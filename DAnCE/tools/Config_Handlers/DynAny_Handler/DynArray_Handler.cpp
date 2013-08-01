@@ -1,6 +1,6 @@
 // $Id$
 
-#include "DynSequence_Handler.h"
+#include "DynArray_Handler.h"
 #include "DynAny_Handler.h"
 #include "dance/Logger/Log_Macros.h"
 #include "Basic_Deployment_Data.hpp"
@@ -19,28 +19,28 @@ namespace DAnCE
   namespace Config_Handlers
   {
     DynamicAny::DynAny_ptr
-    DynSequence_Handler::extract_into_dynany (const DataType &type,
-                                              const DataValue &value,
-                                              CORBA::TypeCode_ptr req_tc)
+    DynArray_Handler::extract_into_dynany (const DataType &type,
+                                           const DataValue &value,
+                                           CORBA::TypeCode_ptr req_tc)
     {
-      DANCE_TRACE("DynSequence_Handler::extract_into_dynany");
+      DANCE_TRACE("DynArray_Handler::extract_into_dynany");
 
       CORBA::TypeCode_var tc;
       if (req_tc)
         tc = req_tc;
       else
-        tc = DynSequence_Handler::create_typecode (type);
+        tc = DynArray_Handler::create_typecode (type);
 
-      // Make the actual DynSequence
+      // Make the actual DynArray
       DynamicAny::DynAny_var temp =
         DYNANY_HANDLER->daf ()->create_dyn_any_from_type_code (tc);
-      DynamicAny::DynSequence_var retval =
-        DynamicAny::DynSequence::_narrow (temp.in ());
+      DynamicAny::DynArray_var retval =
+        DynamicAny::DynArray::_narrow (temp.in ());
 
       DynamicAny::DynAnySeq dynseq;
       CORBA::ULong pos = 0;
 
-      switch (type.sequence ().elementType ().kind ().integral ())
+      switch (type.array ().elementType ().kind ().integral ())
         {
           // ========== BASIC TYPES
         case TCKind::tk_null_l:
@@ -74,14 +74,13 @@ namespace DAnCE
           try
             {
               dynseq.length (value.count_element ());
-              retval->set_length (value.count_element ());
 
               for (DataValue::element_const_iterator i = value.begin_element ();
                    i != value.end_element ();
                    ++i)
                 {
                   DynamicAny::DynAny_var dynany
-                    (DYNANY_HANDLER->extract_into_dynany (type.sequence ().elementType (),
+                    (DYNANY_HANDLER->extract_into_dynany (type.array ().elementType (),
                                                           **i));
                   dynseq[pos++] = dynany->copy ();
                 }
@@ -92,9 +91,9 @@ namespace DAnCE
           catch (DynamicAny::DynAny::InvalidValue)
             {
               DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, ACE_TEXT ("Invalid value provided in XML when trying to ")
-                          ACE_TEXT ("populate %ith element of a sequence\n"),
+                          ACE_TEXT ("populate %ith element of an array\n"),
                           pos));
-              throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the sequence."));
+              throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Invalid value whilst populating the array."));
             }
 
         case TCKind::tk_char_l:
@@ -115,8 +114,7 @@ namespace DAnCE
         case TCKind::tk_local_interface_l:
         case TCKind::tk_event_l:
           // Special case where element association in datavalue contains another datavalue.
-
-          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("DynSequence_Handler::extract_into_dynany - Type not supported\n")));
+          DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("DynArray_Handler::extract_into_dynany - Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 
@@ -124,37 +122,35 @@ namespace DAnCE
     }
 
     void
-    DynSequence_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr)
+    DynArray_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr)
     {
-      DANCE_TRACE("DynSequence_Handler::extract_out_of_dynany");
+      DANCE_TRACE("DynArray_Handler::extract_out_of_dynany");
 
       DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
-        (LM_ERROR, ACE_TEXT ("Extracting Sequences not yet supported\n")));
+        (LM_ERROR, ACE_TEXT ("Extracting Array not yet supported\n")));
     }
 
     CORBA::TypeCode_ptr
-    DynSequence_Handler::create_typecode (const DataType &type)
+    DynArray_Handler::create_typecode (const DataType &type)
     {
-      DANCE_TRACE("DynSequence_Handler::create_typecode");
+      DANCE_TRACE("DynArray_Handler::create_typecode");
 
-      if (!type.sequence_p ())
+      if (!type.array_p ())
         {
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, ACE_TEXT (
-              "ERROR: Sequence type description required")));
+              "ERROR: Array type description required")));
           throw Config_Error (ACE_TEXT (""),
-            ACE_TEXT ("Expected <sequence> element, incorrect tc_kind."));
+            ACE_TEXT ("Expected <array> element, incorrect tc_kind."));
         }
 
       CORBA::TypeCode_var etc =
-        DYNANY_HANDLER->create_typecode (type.sequence ().elementType ());
+        DYNANY_HANDLER->create_typecode (type.array ().elementType ());
 
-      CORBA::ULong bound (0);
-      if (type.sequence ().bound_p ())
-        bound = type.sequence ().bound ();
+      CORBA::ULong const length =  type.array ().length ();
 
       CORBA::TypeCode_var tc =
-        DYNANY_HANDLER->orb ()->create_sequence_tc (bound, etc);
+        DYNANY_HANDLER->orb ()->create_array_tc (length, etc);
 
       return tc._retn ();
     }

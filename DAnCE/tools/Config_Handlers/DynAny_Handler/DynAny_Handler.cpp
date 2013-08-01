@@ -8,6 +8,7 @@
 #include "DynSequence_Handler.h"
 #include "DynStruct_Handler.h"
 #include "DynAlias_Handler.h"
+#include "DynArray_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "Common.h"
 
@@ -178,7 +179,7 @@ namespace DAnCE
               ACE_TEXT ("Wrong value type for tk_octet data type"));
           if (!req_tc)
             retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_octet);
-          retval->insert_octet (static_cast <const unsigned char &> (
+          retval->insert_octet (CORBA::Octet (
             *(*(value.begin_octet ()))));
           break;
 
@@ -240,7 +241,14 @@ namespace DAnCE
         case TCKind::tk_alias_l:
           return DynAlias_Handler::extract_into_dynany (type, value, req_tc);
 
+        case TCKind::tk_array_l:
+          return DynArray_Handler::extract_into_dynany (type, value, req_tc);
+
         case TCKind::tk_longdouble_l:
+          // Not supported since a longdouble is defined in the xsd as double.
+          // We are then creating a long double initialized with a regular
+          // double. This is a very tricky conversion and doesn't work in
+          // combination with certain (versions of) compilers.
         case TCKind::tk_wstring_l:
         case TCKind::tk_fixed_l:
         case TCKind::tk_any_l:
@@ -248,7 +256,6 @@ namespace DAnCE
         case TCKind::tk_Principal_l:
         case TCKind::tk_objref_l:
         case TCKind::tk_union_l:
-        case TCKind::tk_array_l:
         case TCKind::tk_except_l:
         case TCKind::tk_value_l:
         case TCKind::tk_value_box_l:
@@ -259,7 +266,7 @@ namespace DAnCE
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR,
-            ACE_TEXT ("Type not supported\n")));
+            DLINFO ACE_TEXT ("DynAny_Handler::extract_into_dynany - Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 
@@ -416,6 +423,10 @@ namespace DAnCE
           break;
 
         case TCKind::tk_longdouble_l:
+          // Disabled since a longdouble is defined in the xsd as double.
+          // We are then creating a long double initialized from a regular
+          // double. This is a very tricky conversion and doesn't work in
+          // combination with certain (versions of) compilers.
           break;
 
         case TCKind::tk_wchar_l:
@@ -437,13 +448,15 @@ namespace DAnCE
         case TCKind::tk_alias_l:
           return DynAlias_Handler::create_typecode (type);
 
+        case TCKind::tk_array_l:
+          return DynArray_Handler::create_typecode (type);
+
         case TCKind::tk_fixed_l:
         case TCKind::tk_any_l:
         case TCKind::tk_TypeCode_l:
         case TCKind::tk_Principal_l:
         case TCKind::tk_objref_l:
         case TCKind::tk_union_l:
-        case TCKind::tk_array_l:
         case TCKind::tk_except_l:
         case TCKind::tk_value_l:
         case TCKind::tk_value_box_l:
@@ -454,7 +467,7 @@ namespace DAnCE
         case TCKind::tk_home_l:
         case TCKind::tk_event_l:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, ACE_TEXT ("Type not supported\n")));
+            (LM_ERROR, DLINFO ACE_TEXT ("DynAny_Handler::create_typecode - Type not supported\n")));
           throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Type not supported"));
         }
 
