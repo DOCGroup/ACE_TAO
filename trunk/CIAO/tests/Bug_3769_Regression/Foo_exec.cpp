@@ -3,6 +3,45 @@
 
 #include "Foo_exec.h"
 
+// Helper methods.
+// Indicates which test fails.
+void check_error (bool success, const char * test)
+{
+  if (!success)
+    {
+      ACE_ERROR ((LM_ERROR, "ERROR: Found errors in the <%C> attribute test.\n", test));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, "OK: No errors found in the <%C> attribute test.\n", test));
+    }
+}
+
+template<typename ARRAY, typename ITER>
+class check_array
+{
+public:
+  check_array (void) {}
+
+  static bool check (ARRAY array, const char * name,
+                     ITER multiplier, int dimension)
+  {
+    bool ret = true;
+    for (int i = 0; i < dimension; ++i)
+      {
+        if (array[i] != (i+1)*multiplier)
+          {
+            ACE_ERROR ((LM_ERROR, "ERROR: %C[%d] != %d, it is %d\n",
+                        name, i, (i+1)*multiplier, array[i]));
+            ret = false;
+          }
+      }
+    return ret;
+  }
+};
+
+
+
 namespace CIAO_Foo_Impl
 {
   //============================================================
@@ -10,22 +49,40 @@ namespace CIAO_Foo_Impl
   //============================================================
 
   Foo_exec_i::Foo_exec_i (void)
-    : my_short_ (false),
-      my_long_ (false),
-      my_float_ (false),
-      my_double_ (false),
-      my_short_sequence_ (false),
-      my_empty_sequence_ (false),
-      my_long_sequence_ (false),
-      my_float_sequence_ (false),
-      my_double_sequence_ (false),
-      my_bar_struct_ (false),
-      my_baz_struct_ (false),
-      my_string_sequence_ (false),
-      my_fixed_string_ (false),
-      my_variable_string_ (false),
-      supported_short_ (false),
-      my_struct_struct_ (false)
+    : my_octet_success_ (false),
+      my_short_success_ (false),
+      my_boolean_success_ (false),
+      my_long_success_ (false),
+      my_float_success_ (false),
+      my_double_success_ (false),
+      my_short_sequence_success_ (false),
+      my_empty_sequence_success_ (false),
+      my_long_sequence_success_ (false),
+      my_long_array_success_ (false),
+      my_longlong_array_success_ (false),
+      my_ulonglong_array_success_ (false),
+      my_short_array_success_ (false),
+      my_ushort_array_success_ (false),
+      my_string_array_success_ (false),
+      my_double_array_success_ (false),
+      my_float_array_success_ (false),
+      my_boolean_array_success_ (false),
+      my_octet_array_success_ (false),
+      my_float_sequence_success_ (false),
+      my_double_sequence_success_ (false),
+      my_bar_struct_success_ (false),
+      my_bar_array_success_ (false),
+      my_bar_array_2_success_ (false),
+      my_sequence_array_success_ (false),
+      my_bar_struct_array_success_ (false),
+      my_baz_struct_success_ (false),
+      my_string_sequence_success_ (false),
+      my_string_sequence_2_success_ (false),
+      my_array_sequence_success_ (false),
+      my_bounded_string_success_ (false),
+      my_variable_string_success_ (false),
+      supported_short_success_ (false),
+      my_struct_struct_success_ (false)
   {
   }
 
@@ -38,7 +95,6 @@ namespace CIAO_Foo_Impl
   ::CORBA::Short
   Foo_exec_i::supported_short (void)
   {
-    /* Your code here. */
     return 0;
   }
 
@@ -46,18 +102,44 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::supported_short (
     const ::CORBA::Short supported_short)
   {
-    if(supported_short != 11)
+    if (supported_short != 11)
       ACE_ERROR ((LM_ERROR, "ERROR: supported_short != 11, it is %d\n", supported_short));
-    else supported_short_ = true;
+    else this->supported_short_success_ = true;
 
   }
 
   // Component attributes and port operations.
+  ::CORBA::Char
+  Foo_exec_i::my_char (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_char (
+    ::CORBA::Char /*my_char*/)
+  {
+    // Not supported since it's not configured in the xsd.
+  }
+
+  ::CORBA::Octet
+  Foo_exec_i::my_octet (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_octet (
+    ::CORBA::Octet my_octet)
+  {
+    if (my_octet != 20)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_octet != 20, it is %d\n", my_octet));
+    else this->my_octet_success_ = true;
+  }
 
   ::CORBA::Short
   Foo_exec_i::my_short (void)
   {
-    /* Your code here. */
     return 0;
   }
 
@@ -65,16 +147,31 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_short (
     ::CORBA::Short my_short)
   {
-    if(my_short != 22)
+    if (my_short != 22)
       ACE_ERROR ((LM_ERROR, "ERROR: my_short != 22, it is %d\n", my_short));
-    else my_short_ = true;
+    else this->my_short_success_ = true;
+
+  }
+
+  ::CORBA::Boolean
+  Foo_exec_i::my_boolean (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_boolean (
+    ::CORBA::Boolean my_boolean)
+  {
+    if (!my_boolean)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_boolean != true, it is false\n"));
+    else this->my_boolean_success_ = true;
 
   }
 
   ::CORBA::Long
   Foo_exec_i::my_long (void)
   {
-    /* Your code here. */
     return 0;
   }
 
@@ -82,16 +179,15 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_long (
     ::CORBA::Long my_long)
   {
-    if(my_long != 33)
+    if (my_long != 33)
       ACE_ERROR ((LM_ERROR, "ERROR: my_long != 33, it is %d\n", my_long));
-    else my_long_ = true;
+    else this->my_long_success_ = true;
 
   }
 
   ::CORBA::Float
   Foo_exec_i::my_float (void)
   {
-    /* Your code here. */
     return 0.0f;
   }
 
@@ -99,16 +195,15 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_float (
     ::CORBA::Float my_float)
   {
-    if(ACE::is_inequal (my_float, 45.67F))
+    if (ACE::is_inequal (my_float, 45.67F))
       ACE_ERROR ((LM_ERROR, "ERROR: my_float != 45.67, it is %f\n", my_float));
-    else my_float_ = true;
+    else this->my_float_success_ = true;
 
   }
 
   ::CORBA::Double
   Foo_exec_i::my_double (void)
   {
-    /* Your code here. */
     return 0.0;
   }
 
@@ -116,15 +211,30 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_double (
     ::CORBA::Double my_double)
   {
-    if(ACE::is_inequal (my_double, 56.78))
+    if (ACE::is_inequal (my_double, 56.78))
       ACE_ERROR ((LM_ERROR, "ERROR: my_double != 56.78, it is %f\n", my_double));
-    else my_double_ = true;
+    else this->my_double_success_ = true;
+  }
+
+  ::CORBA::LongDouble
+  Foo_exec_i::my_longdouble (void)
+  {
+    return 0.0;
+  }
+
+  void
+  Foo_exec_i::my_longdouble (
+    ::CORBA::LongDouble /*my_longdouble*/)
+  {
+    // Not supported since a longdouble is defined in the xsd as double.
+    // We are then creating a long double initialized with a regular
+    // double. This is a very tricky conversion and doesn't work in
+    // combination with certain (versions of) compilers.
   }
 
   ::short_sequence *
   Foo_exec_i::my_short_sequence (void)
   {
-    /* Your code here. */
     return 0;
   }
 
@@ -132,37 +242,39 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_short_sequence (
     const ::short_sequence & my_short_sequence)
   {
-    if(my_short_sequence.length() != 3)
-    {
-      ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence does not have the correct length\n"));
-      return;
-    }
-
-    my_short_sequence_ = true;
-
-    if(my_short_sequence[0] != 11)
+    if (my_short_sequence.length() != 3)
       {
-        my_short_sequence_ = false;
-        ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[0] != 11, it is %d\n", my_short_sequence[0]));
+        ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence does not have the correct length\n"));
+        return;
       }
 
-    if(my_short_sequence[1] != 12)
+    this->my_short_sequence_success_ = true;
+
+    if (my_short_sequence[0] != 11)
       {
-        my_short_sequence_ = false;
-        ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[1] != 12, it is %d\n", my_short_sequence[1]));
+        this->my_short_sequence_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[0] != 11, it is %d\n",
+                    my_short_sequence[0]));
       }
 
-    if(my_short_sequence[2] != 13)
+    if (my_short_sequence[1] != 12)
       {
-        my_short_sequence_ = false;
-        ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[2] != 13, it is %d\n", my_short_sequence[2]));
+        this->my_short_sequence_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[1] != 12, it is %d\n",
+                    my_short_sequence[1]));
+      }
+
+    if (my_short_sequence[2] != 13)
+      {
+        this->my_short_sequence_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence[2] != 13, it is %d\n",
+                    my_short_sequence[2]));
       }
   }
 
   ::short_sequence *
   Foo_exec_i::my_empty_sequence (void)
   {
-    /* Your code here. */
     return 0;
   }
 
@@ -170,19 +282,18 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_empty_sequence (
     const ::short_sequence & my_empty_sequence)
   {
-    if(my_empty_sequence.length() != 0)
-    {
-      ACE_ERROR ((LM_ERROR, "ERROR: my_empty_sequence does not have the correct length\n"));
-      return;
-    }
+    if (my_empty_sequence.length() != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_empty_sequence does not have the correct length\n"));
+        return;
+      }
 
-    my_empty_sequence_ = true;
+    this->my_empty_sequence_success_ = true;
   }
 
   ::long_sequence *
   Foo_exec_i::my_long_sequence (void)
   {
-    /* Your code here. */
     return 0;
   }
 
@@ -190,37 +301,39 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_long_sequence (
     const ::long_sequence & my_long_sequence)
   {
-    if(my_long_sequence.length() != 3)
-    {
-      ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence does not have the correct length\n"));
-      return;
-    }
-
-    my_long_sequence_ = true;
-
-    if(my_long_sequence[0] != 21)
+    if (my_long_sequence.length() != 3)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence[0] != 21, it is %d\n", my_long_sequence[0]));
-        my_long_sequence_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence does not have the correct length\n"));
+        return;
       }
 
-    if(my_long_sequence[1] != 22)
+    this->my_long_sequence_success_ = true;
+
+    if (my_long_sequence[0] != 21)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence[1] != 22, it is %d\n", my_long_sequence[1]));
-        my_long_sequence_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence[0] != 21, it is %d\n",
+                    my_long_sequence[0]));
+        this->my_long_sequence_success_ = false;
       }
 
-    if(my_long_sequence[2] != 23)
+    if (my_long_sequence[1] != 22)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence[2] != 23, it is %d\n", my_long_sequence[2]));
-        my_long_sequence_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence[1] != 22, it is %d\n",
+                    my_long_sequence[1]));
+        this->my_long_sequence_success_ = false;
+      }
+
+    if (my_long_sequence[2] != 23)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_long_sequence[2] != 23, it is %d\n",
+                    my_long_sequence[2]));
+        this->my_long_sequence_success_ = false;
       }
   }
 
   ::float_sequence *
   Foo_exec_i::my_float_sequence (void)
   {
-    /* Your code here. */
     return 0;
   }
 
@@ -228,37 +341,39 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_float_sequence (
     const ::float_sequence & my_float_sequence)
   {
-    if(my_float_sequence.length() != 3)
-    {
-      ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence does not have the correct length\n"));
-      return;
-    }
-
-    my_float_sequence_ = true;
-
-    if(ACE::is_inequal (my_float_sequence[0], 21.12F))
+    if (my_float_sequence.length() != 3)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[0] != 21.12, it is %f\n", my_float_sequence[0]));
-        my_float_sequence_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence does not have the correct length\n"));
+        return;
       }
 
-    if(ACE::is_inequal (my_float_sequence[1], 22.22F))
+    this->my_float_sequence_success_ = true;
+
+    if (ACE::is_inequal (my_float_sequence[0], 21.12F))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[1] != 22.22, it is %f\n", my_float_sequence[1]));
-        my_float_sequence_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[0] != 21.12, it is %f\n",
+                    my_float_sequence[0]));
+        this->my_float_sequence_success_ = false;
       }
 
-    if(ACE::is_inequal (my_float_sequence[2], 23.32F))
+    if (ACE::is_inequal (my_float_sequence[1], 22.22F))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[2] != 23.32, it is %f\n", my_float_sequence[2]));
-        my_float_sequence_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[1] != 22.22, it is %f\n",
+                    my_float_sequence[1]));
+        this->my_float_sequence_success_ = false;
+      }
+
+    if (ACE::is_inequal (my_float_sequence[2], 23.32F))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_float_sequence[2] != 23.32, it is %f\n",
+                    my_float_sequence[2]));
+        this->my_float_sequence_success_ = false;
       }
   }
 
   ::double_sequence *
   Foo_exec_i::my_double_sequence (void)
   {
-    /* Your code here. */
     return 0;
   }
 
@@ -266,38 +381,40 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_double_sequence (
     const ::double_sequence & my_double_sequence)
   {
-    if(my_double_sequence.length() != 3)
-    {
-      ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence does not have the correct length\n"));
-      return;
-    }
-
-    this->my_double_sequence_ = true;
-
-    if(ACE::is_inequal (my_double_sequence[0], 621.12))
+    if (my_double_sequence.length() != 3)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[0] != 621.12, it is %f\n", my_double_sequence[0]));
-        this->my_double_sequence_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence does not have the correct length\n"));
+        return;
+      }
+
+    this->my_double_sequence_success_ = true;
+
+    if (ACE::is_inequal (my_double_sequence[0], 621.12))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[0] != 621.12, it is %f\n",
+                    my_double_sequence[0]));
+        this->my_double_sequence_success_ = false;
       }
 
 
-    if(ACE::is_inequal (my_double_sequence[1], 622.22))
+    if (ACE::is_inequal (my_double_sequence[1], 622.22))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[1] != 622.22, it is %f\n", my_double_sequence[1]));
-        this->my_double_sequence_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[1] != 622.22, it is %f\n",
+                    my_double_sequence[1]));
+        this->my_double_sequence_success_ = false;
       }
 
-    if(ACE::is_inequal (my_double_sequence[2], 623.32))
+    if (ACE::is_inequal (my_double_sequence[2], 623.32))
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[2] != 623.32, it is %f\n", my_double_sequence[2]));
-        this->my_double_sequence_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_double_sequence[2] != 623.32, it is %f\n",
+                    my_double_sequence[2]));
+        this->my_double_sequence_success_ = false;
       }
   }
 
   ::Bar
   Foo_exec_i::my_bar_struct (void)
   {
-    /* Your code here. */
     return ::Bar ();
   }
 
@@ -305,37 +422,297 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_bar_struct (
     const ::Bar & my_bar_struct)
   {
-    my_bar_struct_ = true;
+    this->my_bar_struct_success_ = true;
 
-    if(my_bar_struct.s != 3)
+    if (my_bar_struct.s != 3)
       {
-        my_bar_struct_ = false;
+        this->my_bar_struct_success_ = false;
         ACE_ERROR ((LM_ERROR, "ERROR: short value != 3, it is %d\n", my_bar_struct.s));
       }
 
-    if(my_bar_struct.l != 4)
+    if (my_bar_struct.l != 4)
       {
-        my_bar_struct_ = false;
+        this->my_bar_struct_success_ = false;
         ACE_ERROR ((LM_ERROR, "ERROR: long value != 4, it is %d\n", my_bar_struct.l));
       }
 
-    if(ACE::is_inequal (my_bar_struct.f, 5.6F))
+    if (ACE::is_inequal (my_bar_struct.f, 5.6F))
       {
-        my_bar_struct_ = false;
+        this->my_bar_struct_success_ = false;
         ACE_ERROR ((LM_ERROR, "ERROR: float value != 5.6, it is %f\n", my_bar_struct.f));
       }
 
-    if(ACE::is_inequal (my_bar_struct.d, 7.8))
+    if (ACE::is_inequal (my_bar_struct.d, 7.8))
       {
+        this->my_bar_struct_success_ = false;
         ACE_ERROR ((LM_ERROR, "ERROR: double value != 7.8, it is %f\n", my_bar_struct.d));
-        my_bar_struct_ = false;
+      }
+  }
+
+  ::BarArray_slice*
+  Foo_exec_i::my_bar_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_bar_array (
+    const ::BarArray my_bar_array)
+  {
+    this->my_bar_array_success_ = true;
+    for (int i = 0; i < 3; ++i)
+      {
+        if (my_bar_array[i].s != i+1)
+          {
+            this->my_bar_array_success_ = false;
+            ACE_ERROR ((LM_ERROR, "ERROR for index <%d>: short value != %d, it is %d\n",
+                        i, i+1, my_bar_array[i].s));
+          }
+
+        if (my_bar_array[i].l != i+2)
+          {
+            this->my_bar_array_success_ = false;
+            ACE_ERROR ((LM_ERROR, "ERROR for index <%d>: short value != %d, it is %d\n",
+                        i, i+2, my_bar_array[i].l));
+          }
+      }
+
+    if (ACE::is_inequal (my_bar_array[0].f, 3.4F))
+      {
+        this->my_bar_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <0>: float value != 3.4, it is %f\n",
+                    my_bar_array[0].f));
+      }
+
+    if (ACE::is_inequal (my_bar_array[0].d, 5.6))
+      {
+        this->my_bar_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <0>: double value != 5.6, it is %f\n",
+                    my_bar_array[0].d));
+      }
+
+    if (ACE::is_inequal (my_bar_array[1].f, 4.5F))
+      {
+        this->my_bar_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <1>: float value != 4.5, it is %f\n",
+                    my_bar_array[1].f));
+      }
+
+    if (ACE::is_inequal (my_bar_array[1].d, 6.7))
+      {
+        this->my_bar_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <1>: double value != 6.7, it is %f\n",
+                    my_bar_array[1].d));
+      }
+
+    if (ACE::is_inequal (my_bar_array[2].f, 5.6F))
+      {
+        this->my_bar_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <2>: float value != 5.6, it is %f\n",
+                    my_bar_array[2].f));
+      }
+
+    if (ACE::is_inequal (my_bar_array[2].d, 7.8))
+      {
+        this->my_bar_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <2>: double value != 7.8, it is %f\n",
+                    my_bar_array[2].d));
+      }
+  }
+
+  ::BarArray2_slice *
+  Foo_exec_i::my_bar_array_2 (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_bar_array_2 (
+    const ::BarArray2 my_bar_array_2)
+  {
+    this->my_bar_array_2_success_ = true;
+    for (int h = 0; h < 2; ++h)
+      {
+        for (int i = 0; i < 3; ++i)
+          {
+            if (my_bar_array_2[h][i].s != (h*10)+(i+1))
+              {
+                this->my_bar_array_2_success_ = false;
+                ACE_ERROR ((LM_ERROR, "ERROR for index <%d>: short value != %d, it is %d\n",
+                            i, (h*10)+(i+1), my_bar_array_2[h][i].s));
+              }
+
+            if (my_bar_array_2[h][i].l != (h*10)+(i+2))
+              {
+                this->my_bar_array_2_success_ = false;
+                ACE_ERROR ((LM_ERROR, "ERROR for index <%d>: short value != %d, it is %d\n",
+                            i, (h*10)+(i+2), my_bar_array_2[h][i].l));
+              }
+          }
+        if (ACE::is_inequal (my_bar_array_2[h][0].f, (h*10)+3.4F))
+          {
+            this->my_bar_array_success_ = false;
+            ACE_ERROR ((LM_ERROR, "ERROR for index <0>: float value != %f, it is %f\n",
+                        (h*10)+3.4F, my_bar_array_2[h][0].f));
+          }
+
+        if (ACE::is_inequal (my_bar_array_2[h][0].d, (h*10)+5.6))
+          {
+            this->my_bar_array_success_ = false;
+            ACE_ERROR ((LM_ERROR, "ERROR for index <0>: double value != %f, it is %f\n",
+                        (h*10)+5.6, my_bar_array_2[h][0].d));
+          }
+
+        if (ACE::is_inequal (my_bar_array_2[h][1].f, (h*10)+4.5F))
+          {
+            this->my_bar_array_success_ = false;
+            ACE_ERROR ((LM_ERROR, "ERROR for index <1>: float value != %f, it is %f\n",
+                        (h*10)+4.5F, my_bar_array_2[h][1].f));
+          }
+
+        if (ACE::is_inequal (my_bar_array_2[h][1].d, (h*10)+6.7))
+          {
+            this->my_bar_array_success_ = false;
+            ACE_ERROR ((LM_ERROR, "ERROR for index <1>: double value != %f, it is %f\n",
+                        (h*10)+6.7, my_bar_array_2[h][1].d));
+          }
+
+        if (ACE::is_inequal (my_bar_array_2[h][2].f, (h*10)+5.6F))
+          {
+            this->my_bar_array_success_ = false;
+            ACE_ERROR ((LM_ERROR, "ERROR for index <2>: float value != %f, it is %f\n",
+                       (h*10)+5.6F, my_bar_array_2[h][2].f));
+          }
+
+        if (ACE::is_inequal (my_bar_array_2[h][2].d, (h*10)+7.8))
+          {
+            this->my_bar_array_success_ = false;
+            ACE_ERROR ((LM_ERROR, "ERROR for index <2>: double value != %f, it is %f\n",
+                        (h*10)+7.8, my_bar_array_2[h][2].d));
+          }
+      }
+  }
+
+  ::SequenceArray_slice *
+  Foo_exec_i::my_sequence_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_sequence_array (
+    const ::SequenceArray my_sequence_array)
+  {
+    if (my_sequence_array[0].length() != 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: The first sequence does not have the correct length\n"));
+        return;
+      }
+    if (my_sequence_array[1].length() != 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: The second sequence does not have the correct length\n"));
+        return;
+      }
+    this->my_sequence_array_success_ = true;
+
+    if (ACE_OS::strcmp (my_sequence_array[0][0], "Hi") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_sequence_array[0][0] != Hi, it is %C\n",
+                    my_sequence_array[0][0].in ()));
+        this->my_sequence_array_success_ = false;
+      }
+    if (ACE_OS::strcmp (my_sequence_array[0][1], "World") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_sequence_array[0][1] != World, it is %C\n",
+                    my_sequence_array[0][1].in ()));
+        this->my_sequence_array_success_ = false;
+      }
+
+    if (ACE_OS::strcmp (my_sequence_array[1][0], "Bye") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_sequence_array[1][0] != Bye, it is %C\n",
+                    my_sequence_array[1][0].in ()));
+        this->my_sequence_array_success_ = false;
+      }
+    if (ACE_OS::strcmp (my_sequence_array[1][1], "World") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_sequence_array[1][1] != World, it is %C\n",
+                    my_sequence_array[1][1].in ()));
+        this->my_sequence_array_success_ = false;
+      }
+  }
+
+  ::BarStruct
+  Foo_exec_i::my_bar_struct_array (void)
+  {
+    return BarStruct ();
+  }
+
+  void
+  Foo_exec_i::my_bar_struct_array (
+    const ::BarStruct & my_bar_struct_array)
+  {
+    this->my_bar_struct_array_success_ = true;
+    for (int i = 0; i < 3; ++i)
+      {
+        if (my_bar_struct_array.bar[i].s != i+1)
+          {
+            this->my_bar_struct_array_success_ = false;
+            ACE_ERROR ((LM_ERROR, "ERROR for index <%d>: short value != %d, it is %d\n",
+                        i, i+1, my_bar_struct_array.bar[i].s));
+          }
+
+        if (my_bar_struct_array.bar[i].l != i+2)
+          {
+            this->my_bar_struct_array_success_ = false;
+            ACE_ERROR ((LM_ERROR, "ERROR for index <%d>: short value != %d, it is %d\n",
+                        i, i+2, my_bar_struct_array.bar[i].l));
+          }
+      }
+
+    if (ACE::is_inequal (my_bar_struct_array.bar[0].f, 3.4F))
+      {
+        this->my_bar_struct_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <0>: float value != 3.4, it is %f\n",
+                    my_bar_struct_array.bar[0].f));
+      }
+    if (ACE::is_inequal (my_bar_struct_array.bar[0].d, 5.6))
+      {
+        this->my_bar_struct_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <0>: double value != 5.6, it is %f\n",
+                    my_bar_struct_array.bar[0].d));
+      }
+
+    if (ACE::is_inequal (my_bar_struct_array.bar[1].f, 4.5F))
+      {
+        this->my_bar_struct_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <1>: float value != 4.5, it is %f\n",
+                    my_bar_struct_array.bar[1].f));
+      }
+    if (ACE::is_inequal (my_bar_struct_array.bar[1].d, 6.7))
+      {
+        this->my_bar_struct_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <1>: double value != 6.7, it is %f\n",
+                    my_bar_struct_array.bar[1].d));
+      }
+
+    if (ACE::is_inequal (my_bar_struct_array.bar[2].f, 5.6F))
+      {
+        this->my_bar_struct_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <2>: float value != 5.6, it is %f\n",
+                    my_bar_struct_array.bar[2].f));
+      }
+    if (ACE::is_inequal (my_bar_struct_array.bar[2].d, 7.8))
+      {
+        this->my_bar_struct_array_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR for index <2>: double value != 7.8, it is %f\n",
+                    my_bar_struct_array.bar[2].d));
       }
   }
 
   ::Baz *
   Foo_exec_i::my_baz_struct (void)
   {
-    /* Your code here. */
     return 0;
   }
 
@@ -349,14 +726,14 @@ namespace CIAO_Foo_Impl
         return;
       }
 
-    my_baz_struct_ = true;
+    this->my_baz_struct_success_ = true;
 
     if (ACE_OS::strcmp (my_baz_struct.name.in (),
                         "My Baz Struct") != 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_baz struct has incorrect name %C\n",
                     my_baz_struct.name.in ()));
-        my_baz_struct_ = false;
+        this->my_baz_struct_success_ = false;
       }
 
     CORBA::Short inc_s = 0;
@@ -368,27 +745,27 @@ namespace CIAO_Foo_Impl
          i < my_baz_struct.my_bar_sequence.length ();
          ++i)
       {
-        if(my_baz_struct.my_bar_sequence[i].s != 3 + inc_s)
+        if (my_baz_struct.my_bar_sequence[i].s != 3 + inc_s)
           {
-            my_baz_struct_ = false;
+            this->my_baz_struct_success_ = false;
             ACE_ERROR ((LM_ERROR, "ERROR: short value != %d, it is %d\n",
                         3 + inc_s,
                         my_baz_struct.my_bar_sequence[i].s));
           }
 
         inc_s += 10;
-        if(my_baz_struct.my_bar_sequence[i].l != 4 + inc_l)
+        if (my_baz_struct.my_bar_sequence[i].l != 4 + inc_l)
           {
-            my_baz_struct_ = false;
+            this->my_baz_struct_success_ = false;
             ACE_ERROR ((LM_ERROR, "ERROR: long value != %d, it is %d\n",
                         4 + inc_l,
                         my_baz_struct.my_bar_sequence[i].l));
           }
 
         inc_l += 10;
-        if(ACE::is_inequal (my_baz_struct.my_bar_sequence[i].f, 5.6F + inc_f))
+        if (ACE::is_inequal (my_baz_struct.my_bar_sequence[i].f, 5.6F + inc_f))
           {
-            my_baz_struct_ = false;
+            this->my_baz_struct_success_ = false;
             ACE_ERROR ((LM_ERROR, "ERROR: float value != %f, it is %f\n",
                         5.6F + inc_f,
                         my_baz_struct.my_bar_sequence[i].f));
@@ -396,9 +773,9 @@ namespace CIAO_Foo_Impl
 
         inc_f += 10.0F;
 
-        if(ACE::is_inequal (my_baz_struct.my_bar_sequence[i].d, 7.8 + inc_d))
+        if (ACE::is_inequal (my_baz_struct.my_bar_sequence[i].d, 7.8 + inc_d))
           {
-            my_baz_struct_ = false;
+            this->my_baz_struct_success_ = false;
             ACE_ERROR ((LM_ERROR, "ERROR: double value != %f, it is %f\n",
                         7.8 + inc_d,
                         my_baz_struct.my_bar_sequence[i].d));
@@ -416,7 +793,8 @@ namespace CIAO_Foo_Impl
 
 
   void
-  Foo_exec_i::my_data_union (const ::Data & /*my_data_union*/)
+  Foo_exec_i::my_data_union (
+    const ::Data & /*my_data_union*/)
   {
   }
 
@@ -425,7 +803,8 @@ namespace CIAO_Foo_Impl
     return 0;
   }
 
-  void Foo_exec_i::my_var_data_union (const ::Data2 & /*my_data_union*/)
+  void Foo_exec_i::my_var_data_union (
+    const ::Data2 & /*my_data_union*/)
   {
   }
 
@@ -434,43 +813,150 @@ namespace CIAO_Foo_Impl
     return 0;
   }
 
-  void Foo_exec_i::my_string_sequence (
-      const ::string_sequence & my_string_sequence)
+  void
+  Foo_exec_i::my_string_sequence (
+    const ::string_sequence & my_string_sequence)
   {
-    if(my_string_sequence.length() != 2)
-    {
-      ACE_ERROR ((LM_ERROR, "ERROR: my_short_sequence does not have the correct length\n"));
-      return;
-    }
-
-    my_string_sequence_ = true;
-
-    if(ACE_OS::strcmp (my_string_sequence[0], "Hi") != 0)
+    if (my_string_sequence.length() != 2)
       {
-        my_string_sequence_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence does not have the correct length\n"));
+        return;
+      }
+
+    this->my_string_sequence_success_ = true;
+
+    if (ACE_OS::strcmp (my_string_sequence[0], "Hi") != 0)
+      {
+        this->my_string_sequence_success_ = false;
         ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence[0] != Hi, it is %C\n",
                     my_string_sequence[0].in ()));
       }
 
-    if(ACE_OS::strcmp (my_string_sequence[1], "World") != 0)
+    if (ACE_OS::strcmp (my_string_sequence[1], "World") != 0)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence[1] != World, it is %C\n",
                     my_string_sequence[1].in ()));
-        my_string_sequence_ = false;
+        this->my_string_sequence_success_ = false;
       }
   }
 
-  char * Foo_exec_i::my_fixed_string (void)
+  ::string_sequence2 *
+  Foo_exec_i::my_string_sequence_2 (void)
   {
     return 0;
   }
 
-  void Foo_exec_i::my_fixed_string (const char * my_fixed_string)
+
+  void
+  Foo_exec_i::my_string_sequence_2 (
+    const ::string_sequence2 & my_string_sequence_2)
   {
-    if(ACE_OS::strcmp (my_fixed_string, "Hi") != 0)
-      ACE_ERROR ((LM_ERROR, "ERROR: my_fixed_string != Hi, it is %C\n",
-                  my_fixed_string));
-    else my_fixed_string_ = true;
+    if (my_string_sequence_2.length() != 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: The main string sequence does not have the correct length\n"));
+        return;
+      }
+    if (my_string_sequence_2[0].length() != 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: String sequence I does not have the correct length\n"));
+        return;
+      }
+    if (my_string_sequence_2[1].length() != 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: String sequence II does not have the correct length\n"));
+        return;
+      }
+
+    this->my_string_sequence_2_success_ = true;
+
+    if (ACE_OS::strcmp (my_string_sequence_2[0][0], "Hi") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence_2[0][0] != Hi, it is %C\n",
+                    my_string_sequence_2[0][0].in ()));
+        this->my_string_sequence_2_success_ = false;
+      }
+    if (ACE_OS::strcmp (my_string_sequence_2[0][1], "World") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence_2[0][1] != World, it is %C\n",
+                    my_string_sequence_2[0][1].in ()));
+        this->my_string_sequence_2_success_ = false;
+      }
+
+    if (ACE_OS::strcmp (my_string_sequence_2[1][0], "Bye") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence_2[1][0] != Bye, it is %C\n",
+                    my_string_sequence_2[1][0].in ()));
+        this->my_string_sequence_2_success_ = false;
+      }
+    if (ACE_OS::strcmp (my_string_sequence_2[1][1], "World") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_string_sequence_2[1][1] != World, it is %C\n",
+                    my_string_sequence_2[1][1].in ()));
+        this->my_string_sequence_2_success_ = false;
+      }
+
+  }
+
+  ::array_sequence *
+  Foo_exec_i::my_array_sequence (void)
+  {
+    return 0;
+  }
+
+
+  void
+  Foo_exec_i::my_array_sequence (
+    const ::array_sequence & my_array_sequence)
+  {
+    if (my_array_sequence.length() != 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: The main array sequence does not have the correct length\n"));
+        return;
+      }
+
+    this->my_array_sequence_success_ = true;
+
+    if (ACE_OS::strcmp (my_array_sequence[0][0], "Hi") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_array_sequence[0][0] != Hi, it is %C\n",
+                    my_array_sequence[0][0].in ()));
+        this->my_array_sequence_success_ = false;
+      }
+    if (ACE_OS::strcmp (my_array_sequence[0][1], "World") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_array_sequence[0][1] != World, it is %C\n",
+                    my_array_sequence[0][1].in ()));
+        this->my_array_sequence_success_ = false;
+      }
+
+    if (ACE_OS::strcmp (my_array_sequence[1][0], "Bye") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_array_sequence[1][0] != Bye, it is %C\n",
+                    my_array_sequence[1][0].in ()));
+        this->my_array_sequence_success_ = false;
+      }
+    if (ACE_OS::strcmp (my_array_sequence[1][1], "World") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_array_sequence[1][1] != World, it is %C\n",
+                    my_array_sequence[1][1].in ()));
+        this->my_array_sequence_success_ = false;
+      }
+
+  }
+
+  char * Foo_exec_i::my_bounded_string (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_bounded_string (
+    const char * my_bounded_string)
+  {
+    if (ACE_OS::strcmp (my_bounded_string, "Hi") != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_bounded_string != Hi, it is %C\n",
+                  my_bounded_string));
+    else this->my_bounded_string_success_ = true;
   }
 
   char *Foo_exec_i::my_variable_string (void)
@@ -478,20 +964,24 @@ namespace CIAO_Foo_Impl
     return 0;
   }
 
-  void Foo_exec_i::my_variable_string (const char * my_variable_string)
+  void
+  Foo_exec_i::my_variable_string (
+    const char * my_variable_string)
   {
-    if(ACE_OS::strcmp (my_variable_string, "Hi") != 0)
+    if (ACE_OS::strcmp (my_variable_string, "Hi") != 0)
       ACE_ERROR ((LM_ERROR, "ERROR: my_variable_string != Hi, it is %C\n",
                   my_variable_string));
-    else my_variable_string_ = true;
+    else this->my_variable_string_success_ = true;
   }
 
-  ::CORBA::WChar *Foo_exec_i::my_fixed_wstring (void)
+  ::CORBA::WChar *Foo_exec_i::my_bounded_wstring (void)
   {
     return 0;
   }
 
-  void Foo_exec_i::my_fixed_wstring (const ::CORBA::WChar * /*my_fixed_wstring*/)
+  void
+  Foo_exec_i::my_bounded_wstring (
+    const ::CORBA::WChar * /*my_bounded_wstring*/)
   {
   }
 
@@ -501,7 +991,7 @@ namespace CIAO_Foo_Impl
   }
 
   void Foo_exec_i::my_variable_wstring (
-      const ::CORBA::WChar * /*my_variable_wstring*/)
+    const ::CORBA::WChar * /*my_variable_wstring*/)
   {
   }
 
@@ -510,17 +1000,259 @@ namespace CIAO_Foo_Impl
     return 0;
   }
 
-  void Foo_exec_i::my_long_array (const ::long_array /*my_long_array*/)
+  void
+  Foo_exec_i::my_long_array (
+    const ::long_array my_long_array)
   {
+    this->my_long_array_success_ =
+      check_array<const long_array, CORBA::Long>::check (my_long_array, "my_long_array", 1, 5);
   }
 
-  ::string_array_slice *Foo_exec_i::my_string_array (void)
+  ::ulong_array_slice *Foo_exec_i::my_ulong_array (void)
   {
     return 0;
   }
 
-  void Foo_exec_i::my_string_array (const ::string_array /*my_string_array*/)
+  void
+  Foo_exec_i::my_ulong_array (
+    const ::ulong_array my_ulong_array)
   {
+    this->my_ulong_array_success_ =
+      check_array<const ulong_array, CORBA::ULong>::check (my_ulong_array, "my_ulong_array", 2, 5);
+  }
+
+  ::longlong_array_slice * Foo_exec_i::my_longlong_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_longlong_array (
+    const ::longlong_array my_longlong_array)
+  {
+    this->my_longlong_array_success_ =
+      check_array<const longlong_array, CORBA::LongLong>::check (my_longlong_array, "my_longlong_array", 3, 5);
+  }
+
+
+  ::ulonglong_array_slice * Foo_exec_i::my_ulonglong_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_ulonglong_array (
+    const ::ulonglong_array my_ulonglong_array)
+  {
+    this->my_ulonglong_array_success_ =
+      check_array<const ulonglong_array, CORBA::ULongLong>::check (my_ulonglong_array, "my_ulonglong_array", 4, 5);
+  }
+
+  ::short_array_slice * Foo_exec_i::my_short_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_short_array (
+    const ::short_array my_short_array)
+  {
+    this->my_short_array_success_ =
+      check_array<const short_array, CORBA::Short>::check (my_short_array, "my_short_array", 5, 5);
+  }
+
+  ::ushort_array_slice * Foo_exec_i::my_ushort_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_ushort_array (
+    const ::ushort_array my_ushort_array)
+  {
+    this->my_ushort_array_success_ =
+      check_array<const ushort_array, CORBA::Short>::check (my_ushort_array, "my_ushort_array", 6, 5);
+  }
+
+  ::string_array_slice * Foo_exec_i::my_string_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_string_array (
+    const ::string_array my_string_array)
+  {
+    this->my_string_array_success_ = true;
+
+    if (ACE_OS::strcmp (my_string_array[0].in (), "Hello") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_string_array[0] != 'Hello', it is %C\n",
+                    my_string_array[0].in ()));
+        this->my_string_array_success_ = false;
+      }
+
+    if (ACE_OS::strcmp (my_string_array[1], "World") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_string_array[1] != 'World', it is %C\n",
+                    my_string_array[1].in ()));
+        this->my_string_array_success_ = false;
+      }
+  }
+
+  ::wstring_array_slice * Foo_exec_i::my_wstring_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_wstring_array (
+    const ::wstring_array /*my_wstring_array*/)
+  {
+  }
+
+  ::char_array_slice * Foo_exec_i::my_char_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_char_array (
+    const ::char_array /*my_char_array*/)
+  {
+    // Not supported since it's not configured in the xsd.
+  }
+
+  ::wchar_array_slice * Foo_exec_i::my_wchar_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_wchar_array (
+    const ::wchar_array /*my_wchar_array*/)
+  {
+  }
+
+  ::double_array_slice * Foo_exec_i::my_double_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_double_array (
+    const ::double_array my_double_array)
+  {
+    this->my_double_array_success_ = true;
+    if (ACE::is_inequal (my_double_array[0], 0.123))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_double_array[0] != 0.123, it is %f\n",
+                    my_double_array[0]));
+        this->my_double_array_success_ = false;
+      }
+    if (ACE::is_inequal (my_double_array[1], 4.56))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_double_array[1] != 4.56, it is %f\n",
+                    my_double_array[1]));
+        this->my_double_array_success_ = false;
+      }
+    if (ACE::is_inequal (my_double_array[2], 78.9))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_double_array[2] != 78.9, it is %f\n",
+                    my_double_array[2]));
+        this->my_double_array_success_ = false;
+      }
+  }
+
+  ::longdouble_array_slice * Foo_exec_i::my_longdouble_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_longdouble_array (
+    const ::longdouble_array /*my_longdouble_array*/)
+  {
+    // Not supported since a longdouble is defined in the xsd as double.
+    // We are then creating a long double initialized with a regular
+    // double. This is a very tricky conversion and doesn't work in
+    // combination with certain (versions of) compilers.
+  }
+
+  ::float_array_slice * Foo_exec_i::my_float_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_float_array (
+    const ::float_array my_float_array)
+  {
+    this->my_float_array_success_ = true;
+    if (ACE::is_inequal (my_float_array[0], 0.369F))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_float_array[0] != 0.369, it is %f\n",
+                    my_float_array[0]));
+        this->my_float_array_success_ = false;
+      }
+    if (ACE::is_inequal (my_float_array[1], 13.68F))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_float_array[1] != 13.68, it is %f\n",
+                    my_float_array[1]));
+        this->my_float_array_success_ = false;
+      }
+    if (ACE::is_inequal (my_float_array[2], 236.7F))
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_float_array[2] != 236.7, it is %f\n",
+                    my_float_array[2]));
+        this->my_float_array_success_ = false;
+      }
+  }
+
+  ::boolean_array_slice * Foo_exec_i::my_boolean_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_boolean_array (
+    const ::boolean_array my_boolean_array)
+  {
+    this->my_boolean_array_success_ = true;
+    if (!my_boolean_array[0])
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_boolean_array[0] != true, it is false\n"));
+        this->my_boolean_array_success_ = false;
+      }
+    if (my_boolean_array[1])
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_boolean_array[1] != false, it is true\n"));
+        this->my_boolean_array_success_ = false;
+      }
+  }
+
+  ::octet_array_slice * Foo_exec_i::my_octet_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_octet_array (
+    const ::octet_array my_octet_array)
+  {
+    this->my_octet_array_success_ = true;
+    if (my_octet_array[0] != 1)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_octet_array[0] != 1, it is %d\n",
+                    my_octet_array[0]));
+        this->my_octet_array_success_ = false;
+      }
+    if (my_octet_array[1] != 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_octet_array[1] != 2, it is %d\n",
+                    my_octet_array[1]));
+        this->my_octet_array_success_ = false;
+      }
   }
 
   StructModule::StructStruct Foo_exec_i::my_struct_struct (void)
@@ -528,30 +1260,32 @@ namespace CIAO_Foo_Impl
     return StructModule::StructStruct ();
   }
 
-  void Foo_exec_i::my_struct_struct (const StructModule::StructStruct & my_struct_struct)
+  void
+  Foo_exec_i::my_struct_struct (
+    const StructModule::StructStruct & my_struct_struct)
   {
     bool error_found = false;
 
     if (my_struct_struct.type != StructModule::DLT_HARD)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_struct_struct.deadline_type != 2, it is %d\n",
-                  my_struct_struct.type));
+                    my_struct_struct.type));
         error_found = true;
       }
     if (my_struct_struct.struct_time.sec != 15)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_struct_struct.struct_time.sec != 15, it is %d\n",
-                  my_struct_struct.struct_time.sec));
+                    my_struct_struct.struct_time.sec));
         error_found = true;
       }
     if (my_struct_struct.struct_time.nanosec != 20)
       {
         ACE_ERROR ((LM_ERROR, "ERROR: my_struct_struct.struct_time.nanosec != 20, it is %d\n",
-                  my_struct_struct.struct_time.nanosec));
+                    my_struct_struct.struct_time.nanosec));
         error_found = true;
       }
 
-    my_struct_struct_ = !error_found;
+    this->my_struct_struct_success_ = !error_found;
   }
 
   // Operations from Components::SessionComponent.
@@ -577,29 +1311,43 @@ namespace CIAO_Foo_Impl
   void
   Foo_exec_i::ccm_activate (void)
   {
-    if (!(my_short_ &&
-          my_long_ &&
-          my_float_ &&
-          my_double_ &&
-          my_short_sequence_ &&
-          my_empty_sequence_ &&
-          my_long_sequence_ &&
-          my_float_sequence_ &&
-          my_double_sequence_ &&
-          my_bar_struct_ &&
-          my_baz_struct_ &&
-          my_string_sequence_ &&
-          my_fixed_string_ &&
-          my_variable_string_ &&
-          supported_short_ &&
-          my_struct_struct_))
-      {
-        ACE_ERROR ((LM_ERROR, "ERROR: Not all expected attributes were initialized\n"));
-      }
-    else
-      {
-        ACE_DEBUG ((LM_DEBUG, "OK: All attributes were correctly initialized\n"));
-      }
+    check_error (this->my_octet_success_, "octet");
+    check_error (this->my_short_success_, "short");
+    check_error (this->my_boolean_success_, "boolean");
+    check_error (this->my_long_success_, "long");
+    check_error (this->my_float_success_, "float");
+    check_error (this->my_double_success_, "double");
+    check_error (this->my_short_sequence_success_, "short sequence");
+    check_error (this->my_empty_sequence_success_, "empty sequence");
+    check_error (this->my_long_sequence_success_, "long sequence");
+
+    check_error (this->my_long_array_success_, "long array");
+    check_error (this->my_ulong_array_success_, "unsigned long array");
+    check_error (this->my_longlong_array_success_, "long long array");
+    check_error (this->my_ulonglong_array_success_, "unsigned long long array");
+    check_error (this->my_short_array_success_, "short array");
+    check_error (this->my_ushort_array_success_, "unsigned short array");
+    check_error (this->my_string_array_success_, "string array");
+    check_error (this->my_double_array_success_, "double array");
+    check_error (this->my_float_array_success_, "float array");
+    check_error (this->my_boolean_array_success_, "boolean array");
+    check_error (this->my_octet_array_success_, "octet array");
+
+    check_error (this->my_float_sequence_success_, "float sequence");
+    check_error (this->my_double_sequence_success_, "double sequence");
+    check_error (this->my_bar_struct_success_, "bar struct");
+    check_error (this->my_bar_array_success_, "bar array");
+    check_error (this->my_bar_array_2_success_, "array in array");
+    check_error (this->my_sequence_array_success_, "sequence in array");
+    check_error (this->my_bar_struct_array_success_, "bar array in struct");
+    check_error (this->my_baz_struct_success_, "baz struct");
+    check_error (this->my_string_sequence_success_, "string sequence");
+    check_error (this->my_string_sequence_2_success_, "sequence in sequence");
+    check_error (this->my_array_sequence_success_, "array in sequence");
+    check_error (this->my_bounded_string_success_, "fixed string");
+    check_error (this->my_variable_string_success_, "variable string");
+    check_error (this->supported_short_success_, "supported short");
+    check_error (this->my_struct_struct_success_, "nested struct");
   }
 
   void
