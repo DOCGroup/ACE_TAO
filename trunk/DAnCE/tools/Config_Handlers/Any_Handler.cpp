@@ -48,7 +48,7 @@ namespace DAnCE
                            ACE_TEXT (" dynany: %C\n"),
                            ex._info ().c_str ()));
           throw Config_Error (ACE_TEXT (""),
-                              ACE_TEXT ("CORBA Exception while extracting into dynany\n"));
+                              ACE_TEXT ("CORBA Exception while extracting into dynany"));
         }
       catch (Config_Error &ex)
         {
@@ -56,7 +56,7 @@ namespace DAnCE
         }
       catch (...)
         {
-          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Caught error whilst parsing XML into Any\n"));
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Caught error whilst parsing XML into Any"));
         }
     }
 

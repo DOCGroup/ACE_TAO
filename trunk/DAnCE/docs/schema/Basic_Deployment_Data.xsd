@@ -63,16 +63,14 @@
         <xsd:element name="value" type="Deployment:ValueType"/>
         <xsd:element name="sequence" type="Deployment:SequenceType"/>
         <xsd:element name="alias" type="Deployment:AliasType"/>
+        <xsd:element name="array" type="Deployment:ArrayType"/>
       </xsd:choice>
 
 <!--
 @@ not supported now..
-
       <xsd:element name="objref" type="Deployment:ObjrefType"/>
       <xsd:element name="boundedString" type="Deployment:BoundedStringType"/>
       <xsd:element name="fixed" type="Deployment:FixedType"/>
-      <xsd:element name="array" type="Deployment:ArrayType"/>
-
       <xsd:element name="union" type="Deployment:UnionType"/>
 -->
     </xsd:sequence>
@@ -160,6 +158,13 @@
     <xsd:sequence>
       <xsd:element name="name" type="xsd:string"/>
       <xsd:element name="value" type="Deployment:DataValue"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ArrayType">
+    <xsd:sequence>
+      <xsd:element name="length" type="xsd:unsignedInt" />
+      <xsd:element name="elementType" type="Deployment:DataType"/>
     </xsd:sequence>
   </xsd:complexType>
 
