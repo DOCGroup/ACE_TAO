@@ -8,13 +8,6 @@
  * please contact the current XSC maintainer:
  *             Will Otte <wotte@dre.vanderbilt.edu>
  */
-
-// Fix for Borland compilers, which seem to have a broken
-// <string> include.
-#ifdef __BORLANDC__
-# include <string.h>
-#endif
-
 #include "Basic_Deployment_Data.hpp"
 
 namespace DAnCE
@@ -33,7 +26,7 @@ namespace DAnCE
 
     IdRef::
     IdRef (IdRef const& s)
-      : ::XSCRT::Type (),
+    : ::XSCRT::Type (),
     href_ (s.href_.get () ? new ::XMLSchema::string< ACE_TCHAR > (*s.href_) : 0),
     idref_ (s.idref_.get () ? new ::XMLSchema::IDREF< ACE_TCHAR > (*s.idref_) : 0),
     regulator__ ()
@@ -45,11 +38,14 @@ namespace DAnCE
     IdRef& IdRef::
     operator= (IdRef const& s)
     {
-      if (s.href_.get ()) href (*(s.href_));
-      else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
+      if (&s != this)
+      {
+        if (s.href_.get ()) href (*(s.href_));
+        else href_ = ::std::auto_ptr< ::XMLSchema::string< ACE_TCHAR > > (0);
 
-      if (s.idref_.get ()) idref (*(s.idref_));
-      else idref_ = ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > (0);
+        if (s.idref_.get ()) idref (*(s.idref_));
+        else idref_ = ::std::auto_ptr< ::XMLSchema::IDREF< ACE_TCHAR > > (0);
+      }
 
       return *this;
     }
@@ -110,8 +106,7 @@ namespace DAnCE
       return *idref_;
     }
 
-    ::XSCRT::Type* IdRef::
-    idref_ptr ()
+    ::XSCRT::Type* IdRef::idref_ptr ()
     {
         std::basic_string<ACE_TCHAR> temp (idref().id());
       return this->get_idref(temp.c_str());
@@ -184,6 +179,7 @@ namespace DAnCE
     value_ (s.value_.get () ? new ::DAnCE::Config_Handlers::ValueType (*s.value_) : 0),
     sequence_ (s.sequence_.get () ? new ::DAnCE::Config_Handlers::SequenceType (*s.sequence_) : 0),
     alias_ (s.alias_.get () ? new ::DAnCE::Config_Handlers::AliasType (*s.alias_) : 0),
+    array_ (s.array_.get () ? new ::DAnCE::Config_Handlers::ArrayType (*s.array_) : 0),
     id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
     regulator__ ()
     {
@@ -193,41 +189,50 @@ namespace DAnCE
       if (value_.get ()) value_->container (this);
       if (sequence_.get ()) sequence_->container (this);
       if (alias_.get ()) alias_->container (this);
+      if (array_.get ()) array_->container (this);
       if (id_.get ()) id_->container (this);
     }
 
     DataType& DataType::
     operator= (DataType const& s)
     {
-      kind (*s.kind_);
+      if (&s != this)
+      {
+        kind (*s.kind_);
 
-      if (s.enum__.get ())
-        enum_ (*(s.enum__));
-      else
-        enum__.reset (0);
+        if (s.enum__.get ())
+          enum_ (*(s.enum__));
+        else
+          enum__.reset (0);
 
-      if (s.struct__.get ())
-        struct_ (*(s.struct__));
-      else
-        struct__.reset (0);
+        if (s.struct__.get ())
+          struct_ (*(s.struct__));
+        else
+          struct__.reset (0);
 
-      if (s.value_.get ())
-        value (*(s.value_));
-      else
-        value_.reset (0);
+        if (s.value_.get ())
+          value (*(s.value_));
+        else
+          value_.reset (0);
 
-      if (s.sequence_.get ())
-        sequence (*(s.sequence_));
-      else
-        sequence_.reset (0);
+        if (s.sequence_.get ())
+          sequence (*(s.sequence_));
+        else
+          sequence_.reset (0);
 
-      if (s.alias_.get ())
-        alias (*(s.alias_));
-      else
-        alias_.reset (0);
+        if (s.alias_.get ())
+          alias (*(s.alias_));
+        else
+          alias_.reset (0);
 
-      if (s.id_.get ()) id (*(s.id_));
-      else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
+        if (s.array_.get ())
+          array (*(s.array_));
+        else
+          array_.reset (0);
+
+        if (s.id_.get ()) id (*(s.id_));
+        else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
+      }
 
       return *this;
     }
@@ -395,6 +400,35 @@ namespace DAnCE
     // DataType
     //
     bool DataType::
+    array_p () const
+    {
+      return array_.get () != 0;
+    }
+
+    ::DAnCE::Config_Handlers::ArrayType const& DataType::
+    array () const
+    {
+      return *array_;
+    }
+
+    void DataType::
+    array (::DAnCE::Config_Handlers::ArrayType const& e)
+    {
+      if (array_.get ())
+      {
+        *array_ = e;
+      }
+
+      else
+      {
+        array_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::ArrayType > (new ::DAnCE::Config_Handlers::ArrayType (e));
+        array_->container (this);
+      }
+    }
+
+    // DataType
+    //
+    bool DataType::
     id_p () const
     {
       return id_.get () != 0;
@@ -464,35 +498,38 @@ namespace DAnCE
     DataValue& DataValue::
     operator= (DataValue const& s)
     {
-      short__ = s.short__;
+      if (&s != this)
+      {
+        short__ = s.short__;
 
-      long__ = s.long__;
+        long__ = s.long__;
 
-      ushort_ = s.ushort_;
+        ushort_ = s.ushort_;
 
-      ulong_ = s.ulong_;
+        ulong_ = s.ulong_;
 
-      float__ = s.float__;
+        float__ = s.float__;
 
-      double__ = s.double__;
+        double__ = s.double__;
 
-      boolean_ = s.boolean_;
+        boolean_ = s.boolean_;
 
-      octet_ = s.octet_;
+        octet_ = s.octet_;
 
-      enum__ = s.enum__;
+        enum__ = s.enum__;
 
-      string_ = s.string_;
+        string_ = s.string_;
 
-      longlong_ = s.longlong_;
+        longlong_ = s.longlong_;
 
-      ulonglong_ = s.ulonglong_;
+        ulonglong_ = s.ulonglong_;
 
-      longdouble_ = s.longdouble_;
+        longdouble_ = s.longdouble_;
 
-      element_ = s.element_;
+        element_ = s.element_;
 
-      member_ = s.member_;
+        member_ = s.member_;
+      }
 
       return *this;
     }
@@ -1104,11 +1141,14 @@ namespace DAnCE
     AliasType& AliasType::
     operator= (AliasType const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      typeId (*s.typeId_);
+        typeId (*s.typeId_);
 
-      elementType (*s.elementType_);
+        elementType (*s.elementType_);
+      }
 
       return *this;
     }
@@ -1190,11 +1230,14 @@ namespace DAnCE
     EnumType& EnumType::
     operator= (EnumType const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      typeId (*s.typeId_);
+        typeId (*s.typeId_);
 
-      member_ = s.member_;
+        member_ = s.member_;
+      }
 
       return *this;
     }
@@ -1298,11 +1341,14 @@ namespace DAnCE
     StructType& StructType::
     operator= (StructType const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      typeId (*s.typeId_);
+        typeId (*s.typeId_);
 
-      member_ = s.member_;
+        member_ = s.member_;
+      }
 
       return *this;
     }
@@ -1405,9 +1451,12 @@ namespace DAnCE
     StructMemberType& StructMemberType::
     operator= (StructMemberType const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      type (*s.type_);
+        type (*s.type_);
+      }
 
       return *this;
     }
@@ -1483,15 +1532,18 @@ namespace DAnCE
     ValueType& ValueType::
     operator= (ValueType const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      typeId (*s.typeId_);
+        typeId (*s.typeId_);
 
-      modifier (*s.modifier_);
+        modifier (*s.modifier_);
 
-      baseType (*s.baseType_);
+        baseType (*s.baseType_);
 
-      member_ = s.member_;
+        member_ = s.member_;
+      }
 
       return *this;
     }
@@ -1627,11 +1679,14 @@ namespace DAnCE
     ValueMemberType& ValueMemberType::
     operator= (ValueMemberType const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      visibility (*s.visibility_);
+        visibility (*s.visibility_);
 
-      type (*s.type_);
+        type (*s.type_);
+      }
 
       return *this;
     }
@@ -1710,9 +1765,12 @@ namespace DAnCE
     NamedValue& NamedValue::
     operator= (NamedValue const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      value (*s.value_);
+        value (*s.value_);
+      }
 
       return *this;
     }
@@ -1747,6 +1805,76 @@ namespace DAnCE
     }
 
 
+    // ArrayType
+    //
+
+    ArrayType::
+    ArrayType (::XMLSchema::unsignedInt const& length__,
+               ::DAnCE::Config_Handlers::DataType const& elementType__)
+    :
+    length_ (new ::XMLSchema::unsignedInt (length__)),
+    elementType_ (new ::DAnCE::Config_Handlers::DataType (elementType__)),
+    regulator__ ()
+    {
+      length_->container (this);
+      elementType_->container (this);
+    }
+
+    ArrayType::
+    ArrayType (ArrayType const& s)
+    :
+    ::XSCRT::Type (),
+    length_ (new ::XMLSchema::unsignedInt (*s.length_)),
+    elementType_ (new ::DAnCE::Config_Handlers::DataType (*s.elementType_)),
+    regulator__ ()
+    {
+      length_->container (this);
+      elementType_->container (this);
+    }
+
+    ArrayType& ArrayType::
+    operator= (ArrayType const& s)
+    {
+      if (&s != this)
+      {
+        length (*s.length_);
+
+        elementType (*s.elementType_);
+      }
+
+      return *this;
+    }
+
+
+    // ArrayType
+    //
+    ::XMLSchema::unsignedInt const& ArrayType::
+    length () const
+    {
+      return *length_;
+    }
+
+    void ArrayType::
+    length (::XMLSchema::unsignedInt const& e)
+    {
+      *length_ = e;
+    }
+
+    // ArrayType
+    //
+    ::DAnCE::Config_Handlers::DataType const& ArrayType::
+    elementType () const
+    {
+      return *elementType_;
+    }
+
+    void ArrayType::
+    elementType (::DAnCE::Config_Handlers::DataType const& e)
+    {
+      *elementType_ = e;
+    }
+
+
     // SequenceType
     //
 
@@ -1774,12 +1902,15 @@ namespace DAnCE
     SequenceType& SequenceType::
     operator= (SequenceType const& s)
     {
-      if (s.bound_.get ())
-        bound (*(s.bound_));
-      else
-        bound_.reset (0);
+      if (&s != this)
+      {
+        if (s.bound_.get ())
+          bound (*(s.bound_));
+        else
+          bound_.reset (0);
 
-      elementType (*s.elementType_);
+        elementType (*s.elementType_);
+      }
 
       return *this;
     }
@@ -1859,9 +1990,12 @@ namespace DAnCE
     Any& Any::
     operator= (Any const& s)
     {
-      type (*s.type_);
+      if (&s != this)
+      {
+        type (*s.type_);
 
-      value (*s.value_);
+        value (*s.value_);
+      }
 
       return *this;
     }
@@ -1926,9 +2060,12 @@ namespace DAnCE
     Property& Property::
     operator= (Property const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      value (*s.value_);
+        value (*s.value_);
+      }
 
       return *this;
     }
@@ -2030,13 +2167,16 @@ namespace DAnCE
     SatisfierProperty& SatisfierProperty::
     operator= (SatisfierProperty const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      kind (*s.kind_);
+        kind (*s.kind_);
 
-      dynamic (*s.dynamic_);
+        dynamic (*s.dynamic_);
 
-      value (*s.value_);
+        value (*s.value_);
+      }
 
       return *this;
     }
@@ -2128,11 +2268,14 @@ namespace DAnCE
     Resource& Resource::
     operator= (Resource const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      resourceType_ = s.resourceType_;
+        resourceType_ = s.resourceType_;
 
-      property_ = s.property_;
+        property_ = s.property_;
+      }
 
       return *this;
     }
@@ -2260,11 +2403,14 @@ namespace DAnCE
     Requirement& Requirement::
     operator= (Requirement const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      resourceType (*s.resourceType_);
+        resourceType (*s.resourceType_);
 
-      property_ = s.property_;
+        property_ = s.property_;
+      }
 
       return *this;
     }
@@ -2368,11 +2514,14 @@ namespace DAnCE
     ResourceDeploymentDescription& ResourceDeploymentDescription::
     operator= (ResourceDeploymentDescription const& s)
     {
-      requirementName (*s.requirementName_);
+      if (&s != this)
+      {
+        requirementName (*s.requirementName_);
 
-      resourceName (*s.resourceName_);
+        resourceName (*s.resourceName_);
 
-      property_ = s.property_;
+        property_ = s.property_;
+      }
 
       return *this;
     }
@@ -2482,22 +2631,25 @@ namespace DAnCE
     ArtifactDeploymentDescription& ArtifactDeploymentDescription::
     operator= (ArtifactDeploymentDescription const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      source_ = s.source_;
+        source_ = s.source_;
 
-      node (*s.node_);
+        node (*s.node_);
 
-      location_ = s.location_;
+        location_ = s.location_;
 
-      execParameter_ = s.execParameter_;
+        execParameter_ = s.execParameter_;
 
-      deployRequirement_ = s.deployRequirement_;
+        deployRequirement_ = s.deployRequirement_;
 
-      deployedResource_ = s.deployedResource_;
+        deployedResource_ = s.deployedResource_;
 
-      if (s.id_.get ()) id (*(s.id_));
-      else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
+        if (s.id_.get ()) id (*(s.id_));
+        else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
+      }
 
       return *this;
     }
@@ -2788,18 +2940,21 @@ namespace DAnCE
     MonolithicDeploymentDescription& MonolithicDeploymentDescription::
     operator= (MonolithicDeploymentDescription const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      source_ = s.source_;
+        source_ = s.source_;
 
-      artifact_ = s.artifact_;
+        artifact_ = s.artifact_;
 
-      execParameter_ = s.execParameter_;
+        execParameter_ = s.execParameter_;
 
-      deployRequirement_ = s.deployRequirement_;
+        deployRequirement_ = s.deployRequirement_;
 
-      if (s.id_.get ()) id (*(s.id_));
-      else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
+        if (s.id_.get ()) id (*(s.id_));
+        else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
+      }
 
       return *this;
     }
@@ -3070,13 +3225,16 @@ namespace DAnCE
     InstanceResourceDeploymentDescription& InstanceResourceDeploymentDescription::
     operator= (InstanceResourceDeploymentDescription const& s)
     {
-      resourceUsage (*s.resourceUsage_);
+      if (&s != this)
+      {
+        resourceUsage (*s.resourceUsage_);
 
-      requirementName (*s.requirementName_);
+        requirementName (*s.requirementName_);
 
-      resourceName (*s.resourceName_);
+        resourceName (*s.resourceName_);
 
-      property_ = s.property_;
+        property_ = s.property_;
+      }
 
       return *this;
     }
@@ -3209,25 +3367,28 @@ namespace DAnCE
     InstanceDeploymentDescription& InstanceDeploymentDescription::
     operator= (InstanceDeploymentDescription const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      node (*s.node_);
+        node (*s.node_);
 
-      source (*s.source_);
+        source (*s.source_);
 
-      implementation (*s.implementation_);
+        implementation (*s.implementation_);
 
-      configProperty_ = s.configProperty_;
+        configProperty_ = s.configProperty_;
 
-      deployedResource_ = s.deployedResource_;
+        deployedResource_ = s.deployedResource_;
 
-      if (s.deployedSharedResource_.get ())
-        deployedSharedResource (*(s.deployedSharedResource_));
-      else
-        deployedSharedResource_.reset (0);
+        if (s.deployedSharedResource_.get ())
+          deployedSharedResource (*(s.deployedSharedResource_));
+        else
+          deployedSharedResource_.reset (0);
 
-      if (s.id_.get ()) id (*(s.id_));
-      else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
+        if (s.id_.get ()) id (*(s.id_));
+        else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
+      }
 
       return *this;
     }
@@ -3511,26 +3672,29 @@ namespace DAnCE
     ComponentPortDescription& ComponentPortDescription::
     operator= (ComponentPortDescription const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      if (s.specificType_.get ())
-        specificType (*(s.specificType_));
-      else
-        specificType_.reset (0);
+        if (s.specificType_.get ())
+          specificType (*(s.specificType_));
+        else
+          specificType_.reset (0);
 
-      supportedType_ = s.supportedType_;
+        supportedType_ = s.supportedType_;
 
-      provider (*s.provider_);
+        provider (*s.provider_);
 
-      exclusiveProvider (*s.exclusiveProvider_);
+        exclusiveProvider (*s.exclusiveProvider_);
 
-      exclusiveUser (*s.exclusiveUser_);
+        exclusiveUser (*s.exclusiveUser_);
 
-      optional (*s.optional_);
+        optional (*s.optional_);
 
-      kind (*s.kind_);
+        kind (*s.kind_);
 
-      templateParam_ = s.templateParam_;
+        templateParam_ = s.templateParam_;
+      }
 
       return *this;
     }
@@ -3756,9 +3920,12 @@ namespace DAnCE
     ComponentPropertyDescription& ComponentPropertyDescription::
     operator= (ComponentPropertyDescription const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      type (*s.type_);
+        type (*s.type_);
+      }
 
       return *this;
     }
@@ -3818,7 +3985,10 @@ namespace DAnCE
     ComponentExternalPortEndpoint& ComponentExternalPortEndpoint::
     operator= (ComponentExternalPortEndpoint const& s)
     {
-      portName (*s.portName_);
+      if (&s != this)
+      {
+        portName (*s.portName_);
+      }
 
       return *this;
     }
@@ -3876,16 +4046,19 @@ namespace DAnCE
     PlanSubcomponentPortEndpoint& PlanSubcomponentPortEndpoint::
     operator= (PlanSubcomponentPortEndpoint const& s)
     {
-      portName (*s.portName_);
+      if (&s != this)
+      {
+        portName (*s.portName_);
 
-      if (s.provider_.get ())
-        provider (*(s.provider_));
-      else
-        provider_.reset (0);
+        if (s.provider_.get ())
+          provider (*(s.provider_));
+        else
+          provider_.reset (0);
 
-      kind (*s.kind_);
+        kind (*s.kind_);
 
-      instance (*s.instance_);
+        instance (*s.instance_);
+      }
 
       return *this;
     }
@@ -3996,16 +4169,19 @@ namespace DAnCE
     ExternalReferenceEndpoint& ExternalReferenceEndpoint::
     operator= (ExternalReferenceEndpoint const& s)
     {
-      location (*s.location_);
+      if (&s != this)
+      {
+        location (*s.location_);
 
-      provider (*s.provider_);
+        provider (*s.provider_);
 
-      if (s.portName_.get ())
-        portName (*(s.portName_));
-      else
-        portName_.reset (0);
+        if (s.portName_.get ())
+          portName (*(s.portName_));
+        else
+          portName_.reset (0);
 
-      supportedType_ = s.supportedType_;
+        supportedType_ = s.supportedType_;
+      }
 
       return *this;
     }
@@ -4143,13 +4319,16 @@ namespace DAnCE
     ConnectionResourceDeploymentDescription& ConnectionResourceDeploymentDescription::
     operator= (ConnectionResourceDeploymentDescription const& s)
     {
-      targetName (*s.targetName_);
+      if (&s != this)
+      {
+        targetName (*s.targetName_);
 
-      requirementName (*s.requirementName_);
+        requirementName (*s.requirementName_);
 
-      resourceName (*s.resourceName_);
+        resourceName (*s.resourceName_);
 
-      property_ = s.property_;
+        property_ = s.property_;
+      }
 
       return *this;
     }
@@ -4268,22 +4447,25 @@ namespace DAnCE
     PlanConnectionDescription& PlanConnectionDescription::
     operator= (PlanConnectionDescription const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      if (s.source_.get ())
-        source (*(s.source_));
-      else
-        source_.reset (0);
+        if (s.source_.get ())
+          source (*(s.source_));
+        else
+          source_.reset (0);
 
-      deployRequirement_ = s.deployRequirement_;
+        deployRequirement_ = s.deployRequirement_;
 
-      externalEndpoint_ = s.externalEndpoint_;
+        externalEndpoint_ = s.externalEndpoint_;
 
-      internalEndpoint_ = s.internalEndpoint_;
+        internalEndpoint_ = s.internalEndpoint_;
 
-      externalReference_ = s.externalReference_;
+        externalReference_ = s.externalReference_;
 
-      deployedResource_ = s.deployedResource_;
+        deployedResource_ = s.deployedResource_;
+      }
 
       return *this;
     }
@@ -4548,7 +4730,10 @@ namespace DAnCE
     ImplementationDependency& ImplementationDependency::
     operator= (ImplementationDependency const& s)
     {
-      requiredType (*s.requiredType_);
+      if (&s != this)
+      {
+        requiredType (*s.requiredType_);
+      }
 
       return *this;
     }
@@ -4596,11 +4781,14 @@ namespace DAnCE
     Capability& Capability::
     operator= (Capability const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      resourceType_ = s.resourceType_;
+        resourceType_ = s.resourceType_;
 
-      property_ = s.property_;
+        property_ = s.property_;
+      }
 
       return *this;
     }
@@ -4734,26 +4922,29 @@ namespace DAnCE
     ImplementationRequirement& ImplementationRequirement::
     operator= (ImplementationRequirement const& s)
     {
-      if (s.resourceUsage_.get ())
-        resourceUsage (*(s.resourceUsage_));
-      else
-        resourceUsage_.reset (0);
+      if (&s != this)
+      {
+        if (s.resourceUsage_.get ())
+          resourceUsage (*(s.resourceUsage_));
+        else
+          resourceUsage_.reset (0);
 
-      if (s.resourcePort_.get ())
-        resourcePort (*(s.resourcePort_));
-      else
-        resourcePort_.reset (0);
+        if (s.resourcePort_.get ())
+          resourcePort (*(s.resourcePort_));
+        else
+          resourcePort_.reset (0);
 
-      if (s.componentPort_.get ())
-        componentPort (*(s.componentPort_));
-      else
-        componentPort_.reset (0);
+        if (s.componentPort_.get ())
+          componentPort (*(s.componentPort_));
+        else
+          componentPort_.reset (0);
 
-      resourceType (*s.resourceType_);
+        resourceType (*s.resourceType_);
 
-      name (*s.name_);
+        name (*s.name_);
 
-      property_ = s.property_;
+        property_ = s.property_;
+      }
 
       return *this;
     }
@@ -4943,9 +5134,12 @@ namespace DAnCE
     SubcomponentPortEndpoint& SubcomponentPortEndpoint::
     operator= (SubcomponentPortEndpoint const& s)
     {
-      portName (*s.portName_);
+      if (&s != this)
+      {
+        portName (*s.portName_);
 
-      instance (*s.instance_);
+        instance (*s.instance_);
+      }
 
       return *this;
     }
@@ -5009,15 +5203,18 @@ namespace DAnCE
     AssemblyConnectionDescription& AssemblyConnectionDescription::
     operator= (AssemblyConnectionDescription const& s)
     {
-      name (*s.name_);
+      if (&s != this)
+      {
+        name (*s.name_);
 
-      deployRequirement_ = s.deployRequirement_;
+        deployRequirement_ = s.deployRequirement_;
 
-      internalEndpoint_ = s.internalEndpoint_;
+        internalEndpoint_ = s.internalEndpoint_;
 
-      externalEndpoint_ = s.externalEndpoint_;
+        externalEndpoint_ = s.externalEndpoint_;
 
-      externalReference_ = s.externalReference_;
+        externalReference_ = s.externalReference_;
+      }
 
       return *this;
     }
@@ -5245,9 +5442,12 @@ namespace DAnCE
     PlanLocality& PlanLocality::
     operator= (PlanLocality const& s)
     {
-      constraint (*s.constraint_);
+      if (&s != this)
+      {
+        constraint (*s.constraint_);
 
-      constrainedInstance_ = s.constrainedInstance_;
+        constrainedInstance_ = s.constrainedInstance_;
+      }
 
       return *this;
     }
@@ -5533,6 +5733,12 @@ namespace DAnCE
         {
           ::DAnCE::Config_Handlers::AliasType t (e);
           alias (t);
+        }
+
+        else if (n == ACE_TEXT("array"))
+        {
+          ::DAnCE::Config_Handlers::ArrayType t (e);
+          array (t);
         }
 
         else
@@ -5935,6 +6141,39 @@ namespace DAnCE
         {
           value_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataValue > (new ::DAnCE::Config_Handlers::DataValue (e));
           value_->container (this);
+        }
+
+        else
+        {
+        }
+      }
+    }
+
+    // ArrayType
+    //
+
+    ArrayType::
+    ArrayType (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == ACE_TEXT("length"))
+        {
+          length_ = ::std::auto_ptr< ::XMLSchema::unsignedInt > (new ::XMLSchema::unsignedInt (e));
+          length_->container (this);
+        }
+
+        else if (n == ACE_TEXT("elementType"))
+        {
+          elementType_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::DataType > (new ::DAnCE::Config_Handlers::DataType (e));
+          elementType_->container (this);
         }
 
         else
@@ -7397,6 +7636,20 @@ namespace DAnCE
 
       NamedValueTypeInfoInitializer NamedValueTypeInfoInitializer_;
 
+      struct ArrayTypeTypeInfoInitializer
+      {
+        ArrayTypeTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::ArrayType));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      ArrayTypeTypeInfoInitializer ArrayTypeTypeInfoInitializer_;
+
       struct SequenceTypeTypeInfoInitializer
       {
         SequenceTypeTypeInfoInitializer ()
@@ -7911,6 +8164,8 @@ namespace DAnCE
         else sequence_none (o);
         if (o.alias_p ()) alias (o);
         else alias_none (o);
+        if (o.array_p ()) array (o);
+        else array_none (o);
         if (o.id_p ()) id (o);
         else id_none (o);
         post (o);
@@ -7931,6 +8186,8 @@ namespace DAnCE
         else sequence_none (o);
         if (o.alias_p ()) alias (o);
         else alias_none (o);
+        if (o.array_p ()) array (o);
+        else array_none (o);
         if (o.id_p ()) id (o);
         else id_none (o);
         post (o);
@@ -8065,6 +8322,28 @@ namespace DAnCE
 
       void DataType::
       alias_none (Type const&)
+      {
+      }
+
+      void DataType::
+      array (Type& o)
+      {
+        dispatch (o.array ());
+      }
+
+      void DataType::
+      array (Type const& o)
+      {
+        dispatch (o.array ());
+      }
+
+      void DataType::
+      array_none (Type&)
+      {
+      }
+
+      void DataType::
+      array_none (Type const&)
       {
       }
 
@@ -10186,6 +10465,72 @@ namespace DAnCE
       }
 
       void NamedValue::
+      post (Type const&)
+      {
+      }
+
+      // ArrayType
+      //
+      //
+
+      void ArrayType::
+      traverse (Type& o)
+      {
+        pre (o);
+        length (o);
+        elementType (o);
+        post (o);
+      }
+
+      void ArrayType::
+      traverse (Type const& o)
+      {
+        pre (o);
+        length (o);
+        elementType (o);
+        post (o);
+      }
+
+      void ArrayType::
+      pre (Type&)
+      {
+      }
+
+      void ArrayType::
+      pre (Type const&)
+      {
+      }
+
+      void ArrayType::
+      length (Type& o)
+      {
+        dispatch (o.length ());
+      }
+
+      void ArrayType::
+      length (Type const& o)
+      {
+        dispatch (o.length ());
+      }
+
+      void ArrayType::
+      elementType (Type& o)
+      {
+        dispatch (o.elementType ());
+      }
+
+      void ArrayType::
+      elementType (Type const& o)
+      {
+        dispatch (o.elementType ());
+      }
+
+      void ArrayType::
+      post (Type&)
+      {
+      }
+
+      void ArrayType::
       post (Type const&)
       {
       }
@@ -15068,7 +15413,7 @@ namespace DAnCE
       void DataType::
       kind (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("kind"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("kind"), top_ ()));
         Traversal::DataType::kind (o);
         pop_ ();
       }
@@ -15076,7 +15421,7 @@ namespace DAnCE
       void DataType::
       enum_ (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("enum"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("enum"), top_ ()));
         Traversal::DataType::enum_ (o);
         pop_ ();
       }
@@ -15084,7 +15429,7 @@ namespace DAnCE
       void DataType::
       struct_ (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("struct"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("struct"), top_ ()));
         Traversal::DataType::struct_ (o);
         pop_ ();
       }
@@ -15092,7 +15437,7 @@ namespace DAnCE
       void DataType::
       value (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("value"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("value"), top_ ()));
         Traversal::DataType::value (o);
         pop_ ();
       }
@@ -15100,7 +15445,7 @@ namespace DAnCE
       void DataType::
       sequence (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("sequence"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("sequence"), top_ ()));
         Traversal::DataType::sequence (o);
         pop_ ();
       }
@@ -15108,8 +15453,16 @@ namespace DAnCE
       void DataType::
       alias (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("alias"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("alias"), top_ ()));
         Traversal::DataType::alias (o);
+        pop_ ();
+      }
+
+      void DataType::
+      array (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("array"), top_ ()));
+        Traversal::DataType::array (o);
         pop_ ();
       }
 
@@ -15146,7 +15499,7 @@ namespace DAnCE
       void DataValue::
       short_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("short"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("short"), top_ ()));
       }
 
       void DataValue::
@@ -15165,7 +15518,7 @@ namespace DAnCE
       void DataValue::
       long_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("long"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("long"), top_ ()));
       }
 
       void DataValue::
@@ -15184,7 +15537,7 @@ namespace DAnCE
       void DataValue::
       ushort_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("ushort"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("ushort"), top_ ()));
       }
 
       void DataValue::
@@ -15203,7 +15556,7 @@ namespace DAnCE
       void DataValue::
       ulong_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("ulong"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("ulong"), top_ ()));
       }
 
       void DataValue::
@@ -15222,7 +15575,7 @@ namespace DAnCE
       void DataValue::
       float_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("float"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("float"), top_ ()));
       }
 
       void DataValue::
@@ -15241,7 +15594,7 @@ namespace DAnCE
       void DataValue::
       double_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("double"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("double"), top_ ()));
       }
 
       void DataValue::
@@ -15260,7 +15613,7 @@ namespace DAnCE
       void DataValue::
       boolean_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("boolean"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("boolean"), top_ ()));
       }
 
       void DataValue::
@@ -15279,7 +15632,7 @@ namespace DAnCE
       void DataValue::
       octet_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("octet"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("octet"), top_ ()));
       }
 
       void DataValue::
@@ -15298,7 +15651,7 @@ namespace DAnCE
       void DataValue::
       enum_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("enum"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("enum"), top_ ()));
       }
 
       void DataValue::
@@ -15317,7 +15670,7 @@ namespace DAnCE
       void DataValue::
       string_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("string"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("string"), top_ ()));
       }
 
       void DataValue::
@@ -15336,7 +15689,7 @@ namespace DAnCE
       void DataValue::
       longlong_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("longlong"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("longlong"), top_ ()));
       }
 
       void DataValue::
@@ -15355,7 +15708,7 @@ namespace DAnCE
       void DataValue::
       ulonglong_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("ulonglong"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("ulonglong"), top_ ()));
       }
 
       void DataValue::
@@ -15374,7 +15727,7 @@ namespace DAnCE
       void DataValue::
       longdouble_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("longdouble"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("longdouble"), top_ ()));
       }
 
       void DataValue::
@@ -15393,7 +15746,7 @@ namespace DAnCE
       void DataValue::
       element_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("element"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("element"), top_ ()));
       }
 
       void DataValue::
@@ -15412,7 +15765,7 @@ namespace DAnCE
       void DataValue::
       member_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("member"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("member"), top_ ()));
       }
 
       void DataValue::
@@ -15452,7 +15805,7 @@ namespace DAnCE
       void AliasType::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::AliasType::name (o);
         pop_ ();
       }
@@ -15460,7 +15813,7 @@ namespace DAnCE
       void AliasType::
       typeId (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("typeId"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("typeId"), top_ ()));
         Traversal::AliasType::typeId (o);
         pop_ ();
       }
@@ -15468,7 +15821,7 @@ namespace DAnCE
       void AliasType::
       elementType (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("elementType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("elementType"), top_ ()));
         Traversal::AliasType::elementType (o);
         pop_ ();
       }
@@ -15497,7 +15850,7 @@ namespace DAnCE
       void EnumType::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::EnumType::name (o);
         pop_ ();
       }
@@ -15505,7 +15858,7 @@ namespace DAnCE
       void EnumType::
       typeId (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("typeId"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("typeId"), top_ ()));
         Traversal::EnumType::typeId (o);
         pop_ ();
       }
@@ -15513,7 +15866,7 @@ namespace DAnCE
       void EnumType::
       member_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("member"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("member"), top_ ()));
       }
 
       void EnumType::
@@ -15553,7 +15906,7 @@ namespace DAnCE
       void StructType::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::StructType::name (o);
         pop_ ();
       }
@@ -15561,7 +15914,7 @@ namespace DAnCE
       void StructType::
       typeId (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("typeId"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("typeId"), top_ ()));
         Traversal::StructType::typeId (o);
         pop_ ();
       }
@@ -15569,7 +15922,7 @@ namespace DAnCE
       void StructType::
       member_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("member"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("member"), top_ ()));
       }
 
       void StructType::
@@ -15609,7 +15962,7 @@ namespace DAnCE
       void StructMemberType::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::StructMemberType::name (o);
         pop_ ();
       }
@@ -15617,7 +15970,7 @@ namespace DAnCE
       void StructMemberType::
       type (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("type"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("type"), top_ ()));
         Traversal::StructMemberType::type (o);
         pop_ ();
       }
@@ -15646,7 +15999,7 @@ namespace DAnCE
       void ValueType::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::ValueType::name (o);
         pop_ ();
       }
@@ -15654,7 +16007,7 @@ namespace DAnCE
       void ValueType::
       typeId (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("typeId"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("typeId"), top_ ()));
         Traversal::ValueType::typeId (o);
         pop_ ();
       }
@@ -15662,7 +16015,7 @@ namespace DAnCE
       void ValueType::
       modifier (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("modifier"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("modifier"), top_ ()));
         Traversal::ValueType::modifier (o);
         pop_ ();
       }
@@ -15670,7 +16023,7 @@ namespace DAnCE
       void ValueType::
       baseType (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("baseType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("baseType"), top_ ()));
         Traversal::ValueType::baseType (o);
         pop_ ();
       }
@@ -15678,7 +16031,7 @@ namespace DAnCE
       void ValueType::
       member_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("member"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("member"), top_ ()));
       }
 
       void ValueType::
@@ -15718,7 +16071,7 @@ namespace DAnCE
       void ValueMemberType::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::ValueMemberType::name (o);
         pop_ ();
       }
@@ -15726,7 +16079,7 @@ namespace DAnCE
       void ValueMemberType::
       visibility (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("visibility"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("visibility"), top_ ()));
         Traversal::ValueMemberType::visibility (o);
         pop_ ();
       }
@@ -15734,7 +16087,7 @@ namespace DAnCE
       void ValueMemberType::
       type (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("type"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("type"), top_ ()));
         Traversal::ValueMemberType::type (o);
         pop_ ();
       }
@@ -15763,7 +16116,7 @@ namespace DAnCE
       void NamedValue::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::NamedValue::name (o);
         pop_ ();
       }
@@ -15771,8 +16124,45 @@ namespace DAnCE
       void NamedValue::
       value (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("value"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("value"), top_ ()));
         Traversal::NamedValue::value (o);
+        pop_ ();
+      }
+
+      // ArrayType
+      //
+      //
+
+      ArrayType::
+      ArrayType (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      ArrayType::
+      ArrayType ()
+      {
+      }
+
+      void ArrayType::
+      traverse (Type const& o)
+      {
+        Traversal::ArrayType::traverse (o);
+      }
+
+      void ArrayType::
+      length (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("length"), top_ ()));
+        Traversal::ArrayType::length (o);
+        pop_ ();
+      }
+
+      void ArrayType::
+      elementType (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("elementType"), top_ ()));
+        Traversal::ArrayType::elementType (o);
         pop_ ();
       }
 
@@ -15800,7 +16190,7 @@ namespace DAnCE
       void SequenceType::
       bound (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("bound"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("bound"), top_ ()));
         Traversal::SequenceType::bound (o);
         pop_ ();
       }
@@ -15808,7 +16198,7 @@ namespace DAnCE
       void SequenceType::
       elementType (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("elementType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("elementType"), top_ ()));
         Traversal::SequenceType::elementType (o);
         pop_ ();
       }
@@ -15837,7 +16227,7 @@ namespace DAnCE
       void Any::
       type (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("type"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("type"), top_ ()));
         Traversal::Any::type (o);
         pop_ ();
       }
@@ -15845,7 +16235,7 @@ namespace DAnCE
       void Any::
       value (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("value"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("value"), top_ ()));
         Traversal::Any::value (o);
         pop_ ();
       }
@@ -15874,7 +16264,7 @@ namespace DAnCE
       void Property::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::Property::name (o);
         pop_ ();
       }
@@ -15882,7 +16272,7 @@ namespace DAnCE
       void Property::
       value (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("value"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("value"), top_ ()));
         Traversal::Property::value (o);
         pop_ ();
       }
@@ -15952,7 +16342,7 @@ namespace DAnCE
       void SatisfierProperty::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::SatisfierProperty::name (o);
         pop_ ();
       }
@@ -15960,7 +16350,7 @@ namespace DAnCE
       void SatisfierProperty::
       kind (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("kind"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("kind"), top_ ()));
         Traversal::SatisfierProperty::kind (o);
         pop_ ();
       }
@@ -15968,7 +16358,7 @@ namespace DAnCE
       void SatisfierProperty::
       dynamic (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("dynamic"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("dynamic"), top_ ()));
         Traversal::SatisfierProperty::dynamic (o);
         pop_ ();
       }
@@ -15976,7 +16366,7 @@ namespace DAnCE
       void SatisfierProperty::
       value (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("value"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("value"), top_ ()));
         Traversal::SatisfierProperty::value (o);
         pop_ ();
       }
@@ -16005,7 +16395,7 @@ namespace DAnCE
       void Resource::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::Resource::name (o);
         pop_ ();
       }
@@ -16013,7 +16403,7 @@ namespace DAnCE
       void Resource::
       resourceType_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourceType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("resourceType"), top_ ()));
       }
 
       void Resource::
@@ -16032,7 +16422,7 @@ namespace DAnCE
       void Resource::
       property_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("property"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("property"), top_ ()));
       }
 
       void Resource::
@@ -16072,7 +16462,7 @@ namespace DAnCE
       void Requirement::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::Requirement::name (o);
         pop_ ();
       }
@@ -16080,7 +16470,7 @@ namespace DAnCE
       void Requirement::
       resourceType (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourceType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("resourceType"), top_ ()));
         Traversal::Requirement::resourceType (o);
         pop_ ();
       }
@@ -16088,7 +16478,7 @@ namespace DAnCE
       void Requirement::
       property_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("property"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("property"), top_ ()));
       }
 
       void Requirement::
@@ -16128,7 +16518,7 @@ namespace DAnCE
       void ResourceDeploymentDescription::
       requirementName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("requirementName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("requirementName"), top_ ()));
         Traversal::ResourceDeploymentDescription::requirementName (o);
         pop_ ();
       }
@@ -16136,7 +16526,7 @@ namespace DAnCE
       void ResourceDeploymentDescription::
       resourceName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourceName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("resourceName"), top_ ()));
         Traversal::ResourceDeploymentDescription::resourceName (o);
         pop_ ();
       }
@@ -16144,7 +16534,7 @@ namespace DAnCE
       void ResourceDeploymentDescription::
       property_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("property"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("property"), top_ ()));
       }
 
       void ResourceDeploymentDescription::
@@ -16184,7 +16574,7 @@ namespace DAnCE
       void ArtifactDeploymentDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::ArtifactDeploymentDescription::name (o);
         pop_ ();
       }
@@ -16192,7 +16582,7 @@ namespace DAnCE
       void ArtifactDeploymentDescription::
       source_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("source"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("source"), top_ ()));
       }
 
       void ArtifactDeploymentDescription::
@@ -16211,7 +16601,7 @@ namespace DAnCE
       void ArtifactDeploymentDescription::
       node (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("node"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("node"), top_ ()));
         Traversal::ArtifactDeploymentDescription::node (o);
         pop_ ();
       }
@@ -16219,7 +16609,7 @@ namespace DAnCE
       void ArtifactDeploymentDescription::
       location_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("location"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("location"), top_ ()));
       }
 
       void ArtifactDeploymentDescription::
@@ -16238,7 +16628,7 @@ namespace DAnCE
       void ArtifactDeploymentDescription::
       execParameter_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("execParameter"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("execParameter"), top_ ()));
       }
 
       void ArtifactDeploymentDescription::
@@ -16257,7 +16647,7 @@ namespace DAnCE
       void ArtifactDeploymentDescription::
       deployRequirement_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("deployRequirement"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("deployRequirement"), top_ ()));
       }
 
       void ArtifactDeploymentDescription::
@@ -16276,7 +16666,7 @@ namespace DAnCE
       void ArtifactDeploymentDescription::
       deployedResource_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("deployedResource"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("deployedResource"), top_ ()));
       }
 
       void ArtifactDeploymentDescription::
@@ -16325,7 +16715,7 @@ namespace DAnCE
       void MonolithicDeploymentDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::MonolithicDeploymentDescription::name (o);
         pop_ ();
       }
@@ -16333,7 +16723,7 @@ namespace DAnCE
       void MonolithicDeploymentDescription::
       source_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("source"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("source"), top_ ()));
       }
 
       void MonolithicDeploymentDescription::
@@ -16352,7 +16742,7 @@ namespace DAnCE
       void MonolithicDeploymentDescription::
       artifact_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("artifact"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("artifact"), top_ ()));
       }
 
       void MonolithicDeploymentDescription::
@@ -16371,7 +16761,7 @@ namespace DAnCE
       void MonolithicDeploymentDescription::
       execParameter_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("execParameter"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("execParameter"), top_ ()));
       }
 
       void MonolithicDeploymentDescription::
@@ -16390,7 +16780,7 @@ namespace DAnCE
       void MonolithicDeploymentDescription::
       deployRequirement_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("deployRequirement"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("deployRequirement"), top_ ()));
       }
 
       void MonolithicDeploymentDescription::
@@ -16479,7 +16869,7 @@ namespace DAnCE
       void InstanceResourceDeploymentDescription::
       resourceUsage (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourceUsage"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("resourceUsage"), top_ ()));
         Traversal::InstanceResourceDeploymentDescription::resourceUsage (o);
         pop_ ();
       }
@@ -16487,7 +16877,7 @@ namespace DAnCE
       void InstanceResourceDeploymentDescription::
       requirementName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("requirementName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("requirementName"), top_ ()));
         Traversal::InstanceResourceDeploymentDescription::requirementName (o);
         pop_ ();
       }
@@ -16495,7 +16885,7 @@ namespace DAnCE
       void InstanceResourceDeploymentDescription::
       resourceName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourceName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("resourceName"), top_ ()));
         Traversal::InstanceResourceDeploymentDescription::resourceName (o);
         pop_ ();
       }
@@ -16503,7 +16893,7 @@ namespace DAnCE
       void InstanceResourceDeploymentDescription::
       property_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("property"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("property"), top_ ()));
       }
 
       void InstanceResourceDeploymentDescription::
@@ -16543,7 +16933,7 @@ namespace DAnCE
       void InstanceDeploymentDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::InstanceDeploymentDescription::name (o);
         pop_ ();
       }
@@ -16551,7 +16941,7 @@ namespace DAnCE
       void InstanceDeploymentDescription::
       node (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("node"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("node"), top_ ()));
         Traversal::InstanceDeploymentDescription::node (o);
         pop_ ();
       }
@@ -16559,7 +16949,7 @@ namespace DAnCE
       void InstanceDeploymentDescription::
       source (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("source"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("source"), top_ ()));
         Traversal::InstanceDeploymentDescription::source (o);
         pop_ ();
       }
@@ -16567,7 +16957,7 @@ namespace DAnCE
       void InstanceDeploymentDescription::
       implementation (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("implementation"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("implementation"), top_ ()));
         Traversal::InstanceDeploymentDescription::implementation (o);
         pop_ ();
       }
@@ -16575,7 +16965,7 @@ namespace DAnCE
       void InstanceDeploymentDescription::
       configProperty_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("configProperty"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("configProperty"), top_ ()));
       }
 
       void InstanceDeploymentDescription::
@@ -16594,7 +16984,7 @@ namespace DAnCE
       void InstanceDeploymentDescription::
       deployedResource_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("deployedResource"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("deployedResource"), top_ ()));
       }
 
       void InstanceDeploymentDescription::
@@ -16613,7 +17003,7 @@ namespace DAnCE
       void InstanceDeploymentDescription::
       deployedSharedResource (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("deployedSharedResource"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("deployedSharedResource"), top_ ()));
         Traversal::InstanceDeploymentDescription::deployedSharedResource (o);
         pop_ ();
       }
@@ -16694,7 +17084,7 @@ namespace DAnCE
       void ComponentPortDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::ComponentPortDescription::name (o);
         pop_ ();
       }
@@ -16702,7 +17092,7 @@ namespace DAnCE
       void ComponentPortDescription::
       specificType (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("specificType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("specificType"), top_ ()));
         Traversal::ComponentPortDescription::specificType (o);
         pop_ ();
       }
@@ -16710,7 +17100,7 @@ namespace DAnCE
       void ComponentPortDescription::
       supportedType_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("supportedType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("supportedType"), top_ ()));
       }
 
       void ComponentPortDescription::
@@ -16729,7 +17119,7 @@ namespace DAnCE
       void ComponentPortDescription::
       provider (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("provider"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("provider"), top_ ()));
         Traversal::ComponentPortDescription::provider (o);
         pop_ ();
       }
@@ -16737,7 +17127,7 @@ namespace DAnCE
       void ComponentPortDescription::
       exclusiveProvider (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("exclusiveProvider"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("exclusiveProvider"), top_ ()));
         Traversal::ComponentPortDescription::exclusiveProvider (o);
         pop_ ();
       }
@@ -16745,7 +17135,7 @@ namespace DAnCE
       void ComponentPortDescription::
       exclusiveUser (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("exclusiveUser"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("exclusiveUser"), top_ ()));
         Traversal::ComponentPortDescription::exclusiveUser (o);
         pop_ ();
       }
@@ -16753,7 +17143,7 @@ namespace DAnCE
       void ComponentPortDescription::
       optional (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("optional"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("optional"), top_ ()));
         Traversal::ComponentPortDescription::optional (o);
         pop_ ();
       }
@@ -16761,7 +17151,7 @@ namespace DAnCE
       void ComponentPortDescription::
       kind (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("kind"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("kind"), top_ ()));
         Traversal::ComponentPortDescription::kind (o);
         pop_ ();
       }
@@ -16769,7 +17159,7 @@ namespace DAnCE
       void ComponentPortDescription::
       templateParam_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("templateParam"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("templateParam"), top_ ()));
       }
 
       void ComponentPortDescription::
@@ -16809,7 +17199,7 @@ namespace DAnCE
       void ComponentPropertyDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::ComponentPropertyDescription::name (o);
         pop_ ();
       }
@@ -16817,7 +17207,7 @@ namespace DAnCE
       void ComponentPropertyDescription::
       type (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("type"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("type"), top_ ()));
         Traversal::ComponentPropertyDescription::type (o);
         pop_ ();
       }
@@ -16846,7 +17236,7 @@ namespace DAnCE
       void ComponentExternalPortEndpoint::
       portName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("portName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("portName"), top_ ()));
         Traversal::ComponentExternalPortEndpoint::portName (o);
         pop_ ();
       }
@@ -16875,7 +17265,7 @@ namespace DAnCE
       void PlanSubcomponentPortEndpoint::
       portName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("portName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("portName"), top_ ()));
         Traversal::PlanSubcomponentPortEndpoint::portName (o);
         pop_ ();
       }
@@ -16883,7 +17273,7 @@ namespace DAnCE
       void PlanSubcomponentPortEndpoint::
       provider (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("provider"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("provider"), top_ ()));
         Traversal::PlanSubcomponentPortEndpoint::provider (o);
         pop_ ();
       }
@@ -16891,7 +17281,7 @@ namespace DAnCE
       void PlanSubcomponentPortEndpoint::
       kind (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("kind"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("kind"), top_ ()));
         Traversal::PlanSubcomponentPortEndpoint::kind (o);
         pop_ ();
       }
@@ -16899,7 +17289,7 @@ namespace DAnCE
       void PlanSubcomponentPortEndpoint::
       instance (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("instance"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("instance"), top_ ()));
         Traversal::PlanSubcomponentPortEndpoint::instance (o);
         pop_ ();
       }
@@ -16928,7 +17318,7 @@ namespace DAnCE
       void ExternalReferenceEndpoint::
       location (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("location"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("location"), top_ ()));
         Traversal::ExternalReferenceEndpoint::location (o);
         pop_ ();
       }
@@ -16936,7 +17326,7 @@ namespace DAnCE
       void ExternalReferenceEndpoint::
       provider (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("provider"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("provider"), top_ ()));
         Traversal::ExternalReferenceEndpoint::provider (o);
         pop_ ();
       }
@@ -16944,7 +17334,7 @@ namespace DAnCE
       void ExternalReferenceEndpoint::
       portName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("portName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("portName"), top_ ()));
         Traversal::ExternalReferenceEndpoint::portName (o);
         pop_ ();
       }
@@ -16952,7 +17342,7 @@ namespace DAnCE
       void ExternalReferenceEndpoint::
       supportedType_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("supportedType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("supportedType"), top_ ()));
       }
 
       void ExternalReferenceEndpoint::
@@ -16992,7 +17382,7 @@ namespace DAnCE
       void ConnectionResourceDeploymentDescription::
       targetName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("targetName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("targetName"), top_ ()));
         Traversal::ConnectionResourceDeploymentDescription::targetName (o);
         pop_ ();
       }
@@ -17000,7 +17390,7 @@ namespace DAnCE
       void ConnectionResourceDeploymentDescription::
       requirementName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("requirementName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("requirementName"), top_ ()));
         Traversal::ConnectionResourceDeploymentDescription::requirementName (o);
         pop_ ();
       }
@@ -17008,7 +17398,7 @@ namespace DAnCE
       void ConnectionResourceDeploymentDescription::
       resourceName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourceName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("resourceName"), top_ ()));
         Traversal::ConnectionResourceDeploymentDescription::resourceName (o);
         pop_ ();
       }
@@ -17016,7 +17406,7 @@ namespace DAnCE
       void ConnectionResourceDeploymentDescription::
       property_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("property"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("property"), top_ ()));
       }
 
       void ConnectionResourceDeploymentDescription::
@@ -17056,7 +17446,7 @@ namespace DAnCE
       void PlanConnectionDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::PlanConnectionDescription::name (o);
         pop_ ();
       }
@@ -17064,7 +17454,7 @@ namespace DAnCE
       void PlanConnectionDescription::
       source (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("source"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("source"), top_ ()));
         Traversal::PlanConnectionDescription::source (o);
         pop_ ();
       }
@@ -17072,7 +17462,7 @@ namespace DAnCE
       void PlanConnectionDescription::
       deployRequirement_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("deployRequirement"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("deployRequirement"), top_ ()));
       }
 
       void PlanConnectionDescription::
@@ -17091,7 +17481,7 @@ namespace DAnCE
       void PlanConnectionDescription::
       externalEndpoint_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("externalEndpoint"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("externalEndpoint"), top_ ()));
       }
 
       void PlanConnectionDescription::
@@ -17110,7 +17500,7 @@ namespace DAnCE
       void PlanConnectionDescription::
       internalEndpoint_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("internalEndpoint"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("internalEndpoint"), top_ ()));
       }
 
       void PlanConnectionDescription::
@@ -17129,7 +17519,7 @@ namespace DAnCE
       void PlanConnectionDescription::
       externalReference_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("externalReference"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("externalReference"), top_ ()));
       }
 
       void PlanConnectionDescription::
@@ -17148,7 +17538,7 @@ namespace DAnCE
       void PlanConnectionDescription::
       deployedResource_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("deployedResource"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("deployedResource"), top_ ()));
       }
 
       void PlanConnectionDescription::
@@ -17188,7 +17578,7 @@ namespace DAnCE
       void ImplementationDependency::
       requiredType (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("requiredType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("requiredType"), top_ ()));
         Traversal::ImplementationDependency::requiredType (o);
         pop_ ();
       }
@@ -17217,7 +17607,7 @@ namespace DAnCE
       void Capability::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::Capability::name (o);
         pop_ ();
       }
@@ -17225,7 +17615,7 @@ namespace DAnCE
       void Capability::
       resourceType_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourceType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("resourceType"), top_ ()));
       }
 
       void Capability::
@@ -17244,7 +17634,7 @@ namespace DAnCE
       void Capability::
       property_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("property"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("property"), top_ ()));
       }
 
       void Capability::
@@ -17284,7 +17674,7 @@ namespace DAnCE
       void ImplementationRequirement::
       resourceUsage (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourceUsage"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("resourceUsage"), top_ ()));
         Traversal::ImplementationRequirement::resourceUsage (o);
         pop_ ();
       }
@@ -17292,7 +17682,7 @@ namespace DAnCE
       void ImplementationRequirement::
       resourcePort (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourcePort"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("resourcePort"), top_ ()));
         Traversal::ImplementationRequirement::resourcePort (o);
         pop_ ();
       }
@@ -17300,7 +17690,7 @@ namespace DAnCE
       void ImplementationRequirement::
       componentPort (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("componentPort"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("componentPort"), top_ ()));
         Traversal::ImplementationRequirement::componentPort (o);
         pop_ ();
       }
@@ -17308,7 +17698,7 @@ namespace DAnCE
       void ImplementationRequirement::
       resourceType (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("resourceType"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("resourceType"), top_ ()));
         Traversal::ImplementationRequirement::resourceType (o);
         pop_ ();
       }
@@ -17316,7 +17706,7 @@ namespace DAnCE
       void ImplementationRequirement::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::ImplementationRequirement::name (o);
         pop_ ();
       }
@@ -17324,7 +17714,7 @@ namespace DAnCE
       void ImplementationRequirement::
       property_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("property"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("property"), top_ ()));
       }
 
       void ImplementationRequirement::
@@ -17364,7 +17754,7 @@ namespace DAnCE
       void SubcomponentPortEndpoint::
       portName (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("portName"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("portName"), top_ ()));
         Traversal::SubcomponentPortEndpoint::portName (o);
         pop_ ();
       }
@@ -17372,7 +17762,7 @@ namespace DAnCE
       void SubcomponentPortEndpoint::
       instance (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("instance"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("instance"), top_ ()));
         Traversal::SubcomponentPortEndpoint::instance (o);
         pop_ ();
       }
@@ -17401,7 +17791,7 @@ namespace DAnCE
       void AssemblyConnectionDescription::
       name (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("name"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("name"), top_ ()));
         Traversal::AssemblyConnectionDescription::name (o);
         pop_ ();
       }
@@ -17409,7 +17799,7 @@ namespace DAnCE
       void AssemblyConnectionDescription::
       deployRequirement_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("deployRequirement"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("deployRequirement"), top_ ()));
       }
 
       void AssemblyConnectionDescription::
@@ -17428,7 +17818,7 @@ namespace DAnCE
       void AssemblyConnectionDescription::
       internalEndpoint_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("internalEndpoint"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("internalEndpoint"), top_ ()));
       }
 
       void AssemblyConnectionDescription::
@@ -17447,7 +17837,7 @@ namespace DAnCE
       void AssemblyConnectionDescription::
       externalEndpoint_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("externalEndpoint"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("externalEndpoint"), top_ ()));
       }
 
       void AssemblyConnectionDescription::
@@ -17466,7 +17856,7 @@ namespace DAnCE
       void AssemblyConnectionDescription::
       externalReference_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("externalReference"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("externalReference"), top_ ()));
       }
 
       void AssemblyConnectionDescription::
@@ -17544,7 +17934,7 @@ namespace DAnCE
       void PlanLocality::
       constraint (Type const& o)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("constraint"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("constraint"), top_ ()));
         Traversal::PlanLocality::constraint (o);
         pop_ ();
       }
@@ -17552,7 +17942,7 @@ namespace DAnCE
       void PlanLocality::
       constrainedInstance_pre (Type const&)
       {
-        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT ("constrainedInstance"), top_ ()));
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("constrainedInstance"), top_ ()));
       }
 
       void PlanLocality::
