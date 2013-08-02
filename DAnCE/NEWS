@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.0 and DAnCE-1.2.1
 =======================================================
 
+. Extended DAnCE Config Handlers to support array
+
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.9 and DAnCE-1.2.0
 =======================================================
 
