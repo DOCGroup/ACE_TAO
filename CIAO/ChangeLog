@@ -1,3 +1,8 @@
+Fri Aug  2 06:25:59 UTC 2013  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fixed compile errors related to long doubles.
+
 Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo.idl:
@@ -6,7 +11,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
 
-          Added extended tests for array attributes. Expanded the 
+          Added extended tests for array attributes. Expanded the
           Bug_3769_Regression to test this. Added some more attributes
           to test more cases.
           Log:
@@ -23,13 +28,13 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Changes after review
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                         Fixed some faulty error logs.
-                  
+
                       * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
                         Removed commented out code.
-                  
+
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
                         Fixed logging.
 
@@ -39,7 +44,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Removed commented out code
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
 
               commit 9ee6750d39e778a291333c09ec5520add22ab102
@@ -49,7 +54,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
                   Fixed compile issues on windows by disabling the long double. Added
                   comments.
                   (refs #1551)
-                  
+
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
 
               commit 075179c1cdf06b39d53bddba009a32285e3bf7ad
@@ -59,7 +64,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
                   Documented why chars and long doubles are not supported.
                   Removed defaults in arguments of check_array.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
 
               commit 1c90d97e9afceeebad6a71fc5c879cf2d4839f28
@@ -68,7 +73,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Removed TODO list.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
 
               commit c781f16d4730a6f5a493fc7df52786d5ffb03f14
@@ -77,7 +82,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Layout changes.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -88,7 +93,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added a test for sequences in arrays.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -100,7 +105,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added a sequence of arrays to test.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -115,12 +120,12 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
                   double. This is a very tricky conversion and doesn't work in
                   combination with certain (versions of) compilers.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
                       * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
                         Removed long double checks
-                  
+
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
                         Don't assign the type code in case a long double. Added comments
                         above.
@@ -131,7 +136,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Updated todo list.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
 
               commit 4160bc932f390e837244eb800dea190f272bcb85
@@ -140,7 +145,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added a plain boolean attribute to test.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -152,7 +157,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added an octet and a long double as attribute to the Foo component.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -171,7 +176,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added checks on the array of octets.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
 
@@ -181,7 +186,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Enabled an array of octets.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
 
@@ -206,13 +211,13 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
               Date:   Tue Jul 30 15:58:29 2013 +0200
 
                   References issue #1551
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
                         Fixed compile issue
-                  
+
                       * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
                         Enabled long double test again.
-                  
+
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
@@ -225,7 +230,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
                   Added an array of booleans.
                   Added char and wstring arrays although these are not supported.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -236,14 +241,14 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
               Date:   Tue Jul 30 13:47:44 2013 +0200
 
                   References issue #1551
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
                       * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
                         Added float and longdouble arrays. Long double arrays do appear to
                         have errors.
-                  
+
                       * DAnCE/tools/Config_Handlers/Any_Handler.cpp:
                         Removed newline character in exception logging.
 
@@ -254,11 +259,11 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
                   Added an array of doubles. Skipped an array of chars since this is
                   not supported.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
                         Also layout changes
 
@@ -268,7 +273,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added (unsigned) short arrays
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -280,7 +285,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added a test for an array with unsigned long long values.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -295,7 +300,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
                   of the arrays are correct. This'll prevent multiple times the
                   same code.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -307,7 +312,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added a ulong array as test. Prepared the other basic types in arrays.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -319,7 +324,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Layout changes.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
 
               commit 756c6c355b7c89ba1b6cefcc91d7b5ee3d738748
@@ -328,7 +333,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added a sequence in sequence test.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -339,16 +344,16 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
               Date:   Mon Jul 29 16:51:29 2013 +0200
 
                   References issue #1551
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
                       * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
                         Added an array in array tests.
-                  
+
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
                         Fixed issues regarding array in arrays and sequences in arrays.
-                  
+
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
                         Fixed issues regarding sequences in sequences and arrays. Need to add
                         an extra test for this.
@@ -359,7 +364,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added test for a struct, containing one member which is an array of structs.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
@@ -372,7 +377,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
                   Enabled the check on an array of bar structs. Prepared the next
                   check as well.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
@@ -390,7 +395,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Renamed error_ postfix to success_.
                   (refs #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
 
@@ -399,10 +404,10 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
               Date:   Mon Jul 29 13:00:32 2013 +0200
 
                   References issue #1551
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo.idl:
                         String array contains 3 instead of 5 entries.
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
                         Improved naming of booleans by adding 'error_'.
@@ -413,7 +418,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Added test for arrays of strings.
                   (issue #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
                       * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
@@ -424,7 +429,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
                   Improved error logging in ccm_activate.
                   (issue #1551)
-                  
+
                       * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
 
               commit 8241a2b161d6e0b5d56b08aaf3626f46f78e4f98
@@ -515,7 +520,7 @@ Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.h:
                         Added.
-                  
+
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
                       * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc:
 
