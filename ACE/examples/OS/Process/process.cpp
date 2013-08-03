@@ -133,11 +133,11 @@ test_more (void)
 
   if (new_process.spawn (options) == -1)
     {
-      int error = ACE_OS::last_error ();
+      int const error_number = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p errno = %d.\n"),
                   ACE_TEXT ("test_more"),
-                  error));
+                  error_number));
     }
 
   ACE_exitcode status;
@@ -163,11 +163,11 @@ test_date (void)
   ACE_Process new_process;
   if (new_process.spawn (options) == -1)
     {
-      int error = ACE_OS::last_error ();
+      int const error_number = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p errno = %d.\n"),
                   ACE_TEXT ("test_date"),
-                  error));
+                  error_number));
       return;
     }
 
@@ -192,11 +192,11 @@ test_ls (void)
   ACE_Process new_process;
   if (new_process.spawn (options) == -1)
     {
-      int error = ACE_OS::last_error ();
+      int error_number = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p errno = %d.\n"),
                   ACE_TEXT ("test_ls"),
-                  error));
+                  error_number));
     }
 
   ACE_exitcode status;
@@ -218,11 +218,11 @@ test_wait (void)
   ACE_Process process1;
   if (process1.spawn (options) == -1)
     {
-      int error = ACE_OS::last_error ();
+      int const error_number = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p errno = %d.\n"),
                   ACE_TEXT ("test_ls"),
-                  error));
+                  error_number));
     }
 
   int result;
@@ -254,11 +254,11 @@ test_wait (void)
   ACE_Process process2;
   if (process2.spawn (options) == -1)
     {
-      int error = ACE_OS::last_error ();
+      int const error_number = ACE_OS::last_error ();
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p errno = %d.\n"),
                   ACE_TEXT ("test_ls"),
-                  error));
+                  error_number));
     }
 
   //FUZZ: disable check_for_lack_ACE_OS

@@ -1,3 +1,11 @@
+Sat Aug  3 19:13:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/OS/Process/process.cpp:
+          Renamed local variable to resolve scoreboard error
+
+        * tests/CDR_Array_Test.cpp:
+          Unicode logging fix
+
 Fri Aug  2 12:52:08 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
