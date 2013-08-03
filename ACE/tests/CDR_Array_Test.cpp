@@ -622,7 +622,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
             CDR_Test<T, H>::ttoh (cv, cs);
             ACE_ERROR((LM_ERROR,
                        ACE_TEXT ( "Wrong value at pos %d:" )
-                       ACE_TEXT ( " '%s' should be '%s'.\n" ),
+                       ACE_TEXT ( " '%C' should be '%C'.\n" ),
                        i, rs, cs));
             errors++;
             if (errors == maxerrors)
