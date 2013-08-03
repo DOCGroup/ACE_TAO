@@ -219,7 +219,8 @@ namespace CIAO_Foo_Impl
   ::CORBA::LongDouble
   Foo_exec_i::my_longdouble (void)
   {
-    return 0.0L;
+    CORBA::LongDouble ld;
+    return ld;
   }
 
   void
