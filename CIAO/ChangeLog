@@ -1,3 +1,8 @@
+Sat Aug  3 19:01:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Another fix for compile errors related to long doubles.
+
 Fri Aug  2 06:25:59 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo_exec.cpp:
