@@ -23,8 +23,8 @@
 //   TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory()
 //   "-SSLNoProtection
 //   -SSLAuthenticate SERVER_AND_CLIENT
-//   -SSLPrivateKey PEM:serverkey.pem
-//   -SSLCertificate PEM:servercert.pem"
+//   -SSLPrivateKey PEM:server_key.pem
+//   -SSLCertificate PEM:server_cert.pem"
 //
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 //
@@ -35,8 +35,8 @@
 // dynamic SSLIOP_Factory Service_Object *
 //   TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory()
 //   "-SSLAuthenticate NONE
-//   -SSLPrivateKey PEM:clientkey.pem
-//   -SSLCertificate PEM:clientcert.pem"
+//   -SSLPrivateKey PEM:client_key.pem
+//   -SSLCertificate PEM:client_cert.pem"
 //
 // static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 //

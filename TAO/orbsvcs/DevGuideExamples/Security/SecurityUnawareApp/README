@@ -54,8 +54,8 @@ The server's configuration is:
 #
 dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() \
 	"-SSLAuthenticate SERVER_AND_CLIENT	\
-	 -SSLPrivateKey PEM:serverkey.pem	\
-	 -SSLCertificate PEM:servercert.pem"
+	 -SSLPrivateKey PEM:server_key.pem	\
+	 -SSLCertificate PEM:server_cert.pem"
 
 static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 #
@@ -82,8 +82,8 @@ The server's configuration is:
 #
 dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() \
 	"-SSLAuthenticate SERVER_AND_CLIENT	\
-	 -SSLPrivateKey PEM:serverkey.pem	\
-	 -SSLCertificate PEM:servercert.pem"
+	 -SSLPrivateKey PEM:server_key.pem	\
+	 -SSLCertificate PEM:server_cert.pem"
 
 static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 #
@@ -97,8 +97,8 @@ The client's configuration is:
 #
 dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() \
 	"-SSLAuthenticate SERVER_AND_CLIENT	\
-	 -SSLPrivateKey PEM:serverkey.pem	\
-	 -SSLCertificate PEM:servercert.pem"
+	 -SSLPrivateKey PEM:server_key.pem	\
+	 -SSLCertificate PEM:server_cert.pem"
 
 static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 #
@@ -127,8 +127,8 @@ The server's configuration is:
 #
 dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() \
 	"-SSLAuthenticate SERVER_AND_CLIENT	\
-	 -SSLPrivateKey PEM:serverkey.pem	\
-	 -SSLCertificate PEM:servercert.pem"
+	 -SSLPrivateKey PEM:server_key.pem	\
+	 -SSLCertificate PEM:server_cert.pem"
 
 static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 #
@@ -142,8 +142,8 @@ The client's configuration is:
 #
 dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() \
 	"-SSLAuthenticate NONE			\
-	 -SSLPrivateKey PEM:serverkey.pem	\
-	 -SSLCertificate PEM:servercert.pem"
+	 -SSLPrivateKey PEM:server_key.pem	\
+	 -SSLCertificate PEM:server_cert.pem"
 
 static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
 #
