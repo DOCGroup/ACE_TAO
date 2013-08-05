@@ -1,6 +1,5 @@
-//
 // $Id$
-//
+
 #include "LongDoubleTest.h"
 #include "Global.h"
 

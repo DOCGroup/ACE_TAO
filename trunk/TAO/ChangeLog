@@ -1,3 +1,9 @@
+Mon Aug  5 06:25:19 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorManager.cpp:
+          Simplified some logging code to not trigger a false posivite
+          when compiling TAO without logging
+
 Wed Jul 31 17:39:26 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Impl.cpp:
