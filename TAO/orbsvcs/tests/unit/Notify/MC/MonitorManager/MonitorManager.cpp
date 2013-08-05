@@ -5,17 +5,6 @@
 #include "ace/Service_Repository.h"
 #include "ace/Thread_Manager.h"
 
-#if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
-
-void
-error (const char* msg)
-{
-  ACE_ERROR ((LM_ERROR, "%s\n", msg));
-  ACE_OS::exit (1);
-}
-
-#endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
-
 int
 ACE_TMAIN (int, ACE_TCHAR* argv[])
 {
@@ -25,7 +14,7 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
     {
       if (ACE_Service_Config::open (argv[0]) != 0)
         {
-          error ("Unable to load the TAO_MonitorAndControl");
+          ACE_ERROR_RETURN ((LM_ERROR, "Unable to load the TAO_MonitorAndControl\n"), 1);
         }
 
       // Run the service.
@@ -34,7 +23,7 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
                                                  &st);
       if (st == 0)
         {
-          error ("Failed to find the TAO_MonitorAndControl instance");
+          ACE_ERROR_RETURN ((LM_ERROR, "Failed to find the TAO_MonitorAndControl instance\n"), 1);
         }
 
       ACE_Service_Object* obj =
@@ -46,7 +35,7 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
     }
   catch (...)
     {
-      error ("Caught an unexpected exception type");
+      ACE_ERROR_RETURN ((LM_ERROR, "Caught an unexpected exception type\n"), 1);
     }
 #else /* ACE_HAS_MONITOR_FRAMEWORK==1 */
   ACE_UNUSED_ARG (argv);
