@@ -78,6 +78,7 @@ TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_1_to_5.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/examples/Hello/descriptors/run_5_to_5.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/examples/Quoter/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/examples/Shapes/descriptors/run_test.pl: DDS4CCM
+TAO/CIAO/connectors/dds4ccm/examples/ShapesContr/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/run_test.pl: DDS4CCM DDS4CCM_NDDS
 TAO/CIAO/connectors/dds4ccm/examples/Large_Deployment/descriptors/run_test.pl: DDS4CCM
 TAO/CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/descriptors/run_test.pl: DDS4CCM
