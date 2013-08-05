@@ -59,6 +59,7 @@ namespace CIAO_Foo_Impl
       my_empty_sequence_success_ (false),
       my_long_sequence_success_ (false),
       my_long_array_success_ (false),
+      my_ulong_array_success_ (false),
       my_longlong_array_success_ (false),
       my_ulonglong_array_success_ (false),
       my_short_array_success_ (false),
