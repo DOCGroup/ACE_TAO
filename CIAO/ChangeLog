@@ -1,3 +1,8 @@
+Mon Aug  5 06:13:27 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fixed coverity warning
+
 Mon Aug  5 06:08:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo_exec.cpp:
