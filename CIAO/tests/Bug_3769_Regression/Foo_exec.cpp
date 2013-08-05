@@ -220,6 +220,7 @@ namespace CIAO_Foo_Impl
   Foo_exec_i::my_longdouble (void)
   {
     CORBA::LongDouble ld;
+    ACE_CDR_LONG_DOUBLE_ASSIGNMENT (ld, 0.0);
     return ld;
   }
 
