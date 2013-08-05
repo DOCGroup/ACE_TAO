@@ -1,0 +1,74 @@
+// $Id$
+
+/**
+ * @file Shapes_Contr_Base.idl
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
+ */
+
+#ifndef SHAPES_CONTR_BASE_IDL
+#define SHAPES_CONTR_BASE_IDL
+
+
+#pragma ciao lem "../Base/Shapes_Contr_BaseE.idl"
+
+interface shape_attributes_get
+{
+  unsigned short max_size ();
+  unsigned short max_x ();
+  unsigned short max_y ();
+  boolean resize ();
+  unsigned long publish_rate ();
+};
+
+interface shape_attributes_set
+{
+  void max_size(in unsigned short ms);
+  void max_x(in unsigned short mx);
+  void max_y(in unsigned short my);
+  void resize(in boolean rs);
+  void publish_rate (in unsigned long pr);
+
+  void get_attr_values (out unsigned short max_size, out  unsigned short max_x, out unsigned short max_y, out  unsigned long publish_rate, out boolean resize);
+  void update_changes ();
+};
+
+interface shape_changes
+{
+  void pass_change_event();
+};
+
+struct shape_info
+{
+  string shape;
+  string color;
+  unsigned short size;
+  unsigned short posX;
+  unsigned short posY;
+};
+
+typedef sequence<shape_info> ShapeInfoSeq;
+
+interface shape_received
+{
+    unsigned short number_of_shapes();
+    ShapeInfoSeq get_info_shapes();
+};
+
+struct shape_aggr
+{
+  string shape;
+  string color;
+  unsigned long  number_of_shapes;
+  unsigned short last_size;
+  unsigned short last_posX;
+  unsigned short last_posY;
+};
+
+typedef sequence<shape_aggr> ShapeAggrSeq;
+
+interface shapes_aggregates
+{
+  ShapeAggrSeq get_aggr_shapes();
+};
+
+#endif

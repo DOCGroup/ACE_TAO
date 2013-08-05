@@ -1,3 +1,43 @@
+Mon Aug  5 10:20:27 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        *  connectors/dds4ccm/examples/ShapesContr:
+        *  connectors/dds4ccm/examples/ShapesContr/Connector:
+        *  connectors/dds4ccm/examples/ShapesContr/Connector/Shapes_Connector.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Connector/Shapes_Connector.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/Base:
+        *  connectors/dds4ccm/examples/ShapesContr/Base/Shapes_Contr_Base.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/Base/Shapes_Base.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Base/Shapes_Base.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/README:
+        *  connectors/dds4ccm/examples/ShapesContr/Sender:
+        *  connectors/dds4ccm/examples/ShapesContr/Sender/Shapes_Sender_exec.h:
+        *  connectors/dds4ccm/examples/ShapesContr/Sender/Shapes_Sender.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Sender/Shapes_Sender_exec.cpp:
+        *  connectors/dds4ccm/examples/ShapesContr/Sender/Shapes_Sender.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors:
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors/plan.cdp:
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors/plan_nopub.cdp:
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors/plan_nopub.xml:
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors/run_test.pl:
+        *  connectors/dds4ccm/examples/ShapesContr/ControllerR:
+        *  connectors/dds4ccm/examples/ShapesContr/ControllerR/Shapes_ControllerR.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/ControllerR/Shapes_ControllerR_exec.cpp:
+        *  connectors/dds4ccm/examples/ShapesContr/ontrollerR/Shapes_ControllerR.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/ControllerR/Shapes_ControllerR_exec.h:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller_exec.cpp:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller_exec.h:
+        *  connectors/dds4ccm/examples/ShapesContr/Receiver:
+        *  connectors/dds4ccm/examples/ShapesContr/Receiver/Shapes_Receiver_exec.h:
+        *  connectors/dds4ccm/examples/ShapesContr/Receiver/Shapes_Receiver.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Receiver/Shapes_Receiver_exec.cpp:
+        *  connectors/dds4ccm/examples/ShapesContr/Receiver/Shapes_Receiver.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/README:
+        Test where a controller componet starts and stops publishing of shapes and an 
+        other controller component aggregates the received samples and makes them available for the outside world. 
+      
 Mon Aug  5 06:13:27 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3769_Regression/Foo_exec.cpp:
