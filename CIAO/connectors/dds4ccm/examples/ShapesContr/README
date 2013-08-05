@@ -1,23 +1,23 @@
 $Id$
 
 This test uses a Controller component  to start and stop publishing of shapes by the Sender component.
-The Receiver component receives these samples and collects them. 
+The Receiver component receives these samples and collects them.
 The ControllerR component get the collected samples from the receiver and aggregates the samples, sort on color.
 The ControllerR component also provides a  CORBA port (interface) to get the aggregate samples.
 
 
 If the Controller attribute use_web_interface == false (as used in plan.cdp) , then the Controller component triggers the Sender
-to start publishing. 
+to start publishing.
 
-If the Controller attribute use_web_interface == true (default, if not set in deployment plan, as used in plan_no_pub.cdp), 
-then with the use of the Controller component provided CORBA port (interface) , an extern CORBA client , 
-by example a R2CORBA client,  can be used to change the attributes shape resizing, 
-shape max_size, shape max_x , shape max_y and publish_rate.  
+If the Controller attribute use_web_interface == true (default, if not set in deployment plan, as used in plan_no_pub.cdp),
+then with the use of the Controller component provided CORBA port (interface) , an extern CORBA client,
+by example a R2CORBA client,  can be used to change the attributes shape resizing,
+shape max_size, shape max_x , shape max_y and publish_rate.
 Starting and stopping of publishing can be controlled by the extern client, by setting publish_rate resp. greater then 0 or equal to 0.
-The CORBA port (interface) provided  by the ControllerR component can, for example,  be used by a R2CORBA client to get the aggregate samples, 
+The CORBA port (interface) provided  by the ControllerR component can, for example,  be used by a R2CORBA client to get the aggregate samples,
 which in turn can be used to show the received samples with a GUI.
 
 
-In plan.cdp there are used 3 Controller-, 3 Sender-, 3 Receiver- and 3 ControllerR- components for resp. a SQUARE,TRIANGLE and CIRCLE. 
+In plan.cdp there are used 3 Controller-, 3 Sender-, 3 Receiver- and 3 ControllerR- components for resp. a SQUARE,TRIANGLE and CIRCLE.
 In plan_nopub.cdp there are used 3 Controller-, 3 Sender-, 3 Receiver- and 3 ControllerR- components for resp. a SQUARE,
 TRIANGLE and CIRCLE, for the TRIANGLE there is an incompatible <reliability>, defined in the QoS file,  between Publisher and Subscriber.
