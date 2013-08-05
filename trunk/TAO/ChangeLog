@@ -1,3 +1,48 @@
+Mon Aug  5 14:25:16 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/MessengerClient.cpp:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/cacert.pem:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/client.conf:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/client_cert.pem:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/client_key.pem:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/server.conf:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/server_cert.pem:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/server_key.pem:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/MessengerClient.cpp:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/README:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/cacert.pem:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/client.conf:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/client1.conf:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/client_cert.pem:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/client_key.pem:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/server.conf:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/server1.conf:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/server_cert.pem:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/server_key.pem:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/README:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/cacert.pem:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/client.conf:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/client1.conf:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/client_cert.pem:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/client_key.pem:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/server.conf:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/server_cert.pem:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/server_key.pem:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/clientcert.pem:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/clientkey.pem:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/servercert.pem:
+        * orbsvcs/DevGuideExamples/Security/ParticipatingApp/serverkey.pem:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/clientcert.pem:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/clientkey.pem:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/servercert.pem:
+        * orbsvcs/DevGuideExamples/Security/PolicyControllingApp/serverkey.pem:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/clientcert.pem:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/clientkey.pem:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/servercert.pem:
+        * orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/serverkey.pem:
+          Certificates where expired, use now the certificates we also use
+          for the other orbsvcs security tests
+
 Mon Aug  5 06:25:19 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/unit/Notify/MC/MonitorManager/MonitorManager.cpp:
