@@ -1,3 +1,10 @@
+Tue Aug  6 08:00:27 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller_exec.cpp:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller_exec.h:
+        Missing files for test.
+
 Mon Aug  5 10:20:27 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         *  connectors/dds4ccm/examples/ShapesContr:
