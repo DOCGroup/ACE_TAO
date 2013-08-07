@@ -31,9 +31,9 @@ to run TAO on:<P>
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Solaris 9, 10 & 11, Windows XP/2003/Vista (Microsoft Visual C++ 7.1, 8.0, 9.0, and 10.0),
+    <td>Solaris 9, 10 & 11, Windows XP/2003/Vista (Microsoft Visual C++ 7.1, 8.0, 9.0, 10.0, and 11.0),
         Linux/Intel (Redhat,
-        Debian and SuSe), OpenVMS 8.3 IA64
+        Debian and SuSe), Embarcadero C++BuilderXE4, OpenVMS 8.3 IA64
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -204,7 +204,7 @@ If you are building TAO for a VxWorks target, please see the detailed
 instructions for building and installing ACE and TAO in <a
 href="../ACE/ACE-INSTALL.html#vxworks">$ACE_ROOT/ACE-INSTALL.html</a>.</p>
 <p>If you are building TAO for an Android target, please see the notes
-for building and installing ACE and TAO in <a 
+for building and installing ACE and TAO in <a
 href="../ACE-INSTALL.html#android">$ACE_ROOT/ACE-INSTALL.html</a>.</p>
 
     <P>Cross-compiling TAO is not much different than building it for a
@@ -561,8 +561,9 @@ quickly.
   commands:<p>
     <CODE> $ACE_ROOT/bin/mwc.pl TAO.mwc -type gnuace </CODE> <p>
    from <CODE> $TAO_ROOT </CODE> to generate GNUmakefiles. Use <CODE>
-  -type vc71 </CODE> or <CODE>-type vc8</CODE> to generate VC71 and
-  VC8 project and solution files.<p>
+  -type vc71 </CODE>  to generate VC71 project and solution files,
+  or <CODE>-type vc8</CODE> for VC8 project and solution files, or
+   <CODE>-type bmake</CODE> for Borland C++ make files.<p>
    <LI> Build ACE+TAO together in one shot. To do that please issue
   the following commands: <p>
   <CODE> $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc </CODE> <p>

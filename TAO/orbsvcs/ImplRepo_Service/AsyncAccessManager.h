@@ -64,7 +64,7 @@ enum AAM_Status
  * will have its own AAM instance.
  */
 
-class AsyncAccessManager
+class Locator_Export AsyncAccessManager
 {
  public:
   AsyncAccessManager (const Server_Info &info,

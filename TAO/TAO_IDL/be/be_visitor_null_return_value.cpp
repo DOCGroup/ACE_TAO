@@ -139,7 +139,7 @@ be_visitor_null_return_value::visit_sequence (be_sequence *node)
 int
 be_visitor_null_return_value::visit_string (be_string *node)
 {
-  if (node->width () == sizeof (char))
+  if (node->width () == (ssize_t) sizeof (char))
     {
       os_ << "static_cast<char *> (0)";
     }

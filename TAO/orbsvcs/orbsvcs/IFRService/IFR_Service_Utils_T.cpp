@@ -344,7 +344,7 @@ TAO_Port_Utils<T>::create_entry (const char *id,
   return T::_narrow (obj.in ());
 }
 
-#if defined (__BORLANDC__) && (__BORLANDC__ < 0x630)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x660)
 // Borland gives warnings about argument not used on the construct as used
 // for the other compilers. This has been reported to Borland, adding
 // a workaround to suppress these warnings so that the real important ones

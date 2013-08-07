@@ -42,10 +42,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          1);
       cdr.reset ();
 
-      if (!(cdr << ev0))
+      if (!(cdr << ev0.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "ERROR: cdr << ev1\n"),
+                             "ERROR: cdr << ev0\n"),
                             -1);
         }
 

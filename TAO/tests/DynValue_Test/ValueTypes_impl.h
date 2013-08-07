@@ -21,7 +21,7 @@ class BaseValue_impl : public virtual OBV_DynValue_Test::BaseValue,
 public:
   BaseValue_impl () {}
   BaseValue_impl (CORBA::UShort us1, CORBA::UShort us2)
-  :BaseValue (us1,us2) {}
+  : OBV_DynValue_Test::BaseValue (us1,us2) {}
   virtual ~BaseValue_impl ();
   virtual CORBA::ValueBase * _copy_value (void);
   virtual void print ();
@@ -42,7 +42,7 @@ class NestedValue_impl : public virtual OBV_DynValue_Test::NestedValue,
 public:
   NestedValue_impl () {}
   NestedValue_impl (CORBA::Short s1, CORBA::Short s2)
-  :NestedValue (s1,s2) {}
+  : OBV_DynValue_Test::NestedValue (s1,s2) {}
   virtual ~NestedValue_impl ();
   virtual CORBA::ValueBase * _copy_value (void);
 };
