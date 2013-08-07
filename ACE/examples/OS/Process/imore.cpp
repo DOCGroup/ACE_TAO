@@ -234,9 +234,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   options.command_line (executable);
   if (new_process.spawn (options) == -1)
     {
-      int error = ACE_OS::last_error ();
+      int const error_number = ACE_OS::last_error ();
       ACE_ERROR_RETURN ((LM_ERROR, "%p errno = %d.\n",
-                         "test_more", error), -1);
+                         "test_more", error_number), -1);
     }
 
   // write file to ACE_STDOUT.
