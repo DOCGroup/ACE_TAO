@@ -5,14 +5,12 @@
  *
  *  $Id$
  *
- *    This program tests the limits of the Windows CreateProcess
- *    environment buffer.
- *
+ * This program tests the limits of the Windows CreateProcess
+ * environment buffer.
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Process.h"
@@ -25,7 +23,7 @@ typedef void (*setenvfn_t) (const ACE_TCHAR *name, const ACE_TCHAR *value,
 
 void create_large_env (setenvfn_t setenv, void *ctx)
 {
-  static const size_t varsize = 1200;
+  static const size_t varsize = 1600;
   for (int i = 0; i < 26; i++)
     {
       char name[2] = { 'A', '\0' };
@@ -89,7 +87,7 @@ run_main (int, ACE_TCHAR*[])
       test_status = 1;
     }
 
-  //test inheriting a large env block with enable_unicode_environment
+  // Test inheriting a large env block with enable_unicode_environment
   ACE_Process_Options opts2 (1,
                              ACE_Process_Options::DEFAULT_COMMAND_LINE_BUF_LEN,
                              128 * 1024);

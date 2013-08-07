@@ -154,7 +154,7 @@ namespace ACE
 
     ACE::INet::ConnectionKey* ClientRequestHandler::HttpConnectionKey::duplicate () const
       {
-        ConnectionKey* k = 0;
+        ACE::INet::ConnectionKey* k = 0;
         if (this->proxy_connection_)
           {
             ACE_NEW_RETURN (k,

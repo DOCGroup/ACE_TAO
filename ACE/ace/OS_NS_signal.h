@@ -129,13 +129,9 @@ inline int ace_sigsuspend_helper (const sigset_t *s)
 struct ACE_Export siginfo_t
 {
   siginfo_t (ACE_HANDLE handle);
-  siginfo_t (ACE_HANDLE *handles);      // JCEJ 12/23/96
 
   /// Win32 HANDLE that has become signaled.
   ACE_HANDLE si_handle_;
-
-  /// Array of Win32 HANDLEs all of which have become signaled.
-  ACE_HANDLE *si_handles_;
 };
 # endif /* ACE_HAS_SIGINFO_T */
 

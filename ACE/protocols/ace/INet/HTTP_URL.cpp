@@ -24,26 +24,26 @@ namespace ACE
       }
 
     URL::URL ()
-      : URL_INetAuthBase (HTTP_PORT),
+      : ACE::INet::URL_INetAuthBase (HTTP_PORT),
         proxy_port_ (HTTP_PROXY_PORT)
       {
       }
 
     URL::URL (const ACE_CString& url_string)
-      : URL_INetAuthBase (HTTP_PORT),
+      : ACE::INet::URL_INetAuthBase (HTTP_PORT),
         proxy_port_ (HTTP_PROXY_PORT)
       {
         this->parse (url_string);
       }
 
     URL::URL (const URL& url)
-      : URL_INetAuthBase (0)
+      : ACE::INet::URL_INetAuthBase (0)
       {
         *this = url;
       }
 
     URL::URL (u_short port)
-      : URL_INetAuthBase (port),
+      : ACE::INet::URL_INetAuthBase (port),
         proxy_port_ (HTTP_PROXY_PORT)
       {
       }

@@ -30,7 +30,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 {
     // Auto ptr ensures that the driver memory is released
     // automatically.
-    THREAD_TIMER_QUEUE_TEST_DRIVER *tqtd;
+    THREAD_TIMER_QUEUE_TEST_DRIVER *tqtd = 0;
     ACE_NEW_RETURN (tqtd, Thread_Timer_Queue_Custom_Handler_Test, -1);
 
     auto_ptr <THREAD_TIMER_QUEUE_TEST_DRIVER> driver (tqtd);

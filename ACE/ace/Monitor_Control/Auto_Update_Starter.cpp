@@ -14,6 +14,10 @@ namespace ACE
 {
   namespace Monitor_Control
   {
+    Auto_Update_Starter::Auto_Update_Starter (void)
+    {
+    }
+
     int
     Auto_Update_Starter::svc (void)
     {

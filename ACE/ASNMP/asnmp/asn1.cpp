@@ -61,11 +61,11 @@
  *   of this object (i.e. the start of the next object).
  *  Returns 0 on any error.
  */
-u_char * asn1::parse_int( u_char *data,
-                              int *datalength,
-                              u_char *type,
-                              long int *intp,
-                              int intsize)
+u_char * asn1::parse_int(u_char *data,
+                         int *datalength,
+                         u_char *type,
+                         long int *intp,
+                         int intsize)
 {
   ACE_TRACE("asn1::parse_int");
   /*
@@ -75,7 +75,7 @@ u_char * asn1::parse_int( u_char *data,
   u_long            asn_length;
   long   value = 0;
 
-  if (intsize != sizeof (long)){
+  if (intsize != (int) sizeof (long)){
     ASNERROR("not long");
     return 0;
   }
@@ -127,7 +127,7 @@ u_char * asn1::parse_unsigned_int( u_char *data,
   u_long            asn_length;
   u_long value = 0;
 
-  if (intsize != sizeof (long)){
+  if (intsize != (int) sizeof (long)){
     ASNERROR("not long");
     return 0;
   }
@@ -180,7 +180,7 @@ u_char * asn1::build_int( u_char *data,
   long integer;
   u_long mask;
 
-  if (intsize != sizeof (long))
+  if (intsize != (int) sizeof (long))
     return 0;
   integer = *intp;
   /*
@@ -237,7 +237,7 @@ u_char * asn1::build_unsigned_int( u_char *data,
   u_long mask;
   int add_null_byte = 0;
 
-  if (intsize != sizeof (long))
+  if (intsize != (int) sizeof (long))
     return 0;
   integer = *intp;
   mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
@@ -851,7 +851,7 @@ u_char * asn1::parse_unsigned_int64(u_char *data,
   u_long low = 0, high = 0;
   int intsize = 4;
 
-  if (countersize != sizeof(struct counter64)){
+  if (countersize != (int) sizeof(struct counter64)){
     ASNERROR("not right size");
     return 0;
   }
@@ -911,7 +911,7 @@ u_char * asn1::build_unsigned_int64( u_char *data,
   int add_null_byte = 0;
   int intsize;
 
-  if (countersize != sizeof (struct counter64))
+  if (countersize != (int) sizeof (struct counter64))
     return 0;
   intsize = 8;
   low = cp->low;

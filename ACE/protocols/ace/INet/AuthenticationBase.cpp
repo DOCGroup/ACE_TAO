@@ -12,9 +12,17 @@ namespace ACE
 {
   namespace INet
   {
-    AuthenticationBase::~AuthenticationBase () {}
+    AuthenticationBase::~AuthenticationBase ()
+    {
+    }
 
-    AuthenticatorBase::~AuthenticatorBase () {}
+    AuthenticatorBase::AuthenticatorBase ()
+    {
+    }
+
+    AuthenticatorBase::~AuthenticatorBase ()
+    {
+    }
   }
 }
 

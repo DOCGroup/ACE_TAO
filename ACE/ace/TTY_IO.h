@@ -36,6 +36,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_TTY_IO : public ACE_DEV_IO
 {
 public:
+  ACE_TTY_IO (void);
+
   enum Control_Mode
   {
     SETPARAMS,              ///< Set control parameters.

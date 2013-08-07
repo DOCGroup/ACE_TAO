@@ -32,7 +32,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
 #else /* Do the ol' 2-read trick... */
   if (ACE_OS::read (this->get_handle (),
                     (char *) &recv_msg.len,
-                    sizeof recv_msg.len) != sizeof recv_msg.len)
+                    sizeof recv_msg.len) != (ssize_t) sizeof recv_msg.len)
     {
       return -1;
     }

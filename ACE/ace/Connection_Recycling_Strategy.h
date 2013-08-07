@@ -29,6 +29,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Connection_Recycling_Strategy
 {
 public:
+  ACE_Connection_Recycling_Strategy (void);
+
   /// Virtual Destructor
   virtual ~ACE_Connection_Recycling_Strategy (void);
 

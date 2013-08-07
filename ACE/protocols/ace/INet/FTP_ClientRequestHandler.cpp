@@ -68,7 +68,7 @@ namespace ACE
         const ACE_CString& realm,
         ACE_CString& user,
         ACE_CString& pw)
-      : AuthenticationBase (),
+      : ACE::INet::AuthenticationBase (),
         realm_ (realm),
         user_ (user),
         password_ (pw)

@@ -165,6 +165,9 @@ private:
 class ACE_Export ACE_Sig_Handlers : public ACE_Sig_Handler
 {
 public:
+  /// Default constructor
+  ACE_Sig_Handlers (void);
+
   // = Registration and removal methods.
   /**
    * Add a new ACE_Event_Handler and a new sigaction associated with

@@ -599,7 +599,7 @@ int IpAddress::resolve_to_address(const char *hostname, in_addr& quad_addr)
    ACE_OS::memset(&lookupResult, 0, sizeof(struct hostent));
    int loc_errno = 0;
    if (ACE_OS::gethostbyname_r( hostname, &lookupResult, buffer, &loc_errno)) {
-     if (lookupResult.h_length == sizeof(in_addr) &&
+     if (lookupResult.h_length == (int) sizeof(in_addr) &&
          lookupResult.h_addrtype == AF_INET) {
         ACE_OS::memcpy((void *) &quad_addr,
                        (void *) lookupResult.h_addr_list[0], sizeof(in_addr));
@@ -719,7 +719,7 @@ int Address_Iter::query_dns(const char *hostname)
   int loc_errno = 0;
   if (ACE_OS::gethostbyname_r( hostname, &lookupResult_, buffer_,
                                 &loc_errno)) {
-    if (lookupResult_.h_length == sizeof(IPV4LEN) &&
+    if (lookupResult_.h_length == (int) sizeof(IPV4LEN) &&
         lookupResult_.h_addrtype == AF_INET) {
       return 0;
     }
