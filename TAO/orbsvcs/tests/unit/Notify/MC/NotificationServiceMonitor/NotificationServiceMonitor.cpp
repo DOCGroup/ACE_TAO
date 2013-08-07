@@ -7,19 +7,6 @@
 
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
-#if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
-
-using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
-
-void
-error (const char* msg)
-{
-  ACE_ERROR ((LM_ERROR, "%s\n", msg));
-  ACE_OS::exit (1);
-}
-
-#endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
-
 int
 ACE_TMAIN (int, ACE_TCHAR*[])
 {
@@ -34,7 +21,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       if (reg == 0)
         {
-          error ("Monitor_Point_Registry::instance() failed");
+          ACE_ERROR_RETURN ((LM_ERROR, "Monitor_Point_Registry::instance() failed\n"), 1);
         }
 
       // This can vary with the platform, so to make the test more
@@ -52,7 +39,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       if (reg->add (s) == false)
         {
-          error ("clean Monitor_Point_Registry::add() failed");
+          ACE_ERROR_RETURN ((LM_ERROR, "clean Monitor_Point_Registry::add() failed\n"), 1);
         }
 
       /// Index for several FOR loops below.
@@ -70,7 +57,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       if (reg->add (s) == false)
         {
-          error ("second Monitor_Point_Registry::add() failed");
+          ACE_ERROR_RETURN ((LM_ERROR, "second Monitor_Point_Registry::add() failed\n"), 1);
         }
 
       for (i = 0; i < 10; ++i)
@@ -85,7 +72,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       if (reg->add (s) == false)
         {
-          error ("third Monitor_Point_Registry::add() failed");
+          ACE_ERROR_RETURN ((LM_ERROR, "third Monitor_Point_Registry::add() failed\n"), 1);
         }
 
       for (i = 0; i < 10; ++i)
@@ -100,8 +87,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       // We added 3 to whatever was there already.
       if (names == 0 || names->length () != start_size + 3)
         {
-          error ("get_statistic_names() returned "
-                 "the incorrect number of names");
+          ACE_ERROR_RETURN ((LM_ERROR, "get_statistic_names() returned the incorrect number of names\n"), 1);
         }
 
       CORBA::ULong index = start_size;
@@ -112,7 +98,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       if (num.count != 10)
         {
-          error ("get_statistic() returned the wrong data");
+          ACE_ERROR_RETURN ((LM_ERROR, "get_statistic() returned the wrong data\n"), 1);
         }
 
       Monitor::DataList_var data =
@@ -121,8 +107,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       // We added 3 monitors to whatever was there already.
       if (data.ptr () == 0 || data.in ().length () != start_size + 3)
         {
-          error ("get_statistics() returned the "
-                 "incorrect number of data elements");
+          ACE_ERROR_RETURN ((LM_ERROR, "get_statistics() returned the incorrect number of data elements\n"), 1);
         }
 
       index = start_size + 1;
@@ -130,7 +115,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       if (!ACE::is_equal (num.average, 4.5))
         {
-          error ("get_statistics() return the wrong data");
+          ACE_ERROR_RETURN ((LM_ERROR, "get_statistics() return the wrong data\n"), 1);
         }
 
       data = monitor.get_and_clear_statistics (*names);
@@ -138,8 +123,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       // We added 3 to whatever was there already.
       if (data.ptr () == 0 || data.in ().length () != start_size + 3)
         {
-          error ("get_and_clear_statistics() returned "
-                 "the incorrect number of data elements");
+          ACE_ERROR_RETURN ((LM_ERROR, "get_and_clear_statistics() returned the incorrect number of data elements\n"), 1);
         }
 
       // Skip the monitors not added by this test.
@@ -149,7 +133,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
           if (num.count == 0)
             {
-              error ("get_and_clear_statistics() failed");
+              ACE_ERROR_RETURN ((LM_ERROR, "get_and_clear_statistics() failed\n"), 1);
             }
         }
 
@@ -163,14 +147,14 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       if (s->count () != 0)
         {
-          error ("clear_statistics() did not clear the data");
+          ACE_ERROR_RETURN ((LM_ERROR, "clear_statistics() did not clear the data\n"), 1);
         }
 
       TAO_Singleton_Manager::instance ()->fini ();
     }
   catch (...)
     {
-      error ("Caught an unexpected exception type");
+      ACE_ERROR_RETURN ((LM_ERROR, "Caught an unexpected exception type\n"), 1);
     }
 
 #endif /* TAO_HAS_MONITOR_FRAMEWORK==1 */
