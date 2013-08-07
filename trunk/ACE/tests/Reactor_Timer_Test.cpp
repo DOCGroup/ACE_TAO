@@ -94,7 +94,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 
   if (current_count == long (ACE_MAX_TIMERS - 1))
     done = 1;
-  else if (the_count == ACE_MAX_TIMERS - 1)
+  else if (the_count == long (ACE_MAX_TIMERS - 1))
     {
       done = 1;
       return -1;

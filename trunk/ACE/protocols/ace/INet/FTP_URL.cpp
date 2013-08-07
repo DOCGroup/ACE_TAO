@@ -24,18 +24,18 @@ namespace ACE
       }
 
     URL::URL ()
-      : URL_INetAuthBase (FTP_PORT)
+      : ACE::INet::URL_INetAuthBase (FTP_PORT)
       {
       }
 
     URL::URL (const ACE_CString& url_string)
-      : URL_INetAuthBase (FTP_PORT)
+      : ACE::INet::URL_INetAuthBase (FTP_PORT)
       {
         this->parse (url_string);
       }
 
     URL::URL (const URL& url)
-      : URL_INetAuthBase (0)
+      : ACE::INet::URL_INetAuthBase (0)
       {
         *this = url;
       }

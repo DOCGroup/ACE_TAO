@@ -74,7 +74,7 @@ typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR> ACCEPTOR;
 typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
 
 // counter for connections
-static int connections = 0;
+static size_t connections = 0;
 
 // Use this to show down the process gracefully.
 static void
@@ -226,7 +226,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   // Store the initial value of the count in the file.
   if (ACE_OS::write (this->file_lock_.get_handle (),
                      (const void *) &count,
-                     sizeof count) != sizeof count)
+                     sizeof count) != (ssize_t) sizeof count)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("write")));
@@ -304,7 +304,7 @@ Counting_Service::read (void)
   if (ACE_OS::pread (OPTIONS::instance ()->file_lock ().get_handle (),
                      (void *) &count,
                      sizeof count,
-                     0) != sizeof count)
+                     0) != (ssize_t) sizeof count)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),
                        ACE_TEXT ("read")),
@@ -342,7 +342,7 @@ Counting_Service::inc (void)
   if (ACE_OS::pread (OPTIONS::instance ()->file_lock ().get_handle (),
                      (void *) &count,
                      sizeof count,
-                     0) != sizeof count)
+                     0) != (ssize_t) sizeof count)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),
                        ACE_TEXT ("read")),
@@ -357,7 +357,7 @@ Counting_Service::inc (void)
   if (ACE_OS::pwrite (OPTIONS::instance ()->file_lock ().get_handle (),
                       (const void *) &count,
                       sizeof count,
-                      0) != sizeof count)
+                      0) != (ssize_t) sizeof count)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),
                        ACE_TEXT ("write")),

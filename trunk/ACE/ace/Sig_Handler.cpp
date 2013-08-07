@@ -329,6 +329,10 @@ ACE_Sig_Handlers_Set::instance (int signum)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handlers)
 
+ACE_Sig_Handlers::ACE_Sig_Handlers (void)
+{
+}
+
 void
 ACE_Sig_Handlers::dump (void) const
 {

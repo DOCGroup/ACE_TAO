@@ -282,3 +282,7 @@ void Snmp::get_host_name(char* name, int len)
 Snmp_Result::~Snmp_Result()
 {
 }
+
+Snmp_Result::Snmp_Result()
+{
+}

@@ -55,6 +55,7 @@ class Snmp;
 class ASNMP_Export Snmp_Result
 {
   public:
+    Snmp_Result ();
     virtual ~Snmp_Result();
     virtual void result(Snmp *snmp, int result) = 0;
 };

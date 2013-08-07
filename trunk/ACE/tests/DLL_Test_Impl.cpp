@@ -113,6 +113,10 @@ static Static_Constructor_Test the_instance;
 
 // --------------------------------------------------------
 
+Child::Child (void)
+{
+}
+
 Child::~Child (void)
 {
 }

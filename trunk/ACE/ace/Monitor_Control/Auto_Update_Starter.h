@@ -45,6 +45,8 @@ namespace ACE
     class MONITOR_CONTROL_Export Auto_Update_Starter : public ACE_Task_Base
     {
     public:
+      Auto_Update_Starter (void);
+
       int svc (void);
     };
   }

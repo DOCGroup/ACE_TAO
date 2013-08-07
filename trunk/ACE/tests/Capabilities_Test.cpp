@@ -86,7 +86,7 @@ run_main (int, ACE_TCHAR *[])
 
 
   if (ACE_OS::write (fd, file_contents, sizeof(file_contents)) !=
-      sizeof(file_contents))
+      (ssize_t) sizeof(file_contents))
     {
       ACE_OS::unlink (config);
       ACE_OS::close (fd);

@@ -26,6 +26,10 @@ namespace
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_TTY_IO::ACE_TTY_IO (void)
+{
+}
+
 ACE_TTY_IO::Serial_Params::Serial_Params (void)
 {
   baudrate = 9600;

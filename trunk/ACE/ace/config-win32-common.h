@@ -134,7 +134,7 @@
 //  #endif
 
 // Define the special export macros needed to export symbols outside a dll
-#if !defined(__BORLANDC__) && (!defined (ACE_HAS_CUSTOM_EXPORT_MACROS) || (ACE_HAS_CUSTOM_EXPORT_MACROS == 0))
+#if !defined (ACE_HAS_CUSTOM_EXPORT_MACROS) || (ACE_HAS_CUSTOM_EXPORT_MACROS == 0)
 #if defined (ACE_HAS_CUSTOM_EXPORT_MACROS)
 #undef ACE_HAS_CUSTOM_EXPORT_MACROS
 #endif

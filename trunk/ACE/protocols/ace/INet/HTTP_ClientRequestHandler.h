@@ -190,7 +190,7 @@ namespace ACE
 
                     virtual u_long hash () const;
 
-                    virtual ConnectionKey* duplicate () const;
+                    virtual ACE::INet::ConnectionKey* duplicate () const;
 
                     bool is_proxy_connection () const;
 
@@ -199,7 +199,7 @@ namespace ACE
                     u_short proxy_target_port () const;
 
                   protected:
-                    virtual bool equal (const ConnectionKey& key) const;
+                    virtual bool equal (const ACE::INet::ConnectionKey& key) const;
 
                   private:
                     bool proxy_connection_;

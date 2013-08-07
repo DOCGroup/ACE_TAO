@@ -86,7 +86,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
             // send the request to the server (number of MiB in the next call)
             // Note: only use the sizeof and pointer to int on compatible
             //       platforms (i.e. little-endian/big-endian, data type size)
-            if (stream.send_n(&size, sizeof(size), &connTimeout) != sizeof(size)) {
+            if (stream.send_n(&size, sizeof(size), &connTimeout) != (ssize_t) sizeof(size)) {
                 ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to  send ")
                            ACE_TEXT ("request. (errno = %i: %m)\n"), ACE_ERRNO_GET));
                 throw 1;

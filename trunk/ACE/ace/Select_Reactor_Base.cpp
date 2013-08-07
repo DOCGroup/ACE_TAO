@@ -892,7 +892,7 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
   if (n > 0)
     {
       // Check to see if we've got a short read.
-      if (n != sizeof buffer)
+      if ((size_t)n != sizeof buffer)
         {
           ssize_t const remainder = sizeof buffer - n;
 

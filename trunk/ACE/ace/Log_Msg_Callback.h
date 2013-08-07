@@ -54,6 +54,9 @@ class ACE_Log_Record;
 class ACE_Export ACE_Log_Msg_Callback
 {
 public:
+  /// Default constructor
+  ACE_Log_Msg_Callback (void);
+
   /// No-op virtual destructor.
   virtual ~ACE_Log_Msg_Callback (void);
 

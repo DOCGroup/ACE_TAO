@@ -141,10 +141,9 @@ Process::parse_args (int argc, ACE_TCHAR* argv[])
 
 // Define a function to handle Ctrl+C to cleanly shut this down.
 
-static BOOL __stdcall
-ConsoleHandler (DWORD ctrlType)
+static BOOL WINAPI
+ConsoleHandler (DWORD /*ctrlType*/)
 {
-  ACE_UNUSED_ARG (ctrlType);
   SERVICE::instance ()->handle_control (SERVICE_CONTROL_STOP);
   return TRUE;
 }

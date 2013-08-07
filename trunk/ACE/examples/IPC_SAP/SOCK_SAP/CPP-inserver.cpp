@@ -90,7 +90,7 @@ twoway_server (void *arg)
                       "(%P|%t) reached end of input, connection closed by client\n"));
           break;
         }
-      else if (r_bytes != sizeof (ACE_INT32))
+      else if (r_bytes != (ssize_t) sizeof (ACE_INT32))
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) %p\n",
@@ -206,7 +206,7 @@ oneway_server (void *arg)
                       "(%P|%t) reached end of input, connection closed by client\n"));
           break;
         }
-      else if (r_bytes != sizeof (ACE_INT32))
+      else if (r_bytes != (ssize_t) sizeof (ACE_INT32))
         {
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) %p\n",

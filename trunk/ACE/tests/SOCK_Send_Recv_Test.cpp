@@ -196,7 +196,6 @@ client (void *arg)
   // case this tests only needs to be exercised if the socket is
   // non-blocking, so set that first.
 
-  ssize_t sent;
   char buff[Test3_Send_Size];
   if (-1 == cli_stream.enable (ACE_NONBLOCK))
     ACE_ERROR ((LM_ERROR,
@@ -205,8 +204,8 @@ client (void *arg)
   for (i = 0; i < Test3_Loops; ++i)
     {
       errno = 0;
-      sent = cli_stream.send_n (buff, sizeof (buff));
-      if (sent != sizeof (buff) && errno != 0)
+      ssize_t sent = cli_stream.send_n (buff, sizeof (buff));
+      if (sent != (ssize_t) sizeof (buff) && errno != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) Test 3, pass %d, sent %d, %p\n"),

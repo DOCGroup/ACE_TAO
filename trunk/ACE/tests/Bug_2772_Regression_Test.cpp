@@ -18,8 +18,6 @@
 #include "ace/Condition_Recursive_Thread_Mutex.h"
 #include "ace/Thread.h"
 
-
-
 class ThreadTest
 {
  public:
