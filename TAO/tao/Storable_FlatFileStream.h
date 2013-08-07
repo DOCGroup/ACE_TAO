@@ -74,6 +74,10 @@ namespace TAO
 
     virtual Storable_Base& operator >> (ACE_CString& str);
 
+    virtual Storable_Base& operator << (bool b);
+
+    virtual Storable_Base& operator >> (bool &b);
+
     virtual Storable_Base& operator << (int i);
 
     virtual Storable_Base& operator >> (int &i);

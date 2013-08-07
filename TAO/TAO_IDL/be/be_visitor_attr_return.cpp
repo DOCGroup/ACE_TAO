@@ -173,7 +173,7 @@ be_visitor_attr_return::visit_string (be_string *node)
   os_ << be_nl
       << "return "
       << "::CORBA::"
-      << (node->width () == sizeof (char) ? "" : "w")
+      << (node->width () == (ssize_t) sizeof (char) ? "" : "w")
       << "string_dup (" << this->attr_name_string_.c_str ()
       << ".in ());";
 

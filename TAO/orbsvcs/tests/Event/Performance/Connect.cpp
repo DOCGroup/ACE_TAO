@@ -325,7 +325,7 @@ ECC_Consumer::connect (
 
 void
 ECC_Consumer::dump_results (const ACE_TCHAR* name,
-                            ACE_UINT32 gsf)
+                            ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->connect_time_.dump_results (name, gsf);
   this->EC_Consumer::dump_results (name, gsf);
@@ -363,7 +363,7 @@ ECC_Supplier::connect (
 
 void
 ECC_Supplier::dump_results (const ACE_TCHAR* name,
-                            ACE_UINT32 gsf)
+                            ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->connect_time_.dump_results (name, gsf);
   this->EC_Supplier::dump_results (name, gsf);

@@ -21,6 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include /**/ "tao/TAO_Export.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -37,7 +39,7 @@ namespace TAO
  * Internal class, providing stack functionality for TAO_Queued_Data
  * objects.  Stack operations don't require memory allocation.
 */
-class Incoming_Message_Stack
+class TAO_Export Incoming_Message_Stack
 {
 public:
   /// default constructor, initiliazes empty stack.

@@ -47,8 +47,7 @@ public:
   /// Called when a POA needs to be created.
   virtual CORBA::Boolean unknown_adapter (
     PortableServer::POA_ptr parent,
-    const char *name
-  );
+    const char *name);
 
   void init(TAO_ServantBase * servant);
 private:

@@ -867,7 +867,7 @@ TAO::PG_Object_Group::initial_populate (void)
 
   if (this->get_membership_style () == PortableGroup::MEMB_INF_CTRL)
     {
-      PortableGroup::InitialNumberMembersValue initial_number_members =
+      PortableGroup::InitialNumberMembersValue const initial_number_members =
         this->get_initial_number_members ();
 
       if (this->members_.current_size () < initial_number_members)
@@ -882,9 +882,9 @@ TAO::PG_Object_Group::minimum_populate (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  if ( this->get_membership_style () == PortableGroup::MEMB_INF_CTRL )
+  if ( this->get_membership_style () == PortableGroup::MEMB_INF_CTRL)
     {
-      PortableGroup::MinimumNumberMembersValue minimum_number_members =
+      PortableGroup::MinimumNumberMembersValue const minimum_number_members =
         this->get_minimum_number_members ();
       if (members_.current_size () < minimum_number_members)
         {

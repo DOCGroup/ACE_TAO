@@ -1,3 +1,159 @@
+Wed Aug  7 07:05:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+        * TAO_IDL/ast/ast_string.cpp:
+        * TAO_IDL/be/be_visitor_attr_assign.cpp:
+        * TAO_IDL/be/be_visitor_attr_return.cpp:
+        * TAO_IDL/be/be_visitor_attr_setarg_type.cpp:
+        * TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO_IDL/include/ast_generator.h:
+        * orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.h:
+        * orbsvcs/ImplRepo_Service/Forwarder.h:
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+        * orbsvcs/orbsvcs/Trader/Trader.h:
+        * orbsvcs/tests/Event/Performance/Connect.h:
+        * orbsvcs/tests/Event/Performance/Connect.cpp:
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * tao/Dynamic_TP/DTP_POA_Strategy.h:
+        * tao/Incoming_Message_Stack.h:
+        * tao/Storable_Base.h:
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+        * tests/Bug_3941_Regression/test.cpp:
+        * tests/DynValue_Test/ValueTypes_impl.h:
+          Revived port for Embarcadero C++ Builder XE4 using bcc32
+
+          commit b9b08e429017ccd9cd15bafb5b7d461e6c7706e2
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Thu Aug 1 20:36:14 2013 +0200
+
+                    Fixed incorrect debug message and ambiguity with bcc32
+                  * TAO/tests/Bug_3941_Regression/test.cpp:
+
+          commit 4f5ded317dc59e12c207fcd455f544f9bbe98ccb
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Jul 26 19:17:37 2013 +0200
+
+                    Attempt to fix another warning for bcc32
+                  * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+
+          commit 7d233fdff45268cff9a63b2ea9811db480879876
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Jul 26 19:02:18 2013 +0200
+
+                    Use ACE_ERROR for errors
+                  * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+
+          commit 80f12a906ef66c5ee6ca32413957a0b629c9e7b5
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Jul 26 18:57:10 2013 +0200
+
+                    Fix bcc32 errors
+                  * TAO/tests/DynValue_Test/ValueTypes_impl.h:
+
+          commit 30383d0b1622590e379895e3e887966a8de8bec1
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Jul 26 18:50:36 2013 +0200
+
+                    Fix bcc32 warnings
+                  * TAO/orbsvcs/tests/Event/Performance/Connect.cpp:
+                  * TAO/orbsvcs/tests/Event/Performance/Connect.h:
+
+          commit 4c955236d2f702c921875576892ad9fc51b99d36
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Thu Jul 25 10:03:27 2013 +0200
+
+                    Use const/fix C++BuilderXE 4 warning
+                  * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp:
+                  * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+
+          commit d1c1e8c357ae8d0925e64e824f319e8877812bdb
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Thu Jul 25 10:00:53 2013 +0200
+
+                    Added bool insert/extract operators to resolve ambiguity
+                    errors with C++BuilderXE 4
+                  * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.h:
+                  * TAO/tao/Storable_Base.h:
+                  * TAO/tao/Storable_FlatFileStream.cpp:
+                  * TAO/tao/Storable_FlatFileStream.h:
+
+          commit 9da7d71b26fc5168b187df1856bda3cb3a642c23
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed Jul 24 15:13:38 2013 +0200
+
+                    Fix link problem with bcc32
+                  * TAO/orbsvcs/orbsvcs/Trader/Trader.h:
+
+          commit c2eb6f4e43a00cd9f91c149390780d9804cc784e
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed Jul 24 15:12:44 2013 +0200
+
+                    Fix link problems with bcc32
+                  * TAO/orbsvcs/ImplRepo_Service/Adapter_Activator.h:
+                  * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+                  * TAO/orbsvcs/ImplRepo_Service/AsyncListManager.h:
+                  * TAO/orbsvcs/ImplRepo_Service/Forwarder.h:
+
+          commit 16854b8d9821d87fc8e7334d8fb59cf5596e8310
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed Jul 24 15:07:53 2013 +0200
+
+                    Fix bcc32 problems because of signature mismatches
+                  * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
+                  * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+                  * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h:
+
+          commit ee6893a5065cbe56df7e4ab5aae31971ddf0edf3
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Jun 28 19:34:00 2013 +0200
+
+                    Updated borland instructions
+                  * TAO/TAO-INSTALL.html:
+
+          commit 1ac4a32bb448852cf8c1f2fa90d6b14f1fd2d339
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Jun 28 19:28:01 2013 +0200
+
+                    Fix conversion warnings for bcc32:
+                  * TAO/TAO_IDL/ast/ast_string.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_attr_assign.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_attr_return.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_attr_setarg_type.cpp:
+                  * TAO/TAO_IDL/be/be_visitor_null_return_value.cpp:
+
+          commit 52a0b8c3e3afa65cb4a136027c4211ada9cbaf70
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Jun 28 09:15:11 2013 +0200
+
+                    Attempt to fix some bcc32 errors
+                  * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+                  * TAO/tao/Dynamic_TP/DTP_POA_Strategy.h:
+                  * TAO/tao/Incoming_Message_Stack.h:
+
+          commit c257a73968b54bcab543cb5f2f436f16a9d63df8
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Thu Jun 27 11:13:25 2013 +0200
+
+                    Cleanup port
+                  * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+                  * TAO/orbsvcs/orbsvcs/Trader/Trader.h:
+
+          commit cf41d073ee048ba51a7cda72ef1b24c78b73201f
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed May 29 08:33:56 2013 +0200
+
+                    Added default constructor
+                  * TAO/TAO_IDL/include/ast_generator.h:
+
 Wed Aug  7 06:52:43 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/AnyTypeCode/TypeCode_Case_Enum_T.cpp:

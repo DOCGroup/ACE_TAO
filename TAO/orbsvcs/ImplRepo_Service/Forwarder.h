@@ -27,6 +27,7 @@
 
 #include "tao/LocalObject.h"
 #include "ImR_ResponseHandler.h"
+#include "locator_export.h"
 
 class ImR_Locator_i;
 
@@ -56,7 +57,7 @@ public:
                         CORBA::ORB_ptr orb,
                         TAO_AMH_DSI_Response_Handler_ptr resp);
 
-  ~ImR_DSI_ResponseHandler (void);
+  virtual ~ImR_DSI_ResponseHandler (void);
 
   void send_ior (const char *pior);
   void send_exception (CORBA::Exception *ex);
@@ -73,7 +74,7 @@ private:
 
 //---------------------------------------------------------------------------
 /**
- * @class ImR_Forwarder:
+ * @class ImR_Forwarder
  *
  * @brief Implementation Repository Forwarder for AMH
  *
@@ -82,7 +83,7 @@ private:
  * AMH to ensure the handling thread is never blocked waiting for an upcall
  * if one is necessary
  */
-class ImR_DSI_Forwarder : public virtual TAO_DynamicImplementation
+class Locator_Export ImR_DSI_Forwarder : public virtual TAO_DynamicImplementation
 {
 public:
   ImR_DSI_Forwarder (ImR_Locator_i& imr_impl);
