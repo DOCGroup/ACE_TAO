@@ -123,7 +123,7 @@ be_visitor_attr_setarg_type::visit_sequence (be_sequence *)
 int
 be_visitor_attr_setarg_type::visit_string (be_string *node)
 {
-  if (node->width () == sizeof (char))
+  if (node->width () == (ssize_t) sizeof (char))
     {
       os_ << "const char * ";
     }

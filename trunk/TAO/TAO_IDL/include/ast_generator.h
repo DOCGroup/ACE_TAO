@@ -99,6 +99,7 @@ class AST_Finder;
 class TAO_IDL_FE_Export AST_Generator
 {
 public:
+  AST_Generator (void) {}
 
   virtual ~AST_Generator (void) {}
 
@@ -107,8 +108,7 @@ public:
   // Create a node representing a predefined type.
   virtual AST_PredefinedType *create_predefined_type (
       AST_PredefinedType::PredefinedType t,
-      UTL_ScopedName *n
-    );
+      UTL_ScopedName *n);
 
   // Create a node representing a module.
   virtual AST_Module *create_module (UTL_Scope *s,
@@ -125,15 +125,13 @@ public:
       AST_Interface **inherits_flat,
       long n_inherits_flat,
       bool is_local,
-      bool is_abstract
-    );
+      bool is_abstract);
 
   // Create a node representing a forward declaration of an interface.
   virtual AST_InterfaceFwd *create_interface_fwd (
       UTL_ScopedName *n,
       bool is_local,
-      bool is_abstract
-    );
+      bool is_abstract);
 
   // Create a node representing a valuetype.
   virtual AST_ValueType *create_valuetype (
@@ -148,14 +146,12 @@ public:
       AST_Type *supports_concrete,
       bool is_abstract,
       bool is_truncatable,
-      bool is_custom
-    );
+      bool is_custom);
 
   // Create a node representing a forward declaration of a valuetype.
   virtual AST_ValueTypeFwd *create_valuetype_fwd (
       UTL_ScopedName *n,
-      bool is_abstract
-    );
+      bool is_abstract);
 
   // Create a node representing an eventtype.
   virtual AST_EventType *create_eventtype (
@@ -170,14 +166,12 @@ public:
       AST_Type *supports_concrete,
       bool is_abstract,
       bool is_truncatable,
-      bool is_custom
-    );
+      bool is_custom);
 
   // Create a node representing a forward declaration of an eventtype.
   virtual AST_EventTypeFwd *create_eventtype_fwd (
       UTL_ScopedName *n,
-      bool is_abstract
-    );
+      bool is_abstract);
 
   // Create a node representing a component.
   virtual AST_Component *create_component (
@@ -186,13 +180,11 @@ public:
       AST_Type **supports_list,
       long n_supports,
       AST_Interface **supports_flat,
-      long n_supports_flat
-    );
+      long n_supports_flat);
 
   // Create a node representing a forward declaration of a component.
   virtual AST_ComponentFwd *create_component_fwd (
-      UTL_ScopedName *n
-    );
+      UTL_ScopedName *n);
 
   // Create a node representing a component home.
   virtual AST_Home *create_home (
@@ -203,22 +195,19 @@ public:
       AST_Type **support_lists,
       long n_supports,
       AST_Interface **supports_flat,
-      long n_supports_flat
-    );
+      long n_supports_flat);
 
   // Create a node representing an exception.
   virtual AST_Exception *create_exception (
       UTL_ScopedName *n,
       bool is_local,
-      bool is_abstract
-    );
+      bool is_abstract);
 
   // Create a node representing a structure.
   virtual AST_Structure *create_structure (
       UTL_ScopedName *n,
       bool is_local,
-      bool is_abstract
-    );
+      bool is_abstract);
 
   // Create a node representing a forward declaration of a structure.
   virtual AST_StructureFwd *create_structure_fwd (UTL_ScopedName *n);
@@ -234,8 +223,7 @@ public:
       AST_Operation::Flags fl,
       UTL_ScopedName *n,
       bool is_local,
-      bool is_abstract
-    );
+      bool is_abstract);
 
   // Create a node representing a field in a structure, exception or
   // union.
@@ -248,8 +236,7 @@ public:
   virtual AST_Argument *create_argument (
       AST_Argument::Direction d,
       AST_Type *ft,
-      UTL_ScopedName *n
-    );
+      UTL_ScopedName *n);
 
   // Create a node representing an attribute.
   virtual AST_Attribute *create_attribute (
@@ -257,8 +244,7 @@ public:
       AST_Type *ft,
       UTL_ScopedName *n,
       bool is_local,
-      bool is_abstract
-    );
+      bool is_abstract);
 
   // Create a node representing a union.
   virtual AST_Union *create_union (AST_ConcreteType *dt,
@@ -273,8 +259,7 @@ public:
   virtual AST_UnionBranch *create_union_branch (
       UTL_LabelList *ll,
       AST_Type *ft,
-      UTL_ScopedName *n
-    );
+      UTL_ScopedName *n);
 
   // Create a node representing a label on a union branch.
   virtual AST_UnionLabel *create_union_label (AST_UnionLabel::UnionLabel ul,

@@ -79,7 +79,6 @@ namespace TAO
       /// TRUE if this is primary member
       CORBA::Boolean is_primary_;
 
-
       ///////////////
       // Methods
 

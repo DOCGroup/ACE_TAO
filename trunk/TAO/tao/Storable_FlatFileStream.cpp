@@ -345,9 +345,28 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
 }
 
 TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator << (bool b)
+{
+  int const n = ACE_OS::fprintf (this->fl_, "%d\n", b);
+  if (n < 0)
+    this->throw_on_write_error (badbit);
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator >> (bool &b)
+{
+  Storable_State state = this->rdstate ();
+  read_integer ("%d\n", b, state, fl_);
+  this->throw_on_read_error (state);
+
+  return *this;
+}
+
+TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (int i)
 {
-  int n = ACE_OS::fprintf (this->fl_, "%d\n", i);
+  int const n = ACE_OS::fprintf (this->fl_, "%d\n", i);
   if (n < 0)
     this->throw_on_write_error (badbit);
   return *this;
@@ -366,7 +385,7 @@ TAO::Storable_FlatFileStream::operator >> (int &i)
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (unsigned int i)
 {
-  int n = ACE_OS::fprintf (this->fl_, "%u\n", i);
+  int const n = ACE_OS::fprintf (this->fl_, "%u\n", i);
   if (n < 0)
     this->throw_on_write_error (badbit);
   return *this;
@@ -385,12 +404,12 @@ TAO::Storable_FlatFileStream::operator >> (unsigned int &i)
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)
 {
-  unsigned int length = cdr.total_length ();
+  unsigned int const length = cdr.total_length ();
   *this << length;
   for (const ACE_Message_Block *i = cdr.begin (); i != 0; i = i->cont ())
     {
       const char *bytes = i->rd_ptr ();
-      size_t len = i->length ();
+      size_t const len = i->length ();
       this->write (len, bytes);
     }
   return *this;

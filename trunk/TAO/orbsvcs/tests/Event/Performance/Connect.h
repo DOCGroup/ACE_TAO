@@ -93,7 +93,7 @@ public:
       const RtecEventChannelAdmin::ConsumerQOS& qos,
       int shutdown_event_type);
   virtual void dump_results (const ACE_TCHAR* name,
-                             ACE_UINT32 global_scale_factor);
+                             ACE_High_Res_Timer::global_scale_factor_type global_scale_factor);
 
 private:
   ACE_Throughput_Stats connect_time_;
@@ -114,7 +114,7 @@ public:
       const RtecEventChannelAdmin::SupplierQOS& qos,
       int shutdown_event_type);
   virtual void dump_results (const ACE_TCHAR* name,
-                             ACE_UINT32 global_scale_factor);
+                             ACE_High_Res_Timer::global_scale_factor_type global_scale_factor);
 
 private:
   ACE_Throughput_Stats connect_time_;

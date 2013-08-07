@@ -102,8 +102,4 @@ class ListLiveListener : public LiveListener
   bool started_;
 };
 
-
-
-
-
 #endif /* IMR_ASYNCACCESSMANGER_H_  */
