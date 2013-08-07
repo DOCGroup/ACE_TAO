@@ -1471,7 +1471,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
     return -1;
 
 #     if defined (ACE_WIN32)
-  if (result != WAIT_OBJECT_0)
+  if (result != (int)WAIT_OBJECT_0)
     {
       switch (result)
         {
@@ -1654,7 +1654,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
     return -1;
 
-  if (result != WAIT_OBJECT_0)
+  if (result != (int)WAIT_OBJECT_0)
     {
       switch (result)
         {
@@ -1746,7 +1746,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   if (ACE_OS::thread_mutex_unlock (&cv->waiters_lock_) != 0)
     return -1;
 
-  if (result != WAIT_OBJECT_0)
+  if (result != (int)WAIT_OBJECT_0)
     {
       switch (result)
         {

@@ -64,6 +64,7 @@ public:
 class ACE_Svc_Export Child : public Parent
 {
 public:
+  Child (void);
 
   virtual ~Child (void);
 

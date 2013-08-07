@@ -76,7 +76,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         // Note: only use the sizeof and pointer to int on compatible
         //       platforms (i.e. little-endian/big-endian, data type size)
         if (mStream.recv_n(&mDataSize, sizeof(mDataSize),
-                &connTimeout) != sizeof(mDataSize)) {
+                &connTimeout) != (ssize_t) sizeof(mDataSize)) {
           ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to receive ")
                      ACE_TEXT ("request. (errno = %i: %m)\n"), ACE_ERRNO_GET));
             INVOCATION_RETURN(-1);

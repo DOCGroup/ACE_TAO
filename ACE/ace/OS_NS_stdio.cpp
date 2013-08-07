@@ -37,8 +37,11 @@ extern "C" BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace ACE_OS
+{
+
 void
-ACE_OS::ace_flock_t::dump (void) const
+ace_flock_t::dump (void) const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_OS_TRACE ("ACE_OS::ace_flock_t::dump");
@@ -66,6 +69,8 @@ ACE_OS::ace_flock_t::dump (void) const
 # endif /* 0 */
 #endif /* ACE_HAS_DUMP */
 }
+
+} /* namespace ACE_OS */
 
 /*****************************************************************************/
 

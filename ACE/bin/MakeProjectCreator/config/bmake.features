@@ -1,0 +1,7 @@
+// bmake.features,v 1.2 2005/08/22 09:35:48 jwillemsen Exp
+
+ssl=0
+qos=1
+cidl=0
+rwho=0
+sctp=0

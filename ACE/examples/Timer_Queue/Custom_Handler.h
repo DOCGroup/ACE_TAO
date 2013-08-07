@@ -19,6 +19,7 @@
 #define _CUSTOM_HANDLER_H_
 
 #include "ace/Timer_Queue.h"
+#include "ace/svc_export.h"
 
 /**
  * @class Custom_Handler
@@ -60,7 +61,7 @@ class Custom_Handler
 ///
 /// Implements the Upcall interface used by the ACE_Timer_Queue, specifically for the
 /// IWorkItem interface.
-class Custom_Handler_Upcall
+class ACE_Svc_Export Custom_Handler_Upcall
 {
     public:
 

@@ -41,6 +41,9 @@ namespace ACE
       : public ACE_Event_Handler
     {
     public:
+      /// Default constructor
+      Monitor_Point_Auto_Query ();
+
       /// Override of ACE base class method.
       virtual int handle_timeout (const ACE_Time_Value& current,
                                   const void* monitor_query);

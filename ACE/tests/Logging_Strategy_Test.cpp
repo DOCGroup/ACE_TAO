@@ -65,7 +65,7 @@
 ACE_TCHAR const *
 cdecl_decoration (ACE_TCHAR const *func_name)
 {
-#if defined (__BORLANDC__)
+#if defined(ACE_NEEDS_DL_UNDERSCORE)
   static ACE_TCHAR decorated_func_name[10*1024];
   ACE_OS::sprintf (decorated_func_name,
                    ACE_TEXT ("_%s"),
@@ -73,7 +73,7 @@ cdecl_decoration (ACE_TCHAR const *func_name)
   return decorated_func_name;
 #else
   return func_name;
-#endif /* __BORLANDC__ */
+#endif /* ACE_NEEDS_DL_UNDERSCORE */
 }
 
 // Global variables.

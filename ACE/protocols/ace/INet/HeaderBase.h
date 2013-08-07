@@ -36,7 +36,7 @@ namespace ACE
         * @brief Name/Value pair holder class.
         *
         */
-        class NVPair
+        class ACE_INET_Export NVPair
           {
             public:
               NVPair ();
@@ -116,22 +116,22 @@ namespace ACE
 
               static const ACE_CString EMPTY;
 
-              /// Sets header <name> to <value>. Overwrites existing vaues.
+              /// Sets header @a name to @a value. Overwrites existing vaues.
               void    set (const ACE_CString& name, const ACE_CString& value);
 
-              /// Adds header <name> with <value>. Allows duplicates.
+              /// Adds header @a name with @a value. Allows duplicates.
               void    add (const ACE_CString& name, const ACE_CString& value);
 
-              /// Removes header <name> (first found).
+              /// Removes header @a name (first found).
               void    remove (const ACE_CString& name);
 
-              /// Retrieves value for header <name> into <value> (first found).
+              /// Retrieves value for header @a name into @a value (first found).
               bool    get (const ACE_CString& name, ACE_CString& value) const;
 
-              /// Returns true if a header <name> exists (1 or more), false otherwise.
+              /// Returns true if a header @a name exists (1 or more), false otherwise.
               bool    has (const ACE_CString& name) const;
 
-              /// Retrieves values for all headers <name> into <values>.
+              /// Retrieves values for all headers @a name into @a values.
               void    get_values (const ACE_CString& name, ACE_Array<ACE_CString>& values) const;
 
             protected:

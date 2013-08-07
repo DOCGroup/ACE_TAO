@@ -61,7 +61,9 @@
 # define ACE_DEFAULT_TEST_DIR ACE_TEXT ("")
 #endif
 
-#define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
+#if !defined (ACE_LOG_FILE_EXT_NAME)
+# define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
+#endif /* ACE_LOG_FILE_EXT_NAME */
 
 #if defined (ACE_HAS_WINCE) || defined (ACE_HAS_PHARLAP)
 size_t const ACE_MAX_CLIENTS = 4;
@@ -77,6 +79,16 @@ size_t const ACE_MAX_INTERVAL = 0;
 size_t const ACE_MAX_ITERATIONS = 10;
 size_t const ACE_MAX_PROCESSES = 10;
 size_t const ACE_MAX_THREADS = 4;
+
+#if defined ACE_HAS_CONSOLE_TEST_OUTPUT
+#ifndef ACE_START_TEST
+# define ACE_START_TEST(NAME) const ACE_TCHAR *program = NAME; ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), NAME))
+#endif /* ACE_START_TEST */
+
+#ifndef ACE_END_TEST
+# define ACE_END_TEST ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test t %D\n"), program));
+#endif /* ACE_END_TEST */
+#endif /* ACE_HAS_CONSOLE_TEST_OUTPUT */
 
 #ifndef ACE_START_TEST
 #define ACE_START_TEST(NAME) \

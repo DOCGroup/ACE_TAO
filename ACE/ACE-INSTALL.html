@@ -154,7 +154,7 @@ document</a>.</p><p>
     <th>Remedy IT</th>
     <td>Maintains ACE on many platforms required for their ACE and
         TAO service offerings. We support AIX,
-        CodeGear C++ Builder 2007/2009, CodeGear RAD Studio 2007, Embarcadero C++ Builder 2010/XE,
+        CodeGear C++ Builder 2007/2009, CodeGear RAD Studio 2007, Embarcadero C++ Builder 2010/XE/XE4,
         Windows CE, MinGW, Microsoft Visual C++ 7.1/8/9/10, GCC,
         Cygwin, VxWorks 6.x (kernel and rtp), OpenVMS 8.3 on IA64,
         BlueCAT Linux, RedHat Linux, Fedora, MacOSX, Solaris,
@@ -286,7 +286,7 @@ UNIX with:
 <ol>
   <li><a href="#unix_traditional">Traditional ACE/GNU Make Configuration</a></li>
 </ol>
-The <a href="#win32">build process for Windows</a> is different from 
+The <a href="#win32">build process for Windows</a> is different from
 the UNIX methods.
 
 <h3><a name="unix_traditional">Using the Traditional ACE/GNU Configuration</a></h3>
@@ -421,7 +421,7 @@ one will not clean up any old files, and trying to use the environment's
 
 <ul>
 <li><a href="#msvc">Microsoft Visual Studio</a></li>
-<li><a href="#codegear">Embarcadero C++Builder</a></li>
+<li><a href="#embarcadero">Embarcadero C++Builder</a></li>
 <li><a href="#mingw">MinGW</a></li>
 <li><a href="#cygwin">Cygwin</a></li>
 </ul>
@@ -430,8 +430,8 @@ one will not clean up any old files, and trying to use the environment's
 </p><h3><a name="msvc">Building and Installing ACE on Windows with
 Microsoft Visual Studio</a></h3>
 
-<p>ACE contains project files for Microsoft Visual Studio .NET 2005 (VC8)
-, Visual Studio 2009 (VC9), and Visual Studio 2010 (VC10).
+<p>ACE contains project files for
+Visual Studio 2009 (VC9), and Visual Studio 2010 (VC10).
 Visual Studio 2005 supports building for
 desktop/server Windows as well as for Windows CE and Windows Mobile. Since
 not all users will be interested in the CE/Mobile capability, these platforms
@@ -626,9 +626,7 @@ card.  This is one method:
 </p></li></a></ol>
 
 <hr align="left" width="50%"><p>&nbsp;</p>
-<h3><a name="codegear">Building and Installing ACE on Windows with Embarcadero C++</a></h3>
-
-<b>The Embarcadero C++ port is not maintained anymore due to lack of funding.</b><p>
+<h3><a name="embarcadero">Building and Installing ACE on Windows with Embarcadero C++</a></h3>
 
 If you are building for a machine without a network card, you may want
 to check <a href="#win32nonic">here</a> first. <p>
@@ -655,11 +653,15 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
   </li><li>Add ACE_wrappers\lib and ACE_wrappers\bin to the PATH environment variable:<br>
       <br>
-      <code>set PATH=C:\ACE_wrappers\lib;C:\ACE_wrappers\bin;%PATH%</code><br>
+      <code>set PATH=%ACE_ROOT%\lib;%ACE_ROOT%\bin;%PATH%</code><br>
       <br>
-  </li><li>Generate the bmake makefiles using <a href="#MPC">MPC</a>. Use the <code>bmake</code> project type for C++ Builder.
-      <br><br>
+  </li><li>Generate the bmake makefiles using <a href="#MPC">MPC</a>. Use the <code>bmake</code> project type for C++ Builder:<br>
+      <br>
+      <code>%ACE_ROOT%\bin\mwc.pl -type bmake</code><br>
+      <br>
   </li><li>Change to the ACE_ROOT\ace directory.<br>
+      <br>
+      <code>cd %ACE_ROOT%\ace</code><br>
       <br>
   </li><li>Build release DLLs for ACE by going:<br>
       <br>
@@ -695,7 +697,7 @@ to check <a href="#win32nonic">here</a> first. <p>
 
 Note that when you run <code>make</code> in a sub directory you give <code>make -f Makefile.bmak all</code>. The <code>all</code> is needed to make sure the complete project is build.<p>
 
-The Borland/CodeGear/Embarcadero C++ Builder 4.0/5.0/6.0/2006/2007/2009/2010 port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
+The C++ Builder port has been done by Jody Hagins, <a href="mailto:chris@kohlhoff.com">Christopher Kohlhoff</a> and <a href="mailto:jwillemsen@remedy.nl">Johnny Willemsen</a>. </p><p>
 
 <b>ACE TESTS</b></p><p>
 
@@ -715,7 +717,7 @@ Once you build all the tests, you can run the automated test script using:</p><p
 </p><blockquote><code>perl run_test.pl</code></blockquote><p> in the
 <code>tests</code> directory to try all the tests. You need to make
 sure the ACE bin and lib directory (in this case
-<code>ACE_ROOT\bin</code> and <code>ACE_ROOT\lib</code>)
+<code>%ACE_ROOT%\bin</code> and <code>%ACE_ROOT%\lib</code>)
 are on the path before you try to run the tests.</p><p>
 
 <p></p><hr align="left" width="50%"><p>
@@ -789,16 +791,16 @@ For our build we require the packages
        before the previous one.
        <br><br>
 
-	   <p>
+     <p>
        If you want to install ACE (using "make install") and want all the <tt>.pc</tt> files generated,
-	   set the installation prefix in platform_macros.GNU.
+     set the installation prefix in platform_macros.GNU.
        </p><blockquote><code></code><pre>      INSTALL_PREFIX=/c/ACE
        </pre></blockquote>
-	   Headers will be installed to $INSTALL_PREFIX/include, documentation and
-	   build system files to $INSTALL_PREFIX/share and libraries to $INSTALL_PREFIX/lib. With INSTALL_PREFIX set, RPATH will be enabled.
-	   To disable RPATH (for example, if $INSTALL_PREFIX/$INSTALL_LIB is already
-	   a system-known location for shared libraries), set the make macro
-	   install_rpath to 0 by adding install_rpath=0 to platform_macros.GNU.
+     Headers will be installed to $INSTALL_PREFIX/include, documentation and
+     build system files to $INSTALL_PREFIX/share and libraries to $INSTALL_PREFIX/lib. With INSTALL_PREFIX set, RPATH will be enabled.
+     To disable RPATH (for example, if $INSTALL_PREFIX/$INSTALL_LIB is already
+     a system-known location for shared libraries), set the make macro
+     install_rpath to 0 by adding install_rpath=0 to platform_macros.GNU.
 
        <br><br>
 
@@ -823,9 +825,9 @@ For our build we require the packages
 
   </li><li> Run make install:
 
-		<blockquote><code></code><pre>       % make install
+    <blockquote><code></code><pre>       % make install
        </pre></blockquote>
-	   <p>
+     <p>
        This should create <tt>ACE.pc</tt> to use with pkg-config.
        </p>
 
@@ -1782,9 +1784,9 @@ below.</p>
       the <code>config.h</code> file has been created, build the
       <code>ACE_SSL</code> project.</li>
 </ol>
-<h2>CodeGear C++</h2>
+<h2>Embarcadero C++</h2>
 <p>Support for building ACE's ACE_SSL library and TAO's SSLIOP
-   pluggable protocol with CodeGear C++ does exist.
+   pluggable protocol with Embarcadero C++ does exist.
 <ol>
   <li>Set the <code>SSL_ROOT</code> environment variable to the location
       of the directory containing the OpenSSL <code>inc32</code> and
@@ -1792,7 +1794,7 @@ below.</p>
   <li>Add <code>ssl=1</code> to your MPC
       <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
       or <code>$ACE_ROOT/local.features</code> file, and re-run MPC to add
-      support for building the ACE_SSL library to your CodeGear C++ makefiles.
+      support for building the ACE_SSL library to your Embarcadero C++ makefiles.
   <li>Build ACE and TAO.
 </ol>
 </p>
@@ -2560,7 +2562,7 @@ To save space on a Unix machine, I usually run
     'find . -name \*.sln -o -name \*.vcproj -o -name \*.bmak | xargs rm -f'
 in $ACE_ROOT at first after I untar the distribution.  They are
 meaningless in my environment (Files named '*.sln' and '*.vcproj' are
-used for MSVC++ and files named '*.bmak' are for CodeGear C++
+used for MSVC++ and files named '*.bmak' are for Embarcadero C++
 Builder.)</p><p>
 
 Finally, to save space, may want to run 'make clean' after 'make'.  It
@@ -2926,18 +2928,18 @@ CIAO. We point out some suggestions below to get bootstrapped
 quickly.
 
 <ul>
-	<li>You can checkout different subsets from the Subversion repository.
-	<ul>
-	<li>To checkout ACE with MPC:<p>
-	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE .</code>
-	</li>
-	<li>To checkout ACE+TAO with MPC:<p>
-	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO .</code>
-	</li>
-	<li>To checkout ACE+TAO+CIAO with MPC:<p>
-	<code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO .</code>
-	</li>
-	</ul>
+  <li>You can checkout different subsets from the Subversion repository.
+  <ul>
+  <li>To checkout ACE with MPC:<p>
+  <code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE .</code>
+  </li>
+  <li>To checkout ACE+TAO with MPC:<p>
+  <code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO .</code>
+  </li>
+  <li>To checkout ACE+TAO+CIAO with MPC:<p>
+  <code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO .</code>
+  </li>
+  </ul>
   </p></li><li>Please make sure that you have <a href="http://www.perl.org/">
   perl</a> installed, preferably perl
   5.8 or higher. Users on Win32 based platforms are recommended to use

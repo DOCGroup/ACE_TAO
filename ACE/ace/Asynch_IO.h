@@ -1697,6 +1697,7 @@ protected:
   /// Refers to proxy for this handler.
   ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX> proxy_;
 
+private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Handler (const ACE_Handler &))
   ACE_UNIMPLEMENTED_FUNC (ACE_Handler operator= (const ACE_Handler &))
 };
