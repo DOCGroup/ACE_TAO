@@ -4,6 +4,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.0 and ACE-6.2.1
 . Added support for Fedora 19, ended daily maintenance
   for Fedora 17 and 18
 
+. Added support for Embarcadero C++BuilderXE4 using
+  bcc32 in debug and release mode
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.9 and ACE-6.2.0
 ====================================================
 
