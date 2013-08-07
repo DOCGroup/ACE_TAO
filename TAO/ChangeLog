@@ -1,3 +1,8 @@
+Wed Aug  7 06:52:43 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode_Case_Enum_T.cpp:
+          Layout changes
+
 Mon Aug  5 14:25:16 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/DevGuideExamples/Security/ParticipatingApp/MessengerClient.cpp:
