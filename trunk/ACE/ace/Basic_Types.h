@@ -55,6 +55,7 @@
 # include "ace/os_include/os_float.h"      // Floating point limits
 # include "ace/os_include/os_stdlib.h"     // Other types
 # include "ace/os_include/os_stddef.h"     // Get ptrdiff_t - see further comments below
+# include "ace/os_include/arpa/os_inet.h"  // For htons
 
 # include "ace/os_include/sys/os_types.h"
 
