@@ -2,13 +2,7 @@
 // $Id$
 
 #include "tao/DynamicAny/DynValueCommon_i.h"
-//#include "tao/DynamicAny/DynAnyUtils_T.h"
-
-//#include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-//#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-//#include "tao/CDR.h"
-//#include "tao/Valuetype/ValueBase.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
