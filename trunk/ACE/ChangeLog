@@ -1,3 +1,14 @@
+Thu Aug  8 15:17:27 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Basic_Types.h:
+        * ace/config-android.h:
+        * include/makeinclude/platform_android.GNU:
+          Improved support for android:
+          * Support newer API levels
+          * Make it possible to enable shared libraries, something that
+            should work with new Android versions, but not tested yet
+          * Support new mixed endianess ARM CPU architectures
+
 Wed Aug  7 09:37:08 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/OS/Process/imore.cpp:
