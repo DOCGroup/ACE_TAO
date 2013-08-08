@@ -59,7 +59,6 @@
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_SETINHERITSCHED
-#define ACE_LACKS_STD_WSTRING
 #define ACE_LACKS_STRRECVFD
 #define ACE_LACKS_SWAB
 #define ACE_LACKS_SYSV_SHMEM
@@ -220,10 +219,7 @@
 #define ACE_HAS_BYTESWAP_H
 #define ACE_HAS_BSWAP_16
 #define ACE_HAS_BSWAP_32
-
-#if defined (__GNUC__)
-#  define ACE_HAS_BSWAP_64
-#endif
+#define ACE_HAS_BSWAP_64
 
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
@@ -308,9 +304,6 @@
 # define ACE_SIZEOF_LONG_DOUBLE 16
 #endif
 
-#define ACE_LACKS_GETIPNODEBYADDR
-#define ACE_LACKS_GETIPNODEBYNAME
-
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
 
@@ -328,11 +321,7 @@
 #define ACE_HAS_IPV6_MULTICAST_LOOP_AS_BOOL 1
 #define ACE_HAS_IP_MULTICAST_LOOP_AS_INT 1
 
-#if defined (ACE_LACKS_NETWORKING)
-# include "ace/config-posix-nonetworking.h"
-#else
-# define ACE_HAS_NETLINK
-#endif
+#define ACE_HAS_NETLINK
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in
@@ -363,13 +352,27 @@
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
+#if __ANDROID_API__ >= 9
+# define ACE_HAS_TIMEZONE
+#endif
+
+#if __ANDROID_API__ < 14
+# define ACE_LACKS_STD_WSTRING
+# define ACE_LACKS_GETIPNODEBYADDR
+# define ACE_LACKS_GETIPNODEBYNAME
+#endif
+
 #if __ANDROID_API__ == 8
 # define ACE_LACKS_REGEX_H 1
 # define ACE_LACKS_CONDATTR 1
 #elif __ANDROID_API__ == 9
-# define ACE_HAS_TIMEZONE
+#elif __ANDROID_API__ == 14
 #else
 # error Unsupported Android release
+#endif
+
+#if !defined ACE_DEFAULT_TEMP_DIR
+# define ACE_DEFAULT_TEMP_DIR "/data/tmp"
 #endif
 
 #include /**/ "ace/post.h"
