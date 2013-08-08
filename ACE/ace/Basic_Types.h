@@ -311,53 +311,53 @@ typedef unsigned char ACE_Byte;
 // Define a pseudo wide character type when wchar is not supported so we
 // can support basic wide character string operations.
 
-# if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
-#   define ACE_WINT_T wint_t
-#   define ACE_WCHAR_T wchar_t
-# else
-#   define ACE_WINT_T ACE_UINT16
-#   define ACE_WCHAR_T ACE_UINT16
-# endif /* ACE_HAS_WCHAR */
+#if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
+#  define ACE_WINT_T wint_t
+#  define ACE_WCHAR_T wchar_t
+#else
+#  define ACE_WINT_T ACE_UINT16
+#  define ACE_WCHAR_T ACE_UINT16
+#endif /* ACE_HAS_WCHAR */
 
 // The number of bytes in a void *.
-# ifndef ACE_SIZEOF_VOID_P
-#   define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
-# endif /* ACE_SIZEOF_VOID_P */
+#ifndef ACE_SIZEOF_VOID_P
+#  define ACE_SIZEOF_VOID_P ACE_SIZEOF_LONG
+#endif /* ACE_SIZEOF_VOID_P */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Byte-order (endian-ness) determination.
-# if defined (BYTE_ORDER)
-#   if (BYTE_ORDER == LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (BYTE_ORDER == BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   else
-#     error: unknown BYTE_ORDER!
-#   endif /* BYTE_ORDER */
-# elif defined (_BYTE_ORDER)
-#   if (_BYTE_ORDER == _LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (_BYTE_ORDER == _BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   else
-#     error: unknown _BYTE_ORDER!
-#   endif /* _BYTE_ORDER */
-# elif defined (__BYTE_ORDER)
-#   if (__BYTE_ORDER == __LITTLE_ENDIAN)
-#     define ACE_LITTLE_ENDIAN 0x0123
-#     define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
-#   elif (__BYTE_ORDER == __BIG_ENDIAN)
-#     define ACE_BIG_ENDIAN 0x3210
-#     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
-#   else
-#     error: unknown __BYTE_ORDER!
-#   endif /* __BYTE_ORDER */
-# else /* ! BYTE_ORDER && ! __BYTE_ORDER */
+#if defined (BYTE_ORDER)
+#  if (BYTE_ORDER == LITTLE_ENDIAN)
+#    define ACE_LITTLE_ENDIAN 0x0123
+#    define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
+#  elif (BYTE_ORDER == BIG_ENDIAN)
+#    define ACE_BIG_ENDIAN 0x3210
+#    define ACE_BYTE_ORDER ACE_BIG_ENDIAN
+#  else
+#    error: unknown BYTE_ORDER!
+#  endif /* BYTE_ORDER */
+#elif defined (_BYTE_ORDER)
+#  if (_BYTE_ORDER == _LITTLE_ENDIAN)
+#    define ACE_LITTLE_ENDIAN 0x0123
+#    define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
+#  elif (_BYTE_ORDER == _BIG_ENDIAN)
+#    define ACE_BIG_ENDIAN 0x3210
+#    define ACE_BYTE_ORDER ACE_BIG_ENDIAN
+#  else
+#    error: unknown _BYTE_ORDER!
+#  endif /* _BYTE_ORDER */
+#elif defined (__BYTE_ORDER)
+#  if (__BYTE_ORDER == __LITTLE_ENDIAN)
+#    define ACE_LITTLE_ENDIAN 0x0123
+#    define ACE_BYTE_ORDER ACE_LITTLE_ENDIAN
+#  elif (__BYTE_ORDER == __BIG_ENDIAN)
+#    define ACE_BIG_ENDIAN 0x3210
+#    define ACE_BYTE_ORDER ACE_BIG_ENDIAN
+#  else
+#    error: unknown __BYTE_ORDER!
+#  endif /* __BYTE_ORDER */
+#else /* ! BYTE_ORDER && ! __BYTE_ORDER */
   // We weren't explicitly told, so we have to figure it out . . .
   // Note that Itanium hardware (IA64) can run in either byte order. It's
   // selected by the OS when loading; Windows runs little, HP-UX runs big.
@@ -374,7 +374,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     define ACE_BIG_ENDIAN 0x3210
 #     define ACE_BYTE_ORDER ACE_BIG_ENDIAN
 #   endif
-# endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
+#endif /* ! BYTE_ORDER && ! __BYTE_ORDER */
 
 // Byte swapping macros to deal with differences between little endian
 // and big endian machines.  Note that "long" here refers to 32 bit
@@ -383,25 +383,19 @@ ACE_END_VERSIONED_NAMESPACE_DECL
             | ACE_SWAP_WORD(((L) >> 16) & 0xFFFF))
 # define ACE_SWAP_WORD(L) ((((L) & 0x00FF) << 8) | (((L) & 0xFF00) >> 8))
 
+# define ACE_HTONL(X) htonl (X)
+# define ACE_NTOHL(X) ntohl (X)
+
 # if defined (ACE_LITTLE_ENDIAN)
-#   define ACE_HTONL(X) ACE_SWAP_LONG (X)
-#   define ACE_NTOHL(X) ACE_SWAP_LONG (X)
 #   define ACE_IDL_NCTOHL(X) (X)
 #   define ACE_IDL_NSTOHL(X) (X)
 # else
-#   define ACE_HTONL(X) X
-#   define ACE_NTOHL(X) X
 #   define ACE_IDL_NCTOHL(X) (X << 24)
 #   define ACE_IDL_NSTOHL(X) ((X) << 16)
 # endif /* ACE_LITTLE_ENDIAN */
 
-# if defined (ACE_LITTLE_ENDIAN)
-#   define ACE_HTONS(x) ACE_SWAP_WORD(x)
-#   define ACE_NTOHS(x) ACE_SWAP_WORD(x)
-# else
-#   define ACE_HTONS(x) x
-#   define ACE_NTOHS(x) x
-# endif /* ACE_LITTLE_ENDIAN */
+#define ACE_HTONS(x) htons(x)
+#define ACE_NTOHS(x) ntohs(x)
 
 # define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
      reinterpret_cast<PTR_TYPE> (static_cast<intptr_t> (L))
