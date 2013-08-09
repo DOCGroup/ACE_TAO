@@ -3,18 +3,12 @@
 #include "CPU_Affinity.h"
 #include "dance/DAnCE_PropertiesC.h"
 #include "dance/Deployment/Deployment_StartErrorC.h"
-
 #include "dance/Logger/Log_Macros.h"
-
-#if defined (LINUX_VERSION_CODE) && defined (KERNEL_VERSION)
-# if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,8))
-#include <sched.h>
-#include <sstream>
+#include "ace/os_include/os_sched.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Tokenizer_T.h"
 #include "ace/OS_NS_unistd.h"
-#endif
-#endif
+#include <sstream>
 
 namespace DAnCE
 {
@@ -34,9 +28,8 @@ namespace DAnCE
 
   void CPU_Affinity::configure (const ::Deployment::Property & prop)
   {
-#if defined (LINUX_VERSION_CODE) && defined (KERNEL_VERSION)
-# if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,8))
-    const char *extracted_affinity;
+#if defined (ACE_HAS_SCHED_SETAFFINITY)
+    const char *extracted_affinity = 0;
 
     if (! (prop.value >>= CORBA::Any::to_string (extracted_affinity, 0)))
       {
@@ -110,7 +103,6 @@ namespace DAnCE
 
     return;
 
-#endif
 #endif
 
     throw ::Deployment::StartError (prop.name.in (),

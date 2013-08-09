@@ -1,3 +1,9 @@
+Fri Aug  9 16:54:51 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
+          Use ACE_HAS_SCHED_SETAFFINITY instead of checking the
+          linux kernel version here
+
 Fri Aug  9 08:33:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/Config_Handlers/DynAny_Handler/DataType_Handler.cpp:
