@@ -30,78 +30,60 @@ namespace DAnCE{
         case  TCKind::tk_null_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_null);
 
-
         case  TCKind::tk_short_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_short);
-
 
         case  TCKind::tk_long_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_long);
 
-
         case  TCKind::tk_ushort_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_ushort);
-
 
         case  TCKind::tk_ulong_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_ulong);
 
-
         case  TCKind::tk_float_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_float);
-
 
         case  TCKind::tk_double_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_double);
 
-
         case  TCKind::tk_boolean_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_boolean);
-
 
         case  TCKind::tk_char_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_char);
 
-
         case  TCKind::tk_octet_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_octet);
-
 
         case  TCKind::tk_string_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_string);
 
-
         case  TCKind::tk_longlong_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_longlong);
-
 
         case  TCKind::tk_ulonglong_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_ulonglong);
 
-
         case  TCKind::tk_longdouble_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_longdouble);
-
 
         case  TCKind::tk_wchar_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_wchar);
 
-
         case  TCKind::tk_wstring_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_wstring);
-
 
         case  TCKind::tk_any_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_any);
 
-
         case  TCKind::tk_TypeCode_l:
           return CORBA::TypeCode::_duplicate (CORBA::_tc_TypeCode);
 
-
         default:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, "Invalid typecode in any\n"));
+            (LM_ERROR, "DataType_Handler::data_type - Invalid typecode in any\n"));
           throw Config_Error ("", "Invalid typecode");
         }
 
@@ -175,7 +157,7 @@ namespace DAnCE{
           type.kind (TCKind::tk_TypeCode);
         default:
           DANCE_DEBUG (DANCE_LOG_TERMINAL_ERROR,
-            (LM_ERROR, "Invalid typecode\n"));
+            (LM_ERROR, "DataType_Handler::data_type - Invalid typecode\n"));
           throw Config_Error ("", "Invalid typecode");
         }
       return type;
