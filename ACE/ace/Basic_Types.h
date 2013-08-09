@@ -39,7 +39,7 @@
  */
 //=============================================================================
 
-#include "ace/config-lite.h"
+#include /**/ "ace/config-lite.h"
 
 #ifndef ACE_BASIC_TYPES_H
 # define ACE_BASIC_TYPES_H
