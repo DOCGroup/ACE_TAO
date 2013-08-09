@@ -53,8 +53,20 @@ namespace CIAO_Foo_Impl
       my_short_success_ (false),
       my_boolean_success_ (false),
       my_long_success_ (false),
+      my_ulong_success_ (false),
+      my_longlong_success_ (false),
+      my_ulonglong_success_ (false),
       my_float_success_ (false),
       my_double_success_ (false),
+      my_default_octet_success_ (false),
+      my_default_short_success_ (false),
+      my_default_boolean_success_ (false),
+      my_default_long_success_ (false),
+      my_default_ulong_success_ (false),
+      my_default_longlong_success_ (false),
+      my_default_ulonglong_success_ (false),
+      my_default_float_success_ (false),
+      my_default_double_success_ (false),
       my_short_sequence_success_ (false),
       my_empty_sequence_success_ (false),
       my_long_sequence_success_ (false),
@@ -72,6 +84,7 @@ namespace CIAO_Foo_Impl
       my_float_sequence_success_ (false),
       my_double_sequence_success_ (false),
       my_bar_struct_success_ (false),
+      my_default_bar_struct_success_ (false),
       my_bar_array_success_ (false),
       my_bar_array_2_success_ (false),
       my_sequence_array_success_ (false),
@@ -82,6 +95,7 @@ namespace CIAO_Foo_Impl
       my_array_sequence_success_ (false),
       my_bounded_string_success_ (false),
       my_variable_string_success_ (false),
+      my_default_variable_string_success_ (false),
       supported_short_success_ (false),
       my_struct_struct_success_ (false)
   {
@@ -186,6 +200,54 @@ namespace CIAO_Foo_Impl
 
   }
 
+  ::CORBA::ULong
+  Foo_exec_i::my_ulong (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_ulong (
+    ::CORBA::ULong my_ulong)
+  {
+    if (my_ulong != 33)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_ulong != 33, it is %d\n", my_ulong));
+    else this->my_ulong_success_ = true;
+
+  }
+
+  ::CORBA::LongLong
+  Foo_exec_i::my_longlong (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_longlong (
+    ::CORBA::LongLong my_longlong)
+  {
+    if (my_longlong != 33)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_longlong != 33, it is %d\n", my_longlong));
+    else this->my_longlong_success_ = true;
+
+  }
+
+  ::CORBA::ULongLong
+  Foo_exec_i::my_ulonglong (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_ulonglong (
+    ::CORBA::ULongLong my_ulonglong)
+  {
+    if (my_ulonglong != 33)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_ulonglong != 33, it is %d\n", my_ulonglong));
+    else this->my_ulonglong_success_ = true;
+
+  }
+
   ::CORBA::Float
   Foo_exec_i::my_float (void)
   {
@@ -228,6 +290,180 @@ namespace CIAO_Foo_Impl
   void
   Foo_exec_i::my_longdouble (
     ::CORBA::LongDouble /*my_longdouble*/)
+  {
+    // Not supported since a longdouble is defined in the xsd as double.
+    // We are then creating a long double initialized with a regular
+    // double. This is a very tricky conversion and doesn't work in
+    // combination with certain (versions of) compilers.
+  }
+
+  // Component attributes and port operations.
+  ::CORBA::Char
+  Foo_exec_i::my_default_char (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_default_char (
+    ::CORBA::Char /*my_default_char*/)
+  {
+    // Not supported since it's not configured in the xsd.
+  }
+
+  ::CORBA::Octet
+  Foo_exec_i::my_default_octet (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_default_octet (
+    ::CORBA::Octet my_default_octet)
+  {
+    if (my_default_octet != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_default_octet != 0, it is %d\n", my_default_octet));
+    else this->my_default_octet_success_ = true;
+  }
+
+  ::CORBA::Short
+  Foo_exec_i::my_default_short (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_default_short (
+    ::CORBA::Short my_default_short)
+  {
+    if (my_default_short != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_default_short != 0, it is %d\n", my_default_short));
+    else this->my_default_short_success_ = true;
+
+  }
+
+  ::CORBA::Boolean
+  Foo_exec_i::my_default_boolean (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_default_boolean (
+    ::CORBA::Boolean my_default_boolean)
+  {
+    if (my_default_boolean)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_default_boolean != false, it is true\n"));
+    else this->my_default_boolean_success_ = true;
+
+  }
+
+  ::CORBA::Long
+  Foo_exec_i::my_default_long (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_default_long (
+    ::CORBA::Long my_default_long)
+  {
+    if (my_default_long != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_default_long != 0, it is %d\n", my_default_long));
+    else this->my_default_long_success_ = true;
+
+  }
+
+  ::CORBA::ULong
+  Foo_exec_i::my_default_ulong (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_default_ulong (
+    ::CORBA::ULong my_default_ulong)
+  {
+    if (my_default_ulong != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_default_ulong != 0, it is %d\n", my_default_ulong));
+    else this->my_default_ulong_success_ = true;
+
+  }
+
+  ::CORBA::LongLong
+  Foo_exec_i::my_default_longlong (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_default_longlong (
+    ::CORBA::LongLong my_default_longlong)
+  {
+    if (my_default_longlong != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_default_longlong != 0, it is %d\n", my_default_longlong));
+    else this->my_default_longlong_success_ = true;
+
+  }
+
+  ::CORBA::ULongLong
+  Foo_exec_i::my_default_ulonglong (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_default_ulonglong (
+    ::CORBA::ULongLong my_default_ulonglong)
+  {
+    if (my_default_ulonglong != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_default_ulonglong != 0, it is %d\n", my_default_ulonglong));
+    else this->my_default_ulonglong_success_ = true;
+
+  }
+
+  ::CORBA::Float
+  Foo_exec_i::my_default_float (void)
+  {
+    return 0.0f;
+  }
+
+  void
+  Foo_exec_i::my_default_float (
+    ::CORBA::Float my_default_float)
+  {
+    if (ACE::is_inequal (my_default_float, 0.0f))
+      ACE_ERROR ((LM_ERROR, "ERROR: my_default_float != 0.0, it is %f\n", my_default_float));
+    else this->my_default_float_success_ = true;
+
+  }
+
+  ::CORBA::Double
+  Foo_exec_i::my_default_double (void)
+  {
+    return 0.0;
+  }
+
+  void
+  Foo_exec_i::my_default_double (
+    ::CORBA::Double my_default_double)
+  {
+    if (ACE::is_inequal (my_default_double, 0.0))
+      ACE_ERROR ((LM_ERROR, "ERROR: my_default_double != 0.0, it is %f\n", my_default_double));
+    else this->my_default_double_success_ = true;
+  }
+
+  ::CORBA::LongDouble
+  Foo_exec_i::my_default_longdouble (void)
+  {
+    CORBA::LongDouble ld;
+    ACE_CDR_LONG_DOUBLE_ASSIGNMENT (ld, 0.0);
+    return ld;
+  }
+
+  void
+  Foo_exec_i::my_default_longdouble (
+    ::CORBA::LongDouble /*my_default_longdouble*/)
   {
     // Not supported since a longdouble is defined in the xsd as double.
     // We are then creating a long double initialized with a regular
@@ -449,6 +685,43 @@ namespace CIAO_Foo_Impl
       {
         this->my_bar_struct_success_ = false;
         ACE_ERROR ((LM_ERROR, "ERROR: double value != 7.8, it is %f\n", my_bar_struct.d));
+      }
+  }
+
+  ::Bar
+  Foo_exec_i::my_default_bar_struct (void)
+  {
+    return ::Bar ();
+  }
+
+  void
+  Foo_exec_i::my_default_bar_struct (
+    const ::Bar & my_bar_struct)
+  {
+    this->my_default_bar_struct_success_ = true;
+
+    if (my_bar_struct.s != 0)
+      {
+        this->my_default_bar_struct_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: short value != 0, it is %d\n", my_bar_struct.s));
+      }
+
+    if (my_bar_struct.l != 0)
+      {
+        this->my_default_bar_struct_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: long value != 0, it is %d\n", my_bar_struct.l));
+      }
+
+    if (ACE::is_inequal (my_bar_struct.f, 0.0F))
+      {
+        this->my_default_bar_struct_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: float value != 0.0, it is %f\n", my_bar_struct.f));
+      }
+
+    if (ACE::is_inequal (my_bar_struct.d, 0.0))
+      {
+        this->my_default_bar_struct_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: double value != 0.0, it is %f\n", my_bar_struct.d));
       }
   }
 
@@ -794,7 +1067,6 @@ namespace CIAO_Foo_Impl
     return d;
   }
 
-
   void
   Foo_exec_i::my_data_union (
     const ::Data & /*my_data_union*/)
@@ -975,6 +1247,21 @@ namespace CIAO_Foo_Impl
       ACE_ERROR ((LM_ERROR, "ERROR: my_variable_string != Hi, it is %C\n",
                   my_variable_string));
     else this->my_variable_string_success_ = true;
+  }
+
+  char *Foo_exec_i::my_default_variable_string (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_default_variable_string (
+    const char * my_default_variable_string)
+  {
+    if (ACE_OS::strcmp (my_default_variable_string, "") != 0)
+      ACE_ERROR ((LM_ERROR, "ERROR: my_default_variable_string != empty, it is %C\n",
+                  my_default_variable_string));
+    else this->my_default_variable_string_success_ = true;
   }
 
   ::CORBA::WChar *Foo_exec_i::my_bounded_wstring (void)
@@ -1318,8 +1605,20 @@ namespace CIAO_Foo_Impl
     check_error (this->my_short_success_, "short");
     check_error (this->my_boolean_success_, "boolean");
     check_error (this->my_long_success_, "long");
+    check_error (this->my_ulong_success_, "ulong");
+    check_error (this->my_longlong_success_, "longlong");
+    check_error (this->my_ulonglong_success_, "ulonglong");
     check_error (this->my_float_success_, "float");
     check_error (this->my_double_success_, "double");
+    check_error (this->my_default_octet_success_, "default octet");
+    check_error (this->my_default_short_success_, "default short");
+    check_error (this->my_default_boolean_success_, "default boolean");
+    check_error (this->my_default_long_success_, "default long");
+    check_error (this->my_default_ulong_success_, "default ulong");
+    check_error (this->my_default_longlong_success_, "default longlong");
+    check_error (this->my_default_ulonglong_success_, "default ulonglong");
+    check_error (this->my_default_float_success_, "default float");
+    check_error (this->my_default_double_success_, "default double");
     check_error (this->my_short_sequence_success_, "short sequence");
     check_error (this->my_empty_sequence_success_, "empty sequence");
     check_error (this->my_long_sequence_success_, "long sequence");
@@ -1339,6 +1638,7 @@ namespace CIAO_Foo_Impl
     check_error (this->my_float_sequence_success_, "float sequence");
     check_error (this->my_double_sequence_success_, "double sequence");
     check_error (this->my_bar_struct_success_, "bar struct");
+    check_error (this->my_default_bar_struct_success_, "default bar struct");
     check_error (this->my_bar_array_success_, "bar array");
     check_error (this->my_bar_array_2_success_, "array in array");
     check_error (this->my_sequence_array_success_, "sequence in array");
@@ -1349,6 +1649,7 @@ namespace CIAO_Foo_Impl
     check_error (this->my_array_sequence_success_, "array in sequence");
     check_error (this->my_bounded_string_success_, "fixed string");
     check_error (this->my_variable_string_success_, "variable string");
+    check_error (this->my_default_variable_string_success_, "default variable string");
     check_error (this->supported_short_success_, "supported short");
     check_error (this->my_struct_struct_success_, "nested struct");
   }
