@@ -1,3 +1,8 @@
+Fri Aug  9 08:24:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ACE+TAO+CIAO+DAnCE.json:
+          Also check the DAnCE DynAny_Handler
+
 Fri Aug  9 08:14:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/arpa/os_inet.h:
