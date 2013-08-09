@@ -134,9 +134,24 @@ component Foo supports FooSupport
   attribute long    my_long;
   attribute float   my_float;
   attribute double  my_double;
+  attribute unsigned long my_ulong;
+  attribute long long my_longlong;
+  attribute unsigned long long my_ulonglong;
+  attribute char    my_default_char;
+  attribute octet   my_default_octet;
+  attribute boolean my_default_boolean;
+  attribute short   my_default_short;
+  attribute long    my_default_long;
+  attribute float   my_default_float;
+  attribute double  my_default_double;
+  attribute unsigned long my_default_ulong;
+  attribute long long my_default_longlong;
+  attribute unsigned long long my_default_ulonglong;
   attribute long double     my_longdouble;
+  attribute long double     my_default_longdouble;
   attribute bounded_string  my_bounded_string;
   attribute string          my_variable_string;
+  attribute string          my_default_variable_string;
   attribute bounded_wstring my_bounded_wstring;
   attribute wstring         my_variable_wstring;
 
@@ -166,6 +181,7 @@ component Foo supports FooSupport
   attribute array_sequence    my_array_sequence;
 
   attribute Bar           my_bar_struct;
+  attribute Bar           my_default_bar_struct;
   attribute BarArray      my_bar_array;
   attribute BarArray2     my_bar_array_2;
   attribute SequenceArray my_sequence_array;
