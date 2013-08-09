@@ -1,6 +1,6 @@
 // $Id$
 
-#include "ace/config-lite.h"
+#include /**/ "ace/config-lite.h"
 #include "ace/Proactor.h"
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 

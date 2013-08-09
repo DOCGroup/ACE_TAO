@@ -17,7 +17,7 @@
 #ifndef ACE_IF_THEN_ELSE_H
 #define ACE_IF_THEN_ELSE_H
 
-#include "ace/config-lite.h"
+#include /**/ "ace/config-lite.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

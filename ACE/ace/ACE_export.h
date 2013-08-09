@@ -8,7 +8,7 @@
 #ifndef ACE_EXPORT_H
 #define ACE_EXPORT_H
 
-#include "ace/config-lite.h"
+#include /**/ "ace/config-lite.h"
 
 #if defined (ACE_AS_STATIC_LIBS)
 
