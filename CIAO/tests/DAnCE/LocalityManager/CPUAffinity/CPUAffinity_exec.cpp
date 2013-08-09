@@ -3,16 +3,10 @@
 
 #include "CPUAffinity_exec.h"
 #include "ace/Log_Msg.h"
+#include "ace/os_include/os_sched.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
-
-#if defined (LINUX_VERSION_CODE) && defined (KERNEL_VERSION)
-# if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,8))
-#include <sched.h>
-
-#endif
-#endif
 
 namespace CIAO_cpuaffinity_A_Impl
 {
@@ -61,9 +55,7 @@ namespace CIAO_cpuaffinity_A_Impl
   void
   Component_exec_i::ccm_activate (void)
   {
-#if defined (LINUX_VERSION_CODE) && defined (KERNEL_VERSION)
-# if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,8))
-
+#if defined (ACE_HAS_SCHED_GETAFFINITY)
     if (ACE_OS::num_processors () < 2)
       {
         ACE_DEBUG ((LM_DEBUG, "This machine only has a single processor, aborting\n"));
@@ -101,8 +93,6 @@ namespace CIAO_cpuaffinity_A_Impl
       {
         ACE_ERROR ((LM_ERROR, "Error: Trying to test an affinity I don't support\n"));
       }
-
-#endif
 #endif
   }
 
