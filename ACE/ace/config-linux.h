@@ -72,13 +72,13 @@
 
 #if defined (__powerpc__) || defined (__x86_64__)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
-#   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
+#   define ACE_DEFAULT_BASE_ADDR (reinterpret_cast< char* >(0x40000000))
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
 #elif defined (__ia64)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 // Zero base address should work fine for Linux of IA-64: it just lets
 // the kernel to choose the right value.
-#   define ACE_DEFAULT_BASE_ADDR ((char *) 0x0000000000000000)
+#   define ACE_DEFAULT_BASE_ADDR (reinterpret_cast< char*>(0x0000000000000000))
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
 #endif /* ! __powerpc__  && ! __ia64 */
 
@@ -203,7 +203,7 @@
 #define ACE_HAS_3_PARAM_READDIR_R
 
 #if !defined (ACE_DEFAULT_BASE_ADDR)
-#  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
+#  define ACE_DEFAULT_BASE_ADDR (reinterpret_cast< char* >(0x80000000))
 #endif /* ! ACE_DEFAULT_BASE_ADDR */
 
 #define ACE_HAS_ALLOCA
