@@ -1,3 +1,8 @@
+Fri Aug  9 13:00:38 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Security DevGuideExamples don't work with ACE_FOR_TAO
+
 Fri Aug  9 07:52:26 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
