@@ -1,3 +1,9 @@
+Fri Aug  9 07:52:26 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          Removed const addition, only change I can see that is in
+          the FT area
+
 Thu Aug  8 13:27:18 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DynamicAny/DynValueCommon_i.cpp:
