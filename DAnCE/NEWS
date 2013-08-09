@@ -3,6 +3,9 @@ USER VISIBLE CHANGES BETWEEN DAnCE-1.2.0 and DAnCE-1.2.1
 
 . Extended DAnCE Config Handlers to support array
 
+. DAnCE Config Handlers now support <value/> for all
+  basic types, will default to 0 or false for boolean
+
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.9 and DAnCE-1.2.0
 =======================================================
 
