@@ -702,6 +702,22 @@ project(Compiler_Features_21_Test) : acetest {
   }
 }
 
+project(Compiler_Features_22_Test) : acelib {
+  libout       = .
+  sharedname   = Compiler_Features_22
+  dynamicflags += COMPILER_FEATURES_22_DLL_BUILD_DLL
+
+  Source_Files {
+    Compiler_Features_22_DLL.cpp
+  }
+  Header_Files {
+    Compiler_Features_22_DLL.h
+    Compiler_Features_22_DLL_Export.h
+  }
+  Resource_Files {
+  }
+}
+
 project(Config Test) : acetest {
   avoids += ace_for_tao
   exename = Config_Test
