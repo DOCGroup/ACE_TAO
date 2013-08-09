@@ -1,3 +1,11 @@
+Fri Aug  9 17:46:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux.h:
+          Use C++ casts instead of C-style casts for ACE_DEFAULT_BASE_ADDR.
+          This fixes bugzilla 4113, thanks to Yogesh Sharma
+          <Yogesh dot Sharma at saabsensis dot com> for reporting this and
+          supplying the patch
+
 Fri Aug  9 16:53:17 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux.h:
