@@ -1,3 +1,10 @@
+Fri Aug  9 17:57:43 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/post.h:
+        * ace/pre.h:
+          Disable warning 8127 with Embarcadero C++ BuilderXE4, it is
+          given incorrectly and reported as QC 117740.
+
 Fri Aug  9 17:46:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-linux.h:
