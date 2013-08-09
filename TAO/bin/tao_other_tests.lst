@@ -267,9 +267,9 @@ TAO/orbsvcs/DevGuideExamples/NotifyService/OfferSubscriptions/run_test.pl: !ST !
 TAO/orbsvcs/DevGuideExamples/NotifyService/QoSProperties/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
 TAO/orbsvcs/DevGuideExamples/NotifyService/SupplierSideNC/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
 TAO/orbsvcs/DevGuideExamples/NotifyService/RTNotify/run_test.pl: !ST !MINIMUM !STATIC !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
-TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
-TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
+TAO/orbsvcs/DevGuideExamples/Security/PolicyControllingApp/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
+TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/run_test.pl: SSL !STATIC !DISABLE_INTERCEPTORS !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/DevGuideExamples/NamingService/Messenger/run_test.pl: !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
 TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Client/run_test.pl: !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
 TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/run_test.pl: !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
