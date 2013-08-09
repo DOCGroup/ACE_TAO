@@ -122,6 +122,124 @@
     </configProperty>
 
     <configProperty>
+      <name>my_ulong</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>33</ulong>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_longlong</name>
+      <value>
+        <type>
+          <kind>tk_longlong</kind>
+        </type>
+        <value>
+          <longlong>33</longlong>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_ulonglong</name>
+      <value>
+        <type>
+          <kind>tk_ulonglong</kind>
+        </type>
+        <value>
+          <ulonglong>33</ulonglong>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_octet</name>
+      <value>
+        <type>
+          <kind>tk_octet</kind>
+        </type>
+        <value>
+          <octet>20</octet>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_default_octet</name>
+      <value>
+        <type>
+          <kind>tk_octet</kind>
+        </type>
+        <value/>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_default_boolean</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value/>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_default_short</name>
+      <value>
+        <type>
+          <kind>tk_short</kind>
+        </type>
+        <value/>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_default_long</name>
+      <value>
+        <type>
+          <kind>tk_long</kind>
+        </type>
+        <value/>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_default_ulong</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value/>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_default_longlong</name>
+      <value>
+        <type>
+          <kind>tk_longlong</kind>
+        </type>
+        <value/>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_default_ulonglong</name>
+      <value>
+        <type>
+          <kind>tk_ulonglong</kind>
+        </type>
+        <value/>
+      </value>
+    </configProperty>
+
+    <configProperty>
       <name>my_string_array</name>
       <value>
         <type>
@@ -969,6 +1087,26 @@
     </configProperty>
 
     <configProperty>
+      <name>my_default_float</name>
+      <value>
+        <type>
+          <kind>tk_float</kind>
+        </type>
+        <value/>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_default_variable_string</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value/>
+      </value>
+    </configProperty>
+
+    <configProperty>
       <name>my_bounded_string</name>
       <value>
         <type>
@@ -989,6 +1127,16 @@
         <value>
           <double>56.78</double>
         </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_default_double</name>
+      <value>
+        <type>
+          <kind>tk_double</kind>
+        </type>
+        <value/>
       </value>
     </configProperty>
 
@@ -1262,6 +1410,61 @@
             <value>
               <double>7.8</double>
             </value>
+          </member>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_default_bar_struct</name>
+      <value>
+        <type>
+          <kind>tk_struct</kind>
+          <struct>
+            <name>Bar</name>
+            <typeId>IDL:Bar:1.0</typeId>
+            <member>
+              <name>s</name>
+              <type>
+                <kind>tk_short</kind>
+              </type>
+            </member>
+            <member>
+              <name>l</name>
+              <type>
+                <kind>tk_long</kind>
+              </type>
+            </member>
+            <member>
+              <name>f</name>
+              <type>
+                <kind>tk_float</kind>
+              </type>
+            </member>
+            <member>
+              <name>d</name>
+              <type>
+                <kind>tk_double</kind>
+              </type>
+            </member>
+          </struct>
+        </type>
+        <value>
+          <member>
+            <name>s</name>
+            <value/>
+          </member>
+          <member>
+            <name>l</name>
+            <value/>
+          </member>
+          <member>
+            <name>f</name>
+            <value/>
+          </member>
+          <member>
+            <name>d</name>
+            <value/>
           </member>
         </value>
       </value>

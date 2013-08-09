@@ -53,6 +53,18 @@ namespace CIAO_Foo_Impl
 
     virtual void my_long (::CORBA::Long my_long);
 
+    virtual ::CORBA::ULong my_ulong (void);
+
+    virtual void my_ulong (::CORBA::ULong my_ulong);
+
+    virtual ::CORBA::LongLong my_longlong (void);
+
+    virtual void my_longlong (::CORBA::LongLong my_longlong);
+
+    virtual ::CORBA::ULongLong my_ulonglong (void);
+
+    virtual void my_ulonglong (::CORBA::ULongLong my_ulonglong);
+
     virtual ::CORBA::Float my_float (void);
 
     virtual void my_float (::CORBA::Float my_float);
@@ -64,6 +76,50 @@ namespace CIAO_Foo_Impl
     virtual ::CORBA::LongDouble my_longdouble (void);
 
     virtual void my_longdouble (::CORBA::LongDouble my_longdouble);
+
+    virtual ::CORBA::Char my_default_char (void);
+
+    virtual void my_default_char (::CORBA::Char my_default_char);
+
+    virtual ::CORBA::Octet my_default_octet (void);
+
+    virtual void my_default_octet (::CORBA::Octet my_default_octet);
+
+    virtual ::CORBA::Short my_default_short (void);
+
+    virtual void my_default_short (::CORBA::Short my_default_short);
+
+    virtual ::CORBA::Boolean my_default_boolean (void);
+
+    virtual void my_default_boolean (::CORBA::Boolean my_default_boolean);
+
+    virtual ::CORBA::Long my_default_long (void);
+
+    virtual void my_default_long (::CORBA::Long my_default_long);
+
+    virtual ::CORBA::ULong my_default_ulong (void);
+
+    virtual void my_default_ulong (::CORBA::ULong my_default_ulong);
+
+    virtual ::CORBA::LongLong my_default_longlong (void);
+
+    virtual void my_default_longlong (::CORBA::LongLong my_default_longlong);
+
+    virtual ::CORBA::ULongLong my_default_ulonglong (void);
+
+    virtual void my_default_ulonglong (::CORBA::ULongLong my_default_ulonglong);
+
+    virtual ::CORBA::Float my_default_float (void);
+
+    virtual void my_default_float (::CORBA::Float my_default_float);
+
+    virtual ::CORBA::Double my_default_double (void);
+
+    virtual void my_default_double (::CORBA::Double my_default_double);
+
+    virtual ::CORBA::LongDouble my_default_longdouble (void);
+
+    virtual void my_default_longdouble (::CORBA::LongDouble my_default_longdouble);
 
     virtual ::short_sequence * my_short_sequence (void);
 
@@ -88,6 +144,10 @@ namespace CIAO_Foo_Impl
     virtual ::Bar my_bar_struct (void);
 
     virtual void my_bar_struct (const ::Bar & my_bar_struct);
+
+    virtual ::Bar my_default_bar_struct (void);
+
+    virtual void my_default_bar_struct (const ::Bar & my_default_bar_struct);
 
     virtual ::BarArray_slice* my_bar_array (void);
 
@@ -137,6 +197,10 @@ namespace CIAO_Foo_Impl
     virtual char *my_variable_string (void);
 
     virtual void my_variable_string (const char * my_variable_string);
+
+    virtual char *my_default_variable_string (void);
+
+    virtual void my_default_variable_string (const char * my_default_variable_string);
 
     virtual ::CORBA::WChar *my_bounded_wstring (void);
 
@@ -236,8 +300,20 @@ namespace CIAO_Foo_Impl
       my_short_success_,
       my_boolean_success_,
       my_long_success_,
+      my_ulong_success_,
+      my_longlong_success_,
+      my_ulonglong_success_,
       my_float_success_,
       my_double_success_,
+      my_default_octet_success_,
+      my_default_short_success_,
+      my_default_boolean_success_,
+      my_default_long_success_,
+      my_default_ulong_success_,
+      my_default_longlong_success_,
+      my_default_ulonglong_success_,
+      my_default_float_success_,
+      my_default_double_success_,
       my_short_sequence_success_,
       my_empty_sequence_success_,
       my_long_sequence_success_,
@@ -255,6 +331,7 @@ namespace CIAO_Foo_Impl
       my_float_sequence_success_,
       my_double_sequence_success_,
       my_bar_struct_success_,
+      my_default_bar_struct_success_,
       my_bar_array_success_,
       my_bar_array_2_success_,
       my_sequence_array_success_,
@@ -265,6 +342,7 @@ namespace CIAO_Foo_Impl
       my_array_sequence_success_,
       my_bounded_string_success_,
       my_variable_string_success_,
+      my_default_variable_string_success_,
       supported_short_success_,
       my_struct_struct_success_;
 
