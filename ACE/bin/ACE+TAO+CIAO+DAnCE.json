@@ -127,7 +127,8 @@
                 { file_name_regex: ".*/TAO/orbsvcs/orbsvcs/Event/.*" },
                 { file_name_regex: ".*/CIAO/ciao/.*" },
                 { file_name_regex: ".*/CIAO/connectors/dds4ccm/impl/.*" },
-                { file_name_regex: ".*/DAnCE/dance/LocalityManager.*" }
+                { file_name_regex: ".*/DAnCE/dance/LocalityManager.*" },
+                { file_name_regex: ".*/DAnCE/tools/Config_Handlers/DynAny_Handler.*" }
               ] },
               { not: { file_name_regex: "CIAO/connectors/dds4ccm/impl/ndds" }}
             ]
