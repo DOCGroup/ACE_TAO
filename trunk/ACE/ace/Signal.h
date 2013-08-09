@@ -14,7 +14,7 @@
 #define ACE_SIGNAL_H
 #include /**/ "ace/pre.h"
 
-#include "ace/config-lite.h"
+#include /**/ "ace/config-lite.h"
 
 #if defined (ACE_DONT_INCLUDE_ACE_SIGNAL_H)
 # error ace/Signal.h was #included instead of signal.h by ace/OS_NS_signal.h:  fix!!!!

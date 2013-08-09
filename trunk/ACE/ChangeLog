@@ -1,3 +1,9 @@
+Fri Aug  9 08:30:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/*.h:
+          Use /**/ for include of config-lite.h to not get it in all
+          include diagrams with doxygen
+
 Fri Aug  9 08:24:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ACE+TAO+CIAO+DAnCE.json:

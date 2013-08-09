@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/config-lite.h"
+#include /**/ "ace/config-lite.h"
 #include "ace/Assert.h" // For ACE_ASSERT
 
 // Start Global Macros
