@@ -72,11 +72,10 @@ namespace DAnCE
     }
 
     void
-    DynEnum_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr dyn)
+    DynEnum_Handler::extract_out_of_dynany (const DynamicAny::DynAny_ptr)
     {
       DANCE_TRACE("DynEnum_Handler::extract_out_of_dynany");
 
-      ACE_UNUSED_ARG (dyn);
       DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
         (LM_ERROR, ACE_TEXT ("Extracting Enums not yet supported\n")));
     }
