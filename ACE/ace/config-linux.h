@@ -356,13 +356,14 @@
 # define ACE_HAS_GETIFADDRS
 #endif
 
+#if !defined (ACE_LACKS_LINUX_VERSION_H)
+# include <linux/version.h>
+#endif /* !ACE_LACKS_LINUX_VERSION_H */
+
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in
 // the sockaddr_in::sin_zero field by evaluation of the kernel
 // version. Since version 2.5.47 this problem is fixed.
-#  if !defined (ACE_LACKS_LINUX_VERSION_H)
-#    include <linux/version.h>
-#  endif /* !ACE_LACKS_LINUX_VERSION_H */
 #  if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,47))
 #    define ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO 0
 #  else
@@ -371,12 +372,14 @@
 #endif  /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
 
 #if !defined (ACE_HAS_EVENT_POLL) && !defined (ACE_HAS_DEV_POLL)
-# if !defined (ACE_LACKS_LINUX_VERSION_H)
-#  include <linux/version.h>
-# endif /* !ACE_LACKS_LINUX_VERSION_H */
 # if (LINUX_VERSION_CODE > KERNEL_VERSION (2,6,0))
 #  define ACE_HAS_EVENT_POLL
 # endif
+#endif
+
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,5,8))
+# define ACE_HAS_SCHED_GETAFFINITY 1
+# define ACE_HAS_SCHED_SETAFFINITY 1
 #endif
 
 // This is ghastly, but as long as there are platforms supported
