@@ -1,3 +1,9 @@
+Fri Aug  9 16:53:17 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-linux.h:
+          Linux kernel 2.8.8 and newer have sched_getaffinity and
+          sched_getaffinity
+
 Fri Aug  9 14:27:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_22_DLL.h:
