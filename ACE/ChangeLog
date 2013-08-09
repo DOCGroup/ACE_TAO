@@ -1,3 +1,11 @@
+Fri Aug  9 08:14:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/arpa/os_inet.h:
+        * ace/os_include/netinet/os_in.h:
+        * ace/os_include/netinet/os_tcp.h:
+          Include config-lite.h instead of config-all.h to break some
+          circular includes
+
 Fri Aug  9 08:05:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ACE+TAO+CIAO+DAnCE.json:
