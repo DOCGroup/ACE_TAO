@@ -95,7 +95,7 @@
               dominated_by_astnode: {
                 and: [
                     { contains_astnode: { not: { expression_kind: "throw" }}},
-                    { throws_type: { type_name_regex: "DynamicAny|Deployment" }}
+                    { throws_type: { type_name_regex: "CORBA|DynamicAny|Deployment" }}
                 ]
               }
             }
