@@ -62,7 +62,7 @@ public:
   // naming context implementations.
   static void set_naming_manager (TAO_FT_Naming_Manager *mgr_impl);
 
-  CORBA::Boolean is_object_group (CORBA::Object_ptr obj) const;
+  bool is_object_group (const CORBA::Object_ptr obj) const;
 
  /**
   * Tell the peer replica that this context has been updated.
