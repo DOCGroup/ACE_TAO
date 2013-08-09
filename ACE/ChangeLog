@@ -1,3 +1,12 @@
+Fri Aug  9 14:27:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_22_DLL.h:
+        * tests/Compiler_Features_22_DLL.cpp:
+        * tests/Compiler_Features_22_DLL_Export.h:
+        * tests/tests.mpc:
+          New test for template method specialization combined with
+          dllexport
+
 Fri Aug  9 08:30:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/*.h:
