@@ -12,6 +12,8 @@
 #ifndef ACE_TESTS_COMPILER_FEATURES_22_DLL_H
 #define ACE_TESTS_COMPILER_FEATURES_22_DLL_H
 
+#include /**/ "ace/pre.h"
+
 #include "test_config.h"
 
 #include "Compiler_Features_22_DLL_Export.h"
@@ -36,5 +38,7 @@ COMPILER_FEATURES_22_DLL_Export is_nil<> (A_ptr)
 {
   return false;
 }
+
+#include /**/ "ace/post.h"
 
 #endif /* ACE_TESTS_COMPILER_FEATURES_22_DLL_H */
