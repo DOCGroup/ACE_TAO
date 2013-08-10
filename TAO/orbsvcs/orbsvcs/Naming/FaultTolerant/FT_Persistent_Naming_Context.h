@@ -62,7 +62,7 @@ public:
 
   static void set_naming_manager_impl (TAO_FT_Naming_Manager *mgr_impl);
 
-  bool is_object_group (const CORBA::Object_ptr obj) const;
+  CORBA::Boolean is_object_group (CORBA::Object_ptr obj) const;
 
 protected:
   static TAO_FT_Naming_Manager *naming_manager_impl_;

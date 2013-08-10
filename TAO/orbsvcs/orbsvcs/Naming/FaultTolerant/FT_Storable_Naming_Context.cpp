@@ -45,7 +45,7 @@ TAO_FT_Storable_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
 {
   // Ensure the object is not nil first. If so, it cannot be an ObjectGroup.
   if (CORBA::is_nil (obj))
-    return 0;
+    return false;
 
   // If there is a tagged component with tag = IOP::TAG_FT_GROUP in the
   // object reference then it is an object group
