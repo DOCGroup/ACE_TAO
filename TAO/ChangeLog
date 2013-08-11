@@ -1,3 +1,10 @@
+Sun Aug 11 17:51:49 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Storable_Base.h:
+        * tao/Storable_FlatFileStream.h:
+        * tao/Storable_FlatFileStream.cpp:
+          Reverted addition of operator bool, breaks the ft tests
+
 Sat Aug 10 17:11:21 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h:
