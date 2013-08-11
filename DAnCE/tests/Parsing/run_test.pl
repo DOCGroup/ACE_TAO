@@ -47,7 +47,7 @@ open (STDOUT, ">&OLDOUT");
 open (STDERR, ">&OLDERR");
 
   if ($retval != 0) {
-    print STDERR "ERROR: Parsing returned $retval for file\n";
+    print STDERR "ERROR: Parsing returned $retval for file $file\n";
     $status = 1;
   }
  else  {
