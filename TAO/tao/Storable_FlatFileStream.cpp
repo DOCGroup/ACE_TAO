@@ -345,25 +345,6 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator << (bool b)
-{
-  int const n = ACE_OS::fprintf (this->fl_, "%d\n", b);
-  if (n < 0)
-    this->throw_on_write_error (badbit);
-  return *this;
-}
-
-TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator >> (bool &b)
-{
-  Storable_State state = this->rdstate ();
-  read_integer ("%d\n", b, state, fl_);
-  this->throw_on_read_error (state);
-
-  return *this;
-}
-
-TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (int i)
 {
   int const n = ACE_OS::fprintf (this->fl_, "%d\n", i);
