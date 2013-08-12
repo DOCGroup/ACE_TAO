@@ -1,3 +1,8 @@
+Mon Aug 12 12:35:53 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Extended bcc32 instructions
+
 Mon Aug 12 07:24:33 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/Gateway/Gateway/Event_Channel.cpp:

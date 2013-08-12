@@ -644,7 +644,7 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
       <code>#include "ace/config-win32.h"</code><br>
       <br>
-  </li><li>Open a Command Prompt (DOS Box).<br>
+  </li><li>Open a RAD Studio Command Prompt.<br>
       <br>
   </li><li>Set the ACE_ROOT environment variable to point to the ACE_wrappers
       directory. For example:<br>
@@ -662,10 +662,6 @@ to check <a href="#win32nonic">here</a> first. <p>
   </li><li>Change to the ACE_ROOT\ace directory.<br>
       <br>
       <code>cd %ACE_ROOT%\ace</code><br>
-      <br>
-  </li><li>Build release DLLs for ACE by going:<br>
-      <br>
-      <code>make -f Makefile.bmak all</code><br>
       <br>
   </li><li>You can build several different versions of ACE by setting environment
       variables before you run make:<br>
@@ -690,6 +686,10 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
       You may also enable the options by passing them as command line options to make, for example:<br>
       <code>make -f Makefile.bmak -DDEBUG all</code><br>
+      <br>
+  </li><li>Build ACE by doing:<br>
+      <br>
+      <code>make -f Makefile.bmak all</code><br>
       <br>
 </li></ol>
 
