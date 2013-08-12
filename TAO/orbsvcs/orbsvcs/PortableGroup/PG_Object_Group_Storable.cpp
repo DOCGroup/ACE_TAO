@@ -542,7 +542,7 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
       factory_id_cdr << member->factory_id_;
       stream << factory_id_cdr;
 
-      stream << member->is_primary_;
+      stream << (int)member->is_primary_;
     }
   stream.flush ();
   this->write_occurred_ = true;

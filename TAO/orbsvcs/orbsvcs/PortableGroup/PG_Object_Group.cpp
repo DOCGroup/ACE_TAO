@@ -870,7 +870,7 @@ TAO::PG_Object_Group::initial_populate (void)
       PortableGroup::InitialNumberMembersValue initial_number_members =
         this->get_initial_number_members ();
 
-      if (this->members_.current_size () < initial_number_members)
+      if (((PortableGroup::InitialNumberMembersValue)this->members_.current_size ()) < initial_number_members)
         {
           this->create_members (initial_number_members);
         }
@@ -886,7 +886,7 @@ TAO::PG_Object_Group::minimum_populate (void)
     {
       PortableGroup::MinimumNumberMembersValue minimum_number_members =
         this->get_minimum_number_members ();
-      if (members_.current_size () < minimum_number_members)
+      if (((PortableGroup::InitialNumberMembersValue)members_.current_size ()) < minimum_number_members)
         {
           this->create_members (minimum_number_members);
         }
