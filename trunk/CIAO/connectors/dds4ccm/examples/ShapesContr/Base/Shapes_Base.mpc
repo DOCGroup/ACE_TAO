@@ -75,7 +75,7 @@ project(Shapes_Contr_Base_stub) : ccm_stub {
 }
 
 
-project(Shapes_Contr_Base_svnt) : ciao_servant, dds4ccm_lem_stub, dds4ccm_skel {
+project(Shapes_Contr_Base_svnt) : ciao_servant {
   after      +=   Shapes_Contr_Base_stub
   sharedname  = Shapes_Contr_Base_svnt
   libs       += Shapes_Contr_Base_stub

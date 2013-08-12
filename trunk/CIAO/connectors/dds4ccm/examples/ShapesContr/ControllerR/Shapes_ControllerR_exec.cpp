@@ -54,6 +54,7 @@ namespace CIAO_Shapes_ShapesControllerR_Impl
 
   ControllerR_exec_i::~ControllerR_exec_i (void)
   {
+    delete this->ticker_;
   }
 
   // Supported operations and attributes.
