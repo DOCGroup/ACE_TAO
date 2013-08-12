@@ -106,7 +106,7 @@ ACE_OS::mmap (void *addr,
       const DWORD len_low = static_cast<DWORD>(len),
         len_high = static_cast<DWORD>(len >> 32);
 #  else
-      const DWORD len_low = len, len_high = 0;
+      const DWORD len_low = static_cast<DWORD>(len), len_high = 0;
 #  endif
 
       *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,
