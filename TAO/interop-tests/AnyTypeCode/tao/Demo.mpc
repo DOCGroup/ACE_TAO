@@ -1,0 +1,47 @@
+project(*idl): taoidldefaults, valuetype {
+  idlflags -= -Sa -St
+  IDL_Files {
+    ../idl/Demo.idl
+  }
+
+  Modify_Custom(IDL) {
+    output_follows_input = 0
+  }
+
+  custom_only = 1
+}
+
+project(*Server): taoserver, valuetype, avoids_minimum_corba {
+  exename=Server
+  after += *idl
+  Source_Files {
+    Demo_i.cpp
+    BaseValueFactory.cpp
+    NestedValueFactory.cpp
+    BaseValueImpl.cpp
+    NestedValueImpl.cpp
+    Server.cpp
+  }
+  Source_Files {
+    DemoC.cpp
+    DemoS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, valuetype, avoids_minimum_corba {
+  exename=Client
+  after += *idl
+  libs += TAO_AnyTypeCode
+  Source_Files {
+    Client.cpp
+    BaseValueImpl.cpp
+    NestedValueImpl.cpp
+  }
+  Source_Files {
+    DemoC.cpp
+  }
+  IDL_Files {
+  }
+}
