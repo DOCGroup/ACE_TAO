@@ -1,3 +1,12 @@
+Mon Aug 12 07:18:01 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group.cpp:
+          Fixed conversion warnings with bcc32
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+          Added cast to int when streaming a CORBA::Boolean to Storabe_Base,
+          fixes bcc32 error
+
 Sun Aug 11 17:51:49 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Storable_Base.h:
