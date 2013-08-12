@@ -70,10 +70,10 @@ namespace ACE
               virtual int handle_output (ACE_HANDLE);
 
               /// Called by streambuffer to read/receive new data from peer
-              int read_from_stream (void * buf, size_t length, u_short char_size);
+              int read_from_stream (void * buf, size_t length, size_t char_size);
 
               /// Called by streambuffer to send new data to peer
-              int write_to_stream (const void * buf, size_t length, u_short char_size);
+              int write_to_stream (const void * buf, size_t length, size_t char_size);
 
               /// Returns true as long as the connection to peer is active
               bool is_connected () const;
@@ -100,14 +100,14 @@ namespace ACE
               /// processes queued input
               int process_input (char* buf,
                                  size_t& char_length,
-                                 u_short char_size,
+                                 size_t char_size,
                                  ACE_Time_Value* timeout);
 
               /// Returns true if a timeout is to be used on IO operations.
               bool use_timeout () const;
 
               /// Returns true is the queued data contains at least char_size bytes.
-              bool char_in_queue (u_short char_size);
+              bool char_in_queue (size_t char_size);
 
               bool connected_;
               ACE_Synch_Options sync_opt_;

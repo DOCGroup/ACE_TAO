@@ -282,10 +282,10 @@ Event_Channel::complete_connection_connection (Connection_Handler *connection_ha
 
   // Send the connection id to the peerd.
 
-  ssize_t n = connection_handler->peer ().send ((const void *) &id,
+  ssize_t const n = connection_handler->peer ().send ((const void *) &id,
                                                 sizeof id);
 
-  if (n != sizeof id)
+  if (n != (ssize_t) sizeof id)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "(%t) %p\n",
                       n == 0 ? "peer has closed down unexpectedly" : "send"),
