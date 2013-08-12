@@ -73,7 +73,26 @@ namespace DAnCE
       if (req_tc)
         retval = this->daf_->create_dyn_any_from_type_code (req_tc);
 
-      switch (type.kind ().integral ())
+      TCKind::Value tkind = type.kind ().integral ();
+
+      if ((value.count_short () && tkind != TCKind::tk_short_l) ||
+          (value.count_long () && tkind != TCKind::tk_long_l) ||
+          (value.count_ushort () && tkind != TCKind::tk_ushort_l ) ||
+          (value.count_ulong () && tkind != TCKind::tk_ulong_l) ||
+          (value.count_float () && tkind != TCKind::tk_float_l) ||
+          (value.count_double () && tkind != TCKind::tk_double_l) ||
+          (value.count_boolean () && tkind != TCKind::tk_boolean_l) ||
+          (value.count_octet () && tkind != TCKind::tk_octet_l) ||
+          (value.count_longlong () && tkind != TCKind::tk_longlong_l) ||
+          (value.count_ulonglong () && tkind != TCKind::tk_ulonglong_l) ||
+          (value.count_string () && !(tkind == TCKind::tk_string_l ||
+                                      tkind == TCKind::tk_char_l ||
+                                      tkind == TCKind::tk_wchar_l)))
+        {
+          throw Config_Error (ACE_TEXT (""), ACE_TEXT ("Wrong value type for data type"));
+        }
+
+      switch (tkind)
         {
           // ========== BASIC TYPES
         case TCKind::tk_null_l:

@@ -1,3 +1,10 @@
+Mon Aug 12 07:40:11 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+          Added check for incorrect value, for a specific kind the
+          value could be empty, but not of a different type, that
+          is an error in the cdp
+
 Sun Aug 11 17:50:53 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Parsing/run_test.pl:
