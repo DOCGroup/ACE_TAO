@@ -270,7 +270,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                                           sizeof ior_len,
                                           0,
                                           &tv);
-                  if (result != sizeof (ior_len))
+                  if (result != (ssize_t)sizeof (ior_len))
                     {
                       TAOLIB_ERROR ((LM_ERROR,
                                   ACE_TEXT ("%p\n"),
