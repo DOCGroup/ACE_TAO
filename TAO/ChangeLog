@@ -1,3 +1,11 @@
+Mon Aug 12 14:43:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * tests/Bug_3574_Regression/test.cpp:
+        * tests/Bug_4102_Regression:
+        * tests/IDL_Test/constants.idl:
+          Suppressed some warnings with bcc32
+
 Mon Aug 12 08:28:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
