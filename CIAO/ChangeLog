@@ -1,3 +1,11 @@
+Mon Aug  12 09:48:27 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        *  connectors/dds4ccm/examples/ShapesContr/Base/Shapes_Base.mpc:
+        Remove dds4ccm from svnt 
+        *  connectors/dds4ccm/examples/ShapesContr/ControllerR/Shapes_ControllerR_exec.cpp:
+        Delete ticker
+
+
 Fri Aug  9 16:57:32 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DAnCE/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
