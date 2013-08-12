@@ -1,3 +1,11 @@
+Mon Aug 12 18:11:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_sys_mman.inl:
+          Added cast to silence compiler warning with vs2005.
+          This fixes bugzilla 4122, thanks to Yogesh Sharma
+          <Yogesh dot Sharma at saabsensis dot com> for reporting this and
+          supplying the patch
+
 Mon Aug 12 14:44:34 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Compression/rle/RLECompressor.cpp:
