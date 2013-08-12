@@ -174,7 +174,7 @@ namespace ACE
     int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::read_from_stream (
         void * buf,
         size_t length,
-        u_short char_size)
+        size_t char_size)
       {
         INET_TRACE ("ACE_IOS_StreamHandler::read_from_stream");
 
@@ -311,7 +311,7 @@ namespace ACE
     int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::process_input (
         char* buf,
         size_t& char_length,
-        u_short char_size,
+        size_t char_size,
         ACE_Time_Value* timeout)
       {
         INET_TRACE ("ACE_IOS_StreamHandler::process_input");
@@ -425,13 +425,13 @@ namespace ACE
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
-    bool StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::char_in_queue (u_short char_size)
+    bool StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::char_in_queue (size_t char_size)
       {
         return this->msg_queue ()->message_bytes () >= char_size;
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
-    int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::write_to_stream (const void * buf, size_t length, u_short char_size)
+    int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::write_to_stream (const void * buf, size_t length, size_t char_size)
       {
         INET_TRACE ("ACE_IOS_StreamHandler::write_to_stream");
 

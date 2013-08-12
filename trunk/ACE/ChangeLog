@@ -1,3 +1,15 @@
+Mon Aug 12 07:24:33 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/Gateway/Gateway/Event_Channel.cpp:
+          Added cast to resolve bcc32 warning
+
+        * protocols/ace/INet/StreamHandler.h:
+        * protocols/ace/INet/StreamHandler.cpp:
+          Changed char_size argumen to size_t to resolve bcc32 warnings
+
+        * protocols/tests/RMCast/Receiver.cpp:
+          Added cast to resolve bcc32 warning
+
 Sat Aug 10 17:10:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Compression/rle/RLECompressor.cpp:
