@@ -1,0 +1,129 @@
+<project name="TAO-JacORB AnyTypeCode interop test" default="compile" basedir=".">
+
+    <property environment="env"/>
+    <property name="src.dir"        value="jacorb"/>
+    <property name="build.dir"      value="build"/>
+    <property name="classes.dir"    value="${build.dir}/classes"/>
+
+    <property name="idl.dir"        value="idl" />
+    <property name="gen.dir"        value="${build.dir}/generated" />
+    <property name="resources.dir"  value="resources" />
+    <property name="jacorb.dir"     value="${env.JACORB_HOME}" />
+
+    <property name="tmp.dir"        value="${build.dir}/tmp" />
+
+    <!-- this property can be overridden on the command line to pass in additional args  -->
+    <!-- to the started java processes e.g. -Djaco.args=-Djacorb.log.default.verbosity=4 -->
+    <property name="jaco.args"      value="-Dignored=value" />
+
+    <path id="jacorb.classpath" >
+        <pathelement location="${jacorb.dir}/classes" />
+        <fileset dir="${jacorb.dir}/lib">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <path id="demo.classpath" >
+        <pathelement location="${classes.dir}" />
+        <pathelement location="${resources.dir}" />
+        <pathelement location="../common/build/classes" />
+    </path>
+
+    <presetdef name="jaco">
+        <java fork="true" >
+            <jvmarg value="-Xbootclasspath/p:${jacorb.dir}/classes" />
+            <jvmarg value="-Djava.endorsed.dirs=${jacorb.dir}/lib" />
+            <jvmarg value="-Dorg.omg.CORBA.ORBClass=org.jacorb.orb.ORB" />
+            <jvmarg value="-Dorg.omg.CORBA.ORBSingletonClass=org.jacorb.orb.ORBSingleton" />
+            <jvmarg value="${jaco.args}" />
+
+            <classpath refid="demo.classpath" />
+        </java>
+    </presetdef>
+
+    <target name="idl.taskdef">
+        <taskdef name="jacidl" classname="org.jacorb.idl.JacIDL" classpathref="jacorb.classpath"/>
+    </target>
+
+    <target name="idl" depends="idl.taskdef">
+        <mkdir dir="${idl.dir}"/>
+        <jacidl srcdir="${idl.dir}" destdir="${gen.dir}" includes="*.idl" helpercompat="jacorb"
+    	   includepath="${jacorb.dir}/idl/omg" />
+    </target>
+
+    <target name="compile" depends="idl" >
+        <mkdir dir="${classes.dir}"/>
+
+        <javac destdir="${classes.dir}" debug="true" includeantruntime="false">
+            <src path="${src.dir}" />
+            <src path="${gen.dir}" />
+            <classpath refid="jacorb.classpath" />
+        </javac>
+    </target>
+
+    <macrodef name="run-demo" description="executes server and client process concurrently" >
+        <element name="run-server" description="tasks that are used to start the serverprocess" />
+        <element name="run-client" description="tasks that are used to start the clientprocess" />
+
+        <sequential>
+            <mkdir dir="${tmp.dir}" />
+            <tempfile property="killfile.file" destdir="${tmp.dir}" prefix="kill" />
+            <tempfile property="ior.file" destdir="${tmp.dir}" prefix="server" suffix=".ior" />
+
+            <parallel>
+                <sequential>
+                    <run-server />
+                </sequential>
+
+                <sequential>
+                    <waitfor maxwait="30" maxwaitunit="second">
+                        <available file="${ior.file}"/>
+                    </waitfor>
+
+                    <run-client />
+
+                    <touch file="${killfile.file}" />
+                </sequential>
+
+            </parallel>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="run-default-server" >
+        <attribute name="classname" />
+
+        <sequential>
+            <jaco classname="@{classname}" >
+                <arg value="${ior.file}" />
+                <arg value="${killfile.file}" />
+            </jaco>
+        </sequential>
+    </macrodef>
+
+    <macrodef name="run-default-client">
+        <attribute name="classname" />
+
+        <sequential>
+            <jaco classname="@{classname}" >
+                <arg value="${ior.file}" />
+            </jaco>
+        </sequential>
+    </macrodef>
+
+
+    <target name="clean">
+         <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="demo" depends="compile" >
+        <run-demo>
+            <run-server>
+                <run-default-server classname="demo.Server" />
+            </run-server>
+
+            <run-client>
+                <run-default-client classname="demo.Client" />
+            </run-client>
+        </run-demo>
+    </target>
+</project>

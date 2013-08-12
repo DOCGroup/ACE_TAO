@@ -1,3 +1,45 @@
+Mon Aug 12 20:50:27 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * interop-tests/AnyTypeCode:
+
+        * interop-tests/AnyTypeCode/README.txt:
+        * interop-tests/AnyTypeCode/atc.mwc:
+        * interop-tests/AnyTypeCode/build.xml:
+        * interop-tests/AnyTypeCode/idl:
+
+        * interop-tests/AnyTypeCode/idl/Demo.idl:
+
+        * interop-tests/AnyTypeCode/jacorb:
+
+        * interop-tests/AnyTypeCode/jacorb/demo:
+
+        * interop-tests/AnyTypeCode/jacorb/demo/ATC_TestImpl.java:
+        * interop-tests/AnyTypeCode/jacorb/demo/BaseValueImpl.java:
+        * interop-tests/AnyTypeCode/jacorb/demo/BaseValueValueFactoryImpl.java:
+        * interop-tests/AnyTypeCode/jacorb/demo/Client.java:
+        * interop-tests/AnyTypeCode/jacorb/demo/NestedValueImpl.java:
+        * interop-tests/AnyTypeCode/jacorb/demo/NestedValueValueFactoryImpl.java:
+        * interop-tests/AnyTypeCode/jacorb/demo/Server.java:
+
+        * interop-tests/AnyTypeCode/tao:
+
+        * interop-tests/AnyTypeCode/tao/BaseValueFactory.h:
+        * interop-tests/AnyTypeCode/tao/BaseValueFactory.cpp:
+        * interop-tests/AnyTypeCode/tao/BaseValueImpl.h:
+        * interop-tests/AnyTypeCode/tao/BaseValueImpl.cpp:
+        * interop-tests/AnyTypeCode/tao/Client.cpp:
+        * interop-tests/AnyTypeCode/tao/Demo.mpc:
+        * interop-tests/AnyTypeCode/tao/Demo_i.h:
+        * interop-tests/AnyTypeCode/tao/Demo_i.cpp:
+        * interop-tests/AnyTypeCode/tao/NestedValueFactory.h:
+        * interop-tests/AnyTypeCode/tao/NestedValueFactory.cpp:
+        * interop-tests/AnyTypeCode/tao/NestedValueImpl.h:
+        * interop-tests/AnyTypeCode/tao/NestedValueImpl.cpp:
+        * interop-tests/AnyTypeCode/tao/Server.cpp:
+
+          New test to show that TAO now can unmarshal Anys that carry indirect
+          typecodes. For now TAO still does not generate indirect typecodes.
+
 Mon Aug 12 14:43:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
