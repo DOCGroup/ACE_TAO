@@ -1,3 +1,8 @@
+Mon Aug 12 14:44:34 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/rle/RLECompressor.cpp:
+          Added version check to bcc32
+
 Mon Aug 12 12:35:53 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:
