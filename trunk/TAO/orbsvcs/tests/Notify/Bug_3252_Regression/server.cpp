@@ -33,10 +33,10 @@ ACE_TCHAR const * const scpc_loadNotifyService = ACE_DYNAMIC_VERSIONED_SERVICE_D
 ACE_TCHAR const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
 
 int
-unloadNotify(ACE_Service_Config & r_serviceConfig)
+unloadNotify(ACE_Service_Config & service_config)
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Unloading NotifyService ...\n")));
-  if(r_serviceConfig.process_directive(scpc_unloadNotifyService) != 0)
+  if(service_config.process_directive(scpc_unloadNotifyService) != 0)
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unloading NotifyService failed\n")));
     return -1;
@@ -46,7 +46,7 @@ unloadNotify(ACE_Service_Config & r_serviceConfig)
 }
 
 int
-loadNotify(ACE_Service_Config & r_serviceConfig)
+loadNotify(ACE_Service_Config & service_config)
 {
   try
   {
@@ -58,7 +58,7 @@ loadNotify(ACE_Service_Config & r_serviceConfig)
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("RootPOA OK.\n")));
 
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("Loading NotifyService ...\n")));
-    if(0 != r_serviceConfig.process_directive(scpc_loadNotifyService))
+    if(0 != service_config.process_directive(scpc_loadNotifyService))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Loading NotifyService failed\n")));
       return -1;
@@ -113,10 +113,10 @@ loadNotify(ACE_Service_Config & r_serviceConfig)
 }
 
 
-int unloadOrb(ACE_Service_Config & r_serviceConfig)
+int unloadOrb(ACE_Service_Config & service_config)
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Unloading ORB ...\n")));
-  if(0 != r_serviceConfig.process_directive(scpc_unloadOrb))
+  if(0 != service_config.process_directive(scpc_unloadOrb))
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unloading ORB failed\n")));
     return -1;
@@ -125,10 +125,10 @@ int unloadOrb(ACE_Service_Config & r_serviceConfig)
   return 0;
 }
 
-int loadOrb(ACE_Service_Config & r_serviceConfig)
+int loadOrb(ACE_Service_Config & service_config)
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Loading ORB ...\n")));
-  if(0 != r_serviceConfig.process_directive(scpc_loadOrb))
+  if(0 != service_config.process_directive(scpc_loadOrb))
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Loading ORB failed\n")));
     return -1;
