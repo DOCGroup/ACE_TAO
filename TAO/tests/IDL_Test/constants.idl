@@ -15,10 +15,6 @@
  */
 //=============================================================================
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x660)
-#  pragma option push -w-8056
-#endif
-
 const string all_escape = "\n\t\v\b\r\f\a\\\?\'\"";
 
 const char tick = '\'';
@@ -148,7 +144,3 @@ module SignedGen
   typedef short ShortType;
   const ShortType short_val = -3;
 };
-
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x660)
-# pragma option pop
-#endif
