@@ -1,4 +1,5 @@
 // $Id$
+// FUZZ: disable check_for_ace_log_categories
 
 #include "Demo_i.h"
 #include "BaseValueFactory.h"

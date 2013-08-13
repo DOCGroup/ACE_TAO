@@ -1,3 +1,4 @@
+// $Id$
 project(*idl): taoidldefaults, valuetype {
   idlflags -= -Sa -St
   IDL_Files {
