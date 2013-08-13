@@ -1,3 +1,4 @@
+<!-- $Id$ -->
 <project name="TAO-JacORB AnyTypeCode interop test" default="compile" basedir=".">
 
     <property environment="env"/>
