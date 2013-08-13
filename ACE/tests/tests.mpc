@@ -1776,6 +1776,9 @@ project(Service Config Test) : acetest {
   Source_Files {
     Service_Config_Test.cpp
   }
+  specific(vxtest) {
+    libs += Service_Config_DLL
+  }
 }
 
 project(Framework Component Test) : acetest {
@@ -1987,6 +1990,9 @@ project(Based Pointer Test) : acetest {
   Source_Files {
     Based_Pointer_Test.cpp
   }
+  specific(vxtest) {
+    libs += Based_Pointer_Test_Lib
+  }
 }
 
 project(Library Unload): unload_libace {
@@ -2065,6 +2071,9 @@ project(Service Config Stream Test) : acetest {
   exename = Service_Config_Stream_Test
   Source_Files {
     Service_Config_Stream_Test.cpp
+  }
+  specific(vxtest) {
+    libs += Service_Config_Stream_DLL
   }
 }
 

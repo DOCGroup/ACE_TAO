@@ -1,3 +1,11 @@
+Tue Aug 13 17:09:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/tests.mpc:
+          Some tests do need a shared library that it doesn't link with,
+          added this to the vxtest specific part for that test so
+          that the test framework also copies those shared libraries
+          to the test target
+
 Mon Aug 12 18:11:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_mman.inl:
