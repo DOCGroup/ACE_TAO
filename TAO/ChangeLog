@@ -1,3 +1,10 @@
+Wed Aug 14 17:34:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/corba.h:
+          Document that this file is for backward compatibility
+          only. Thanks to Lukas Grützmacher <Lukas dot Gruetzmacher
+          at ais-automation dot com> that this was not done.
+
 Tue Aug 13 13:43:15 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * interop-tests/AnyTypeCode/README.txt:
