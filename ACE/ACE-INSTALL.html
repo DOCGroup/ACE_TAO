@@ -1609,13 +1609,15 @@ symbols are necessary when you want to debug your code.</p>
 <p></p><hr align="left" width="50%">
 
 <p></p><h2><a name="android">Building and Installing ACE on Android</a></h2>
-<p>ACE can be built for Android by using the Android Native Development
-Kit's <b>standalone toolchain</b>.  The compilation creates native binaries,
+<p>ACE can be built for Android by using the <a href="http://developer.android.com/tools/sdk/ndk/index.html">Android Native Development
+Kit's</a> standalone toolchain. Testing has been performed with
+NDK6 and NDK8e. The compilation creates native binaries,
 not the standard Android Java applications.  The native binary applications
 that use ACE can be run by either a shell or using the Java Runtime exec
 operation.</p>
 
-<p>The standalone toolchain must be set for a platform of android-9 or later. From your NDK root directory you can use their <code>make-standalone-toolchain.sh</code> script to set this up. For example:</p>
+<p>The standalone toolchain must configured for a platform of android API level 8, 9, or 14. From your NDK root directory you can use their 
+<code>make-standalone-toolchain.sh</code> script to set this up. For example:</p>
 <code>./build/tools/make-standalone-toolchain.sh --toolchain=arm-linux-androideabi-4.4.3 --arch=arm --platform=android-9 --install-dir=../arm_tools</code>
 <p>To set up an arm-specific tool chain. With the release of NDK r6, x86 targets are supported, so the setup command for that would be:</p>
 <code>./build/tools/make-standalone-toolchain.sh --toolchain=x86-4.4.3 --arch=x86 --platform=android-9 --install-dir=../x86_tools</code>
@@ -1625,12 +1627,11 @@ The bin directory under the installed standalone toolchain dir must be added to 
 When using the Android NDK on a 64bit Linux system you have to install the
 following 32bit packages: <code>libstdc++.i686 glibc.i686 ncurses-libs.i686 zlib.i686</code>
 </p>
-<p>Due to Android's library loading restrictions, static linking is necessary
- for all included libraries.</p>
+<p>Starting with NDK8e it is possible to use shared libraries on Android.</p>
 
 <p>Compilation requires using the NDK's standalone toolchain for it's
 exception and RTTI support.  The standard NDK compiler is not identified
- as supporting exceptions or RTTI, as of NDK r5c.</p>
+as supporting exceptions or RTTI, as of NDK r5c.</p>
 
 <p>It is not recommended to perform the build on a Windows host.  Using the
 NDK r5c, compilation issues were encountered on Windows XP, when the compiler
@@ -1656,7 +1657,8 @@ cross compiling the code.<p>
       <li>Create <code>include/makeinclude/platform_macros.GNU</code>:
         <ul>
           <li>set options for debug and optimized builds</li>
-          <li>inline is forced on as are static libs and no-hidden-visibility</li>
+          <li>inline is forced on and no-hidden-visibility</li>
+          <li>if you want to compile static, add <code>static_libs_only=1</code></li>
           <li>Include the <code>include/makeinclude/platform_android.GNU</code> file.</li>
           <li>If building TAO, set the tao idl options specified in the cross compiling instructions in <code>TAO-INSTALL.html</code></li>
         </ul>
