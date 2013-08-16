@@ -1,0 +1,13 @@
+// $Id$
+
+#ifndef DEPLOYMENT_INVALIDCOMPONENTEXECPARAMETER_IDL
+#define DEPLOYMENT_INVALIDCOMPONENTEXECPARAMETER_IDL
+
+module Deployment {
+  exception InvalidComponentExecParameter {
+    string name;
+    string reason;
+  };
+};
+
+#endif

@@ -1,0 +1,24 @@
+// $Id$
+
+/**
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
+ */
+
+#ifndef DDS_SHAPES_SENDER_IDL
+#define DDS_SHAPES_SENDER_IDL
+
+#include "Connector/Shapes_Connector.idl"
+#include "../Base/Shapes_Contr_Base.idl"
+
+module Shapes
+{
+  component Sender
+  {
+    port Shapes::DDS_Write info_write;
+    uses shape_attributes_get shapeAttribsSub;
+    provides shape_changes shapeChangesPub;
+    attribute string color;
+  };
+};
+
+#endif

@@ -1,0 +1,49 @@
+//$Id$
+project(*idl) : tao_versioning_idl_defaults, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -Sa -St \
+                -Wb,export_macro=TAO_IORInterceptor_Export \
+                -Wb,export_include=tao/IORInterceptor/iorinterceptor_export.h \
+                -Wb,include_guard=TAO_IORINTERCEPTOR_SAFE_INCLUDE \
+                -Wb,safe_include=tao/IORInterceptor/IORInterceptor.h \
+                -iC tao/IORInterceptor
+    IORInterceptor.pidl
+  }
+
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -Sa -St \
+                -Wb,export_macro=TAO_IORInterceptor_Export \
+                -Wb,export_include=tao/IORInterceptor/iorinterceptor_export.h \
+                -iC IORInterceptor
+    IORInfo.pidl
+  }
+
+  specific {
+    install_dir = tao/IORInterceptor
+  }
+}
+
+project(IORInterceptor) : taolib, tao_output, portableserver, objreftemplate, pi, install, taoidldefaults {
+  after       += *idl
+  sharedname   = TAO_IORInterceptor
+  dynamicflags += TAO_IORINTERCEPTOR_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    IORInterceptorC.cpp
+    IORInfoC.cpp
+  }
+
+  Header_Files {
+    *.h
+    IORInterceptorC.h
+    IORInterceptorS.h
+    IORInfoC.h
+    IORInfoS.h
+  }
+
+  specific {
+    install_dir = tao/IORInterceptor
+  }
+}

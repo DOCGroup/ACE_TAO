@@ -1,0 +1,28 @@
+// $Id$
+
+/**
+ * @file
+ * @author Marcel Smit (msmit@remedy.nl)
+ */
+
+#ifndef RECEIVER_IDL
+#define RECEIVER_IDL
+
+#include "Connector/Shapes_Connector.idl"
+#include "../Base/Shapes_Contr_Base.idl"
+
+module Shapes
+{
+  component Receiver
+  {
+    port Shapes::DDS_Listen info_out;
+    port Shapes::DDS_Get info_get;
+    provides shape_received shapeReceivedPub;
+    attribute unsigned long rate;
+    attribute boolean get_data; //if true, get_one and get_all are invoked
+    attribute boolean read_data;//if true, read_one and read_all are invoked.
+    attribute boolean raw_listen; //if true, raw listen port is enabled.
+  };
+};
+
+#endif

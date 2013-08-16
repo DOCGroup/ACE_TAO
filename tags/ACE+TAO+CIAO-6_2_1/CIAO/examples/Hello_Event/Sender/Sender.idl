@@ -1,0 +1,29 @@
+//$Id$
+
+#ifndef SENDER_IDL
+#define SENDER_IDL
+
+
+#include "../Hello_Base/Hello_Base.idl"
+#include "tao/StringSeq.pidl"
+
+module Hello
+{
+  /* This is a Sender specific interface which will be used to get the
+   * process start.
+   */
+
+  interface trigger
+  {
+    void start ();
+  };
+
+  component Sender supports trigger
+  {
+    provides ReadMessage push_message;
+    publishes TimeOut click_out;
+
+    attribute string local_message;
+  };
+};
+#endif /*SENDER_IDL*/

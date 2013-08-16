@@ -1,0 +1,54 @@
+// $Id$
+
+#ifndef TAO_MONITOR_MONITOR_TYPES_PIDL
+#define TAO_MONITOR_MONITOR_TYPES_PIDL
+
+#include "tao/TimeBase.pidl"
+#include "tao/StringSeq.pidl"
+
+module Monitor
+{
+  struct DataValue
+  {
+    /// The number of samples currently taken into account
+    TimeBase::TimeT timestamp;
+    double value;
+  };
+
+  typedef string Name;
+  typedef string NameFilter;
+  typedef CORBA::StringSeq NameList;
+  typedef sequence<DataValue> DataValueList;
+  struct Numeric
+  {
+    DataValueList dlist;
+    unsigned long count;
+    double average;
+    double sum_of_squares;
+    double minimum;
+    double maximum;
+    double last;
+  };
+  enum DataType { DATA_NUMERIC, DATA_TEXT };
+  union UData switch (DataType) {
+    case DATA_NUMERIC: Numeric num;
+    case DATA_TEXT: NameList list;
+  };
+  struct Data
+  {
+    Name itemname;
+    UData data_union;
+  };
+  typedef sequence<Data> DataList;
+  typedef long ConstraintId;
+  typedef sequence<ConstraintId> ConstraintIdList;
+  typedef string Constraint;
+  struct ConstraintStruct
+  {
+    Name itemname;
+    ConstraintId id;
+  };
+  typedef sequence<ConstraintStruct> ConstraintStructList;
+};
+
+#endif /* TAO_MONITOR_MONITOR_TYPES_PIDL */
