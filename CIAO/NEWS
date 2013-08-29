@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.2.1 and CIAO-1.2.2
 =======================================================
 
+. The DDS4CCM State connector now keeps the state in
+  DDS. The listeners are now using DDS read so that the
+  state is not destroyed within DDS
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.2.0 and CIAO-1.2.1
 =======================================================
 
