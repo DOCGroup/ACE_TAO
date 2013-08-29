@@ -332,6 +332,8 @@ ACE_HAS_IDTYPE_T                        Compiler/platform supports
 ACE_HAS_INLINED_OSCALLS                 Inline all the static class OS
                                         methods to remove call
                                         overhead
+ACE_HAS_INT_SWAB                        Platform's swab function has length
+                                        argument of type int, not ssize_t.
 ACE_HAS_IP_MULTICAST                    Platform supports IP multicast
 ACE_HAS_IPV6                            Platform supports IPv6.
 ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED   gethostbyaddr does not handle

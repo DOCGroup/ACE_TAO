@@ -1,3 +1,26 @@
+Thu Aug 29 22:06:55 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_unistd.inl (swab): Added support for ACE_HAS_INT_SWAB for
+          platforms where the 'length' arg to swab() is an int instead of
+          the standard ssize_t.
+
+        * ace/config-win32-common.h: Added ACE_HAS_INT_SWAB
+
+        * tests/OS_Test.cpp: Added a ACE_OS::swab() test.
+
+        * ace/Process.h:
+        * ace/Process.inl: Changed ACE_Process::command_line_buf(int*) to
+          command_line_buf(size_t*) to align with the member whose value is
+          returned. 
+
+        * ace/README: Added ACE_HAS_INT_SWAB description.
+
+        * NEWS: Added the ACE_Process::command_line_buf() API change note.
+
+        * THANKS: Updated John Lilley's email address. Thanks to John for
+          noticing the busted 64-bit Windows builds that flagged the above
+          issues with compile warnings.
+
 Mon Aug 26 11:26:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:

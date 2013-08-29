@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.2.1 and ACE-6.2.2
 ====================================================
 
+. The max_len argument to ACE_Process::command_line_buf changed from int*
+  to size_t*. This corrects a mismatch between the argument type and the
+  data member in ACE_Process from which the value comes.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.0 and ACE-6.2.1
 ====================================================
 

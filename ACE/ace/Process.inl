@@ -327,7 +327,7 @@ ACE_Process_Options::getegid (void) const
 #endif /* ACE_WIN32 */
 
 ACE_INLINE ACE_TCHAR *
-ACE_Process_Options::command_line_buf (int *max_lenp)
+ACE_Process_Options::command_line_buf (size_t *max_lenp)
 {
   if (max_lenp != 0)
     *max_lenp = this->command_line_buf_len_;
