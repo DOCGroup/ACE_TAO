@@ -181,7 +181,8 @@ private:
       typename CCM_TYPE::push_observer_traits,
       typename DDS_TYPE::typed_reader_type,
       typename DDS_TYPE::value_type,
-      SEQ_TYPE>
+      SEQ_TYPE,
+      CIAO::DDS4CCM::DDS4CCM_READ>
   push_observer_;
   //@}
 
@@ -193,7 +194,8 @@ private:
       typename CCM_TYPE::push_state_observer_traits,
       typename DDS_TYPE::typed_reader_type,
       typename DDS_TYPE::value_type,
-      SEQ_TYPE>
+      SEQ_TYPE,
+      CIAO::DDS4CCM::DDS4CCM_READ>
     push_state_observer_;
   //@}
 

@@ -11,10 +11,14 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   // ListenManyByManyTest_Listener_exec_i
   //============================================================
   ListenManyByManyTest_Listener_exec_i::ListenManyByManyTest_Listener_exec_i (
-                                              Atomic_ULong &received_one_by_one,
-                                              Atomic_ULong &received_many_by_many)
-    : received_one_by_one_ (received_one_by_one),
-      received_many_by_many_ (received_many_by_many)
+    ::LMBM_Test::CCM_Receiver_Context_ptr context,
+    Atomic_ULong &received_one_by_one,
+    Atomic_ULong &received_many_by_many,
+    Atomic_ULong &samples_read)
+    : context_ (::LMBM_Test::CCM_Receiver_Context::_duplicate (context)),
+      received_one_by_one_ (received_one_by_one),
+      received_many_by_many_ (received_many_by_many),
+      samples_read_ (samples_read)
   {
   }
 
@@ -38,19 +42,19 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   {
     if (an_instance.length () == 0)
       {
-        ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
-                               "instance sequence length is nil\n"));
+        ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data: "
+                              "instance sequence length is nil\n"));
         return;
       }
     for (CORBA::ULong i = 0 ; i < info.length(); ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, "ListenManyByManyTest_Listener_exec_i::on_many_data:"
+        ACE_DEBUG ((LM_DEBUG, "ListenManyByManyTest_Listener_exec_i::on_many_data: "
                                "key <%C> - iteration <%d>\n",
                                an_instance[i].key.in (),
                                an_instance[i].iteration));
         if (info[i].instance_handle == ::DDS::HANDLE_NIL)
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data:"
+            ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data: "
                                 "instance handle %d seems to be nil"
                                 "key <%C> - iteration <%d>\n",
                                  i,
@@ -60,7 +64,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
         if (info[i].source_timestamp.sec == 0 &&
             info[i].source_timestamp.nanosec == 0)
           {
-            ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_one_data: "
+            ACE_ERROR ((LM_ERROR, "ERROR: ListenManyByManyTest_Listener_exec_i::on_many_data: "
                                 "source timestamp seems to be invalid (nil) "
                                 "key <%C> - iteration <%d>\n",
                                 an_instance[i].key.in (),
@@ -68,6 +72,30 @@ namespace CIAO_LMBM_Test_Receiver_Impl
           }
       }
     this->received_many_by_many_ += an_instance.length ();
+    try
+      {
+        ::LMBM_Test::ListenManyByManyTestConnector::Reader_var reader =
+          this->context_->get_connection_info_listen_data ();
+        if (::CORBA::is_nil (reader.in ()))
+          {
+            ACE_ERROR ((LM_ERROR, "ListenManyByManyTest_Listener_exec_i::on_many_data - "
+                      "ERROR: Reader seems nil\n"));
+          }
+        ::ListenManyByManyTestSeq seq;
+        ::CCM_DDS::ReadInfoSeq infos;
+        reader->read_all (seq, infos);
+        this->samples_read_ += seq.length ();
+
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ListenManyByManyTest_Listener_exec_i::on_many_data - ")
+                              ACE_TEXT ("Read <%u> samples\n"),
+                              seq.length ()));
+      }
+    catch (const CCM_DDS::InternalError& ex)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Internal Error ")
+                     ACE_TEXT ("when using reader->read_all: index <%d> - retval <%d>\n"),
+                     ex.index, ex.error_code));
+      }
   }
 
   //============================================================
@@ -76,6 +104,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   Receiver_exec_i::Receiver_exec_i (void)
     : received_one_by_one_ (0),
       received_many_by_many_ (0),
+      samples_read_ (0),
       iterations_ (10),
       keys_ (5)
   {
@@ -97,8 +126,10 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   Receiver_exec_i::get_info_listen_data_listener (void)
   {
     return new ListenManyByManyTest_Listener_exec_i (
-                this->received_one_by_one_,
-                this->received_many_by_many_);
+      this->context_.in (),
+      this->received_one_by_one_,
+      this->received_many_by_many_,
+      this->samples_read_);
   }
 
   ::CCM_DDS::CCM_PortStatusListener_ptr
@@ -203,6 +234,15 @@ namespace CIAO_LMBM_Test_Receiver_Impl
                                 "Received only data on "
                                 "many_by_many callback. "
                                 "Test passed!\n"));
+      }
+    if (this->samples_read_.value () == 0)
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK: read no samples\n")));
+      }
+    else
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: read <%u> samples\n"),
+                this->samples_read_.value ()));
       }
   }
 

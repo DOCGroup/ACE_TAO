@@ -104,7 +104,8 @@ private:
       typename CCM_TYPE::push_consumer_traits,
       typename DDS_TYPE::typed_reader_type,
       typename DDS_TYPE::value_type,
-      SEQ_TYPE>
+      SEQ_TYPE,
+      CIAO::DDS4CCM::DDS4CCM_TAKE>
     push_consumer_;
   //@}
 

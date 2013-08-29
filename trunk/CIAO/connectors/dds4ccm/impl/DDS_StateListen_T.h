@@ -3,7 +3,7 @@
  *
  * $Id$
  *
- * Wrapper facade for NDDS.
+ * DDS4CCM StateListen port
  */
 #ifndef DDS_STATELISTEN_T_H_
 #define DDS_STATELISTEN_T_H_
@@ -11,8 +11,9 @@
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.h"
 #include "dds4ccm/impl/StateListenerControl_T.h"
 #include "dds4ccm/impl/DataReaderStateListener_T.h"
+#include "dds4ccm/impl/Utils.h"
 
-template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE, CIAO::DDS4CCM::DDS4CCM_LISTENER_READ_TAKE LRT>
 class DDS_StateListen_T
   : public DDS_Subscriber_Base_T<CCM_TYPE,
                                  TYPED_DDS_READER,
@@ -41,7 +42,7 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 private:
-  typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<CCM_TYPE, TYPED_DDS_READER, SEQ_VALUE_TYPE>
+  typedef ::CIAO::DDS4CCM::DataReaderStateListener_T<CCM_TYPE, TYPED_DDS_READER, SEQ_VALUE_TYPE, LRT>
     DataReaderStateListener_type;
   typedef CCM_DDS_StateListenerControl_T< ::CCM_DDS::CCM_StateListenerControl>
     StateListenerControl_type;
