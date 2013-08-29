@@ -18,6 +18,10 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
+    /**
+     * Guard class which calls begin_coherent_changes() on
+     * construction and end_coherent_changes() at destruction
+     */
     class DDS4CCM_DDS_IMPL_Export Coherent_Changes_Guard :
       private ACE_Copy_Disabled
     {

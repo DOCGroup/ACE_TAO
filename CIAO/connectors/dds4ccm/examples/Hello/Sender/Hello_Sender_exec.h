@@ -185,8 +185,7 @@ namespace CIAO_Hello_Sender_Impl
     CORBA::Boolean log_time_;
     ACE_CString msg_;
 
-    ACE_CString create_message (
-          const ACE_CString &msg);
+    ACE_CString create_message (const ACE_CString &msg);
     Atomic_Boolean ready_to_start_;
   };
 

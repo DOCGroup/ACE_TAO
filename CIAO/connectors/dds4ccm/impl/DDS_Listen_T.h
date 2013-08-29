@@ -11,12 +11,20 @@
 #include "dds4ccm/impl/DDS_Subscriber_Base_T.h"
 #include "dds4ccm/impl/DataReaderListener_T.h"
 #include "dds4ccm/impl/DataListenerControl_T.h"
+#include "dds4ccm/impl/Utils.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE>
+/**
+  * Template implementing the DDS4CCM Listen basic port
+  * @tparam CCM_TYPE Set of type traits for this basic port
+  * @tparam TYPED_DDS_READER The typed DDS DataReader type
+  * @tparam SEQ_TYPE The type of sequence
+  * @tparam LRT An enum indicating the read or take semantics of this port
+  */
+template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE, CIAO::DDS4CCM::DDS4CCM_LISTENER_READ_TAKE LRT>
 class DDS_Listen_T
   : public DDS_Subscriber_Base_T<CCM_TYPE, TYPED_DDS_READER, VALUE_TYPE, SEQ_VALUE_TYPE>
 {
@@ -42,7 +50,7 @@ public:
   void remove (::DDS::Subscriber_ptr subscriber);
 
 private:
-  typedef ::CIAO::DDS4CCM::DataReaderListener_T<CCM_TYPE, TYPED_DDS_READER, SEQ_VALUE_TYPE>
+  typedef ::CIAO::DDS4CCM::DataReaderListener_T<CCM_TYPE, TYPED_DDS_READER, SEQ_VALUE_TYPE, LRT>
     DataReaderListener_type;
   typedef CCM_DDS_DataListenerControl_T< ::CCM_DDS::CCM_DataListenerControl>
     DataListenerControl_type;
