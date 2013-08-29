@@ -206,7 +206,7 @@ public:
   /// same as the single string in the prior case and can be obtained by
   /// providing max_len. @arg max_len, if non-zero, provides a location
   /// into which the total length of the command line buffer is returned.
-  ACE_TCHAR *command_line_buf (int *max_len = 0);
+  ACE_TCHAR *command_line_buf (size_t *max_len = 0);
 
   /**
    * argv-style command-line options.  Parses and modifies the string
