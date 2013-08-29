@@ -285,6 +285,26 @@
       <resourceType>Local_Interface</resourceType>
     </deployRequirement>
     <internalEndpoint>
+      <portName>info_listen_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="ReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="LMBM_Test_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>info_listen_data_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
       <portName>info_listen_data_listener</portName>
       <provider>true</provider>
       <kind>Facet</kind>

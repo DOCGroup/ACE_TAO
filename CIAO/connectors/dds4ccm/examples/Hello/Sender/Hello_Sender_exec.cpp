@@ -326,9 +326,8 @@ namespace CIAO_Hello_Sender_Impl
     if (!this->ready_to_start_.value())
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Sender_exec_i::stop - ")
-                              ACE_TEXT ("Sender never got ready to start\n")));
+                              ACE_TEXT ("ERROR Sender never got ready to start\n")));
       }
-
   }
 
 

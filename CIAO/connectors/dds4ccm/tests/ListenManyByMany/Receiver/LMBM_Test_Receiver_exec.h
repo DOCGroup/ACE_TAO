@@ -30,8 +30,10 @@ namespace CIAO_LMBM_Test_Receiver_Impl
   {
   public:
     ListenManyByManyTest_Listener_exec_i (
-                            Atomic_ULong &received_one_by_one,
-                            Atomic_ULong &received_many_by_many);
+      ::LMBM_Test::CCM_Receiver_Context_ptr context,
+      Atomic_ULong &received_one_by_one,
+      Atomic_ULong &received_many_by_many,
+      Atomic_ULong &samples_read_);
     virtual ~ListenManyByManyTest_Listener_exec_i (void);
 
     virtual void
@@ -43,8 +45,10 @@ namespace CIAO_LMBM_Test_Receiver_Impl
       const ListenManyByManyTestSeq & an_instance,
       const ::CCM_DDS::ReadInfoSeq & info);
   private:
+    ::LMBM_Test::CCM_Receiver_Context_var context_;
     Atomic_ULong &received_one_by_one_;
     Atomic_ULong &received_many_by_many_;
+    Atomic_ULong &samples_read_;
   };
 
   //============================================================
@@ -92,6 +96,7 @@ namespace CIAO_LMBM_Test_Receiver_Impl
 
     Atomic_ULong received_one_by_one_;
     Atomic_ULong received_many_by_many_;
+    Atomic_ULong samples_read_;
 
     CORBA::UShort iterations_;
     CORBA::UShort keys_;

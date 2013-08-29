@@ -8,8 +8,8 @@ namespace CIAO
 {
   namespace DDS4CCM
   {
-    template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
-    DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::DataReaderListener_T (
+    template <typename CCM_TYPE, typename TYPED_DDS_READER, typename SEQ_TYPE, DDS4CCM_LISTENER_READ_TAKE LRT>
+    DataReaderListenerBase_T<CCM_TYPE, TYPED_DDS_READER, SEQ_TYPE, LRT>::DataReaderListenerBase_T (
       typename CCM_TYPE::data_listener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr port_status_listener,
       ::CCM_DDS::DataListenerControl_ptr control,
@@ -20,21 +20,21 @@ namespace CIAO
         control_ (::CCM_DDS::DataListenerControl::_duplicate (control)),
         condition_manager_ (condition_manager)
     {
-      DDS4CCM_TRACE ("DataReaderListener_T::DataReaderListener_T");
+      DDS4CCM_TRACE ("DataReaderListenerBase_T::DataReaderListenerBase_T");
     }
 
-    template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
-    DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::~DataReaderListener_T (void)
+    template <typename CCM_TYPE, typename TYPED_DDS_READER, typename SEQ_TYPE, DDS4CCM_LISTENER_READ_TAKE LRT>
+    DataReaderListenerBase_T<CCM_TYPE, TYPED_DDS_READER, SEQ_TYPE, LRT>::~DataReaderListenerBase_T (void)
     {
-      DDS4CCM_TRACE ("DataReaderListener_T::~DataReaderListener_T");
+      DDS4CCM_TRACE ("DataReaderListenerBase_T::~DataReaderListenerBase_T");
     }
 
-    template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
+    template <typename CCM_TYPE, typename TYPED_DDS_READER, typename SEQ_TYPE, DDS4CCM_LISTENER_READ_TAKE LRT>
     void
-    DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::on_data_available (
+    DataReaderListenerBase_T<CCM_TYPE, TYPED_DDS_READER, SEQ_TYPE, LRT>::on_data_available (
       ::DDS::DataReader_ptr rdr)
     {
-      DDS4CCM_TRACE ("DataReaderListener_T::on_data_available");
+      DDS4CCM_TRACE ("DataReaderListenerBase_T::on_data_available");
 
       if (!::CORBA::is_nil (rdr) &&
           this->control_->mode () != ::CCM_DDS::NOT_ENABLED)
@@ -59,17 +59,81 @@ namespace CIAO
         }
     }
 
-    template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
+    template <typename CCM_TYPE, typename TYPED_DDS_READER, typename SEQ_TYPE>
+    ::DDS::ReturnCode_t
+    DataReaderListener_T<CCM_TYPE, TYPED_DDS_READER, SEQ_TYPE, CIAO::DDS4CCM::DDS4CCM_TAKE>::get_data_i (
+      typename TYPED_DDS_READER::_ptr_type reader,
+      ::DDS::QueryCondition_ptr qc,
+      SEQ_TYPE &data,
+      ::DDS::SampleInfoSeq &sample_info,
+      ::CORBA::Long max_samples)
+    {
+      DDS4CCM_TRACE ("DataReaderListener_T::get_data_i");
+
+      ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+      if (! ::CORBA::is_nil (qc))
+        {
+          ::DDS::ReadCondition_var rd = ::DDS::ReadCondition::_narrow (qc);
+          result = reader->take_w_condition (data,
+                                             sample_info,
+                                             max_samples,
+                                             rd.in ());
+        }
+      else
+        {
+          result = reader->take (data,
+                                 sample_info,
+                                 max_samples,
+                                 ::DDS::NOT_READ_SAMPLE_STATE,
+                                 ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
+                                 ::DDS::ANY_INSTANCE_STATE);
+        }
+      return result;
+    }
+
+    template <typename CCM_TYPE, typename TYPED_DDS_READER, typename SEQ_TYPE>
+    ::DDS::ReturnCode_t
+    DataReaderListener_T<CCM_TYPE, TYPED_DDS_READER, SEQ_TYPE, CIAO::DDS4CCM::DDS4CCM_READ>::get_data_i (
+      typename TYPED_DDS_READER::_ptr_type reader,
+      ::DDS::QueryCondition_ptr qc,
+      SEQ_TYPE &data,
+      ::DDS::SampleInfoSeq &sample_info,
+      ::CORBA::Long max_samples)
+    {
+      DDS4CCM_TRACE ("DataReaderListener_T::get_data_i");
+
+      ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
+      if (! ::CORBA::is_nil (qc))
+        {
+          ::DDS::ReadCondition_var rd = ::DDS::ReadCondition::_narrow (qc);
+          result = reader->read_w_condition (data,
+                                             sample_info,
+                                             max_samples,
+                                             rd.in ());
+        }
+      else
+        {
+          result = reader->read (data,
+                                 sample_info,
+                                 max_samples,
+                                 ::DDS::NOT_READ_SAMPLE_STATE,
+                                 ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
+                                 ::DDS::ANY_INSTANCE_STATE);
+        }
+      return result;
+    }
+
+    template <typename CCM_TYPE, typename TYPED_DDS_READER, typename SEQ_TYPE, DDS4CCM_LISTENER_READ_TAKE LRT>
     void
-    DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::on_data_available_i (
+    DataReaderListenerBase_T<CCM_TYPE, TYPED_DDS_READER, SEQ_TYPE, LRT>::on_data_available_i (
       ::DDS::DataReader_ptr rdr)
     {
-      DDS4CCM_TRACE ("DataReaderListener_T::on_data_available_i");
+      DDS4CCM_TRACE ("DataReaderListenerBase_T::on_data_available_i");
 
       if (::CORBA::is_nil (rdr))
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                             ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
+                             ACE_TEXT ("DataReaderListenerBase_T::on_data_available_i - ")
                              ACE_TEXT ("No datareader received.\n")));
           return;
         }
@@ -80,13 +144,13 @@ namespace CIAO
           return;
         }
 
-      typename TYPED_READER::_var_type reader;
-      reader = TYPED_READER::_narrow (rdr);
+      typename TYPED_DDS_READER::_var_type reader;
+      reader = TYPED_DDS_READER::_narrow (rdr);
 
       if (::CORBA::is_nil (reader.in ()))
         {
           DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                             ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
+                             ACE_TEXT ("DataReaderListenerBase_T::on_data_available_i - ")
                              ACE_TEXT ("Failed to narrow DataReader to a type ")
                              ACE_TEXT ("specific DataReader.\n")));
           return;
@@ -107,29 +171,12 @@ namespace CIAO
           ::DDS::QueryCondition_var qc =
             this->condition_manager_.get_querycondition_listener ();
 
-          ::DDS::ReturnCode_t result = ::DDS::RETCODE_OK;
-
-          if (! ::CORBA::is_nil (qc.in ()))
-            {
-              ::DDS::ReadCondition_var rd = ::DDS::ReadCondition::_narrow (qc.in ());
-              result = reader->take_w_condition (data,
-                                                 sample_info,
-                                                 max_samples,
-                                                 rd.in ());
-            }
-          else
-            {
-              result = reader->take (data,
-                                     sample_info,
-                                     max_samples,
-                                     ::DDS::NOT_READ_SAMPLE_STATE,
-                                     ::DDS::NEW_VIEW_STATE | ::DDS::NOT_NEW_VIEW_STATE,
-                                     ::DDS::ANY_INSTANCE_STATE);
-            }
+          ::DDS::ReturnCode_t const result =
+            this->get_data_i (reader, qc.in (), data, sample_info, max_samples);
 
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_INFO, DDS4CCM_INFO
-                              ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
-                              ACE_TEXT ("Take data returned %C.\n"),
+                              ACE_TEXT ("DataReaderListenerBase_T::on_data_available_i - ")
+                              ACE_TEXT ("Get data returned %C.\n"),
                               translate_retcode (result)));
 
           if (result == ::DDS::RETCODE_OK)
@@ -186,7 +233,7 @@ namespace CIAO
           if (retval != ::DDS::RETCODE_OK)
             {
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
-                            ACE_TEXT ("DataReaderListener_T::on_data_available_i - ")
+                            ACE_TEXT ("DataReaderListenerBase_T::on_data_available_i - ")
                             ACE_TEXT ("Error returning loan to DDS - <%C>\n"),
                             translate_retcode (retval)));
               // No exception here since this the DDS vendor doesn't expect this.
@@ -198,14 +245,14 @@ namespace CIAO
           DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION (
                                   DDS4CCM_LOG_LEVEL_ACTION,
                                   ex,
-                                  "DataReaderListener_T::on_data_available_i");
+                                  "DataReaderListenerBase_T::on_data_available_i");
         }
       catch (const ::CORBA::Exception& ex)
         {
           DDS4CCM_PRINT_CORBA_EXCEPTION (
                                   DDS4CCM_LOG_LEVEL_ERROR,
                                   ex,
-                                  "DataReaderListener_T::on_data_available_i");
+                                  "DataReaderListenerBase_T::on_data_available_i");
         }
       catch (...)
         {
@@ -215,13 +262,13 @@ namespace CIAO
         }
     }
 
-    template <typename CCM_TYPE, typename TYPED_READER, typename SEQ_TYPE>
+    template <typename CCM_TYPE, typename TYPED_DDS_READER, typename SEQ_TYPE, DDS4CCM_LISTENER_READ_TAKE LRT>
     ::DDS::StatusMask
-    DataReaderListener_T<CCM_TYPE, TYPED_READER, SEQ_TYPE>::get_mask (
+    DataReaderListenerBase_T<CCM_TYPE, TYPED_DDS_READER, SEQ_TYPE, LRT>::get_mask (
       typename CCM_TYPE::data_listener_type::_ptr_type listener,
       ::CCM_DDS::PortStatusListener_ptr status)
     {
-      DDS4CCM_TRACE ("DataReaderListener_T::get_mask");
+      DDS4CCM_TRACE ("DataReaderListenerBase_T::get_mask");
 
       ::DDS::StatusMask mask = 0;
 
@@ -237,7 +284,7 @@ namespace CIAO
           ACE_CString msk;
           translate_statusmask (msk, mask);
           DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_DDS_STATUS, (LM_DEBUG, DDS4CCM_INFO
-                        "DataReaderListener_T::get_mask - "
+                        "DataReaderListenerBase_T::get_mask - "
                         "Mask becomes %C\n",
                         msk.c_str ()));
         }
