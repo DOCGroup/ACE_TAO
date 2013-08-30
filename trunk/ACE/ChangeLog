@@ -1,3 +1,8 @@
+Fri Aug 30 12:10:23 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.cpp (spawn): Supply correct type to command_line_buf()
+          call, per change below.
+
 Thu Aug 29 22:06:55 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/OS_NS_unistd.inl (swab): Added support for ACE_HAS_INT_SWAB for
