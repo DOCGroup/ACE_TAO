@@ -102,9 +102,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
   if (set_p && !ACE_BIT_ENABLED (options.creation_flags (),
                                  ACE_Process_Options::NO_EXEC))
     {
-      int maxlen = 0;
-      ACE_TCHAR *cmd_line_buf = options.command_line_buf (&maxlen);
-      size_t max_len = static_cast<size_t> (maxlen);
+      size_t max_len = 0;
+      ACE_TCHAR *cmd_line_buf = options.command_line_buf (&max_len);
       size_t curr_len = ACE_OS::strlen (cmd_line_buf);
       ACE_Handle_Set_Iterator h_iter (*set_p);
       // Because the length of the to-be-formatted +H option is not
