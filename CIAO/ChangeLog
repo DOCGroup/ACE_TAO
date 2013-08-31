@@ -1,3 +1,9 @@
+Sat Aug 31 14:05:45 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Removed error from a message, we also run this component
+          without a receiver, than this will happen
+
 Thu Aug 29 11:11:22 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/impl/Coherent_Changes_Guard.h:
