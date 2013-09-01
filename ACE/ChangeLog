@@ -1,3 +1,32 @@
+Sun Sep  1 13:08:59 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ASNMP/agent/main.cpp:
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/ICMP_Socket.cpp:
+        * ace/OS_NS_string.cpp:
+        * ace/WIN32_Asynch_IO.cpp:
+
+        * examples/Log_Msg/Log_Msg_MFC/Log_Msg_MFC.cpp:
+
+        * examples/Shared_Malloc/test_persistence.cpp:
+
+        * netsvcs/lib/TS_Clerk_Handler.cpp:
+
+        * tests/ACE_Init_Test.cpp:
+        * tests/MM_Shared_Memory_Test.cpp:
+        * tests/Mem_Map_Test.cpp:
+        * tests/Naming_Test.cpp:
+        * tests/Object_Manager_Flipping_Test.cpp:
+        * tests/Object_Manager_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+        * tests/Process_Test.cpp:
+        * tests/Time_Service_Test.cpp:
+
+        * websvcs/lib/URL_Addr.cpp:
+
+          Add in the required explicit header includes.
+
 Sun Sep  1 00:43:55 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
