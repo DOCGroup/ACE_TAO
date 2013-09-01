@@ -9,6 +9,7 @@
 #include "ace/Version.h"
 #include "ace/Message_Block.h"
 #include "ace/Log_Category.h"
+#include "ace/Flag_Manip.h"
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
