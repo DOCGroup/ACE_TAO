@@ -43,6 +43,7 @@
 #include "nr_extern.h"
 
 #include "ace/Process.h"
+#include "ace/Lib_Find.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
