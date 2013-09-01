@@ -4,6 +4,7 @@
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
+#include "ace/Flag_Manip.h"
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 

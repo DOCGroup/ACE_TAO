@@ -16,7 +16,7 @@
 #include "test_config.h"
 #include "ace/Process.h"
 #include "ace/Get_Opt.h"
-#include "ace/ACE.h"
+#include "ace/Lib_Find.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Dirent.h"

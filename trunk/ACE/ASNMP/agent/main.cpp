@@ -5,7 +5,7 @@
 
 #include "ace/config-all.h"
 #include "snmp_agent.h"
-#include "ace/ACE.h"
+#include "ace/Init_ACE.h"
 #include "ace/Argv_Type_Converter.h"
 
 int
