@@ -9,6 +9,7 @@
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/Service_Config.h"
+#include "ace/Flag_Manip.h"
 #include "ace/INET_Addr.h"
 #include "ace/Task_T.h"
 #include "ace/OS_NS_errno.h"

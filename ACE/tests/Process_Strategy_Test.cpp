@@ -47,6 +47,7 @@
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
 #include "ace/File_Lock.h"
+#include "ace/Lib_Find.h"
 
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"

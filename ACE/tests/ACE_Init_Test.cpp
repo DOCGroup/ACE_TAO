@@ -37,6 +37,7 @@ run_main (int, ACE_TCHAR *[])
 #include "ACE_Init_TestDlg.h"
 #include "test_config.h"
 #include "ace/ACE.h"
+#include "ace/Init_ACE.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Thread_Manager.h"
 

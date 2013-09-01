@@ -3,6 +3,7 @@
 
 #include "ace/Log_Msg.h"
 #include "Log_Msg_MFC.h"
+#include "ace/Init_ACE.h"
 
 #if defined (ACE_WIN32)
 

@@ -20,7 +20,7 @@
 
 #include "test_config.h"
 #include "ace/Process.h"
-#include "ace/ACE.h"
+#include "ace/Lib_Find.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 

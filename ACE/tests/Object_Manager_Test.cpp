@@ -16,7 +16,7 @@
 #include "test_config.h"
 #include "ace/Object_Manager.h"
 #include "ace/OS_Memory.h"
-#include "ace/ACE.h"
+#include "ace/Init_ACE.h"
 
 
 
