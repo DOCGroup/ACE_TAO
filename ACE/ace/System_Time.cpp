@@ -5,6 +5,8 @@
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Time_Value.h"
+#include "ace/Lib_Find.h"
+
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 

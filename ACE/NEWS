@@ -5,6 +5,11 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.1 and ACE-6.2.2
   to size_t*. This corrects a mismatch between the argument type and the
   data member in ACE_Process from which the value comes.
 
+. Removed some include files from ACE.h. These were not required for ACE.
+  The removed includes are OS_NS_math, Flag_Manip, Handle_Ops, Lib_Find,
+  Init_ACE, Sock_Connect.h. You may have to explicitly add one of these
+  in your own code to restore compiling.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.0 and ACE-6.2.1
 ====================================================
 

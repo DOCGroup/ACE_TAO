@@ -6,6 +6,7 @@
 #include "ace/Local_Name_Space_T.h"
 #include "ace/Registry_Name_Space.h"
 #include "ace/MMAP_Memory_Pool.h"
+#include "ace/Lib_Find.h"
 #include "ace/RW_Process_Mutex.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"

@@ -1,3 +1,21 @@
+Sun Sep  1 00:43:55 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+        * ace/ACE.h:
+        * ace/ACE.cpp:
+        * ace/MEM_Acceptor.cpp:
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/Naming_Context.cpp:
+        * ace/SPIPE_Connector.cpp:
+        * ace/System_Time.cpp:
+
+          Remove unneeded includes from ACE.h. ACE.h is included a lot,
+          and bringing in any extra includes increases the risk of
+          namespace collisions.
+
+          All the cpp files above were implicitly dependent on ACE.h to
+          include, which are now explicit.
+
 Fri Aug 30 12:10:23 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.cpp (spawn): Supply correct type to command_line_buf()
@@ -16,7 +34,7 @@ Thu Aug 29 22:06:55 UTC 2013  Steve Huston  <shuston@riverace.com>
         * ace/Process.h:
         * ace/Process.inl: Changed ACE_Process::command_line_buf(int*) to
           command_line_buf(size_t*) to align with the member whose value is
-          returned. 
+          returned.
 
         * ace/README: Added ACE_HAS_INT_SWAB description.
 
