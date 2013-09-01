@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/MEM_Acceptor.h"
+#include "ace/Lib_Find.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 

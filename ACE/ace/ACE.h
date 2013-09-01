@@ -28,12 +28,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_math.h"
-#include "ace/Flag_Manip.h"
-#include "ace/Handle_Ops.h"
-#include "ace/Lib_Find.h"
-#include "ace/Init_ACE.h"
-#include "ace/Sock_Connect.h"
+#include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
 
 #if defined (ACE_EXPORT_MACRO)

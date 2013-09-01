@@ -8,6 +8,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Log_Category.h"
 #include "ace/Truncate.h"
+#include "ace/Lib_Find.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 #include "ace/Based_Pointer_T.h"

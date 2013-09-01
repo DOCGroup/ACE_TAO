@@ -1,6 +1,7 @@
 // $Id$
 
 #include "ace/SPIPE_Connector.h"
+#include "ace/Handle_Ops.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_fcntl.h"
