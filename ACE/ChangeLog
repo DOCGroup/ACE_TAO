@@ -1,3 +1,9 @@
+Sun Sep  1 14:01:57 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/OS_NS_string.cpp:
+
+          One more include change.
+
 Sun Sep  1 13:08:59 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ASNMP/agent/main.cpp:
