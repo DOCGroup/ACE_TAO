@@ -7,6 +7,7 @@
 #include "Latency_BaseSupport.h"
 #include "Latency_BasePlugin.h"
 #include "ace/Tokenizer_T.h"
+#include "ace/OS_NS_math.h"
 
 #include <ndds/ndds_namespace_cpp.h>
 #include <ndds/ndds_cpp.h>

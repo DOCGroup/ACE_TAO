@@ -28,6 +28,7 @@
 #include "LatencyTT_Test_Sender_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
+#include "ace/OS_NS_math.h"
 
 #include "ace/Timer_Queue.h"
 #include "ace/High_Res_Timer.h"
