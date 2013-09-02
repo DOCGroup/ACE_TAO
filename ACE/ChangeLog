@@ -1,3 +1,9 @@
+Mon Sep  2 13:45:34 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * examples/NT_Service/main.cpp:
+
+          explicit include.
+
 Sun Sep  1 14:01:57 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/OS_NS_string.cpp:
