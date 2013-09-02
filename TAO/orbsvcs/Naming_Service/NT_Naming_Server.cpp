@@ -31,6 +31,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 #else
 
 #include "ace/Get_Opt.h"
+#include "ace/Init_ACE.h"
 
 #include "winreg.h"
 #include "NT_Naming_Service.h"
