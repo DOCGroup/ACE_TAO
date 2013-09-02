@@ -1,3 +1,10 @@
+Mon Sep  2 15:01:46 UTC 2013  Phil Mesnier  <mesnier_p@local>
+
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+
+          explicit includes.
+
 Sun Sep  1 00:28:39 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_interface.cpp:

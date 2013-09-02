@@ -36,6 +36,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 #include "ace/Arg_Shifter.h"
 #include "ace/ARGV.h"
 #include "ace/Configuration.h"
+#include "ace/Init_ACE.h"
 
 #include "winreg.h"
 #include "NT_Notify_Service.h"
