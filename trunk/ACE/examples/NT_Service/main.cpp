@@ -16,6 +16,7 @@
 
 
 #include "ace/Get_Opt.h"
+#include "ace/Init_ACE.h"
 #include "ntsvc.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
