@@ -1,3 +1,9 @@
+Tue Sep  3 13:12:23 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SV_Semaphore_Complex.h:
+        * ace/SV_Semaphore_Simple.h:
+          Doxygen fixes
+
 Mon Sep  2 13:45:34 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/NT_Service/main.cpp:
