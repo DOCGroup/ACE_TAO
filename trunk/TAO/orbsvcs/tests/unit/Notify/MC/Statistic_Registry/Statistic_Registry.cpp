@@ -12,6 +12,9 @@ using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 void
 error (const char* msg)
 {
+#if defined (ACE_NLOGGING)
+  ACE_UNUSED_ARG (msg);
+#endif /* ACE_NLOGGING */
   ACE_ERROR ((LM_ERROR, "%s\n", msg));
   ACE_OS::exit (1);
 }
