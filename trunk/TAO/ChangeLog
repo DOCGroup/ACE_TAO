@@ -1,3 +1,9 @@
+Tue Sep  3 15:52:23 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/NamingViewer/NamingViewer.cpp:
+
+          explicit includes.
+
 Tue Sep  3 13:17:47 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
