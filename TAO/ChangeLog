@@ -1,4 +1,12 @@
-Mon Sep  2 15:01:46 UTC 2013  Phil Mesnier  <mesnier_p@local>
+Tue Sep  3 13:17:47 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Statistic_Registry.cpp:
+
+          Fix warnings reported as errors in the build with logging disabled.
+
+Mon Sep  2 15:01:46 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
         * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
