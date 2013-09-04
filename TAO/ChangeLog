@@ -1,9 +1,16 @@
+Wed Sep  4 18:13:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.h:
+          Fixed mismatched guard. Thanks to
+          Yogesh Sharma <Yogesh dot Sharma at saabsensis dot com> for
+          reporting the bug and supplying a patch. Closes [BUGID:4127].
+
 Wed Sep  4 18:00:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
           Fixed mismatched guard. Thanks to
           Yogesh Sharma <Yogesh dot Sharma at saabsensis dot com> for
-          reporting the bug and supplying a patch. Closes [BUGID:4125].
+          reporting the bug and supplying a patch. Closes [BUGID:4126].
 
 Wed Sep  4 12:44:02 UTC 2013  Phil Mesnier  <mesnier_p@local>
 
