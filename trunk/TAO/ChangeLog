@@ -1,3 +1,10 @@
+Wed Sep  4 18:00:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+          Fixed mismatched guard. Thanks to
+          Yogesh Sharma <Yogesh dot Sharma at saabsensis dot com> for
+          reporting the bug and supplying a patch. Closes [BUGID:4125].
+
 Wed Sep  4 12:44:02 UTC 2013  Phil Mesnier  <mesnier_p@local>
 
         * examples/mfc/server.cpp:
