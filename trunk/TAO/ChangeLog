@@ -1,3 +1,18 @@
+Wed Sep  4 12:44:02 UTC 2013  Phil Mesnier  <mesnier_p@local>
+
+        * examples/mfc/server.cpp:
+
+          Explicit include fix.
+
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
+
+          Fix spurious scoreboard error for ACE_NLOGGING build.
+
+        * orbsvcs/tests/Bug_2112_Regression/client.cpp:
+
+          Use a new fake IP address as the old one is now a valid IP in the
+          wild and started messing with the test.
+
 Tue Sep  3 15:52:23 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/NamingViewer/NamingViewer.cpp:

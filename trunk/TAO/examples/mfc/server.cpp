@@ -14,6 +14,7 @@
 #include "serverView.h"
 
 #include "ace/ACE.h"
+#include "ace/Init_ACE.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
