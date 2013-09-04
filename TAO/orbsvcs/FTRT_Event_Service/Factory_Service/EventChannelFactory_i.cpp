@@ -135,11 +135,10 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   timeout += ACE_OS::gettimeofday();
   if (new_process.spawn (options) == -1)
   {
-    int error = ACE_OS::last_error ();
     ORBSVCS_ERROR ((LM_ERROR,
       "%p errno = %d.\n",
       str.c_str(),
-      error));
+      ACE_OS::last_error ()));
     return result;
   }
 
