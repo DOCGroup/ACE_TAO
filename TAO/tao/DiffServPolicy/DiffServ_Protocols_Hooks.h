@@ -12,7 +12,7 @@
 // ===================================================================
 
 #ifndef TAO_DIFFSERV_PROTOCOLS_HOOKS_H
-#define TAO_DIFFSERVT_PROTOCOLS_HOOKS_H
+#define TAO_DIFFSERV_PROTOCOLS_HOOKS_H
 
 #include /**/ "ace/pre.h"
 
