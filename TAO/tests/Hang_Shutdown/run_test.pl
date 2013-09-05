@@ -58,7 +58,7 @@ if ($client->PutFile ($svcconf) == -1) {
     exit 1;
 }
 
-$SV2 = $server->CreateProcess ("server");
+$SV2 = $server->CreateProcess ("server", " -o $server_iorfile");
 $CL2 = $client->CreateProcess ("client", " -ORBSvcConf $client_svcfile");
 
 $SV2->Spawn ();

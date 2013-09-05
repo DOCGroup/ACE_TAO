@@ -57,8 +57,6 @@ $CL2 = $client2->CreateProcess ("client",
                                 "-ORBDottedDecimalAddresses 2 " .
                                 "-ORBEndpoint iiop://:$port2");
 
-print $SV->CommandLine() . "\n";
-
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
@@ -91,8 +89,6 @@ if ($client2->PutFile ($iorfile) == -1) {
     exit 1;
 }
 
-print $CL1->CommandLine() . "\n";
-
 $client_status = $CL1->SpawnWaitKill ($client1->ProcessStartWaitInterval() + 45);
 
 # The client crashes, therefore it normally exists with status != 0,
@@ -101,8 +97,6 @@ if ($client_status == -1) {
     print STDERR "ERROR: client returned $client_status\n";
     $status = 1;
 }
-
-print $CL2->CommandLine() . "\n";
 
 $client_status = $CL2->SpawnWaitKill ($client2->ProcessStartWaitInterval() + 45);
 

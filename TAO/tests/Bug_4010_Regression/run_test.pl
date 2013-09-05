@@ -46,9 +46,6 @@ $SV1 = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server
 $SV2 = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile -ORBListenEndpoints iiop://:${port}");
 $CL = $client->CreateProcess ("client", "-ORBdebuglevel $cdebug_level -ORBSvcConf $client_conf -k file://$client_iorfile -t $loop_time -i $iterations");
 
-print $SV1->CommandLine() . "\n\n";
-print $CL->CommandLine() . "\n\n";
-
 $server_status = $SV1->Spawn ();
 
 if ($server_status != 0) {
