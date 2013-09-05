@@ -467,8 +467,19 @@ $svc_conf_file = "Service_Config_Stream_Test.conf";
 if ($target->PutFile ($svc_conf_file) == -1) {
     print STDERR "WARNING: Cannot send $svc_conf_file to target\n";
 }
+# Bug_3334_Regression_Test needs service config file.
+$svc_conf_file = "Bug_3334_Regression_Test.conf";
+if ($target->PutFile ($svc_conf_file) == -1) {
+    print STDERR "WARNING: Cannot send $svc_conf_file to target\n";
+}
+# Bug_3912_Regression_Test needs service config file.
+$svc_conf_file = "Bug_3912_Regression_Test.conf";
+if ($target->PutFile ($svc_conf_file) == -1) {
+    print STDERR "WARNING: Cannot send $svc_conf_file to target\n";
+}
 
 foreach $test (@tests) {
+
     if (defined $opt_d) {
         print "Would run test $test now\n";
     }

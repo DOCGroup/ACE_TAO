@@ -322,6 +322,7 @@
 #define ACE_HAS_IP_MULTICAST_LOOP_AS_INT 1
 
 #define ACE_HAS_NETLINK
+#define ACE_HAS_SIOCGIFCONF
 
 #if !defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO)
 // Detect if getsockname() and getpeername() returns random values in
@@ -373,6 +374,16 @@
 
 #if !defined ACE_DEFAULT_TEMP_DIR
 # define ACE_DEFAULT_TEMP_DIR "/data/tmp"
+#endif
+
+#if !defined TEST_DIR
+# define TEST_DIR "/data"
+#endif
+
+#if !defined (ACE_AS_STATIC_LIBS)
+# if (__GNUC__ == 4 && __GNUC_MINOR__ == 4)
+#  error Shared library support is not possible with GCC 4.4.x
+# endif
 #endif
 
 #include /**/ "ace/post.h"

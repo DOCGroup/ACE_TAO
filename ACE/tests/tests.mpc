@@ -324,6 +324,9 @@ project (Bug_2980_Regression_Test) {
   }
   Resource_Files {
   }
+  specific(vxtest) {
+    libs += Bug_2980_Regression ACE
+  }
 }
 
 project (Bug_2980_Regression_Dll): acelib {

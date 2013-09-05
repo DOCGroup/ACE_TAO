@@ -222,7 +222,78 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   return 0;
 
-#elif defined (ACE_HAS_SIOCGIFCONF)
+#elif defined (__ANDROID_API__) && defined (ACE_HAS_SIOCGIFCONF) && !defined (ACE_LACKS_NETWORKING)
+
+  struct ifconf ifc;
+  struct ifreq ifr_buf[32];
+
+
+  ACE_HANDLE handle =
+    ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
+
+  if (handle == ACE_INVALID_HANDLE)
+    {
+      return -1;
+    }
+
+
+  ifc.ifc_len = sizeof(ifr_buf);
+  ifc.ifc_req = &ifr_buf[0];
+
+  if (ACE_OS::ioctl (handle, SIOCGIFCONF, &ifc) < 0)
+    {
+      ACE_OS::close (handle);
+      return -1;
+    }
+
+  int numif = ifc.ifc_len / sizeof(struct ifreq);
+
+  // find first eligible device
+  struct ifreq* ifr = 0;
+  for (int i=0; i< numif ;++i)
+    {
+      ifr = &ifr_buf[i];
+
+      // get device flags
+      if (ACE_OS::ioctl (handle, SIOCGIFFLAGS, ifr) < 0)
+        {
+          ACE_OS::close (handle);
+          return -1;
+        }
+
+      // Check to see if it's up and is not either PPP or loopback
+      if ((ifr->ifr_flags & IFF_UP) == IFF_UP &&
+          (ifr->ifr_flags & (IFF_LOOPBACK | IFF_POINTOPOINT)) == 0)
+        break;
+
+      ifr = 0;
+    }
+  // did we find any?
+  if (ifr == 0)
+    {
+      ACE_OS::close (handle);
+      errno = ENODEV;
+      return -1;
+    }
+
+  if (ACE_OS::ioctl (handle, SIOCGIFHWADDR, ifr) < 0)
+    {
+      ACE_OS::close (handle);
+      return -1;
+    }
+
+  struct sockaddr* sa =
+    (struct sockaddr *) &ifr->ifr_hwaddr;
+
+  ACE_OS::close (handle);
+
+  ACE_OS::memcpy (node->node,
+                  sa->sa_data,
+                  6);
+
+  return 0;
+
+#elif defined (ACE_HAS_SIOCGIFCONF) && !defined (__ANDROID_API__)
 
   const long BUFFERSIZE = 4000;
   char buffer[BUFFERSIZE];
