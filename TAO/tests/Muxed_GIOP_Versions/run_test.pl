@@ -119,7 +119,6 @@ if ($client3->PutFile ($iorbase) == -1) {
 print STDERR "****** Start the clients*** \n" if $verbose;
 
 if ($clients > 0) {
-    print STDERR $CL1->CommandLine(), "\n" if $verbose;
     $client_status = $CL1->Spawn ();
 
     if ($client_status != 0) {
