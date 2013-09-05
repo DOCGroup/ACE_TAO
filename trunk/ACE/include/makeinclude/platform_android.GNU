@@ -4,7 +4,7 @@
 # This file should allow ACE to be built for Android 2.3.1 (API Level 9)
 # or greater, by cross compiling on Linux.
 
-# The standalone gcc compilers in NDK r6 have issues with the visibility.
+# The standalone gcc compilers in NDK r6-r9 have issues with the visibility.
 no_hidden_visibility ?= 1
 
 # as of NDK r6 inlining is required
@@ -22,27 +22,43 @@ rwho = 0
 #$SYSROOT - $NDK/platform/android-9
 #$TOOLCHAIN/bin in path, $TOOLCHAIN is root of standalone toolchain
 #
+#Optionally ANDROID_ABI can be set to select specific architecture ABIs like armeabi-v7a or neon
+#
 #Toolchain defaults to arm architecture
 ANDROID_ARCH ?= arm
 
-SYSROOT ?= $(NDK)/platforms/android-9/arch-$(ANDROID_ARCH)
+#SYSROOT ?= $(NDK)/platforms/android-9/arch-$(ANDROID_ARCH)
 
-ifeq ($(ANDROID_ARCH),arm)
-  CROSS_COMPILE=arm-linux-androideabi-
-else
-  ifeq ($(ANDROID_ARCH),x86)
-    CROSS_COMPILE=i686-android-linux-
+ifeq (,$(CROSS_COMPILE))
+  ifeq ($(ANDROID_ARCH),arm)
+    CROSS_COMPILE=arm-linux-androideabi-
   else
-    CROSS_COMPILE=unknown-android-arch-
+    ifeq ($(ANDROID_ARCH),x86)
+      CROSS_COMPILE=i686-android-linux-
+    else
+      CROSS_COMPILE=unknown-android-arch-
+    endif
   endif
 endif
 
 # fix this
 pipes ?= 1
 
-# NDK says required for working around a CPU bug in some Cortex-A8 implementations
-ifeq ($(ANDROID_ARCH),arm)
-LDFLAGS += -Wl,--fix-cortex-a8
+# set archtecture specific build flags
+ifeq (arm,$(findstring arm,$(ANDROID_ARCH)))
+
+  # Set ABI specific flags
+  ifeq ($(ANDROID_ABI),armeabi-v7a)
+    FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16
+    LDFLAGS    += -march=armv7-a
+  endif
+  ifeq ($(ANDROID_ABI),neon)
+    FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp -mfpu=neon
+    LDFLAGS    += -march=armv7-a
+  endif
+
+  # NDK says required for working around a CPU bug in some Cortex-A8 implementations
+  LDFLAGS += -Wl,--fix-cortex-a8
 endif
 
 FLAGS_C_CC += -W -Wall -Wpointer-arith -Wno-psabi

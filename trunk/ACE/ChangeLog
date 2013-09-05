@@ -1,3 +1,156 @@
+Thu Sep  5 07:53:19 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_NS_netdb.cpp:
+        * ace/UUID.cpp:
+        * ace/config-android.h:
+        * bin/PerlACE/ProcessAndroid.pm:
+        * include/makeinclude/platform_android.GNU:
+        * tests/run_test.pl:
+        * tests/tests.mpc:
+          Improvements for the Android port, in detail:
+
+          commit 171a851ebe98b58ed4654956833ee1bfd17961a4
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed Sep 4 19:30:40 2013 +0200
+
+                    Run all ACE tests within one emulator
+                  * ACE/tests/run_test.pl:
+
+          commit f634cead8e84de9320f7626d1fda1fec4fc579ac
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Wed Sep 4 14:22:00 2013 +0200
+
+                    Added a check for gcc 4.4 && shared libraries, issue
+                    an error when someone wants to use this
+                  * ACE/ace/config-android.h:
+
+          commit f1c393872e241d5bc9737b34e1ed10f9288fed17
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Tue Sep 3 19:47:59 2013 +0200
+
+                    Removed incorrect define
+                  * ACE/ace/config-android.h:
+
+          commit 9f7d4fffee0e527bfdf87378e89c703df1cf124d
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Tue Sep 3 15:03:40 2013 +0200
+
+                    Set ACE_DEFAULT_TEST_DIR and TEST_DIR to /data on Android
+                  * ACE/ace/config-android.h:
+
+          commit 856266b58ef37236e8e79caa9472a93251c9a8d7
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Tue Sep 3 12:14:42 2013 +0200
+
+                    3912 also needs a conf file
+                  * ACE/tests/run_test.pl:
+
+          commit 4cea1a7df2840a4409d0e1212667741d27b25125
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Tue Sep 3 11:40:48 2013 +0200
+
+                    2980 also needs ACE
+                  * ACE/tests/tests.mpc:
+
+          commit 889f04d3e100f92e723222a3c662927d8cf4960f
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 2 18:54:07 2013 +0200
+
+                    Added Bug_3334_Regression_Test.conf
+                  * ACE/tests/run_test.pl:
+
+          commit 6a8c9eb8a069b7bb01acb3352ad4ef91c9081ae9
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Thu Aug 29 14:24:41 2013 +0200
+
+                    Fixed compile warnings
+                  * ACE/ace/UUID.cpp:
+
+          commit 3d8bb9c4086ba30528332a8a8c0baf08d7bd464b
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Thu Aug 29 12:41:46 2013 +0200
+
+                    2980 test needs a shared library
+                  * ACE/tests/tests.mpc:
+
+          commit 9d09334a50106de26cd4909b33b95edbd458d6c4
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Thu Aug 29 11:07:59 2013 +0200
+
+                    Run all ACE tests in a separate emulator
+                  * ACE/tests/run_test.pl:
+
+          commit 7fc163cf996f1449992a01c5a60ad1f7e3e33cc2
+          Author: Martin Corino <mcorino@remedy.nl>
+          Date:   Mon Aug 26 13:05:13 2013 +0200
+
+              Add support for ABI specific build flags.
+              refs #3151
+
+                  * ACE/include/makeinclude/platform_android.GNU:
+
+          commit d31596f1e27781c22494a8cca7f822eab7ccfd7a
+          Author: Martin Corino <mcorino@remedy.nl>
+          Date:   Thu Aug 22 12:50:52 2013 +0200
+
+              Fix incorrect crosscompile setup conflicting with latest buildtools changes.
+              refs #3116
+
+                  * ACE/include/makeinclude/platform_android.GNU:
+
+          commit d96a43f0b91110fdf9adca9d59c0fbd3f36b984e
+          Author: Martin Corino <mcorino@remedy.nl>
+          Date:   Fri Aug 16 17:05:09 2013 +0200
+
+              Fix last copy/paste error.
+              refs #3158
+
+                  * ACE/ace/OS_NS_netdb.cpp:
+
+          commit 6c389f06f67b617fcce4bf89283f5eb322db79c2
+          Author: Martin Corino <mcorino@remedy.nl>
+          Date:   Fri Aug 16 16:19:56 2013 +0200
+
+              Remove logging and fix typo breaking functionality.
+              refs #3158
+
+                  * ACE/ace/OS_NS_netdb.cpp:
+
+          commit c02af6da3d34e875ee51ea46c682e4562ae442e8
+          Author: Martin Corino <mcorino@remedy.nl>
+          Date:   Fri Aug 16 15:33:30 2013 +0200
+
+              Added some debug prints to track what is going on in ACE_OS::getmacaddress.
+              refs #3158
+
+                  * ACE/ace/OS_NS_netdb.cpp:
+
+          commit dd9a9826ba4989ddf44167d3aa4a619fcce7f4ec
+          Author: Martin Corino <mcorino@remedy.nl>
+          Date:   Fri Aug 16 14:29:09 2013 +0200
+
+              Fixed two typos in ACE_OS::getmacaddres (refs #3158).
+
+                  * ACE/ace/OS_NS_netdb.cpp:
+
+          commit 981edf7f34445adae658bfb7cdf9f159060cdfde
+          Author: Martin Corino <mcorino@remedy.nl>
+          Date:   Fri Aug 16 13:55:46 2013 +0200
+
+              Added Android implementation for ACE_OS::getmacaddress (refs #3158).
+
+                  * ACE/ace/OS_NS_netdb.cpp:
+                  * ACE/ace/config-android.h:
+
+          commit 03cbeb0e4a1954ba667ec8c2df14b8a8ef9dca78
+          Author: Martin Corino <mcorino@remedy.nl>
+          Date:   Wed Aug 14 14:00:02 2013 +0200
+
+              Fix local expansion of env var intended to be expanded on Android only.
+              Issue #3155.
+
+                  * ACE/bin/PerlACE/ProcessAndroid.pm:
+
 Tue Sep  3 13:12:23 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SV_Semaphore_Complex.h:
