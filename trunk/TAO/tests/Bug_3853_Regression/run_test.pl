@@ -35,10 +35,6 @@ $SV1 = $server1->CreateProcess ("server", "-ORBEndpoint iiop://localhost:$port1 
 $SV2 = $server2->CreateProcess ("server", "-ORBEndpoint iiop://localhost:$port2 -o $server_iorfile2 -s $shutdown_server_iorfile2");
 $CL = $client->CreateProcess ("client", "-t 30");
 
-print STDERR $SV1->CommandLine() . "\n";
-print STDERR $SV2->CommandLine() . "\n";
-print STDERR $CL->CommandLine() . "\n";
-
 $server_status = $SV1->Spawn ();
 
 if ($server_status != 0) {

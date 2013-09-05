@@ -56,7 +56,6 @@ $CLS[$num_clients - 1] = $clients[$i]->CreateProcess ("client",
                                     "-k file://$clients_iorfile[$num_clients - 1] -x");
 
 # start server and wait for file
-print STDERR $SV->CommandLine(), "\n" if $verbose;
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
@@ -93,7 +92,6 @@ if ($status != 0) {
 # spawn clients in the loop and one in separated way
 my $broken_number = 0;
 for($i = 0; $i < $num_clients - 1; $i++) {
-    print STDERR $CLS[$i]->CommandLine(), "\n" if $verbose;
     my $client_status = $CLS[$i]->Spawn();
     if ($client_status != 0) {
         print STDERR "ERROR: client $i Spawn returned $client_status\n";

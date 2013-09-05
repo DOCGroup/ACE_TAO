@@ -1,3 +1,63 @@
+Thu Sep  5 07:55:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2174_Regression/run_test.pl:
+        * tests/Bug_3000_Regression/run_test.pl:
+        * tests/Bug_3531_Regression/run_test.pl:
+        * tests/Bug_3853_Regression/run_test.pl:
+        * tests/Bug_4010_Regression/run_test.pl:
+        * tests/Exposed_Policies/run_test.pl:
+        * tests/HandleExhaustion/run_test.pl:
+        * tests/Hang_Shutdown/run_test.pl:
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+        * tests/OBV/TC_Alignment/run_test.pl:
+        * tests/Optimized_Connection/run_test.pl:
+        * tests/Server_Connection_Purging/run_test.pl:
+        * tests/TransportCurrent/Framework/run_test.pl:
+        * tests/TransportCurrent/IIOP/run_test.pl:
+          Fixes for the Android port
+
+          commit f90a0bf55e83d6565d0641ea0ba2fe2209f5305a
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Aug 23 15:41:29 2013 +0200
+
+                    Copy conf files to target
+                  * TAO/tests/Exposed_Policies/run_test.pl:
+
+          commit 25b050b9725f79351a75f48cdf978ae236702a70
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Aug 23 15:35:23 2013 +0200
+
+                    Also with the second spawn of the server pass the filename
+                    it should use for the IOR
+                  * TAO/tests/Hang_Shutdown/run_test.pl:
+
+          commit 6f0b01d790c1628e81e67c93c4db9f6f3ac37d71
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Aug 23 15:14:44 2013 +0200
+
+                    Removed printing of CommandLine, test framework
+                    can do that at a lower level and this method
+                    isn't supported on Android currently
+                  * TAO/tests/Bug_3000_Regression/run_test.pl:
+                  * TAO/tests/Bug_3531_Regression/run_test.pl:
+                  * TAO/tests/Bug_3853_Regression/run_test.pl:
+                  * TAO/tests/Bug_4010_Regression/run_test.pl:
+                  * TAO/tests/Muxed_GIOP_Versions/run_test.pl:
+                  * TAO/tests/OBV/TC_Alignment/run_test.pl:
+                  * TAO/tests/Server_Connection_Purging/run_test.pl:
+                  * TAO/tests/TransportCurrent/Framework/run_test.pl:
+                  * TAO/tests/TransportCurrent/IIOP/run_test.pl:
+
+          commit d5ebcd70308dbb06f97b98764038e2fdb13899e0
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Aug 23 15:13:08 2013 +0200
+
+                    Improved these scripts so that they will
+                    better behave on Android
+                  * TAO/tests/Bug_2174_Regression/run_test.pl:
+                  * TAO/tests/HandleExhaustion/run_test.pl:
+                  * TAO/tests/Optimized_Connection/run_test.pl:
+
 Wed Sep  4 18:13:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/Optimized_Connection_Endpoint_Selector.h:

@@ -43,8 +43,6 @@ $CL = $client->CreateProcess ("client",
 
 $SH_CL = $client_shutdown->CreateProcess ("shutdown_client", "-k file://$client_shutdown_iorfile");
 
-print STDERR $CL->CommandLine(), "\n" ;
-
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {

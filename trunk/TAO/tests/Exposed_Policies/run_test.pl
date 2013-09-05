@@ -41,6 +41,15 @@ my $server_cfg_object = $server->LocalFile ($cfg_object);
 my $client_cfg_poa = $client->LocalFile ($cfg_poa);
 my $client_cfg_object = $client->LocalFile ($cfg_object);
 
+if ($server->PutFile ($cfg_poa) == -1) {
+    print STDERR "ERROR: cannot set file <$server_cfg_poa>\n";
+    return 1;
+}
+if ($server->PutFile ($cfg_object) == -1) {
+    print STDERR "ERROR: cannot set file <$server_cfg_object>\n";
+    return 1;
+}
+
 if ($^O eq "dec_osf") {
     $server_cfg_poa = "$server_cfg_poa$cfg_suffix_tru64";
     $server_cfg_object = "$server_cfg_object$cfg_suffix_tru64";

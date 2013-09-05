@@ -42,7 +42,6 @@ my $confclient = $client->LocalFile ("client$confmod.conf");
 $SV = $server->CreateProcess ("server", "@ARGV -ORBSvcConf $confserver -o $server_iorfile");
 $CL = $client->CreateProcess ("client", "@ARGV -n 1 -ORBSvcConf $confclient -k file://$client_iorfile");
 
-print STDERR $SV->CommandLine()."\n";
 $SV->Spawn ();
 
 if ($server->WaitForFileTimed ($iorbase,
@@ -52,7 +51,6 @@ if ($server->WaitForFileTimed ($iorbase,
     exit 1;
 }
 
-print STDERR $CL->CommandLine()."\n";
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval ());
 
 if ($client_status != 0) {
