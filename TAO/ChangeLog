@@ -1,3 +1,13 @@
+Thu Sep  5 18:42:06 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Bug_2112_Regression/client.cpp:
+
+          The previous fake IP address still isn't as invalid as it should
+          be. Now using 10.123.123.123. Probably the right thing to do is
+          run through the 10.* address space to ensure the test doesn't select
+          a real IP address, since the whole point of the test is to ensure
+          that a timeout occurs attempting to connect to an unavailable IP.
+
 Thu Sep  5 07:55:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2174_Regression/run_test.pl:

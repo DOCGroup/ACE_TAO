@@ -36,7 +36,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Now try to contact a server.
       // Use a remote machine that is unreachable on the network.
-      const char * obj_ref = "corbaloc:iiop:1.0@127.123.123.123:4567/NameService";
+      const char * obj_ref = "corbaloc:iiop:1.0@10.123.123.123:4567/NameService";
 
       obj = Orb->string_to_object(obj_ref);
 
