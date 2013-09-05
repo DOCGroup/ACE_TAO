@@ -278,7 +278,7 @@ sub Spawn ()
     my($test, $dir, $suffix) = fileparse($program);
 
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
-    my $cmd = $adb_process . ' shell "cd ' . $dir . ' && LD_LIBRARY_PATH=' . $fsroot_target . '/lib:$LD_LIBRARY_PATH ./' . $test . ' ' . $self->{ARGUMENTS} . '"';
+    my $cmd = $adb_process . ' shell "cd ' . $dir . ' && LD_LIBRARY_PATH=' . $fsroot_target . '/lib:\$LD_LIBRARY_PATH ./' . $test . ' ' . $self->{ARGUMENTS} . '"';
 
     FORK: {
         if ($self->{PROCESS} = fork) {

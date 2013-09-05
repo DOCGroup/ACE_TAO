@@ -348,8 +348,8 @@ namespace ACE_Utils
   UUID_Generator::
   generate_UUID (UUID& uuid, ACE_UINT16 version, u_char variant)
   {
-    UUID_Time timestamp;
-    ACE_UINT16 clock_sequence;
+    UUID_Time timestamp = 0;
+    ACE_UINT16 clock_sequence = 0;
 
     this->get_timestamp_and_clocksequence (timestamp,
                                            clock_sequence);
