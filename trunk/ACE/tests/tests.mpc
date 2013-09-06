@@ -722,6 +722,20 @@ project(Compiler_Features_22_Test) : acelib {
   }
 }
 
+project(Compiler_Features_23_Test) : acetest {
+  exename = Compiler_Features_23_Test
+  Source_Files {
+    Compiler_Features_23_Test.cpp
+  }
+}
+
+project(Compiler_Features_24_Test) : acetest {
+  exename = Compiler_Features_24_Test
+  Source_Files {
+    Compiler_Features_24_Test.cpp
+  }
+}
+
 project(Config Test) : acetest {
   avoids += ace_for_tao
   exename = Config_Test

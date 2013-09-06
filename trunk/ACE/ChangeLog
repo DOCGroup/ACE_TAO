@@ -1,3 +1,11 @@
+Fri Sep  6 12:35:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_23_Test.cpp:
+        * tests/Compiler_Features_24_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Two new C++11 compiler features tests
+
 Fri Sep  6 10:23:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/tests.mpc:
