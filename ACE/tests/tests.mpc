@@ -318,6 +318,7 @@ project (Bug_2980_Regression_Test) {
   after += Bug_2980_Regression_Dll
   avoids += uses_wchar
   includes    += $(ACE_ROOT)
+  staticflags += ACE_AS_STATIC_LIBS
   exename = Bug_2980_Regression_Test
   Source_Files {
     Bug_2980_Regression_Test.cpp
