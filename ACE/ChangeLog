@@ -1,3 +1,8 @@
+Fri Sep  6 10:23:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/tests.mpc:
+          Added ACE_AS_STATIC_LIBS to static_flags for 2980
+
 Thu Sep  5 07:53:19 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_netdb.cpp:
