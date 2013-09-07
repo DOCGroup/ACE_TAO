@@ -1,3 +1,8 @@
+Sat Sep  7 17:32:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2593_Regression/run_test.pl:
+          Put svc conf file to target
+
 Thu Sep  5 18:42:06 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Bug_2112_Regression/client.cpp:
