@@ -244,7 +244,12 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 
   // Become a daemon before doing anything else.
   if (ACE_Service_Config::be_a_daemon_)
-    ACE::daemonize ();
+    {
+      // If we have to become a daemn and that fails
+      // return -1 here
+      if (ACE::daemonize () == -1)
+        return -1;
+    }
 
   // Write process id to file.
   if (this->pid_file_name_ != 0)

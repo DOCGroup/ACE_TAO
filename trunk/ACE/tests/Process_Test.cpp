@@ -23,8 +23,6 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_stdlib.h"
 
-
-
 // This will only work on Linux. Even UNIX-ish with /proc filesys lacks the
 // 'self' level and link to the opened file name.
 static const char *proc_self_fd = "/proc/self/fd/";

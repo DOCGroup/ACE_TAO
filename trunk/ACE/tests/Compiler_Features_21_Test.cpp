@@ -24,7 +24,7 @@ struct B
 
 int xxx()
 {
-  B local_array();
+  B local_array;
   return 0;
 }
 

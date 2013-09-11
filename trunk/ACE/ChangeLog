@@ -1,3 +1,150 @@
+Wed Sep 11 07:50:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/MEM_Addr.h:
+        * ace/MEM_Connector.cpp:
+        * ace/OS_NS_Thread.cpp:
+        * ace/README:
+        * ace/Service_Config.cpp:
+        * ace/config-android.h:
+        * ace/config-hpux-11.00.h:
+        * ace/config-kfreebsd.h:
+        * ace/config-linux.h:
+        * ace/config-macosx.h:
+        * ace/config-netbsd.h:
+        * ace/config-qnx.h:
+        * ace/config-vxworks6.4.h:
+        * bin/PerlACE/ProcessAndroid.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+        * tests/Bug_3912_Regression_Test.cpp:
+        * tests/Compiler_Features_21_Test.cpp:
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Malloc_Test.cpp:
+        * tests/Process_Mutex_Test.cpp:
+        * tests/Process_Test.cpp:
+        * tests/Service_Config_Test.cpp:
+        * tests/test_config.h:
+          Improvements for the Android port
+
+          commit 496976474caeddb893be839386f204f46e5965d7
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Tue Sep 10 10:02:38 2013 +0200
+
+                    Comment out ACE_HAS_POSIX_SEM, have to test this further
+                  * ACE/ace/config-android.h:
+
+          commit 5a8318253f6f8647b4db2842a3503481e043e2fb
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 20:55:12 2013 +0200
+
+                    Layout changes
+                  * ACE/ace/README:
+
+          commit cb35f2c6d6e59614ecfaf60ccd996c68d90d0d56
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 15:17:44 2013 +0200
+
+                    Use quotes around filenames in order to support spaces
+                    as part of filename
+                  * ACE/bin/PerlACE/ProcessAndroid.pm:
+                  * ACE/bin/PerlACE/TestTarget_Android.pm:
+
+          commit 29efbb9f20501f2ba553b9b2d73cebe03776e470
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 15:17:23 2013 +0200
+
+                    Fixed compile error
+                  * ACE/tests/Malloc_Test.cpp:
+
+          commit 9a4e55c673fd2b5dfa023f1ca0979e052f646783
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 14:48:37 2013 +0200
+
+                    Doxygen changes and improved logging
+                  * ACE/ace/MEM_Addr.h:
+                  * ACE/ace/MEM_Connector.cpp:
+                  * ACE/tests/MEM_Stream_Test.cpp:
+
+          commit bfb51ada525d6aedd1c992a353ce875804417a09
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 14:39:41 2013 +0200
+
+                    layout change
+                  * ACE/tests/Process_Test.cpp:
+
+          commit 4ac9f871f71bf40dc589d30868c66598a8cded43
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 14:39:23 2013 +0200
+
+                    Add more logging
+                  * ACE/tests/Bug_3912_Regression_Test.cpp:
+
+          commit b6becedd263028b68853fba7de8a232c8f9a3c62
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 13:47:24 2013 +0200
+
+                    Android also can't hnadle mmap from the signal handler
+                  * ACE/tests/Malloc_Test.cpp:
+
+          commit bd11f9f77184f9cd988aea0b214dd67b98a4245f
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 13:47:08 2013 +0200
+
+                    Added ACE_ANDROID
+                  * ACE/ace/config-android.h:
+
+          commit 8bb25df4c6ae1969c90297a7a36a549701c7295a
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 13:39:56 2013 +0200
+
+                    Layout change
+                  * ACE/tests/Process_Mutex_Test.cpp:
+
+          commit 4cd46bb07480c0c2038360ef7c76da21672d481f
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 13:39:36 2013 +0200
+
+                    Use full paths, added more logging
+                  * ACE/tests/Service_Config_Test.cpp:
+
+          commit fef201da28f786ec93110ed03b66e4996d5cdde9
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 13:39:07 2013 +0200
+
+                    Fixed typo in message
+                  * ACE/tests/test_config.h:
+
+          commit 705787197e4b934ae6a2fe57ae0533d68f4b2e56
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 13:38:45 2013 +0200
+
+                    Check return of daemonize
+                  * ACE/ace/Service_Config.cpp:
+
+          commit 71c63afb20484344f7c3559c3c0bfb3c0b92eab3
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 12:46:39 2013 +0200
+
+                    Further cleanup of the config files
+                  * ACE/ace/config-android.h:
+                  * ACE/ace/config-kfreebsd.h:
+                  * ACE/ace/config-macosx.h:
+                  * ACE/ace/config-netbsd.h:
+
+          commit c471940cd808a7240f1661940aad83bb82dd6dc9
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 11:39:51 2013 +0200
+
+                    Introduced ACE_LACKSP_THREAD_SCOPE_PROCESS and
+                    simplified OS_NS_Thread.cpp by using this new
+                    define. Set it also for android from now
+                  * ACE/ace/OS_NS_Thread.cpp:
+                  * ACE/ace/README:
+                  * ACE/ace/config-android.h:
+                  * ACE/ace/config-hpux-11.00.h:
+                  * ACE/ace/config-linux.h:
+                  * ACE/ace/config-qnx.h:
+                  * ACE/ace/config-vxworks6.4.h:
+
 Fri Sep  6 12:35:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_23_Test.cpp:
