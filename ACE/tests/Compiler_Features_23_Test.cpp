@@ -20,9 +20,9 @@ std::array<std::string, 2> priority_names =
   }
 };
 
-std::string t (uint32_t prop)
+std::string t (std::uint32_t prop)
 {
-  uint32_t log = 0;
+  std::uint32_t log = 0;
 
   for (; prop > 1; ++log)
     prop >>= 1;

@@ -1,3 +1,8 @@
+Wed Sep 11 18:19:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_23_Test.cpp:
+          Use std namespace
+
 Wed Sep 11 07:50:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/MEM_Addr.h:
