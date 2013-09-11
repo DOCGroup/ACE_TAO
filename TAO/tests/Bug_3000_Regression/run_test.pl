@@ -27,7 +27,13 @@ my $iorfile = "test.ior";
 my $server_iorfile = $server->LocalFile ($iorfile);
 $server->DeleteFile($iorfile);
 
-my $server_conf = $server->LocalFile ("rw.conf");
+my $base_conf = "rw" . $PerlACE::svcconf_ext;
+my $server_conf = $server->LocalFile ($base_conf);
+
+if ($server->PutFile ($base_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_conf>\n";
+    exit 1;
+}
 
 #Files which used by client1
 my $client1_iorfile = $client1->LocalFile ($iorfile);

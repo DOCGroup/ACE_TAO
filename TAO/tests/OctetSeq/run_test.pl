@@ -24,7 +24,6 @@ foreach $i (@ARGV) {
     }
 }
 
-
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $t3 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
