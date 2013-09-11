@@ -16,6 +16,8 @@
 # error __ANDROID_API__ must be defined
 #endif
 
+#define ACE_ANDROID
+
 #define ACE_HAS_SSIZE_T
 
 // system errorno is a volatile int
@@ -85,34 +87,13 @@
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 #include <features.h>
 
-#if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500)
-#  define ACE_HAS_PTHREADS_UNIX98_EXT
-#endif /* _XOPEN_SOURCE - 0 >= 500 */
+#define ACE_HAS_PTHREADS_UNIX98_EXT
 
-# include "ace/config-posix.h"
+#include "ace/config-posix.h"
 
-#if !defined (ACE_LACKS_LINUX_NPTL)
-
-  // Temporary fix because NPTL kernels do have shm_open but there is a problem
-  // with shm_open/shm_unlink pairing in ACE which needs to be fixed when I have time.
-# if defined (ACE_HAS_SHM_OPEN)
-#   undef ACE_HAS_SHM_OPEN
-# endif /* ACE_HAS_SHM_OPEN */
-
-# if defined (ACE_USES_FIFO_SEM)
-    // Don't use this for Linux NPTL since this has complete
-    // POSIX semaphores which are more efficient
-#   undef ACE_USES_FIFO_SEM
-# endif /* ACE_USES_FIFO_SEM */
-
-# if defined (ACE_HAS_POSIX_SEM)
-    // Linux NPTL may not define the right POSIX macro
-    // but they have the actual runtime support for this stuff
-#   if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && (((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600))
-#     define ACE_HAS_POSIX_SEM_TIMEOUT
-#   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && (((_POSIX_C_SOURCE - 0) >= 200112L) || (_XOPEN_SOURCE >= 600)) */
-# endif /* ACE_HAS_POSIX_SEM */
-#endif /* !ACE_LACKS_LINUX_NPTL */
+// @todo JW, test if this works
+// #define ACE_HAS_POSIX_SEM
+// #define ACE_HAS_POSIX_SEM_TIMEOUT
 
 // AIO support pulls in the rt library, which pulls in the pthread
 // library.  Disable AIO in single-threaded builds.
@@ -123,16 +104,9 @@
 #endif
 
 // First the machine specific part
-
 #if defined (__powerpc__) || defined (__x86_64__)
 # if !defined (ACE_DEFAULT_BASE_ADDR)
 #   define ACE_DEFAULT_BASE_ADDR ((char *) 0x40000000)
-# endif /* ! ACE_DEFAULT_BASE_ADDR */
-#elif defined (__ia64)
-# if !defined (ACE_DEFAULT_BASE_ADDR)
-// Zero base address should work fine for Linux of IA-64: it just lets
-// the kernel to choose the right value.
-#   define ACE_DEFAULT_BASE_ADDR ((char *) 0x0000000000000000)
 # endif /* ! ACE_DEFAULT_BASE_ADDR */
 #endif /* ! __powerpc__  && ! __ia64 */
 
@@ -299,11 +273,6 @@
 
 #define ACE_SIZEOF_WCHAR 4
 
-#if defined (__powerpc__) && !defined (ACE_SIZEOF_LONG_DOUBLE)
-// 32bit PowerPC Linux uses 128bit long double
-# define ACE_SIZEOF_LONG_DOUBLE 16
-#endif
-
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
 
@@ -313,6 +282,8 @@
 #define ACE_HAS_VOIDPTR_MMAP
 
 #define ACE_HAS_VASPRINTF
+
+#define ACE_LACKS_PTHREAD_SCOPE_PROCESS
 
 // According to man pages Linux uses different (compared to UNIX systems) types
 // for setting IP_MULTICAST_TTL and IPV6_MULTICAST_LOOP / IP_MULTICAST_LOOP
@@ -363,7 +334,9 @@
 # define ACE_LACKS_GETIPNODEBYNAME
 #endif
 
-#if __ANDROID_API__ == 8
+#if __ANDROID_API__ == 3
+# error Unsupported Android release 3
+#elif __ANDROID_API__ == 8
 # define ACE_LACKS_REGEX_H 1
 # define ACE_LACKS_CONDATTR 1
 #elif __ANDROID_API__ == 9

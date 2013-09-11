@@ -167,6 +167,8 @@
 #define ACE_LACKS_CLOCK_MONOTONIC
 #define ACE_LACKS_MONOTONIC_TIME
 
+#define ACE_LACKS_PTHREAD_SCOPE_PROCESS
+
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 

@@ -142,7 +142,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   else
     {
       ACE_START_TEST (ACE_TEXT ("Process_Mutex_Test"));
-#     if !defined( ACE_HAS_SYSV_IPC) || defined( ACE_USES_MUTEX_FOR_PROCESS_MUTEX )
+#     if !defined( ACE_HAS_SYSV_IPC) || defined(ACE_USES_MUTEX_FOR_PROCESS_MUTEX)
       // When Process_Mutex is pthreads based, then the owner of mutex destroys it
       // in destructor. This may disturb the other processes which still uses the
       // mutex. It is safer then to hold the mutex in main process, and destroy it after

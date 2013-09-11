@@ -61,18 +61,32 @@ run_test (int argc, ACE_TCHAR *argv[])
   Close_Handler* close_handler = 0;
   ACE_NEW_RETURN(close_handler, Close_Handler (&close_called), -1);
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening service config\n")));
+
   status = ACE_Service_Config::open (argc,
                                      argv,
                                      ACE_DEFAULT_LOGGER_KEY,
                                      true,
                                      true /*ignore def svc.conf*/);
   if (status != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("run_test, %p\n")
-                       ACE_TEXT ("ACE_Service_Config::open")),
-                       status);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                        ACE_TEXT ("run_test, %p\n")
+                        ACE_TEXT ("ACE_Service_Config::open")),
+                        status);
+    }
+  else
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Service config opened\n")));
+
 
   ACE_Service_Repository *asr = ACE_Service_Repository::instance ();
+  if (asr == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("run_test, no service repository\n")),
+                       -1);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test module\n")));
+
   const ACE_Service_Type* st = 0;
   status = asr->find (ACE_TEXT ("Close_Test_Module"), &st);
   if (status != 0)
@@ -87,6 +101,10 @@ run_test (int argc, ACE_TCHAR *argv[])
   MT_Module* close_test_module =
     static_cast <MT_Module *> (st->type()->object ());
 
+  if (close_test_module == 0)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("run_test, no close test module\n")),
+                       -1);
   close_test_module->reader (close_handler);
 
   //
@@ -100,6 +118,8 @@ run_test (int argc, ACE_TCHAR *argv[])
   const ACE_Module_Type* module_type =
     static_cast< const ACE_Module_Type*>(st->type ());
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test stream\n")));
+
   status = asr->find (ACE_TEXT ("Close_Test_Stream"), &st);
   if (status != 0)
   {
@@ -111,6 +131,8 @@ run_test (int argc, ACE_TCHAR *argv[])
   const ACE_Stream_Type* close_test_stream =
     static_cast<const ACE_Stream_Type*> (st->type ());
 
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Removing module\n")));
+
   ACE_Stream_Type *nc_stream = const_cast<ACE_Stream_Type*>(close_test_stream);
   ACE_Module_Type *nc_module = const_cast<ACE_Module_Type*>(module_type);
   nc_stream->remove (nc_module);
@@ -118,7 +140,7 @@ run_test (int argc, ACE_TCHAR *argv[])
   if (!close_called)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("close not called\n")));
-      status++;
+      ++status;
     }
   else
     {
@@ -132,12 +154,24 @@ run_main(int, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_3912_Regression_Test"));
 
+  ACE_TCHAR conf_file_name [MAXPATHLEN];
+#if defined (TEST_DIR)
+  ACE_OS::strcpy (conf_file_name, TEST_DIR);
+  ACE_OS::strcat (conf_file_name, ACE_DIRECTORY_SEPARATOR_STR);
+  ACE_OS::strcat (conf_file_name, ACE_TEXT ("Bug_3912_Regression_Test.conf"));
+#else
+  ACE_OS::strcpy (conf_file_name, ACE_TEXT ("Bug_3912_Regression_Test.conf"));
+#endif
+
   ACE_TCHAR * _argv[3] = {argv[0],
                           const_cast<ACE_TCHAR*> (ACE_TEXT ("-f")),
-                          const_cast<ACE_TCHAR*>
-                          (ACE_TEXT ("Bug_3912_Regression_Test.conf"))};
+                          const_cast<ACE_TCHAR*> (conf_file_name)};
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting test\n")));
 
   int status = run_test (3,_argv);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Closing service config\n")));
 
   ACE_Service_Config::fini_svcs ();
 

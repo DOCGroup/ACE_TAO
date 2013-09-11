@@ -175,7 +175,9 @@ run_client (u_short port,
 
   if (connector.connect (stream, to_server.get_remote_addr ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"), ACE_TEXT ("connector.connect()")),
+                       ACE_TEXT ("Failed to connect to <%C> %p\n"),
+                       to_server.get_host_name (),
+                       ACE_TEXT ("connector.connect()")),
                       -1);
 
   ACE_TCHAR buf[MAXPATHLEN];

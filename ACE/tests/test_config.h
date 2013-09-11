@@ -86,7 +86,7 @@ size_t const ACE_MAX_THREADS = 4;
 #endif /* ACE_START_TEST */
 
 #ifndef ACE_END_TEST
-# define ACE_END_TEST ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test t %D\n"), program));
+# define ACE_END_TEST ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Ending %s test %D\n"), program));
 #endif /* ACE_END_TEST */
 #endif /* ACE_HAS_CONSOLE_TEST_OUTPUT */
 

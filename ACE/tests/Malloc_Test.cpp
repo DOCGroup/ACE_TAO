@@ -40,6 +40,7 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 #define MUTEX_NAME ACE_TEXT ("test_lock")
 
 #if !defined (ACE_LINUX) && !defined (ACE_OPENVMS) \
+    && !defined (ACE_ANDROID) \
     && !(defined (ACE_WIN32) \
          && (defined (ghs) || defined (__MINGW32__) )) \
     && !(defined (__OpenBSD__) && defined (ACE_HAS_PTHREADS))
@@ -49,7 +50,7 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 // Mingw's gcc does not support structural exceptions.
 // Win9x doesn't support remaps.
 // OpenBSD causes this test to hang in the child when pthreads are enabled.
-// On these plarforms, we make sure the remapping will never occur.
+// On these platforms, we make sure the remapping will never occur.
 #endif /* ACE_LINUX && Win32 GHS*/
 
 #if defined (ACE_WIN32)

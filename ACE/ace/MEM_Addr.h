@@ -71,7 +71,7 @@ public:
   int set (u_short port_number, int encode = 1);
 
   /// Uses <getservbyname> to initialize an ACE_MEM_Addr from a
-  /// <port_name>, the remote <host_name>, and the <protocol>.
+  /// @a port_name, the remote <host_name>, and the <protocol>.
   int set (const ACE_TCHAR port_name[]);
 
   /// Return a pointer to the underlying network address.

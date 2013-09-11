@@ -77,9 +77,6 @@
 
 #define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
 
-// Platform supports System V IPC (most versions of UNIX, but not Win32)
-//#define ACE_HAS_SYSV_IPC
-
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
 

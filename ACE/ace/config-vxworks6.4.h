@@ -202,6 +202,8 @@
 #define ACE_LACKS_SYMLINKS
 #define ACE_LACKS_ISCTYPE
 
+#define ACE_LACKS_PTHREAD_SCOPE_PROCESS
+
 #if defined __RTP__
   // We are building for RTP mode
   #if !defined (ACE_AS_STATIC_LIBS)
