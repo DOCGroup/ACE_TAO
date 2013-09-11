@@ -35,9 +35,19 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-my $confserverbase = "server$confmod.conf";
-my $confserver = $server->LocalFile ("$confserverbase");
-my $confclient = $client->LocalFile ("client$confmod.conf");
+my $confserverbase = "server$confmod" . $PerlACE::svcconf_ext;
+my $confclientbase = "client$confmod" . $PerlACE::svcconf_ext;
+my $confserver = $server->LocalFile ($confserverbase);
+my $confclient = $client->LocalFile ($confclientbase);
+
+if ($server->PutFile ($confserverbase) == -1) {
+    print STDERR "ERROR: cannot set file <$confserver>\n";
+    exit 1;
+}
+if ($client->PutFile ($confclientbase) == -1) {
+    print STDERR "ERROR: cannot set file <$confclient>\n";
+    exit 1;
+}
 
 $SV = $server->CreateProcess ("server", "@ARGV -ORBSvcConf $confserver -o $server_iorfile");
 $CL = $client->CreateProcess ("client", "@ARGV -n 1 -ORBSvcConf $confclient -k file://$client_iorfile");

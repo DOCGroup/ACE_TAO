@@ -1,3 +1,60 @@
+Wed Sep 11 07:50:52 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * tao/RTCORBA/RT_ORB.cpp:
+        * tests/Bug_3000_Regression/run_test.pl:
+        * tests/Bug_3630_Regression/run_test.pl:
+        * tests/Bug_3837_Regression/run_test.pl:
+        * tests/CodeSets/simple/run_test.pl:
+        * tests/OctetSeq/run_test.pl:
+        * tests/OctetSeq/run_test1.pl:
+        * tests/OctetSeq/run_test2.pl:
+        * tests/TransportCurrent/Framework/run_test.pl:
+        * tests/TransportCurrent/IIOP/run_test.pl:
+          Improvements for the Android port
+
+          commit f723a63d4ce65bcb102dbbf9a525467b01b7a14b
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 20:41:48 2013 +0200
+
+                    IDL_Test doesn't run on Android
+                  * TAO/bin/tao_orb_tests.lst:
+
+          commit 777c5eeaab1045f07eb30bbd074bba83792b1344
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 20:41:01 2013 +0200
+
+                    Copy conf files to target
+                  * TAO/tests/TransportCurrent/Framework/run_test.pl:
+                  * TAO/tests/TransportCurrent/IIOP/run_test.pl:
+
+          commit 29b35e6080087514395a9a800693052ab728f0f2
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 15:36:42 2013 +0200
+
+                    Disabled some tests for Android, can't run tao_idl on the device
+                  * TAO/bin/tao_orb_tests.lst:
+
+          commit 12d94d292feccc61bcfc1472eb10ab64bb9dcdd3
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 15:31:40 2013 +0200
+
+                    Copy svc conf files to target
+                  * TAO/tests/Bug_3837_Regression/run_test.pl:
+                  * TAO/tests/CodeSets/simple/run_test.pl:
+
+          commit 6773f79cfaeac77d7e279d86b76c98eee6194531
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 15:18:36 2013 +0200
+
+                    Copy svc conf files to target
+                  * TAO/tao/RTCORBA/RT_ORB.cpp:
+                  * TAO/tests/Bug_3000_Regression/run_test.pl:
+                  * TAO/tests/Bug_3630_Regression/run_test.pl:
+                  * TAO/tests/OctetSeq/run_test.pl:
+                  * TAO/tests/OctetSeq/run_test1.pl:
+                  * TAO/tests/OctetSeq/run_test2.pl:
+
 Sat Sep  7 17:32:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_2593_Regression/run_test.pl:

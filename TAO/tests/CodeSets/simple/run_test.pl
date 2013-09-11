@@ -22,8 +22,18 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-my $client_conf = $client->LocalFile ("cs_test.conf");
-my $server_conf = $server->LocalFile ("cs_test.conf");
+my $base_conf = "cs_test" . $PerlACE::svcconf_ext;
+my $client_conf = $client->LocalFile ($base_conf);
+my $server_conf = $server->LocalFile ($base_conf);
+
+if ($server->PutFile ($base_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_conf>\n";
+    exit 1;
+}
+if ($client->PutFile ($base_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_conf>\n";
+    exit 1;
+}
 
 $SV = $server->CreateProcess ("server", "-o $server_iorfile -ORBDottedDecimalAddresses 1");
 $CL = $client->CreateProcess ("client", "-k file://$client_iorfile -ORBSvcConf $client_conf");

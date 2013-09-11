@@ -18,7 +18,7 @@ my $logout0 = "log.out";
 my $logout1 = "log.out.1";
 my $logout2 = "log.out.2";
 my $logout3 = "log.out.3";
-my $svcconf = "logger.conf";
+my $svcconf = "logger" . $PerlACE::svcconf_ext;
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $server_logout0 = $server->LocalFile ($logout0);
 my $server_logout1 = $server->LocalFile ($logout1);
@@ -39,6 +39,11 @@ foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $tofile = '';
     }
+}
+
+if ($server->PutFile ($svcconf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svcconf>\n";
+    exit 1;
 }
 
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel 10 $tofile ".

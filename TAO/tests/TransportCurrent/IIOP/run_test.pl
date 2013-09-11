@@ -25,19 +25,28 @@ $status = 0;
 
 $mode = shift (@ARGV);
 if ( $mode =~ /-dynamic/) {
-    $base_client_conf = "client_dynamic.conf";
-    $base_server_conf = "server_dynamic.conf";
+    $base_client_conf = "client_dynamic" . $PerlACE::svcconf_ext;
+    $base_server_conf = "server_dynamic" . $PerlACE::svcconf_ext;
     $client_conf_file = $client->LocalFile ("$base_client_conf");
     $server_conf_file = $server->LocalFile ("$base_server_conf");
 }
 elsif  ( $mode =~ /-static/) {
-    $base_client_conf = "client_static.conf";
-    $base_server_conf = "server_static.conf";
+    $base_client_conf = "client_static" . $PerlACE::svcconf_ext;
+    $base_server_conf = "server_static" . $PerlACE::svcconf_ext;
     $client_conf_file = $client->LocalFile ("$base_client_conf");
     $server_conf_file = $server->LocalFile ("$base_server_conf");
 }
 else {
     print STDERR "Unknown $mode. Specify -static or -dynamic\n";
+    exit 1;
+}
+
+if ($server->PutFile ($base_server_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_conf_file>\n";
+    exit 1;
+}
+if ($client->PutFile ($base_client_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$client_conf_file>\n";
     exit 1;
 }
 
