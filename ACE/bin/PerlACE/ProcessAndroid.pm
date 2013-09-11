@@ -407,7 +407,7 @@ sub PutFile ($)
 
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
-    my $cmd = "$adb_process" . ' push '. "$src $dest $silent";
+    my $cmd = "$adb_process" . ' push '. "\"$src\" \"$dest\" $silent";
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "PutFile cmd: $cmd\n";

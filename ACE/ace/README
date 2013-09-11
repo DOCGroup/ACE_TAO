@@ -473,7 +473,7 @@ ACE_HAS_PTHREADS                        Platform supports POSIX
 ACE_HAS_PTHREADS_UNIX98_EXT             Platform has the UNIX98 extensions to
                                         Pthreads (rwlocks)
 ACE_HAS_PTHREAD_ATTR_SETCREATESUSPEND_NP  Platform has
-					pthread_attr_setcreatesuspend_np().
+                                        pthread_attr_setcreatesuspend_np().
 ACE_HAS_PTHREAD_CONDATTR_SETKIND_NP     Platform has pthread_condattr_setkind_np().
 ACE_HAS_PTHREAD_MUTEXATTR_SETKIND_NP    Platform has
                                         pthread_mutexattr_setkind_np().
@@ -536,10 +536,10 @@ ACE_HAS_SIG_C_FUNC                      Compiler requires extern "C"
 ACE_HAS_SIZET_SOCKET_LEN                OS/compiler uses size_t *
                                         rather than int * for socket
                                         lengths
-ACE_HAS_SOCKADDR_IN_SIN_LEN		Platform has sin_len member in struct
-					sockaddr_in.
-ACE_HAS_SOCKADDR_IN6_SIN_LEN		Platform has sin6_len member in struct
-					sockaddr_in6.
+ACE_HAS_SOCKADDR_IN_SIN_LEN             Platform has sin_len member in struct
+                                        sockaddr_in.
+ACE_HAS_SOCKADDR_IN6_SIN_LEN            Platform has sin6_len member in struct
+                                        sockaddr_in6.
 ACE_HAS_SOCKADDR_MSG_NAME               Platform requires (struct
                                         sockaddr *) for msg_name field
                                         of struct msghdr.
@@ -563,13 +563,13 @@ ACE_HAS_STDCPP_STL_INCLUDES             Standard C++ headers can be
 ACE_HAS_STRBUF_T                        Compiler/platform supports
                                         struct strbuf
 ACE_HAS_STRDUP_EMULATION                Use ACE's strdup() emulation (even
-					if platform has a native strdup()).
-				        This is useful if you need control
-					over what memory allocator is used.
+                                        if platform has a native strdup()).
+                                        This is useful if you need control
+                                        over what memory allocator is used.
 ACE_HAS_WCSDUP_EMULATION                Use ACE's wcsdup() emulation (even
-					if platform has a native wcsdup()).
-				        This is useful if you need control
-					over what memory allocator is used.
+                                        if platform has a native wcsdup()).
+                                        This is useful if you need control
+                                        over what memory allocator is used.
 ACE_HAS_STRNLEN                         Platform supports strnlen(3).
 ACE_HAS_STREAMS                         Platform supports STREAMS
 ACE_HAS_STREAM_PIPES                    Platform supports STREAM pipes
@@ -692,9 +692,9 @@ ACE_HAS_VERSIONED_NAMESPACE             Wrap all library code within a
                                         ACE_VERSIONED_NAMESPACE_NAME
                                         to desired name.
 ACE_LACKS_INTMAX_T                      Platform lacks the intmax_t type
-ACE_LACKS_UINTMAX_T			Platform lacks the uintmax_t type.
+ACE_LACKS_UINTMAX_T                     Platform lacks the uintmax_t type.
 ACE_LACKS_INTPTR_T                      Platform lacks the intptr_t type
-ACE_LACKS_UINTPTR_T			Platform lacks the uintptr_t type.
+ACE_LACKS_UINTPTR_T                     Platform lacks the uintptr_t type.
 
 ACE_HAS_INT8_T                          Platform provides the int8_t type.
 ACE_HAS_INT16_T                         Platform provides the int16_t type.
@@ -889,7 +889,7 @@ ACE_LACKS_MKTEMP                        Platform lacks the mktemp() function.
 ACE_LACKS_MKTEMP_PROTOTYPE              Platform/compiler lacks the
                                         mktemp() prototype (e.g.,
                                         LynxOS)
-ACE_LACKS_MKSTEMP			Platform lacks the mkstemp() function.
+ACE_LACKS_MKSTEMP      Platform lacks the mkstemp() function.
 ACE_LACKS_MKSTEMP_PROTOTYPE             Platform/compiler lacks the
                                         mkstemp() prototype (e.g.,
                                         LynxOS)
@@ -924,7 +924,7 @@ ACE_LACKS_NEW_H                         OS doesn't have, or we don't want to
                                         use, new.h.
 ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
                                         for ::pthread_join ().
-ACE_LACKS_NUMERIC_LIMITS		Platform lacks std::numeric_limits<>.
+ACE_LACKS_NUMERIC_LIMITS    Platform lacks std::numeric_limits<>.
 ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filtering
                                         of multicast dgrams at the socket level.
                                         If == 1, ACE_SOCK_Dgram_Mcast will bind
@@ -936,6 +936,8 @@ ACE_LACKS_PRI_T                         Platform lacks pri_t (e.g.,
                                         Tandem NonStop UNIX).
 ACE_LACKS_PTHREAD_CANCEL                Platform lacks
                                         pthread_cancel().
+ACE_LACKS_PTHREAD_SCOPE_PROCESS         Platform lacks support for
+                                        PTHREAD_SCOPE_PROCESS
 ACE_LACKS_PTHREAD_SIGMASK               Platform lacks pthread_sigmask ().
 ACE_LACKS_PTHREAD_THR_SIGSETMASK        Platform lacks
                                         pthread_thr_sigsetmask (e.g.,
@@ -995,9 +997,9 @@ ACE_LACKS_SIGSET                        Platform lacks signal sets
                                         (e.g., Chorus and Win32)
 ACE_LACKS_STRPTIME                      Platform/compiler lacks the strptime()
                                         function.
-ACE_LACKS_WCSCHR			Platform/compiler lacks wcschr()
-ACE_LACKS_STRDUP			Platform/compiler lacks strdup()
-ACE_LACKS_WCSDUP			Platform/compiler lacks wcsdup()
+ACE_LACKS_WCSCHR                        Platform/compiler lacks wcschr()
+ACE_LACKS_STRDUP                        Platform/compiler lacks strdup()
+ACE_LACKS_WCSDUP                        Platform/compiler lacks wcsdup()
 ACE_LACKS_STRRCHR                       Platform/compiler lacks strrchr()
 ACE_LACKS_WCSRCHR                       Platform/compiler lacks wcsrchr()
 ACE_LACKS_SWAB                          Platform/compiler lacks
@@ -1045,17 +1047,17 @@ ACE_LACKS_TELLDIR                       Platform uses ACE_HAS_DIRENT
 ACE_LACKS_THREAD_STACK_SIZE             Platform lacks
                                         pthread_attr_setstacksize()
                                         (e.g., Linux pthreads)
-ACE_LACKS_THR_CONCURRENCY_FUNCS		(ONLY APPLIES TO SOLARIS)
-					Platform does not support
-					thr_getconcurrency/thr_setconcurrency
-					functions, or their implementation
-					is effectively a "no-op".  This
-					notably applies for Solaris >= 5.9.
-					Note that if you build on Solaris 8
-					and run on Solaris 9+, you can
-					encounter thread creation errors
-					unless you rebuild on the target
-					platform.
+ACE_LACKS_THR_CONCURRENCY_FUNCS    (ONLY APPLIES TO SOLARIS)
+                                        Platform does not support
+                                        thr_getconcurrency/thr_setconcurrency
+                                        functions, or their implementation
+                                        is effectively a "no-op".  This
+                                        notably applies for Solaris >= 5.9.
+                                        Note that if you build on Solaris 8
+                                        and run on Solaris 9+, you can
+                                        encounter thread creation errors
+                                        unless you rebuild on the target
+                                        platform.
 ACE_LACKS_TIMEDWAIT_PROTOTYPES          MIT pthreads platform lacks
                                         the timedwait prototypes
 ACE_LACKS_TIMESPEC_T                    Platform does not define

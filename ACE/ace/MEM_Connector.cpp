@@ -1,9 +1,6 @@
-// MEM_Connector.cpp
 // $Id$
 
 #include "ace/MEM_Connector.h"
-
-
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
