@@ -1,3 +1,10 @@
+Thu Sep 12 14:12:37 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_25_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          New C++11 is_true/is_false test
+
 Wed Sep 11 18:19:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_23_Test.cpp:
