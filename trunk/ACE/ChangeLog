@@ -1,3 +1,8 @@
+Thu Sep 12 17:57:24 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          With bmake we have some optional environment variables
+
 Thu Sep 12 14:12:37 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_25_Test.cpp:
