@@ -1,3 +1,9 @@
+Fri Sep 13 10:16:32 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Added recommendation for windows users to use active state
+          perl
+
 Fri Sep 13 09:16:44 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_26_Test.cpp:
