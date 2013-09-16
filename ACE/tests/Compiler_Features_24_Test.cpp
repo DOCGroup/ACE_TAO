@@ -44,9 +44,14 @@ private:
   shared_ptr_type stub_;
 };
 
+#if defined (__GNUC__)
+// g++ allows a redeclaration of the default
 template<typename T,
          typename = typename std::enable_if<
            std::is_base_of<T_base, T>::value>::type, typename ...Args>
+#else
+template<typename T, typename, typename ...Args>
+#endif
 inline o_r<T> make_f(Args&& ...args)
 {
   return o_r<T> (new T (std::forward<Args> (args)...));
