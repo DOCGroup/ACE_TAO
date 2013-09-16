@@ -81,7 +81,7 @@ run_main (int, ACE_TCHAR *[])
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT("Compiler_Features_25_Test"));
+  ACE_START_TEST (ACE_TEXT("Compiler_Features_26_Test"));
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("No C++11 support enabled\n")));
