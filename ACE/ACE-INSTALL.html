@@ -659,13 +659,13 @@ to check <a href="#win32nonic">here</a> first. <p>
       <br>
       <code>set PATH=%ACE_ROOT%\lib;%ACE_ROOT%\bin;%PATH%</code><br>
       <br>
-  </li><li>Generate the bmake makefiles using <a href="#MPC">MPC</a>. Use the <code>bmake</code> project type for C++ Builder:<br>
-      <br>
-      <code>%ACE_ROOT%\bin\mwc.pl -type bmake</code><br>
-      <br>
   </li><li>Change to the ACE_ROOT\ace directory.<br>
       <br>
       <code>cd %ACE_ROOT%\ace</code><br>
+      <br>
+  </li><li>Generate the bmake makefiles using <a href="#MPC">MPC</a>. Use the <code>bmake</code> project type for C++ Builder:<br>
+      <br>
+      <code>%ACE_ROOT%\bin\mwc.pl -type bmake</code><br>
       <br>
   </li><li>You can build several different versions of ACE by setting the following optional environment
       variables before you run make:<br>
@@ -706,14 +706,16 @@ The C++ Builder port has been done by Jody Hagins, <a href="mailto:chris@kohlhof
 <b>ACE TESTS</b></p><p>
 
 Before you can build the tests you need to build the protocols directory.
-Change the directory to ACE_ROOT\protocols and start the build with: </p><p>
+Change the directory to ACE_ROOT\protocols and start: </p><p>
 </p><blockquote><code>
+%ACE_ROOT%\bin\mwc.pl -type bmake<br>
 make -f Makefile.bmak all
 </code></blockquote><p>
 
 The tests are located in ACE_ROOT\tests, change to this directory.
-You build then the tests with the following command:</p><p>
+You build then the tests with the following commands:</p><p>
 </p><blockquote><code>
+%ACE_ROOT%\bin\mwc.pl -type bmake<br>
 make -f Makefile.bmak all
 </code></blockquote><p>
 
@@ -722,7 +724,9 @@ Once you build all the tests, you can run the automated test script using:</p><p
 <code>tests</code> directory to try all the tests. You need to make
 sure the ACE bin and lib directory (in this case
 <code>%ACE_ROOT%\bin</code> and <code>%ACE_ROOT%\lib</code>)
-are on the path before you try to run the tests.</p><p>
+are on the path before you try to run the tests. If your executables are
+compiled into a subdirectory, add <code>-ExeSubDir subdirname</code> to the
+command.</p><p>
 
 <p></p><hr align="left" width="50%"><p>
 </p><h3><a name="mingw">Building and Installing ACE on Win32 with MinGW/ MSYS</a></h3>
