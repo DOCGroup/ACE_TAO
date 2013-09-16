@@ -1,3 +1,8 @@
+Mon Sep 16 10:48:29 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_24_Test.cpp:
+          Using a default on the redeclaration only works with G++
+
 Mon Sep 16 09:56:17 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_24_Test.cpp:
