@@ -1,3 +1,12 @@
+Mon Sep 16 16:33:46 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          ACE_ROOT and TAO_ROOT are mandatory, for example MPC can't
+          run without TAO_ROOT
+
+        * tests/Bug_2734_Regression/client.cpp:
+          Zapped a lot of empty lines
+
 Wed Sep 11 07:50:52 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:

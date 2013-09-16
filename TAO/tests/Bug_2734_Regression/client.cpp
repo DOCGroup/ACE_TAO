@@ -165,9 +165,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           send_echo (none, orb.in (), server.in (), t);
 
-
-
-
           ACE_DEBUG ((LM_DEBUG,
                       "client(%P) Set the ORB policies\n"));
 
@@ -183,12 +180,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           policy_list[0]->destroy ();
 
-
-
-
-
-
-
           ACE_DEBUG ((LM_DEBUG,
                       "client(%P) Set the thread policies\n"));
 
@@ -203,12 +194,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           send_echo (thread1, orb.in (), server.in (), t);
 
           policy_list[0]->destroy ();
-
-
-
-
-
-
 
           ACE_DEBUG ((LM_DEBUG,
                       "client(%P) Use the object policies\n"));
