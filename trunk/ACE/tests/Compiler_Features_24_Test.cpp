@@ -10,20 +10,50 @@
 #if defined (ACE_HAS_CPP11)
 
 #include <type_traits>
+#include <memory>
 
-class T_base;
+template <typename T>
+class o_r;
+
+class T_base {};
 
 template<typename T,
          typename = typename std::enable_if<
            std::is_base_of<T_base, T>::value>::type, typename ...Args>
-void f(T const&);
+o_r<T> make_f(Args&& ...args);
 
-template<typename T,
-         typename = typename std::enable_if<
-           std::is_base_of<T_base, T>::value>::type, typename ...Args>
-inline void f(T const&)
+template <typename T>
+class o_r final
 {
+public:
+  template <typename _Tp1, typename, typename ...Args>
+  friend o_r<_Tp1> make_f(Args&& ...args);
+protected:
+  typedef std::shared_ptr<T>    shared_ptr_type;
+  template<typename _Tp1, typename = typename
+    std::enable_if<std::is_convertible<_Tp1*, T*>::value>::type>
+  explicit o_r (_Tp1*)
+    : stub_ ()
+  {}
+private:
+  shared_ptr_type stub_;
+};
+
+template<typename T,
+         typename = typename std::enable_if<
+           std::is_base_of<T_base, T>::value>::type, typename ...Args>
+inline o_r<T> make_f(Args&& ...args)
+{
+  return o_r<T> (new T (std::forward<Args> (args)...));
 }
+
+class A : public T_base
+{
+protected:
+  A () = default;
+  template <typename _Tp1, typename, typename ...Args>
+  friend o_r<_Tp1> make_reference(Args&& ...args);
+};
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -32,6 +62,8 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Compiler Feature 24 Test does compile and run.\n")));
+
+  o_r<A> l = make_f<A>();
 
   ACE_END_TEST;
 

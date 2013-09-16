@@ -1,3 +1,11 @@
+Mon Sep 16 09:37:33 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Extended Embarcadero C++ Builder instructions
+
+        * tests/Compiler_Features_24_Test.cpp:
+          Further extend this unit test with more code
+
 Mon Sep 16 06:53:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_26_Test.cpp:
