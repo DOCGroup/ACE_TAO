@@ -1,3 +1,9 @@
+Mon Sep 16 14:34:32 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_24_Test.cpp:
+          Removed g++ specific code, that is really a GCC bug, see
+          http://gcc.gnu.org/bugzilla/show_bug.cgi?id=50370
+
 Mon Sep 16 10:48:29 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_24_Test.cpp:

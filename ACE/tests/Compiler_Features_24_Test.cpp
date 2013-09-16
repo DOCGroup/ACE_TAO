@@ -44,14 +44,7 @@ private:
   shared_ptr_type stub_;
 };
 
-#if defined (__GNUC__)
-// g++ allows a redeclaration of the default
-template<typename T,
-         typename = typename std::enable_if<
-           std::is_base_of<T_base, T>::value>::type, typename ...Args>
-#else
 template<typename T, typename, typename ...Args>
-#endif
 inline o_r<T> make_f(Args&& ...args)
 {
   return o_r<T> (new T (std::forward<Args> (args)...));
@@ -70,6 +63,8 @@ o_t<A>::ref_type create ()
   return make_f<A>();
 }
 
+class B {};
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -79,6 +74,9 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("Compiler Feature 24 Test does compile and run.\n")));
 
   o_r<A> l = create();
+  o_r<A> l2 = make_f<A>();
+  // next line doesn't compile and shouldn't
+  //o_r<B> l3 = make_f<B>();
 
   ACE_END_TEST;
 
