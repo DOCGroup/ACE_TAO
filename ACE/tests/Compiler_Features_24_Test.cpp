@@ -15,6 +15,11 @@
 template <typename T>
 class o_r;
 
+template <typename T>
+struct o_t
+{
+  typedef o_r<T>       ref_type;
+};
 class T_base {};
 
 template<typename T,
@@ -55,6 +60,11 @@ protected:
   friend o_r<_Tp1> make_reference(Args&& ...args);
 };
 
+o_t<A>::ref_type create ()
+{
+  return make_f<A>();
+}
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -63,7 +73,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Compiler Feature 24 Test does compile and run.\n")));
 
-  o_r<A> l = make_f<A>();
+  o_r<A> l = create();
 
   ACE_END_TEST;
 
