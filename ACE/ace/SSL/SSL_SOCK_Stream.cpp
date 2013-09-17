@@ -128,12 +128,19 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
   io_vec->iov_base = 0;
 
   // Check the status of the current socket.
+#if defined (__MINGW64__)
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-fpermissive"
+#endif /* __MINGW64__ */
   switch (
     ACE_OS::select (int (this->get_handle ()) + 1,
                     handle_set,
                     0,
                     0,
                     timeout))
+#if defined (__MINGW64__)
+#pragma GCC diagnostic pop
+#endif /* __MINGW64__ */
     {
     case -1:
       return -1;

@@ -150,11 +150,18 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
           // Block indefinitely if timeout pointer is zero.
+#if defined (__MINGW64__)
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-fpermissive"
+#endif /* __MINGW64__ */
           status = ACE::select (int (handle) + 1,
                                 &rd_handle,
                                 &wr_handle,
                                 0,
                                 (timeout == 0 ? 0 : &t));
+#if defined (__MINGW64__)
+#pragma GCC diagnostic pop
+#endif /* __MINGW64__ */
 
           (void) countdown.update ();
 

@@ -14,7 +14,14 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
     }
   else
     {
+#if defined (__MINGW64__)
+# pragma GCC diagnostic push
+# pragma GCC diagnostic ignored "-fpermissive"
+#endif /* __MINGW64__ */
       (void) ::SSL_set_fd (this->ssl_, (int) fd);
+#if defined (__MINGW64__)
+# pragma GCC diagnostic pop
+#endif /* __MINGW64__ */
       this->ACE_SSL_SOCK::set_handle (fd);
       this->stream_.set_handle (fd);
     }

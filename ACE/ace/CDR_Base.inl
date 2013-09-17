@@ -145,7 +145,11 @@ ACE_CDR::swap_8 (const char* orig, char* target)
     && !defined(ACE_LACKS_INLINE_ASSEMBLY)
   ACE_REGISTER unsigned long x =
     * reinterpret_cast<const unsigned long*> (orig);
+#if defined (__MINGW64__)
+  asm ("bswap %1" : "=r" (x) : "0" (x));
+#else
   asm ("bswapq %1" : "=r" (x) : "0" (x));
+#endif /* __MINGW__ */
   *reinterpret_cast<unsigned long*> (target) = x;
 #elif defined(ACE_HAS_PENTIUM) && defined(__GNUG__) \
     && !defined(ACE_LACKS_INLINE_ASSEMBLY)
