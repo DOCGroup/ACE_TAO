@@ -389,6 +389,10 @@ installation notes</A> and the <code>TAO_ROOT</code> environment variable.
 Remember to <a href="../ACE/ACE-INSTALL.html">set
 up ACE</A> before building TAO.
 
+Make sure that you first build <code>$TAO_ROOT\TAO_IDL</code> and then <code>
+$TAO_ROOT\tao</code> because in order to compile the core TAO libraries
+you need to have <code>TAO_IDL</code> compiled.
+
 <H4>Visual C++ 7.1 and newer</H4>
 
 <P>It works best if TAO is placed in ACE_wrappers so TAO ends up in
@@ -424,7 +428,7 @@ project </a> file.</P>
       and build both client and server. <P>
 </OL>
 
-<H4>Visual C++ 7.1</H4>
+<H4>Visual C++ 7.0</H4>
 The DOC group doesn't support TAO on VC++ 7.0 since the libraries that
 were shipped with VC++ 7.0 did not work well. The DOC group supports
 only VC++ 7.1, which is used by their sponsors. The above mentioned
