@@ -1,3 +1,11 @@
+Tue Sep 17 12:12:16 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_24_Test.cpp:
+          Corrected friend
+
+        * tests/OS_Test.cpp:
+          Zapped empty lines
+
 Mon Sep 16 14:34:32 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_24_Test.cpp:

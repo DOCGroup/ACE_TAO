@@ -32,8 +32,6 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_netdb.h"
 
-
-
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \
   ((X)                                                          \
