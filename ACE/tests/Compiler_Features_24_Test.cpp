@@ -55,7 +55,7 @@ class A : public T_base
 protected:
   A () = default;
   template <typename _Tp1, typename, typename ...Args>
-  friend o_r<_Tp1> make_reference(Args&& ...args);
+  friend o_r<_Tp1> make_f(Args&& ...args);
 };
 
 o_t<A>::ref_type create ()
