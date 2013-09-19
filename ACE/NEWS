@@ -10,6 +10,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.1 and ACE-6.2.2
   Init_ACE, Sock_Connect.h. You may have to explicitly add one of these
   in your own code to restore compiling.
 
+. Further improvements of the Android port, still work in progress.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.0 and ACE-6.2.1
 ====================================================
 
