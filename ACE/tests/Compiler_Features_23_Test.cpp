@@ -30,6 +30,9 @@ std::string t (std::uint32_t prop)
   return priority_names[log];
 }
 
+struct A { A(int) {} ; };
+const std::array<A, 4> x = {{ 1, 1, 1, 1 }};
+
 int
 run_main (int, ACE_TCHAR *[])
 {
