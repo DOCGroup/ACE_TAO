@@ -1,3 +1,8 @@
+Sat Sep 21 14:12:18 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_23_Test.cpp:
+          Extended test case
+
 Sat Sep 21 14:05:54 UTC 2013  johnny  <johnny@remedy.nl>
 
         * bin/ACE+TAO+CIAO+DAnCE.json:
