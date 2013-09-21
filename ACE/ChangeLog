@@ -1,3 +1,8 @@
+Sat Sep 21 14:05:54 UTC 2013  johnny  <johnny@remedy.nl>
+
+        * bin/ACE+TAO+CIAO+DAnCE.json:
+          Ignore all throw
+
 Tue Sep 17 13:10:05 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_27_Test.cpp:
