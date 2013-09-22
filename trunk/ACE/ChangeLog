@@ -1,3 +1,9 @@
+Sun Sep 22 21:07:34 UTC 2013  Abdul Sowayan  <sowayan@gmail.com>
+
+        * ace/config-macosx-mavericks.h:
+
+          Adding support for OSX 10.9 Mavericks
+
 Sat Sep 21 14:12:18 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_23_Test.cpp:
