@@ -1,3 +1,8 @@
+Sun Sep 22 21:14:38 UTC 2013  Abdul Sowayan  <sowayan@gmail.com>
+
+        * include/makeinclude/platform_macosx_mavericks.GNU:
+          Adding support for OSX 10.9 Mavericks
+
 Sun Sep 22 21:07:34 UTC 2013  Abdul Sowayan  <sowayan@gmail.com>
 
         * ace/config-macosx-mavericks.h:
