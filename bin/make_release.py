@@ -928,7 +928,7 @@ def generate_workspaces (stage_dir):
     if opts.ace_only != "yes":
         os.putenv ("TAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO"))
         os.putenv ("CIAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO"))
-    os.putenv ("DANCE_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO", "DAnCE"))
+        os.putenv ("DANCE_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO", "DAnCE"))
 
     # Create option strings
     mpc_command = os.path.join (stage_dir, "ACE_wrappers", "bin", "mwc.pl")
@@ -936,10 +936,10 @@ def generate_workspaces (stage_dir):
     if opts.ace_only != "yes":
         mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
         mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
+        mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO/DAnCE '
         exclude_option = ' -exclude TAO/TAO_*.mwc,TAO/CIAO/CIAO_*.mwc '
     else:
         exclude_option = ' '
-    mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO/DAnCE '
 
     static_vc9_option = ' -static -name_modifier *_vc9_Static -apply_project -exclude TAO/CIAO '
     static_vc9_option += mpc_option

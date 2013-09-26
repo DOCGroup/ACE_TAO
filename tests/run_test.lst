@@ -88,6 +88,7 @@ Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
 Conn_Test: !ACE_FOR_TAO
 DLL_Test: !Unicos !STATIC !KCC_Linux
 DLList_Test: !ACE_FOR_TAO
+Daemonize_Test
 Date_Time_Test: !ACE_FOR_TAO
 Dev_Poll_Reactor_Test: !nsk !ST
 Dirent_Test: !VxWorks_RTP !LabVIEW_RT
