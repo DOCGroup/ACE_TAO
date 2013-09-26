@@ -613,8 +613,10 @@
 #define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_LSTAT
-// Looks like Win32 has a non-const swab function
+// Looks like Win32 has a non-const swab function, and it takes the
+// non-standard int len (rather than ssize_t).
 #define ACE_HAS_NONCONST_SWAB
+#define ACE_HAS_INT_SWAB
 
 // If we are using winsock2 then the SO_REUSEADDR feature is broken
 // SO_REUSEADDR=1 behaves like SO_REUSEPORT=1. (SO_REUSEPORT is an
