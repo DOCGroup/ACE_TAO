@@ -1,3 +1,19 @@
+Thu Sep 26 20:22:53 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp (recvv_n_i): Resolve 64-bit compile warning on Windows.
+
+Thu Aug 29 22:06:55 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_unistd.inl (swab): Added support for ACE_HAS_INT_SWAB for
+          platforms where the 'length' arg to swab() is an int instead of
+          the standard ssize_t.
+
+        * ace/config-win32-common.h: Added ACE_HAS_INT_SWAB
+
+        * tests/OS_Test.cpp: Added a ACE_OS::swab() test.
+
+        * ace/README: Added ACE_HAS_INT_SWAB description.
+
 Tue Nov 20 23:55:57 UTC 2012  Steve Huston  <shuston@riverace.com>
 
         * ace/config-hpux-11.00.h:
