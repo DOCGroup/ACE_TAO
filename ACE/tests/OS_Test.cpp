@@ -1374,6 +1374,29 @@ log2_test (void)
 }
 
 int
+swab_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing swab method\n")));
+
+  int error_count = 0;
+  char from[] =   "BADCFEHGJILKNMPORQTSVUXWZY";
+  char to[] =     "..........................";
+  char expect[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+  ACE_OS::swab (from, to, sizeof (from));
+  if (ACE_OS::strcmp (to, expect) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("swab error: %C, expected %C\n"),
+                  to, expect));
+      ++error_count;
+    }
+
+  return error_count;
+}
+
+int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("OS_Test"));
@@ -1438,6 +1461,9 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = ace_ctype_test ()) != 0)
+      status = result;
+
+  if ((result = swab_test ()) != 0)
       status = result;
 
   if ((result = compiler_test ()) != 0)

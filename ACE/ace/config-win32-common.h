@@ -603,8 +603,10 @@
 #define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_LSTAT
-// Looks like Win32 has a non-const swab function
+// Looks like Win32 has a non-const swab function, and it takes the
+// non-standard int len (rather than ssize_t).
 #define ACE_HAS_NONCONST_SWAB
+#define ACE_HAS_INT_SWAB
 
 // gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
 #define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
