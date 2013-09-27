@@ -154,10 +154,10 @@ ACE_Ping_Socket::receive_echo_reply (ACE_Time_Value const * timeout)
 
   do
     {
-      int rval_recv = inherited::recv (icmp_recv_buff_,
-                                       sizeof icmp_recv_buff_,
-                                       0,
-                                       wait_time);
+      ssize_t rval_recv = inherited::recv (icmp_recv_buff_,
+                                           sizeof icmp_recv_buff_,
+                                           0,
+                                           wait_time);
       if (rval_recv < 0)
         {
           if (errno == EINTR)
@@ -203,7 +203,7 @@ int
 ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
 {
   unsigned char hlen1;
-  int icmplen;
+  ssize_t icmplen;
   struct ip * ip;
   struct icmp * icmp;
 
@@ -224,7 +224,7 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
       ACELIB_DEBUG
         ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram")
-          ACE_TEXT (" - ICMP length is %d < 8.\n"),
+          ACE_TEXT (" - ICMP length is %b < 8.\n"),
           icmplen));
       ACELIB_ERROR_RETURN
         ((LM_ERROR,
@@ -257,7 +257,7 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
             ((LM_ERROR,
               ACE_TEXT ("(%P|%t) ACE_Ping_Socket::")
               ACE_TEXT ("process_incoming_dgram - ICMP length ")
-              ACE_TEXT ("is %d < 16."),
+              ACE_TEXT ("is %b < 16."),
               icmplen),
              -1);
         }
@@ -266,7 +266,7 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
         ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) ACE::Ping_Socket::process_incoming_dgram - ")
           ACE_TEXT ("received ")
-          ACE_TEXT ("ICMP datagram with length of %d bytes (not counting ")
+          ACE_TEXT ("ICMP datagram with length of %b bytes (not counting ")
           ACE_TEXT ("IP-header): seq=%u, ttl=%d.\n"),
           icmplen, icmp->icmp_seq, ip->ip_ttl));
 
@@ -335,7 +335,7 @@ ACE_Ping_Socket::send_echo_check (ACE_INET_Addr &remote_addr,
   _icmp->icmp_cksum = 0;
   _icmp->icmp_cksum = inherited::calculate_checksum ((u_short *) _icmp,
                                                      length_icmp);
-  int rval_send = -1;
+  ssize_t rval_send = -1;
 
   if ((rval_send = send ((void const *) icmp_send_buff_,
                          length_icmp,
