@@ -1,3 +1,15 @@
+Fri Sep 27 21:33:58 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/ACE.cpp: Same fix as Thu Sep 26 20:22:53 made to recvv_n_i(),
+          sendv_n_i(), readv_n(), writev_n().
+
+        * ace/FILE_IO.cpp (recvv): Resolve 64-bit compile warnings and ensure
+          that no more is read than can be accurately reported.
+
+        * ace/INET_Addr.cpp (set):
+        * ace/Ping_Socket.cpp:
+          Resolve 64-bit compile warning on Windows.
+
 Thu Sep 26 20:22:53 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp (recvv_n_i): Resolve 64-bit compile warning on Windows.
