@@ -7,6 +7,7 @@
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -330,7 +331,7 @@ ACE_INLINE ACE_TCHAR *
 ACE_Process_Options::command_line_buf (int *max_lenp)
 {
   if (max_lenp != 0)
-    *max_lenp = this->command_line_buf_len_;
+    *max_lenp = ACE_Utils::truncate_cast<int>(this->command_line_buf_len_);
   return this->command_line_buf_;
 }
 
