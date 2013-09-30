@@ -1,0 +1,1103 @@
+ace (6.0.3-1) experimental; urgency=low
+
+  [ Thomas Girard ]
+  * Drop obsolete patch multiarch.dpatch.
+  * Really install NEWS file with libace-ssl.
+  * Convert to format 3.0 (quilt):
+    o Drop dpatch dependency
+    o Do not repackage upstream tarball
+    o rework patches 90 and 91 so that they can be applied before building
+  * Convert debian/rules to debhelper level 8.
+  * Convert patches to DEP3 format.
+  * debian/watch: use ACE+TAO-src-*.tar.bz2 since we don't package CIAO.
+  * Port to GNU/Hurd.
+  * Make tao-idl and tao-ifr depend on g++; we need cpp for preprocessing.
+  * Change descriptions to match new binary names.
+  * Replace Conflicts:/Replaces: with Breaks:/Replaces:, following lintian
+    recommendation.
+  * Register ace-netsvcs documentation with doc-base (again, thanks lintian).
+
+  [ Pau Garcia i Quiles ]
+  * New upstream patch release. Closes: #628572.
+  * Drop patch 11-promote-QtResource-to-qt4
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Wed, 27 Jul 2011 15:34:32 +0200
+
+ace (6.0.1-3) unstable; urgency=low
+
+  * Convert to format 3.0 (quilt):
+    o Drop dpatch dependency
+    o Do not repackage upstream tarball
+  * Convert debian/rules to debhelper level 8.
+  * Port to GNU/Hurd.
+  * debian/watch: use ACE+TAO-src-*.tar.bz2 since we don't package CIAO.
+  * debian/patches/multiarch.dpatch: change detection of librt.so to use
+    getconf so that it does not break with multiarch locations.
+    Closes: #629657.
+  * debian/NEWS.Debian: mention that SSL v2 was removed from Debian
+    packages.
+  * Enhance package descriptions. Thanks to Gerfried Fuchs for the
+    report, and to Justin B Rye from debian-l10n-english@ for
+    his changes. Closes: #599549.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Mon, 20 Jun 2011 21:05:52 +0200
+
+ace (6.0.1-2) unstable; urgency=low
+
+  [ Thomas Girard ]
+  * Import into git.
+  * debian/control: change Vcs-* accordingly.
+  * Restore lost changelog entries, thanks to git!
+  * Add DM-Upload-Allowed: yes to debian/control.
+  * Bump Standards-Version: to 3.9.2.
+
+  [ Pau Garcia i Quiles ]
+  * Disable SSLv2 by adding patch 35_disable_sslv2 (Closes: #622074)
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sun, 01 May 2011 13:02:17 +0200
+
+ace (6.0.1-1) unstable; urgency=low
+
+  [ Pau Garcia i Quiles ]
+  * New upstream release
+  * Drop patch 12-add-DESTDIR-to-MPC (applied upstream)
+  * Drop patch 13-add-QtReactor-export (applied upstream)
+  * Drop patch 14-fix-tcl-flags (applied upstream)
+  * Drop patch 16-fix-pidl-install (applied upstream)
+  * Update patch 11-promote-QtResource-to-qt4
+  * Update patch 15-fix-lzo-flags
+  * Update patch 34-bts386713
+  * Require debhelper >= 7 (it was already required, in practice)
+  * Register documentation with doc-base
+  * Explicitly set source format 1.0 until we move to 3.0
+  * Package ACE_INet and ACE_INet_SSL
+
+  [ Thomas Girard ]
+  * Build-depend on Tcl/Tk >= 8.5.
+
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>  Sun, 20 Feb 2011 16:33:13 +0100
+
+ace (6.0.0-1) experimental; urgency=low
+
+  * New upstream release:
+    o use new make install target.
+    o remove generator_pkgconfig.sh, no longer needed.
+    o new binary renaming:
+      - LoadManager => tao_loadmanager
+      - LoadMonitor => tao_loadmonitor
+      - ImplRepo_Service => tao_imr_locator
+      - ImR_Activator => tao_imr_activator
+      - IFR_Service => tao_ifr_service
+      - Fault_Detector => tao_fault_detector
+      - Fault_Notifier => tao_fault_notifier
+      - Scheduling_Service => tao_cosscheduling
+      - Dump_Schedule => tao_dump_schedule
+    o remove libACE_gperf_lib.
+    o remove patches that were merged upstream:
+      - 11-create-ace_qt4reactor-mpb.dpatch
+      - 12-create-config_kfreebsd.dpatch
+      - 16-rename-tao-programs.dpatch
+      - 24-add-missing-headers.dpatch
+      - 25-remove-duplicate-files.dpatch
+      - 47-change-netsvcs.dpatch
+      - 48-fix-doxygen-cross-links.dpatch
+    o remove useless patches:
+      - 10-fix-prj-install.dpatch
+      - 19-gcc43.dpatch
+    o rework existing patches:
+      - 20-versioned_libs.dpatch, for versioned_so=2
+      - 34-bts386713.dpatch
+      - 90-patch-mpc-basedir.dpatch
+    o new patches or scripts:
+      - 12-add-DESTDIR-to-MPC.dpatch, to add and use DESTDIR in make install
+      - 13-add-QtReactor_export.h.dpatch, to add a missing header in
+        libace-qtreactor-dev package.
+      - 16-fix-pidl-install.dpatch, to add missing .pidl files.
+      - fix_doxygen.sh, to regenerate the patch for Doxygen reduction.
+  * Bump Standards-Version: to 3.9.1.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Thu, 06 Jan 2011 07:39:04 +0100
+
+ace (5.7.7-4) unstable; urgency=high
+  [ Marek Brudka ]
+  * Synchronized *.pc with *.so and created transitional tags. Closes: #598169
+
+ -- Marek Brudka <mbrudka@aster.pl>  Mon, 27 Sep 2010 20:36:00 +0200
+
+ace (5.7.7-3) unstable; urgency=low
+  [ Marek Brudka ]
+  * Configuration file for KFreeBSD created. Closes: #591586.
+  * Restored pkgconfig files. Closes: #591610.
+  * Provided manpages for tao_catior, tao_nslist, tao_nsdel, 
+    tao_nsadd, ace_netsvcs.
+
+  [ Thomas Girard ]
+  * Disable -fvisibility=hidden on armel since it does not seem to work on
+    that platform. Closes: #593225.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Tue, 07 Sep 2010 20:04:20 +0200
+
+ace (5.7.7-2) unstable; urgency=low
+
+  * Rebuild with sid tk-dev build-dependency. Closes: #590512.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Mon, 02 Aug 2010 23:49:01 +0200
+
+ace (5.7.7-1) unstable; urgency=low
+
+  [ Thomas Girard ]
+  * Add Marek to Uploaders: field.
+  * Remove dependencies on autotools; these are no longer needed now that we
+    have agreed to move back to the traditional compilation method.
+  * Add bzip2 and lzo ZIOP implementation.
+  * New patch: 20-versioned_libs.dpatch, to generate libraries with names
+    following libACE-5.7.7.so pattern instead of libACE.so.5.7.7.
+  * Rename binaries and packages to follow what is used in RPMs.
+  * Move $ACE_ROOT to /usr/lib/ace.
+
+  [ Marek Brudka ]
+  * New upstream release:
+    o add libACE_gperf, libACE_ETCL and libACE_Monitor_Control to libace
+    o add headers and libraries for Monitor, ZIOP, ETCL to libtao package
+    o renamed gperf-ace to ace_gperf to follow the upstream convention
+    o renamed utilities (ns{add,del,list} to tao_ns{add,del,list}) in tao-utils
+      to follow the upstream changes
+  * Change compilation back to traditional ACE+TAO build method:
+    o adapt existing Debian build mechanism
+    o remove patches no longer needed because of this switch
+    o use MPC generated makefiles
+    o install build result using MPC/prj_install.pl and .ins files
+    o temporarily excluded logWalker from build
+  * New patch: 10-fix-prj-install to work-around a problem installing files
+  * Added PerlACE to mpc-ace. Closes: #522557
+  * Created patch to reduce the size of doxygen doc. Closes: #562164
+  * Created patch to fix cross references in doxygen tags
+  * Created libnetsvcs packages. Closes: #466137. Addresses: LP#185285
+  * Moved IDL fiels from /usr/include into /usr/share/idl
+
+  [ Pau Garcia i Quiles ]
+  * New upstream release
+  * Add dependency on ${misc:Depends}
+  * Add new libraries and update patch 34-bts386713 accordingly
+  * Update patch 02-qt4 (partially fixed upstream)
+  * Drop patch 05-autoconf-fox (fixed upstream)
+  * Drop patch 06-fix-kokyu-mpc (fixed upstream)
+  * Drop patch 07-autoconf-fix-gperf (fixed upstream)
+  * Drop patch 08-fix-perl-shebang (fixed upstream)
+  * Drop patch 10-fix-fox-resource-export (fixed upstream)
+  * Drop patch 11-fix-fox-reactor.dpatch (fixed upstream)
+  * Update patch 12-fix-fox-include
+  * Drop patch 13-fix-fox-errors (fixed upstream except for the #include, which
+    I have now merged in 12-fix-fox-include)
+  * Drop patch 14-autoconf-tao (fixed upstream)
+  * Drop patch 15-fix-fltk-include (fixed upstream)
+  * Drop patch 17-protect-mpc-path (fixed upstream)
+  * Drop patch 18-fix-bswap-detection (fixed upstream)
+  * Update patch 19-gcc43
+  * Drop patch 20-fix-iostream-detection (fixed upstream)
+  * Drop patch 22-remove-Ge-doc (fixed upstream)
+  * Drop patch 23-add-sh-shebang (fixed upstream)
+  * Update patch 24-add-missing-headers (WORK IN PROGRESS)
+  * Update patch 34-bts386713
+  * Drop patch 49-missing-template (fixed upstream)
+  * Update patch 90-patch-mpc-basedir
+  * Update patch 91-patch-dg-basedir
+  * Add patch 93-hack-to-fix-libtoolize
+  * Add patch 94-build-crosscompile
+  * Add patch 95-build-ace-for-tao
+  * Add patch 96-build-athena3d
+  * Remove DH_COMPAT definition from the debian/rules file, it's already in
+    debian/compat
+  * Fix fox-config location, detection method has changed since 5.6.3
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sun, 23 May 2010 16:58:42 +0200
+
+ace (5.6.3-6) unstable; urgency=low
+
+  [ Thomas Girard ]
+  * Remove obsolete maintainers:
+    - Konstantinos Margaritis <markos@debian.org>
+    - Brian Nelson <pyro@debian.org>
+    Closes: #521487.
+  * Bump Standards-Version: to 3.8.3.
+  * Remove erroneous #define ACE_SCANDIR_CMP_USES_CONST_VOIDPTR in config.h;
+    causing diagnostics to FTBFS. Closes: #552899.
+  * Remove extra ACLOCAL_AMFLAGS from already existing Makefile.am; causing
+    recent aclocal to abort. Thanks to Pau Garcia i Quiles for the patch.
+    Closes: #518735.
+  * Add README.source.
+  * Add Pau Garcia i Quiles to the list of maintainers.
+  * Fix many issues spotted by lintian.
+
+  [ Pau Garcia i Quiles ]
+  * Add new patches:
+    - Remove duplicate files from .mpc files so that Makefile.am files do
+      not have duplicates 
+    - Run autoupdate and autoreconf in the ACE and TAO directories in order
+      to update from libtool 1.5 (what upstream uses) to libtool 2.2
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sun, 13 Dec 2009 11:47:50 +0100
+
+ace (5.6.3-5) unstable; urgency=low
+
+  * Do not ship MPC config files in both mpc-ace and libace-dev packages;
+    they're meant to be only in mpc-ace. Make mpc-ace Replaces: the bogus
+    previous upload. Closes: #484718.
+  * Bump Standards-Version: to 3.8.0.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Fri, 13 Jun 2008 21:52:28 +0000
+
+ace (5.6.3-4) unstable; urgency=low
+
+  * Add the following missing programs to libace-dev:
+    o $ACE_ROOT/bin/generate_export_file.pl
+    o $ACE_ROOT/bin/split-cpp
+    o $ACE_ROOT/bin/g++dep
+    o $ACE_ROOT/bin/add_rel_link.sh
+  * Move DependencyGenerator from mpc-ace to libace-dev.
+  * New patch, 22-remove-Ge-doc.dpatch, to remove documentation for
+    tao_idl -Ge flag that no longer works. Thanks to Pascal Giard for
+    reporting this.
+  * Remove PACKAGE_* definitions from /usr/include/ace/config.h. Thanks to
+    Pascal Giard for reporting this.
+  * Remove pre-etch Conflicts: and Replaces: information.
+  * Add missing headers found with cmp-installation.sh. Closes: #481088.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 24 May 2008 15:47:01 +0000
+
+ace (5.6.3-3) unstable; urgency=low
+
+  * Pass full path to fox-config-1.6 instead of trying to detect fox-config
+    since fox-config is an alternative. Should fix multiple FTBFS.
+  * Enable IPv6 again. Disabling it was a mistake: it does work. But on an
+    IPv4 only host one need to specify the end-point to use, e.g. :
+      Naming_Service -ORBEndPoint iiop://localhost:1234
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Thu, 24 Apr 2008 18:27:07 +0000
+
+ace (5.6.3-2) unstable; urgency=low
+
+  * Add missing libfox-1.6-dev build dependency. Thanks to Bastian Blank for
+    the report. Closes: #476822.
+  * Build depend on libqt4-dev (>= 4.4~rc1-4) to fix FTBFS. Thanks to
+    Martin Zobel-Helas for the report and to Sune Vuorela for the fix.
+    Closes: #476505.
+  * Add platform_macros.GNU.in and have autotools handle it so that it's
+    possible to ship rules.*.GNU. Closes: #469843, #469845.
+  * Remove doxygen-generated files we don't need.
+  * (Build-)Depend on tk-dev instead of tk8.4-dev.
+  * Rework debian/patches/05-autoconf-fox.dpatch not to link against too
+    many libs.
+  * Restore doxygen build-dependency.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Tue, 22 Apr 2008 18:23:46 +0000
+
+ace (5.6.3-1) unstable; urgency=low
+
+  * New upstream release:
+    o missing os_include/os_byteswap.h is included. Closes: #469844.
+  * Upload to unstable.
+  * New packages: libace-foxreactor and libtao-foxresource, integrating
+    with the FOX toolkit.
+  * Build doxygen again.
+  * Rewrite debian/copyright, following proposal from:
+    http://wiki.debian.org/Proposals/CopyrightFormat
+  * Add a watch file.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 12 Apr 2008 17:10:14 +0000
+
+ace (5.6.2-1) experimental; urgency=low
+
+  * New upstream release.
+  * Generate .am files instead of patching them; hence drop:
+    o patches/02-tao-sonames-release-am.dpatch
+    o tao-sonames-release-am.sh
+  * Fix DEB_BUILD_OPTIONS=noopt.
+  * Add zlib1g-dev and libzzip-dev build dependencies.
+  * Enable symbol visibility.
+  * Manually add missing some autoconf tests to reduce differences against
+    regular ACE build method.
+  * Do not generate doxygen; it fails now.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sun, 06 Jan 2008 21:05:37 +0100
+
+ace (5.5.9-1) experimental; urgency=low
+
+  * New upstream release. We now use the -src.tar.bz2 tarball, hence:
+      o generate autotools stuff at compile time
+      o huge patches/06-bootstrap is dropped
+  * Fix broken libtao-tkresource package.
+  * Drop no longer needed patches:
+      o 03-compile-lifecycle
+      o 04-compile-ftrt
+      o 07-ace-tao-ssliop-refcount
+  * New patches:
+      o 02-qt4 to switch to Qt4
+      o 02-fltk-no-gl to avoid linking with libfltk_gl
+      o 03-g++-new-throws to prevent autoconfiguration from eating all
+        memory testing whether std::bad_alloc is thrown
+  * Disable patch 20-check-_REENTRANT; it's not needed when using autotools
+    method. Closes: #420216.
+  * Update patch 34-bts386713.
+  * Use debian/compat instead of DH_COMPAT.
+  * Drop no longer needed dpkg-dev tightened build-dependency since it is
+    available in etch.
+  * Generate doxygen documentation. Closes: #391011.
+  * Enable ACE reactor notification queue.
+  * Move $ACE_ROOT/bin/MakeProjectCreator/config files into libace-dev.
+  * Install $TAO_ROOT/MPC files into libtao-dev.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Tue, 17 Jul 2007 22:50:36 +0200
+
+ace (5.5.6-2) experimental; urgency=low
+
+  * debian/control: fix broken Conflicts: fields. Package split for
+    libtao-orbsvcs happened in libtao-orbsvcs1.4.7c2a 5.4.7-11 and this should
+    not be changed.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Fri, 23 Mar 2007 18:38:41 +0000
+
+ace (5.5.6-1) experimental; urgency=low
+
+  Thomas Girard:
+    * New upstream release. Closes: #381647.
+    * Switch to the autotools method. Consequences:
+       o CIAO packages are dropped for now
+       o static libraries are removed as well
+       o IPv6 is disabled again
+    * Drop obsolete patches and scripts.
+    * We no longer ship TAO_ORB_Options.1 in libtao-orbsvcs.
+    * debian/patches/01-change-tao-sonames.dpatch: enable TAO_VERSION_NAME
+      propagation from configure, and use it for TAO libraries.
+    * debian/patches/02-tao-sonames-release-am.dpatch: diff on Makefile.am
+      after application of the 01-change-tao-sonames patch.
+    * debian/patches/03-compile-lifecycle.dpatch: enables LifeCycle
+      compilation.
+    * debian/patches/04-compile-ftrt.dpatch: enables FTRT_EventService
+      compilation.
+    * debian/patches/07-ace-tao-ssliop-refcount.dpatch: fix ssliop reference
+      counting problem.
+
+  Konstantinos Margaritis:
+    * changed URL in copyright to new one.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Thu, 15 Mar 2007 22:12:29 +0000
+
+ace (5.4.7-13) unstable; urgency=low
+
+  * Rename packages:
+    o libace5.4.7c2a to libace5.4.7ldbl (Closes: #430244)
+    o libtao1.4.7c2a to libtao1.4.7ldbl (Closes: #430307)
+    for ldbl128 transition.
+  * Use debian/compat instead of DH_COMPAT.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Thu, 06 Sep 2007 09:52:34 +0000
+
+ace (5.4.7-12) unstable; urgency=low
+
+  * debian/control: tao-naming recommends tao-utils (Closes: #393032).
+  * debian/libtao-dev.install: add libTAO.so symlink (Closes: #396303).
+  * debian/patches/20-check-_REENTRANT.dpatch: do not automatically
+    define _REENTRANT (Closes: #380739).
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sun,  5 Nov 2006 11:14:00 +0100
+
+ace (5.4.7-11) unstable; urgency=low
+
+  * debian/control: package HTBP, the protocol over HTTP tunneling library.
+  * debian/control: split libace into libace + libace-ssl.
+  * debian/control: move binaries in their own tao-* packages.
+  * debian/patches/34-bts386713.dpatch: dlopen() TAO libraries using their
+    full name (Closes: #386713).
+  * debian/generate_pkgconfig.sh: generate .pc files (Closes: #367480).
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 23 Sep 2006 15:02:12 +0200
+
+ace (5.4.7-10) unstable; urgency=low
+
+  * debian/rules: fix and honor DEB_BUILD_OPTIONS.
+  * debian/libace-dev.install: drop QoS header files as QoS in not compiled
+    in.
+  * debian/*.install: fix empty wildcard expansion that produce errors when
+    DH_COMPAT is 5.
+  * debian/libtao-dev.install: do not distribute include files from TAO_IDL.
+    They are not needed and don't get installed when using the autotools
+    method.
+  * debian/rules: rename mwc.pl and mpc.pl to mwc-ace and mpc-ace.
+  * debian/ace-config*,debian/tao-config*: dropped. These files were no
+    longer installed.
+  * debian/libace-dev.install: don't install ace-config and tao-config
+    manpages either (Closes: #367478).
+  * debian/control: relax mpc-ace dependencies. This package now installs
+    without pulling any ACE library. Thanks to Alex Bodnaru for noticing.
+  * debian/control: simplify packages synopsis and descriptions.
+  * debian/control: drop xerces dependency (Closes: #378605). Xerces is
+    only needed by DAnCE, which is not packaged yet.
+  * debian/libace-dev.install: remove generate_export_file.pl for now.
+  * patches/31-gcc-4.1-fix.dpatch: add other type-punned fixes taken from
+    upstream.
+  * debian/mpc.sgml: new man page.
+  * debian/patches/32-bug1770-fix.dpatch,33-bug1805-fix.dpatch: backport
+    two patches for SSL wrappers.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Thu, 20 Jul 2006 20:55:53 +0200
+
+ace (5.4.7-9) unstable; urgency=low
+
+  * debian/patches/28-bug2222-fix.dpatch, debian/patches/29-bug2262.dpatch:
+    backport upstream fixes.
+  * debian/patches/31-gcc-4.1-fix.dpatch: fix "dereferencing type-punned
+    pointers" gcc 4.1 warning.
+  * debian/patches/30-Env_Value-template-specialization-fix.dpatch:
+    backport template specialization fix (Closes: #358898).
+  * debian/patches/20-debian-compiler-definitions.dpatch: downgrade
+    optimization flag from `-O3' to `-O2'.
+  * debian/rules: add ${perl:Depends} for mpc-ace package.
+  * debian/control: make a new package, libciao-doc.
+  * debian/libtao-dev.install: add missing pkg-config file for ImR_Client
+    library.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Wed, 29 Mar 2006 22:14:53 +0200
+
+ace (5.4.7-8) unstable; urgency=low
+
+  * debian/copy_template_sources.sh: add missing files to `libtao-dev'
+    package. Thanks to Arren and Bernhard Seibold for reporting this.
+  * debian/patches/23-PortableGroup-exceptions-propagation.dpatch,
+    debian/patches/24-collocated-oneway+SYNC_WITH_SERVER-fix.dpatch,
+    debian/patches/25-TypeCode-equivalent-fix.dpatch,
+    debian/patches/26-union-_default-fix.dpatch,
+    debian/patches/27-bug2225-fix.dpatch: backport various upstream
+    fixes.
+  * debian/control: tighten build dependency from `xlibs-dev' to
+    `libxt-dev'. (Closes: #346607).
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Fri, 13 Jan 2006 17:15:37 +0200
+
+ace (5.4.7-7) unstable; urgency=low
+
+  * debian/config/config.h: add IPv6 support. Thanks to David Hausheer
+    for the report and the fix. (Closes: #341988)
+  * debian/patches/23-TTY_IO-compilation-fix.dpatch: new patch to work
+    around `struct termios` platform-specific fields. (Closes: #342328).
+  * debian/patches/84-skip-DAnCE-compilation.dpatch: completely disable
+    DAnCE compilation, since we don't package it. (Closes: #336020).
+  * Really close fixed in NMU bugs (Closes: #324271, #339142).
+
+ -- Konstantinos Margaritis <markos@debian.org>  Mon, 19 Dec 2005 13:40:48 +0200
+
+ace (5.4.7-6) unstable; urgency=low
+
+  * debian/control: consolidate package descriptions.
+  * debian/patches/16-g++4-visibility-tweaks.dpatch:
+    Backport upstream tweaks for g++ 4 visibility feature and disable
+    visibility hiding for now. (Closes: #324271).
+  * debian/rules: g++ 4.0.2 was ICE'ing on #pragma once. This is no 
+    longer true as of g++-4.0_4.0.2-4, so we can use g++4 again. For the
+    record, another possible fix was to #define ACE_LACKS_PRAGMA_ONCE in 
+    `$ACE_ROOT/ace/config.h`.
+  * Add `c2a` suffix to all libs for libstdc++ allocator change.
+    (Closes: #339142).
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Fri, 18 Nov 2005 20:23:59 +0100
+
+ace (5.4.7-5) unstable; urgency=low
+
+  * Force gcc 3.4 for all arches, seems gcc 4.0 produces errors on all of
+    them. (Closes: #333981)
+
+ -- Konstantinos Margaritis <markos@debian.org>  Wed, 12 Oct 2005 03:26:14 +0300
+
+ace (5.4.7-4) unstable; urgency=medium
+
+  * Rebuilt package for the Qt C++ transition. (Closes: #327926).
+  * Also, gcc 4.0 is buggy in some arches, use g++-3.4 on them instead.
+    Update: Even on i386, cpp-4.0 produces Internal Compiler Errors(ICEs). For
+    this reason, cpp-3.4 will be used instead (but with gcc/g++ 4.0.
+
+ -- Konstantinos Margaritis <markos@debian.org>  Mon, 4 Oct 2005 03:21:20 +0300
+
+ace (5.4.7-3) unstable; urgency=low
+
+  * Fixed (another) missing build-dependency. (Closes: #323630)
+    (this is getting irritating :-)
+
+ -- Konstantinos Margaritis <markos@debian.org>  Thu, 18 Aug 2005 10:29:48 +0300
+
+ace (5.4.7-2) unstable; urgency=low
+
+  * Fixed missing build-dependency in the .dsc file. (Closes: #323181)
+
+ -- Konstantinos Margaritis <markos@debian.org>  Tue, 16 Aug 2005 01:09:09 +0300
+
+ace (5.4.7-1) unstable; urgency=low
+
+  * Thomas Girard <thomas.g.girard@free.fr>
+    - New upstream release. (Closes: #317488)
+    - Package names were changed to include the full library soname.
+      (Closes: #288161)
+    - debian/control: libtao-{xt,qt}reactor are now called
+      libtao-{xt,qt}resource. Also add libtao-{fl,tk}resource.
+    - debian/control: add new package libace-tmcast5.4.7.
+  * Konstantinos Margaritis
+    - Now use the .bz2 version of the original tarball to save space.
+
+ -- Konstantinos Margaritis <markos@debian.org>  Fri, 12 Aug 2005 12:45:13 +0300
+
+ace (5.4.2.1.0-4) unstable; urgency=high
+  
+    * Thomas Girard <thomas.g.girard@free.fr>
+      - debian/control:
+        o libacexml-dev depends on libace-dev.
+        o libkokyu-dev depends on libace-dev.
+        o libtao-dev depends on libtao1.4.
+        o normalize Depends: and Build-Depends: sections.
+      - debian/ace-config.1 debian/tao-config.1: fix hyphenation problem
+        reported by lintian.
+      - debian/libciao-dev.install: add missing .idl and .pidl files.
+        (Closes: #307258)
+  
+ -- Thomas Girard <thomas.g.girard@free.fr>  Mon,  2 May 2005 19:30:01 +0200
+
+ace (5.4.2.1.0-3) unstable; urgency=high
+
+  * Thomas Girard <thomas.g.girard@free.fr>
+    - debian/patches/84-mpc-honour-soversion.dpatch: new patch from
+      upstream to honour the `version' keyword for libraries.
+    - debian/patches/17-fix-tao-encode_value-memory-leak: new patch
+      from upstream to fix a potential memory leak.
+    - debian/mpc-ace.install: add depgen.pl. (Closes: #289157)
+    - debian/tao_idl: new script that automatically sets ACE_ROOT and
+      TAO_ROOT environment variables. (Closes: #289158)
+    - debian/rules: unbreak gperf-ace. (Closes: #294338)
+    - debian/remove_reactor_dups.sh: new script to ensure that duplicate
+      reactor header files get deleted. (Closes: #294660)
+    - debian/patches/21-always-inline.dpatch, debian/config.h: Always
+      define __ACE_INLINE__, and remove the inline option from the MPC
+      generated GNUmakefiles. Thanks to Marek Brudka for reporting this and
+      for providing the fix. (Closes: #290114)
+    - debian/patches/18-fix-trader-twiddle-operator.dpatch: backport
+      fix to correct operator ~ in trader constraints.
+    - debian/patches/19-fix-taoidl-fd-leak.dpatch: backport a fix to
+      close open file.
+    - debian/control: lib{ace,tao}qtreactor-dev packages depend on
+      libqt3-mt-dev.
+    - debian/libtao-orbsvcs1.4.install:
+      o Add FT_ReplicationManager.
+      o Add Fault_Detector and Fault_Notifier.
+    - debian/control:
+      o mpc-ace is in devel section.
+      o lib{ace,tao}-{fl,tk,qt,xt}reactor-dev are in libdevel section.
+    - debian/tao_ifr: new wrapper script that automatically sets ACE_ROOT
+      and TAO_ROOT environment variables.
+    - debian/libtao-orbsvcs1.4.manpages: add TAO_ORB_Options.1 manpage.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Wed, 30 Mar 2005 23:24:40 +0200
+
+ace (5.4.2.1.0-2) unstable; urgency=medium
+
+  * Konstantinos Margaritis <markos@debian.org>
+    - Changed dependency of libfltk1-dev in libace-flreactor-dev to
+    libfltk1.1-dev (Closes: #289287)
+    - Added Uploaders field in control.
+
+ -- Konstantinos Margaritis <markos@debian.org>  Sat,  8 Jan 2005 22:39:05 +0200
+
+ace (5.4.2.1.0-1) unstable; urgency=low
+
+  * Thomas Girard <thomas.g.girard@free.fr>
+    - Much lintian cleaning.
+    - Integrate upstream MPC patch to honour `libout' and `install' keywords.
+    - Repackage FTRT_EventChannel.
+    - Bug 242881 was closed in the previous upload. (Closes: #242881)
+    - debian/control: libtao-dev should depend on libace-dev.
+      (Closes: #277052)
+    - debian/{Basic,Event,Notify,RTEvent}_Logging_Service.sgml: new man pages.
+    - debian/rules: add docbook-to-man calls.
+  * Raphael Bossek <bossekr@debian.org>
+    - debian/config/debian.features: MPC configuration for Debian GNU/Linux added
+    - debian/config/platform_macros.GNU: Removed due to introduction of
+      debian.features files. This file will be generated
+    - debian/rules: Uses dpatch. Simplified clean target by removing temporary
+      ACE_wrappers subdirectory. Install ace-config and tao-config scripts
+      with executable bit set (Closes: #278522, #278523)
+    - debian/control: Added new reactor packages. Removed depricated
+      suggestions on ace+tao-utilities. Added libssl-dev as recommendation for
+      libace-dev. Added suggestions for pkg-config
+    - Upgrade to latest version of TAO (Closes: #265238)
+    - debian/pkgconfig-ace, debian/pkgconfig-tao, debian/ace.pc.in,
+      debian/tao.pc.in: Support for pkg-config added
+    - debian/libace-dev.links: Added sym-link for /usr/share/ace/lib and
+      /usr/share/ace/bin/generate_export_file.pl
+    - debian/*.docs, debian/*.manpages: Added source directory ACE_wrappers as prefix
+    - debian/libace-dev.install: Added ACE_wrappers/bin/generate_export_file.pl
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Mon, 18 Oct 2004 13:35:56 +0200
+
+ace (5.4.2.1-1) unstable; urgency=low
+
+  * Thomas Girard <thomas.g.girard@free.fr>
+    - New upstream release. (Closes: #243062)
+    - Do not link against Xt libs. (Closes: #251477)
+    - As such, libace-dev does not need to depend on libxt-dev nor xlibs-dev
+      (Closes: #253226)
+    - Add MPC.
+    - Patch ACE_IOStream to support g++ 3.3. (Closes: #243473)
+    - Patch MPC to honour `libout' and `install' keywords in GNUmakefile
+      generation. See DOC Bug#1915.
+    - Backport a fix to NotifyLoggingService from CVS.
+    - Make %S work in ACE_DEBUG.
+  * Konstantinos Margaritis
+    - Fixed missed path for libACE.so.5.4.2 in dh_shlibdeps
+    - Fixed incorrect timestamp of original archive (1970 etc).
+ 
+ -- Konstantinos Margaritis <markos@debian.org>  Thu,  2 Sep 2004 23:04:56 +0200
+ 
+ace (5.4.0.1-1.1) unstable; urgency=low
+
+  * Fixed ACE_NDEBUG configuration of ACE. (Closes: #242881)
+  * Build-depends on libqt3-headers removed qt_reactor not set.
+  * System capabilities will be determined by including <unistd.h> in
+    <ace/config.h>.
+
+ -- Raphael Bossek <bossekr@debian.org>  Thu,  8 Apr 2004 15:37:24 +0200
+
+ace (5.4.0.1-1) unstable; urgency=low
+
+  * KM: release to fix the timestamp errors in the upstream source.
+
+ -- Konstantinos Margaritis <markos@debian.org>  Sun, 29 Feb 2004 21:11:14 +0200
+
+ace (5.4-3) unstable; urgency=low
+
+  * KM: backported fixes from CVS to fix 64-bit pointer to int casting in
+    orbsvcs/RTCosScheduling files. This is to fix FTBFS bug in 64-bit archs,
+    until 5.4.1 is released (mid-march).
+    Closes: #233890
+
+ -- Konstantinos Margaritis <markos@debian.org>  Wed, 28 Feb 2004 15:53:30 +0200
+
+ace (5.4-2) unstable; urgency=low
+
+  * KM: Includes patch from Raphael Bossek <bossekr@debian.org> to handle
+    bug in tao_idl to use ACE_GPERF instead of plain gperf.
+  * BN: libace-dev now suggests libtao-dev instead of the non-existing tao
+    package. (Closes: #233488)
+  * BN: prepended a "-" to the chmod commands in debian/rules so that they
+    don't fail if used repeatedly.
+
+ -- Brian Nelson <pyro@debian.org>  Wed, 18 Feb 2004 02:23:07 -0800
+
+ace (5.4-1) unstable; urgency=low
+
+  * KM: new upstream release
+  * KM: Now builds also ACE+SSL library, Kokyu and CIAO libs.
+  * KM: Due to the orbsvcs executables we can't have 2 different versions
+    of the libtao-orbsvcs1.x package, so we have to replace. This doesn't apply
+    for libace5.x, libtao1.x or the rest of the libs.
+  * Closes: #229134 (fixed dependencies).
+
+ -- Konstantinos Margaritis <markos@debian.org>  Sun, 25 Jan 2004 13:33:20 +0200
+
+ace (5.3.1-8) unstable; urgency=low
+
+  * KM: Included the .pidl files in libtao-dev package. These
+    were needed by some .idl files. (Closes: #213568)
+
+ -- Konstantinos Margaritis <markos@debian.org>  Wed, 29 Oct 2003 23:46:01 +0200
+
+ace (5.3.1-7) unstable; urgency=low
+
+  * BN: Changed maintainer to "Debian ACE+TAO maintainers
+    <pkg-ace-devel@lists.alioth.debian.org>" and moved myself to the
+    Uploaders.
+  * KM: Fixed conflicting file "/usr/bin/catior" by changing the name to
+    tao-catior in libtao-dev. (Closes: #214421)
+
+ -- Brian Nelson <pyro@debian.org>  Thu,  9 Oct 2003 15:05:12 -0700
+
+ace (5.3.1-6) unstable; urgency=low
+
+  * Added the ORB services .idl files that were left out from the 
+    libtao-orbsvcs-dev package. (Closes: #213568)
+
+ -- Konstantinos Margaritis <markos@debian.org>  Sun,  5 Oct 2003 12:31:21 +0300
+
+ace (5.3.1-5) unstable; urgency=low
+
+  * Regenerated .diff.gz so that it is no longer broken (Closes: #211501)
+  * Back out Debian-specific change in the way that CosNamingC.h is
+    included in TAO/utils/nslist/nslist.cpp.  I'm not sure why this was
+    changed in the first place, but it broke the build. (Closes: #213611)
+
+ -- Brian Nelson <pyro@debian.org>  Wed,  1 Oct 2003 10:28:54 -0700
+
+ace (5.3.1-4) unstable; urgency=low
+
+  * Moved the manpages back to -dev packages to follow policy.
+  * Now mostly lintian clean.
+  * provided manpages for a few executables.
+
+ -- Konstantinos Margaritis <markos@debian.org>  Wed, 17 Sep 2003 11:43:55 +0300
+
+ace (5.3.1-3) unstable; urgency=low
+
+  * Updated to new standards version 3.6.1
+  * Fixed the section of a couple of packages.
+  * Now the getrlimit, etc functions are always defined 
+    as ints. g++ 3.x does not complain anymore (Closes: #104681).
+
+ -- Konstantinos Margaritis <markos@debian.org>  Tue, 16 Sep 2003 10:31:03 +0300
+
+ace (5.3.1-2) unstable; urgency=low
+
+  * Now the following TAO packages are created:
+    libtao1.3.1, libtao-dev, libtao-doc, libtao-orbsvcs1.3.1,
+    libtao-orbsvcs-dev.
+  * Also included ACEXML library in two separate packages:
+    libacexml5.3.1, libacexml-dev.
+  * Full doxygen documentation not included due to size concerns.
+    (Closes: #108749).
+  * tao-config included in libtao-dev. (Closes: #159234).
+  * All -dev packages carry their respective examples in full and 
+    uncompressed. (Closes: #52145, #76967).
+  * libACE.a is compiled with thread support enabled. (Closes: #126717).
+    dbbalancer now builds successfully with -static.
+  * Moved all manpages to respective -doc pagkaces. (Closes: #73044).
+
+ -- Konstantinos Margaritis <markos@debian.org>  Tue,  9 Sep 2003 10:41:14 +0300
+
+ace (5.3.1-1) unstable; urgency=low
+
+  * New upstream release
+  * New maintainers for the package, Brian Nelson <pyro@debian.org> and
+    Konstantinos Margaritis <markos@debian.org> (Closes #199768)
+  * Removed build-dependency on versioned g++
+  * Bumped up standards version to 3.6.0
+  * Dropped version string from -dev package name
+  * libace-dev: downgrade tao to suggests (where did tao go anyway?)
+  * Use debian/compat for debhelper versioning
+  * Use dh_install instead of dh_movefiles, and dh_link instead of manual
+    ln.  The debian/rules file is a lot less hairy now.
+  * Reinstated a libace-doc package (Closes: #192338)
+  * Added symlinks to /usr/share/ace so that this directory can serve as
+    $ACE_ROOT.  Added a corresponding note to the README.Debian
+    file. (Closes: #80329)
+  * Removed the /usr/lib/libACE.so.5 and libACE_RMCast.so.5 symlinks, and
+    made the package names match the sonames.  The sonames now include the
+    full version string, so ACE libs of different versions from now on
+    should coexist nicely, even though upstream doesn't use a proper
+    versioning scheme.  (Closes: #147741)
+
+ -- Brian Nelson <pyro@debian.org>  Fri, 15 Aug 2003 00:15:59 -0700
+
+ace (5.2.4-1.2) unstable; urgency=low
+
+  * fix to previous NMU
+  * (Closes: #190792)
+
+ -- Konstantinos Margaritis <markos@debian.org>  Sat, 26 Apr 2003 19:18:49 +0300
+
+ace (5.2.4-1.1) unstable; urgency=low
+
+  * gcc-3.2 transition, NMU patch by Andreas Metzler <ametzler@debian.org> 
+  * (Closes: #188328)
+
+ -- Konstantinos Margaritis <markos@debian.org>  Fri, 11 Apr 2003 23:25:38 +0200
+
+ace (5.2.4-1) unstable; urgency=low
+
+  * New upstream.
+  * Incorporated below change from Goswin.  (Closes: #159236)
+
+ -- Ossama Othman <ossama@valinor.ece.uci.edu>  Sun, 15 Sep 2002 14:14:06 -0700
+
+ace (5.2.1-1.1) unstable; urgency=low
+
+  * debian/control: libace5.2-dev recommends tao
+  * ace-config: export ACE_ROOT
+              make -f /usr/share/ace/ace-config.GNU
+                test for tao-confg
+                unset MAKEs env vars to prevent extranous output
+  * debian/rules: install platform macros in
+        $(ACE_PREFIX)/share/ace/include/makeinclude/
+
+ -- Goswin Brederlow <goswin.brederlow@student.uni-tuebingen.de>  Mon, 02 Sep 2002 02:37:25 +0200
+
+ace (5.2.1-1) unstable; urgency=low
+
+  * New upstream.
+  * Pulled in updated g++ configuration header and Linux Makefile rules
+    for ACE.  They allow implicit template instantiation to occur.
+  * Disabled support for the ACE_XT_Reactor.  Most folks never use it.
+
+ -- Ossama Othman <ossama@debian.org>  Mon, 25 Feb 2002 13:15:25 -0800
+
+ace (5.1.8-7) unstable; urgency=low
+
+  * Really removed the flex/lex checks in configure.in.
+
+ -- Ossama Othman <ossama@debian.org>  Wed, 28 Nov 2001 15:30:59 -0800
+
+ace (5.1.8-6) unstable; urgency=low
+
+  * Added "libtool" to Build-Depend field, and run libtoolize in `rules'
+    file to pull in links to recent config.sub, config.guess and
+    ltmain.sh revisions.  (Closes: #120141)
+  * Removed local autoconf test that checks if new() throws exception
+    on failure.  The test caused build hosts to come to a crawl.  g++
+    does indeed throw an exception.
+    Just configure that explicitly.  (Closes: #90731)
+  * Removed flex and yacc checks in configure.in.  They aren't necessary
+    to build ACE.
+  * Closed bug related to gcc internal compiler error.  (Closes: #85230)
+  * Removed unnecessary g++ dependency in control file.  (Closes: #84405)
+  * Added missing xlibs-dev dependency to libace5.1-dev package.
+
+ -- Ossama Othman <ossama@debian.org>  Mon, 26 Nov 2001 16:53:33 -0800
+
+ace (5.1.8-5.1) unstable; urgency=high
+
+  * NMU
+  * Added the missing build dependencies on flex and xlibs-dev.
+    (closes: #101170)
+
+ -- Adrian Bunk <bunk@fs.tum.de>  Sat, 10 Nov 2001 01:17:53 +0100
+
+ace (5.1.8-5) unstable; urgency=low
+
+  * libace5.1 and libace5.1-dev now conflict with their corresponding ACE
+    5.0 debian packages, since both sets of packages have files with the
+    same name.  libace5.1-dev also conflicts with libace4.6-dev.  (#74031)
+  * Added xlib6g-dev to the list of build dependencies.  The X11 libraries
+    aren't strictly necessary to build ACE, but the Debian packages enable    
+    ACE's XtReactor support.
+  * Updated `README.Debian'.  The Debian ACE packages are no longer built
+    using experimental ACE Configuration Project distributions.  They are
+    built using the upstream distribution's autoconf support (contributed
+    by the ACE Configuration Project).
+
+ -- Ossama Othman <ossama@debian.org>  Thu,  5 Oct 2000 17:35:56 -0700
+
+ace (5.1.8-4) unstable; urgency=low
+
+  * Updated configure script from new upstream since it detects the CDROM
+    and STREAMS ioctl conflict in current kernels and glibc 2.1.94.  This
+    fixes a seg fault that would occur in ACE applications that use the
+    ACE_Reactor.
+
+ -- Ossama Othman <ossama@debian.org>  Wed,  4 Oct 2000 14:43:48 -0700
+
+ace (5.1.8-3) unstable; urgency=low
+
+  * Rebuilt against glibc 2.1.94 (pre-2.2).
+
+ -- Ossama Othman <ossama@debian.org>  Fri, 29 Sep 2000 12:40:39 -0700
+
+ace (5.1.8-2) unstable; urgency=low
+
+  * Added missing Build-Depends and Build-Depends-Indep fields to the
+    control file.  (#70113)
+  * Corrected `debian/rules' so that it doesn't erase the installed
+    `config-all.h' header.
+
+ -- Ossama Othman <ossama@debian.org>  Sat, 23 Sep 2000 09:54:26 -0700
+
+ace (5.1.8-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Ossama Othman <ossama@debian.org>  Fri, 25 Aug 2000 15:45:01 -0700
+
+ace (5.0.7-4) frozen unstable; urgency=low
+
+  * Rebuilt the packages so that they get installed in the unstable
+    distribution archive, in addition to the frozen one.  (#58366)
+
+ -- Ossama Othman <ossama@debian.org>  Wed, 24 May 2000 15:15:21 -0700
+
+ace (5.0.7-3) frozen; urgency=high
+
+  * Updated libtool related files from latest libtool multi-language
+    branch snapshot.  Regenerated the configure script.  It now has the
+    appropriate deplibs regex.  Apparently, there was a problem with M4
+    quoting in the last package upload.  (#63932)
+  * Explicitly enable C++ exception support.  A fix to the configure
+    script caused this to be necessary since the configure script disables
+    exception handling by default.
+  * Updated `debian/rules' file to use debhelper v2 support.
+  * Updated download location in `debian/copyright'.
+
+ -- Ossama Othman <ossama@debian.org>  Fri, 19 May 2000 15:05:30 -0700
+
+ace (5.0.7-2) frozen; urgency=low
+
+  * Updated `acewindex.html' file so that it is no longer empty.  (#50704)
+  * Updated `ACE_Log_Msg.3' man page so that important information is
+    included when it is generated.  This patch was incorporated upstream.
+    (#51224)
+  * Replaced configure script and related files with current upstream
+    configure script.  Patched OS.{h,i} with llseek/lseek64 related
+    upstream fixes.  This should correct the lseek64 and llseek problems
+    encountered in the m68k port.  (#50094, #51074)
+  * Updated ace-config.in with latest upstream since the previous one was
+    missing a "-lACE" in the library list.
+  * Fixed "--infodir" and "--mandir" configure script options in `rules'
+    file.  They incorrectly used a the actual install prefix instead of
+    the debian package install prefix.  This fixes a problem where the
+    gperf-ace documentation wasn't being registered doc-base.
+
+ -- Ossama Othman <ossama@debian.org>  Mon, 17 Jan 2000 18:39:18 -0800
+
+ace (5.0.7-1) unstable; urgency=low
+
+  * New upstream.
+  * Enabled C++ template repository during build.  This will reduce
+    the size of the resulting binaries by about 20%.
+  * Updated copyright file.  (updated distribution terms contain
+    suggestions contributed by Richard M. Stallman)
+  * FHS updates.
+  * Added versioned shlibs dependencies via "-V" option for dh_makeshlibs.
+    This is important since new versions of libACE are not always binary
+    compatible with previous versions.
+  * Updated libace5.0-dev to use package dh_installinfo to install
+    gperf-ace.info file.
+  * Minor update to ACE documentation index.html file.
+  * Added ACE man pages in HTML format.
+
+ -- Ossama Othman <ossama@debian.org>  Fri, 29 Oct 1999 21:13:10 -0500
+
+ace (4.6.44-1) unstable; urgency=low
+
+  * New upstream.
+
+ -- Ossama Othman <ossama@debian.org>  Tue, 13 Jul 1999 20:23:11 -0500
+
+ace (4.6.42-1) unstable; urgency=low
+
+  * New upstream.
+
+ -- Ossama Othman <ossama@debian.org>  Sat, 26 Jun 1999 15:46:16 -0500
+
+ace (4.6.37-1) unstable; urgency=low
+
+  * New upstream.
+  * Added doc-base support.
+
+ -- Ossama Othman <ossama@debian.org>  Tue, 27 Apr 1999 13:28:53 -0500
+
+ace (4.6.31-2) unstable; urgency=low
+
+  * Removed clone.1 man page since ACE clone utility isn't needed
+    for the Debian packages.
+
+ -- Ossama Othman <ossama@debian.org>  Mon, 22 Mar 1999 14:47:50 -0600
+
+ace (4.6.31-1) unstable; urgency=low
+
+  * New upstream beta.
+  * Added ACE PROBLEM-REPORT-FORM to each package. (#34455)
+  * Rebuilt against glibc 2.1.  (#34573)
+  * Added check for struct siginfo_t in signal.h.  Thanks to
+    Konstantinos Margaritis <kmargar@cc.uoa.gr> for pointing this
+    configuration bug out. (#34678)
+
+ -- Ossama Othman <ossama@debian.org>  Sun, 24 Jan 1999 15:49:04 -0500
+
+ace (4.6.15-1) unstable; urgency=low
+
+  * Updated to ACE release 4.6.15.
+
+ -- Ossama Othman <ossama@debian.org>  Sat, 16 Jan 1999 18:47:25 -0500
+
+ace (4.6.13-1) unstable; urgency=low
+
+  * Updated to ACE release 4.6.13.
+
+ -- Ossama Othman <ossama@debian.org>  Thu, 14 Jan 1999 19:54:41 -0500
+
+ace (4.6.12-2) unstable; urgency=low
+
+  * Forgot to change libace4.6-dev dependency from version 4.6.7 to 4.6.12.
+
+ -- Ossama Othman <ossama@debian.org>  Thu, 14 Jan 1999 02:47:13 -0500
+
+ace (4.6.12-1) unstable; urgency=low
+
+  * Updated to ACE release 4.6.12.
+
+ -- Ossama Othman <ossama@debian.org>  Thu, 14 Jan 1999 01:17:16 -0500
+
+ace (4.6.7-1) unstable; urgency=low
+
+  * Force libtool to link "-lpthread" into ACE's inter-library dependencies
+    since the configure script detects that the "-pthread" flag can be used
+    which make it unneccessary to explicitly link to "-lpthread."  However, we
+    want the "-lpthread" dependency since not all users or programs use the
+    "-pthread" compiler flag.
+  * Fixed packaging bug where run-time library package tried to install/remove
+    the gperf-ace info file.
+  * Updated to ACE release 4.6.7.
+
+ -- Ossama Othman <ossama@debian.org>  Tue, 15 Dec 1998 16:29:10 -0500
+
+ace (4.6.5-3) unstable; urgency=low
+
+  * Enabled ACE debugging macros.
+  * Enabled ACE logging macros (LM_DEBUG and LM_INFO).
+
+ -- Ossama Othman <ossama@debian.org>  Tue,  8 Dec 1998 14:22:02 -0500
+
+ace (4.6.5-2) unstable; urgency=low
+
+  * Released ace-4.6.5-2 packages.
+  * gperf files (gperf, gperf.1 and gperf.info) will be installed as gperf-ace
+    to prevent conflicts with the existing Cygnus based gperf package.
+  * Corrected libACE compile list by removing template sources from the
+    libACE "SOURCES" make variable.
+
+ -- Ossama Othman <ossama@debian.org>  Thu,  3 Dec 1998 15:59:06 -0500
+
+ace (4.6.5-1) unstable; urgency=low
+
+  * Released ace-4.6.5-1 packages
+
+ -- Ossama Othman <othman@astrosun.tn.cornell.edu>  Tue,  1 Dec 1998 16:09:49 -0500
+
+ace (4.6.4-2) unstable; urgency=low
+
+  * Added libnsl to library check for t_accept() (not a Debian issue).
+  * Moved all pre-processor related lines to the first column of the M4 block
+    so that they will be in the first column of their respective test programs.
+  * Made definition of ACE_HAS_NONSTATIC_OBJECT_MANAGER a configure script
+    option since there was no working autoconf test for it.
+
+ -- Ossama Othman <othman@astrosun.tn.cornell.edu>  Mon, 30 Nov 1998 17:24:49 -0500
+
+ace (4.6.4-1) unstable; urgency=low
+
+  * Added "install-info" commands to postinst and prerm scripts.
+  * Added a "modernized" gperf.info to the distribution.
+  * Added "#ifndef" guards to PACKAGE, VERSION, DEBUG and NDEBUG macros in
+    acconfig.h to prevent redefinition when using ACE with a package that
+    defines them.
+  * Added Env_Value_T.cpp to list of template sources to be installed.
+  * Moved ace-config script to "-dev" package.
+  * Added gperf to the distribution.
+
+ -- Ossama Othman <othman@astrosun.tn.cornell.edu>  Fri, 13 Nov 1998 16:02:32 -0500
+
+ace (4.6.3-2) unstable; urgency=low
+
+  * Released ace-4.6.3-2 packages.
+  * Corrected ace-config and configure scripts so that the X11 libraries are
+    displayed correctly by the ace-config script.
+
+ -- Ossama Othman <othman@astrosun.tn.cornell.edu>  Thu, 12 Nov 1998 17:24:11 -0500
+
+ace (4.6.3-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Ossama Othman <othman@astrosun.tn.cornell.edu>  Thu, 12 Nov 1998 13:13:59 -0500
+

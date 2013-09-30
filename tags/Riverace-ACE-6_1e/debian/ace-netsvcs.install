@@ -1,0 +1,2 @@
+../../netsvcs/servers/ace_netsvcs usr/bin
+../../netsvcs/servers/svc.conf* usr/share/ace-netsvcs
