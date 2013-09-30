@@ -1,3 +1,9 @@
+Mon Sep 30 18:45:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ace-install:
+          Use -perm /xxx instead of -perm -xxx, the last variant is
+          deprecated
+
 Fri Sep 27 21:33:58 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/ACE.cpp: Same fix as Thu Sep 26 20:22:53 made to recvv_n_i(),

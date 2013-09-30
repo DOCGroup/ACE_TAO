@@ -449,8 +449,8 @@ if [ $install -ne 0 ]; then
     # copy TAO executables
     echo "Copying executables..."
 
-    ALL_PROGS=`find orbsvcs -type f -perm +a+x -print | grep -v ".*lib.*" | grep -v ".\.pl" | grep -v test | grep -v example`
-    ALL_PROGS="`find utils  -type f -perm +a+x -print` $ALL_PROGS"
+    ALL_PROGS=`find orbsvcs -type f -perm /a+x -print | grep -v ".*lib.*" | grep -v ".\.pl" | grep -v test | grep -v example`
+    ALL_PROGS="`find utils  -type f -perm /a+x -print` $ALL_PROGS"
     PROGS=`echo $ALL_PROGS | tr " " "\n" | grep -v test | grep -v default.bld | grep -v README | grep -v GNUmakefile`
 
     for f in TAO_IDL/tao_idl $PROGS; do
@@ -501,7 +501,7 @@ if [ $install -ne 0 ]; then
    # PERMISSIONS
    chmod -R a+r $ACE_DEST
    find $ACE_DEST -type d -exec chmod a+x {} \;
-   find $ACE_DEST -type f -perm +a+x -exec chmod a+x {} \;
+   find $ACE_DEST -type f -perm /a+x -exec chmod a+x {} \;
 
 fi   # if [ $install -ne 0 ]
 
