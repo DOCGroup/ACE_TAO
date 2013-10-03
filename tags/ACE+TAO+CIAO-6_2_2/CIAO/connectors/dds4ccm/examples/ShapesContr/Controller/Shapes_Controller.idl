@@ -1,0 +1,32 @@
+// $Id$
+
+/**
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
+ */
+
+#ifndef SHAPES_CONTROLLER_IDL
+#define SHAPES_CONTROLLER_IDL
+
+#include <Components.idl>
+
+#include "../Base/Shapes_Contr_Base.idl"
+
+
+module Shapes
+{
+  component ShapesController
+  {
+    provides shape_attributes_set shapeAttribsSet;
+    provides shape_attributes_get shapeAttribsPub;
+    uses shape_changes shapeChangesSub;
+    //attribute unsigned long rate;
+    attribute unsigned long publish_rate;
+    attribute unsigned short max_size;
+    attribute unsigned short max_x;
+    attribute unsigned short max_y;
+    attribute boolean resize_shape;
+    attribute boolean use_web_interface;
+  };
+};
+
+#endif

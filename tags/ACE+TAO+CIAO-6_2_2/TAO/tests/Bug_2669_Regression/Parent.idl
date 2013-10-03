@@ -1,0 +1,15 @@
+
+//=============================================================================
+/**
+ *  $Id$
+ */
+//=============================================================================
+
+#pragma prefix "parent.pragma.prefix"
+
+interface ParentInterface {};
+
+module ParentModule
+  {
+    interface ParentInterface {};
+  };

@@ -1,0 +1,118 @@
+// $Id$
+
+project(ShapesContr_ContrR_idl_gen) : componentidldefaults{
+   custom_only = 1
+  after += Shapes_Contr_Base_stub
+  idlflags += -Wb,stub_export_macro=CONTROLLERR_STUB_Export \
+              -Wb,stub_export_include=ControllerR_stub_export.h \
+              -Wb,skel_export_macro=CONTROLLERR_SVNT_Export \
+              -Wb,skel_export_include=ControllerR_svnt_export.h \
+              -Wb,svnt_export_macro=CONTROLLERR_SVNT_Export \
+              -Wb,svnt_export_include=ControllerR_svnt_export.h \
+              -Wb,exec_export_macro=CONTROLLERR_EXEC_Export \
+              -Wb,exec_export_include=ControllerR_exec_export.h \
+              -I..
+
+  IDL_Files {
+    Shapes_ControllerR.idl
+  }
+}
+
+project(ShapesContr_ContrR_lem_gen) : ciaoidldefaults {
+  after += ShapesContr_ContrR_idl_gen Shapes_Contr_Base_lem_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=CONTROLLERR_EXEC_Export \
+              -Wb,export_include=ControllerR_exec_export.h \
+              -SS
+
+  IDL_Files {
+    Shapes_ControllerRE.idl
+  }
+}
+
+project(ShapesContr_ContrR_stub) : ccm_stub {
+  after += ShapesContr_ContrR_idl_gen Shapes_Contr_Base_stub
+  libs  += Shapes_Contr_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = ShapesContr_ContrR_stub
+  dynamicflags += CONTROLLERR_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Shapes_ControllerRC.cpp
+  }
+
+  Header_Files {
+    Shapes_ControllerRC.h
+    Shapes_ControllerR_stub_export.h
+  }
+
+  Inline_Files {
+    Shapes_ControllerRC.inl
+  }
+}
+
+project(ShapesContr_ContrR_exec) : ciao_executor {
+  after   += ShapesContr_ContrR_lem_gen ShapesContr_ContrR_stub
+  sharedname = ShapesContr_ContrR_exec
+  libs += ShapesContr_ContrR_stub Shapes_Contr_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += CONTROLLERR_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Shapes_ControllerREC.cpp
+    Shapes_ControllerR_exec.cpp
+  }
+
+  Header_Files {
+    Shapes_ControllerREC.h
+    Shapes_ControllerR_exec.h
+    Shapes_ControllerR_exec_export.h
+  }
+
+  Inline_Files {
+    Shapes_ControllerREC.inl
+  }
+}
+
+
+project(ShapesContr_ContrRr_svnt) : ciao_servant {
+  after      += Shapes_Contr_Base_skel ShapesContr_ContrR_exec Shapes_Contr_Base_svnt Shapes_Contr_Base_stub
+  sharedname  = ShapesContr_ContrR_svnt
+  libs       += ShapesContr_ContrR_exec \
+                ShapesContr_ContrR_stub \
+                Shapes_Contr_Base_svnt \
+                Shapes_Contr_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += CONTROLLERR_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Shapes_ControllerRS.cpp
+    Shapes_ControllerR_svnt.cpp
+  }
+
+  Header_Files {
+    Shapes_ControllerRS.h
+    Shapes_ControllerR_svnt.h
+    Shapes_ControllerR_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+

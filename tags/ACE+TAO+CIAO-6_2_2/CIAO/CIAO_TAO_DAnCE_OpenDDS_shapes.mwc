@@ -1,0 +1,47 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  $(ACE_ROOT)/ace
+  $(ACE_ROOT)/apps/gperf/src
+  $(ACE_ROOT)/protocols/ace/INet
+  $(TAO_ROOT)/TAO_IDL
+  $(TAO_ROOT)/tao
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Serv.mpc
+  $(TAO_ROOT)/orbsvcs/orbsvcs/CosNaming_Skel.mpc
+  $(TAO_ROOT)/orbsvcs/Naming_Service
+  $(TAO_ROOT)/orbsvcs/orbsvcs/Svc_Utils.mpc
+  ccm
+  ciao
+  $(DANCE_ROOT)/dance
+  $(DANCE_ROOT)/tools
+  connectors/dds4ccm/idl
+  connectors/dds4ccm/impl
+  $(DDS_ROOT)/DDS_TAOv2.mwc
+  $(DDS_ROOT)/examples/DCPS/ishapes
+  connectors/dds4ccm/examples/Shapes
+  exclude {
+    $(DANCE_ROOT)/dance/TargetManager
+    $(DANCE_ROOT)/dance/RepositoryManager
+    $(DANCE_ROOT)/tools/System_Health
+    $(DANCE_ROOT)/tools/Logger_Backend
+    $(ACE_ROOT)/ace/Compression
+    $(ACE_ROOT)/ace/ETCL
+    $(ACE_ROOT)/ace/Monitor_Control
+    $(ACE_ROOT)/ace/SSL
+    $(TAO_ROOT)/tao/CSD_Framework
+    $(TAO_ROOT)/tao/CSD_ThreadPool
+    $(TAO_ROOT)/tao/Compression
+    $(TAO_ROOT)/tao/Dynamic_TP
+    $(TAO_ROOT)/tao/ETCL
+    $(TAO_ROOT)/tao/TransportCurrent
+    $(TAO_ROOT)/tao/ZIOP
+    $(TAO_ROOT)/tao/SmartProxies
+    $(TAO_ROOT)/tao/RTCORBA
+    $(TAO_ROOT)/tao/RTPortableServer
+    $(TAO_ROOT)/tao/RTScheduling
+    $(TAO_ROOT)/tao/Monitor
+
+  }
+}

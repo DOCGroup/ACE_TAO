@@ -1,0 +1,5 @@
+<?xml version='1.0'?>
+<ACE_Svc_Conf>
+ <!--  $Id$ -->
+ <static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'">
+</ACE_Svc_Conf>

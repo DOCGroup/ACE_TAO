@@ -1,0 +1,15 @@
+# $Id$
+
+This test demonstrates the fix for Bugzilla 4118. This test depends on
+existing services and utilities, therefore the is no need for a makefile.
+
+The test starts the naming service with persistence, multiple threads,
+and no collocation. This makes the single instance behave as a member of
+a federation, forcing nested resolves to be handled as though they are
+external requests.
+
+The test uses ns_add to compose a naming context cycle by creating a new
+context supplying the root context's IOR. Then it tries to bind to a
+nested name that traverses the recursion. This second ns_add should run
+to completion if all is well. It will hang if the fix for 4118 is not
+working.
