@@ -1,3 +1,9 @@
+Thu Oct  3 19:33:20 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Added instructions how to compile DDS4CCM with RTI DDS
+          with Visual Studio on Windows
+
 Thu Oct  3 09:36:45 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
