@@ -52,7 +52,7 @@ For compiling and installing CIAO see <a href="../../CIAO-INSTALL.html">CIAO-INS
     </p>
     <p>
       To be sure that CIAO, DAnCE and DDS4CCM are build correctly, one might
-      use the $CIAO_ROOT/CIAO_TAO_DAnCE.mwc workspace for RTI DDS. 
+      use the $CIAO_ROOT/CIAO_TAO_DAnCE.mwc workspace for RTI DDS.
 <p>
 </p>
       When using DDS4CCM with OpenDDS we commend you to use the $CIAO_ROOT/CIAO_TAO_DAnCE_OpenDDS.mwc workspace. This workspace
@@ -61,7 +61,7 @@ For compiling and installing CIAO see <a href="../../CIAO-INSTALL.html">CIAO-INS
     </p>
     <hr>
     <h3>Building and Installing DDS4CCM with OpenDDS on Linux</h3>
-    
+
 Building DDS4CCM with OpenDDS integration takes a few manual steps to get the job done. Besides downloading ACE+TAO+CIAO+DAnCE and OpenDDS
 the build has to be configured. For this integration we need 3 configuration files. For controlling the MPC makefile generation
 we need to create $ACE_ROOT/bin/MakeProjectCreator/config/default.features. This is needed because each DDS vendor has its own IDL compiler
@@ -88,13 +88,13 @@ echo -e '#include "ace/config-linux.h"' > $ACE_ROOT/ace/config.h
 echo -e 'dds4ccm_opendds=1\nxerces3=1\ninclude $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
 echo -e 'dds4ccm_opendds=1\ndds_suppress_anys=0\nxerces3=1\n' > $ACE_ROOT/bin/MakeProjectCreator/config/default.features
 cd $CIAO_ROOT && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 CIAO_TAO_DAnCE_OpenDDS.mwc
-cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 
+cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4
 cd $CIAO_ROOT && make
 cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && make
 cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes/descriptors && perl run_test.pl
 </pre>
     <h3>Building and Installing DDS4CCM with RTI DDS on Linux</h3>
-    
+
 Building DDS4CCM with RTI DDS integration takes a few manual steps to get the job done. Besides downloading ACE+TAO+CIAO+DAnCE and RTI DDS
 the build has to be configured. For this integration we need 3 configuration files. For controlling the MPC makefile generation
 we need to create $ACE_ROOT/bin/MakeProjectCreator/config/default.features. This is needed because each DDS vendor has its own IDL compiler
@@ -122,10 +122,49 @@ echo -e '#include "ace/config-linux.h"' > $ACE_ROOT/ace/config.h
 echo -e 'dds4ccm_ndds=1\nndds=1\nxerces3=1\ninclude $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
 echo -e 'dds4ccm_ndds=1\nndds=1\nxerces3=1\n' > $ACE_ROOT/bin/MakeProjectCreator/config/default.features
 cd $CIAO_ROOT && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 CIAO_TAO_DAnCE.mwc
-cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4 
+cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && $ACE_ROOT/bin/mwc.pl -type gnuace -workers 4
 cd $CIAO_ROOT && make
 cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && make
 cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes/descriptors && perl run_test.pl
+</pre>
+    <h3>Building and Installing DDS4CCM with RTI DDS on Windows</h3>
+
+Building DDS4CCM with RTI DDS integration takes a few manual steps to get the job done. Besides downloading ACE+TAO+CIAO+DAnCE and RTI DDS
+the build has to be configured. For this integration we need 2 configuration files. For controlling the MPC makefile generation
+we need to create $ACE_ROOT/bin/MakeProjectCreator/config/default.features. This is needed because each DDS vendor has its own IDL compiler
+which has to be triggered during the build step. Secondly we need to create $ACE_ROOT/ace/config.h to control the compiler settings. After initial compilation you can
+tweak more settings in these 2 files, but we do recommend to do a full rebuild when changing any of these files.
+</p><p>
+The steps below assume that RTI DDS has been obtained from RTI including their CORBA Compatibility Kit (CCK). The environment
+variables NDDSHOME and NDDSARCHITECTURE must be defined accordingly the RTI documentation.
+</p><p>
+These instructions assume that you have cygwin installed including wget and unzip and that these utilities are in your path.
+For perl we advice to use ActiveState perl. You also need
+to obtain and install xerces3, the XERCESCROOT environment variable should point to the location of your xerces3 tree.
+</p><p>
+The steps below download ATCD, create all needed ATCD environment variables and configuration
+files and compiles all core code and the DDS4CCM shapes example. As last step it deploys this
+example which dumps shapes information to the console. Run the commands from a Visual Studio command
+prompt. In the steps where <code>devenv</code> is used, the IDE will start and you can use
+the IDE to compile the project. Compiling the code will take some time, we can recommend Incredibuild
+to speed up compilation using distribution compilation. When the full solution has compiled, close the IDE
+and perform the next step.
+<pre>
+\cygwin\bin\wget http://download.dre.vanderbilt.edu/ACE+TAO-distribution/ACE+TAO+CIAO-src.zip
+\cygwin\bin\unzip ACE+TAO+CIAO-src.zip
+set DOC_ROOT=%CD%
+set ACE_ROOT=%DOC_ROOT%\ACE_wrappers
+set TAO_ROOT=%ACE_ROOT%\TAO
+set CIAO_ROOT=%TAO_ROOT%\CIAO
+set DANCE_ROOT=%TAO_ROOT%\DAnCE
+set PATH=%ACE_ROOT%\lib;%PATH%
+\cygwin\bin\echo -e '#include "ace/config-win32.h"' > %ACE_ROOT%/ace/config.h
+\cygwin\bin\echo -e 'dds4ccm_ndds=1\nndds=1\nxerces3=1\n' > %ACE_ROOT%/bin/MakeProjectCreator/config/default.features
+cd %CIAO_ROOT% && %ACE_ROOT%/bin/mwc.pl -type vc10 -workers 4 CIAO_TAO_DAnCE.mwc
+cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && %ACE_ROOT%/bin/mwc.pl -type gnuace -workers 4
+cd %CIAO_ROOT% && devenv CIAO_TAO_DAnCE.sln
+cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && devenv Shapes.sln
+cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes/descriptors && perl run_test.pl
 </pre>
     <h3>Supported Platforms for DDS4CCM</h3>
     <p>DDS4CCM is daily compiled and tested on Linux with RTI DDS and OpenDDS. It does compile on Windows with Microsoft Visual Studio 10 but
