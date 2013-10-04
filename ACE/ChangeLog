@@ -1,3 +1,8 @@
+Fri Oct  4 09:09:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/make_release.py:
+          Generate vc10/vc11 now as part of the release
+
 Thu Oct  3 09:36:38 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
