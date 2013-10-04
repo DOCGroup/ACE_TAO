@@ -1,3 +1,8 @@
+Fri Oct  4 07:22:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Added nmake steps
+
 Thu Oct  3 19:33:20 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/DDS4CCM-INSTALL.html:
