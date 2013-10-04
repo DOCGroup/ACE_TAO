@@ -160,10 +160,21 @@ set DANCE_ROOT=%TAO_ROOT%\DAnCE
 set PATH=%ACE_ROOT%\lib;%PATH%
 \cygwin\bin\echo -e '#include "ace/config-win32.h"' > %ACE_ROOT%/ace/config.h
 \cygwin\bin\echo -e 'dds4ccm_ndds=1\nndds=1\nxerces3=1\n' > %ACE_ROOT%/bin/MakeProjectCreator/config/default.features
+</pre>
+When you want to compile now using Visual Studio 2010 you can use the following steps
+<pre>
 cd %CIAO_ROOT% && %ACE_ROOT%/bin/mwc.pl -type vc10 -workers 4 CIAO_TAO_DAnCE.mwc
-cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && %ACE_ROOT%/bin/mwc.pl -type gnuace -workers 4
+cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && %ACE_ROOT%/bin/mwc.pl -type vc10 -workers 4
 cd %CIAO_ROOT% && devenv CIAO_TAO_DAnCE.sln
 cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && devenv Shapes.sln
+cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes/descriptors && perl run_test.pl
+</pre>
+When using nmake you can use the following steps
+<pre>
+cd %CIAO_ROOT% && %ACE_ROOT%/bin/mwc.pl -type nmake -workers 4 CIAO_TAO_DAnCE.mwc
+cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && %ACE_ROOT%/bin/mwc.pl -type nmake -workers 4
+cd %CIAO_ROOT% && nmake
+cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && nmake
 cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes/descriptors && perl run_test.pl
 </pre>
     <h3>Supported Platforms for DDS4CCM</h3>
