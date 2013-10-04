@@ -14,53 +14,10 @@
       <a href="http://www.rti.com/products/dds/index.html">RTI DDS</a> and
       <a href="http://www.opendds.org">OpenDDS</a> as underlying DDS vendors.
     </p>
-    <h3>Building and Installing DDS4CCM</h3>
-    <p>
-      Before compiling CIAO and DAnCE, one should
-      first set the correct flags in the default.features and platform_macros.GNU.
-For compiling and installing CIAO see <a href="../../CIAO-INSTALL.html">CIAO-INSTALL.html</a>.
-      DDS4CCM uses DAnCE as deployement tool in all of the examples and tests.
-      Therefor one should also be sure that DAnCE is build and installed
-      in order to run the DDS4CCM examples.<br/><br/>
-    </p>
-    <h4>Setting up default.features and platform_macros.GNU</h4>
-    <p>Besided the flags needed to build ACE, TAO, CIAO, and, DAnCE, the following
-      flags should be added for DDS4CCM.
-    </p>
-    <p>$ACE_ROOT/bin/MakeProjectCreator/config/default.features should contain at least the following flags for RTI DDS:<br/>
-      <ul>
-        <li><code>ndds=1</code></li>
-        <li><code>dds4ccm_ndds=1</code></li>
-      </ul>
-    </p>
-    <p>$ACE_ROOT/bin/MakeProjectCreator/config/default.features should contain at least the following flags for OpenDDS:<br/>
-      <ul>
-        <li><code>dds4ccm_opendds=1</code></li>
-        <li><code>dds_suppress_anys=0</code></li>
-      </ul>
-    </p>
-    <p>$ACE_ROOT/include/makeinclude/platform_macros.GNU should contain at least the following flags for RTI DDS:<br/>
-      <ul>
-        <li><code>ndds=1</code></li>
-        <li><code>dds4ccm_ndds=1</code></li>
-      </ul>
-    </p>
-    <p>$ACE_ROOT/include/makeinclude/platform_macros.GNU should contain at least the following flags for OpenDDS:<br/>
-      <ul>
-        <li><code>dds4ccm_opendds=1</code></li>
-      </ul>
-    </p>
-    <p>
-      To be sure that CIAO, DAnCE and DDS4CCM are build correctly, one might
-      use the $CIAO_ROOT/CIAO_TAO_DAnCE.mwc workspace for RTI DDS.
-<p>
-</p>
-      When using DDS4CCM with OpenDDS we commend you to use the $CIAO_ROOT/CIAO_TAO_DAnCE_OpenDDS.mwc workspace. This workspace
-      will compile all needed parts of ACE, TAO, CIAO, DAnCE, and OpenDDS. OpenDDS has to be compiled before compiling DDS4CCM
-      because we are using several of the OpenDDS libraries and the OpenDDS IDL compiler.
-    </p>
-    <hr>
-    <h3>Building and Installing DDS4CCM with OpenDDS on Linux</h3>
+    <h3>Building and Installing DDS4CCM on Linux</h3>
+DDS4CCM is used frequently on linux. Before building DDS4CCM make sure that perl, make, gcc-g++, and libxerces-c-devel are installed
+as packages.
+    <h4>Building and Installing DDS4CCM with OpenDDS on Linux</h4>
 
 Building DDS4CCM with OpenDDS integration takes a few manual steps to get the job done. Besides downloading ACE+TAO+CIAO+DAnCE and OpenDDS
 the build has to be configured. For this integration we need 3 configuration files. For controlling the MPC makefile generation
@@ -93,7 +50,7 @@ cd $CIAO_ROOT && make
 cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes && make
 cd $CIAO_ROOT/connectors/dds4ccm/examples/Shapes/descriptors && perl run_test.pl
 </pre>
-    <h3>Building and Installing DDS4CCM with RTI DDS on Linux</h3>
+    <h4>Building and Installing DDS4CCM with RTI DDS on Linux</h4>
 
 Building DDS4CCM with RTI DDS integration takes a few manual steps to get the job done. Besides downloading ACE+TAO+CIAO+DAnCE and RTI DDS
 the build has to be configured. For this integration we need 3 configuration files. For controlling the MPC makefile generation
@@ -161,6 +118,7 @@ set PATH=%ACE_ROOT%\lib;%PATH%
 \cygwin\bin\echo -e '#include "ace/config-win32.h"' > %ACE_ROOT%/ace/config.h
 \cygwin\bin\echo -e 'dds4ccm_ndds=1\nndds=1\nxerces3=1\n' > %ACE_ROOT%/bin/MakeProjectCreator/config/default.features
 </pre>
+    <h3>Building and Installing DDS4CCM on Windows using Visual Studio 2010</h3>
 When you want to compile now using Visual Studio 2010 you can use the following steps
 <pre>
 cd %CIAO_ROOT% && %ACE_ROOT%/bin/mwc.pl -type vc10 -workers 4 CIAO_TAO_DAnCE.mwc
@@ -169,6 +127,7 @@ cd %CIAO_ROOT% && devenv CIAO_TAO_DAnCE.sln
 cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && devenv Shapes.sln
 cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes/descriptors && perl run_test.pl
 </pre>
+    <h3>Building and Installing DDS4CCM on Windows using nmake</h3>
 When using nmake you can use the following steps
 <pre>
 cd %CIAO_ROOT% && %ACE_ROOT%/bin/mwc.pl -type nmake -workers 4 CIAO_TAO_DAnCE.mwc
@@ -177,6 +136,53 @@ cd %CIAO_ROOT% && nmake
 cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && nmake
 cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes/descriptors && perl run_test.pl
 </pre>
+    <h3>Additionally Building and Installing DDS4CCM</h3>
+    <p>
+      If you already have a configuration of CIAO, the instruction below
+      explain which additional settings are needed in order to compile
+      DDS4CCM.For compiling DDS4CCM the correct flags need to be in the default.features and platform_macros.GNU files..
+      For compiling and installing CIAO see <a href="../../CIAO-INSTALL.html">CIAO-INSTALL.html</a>.
+      DDS4CCM uses DAnCE as deployement tool in all of the examples and tests.
+      Therefor one should also be sure that DAnCE is build and installed
+      in order to run the DDS4CCM examples.<br/>
+    </p>
+    <h4>Setting up default.features and platform_macros.GNU</h4>
+    <p>Besided the flags needed to build ACE, TAO, CIAO, and, DAnCE, the following
+      flags should be added for DDS4CCM.
+    </p>
+    <p>$ACE_ROOT/bin/MakeProjectCreator/config/default.features should contain at least the following flags for RTI DDS:<br/>
+      <ul>
+        <li><code>ndds=1</code></li>
+        <li><code>dds4ccm_ndds=1</code></li>
+      </ul>
+    </p>
+    <p>$ACE_ROOT/bin/MakeProjectCreator/config/default.features should contain at least the following flags for OpenDDS:<br/>
+      <ul>
+        <li><code>dds4ccm_opendds=1</code></li>
+        <li><code>dds_suppress_anys=0</code></li>
+      </ul>
+    </p>
+    <p>$ACE_ROOT/include/makeinclude/platform_macros.GNU should contain at least the following flags for RTI DDS:<br/>
+      <ul>
+        <li><code>ndds=1</code></li>
+        <li><code>dds4ccm_ndds=1</code></li>
+      </ul>
+    </p>
+    <p>$ACE_ROOT/include/makeinclude/platform_macros.GNU should contain at least the following flags for OpenDDS:<br/>
+      <ul>
+        <li><code>dds4ccm_opendds=1</code></li>
+      </ul>
+    </p>
+    <p>
+      To be sure that CIAO, DAnCE and DDS4CCM are build correctly, one might
+      use the $CIAO_ROOT/CIAO_TAO_DAnCE.mwc workspace for RTI DDS.
+<p>
+</p>
+      When using DDS4CCM with OpenDDS we commend you to use the $CIAO_ROOT/CIAO_TAO_DAnCE_OpenDDS.mwc workspace. This workspace
+      will compile all needed parts of ACE, TAO, CIAO, DAnCE, and OpenDDS. OpenDDS has to be compiled before compiling DDS4CCM
+      because we are using several of the OpenDDS libraries and the OpenDDS IDL compiler.
+    </p>
+    <hr>
     <h3>Supported Platforms for DDS4CCM</h3>
     <p>DDS4CCM is daily compiled and tested on Linux with RTI DDS and OpenDDS. It does compile on Windows with Microsoft Visual Studio 10 but
     we have not validated all tests.
