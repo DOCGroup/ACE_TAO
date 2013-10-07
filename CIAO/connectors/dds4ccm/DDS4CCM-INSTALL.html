@@ -121,8 +121,8 @@ set PATH=%ACE_ROOT%\lib;%PATH%
     <h3>Building and Installing DDS4CCM on Windows using Visual Studio 2010</h3>
 When you want to compile now using Visual Studio 2010 you can use the following steps
 <pre>
-cd %CIAO_ROOT% && %ACE_ROOT%\bin\mwc.pl -type vc10 -workers 4 CIAO_TAO_DAnCE.mwc
-cd %CIAO_ROOT%\connectors\dds4ccm\examples\Shapes && %ACE_ROOT%\bin\mwc.pl -type vc10 -workers 4
+cd %CIAO_ROOT% && perl %ACE_ROOT%\bin\mwc.pl -type vc10 -workers 4 CIAO_TAO_DAnCE.mwc
+cd %CIAO_ROOT%\connectors\dds4ccm\examples\Shapes && perl %ACE_ROOT%\bin\mwc.pl -type vc10 -workers 4
 cd %CIAO_ROOT% && devenv CIAO_TAO_DAnCE.sln
 cd %CIAO_ROOT%\connectors\dds4ccm\examples\Shapes && devenv Shapes.sln
 cd %CIAO_ROOT%\connectors\dds4ccm\examples\Shapes\descriptors && perl run_test.pl
@@ -132,8 +132,8 @@ When using nmake you can use the following steps. At the moment you want to comp
 <code>-value_template platforms=Win64</code> to the mwc.pl commands below.
 
 <pre>
-cd %CIAO_ROOT% && %ACE_ROOT%\bin\mwc.pl -type nmake -workers 4 CIAO_TAO_DAnCE.mwc
-cd %CIAO_ROOT%\connectors\dds4ccm\examples\Shapes && %ACE_ROOT%\bin\mwc.pl -type nmake -workers 4
+cd %CIAO_ROOT% && perl %ACE_ROOT%\bin\mwc.pl -type nmake -workers 4 CIAO_TAO_DAnCE.mwc
+cd %CIAO_ROOT%\connectors\dds4ccm\examples\Shapes && perl %ACE_ROOT%\bin\mwc.pl -type nmake -workers 4
 cd %CIAO_ROOT% && nmake
 cd %CIAO_ROOT%\connectors\dds4ccm\examples\Shapes && nmake
 cd %CIAO_ROOT%\connectors\dds4ccm\examples\Shapes\descriptors && perl run_test.pl
