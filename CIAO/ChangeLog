@@ -1,3 +1,9 @@
+Mon Oct  7 14:55:11 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Added note that paths in environment variables shouldn't use
+          double quotes
+
 Mon Oct  7 13:50:49 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/DDS4CCM-INSTALL.html:
