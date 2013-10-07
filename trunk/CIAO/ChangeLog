@@ -1,3 +1,8 @@
+Mon Oct  7 08:15:16 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Document how with nmake we can generate Win64 projects
+
 Fri Oct  4 10:51:06 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/DDS4CCM-INSTALL.html:
