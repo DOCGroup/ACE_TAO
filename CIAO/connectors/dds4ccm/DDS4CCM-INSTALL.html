@@ -128,7 +128,9 @@ cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && devenv Shapes.sln
 cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes/descriptors && perl run_test.pl
 </pre>
     <h3>Building and Installing DDS4CCM on Windows using nmake</h3>
-When using nmake you can use the following steps
+When using nmake you can use the following steps. At the moment you want to compile for Windows 64bit, add
+<code>-value_template platforms=Win64</code> to the mwc.pl commands below.
+
 <pre>
 cd %CIAO_ROOT% && %ACE_ROOT%/bin/mwc.pl -type nmake -workers 4 CIAO_TAO_DAnCE.mwc
 cd %CIAO_ROOT%/connectors/dds4ccm/examples/Shapes && %ACE_ROOT%/bin/mwc.pl -type nmake -workers 4
