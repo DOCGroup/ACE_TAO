@@ -116,9 +116,11 @@ set ACE_ROOT=%DOC_ROOT%\ACE_wrappers
 set TAO_ROOT=%ACE_ROOT%\TAO
 set CIAO_ROOT=%TAO_ROOT%\CIAO
 set DANCE_ROOT=%TAO_ROOT%\DAnCE
-set PATH=%ACE_ROOT%\lib;%PATH%
-\cygwin\bin\echo -e '#include "ace/config-win32.h"' > %ACE_ROOT%/ace/config.h
-\cygwin\bin\echo -e 'dds4ccm_ndds=1\nndds=1\nxerces3=1\n' > %ACE_ROOT%/bin/MakeProjectCreator/config/default.features
+set PATH=%ACE_ROOT%\lib;%XERCESCROOT%\bin;%NDDSHOME%\lib\%NDDSARCHITECTURE%;%PATH%
+echo #include "ace/config-win32.h" > %ACE_ROOT%/ace/config.h
+echo dds4ccm_ndds=1 > %ACE_ROOT%/bin/MakeProjectCreator/config/default.features
+echo ndds=1 > %ACE_ROOT%/bin/MakeProjectCreator/config/default.features
+echo xerces3=1 > %ACE_ROOT%/bin/MakeProjectCreator/config/default.features
 </pre>
     <h3>Building and Installing DDS4CCM on Windows using Visual Studio 2010</h3>
 When you want to compile now using Visual Studio 2010 you can use the following steps
