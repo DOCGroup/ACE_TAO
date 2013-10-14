@@ -1,3 +1,8 @@
+Mon Oct 14 07:50:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ImR/Combined_Service/test.cpp:
+          No need to print filename
+
 Thu Oct  3 09:36:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

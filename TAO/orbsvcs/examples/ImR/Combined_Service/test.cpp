@@ -11,7 +11,7 @@
 
 #define assertTrue(CONDITION) \
     if (!(CONDITION)) { \
-      ACE_CString str ("Error : "#CONDITION" "__FILE__":"); \
+      ACE_CString str ("Error : "#CONDITION" :"); \
       char line[32]; \
       ACE_OS::sprintf (line, "%d", __LINE__); \
       throw std::runtime_error (str.c_str ()); \
