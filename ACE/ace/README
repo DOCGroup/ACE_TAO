@@ -341,8 +341,6 @@ ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED   gethostbyaddr does not handle
 ACE_USES_IPV4_IPV6_MIGRATION            Enable IPv6 support in ACE on
                                         platforms that don't have IPv6
                                         turned on by default.
-ACE_HAS_IPV6_V6ONLY                     Platform supports the IPPROTO_IPV6
-                                        level IPV6_V6ONLY socket option.
 ACE_HAS_NONSTATIC_OBJECT_MANAGER        Causes the ACE_Object_Manager
                                         instance to be created in main
                                         (int, char *[]), instead of as
