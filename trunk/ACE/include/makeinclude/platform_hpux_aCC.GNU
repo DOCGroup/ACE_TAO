@@ -206,3 +206,7 @@ ifeq ($(64bitoffsets),1)
     CCFLAGS += +W600
   endif
 endif
+
+ifeq ($(c++0x),1)
+  CCFLAGS += -Ax
+endif
