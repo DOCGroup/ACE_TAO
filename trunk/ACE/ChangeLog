@@ -1,3 +1,7 @@
+Thu Oct 17 22:44:41 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/README: Remove entry for ACE_HAS_IPV6_V6ONLY - it's not used.
+
 Thu Oct 17 11:51:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_hpux_aCC.GNU:
