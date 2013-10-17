@@ -1,3 +1,11 @@
+Thu Oct 17 11:51:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_hpux_aCC.GNU:
+          Added support for c++0x
+
+        * tests/Compiler_Features_21_Test.cpp:
+          Invoke the helper method
+
 Fri Oct  4 09:09:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:
