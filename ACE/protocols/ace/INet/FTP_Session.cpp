@@ -227,7 +227,7 @@ namespace ACE
                                   ACE_TEXT ("(%d) FTP_Session::send_request - ")
                                   ACE_TEXT ("reconnect failed\n"),
                                   ACE_OS::last_error ()));
-                return ACE::IOS::Null::out_stream_;
+                return false;
               }
           }
 
