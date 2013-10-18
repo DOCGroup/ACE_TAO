@@ -1,3 +1,8 @@
+Fri Oct 18 18:12:17 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/INet/FTP_Session.cpp:
+          Fixed compile problem with Visual Studio 2013
+
 Thu Oct 17 22:44:41 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/README: Remove entry for ACE_HAS_IPV6_V6ONLY - it's not used.
