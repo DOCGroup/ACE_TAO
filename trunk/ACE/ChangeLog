@@ -1,3 +1,16 @@
+Tue Oct 22 19:37:43 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/OS_NS_Thread.inl (thr_join): Add deadlock detection for Windows
+          at Vista/WinSvr2003 or higher. Prevents a thread calling join on
+          itself from deadlocking, making the behavior similar to that of
+          Pthreads, etc.
+
+        * tests/Task_Wait_Test.cpp: Don't try this test on Windows systems
+          without the deadlock detection available above. It hangs and there's
+          little to be done about it.
+
+        * NEWS: Added the deadlock feature description.
+
 Tue Oct 22 17:20:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:

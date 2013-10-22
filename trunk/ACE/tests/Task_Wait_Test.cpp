@@ -18,7 +18,16 @@
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 
-#if defined (ACE_HAS_THREADS)
+// On Windows, this test will deadlock because a thread tries to join with
+// itself. Pthreads, et al, have deadlock protection in join; Windows Vista
+// and Server 2003 have API to access the info needed to check for deadlock
+// in ACE_OS::thr_join() - don't run this test on earlier Windows versions
+// because it will hang/time out and there's little to be done about it.
+#if defined (ACE_HAS_THREADS) && ((defined (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0502)) || !defined (WIN32))
+#  define RUN_THIS_TEST
+#endif
+
+#ifdef RUN_THIS_TEST
 
 static ACE_Event TaskDone;
 
@@ -57,7 +66,7 @@ Do_Nothing_Task::svc (void)
   return 0;
 }
 
-#endif /* ACE_HAS_THREADS */
+#endif /* RUN_THIS_TEST */
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -65,7 +74,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Task_Wait_Test"));
   int status = 0;
 
-#if defined (ACE_HAS_THREADS)
+#if defined (RUN_THIS_TEST)
 
   Do_Nothing_Task t;
   status = t.activate ();
@@ -73,8 +82,8 @@ run_main (int, ACE_TCHAR *[])
 
 #else
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("threads not supported on this platform\n")));
-#endif /* ACE_HAS_THREADS */
+              ACE_TEXT ("inadequate thread support on this platform\n")));
+#endif /* RUN_THIS_TEST */
 
   ACE_END_TEST;
   return status;
