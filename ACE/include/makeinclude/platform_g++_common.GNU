@@ -223,6 +223,12 @@ ifeq ($(minimaltoc),1)
   FLAGS_C_CC += -mminimal-toc
 endif
 
+address-sanitizer ?= 0
+ifeq ($(address-sanitizer),1)
+  CPPFLAGS += -fsanitize=address -fno-omit-frame-pointer
+  LDFLAGS += -fsanitize=address
+endif
+
 pipes ?= 1
 
 FLAGS_C_CC += -Wall -W -Wpointer-arith
