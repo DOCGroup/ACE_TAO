@@ -2942,6 +2942,22 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_join (thr_handle, status), result),
                      int, -1);
 # elif defined (ACE_HAS_WTHREADS)
+  // Waiting on the calling thread will deadlock, so try to avoid that. The
+  // direct access to the needed info (GetThreadId) was added at Vista.
+  // Win Server 2003 is 5.2; Vista is 6.0
+#   if defined (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0502)
+  const ACE_TEXT_OSVERSIONINFO &info = ACE_OS::get_win32_versioninfo ();
+  if (info.dwMajorVersion >= 6 ||
+      (info.dwMajorVersion == 5 && info.dwMinorVersion == 2))
+    {
+      if (::GetThreadId (thr_handle) == ::GetCurrentThreadId ())
+        {
+          errno = ERROR_POSSIBLE_DEADLOCK;
+          return -1;
+        }
+    }
+#   endif /* _WIN32_WINNT */
+
   ACE_THR_FUNC_RETURN local_status = 0;
 
   // Make sure that status is non-NULL.

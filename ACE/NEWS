@@ -1,6 +1,11 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.2.2 and ACE-6.2.3
 ====================================================
 
+. The ACE_OS::thr_join() method will detect if the thread to be waited on is
+  the calling thread and avert that deadlock. The support needed for this
+  method is available at Vista/Windows Server 2003 and higher; to enable
+  the deadlock prevention, compile ACE with _WIN32_WINNT=0x0502 or higher.
+
 . Ended maintenance and support for FC12 CEEL
 
 USER VISIBLE CHANGES BETWEEN ACE-6.2.1 and ACE-6.2.2
