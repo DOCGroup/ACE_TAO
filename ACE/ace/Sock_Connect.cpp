@@ -1430,8 +1430,25 @@ ip_check (int &ipvn_enabled, int pf)
 
   if (ipvn_enabled == -1)
     {
+
+#if defined (ACE_WIN32)
+      // as of the release of Windows 2008, even hosts that have IPv6 interfaces disabled
+      // will still permit the creation of a PF_INET6 socket, thus rendering the socket
+      // creation test inconsistent. The reccommended solution is to get the list of
+      // endpoint addresses and see if any match the desired family.
+      ACE_INET_Addr *if_addrs = 0;
+      size_t if_cnt = 0;
+
+      ACE::get_ip_interfaces (if_cnt, if_addrs);
+      ipvn_enabled = 0;
+      for (size_t i = 0; ipvn_enabled == 0 && i < if_cnt; i++)
+        {
+          ipvn_enabled = (if_addrs[i].get_type () == pf);
+        }
+      delete [] if_addrs;
+#else
       // Determine if the kernel has IPv6 support by attempting to
-      // create a PF_INET socket and see if it fails.
+      // create a PF_INET6 socket and see if it fails.
       ACE_HANDLE const s = ACE_OS::socket (pf, SOCK_DGRAM, 0);
       if (s == ACE_INVALID_HANDLE)
         {
@@ -1442,6 +1459,7 @@ ip_check (int &ipvn_enabled, int pf)
           ipvn_enabled = 1;
           ACE_OS::closesocket (s);
         }
+#endif
     }
   return ipvn_enabled;
 }
