@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.2.2 and ACE-6.2.3
 ====================================================
 
+. Ended maintenance and support for FC12 CEEL
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.1 and ACE-6.2.2
 ====================================================
 
