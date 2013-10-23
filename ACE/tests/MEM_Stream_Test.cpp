@@ -489,14 +489,10 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 }
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
+#define ACE_Atomic_Op_type \
+    ACE_Atomic_Op< ACE_SYNCH_MUTEX, u_short>
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_Atomic_Op_type, ACE_SYNCH_RECURSIVE_MUTEX);
 
-template ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>,
-                       ACE_SYNCH_RECURSIVE_MUTEX> *
-  ACE_Singleton<ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>,
-                ACE_SYNCH_RECURSIVE_MUTEX>::singleton_;
-
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
 
 #else
 int

@@ -59,12 +59,7 @@
 #define ACE_LACKS_FORK
 #endif /* __hpux */
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-
-template ACE_Singleton<Options, ACE_Null_Mutex> *
-  ACE_Singleton<Options, ACE_Null_Mutex>::singleton_;
-
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Options, ACE_Null_Mutex);
 
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.

@@ -26,8 +26,6 @@ void foo (void)
 // Listing 1
 
 // Listing 2 code/ch03
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<LogManager, ACE_Null_Mutex> *
-  ACE_Singleton<LogManager, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, LogManager, ACE_Null_Mutex);
+
 // Listing 2

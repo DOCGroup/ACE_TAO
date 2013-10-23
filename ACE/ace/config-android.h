@@ -135,6 +135,13 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
+
+# define ACE_HAS_CUSTOM_EXPORT_MACROS
+# define ACE_Proper_Export_Flag
+# define ACE_IMPORT_SINGLETON_DECLARATION(T) __extension__ extern template class T
+# define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
+# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+
 #elif defined (__GNUC__)
 /**
  * GNU C compiler.

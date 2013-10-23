@@ -90,15 +90,14 @@ sub Executable
         $self->{EXECUTABLE} = shift;
     }
 
-    my $executable = $self->{EXECUTABLE};
+    my $executable = File::Spec->rel2abs ($self->{EXECUTABLE});
 
-    # If the target's config has a different ACE_ROOT, rebase the executable
-    # from $ACE_ROOT to the target's root.
-    if (defined $self->{TARGET} &&
-          $self->{TARGET}->ACE_ROOT() ne $ENV{'ACE_ROOT'}) {
-        $executable = PerlACE::rebase_path ($executable,
-                                            $ENV{'ACE_ROOT'},
-                                            $self->{TARGET}->ACE_ROOT());
+    if (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
+      # If the target's config has a different filesystem root, rebase the executable
+      # from local root to the target's root.
+      $executable = PerlACE::rebase_path ($executable,
+                                          $self->{TARGET}->{HOST_FSROOT},
+                                          $self->{TARGET}->{TARGET_FSROOT});
     }
 
     if ($self->{IGNOREHOSTROOT} == 0) {
@@ -120,7 +119,6 @@ sub Executable
     }
 
     $executable = $dirname . $subdir . $basename;
-
     return $executable;
 }
 
@@ -141,7 +139,6 @@ sub CommandLine ()
 
     my $exe = $self->Executable ();
     my $commandline = $exe;
-
     if (defined $self->{REMOTEINFO}) {
         my($method)   = $self->{REMOTEINFO}->{method};
         my($username) = $self->{REMOTEINFO}->{username};
@@ -178,11 +175,9 @@ sub CommandLine ()
         }
         $commandline .= $exe;
     }
-
     if (defined $self->{ARGUMENTS}) {
         $commandline .= ' '.$self->{ARGUMENTS};
     }
-
     # Avoid modifying TAO/tests run_test.pl scripts by using the
     # ACE_RUNTEST_ARGS environment variable to append command line
     # arguments.
@@ -195,7 +190,6 @@ sub CommandLine ()
                            . $global_args;
         }
     }
-
     if (defined $self->{REMOTEINFO}) {
         $commandline .= '"';
     } elsif (defined $self->{TARGET} && defined $self->{TARGET}->{REMOTE_SHELL}) {
@@ -205,14 +199,19 @@ sub CommandLine ()
         if (!defined $root) {
             $root = $ENV{'ACE_ROOT'};
         }
-        my($exedir)    = dirname ($exe);
-        my($local_xdir)= File::Spec->rel2abs($self->{EXECUTABLE});
-        if ($exedir == '.' || $exedir == './' || $exedir == '') {
-            $exedir = cwd ();
-            $local_xdir = $exedir;
+        my $exedir = cwd ();
+        my $local_xdir = $exedir;
+
+        if (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
+          $exedir = PerlACE::rebase_path ($exedir,
+                                          $self->{TARGET}->{HOST_FSROOT},
+                                          $self->{TARGET}->{TARGET_FSROOT});
+          if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+              print STDERR "INFO: rebased run script exedir to [",$exedir,"]\n";
+          }
         }
         if (!defined $self->{PIDFILE}) {
-            $self->{PIDFILE} = "/tmp/.acerun/ace-".rand(time).".pid";
+            $self->{PIDFILE} = "$exedir/ace-".rand(time).".pid";
         }
         if (!defined $self->{SCRIPTFILE}) {
             $self->{SCRIPTFILE} = "$local_xdir/run-".rand(time).".sh";
@@ -223,13 +222,30 @@ sub CommandLine ()
             $libpath = PerlACE::concat_path ($libpath, $self->{TARGET}->{LIBPATH});
         }
         my $run_script =
-            "if [ ! -e /tmp/.acerun ]; then mkdir /tmp/.acerun; fi\n".
+            # "if [ ! -e /tmp/.acerun ]; then mkdir /tmp/.acerun; fi\n".
             "cd $exedir\n".
             "export LD_LIBRARY_PATH=$libpath:\$LD_LIBRARY_PATH\n".
             "export DYLD_LIBRARY_PATH=$libpath:\$DYLD_LIBRARY_PATH\n".
             "export LIBPATH=$libpath:\$LIBPATH\n".
             "export SHLIB_PATH=$libpath:\$SHLIB_PATH\n".
             "export PATH=\$PATH:$root/bin:$root/lib:$libpath\n";
+        if (defined $self->{TARGET}->{dance_root}) {
+          $run_script .=
+            "export DANCE_ROOT=$self->{TARGET}->{dance_root}\n";
+        }
+        if (defined $self->{TARGET}->{ace_root}) {
+          $run_script .=
+            "export ACE_ROOT=$self->{TARGET}->{ace_root}\n";
+        }
+        if (defined $self->{TARGET}->{tao_root}) {
+          $run_script .=
+            "export TAO_ROOT=$self->{TARGET}->{tao_root}\n";
+        }
+        if (defined $self->{TARGET}->{ciao_root}) {
+          $run_script .=
+            "export CIAO_ROOT=$self->{TARGET}->{ciao_root}\n";
+        }
+
         while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {
             $run_script .=
             "export $env_key=$env_value\n";
@@ -241,7 +257,8 @@ sub CommandLine ()
           "echo \$MY_PID > ".$self->{PIDFILE}."\n";
         $run_script .=
           "wait \$MY_PID\n";
-
+        $run_script .=
+          "rm $self->{PIDFILE}\n";
         unless (open (RUN_SCRIPT, ">".$self->{SCRIPTFILE})) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                           "> failed to create ",$self->{SCRIPTFILE},"\n";
@@ -253,8 +270,16 @@ sub CommandLine ()
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "INFO: created run script [",$self->{SCRIPTFILE},"]\n", $run_script;
         }
+        if (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
+          if ($self->{TARGET}->PutFile (basename ($self->{SCRIPTFILE})) == -1) {
+            print STDERR "ERROR: Failed to copy <", $self->{SCRIPTFILE},
+                          "> to target \n";
+            return -1;
+          }
+        }
 
         $commandline = "$shell \"source $exedir/".basename ($self->{SCRIPTFILE})."\"";
+
     }
 
     return $commandline;
@@ -353,7 +378,9 @@ sub Spawn ()
     }
 
     if ($self->{IGNOREEXESUBDIR} == 0) {
-        if (!defined $self->{REMOTEINFO} && !-f $self->Executable ()) {
+        if (!defined $self->{REMOTEINFO} &&
+            !defined $self->{TARGET}->{REMOTE_SHELL} &&
+            !-f $self->Executable ()) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                          "> not found\n";
             return -1;

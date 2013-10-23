@@ -102,10 +102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
   return 0;
 }
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex> *
-  ACE_Singleton<ACE_Auto_Event, ACE_Thread_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_Auto_Event, ACE_Thread_Mutex);
 
 
 #else

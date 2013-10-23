@@ -1,3 +1,267 @@
+Wed Oct 23 08:28:29 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
+
+        * ace/Based_Pointer_Repository.cpp:
+
+        * ace/Compression/rle/RLECompressor.cpp:
+
+        * ace/Dynamic.cpp:
+        * ace/Lib_Find.cpp:
+        * ace/Obstack_T.cpp:
+
+        * ace/SSL/SSL_Context.cpp:
+
+        * ace/UUID.cpp:
+        * ace/config-android.h:
+        * ace/config-macros.h:
+
+        * apps/JAWS3/jaws3/Templates.cpp:
+
+        * apps/drwho/File_Manager.cpp:
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+
+        * bin/auto_run_tests.pl:
+
+        * examples/APG/Logging/Use_LogManager.cpp:
+
+        * examples/APG/Timers/PTimerDispatcher.cpp:
+        * examples/APG/Timers/TimerDispatcher.cpp:
+
+        * examples/C++NPv2/TP_Logging_Server.cpp:
+
+        * examples/Export/dll.cpp:
+
+        * examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+        * examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+
+        * examples/Logger/Acceptor-server/server_loggerd.cpp:
+
+        * examples/Logger/simple-server/server_loggerd.cpp:
+
+        * examples/Threads/auto_event.cpp:
+        * examples/Threads/tss2.cpp:
+
+        * examples/Web_Crawler/Command_Processor.cpp:
+
+        * performance-tests/Misc/test_singleton.cpp:
+
+        * tests/MEM_Stream_Test.cpp:
+        * tests/Process_Strategy_Test.cpp:
+
+        Changes for ANDROID CIAO port with native android
+
+
+      commit 43a2b2dfd3cc68ed5c30f4d8994a36183d972202
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Wed Oct 16 12:40:58 2013 +0200
+              Removed my_test.lst
+              * ACE/bin/auto_run_tests.pl:
+
+      commit 6e8749c45496635965cb9928690454572b208794
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Wed Oct 16 11:11:15 2013 +0200
+
+          Use typedef for template in Singleton template
+              * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+              * ACE/tests/MEM_Stream_Test.cpp:
+
+      commit 676e8e389552f864f5118a9616d156d134454085
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Wed Oct 16 10:06:07 2013 +0200
+
+          Added my_list
+              * ACE/bin/auto_run_tests.pl:
+
+      commit b08cbe167f6f20b94d4e16c4e6cf6e516f605e16
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Tue Oct 15 15:35:33 2013 +0200
+
+          Temporarily use an other test list
+               * ACE/bin/auto_run_tests.pl:
+
+      commit ac22da3990acafaa9e5c2e9ddf8fc08a8e86f2b0
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Tue Oct 15 15:22:58 2013 +0200
+
+          Work in progress
+              * ACE/bin/PerlACE/Process_Unix.pm:
+              * ACE/bin/PerlACE/TestTarget.pm:
+              * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+              * ACE/tests/MEM_Stream_Test.cpp:
+  
+      commit bb0a43d0cabb4a28504d9e57b21978b413d5eed5
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Wed Oct 9 15:56:10 2013 +0200
+
+          Changes for local AND remote targets
+              * ACE/bin/PerlACE/Process_Unix.pm:
+              * ACE/bin/PerlACE/TestTarget.pm:
+              * ACE/bin/PerlACE/TestTarget_Android.pm:
+          
+              Singleton errors.
+              * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+              * ACE/tests/MEM_Stream_Test.cpp:
+
+      commit a7d5192310bdac903fbc1c26cb2e02f3367804a0
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Wed Oct 9 10:03:30 2013 +0200
+
+          Solved compiler errors.
+              * ACE/examples/Export/dll.cpp:
+              * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+              * ACE/examples/Logger/simple-server/server_loggerd.cpp:
+              * ACE/tests/MEM_Stream_Test.cpp:
+
+      commit cd8529e7014ccede6aec99106074b39584eecf14
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Tue Oct 8 15:44:52 2013 +0200
+
+          Use macro ACE_SINGLETON_TEMPLATE_INSTANTIATE
+              * ACE/ace/Based_Pointer_Repository.cpp:
+              * ACE/ace/Dynamic.cpp:
+              * ACE/ace/Lib_Find.cpp:
+              * ACE/ace/SSL/SSL_Context.cpp:
+              * ACE/apps/JAWS3/jaws3/Templates.cpp:
+              * ACE/apps/drwho/File_Manager.cpp:
+              * ACE/examples/APG/Logging/Use_LogManager.cpp:
+              * ACE/examples/APG/Timers/PTimerDispatcher.cpp:
+              * ACE/examples/APG/Timers/TimerDispatcher.cpp:
+              * ACE/examples/C++NPv2/TP_Logging_Server.cpp:
+              * ACE/examples/Export/dll.cpp:
+              * ACE/examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+              * ACE/examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+              * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+              * ACE/examples/Logger/simple-server/server_loggerd.cpp:
+              * ACE/examples/Threads/auto_event.cpp:
+              * ACE/examples/Threads/tss2.cpp:
+              * ACE/examples/Web_Crawler/Command_Processor.cpp:
+              * ACE/performance-tests/Misc/test_singleton.cpp:
+              * ACE/tests/MEM_Stream_Test.cpp:
+              * ACE/tests/Process_Strategy_Test.cpp:
+
+      commit 43a2b2dfd3cc68ed5c30f4d8994a36183d972202
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Wed Oct 16 12:40:58 2013 +0200
+
+                Removed my_test.lst
+              * ACE/bin/auto_run_tests.pl:
+
+      commit 6e8749c45496635965cb9928690454572b208794
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Wed Oct 16 11:11:15 2013 +0200
+
+          Use typedef for template in Singleton template
+              * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+              * ACE/tests/MEM_Stream_Test.cpp:
+
+      commit 676e8e389552f864f5118a9616d156d134454085
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Wed Oct 16 10:06:07 2013 +0200
+
+          Added my_list
+              * ACE/bin/auto_run_tests.pl:
+
+      commit b08cbe167f6f20b94d4e16c4e6cf6e516f605e16
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Tue Oct 15 15:35:33 2013 +0200
+
+          Temporarily use an other test list
+              * ACE/bin/auto_run_tests.pl:
+
+      commit ac22da3990acafaa9e5c2e9ddf8fc08a8e86f2b0
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Tue Oct 15 15:22:58 2013 +0200
+
+          Work in progress
+              * ACE/bin/PerlACE/Process_Unix.pm:
+              * ACE/bin/PerlACE/TestTarget.pm:
+              * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+              * ACE/tests/MEM_Stream_Test.cpp:
+  
+      commit bb0a43d0cabb4a28504d9e57b21978b413d5eed5
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Wed Oct 9 15:56:10 2013 +0200
+
+          refs #39157
+              Changes for local AND remote targets
+              * ACE/bin/PerlACE/Process_Unix.pm:
+              * ACE/bin/PerlACE/TestTarget.pm:
+              * ACE/bin/PerlACE/TestTarget_Android.pm:
+          
+              Singleton errors.
+              * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+              * ACE/tests/MEM_Stream_Test.cpp:
+
+      commit a7d5192310bdac903fbc1c26cb2e02f3367804a0
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Wed Oct 9 10:03:30 2013 +0200
+
+          Solved compiler errors.
+              * ACE/examples/Export/dll.cpp:
+              * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+              * ACE/examples/Logger/simple-server/server_loggerd.cpp:
+              * ACE/tests/MEM_Stream_Test.cpp:
+
+      commit cd8529e7014ccede6aec99106074b39584eecf14
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Tue Oct 8 15:44:52 2013 +0200
+
+          Use macro ACE_SINGLETON_TEMPLATE_INSTANTIATE
+              * ACE/ace/Based_Pointer_Repository.cpp:
+              * ACE/ace/Dynamic.cpp:
+              * ACE/ace/Lib_Find.cpp:
+              * ACE/ace/SSL/SSL_Context.cpp:
+              * ACE/apps/JAWS3/jaws3/Templates.cpp:
+              * ACE/apps/drwho/File_Manager.cpp:
+              * ACE/examples/APG/Logging/Use_LogManager.cpp:
+              * ACE/examples/APG/Timers/PTimerDispatcher.cpp:
+              * ACE/examples/APG/Timers/TimerDispatcher.cpp:
+              * ACE/examples/C++NPv2/TP_Logging_Server.cpp:
+              * ACE/examples/Export/dll.cpp:
+              * ACE/examples/IPC_SAP/SOCK_SAP/CPP-inclient.cpp:
+              * ACE/examples/IPC_SAP/SOCK_SAP/CPP-inserver-fancy.cpp:
+              * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
+              * ACE/examples/Logger/simple-server/server_loggerd.cpp:
+              * ACE/examples/Threads/auto_event.cpp:
+              * ACE/examples/Threads/tss2.cpp:
+              * ACE/examples/Web_Crawler/Command_Processor.cpp:
+              * ACE/performance-tests/Misc/test_singleton.cpp:
+              * ACE/tests/MEM_Stream_Test.cpp:
+              * ACE/tests/Process_Strategy_Test.cpp:
+
+      commit e9ae52194cec4f883c0c504026d53d2d52704c21
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Tue Oct 8 12:41:22 2013 +0200
+
+          Add support for remote testing in build environment with flat layout.
+              * ACE/bin/PerlACE/Process_Unix.pm:
+
+      commit 1bf4499a38f5b1b1db7bfeb1c509708cc3950411
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Mon Oct 7 15:45:47 2013 +0200
+
+          Add Singleton instantiate
+              * ACE/ace/Compression/rle/RLECompressor.cpp:
+
+      commit 384158b0b43c358cf5d960b9437f62701f402a07
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Mon Oct 7 09:39:43 2013 +0200
+
+          Added SINGLETON_DECLARATION
+              * ACE/ace/Obstack_T.cpp:
+
+      commit eb9626a86511c55e5d46a65a260240af6103f8e4
+      Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+      Date:   Thu Oct 3 10:19:06 2013 +0200
+
+              Solved singleton problems for android
+              * ACE/ace/UUID.cpp:
+              * ACE/ace/config-android.h:
+              * ACE/ace/config-macros.h:
+ 
+
 Tue Oct 22 22:09:41 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Sock_Connect.cpp:
