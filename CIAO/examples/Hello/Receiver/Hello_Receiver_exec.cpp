@@ -92,6 +92,8 @@ namespace CIAO_Hello_Receiver_Impl
 
   Receiver_exec_i::Receiver_exec_i (void)
   {
+    ACE_DEBUG ((LM_DEBUG,ACE_TEXT(" Receiver_exec_i::Receiver_exec_i \n")));
+
   }
 
   Receiver_exec_i::~Receiver_exec_i (void)
@@ -122,6 +124,7 @@ namespace CIAO_Hello_Receiver_Impl
   Receiver_exec_i::set_session_context (
     ::Components::SessionContext_ptr ctx)
   {
+    ACE_DEBUG ((LM_DEBUG,ACE_TEXT(" Receiver_exec_i::set_session_context \n")));
     this->context_ = ::Hello::CCM_Receiver_Context::_narrow (ctx);
 
     if ( ::CORBA::is_nil (this->context_.in ()))
@@ -133,16 +136,20 @@ namespace CIAO_Hello_Receiver_Impl
   void
   Receiver_exec_i::configuration_complete (void)
   {
+    ACE_DEBUG ((LM_DEBUG,ACE_TEXT(" Receiver_exec_i::configuration_complete \n")));
   }
 
   void
   Receiver_exec_i::ccm_activate (void)
   {
+    ACE_DEBUG ((LM_DEBUG,ACE_TEXT(" Receiver_exec_i::ccm_activate \n")));
+
   }
 
   void
   Receiver_exec_i::ccm_passivate (void)
   {
+    ACE_DEBUG ((LM_DEBUG,ACE_TEXT(" Receiver_exec_i::ccm_passivate \n")));
   }
 
   void
