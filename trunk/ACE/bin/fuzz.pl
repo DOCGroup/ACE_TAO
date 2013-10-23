@@ -1902,16 +1902,12 @@ sub check_for_deprecated_macros ()
 
             print "Looking at file $file\n" if $opt_d;
             while (<FILE>) {
-                # Check for ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION usage.
-                if (m/ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION\)/) {
-                    print_error ("$file:$.: ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION found.");
-                }
-                elsif (/ACE_THROW_SPEC/) {
-                    ## Do not use ACE_THROW_SPEC in TAO or CIAO.
-                    if ($file =~ /TAO|CIAO/i || $cwd =~ /TAO|CIAO/i) {
-                        print_error ("$file:$.: ACE_THROW_SPEC found.");
-                    }
-                }
+              if (/ACE_THROW_SPEC/) {
+                  ## Do not use ACE_THROW_SPEC in TAO or CIAO.
+                  if ($file =~ /TAO|CIAO/i || $cwd =~ /TAO|CIAO/i) {
+                      print_error ("$file:$.: ACE_THROW_SPEC found.");
+                  }
+              }
             }
             close (FILE);
         }
