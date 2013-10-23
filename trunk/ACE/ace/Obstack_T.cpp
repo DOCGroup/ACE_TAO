@@ -221,6 +221,8 @@ ACE_Obstack_T<ACE_CHAR_T>::freeze (void)
   return retv;
 }
 
+ACE_SINGLETON_TEMPLATE_INSTANTIATION(ACE_Obstack_T <char>;);
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_OBSTACK_T_CPP */

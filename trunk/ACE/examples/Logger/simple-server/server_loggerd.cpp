@@ -77,8 +77,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_Reactor, ACE_Null_Mutex);
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<ACE_Reactor, ACE_Null_Mutex> *
-  ACE_Singleton<ACE_Reactor, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
