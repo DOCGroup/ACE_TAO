@@ -158,6 +158,8 @@ ACE_RLECompressor::decompress( const void *in_ptr,
     return out_len;
 }
 
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_RLECompressor, ACE_SYNCH_MUTEX);
+
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
 

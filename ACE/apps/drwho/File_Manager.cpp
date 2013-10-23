@@ -165,7 +165,5 @@ File_Manager::open_friends_file (const char *filename)
   return this->number_of_friends;
 }
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<File_Manager, ACE_Null_Mutex> *
-  ACE_Singleton<File_Manager, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, File_Manager, ACE_Null_Mutex);
+

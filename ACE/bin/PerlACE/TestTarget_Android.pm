@@ -75,15 +75,6 @@ sub LocalFile
 {
     my $self = shift;
     my $file = shift;
-    my $cwdrel = $file;
-    my $prjroot = $ENV{'ACE_ROOT'};
-
-    if (length ($cwdrel) > 0) {
-        $cwdrel = File::Spec->abs2rel( cwd(), $prjroot );
-    }
-    else {
-        $cwdrel = File::Spec->abs2rel( $cwdrel, $prjroot );
-    }
 
     my $newfile = $self->{FSROOT} . "/" . $file;
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {

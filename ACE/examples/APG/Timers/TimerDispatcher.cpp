@@ -66,8 +66,5 @@ Timer_Dispatcher::reset_interval (long timer_id,
 
   return timer_queue_->reset_interval(timer_id, interval);
 }
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Timer_Dispatcher, ACE_Null_Mutex);
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Timer_Dispatcher, ACE_Null_Mutex> *
-      ACE_Singleton<Timer_Dispatcher, ACE_Null_Mutex>::singleton_;
-# endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */

@@ -204,10 +204,10 @@ foreach my $test_lst (@file_list) {
         # when $opt_r is set make sure to *first* check the explicitly
         # specified directory and only when nothing found there check
         # the default dirs
-	if ($opt_r) {
-	  unshift (@dirlist, $startdir."/$directory");
-	  unshift (@dirlist, $startdir."/$orig_dir");
-	}
+  if ($opt_r) {
+    unshift (@dirlist, $startdir."/$directory");
+    unshift (@dirlist, $startdir."/$orig_dir");
+  }
         foreach my $path (@dirlist) {
           if (-d $path && ($status = chdir ($path))) {
             last;

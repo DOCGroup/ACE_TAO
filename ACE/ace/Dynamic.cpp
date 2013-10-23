@@ -26,9 +26,7 @@ ACE_Dynamic::instance (void)
   return ACE_TSS_Singleton<ACE_Dynamic, ACE_SYNCH_NULL_MUTEX>::instance ();
 }
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex> *
-  ACE_TSS_Singleton<ACE_Dynamic, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_TSS_Singleton, ACE_Dynamic, ACE_SYNCH_MUTEX);
+
 
 ACE_END_VERSIONED_NAMESPACE_DECL

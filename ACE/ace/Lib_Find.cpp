@@ -104,10 +104,9 @@ ACE_SINGLETON_DECLARE (ACE_Singleton,
 typedef ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex>
         ACE_LD_SYMBOL_REGISTRY;
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex> *
-  ACE_Singleton<ACE_LD_Symbol_Registry, ACE_Thread_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_LD_Symbol_Registry, ACE_SYNCH_MUTEX);
+
+
 #endif
 
 

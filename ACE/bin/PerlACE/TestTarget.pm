@@ -11,8 +11,10 @@ use English;
 use POSIX qw(:time_h);
 use File::Copy;
 use File::Spec;
+use File::Basename;
 use PerlACE::Run_Test;
 use Sys::Hostname;
+use Cwd;
 
 ###############################################################################
 
@@ -104,6 +106,7 @@ sub GetConfigSettings ($)
     if (defined $config_name) {
         $env_prefix = $config_name."_";
     }
+
     my $env_name = $env_prefix.'ACE_ROOT';
     if (exists $ENV{$env_name}) {
         $self->{ace_root} = $ENV{$env_name};
@@ -113,17 +116,40 @@ sub GetConfigSettings ($)
         $self->{ace_root} = $ENV{'ACE_ROOT'};
     }
     $env_name = $env_prefix.'TAO_ROOT';
-    if (exists $ENV{$env_name}) {
-        $self->{tao_root} = $ENV{$env_name};
+    if (exists $ENV{$env_name})
+    {
+      $self->{tao_root} = $ENV{$env_name};
+    } elsif (exists $ENV{'TAO_ROOT'}) {
+        $self->{tao_root} = $ENV{'TAO_ROOT'};
     } else {
+        # assume there is a hierarchical struture
         $self->{tao_root} = "$self->{ace_root}/TAO";
     }
     $env_name = $env_prefix.'CIAO_ROOT';
     if (exists $ENV{$env_name}) {
         $self->{ciao_root} = $ENV{$env_name};
+    } elsif (exists $ENV{'CIAO_ROOT'}) {
+        $self->{ciao_root} = $ENV{'CIAO_ROOT'};
     } else {
+        # assume there is a hierarchical struture
         $self->{ciao_root} = "$self->{tao_root}/CIAO";
     }
+
+    $env_name = $env_prefix.'DANCE_ROOT';
+    if (exists $ENV{$env_name}) {
+        $self->{dance_root} = $ENV{$env_name};
+    } elsif (exists $ENV{'DANCE_ROOT'}) {
+        $self->{dance_root} = $ENV{'DANCE_ROOT'};
+    } else {
+        # assume there is a hierarchical struture
+        $self->{dance_root} = "$self->{tao_root}/DANCE";
+    }
+
+    if ($self->{ace_root} ne $ENV{'ACE_ROOT'}) {
+      $self->{HOST_FSROOT} = dirname ($ENV{'ACE_ROOT'});
+      $self->{TARGET_FSROOT} = dirname ($self->{ace_root});
+    }
+
     $env_name = $env_prefix.'EXE_SUBDIR';
     if (exists $ENV{$env_name}) {
         $self->{EXE_SUBDIR} = $ENV{$env_name}.'/';
@@ -273,6 +299,12 @@ sub CIAO_ROOT ($)
     return $self->{ciao_root};
 }
 
+sub DANCE_ROOT ($)
+{
+    my $self = shift;
+    return $self->{dance_root};
+}
+
 sub HostName ($)
 {
     my $self = shift;
@@ -330,12 +362,33 @@ sub AdbWaitForDeviceTimeout ($)
     return $self->{ADB_WAIT_FOR_DEVICE_TIMEOUT};
 }
 
+sub LocalEnvDir ($)
+{
+    my $self = shift;
+    my $dir = shift;
+    my $newdir = $dir;
+    if (defined $self->{TARGET_FSROOT}) {
+      $newdir = PerlACE::rebase_path ($dir,
+                                      $self->{HOST_FSROOT},
+                                      $self->{TARGET_FSROOT});
+
+    }
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+        print STDERR "LocalEnvDir for $dir is $newdir\n";
+    }
+    return $newdir;
+}
 
 sub LocalFile ($)
 {
     my $self = shift;
     my $file = shift;
     my $newfile = PerlACE::LocalFile($file);
+    if (defined $self->{TARGET_FSROOT}) {
+      $newfile = PerlACE::rebase_path ($newfile,
+                                       $self->{HOST_FSROOT},
+                                       $self->{TARGET_FSROOT});
+    }
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
         print STDERR "LocalFile for $file is $newfile\n";
     }
@@ -363,7 +416,7 @@ sub AddLibPath ($)
         $self->{LIBPATH} = PerlACE::concat_path ($self->{LIBPATH}, $dir);
     } else {
         # add rebased path
-        $dir = PerlACE::rebase_path ($dir, $ENV{'ACE_ROOT'}, $self->ACE_ROOT ());
+        $dir = Cwd::realpath (PerlACE::rebase_path ($dir, $self->{HOST_FSROOT}, $self->{TARGET_FSROOT}));
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "Adding libpath $dir\n";
         }
