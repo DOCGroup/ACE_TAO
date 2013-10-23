@@ -1,3 +1,8 @@
+Wed Oct 23 13:26:02 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/fuzz.pl:
+        ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION macro no longer deprecated
+
 Wed Oct 23 08:28:29 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
 
         * ace/Based_Pointer_Repository.cpp:
@@ -90,7 +95,7 @@ Wed Oct 23 08:28:29 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
               * ACE/bin/PerlACE/TestTarget.pm:
               * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
               * ACE/tests/MEM_Stream_Test.cpp:
-  
+
       commit bb0a43d0cabb4a28504d9e57b21978b413d5eed5
       Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
       Date:   Wed Oct 9 15:56:10 2013 +0200
@@ -99,7 +104,7 @@ Wed Oct 23 08:28:29 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
               * ACE/bin/PerlACE/Process_Unix.pm:
               * ACE/bin/PerlACE/TestTarget.pm:
               * ACE/bin/PerlACE/TestTarget_Android.pm:
-          
+
               Singleton errors.
               * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
               * ACE/tests/MEM_Stream_Test.cpp:
@@ -179,7 +184,7 @@ Wed Oct 23 08:28:29 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
               * ACE/bin/PerlACE/TestTarget.pm:
               * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
               * ACE/tests/MEM_Stream_Test.cpp:
-  
+
       commit bb0a43d0cabb4a28504d9e57b21978b413d5eed5
       Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
       Date:   Wed Oct 9 15:56:10 2013 +0200
@@ -189,7 +194,7 @@ Wed Oct 23 08:28:29 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
               * ACE/bin/PerlACE/Process_Unix.pm:
               * ACE/bin/PerlACE/TestTarget.pm:
               * ACE/bin/PerlACE/TestTarget_Android.pm:
-          
+
               Singleton errors.
               * ACE/examples/Logger/Acceptor-server/server_loggerd.cpp:
               * ACE/tests/MEM_Stream_Test.cpp:
@@ -260,7 +265,7 @@ Wed Oct 23 08:28:29 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
               * ACE/ace/UUID.cpp:
               * ACE/ace/config-android.h:
               * ACE/ace/config-macros.h:
- 
+
 
 Tue Oct 22 22:09:41 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
