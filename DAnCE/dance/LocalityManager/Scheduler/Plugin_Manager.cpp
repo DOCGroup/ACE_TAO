@@ -106,6 +106,10 @@ namespace DAnCE
   Plugin_Manager::Plugin_Manager (void) :
      config_ (0)
   {
+    DANCE_DEBUG (DANCE_LOG_MINOR_EVENT,
+                  (LM_INFO, DLINFO
+                  ACE_TEXT ("Plugin_Manager::Plugin_Manager")
+                  ACE_TEXT ("\n")));
   }
 
   void
@@ -233,7 +237,6 @@ namespace DAnCE
                                         const ACE_TCHAR *entrypoint,
                                         int open_mode)
   {
-
     ::DAnCE::DeploymentInterceptor_var plugin =
       load_plugin< ::DAnCE::DeploymentInterceptor > (artifact,
                                                      entrypoint,
@@ -372,3 +375,6 @@ namespace DAnCE
   }
 
 }
+
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, DAnCE::Plugin_Manager, TAO_SYNCH_MUTEX);
+
