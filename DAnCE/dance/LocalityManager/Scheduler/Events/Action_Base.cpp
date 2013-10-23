@@ -53,53 +53,56 @@ namespace DAnCE
             this->create_unexpected_exception (this->name_,
                                                "Invalid Instance Type");
           }
+        else
+        {
+          ::DAnCE::InstanceDeploymentHandler_var handler =
+              PLUGIN_MANAGER::instance ()->fetch_installation_handler (this->instance_type_.c_str ());
 
-        ::DAnCE::InstanceDeploymentHandler_var handler =
-            PLUGIN_MANAGER::instance ()->fetch_installation_handler (this->instance_type_.c_str ());
+          if (CORBA::is_nil (handler))
+            {
+              this->create_unexpected_exception (this->name_,
+                                                 "Unable to load appropriate instance handler");
+            }
+          else
+            {
+              try
+                {
+                  this->invoke (handler.in ());
+                }
+              catch (CORBA::UserException &ex)
+                {
+                  DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
+                               (LM_INFO, DLINFO
+                                ACE_TEXT ("Action_Base::call - ")
+                                ACE_TEXT ("Caught CORBA UserException while processing instance ")
+                                ACE_TEXT ("<%C>\n"),
+                                this->name_.c_str ()));
+                  this->instance_excep_ = DAnCE::Utility::create_any_from_user_exception (ex);
+                }
+              catch (CORBA::SystemException &ex)
+                {
+                  DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
+                               (LM_INFO, DLINFO
+                                ACE_TEXT ("Action_Base::call - ")
+                                ACE_TEXT ("Caught CORBA SystemException while processing instance ")
+                                ACE_TEXT ("<%C>\n"),
+                                this->name_.c_str ()));
+                  this->instance_excep_ = DAnCE::Utility::create_any_from_exception (ex);
+                }
+              catch (...)
+                {
+                  DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
+                               (LM_INFO, DLINFO
+                                ACE_TEXT ("Action_Base::call - ")
+                                ACE_TEXT ("Caught C++ exception while processing instance ")
+                                ACE_TEXT ("<%C>\n"),
+                                this->name_.c_str ()));
 
-        if (CORBA::is_nil (handler))
-          {
-            this->create_unexpected_exception (this->name_,
-                                               "Unable to load appropriate instance handler");
-          }
-
-        try
-          {
-            this->invoke (handler.in ());
-          }
-        catch (CORBA::UserException &ex)
-          {
-            DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
-                         (LM_INFO, DLINFO
-                          ACE_TEXT ("Action_Base::call - ")
-                          ACE_TEXT ("Caught CORBA UserException while processing instance ")
-                          ACE_TEXT ("<%C>\n"),
-                          this->name_.c_str ()));
-            this->instance_excep_ = DAnCE::Utility::create_any_from_user_exception (ex);
-          }
-        catch (CORBA::SystemException &ex)
-          {
-            DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
-                         (LM_INFO, DLINFO
-                          ACE_TEXT ("Action_Base::call - ")
-                          ACE_TEXT ("Caught CORBA SystemException while processing instance ")
-                          ACE_TEXT ("<%C>\n"),
-                          this->name_.c_str ()));
-            this->instance_excep_ = DAnCE::Utility::create_any_from_exception (ex);
-          }
-        catch (...)
-          {
-            DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
-                         (LM_INFO, DLINFO
-                          ACE_TEXT ("Action_Base::call - ")
-                          ACE_TEXT ("Caught C++ exception while processing instance ")
-                          ACE_TEXT ("<%C>\n"),
-                          this->name_.c_str ()));
-
-            this->create_unexpected_exception (this->name_,
-                                               "Caught unknown C++ exception from install");
-          }
-
+                  this->create_unexpected_exception (this->name_,
+                                                     "Caught unknown C++ exception from install");
+                }
+            }
+        }
         Event_Result result (this->name_, this->instance_excep_.ptr () != 0);
         if (!interceptors.empty ())
           {
