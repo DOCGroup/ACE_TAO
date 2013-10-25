@@ -664,6 +664,6 @@ ACE_SSL_Context::dh_params (const char *file_name,
 }
 
 // ****************************************************************
-ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Unmanaged_Singleton, ACE_Based_Pointer_Repository, ACE_SYNCH_MUTEX);
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Unmanaged_Singleton, ACE_SSL_Context, ACE_SYNCH_MUTEX);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
