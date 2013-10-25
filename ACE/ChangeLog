@@ -1,3 +1,9 @@
+Fri Oct 25 08:17:43 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dynamic.cpp:
+        * ace/SSL/SSL_Context.cpp:
+          Fixed singleton macros
+
 Wed Oct 23 13:26:02 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/fuzz.pl:
