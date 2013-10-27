@@ -1,3 +1,10 @@
+Sun Oct 27 15:38:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_28_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          New C++11 test program
+
 Fri Oct 25 08:17:43 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Dynamic.cpp:
