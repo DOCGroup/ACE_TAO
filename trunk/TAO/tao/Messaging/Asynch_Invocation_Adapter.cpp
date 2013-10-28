@@ -28,7 +28,8 @@ namespace TAO
     const char *operation,
     size_t op_len,
     int collocation_opportunity,
-    Invocation_Mode m)
+    Invocation_Mode m,
+    bool has_in_args)
     : Invocation_Adapter (target,
                           args,
                           arg_number,
@@ -36,7 +37,8 @@ namespace TAO
                           op_len,
                           collocation_opportunity,
                           TAO_TWOWAY_INVOCATION,
-                          m)
+                          m,
+                          has_in_args)
     , safe_rd_ ()
   {
   }

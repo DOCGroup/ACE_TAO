@@ -9,6 +9,7 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
                                               CORBA::ULong len,
                                               TAO::Argument **args,
                                               CORBA::ULong num,
+                                              CORBA::Boolean has_in_args,
                                               TAO::Exception_Data *data,
                                               CORBA::ULong count)
   : opname_ (name)
@@ -18,6 +19,7 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
     , addressing_mode_ (TAO_Target_Specification::Key_Addr)
     , args_ (args)
     , num_args_ (num)
+    , has_in_args_ (has_in_args)
     , ex_data_ (data)
     , ex_count_ (count)
     , use_stub_args_ (args ? true : false)
@@ -47,6 +49,28 @@ TAO_Operation_Details::argument_flag (void) const
 {
   return (this->num_args_ > 1);
 }
+
+#if 1
+ACE_INLINE CORBA::Boolean
+TAO_Operation_Details::in_argument_flag (void) const
+{
+  return this->has_in_args_  && this->num_args_ > 1;
+}
+#else
+ACE_INLINE CORBA::Boolean
+TAO_Operation_Details::in_argument_flag (void) const
+{
+  for (CORBA::ULong i = 1; i < this->num_args_ && !this->has_in_args_; i++)
+    {
+      if (dynamic_cast<TAO::InArgument *>(args_[i]) != 0 ||
+          dynamic_cast<TAO::InoutArgument *>(args_[i]))
+        {
+          return true;
+        }
+    }
+  return false;
+}
+#endif // TAO_IGNORE_IN_ARGS
 
 ACE_INLINE TAO_Service_Context &
 TAO_Operation_Details::request_service_context (void)

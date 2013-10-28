@@ -68,7 +68,8 @@ namespace TAO
         const char *operation,
         size_t op_len,
         int collocation_opportunity,
-        TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION);
+        TAO::Invocation_Mode mode = TAO_ASYNCHRONOUS_CALLBACK_INVOCATION,
+        bool has_in_args = true);
 
     void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr,
                  const TAO_Reply_Handler_Stub &reply_handler_stub);

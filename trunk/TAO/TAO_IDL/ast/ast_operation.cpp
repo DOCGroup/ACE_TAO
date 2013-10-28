@@ -109,6 +109,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
     pd_context (0),
     pd_exceptions (0),
     argument_count_ (-1),
+    has_in_arguments_ (false),
     has_native_ (0)
 {
   AST_PredefinedType *pdt = 0;
@@ -157,6 +158,15 @@ AST_Operation::argument_count (void)
   this->compute_argument_attr ();
 
   return this->argument_count_;
+}
+
+// Return the IN/INOUT member flag.
+bool
+AST_Operation::has_in_arguments (void)
+{
+  this->compute_argument_attr ();
+
+  return this->has_in_arguments_;
 }
 
 int
@@ -257,6 +267,13 @@ AST_Operation::compute_argument_attr (void)
               this->argument_count_++;
 
               arg = AST_Argument::narrow_from_decl (d);
+
+              if (arg->direction() == AST_Argument::dir_IN ||
+                  arg->direction() == AST_Argument::dir_INOUT)
+                {
+                  this->has_in_arguments_ = true;
+                }
+
 
               type = AST_Type::narrow_from_decl (arg->field_type ());
 

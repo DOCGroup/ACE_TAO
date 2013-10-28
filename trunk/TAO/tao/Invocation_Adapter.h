@@ -110,7 +110,8 @@ namespace TAO
                         size_t op_len,
                         int collocation_opportunity,
                         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
-                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
+                        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
+                        bool has_in_args = true);
 
     virtual ~Invocation_Adapter (void);
 
@@ -261,6 +262,8 @@ namespace TAO
      * This includes the return values too
      */
     int const number_args_;
+
+    bool has_in_args_;
 
     /// Name of the operation.
     char const * operation_;
