@@ -210,6 +210,13 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       *os << " | TAO::TAO_CO_THRU_POA_STRATEGY";
     }
 
+  if (!node->has_in_arguments ())
+    {
+      *os << "," << be_nl
+          << "TAO::TAO_ASYNCHRONOUS_CALLBACK_INVOCATION," << be_nl
+          << "false";
+    }
+
   *os << be_uidt_nl
       << ");" << be_uidt;
 

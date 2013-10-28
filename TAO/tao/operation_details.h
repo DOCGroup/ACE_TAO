@@ -76,6 +76,7 @@ public:
                          CORBA::ULong len,
                          TAO::Argument **args = 0,
                          CORBA::ULong num_args = 0,
+                         CORBA::Boolean has_in_args = true,
                          TAO::Exception_Data *ex_data = 0,
                          CORBA::ULong ex_count = 0);
 
@@ -88,6 +89,7 @@ public:
   /// Return the flag that indicates whether the operation has any
   /// arguments
   CORBA::Boolean argument_flag (void) const;
+  CORBA::Boolean in_argument_flag (void) const;
 
   /// Set the response flags
   void response_flags (CORBA::Octet flags);
@@ -209,6 +211,9 @@ private:
   /// Number of arguments including the return value
   CORBA::ULong num_args_;
 
+  /// A flag indicating any args are sent with the request
+  CORBA::Boolean has_in_args_;
+
   /// The type of exceptions that the operations can throw.
   TAO::Exception_Data *ex_data_;
 
@@ -232,6 +237,7 @@ private:
 
   /// The optional reply dispatcher
   TAO_Reply_Dispatcher *reply_dispatcher_;
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

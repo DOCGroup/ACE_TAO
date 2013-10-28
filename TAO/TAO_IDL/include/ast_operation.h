@@ -111,6 +111,9 @@ public:
   /// Return the number of arguments
   virtual int argument_count (void);
 
+  /// Return the flag indicating a request sends argument data
+  virtual bool has_in_arguments (void);
+
   /// Count the number of arguments of a certain type.
   /**
    * @param direction_mask limit the direction (IN, OUT or INOUT) of
@@ -164,6 +167,9 @@ protected:
 
   int argument_count_;
   // Number of arguments.
+
+  bool has_in_arguments_;
+  // True if any arguments are IN or INOUT
 
   int has_native_;
   // Is any argument of type native.
