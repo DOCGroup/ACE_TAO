@@ -1,3 +1,8 @@
+Mon Oct 28 08:31:16 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * ace/Dynamic.cpp:
+        Fixed singleton macro
+
 Sun Oct 27 15:38:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_28_Test.cpp:
