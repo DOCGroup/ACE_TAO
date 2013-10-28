@@ -155,8 +155,15 @@ TAO_FT_Naming_Service::run (void)
     return runner.svc();
   else
     {
-      runner.activate ( THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
-                        this->num_threads_);
+      int grpid = runner.activate ( THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
+                                    this->num_threads_);
+      if (grpid == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("FT_Naming_Service(%P)::run %p\n"),
+                      ACE_TEXT ("thread acitvation")));
+          return -1;
+        }
       runner.wait();
     }
   return 0;
