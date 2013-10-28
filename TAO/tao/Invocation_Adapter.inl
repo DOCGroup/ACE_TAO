@@ -15,10 +15,12 @@ namespace TAO
       size_t op_len,
       int collocation_opportunity,
       Invocation_Type type,
-      Invocation_Mode mode)
+      Invocation_Mode mode,
+      bool has_in_args)
     : target_ (target)
     , args_ (args)
     , number_args_  (arg_number)
+    , has_in_args_ (has_in_args)
     , operation_ (operation)
     , op_len_ (op_len)
     , collocation_opportunity_ (collocation_opportunity)

@@ -1,3 +1,36 @@
+Mon Oct 28 21:27:19 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/include/ast_operation.h:
+
+          Add explicit detection of IN or INOUT operation arguments. If there
+          are none, then extend the Invocation Adatpter constructor call to
+          set the new has_in_args flag to false. For backwards compatibility
+          that flag is defaulted to true.
+
+        * interop-tests/CdrOutArg:
+
+          Added a new test to demonstrate the fix. There is no explicit
+          regression test for this problem since every CORBA request invokes
+          this code.
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.inl:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/operation_details.h:
+        * tao/operation_details.inl:
+
+          Add a new flag, has_in_args, which is true if any of the operation
+          aguments send data with the request. The CDR buffer taking the
+          request is aligned after the header only if there is an IN argument.
+
 Mon Oct 28 16:33:43 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:

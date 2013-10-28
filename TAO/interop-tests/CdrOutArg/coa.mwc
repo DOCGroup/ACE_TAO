@@ -1,0 +1,4 @@
+// $Id$
+workspace {
+  tao/CdrOutArg.mpc
+}

@@ -41,6 +41,7 @@ namespace TAO
                                       this->op_len_,
                                       this->args_,
                                       this->number_args_,
+                                      this->has_in_args_,
                                       ex_data,
                                       ex_count);
 

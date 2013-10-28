@@ -294,8 +294,21 @@ be_visitor_operation::gen_stub_operation_body (
 
   if (node->flags () == AST_Operation::OP_oneway)
     {
+      *os << "," << be_nl;
+      *os << "TAO::TAO_ONEWAY_INVOCATION" << be_nl;
+    }
+
+  if (!node->has_in_arguments ())
+    {
+      if (node->flags () != AST_Operation::OP_oneway)
+        {
+          *os << "," << be_nl;
+          *os << "TAO::TAO_TWOWAY_INVOCATION" << be_nl;
+        }
+
       *os << "," << be_nl
-          << "TAO::TAO_ONEWAY_INVOCATION";
+          << "TAO::TAO_SYNCHRONOUS_INVOCATION," << be_nl
+          << "false";
     }
 
   *os << be_uidt_nl

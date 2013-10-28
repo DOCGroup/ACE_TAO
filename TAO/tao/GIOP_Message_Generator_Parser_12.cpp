@@ -83,7 +83,7 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
     return false;
 
   // We align the pointer only if the operation has arguments.
-  if (opdetails.argument_flag ()
+  if (opdetails.in_argument_flag ()
       && msg.align_write_ptr (TAO_GIOP_MESSAGE_ALIGN_PTR) == -1)
     {
       return false;
