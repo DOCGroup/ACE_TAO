@@ -1,3 +1,9 @@
+Mon Oct 28 14:098:24 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
+
+        * docs/CIAO_android_port.html:
+        Description setup CIAO Android port.
+
+
 Wed Oct 23 08:48:24 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
 
         * examples/Hello/Receiver/Hello_Receiver_exec.cpp:
