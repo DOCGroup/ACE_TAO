@@ -1,3 +1,11 @@
+Mon Oct 28 16:33:43 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+          Report an error and exit if the service is unable to start the threads
+          requested with the -n command line parameter.
+
 Mon Oct 14 07:50:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/ImR/Combined_Service/test.cpp:
