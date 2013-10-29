@@ -16,7 +16,8 @@ namespace TAO
       size_t op_len,
       int collocation_opportunity,
       Invocation_Type type,
-      Invocation_Mode mode)
+      Invocation_Mode mode,
+      bool has_in_args)
     : Invocation_Adapter (target->equivalent_objref (),
                           args,
                           arg_number,
@@ -24,7 +25,8 @@ namespace TAO
                           op_len,
                           collocation_opportunity,
                           type,
-                          mode)
+                          mode,
+                          has_in_args)
   {
   }
 } // End namespace TAO

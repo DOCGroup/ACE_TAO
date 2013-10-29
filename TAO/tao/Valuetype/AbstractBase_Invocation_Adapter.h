@@ -53,7 +53,8 @@ namespace TAO
         size_t op_len,
         int collocation_opportunity,
         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
-        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION);
+        TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
+        bool has_in_args = false);
 
   private:
     // Don't allow default initializations

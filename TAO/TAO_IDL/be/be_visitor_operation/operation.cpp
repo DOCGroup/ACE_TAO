@@ -295,10 +295,14 @@ be_visitor_operation::gen_stub_operation_body (
   if (node->flags () == AST_Operation::OP_oneway)
     {
       *os << "," << be_nl;
-      *os << "TAO::TAO_ONEWAY_INVOCATION" << be_nl;
+      *os << "TAO::TAO_ONEWAY_INVOCATION";
     }
 
-  if (!node->has_in_arguments ())
+  if (node->has_in_arguments ())
+    {
+      *os << be_nl;
+    }
+  else
     {
       if (node->flags () != AST_Operation::OP_oneway)
         {
