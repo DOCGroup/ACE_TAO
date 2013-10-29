@@ -1,3 +1,14 @@
+Tue Oct 29 03:24:14 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+
+          Fix the output format.
+
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.h:
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.cpp:
+
+          Add missing parameter.
+
 Mon Oct 28 21:27:19 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
@@ -43,7 +54,7 @@ Mon Oct 14 07:50:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/examples/ImR/Combined_Service/test.cpp:
           No need to print filename
-
+rr
 Thu Oct  3 09:36:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
