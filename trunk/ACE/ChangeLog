@@ -1,7 +1,17 @@
+Tue Oct 29 22:22:18 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/fuzz.pl:
+
+          Modify the test for log macro signature to relax for TAOLIB when it
+          is under the interop-tests directory. As we slowly collect interop
+          tests, it seems natural to have a "tao" directory and a separate
+          non-tao directory to ensure artifacts aren't overwritten by non-tao
+          idl compilers or other build tools.
+
 Tue Oct 29 09:31:05 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
-        Removed error in Spawn 
+        Removed error in Spawn
 
 Mon Oct 28 08:31:16 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 

@@ -2311,7 +2311,7 @@ sub check_for_ace_log_categories ()
             next if $1 eq 'Log_Msg' || $` =~ /\/protocols\/$/;
             $cat = 'ACELIB';
         }
-        elsif ($f =~ /tao\//) {
+        elsif ($f =~ /tao\// && $f !~ /interop-tests\//) {
             $cat = 'TAOLIB';
         }
         elsif ($f =~ /\/orbsvcs\// && $f !~ /tests|examples/i) {
