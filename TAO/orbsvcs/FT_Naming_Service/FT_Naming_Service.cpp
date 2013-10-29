@@ -159,9 +159,9 @@ TAO_FT_Naming_Service::run (void)
                                     this->num_threads_);
       if (grpid == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("FT_Naming_Service(%P)::run %p\n"),
-                      ACE_TEXT ("thread acitvation")));
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("FT_Naming_Service(%P)::run %p\n"),
+                          ACE_TEXT ("thread acitvation")));
           return -1;
         }
       runner.wait();
