@@ -1,3 +1,8 @@
+Tue Oct 29 09:31:05 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+        Removed error in Spawn 
+
 Mon Oct 28 08:31:16 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * ace/Dynamic.cpp:
