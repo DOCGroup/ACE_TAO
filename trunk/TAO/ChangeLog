@@ -1,3 +1,10 @@
+Tue Oct 29 22:27:08 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+          Fuzz fix.
+
 Tue Oct 29 03:24:14 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
