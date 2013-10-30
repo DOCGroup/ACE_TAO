@@ -1,3 +1,10 @@
+Wed Oct 30 03:25:41 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
+
+        * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+
+          The real fuzz fix.
+
 Tue Oct 29 22:27:08 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:
