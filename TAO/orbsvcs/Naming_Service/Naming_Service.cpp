@@ -3,6 +3,7 @@
 #include "Naming_Service.h"
 
 #include "orbsvcs/Naming/Naming_Server.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Daemon_Utilities.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"
