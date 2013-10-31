@@ -204,21 +204,27 @@ run_main (int argc, ACE_TCHAR *argv[])
       // FUZZ: enable check_for_lack_ACE_OS
 #  endif /* AIX */
 
+      ACE_TCHAR const * argv_0 = argc > 0 ? argv[0] : ACE_TEXT ("Process_Manual_Event_Test");
+
 #if defined (ACE_WIN32)
       const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" -c -i %d");
 #elif !defined (ACE_USES_WCHAR)
-const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s -c -i %d");
+const ACE_TCHAR *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s -c -i %d"));
 #else
-const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls -c -i %d");
+const ACE_TCHAR *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls -c -i %d"));
 #endif
 
       ACE_Process_Options options;
       options.command_line (cmdline_format,
-                            argc > 0 ? argv[0] : ACE_TEXT ("Process_Manual_Event_Test"),
+                            argv_0,
                             iterations);
       // Spawn a child process that will contend for the
       // lock.
       ACE_Process child;
+
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Spawning <%s> <%s>\n"),
+                            options.process_name(),
+                            options.command_line_buf ()));
 
       // Spawn the child process.
       pid_t result = child.spawn (options);

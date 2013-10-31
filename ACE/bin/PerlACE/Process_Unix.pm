@@ -90,15 +90,7 @@ sub Executable
         $self->{EXECUTABLE} = shift;
     }
 
-    my $executable = File::Spec->rel2abs ($self->{EXECUTABLE});
-
-    if (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
-      # If the target's config has a different filesystem root, rebase the executable
-      # from local root to the target's root.
-      $executable = PerlACE::rebase_path ($executable,
-                                          $self->{TARGET}->{HOST_FSROOT},
-                                          $self->{TARGET}->{TARGET_FSROOT});
-    }
+    my $executable = $self->{EXECUTABLE};
 
     if ($self->{IGNOREHOSTROOT} == 0) {
         if (PerlACE::is_vxworks_test()) {
@@ -138,6 +130,17 @@ sub CommandLine ()
     my $self = shift;
 
     my $exe = $self->Executable ();
+
+    $exe = File::Spec->rel2abs ($exe);
+
+    if (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
+      # If the target's config has a different filesystem root, rebase the executable
+      # from local root to the target's root.
+      $exe = PerlACE::rebase_path ($exe,
+                                   $self->{TARGET}->{HOST_FSROOT},
+                                   $self->{TARGET}->{TARGET_FSROOT});
+    }
+
     my $commandline = $exe;
     if (defined $self->{REMOTEINFO}) {
         my($method)   = $self->{REMOTEINFO}->{method};
@@ -402,6 +405,15 @@ sub Spawn ()
     }
     else {
         $executable = $self->Executable();
+        $executable = File::Spec->rel2abs ($executable);
+
+        if (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
+          # If the target's config has a different filesystem root, rebase the executable
+          # from local root to the target's root.
+          $executable = PerlACE::rebase_path ($executable,
+                                       $self->{TARGET}->{HOST_FSROOT},
+                                       $self->{TARGET}->{TARGET_FSROOT});
+        }
         $cmdline = $self->CommandLine();
     }
 
