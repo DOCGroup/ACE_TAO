@@ -140,7 +140,7 @@
 # define ACE_Proper_Export_Flag
 # define ACE_IMPORT_SINGLETON_DECLARATION(T) __extension__ extern template class T
 # define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
-# define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION
+# define ACE_HAS_EXPLICIT_TEMPLATE_CLASS_INSTANTIATION
 
 #elif defined (__GNUC__)
 /**
