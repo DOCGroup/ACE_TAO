@@ -1,10 +1,15 @@
+Fri Nov  1 13:17:20 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/ace_for_tao.mpc:
+          Added new obstack
+
 Thu Oct 31 10:34:54 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * ace/Obstack.cpp:
         * ace/Obstack_T.cpp:
         * ace/ace.mpc:
         Added Obstack.cpp for ACE_SINGLETON_TEMPLATE_INSTANTIATION.
-        Remove ACE_SINGLETON_TEMPLATE_INSTANTIATION from Obstack_T.cpp 
+        Remove ACE_SINGLETON_TEMPLATE_INSTANTIATION from Obstack_T.cpp
 
         * ace/config-android.h:
         * ace/config-macros.h:
@@ -12,10 +17,10 @@ Thu Oct 31 10:34:54 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         ACE_HAS_EXPLICIT_TEMPLATE_CLASS_INSTANTIATION
 
         * bin/PerlACE/Process_Unix.pm:
-        Removed rel2abs from Executable(). 
+        Removed rel2abs from Executable().
 
         * tests/Process_Manual_Event_Test.cpp:
-        Resolved error when using absolute paths. 
+        Resolved error when using absolute paths.
 
 Tue Oct 29 22:22:18 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
