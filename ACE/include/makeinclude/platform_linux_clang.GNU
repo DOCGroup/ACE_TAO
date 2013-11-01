@@ -34,6 +34,10 @@ ifeq ($(c++0x),1)
   CCFLAGS += -std=c++0x
 endif
 
+ifeq ($(c++11),1)
+  CCFLAGS += -std=c++11
+endif
+
 SOFLAGS += $(CPPFLAGS) -shared
 SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
