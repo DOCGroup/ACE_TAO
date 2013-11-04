@@ -27,6 +27,8 @@ For those tests minor changes are made in the run-test.pl scripts.</p>
   build of ACE/TAO/CIAO&DAnCE for Android. Since the multibyte support in the standard Android libraries is lacking it will be needed to port a
   multibyte support library like <code>libincov</code> as well. For the described cross build xerces2 and libiconv-1.13.1 were ported to 
   Android (see below for more information)
+  <li><b>Extra environment variables</b> - For the cross build and for running the tests in the mixed runtime environment, 
+  extra environment variables are needed, see  for more information <a href= "#section setup_android">Basic steps to setup the Android cross build</a>.
 </ul>
 
 <h2>Android shell executable path length limit</h2>
@@ -78,6 +80,89 @@ Subsequently cross building XercesC required 2 patches to circumvent a problem w
  }
  
  
+</pre>
+
+
+<A name="section setup_android"><h2>Basic steps to setup the Android cross build</h2></A>
+
+    In general, follow the cross compilation setup instructions provide in $TAO_ROOT/TAO-INSTALL.html. Search for "Using cross compilation".<br>
+    Extra information for this particular cross build:<br><br>  
+    
+    <b>Setup the Linux host build:</b> 
+    <p>On the host, not only TAO_IDL, but also DAnCE and CIAO are needed, so the following workspace was used for the host build:
+    <pre>
+     {
+      ACE/ace
+      ACE/apps/gperf/src
+      ACE/protocols/ace/INet
+      TAO/tao
+      TAO/TAO_IDL
+      TAO/orbsvcs/orbsvcs/CosNaming.mpc
+      TAO/orbsvcs/orbsvcs/CosNaming_Serv.mpc
+      TAO/orbsvcs/orbsvcs/CosNaming_Skel.mpc
+      TAO/orbsvcs/Naming_Service
+      TAO/orbsvcs/orbsvcs/Svc_Utils.mpc
+      CIAO/tools
+      DAnCE/dance
+      DAnCE/tools
+      CIAO/ccm
+      CIAO/ciao
+      CIAO/examples/Hello
+      }
+     </pre>
+     </p>
+     <b>Setup the Android target build:</b>
+     <p>
+     Create ace/config.h: #include "ace/config-android.h"<br>
+     Create bin/MakeProjectCreator/config/default.features:<br>
+     <pre>
+     ssl=0
+     bzip2=0
+     xerces2=1
+     cross_compile=1
+     </pre>     
+     Create include/makeinclude/platform_macros.GNU:<br>
+     <pre>
+     fl=0
+     xt=0
+     CROSS_COMPILE=arm-linux-androideabi-
+     xerces2=1
+     debug=0
+     buildbits=0
+     </pre>
+     Include the include/makeinclude/platform_android.GNU file.<br>
+     Ensure the following environment variables are set:<br>
+     <pre>
+     ACE_TEST_VERBOSE=1
+     ANDROID_ABI=armeabi-v7a
+     ANDROID_ARCH=arm
+     ACE_ROOT= the path to the ACE_ROOT of the target
+     CIAO_ROOT= the path to the CIAO_ROOT of the target
+     DANCE_ROOT= the path to the DANCE_ROOT of the target
+     HOST_ROOT= the path to the ACE_ROOT of the host
+     MPC_ROOT= the path to the MPC_ROOT of the target
+     TAO_ROOT= the path to the TAO_ROOT of the target
+     </pre>
+ </p>
+
+   <b>Running test on mixed environment</b><br>
+<p>
+    Ensure the following environment variables are (re)set:
+<pre>
+    ACE_ROOT= the path to the ACE_ROOT of the host
+    ACE_TEST_VERBOSE=1
+    ANDROID_ACE_ROOT=the path to the ACE_ROOT of the target
+    ANDROID_ARCH=arm
+    ANDROID_CIAO_ROOT=the path to the CIAO_ROOT of the target
+    ANDROID_DANCE_ROOT=the path to the DANCE_ROOT of the target
+    ANDROID_OS=remote
+    ANDROID_REMOTE_SHELL="ssh targetname" with targetname is the hostname of the Android device
+    ANDROID_TAO_ROOT=the path to the TAO_ROOT of the target
+    CIAO_ROOT=the path to the CIAO_ROOT of the host
+    DANCE_ROOT=/the path to the DANCE_ROOT of the host
+    DOC_TEST_2=ANDROID
+    HOST_ROOT=the path to the ACE_ROOT of the host
+    TAO_ROOT= the path to the TAO_ROOT of the host
 </pre>
 
 </body> </html>
