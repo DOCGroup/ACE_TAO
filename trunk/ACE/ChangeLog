@@ -1,3 +1,8 @@
+Wed Nov  6 12:29:45 UTC 2013  Marijke Hengstmengel  <MHengstmengel@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+        Moved rel2abs from exe in commandline()
+
 Fri Nov  1 14:11:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_clang.GNU:
