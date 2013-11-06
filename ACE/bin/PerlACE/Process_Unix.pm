@@ -131,11 +131,10 @@ sub CommandLine ()
 
     my $exe = $self->Executable ();
 
-    $exe = File::Spec->rel2abs ($exe);
-
     if (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
       # If the target's config has a different filesystem root, rebase the executable
       # from local root to the target's root.
+      $exe = File::Spec->rel2abs ($exe);
       $exe = PerlACE::rebase_path ($exe,
                                    $self->{TARGET}->{HOST_FSROOT},
                                    $self->{TARGET}->{TARGET_FSROOT});
