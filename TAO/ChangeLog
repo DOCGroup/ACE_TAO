@@ -1,3 +1,8 @@
+Fri Nov  8 17:05:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * interop-tests/CdrOutArg/orbix/README:
+          Fix the Orbix version citation.
+
 Fri Nov  8 15:33:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * interop-tests/CdrOutArg/orbix/README:
@@ -11,8 +16,9 @@ Fri Nov  8 15:33:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
         * interop-tests/CdrOutArg/orbix/server_interceptor.cxx:
         * interop-tests/CdrOutArg/orbix/test_i.h:
         * interop-tests/CdrOutArg/orbix/test_i.cxx:
-          Companion test to be built using Orbix 6.2. *UNSUPPORTED*
+          Companion test to be built using Orbix 6.3. *UNSUPPORTED*
           The DOC group can only support the TAO portion of the test.
+          Thanks to Mike McKnerney for supplying this test.
 
 Wed Oct 30 03:25:41 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
 
