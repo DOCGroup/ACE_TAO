@@ -1,3 +1,19 @@
+Fri Nov  8 15:33:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * interop-tests/CdrOutArg/orbix/README:
+        * interop-tests/CdrOutArg/orbix/Server_ORBInitializer.h:
+        * interop-tests/CdrOutArg/orbix/Server_ORBInitializer.cxx:
+        * interop-tests/CdrOutArg/orbix/cxx_demo.mk:
+        * interop-tests/CdrOutArg/orbix/demo.mk:
+        * interop-tests/CdrOutArg/orbix/makefile:
+        * interop-tests/CdrOutArg/orbix/server.cxx:
+        * interop-tests/CdrOutArg/orbix/server_interceptor.h:
+        * interop-tests/CdrOutArg/orbix/server_interceptor.cxx:
+        * interop-tests/CdrOutArg/orbix/test_i.h:
+        * interop-tests/CdrOutArg/orbix/test_i.cxx:
+          Companion test to be built using Orbix 6.2. *UNSUPPORTED*
+          The DOC group can only support the TAO portion of the test.
+
 Wed Oct 30 03:25:41 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
 
         * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:
