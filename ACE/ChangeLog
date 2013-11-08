@@ -1,12 +1,17 @@
+Fri Nov  8 17:09:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * THANKS:
+          Added Mike McKnerney to the list
+
 Fri Nov  8 12:35:10 UTC 2013  Marijke Hengstmengel  <MHengstmengel@remedy.nl>
 
         * NEWS:
-        Added changes test framework and improvements for Android port
+          Added changes test framework and improvements for Android port
 
 Wed Nov  6 12:29:45 UTC 2013  Marijke Hengstmengel  <MHengstmengel@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
-        Moved rel2abs from exe in commandline()
+          Moved rel2abs from exe in commandline()
 
 Fri Nov  1 14:11:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -23,19 +28,19 @@ Thu Oct 31 10:34:54 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
         * ace/Obstack.cpp:
         * ace/Obstack_T.cpp:
         * ace/ace.mpc:
-        Added Obstack.cpp for ACE_SINGLETON_TEMPLATE_INSTANTIATION.
-        Remove ACE_SINGLETON_TEMPLATE_INSTANTIATION from Obstack_T.cpp
+          Added Obstack.cpp for ACE_SINGLETON_TEMPLATE_INSTANTIATION.
+          Remove ACE_SINGLETON_TEMPLATE_INSTANTIATION from Obstack_T.cpp
 
         * ace/config-android.h:
         * ace/config-macros.h:
-        Rename ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION to
-        ACE_HAS_EXPLICIT_TEMPLATE_CLASS_INSTANTIATION
+          Rename ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION to
+          ACE_HAS_EXPLICIT_TEMPLATE_CLASS_INSTANTIATION
 
         * bin/PerlACE/Process_Unix.pm:
-        Removed rel2abs from Executable().
+          Removed rel2abs from Executable().
 
         * tests/Process_Manual_Event_Test.cpp:
-        Resolved error when using absolute paths.
+          Resolved error when using absolute paths.
 
 Tue Oct 29 22:22:18 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -50,12 +55,12 @@ Tue Oct 29 22:22:18 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 Tue Oct 29 09:31:05 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
-        Removed error in Spawn
+          Removed error in Spawn
 
 Mon Oct 28 08:31:16 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * ace/Dynamic.cpp:
-        Fixed singleton macro
+          Fixed singleton macro
 
 Sun Oct 27 15:38:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -73,7 +78,7 @@ Fri Oct 25 08:17:43 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 Wed Oct 23 13:26:02 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
 
         * bin/fuzz.pl:
-        ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION macro no longer deprecated
+          ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION macro no longer deprecated
 
 Wed Oct 23 08:28:29 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
 
