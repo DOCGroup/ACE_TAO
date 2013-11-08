@@ -1,3 +1,8 @@
+Fri Nov  8 12:35:10 UTC 2013  Marijke Hengstmengel  <MHengstmengel@remedy.nl>
+
+        * NEWS:
+        Added changes test framework and improvements for Android port
+
 Wed Nov  6 12:29:45 UTC 2013  Marijke Hengstmengel  <MHengstmengel@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
