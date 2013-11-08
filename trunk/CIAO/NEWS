@@ -1,5 +1,9 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.2.2 and CIAO-1.2.3
 =======================================================
+. Added examples/ciao_android.lst with tests which are
+made suitable to run on a mixed Linux-Android environment.
+. Added CIAO_android_port.html, describing how to set up an 
+mixed Linux-Android port
 
 USER VISIBLE CHANGES BETWEEN CIAO-1.2.1 and CIAO-1.2.2
 =======================================================
