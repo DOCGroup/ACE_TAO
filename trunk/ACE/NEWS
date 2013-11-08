@@ -8,6 +8,16 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.2 and ACE-6.2.3
 
 . Ended maintenance and support for FC12 CEEL
 
+. Further improvements of the Android port: Added new define 
+  ACE_HAS_EXPLICIT_TEMPLATE_CLASS_INSTANTIATION and related macros
+  ACE_SINGLETON_TEMPLATE_INSTANTIATION and ACE_SINGLETON_TEMPLATE_INSTANTIATE
+  providing a cleaner way to support explicit template (static member or class)
+  instantiation.
+
+' Improvements of the test framework for running tests in a mixed environment
+  where different targets run on different physiscal devices (possibly having
+  different OS).
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.1 and ACE-6.2.2
 ====================================================
 
