@@ -1,7 +1,6 @@
 Wed Oct 23 08:45:46 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
 
         * dance/LocalityManager/Scheduler/Events/Action_Base.cpp:
-
         * dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
         commit eb9626a86511c55e5d46a65a260240af6103f8e4
         Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
@@ -9,10 +8,9 @@ Wed Oct 23 08:45:46 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
 
                 Solved singleton problems for android
                 * DAnCE/dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
-            
+
                 * DAnCE/dance/LocalityManager/Scheduler/Events/Action_Base.cpp:
                 If InstanceDeploymentHandler is nil, don't call invoke
-
 
 Thu Oct  3 09:36:51 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
