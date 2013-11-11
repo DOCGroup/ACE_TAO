@@ -1,3 +1,11 @@
+Mon Nov 11 09:43:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+        * tao/Codeset/Codeset_Manager_i.cpp:
+          Debug message change
+
 Mon Nov 11 09:17:34 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 2.2.3 released.
