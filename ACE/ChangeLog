@@ -1,3 +1,12 @@
+Mon Nov 11 09:42:59 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * debian/debian.changelog:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Make x.2.3 public and prepare for next release
+
 Mon Nov 11 09:17:34 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.2.3 released.
