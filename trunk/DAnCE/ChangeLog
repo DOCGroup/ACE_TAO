@@ -1,3 +1,11 @@
+Mon Nov 11 09:43:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+          Catch exceptions as const
+
 Mon Nov 11 09:17:34 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * DAnCE version 1.2.3 released.
