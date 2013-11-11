@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- $Id$ -->
+<Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>6D382DAE-9024-4C4D-B91B-A0F9176AFACF</UUID>
+
+  <implementation xmi:id="NonTopic_ConnectorHomeImplementation">
+    <name>NonTopic_ConnectorHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="NonTopic_Connector_ExecArtifact"/>
+    <artifact xmi:idref="NonTopic_Connector_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Xtest_1_NT_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>NonTopic_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Xtest_1_NT_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>NonTopic_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="NonTopic.ComponentImplementations.NonTopicImplementation.NonTopic">
+    <name>NonTopic.ComponentImplementations.NonTopicImplementation.NonTopic</name>
+    <node>ConnectorNode</node>
+    <source/>
+    <implementation xmi:idref="NonTopic_ConnectorHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Connector.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <artifact xmi:id="NonTopic_Connector_SvntArtifact">
+    <name>NonTopic_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>NT_Connector_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Xtest_1_NT_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="NonTopic_Connector_ExecArtifact">
+    <name>NonTopic_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>NT_Connector_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Xtest_1_NT_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:DeploymentPlan>

@@ -1,0 +1,56 @@
+// $Id$
+
+/**
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
+ */
+
+#ifndef DDS_SENDER_IDL
+#define DDS_SENDER_IDL
+
+#include "Connector1/Hello_Connector.idl"
+#include "Connector2/Hello_Connector2.idl"
+
+module Hello
+{
+  interface Base_obj
+  {
+  };
+
+  interface Derived_obj : Base_obj
+  {
+  };
+
+  component Base_comp
+  {
+    provides Base_obj baseFacet;
+    uses Base_obj baseRecept;
+    port Foo_conn::DDS_Write fooPub;
+    port Foo_conn::DDS_Listen fooSub;
+    attribute short baseAttr;
+  };
+
+  home Base_compHome manages Base_comp {
+  };
+
+  component Derived_comp : Base_comp
+  {
+    provides Derived_obj derivedFacet;
+    uses Derived_obj derivedRecept;
+    attribute long long derivedAttr;
+    port Bar_conn::DDS_Write barPub;
+    port Bar_conn::DDS_Listen barSub;
+
+  };
+
+  home Derived_compHome : Base_compHome manages Derived_comp {
+  };
+
+ component DerivedEmpty_comp : Base_comp {
+  };
+
+
+
+
+};
+
+#endif

@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project: ccm_direct_collocation {
+  includes += $(CIAO_ROOT)
+  libpaths += $(ACE_ROOT)/lib
+}

@@ -1,0 +1,32 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults, amh {
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, amh, strategies {
+  after += *idl
+  Source_Files {
+    server.cpp
+    TestS.cpp
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoserver, amh, strategies {
+  exename = client
+  after += *idl
+  Source_Files {
+    client.cpp
+    TestS.cpp
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}

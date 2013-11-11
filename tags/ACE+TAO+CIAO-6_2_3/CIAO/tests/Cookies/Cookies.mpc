@@ -1,0 +1,43 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  idlflags += -Sp
+  idlflags += -I $(CIAO_ROOT)
+  IDL_Files {
+    Test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, ciao_base, ccm_cookie  {
+  after += *idl CCM_Cookie_Factory
+  libs += CCM_Cookie_Factory
+  includes += $(CIAO_ROOT)
+  Source_Files {
+    Cookie.cpp
+    server.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, ciao_base, ccm_cookie {
+  after += *idl
+  includes += $(CIAO_ROOT)
+  libs += CCM_Cookie_Factory
+
+  Source_Files {
+    client.cpp
+  }
+  Source_Files {
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}
+

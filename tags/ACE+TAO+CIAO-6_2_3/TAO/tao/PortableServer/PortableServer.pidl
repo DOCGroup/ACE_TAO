@@ -1,0 +1,15 @@
+/**
+ * @file PortableServer.pidl
+ *
+ * $Id$
+ *
+ * @brief Pre-compiled IDL source for the PortableServer module.
+ */
+
+#ifndef _PORTABLE_SERVER_IDL_
+#define _PORTABLE_SERVER_IDL_
+
+///FUZZ: disable check_for_include/
+#include "tao/PortableServer/POA.pidl"
+
+#endif // _POA_SERVER_IDL_

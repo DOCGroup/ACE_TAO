@@ -1,0 +1,399 @@
+Wed Aug 29 08:16:04 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.1.4 released.
+
+Wed Aug 22 10:55:00 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * tests/DeploymentPlanDump/NewCcmDance1.cdp:
+        * tests/DeploymentPlanDump/CcmDance2-host1.cdp:
+        * tests/DeploymentPlanDump/CcmDance2.cdp:
+        * tests/DeploymentPlanDump/CcmDance4-host2.cdp:
+        * tests/DeploymentPlanDump/CcmDance2-host2.cdp:
+        * tests/DeploymentPlanDump/CcmDance4-host1.cdp:
+
+          Thales requested name change (thalesgroup.com to cardamom.eu)
+          Redone.
+
+Wed Aug 22 10:10:45 UTC 2012  Simon Massey  <sma at prismtech dot com>
+
+        * tests/DeploymentPlanDump/NewCcmDance1.cdp:
+        * tests/DeploymentPlanDump/CcmDance2-host1.cdp:
+        * tests/DeploymentPlanDump/CcmDance2.cdp:
+        * tests/DeploymentPlanDump/CcmDance4-host2.cdp:
+        * tests/DeploymentPlanDump/CcmDance2-host2.cdp:
+        * tests/DeploymentPlanDump/CcmDance4-host1.cdp:
+
+          Thales requested name change (thalesgroup.com to cardamom.eu)
+
+Fri Aug 10 11:25:19 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+        * dance/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * dance/LocalityManager/Handler/Plugin_Conf.cpp:
+        * dance/LocalityManager/Interceptors/Standard_Error.cpp:
+          Layout changes, const fixes, debug message fixes
+
+Fri Aug 10 10:59:29 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Daemon/Locality_Manager_Impl.cpp:
+          Fixed incorrect debug statements
+
+        * dance/LocalityManager/Scheduler/Events/Install.cpp:
+          Layout changes
+
+Mon Jul 30 08:03:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Logger_Backend/ndds/Log_Backend.cpp:
+          Minor code improvements
+
+Mon Jul 30 07:58:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/Logger/Logger_Service.cpp:
+          Added a debug statement at the moment we have successfully opened
+          a logger backend
+
+Fri Jul 27 10:56:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/DAnCE.doxygen:
+          Generate UML diagrams, assume stl is buildin
+
+Thu Jul 26 16:31:22 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/DAnCE.doxygen:
+          Upgraded with doxygen -u
+
+        * tools/Logger_Backend/ndds/Log_Backend.h:
+          Doxygen fix
+
+Thu Jul 26 09:31:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+        * etc/DAnCE.doxygen:
+          Removed deprecated tag
+
+Thu Jul 26 09:12:26 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.1.3 released.
+
+Thu May 31 17:18:44 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/ExecutionManager/ExecutionManager.mpc:
+          Zapped tabs
+
+        * tests/DeploymentPlanDump/test.cpp:
+        * tests/DeploymentPlanTestReferences/test.cpp:
+        * tests/DeploymentTest1/test.cpp:
+        * tests/Parsing/domain.cpp:
+        * tests/Parsing/test.cpp:
+          Updated includes
+
+Thu May 31 12:31:35 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/Deployment.cpp:
+        * tools/Config_Handlers/Deployment.hpp:
+        * tools/Config_Handlers/Utils/Functors.h:
+        * tools/Config_Handlers/XMI.cpp:
+        * tools/Config_Handlers/XMI.hpp:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+        * tools/Config_Handlers/ccd.cpp:
+        * tools/Config_Handlers/ccd.hpp:
+        * tools/Config_Handlers/cdd.hpp:
+        * tools/Config_Handlers/cdd.cpp:
+        * tools/Config_Handlers/cdp.cpp:
+        * tools/Config_Handlers/cdp.hpp:
+        * tools/Config_Handlers/cid.hpp:
+        * tools/Config_Handlers/cid.cpp:
+        * tools/Config_Handlers/cpd.cpp:
+        * tools/Config_Handlers/cpd.hpp:
+        * tools/Config_Handlers/iad.cpp:
+        * tools/Config_Handlers/iad.hpp:
+        * tools/Config_Handlers/pcd.hpp:
+        * tools/Config_Handlers/pcd.cpp:
+        * tools/Config_Handlers/toplevel.hpp:
+        * tools/Config_Handlers/toplevel.cpp:
+          Updated for XMLSchema move to ACE
+
+        * tools/Config_Handlers/XMLSchema:
+        * tools/Config_Handlers/XMLSchema/Traversal.hpp:
+        * tools/Config_Handlers/XMLSchema/Traversal.ipp:
+        * tools/Config_Handlers/XMLSchema/Traversal.tpp:
+        * tools/Config_Handlers/XMLSchema/TypeInfo.hpp:
+        * tools/Config_Handlers/XMLSchema/TypeInfo.ipp:
+        * tools/Config_Handlers/XMLSchema/TypeInfo.tpp:
+        * tools/Config_Handlers/XMLSchema/Types.hpp:
+        * tools/Config_Handlers/XMLSchema/Types.ipp:
+        * tools/Config_Handlers/XMLSchema/Types.tpp:
+        * tools/Config_Handlers/XMLSchema/Writer.hpp:
+        * tools/Config_Handlers/XMLSchema/Writer.ipp:
+        * tools/Config_Handlers/XMLSchema/Writer.tpp:
+        * tools/Config_Handlers/XMLSchema/id_map.hpp:
+        * tools/Config_Handlers/XSCRT:
+        * tools/Config_Handlers/XSCRT/Elements.hpp:
+        * tools/Config_Handlers/XSCRT/Elements.ipp:
+        * tools/Config_Handlers/XSCRT/Elements.tpp:
+        * tools/Config_Handlers/XSCRT/ExtendedTypeInfo.hpp:
+        * tools/Config_Handlers/XSCRT/ExtendedTypeInfo.ipp:
+        * tools/Config_Handlers/XSCRT/Parser.hpp:
+        * tools/Config_Handlers/XSCRT/Parser.ipp:
+        * tools/Config_Handlers/XSCRT/Parser.tpp:
+        * tools/Config_Handlers/XSCRT/Traversal.hpp:
+        * tools/Config_Handlers/XSCRT/Traversal.ipp:
+        * tools/Config_Handlers/XSCRT/Traversal.tpp:
+        * tools/Config_Handlers/XSCRT/Writer.hpp:
+        * tools/Config_Handlers/XSCRT/Writer.ipp:
+        * tools/Config_Handlers/XSCRT/Writer.tpp:
+        * tools/Config_Handlers/XSCRT/XML.hpp:
+        * tools/Config_Handlers/XSCRT/XML.ipp:
+        * tools/Config_Handlers/XSCRT/XML.tpp:
+        * tools/Config_Handlers/XSCRT/XMLSchema.hpp:
+          Removed these files, moved to ACE
+
+Thu May 31 09:13:26 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/dance_config_handlers.mpb:
+        * MPC/config/dance_config_handlers_base.mpb:
+        * dance/RepositoryManager/RepositoryManager_Impl.cpp:
+        * dance/TargetManager/DomainDataManager.cpp:
+        * tools/Config_Handlers/Any_Handler.h:
+        * tools/Config_Handlers/Config_Handlers.mpc:
+        * tools/Config_Handlers/DD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc:
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.h:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+          Updated because DAnCE XML_Utils has been moved to ACE as ACE_XML_Utils
+
+        * MPC/config/xml_utils.mpb:
+        * tools/XML:
+        * tools/XML/XML.mpc:
+        * tools/XML/XML_Error_Handler.h:
+        * tools/XML/XML_Error_Handler.cpp:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+        * tools/XML/XML_Typedefs.h:
+        * tools/XML/XML_Typedefs.cpp:
+        * tools/XML/XML_Utils_Export.h:
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+          Removed these files.
+
+Wed May 30 11:28:57 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        Merged git branch DDS4CCM_QOS_Handler which adds support for
+        configuring DDS4CCM QOS through xml files with OpenDDS
+
+        commit 41a741b0fc38c82d12a8359023bfde0a97ef24a3
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Wed May 30 08:50:49 2012 +0200
+
+                * DAnCE/MPC/config/dance_config_handlers.mpb:
+                * DAnCE/MPC/config/dance_config_handlers_base.mpb:
+                * DAnCE/tools/Config_Handlers/Config_Handlers.mpc:
+                  Removed visibility override, shouldn't be needed
+
+        commit 028b7e82e57842a3271ae782342c5e0d711f7637
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Tue May 29 21:14:07 2012 +0200
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                  Layout change
+
+                * DAnCE/tools/Config_Handlers/Utils/Functors.h:
+                  Removed borland workaround
+
+        commit 6dc4be2b0cb7e23aa24a68b65e21ec97bc6532b3
+        Author: Johnny Willemsen <jwillemsen@remedy.nl>
+        Date:   Fri May 18 20:06:46 2012 +0200
+
+                * CIAO/MPC/config/dds4ccm_config_handlers.mpb:
+                * CIAO/MPC/config/dds4ccm_config_handlers_base.mpb:
+                  New base projects for dds4ccm config handlers
+
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/dds4ccm_qos_dump.mpc:
+                * CIAO/connectors/dds4ccm/tests/QoS/dump/qos_dump.cpp:
+                  Starter for new qos xml tests
+
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/QOS_XML_Loader.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.cpp:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/XML_File_Intf.h:
+                * CIAO/connectors/dds4ccm/tools/QOS_XML_Handler/qos_xml_handler.mpc:
+                  Added more code
+
+                * DAnCE/tests/DeploymentPlanDump/DeploymentPlanDump.mpc:
+                  Removed not needed base project
+
+                * DAnCE/tools/Config_Handlers/DnC_Dump.h:
+                  Layout changes
+
+
+Sat May 19 14:28:57 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.1.2 released.
+
+Wed May 16 07:07:44 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tools/Config_Handlers/XML_File_Intf.h:
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+          Fixed fuzz error.
+
+Tue May 15 13:43:53 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * MPC/config/dance_config_handlers.mpb:
+        * MPC/config/dance_config_handlers_base.mpb:
+        * MPC/config/xml_utils.mpb:
+
+        * dance/RepositoryManager/RepositoryManager_Impl.cpp:
+
+        * tools/Config_Handlers/Config_Handlers.mpc:
+        * tools/Config_Handlers/DD_Handler.cpp:
+
+        * tools/Config_Handlers/Package_Handlers/CAD_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/CID_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/CPD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.h:
+        * tools/Config_Handlers/Package_Handlers/Comp_Intf_Descr_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/IAD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/PCD_Handler.cpp:
+        * tools/Config_Handlers/Package_Handlers/Package_Handlers.mpc:
+        * tools/Config_Handlers/Package_Handlers/SID_Handler.h:
+
+        * tools/Config_Handlers/XML_File_Intf.cpp:
+
+        * tools/XML/XML.mpc:
+        * tools/XML/XML_Error_Handler.h:
+        * tools/XML/XML_Error_Handler.cpp:
+        * tools/XML/XML_Helper.h:
+        * tools/XML/XML_Helper.tpp:
+        * tools/XML/XML_Schema_Resolver.h:
+        * tools/XML/XML_Schema_Resolver.tpp:
+        * tools/XML/XML_Schema_Resolver.cpp:
+        * tools/XML/XML_Typedefs.h:
+        * tools/XML/XML_Typedefs.cpp:
+        * tools/XML/XML_Utils_Export.h:
+        * tools/XML/XercesString.h:
+        * tools/XML/XercesString.cpp:
+
+        * MPC/config/dance_xml_utils.mpb:
+
+        * tools/Config_Handlers/XML_Typedefs.h:
+        * tools/Config_Handlers/XML_Typedefs.cpp:
+
+        * tools/XML/DAnCE_XML_Utils_Export.h:
+
+          Made the XML utils more generic so that it can be used in
+          dds4ccm
+
+Sun May 13 12:50:40 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+          Fixed typo
+
+Fri Apr 06 09:03:19 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.1.1 released.
+
+Wed Mar  7 10:03:04 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for release
+
+Wed Mar 07 09:04:40 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.1.0 released.
+
+Wed Feb 29 09:06:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/Deployment/Deployment_DeploymentPlan.idl:
+          Updated include for install builds
+
+Tue Feb 28 14:55:48 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/Deployment/Deployment_Core.mpc:
+          Removed obsolete argument
+
+        * dance/Deployment/Deployment_Data.idl:
+        * dance/Deployment/Deployment_DeploymentPlan.idl:
+        * dance/Deployment/Deployment_Packaging_Data.idl:
+        * dance/Deployment/Deployment_RepositoryManager.idl:
+        * dance/Deployment/Deployment_ResourceCommitmentManager.idl:
+        * dance/Deployment/Deployment_TargetData.idl:
+        * dance/Deployment/Deployment_TargetManager.idl:
+          Don't fully scope CORBA
+
+Tue Feb 28 10:48:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/Deployment/Deployment_DeploymentPlan.idl:
+          Include orb.idl instead of multiple pidl files
+
+Thu Feb 23 11:58:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/DAnCE_Properties.idl:
+        * dance/LocalityManager/Daemon/Locality_Manager_Task.cpp:
+        * dance/LocalityManager/Handler/Config_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Inst_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Interceptor_Handler_Impl.cpp:
+        * dance/LocalityManager/Handler/Plugin_Conf.h:
+        * dance/LocalityManager/Handler/Plugin_Conf.cpp:
+        * dance/LocalityManager/Scheduler/Plugin_Manager.h:
+        * dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        * docs/LocalityManager-Plugins.txt:
+          Added support for specify an additional open_mode for each dance
+          plugin. This open mode is than passed to ACE_DLL::open.
+
+Fri Jan 27 09:02:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Fri Jan 27 08:58:54 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.0.8 released.
+
+Thu Jan 26 10:57:30 UTC 2012  Martin Corino  <mcorino@remedy.nl>
+
+        * dance/LocalityManager/Interceptors/Best_Effort.cpp:
+          Fixed incorrect log texts.
+
+Mon Jan 23 09:49:47 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Scheduler/Scheduler.mpc:
+          Removed postinstall that is not needed
+
+Wed Dec 28 09:00:54 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/RepositoryManager/RepositoryManager_Impl.cpp:
+          Fixed compile error when ACE_HAS_DUMP is defined
+
+Tue Dec 27 11:40:02 UTC 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Tue Dec 27 10:06:28 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.0.7 released.
+
+Sun Dec 04 11:51:30 CET 2011  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.0.6 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

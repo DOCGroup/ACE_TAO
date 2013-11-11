@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef QUOTER_CLIENT_IDL
+#define QUOTER_CLIENT_IDL
+
+#include <Components.idl>
+
+#include "Base/Quoter.idl"
+
+#pragma ciao ami4ccm receptacle "Quoter::Client::my_quoter"
+
+module Quoter
+{
+  component Client
+  {
+    /// For synchronous invocation
+    uses StockManager my_quoter;
+  };
+};
+
+#endif

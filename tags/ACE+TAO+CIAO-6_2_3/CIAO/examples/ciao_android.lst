@@ -1,0 +1,12 @@
+# $Id$
+#
+# This is the list of run_test.pl's that need to be run by
+# auto_run_tests.pl.
+# 
+# This list is used for running tests where the run_test.pl scripts
+# are already adapted for running the test on 2 different targets.
+# Target 1 is default and Target 2 is Android. 
+#
+TAO/CIAO/examples/Hello/descriptors/run_test.pl
+
+

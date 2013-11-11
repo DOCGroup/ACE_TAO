@@ -1,0 +1,4 @@
+reduce-doxygen-doc.diff
+90-patch-mpc-basedir.diff
+91-patch-dg-basedir.diff
+92-default-ACE_ROOT.diff
