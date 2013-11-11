@@ -1,3 +1,7 @@
+Mon Nov 11 09:17:34 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.3 released.
+
 Wed Oct 23 08:45:46 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
 
         * dance/LocalityManager/Scheduler/Events/Action_Base.cpp:
