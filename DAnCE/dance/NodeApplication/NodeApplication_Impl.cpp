@@ -283,7 +283,7 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
               providedReference[retval_pos++] = instance_references[ir_pos];
             }
         }
-      catch (Deployment::PlanError &ex)
+      catch (const Deployment::PlanError &ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
                        (LM_ERROR, DLINFO
@@ -293,7 +293,7 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
                         ex.reason.in ()));
           throw;
         }
-      catch (Deployment::StartError &ex)
+      catch (const Deployment::StartError &ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
                        (LM_ERROR, DLINFO
@@ -303,7 +303,7 @@ NodeApplication_Impl::start_launch_instances (const Deployment::Properties &prop
                         ex.reason.in ()));
           throw;
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
                        (LM_ERROR, DLINFO
@@ -335,7 +335,7 @@ NodeApplication_Impl::finishLaunch (const ::Deployment::Connections & providedRe
         {
           i->second->finishLaunch (providedReference, start);
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
                        (LM_ERROR, DLINFO
@@ -365,7 +365,7 @@ NodeApplication_Impl::start ()
         {
           i->second->start ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
                        (LM_ERROR, DLINFO

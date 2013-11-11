@@ -195,7 +195,7 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT("TAO (%P|%t) - ")
-                    ACE_TEXT("Codeset_Manager_i::process_service_context ")
+                    ACE_TEXT("Codeset_Manager_i::process_service_context, ")
                     ACE_TEXT("no codeset context in request, using defaults\n")
                     ));
       tcs_c = TAO_Codeset_Manager_i::default_char_codeset;
