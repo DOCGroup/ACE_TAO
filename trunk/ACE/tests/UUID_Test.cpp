@@ -32,14 +32,14 @@ Tester::test (void)
   auto_ptr <ACE_Utils::UUID> uuid (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());
   ACE_CString uuid_str (uuid->to_string ()->c_str ());
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Generated UUID\n %s\n"),
+              ACE_TEXT ("Generated UUID\n %C\n"),
               uuid_str.c_str ()));
 
   // Construct UUID from string
   ACE_Utils::UUID new_uuid (uuid_str);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("UUID Constructed from above Generated UUID\n %s\n"),
+              ACE_TEXT ("UUID Constructed from above Generated UUID\n %C\n"),
               new_uuid.to_string ()->c_str ()));
 
   // Construct UUID from string by assigning it
@@ -47,7 +47,7 @@ Tester::test (void)
   new_uuid_assign.from_string (new_uuid.to_string ()->c_str ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID Constructed from above Generated UUID ")
-              ACE_TEXT ("with assign\n %s\n"),
+              ACE_TEXT ("with assign\n %C\n"),
               new_uuid_assign.to_string ()->c_str ()));
 
   if (new_uuid != new_uuid_assign)
@@ -67,7 +67,7 @@ Tester::test (void)
   ACE_Utils::UUID new_uuid_copy (new_uuid);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID constructed from above Generated UUID")
-              ACE_TEXT (" with copy\n %s\n"),
+              ACE_TEXT (" with copy\n %C\n"),
               new_uuid_copy.to_string ()->c_str ()));
 
   if (new_uuid != new_uuid_copy)
@@ -79,7 +79,7 @@ Tester::test (void)
   ACE_Utils::UUID nil_uuid (*ACE_Utils::UUID::NIL_UUID.to_string ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID Constructed from NIL_UUID with ")
-              ACE_TEXT ("string copy\n %s\n"),
+              ACE_TEXT ("string copy\n %C\n"),
               nil_uuid.to_string ()->c_str ()));
 
   if (nil_uuid != ACE_Utils::UUID::NIL_UUID)
@@ -93,7 +93,7 @@ Tester::test (void)
   new_uuid_assigment = new_uuid;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID Constructed from above Generated UUID ")
-              ACE_TEXT ("with assignment\n %s\n"),
+              ACE_TEXT ("with assignment\n %C\n"),
               new_uuid_assigment.to_string ()->c_str ()));
 
   if (new_uuid != new_uuid_assigment)
@@ -107,7 +107,7 @@ Tester::test (void)
     uuid_with_tp_id (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (0x0001, 0xc0));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("UUID with Thread and Process ID\n %s\n"),
+              ACE_TEXT ("UUID with Thread and Process ID\n %C\n"),
               uuid_with_tp_id->to_string ()->c_str ()));
 
   if (new_uuid == *uuid_with_tp_id)
@@ -119,7 +119,7 @@ Tester::test (void)
   ACE_Utils::UUID new_uuid_with_tp_id (uuid_with_tp_id->to_string ()->c_str ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID with Thread and Process ID reconstructed ")
-              ACE_TEXT ("from above UUID \n %s\n"),
+              ACE_TEXT ("from above UUID \n %C\n"),
               new_uuid_with_tp_id.to_string ()->c_str ()));
 
   return retval;
@@ -131,7 +131,7 @@ int run_main(int, ACE_TCHAR* [])
 
   Tester tester;
 
-  int result = tester.test();
+  int const result = tester.test();
 
   if (result == 0)
     ACE_DEBUG((LM_DEBUG,

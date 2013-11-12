@@ -7,7 +7,7 @@
 bool match (const char *str, const char *pat, bool cs = true, bool cc = false)
 {
   bool const result = ACE::wild_match (str, pat, cs, cc);
-  ACE_DEBUG ((LM_DEBUG, "string {%C} %C pattern {%s}\t%C\t%C\n", str,
+  ACE_DEBUG ((LM_DEBUG, "string {%C} %C pattern {%C}\t%C\t%C\n", str,
               (result ? "matches" : "does not match"), pat,
               (cs ? "" : "case-insensitive"), (cc ? "char classes" : "")));
   return result;
