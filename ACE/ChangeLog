@@ -1,3 +1,8 @@
+Tue Nov 12 07:56:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Added package
+
 Mon Nov 11 09:42:59 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/diff-builds-and-group-fixed-tests-only.sh:
