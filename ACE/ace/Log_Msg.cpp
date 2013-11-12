@@ -2072,7 +2072,11 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     // skip the frame that we're currently in
                     ACE_Stack_Trace t(2);
+#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                    ACE_OS::strcpy (fp, ACE_TEXT ("S"));
+#else /* ACE_WIN32 && ACE_USES_WCHAR */
                     ACE_OS::strcpy (fp, ACE_TEXT ("s"));
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
                     if (can_check)
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, t.c_str ());

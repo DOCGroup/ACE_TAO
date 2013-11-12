@@ -1,3 +1,25 @@
+Tue Nov 12 09:56:49 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Fixed logging of stack trace on Windows with wchar enabled
+
+        * ace/Stack_Trace.h:
+          Fixed incorrect log msg format mask
+
+        * docs/bczar/bczar.html:
+          Added package
+
+        * tests/Proactor_Scatter_Gather_Test.cpp:
+        * tests/Proactor_Test.cpp:
+        * tests/Proactor_Test_IPV6.cpp:
+        * tests/Proactor_Timer_Test.cpp:
+        * tests/Proactor_UDP_Test.cpp:
+          Added missing newline
+
+        * tests/UUID_Test.cpp:
+        * tests/Wild_Match_Test.cpp:
+          Fixed logging in case of unicode
+
 Tue Nov 12 08:44:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
