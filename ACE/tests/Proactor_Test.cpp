@@ -1936,7 +1936,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Threads or Asynchronous IO is unsupported.\n")
-              ACE_TEXT ("Proactor_Test will not be run.")));
+              ACE_TEXT ("Proactor_Test will not be run.\n")));
 
   ACE_END_TEST;
 

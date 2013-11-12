@@ -43,7 +43,7 @@
  *     ACELIB_DEBUG((LM_DEBUG, "%?"));
  *
  *     ACE_Stack_Trace st;
- *     ACELIB_DEBUG ((LM_DEBUG, "%s", st.c_str() ));
+ *     ACELIB_DEBUG ((LM_DEBUG, "%C", st.c_str() ));
  *  \endcode
  *
  *  These usage examples were shown in $ACE_ROOT/tests/Stack_Trace_Test.cpp.

@@ -1482,7 +1482,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Asynchronous Scatter/Gather IO is unsupported.\n")
-              ACE_TEXT ("Proactor_Scatter_Gather_Test will not be run.")));
+              ACE_TEXT ("Proactor_Scatter_Gather_Test will not be run.\n")));
 
   ACE_END_TEST;
 
