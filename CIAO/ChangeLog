@@ -1,3 +1,23 @@
+Wed Nov 13 18:19:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/03_executors.html:
+          Added missing commandline flags to specify the export file and macro
+          when generating the starter code
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.mpc:
+          Added missing commandline flags to specify the export file and macro
+          when generating the starter code
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.cpp:
+          Regenerated with the latest flags
+
 Mon Nov 11 09:43:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

@@ -23,6 +23,8 @@ project(Shapes_Receiver_executor_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   idlflags += -Gex -SS -Sci \
               -I../../ports \
+              -Wb,exec_export_macro=SHAPES_RECEIVER_COMP_EXEC_Export \
+              -Wb,exec_export_include=Shapes_Receiver_comp_exec_export.h \
               -o ../../../Tutorial/Code/Shapes_Receiver_comp
 
   IDL_Files {
