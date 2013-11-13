@@ -25,6 +25,8 @@ project(Shapes_Control_executor_gen) : componentidldefaults {
   idlflags += -Gexr -SS -Sci \
               -I../ports \
               -I../../ports \
+              -Wb,exec_export_macro=SHAPES_CONTROL_COMP_EXEC_Export \
+              -Wb,exec_export_include=Shapes_Control_comp_exec_export.h \
               -o ../../../Tutorial/Code/Shapes_Control_comp
 
   IDL_Files {
