@@ -34,6 +34,8 @@
         tao_idl -I../ports -I../ports/GeneratedCode
         -I../../ports -I%TAO_ROOT% -I%TAO_ROOT%/tao -I%CIAO_ROOT%
         -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao -Gexr
+        -Wb,exec_export_macro=SHAPES_CONTROL_COMP_EXEC_Export
+        -Wb,exec_export_include=Shapes_Control_comp_exec_export.h
         Shapes_Control_comp.idl
     </code>
     <br/><br/>
@@ -66,6 +68,8 @@
         -I../ports/GeneratedCode -I../../ports -I%TAO_ROOT%
         -I%TAO_ROOT%/tao -I%CIAO_ROOT% -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao
         -I%CIAO_ROOT%/connectors/dds4ccm/idl
+        -Wb,exec_export_macro=SHAPES_SENDER_COMP_EXEC_Export
+        -Wb,exec_export_include=Shapes_Sender_comp_exec_export.h
         -DCIAO_DDS4CCM_NDDS -Gex Shapes_Sender_comp.idl
     </code>
     <br/><br/>
@@ -94,6 +98,8 @@
         -I../ports/GeneratedCode -I../../ports -I%TAO_ROOT%
         -I%TAO_ROOT%/tao -I%CIAO_ROOT% -I%CIAO_ROOT%/ccm -I%CIAO_ROOT%/ciao
         -I%CIAO_ROOT%/connectors/dds4ccm/idl
+        -Wb,exec_export_macro=SHAPES_RECEIVER_COMP_EXEC_Export
+        -Wb,exec_export_include=Shapes_Receiver_comp_exec_export.h
         -DCIAO_DDS4CCM_NDDS -Gex Shapes_Receiver_comp.idl
     </code>
     <br/><br/>

@@ -24,6 +24,8 @@ project(Shapes_Sender_executor_gen) : componentidldefaults, dds4ccm {
   idlflags += -Gex -SS -Sci \
               -I../ports \
               -I../../ports \
+              -Wb,exec_export_macro=SHAPES_SENDER_COMP_EXEC_Export \
+              -Wb,exec_export_include=Shapes_Sender_comp_exec_export.h \
               -o ../../../Tutorial/Code/Shapes_Sender_comp
 
   IDL_Files {
