@@ -35,7 +35,7 @@ namespace CIAO
       if (CORBA::is_nil (ctx))
         {
           CIAO_ERROR (1, (LM_WARNING, CLINFO "Name_Utilities::bind_object - "
-                          "Provided naming context is nil, component %C will not be registered.",
+                          "Provided naming context is nil, component <%C> will not be registered.",
                           name));
           return false;
         }
@@ -50,7 +50,7 @@ namespace CIAO
             {
               CIAO_ERROR (1, (LM_WARNING, CLINFO
                               "Name_Utilities::bind_object - "
-                              "build_name resulted in an invalid name for string %C\n",
+                              "build_name resulted in an invalid name for string <%C>\n",
                               name));
               return false;
             }
@@ -64,7 +64,7 @@ namespace CIAO
           catch (const CosNaming::NamingContext::AlreadyBound &)
             {
               CIAO_ERROR (1, (LM_WARNING, CLINFO "Name_Utilities::bind_object - "
-                              "Name %C already bound, rebinding....\n",
+                              "Name <%C> already bound, rebinding....\n",
                               name));
               ctx->rebind (nm, obj);
             }
@@ -72,14 +72,14 @@ namespace CIAO
       catch (const CORBA::Exception &ex)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "Name_Utilities::bind_object - "
-                          "Caught CORBA exception while attempting to bind name %C: %C\n",
+                          "Caught CORBA exception while attempting to bind name <%C>: <%C>\n",
                           name, ex._info ().c_str ()));
           return false;
         }
       catch (...)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO "Name_Utilities::bind_object - "
-                          "Caught unknown C++ exception while attemptint to bind name %C\n",
+                          "Caught unknown C++ exception while attemptint to bind name <%C>\n",
                           name));
           return false;
         }
@@ -98,6 +98,7 @@ namespace CIAO
           CIAO_ERROR (1, (LM_WARNING, CLINFO
                           "Name_Utilities::bind_context - "
                           "Provided naming context is nil, the naming context will not be bound."));
+          return;
         }
 
       CosNaming::Name newname (nm.length ());
@@ -113,14 +114,14 @@ namespace CIAO
               ctx->bind_new_context (newname);
               CIAO_DEBUG (9, (LM_TRACE, CLINFO
                               "Name_Utilities::bind_context - "
-                              "Bound new context %C\n",
+                              "Bound new context <%C>\n",
                               newname[i].id.in ()));
             }
           catch (CosNaming::NamingContext::AlreadyBound &)
             {
               CIAO_DEBUG (9, (LM_TRACE, CLINFO
                               "Name_Utilities::bind_context - "
-                              "Context %C already bound.\n",
+                              "Context <%C> already bound.\n",
                               newname[i].id.in ()));
             }
         }
@@ -136,8 +137,9 @@ namespace CIAO
         {
           CIAO_ERROR (1, (LM_WARNING, CLINFO
                           "Name_Utilities::unbind_object - "
-                          "Provided naming context is nil, instance %C will not be unbound\n",
+                          "Provided naming context is nil, instance <%C> will not be unbound\n",
                           name));
+          return false;
         }
 
       CosNaming::Name nm;
@@ -151,7 +153,7 @@ namespace CIAO
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO
                           "Name_Utilities::unbind_object - "
-                          "Caught CORBA exception whilst unbinding name %C: %C\n",
+                          "Caught CORBA exception whilst unbinding name <%C>: <%C>\n",
                           name, e._info ().c_str ()));
           return false;
         }
@@ -175,7 +177,7 @@ namespace CIAO
 
           CIAO_DEBUG (9, (LM_TRACE, CLINFO
                           "Name_Utilities::build_name - "
-                          "Found name component %C\n",
+                          "Found name component <%C>\n",
                           next));
 
           nm[i].id = CORBA::string_dup (next);

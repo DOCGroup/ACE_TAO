@@ -1,3 +1,9 @@
+Sun Nov 17 19:17:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Name_Utilities.cpp:
+          Improved logging and when we get invalid arguments directly return
+          after logging an error
+
 Wed Nov 13 18:19:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tutorials/Shapes/Tutorial/03_executors.html:
