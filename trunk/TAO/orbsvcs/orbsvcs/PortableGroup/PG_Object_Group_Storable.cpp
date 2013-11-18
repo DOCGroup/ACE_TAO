@@ -75,6 +75,10 @@ TAO::Object_Group_File_Guard::Object_Group_File_Guard (
   : TAO::Storable_File_Guard(true)
   , object_group_(object_group)
 {
+  if (object_group_.lock_.acquire() == -1)
+    {
+      throw CORBA::INTERNAL ();
+    }
   try
     {
       this->init (method_type);
@@ -92,6 +96,11 @@ TAO::Object_Group_File_Guard::~Object_Group_File_Guard ()
   // Notify if persistent store was updated.
   if (object_group_.write_occurred_)
     object_group_.state_written ();
+
+  if (object_group_.lock_.release() == -1)
+    {
+      throw CORBA::INTERNAL ();
+    }
 }
 
 void
