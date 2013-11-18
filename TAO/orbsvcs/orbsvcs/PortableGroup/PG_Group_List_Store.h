@@ -107,6 +107,10 @@ namespace TAO
 
     bool is_obsolete (time_t stored_time);
 
+    // Since the underlying file lock is process wide, we must
+    // insure that only one thread is using the file at a time
+    TAO_SYNCH_MUTEX lock_;
+
     friend class PG_Group_List_Store_File_Guard;
 
   };

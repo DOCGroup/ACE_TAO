@@ -1,3 +1,14 @@
+Mon Nov 18 18:07:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+          The file lock used in these classes is a process level lock.
+          This change adds a thread mutex to insure that only one thread
+          in the process holds the file lock.
+          Submitted on behalf of Rich Seibel <seibelr@ociweb.com>
+
 Mon Nov 11 09:43:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
