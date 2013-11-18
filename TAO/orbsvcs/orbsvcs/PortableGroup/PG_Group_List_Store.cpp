@@ -56,6 +56,10 @@ TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
   : TAO::Storable_File_Guard(true),
   list_store_(list_store)
 {
+  if (list_store_.lock_.acquire() == -1)
+    {
+      throw CORBA::INTERNAL ();
+    }
   try
     {
       this->init (method_type);
@@ -69,6 +73,10 @@ TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
 TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard ()
 {
   this->release ();
+  if (list_store_.lock_.release() == -1)
+    {
+      throw CORBA::INTERNAL ();
+    }
 }
 
 void
