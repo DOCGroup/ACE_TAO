@@ -139,7 +139,7 @@ sub uniqueid
 sub waitforfile
 {
     local($file) = @_;
-    sleep 1 while (!(-e $file && -s $file));
+    select(undef, undef, undef, 0.1) while (!(-e $file && -s $file));
 }
 
 sub waitforfile_timed
@@ -149,12 +149,14 @@ sub waitforfile_timed
     $maxtime *= (($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test) ?
                   $PerlACE::ProcessVX::WAIT_DELAY_FACTOR :
                   $PerlACE::Process::WAIT_DELAY_FACTOR);
+    # Multiply with 10 because we wait a tenth of a second each time
+    $maxtime *= 10;
 
     while ($maxtime-- != 0) {
         if (-e $file && -s $file) {
             return 0;
         }
-        sleep 1;
+        select(undef, undef, undef, 0.1);
     }
     return -1;
 }
@@ -307,6 +309,8 @@ sub waitforfileoutput_timed
     $maxtime *= (($PerlACE::VxWorks_Test || $PerlACE::VxWorks_RTP_Test) ?
                   $PerlACE::ProcessVX::WAIT_DELAY_FACTOR :
                   $PerlACE::Process::WAIT_DELAY_FACTOR);
+    # Multiply with 10 because we wait a tenth of a second each time
+    $maxtime *= 10;
 
     while ($maxtime-- != 0) {
         if (-e $file && -s $file) {
@@ -319,7 +323,7 @@ sub waitforfileoutput_timed
               }
               close(DATA);
         }
-        sleep 1;
+        select(undef, undef, undef, 0.1);
     }
     return -1;
 }
