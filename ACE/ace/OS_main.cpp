@@ -2,8 +2,6 @@
 
 #include "ace/OS_main.h"
 
-
-
 #if !defined (ACE_DOESNT_DEFINE_MAIN)
 
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)

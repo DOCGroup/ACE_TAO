@@ -1,3 +1,27 @@
+Tue Nov 19 14:23:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Init_ACE.h:
+          Doxygen improvements
+
+        * ace/OS_main.cpp:
+          Zapped some empty lines
+
+        * ace/config-win32-msvc-10.h:
+        * ace/config-win32-msvc-9.h:
+          Windows Vista and Windows Server 2008 and newer do have native
+          condition variable support, but the support in ACE isn't
+          complete. Fixed the Windows API version checks, but commented
+          it out, see bugzilla 4146. Thanks to Russ Noseworthy
+          <J dot Russell dot Noseworthy at TENA-SDA dot org> for pointing
+          this out.
+
+        * bin/PerlACE/ProcessVX_Unix.pm:
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/Run_Test.pm:
+          Instead of waiting 1 second on a file or process exit, wait 0.1
+          seconds which speeds up testing when deploying a lot of
+          processes, like when testing CIAO
+
 Tue Nov 12 09:56:49 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
