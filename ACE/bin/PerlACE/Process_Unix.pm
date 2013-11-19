@@ -689,14 +689,19 @@ sub TimedWait ($)
         return 0;
     }
 
-    $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
+    if ($PerlACE::Process::WAIT_DELAY_FACTOR > 0) {
+        $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
+    }
+
+    # Multiply with 10 because we wait a tenth of a second each time
+    $timeout *= 10;
 
     while ($timeout-- != 0) {
         my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
         if ($pid != 0 && $? != -1) {
             return $self->check_return_value ($?);
         }
-        sleep 1;
+        select(undef, undef, undef, 0.1);
     }
 
     return -1;
