@@ -63,6 +63,9 @@ $warnings = 0;
 # to register suppressed tests
 %suppressed_tests = ();
 
+# to register excluded directories
+@excluded_dirs = ();
+
 ##############################################################################
 
 # Find_Modified_Files will use 'svn -q st' to get a list of locally modified
@@ -84,6 +87,17 @@ sub find_mod_files ()
 }
 
 
+sub is_excluded ($)
+{
+  # exclude will contain the full file name
+  my $exclude = shift;
+  foreach (@excluded_dirs) {
+      if ($exclude =~ /$_/) {
+          return 1;
+      }
+  }
+  return 0;
+}
 
 # Find_Files will search for files with certain extensions in the
 # directory tree
@@ -103,6 +117,8 @@ sub store_file ($)
 {
     my $name = shift;
 
+    return if is_excluded ($name);
+    
     if ($name =~ /\.(c|cc|cpp|cxx|tpp)$/i) {
         push @files_cpp, ($name);
     }
@@ -2354,13 +2370,15 @@ sub check_for_ace_log_categories ()
 
 ##############################################################################
 
-use vars qw/$opt_c $opt_d $opt_h $opt_l $opt_t $opt_s $opt_m/;
+use vars qw/$opt_c $opt_d $opt_x $opt_h $opt_l $opt_t $opt_s $opt_m/;
 
-if (!getopts ('cdhl:t:s:mv') || $opt_h) {
+if (!getopts ('cdx:hl:t:s:mv') || $opt_h) {
     print "fuzz.pl [-cdhm] [-l level] [-t test_names] [file1, file2, ...]\n";
     print "\n";
     print "    -c             only look at the files passed in\n";
     print "    -d             turn on debugging\n";
+    print "    -x             specify comma-separated list of path masks\n";
+          "                       (regex) to exclude\n";
     print "    -h             display this help\n";
     print "    -l level       set detection level (default = 5)\n";
     print "    -t test_names  specify comma-separated list of tests to run\n".
@@ -2419,6 +2437,14 @@ EOT
 
 if (!$opt_l) {
     $opt_l = 5;
+}
+
+# Before opt_m is read!
+if ($opt_x) {
+    my @excludes = split '\s*,\s*', $opt_x;
+    for my $exclude (@excludes) {
+      push (@excluded_dirs, $exclude);
+    }
 }
 
 if ($opt_c) {

@@ -1,3 +1,9 @@
+Wed Nov 20 15:25:01 UTC 2013  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/fuzz.pl:
+          Added an option (-x) to exclude certain directories by
+          applying certain (regex) masks.
+
 Tue Nov 19 14:23:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Init_ACE.h:
