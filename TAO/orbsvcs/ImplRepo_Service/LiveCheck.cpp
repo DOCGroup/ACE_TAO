@@ -161,6 +161,20 @@ LiveEntry::add_listener (LiveListener *ll)
 }
 
 void
+LiveEntry::remove_listener (LiveListener *ll)
+{
+  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
+  LiveListener_ptr llp(ll->_add_ref());
+  int result = this->listeners_.remove (llp);
+  if (ImR_Locator_i::debug() > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveEntry::remove_listener, result = %d\n"),
+                      result));
+    }
+}
+
+void
 LiveEntry::reset_status (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
@@ -460,6 +474,12 @@ PingReceiver::ping (void)
 {
   if (this->entry_ != 0)
     {
+      if (ImR_Locator_i::debug () > 5)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) PingReceiver::ping received from %C\n"),
+                          this->entry_->server_name ()));
+        }
       this->entry_->status (LS_ALIVE);
       this->entry_->release_callback ();
     }
@@ -472,6 +492,12 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
 {
   try
     {
+      if (ImR_Locator_i::debug () > 5)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) PingReceiver::ping_excep received from %C\n"),
+                          this->entry_->server_name ()));
+        }
       excep_holder->raise_exception ();
     }
   catch (CORBA::TRANSIENT &ex)
@@ -818,6 +844,21 @@ LiveCheck::add_listener (LiveListener *l)
 
   entry->add_listener (l);
   return this->schedule_ping (entry);
+}
+
+void
+LiveCheck::remove_listener (LiveListener *l)
+{
+  if (!this->running_)
+    return;
+
+  LiveEntry *entry = 0;
+  ACE_CString key (l->server());
+  int result = entry_map_.find (key, entry);
+  if (result != -1 && entry != 0)
+    {
+      entry->remove_listener (l);
+    }
 }
 
 bool
