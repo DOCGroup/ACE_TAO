@@ -186,17 +186,22 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
                                         this,
                                         *this->pinger_));
 
-          LiveListener_ptr llp(l);
-          if (!l->start())
+          LiveListener_ptr llp (l);
+          if (!l->start ())
             {
               this->server_list_[i].activeStatus =
                 ImplementationRepository::ACTIVE_NO;
+              l->cancel ();
             }
           else
             {
               if (!evaluate_status (i,l->status()))
                 {
                   this->waiters_++;
+                }
+              else
+                {
+                  l->cancel ();
                 }
             }
         }
@@ -244,17 +249,18 @@ AsyncListManager::evaluate_status (CORBA::ULong index, LiveStatus status)
 void
 AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status)
 {
+  if (ImR_Locator_i::debug() > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncListManager::ping_replied, index = %d ")
+                      ACE_TEXT ("status = %C\n"),
+                      index, LiveEntry::status_name (status)));
+    }
   if (evaluate_status (index, status))
     {
       this->waiters_--;
       this->final_state();
       return;
-    }
-  if (ImR_Locator_i::debug() > 4)
-    {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncListManager::ping_replied, index = %d ")
-                      ACE_TEXT ("status = %d\n")));
     }
 }
 
@@ -295,6 +301,7 @@ ListLiveListener::ListLiveListener (const char *server,
    index_ (index),
    started_ (false)
 {
+
 }
 
 ListLiveListener::~ListLiveListener (void)
@@ -313,6 +320,12 @@ LiveStatus
 ListLiveListener::status (void)
 {
   return this->status_;
+}
+
+void
+ListLiveListener::cancel (void)
+{
+  this->pinger_.remove_listener (this);
 }
 
 bool

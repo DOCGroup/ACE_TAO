@@ -117,6 +117,7 @@ class Locator_Export LiveEntry
 
   void release_callback (void);
   void add_listener (LiveListener *ll);
+  void remove_listener (LiveListener *ll);
   LiveStatus status (void) const;
   void status (LiveStatus l);
   void reset_status (void);
@@ -261,6 +262,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
 
   bool add_per_client_listener (LiveListener *listener,
                                 ImplementationRepository::ServerObject_ptr ref);
+
+  void remove_listener (LiveListener *listener);
 
   bool schedule_ping (LiveEntry *entry);
 
