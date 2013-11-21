@@ -1,3 +1,18 @@
+Thu Nov 21 17:29:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+          Fix for ensuring that externally killed servers can be restarted through
+          the ImR service.
+
+        * orbsvcs/ImplRepo_Service/AsyncListManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+          Fix for a potential memory leak when a list of active servers includes some
+          that are in some troubled state. Since the participants are all reference
+          counted, it isn't a true leak, rather unbounded allocation of objects for
+          which the refcount may never reach 0. Also added more debugging output.
+
 Mon Nov 18 18:07:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:

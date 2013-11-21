@@ -75,7 +75,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
 
   if (this->status_ == AAM_SERVER_READY || this->status_ == AAM_SERVER_STARTED_RUNNING)
     {
-      if (this->locator_.pinger().is_alive (this->info_->name.c_str()))
+      if (this->locator_.pinger().is_alive (this->info_->name.c_str()) == LS_ALIVE)
         {
           this->status_ = AAM_SERVER_READY;
           this->final_state();
@@ -212,7 +212,7 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
   this->info_->partial_ior = partial_ior;
   this->info_->server = ImplementationRepository::ServerObject::_duplicate (ref);
 
-  if (this->locator_.pinger().is_alive (this->info_->name.c_str()))
+  if (this->locator_.pinger().is_alive (this->info_->name.c_str()) == LS_ALIVE)
     {
       this->status (AAM_SERVER_READY);
       this->final_state ();

@@ -91,6 +91,7 @@ class ListLiveListener : public LiveListener
 
   virtual ~ListLiveListener (void);
   bool start (void);
+  void cancel (void);
   LiveStatus status (void);
   bool status_changed (LiveStatus status);
 
