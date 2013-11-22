@@ -118,7 +118,7 @@ sub store_file ($)
     my $name = shift;
 
     return if is_excluded ($name);
-    
+
     if ($name =~ /\.(c|cc|cpp|cxx|tpp)$/i) {
         push @files_cpp, ($name);
     }
