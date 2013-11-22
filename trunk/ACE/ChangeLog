@@ -1,3 +1,8 @@
+Fri Nov 22 09:24:06 UTC 2013  Marcel Smit  <msmit@remedy.nl>
+
+        * bin/fuzz.pl:
+          Fixed fuzz issues (whitespaces).
+
 Wed Nov 20 15:25:01 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
         * bin/fuzz.pl:
