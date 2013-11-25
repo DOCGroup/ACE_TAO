@@ -47,7 +47,7 @@ enum ACE_CompressorId
     ACE_COMPRESSORID_RLE    = 10
 };
 
-class ACE_Compression_Export ACE_Compressor : private ACE_Copy_Disabled
+class ACE_Compression_Export ACE_Compressor
 {
 public:
 
@@ -124,6 +124,9 @@ private:
 
   ACE_UINT64          compressed_bytes_;
   ACE_UINT64          uncompressed_bytes_;
+
+  ACE_UNIMPLEMENTED_FUNC (ACE_Compressor (const ACE_Compressor&))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Compressor& operator= (const ACE_Compressor&))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
