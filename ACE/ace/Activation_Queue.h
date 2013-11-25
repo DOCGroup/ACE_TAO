@@ -49,7 +49,7 @@ class ACE_Method_Request;
  *
  * @sa ACE_Method_Request
  */
-class ACE_Export ACE_Activation_Queue : private ACE_Copy_Disabled
+class ACE_Export ACE_Activation_Queue
 {
 public:
   /// Constructor.
@@ -156,6 +156,8 @@ private:
   /// Allocation strategy of the message blocks.
   ACE_Allocator *data_block_allocator_;
 
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Activation_Queue &))
+  ACE_UNIMPLEMENTED_FUNC (ACE_Activation_Queue (const ACE_Activation_Queue &))
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
