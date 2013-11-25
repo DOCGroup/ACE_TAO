@@ -1,3 +1,12 @@
+Mon Nov 25 10:49:19 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Activation_Queue.h:
+        * ace/Compression/Compressor.h:
+          Use ACE_UNIMPLEMENTED_FUNC
+
+        * ace/Caching_Utility_T.h:
+          Doxygen improvements
+
 Mon Nov 25 10:41:00 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Global_Macros.h:
