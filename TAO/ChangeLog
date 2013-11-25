@@ -1,3 +1,8 @@
+Mon Nov 25 21:05:04 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.cpp:
+          Fix scoreboard warnings for some Windows compilers.
+
 Thu Nov 21 17:29:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:

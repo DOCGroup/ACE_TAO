@@ -172,8 +172,9 @@ namespace TAO_PG
     // First we need to calculate the size of packets. Since we anyway run
     // this loop we can also cleanup broken packets.
     CORBA::ULong size = 0;
-    for (HASH_MAP_ITER iter = packets.begin ();
-         iter != packets.end ();)
+    HASH_MAP_ITER iter = packets.begin ();
+
+    while (iter != packets.end ())
       {
         // Move forward iter because what it was pointing to could be
         // unbound at the end of the loop leaving the iterator pointing
@@ -206,7 +207,7 @@ namespace TAO_PG
     ACE_NEW (sorted_set, HASH_MAP_ENTRY*[current_size]);
     ACE_Auto_Array_Ptr<HASH_MAP_ENTRY*> owner (sorted_set);
 
-    HASH_MAP_ITER iter = packets.begin ();
+    iter = packets.begin ();
 
     for (int i = 0; i < current_size; ++i)
       {
