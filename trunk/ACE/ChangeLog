@@ -1,3 +1,9 @@
+Mon Nov 25 10:41:00 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Global_Macros.h:
+          When we have C++11 support, let ACE_UNIMPLEMENTED_FUNC generate
+          = delete to explicitly delete the unimplemented methods
+
 Fri Nov 22 09:24:06 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
         * bin/fuzz.pl:

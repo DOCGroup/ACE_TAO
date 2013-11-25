@@ -101,7 +101,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
     // It just evaporated ;-)  Not pleasant.
 #   define ACE_UNIMPLEMENTED_FUNC(f)
 # else
-#   define ACE_UNIMPLEMENTED_FUNC(f) f;
+#   if defined (ACE_HAS_CPP11)
+#     define ACE_UNIMPLEMENTED_FUNC(f) f = delete;
+#   else
+#     define ACE_UNIMPLEMENTED_FUNC(f) f;
+#   endif
 # endif /* ACE_NEEDS_FUNC_DEFINITIONS */
 
 // ----------------------------------------------------------------
