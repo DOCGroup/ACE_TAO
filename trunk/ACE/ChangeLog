@@ -1,3 +1,9 @@
+Tue Nov 26 14:09:39 UTC 2013  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/config-android.h:
+          Un-defining 'strange' defines since these might lead to
+          compile issues.
+
 Mon Nov 25 10:49:19 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Activation_Queue.h:

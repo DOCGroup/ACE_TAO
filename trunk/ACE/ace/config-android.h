@@ -366,6 +366,40 @@
 # endif
 #endif
 
+// The defines listed below might give compile issues when
+// users declare one letter (IDL) methods. To prevent this,
+// these defines are undefined here.
+// The defines are declared in ctype.h and are used in 
+// ctype_base.h as well. That's why <ostream> is included 
+// as well.
+#include "ctype.h"
+#include <ostream>
+
+#if defined (_U)
+# undef _U
+#endif
+#if defined (_L)
+# undef _L
+#endif
+#if defined (_N)
+# undef _N
+#endif
+#if defined (_S)
+# undef _S
+#endif
+#if defined (_P)
+# undef _P
+#endif
+#if defined (_C)
+# undef _C
+#endif
+#if defined (_X)
+# undef _X
+#endif
+#if defined (_B)
+# undef _B
+#endif
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_ANDROID_H */
