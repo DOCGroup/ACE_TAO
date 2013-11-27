@@ -1,3 +1,8 @@
+Wed Nov 27 08:11:05 UTC 2013  Marcel Smit  <msmit@remedy.nl>
+
+        * ace/config-android.h:
+          Fixed fuzz (whitespaces)
+
 Tue Nov 26 14:09:39 UTC 2013  Marcel Smit  <msmit@remedy.nl>
 
         * ace/config-android.h:
