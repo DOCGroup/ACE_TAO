@@ -369,8 +369,8 @@
 // The defines listed below might give compile issues when
 // users declare one letter (IDL) methods. To prevent this,
 // these defines are undefined here.
-// The defines are declared in ctype.h and are used in 
-// ctype_base.h as well. That's why <ostream> is included 
+// The defines are declared in ctype.h and are used in
+// ctype_base.h as well. That's why <ostream> is included
 // as well.
 #include "ctype.h"
 #include <ostream>
