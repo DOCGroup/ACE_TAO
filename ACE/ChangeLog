@@ -1,3 +1,7 @@
+Wed Nov 27 02:37:17 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * VERSION: Updated the URL to point to Vandy not WUSTl.
+
 Wed Nov 27 12:14:43 UTC 2013  Martin Corino  <mcorino@remedy.nl>
 
         * ace/config-win32-mingw64.h:
