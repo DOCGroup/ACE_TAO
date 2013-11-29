@@ -1,3 +1,7 @@
+Wed Nov 27 02:37:17 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * VERSION: Updated the URL to point to Vandy not WUSTl.
+
 Sun Nov 17 19:17:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Interceptors/Name_Utilities.cpp:
