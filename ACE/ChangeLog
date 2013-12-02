@@ -1,3 +1,12 @@
+Mon Dec  2 10:11:14 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/DLL.h:
+          Doxygen fix
+
+        * docs/ACE-bug-process.html:
+        * docs/Download.html:
+          Updated the URL to point to Vandy not WUSTl.
+
 Wed Nov 27 02:37:17 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * VERSION: Updated the URL to point to Vandy not WUSTl.

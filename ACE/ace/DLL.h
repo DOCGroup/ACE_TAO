@@ -50,7 +50,7 @@ public:
    * @param close_handle_on_destruction  Indicates whether or not the
    *        close() method will be called to close an open DLL when this
    *        object is destroyed. By default, close() will be called.
-   *        Set this parameter to 0 for situations where the DLL's lifetime
+   *        Set this parameter to false for situations where the DLL's lifetime
    *        is controlled in a scope other than that of this ACE_DLL object.
    *        For example, termination by ACE_DLL_Manager via ACE::fini().
    */
