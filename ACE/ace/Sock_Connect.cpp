@@ -744,6 +744,7 @@ get_ip_interfaces_win32 (size_t &count,
 
 # endif /* ACE_HAS_WINCE */
 }
+
 #elif defined (ACE_HAS_GETIFADDRS)
 static int
 get_ip_interfaces_getifaddrs (size_t &count,
@@ -1439,6 +1440,7 @@ ip_check (int &ipvn_enabled, int pf)
       ACE_INET_Addr *if_addrs = 0;
       size_t if_cnt = 0;
 
+      ipvn_enabled = 1; // assume enabled to avoid recursion during interface lookup.
       ACE::get_ip_interfaces (if_cnt, if_addrs);
       ipvn_enabled = 0;
       for (size_t i = 0; ipvn_enabled == 0 && i < if_cnt; i++)
