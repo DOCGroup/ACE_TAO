@@ -1,3 +1,12 @@
+Mon Dec  2 18:27:38 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/Sock_Connect.cpp:
+          Fix for a recursion that happens on windows with the new code to validate
+          IPv6 support when ACE_HAS_IPV4_IPV6_MIGRATION is set. The fix, suggested by
+          MSDev users, is to utilize get_ip_interfaces to find IPv4 and IPv6 support
+          but since that method makes ACE_INET_Addr objects, and the ctor for that
+          checks the ip type available, this is a recursion.
+
 Mon Dec  2 10:11:14 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/DLL.h:
