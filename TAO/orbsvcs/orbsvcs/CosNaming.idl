@@ -21,11 +21,11 @@
  */
 module CosNaming
 {
-  /// Define a typedef for String.  Maybe at some point, <Istring> will
+  /// Define a typedef for String.  Maybe at some point, Istring will
   /// be different to support Internationalization.
   typedef string Istring;
 
-  /*
+  /**
    * This is a 'simple' name.
    *
    * Both id and kind fields are used in resolving names.
@@ -106,7 +106,7 @@ module CosNaming
       /// Indicates that the specified name is already bound to
       /// some object.  Only one object can be bound to a
       /// particular name in an context.  To change the binding,
-      /// <rebind> and <rebind_context> can be used.
+      /// rebind() and rebind_context() can be used.
       exception AlreadyBound
       {
       };
@@ -118,31 +118,31 @@ module CosNaming
 
       // = Binding operations.
 
-      /// Create a binding for name <n> and object <obj> in the naming
+      /// Create a binding for name @a n and object @a obj in the naming
       /// context.  Compound names are treated as follows: ctx->bind
       /// (<c1; c2; c3; cn>, obj) = (ctx->resolve (<c1; c2;
       /// cn-1>))->bind (<cn>, obj) if the there already exists a
-      /// binding for the specified name, <AlreadyBound> exception is
-      /// thrown.  Naming contexts should be bound using <bind_context>
-      /// and <rebind_context> in order to participate in name
+      /// binding for the specified name, AlreadyBound exception is
+      /// thrown.  Naming contexts should be bound using bind_context()
+      /// and rebind_context() in order to participate in name
       /// resolution later.
       void bind (in Name n, in Object obj)
         raises (NotFound, CannotProceed, InvalidName, AlreadyBound);
 
-      /// This is similar to <bind> operation above, except for when
+      /// This is similar to bind() operation above, except for when
       /// the binding for the specified name already exists in the
       /// specified context.  In that case, the existing binding is
       /// replaced with the new one.
       void rebind (in Name n, in Object obj)
         raises (NotFound, CannotProceed, InvalidName);
 
-      /// This is the version of <bind> specifically for binding naming
+      /// This is the version of bind() specifically for binding naming
       /// contexts, so that they will participate in name resolution
       /// when compound names are passed to be resolved.
       void bind_context (in Name n, in NamingContext nc)
         raises(NotFound, CannotProceed, InvalidName, AlreadyBound);
 
-      /// This is a version of <rebind> specifically for naming
+      /// This is a version of rebind() specifically for naming
       /// contexts, so that they can participate in name resolution
       /// when compound names are passed.
       void rebind_context (in Name n, in NamingContext nc)
