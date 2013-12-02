@@ -1,3 +1,12 @@
+Mon Dec  2 10:12:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * VERSION:
+        * docs/implrepo/paper.html:
+          Updated the URL to point to Vandy not WUSTl.
+
+        * orbsvcs/orbsvcs/CosNaming.idl:
+          Doxygen improvements
+
 Mon Nov 25 21:05:04 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.cpp:
