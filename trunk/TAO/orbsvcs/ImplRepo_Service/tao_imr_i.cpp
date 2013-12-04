@@ -156,6 +156,10 @@ TAO_IMR_Op::make_op (const ACE_TCHAR *op_name)
     return new TAO_IMR_Op_Autostart();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("ior")) == 0)
     return new TAO_IMR_Op_IOR();
+  else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("kill")) == 0)
+    return new TAO_IMR_Op_Kill ();
+  else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("link")) == 0)
+    return new TAO_IMR_Op_Link ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("list")) == 0)
     return new TAO_IMR_Op_List ();
   else if (ACE_OS::strcasecmp (op_name, ACE_TEXT ("remove")) == 0)
@@ -381,6 +385,122 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
       case 'f':  // File name
         this->filename_ = get_opts.opt_arg ();
         break;
+      case 'h':  // display help
+        this->print_usage ();
+        return -1;
+      default:
+        ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        this->print_usage ();
+        return -1;
+      }
+    }
+  return 0;
+}
+
+void
+TAO_IMR_Op_Kill::print_usage (void)
+{
+  ORBSVCS_ERROR ((LM_ERROR, "Sends a signal to the designated process\n"
+    "The process must have been started by the ImR and may not use\n"
+    "per-client activation\n"
+    "Usage: tao_imr [options] kill [name] [command-arguments]\n"
+    "  where [options] are ORB options\n"
+    "  where [name] is the registered POA name the peers link to\n"
+    "  where [command-arguments] can be\n"
+    "    -s signum   default 2, the signal to be sent to the process for"
+    "                named server\n"));
+}
+
+int
+TAO_IMR_Op_Kill::parse (int argc, ACE_TCHAR **argv)
+{
+  int server_flag = 0;
+
+  if (argc > 1 && argv[1][0] != '-')
+  {
+    this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
+    server_flag = 2;
+  }
+
+  // Skip both the program name and the "list" command
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:h"), server_flag);
+
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    {
+      switch (c)
+      {
+      case 's': //signum
+        this->signum_ = ACE_OS::strtol (get_opts.opt_arg (), 0, 10);
+        break;
+      case 'h':  // display help
+        this->print_usage ();
+        return -1;
+      default:
+        ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
+        this->print_usage ();
+        return -1;
+      }
+    }
+  return 0;
+}
+
+void
+TAO_IMR_Op_Link::print_usage (void)
+{
+  ORBSVCS_ERROR ((LM_ERROR, "Links multiple POAs to a single executable\n"
+    "\n"
+    "Usage: tao_imr [options] link [name] [peers]\n"
+    "  where [options] are ORB options\n"
+    "  where [name] is the registered POA name the peers link to\n"
+    "  where [command-arguments] can be\n"
+    "    -p peers    provides a comma separated list of additional POAs that are\n"
+    "                part of the same executable. -p may be repeated\n"));
+}
+
+int
+TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
+{
+  int server_flag = 0;
+
+  if (argc > 1 && argv[1][0] != '-')
+  {
+    this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
+    server_flag = 2;
+  }
+
+  // Skip both the program name and the "list" command
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:h"), server_flag);
+
+  int c;
+
+  while ((c = get_opts ()) != -1)
+    {
+      switch (c)
+      {
+      case 'p': //list of peers
+        {
+          char *arg = get_opts.opt_arg ();
+          size_t last = this->peers_.length ();
+          size_t num = 0;
+          char *c = arg;
+          while (c != 0)
+            {
+              num++;
+              c = ACE_OS::strchr (c, ',');
+            }
+          num += last;
+          this->peers_.length (num);
+          while (last < num)
+            {
+              c = ACE_OS::strchr (arg, ',');
+              *c = 0;
+              this->peers_[last++] = CORBA::string_dup (arg);
+              arg = c+1;
+            }
+          break;
+        }
       case 'h':  // display help
         this->print_usage ();
         return -1;
@@ -709,9 +829,10 @@ TAO_IMR_Op_Activate::run (void)
     }
   catch (const ImplementationRepository::CannotActivate& ex)
     {
-      ORBSVCS_ERROR ((LM_ERROR, "Cannot activate server <%C>, reason: <%s>\n",
-        this->server_name_.c_str (),
-        ex.reason.in ()));
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "Cannot activate server <%C>, reason: <%s>\n",
+                      this->server_name_.c_str (),
+                      ex.reason.in ()));
       return TAO_IMR_Op::CANNOT_ACTIVATE;
     }
   catch (const ImplementationRepository::NotFound&)
@@ -863,6 +984,93 @@ TAO_IMR_Op_IOR::run (void)
 }
 
 int
+TAO_IMR_Op_Kill::run (void)
+{
+  ACE_ASSERT (! CORBA::is_nil(imr_));
+
+  ImplementationRepository::AdministrationExt_var imrext =
+    ImplementationRepository::AdministrationExt::_narrow (imr_);
+  if (CORBA::is_nil (imrext.in()))
+    {
+      ORBSVCS_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("Error: requested IMR does not support the kill operation\n")),
+         -1);
+    }
+
+  try
+    {
+      imrext->kill_server (this->server_name_.c_str(), this->signum_);
+    }
+  catch (const ImplementationRepository::NotFound &)
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "Could not find server <%C>.\n",
+                      this->server_name_.c_str ()));
+      return TAO_IMR_Op::NOT_FOUND;
+    }
+  catch (const ImplementationRepository::CannotComplete& ex)
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "Cannot complete kill of <%C>, reason: <%s>\n",
+                      this->server_name_.c_str (),
+                      ex.reason.in ()));
+      return TAO_IMR_Op::CANNOT_COMPLETE;
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Kill");
+      return TAO_IMR_Op::UNKNOWN;
+    }
+
+  return TAO_IMR_Op::NORMAL;
+}
+
+int
+TAO_IMR_Op_Link::run (void)
+{
+  ACE_ASSERT (! CORBA::is_nil(imr_));
+
+  ImplementationRepository::AdministrationExt_var imrext =
+    ImplementationRepository::AdministrationExt::_narrow (imr_);
+  if (CORBA::is_nil (imrext.in()))
+    {
+      ORBSVCS_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT ("Error: requested IMR does not support the kill operation\n")),
+         -1);
+    }
+
+  try
+    {
+      imrext->link_servers (this->server_name_.c_str(), this->peers_);
+    }
+  catch (const ImplementationRepository::NotFound &)
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "Could not find server <%C>.\n",
+                      this->server_name_.c_str ()));
+      return TAO_IMR_Op::NOT_FOUND;
+    }
+  catch (const ImplementationRepository::CannotComplete& ex)
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "Cannot complete kill of <%C>, reason: <%s>\n",
+                      this->server_name_.c_str (),
+                      ex.reason.in ()));
+      return TAO_IMR_Op::CANNOT_COMPLETE;
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Kill");
+      return TAO_IMR_Op::UNKNOWN;
+    }
+
+  return TAO_IMR_Op::NORMAL;
+}
+
+
+int
 TAO_IMR_Op_List::run (void)
 {
   ACE_ASSERT (! CORBA::is_nil(imr_));
@@ -905,7 +1113,9 @@ TAO_IMR_Op_List::run (void)
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ORBSVCS_ERROR ((LM_ERROR, "Could not find server <%C>.\n", this->server_name_.c_str ()));
+      ORBSVCS_ERROR ((LM_ERROR,
+                      "Could not find server <%C>.\n",
+                      this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const CORBA::Exception& ex)

@@ -1,3 +1,30 @@
+Wed Dec  4 17:13:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Added new test.
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Adding two new features to the IMR client interface. First is
+          a kill command that has the activator send a signal to a child
+          process. Also a new link command that allows the ImR locator
+          to recognize two or more POAs are part of the same process.
+          The link command implementation is still under development.
+
+        * orbsvcs/tests/ImplRepo/kill_server:
+          New test case for the kill command.
+
+        * tao/ImR_Client/ImplRepo.idl:
+          New extension interface added to define new operations.
+
 Wed Nov 27 02:37:17 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * VERSION: Updated the URL to point to Vandy not WUSTl.

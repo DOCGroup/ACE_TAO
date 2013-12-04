@@ -85,7 +85,8 @@ public:
     NO_PERMISSION,
     ALREADY_REGISTERED,
     CANNOT_ACTIVATE,
-    NOT_FOUND
+    NOT_FOUND,
+    CANNOT_COMPLETE
   };
 
   /// Factory.
@@ -179,6 +180,52 @@ protected:
   /// Filename to output to.
   ACE_TString filename_;
 };
+
+
+/**
+ * @class TAO_IMR_Op_Kill
+ *
+ * @brief Kill Operation
+ *
+ * Kill is used to unregister a server in the IMR.
+ */
+class TAO_IMR_Op_Kill : public TAO_IMR_Op
+{
+public:
+  virtual int parse (int argc, ACE_TCHAR **argv);
+  virtual int run (void);
+
+protected:
+  /// Prints a message about the usage
+  void print_usage (void);
+
+  ACE_CString server_name_;
+  int signum_;
+};
+
+
+/**
+ * @class TAO_IMR_Op_Link
+ *
+ * @brief Link Operation
+ *
+ * Link is used to unregister a server in the IMR.
+ */
+class TAO_IMR_Op_Link : public TAO_IMR_Op
+{
+public:
+  virtual int parse (int argc, ACE_TCHAR **argv);
+  virtual int run (void);
+
+protected:
+  /// Prints a message about the usage
+  void print_usage (void);
+
+  ACE_CString server_name_;
+
+  CORBA::StringSeq peers_;
+};
+
 
 
 /**
