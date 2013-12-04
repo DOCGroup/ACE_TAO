@@ -735,6 +735,85 @@ ImR_Locator_i::parse_id (const char* id,
 }
 
 void
+ImR_Locator_i::link_servers
+(ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
+ const char * name,
+ const CORBA::StringSeq & peers)
+{
+  Server_Info_Ptr root_si;
+  if (!this->get_info_for_name (name, root_si))
+    {
+      CORBA::Exception *ex =
+        new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+      _tao_rh->link_servers_excep (&h);
+      return;
+    }
+
+  for (size_t i = 0; i < peers.length(); i++)
+    {
+      Server_Info_Ptr si;
+      if (this->get_info_for_name (peers[i], si))
+        {
+        }
+    }
+
+  _tao_rh->link_servers ();
+  return;
+}
+
+void
+ImR_Locator_i::kill_server
+(ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
+ const char * name,
+ CORBA::Short signum)
+{
+  Server_Info_Ptr si;
+  if (!this->get_info_for_name (name, si))
+    {
+      CORBA::Exception *ex =
+        new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+      _tao_rh->kill_server_excep (&h);
+      return;
+    }
+
+  UpdateableServerInfo info (this->repository_.get(), si, true);
+  if (info->activation_mode == ImplementationRepository::PER_CLIENT)
+    {
+      CORBA::Exception *ex =
+        new ImplementationRepository::CannotComplete ("per-client server");
+      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+      _tao_rh->kill_server_excep (&h);
+      return;
+    }
+
+  Activator_Info_Ptr ainfo = this->get_activator (si->activator);
+  ImplementationRepository::ActivatorExt_var actext =
+    ImplementationRepository::ActivatorExt::_narrow (ainfo->activator.in());
+  if (CORBA::is_nil (actext.in()))
+    {
+      CORBA::Exception *ex =
+        new ImplementationRepository::CannotComplete ("activator incompatible");
+      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+      _tao_rh->kill_server_excep (&h);
+      return;
+    }
+  if (!actext->kill_server (name, signum))
+    {
+      CORBA::Exception *ex =
+        new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+      _tao_rh->kill_server_excep (&h);
+    }
+  else
+    {
+      _tao_rh->kill_server ();
+    }
+  return;
+}
+
+void
 ImR_Locator_i::remove_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
  const char* name)

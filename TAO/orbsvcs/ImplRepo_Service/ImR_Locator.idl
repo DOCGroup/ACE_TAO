@@ -5,7 +5,7 @@
 
 module ImplementationRepository
 {
-  interface Locator : Administration
+  interface Locator : AdministrationExt
   {
     /// returns a token that can be used (along with activator name) to
     /// unregister the activator.

@@ -1,0 +1,4 @@
+$Id$
+
+This test starts up servers then uses the tao_imr kill command to force server
+termination via signal.
