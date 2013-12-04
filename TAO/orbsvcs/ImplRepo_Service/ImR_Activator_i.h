@@ -57,17 +57,18 @@ struct ACE_Equal_To_pid_t
 * that can be done by the ImR_Activator.
 *
 */
-class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Activator,
+class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::ActivatorExt,
                                          public ACE_Event_Handler
 {
-public:
+ public:
   ImR_Activator_i (void);
 
- void start_server (
-   const char* name,
-   const char* cmdline,
-   const char* dir,
-   const ImplementationRepository::EnvironmentList & env);
+  void start_server (const char* name,
+                     const char* cmdline,
+                     const char* dir,
+                     const ImplementationRepository::EnvironmentList & env);
+
+  CORBA::Boolean kill_server (const char* name, CORBA::Short signum);
 
   void shutdown(void);
 

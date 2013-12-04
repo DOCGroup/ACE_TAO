@@ -11,6 +11,8 @@
 #include "ace/ARGV.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_signal.h"
+
 #include "ace/os_include/os_netdb.h"
 
 static ACE_CString getHostName ()
@@ -138,8 +140,8 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       PortableServer::ObjectId_var id = PortableServer::string_to_ObjectId ("ImR_Activator");
       this->imr_poa_->activate_object_with_id (id.in (), this);
       obj = this->imr_poa_->id_to_reference (id.in ());
-      ImplementationRepository::Activator_var activator =
-        ImplementationRepository::Activator::_narrow (obj.in ());
+      ImplementationRepository::ActivatorExt_var activator =
+        ImplementationRepository::ActivatorExt::_narrow (obj.in ());
       ACE_ASSERT(! CORBA::is_nil (activator.in ()));
 
       CORBA::String_var ior = this->orb_->object_to_string (activator.in ());
@@ -280,6 +282,30 @@ ImR_Activator_i::shutdown (bool wait_for_completion)
   this->orb_->shutdown (wait_for_completion);
 }
 
+CORBA::Boolean
+ImR_Activator_i::kill_server (const char* name, CORBA::Short signum)
+{
+  if (debug_ > 1)
+    ORBSVCS_DEBUG((LM_DEBUG,
+                   "ImR Activator: Killing server <%s>...\n",
+                   name));
+  for (ProcessMap::iterator iter = process_map_.begin();
+       iter != process_map_.end (); iter++)
+    {
+      if (iter->item () == name)
+        {
+          pid_t pid = iter->key ();
+          if (debug_ > 1)
+            ORBSVCS_DEBUG((LM_DEBUG,
+                           "ImR Activator: Killing server <%s> "
+                           "signal %d to pid %d\n",
+                           name, signum, pid));
+          return ACE_OS::kill (pid, signum) == 0;
+        }
+    }
+  return false;
+}
+
 void
 ImR_Activator_i::start_server(const char* name,
                               const char* cmdline,
@@ -345,13 +371,7 @@ ImR_Activator_i::start_server(const char* name,
             "ImR Activator: register death handler for process %d\n", pid));
         }
       this->process_mgr_.register_handler (this, pid);
-
-      // We only bind to the process_map_ if we want to notify
-      // the locator of a process' death.
-      if (notify_imr_)
-        {
-          this->process_map_.rebind (pid, name);
-        }
+      this->process_map_.rebind (pid, name);
     }
 
   if (debug_ > 0)
@@ -388,7 +408,10 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
                 ACE_TEXT ("ImR Activator: Notifying ImR that %s has exited.\n"),
                 name.c_str()));
             }
-          this->locator_->notify_child_death (name.c_str());
+          if (this->notify_imr_)
+            {
+              this->locator_->notify_child_death (name.c_str());
+            }
         }
     }
 

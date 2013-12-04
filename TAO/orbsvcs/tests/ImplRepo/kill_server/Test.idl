@@ -1,0 +1,11 @@
+// $Id$
+
+interface Test
+{
+
+  // Return the number of the server after a delay
+  short get_server_num ();
+
+  void pause (in char poa_id);
+  void resume (in char poa_id);
+};

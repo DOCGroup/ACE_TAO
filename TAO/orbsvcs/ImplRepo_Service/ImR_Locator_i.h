@@ -89,6 +89,16 @@ public:
      const char * name,
      const ImplementationRepository::StartupOptions &options);
 
+  virtual void link_servers
+    (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
+     const char * name,
+     const CORBA::StringSeq & peers);
+
+  virtual void kill_server
+    (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
+     const char * name,
+     CORBA::Short signum);
+
   virtual void remove_server
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
      const char * name);

@@ -131,6 +131,9 @@ public:
   void shutdown (void);
   void shutdown_excep (Messaging::ExceptionHolder * excep_holder);
 
+  void kill_server (CORBA::Boolean);
+  void kill_server_excep (Messaging::ExceptionHolder * excep_holder);
+
 private:
   AsyncAccessManager_ptr aam_;
   PortableServer::POA_var poa_;

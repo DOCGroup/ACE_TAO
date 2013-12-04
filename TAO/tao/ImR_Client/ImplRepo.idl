@@ -8,6 +8,7 @@
 #define TAO_IMRCLIENT_IMPLREPO_PIDL
 
 #include "ServerObject.idl"
+#include "tao/StringSeq.pidl"
 
 module ImplementationRepository
 {
@@ -24,6 +25,13 @@ module ImplementationRepository
 
   /// Object not found in the Implementation Repository
   exception NotFound {};
+
+  /// Operation cannot be completed due to Activator version
+  /// or other incompatibility
+  exception CannotComplete
+  {
+    string reason;
+  };
 
   /// One environment variable/value pair.
   struct EnvironmentVariable
@@ -184,6 +192,26 @@ module ImplementationRepository
     /// activators and servers first.
     oneway void shutdown(in boolean activators, in boolean servers);
   };
+
+
+
+
+  /**
+    * @brief The Extended Implementation Repository Administration Interface
+    *
+    * This interface adds operations in a way that maintains compatibility
+    */
+  interface AdministrationExt : Administration
+  {
+    /// Identify a set of peer poas that exist in the same process.
+    void link_servers (in string server, in CORBA::StringSeq peers)
+      raises(NotFound);
+
+    /// Have the approprate activator send a signal to the named server process
+    void kill_server (in string server, in short signum)
+      raises(NotFound, CannotComplete);
+  };
+
 };
 
 #endif /* TAO_IMRCLIENT_IMPLREPO_PIDL */
