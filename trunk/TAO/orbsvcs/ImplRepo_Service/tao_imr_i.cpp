@@ -407,7 +407,7 @@ TAO_IMR_Op_Kill::print_usage (void)
     "  where [options] are ORB options\n"
     "  where [name] is the registered POA name the peers link to\n"
     "  where [command-arguments] can be\n"
-    "    -s signum   default 2, the signal to be sent to the process for"
+    "    -s signum   default 9, the signal to be sent to the process for"
     "                named server\n"));
 }
 
@@ -421,6 +421,7 @@ TAO_IMR_Op_Kill::parse (int argc, ACE_TCHAR **argv)
     this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
     server_flag = 2;
   }
+  this->signum_ = 9;
 
   // Skip both the program name and the "list" command
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:h"), server_flag);

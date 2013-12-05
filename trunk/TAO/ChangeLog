@@ -1,3 +1,13 @@
+Thu Dec  5 15:30:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Add a default signum for the kill command.
+
+        * orbsvcs/tests/ImplRepo/kill_server/run_test.pl:
+          Increase the time delay waiting for the server to actually
+          be killed. I believe this is the cause of test failures on
+          some nightly hosts.
+
 Thu Dec  5 10:11:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Simple/bank/AccountManager_i.cpp:
@@ -51,17 +61,18 @@ Mon Nov 25 21:05:04 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 Thu Nov 21 17:29:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
-          Fix for ensuring that externally killed servers can be restarted through
-          the ImR service.
+          Fix for ensuring that externally killed servers can be restarted
+          through the ImR service.
 
         * orbsvcs/ImplRepo_Service/AsyncListManager.h:
         * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
         * orbsvcs/ImplRepo_Service/LiveCheck.h:
         * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
-          Fix for a potential memory leak when a list of active servers includes some
-          that are in some troubled state. Since the participants are all reference
-          counted, it isn't a true leak, rather unbounded allocation of objects for
-          which the refcount may never reach 0. Also added more debugging output.
+          Fix for a potential memory leak when a list of active servers
+          includes some that are in some troubled state. Since the
+          participants are all reference counted, it isn't a true leak,
+          rather unbounded allocation of objects for which the refcount may
+          never reach 0. Also added more debugging output.
 
 Mon Nov 18 18:07:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
