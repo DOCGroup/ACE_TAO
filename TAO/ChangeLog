@@ -1,3 +1,11 @@
+Thu Dec  5 17:32:58 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Improve the performance of the kill command on windows.
+
+        * orbsvcs/tests/ImplRepo/kill_server/run_test.pl:
+          Make the test more windows friendly.
+
 Thu Dec  5 15:30:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
