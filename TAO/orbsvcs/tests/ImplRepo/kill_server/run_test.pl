@@ -14,7 +14,7 @@ $debug_level = '0';
 
 my $servers_count = 2;
 my $servers_kill_count = 1;
-my $signalnum = 3;
+my $signalnum = 2;
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
@@ -287,7 +287,7 @@ sub servers_list_test
     print "\nKilling $servers_kill_count servers\n";
 
     shutdown_servers (0, $servers_kill_count, $signalnum);
-    sleep (2);
+    sleep (4);
 
     print "\nList of active servers after killing a server\n";
     $active_servers_after_kill = list_active_servers ("-a");
