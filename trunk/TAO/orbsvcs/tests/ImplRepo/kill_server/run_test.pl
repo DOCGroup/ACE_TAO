@@ -14,7 +14,7 @@ $debug_level = '0';
 
 my $servers_count = 2;
 my $servers_kill_count = 1;
-my $signalnum = 2;
+my $signalnum = 9;
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
@@ -125,7 +125,7 @@ sub restore_output()
 
 sub servers_setup ()
 {
-    $ACT->Arguments ("-d 0 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
+    $ACT->Arguments ("-d 2 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
 
     $ACT_status = $ACT->Spawn ();
     if ($ACT_status != 0) {
@@ -298,9 +298,6 @@ sub servers_list_test
 	    " but was $active_servers_after_kill\n";
 	$status = 1;
     }
-
-    print "\nList of servers registered with the ImR after killing a server\n";
-    list_active_servers ("");
 
     print "\n";
     shutdown_servers ($servers_kill_count, $servers_count, 9);
