@@ -295,12 +295,14 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Short signum)
       if (iter->item () == name)
         {
           pid_t pid = iter->key ();
+          int result = (signum != 9) ? ACE_OS::kill (pid, signum)
+            : ACE::terminate_process (pid);
           if (debug_ > 1)
             ORBSVCS_DEBUG((LM_DEBUG,
                            "ImR Activator: Killing server <%s> "
-                           "signal %d to pid %d\n",
-                           name, signum, pid));
-          return ACE_OS::kill (pid, signum) == 0;
+                           "signal %d to pid %d, result = %d\n",
+                           name, signum, pid, result));
+          return result == 0;
         }
     }
   return false;
@@ -402,14 +404,15 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
 
       if (!CORBA::is_nil (this->locator_.in ()))
         {
-          if (debug_ > 1)
-            {
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ImR Activator: Notifying ImR that %s has exited.\n"),
-                name.c_str()));
-            }
           if (this->notify_imr_)
             {
+              if (debug_ > 1)
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("ImR Activator: Notifying ImR that ")
+                                  ACE_TEXT ("%s has exited.\n"),
+                                  name.c_str()));
+            }
               this->locator_->notify_child_death (name.c_str());
             }
         }
