@@ -101,7 +101,7 @@ AccountManager_i::close (Bank::Account_ptr account)
                        ACE_TEXT ("Unable to close account\n")));
         }
 
-      if (account.is_nil ())
+      if (!account.is_nil ())
         {
           PortableServer::POA_var poa = account->_default_POA ();
 
