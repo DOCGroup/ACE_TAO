@@ -1,3 +1,8 @@
+Thu Dec  5 10:11:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simple/bank/AccountManager_i.cpp:
+          Deregister from the POA when it is not nil
+
 Wed Dec  4 17:13:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:
