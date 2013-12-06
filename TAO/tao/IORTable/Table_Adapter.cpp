@@ -63,8 +63,7 @@ TAO_Table_Adapter::close (int)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   this->closed_ = true;
-  // no need to release the impl now, that will happen in the
-  // destructor.
+  this->root_ = 0;
 }
 
 void

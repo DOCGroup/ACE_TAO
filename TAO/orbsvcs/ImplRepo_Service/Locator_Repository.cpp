@@ -66,7 +66,7 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
     }
 
   // Register the ImR for use with INS
-  CORBA::Object_var obj = this->orb_->resolve_initial_references ("IORTable");
+  CORBA::Object_var obj = this->orb_->resolve_initial_references ("AsyncIORTable");
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
 
@@ -167,7 +167,7 @@ Locator_Repository::recover_ior (void)
     }
 
   // Register the ImR for use with INS
-  CORBA::Object_var obj = this->orb_->resolve_initial_references ("IORTable");
+  CORBA::Object_var obj = this->orb_->resolve_initial_references ("AsyncIORTable");
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
 

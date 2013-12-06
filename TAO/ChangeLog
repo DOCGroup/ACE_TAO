@@ -1,3 +1,30 @@
+Fri Dec  6 16:50:00 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+          Make these resolve the same version of the IORTable service as
+          the locator main to ensure proper cleanup.
+
+        * tao/IORTable/Table_Adapter.cpp:
+          Force cleanup of the implementation instance on cleanup.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+          Covert the base reference to the IORTable instance to a var
+          type so that references are released on ORB shutdown. Valgrind
+          revealed that the IORTable implementation objects were being
+          lost due to refcount never reaching 0. There are many Object_ptr
+          members of the ORB Core that may need to be converted to vars
+          for the same reason.
+
+        * orbsvcs/tests/ImplRepo/kill_server/Test.idl:
+        * orbsvcs/tests/ImplRepo/kill_server/Test_i.h:
+        * orbsvcs/tests/ImplRepo/kill_server/Test_i.cpp:
+        * orbsvcs/tests/ImplRepo/kill_server/client.cpp:
+        * orbsvcs/tests/ImplRepo/kill_server/run_test.pl:
+          Make the test capable of building on CORBA/e builds.
+
 Thu Dec  5 17:32:58 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:

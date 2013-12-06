@@ -25,9 +25,6 @@ public:
 
   virtual CORBA::Short get_server_num (void);
 
-  virtual void pause (CORBA::Char poa_id);
-  virtual void resume (CORBA::Char poa_id);
-
 private:
   void reset (PortableServer::POAManager_var &mgr, bool pause);
 
