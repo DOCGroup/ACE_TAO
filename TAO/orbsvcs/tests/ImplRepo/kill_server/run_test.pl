@@ -54,7 +54,7 @@ for(my $i = 0; $i < $servers_count; $i++) {
 }
 
 my $refstyle = " -ORBobjrefstyle URL";
-my $obj_count = 1;
+my $obj_count = 2;
 my $port = 9876;
 
 my $objprefix = "TestObject";
@@ -236,7 +236,7 @@ sub list_active_servers($)
 
 sub servers_list_test
 {
-    print "Running scale test with $servers_count servers and $obj_count objects.\n";
+    print "Running server kill test with $servers_count servers and $obj_count objects.\n";
 
     my $result = 0;
     my $start_time = time();

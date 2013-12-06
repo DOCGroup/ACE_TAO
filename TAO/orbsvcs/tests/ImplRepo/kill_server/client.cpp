@@ -11,20 +11,12 @@ char resume_poa = ' ';
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:r:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT(""));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-      case 'p':
-        pause_poa = *get_opts.opt_arg ();
-        break;
-
-      case 'r':
-        resume_poa = *get_opts.opt_arg ();
-        break;
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -52,21 +44,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     Test_var test = Test::_narrow( obj.in() );
     ACE_ASSERT (!CORBA::is_nil(test.in()));
 
-    if (pause_poa != ' ')
-      {
-        test->pause (pause_poa);
-      }
-    if (resume_poa != ' ')
-      {
-        test->resume (resume_poa);
-      }
-    if (pause_poa == ' ' && resume_poa == ' ')
-      {
-        CORBA::Short n = test->get_server_num ();
-        ACE_DEBUG ((LM_DEBUG,
-                    "Client received reply from server %d\n",
-                    n));
-      }
+    CORBA::Short n = test->get_server_num ();
+    ACE_DEBUG ((LM_DEBUG,
+                "Client received reply from server %d\n",
+                n));
 
     return 0;
 

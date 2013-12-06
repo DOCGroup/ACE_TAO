@@ -31,43 +31,5 @@ Test_i::get_server_num (void)
   return this->server_num_;
 }
 
-void
-Test_i::pause (CORBA::Char poa_id)
-{
-  if (poa_id == 'a')
-    {
-      this->reset (this->mgr_a, true);
-    }
-  else if (poa_id == 'b')
-    {
-      this->reset (this->mgr_b, true);
-    }
-}
-
-void
-Test_i::resume (CORBA::Char poa_id)
-{
-  if (poa_id == 'a')
-    {
-      this->reset (this->mgr_a, false);
-    }
-  else if (poa_id == 'b')
-    {
-      this->reset (this->mgr_b, false);
-    }
-}
-
-void
-Test_i::reset (PortableServer::POAManager_var &mgr, bool pause)
-{
-  if (pause)
-    {
-      mgr->hold_requests (false);
-    }
-  else
-    {
-      mgr->activate ();
-    }
-}
 
 
