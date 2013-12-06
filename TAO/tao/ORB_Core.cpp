@@ -1529,6 +1529,8 @@ TAO_ORB_Core::fini (void)
 
   ::CORBA::release (this->ior_table_);
 
+  ::CORBA::release (this->async_ior_table_);
+
   ::CORBA::release (this->monitor_);
 
   if (TAO_debug_level > 2)
@@ -2754,7 +2756,7 @@ TAO_ORB_Core::resolve_ior_table_i (void)
       this->adapter_registry_.insert (iortable_adapter.get ());
 
       // It is now (exception) safe to release ownership from the auto pointers
-      this->ior_table_= tmp_root;
+      this->ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }
 }
@@ -2788,7 +2790,7 @@ TAO_ORB_Core::resolve_async_ior_table_i (void)
       this->adapter_registry_.insert (iortable_adapter.get ());
 
       // It is now (exception) safe to release ownership from the auto pointers
-      this->async_ior_table_= tmp_root;
+      this->async_ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }
 }

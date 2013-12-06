@@ -1,3 +1,11 @@
+Fri Dec  6 19:09:56 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+          Revert my change to var types for the iortable objects. Use the
+          ORB_Core::fini to remove the async iortable object instead.
+
 Fri Dec  6 16:50:00 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:

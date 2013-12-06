@@ -513,11 +513,11 @@ TAO_ORB_Core::resolve_ior_table (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
-  if (CORBA::is_nil (this->ior_table_.in()))
+  if (CORBA::is_nil (this->ior_table_))
     {
       this->resolve_ior_table_i ();
     }
-  return CORBA::Object::_duplicate (this->ior_table_.in());
+  return CORBA::Object::_duplicate (this->ior_table_);
 }
 
 ACE_INLINE CORBA::Object_ptr
@@ -525,11 +525,11 @@ TAO_ORB_Core::resolve_async_ior_table (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
-  if (CORBA::is_nil (this->async_ior_table_.in()))
+  if (CORBA::is_nil (this->async_ior_table_))
     {
       this->resolve_async_ior_table_i ();
     }
-  return CORBA::Object::_duplicate (this->async_ior_table_.in());
+  return CORBA::Object::_duplicate (this->async_ior_table_);
 }
 
 ACE_INLINE CORBA::Object_ptr
