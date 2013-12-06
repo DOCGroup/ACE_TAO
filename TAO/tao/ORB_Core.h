@@ -1051,10 +1051,10 @@ protected:
   CORBA::Object_ptr ior_manip_factory_;
 
   /// The cached object reference for the IORTable.
-  CORBA::Object_var ior_table_;
+  CORBA::Object_ptr ior_table_;
 
   /// The cached object reference for the Async_IORTable.
-  CORBA::Object_var async_ior_table_;
+  CORBA::Object_ptr async_ior_table_;
 
   /// The cached object reference for the Monitor.
   CORBA::Object_ptr monitor_;
