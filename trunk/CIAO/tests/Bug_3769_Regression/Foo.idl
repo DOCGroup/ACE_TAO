@@ -35,6 +35,12 @@ typedef octet octet_array[2];
 
 typedef string<50> bounded_string;
 typedef wstring<50> bounded_wstring;
+typedef sequence<bounded_string> sequence_bounded_string;
+typedef sequence<bounded_wstring> sequence_bounded_wstring;
+typedef sequence<bounded_string, 5> bounded_sequence_bounded_string;
+typedef sequence<bounded_wstring, 5> bounded_sequence_bounded_wstring;
+typedef bounded_string bounded_string_array[2];
+typedef bounded_wstring bounded_wstring_array[2];
 
 struct Bar
 {
@@ -190,6 +196,13 @@ component Foo supports FooSupport
   attribute Data          my_data_union;
   attribute Data2         my_var_data_union;
   attribute StructModule::StructStruct my_struct_struct;
+
+  attribute sequence_bounded_string my_sequence_bounded_string;
+  attribute sequence_bounded_wstring my_sequence_bounded_wstring;
+  attribute bounded_sequence_bounded_string my_bounded_sequence_bounded_string;
+  attribute bounded_sequence_bounded_wstring my_bounded_sequence_bounded_wstring;
+  attribute bounded_string_array my_bounded_string_array;
+  attribute bounded_wstring_array my_bounded_wstring_array;
 };
 
 #endif /* FOO_IDL_ */
