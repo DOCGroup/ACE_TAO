@@ -9,6 +9,7 @@
 #include "DynStruct_Handler.h"
 #include "DynAlias_Handler.h"
 #include "DynArray_Handler.h"
+#include "DynString_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "Common.h"
 
@@ -255,19 +256,7 @@ namespace DAnCE
           break;
 
         case TCKind::tk_string_l:
-          {
-            if (!req_tc)
-              {
-                retval = this->daf_->create_dyn_any_from_type_code (CORBA::_tc_string);
-              }
-            const char* s = 0;
-            if (value.count_string ())
-              {
-                s = ACE_TEXT_ALWAYS_CHAR ((*value.begin_string ())->c_str ());
-              }
-            retval->insert_string (s);
-          }
-          break;
+          return DynString_Handler::extract_into_dynany (type, value, req_tc);
 
         case TCKind::tk_char_l:
           {
@@ -373,51 +362,39 @@ namespace DAnCE
 
         case TCKind::tk_short_l:
           return CORBA::_tc_short;
-          break;
 
         case TCKind::tk_long_l:
           return CORBA::_tc_long;
-          break;
 
         case TCKind::tk_ushort_l:
           return CORBA::_tc_ushort;
-          break;
 
         case TCKind::tk_ulong_l:
           return CORBA::_tc_ulong;
-          break;
 
         case TCKind::tk_float_l:
           return CORBA::_tc_float;
-          break;
 
         case TCKind::tk_double_l:
           return CORBA::_tc_double;
-          break;
 
         case TCKind::tk_boolean_l:
           return CORBA::_tc_boolean;
-          break;
 
         case TCKind::tk_char_l:
           return CORBA::_tc_char;
-          break;
 
         case TCKind::tk_octet_l:
           return CORBA::_tc_octet;
-          break;
 
         case TCKind::tk_string_l:
-          return CORBA::_tc_string;
-          break;
+          return DynString_Handler::create_typecode (type);
 
         case TCKind::tk_longlong_l:
           return CORBA::_tc_longlong;
-          break;
 
         case TCKind::tk_ulonglong_l:
           return CORBA::_tc_ulonglong;
-          break;
 
         case TCKind::tk_longdouble_l:
           // Disabled since a longdouble is defined in the xsd as double.
@@ -428,7 +405,6 @@ namespace DAnCE
 
         case TCKind::tk_wchar_l:
           return CORBA::_tc_wchar;
-          break;
 
         case TCKind::tk_wstring_l:
           break;

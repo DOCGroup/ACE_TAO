@@ -24,6 +24,7 @@ namespace DAnCE
     class DataValue;
     class AliasType;
     class EnumType;
+    class BoundedStringType;
     class StructType;
     class StructMemberType;
     class ValueType;
@@ -267,6 +268,16 @@ namespace DAnCE
 
       protected:
       ::std::auto_ptr< ::DAnCE::Config_Handlers::ArrayType > array_;
+
+      // boundedString
+      //
+      public:
+      bool boundedString_p () const;
+      ::DAnCE::Config_Handlers::BoundedStringType const& boundedString () const;
+      void boundedString (::DAnCE::Config_Handlers::BoundedStringType const& );
+
+      protected:
+      ::std::auto_ptr< ::DAnCE::Config_Handlers::BoundedStringType > boundedString_;
 
       // id
       //
@@ -671,6 +682,44 @@ namespace DAnCE
 
       EnumType&
       operator= (EnumType const& s);
+
+      private:
+      char regulator__;
+    };
+
+
+    class XSC_XML_Handlers_Export BoundedStringType : public ::XSCRT::Type
+    {
+      typedef ::XSCRT::Type Base;
+
+      public:
+      typedef ACE_Refcounted_Auto_Ptr < ::DAnCE::Config_Handlers::BoundedStringType, ACE_Null_Mutex > _ptr;
+
+      // bound
+      //
+      public:
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > >::iterator bound_iterator;
+      typedef ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > >::const_iterator bound_const_iterator;
+      bound_iterator begin_bound ();
+      bound_iterator end_bound ();
+      bound_const_iterator begin_bound () const;
+      bound_const_iterator end_bound () const;
+      void add_bound ( ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > const& );
+      XSCRT::Type* get_bound_ptr ( std::basic_string<ACE_TCHAR> idref );
+      void set_bound_ptr (std::basic_string<ACE_TCHAR> idref );
+      size_t count_bound (void) const;
+
+      protected:
+      ::std::list< ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex > > bound_;
+
+      public:
+      BoundedStringType ();
+
+      BoundedStringType (::XSCRT::XML::Element< ACE_TCHAR > const&);
+      BoundedStringType (BoundedStringType const& s);
+
+      BoundedStringType&
+      operator= (BoundedStringType const& s);
 
       private:
       char regulator__;
@@ -2959,6 +3008,18 @@ namespace DAnCE
         array_none (Type const&);
 
         virtual void
+        boundedString (Type&);
+
+        virtual void
+        boundedString (Type const&);
+
+        virtual void
+        boundedString_none (Type&);
+
+        virtual void
+        boundedString_none (Type const&);
+
+        virtual void
         id (Type&);
 
         virtual void
@@ -3536,6 +3597,57 @@ namespace DAnCE
 
         virtual void
         member_post (Type const&);
+
+        virtual void
+        post (Type&);
+
+        virtual void
+        post (Type const&);
+      };
+
+      struct XSC_XML_Handlers_Export BoundedStringType : ::XMLSchema::Traversal::Traverser< ::DAnCE::Config_Handlers::BoundedStringType >
+      {
+        virtual void
+        traverse (Type&);
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        pre (Type&);
+
+        virtual void
+        pre (Type const&);
+
+        virtual void
+        bound (Type&);
+
+        virtual void
+        bound (Type const&);
+
+        virtual void
+        bound_pre (Type&);
+
+        virtual void
+        bound_pre (Type const&);
+
+        virtual void
+        bound_next (Type&);
+
+        virtual void
+        bound_next (Type const&);
+
+        virtual void
+        bound_post (Type&);
+
+        virtual void
+        bound_post (Type const&);
+
+        virtual void
+        bound_none (Type&);
+
+        virtual void
+        bound_none (Type const&);
 
         virtual void
         post (Type&);
@@ -5907,6 +6019,15 @@ namespace DAnCE
         array (Type const&);
 
         virtual void
+        boundedString (Type &o)
+        {
+          this->boundedString (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        boundedString (Type const&);
+
+        virtual void
         id (Type &o)
         {
           this->id (const_cast <Type const &> (o));
@@ -6451,6 +6572,52 @@ namespace DAnCE
 
         protected:
         EnumType ();
+      };
+
+      struct BoundedStringType : Traversal::BoundedStringType,
+      virtual ::XSCRT::Writer< ACE_TCHAR >
+      {
+        typedef ::DAnCE::Config_Handlers::BoundedStringType Type;
+        BoundedStringType (::XSCRT::XML::Element< ACE_TCHAR >&);
+
+        virtual void
+        traverse (Type &o)
+        {
+          this->traverse (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        traverse (Type const&);
+
+        virtual void
+        bound_pre (Type &o)
+        {
+          this->bound_pre (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        bound_pre (Type const&);
+
+        virtual void
+        bound_next (Type &o)
+        {
+          this->bound_next (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        bound_next (Type const&);
+
+        virtual void
+        bound_post (Type &o)
+        {
+          this->bound_post (const_cast <Type const &> (o));
+        }
+
+        virtual void
+        bound_post (Type const&);
+
+        protected:
+        BoundedStringType ();
       };
 
       struct StructType : Traversal::StructType,
