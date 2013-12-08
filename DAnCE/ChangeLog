@@ -1,3 +1,24 @@
+Sun Dec  8 18:30:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * docs/schema/Basic_Deployment_Data.xsd:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/DataType_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc:
+        * tools/Config_Handlers/DynAny_Handler/DynString_Handler.h:
+        * tools/Config_Handlers/DynAny_Handler/DynString_Handler.cpp:
+          Corrected handling of bounded strings, the bound has to be in the
+          cdp and specified as below, the boundedString element with a bound
+          must be there
+          <type>
+            <kind>tk_string</kind>
+            <boundedString>
+              <bound>50</bound>
+            </boundedString>
+          </type>
+
 Mon Dec  2 10:13:05 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * VERSION:

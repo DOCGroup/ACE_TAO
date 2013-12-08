@@ -14,6 +14,7 @@ project (XSC_DynAny_Handler) : install, xerces, dynamicany, typecodefactory, dan
     DynArray_Handler.cpp
     DynSequence_Handler.cpp
     DynStruct_Handler.cpp
+    DynString_Handler.cpp
     DynAlias_Handler.cpp
   }
 
