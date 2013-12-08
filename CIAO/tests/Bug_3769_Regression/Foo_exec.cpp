@@ -97,7 +97,13 @@ namespace CIAO_Foo_Impl
       my_variable_string_success_ (false),
       my_default_variable_string_success_ (false),
       supported_short_success_ (false),
-      my_struct_struct_success_ (false)
+      my_struct_struct_success_ (false),
+      my_sequence_bounded_string_success_ (false),
+      my_sequence_bounded_wstring_success_ (false),
+      my_bounded_sequence_bounded_string_success_ (false),
+      my_bounded_sequence_bounded_wstring_success_ (false),
+      my_bounded_string_array_success_ (false),
+      my_bounded_wstring_array_success_ (false)
   {
   }
 
@@ -1578,6 +1584,129 @@ namespace CIAO_Foo_Impl
     this->my_struct_struct_success_ = !error_found;
   }
 
+  void
+  Foo_exec_i::my_sequence_bounded_string (const sequence_bounded_string& my_sequence_bounded_string)
+  {
+    if (my_sequence_bounded_string.length() != 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_sequence_bounded_string does not have the correct length\n"));
+        return;
+      }
+
+    this->my_sequence_bounded_string_success_ = true;
+
+    if (ACE_OS::strcmp (my_sequence_bounded_string[0], "Hi") != 0)
+      {
+        this->my_sequence_bounded_string_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_sequence_bounded_string[0] != Hi, it is %C\n",
+                    my_sequence_bounded_string[0].in ()));
+      }
+
+    if (ACE_OS::strcmp (my_sequence_bounded_string[1], "World") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_sequence_bounded_string[1] != World, it is %C\n",
+                    my_sequence_bounded_string[1].in ()));
+        this->my_sequence_bounded_string_success_ = false;
+      }
+  }
+
+  sequence_bounded_string*
+  Foo_exec_i::my_sequence_bounded_string (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_sequence_bounded_wstring (const sequence_bounded_wstring&)
+  {
+  }
+
+  sequence_bounded_wstring*
+  Foo_exec_i::my_sequence_bounded_wstring (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_bounded_sequence_bounded_string (const bounded_sequence_bounded_string& my_bounded_sequence_bounded_string)
+  {
+    if (my_bounded_sequence_bounded_string.length() != 2)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_bounded_sequence_bounded_string does not have the correct length\n"));
+        return;
+      }
+
+    this->my_bounded_sequence_bounded_string_success_ = true;
+
+    if (ACE_OS::strcmp (my_bounded_sequence_bounded_string[0], "Hi") != 0)
+      {
+        this->my_bounded_sequence_bounded_string_success_ = false;
+        ACE_ERROR ((LM_ERROR, "ERROR: my_sequence_bounded_string[0] != Hi, it is %C\n",
+                    my_bounded_sequence_bounded_string[0].in ()));
+      }
+
+    if (ACE_OS::strcmp (my_bounded_sequence_bounded_string[1], "World") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_sequence_bounded_string[1] != World, it is %C\n",
+                    my_bounded_sequence_bounded_string[1].in ()));
+        this->my_bounded_sequence_bounded_string_success_ = false;
+      }
+  }
+
+  bounded_sequence_bounded_string*
+  Foo_exec_i::my_bounded_sequence_bounded_string (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_bounded_sequence_bounded_wstring (const bounded_sequence_bounded_wstring&)
+  {
+  }
+
+  bounded_sequence_bounded_wstring*
+  Foo_exec_i::my_bounded_sequence_bounded_wstring (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_bounded_string_array (const bounded_string_array my_bounded_string_array)
+  {
+    this->my_bounded_string_array_success_ = true;
+
+    if (ACE_OS::strcmp (my_bounded_string_array[0].in (), "Hello") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_bounded_string_array[0] != 'Hello', it is %C\n",
+                    my_bounded_string_array[0].in ()));
+        this->my_bounded_string_array_success_ = false;
+      }
+
+    if (ACE_OS::strcmp (my_bounded_string_array[1], "World") != 0)
+      {
+        ACE_ERROR ((LM_ERROR, "ERROR: my_bounded_string_array[1] != 'World', it is %C\n",
+                    my_bounded_string_array[1].in ()));
+        this->my_bounded_string_array_success_ = false;
+      }
+  }
+
+  bounded_string_array_slice*
+  Foo_exec_i::my_bounded_string_array (void)
+  {
+    return 0;
+  }
+
+  void
+  Foo_exec_i::my_bounded_wstring_array (const bounded_wstring_array)
+  {
+  }
+
+  bounded_wstring_array_slice*
+  Foo_exec_i::my_bounded_wstring_array (void)
+  {
+    return 0;
+  }
+
   // Operations from Components::SessionComponent.
 
   void
@@ -1647,11 +1776,19 @@ namespace CIAO_Foo_Impl
     check_error (this->my_string_sequence_success_, "string sequence");
     check_error (this->my_string_sequence_2_success_, "sequence in sequence");
     check_error (this->my_array_sequence_success_, "array in sequence");
-    check_error (this->my_bounded_string_success_, "fixed string");
+    check_error (this->my_bounded_string_success_, "bounded string");
     check_error (this->my_variable_string_success_, "variable string");
     check_error (this->my_default_variable_string_success_, "default variable string");
     check_error (this->supported_short_success_, "supported short");
     check_error (this->my_struct_struct_success_, "nested struct");
+
+    // wstring not supported at this moment
+    check_error (this->my_sequence_bounded_string_success_, "sequence bounded strings");
+    //check_error (this->my_sequence_bounded_wstring_success_, "sequence bounded wstrings");
+    check_error (this->my_bounded_sequence_bounded_string_success_, "bounded sequence bounded strings");
+    //check_error (this->my_bounded_sequence_bounded_wstring_success_, "bounded sequence bounded wstrings");
+    check_error (this->my_bounded_string_array_success_, "array bounded strings");
+    //check_error (this->my_bounded_wstring_array_success_, "array bounded wstrings");
   }
 
   void
