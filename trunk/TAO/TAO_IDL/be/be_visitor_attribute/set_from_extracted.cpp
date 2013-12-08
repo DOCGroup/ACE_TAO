@@ -123,7 +123,7 @@ int
 be_visitor_attribute_set_from_extracted::visit_string (
   be_string *)
 {
-  os_ << var_name_;
+  os_ << var_name_ << ".val_";
   return 0;
 }
 
