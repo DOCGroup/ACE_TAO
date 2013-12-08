@@ -1,6 +1,11 @@
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.3 and DAnCE-1.2.4
 =======================================================
 
+. Fixed handling of bounded strings as part of the cdp.
+  For bounded strings now a boundedString element with
+  the bound of the string must be specified in the cdp.
+  This bound has to match the bound in IDL.
+
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.2 and DAnCE-1.2.3
 =======================================================
 

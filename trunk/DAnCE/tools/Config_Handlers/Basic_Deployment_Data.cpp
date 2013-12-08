@@ -180,6 +180,7 @@ namespace DAnCE
     sequence_ (s.sequence_.get () ? new ::DAnCE::Config_Handlers::SequenceType (*s.sequence_) : 0),
     alias_ (s.alias_.get () ? new ::DAnCE::Config_Handlers::AliasType (*s.alias_) : 0),
     array_ (s.array_.get () ? new ::DAnCE::Config_Handlers::ArrayType (*s.array_) : 0),
+    boundedString_ (s.boundedString_.get () ? new ::DAnCE::Config_Handlers::BoundedStringType (*s.boundedString_) : 0),
     id_ (s.id_.get () ? new ::XMLSchema::ID< ACE_TCHAR > (*s.id_) : 0),
     regulator__ ()
     {
@@ -190,6 +191,7 @@ namespace DAnCE
       if (sequence_.get ()) sequence_->container (this);
       if (alias_.get ()) alias_->container (this);
       if (array_.get ()) array_->container (this);
+      if (boundedString_.get ()) boundedString_->container (this);
       if (id_.get ()) id_->container (this);
     }
 
@@ -229,6 +231,11 @@ namespace DAnCE
           array (*(s.array_));
         else
           array_.reset (0);
+
+        if (s.boundedString_.get ())
+          boundedString (*(s.boundedString_));
+        else
+          boundedString_.reset (0);
 
         if (s.id_.get ()) id (*(s.id_));
         else id_ = ::std::auto_ptr< ::XMLSchema::ID< ACE_TCHAR > > (0);
@@ -423,6 +430,35 @@ namespace DAnCE
       {
         array_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::ArrayType > (new ::DAnCE::Config_Handlers::ArrayType (e));
         array_->container (this);
+      }
+    }
+
+    // DataType
+    //
+    bool DataType::
+    boundedString_p () const
+    {
+      return boundedString_.get () != 0;
+    }
+
+    ::DAnCE::Config_Handlers::BoundedStringType const& DataType::
+    boundedString () const
+    {
+      return *boundedString_;
+    }
+
+    void DataType::
+    boundedString (::DAnCE::Config_Handlers::BoundedStringType const& e)
+    {
+      if (boundedString_.get ())
+      {
+        *boundedString_ = e;
+      }
+
+      else
+      {
+        boundedString_ = ::std::auto_ptr< ::DAnCE::Config_Handlers::BoundedStringType > (new ::DAnCE::Config_Handlers::BoundedStringType (e));
+        boundedString_->container (this);
       }
     }
 
@@ -1307,6 +1343,76 @@ namespace DAnCE
     count_member(void) const
     {
       return member_.size ();
+    }
+
+
+    // BoundedStringType
+    //
+
+    BoundedStringType::
+    BoundedStringType ()
+    :
+    regulator__ ()
+    {
+    }
+
+    BoundedStringType::
+    BoundedStringType (BoundedStringType const& s)
+    :
+    ::XSCRT::Type (),
+    bound_ (s.bound_),
+    regulator__ ()
+    {
+    }
+
+    BoundedStringType& BoundedStringType::
+    operator= (BoundedStringType const& s)
+    {
+      if (&s != this)
+      {
+        bound_ = s.bound_;
+      }
+
+      return *this;
+    }
+
+
+    // BoundedStringType
+    //
+    BoundedStringType::bound_iterator BoundedStringType::
+    begin_bound ()
+    {
+      return bound_.begin ();
+    }
+
+    BoundedStringType::bound_iterator BoundedStringType::
+    end_bound ()
+    {
+      return bound_.end ();
+    }
+
+    BoundedStringType::bound_const_iterator BoundedStringType::
+    begin_bound () const
+    {
+      return bound_.begin ();
+    }
+
+    BoundedStringType::bound_const_iterator BoundedStringType::
+    end_bound () const
+    {
+      return bound_.end ();
+    }
+
+    void BoundedStringType::
+    add_bound (ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex >  const& e)
+    {
+      bound_.push_back (e);
+    }
+
+    size_t BoundedStringType::
+    count_bound(void) const
+    {
+      return bound_.size ();
     }
 
 
@@ -5741,6 +5847,12 @@ namespace DAnCE
           array (t);
         }
 
+        else if (n == ACE_TEXT("boundedString"))
+        {
+          ::DAnCE::Config_Handlers::BoundedStringType t (e);
+          boundedString (t);
+        }
+
         else
         {
         }
@@ -5946,6 +6058,33 @@ namespace DAnCE
         {
           ACE_Refcounted_Auto_Ptr < ::XMLSchema::string< ACE_TCHAR >, ACE_Null_Mutex >  t (new ::XMLSchema::string< ACE_TCHAR > (e));
           add_member (t);
+        }
+
+        else
+        {
+        }
+      }
+    }
+
+    // BoundedStringType
+    //
+
+    BoundedStringType::
+    BoundedStringType (::XSCRT::XML::Element< ACE_TCHAR > const& e)
+    :Base (e), regulator__ ()
+    {
+
+      ::XSCRT::Parser< ACE_TCHAR > p (e);
+
+      while (p.more_elements ())
+      {
+        ::XSCRT::XML::Element< ACE_TCHAR > e (p.next_element ());
+        ::std::basic_string< ACE_TCHAR > n (::XSCRT::XML::uq_name (e.name ()));
+
+        if (n == ACE_TEXT("bound"))
+        {
+          ACE_Refcounted_Auto_Ptr < ::XMLSchema::unsignedInt, ACE_Null_Mutex >  t (new ::XMLSchema::unsignedInt (e));
+          add_bound (t);
         }
 
         else
@@ -7566,6 +7705,20 @@ namespace DAnCE
 
       EnumTypeTypeInfoInitializer EnumTypeTypeInfoInitializer_;
 
+      struct BoundedStringTypeTypeInfoInitializer
+      {
+        BoundedStringTypeTypeInfoInitializer ()
+        {
+          ::XSCRT::TypeId id (typeid (::DAnCE::Config_Handlers::BoundedStringType));
+          ::XSCRT::ExtendedTypeInfo nf (id);
+
+          nf.add_base (::XSCRT::ExtendedTypeInfo::Access::public_, false, typeid (::XSCRT::Type));
+          ::XSCRT::extended_type_info_map ().insert (::std::make_pair (id, nf));
+        }
+      };
+
+      BoundedStringTypeTypeInfoInitializer BoundedStringTypeTypeInfoInitializer_;
+
       struct StructTypeTypeInfoInitializer
       {
         StructTypeTypeInfoInitializer ()
@@ -8166,6 +8319,8 @@ namespace DAnCE
         else alias_none (o);
         if (o.array_p ()) array (o);
         else array_none (o);
+        if (o.boundedString_p ()) boundedString (o);
+        else boundedString_none (o);
         if (o.id_p ()) id (o);
         else id_none (o);
         post (o);
@@ -8188,6 +8343,8 @@ namespace DAnCE
         else alias_none (o);
         if (o.array_p ()) array (o);
         else array_none (o);
+        if (o.boundedString_p ()) boundedString (o);
+        else boundedString_none (o);
         if (o.id_p ()) id (o);
         else id_none (o);
         post (o);
@@ -8344,6 +8501,28 @@ namespace DAnCE
 
       void DataType::
       array_none (Type const&)
+      {
+      }
+
+      void DataType::
+      boundedString (Type& o)
+      {
+        dispatch (o.boundedString ());
+      }
+
+      void DataType::
+      boundedString (Type const& o)
+      {
+        dispatch (o.boundedString ());
+      }
+
+      void DataType::
+      boundedString_none (Type&)
+      {
+      }
+
+      void DataType::
+      boundedString_none (Type const&)
       {
       }
 
@@ -9921,6 +10100,130 @@ namespace DAnCE
       }
 
       void EnumType::
+      post (Type const&)
+      {
+      }
+
+      // BoundedStringType
+      //
+      //
+
+      void BoundedStringType::
+      traverse (Type& o)
+      {
+        pre (o);
+        bound (o);
+        post (o);
+      }
+
+      void BoundedStringType::
+      traverse (Type const& o)
+      {
+        pre (o);
+        bound (o);
+        post (o);
+      }
+
+      void BoundedStringType::
+      pre (Type&)
+      {
+      }
+
+      void BoundedStringType::
+      pre (Type const&)
+      {
+      }
+
+      void BoundedStringType::
+      bound (Type& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::DAnCE::Config_Handlers::BoundedStringType::bound_iterator b (o.begin_bound()), e (o.end_bound());
+
+        if (b != e)
+        {
+          bound_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) bound_next (o);
+          }
+
+          bound_post (o);
+        }
+
+        else bound_none (o);
+      }
+
+      void BoundedStringType::
+      bound (Type const& o)
+      {
+        // VC6 anathema strikes again
+        //
+        ::DAnCE::Config_Handlers::BoundedStringType::bound_const_iterator b (o.begin_bound()), e (o.end_bound());
+
+        if (b != e)
+        {
+          bound_pre (o);
+          for (; b != e;)
+          {
+            dispatch (*(*b));
+            if (++b != e) bound_next (o);
+          }
+
+          bound_post (o);
+        }
+
+        else bound_none (o);
+      }
+
+      void BoundedStringType::
+      bound_pre (Type&)
+      {
+      }
+
+      void BoundedStringType::
+      bound_pre (Type const&)
+      {
+      }
+
+      void BoundedStringType::
+      bound_next (Type&)
+      {
+      }
+
+      void BoundedStringType::
+      bound_next (Type const&)
+      {
+      }
+
+      void BoundedStringType::
+      bound_post (Type&)
+      {
+      }
+
+      void BoundedStringType::
+      bound_post (Type const&)
+      {
+      }
+
+      void BoundedStringType::
+      bound_none (Type&)
+      {
+      }
+
+      void BoundedStringType::
+      bound_none (Type const&)
+      {
+      }
+
+      void BoundedStringType::
+      post (Type&)
+      {
+      }
+
+      void BoundedStringType::
       post (Type const&)
       {
       }
@@ -15467,6 +15770,14 @@ namespace DAnCE
       }
 
       void DataType::
+      boundedString (Type const& o)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("boundedString"), top_ ()));
+        Traversal::DataType::boundedString (o);
+        pop_ ();
+      }
+
+      void DataType::
       id (Type const& o)
       {
         ::XSCRT::XML::Attribute< ACE_TCHAR > a (ACE_TEXT ("id"), ACE_TEXT ("http://www.omg.org/Deployment"), ACE_TEXT (""), top_ ());
@@ -15878,6 +16189,46 @@ namespace DAnCE
 
       void EnumType::
       member_post (Type const&)
+      {
+        pop_ ();
+      }
+
+      // BoundedStringType
+      //
+      //
+
+      BoundedStringType::
+      BoundedStringType (::XSCRT::XML::Element< ACE_TCHAR >& e)
+      : ::XSCRT::Writer< ACE_TCHAR > (e)
+      {
+      }
+
+      BoundedStringType::
+      BoundedStringType ()
+      {
+      }
+
+      void BoundedStringType::
+      traverse (Type const& o)
+      {
+        Traversal::BoundedStringType::traverse (o);
+      }
+
+      void BoundedStringType::
+      bound_pre (Type const&)
+      {
+        push_ (::XSCRT::XML::Element< ACE_TCHAR > (ACE_TEXT("bound"), top_ ()));
+      }
+
+      void BoundedStringType::
+      bound_next (Type const& o)
+      {
+        bound_post (o);
+        bound_pre (o);
+      }
+
+      void BoundedStringType::
+      bound_post (Type const&)
       {
         pop_ ();
       }
