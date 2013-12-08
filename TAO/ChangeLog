@@ -1,3 +1,13 @@
+Sun Dec  8 18:30:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+          Fixed extraction of regular and bounded strings from an Any
+
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+          Clang fix
+
 Fri Dec  6 19:09:56 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/ORB_Core.h:

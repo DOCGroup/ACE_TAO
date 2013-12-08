@@ -187,7 +187,13 @@ be_visitor_any_extracted_type_decl::visit_sequence (be_sequence *node)
 int
 be_visitor_any_extracted_type_decl::visit_string (be_string *node)
 {
-  os_ << "const " << node->full_name () << " " << var_name_ << " = 0;";
+  ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
+  os_ << "const " << node->full_name () << " " << tmp_name_ << " = 0;" << be_nl;
+  if (node->width () == (long) sizeof (char))
+    os_ << "::CORBA::Any::to_string " << var_name_;
+  else
+    os_ << "::CORBA::Any::to_wstring " << var_name_;
+  os_ << " (" << tmp_name_ << ", " << bound << ");";
   return 0;
 }
 
