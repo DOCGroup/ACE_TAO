@@ -275,6 +275,29 @@ namespace CIAO_Foo_Impl
 
     virtual void my_struct_struct (const StructModule::StructStruct & my_struct_struct);
 
+    virtual void my_sequence_bounded_string (const sequence_bounded_string&);
+
+    virtual sequence_bounded_string* my_sequence_bounded_string (void);
+
+    virtual void my_sequence_bounded_wstring (const sequence_bounded_wstring&);
+
+    virtual sequence_bounded_wstring* my_sequence_bounded_wstring (void);
+
+    virtual void my_bounded_sequence_bounded_string (const bounded_sequence_bounded_string&);
+
+    virtual bounded_sequence_bounded_string* my_bounded_sequence_bounded_string (void);
+
+    virtual void my_bounded_sequence_bounded_wstring (const bounded_sequence_bounded_wstring&);
+
+    virtual bounded_sequence_bounded_wstring* my_bounded_sequence_bounded_wstring (void);
+
+    virtual void my_bounded_string_array (const bounded_string_array);
+
+    virtual bounded_string_array_slice* my_bounded_string_array (void);
+
+    virtual void my_bounded_wstring_array (const bounded_wstring_array);
+
+    virtual bounded_wstring_array_slice* my_bounded_wstring_array (void);
     //@}
 
     //@{
@@ -344,8 +367,13 @@ namespace CIAO_Foo_Impl
       my_variable_string_success_,
       my_default_variable_string_success_,
       supported_short_success_,
-      my_struct_struct_success_;
-
+      my_struct_struct_success_,
+      my_sequence_bounded_string_success_,
+      my_sequence_bounded_wstring_success_,
+      my_bounded_sequence_bounded_string_success_,
+      my_bounded_sequence_bounded_wstring_success_,
+      my_bounded_string_array_success_,
+      my_bounded_wstring_array_success_;
   };
 
   extern "C" FOO_EXEC_Export ::Components::EnterpriseComponent_ptr

@@ -158,18 +158,6 @@
     </configProperty>
 
     <configProperty>
-      <name>my_octet</name>
-      <value>
-        <type>
-          <kind>tk_octet</kind>
-        </type>
-        <value>
-          <octet>20</octet>
-        </value>
-      </value>
-    </configProperty>
-
-    <configProperty>
       <name>my_default_octet</name>
       <value>
         <type>
@@ -248,6 +236,32 @@
             <length>2</length>
             <elementType>
               <kind>tk_string</kind>
+            </elementType>
+          </array>
+        </type>
+        <value>
+          <element>
+            <string>Hello</string>
+          </element>
+          <element>
+            <string>World</string>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_bounded_string_array</name>
+      <value>
+        <type>
+          <kind>tk_array</kind>
+          <array>
+            <length>2</length>
+            <elementType>
+              <kind>tk_string</kind>
+              <boundedString>
+                <bound>50</bound>
+              </boundedString>
             </elementType>
           </array>
         </type>
@@ -1111,6 +1125,9 @@
       <value>
         <type>
           <kind>tk_string</kind>
+          <boundedString>
+            <bound>50</bound>
+          </boundedString>
         </type>
         <value>
           <string>Hi</string>
@@ -1213,6 +1230,57 @@
           <sequence>
             <elementType>
               <kind>tk_string</kind>
+            </elementType>
+          </sequence>
+        </type>
+        <value>
+          <element>
+            <string>Hi</string>
+          </element>
+          <element>
+            <string>World</string>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_sequence_bounded_string</name>
+      <value>
+        <type>
+          <kind>tk_sequence</kind>
+          <sequence>
+            <elementType>
+              <kind>tk_string</kind>
+              <boundedString>
+                <bound>50</bound>
+              </boundedString>
+            </elementType>
+          </sequence>
+        </type>
+        <value>
+          <element>
+            <string>Hi</string>
+          </element>
+          <element>
+            <string>World</string>
+          </element>
+        </value>
+      </value>
+    </configProperty>
+
+    <configProperty>
+      <name>my_bounded_sequence_bounded_string</name>
+      <value>
+        <type>
+          <kind>tk_sequence</kind>
+          <sequence>
+            <bound>5</bound>
+            <elementType>
+              <kind>tk_string</kind>
+              <boundedString>
+                <bound>50</bound>
+              </boundedString>
             </elementType>
           </sequence>
         </type>
