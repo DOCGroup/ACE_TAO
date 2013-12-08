@@ -44,7 +44,7 @@ testCompatibility (int , ACE_TCHAR *[])
     svcname = ACE_TEXT ("CORBALOC_Parser");
 
     ACE_Service_Object* p21 =  ACE_Dynamic_Service<ACE_Service_Object>::instance (one.get (), svcname);
-    if ((p21 == 0))
+    if (p21 == 0)
       ACE_ERROR_RETURN ((LM_DEBUG,
                          ACE_TEXT("Expected %s locally, in one\n"), svcname), -1);
 
