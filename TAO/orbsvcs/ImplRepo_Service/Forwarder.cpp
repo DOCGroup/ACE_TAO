@@ -129,8 +129,8 @@ ImR_DSI_Forwarder::invoke (CORBA::ServerRequest_ptr request,
 
   if (is_oneway)
     {
-      CORBA::release (resp);
-      return; // nothing else to do?
+      return; // nothing else to do, the client isn't waiting so no forwarding
+              // will happen.
     }
 
   PortableServer::POA_var poa = this->poa_current_var_->get_POA();

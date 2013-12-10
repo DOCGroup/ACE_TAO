@@ -1,3 +1,16 @@
+Tue Dec 10 21:16:34 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+          Fix a crash that occurs if the requested operation is a
+          oneway.
+
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+          Clean up scoreboard warnings and wchar compile failure.
+
 Sun Dec  8 18:30:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_helper.cpp:
