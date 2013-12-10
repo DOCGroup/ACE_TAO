@@ -142,7 +142,8 @@ void
 AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
 {
   this->first_ = start;
-  CORBA::ULong len =  this->repo_->servers ().current_size () - start;
+  CORBA::ULong len =
+    static_cast<CORBA::ULong> (this->repo_->servers ().current_size ()) - start;
   if (how_many > 0 && len > how_many)
     {
       len = how_many;

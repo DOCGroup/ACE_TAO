@@ -750,7 +750,7 @@ ImR_Locator_i::link_servers
       return;
     }
 
-  for (size_t i = 0; i < peers.length(); i++)
+  for (CORBA::ULong i = 0; i < peers.length(); i++)
     {
       Server_Info_Ptr si;
       if (this->get_info_for_name (peers[i], si))

@@ -482,9 +482,9 @@ TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
       {
       case 'p': //list of peers
         {
-          char *arg = get_opts.opt_arg ();
-          size_t last = this->peers_.length ();
-          size_t num = 0;
+          char *arg = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+          CORBA::ULong last = this->peers_.length ();
+          CORBA::ULong num = 0;
           char *c = arg;
           while (c != 0)
             {
@@ -711,7 +711,7 @@ TAO_IMR_Op_Register::addenv (ACE_TCHAR *opt)
   // Increase the length of the sequence
   this->environment_vars_.length (length + 1);
   ACE_TString tokens (opt);
-  int index = tokens.find (ACE_TEXT("="));
+  size_t index = tokens.find (ACE_TEXT("="));
   // Insert at position length since that is our new element
   this->environment_vars_ [length].name =
     CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR(tokens.substr (0, index).c_str ()));
