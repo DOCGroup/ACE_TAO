@@ -324,7 +324,11 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   bool opened_endpoint = false;
 
 #if defined (ACE_WIN32) && defined (ACE_HAS_IPV6)
-  if (!orb_core->orb_params ()->connect_ipv6_only () && this->acceptors_ == 0)
+  OSVERSIONINFO vinfo;
+  vinfo.dwOSVersionInfoSize = sizeof (vinfo);
+  int vres = GetVersionEx (&vinfo);
+  if ((vres == 0 || vinfo.dwMajorVersion < 6) &&
+      !orb_core->orb_params ()->connect_ipv6_only () && this->acceptors_ == 0)
     {
       // Since Win32 has single-stack IPv4/IPv6 we need an additional
       // acceptor to open explicitly on IPv6 ANY *and* IPv4 ANY.
