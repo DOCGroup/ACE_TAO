@@ -232,7 +232,7 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
       if (CORBA::is_nil (policy.in ()))
         {
           has_synchronization = true;
-          scope = Messaging::SYNC_WITH_TRANSPORT;
+          scope = orb_core->default_sync_scope ();
           return;
         }
       Messaging::SyncScopePolicy_var p =

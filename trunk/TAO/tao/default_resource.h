@@ -190,7 +190,8 @@ public:
                                    CORBA::ULong max_message_size) const;
   virtual void disable_factory (void);
   virtual bool drop_replies_during_shutdown (void) const;
-  //@}
+  virtual Messaging::SyncScope sync_scope () const;
+ //@}
 
 protected:
 
@@ -322,6 +323,10 @@ private:
   /// Flag to indicate whether replies should be dropped during ORB
   /// shutdown.
   bool drop_replies_;
+
+  /// The default sync scope used with oneways when a policy does not
+  /// override
+  Messaging::SyncScope sync_scope_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Resource_Factory)

@@ -1,3 +1,27 @@
+Thu Dec 12 15:32:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/ImplRepo/oneway:
+          Added new test.
+
+        * tao/Messaging/Messaging_Policy_i.cpp:
+          Get the new configurable default sync scope if no policy is
+          defined.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+        * tao/Resource_Factory.h:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Allow a default sync scope to be set using -ORBDefaultSyncScope
+          on the resource strategy factory. If unset, the default is
+          SYNC_WITH_TRANSPORT. This feature allows for global sync scope
+          configuration without adding a dependency on the Messaging
+          library and adding a block of code to set scope via a policy.
+          The policy framework still works and will override this default
+          as expected.
+
 Thu Dec 12 00:10:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Acceptor_Registry.cpp:
