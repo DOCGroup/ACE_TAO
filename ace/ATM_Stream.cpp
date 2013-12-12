@@ -4,6 +4,8 @@
 
 #if defined (ACE_HAS_ATM)
 
+#include "ace/OS_NS_string.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/ATM_Stream.inl"
 #endif /* __ACE_INLINE__ */
