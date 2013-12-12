@@ -242,6 +242,19 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
       else
         local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
 
+# if defined (ACE_WIN32)
+      // on windows vista and later, Winsock can support dual stack sockets
+      // but this must be explicitly set prior to the bind. Since this
+      // behavior is the default on *nix platforms, it should be benigh to
+      // just do it here. On older platforms the setsockopt will fail, but
+      // that should be OK.
+      int zero = 0;
+      ACE_OS::setsockopt (this->get_handle (),
+                          IPPROTO_IPV6,
+                          IPV6_V6ONLY,
+                          (char *)&zero,
+                          sizeof (zero));
+# endif /* ACE_WIN32 */
       // We probably don't need a bind_port written here.
       // There are currently no supported OS's that define
       // ACE_LACKS_WILDCARD_BIND.
