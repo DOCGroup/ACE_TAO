@@ -1,3 +1,7 @@
+Thu Dec 12 16:28:45 UTC 2013  Steve Huston  <shuston@riverace.com>
+
+        * ace/ATM_Stream.cpp: Add missing OS_NS_string.h
+
 Thu Dec 12 00:07:09 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/SOCK_Acceptor.cpp:
