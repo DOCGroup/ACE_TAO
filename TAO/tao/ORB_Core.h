@@ -537,6 +537,9 @@ public:
                                        bool &has_synchronization,
                                        Messaging::SyncScope &scope);
 
+  /// Return the default sync scope configured for this ORB
+  Messaging::SyncScope default_sync_scope (void);
+
   /// Handle to the factory for protocols_hooks_..
   TAO_Protocols_Hooks *protocols_hooks_;
 
@@ -1267,6 +1270,9 @@ protected:
 
   /// The hook to be set for the SyncScopePolicy
   Sync_Scope_Hook sync_scope_hook_;
+
+  /// The configured value used as the default sync scope
+  Messaging::SyncScope default_sync_scope_;
 
   /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
   Timeout_Hook timeout_hook_;

@@ -266,6 +266,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     codeset_manager_ (0),
     config_ (gestalt),
     sync_scope_hook_ (0),
+    default_sync_scope_ (Messaging::SYNC_WITH_TRANSPORT),
     timeout_hook_ (0)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
@@ -1442,6 +1443,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
   // Initialize the flushing strategy
   this->flushing_strategy_ = trf->create_flushing_strategy ();
+
+  // Initialize the default sync scope value
+  this->default_sync_scope_ = trf->sync_scope ();
 
   // Look in the service repository for an instance of the Protocol Hooks.
   const char *protocols_hooks_name = this->orb_params ()->protocols_hooks_name ();
@@ -3107,13 +3111,13 @@ TAO_ORB_Core::implrepo_service (void)
 }
 
 void
-TAO_ORB_Core::default_sync_scope_hook (TAO_ORB_Core *,
+TAO_ORB_Core::default_sync_scope_hook (TAO_ORB_Core *oc,
                                        TAO_Stub *,
                                        bool &has_synchronization,
                                        Messaging::SyncScope &scope)
 {
   has_synchronization = true;
-  scope = Messaging::SYNC_WITH_TRANSPORT;
+  scope = (oc == 0) ? Messaging::SYNC_WITH_TRANSPORT : oc->default_sync_scope_;
 }
 
 void
