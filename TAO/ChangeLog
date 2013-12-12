@@ -1,3 +1,8 @@
+Thu Dec 12 20:38:46 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+       * orbsvcs/tests/ImplRepo/oneway/Test_i.cpp:
+         fix for overaggressive file cleanup.
+
 Thu Dec 12 15:32:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:
