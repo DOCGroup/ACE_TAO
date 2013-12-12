@@ -916,10 +916,16 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   bool ipv6_only = (def_type == AF_INET6) ||
     orb_core->orb_params ()->connect_ipv6_only ();
 #if defined (ACE_WIN32)
-  if (this->default_address_.get_type () == AF_INET)
-    ipv4_only = true;
-  else
-    ipv6_only = true;
+  OSVERSIONINFO vinfo;
+  vinfo.dwOSVersionInfoSize = sizeof (vinfo);
+  int vres = GetVersionEx (&vinfo);
+  if (vres == 0 || vinfo.dwMajorVersion < 6)
+    {
+      if (this->default_address_.get_type () == AF_INET)
+        ipv4_only = true;
+      else
+        ipv6_only = true;
+    }
 #endif /* ACE_WIN32 */
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise

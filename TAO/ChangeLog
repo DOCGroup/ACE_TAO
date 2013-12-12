@@ -1,3 +1,11 @@
+Thu Dec 12 00:10:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Acceptor_Registry.cpp:
+        * tao/IIOP_Acceptor.cpp:
+          Discriminate between windows platforms that support a dual IP
+          stack and those that don't. Since Windows Vista, the winsock
+          IP stack is capable of concurrent support of IPv4 and IPv6.
+
 Tue Dec 10 21:16:34 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Forwarder.cpp:
