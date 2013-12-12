@@ -659,6 +659,13 @@ TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
 }
 
 ACE_INLINE
+Messaging::SyncScope
+TAO_ORB_Core::default_sync_scope (void)
+{
+  return this->default_sync_scope_;
+}
+
+ACE_INLINE
 void
 TAO_ORB_Core::set_timeout_hook (Timeout_Hook hook)
 {
