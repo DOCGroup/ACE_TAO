@@ -1,3 +1,10 @@
+Fri Dec 13 00:24:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/tests/ImplRepo/oneway/defsync.conf:
+          Fix for bug 4149 and update the test to reflect this status.
+
 Thu Dec 12 20:38:46 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
        * orbsvcs/tests/ImplRepo/oneway/Test_i.cpp:
