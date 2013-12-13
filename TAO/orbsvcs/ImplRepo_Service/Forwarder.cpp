@@ -72,14 +72,6 @@ ImR_DSI_Forwarder::_dispatch (TAO_ServerRequest &request,
           // No need to invoke in this case.
           return;
         }
-      else if (request.sync_with_server ())
-        {
-          // The last line before the call to this function
-          // was an ACE_CHECK_RETURN, so if we're here, we
-          // know there is no exception so far, and that's all
-          // a SYNC_WITH_SERVER client request cares about.
-          request.send_no_exception_reply ();
-        }
     }
 
   // Create DSI request object.
@@ -124,8 +116,8 @@ void
 ImR_DSI_Forwarder::invoke (CORBA::ServerRequest_ptr request,
                            TAO_AMH_DSI_Response_Handler_ptr resp)
 {
-  bool is_oneway = !request->_tao_server_request().response_expected()
-    || request->_tao_server_request().sync_with_server();
+  bool is_oneway = !(request->_tao_server_request().response_expected()
+                     || request->_tao_server_request().sync_with_server());
 
   if (is_oneway)
     {
