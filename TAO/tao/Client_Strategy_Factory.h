@@ -23,6 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/Versioned_Namespace.h"
+#include "tao/Basic_Types.h"
 
 #include "ace/Service_Object.h"
 
@@ -42,6 +43,11 @@ class TAO_Wait_Strategy;
 class TAO_Transport;
 class TAO_ORB_Core;
 class TAO_Connect_Strategy;
+
+namespace Messaging
+{
+  typedef ::CORBA::Short SyncScope;
+}
 
 /**
  * @class TAO_Client_Strategy_Factory
@@ -94,6 +100,8 @@ public:
   /// after an exception occurs.
   virtual const TAO::Invocation_Retry_Params &invocation_retry_params (void) const = 0;
 
+  /// Return the value to be used as the default sync scope for the ORB
+  virtual Messaging::SyncScope sync_scope () const = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

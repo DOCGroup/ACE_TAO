@@ -13,6 +13,7 @@
 #include "tao/LF_Connect_Strategy.h"
 #include "tao/orbconf.h"
 #include "tao/Invocation_Utils.h"
+#include "tao/Messaging_SyncScopeC.h"
 
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -29,6 +30,7 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
   , rd_table_size_ (TAO_RD_TABLE_SIZE)
   , muxed_strategy_lock_type_ (TAO_THREAD_LOCK)
   , use_cleanup_options_ (false)
+  , sync_scope_ (Messaging::SYNC_WITH_TRANSPORT)
 {
   // Use single thread client connection handler
 #if defined (TAO_USE_ST_CLIENT_CONNECTION_HANDLER)
@@ -167,6 +169,43 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                   name);
             }
         }
+    else if (ACE_OS::strcasecmp (argv[curarg],
+                                 ACE_TEXT ("-ORBDefaultSyncScope")) == 0)
+      {
+        ++curarg;
+        if (curarg < argc)
+          {
+            ACE_TCHAR const * const current_arg = argv[curarg];
+
+            if (ACE_OS::strcasecmp (current_arg,
+                                    ACE_TEXT("none")) == 0)
+              {
+                this->sync_scope_ = Messaging::SYNC_NONE;
+              }
+            else if (ACE_OS::strcasecmp (current_arg,
+                                    ACE_TEXT("transport")) == 0)
+              {
+                this->sync_scope_ = Messaging::SYNC_WITH_TRANSPORT;
+              }
+            else if (ACE_OS::strcasecmp (current_arg,
+                                    ACE_TEXT("server")) == 0)
+              {
+                this->sync_scope_ = Messaging::SYNC_WITH_SERVER;
+              }
+            else if (ACE_OS::strcasecmp (current_arg,
+                                    ACE_TEXT("target")) == 0)
+              {
+                this->sync_scope_ = Messaging::SYNC_WITH_TARGET;
+              }
+            else
+              {
+                this->report_option_value_error (ACE_TEXT("-ORBDefaultSyncScope"),
+                                                 argv[curarg]);
+                continue;
+              }
+
+          }
+      }
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-ORBReplyDispatcherTableSize"))
                == 0)
@@ -473,6 +512,11 @@ TAO_Default_Client_Strategy_Factory::create_connect_strategy (
   return cs;
 }
 
+Messaging::SyncScope
+TAO_Default_Client_Strategy_Factory::sync_scope (void) const
+{
+  return this->sync_scope_;
+}
 
 int
 TAO_Default_Client_Strategy_Factory::allow_callback (void)
