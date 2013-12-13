@@ -1255,105 +1255,86 @@ example</a> of how this is used in TAO.</p>
         <th>Description</th>
       </tr>
       <tr>
-        <td><code>-ORBReactorMaskSignals</code> <em>0/1</em></td>
-        <td>ACE select reactors mask signals during upcalls to the
-event handlers. This is only useful if the application is going to trap
-those signals and handle them in any special way. Disabling the mask
-can improve performance by reducing the number of kernel level locks. </td>
+        <td><code>-ORBConnectionCacheLock</code> <em>locktype</em></td>
+        <td><a name="-ORBConnectionCacheLock"></a>Specify the type of
+          lock to be used by the Connection Cache. Possible values for lock type
+          are <code>thread</code>, which specifies that an inter-thread mutex is
+          used to guarantee exclusive access, and <code>null</code>, which
+          specifies that no locking be performed. The default is thread. </td>
       </tr>
       <tr>
-        <td><code>-ORBProtocolFactory</code> <em>factory</em></td>
-        <td><a name="-ORBProtocolFactory"></a>Specify which pluggable
-protocol factory to load. By default, only the factory for the IIOP
-protocol (<code>IIOP_Factory</code>) is loaded.
-        <p>For example, if some protocol called <em><code>Foo</code></em>
-whose factory was called <em><code>Foo_Factory</code></em> was
-available, then it could be loaded into TAO by specifying <code>-ORBProtocolFactory
-Foo_Factory</code> in the service configurator file. The <em><code>Foo</code></em>
-pluggable protocol would then be available for use. </p>
+        <td><code>-ORBConnectionCacheMax</code> <em>limit</em></td>
+        <td><a name="-ORBConnectionCacheMax"></a>The transport cache
+          will grow to a maximum of the specified limit. The default is system
+          dependent, but can be overridden at compile-time by defining the
+          preprocessor macro <CODE>TAO_CONNECTION_CACHE_MAXIMUM</CODE>. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBConnectionCachePurgePercentage</code> <em>percent</em></td>
+        <td><a name="-ORBConnectionCachePurgePercentage"></a>If the
+          transport cache is purged, the specified percentage (20 by default) of
+          the total number of connections cached will be closed. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBConnectionPurgingStrategy</code> <em>type</em></td>
+        <td><a name="-ORBConnectionPurgingStrategy"></a>Opened
+          connections are added to the transport cache so they can be reused.
+          If a process continues to run and these connections are not reused,
+          however, the cache will continue to grow.  Before each new connection,
+          therefore, the cache is checked and purged if it has reached the limit
+          specified by the <CODE>-ORBConnectionCacheMax</CODE> option or the
+          system default if that option was not used. The possible values for
+          type are <CODE>lru</CODE>, <CODE>lfu</CODE>, <CODE>fifo</CODE>, and
+          <CODE>null</CODE>. The default is <CODE>lru</CODE> (least recently
+          used). The other options are <CODE>lfu</CODE> (least frequently used),
+          <CODE>fifo</CODE> (first in first out), and <CODE>null</CODE> (no
+          connections are purged) and are contained within the TAO Strategies
+          library. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBDropRepliesDuringShutdown</code> <em>boolean (0|1)</em></td>
+        <td><a name="-ORBDropRepliesDuringShutdown"></a> Strategy to
+          make the ORB wait for replies to show up even if the ORB is
+          shutdown. The default is to drop replies. For example, clients
+          comunicating with misbehaved servers will continue to hang if
+          replies don't show up and even if the client ORB is shutdown
+          from another thread. This strategy helps the ORB decide to
+          wait for the replies or drop replies. Some clients may not
+          want to drop replies, and may want all their requests to be
+          processed until ORB::destroy () is called. Setting the value
+          of this option to 0 would help with that. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBFlushingStrategy</code> <em>type</em></td>
+        <td><a name="-ORBFlushingStrategy"></a>By default TAO provides
+          three strategies to flush queued messages. The <code>leader_follower</code>
+          strategy uses the Reactor and non-blocking I/O to send the outgoing
+          messages, this strategy participates in the Leader/Followers protocol
+          to synchronize access to the Reactor. The <code>reactive</code>
+          strategy uses the Reactor but does not take part in the
+          Leader/Followers protocol, thus it is better used only in single
+          threaded applications. Finally, the <code>blocking</code> strategy
+          flushes the queue as soon as it becomes "full", and blocks the thread
+          until all the data is sent.
         </td>
       </tr>
       <tr>
         <td><code>-ORBIORParser</code> <em>parser</em></td>
         <td><a name="-ORBIORParser"></a>Name an IOR Parser to load. IOR
-Parsers are used to interpret strings passed to <code>ORB::string_to_object()</code>.
-By default the ORB can handle multiple string formats, including <code>IOR:</code>,
-        <code>corbaloc:</code>, <code>corbaname:</code>, and <code>file:</code>.
-The application developer can <a href="ior_parsing.html">add
-new IOR formats </a>using this option. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBConnectionPurgingStrategy</code> <em>type</em></td>
-        <td><a name="-ORBConnectionPurgingStrategy"></a>Opened
-connections are added to the transport cache so they can be reused.
-If a process continues to run and these connections are not reused,
-however, the cache will continue to grow.  Before each new connection,
-therefore, the cache is checked and purged if it has reached the limit
-specified by the <CODE>-ORBConnectionCacheMax</CODE> option or the
-system default if that option was not used. The possible values for
-type are <CODE>lru</CODE>, <CODE>lfu</CODE>, <CODE>fifo</CODE>, and
-<CODE>null</CODE>. The default is <CODE>lru</CODE> (least recently
-used). The other options are <CODE>lfu</CODE> (least frequently used),
-<CODE>fifo</CODE> (first in first out), and <CODE>null</CODE> (no
-connections are purged) and are contained within the TAO Strategies
-library. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBConnectionCacheMax</code> <em>limit</em></td>
-        <td><a name="-ORBConnectionCacheMax"></a>The transport cache
-will grow to a maximum of the specified limit. The default is system
-dependent, but can be overridden at compile-time by defining the
-preprocessor macro <CODE>TAO_CONNECTION_CACHE_MAXIMUM</CODE>. </td>
+          Parsers are used to interpret strings passed to <code>ORB::string_to_object()</code>.
+          By default the ORB can handle multiple string formats, including <code>IOR:</code>,
+          <code>corbaloc:</code>, <code>corbaname:</code>, and <code>file:</code>.
+          The application developer can <a href="ior_parsing.html">add
+            new IOR formats </a>using this option. </td>
       </tr>
       <tr>
         <td><code>-ORBMuxedConnectionMax</code> <em>number</em></td>
         <td><a name="-ORBMuxedConnectionMax"></a>The transport cache
-allows only specified number of connections-per-QoS property to be
-added to connection cache. Threads not getting the connections will
-wait for the connections to be released. This option is more useful for
-transports using a muxed connection strategy and want control over the
-number of connections that are created by the active threads. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBConnectionCachePurgePercentage</code> <em>percent</em></td>
-        <td><a name="-ORBConnectionCachePurgePercentage"></a>If the
-transport cache is purged, the specified percentage (20 by default) of
-the total number of connections cached will be closed. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBConnectionCacheLock</code> <em>locktype</em></td>
-        <td><a name="-ORBConnectionCacheLock"></a>Specify the type of
-lock to be used by the Connection Cache. Possible values for lock type
-are <code>thread</code>, which specifies that an inter-thread mutex is
-used to guarantee exclusive access, and <code>null</code>, which
-specifies that no locking be performed. The default is thread. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBFlushingStrategy</code> <em>type</em></td>
-        <td><a name="-ORBFlushingStrategy"></a>By default TAO provides
-three strategies to flush queued messages. The <code>leader_follower</code>
-strategy uses the Reactor and non-blocking I/O to send the outgoing
-messages, this strategy participates in the Leader/Followers protocol
-to synchronize access to the Reactor. The <code>reactive</code>
-strategy uses the Reactor but does not take part in the
-Leader/Followers protocol, thus it is better used only in single
-threaded applications. Finally, the <code>blocking</code> strategy
-flushes the queue as soon as it becomes "full", and blocks the thread
-until all the data is sent.
-        </td>
-      </tr>
-      <tr>
-        <td><code>-ORBDropRepliesDuringShutdown</code> <em>boolean (0|1)</em></td>
-        <td><a name="-ORBDropRepliesDuringShutdown"></a> Strategy to
-        make the ORB wait for replies to show up even if the ORB is
-        shutdown. The default is to drop replies. For example, clients
-        comunicating with misbehaved servers will continue to hang if
-        replies don't show up and even if the client ORB is shutdown
-        from another thread. This strategy helps the ORB decide to
-        wait for the replies or drop replies. Some clients may not
-        want to drop replies, and may want all their requests to be
-        processed until ORB::destroy () is called. Setting the value
-        of this option to 0 would help with that. </td>
+          allows only specified number of connections-per-QoS property to be
+          added to connection cache. Threads not getting the connections will
+          wait for the connections to be released. This option is more useful for
+          transports using a muxed connection strategy and want control over the
+          number of connections that are created by the active threads. </td>
       </tr>
       <tr>
         <td><code>-ORBOutputCDRAllocator</code> <em>mmap|local_memory_pool</em></td>
@@ -1361,6 +1342,25 @@ until all the data is sent.
         <code>TAO_USE_OUTPUT_CDR_MMAP_MEMORY_POOL</code> is set to 1 then always the mmap pool
         will be used.
         </td>
+      </tr>
+      <tr>
+        <td><code>-ORBProtocolFactory</code> <em>factory</em></td>
+        <td><a name="-ORBProtocolFactory"></a>Specify which pluggable
+          protocol factory to load. By default, only the factory for the IIOP
+          protocol (<code>IIOP_Factory</code>) is loaded.
+          <p>For example, if some protocol called <em><code>Foo</code></em>
+            whose factory was called <em><code>Foo_Factory</code></em> was
+            available, then it could be loaded into TAO by specifying <code>-ORBProtocolFactory
+              Foo_Factory</code> in the service configurator file. The <em><code>Foo</code></em>
+            pluggable protocol would then be available for use. </p>
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBReactorMaskSignals</code> <em>0/1</em></td>
+        <td>ACE select reactors mask signals during upcalls to the
+          event handlers. This is only useful if the application is going to trap
+          those signals and handle them in any special way. Disabling the mask
+          can improve performance by reducing the number of kernel level locks. </td>
       </tr>
       <tr>
         <td><code>-ORBZeroCopyWrite</code> </td>
@@ -1413,6 +1413,47 @@ is available that shows how to specify this option in the svc.conf file.</p>
         <th>Description</th>
       </tr>
       <tr>
+        <td><code>-ORBAMHResponseHandlerAllocator</code> <em>which</em></td>
+        <td><a name="-ORBAMHResponseHandlerAllocator"></a>Specify whether the ORB
+          uses locked (<em>which</em> = <code>thread</code>) or lock-free (<em>which</em>
+          = <code>null</code>) allocators for the AMH response handlers.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBAMIResponseHandlerAllocator</code> <em>which</em></td>
+        <td><a name="-ORBAMIResponseHandlerAllocator"></a>Specify whether the ORB
+          uses locked (<em>which</em> = <code>thread</code>) or lock-free (<em>which</em>
+          = <code>null</code>) allocators for the AMI response handlers.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBInputCDRAllocator</code> <em>which</em></td>
+        <td><a name="-ORBInputCDRAllocator"></a>Specify whether the
+          ORB uses locked (<em>which</em> = <code>thread</code>) or lock-free
+          (<em>which</em> = <code>null</code>) allocators for the incoming CDR
+          buffers. Though <code>null</code> should give the optimal performance;
+          we made the default <code>thread</code>.  TAO optimizations for octet
+          sequences will not work in all cases when the allocator does not have
+          locks (for example if the octet sequences are part of a return
+          value). Using locked allocators also allows the users to take
+          advantage of the TAO octet sequence extensions to preserve the buffer
+          after the upcall. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBReactorRegistry</code> <em>registry_type</em></td>
+        <td><a name="-ORBReactorRegistry"></a>This option is no longer
+          supported. The Advanced Resource Factory will emit an error if you
+          attempt its use. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBReactorThreadQueue</code> <em>which</em></td>
+        <td><a name="-ORBReactorThreadQueue"></a>Applies only to the
+          <CODE>ACE_TP_Reactor</CODE>, i.e., when <code>-ORBReactorType</code> =
+          <code>tp</code>, and specifies the order, last-in-first-out
+          (<em>which</em> = <code>LIFO</code>), the default, or
+          first-in-first-out (<em>which</em> = <code>FIFO</code>), in which
+          waiting threads are selected to run by the
+          <CODE>ACE_Select_Reactor_Token</CODE>. </td>
+      </tr>
+      <tr>
         <td><code>-ORBReactorType</code> <em>which</em></td>
         <td><a name="-ORBReactorType"></a>Specify what kind of reactor
 the ORB uses. The default reactor is the ACE_TP_Reactor.
@@ -1457,47 +1498,6 @@ thread-pool reactor which is the default.</td>
           </tbody>
         </table>
         </td>
-      </tr>
-      <tr>
-        <td><code>-ORBReactorThreadQueue</code> <em>which</em></td>
-        <td><a name="-ORBReactorThreadQueue"></a>Applies only to the
-<CODE>ACE_TP_Reactor</CODE>, i.e., when <code>-ORBReactorType</code> =
-<code>tp</code>, and specifies the order, last-in-first-out
-(<em>which</em> = <code>LIFO</code>), the default, or
-first-in-first-out (<em>which</em> = <code>FIFO</code>), in which
-waiting threads are selected to run by the
-<CODE>ACE_Select_Reactor_Token</CODE>. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBInputCDRAllocator</code> <em>which</em></td>
-        <td><a name="-ORBInputCDRAllocator"></a>Specify whether the
-ORB uses locked (<em>which</em> = <code>thread</code>) or lock-free
-(<em>which</em> = <code>null</code>) allocators for the incoming CDR
-buffers. Though <code>null</code> should give the optimal performance;
-we made the default <code>thread</code>.  TAO optimizations for octet
-sequences will not work in all cases when the allocator does not have
-locks (for example if the octet sequences are part of a return
-value). Using locked allocators also allows the users to take
-advantage of the TAO octet sequence extensions to preserve the buffer
-after the upcall. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBAMHResponseHandlerAllocator</code> <em>which</em></td>
-        <td><a name="-ORBAMHResponseHandlerAllocator"></a>Specify whether the ORB
-uses locked (<em>which</em> = <code>thread</code>) or lock-free (<em>which</em>
-= <code>null</code>) allocators for the AMH response handlers.</td>
-      </tr>
-      <tr>
-        <td><code>-ORBAMIResponseHandlerAllocator</code> <em>which</em></td>
-        <td><a name="-ORBAMIResponseHandlerAllocator"></a>Specify whether the ORB
-uses locked (<em>which</em> = <code>thread</code>) or lock-free (<em>which</em>
-= <code>null</code>) allocators for the AMI response handlers.</td>
-      </tr>
-      <tr>
-        <td><code>-ORBReactorRegistry</code> <em>registry_type</em></td>
-        <td><a name="-ORBReactorRegistry"></a>This option is no longer
-supported. The Advanced Resource Factory will emit an error if you
-attempt its use. </td>
       </tr>
     </tbody>
   </table>
@@ -1544,11 +1544,78 @@ file. </p>
         <th>Description</th>
       </tr>
       <tr>
+        <td><code>-ORBActiveHintInIds</code> <em>adds an active hint
+            in ids</em></td>
+        <td>Specify whether an active hint should be added to ids. With
+          active hints, ids can be found quickly. However, they lead to larger
+          IORs. Note that this option is disregarded <code>if
+            -ORBAllowReactivationOfSystemids</code> is set to <code>0</code>.
+          The <em>-ORBActiveHintInIds</em>
+          can be <code>0</code> or <code>1</code>. This option defaults to <code>1</code>.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBActiveHintInPOANames</code> <em>adds an active
+hint in poa names</em></td>
+        <td>Specify whether an active hint should be added to POA
+names. With active hints, POA names can be found quickly. However, they
+lead to larger IORs. The <code>-ORBActiveHintInPOANames</code> can be <code>0</code>
+or <code>1</code>. This option defaults to <code>1</code>. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBActiveObjectMapSize</code> <em>active object map
+            size</em></td>
+        <td>Specify the size of the active object map. If not
+          specified, the default value is 64.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBAllowReactivationOfSystemids</code> <em>allows
+            reactivation of system ids</em></td>
+        <td>Specify whether system ids can be reactivated, i.e., once
+          an id that was generated by the system has been deactivated, will the
+          user reactivate a new servant using the old id. If the user is not
+          going to use this feature, the IORs can be shortened, an extra
+          comparison in the critical upcall path removed, and some memory on the
+          server side can be saved. The <code>ORBAllowReactivationOfSystemids</code>
+          can be <code>0</code> or <code>1</code>. This option defaults to <code>1</code>.
+        </td>
+      </tr>
+      <tr>
         <td><a name="orb_concurrency"><code>-ORBConcurrency</code></a> <em>which</em></td>
         <td>Specify which concurrency strategy to use. Range of values
 is <code>reactive</code> for a purely Reactor-driven concurrency
 strategy or <code>thread-per-connection</code> for creating a new
 thread to service each connection. The default is reactive. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBPersistentidPolicyDemuxStrategy</code> <em>persistent
+id policy based demultiplexing strategy</em></td>
+        <td>Specify the demultiplexing lookup strategy to be used with
+the persistent id policy. The <em>demultiplexing strategy</em> can be
+one of <code>dynamic</code> or <code>linear</code>. This option
+defaults to using the <code>dynamic</code> strategy. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBPoaMapSize</code> <em>poa map size</em></td>
+        <td>Specify the size of the POA map. If not specified, the
+default value is 24.</td>
+      </tr>
+      <tr>
+        <td><code>-ORBSystemidPolicyDemuxStrategy</code> <em>system id
+policy based demultiplexing strategy</em></td>
+        <td>Specify the demultiplexing lookup strategy to be used with
+the system id policy. The <em>demultiplexing strategy</em> can be one
+of <code>dynamic</code>, <code>linear</code>, or <code>active</code>.
+This option defaults to use the <code>dynamic</code> strategy when <code>-ORBAllowReactivationOfSystemids</code>
+is true, and to <code>active</code> strategy when <code>-ORBAllowReactivationOfSystemids</code>
+is false. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBThreadFlags</code> <em>thread flags</em></td>
+        <td>Specify the flags used for thread creation. Flags can be
+any logical-OR combination of <code>THR_DETACHED</code>, <code>THR_BOUND</code>,
+        <code>THR_NEW_LWP</code>, <code>THE_SUSPENDED</code>. The
+default is <code>THR_BOUND | THR_DETACHED</code> . </td>
       </tr>
       <tr>
         <td><a name="server_timeout"><code>-ORBThreadPerConnectionTimeout</code></a>
@@ -1572,28 +1639,12 @@ disable polling entirely. This yields a slight performance improvement
         </td>
       </tr>
       <tr>
-        <td><code>-ORBActiveObjectMapSize</code> <em>active object map
-size</em></td>
-        <td>Specify the size of the active object map. If not
-specified, the default value is 64.</td>
-      </tr>
-      <tr>
-        <td><code>-ORBUseridPolicyDemuxStrategy</code> <em>user id
-policy based demultiplexing strategy</em></td>
+        <td><code>-ORBTransientidPolicyDemuxStrategy</code> <em>transient
+id policy based demultiplexing strategy</em></td>
         <td>Specify the demultiplexing lookup strategy to be used with
-the user id policy. The <em>demultiplexing strategy</em> can be one of
-        <code>dynamic</code> or <code>linear</code>. This option
-defaults to using the <code>dynamic</code> strategy. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBSystemidPolicyDemuxStrategy</code> <em>system id
-policy based demultiplexing strategy</em></td>
-        <td>Specify the demultiplexing lookup strategy to be used with
-the system id policy. The <em>demultiplexing strategy</em> can be one
-of <code>dynamic</code>, <code>linear</code>, or <code>active</code>.
-This option defaults to use the <code>dynamic</code> strategy when <code>-ORBAllowReactivationOfSystemids</code>
-is true, and to <code>active</code> strategy when <code>-ORBAllowReactivationOfSystemids</code>
-is false. </td>
+the transient id policy. The <em>demultiplexing strategy</em> can be
+one of <code>dynamic</code>, <code>linear</code>, or <code>active</code>.
+This option defaults to using the <code>active</code> strategy. </td>
       </tr>
       <tr>
         <td><code>-ORBUniqueidPolicyReverseDemuxStrategy</code> <em>unique
@@ -1604,63 +1655,12 @@ can be one of <code>dynamic</code> or <code>linear</code>. This
 option defaults to using the <code>dynamic</code> strategy. </td>
       </tr>
       <tr>
-        <td><code>-ORBAllowReactivationOfSystemids</code> <em>allows
-reactivation of system ids</em></td>
-        <td>Specify whether system ids can be reactivated, i.e., once
-an id that was generated by the system has been deactivated, will the
-user reactivate a new servant using the old id. If the user is not
-going to use this feature, the IORs can be shortened, an extra
-comparison in the critical upcall path removed, and some memory on the
-server side can be saved. The <code>ORBAllowReactivationOfSystemids</code>
-can be <code>0</code> or <code>1</code>. This option defaults to <code>1</code>.
-        </td>
-      </tr>
-      <tr>
-        <td><code>-ORBActiveHintInIds</code> <em>adds an active hint
-in
-ids</em></td>
-        <td>Specify whether an active hint should be added to ids. With
-active hints, ids can be found quickly. However, they lead to larger
-IORs. Note that this option is disregarded <code>if
--ORBAllowReactivationOfSystemids</code> is set to <code>0</code>. The <em>-ORBActiveHintInIds</em>
-can be <code>0</code> or <code>1</code>. This option defaults to <code>1</code>.
-        </td>
-      </tr>
-      <tr>
-        <td><code>-ORBPoaMapSize</code> <em>poa map size</em></td>
-        <td>Specify the size of the POA map. If not specified, the
-default value is 24.</td>
-      </tr>
-      <tr>
-        <td><code>-ORBPersistentidPolicyDemuxStrategy</code> <em>persistent
-id policy based demultiplexing strategy</em></td>
+        <td><code>-ORBUseridPolicyDemuxStrategy</code> <em>user id
+            policy based demultiplexing strategy</em></td>
         <td>Specify the demultiplexing lookup strategy to be used with
-the persistent id policy. The <em>demultiplexing strategy</em> can be
-one of <code>dynamic</code> or <code>linear</code>. This option
-defaults to using the <code>dynamic</code> strategy. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBTransientidPolicyDemuxStrategy</code> <em>transient
-id policy based demultiplexing strategy</em></td>
-        <td>Specify the demultiplexing lookup strategy to be used with
-the transient id policy. The <em>demultiplexing strategy</em> can be
-one of <code>dynamic</code>, <code>linear</code>, or <code>active</code>.
-This option defaults to using the <code>active</code> strategy. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBActiveHintInPOANames</code> <em>adds an active
-hint in poa names</em></td>
-        <td>Specify whether an active hint should be added to POA
-names. With active hints, POA names can be found quickly. However, they
-lead to larger IORs. The <code>-ORBActiveHintInPOANames</code> can be <code>0</code>
-or <code>1</code>. This option defaults to <code>1</code>. </td>
-      </tr>
-      <tr>
-        <td><code>-ORBThreadFlags</code> <em>thread flags</em></td>
-        <td>Specify the flags used for thread creation. Flags can be
-any logical-OR combination of <code>THR_DETACHED</code>, <code>THR_BOUND</code>,
-        <code>THR_NEW_LWP</code>, <code>THE_SUSPENDED</code>. The
-default is <code>THR_BOUND | THR_DETACHED</code> . </td>
+          the user id policy. The <em>demultiplexing strategy</em> can be one of
+          <code>dynamic</code> or <code>linear</code>. This option
+          defaults to using the <code>dynamic</code> strategy. </td>
       </tr>
     </tbody>
   </table>
@@ -1679,10 +1679,8 @@ a default client strategy factory called
 configurator
 (<code>svc.conf</code>) file. The following line in the
 <code>svc.conf</code> file (all in one line)</p>
-<p><code>static
-Client_Strategy_Factory "[list of options]"</code></p>
-<p> would load all
-the options listed within "". An <a
+<p><code>static Client_Strategy_Factory "[list of options]"</code></p>
+<p> would load all the options listed within "". An <a
  href="../performance-tests/Latency/Single_Threaded/svc.conf">example</a>
 is available that shows how to specify this option in the <code>svc.conf</code>
 file.</p>
@@ -1771,18 +1769,6 @@ When this strategy is set to RW, then also the -ORBFlushingStrategy
       </tr>
 
       <tr>
-        <td><code>-ORBTransportMuxStrategy</code> <em>EXCLUSIVE | MUXED</em></td>
-        <td><a name="ORBTransportMuxStrategy"></a><em>EXCLUSIVE</em>
-means that the Transport does not multiplex requests on a connection.
-At a time, there can be only one request pending on a connection.
-        <p><em>MUXED</em> means that Transport multiplexes more than
-one request at the same time on a connection. This option is often used
-in conjunction with AMI, because multiple requests can be sent "in
-bulk." </p>
-        <p>Default for this option is <em>MUXED</em>. </p>
-        </td>
-      </tr>
-      <tr>
         <td><code>-ORBConnectStrategy</code> <em>type</em></td>
         <td><a name="-ORBConnectStrategy"></a>TAO provides three
 strategies to connect to remote servers. The default <em>leader_follower</em>
@@ -1795,6 +1781,25 @@ threaded applications. Finally, the <em>blocked</em> strategy as the
 name implies, blocks the thread until connection is complete. Some of
 the protocols in TAO (such as SHMIOP and SSLIOP) can only use the <em>blocked</em>
 strategy.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBDefaultSyncScope</code> <em>None | Transport | Server | Target</em></td>
+        <td><a name="-ORBDefaultSyncStrategy"></a>Supply a default sync scope for
+          the ORB to use when a Messaging Sync Scope policy is not used. When not
+          supplied, the default sync scope is SYNC_WITH_TRANSPORT.
+        </td>
+      </tr>
+      <tr>
+        <td><code>-ORBTransportMuxStrategy</code> <em>EXCLUSIVE | MUXED</em></td>
+        <td><a name="ORBTransportMuxStrategy"></a><em>EXCLUSIVE</em>
+means that the Transport does not multiplex requests on a connection.
+At a time, there can be only one request pending on a connection.
+        <p><em>MUXED</em> means that Transport multiplexes more than
+one request at the same time on a connection. This option is often used
+in conjunction with AMI, because multiple requests can be sent "in
+bulk." </p>
+        <p>Default for this option is <em>MUXED</em>. </p>
         </td>
       </tr>
       <tr>
@@ -1841,18 +1846,6 @@ strategy.
             <th>Description</th>
           </tr>
           <tr>
-            <td ALIGN="left"><code>&#8209;ORBListenOnAll</code> <em>0 | 1</em></td>
-            <td ALIGN="left">This is a server-side (listener) option that by default is disabled; however
-            this option only takes effect where no <code>&#8209;ORBListenerInterfaces</code>
-            directives (if any, see below) match the actual multicast address being set-up.
-            <p>If disabled (<em>0</em>) the multicast address will be listened for only on the default multicast
-            interface associated with the <CODE>INADDR_ANY</CODE> local address (normally the first such
-            local interface on the system), the loopback interface is normally excluded.</p>
-            If enabled (<em>1</em>) the multicast address will be listened for on ALL the local network
-            interface(s) which are multicast enabled (again the loopback interface is normally excluded).
-            </td>
-          </tr>
-          <tr>
             <td ALIGN="left"><code>&#8209;ORBListenerInterfaces</code> <em>targetNetwork=localNetwork[,...] | CopyPreferredInterfaces</em></td>
             <td ALIGN="left">This is a server-side (listener) option that specifies, on a multihomed host,
              which network/interface(s) are to be used to listen for communications from the multicast addressed
@@ -1885,6 +1878,18 @@ strategy.
              (which may be prefixed and/or postfixed by other <code>&#8209;ORBListenerInterfaces <em>targetNetwork=localNetwork</em></code>
              options as required).
         </tr>
+          <tr>
+            <td ALIGN="left"><code>&#8209;ORBListenOnAll</code> <em>0 | 1</em></td>
+            <td ALIGN="left">This is a server-side (listener) option that by default is disabled; however
+            this option only takes effect where no <code>&#8209;ORBListenerInterfaces</code>
+            directives (if any, see below) match the actual multicast address being set-up.
+            <p>If disabled (<em>0</em>) the multicast address will be listened for only on the default multicast
+            interface associated with the <CODE>INADDR_ANY</CODE> local address (normally the first such
+            local interface on the system), the loopback interface is normally excluded.</p>
+            If enabled (<em>1</em>) the multicast address will be listened for on ALL the local network
+            interface(s) which are multicast enabled (again the loopback interface is normally excluded).
+            </td>
+          </tr>
         </tbody>
       </table>
   </blockquote>
@@ -1955,6 +1960,51 @@ strategy.
                 Description</th>
             </tr>
             <tr>
+              <td ALIGN="left"><code>&#8209;ORBEagerDequeueing</code> <em>0 | 1</em></td>
+              <td ALIGN="left">This is a server-side (listener) option that is enabled by default;
+                although this default can be overriden when the TAO libraries are built in the <CODE>
+                  ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_EAGER_DEQUEUEING&nbsp;false</CODE>
+                which in this case would turn this off by default, unless specified in the
+                service file. If disabled (0) each thread servicing the MIOP listener will only
+                dequeue enough MIOP message fragments from the socket receive buffer to
+                complete a single full MIOP message which it will then process. This action
+                reduces the amount of user memory consumed by the server process, but it also
+                increases the likelihood of the OS sockets receive buffer overflowing (as
+                whilst processing each message, the thread cannot dequeue other incomming
+                message fragments). If enabled (1) it specifies that each server thread will
+                attempt to dequeue all available MIOP messages from the receiver's socket and
+                queue these up in a user memory FIFO queue, before attempting to process a
+                single MIOP message from the head of this FIFO queue. This action attempts to
+                speed up the dequeueing of MIOP messages from the OS socket receive buffer
+                (with a corresponding increase in the amount of user memory consumed by the
+                server process) so as to limit the number of MIOP messages that the server may
+                miss due to the OS sockets receive buffer becoming full.
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBMaxFragmentRate</code> <em>microseconds</em></td>
+              <td ALIGN="left">
+                <P>This client-side (sender) option (if enabled, see <code>&#8209;ORBSendThrottling</code> below)
+                  specifies a non-zero, positive amount of time (in
+                  uSec, i.e. microseconds) that it takes to transmit and process an individual
+                  message fragment of the maximum size; see the <code>&#8209;ORBMaxFragmentSize</code>
+                  option above. (This is the total of the
+                  client&#8209;&gt;server&#8209;&gt;servant processing time not just the average
+                  network transmission delay.) The client attempts to keep the rate at which it
+                  sends messages down to this speed by purposly delaying sending message
+                  fragments, if it would exceeding this capacity (but also see the <code>&#8209;ORBSendHighWaterMark</code>
+                  option below). The default is same value as specified, or is defaulted by, the <code>
+                    &#8209;ORBMaxFragmentSize</code> option above, but this time teated as
+                  microseconds not bytes. (This default delay value is approximatly the time
+                  required to transmit that number of bytes on a 10Base&#8209;T network.) Larger
+                  values will throttle back the clients transmittion rate, smaller values will
+                  speed it up; but note this value is used with the <code>&#8209;ORBMaxFragmentSize</code>
+                  option above&nbsp;to&nbsp;specify a working ratio&nbsp;so this value may need
+                  to be altered if the size is changed.
+                </P>
+              </td>
+            </tr>
+            <tr>
               <td ALIGN="left"><code>&#8209;ORBMaxFragments</code> <em>limit</em></td>
               <td ALIGN="left">This is a client-side (sender) option used to limit the maximum number of
                 fragments that a client can break the outgoing message up into. The limit must
@@ -1970,6 +2020,29 @@ strategy.
                 message). This setting can be used as a safety setting to stop swamping the
                 network and servants with abnormally large messages, or during testing to
                 "lose" large messages for whatever reason.
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBFragmentsCleanupStrategy</code> <em>DELAY | NUMBER
+                  | MEMORY</em></td>
+              <td ALIGN="left">This option is used on the server to specify the incomplete
+                fragments cleanup strategy. The default is <em>DELAY</em>, indicating that the
+                fragments that cannot be reassembled after a certain delay should be removed
+                from the waiting queue (i.e. considered lost messages). The other options are <em>
+                  NUMBER</em> and <em>MEMORY</em>, which respectively mean the number of
+                messages in the waiting queue will be limited, or the whole memory comsumed by
+                the incomplete messages in the waiting queue will be limited.
+              </td>
+            </tr>
+            <tr>
+              <td ALIGN="left"><code>&#8209;ORBFragmentsCleanupBound</code> <em>limit</em></td>
+              <td ALIGN="left">This option specifies the numerical limit for the server's <code>&#8209;ORBFragmentsCleanupStrategy</code>
+                option. If the strategy is <em>DELAY</em>, the value indicates the delay in
+                milliseconds (defaulting to 1000 milliseconds i.e. 1 second). If the strategy
+                is <em>NUMBER</em>, the limit indicates the number of non-reassembled messages
+                in the queue (defaulting to 5 messages). If the strategy is <em>MEMORY</em>,
+                the limit indicates the number of bytes reserved for the whole queue (with the
+                default being 3000000 bytes).
               </td>
             </tr>
             <tr>
@@ -1996,26 +2069,21 @@ strategy.
               </td>
             </tr>
             <tr>
-              <td ALIGN="left"><code>&#8209;ORBMaxFragmentRate</code> <em>microseconds</em></td>
-              <td ALIGN="left">
-                <P>This client-side (sender) option (if enabled, see <code>&#8209;ORBSendThrottling</code> below)
-                  specifies a non-zero, positive amount of time (in
-                  uSec, i.e. microseconds) that it takes to transmit and process an individual
-                  message fragment of the maximum size; see the <code>&#8209;ORBMaxFragmentSize</code>
-                  option above. (This is the total of the
-                  client&#8209;&gt;server&#8209;&gt;servant processing time not just the average
-                  network transmission delay.) The client attempts to keep the rate at which it
-                  sends messages down to this speed by purposly delaying sending message
-                  fragments, if it would exceeding this capacity (but also see the <code>&#8209;ORBSendHighWaterMark</code>
-                  option below). The default is same value as specified, or is defaulted by, the <code>
-                    &#8209;ORBMaxFragmentSize</code> option above, but this time teated as
-                  microseconds not bytes. (This default delay value is approximatly the time
-                  required to transmit that number of bytes on a 10Base&#8209;T network.) Larger
-                  values will throttle back the clients transmittion rate, smaller values will
-                  speed it up; but note this value is used with the <code>&#8209;ORBMaxFragmentSize</code>
-                  option above&nbsp;to&nbsp;specify a working ratio&nbsp;so this value may need
-                  to be altered if the size is changed.
-                </P>
+              <td ALIGN="left"><code>&#8209;ORBRcvSock</code> <em>bytes</em></td>
+              <td ALIGN="left">This server-side (listener) option is the size of the incoming socket's
+                message buffer, i.e., how much data can be received directly off the wire by the
+                server and queued for processing by the servant whilst it is busy. If specified
+                in the service configuration file, this value will override (for MIOP only) the
+                value specified by the corresponding ORB_init parameter. If NOT specified in
+                either place, the default value for the system itself will be used. Again for a
+                Linux type OS, the systems RcvSock is usually about <b>65535</b> bytes, but
+                whatever value is actually specified it is normally doubled internally to take
+                account of the control structures required to track the messages themselves and
+                so it is not a hard limit. Specifying as large a value as possible (i.e.
+                whatever upper limit the OS will allow) with the MIOP <code>&#8209;ORBRcvSock</code>
+                option is advisable to maximize the available socket's receive buffer space, but
+                obviously this is a trade off between available memory and other OS non-paged
+                memory uses.
               </td>
             </tr>
             <tr>
@@ -2064,69 +2132,6 @@ strategy.
                 about <b>65535</b> bytes, but whatever value is actually specified it is
                 normally doubled internally to take account of the control structures required
                 to track the messages themselves and so it is not a hard limit.
-              </td>
-            </tr>
-            <tr>
-              <td ALIGN="left"><code>&#8209;ORBRcvSock</code> <em>bytes</em></td>
-              <td ALIGN="left">This server-side (listener) option is the size of the incoming socket's
-                message buffer, i.e., how much data can be received directly off the wire by the
-                server and queued for processing by the servant whilst it is busy. If specified
-                in the service configuration file, this value will override (for MIOP only) the
-                value specified by the corresponding ORB_init parameter. If NOT specified in
-                either place, the default value for the system itself will be used. Again for a
-                Linux type OS, the systems RcvSock is usually about <b>65535</b> bytes, but
-                whatever value is actually specified it is normally doubled internally to take
-                account of the control structures required to track the messages themselves and
-                so it is not a hard limit. Specifying as large a value as possible (i.e.
-                whatever upper limit the OS will allow) with the MIOP <code>&#8209;ORBRcvSock</code>
-                option is advisable to maximize the available socket's receive buffer space, but
-                obviously this is a trade off between available memory and other OS non-paged
-                memory uses.
-              </td>
-            </tr>
-            <tr>
-              <td ALIGN="left"><code>&#8209;ORBEagerDequeueing</code> <em>0 | 1</em></td>
-              <td ALIGN="left">This is a server-side (listener) option that is enabled by default;
-                although this default can be overriden when the TAO libraries are built in the <CODE>
-                  ace/config.h</CODE>, by specifying the new default such as <CODE>#define&nbsp;TAO_DEFAULT_MIOP_EAGER_DEQUEUEING&nbsp;false</CODE>
-                which in this case would turn this off by default, unless specified in the
-                service file. If disabled (0) each thread servicing the MIOP listener will only
-                dequeue enough MIOP message fragments from the socket receive buffer to
-                complete a single full MIOP message which it will then process. This action
-                reduces the amount of user memory consumed by the server process, but it also
-                increases the likelihood of the OS sockets receive buffer overflowing (as
-                whilst processing each message, the thread cannot dequeue other incomming
-                message fragments). If enabled (1) it specifies that each server thread will
-                attempt to dequeue all available MIOP messages from the receiver's socket and
-                queue these up in a user memory FIFO queue, before attempting to process a
-                single MIOP message from the head of this FIFO queue. This action attempts to
-                speed up the dequeueing of MIOP messages from the OS socket receive buffer
-                (with a corresponding increase in the amount of user memory consumed by the
-                server process) so as to limit the number of MIOP messages that the server may
-                miss due to the OS sockets receive buffer becoming full.
-              </td>
-            </tr>
-              <tr>
-              <td ALIGN="left"><code>&#8209;ORBFragmentsCleanupStrategy</code> <em>DELAY | NUMBER
-                  | MEMORY</em></td>
-              <td ALIGN="left">This option is used on the server to specify the incomplete
-                fragments cleanup strategy. The default is <em>DELAY</em>, indicating that the
-                fragments that cannot be reassembled after a certain delay should be removed
-                from the waiting queue (i.e. considered lost messages). The other options are <em>
-                  NUMBER</em> and <em>MEMORY</em>, which respectively mean the number of
-                messages in the waiting queue will be limited, or the whole memory comsumed by
-                the incomplete messages in the waiting queue will be limited.
-              </td>
-            </tr>
-            <tr>
-              <td ALIGN="left"><code>&#8209;ORBFragmentsCleanupBound</code> <em>limit</em></td>
-              <td ALIGN="left">This option specifies the numerical limit for the server's <code>&#8209;ORBFragmentsCleanupStrategy</code>
-                option. If the strategy is <em>DELAY</em>, the value indicates the delay in
-                milliseconds (defaulting to 1000 milliseconds i.e. 1 second). If the strategy
-                is <em>NUMBER</em>, the limit indicates the number of non-reassembled messages
-                in the queue (defaulting to 5 messages). If the strategy is <em>MEMORY</em>,
-                the limit indicates the number of bytes reserved for the whole queue (with the
-                default being 3000000 bytes).
               </td>
             </tr>
           </tbody>

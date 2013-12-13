@@ -63,6 +63,7 @@ public:
   virtual bool use_cleanup_options (void) const;
   virtual Connect_Strategy connect_strategy (void) const;
   virtual const TAO::Invocation_Retry_Params &invocation_retry_params (void) const;
+  virtual Messaging::SyncScope sync_scope () const;
 
 protected:
   void report_option_value_error (const ACE_TCHAR* option_name,
@@ -109,6 +110,10 @@ private:
 
   /// Retry options when exceptions occur
   TAO::Invocation_Retry_Params invocation_retry_params_;
+
+  /// The default sync scope used with oneways when a policy does not
+  /// override
+  Messaging::SyncScope sync_scope_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Client_Strategy_Factory)

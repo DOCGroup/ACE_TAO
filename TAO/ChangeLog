@@ -1,3 +1,21 @@
+Fri Dec 13 14:59:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+        * docs/Options.html:
+          Document new option. Also alphabetized the various factory options.
+
+        * orbsvcs/tests/ImplRepo/oneway/defsync.conf:
+        * tao/Client_Strategy_Factory.h:
+        * tao/ORB_Core.cpp:
+        * tao/Resource_Factory.h:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Moved the new DefSyncScope option from the resource factory to the client
+          strategy factory. It only affects client behavior so it makes more sense
+          to be a client strategy option.
+
 Fri Dec 13 00:24:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:

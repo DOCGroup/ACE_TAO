@@ -1445,7 +1445,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   this->flushing_strategy_ = trf->create_flushing_strategy ();
 
   // Initialize the default sync scope value
-  this->default_sync_scope_ = trf->sync_scope ();
+  this->default_sync_scope_ = this->client_factory()->sync_scope ();
 
   // Look in the service repository for an instance of the Protocol Hooks.
   const char *protocols_hooks_name = this->orb_params ()->protocols_hooks_name ();
