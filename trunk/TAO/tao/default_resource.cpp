@@ -20,7 +20,6 @@
 #include "tao/MMAP_Allocator.h"
 #include "tao/Load_Protocol_Factory_T.h"
 #include "tao/Time_Policy_Manager.h"
-#include "tao/Messaging_SyncScopeC.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Malloc.h"
@@ -137,7 +136,6 @@ TAO_Default_Resource_Factory::TAO_Default_Resource_Factory (void)
   , wchar_codeset_parameters_ ()
   , resource_usage_strategy_ (TAO_Resource_Factory::TAO_EAGER)
   , drop_replies_ (true)
-  , sync_scope_ (Messaging::SYNC_WITH_TRANSPORT)
 {
 #if TAO_USE_LAZY_RESOURCE_USAGE_STRATEGY == 1
   this->resource_usage_strategy_ =
@@ -491,43 +489,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("Zero copy writes unsupported on this platform\n")));
 #endif  /* TAO_HAS_SENDFILE==1 */
       }
-    else if (ACE_OS::strcasecmp (argv[curarg],
-                                 ACE_TEXT ("-ORBDefaultSyncScope")) == 0)
-      {
-        ++curarg;
-        if (curarg < argc)
-          {
-            ACE_TCHAR const * const current_arg = argv[curarg];
-
-            if (ACE_OS::strcasecmp (current_arg,
-                                    ACE_TEXT("none")) == 0)
-              {
-                this->sync_scope_ = Messaging::SYNC_NONE;
-              }
-            else if (ACE_OS::strcasecmp (current_arg,
-                                    ACE_TEXT("transport")) == 0)
-              {
-                this->sync_scope_ = Messaging::SYNC_WITH_TRANSPORT;
-              }
-            else if (ACE_OS::strcasecmp (current_arg,
-                                    ACE_TEXT("server")) == 0)
-              {
-                this->sync_scope_ = Messaging::SYNC_WITH_SERVER;
-              }
-            else if (ACE_OS::strcasecmp (current_arg,
-                                    ACE_TEXT("target")) == 0)
-              {
-                this->sync_scope_ = Messaging::SYNC_WITH_TARGET;
-              }
-            else
-              {
-                this->report_option_value_error (ACE_TEXT("-ORBDefaultSyncScope"),
-                                                 argv[curarg]);
-                continue;
-              }
-
-          }
-      }
     else if (ACE_OS::strncmp (argv[curarg],
                               ACE_TEXT ("-ORB"),
                               4) == 0)
@@ -624,12 +585,6 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
   number_of_names = index;
 
   return 0;
-}
-
-Messaging::SyncScope
-TAO_Default_Resource_Factory::sync_scope (void) const
-{
-  return this->sync_scope_;
 }
 
 int

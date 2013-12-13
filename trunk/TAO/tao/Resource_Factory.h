@@ -48,11 +48,6 @@ class TAO_Codeset_Manager;
 class TAO_GIOP_Fragmentation_Strategy;
 class TAO_Transport;
 
-namespace Messaging
-{
-  typedef ::CORBA::Short SyncScope;
-}
-
 // ****************************************************************
 
 class TAO_Export TAO_Protocol_Item
@@ -262,8 +257,6 @@ public:
   /// replies during shutdown.
   virtual bool drop_replies_during_shutdown () const = 0;
 
-  /// Return the value to be used as the default sync scope for the ORB
-  virtual Messaging::SyncScope sync_scope () const = 0;
 protected:
   /**
    * Loads the default protocols. This method is used so that the
