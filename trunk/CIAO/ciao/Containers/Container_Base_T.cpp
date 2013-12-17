@@ -878,14 +878,11 @@ namespace CIAO
 
     PortableServer::POAManager_var poa_manager = root->the_POAManager ();
 
-    TAO::Utils::PolicyList_Destroyer policies (2);
-    policies.length (2);
+    TAO::Utils::PolicyList_Destroyer policies (1);
+    policies.length (1);
 
     policies[0] =
       root->create_id_assignment_policy (PortableServer::USER_ID);
-    // Servant Retention Policy
-    policies[1] =
-      root->create_servant_retention_policy (PortableServer::RETAIN);
 
     this->facet_cons_poa_ =
       root->create_POA (name,
