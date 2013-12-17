@@ -1,3 +1,8 @@
+Tue Dec 17 13:12:22 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableInterceptor.h:
+          Removed several old deprecated macros
+
 Fri Dec 13 14:59:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
