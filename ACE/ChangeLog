@@ -1,3 +1,11 @@
+Wed Dec 18 11:22:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/bczar/bczar.html:
+          Updated packages
+
+        * etc/ace.doxygen:
+          Upgraded to doxygen 1.8.5
+
 Thu Dec 12 16:28:45 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/ATM_Stream.cpp: Add missing OS_NS_string.h
