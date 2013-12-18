@@ -395,6 +395,7 @@ TAO_LB_LoadMinimum::get_location (
           found_load = 1;
 
           CosLoadBalancing::Load load;
+          load.value = 0.0;          
           this->push_loads (loc,
                             current_loads.in (),
                             load);
