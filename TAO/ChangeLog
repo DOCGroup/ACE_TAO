@@ -1,3 +1,8 @@
+Wed Dec 18 11:22:44 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao_anytypecode.doxygen:
+          Upgraded to doxygen 1.8.5
+
 Tue Dec 17 13:12:22 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableInterceptor.h:
