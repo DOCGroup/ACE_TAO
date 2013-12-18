@@ -1,3 +1,8 @@
+Wed Dec 18 11:23:21 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_dds4ccm.doxygen:
+          Upgraded to doxygen 1.8.5
+
 Tue Dec 17 13:36:01 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:
