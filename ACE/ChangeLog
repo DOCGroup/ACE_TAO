@@ -1,3 +1,12 @@
+Wed Dec 18 14:16:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace_inet.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Upgraded to doxygen 1.8.5
+
 Wed Dec 18 11:22:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
