@@ -82,17 +82,6 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
                              TAO_ServerRequest &request,
                              CORBA::Object_out forward_to)
 {
-  TAO_IOR_Table_Impl_var rootref;
-  {
-    ACE_GUARD_RETURN (ACE_Lock,
-                      ace_mon,
-                      *this->lock_,
-                      TAO_Adapter::DS_MISMATCHED_KEY);
-    if (this->closed_)
-      return TAO_Adapter::DS_MISMATCHED_KEY;
-    rootref = this->root_;
-  }
-
   if (this->find_object (key, forward_to))
     {
       request.forward_location (forward_to);
@@ -175,11 +164,24 @@ bool
 TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
                                 CORBA::Object_out forward_to)
 {
+  TAO_IOR_Table_Impl_var rootref;
+  {
+    ACE_GUARD_RETURN (ACE_Lock,
+                      ace_mon,
+                      *this->lock_,
+                      TAO_Adapter::DS_MISMATCHED_KEY);
+    if (this->closed_)
+      {
+        return false;
+      }
+    rootref = this->root_;
+  }
+
   CORBA::String_var object_key;
   TAO::ObjectKey::encode_sequence_to_string (object_key.out (), key);
   try
     {
-      CORBA::String_var ior = root_->find (object_key.in ());
+      CORBA::String_var ior = this->root_->find (object_key.in ());
       forward_to = this->orb_core_.orb ()->string_to_object (ior.in ());
     }
   catch (const ::IORTable::NotFound&)
