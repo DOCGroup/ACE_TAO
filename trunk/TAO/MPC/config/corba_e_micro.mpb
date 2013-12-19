@@ -1,7 +1,6 @@
 // -*- MPC -*-
 // $Id$
 
-feature (corba_e_micro) : taobaseidldefaults {
+feature (corba_e_micro) {
   macros += CORBA_E_MICRO
-  idlflags += -DCORBA_E_MICRO -Gce
 }
