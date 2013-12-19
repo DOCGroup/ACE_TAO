@@ -1,3 +1,10 @@
+Thu Dec 19 18:57:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Handle_Set.h:
+          Added check that FD_SETSIZE may not be bigger than __FD_SETSIZE.
+          Thanks to Mike Ketchen <mketchen at broadsoft dot com> for
+          suggesting this
+
 Wed Dec 18 14:16:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace_inet.doxygen:
