@@ -1,3 +1,13 @@
+Thu Dec 19 13:33:18 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/corba_e_compact.mpb:
+        * MPC/config/corba_e_micro.mpb:
+        * MPC/config/minimum_corba.mpb:
+        * MPC/config/taobaseidldefaults.mpb:
+          Changed CORBA/e feature support, move the feature
+          idl flags to taobaseidldefaults to not pull in
+          the IDL Files custom rules
+
 Wed Dec 18 19:19:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:

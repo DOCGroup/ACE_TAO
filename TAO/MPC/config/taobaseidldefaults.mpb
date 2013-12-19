@@ -103,3 +103,15 @@ project: build_files {
   idlflags += $(TAO_IDLFLAGS)
   idlflags += -Sa -St
 }
+
+feature (corba_e_compact) {
+  idlflags += -DCORBA_E_COMPACT -Gce
+}
+
+feature (corba_e_micro) {
+  idlflags += -DCORBA_E_MICRO -Gce
+}
+
+feature(minimum_corba) {
+  idlflags += -DTAO_HAS_MINIMUM_POA -Gmc
+}
