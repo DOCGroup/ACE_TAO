@@ -30,6 +30,10 @@
 #  define ACE_FD_SETSIZE FD_SETSIZE
 #endif /* ACE_FD_SETSIZE */
 
+#if defined(FD_SETSIZE) && defined(__FD_SETSIZE) && (FD_SETSIZE > __FD_SETSIZE)
+#error FD_SETSIZE definition is too large, please correct!
+#endif
+   
 #if !defined (ACE_DEFAULT_SELECT_REACTOR_SIZE)
 #  define ACE_DEFAULT_SELECT_REACTOR_SIZE ACE_FD_SETSIZE
 #endif /* ACE_DEFAULT_SELECT_REACTOR_SIZE */
