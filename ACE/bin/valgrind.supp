@@ -21,13 +21,13 @@
    obj:*perl*
 }
 
-{
-  <RTI warning>
-  Memcheck:Param
-  fun:*
-  fun:NDDS_Transport_UDPv4_send
-  fun:RTINetioSender_send
-}
+# {
+#   <RTI warning>
+#   Memcheck:Param
+#   fun:*
+#   fun:NDDS_Transport_UDPv4_send
+#   fun:RTINetioSender_send
+# }
 
 {
    <Invalid read>
