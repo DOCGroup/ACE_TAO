@@ -169,7 +169,7 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
     ACE_GUARD_RETURN (ACE_Lock,
                       ace_mon,
                       *this->lock_,
-                      TAO_Adapter::DS_MISMATCHED_KEY);
+                      false);
     if (this->closed_)
       {
         return false;

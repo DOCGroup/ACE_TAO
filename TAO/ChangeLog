@@ -1,3 +1,8 @@
+Fri Dec 20 13:37:48 UTC 2013  Phil Mesnier  <mesnier_p@local>
+
+        * tao/IORTable/Table_Adapter.cpp:
+          Fix a cut & paste error.
+
 Thu Dec 19 16:02:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IORTable/Table_Adapter.cpp:
