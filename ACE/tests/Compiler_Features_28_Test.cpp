@@ -9,6 +9,8 @@
 
 #if defined (ACE_HAS_CPP11)
 
+#include <cstdint>
+
 enum class OPERATIONS
 {
   ADD_OBJECT_POLICY,
