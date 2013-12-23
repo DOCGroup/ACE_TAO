@@ -1,3 +1,9 @@
+Mon Dec 23 10:19:42 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_23_Test.cpp:
+        * tests/Compiler_Features_28_Test.cpp:
+          Added missing include of cstdint
+
 Fri Dec 20 13:43:13 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:

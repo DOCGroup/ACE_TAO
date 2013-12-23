@@ -11,6 +11,7 @@
 
 #include <array>
 #include <string>
+#include <cstdint>
 
 std::array<std::string, 2> priority_names =
 {
