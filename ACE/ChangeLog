@@ -1,3 +1,14 @@
+Mon Dec 30 11:18:12 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/sys/os_stat.h:
+          Define S_ISDIR when not defined
+
+        * tests/Compiler_Features_29_Test.cpp:
+        * tests/Compiler_Features_30_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Two new C++11 tests
+
 Wed Dec 25 00:00:00 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
         * Merry Christmas everyone!
