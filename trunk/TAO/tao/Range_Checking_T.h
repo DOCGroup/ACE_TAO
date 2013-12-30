@@ -132,7 +132,7 @@ struct range_checking
     // their own behavior
 #if defined (TAO_CHECKED_SEQUENCE_INDEXING) && (TAO_CHECKED_SEQUENCE_INDEXING == 1)
     if (length <= index)
-      throw ::CORBA::BAD_PARAM ();
+      throw CORBA::BAD_PARAM ();
 #else
     ACE_UNUSED_ARG (index);
     ACE_UNUSED_ARG (length);
@@ -144,7 +144,7 @@ struct range_checking
       CORBA::ULong maximum)
   {
     if (maximum < new_length)
-      throw ::CORBA::BAD_PARAM ();
+      throw CORBA::BAD_PARAM ();
   }
 };
 
