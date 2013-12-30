@@ -102,6 +102,7 @@ Compiler_Features_27_Test
 Compiler_Features_28_Test
 Compiler_Features_29_Test
 Compiler_Features_30_Test
+Compiler_Features_31_Test
 Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
 Conn_Test: !ACE_FOR_TAO
 DLL_Test: !STATIC Linux
