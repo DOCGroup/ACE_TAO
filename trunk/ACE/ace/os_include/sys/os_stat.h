@@ -101,6 +101,11 @@ extern "C"
 # endif /* S_IFLNK */
 #endif /* S_ISLNK */
 
+// Visual Studio doesn't define S_ISDIR
+#if !defined (S_ISDIR)
+# define S_ISDIR(mode)   ((mode&S_IFMT) == S_IFDIR)
+#endif
+
 #if defined (ACE_HAS_WINCE)
 
 // Translate the WinCE bits into names expected by our callers.
