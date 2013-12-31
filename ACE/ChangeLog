@@ -1,3 +1,8 @@
+Tue Dec 31 10:12:14 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_29_Test.cpp:
+          Added another member
+
 Tue Dec 31 07:45:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Queue_Adapters.cpp:
@@ -23,6 +28,7 @@ Mon Dec 30 11:18:12 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/run_test.lst:
         * tests/tests.mpc:
           Two new C++11 tests
+
 
 Wed Dec 25 00:00:00 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
