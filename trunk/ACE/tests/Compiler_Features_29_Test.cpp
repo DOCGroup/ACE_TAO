@@ -15,6 +15,7 @@ class A
 {
 public:
   static constexpr char const* adapter_name = "A";
+  static constexpr float pi = 3.14150;
 };
 
 int
