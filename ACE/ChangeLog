@@ -1,3 +1,11 @@
+Tue Dec 31 07:45:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Queue_Adapters.cpp:
+          Call gettimeofday on the timer queue instead of calling
+          ACE_OS directly, fixes problems when using the hr time. Thanks
+          to Erik Sohns <erik dot sohns at web dot de> for reporting
+          this and providing a patch
+
 Mon Dec 30 12:31:27 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_31_Test.cpp:
