@@ -190,7 +190,7 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
   CORBA::Any the_any;
 
   Test::EnumUnion foo_enum;
-  static CORBA::Long const test_long = 238901;
+  static CORBA::Short const test_long = 23901;
 
   // First simple case, just an union with an enum as discriminator
   foo_enum.i (test_long);
@@ -213,6 +213,19 @@ recursive_union_test (CORBA::ORB_ptr /* orb */,
 
   ::perform_invocation<Test::RecursiveUnion2> (hello,
                                                the_any);
+
+  Test::RecursiveUnion3 foo3;
+  foo3.a (test_long);
+
+  the_any <<= foo3;
+
+  int n;
+  for (n=0; n < 200; ++n)
+  {
+    ::perform_invocation<Test::RecursiveUnion3> (hello,
+        the_any);
+  }
+
 
   // Recursive member case.
   Test::RecursiveUnionSeq seq;

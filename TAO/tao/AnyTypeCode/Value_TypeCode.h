@@ -65,8 +65,7 @@ namespace TAO
              CORBA::ULong nfields);
 
       /// Constructor used for recursive TypeCodes.
-      Value (CORBA::TCKind kind,
-              char const * id);
+      Value (CORBA::TCKind kind, char const * id);
 
       /**
        * @name TAO-specific @c CORBA::TypeCode Methods

@@ -432,6 +432,7 @@ TAO/tests/Typedef_String_Array/run_test.pl:
 TAO/tests/GIOP_Fragments/PMB_With_Fragments/run_test.pl: !CORBA_E_MICRO
 TAO/tests/CodeSets/simple/run_test.pl: !GIOP10 !STATIC
 TAO/tests/Hang_Shutdown/run_test.pl: !ST !ACE_FOR_TAO
+TAO/tests/Any/Indirected/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Any/Recursive/run_test.pl: !STATIC !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/CSD_Strategy_Tests/TP_Test_1/run_test.pl: !ST !CORBA_E_MICRO !LynxOS
 TAO/tests/CSD_Strategy_Tests/TP_Test_2/run_test.pl: !ST !CORBA_E_MICRO !LynxOS

@@ -1,6 +1,5 @@
 // $Id$
 
-#include "tao/TypeCodeFactory/Recursive_TypeCode.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
 
 #include "tao/AnyTypeCode/Marshal.h"
@@ -15,6 +14,7 @@
 #include "tao/AnyTypeCode/Union_TypeCode.h"
 #include "tao/AnyTypeCode/Value_TypeCode.h"
 #include "tao/AnyTypeCode/Recursive_Type_TypeCode.h"
+#include "tao/AnyTypeCode/Indirected_Type_TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Case_T.h"
 #include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
 #include "tao/AnyTypeCode/TypeCode_Value_Field.h"
@@ -787,7 +787,7 @@ TAO_TypeCodeFactory_i::create_recursive_tc (const char *id)
     }
 
   ACE_NEW_THROW_EX (tc,
-                    TAO::TypeCodeFactory::Recursive_TypeCode (id),
+                    TAO::TypeCode::Indirected_Type (id),
                     CORBA::NO_MEMORY ());
 
   return tc;
@@ -1761,9 +1761,9 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
                     if (ACE_OS::strcmp (id, member_tc_id) == 0)
                       {
-                        TAO::TypeCodeFactory::Recursive_TypeCode * const rtc =
+                        TAO::TypeCode::Indirected_Type * const rtc =
                           dynamic_cast<
-                            TAO::TypeCodeFactory::Recursive_TypeCode *> (
+                            TAO::TypeCode::Indirected_Type *> (
                               member_tc.in ());
 
                         if (!rtc)
@@ -1777,7 +1777,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                           }
 
                         // Set the actual recursive TypeCode.
-                        rtc->the_typecode (recursive_tc);
+                        rtc->set_recursive_tc (recursive_tc);
 
                         return true;
                       }
@@ -1866,8 +1866,8 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
           {
             if (ACE_OS::strcmp (id, content_tc_id) == 0)
               {
-                TAO::TypeCodeFactory::Recursive_TypeCode * const rtc =
-                  dynamic_cast<TAO::TypeCodeFactory::Recursive_TypeCode *>
+                TAO::TypeCode::Indirected_Type * const rtc =
+                  dynamic_cast<TAO::TypeCode::Indirected_Type *>
                   (content_tc.in ());
 
                 if (!rtc)
@@ -1881,7 +1881,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                   }
 
                 // Set the actual recursive TypeCode.
-                rtc->the_typecode (recursive_tc);
+                rtc->set_recursive_tc (recursive_tc);
 
                 return true;
               }

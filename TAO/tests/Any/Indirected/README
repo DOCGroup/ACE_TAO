@@ -1,0 +1,19 @@
+$Id$
+
+/**
+
+@page Indirected Any Test README File
+
+This test determines whether some specific aspects of the support
+of typecode indirection with recursive typecodes works correctly.
+More specifically it tests repeated insertion -> extraction sequences
+of the same typecode and memory management with external references of
+indirected typecodes.
+
+To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+the script returns 0 if the test was successful.
+
+*/

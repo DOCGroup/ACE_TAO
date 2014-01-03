@@ -37,7 +37,7 @@ namespace TAO
      *
      * This class template decorates the underlying @c TypeCode
      * implementation @a TypeCodeBase to provide support for IDL
-     * defined recursive types.  Only IDL an @c struct, @c union or
+     * defined recursive types.  Only an IDL @c struct, @c union or
      * @c valuetype may be recursive, which is why this decorator only
      * supports constructors for the corresponding @c TypeCode
      * implementations.
