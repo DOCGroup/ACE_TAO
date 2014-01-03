@@ -1,3 +1,9 @@
+Fri Jan  3 13:34:01 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_31_Test.cpp:
+          Small extension, also add one example using a late specified
+          return type
+
 Tue Dec 31 10:17:54 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_32_Test.cpp:
