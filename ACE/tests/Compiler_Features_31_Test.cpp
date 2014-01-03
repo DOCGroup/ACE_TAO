@@ -21,6 +21,7 @@ namespace A
     {
       typedef abstractbase_reference<T> ref_type;
       static ref_type narrow(abstractbase_reference<C::AbstractBase>);
+      static ref_type narrow2(abstractbase_reference<C::AbstractBase>);
     };
   };
 };
@@ -34,8 +35,12 @@ namespace A
     protected:
       template<typename T>
       friend typename C::abstractbase_traits<T>::ref_type
-      C::abstractbase_traits<T>::narrow(
-      C::abstractbase_reference<C::AbstractBase>);
+        C::abstractbase_traits<T>::narrow(
+        C::abstractbase_reference<C::AbstractBase>);
+      template<typename T>
+      friend auto
+        C::abstractbase_traits<T>::narrow2(
+        C::abstractbase_reference<C::AbstractBase>) -> ref_type;
       AbstractBase() = default;
     };
   };
