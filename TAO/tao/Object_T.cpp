@@ -70,7 +70,7 @@ namespace TAO
               }
           }
       }
-    catch (const ::CORBA::Exception&)
+    catch (const CORBA::Exception&)
       {
         // Swallow the exception
         return T::_nil ();
