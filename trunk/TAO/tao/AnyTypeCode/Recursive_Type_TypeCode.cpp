@@ -6,6 +6,8 @@
 # include "tao/AnyTypeCode/Recursive_Type_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
+#include "ace/Guard_T.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TypeCodeBase, typename TypeCodeType, typename MemberArrayType>

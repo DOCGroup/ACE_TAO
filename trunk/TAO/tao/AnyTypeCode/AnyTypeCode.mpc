@@ -62,6 +62,7 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldef
     IIOPA.cpp
     IOPA.cpp
     IIOP_EndpointsA.cpp
+    Indirected_Type_TypeCode.cpp
     LongDoubleSeqA.cpp
     LongLongSeqA.cpp
     LongSeqA.cpp
