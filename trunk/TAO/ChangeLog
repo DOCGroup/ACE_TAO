@@ -1,8 +1,13 @@
+Sat Jan  4 10:11:14 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Any/Indirected/client.cpp:
+          Fixes for wchar build errors.
+
 Fri Jan  3 19:10:11 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * bin/tao_orb_tests.lst:
           Added Any/Indirected test.
-          
+
         * tao/AnyTypeCode/AnyTypeCode.mpc:
         * tao/AnyTypeCode/Indirected_Type_TypeCode.h:
         * tao/AnyTypeCode/Indirected_Type_TypeCode.inl:
