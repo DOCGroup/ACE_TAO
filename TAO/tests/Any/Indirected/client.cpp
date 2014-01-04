@@ -40,12 +40,12 @@ recursive_union_test ()
     {
       if (out.length () > 512)
       {
-        ACE_HEX_DUMP ((LM_INFO, out.buffer (), 512, "Encoded union (1):"));
-        ACE_HEX_DUMP ((LM_INFO, out.buffer ()+512, out.length ()-512, "Encoded union (2):"));
+        ACE_HEX_DUMP ((LM_INFO, out.buffer (), 512, ACE_TEXT ("Encoded union (1):")));
+        ACE_HEX_DUMP ((LM_INFO, out.buffer ()+512, out.length ()-512, ACE_TEXT ("Encoded union (2):")));
       }
       else
       {
-        ACE_HEX_DUMP ((LM_INFO, out.buffer (), out.length (), "Encoded union:"));
+        ACE_HEX_DUMP ((LM_INFO, out.buffer (), out.length (), ACE_TEXT ("Encoded union:")));
       }
     }
 
@@ -90,12 +90,12 @@ recursive_union_test ()
       {
         if (out.length () > 512)
         {
-          ACE_HEX_DUMP ((LM_INFO, out.buffer (), 512, "Encoded union (1):"));
-          ACE_HEX_DUMP ((LM_INFO, out.buffer ()+512, out.length ()-512, "Encoded union (2):"));
+          ACE_HEX_DUMP ((LM_INFO, out.buffer (), 512, ACE_TEXT ("Encoded union (1):")));
+          ACE_HEX_DUMP ((LM_INFO, out.buffer ()+512, out.length ()-512, ACE_TEXT ("Encoded union (2):")));
         }
         else
         {
-          ACE_HEX_DUMP ((LM_INFO, out.buffer (), out.length (), "Encoded union:"));
+          ACE_HEX_DUMP ((LM_INFO, out.buffer (), out.length (), ACE_TEXT ("Encoded union:")));
         }
       }
 
@@ -152,12 +152,12 @@ recursive_union_test ()
     {
       if (out.length () > 512)
       {
-        ACE_HEX_DUMP ((LM_INFO, out.buffer (), 512, "Encoded union (1):"));
-        ACE_HEX_DUMP ((LM_INFO, out.buffer ()+512, out.length ()-512, "Encoded union (2):"));
+        ACE_HEX_DUMP ((LM_INFO, out.buffer (), 512, ACE_TEXT ("Encoded union (1):")));
+        ACE_HEX_DUMP ((LM_INFO, out.buffer ()+512, out.length ()-512, ACE_TEXT ("Encoded union (2):")));
       }
       else
       {
-        ACE_HEX_DUMP ((LM_INFO, out.buffer (), out.length (), "Encoded union:"));
+        ACE_HEX_DUMP ((LM_INFO, out.buffer (), out.length (), ACE_TEXT ("Encoded union:")));
       }
     }
 
@@ -183,12 +183,12 @@ recursive_union_test ()
     {
       if (out2.length () > 512)
       {
-        ACE_HEX_DUMP ((LM_INFO, out2.buffer (), 512, "Re-encoded union (1):"));
-        ACE_HEX_DUMP ((LM_INFO, out2.buffer ()+512, out2.length ()-512, "Re-encoded union (2):"));
+        ACE_HEX_DUMP ((LM_INFO, out2.buffer (), 512, ACE_TEXT ("Re-encoded union (1):")));
+        ACE_HEX_DUMP ((LM_INFO, out2.buffer ()+512, out2.length ()-512, ACE_TEXT ("Re-encoded union (2):")));
       }
       else
       {
-        ACE_HEX_DUMP ((LM_INFO, out2.buffer (), out2.length (), "Re-encoded union:"));
+        ACE_HEX_DUMP ((LM_INFO, out2.buffer (), out2.length (), ACE_TEXT ("Re-encoded union:")));
       }
     }
 
