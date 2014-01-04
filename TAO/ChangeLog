@@ -1,3 +1,8 @@
+Sat Jan  4 10:32:38 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+          Removed unnecessary typedefs causing compile warnings.
+
 Sat Jan  4 10:11:14 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * tests/Any/Indirected/client.cpp:
