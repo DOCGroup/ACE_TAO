@@ -1458,11 +1458,6 @@ namespace
       {
       case CORBA::tk_struct:
         {
-          typedef ACE_Array_Base<
-            TAO::TypeCode::Struct_Field<
-              CORBA::String_var,
-              CORBA::TypeCode_var> > member_array_type;
-
           ACE_NEW_RETURN (tc,
                           TAO::TypeCode::Indirected_Type (kind,
                                                   id.in ()),
@@ -1475,8 +1470,6 @@ namespace
         break;
       case CORBA::tk_union:
         {
-          typedef union_case_array_type member_array_type;
-
           ACE_NEW_RETURN (tc,
                           TAO::TypeCode::Indirected_Type (kind,
                                                   id.in ()),
@@ -1490,11 +1483,6 @@ namespace
       case CORBA::tk_value:
       case CORBA::tk_event:
         {
-          typedef ACE_Array_Base<
-            TAO::TypeCode::Value_Field<
-              CORBA::String_var,
-              CORBA::TypeCode_var> > member_array_type;
-
           ACE_NEW_RETURN (tc,
                           TAO::TypeCode::Indirected_Type (kind,
                                                   id.in ()),
