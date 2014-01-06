@@ -83,9 +83,7 @@ public:
 
   /// Is this entry free?
   bool free_;
-
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
-
 };
 
 // Forward decl.
