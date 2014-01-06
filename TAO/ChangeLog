@@ -1,3 +1,9 @@
+Mon Jan  6 14:47:05 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Removed const qualifier as part of cast to silence OpenVMS
+          warnings
+
 Mon Jan  6 09:44:58 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * tao/AnyTypeCode/Indirected_Type_TypeCode.cpp:
