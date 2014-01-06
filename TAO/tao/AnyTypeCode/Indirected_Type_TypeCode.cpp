@@ -28,7 +28,7 @@ TAO::TypeCode::Indirected_Type::tao_marshal (TAO_OutputCDR & cdr,
 void
 TAO::TypeCode::Indirected_Type::tao_duplicate (void)
 {
-  ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
   // for every reference beside the master reference (1)
   // increase the master tc's reference count to keep it
@@ -46,7 +46,7 @@ TAO::TypeCode::Indirected_Type::tao_release (void)
   unsigned long newcount;
   CORBA::TypeCode_ptr curmaster;
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
     newcount = --this->refcount_;
     curmaster = this->recursive_tc_;
@@ -67,7 +67,7 @@ TAO::TypeCode::Indirected_Type::set_recursive_tc (CORBA::TypeCode_ptr tc)
   // link only once (should never happen that this is called twice but test anyway)
   if (this->recursive_tc_ == 0)
   {
-    ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, this->mutex_);
+    ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
     if (tc == 0)  // should never happen
       return;

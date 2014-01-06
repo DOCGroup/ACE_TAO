@@ -1,3 +1,9 @@
+Mon Jan  6 09:44:58 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/AnyTypeCode/Indirected_Type_TypeCode.cpp:
+        * tests/Any/Indirected/test.idl:
+          Fuzz fixes.
+
 Sat Jan  4 10:32:38 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
