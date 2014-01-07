@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.2.3 and CIAO-1.2.4
 =======================================================
 
+. Made support for bounded strings as part of a deployment
+  plan compliant with the OMG specification
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.2.2 and CIAO-1.2.3
 =======================================================
 
