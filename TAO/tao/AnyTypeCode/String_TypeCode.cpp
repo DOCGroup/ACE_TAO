@@ -42,8 +42,7 @@ TAO::TypeCode::String<RefCountPolicy>::tao_release (void)
 
 template <class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::String<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
-                                                ) const
+TAO::TypeCode::String<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc) const
 {
   // The following call won't throw since CORBA::TypeCode::equal() has
   // already established the kind of tc is the same as our kind.
@@ -54,8 +53,7 @@ TAO::TypeCode::String<RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
 
 template <class RefCountPolicy>
 CORBA::Boolean
-TAO::TypeCode::String<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
-                                                     ) const
+TAO::TypeCode::String<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc) const
 {
   // Since TCKind comparisons must be performed before equal_i() is
   // called, we can also call it to determine equivalence of

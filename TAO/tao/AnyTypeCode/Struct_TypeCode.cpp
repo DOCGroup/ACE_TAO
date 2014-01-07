@@ -302,8 +302,7 @@ char const *
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::member_name_i (
-  CORBA::ULong index) const
+                      RefCountPolicy>::member_name_i (CORBA::ULong index) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -321,8 +320,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::member_type_i (
-  CORBA::ULong index) const
+                      RefCountPolicy>::member_type_i (CORBA::ULong index) const
 {
   if (index >= this->nfields_)
     throw ::CORBA::TypeCode::Bounds ();

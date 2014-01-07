@@ -62,8 +62,7 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::tao_release (void)
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Sequence<TypeCodeType,
-                        RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc
-                                                  ) const
+                        RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
   // has already established the kind of tc is the same as our kind.
@@ -84,8 +83,7 @@ TAO::TypeCode::Sequence<TypeCodeType,
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Sequence<TypeCodeType,
-                        RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc
-                                                       ) const
+                        RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
   // has already established the kind of tc is the same as our kind.
@@ -99,14 +97,12 @@ TAO::TypeCode::Sequence<TypeCodeType,
 
   return
     Traits<TypeCodeType>::get_typecode (this->content_type_)->equivalent (
-      rhs_content_type.in ()
-     );
+      rhs_content_type.in ());
 }
 
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i (
-  void) const
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i (void) const
 {
   // Already compact since tk_sequence and tk_array TypeCodes have no
   // name or member names, meaning that we can simply call
@@ -125,16 +121,14 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i (
 
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::ULong
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::length_i (
-  void) const
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::length_i (void) const
 {
   return this->length_;
 }
 
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::content_type_i (
-  void) const
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::content_type_i (void) const
 {
   return
     CORBA::TypeCode::_duplicate (

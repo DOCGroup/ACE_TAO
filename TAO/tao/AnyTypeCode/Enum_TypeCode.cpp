@@ -80,9 +80,7 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+                    RefCountPolicy>::equal_i (CORBA::TypeCode_ptr tc) const
 {
   // This call shouldn't throw since CORBA::TypeCode::equal() verified
   // that the TCKind is the same as our's prior to invoking this
@@ -113,9 +111,7 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 CORBA::Boolean
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::equivalent_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+                    RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc) const
 {
   // Perform a structural comparison, excluding the name() and
   // member_name() operations.
@@ -133,8 +129,7 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::get_compact_typecode_i (
-  void) const
+                    RefCountPolicy>::get_compact_typecode_i (void) const
 {
   ACE_Array_Base<CORBA::String_var> tc_enumerators (this->nenumerators_);
 
@@ -170,8 +165,7 @@ TAO::TypeCode::Enum<StringType,
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 char const *
-TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::id_i (
-  void) const
+TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::id_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -180,8 +174,7 @@ TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::id_i (
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 char const *
-TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::name_i (
-  void) const
+TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::name_i (void) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -192,8 +185,7 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 CORBA::ULong
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::member_count_i (
-  void) const
+                    RefCountPolicy>::member_count_i (void) const
 {
   return this->nenumerators_;
 }
@@ -202,9 +194,7 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 char const *
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::member_name_i (
-  CORBA::ULong index
-  ) const
+                    RefCountPolicy>::member_name_i (CORBA::ULong index) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
