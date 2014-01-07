@@ -3,6 +3,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.3 and ACE-6.2.4
 
 . Added support for FC20 and ended support for FC19
 
+. Extended C++11 feature test suite
+
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.2 and ACE-6.2.3
 ====================================================
 
