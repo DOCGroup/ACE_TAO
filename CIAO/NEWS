@@ -4,6 +4,9 @@ USER VISIBLE CHANGES BETWEEN CIAO-1.2.3 and CIAO-1.2.4
 . Made support for bounded strings as part of a deployment
   plan compliant with the OMG specification
 
+. CentOS 6.3 and RHEL 6.4 are now supported and maintained
+  platforms for CIAO including DDS4CCM with RTI DDS integration
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.2.2 and CIAO-1.2.3
 =======================================================
 
