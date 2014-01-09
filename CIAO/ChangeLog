@@ -1,3 +1,9 @@
+Thu Jan  9 13:02:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+          Don't set include path
+
 Thu Jan  9 12:33:02 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao.doxygen:
