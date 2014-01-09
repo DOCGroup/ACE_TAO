@@ -1,3 +1,8 @@
+Thu Jan  9 12:33:13 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/DAnCE.doxygen:
+          Upgraded to doxygen 1.8.6
+
 Thu Jan  9 10:26:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
