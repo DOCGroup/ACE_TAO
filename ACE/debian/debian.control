@@ -28,7 +28,7 @@ Description: makefile, project, and workspace creator
   * mpc-ace: generates project files for a single target
   * mwc-ace: generates workspace files for a set of projects
 
-Package: libace-6.2.3
+Package: libace-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -46,7 +46,7 @@ Description: C++ network programming framework
 Package: libace-dev
 Architecture: any
 Section: libdevel
-Depends: libace-6.2.3 (= ${binary:Version}), ${misc:Depends}
+Depends: libace-6.2.4 (= ${binary:Version}), ${misc:Depends}
 Suggests: libace-doc, libtao-dev, pkg-config
 Replaces: mpc-ace (<< 5.6.3-4)
 Description: C++ network programming framework - development files
@@ -63,7 +63,7 @@ Description: C++ network programming framework - documentation
  This package contains the ACE overview documentation, tutorials,
  examples, and information regarding upstream development.
 
-Package: libace-ssl-6.2.3
+Package: libace-ssl-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -74,12 +74,12 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-6.2.0 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 6.2.3d), ${misc:Depends}
+Depends: libace-ssl-6.2.0 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 6.2.4d), ${misc:Depends}
 Description: ACE secure socket layer library - development files
  This package contains the header files and static library for the ACE
  SSL library.
 
-Package: libace-rmcast-6.2.3
+Package: libace-rmcast-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -93,12 +93,12 @@ Description: ACE reliable multicast library
 Package: libace-rmcast-dev
 Architecture: any
 Section: libdevel
-Depends: libace-rmcast-6.2.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-rmcast-6.2.4 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE reliable multicast library - development files
  This package contains the header files and static library for the ACE
  reliable multicast library.
 
-Package: libace-tmcast-6.2.3
+Package: libace-tmcast-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -112,12 +112,12 @@ Description: ACE transactional multicast library
 Package: libace-tmcast-dev
 Architecture: any
 Section: libdevel
-Depends: libace-tmcast-6.2.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-tmcast-6.2.4 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE transactional multicast library - development files
  This package contains the header files and static library for the ACE
  transactional multicast library.
 
-Package: libace-htbp-6.2.3
+Package: libace-htbp-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -131,12 +131,12 @@ Description: ACE protocol over HTTP tunneling library
 Package: libace-htbp-dev
 Architecture: any
 Section: libdevel
-Depends: libace-htbp-6.2.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-htbp-6.2.4 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE protocol over HTTP tunneling library - development files
  This package contains the header files and static library for the ACE
  HTBP library.
 
-Package: libace-inet-6.2.3
+Package: libace-inet-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -147,15 +147,15 @@ Description: ACE Inet protocol library
 Package: libace-inet-dev
 Architecture: any
 Section: libdevel
-Depends: libace-inet-6.2.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-inet-6.2.4 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE Inet protocol library - development files
  This package contains the header files and static library for the ACE
  Inet protocol library.
 
-Package: libace-inet-ssl-6.2.3
+Package: libace-inet-ssl-6.2.4
 Architecture: any
 Section: libs
-Depends: libace-inet-6.2.1, libace-ssl-6.2.3, ${shlibs:Depends}, ${misc:Depends}
+Depends: libace-inet-6.2.1, libace-ssl-6.2.4, ${shlibs:Depends}, ${misc:Depends}
 Description: ACE SSL-enabled Inet protocol library
  This package provides an ACE addon library for clients (and possibly
  servers at some point) using Inet protocols which support SSL, such as
@@ -164,7 +164,7 @@ Description: ACE SSL-enabled Inet protocol library
 Package: libace-inet-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-inet-ssl-6.2.3 (= ${binary:Version}), libace-inet-dev (= ${binary:Version}), libace-ssl-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-inet-ssl-6.2.4 (= ${binary:Version}), libace-inet-dev (= ${binary:Version}), libace-ssl-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE SSL-enabled Inet protocol library - development files
  This package contains the header files and static library for the ACE
  SSL-enabled Inet protocol library.
@@ -191,7 +191,7 @@ Description: ACE perfect hash function generator (transitional package)
  .
  It can be safely removed after installation.
 
-Package: libacexml-6.2.3
+Package: libacexml-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -207,16 +207,16 @@ Package: libacexml-dev
 Architecture: any
 Section: libdevel
 Replaces: libace-dev (<< 5.7.7-4)
-Depends: libacexml-6.2.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libacexml-6.2.4 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE SAX based XML parsing library - development files
  This package contains the header files and static library for the ACE
  XML parsing library.
 
-Package: libkokyu-6.2.3
+Package: libkokyu-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: libtao-2.2.1, libtao-orbsvcs-2.2.3
+Suggests: libtao-2.2.1, libtao-orbsvcs-2.2.4
 Description: ACE scheduling and dispatching library
  Kokyu is a library designed to provide flexible scheduling and
  dispatching services.
@@ -227,12 +227,12 @@ Description: ACE scheduling and dispatching library
 Package: libkokyu-dev
 Architecture: any
 Section: libdevel
-Depends: libkokyu-6.2.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libkokyu-6.2.4 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE scheduling and dispatching library - development files
  This package contains the header files and static library for the ACE
  scheduling and dispatching library.
 
-Package: libace-qtreactor-6.2.3
+Package: libace-qtreactor-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -251,12 +251,12 @@ Description: ACE-GUI reactor integration for Qt
 Package: libace-qtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-qtreactor-6.2.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), libqt4-dev, ${misc:Depends}
+Depends: libace-qtreactor-6.2.4 (= ${binary:Version}), libace-dev (= ${binary:Version}), libqt4-dev, ${misc:Depends}
 Description: ACE-GUI reactor integration for Qt - development files
  This package contains header files and static library for the ACE-Qt
  reactor integration.
 
-Package: libace-xtreactor-6.2.3
+Package: libace-xtreactor-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -274,12 +274,12 @@ Description: ACE-GUI reactor integration for Xt
 Package: libace-xtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-xtreactor-6.2.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.2.3), ${misc:Depends}
+Depends: libace-xtreactor-6.2.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.2.4), ${misc:Depends}
 Description: ACE-GUI reactor integration for Xt - development files
  This package contains header files and static library for the ACE-Xt
  reactor integration.
 
-Package: libace-tkreactor-6.2.3
+Package: libace-tkreactor-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -298,12 +298,12 @@ Description: ACE-GUI reactor integration for Tk
 Package: libace-tkreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-tkreactor-6.2.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), tk-dev (>= 8.5), ${misc:Depends}
+Depends: libace-tkreactor-6.2.4 (= ${binary:Version}), libace-dev (= ${binary:Version}), tk-dev (>= 8.5), ${misc:Depends}
 Description: ACE-GUI reactor integration for Tk - development files
  This package contains header files and static library for the ACE-Tk
  reactor integration.
 
-Package: libace-flreactor-6.2.3
+Package: libace-flreactor-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -321,12 +321,12 @@ Description: ACE-GUI reactor integration for Fl
 Package: libace-flreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-flreactor-6.2.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.2.3), ${misc:Depends}
+Depends: libace-flreactor-6.2.1 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.2.4), ${misc:Depends}
 Description: ACE-GUI reactor integration for Fl - development files
  This package contains header files and static library for the ACE-Fl
  reactor integration.
 
-Package: libace-foxreactor-6.2.3
+Package: libace-foxreactor-6.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -343,12 +343,12 @@ Description: ACE-GUI reactor integration for FOX
 Package: libace-foxreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-foxreactor-6.2.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfox-1.6-dev, ${misc:Depends}
+Depends: libace-foxreactor-6.2.4 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfox-1.6-dev, ${misc:Depends}
 Description: ACE-GUI reactor integration for FOX - development files
  This package contains header files and static library for the ACE-FOX
  reactor integration.
 
-Package: libtao-2.2.3
+Package: libtao-2.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -363,7 +363,7 @@ Package: libtao-dev
 Architecture: any
 Section: libdevel
 Replaces: libtao-orbsvcs-dev (<< 5.7.7-4)
-Depends: libtao-2.2.3 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libtao-2.2.4 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Suggests: libtao-doc, libtao-orbsvcs-dev
 Description: ACE based CORBA ORB core libraries - development files
  This package contains the header files for TAO. Due to the size of
@@ -379,7 +379,7 @@ Description: ACE based CORBA ORB core libraries - documentation
  This package contains the TAO overview documentation, tutorials,
  examples, and information regarding upstream development.
 
-Package: libtao-orbsvcs-2.2.3
+Package: libtao-orbsvcs-2.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -390,14 +390,14 @@ Package: libtao-orbsvcs-dev
 Architecture: any
 Section: libdevel
 Replaces: libtao-dev (<< 5.7.7-4)
-Depends: libtao-orbsvcs-2.2.3 (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libtao-orbsvcs-2.2.4 (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
 Description: TAO CORBA services - development files
  This package contains the header files for the TAO CORBA services.
  .
  The examples and some documentation have been included as well, but the
  static libraries have been left out due to their size (over 400MB).
 
-Package: libtao-qtresource-2.2.3
+Package: libtao-qtresource-2.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -408,12 +408,12 @@ Description: TAO-GUI reactor integration for Qt
 Package: libtao-qtresource-dev
 Architecture: any
 Section: libdevel
-Depends: libtao-qtresource-2.2.3 (= ${binary:Version}), libace-qtreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libtao-qtresource-2.2.4 (= ${binary:Version}), libace-qtreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
 Description: TAO-GUI reactor integration for Qt - development files
  This package contains header files and static library for the TAO-Qt
  reactor integration.
 
-Package: libtao-xtresource-2.2.3
+Package: libtao-xtresource-2.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -424,12 +424,12 @@ Description: TAO-GUI reactor integration for Xt
 Package: libtao-xtresource-dev
 Architecture: any
 Section: libdevel
-Depends: libtao-xtresource-2.2.3 (= ${binary:Version}), libace-xtreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libtao-xtresource-2.2.4 (= ${binary:Version}), libace-xtreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
 Description: TAO-GUI reactor integration for Xt - development files
  This package contains header files and static library for the TAO-Xt
  reactor integration.
 
-Package: libtao-flresource-2.2.3
+Package: libtao-flresource-2.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -440,12 +440,12 @@ Description: TAO-GUI reactor integration for Fl
 Package: libtao-flresource-dev
 Architecture: any
 Section: libdevel
-Depends: libtao-flresource-2.2.3 (= ${binary:Version}), libace-flreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libtao-flresource-2.2.4 (= ${binary:Version}), libace-flreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
 Description: TAO-GUI reactor integration for Fl - development files
  This package contains header files and static library for the TAO-Fl
  reactor integration.
 
-Package: libtao-tkresource-2.2.3
+Package: libtao-tkresource-2.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -456,12 +456,12 @@ Description: TAO-GUI reactor integration for Tk
 Package: libtao-tkresource-dev
 Architecture: any
 Section: libdevel
-Depends: libtao-tkresource-2.2.3 (= ${binary:Version}), libace-tkreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libtao-tkresource-2.2.4 (= ${binary:Version}), libace-tkreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
 Description: TAO-GUI reactor integration for Tk - development files
  This package contains header files and static library for the TAO-Tk
  reactor integration.
 
-Package: libtao-foxresource-2.2.3
+Package: libtao-foxresource-2.2.4
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -472,14 +472,14 @@ Description: TAO-GUI reactor integration for FOX
 Package: libtao-foxresource-dev
 Architecture: any
 Section: libdevel
-Depends: libtao-foxresource-2.2.3 (= ${binary:Version}), libace-foxreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libtao-foxresource-2.2.4 (= ${binary:Version}), libace-foxreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
 Description: TAO-GUI reactor integration for FOX - development files
  This package contains header files and static library for the TAO-FOX
  reactor integration.
 
 Package: tao-idl
 Architecture: any
-Depends: g++, libtao-2.2.3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Depends: g++, libtao-2.2.4 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Description: TAO IDL to C++ compiler
  This package provides an Interface Definition Language (IDL) to C++
  compiler.
@@ -489,7 +489,7 @@ Description: TAO IDL to C++ compiler
 
 Package: tao-ifr
 Architecture: any
-Depends: g++, libtao-2.2.3 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Depends: g++, libtao-2.2.4 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
 Description: TAO interface repository
  CORBA-aware programs can contact an interface repository to get
  objects' interfaces at run-time. Then they can use the Dynamic
