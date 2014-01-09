@@ -1,0 +1,15 @@
+// $Id$
+
+module test {
+    abstract valuetype EventBase { };
+
+    valuetype event0 : EventBase
+    {
+        public string message;
+    };
+
+    valuetype event1 : EventBase
+    {
+        public long l;
+    };
+};

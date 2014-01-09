@@ -1,0 +1,52 @@
+//$Id$
+project(*idl) : tao_versioning_idl_defaults, avoids_corba_e_micro, install {
+  custom_only = 1
+  IDL_Files {
+    idlflags += -Gp -Gd -Sci -SS -Sorb -GX \
+                -Wb,export_macro=TAO_RTScheduler_Export \
+                -Wb,export_include=tao/RTScheduling/rtscheduler_export.h \
+                -Wb,include_guard=TAO_RTSCHEDULER_SAFE_INCLUDE \
+                -Wb,safe_include=tao/RTScheduling/RTScheduler.h \
+                -iC RTScheduling
+    RTScheduler.pidl
+  }
+
+  IDL_Files {
+    idlflags += -SS -Sorb -GX -Sci \
+                -Wb,export_macro=TAO_RTScheduler_Export \
+                -Wb,export_include=tao/RTScheduling/rtscheduler_export.h \
+                -Wb,unique_include=tao/RTScheduling/RTScheduler.h \
+                -iC RTScheduling
+    RTScheduler_include.pidl
+  }
+
+  specific {
+    install_dir = tao/RTScheduling
+  }
+}
+
+project(RTScheduler) : taolib, tao_output, rtcorba, pi, pi_server, portableserver, install, corba_messaging, taoidldefaults, avoids_corba_e_micro {
+  after       += *idl
+  sharedname   = TAO_RTScheduler
+  dynamicflags += TAO_RTSCHEDULER_BUILD_DLL
+
+  Source_Files {
+    *.cpp
+    RTSchedulerC.cpp
+    RTScheduler_includeC.cpp
+  }
+
+  Header_Files {
+    *.h
+    RTSchedulerC.h
+    RTSchedulerS.h
+    RTSchedulerA.h
+    RTScheduler_includeC.h
+    RTScheduler_includeS.h
+    RTScheduler_includeA.h
+  }
+
+  specific {
+    install_dir = tao/RTScheduling
+  }
+}

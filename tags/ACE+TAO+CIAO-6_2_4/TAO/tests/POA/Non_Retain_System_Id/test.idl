@@ -1,0 +1,6 @@
+// $Id$
+
+interface ID_Check
+{
+  boolean check_servant_id (in short index);
+};

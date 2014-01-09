@@ -1,0 +1,26 @@
+// $Id$
+
+/**
+ * @file Shapes_Connector.idl
+ * @author Marcel Smit (msmit@remedy.nl)
+ */
+
+#ifndef SHAPES_CONNECTOR_IDL_
+#define SHAPES_CONNECTOR_IDL_
+
+#include <Components.idl>
+#include <ccm_dds.idl>
+
+#include "Base/Shapes_Base.idl"
+
+#pragma ciao lem "Connector/Shapes_ConnectorE.idl"
+
+#if (CIAO_DDS4CCM_OPENDDS==1)
+# include "Base/Shapes_BaseTypeSupport.idl"
+#endif
+
+module ::CCM_DDS::Typed < ::org::omg::dds::demo::ShapeType, ::org::omg::dds::demo::ShapeTypeSeq> Shapes;
+
+#endif /* SHAPES_CONNECTOR_IDL_ */
+
+

@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef ASYNCHT_SENDER_IDL
+#define ASYNCHT_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/AsynchT.idl"
+
+#pragma ciao ami4ccm receptacle "AsynchT::Sender::run_my_foo"
+
+module AsynchT
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses MyFoo run_my_foo;
+  };
+};
+
+#endif

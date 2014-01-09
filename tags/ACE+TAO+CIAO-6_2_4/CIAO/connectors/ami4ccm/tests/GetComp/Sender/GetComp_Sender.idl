@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef GETCOMP_T_SENDER_IDL
+#define GETCOMP_T_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/GetComp.idl"
+
+#pragma ciao ami4ccm receptacle "GetComp::Sender::run_my_foo"
+
+module GetComp
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses MyFoo run_my_foo;
+  };
+};
+
+#endif

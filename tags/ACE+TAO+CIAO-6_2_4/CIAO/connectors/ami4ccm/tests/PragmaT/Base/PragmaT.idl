@@ -1,0 +1,37 @@
+// $Id$
+
+#ifndef PRAGMAT_IDL
+#define PRAGMAT_IDL
+
+#pragma ciao lem "Base/PragmaTE.idl"
+#pragma ami4ccm interface "PragmaT::MyFoo"
+#pragma ciao lem "Base/PragmaTAE.idl"
+#pragma ami4ccm idl "Base/PragmaTA.idl"
+
+module PragmaT
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      long foo (in string in_str, out string answer)
+        raises (InternalError);
+      void hello (out long answer)
+        raises (InternalError);
+
+      attribute short rw_attrib
+        getraises (InternalError)
+        setraises (InternalError);
+
+      readonly attribute short ro_attrib
+        raises (InternalError);
+    };
+};
+
+#endif
+

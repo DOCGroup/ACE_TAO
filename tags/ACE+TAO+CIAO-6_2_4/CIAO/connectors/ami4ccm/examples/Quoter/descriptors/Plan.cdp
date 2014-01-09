@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- $Id$ -->
+<Deployment:DeploymentPlan xmlns:Deployment="http://www.omg.org/Deployment" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+
+  <UUID>6D382DAE-9024-4C4D-B91B-A0F9176AFACF</UUID>
+
+  <implementation xmi:id="Quoter_ProducerHomeImplementation">
+    <name>Quoter_ProducerHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="Quoter_Producer_ExecArtifact"/>
+    <artifact xmi:idref="Quoter_Producer_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_Producer_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Quoter.ImplementationArtifacts.ProducerArtifacts.Producer_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_Producer_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Quoter.ImplementationArtifacts.ProducerArtifacts.Producer_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Quoter_ClientHomeImplementation">
+    <name>Quoter_ClientHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="Quoter_Client_ExecArtifact"/>
+    <artifact xmi:idref="Quoter_Client_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_Client_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Quoter.ImplementationArtifacts.ClientArtifacts.Client_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_Client_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Quoter.ImplementationArtifacts.ClientArtifacts.Client_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Quoter_AMIHomeImplementation">
+    <name>Quoter_AMIHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="Quoter_AMI_ExecArtifact"/>
+    <artifact xmi:idref="Quoter_AMI_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_AMI4CCM_StockManager_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Quoter.ImplementationArtifacts.AMIArtifacts.AMI_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_AMI4CCM_StockManager_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Quoter.ImplementationArtifacts.AMIArtifacts.AMI_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="Quoter.ComponentImplementations.QuoterImplementation.Quoter.Producer">
+    <name>Quoter.ComponentImplementations.QuoterImplementation.Quoter.Producer</name>
+    <node>Producer</node>
+    <source/>
+    <implementation xmi:idref="Quoter_ProducerHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Producer.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Quoter.ComponentImplementations.QuoterImplementation.Quoter.Client">
+    <name>Quoter.ComponentImplementations.QuoterImplementation.Quoter.Client</name>
+    <node>Client</node>
+    <source/>
+    <implementation xmi:idref="Quoter_ClientHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Client.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="Quoter.ComponentImplementations.QuoterImplementation.Quoter.AMI">
+    <name>Quoter.ComponentImplementations.QuoterImplementation.Quoter.AMI</name>
+    <node>Client</node>
+    <source/>
+    <implementation xmi:idref="Quoter_AMIHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.InstanceIOR</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>AMI.ior</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+    <name>run_asynch_quoter_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>sendc_my_quoter</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Quoter.ComponentImplementations.QuoterImplementation.Quoter.Client" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_provides</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Quoter.ComponentImplementations.QuoterImplementation.Quoter.AMI" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>do_quoter_connection</name>
+    <internalEndpoint>
+      <portName>my_quoter</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Quoter.ComponentImplementations.QuoterImplementation.Quoter.Producer" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>ami4ccm_port_ami4ccm_uses</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Quoter.ComponentImplementations.QuoterImplementation.Quoter.AMI" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>synch_quoter_connection</name>
+    <internalEndpoint>
+      <portName>my_quoter</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Quoter.ComponentImplementations.QuoterImplementation.Quoter.Producer" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>my_quoter</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Quoter.ComponentImplementations.QuoterImplementation.Quoter.Client" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="Quoter_AMI_SvntArtifact">
+    <name>Quoter.ImplementationArtifacts.AMIArtifacts.AMI_svnt</name>
+    <source/>
+    <node/>
+    <location>Quoter_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_AMI4CCM_StockManager_Connector_AMI4CCM_Connector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Quoter_AMI_ExecArtifact">
+    <name>Quoter.ImplementationArtifacts.AMIArtifacts.AMI_exec</name>
+    <source/>
+    <node/>
+    <location>Quoter_conn</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_AMI4CCM_StockManager_Connector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Quoter_Producer_SvntArtifact">
+    <name>Quoter.ImplementationArtifacts.ProducerArtifacts.Producer_svnt</name>
+    <source/>
+    <node/>
+    <location>Quoter_Producer_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_AMI_ProducerHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Quoter_Producer_ExecArtifact">
+    <name>Quoter.ImplementationArtifacts.ProducerArtifacts.Producer_exec</name>
+    <source/>
+    <node/>
+    <location>Quoter_Producer_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_AMI_ProducerHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Quoter_Client_SvntArtifact">
+    <name>Quoter.ImplementationArtifacts.ClientArtifacts.Client_svnt</name>
+    <source/>
+    <node/>
+    <location>Quoter_Client_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_AMI_ClientHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Quoter_Client_ExecArtifact">
+    <name>Quoter.ImplementationArtifacts.ClientArtifacts.Client_exec</name>
+    <source/>
+    <node/>
+    <location>Quoter_Client_exec</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Quoter_AMI_ClientHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+</Deployment:DeploymentPlan>
