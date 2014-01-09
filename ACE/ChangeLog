@@ -1,3 +1,13 @@
+Thu Jan  9 12:33:11 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace.doxygen:
+        * etc/ace_inet.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Upgraded to doxygen 1.8.6
+
 Thu Jan  9 10:26:46 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
