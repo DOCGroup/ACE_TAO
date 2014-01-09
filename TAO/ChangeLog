@@ -1,3 +1,36 @@
+Thu Jan  9 12:33:08 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao.doxygen:
+        * etc/tao_anytypecode.doxygen:
+        * etc/tao_av.doxygen:
+        * etc/tao_compression.doxygen:
+        * etc/tao_cosevent.doxygen:
+        * etc/tao_cosnaming.doxygen:
+        * etc/tao_cosnotification.doxygen:
+        * etc/tao_costime.doxygen:
+        * etc/tao_costrader.doxygen:
+        * etc/tao_dynamicany.doxygen:
+        * etc/tao_dynamicinterface.doxygen:
+        * etc/tao_esf.doxygen:
+        * etc/tao_ifr.doxygen:
+        * etc/tao_implrepo.doxygen:
+        * etc/tao_iormanip.doxygen:
+        * etc/tao_iortable.doxygen:
+        * etc/tao_pi.doxygen:
+        * etc/tao_pi_server.doxygen:
+        * etc/tao_portablegroup.doxygen:
+        * etc/tao_portableserver.doxygen:
+        * etc/tao_rtcorba.doxygen:
+        * etc/tao_rtevent.doxygen:
+        * etc/tao_rtportableserver.doxygen:
+        * etc/tao_security.doxygen:
+        * etc/tao_smartproxies.doxygen:
+        * etc/tao_ssliop.doxygen:
+        * etc/tao_strategies.doxygen:
+        * etc/tao_transportcurrent.doxygen:
+        * etc/tao_ziop.doxygen:
+          Upgraded to doxygen 1.8.6
+
 Thu Jan  9 10:26:49 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
