@@ -1,3 +1,14 @@
+Thu Jan  9 10:26:46 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Make x.2.4 public to the world
+
 Thu Jan 09 09:18:31 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.2.4 released.
