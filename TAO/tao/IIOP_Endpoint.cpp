@@ -369,18 +369,19 @@ TAO_IIOP_Endpoint::object_addr_i (void) const
   // (or it's an IPv4 address) and the address is *not* an IPv6
   // decimal address try to resolve it as an IPv4 address.
   if ((is_ipv4_decimal_ ||
+       (!ACE::ipv6_enabled () ||
         this->object_addr_.set (this->port_,
                                 this->host_.in (),
                                 1,
-                                AF_INET6) == -1) &&
+                                AF_INET6) == -1)) &&
       (this->is_ipv6_decimal_ ||
-        this->object_addr_.set (this->port_,
-                              this->host_.in (),
-                              1,
-                              AF_INET) == -1))
+       this->object_addr_.set (this->port_,
+                               this->host_.in (),
+                               1,
+                               AF_INET) == -1))
 #else
-  if (this->object_addr_.set (this->port_,
-                              this->host_.in ()) == -1)
+    if (this->object_addr_.set (this->port_,
+                                this->host_.in ()) == -1)
 #endif
     {
       // If this call fails, it most likely due a hostname
