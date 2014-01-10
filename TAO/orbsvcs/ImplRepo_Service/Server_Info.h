@@ -29,17 +29,18 @@
 struct Server_Info
 {
   Server_Info (const ACE_CString& serverId,
-    const ACE_CString& name,
-    bool jacorbs,
-    const ACE_CString& aname,
-    const ACE_CString& cmdline,
-    const ImplementationRepository::EnvironmentList& env,
-    const ACE_CString& working_dir,
-    ImplementationRepository::ActivationMode amode,
-    int start_limit,
-    const ACE_CString& partial_ior = ACE_CString(""),
-    const ACE_CString& server_ior = ACE_CString(""),
-    ImplementationRepository::ServerObject_ptr svrobj = ImplementationRepository::ServerObject::_nil()
+               const ACE_CString& name,
+               bool jacorbs,
+               const ACE_CString& aname,
+               const ACE_CString& cmdline,
+               const ImplementationRepository::EnvironmentList& env,
+               const ACE_CString& working_dir,
+               ImplementationRepository::ActivationMode amode,
+               int start_limit,
+               const ACE_CString& partial_ior = ACE_CString(""),
+               const ACE_CString& server_ior = ACE_CString(""),
+               ImplementationRepository::ServerObject_ptr svrobj = ImplementationRepository::ServerObject::_nil(),
+               const ACE_CString& peer_list = ACE_CString("")
     );
 
   /// Convert to the corba type
@@ -72,9 +73,14 @@ struct Server_Info
   ACE_Time_Value last_ping;
   /// The cached server object
   ImplementationRepository::ServerObject_var server;
+  /// A comma separated list of additional POAs bound to this server
+  ACE_CString peers;
+  int peer_count;
+
   int start_count;
   int waiting_clients;
   bool starting;
+  int pid;
 };
 
 typedef ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> Server_Info_Ptr;

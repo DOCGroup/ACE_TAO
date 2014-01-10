@@ -405,12 +405,16 @@ Locator_Repository::update_activator (const Activator_Info_Ptr& info)
 }
 
 Server_Info_Ptr
-Locator_Repository::get_server (const ACE_CString& name)
+Locator_Repository::get_server (const ACE_CString& name, int pid)
 {
   sync_load ();
 
   Server_Info_Ptr server (0);
   servers ().find (name, server);
+  if (pid != 0 && server.get () != 0 && server->pid != pid)
+    {
+      server.reset ();
+    }
   return server;
 }
 
@@ -504,10 +508,11 @@ Locator_Repository::registered () const
   return this->registered_;
 }
 
-UpdateableServerInfo::UpdateableServerInfo (
-  Locator_Repository* repo, const ACE_CString& name)
+UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
+                                            const ACE_CString& name,
+                                            int pid)
 : repo_(repo),
-  si_(repo->get_server (name)),
+  si_(repo->get_server (name,pid)),
   needs_update_(false)
 {
 }

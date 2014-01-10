@@ -36,6 +36,7 @@ Options::Options ()
 , service_command_ (SC_NONE)
 , unregister_if_address_reused_ (false)
 , imr_type_ (STANDALONE_IMR)
+, throw_shutdown_exceptions_  (false)
 {
 }
 
@@ -621,6 +622,12 @@ bool
 Options::unregister_if_address_reused (void) const
 {
   return this->unregister_if_address_reused_;
+}
+
+bool
+Options::throw_shutdown_exceptions (void) const
+{
+  return this->throw_shutdown_exceptions_;
 }
 
 Options::ImrType

@@ -14,7 +14,8 @@ Server_Info::Server_Info
  int limit,
  const ACE_CString& partial_ior,
  const ACE_CString& server_ior,
- ImplementationRepository::ServerObject_ptr svrobj)
+ ImplementationRepository::ServerObject_ptr svrobj,
+ const ACE_CString& peer_list)
  : server_id (serverId)
  , name (server_name)
  , jacorb_server( jacorbs)
@@ -27,10 +28,22 @@ Server_Info::Server_Info
  , partial_ior (partial_ior)
  , ior (server_ior)
  , server(ImplementationRepository::ServerObject::_duplicate (svrobj))
+ , peers (peer_list)
+ , peer_count (0)
  , start_count (0)
  , waiting_clients (0)
  , starting (false)
+ , pid (0)
 {
+  if (peers.length() > 0)
+    {
+      peer_count = 1;
+      for (size_t i = peers.find (','); i != ACE_CString::npos;
+           i = peers.substr (i+1).find (','))
+        {
+          ++peer_count;
+        }
+    }
 }
 
 ImplementationRepository::ServerInformation*
