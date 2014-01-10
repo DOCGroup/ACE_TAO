@@ -60,7 +60,8 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager::add_interest\n")));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager::add_interest status = %d\n"),
+                                this->status_));
     }
 
 

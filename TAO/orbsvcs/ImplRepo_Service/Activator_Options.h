@@ -62,6 +62,10 @@ public:
   /// Note : Currently this only works on Unix.
   bool notify_imr (void) const;
 
+  /// When notifying of child death, pause this number of milliseconds
+  /// to simulate a heavily loaded server.
+  unsigned int induce_delay (void) const;
+
   /// Debug level for the Implementation Repository.
   unsigned int debug (void) const;
 
@@ -107,6 +111,8 @@ private:
   bool service_;
 
   bool notify_imr_;
+
+  unsigned int induce_delay_;
 
   /// SC_NONE, SC_INSTALL, SC_REMOVE, ...
   SERVICE_COMMAND service_command_;

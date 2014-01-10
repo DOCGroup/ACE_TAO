@@ -62,6 +62,7 @@ ImR_Locator_i::ImR_Locator_i (void)
   , read_only_ (false)
   , ping_external_ (false)
   , unregister_if_address_reused_ (false)
+  , throw_shutdown_exceptions_ (false)
 {
   // Visual C++ 6.0 is not smart enough to do a direct assignment
   // while allocating the INS_Locator.  So, we have to do it in
@@ -91,7 +92,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   this->ping_external_ = opts.ping_external ();
   this->ping_interval_ = opts.ping_interval ();
   this->unregister_if_address_reused_ = opts.unregister_if_address_reused ();
-
+  this->throw_shutdown_exceptions_ = opts.throw_shutdown_exceptions ();
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("RootPOA");
   this->root_poa_ = PortableServer::POA::_narrow (obj.in ());
@@ -414,13 +415,52 @@ ImR_Locator_i::notify_child_death
   ACE_ASSERT (name != 0);
 
   if (debug_ > 1)
-    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Server has died <%C>.\n"), name));
+    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Server[0] has died <%C>.\n"), name));
+
+
+  AsyncAccessManager_ptr aam(this->find_aam (name));
+  if (!aam.is_nil())
+    {
+      aam->notify_child_death ();
+    }
 
   UpdateableServerInfo info(this->repository_.get(), name);
   if (! info.null ())
     {
       info.edit()->ior = "";
       info.edit()->partial_ior = "";
+      info.edit()->pid = 0;
+    }
+  else
+    {
+      if (debug_ > 1)
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ImR: Failed to find server in repository.\n")));
+    }
+  _tao_rh->notify_child_death ();
+}
+
+void
+ImR_Locator_i::child_death_pid
+(ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+ const char* name, CORBA::Long pid)
+{
+  ACE_ASSERT (name != 0);
+
+  if (debug_ > 1)
+    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Server[%d] has died <%C>.\n"), pid, name));
+
+  UpdateableServerInfo info(this->repository_.get(), name, pid);
+  if (! info.null ())
+    {
+      info.edit()->ior = "";
+      info.edit()->partial_ior = "";
+      info.edit()->pid = 0;
+      AsyncAccessManager_ptr aam(this->find_aam (name));
+      if (!aam.is_nil())
+        {
+          aam->notify_child_death ();
+        }
     }
   else
     {
@@ -429,13 +469,33 @@ ImR_Locator_i::notify_child_death
                     ACE_TEXT ("ImR: Failed to find server in repository.\n")));
     }
 
-  AsyncAccessManager_ptr aam(this->find_aam (name));
-  if (!aam.is_nil())
+  _tao_rh->child_death_pid ();
+}
+
+void
+ImR_Locator_i::spawn_pid
+(ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+ const char* name, CORBA::Long pid)
+{
+  ACE_ASSERT (name != 0);
+
+  if (debug_ > 1)
+    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Server[%d] spawned <%C>.\n"),
+                    pid, name));
+
+  UpdateableServerInfo info(this->repository_.get(), name);
+  if (! info.null ())
     {
-      aam->notify_child_death ();
+      info.edit()->pid = pid;
+    }
+  else
+    {
+      if (debug_ > 1)
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("ImR: Failed to find server in repository.\n")));
     }
 
-  _tao_rh->notify_child_death ();
+  _tao_rh->spawn_pid ();
 }
 
 char*
@@ -946,6 +1006,10 @@ ImR_Locator_i::shutdown_server
       ImplementationRepository::ServerObject_var server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
       server->shutdown ();
+      // reset the server info on a successful call. A failure indicates the server isn't
+      // acting on the shutdown. Either it is shutting down already, or hasn't yet started,
+      // in which case the shutdown will need to be reissued.
+      info.edit ()->reset ();
     }
   catch (CORBA::TIMEOUT &to_ex)
     {
@@ -962,19 +1026,23 @@ ImR_Locator_i::shutdown_server
       _tao_rh->shutdown_server_excep (&h);
       return;
     }
-  catch (CORBA::Exception&)
+  catch (CORBA::Exception &ex)
     {
       if (debug_ > 1)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("ImR: Exception ignored while shutting down <%C>\n"),
+            ACE_TEXT ("ImR: Exception while shutting down <%C>\n"),
             server));
+        }
+      if (this->throw_shutdown_exceptions_)
+        {
+          ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
+          _tao_rh->shutdown_server_excep (&h);
+          return;
         }
     }
 
-  // Note : In most cases this has already been done in the server_is_shutting_down ()
-  // operation, but it doesn't hurt to update it again.
-  info.edit ()->reset ();
+
   _tao_rh->shutdown_server ();
 }
 

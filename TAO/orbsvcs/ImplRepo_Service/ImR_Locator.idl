@@ -17,6 +17,16 @@ module ImplementationRepository
     /// The ImR_Activator calls this method to notify death of child
     /// process that it had started.
     void notify_child_death (in string name);
+
+    /// Newer Activators call this method to notify death of child
+    /// process including pid to disambiguate child instances
+    void child_death_pid (in string name, in long pid);
+
+    /// Newer Activators call this method to notify spawn of child
+    /// process to supply pid for reference
+    void spawn_pid (in string name, in long pid);
+
+
   };
 
   enum UpdateType

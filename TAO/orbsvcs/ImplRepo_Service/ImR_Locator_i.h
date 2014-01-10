@@ -78,6 +78,14 @@ public:
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
      const char* name);
 
+  virtual void child_death_pid
+    (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+     const char* name, CORBA::Long pid);
+
+  virtual void spawn_pid
+    (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+     const char* name, CORBA::Long pid);
+
   // tao_imr->Locator
 
   virtual void activate_server
@@ -216,6 +224,7 @@ private:
   bool ping_external_;
   ACE_Time_Value ping_interval_;
   bool unregister_if_address_reused_;
+  bool throw_shutdown_exceptions_;
 };
 
 //----------------------------------------------------------------------------

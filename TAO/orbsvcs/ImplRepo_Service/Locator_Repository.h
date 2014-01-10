@@ -96,7 +96,7 @@ public:
   int update_activator (const Activator_Info_Ptr& info);
 
   /// Returns information related to startup.
-  Server_Info_Ptr get_server (const ACE_CString& name);
+  Server_Info_Ptr get_server (const ACE_CString& name, int pid = 0);
   /// Returns information related to startup.
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
@@ -215,7 +215,9 @@ public:
   /// constructor
   /// @param repo the repo to report updates to
   /// @param name the name of the server to retrieve
-  UpdateableServerInfo(Locator_Repository* repo, const ACE_CString& name);
+  UpdateableServerInfo(Locator_Repository* repo,
+                       const ACE_CString& name,
+                       int pid = 0);
 
   /// constructor
   /// @param repo the repo to report updates to
