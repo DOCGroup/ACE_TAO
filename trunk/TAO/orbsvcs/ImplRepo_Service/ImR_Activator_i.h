@@ -78,6 +78,8 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
   /// Cleans up any state created by init*.
   int fini (void);
 
+  int handle_timeout (const ACE_Time_Value &, const void *tok);
+
   /// Runs the orb.
   int run (void);
 
@@ -93,6 +95,7 @@ private:
   // Handles the death of the child processes of the ImR_Activator.
   // Informs the ImR_Locator too.
   int handle_exit (ACE_Process * process);
+  int handle_exit_i (pid_t pid);
 
 private:
 
@@ -118,6 +121,8 @@ private:
   unsigned int debug_;
 
   bool notify_imr_;
+
+  unsigned int induce_delay_;
 
   ACE_CString name_;
 

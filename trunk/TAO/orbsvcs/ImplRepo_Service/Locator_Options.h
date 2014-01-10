@@ -108,6 +108,8 @@ public:
 
   bool unregister_if_address_reused (void) const;
 
+  bool throw_shutdown_exceptions (void) const;
+
   /// Indicate what type of ImR Locator this is.
   enum ImrType { BACKUP_IMR, PRIMARY_IMR, STANDALONE_IMR };
   ImrType imr_type(void) const;
@@ -171,6 +173,11 @@ private:
   /// The type of ImR Locator this is.
   ImrType imr_type_;
 
+  /// Have the "shutdown_server" command forward any exceptions (such as transient)
+  /// back to the caller. Default behavior is to not do that since doing so may break
+  /// existing installations. There is no command line option for this yet, but I want
+  /// to preserve the framework for future use.
+  bool throw_shutdown_exceptions_;
 };
 
 #endif

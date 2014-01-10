@@ -26,6 +26,7 @@ ImR_Activator_i::ImR_Activator_i (void)
 : registration_token_(0)
 , debug_(0)
 , notify_imr_ (false)
+, induce_delay_ (0)
 , name_ (getHostName ())
 , env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
 , max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
@@ -115,6 +116,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
   orb_ = CORBA::ORB::_duplicate (orb);
   debug_ = opts.debug ();
   notify_imr_ = opts.notify_imr ();
+  induce_delay_ = opts.induce_delay ();
   env_buf_len_ = opts.env_buf_len ();
   max_env_vars_ = opts.max_env_vars ();
   if (opts.name ().length () > 0)
@@ -279,6 +281,13 @@ ImR_Activator_i::shutdown (void)
 void
 ImR_Activator_i::shutdown (bool wait_for_completion)
 {
+  if (! CORBA::is_nil (this->locator_.in ()) && this->registration_token_ != 0)
+    {
+      this->locator_->unregister_activator (name_.c_str(),
+                                            this->registration_token_);
+    }
+  this->locator_ = ImplementationRepository::Locator::_nil ();
+
   this->orb_->shutdown (wait_for_completion);
 }
 
@@ -374,6 +383,21 @@ ImR_Activator_i::start_server(const char* name,
         }
       this->process_mgr_.register_handler (this, pid);
       this->process_map_.rebind (pid, name);
+
+      if (!CORBA::is_nil (this->locator_.in ()))
+        {
+          if (this->notify_imr_)
+            {
+              if (debug_ > 1)
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("ImR Activator: Notifying ImR that ")
+                                  ACE_TEXT ("%s has started.\n"),
+                                  name));
+                }
+              this->locator_->spawn_pid (name, pid);
+            }
+        }
     }
 
   if (debug_ > 0)
@@ -383,24 +407,16 @@ ImR_Activator_i::start_server(const char* name,
 }
 
 int
-ImR_Activator_i::handle_exit (ACE_Process * process)
+ImR_Activator_i::handle_exit_i (pid_t pid)
 {
   // We use the process_manager so that we're notified when
   // any of our launched processes die. We notify the locator
   // when this happens.
 
-  if (debug_ > 0)
-    {
-      ORBSVCS_DEBUG
-        ((LM_DEBUG,
-        ACE_TEXT ("Process %d exited with exit code %d\n"),
-        process->getpid (), process->return_value ()));
-    }
-
   ACE_CString name;
-  if (this->process_map_.find (process->getpid (), name) == 0)
+  if (this->process_map_.find (pid, name) == 0)
     {
-      this->process_map_.unbind (process->getpid ());
+      this->process_map_.unbind (pid);
 
       if (!CORBA::is_nil (this->locator_.in ()))
         {
@@ -412,11 +428,55 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
                                   ACE_TEXT ("ImR Activator: Notifying ImR that ")
                                   ACE_TEXT ("%s has exited.\n"),
                                   name.c_str()));
-            }
-              this->locator_->notify_child_death (name.c_str());
+                }
+              this->locator_->child_death_pid (name.c_str(), pid);
             }
         }
     }
 
+  return 0;
+}
+
+int
+ImR_Activator_i::handle_exit (ACE_Process * process)
+{
+  if (debug_ > 0)
+    {
+      ORBSVCS_DEBUG
+        ((LM_DEBUG,
+        ACE_TEXT ("Process %d exited with exit code %d\n"),
+        process->getpid (), process->return_value ()));
+    }
+
+  if (this->induce_delay_ > 0)
+    {
+      ACE_Reactor *r = this->orb_->orb_core()->reactor();
+      ACE_Time_Value dtv (0, this->induce_delay_ * 1000);
+      pid_t pid = process->getpid();
+#if (ACE_SIZEOF_VOID_P == 8)
+      ACE_INT64 token = static_cast<ACE_INT64>(pid);
+#else
+      ACE_INT32 token = static_cast<ACE_INT32>(pid);
+#endif
+
+      r->schedule_timer (this, reinterpret_cast<void *>(token), dtv );
+    }
+  else
+    {
+      this->handle_exit_i (process->getpid());
+    }
+  return 0;
+}
+
+
+int
+ImR_Activator_i::handle_timeout (const ACE_Time_Value &, const void * tok)
+{
+#if (ACE_SIZEOF_VOID_P == 8)
+  ACE_INT64 token = reinterpret_cast<ACE_INT64>(tok);
+#else
+  ACE_INT32 token = reinterpret_cast<ACE_INT32>(tok);
+#endif
+  this->handle_exit_i (static_cast<pid_t>(token));
   return 0;
 }

@@ -1,3 +1,32 @@
+Fri Jan 10 22:11:38 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Activator_Options.h:
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+          Fix for bug 4152. The Activator now uses new operations on the
+          Locator to provide the PID of a new server instance when started
+          and then again when the server process dies. The Locator notes
+          the startup PID and compares the termination PID to ensure they
+          match. If there is no match the termination signal is ignored.
+          This way if the activator host is so busy that it can't report
+          the child death and the locator decides that a new server instance
+          needs to be started, the tardy death notice won't cause trouble.
+
+        * orbsvcs/tests/ImplRepo/Bug_4152_Regression:
+          Test for the same.
+
+
 Fri Jan 10 20:07:11 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/IIOP_Endpoint.cpp:

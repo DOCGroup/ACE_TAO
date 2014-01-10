@@ -24,6 +24,7 @@ Activator_Options::Activator_Options ()
 : debug_ (1)
 , service_ (false)
 , notify_imr_ (false)
+, induce_delay_ (0)
 , service_command_(SC_NONE)
 , env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
 , max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
@@ -159,6 +160,20 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
         {
           this->notify_imr_ = true;
         }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-delay")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -delay option needs a value\n"));
+              this->print_usage ();
+              return -1;
+            }
+          this->induce_delay_ = ACE_OS::atoi (shifter.get_current ());
+        }
+
       else
         {
           shifter.ignore_arg ();
@@ -210,7 +225,8 @@ Activator_Options::print_usage (void) const
               "  -e buflen   Set the environment buffer length in bytes for activated servants\n"
               "  -o file     Outputs the ImR's IOR to a file\n"
               "  -l          Notify the ImR when a process exits\n"
-              "  -n name     Specify a name for the Activator\n")
+              "  -n name     Specify a name for the Activator\n"
+              "  -delay ms   When using -l to notify, induce a delay of ms before notifying\n")
              );
 }
 
@@ -368,6 +384,12 @@ bool
 Activator_Options::notify_imr (void) const
 {
   return this->notify_imr_;
+}
+
+unsigned int
+Activator_Options::induce_delay (void) const
+{
+  return this->induce_delay_;
 }
 
 unsigned int
