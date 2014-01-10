@@ -1,3 +1,9 @@
+Fri Jan 10 18:09:02 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/GIOP_Message_Base.cpp:
+          The problem affecting Sun CC 5.12 also appears to affect at least
+          some installations of Sun CC 5.11 as well.
+
 Thu Jan  9 12:33:08 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao.doxygen:
