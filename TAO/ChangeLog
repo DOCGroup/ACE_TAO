@@ -1,3 +1,14 @@
+Fri Jan 10 20:07:11 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Endpoint.cpp:
+          Fix to work around problem exposed by a configuration issue
+          on windows 7. Even though there were apparently no IPv6 interfaces,
+          the system still successfully resolved an IPv6 address using
+          ::gethostbyname(). Since there were no usable interfaces, a subsequent
+          attempt to use that address failed, crashing the application. This is
+          not a universal problem, and the exact troubling configuration is yet
+          to be determined.
+
 Fri Jan 10 18:09:02 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/GIOP_Message_Base.cpp:
