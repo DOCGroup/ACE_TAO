@@ -47,6 +47,7 @@ run_standalone (Options& opts)
       int status = server.init (opts);
       if (status == -1)
         {
+          server.fini ();
           return 1;
         }
       else
