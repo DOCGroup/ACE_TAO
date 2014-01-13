@@ -283,8 +283,15 @@ ImR_Activator_i::shutdown (bool wait_for_completion)
 {
   if (! CORBA::is_nil (this->locator_.in ()) && this->registration_token_ != 0)
     {
-      this->locator_->unregister_activator (name_.c_str(),
-                                            this->registration_token_);
+      try
+        {
+          this->locator_->unregister_activator (name_.c_str(),
+                                                this->registration_token_);
+        }
+      catch (const CORBA::Exception& )
+        {
+          // the locator may have already shutdown
+        }
     }
   this->locator_ = ImplementationRepository::Locator::_nil ();
 
