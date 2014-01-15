@@ -37,11 +37,12 @@ namespace
   {
     CORBA::String_var profile_str = profile.to_string ();
 
-//          if (TAO_debug_level > 0)
-      TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("**************    IMR partial IOR =\n%C\n"),
-                  profile_str.in ()));
-
+    if (TAO_debug_level > 0)
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("**************    IMR partial IOR =\n%C\n"),
+                       profile_str.in ()));
+      }
     char* const pos = find_delimiter (profile_str.inout (),
                                       profile.object_key_delimiter ());
     if (pos)
@@ -49,8 +50,10 @@ namespace
     else
       {
         if (TAO_debug_level > 0)
-          TAOLIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Could not parse ImR IOR, skipping ImRification\n")));
+          {
+            TAOLIB_ERROR ((LM_ERROR,
+                           ACE_TEXT ("Could not parse ImR IOR, skipping ImRification\n")));
+          }
         return CORBA::Object::_nil();
       }
 
@@ -59,11 +62,12 @@ namespace
     // Add the key.
     ior += key_str;
 
-//          if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("**************    ImR-ified IOR =\n%C\n\n"),
-                ior.c_str ()));
-
+    if (TAO_debug_level > 0)
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("**************    ImR-ified IOR =\n%C\n\n"),
+                       ior.c_str ()));
+      }
     CORBA::Object_ptr obj = orb_core.orb ()->string_to_object (ior.c_str ());
     obj->_stubobj()->type_id = type_id;
     return obj;
@@ -287,18 +291,23 @@ namespace TAO
 
       if (!svr->_stubobj () || !svr->_stubobj ()->profile_in_use ())
         {
-          TAOLIB_ERROR ((LM_ERROR, "Invalid ImR ServerObject, bailing out.\n"));
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR, "Invalid ImR ServerObject, bailing out.\n"));
+            }
           return;
         }
-
-      CORBA::String_var full_ior = root_poa->_get_orb()->object_to_string (obj.in ());
+      CORBA::ORB_var orb = root_poa->_get_orb ();
+      CORBA::String_var full_ior = orb->object_to_string (obj.in ());
       TAO_Profile& profile = *(svr->_stubobj ()->profile_in_use ());
       CORBA::String_var ior = profile.to_string();
-      TAOLIB_DEBUG((LM_INFO,
-                 "\n\nfull_ior=<%s>\n\nior=<%s>\n\n",
-                 full_ior.in(),
-                 ior.in()));
-
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_DEBUG((LM_INFO,
+                        "\n\nfull_ior=<%s>\n\nior=<%s>\n\n",
+                        full_ior.in(),
+                        ior.in()));
+        }
       char* const pos = find_delimiter (ior.inout (),
                                         profile.object_key_delimiter ());
 
@@ -342,8 +351,10 @@ namespace TAO
         }
 
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Successfully notified ImR of Startup\n")));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("Successfully notified ImR of Startup\n")));
+        }
     }
 
     void
@@ -383,17 +394,21 @@ namespace TAO
           // configured to drop replies during shutdown (it does by default in
           // the LF model) we get a COMM_FAILURE exception which we ignore
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Ignoring COMM_FAILURE while unregistering")
-                        ACE_TEXT ("from ImR.\n")));
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("Ignoring COMM_FAILURE while unregistering")
+                             ACE_TEXT ("from ImR.\n")));
+            }
         }
       catch (const ::CORBA::TRANSIENT&)
         {
           // Similarly, there are cases where we could get a TRANSIENT.
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Ignoring TRANSIENT while unregistering")
-                        ACE_TEXT ("from ImR.\n")));
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("Ignoring TRANSIENT while unregistering")
+                             ACE_TEXT ("from ImR.\n")));
+            }
         }
       catch (const ::CORBA::Exception& ex)
         {
@@ -454,7 +469,7 @@ namespace TAO
           if (TAO_debug_level > 1)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Missing ImR IOR, will not use the ImR\n")));
+                             ACE_TEXT ("Missing ImR IOR, will not use the ImR\n")));
             }
           return CORBA::Object::_nil();
         }
