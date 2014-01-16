@@ -23,8 +23,6 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Log_Msg.h"
 
-
-
 static int stop_test = 0;
 static const ACE_TCHAR *directory = ACE_TEXT (".");
 static const ACE_TCHAR *temp_file = ACE_TEXT ("foo");
