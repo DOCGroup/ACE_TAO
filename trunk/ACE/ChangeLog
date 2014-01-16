@@ -1,3 +1,10 @@
+Thu Jan 16 10:36:20 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/High_Res_Timer.cpp:
+          Fixed implementation of ACE_High_Res_Timer::global_scale_factor,
+          only set the global_scale_factor_status_ when it is zero and we
+          have the lock.
+
 Thu Jan  9 12:33:11 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace.doxygen:
