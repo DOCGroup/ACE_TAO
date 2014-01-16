@@ -209,33 +209,39 @@ ACE_High_Res_Timer::global_scale_factor (void)
       if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
         {
 #         if defined (ACE_WIN32)
-            // This a higher-precision version, specific for Windows systems
-            LARGE_INTEGER freq;
-            if (::QueryPerformanceFrequency (&freq))
-            {
-                ACE_High_Res_Timer::global_scale_factor(freq.QuadPart);
+          // This a higher-precision version, specific for Windows systems
+          LARGE_INTEGER freq;
+          if (::QueryPerformanceFrequency (&freq))
+          {
+            ACE_High_Res_Timer::global_scale_factor(freq.QuadPart);
 
-                ACE_High_Res_Timer::global_scale_factor_status_ = 1;
-            }
-            else
-            {
-              // High-Res timers not supported
-              ACE_High_Res_Timer::global_scale_factor_status_ = -1;
-            }
-            return ACE_High_Res_Timer::global_scale_factor_;
+            // Succeeded in setting the global scale factor
+            ACE_High_Res_Timer::global_scale_factor_status_ = 1;
+          }
+          else
+          {
+            // High-Res timers not supported
+            ACE_High_Res_Timer::global_scale_factor_status_ = -1;
+          }
 #         elif defined (ACE_LINUX)
-            ACE_High_Res_Timer::global_scale_factor (ACE_High_Res_Timer::get_cpuinfo ());
+          ACE_High_Res_Timer::global_scale_factor (ACE_High_Res_Timer::get_cpuinfo ());
 #         endif /* ! ACE_WIN32 && ! (ACE_LINUX && __alpha__) */
 
 #         if !defined (ACE_WIN32)
           if (ACE_High_Res_Timer::global_scale_factor_ <= 1u)
             // Failed to retrieve CPU speed from system, so calculate it.
             ACE_High_Res_Timer::calibrate ();
+
+          // We have set the global scale factor so set out status
+          // to 1, this way we only set the global_scale_factor_ once.
+          // Must be in the !ACE_WIN32 block to make sure that we
+          // not change a value of -1 (only done for ACE_WINC32) by accident
+          // to 1
+          ACE_High_Res_Timer::global_scale_factor_status_ = 1;
 #         endif // (ACE_WIN32)
         }
     }
 
-  ACE_High_Res_Timer::global_scale_factor_status_ = 1;
 #endif /* (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
            ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER) && \
           ! ACE_HAS_HI_RES_TIMER &&
