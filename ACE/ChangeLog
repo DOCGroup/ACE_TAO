@@ -1,3 +1,8 @@
+Fri Jan 17 10:11:41 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS/server/HTTP_Server.cpp:
+          Added missing break
+
 Thu Jan 16 10:36:20 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/High_Res_Timer.cpp:
