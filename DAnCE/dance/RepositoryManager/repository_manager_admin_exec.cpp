@@ -308,6 +308,7 @@ struct Options
                           ACE_TEXT ("Using provided Domain NC: %C\n"),
                           get_opt.opt_arg ()));
             domain_nc_ = get_opt.opt_arg ();
+            break;
 
           case 0:
             if (ACE_OS::strcmp (get_opt.long_option (), ACE_TEXT ("domain-nc")) == 0)
