@@ -1,3 +1,8 @@
+Fri Jan 17 16:12:31 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+          Added missing break statements, reported by Coverity
+
 Fri Jan 17 10:20:51 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Acceptor.cpp:
