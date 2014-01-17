@@ -1,3 +1,8 @@
+Fri Jan 17 10:11:33 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/RepositoryManager/repository_manager_admin_exec.cpp:
+          Added missing break
+
 Fri Jan 17 09:48:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
