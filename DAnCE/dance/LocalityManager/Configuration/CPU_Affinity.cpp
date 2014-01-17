@@ -100,13 +100,10 @@ namespace DAnCE
         throw ::Deployment::StartError (prop.name.in (),
                                         message.c_str ());
       }
-
-    return;
-
-#endif
-
+#else
     throw ::Deployment::StartError (prop.name.in (),
                                     "CPU Affinity not supported on this platform");
+#endif
   }
 }
 

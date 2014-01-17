@@ -1,3 +1,8 @@
+Fri Jan 17 09:48:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
+          Fixed dead code warning from Coverity
+
 Thu Jan  9 12:33:13 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/DAnCE.doxygen:
