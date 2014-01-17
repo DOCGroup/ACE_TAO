@@ -68,8 +68,7 @@ TAO_Log_Constraint_Visitor::evaluate_constraint (ETCL_Constraint* root)
 
 int
 TAO_Log_Constraint_Visitor::visit_literal (
-    ETCL_Literal_Constraint *literal
-  )
+    ETCL_Literal_Constraint *literal)
 {
   TAO_ETCL_Literal_Constraint lit (literal);
   this->queue_.enqueue_head (lit);
@@ -99,8 +98,7 @@ TAO_Log_Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
 
 int
 TAO_Log_Constraint_Visitor::visit_union_value (
-    ETCL_Union_Value *union_value
-  )
+    ETCL_Union_Value *union_value)
 {
   switch (union_value->sign ())
   {
@@ -132,8 +130,7 @@ TAO_Log_Constraint_Visitor::visit_union_value (
 
 int
 TAO_Log_Constraint_Visitor::visit_union_pos (
-    ETCL_Union_Pos *union_pos
-  )
+    ETCL_Union_Pos *union_pos)
 {
   try
     {
@@ -398,8 +395,7 @@ TAO_Log_Constraint_Visitor::visit_component_assoc (
 
 int
 TAO_Log_Constraint_Visitor::visit_component_array (
-    ETCL_Component_Array *array
-  )
+    ETCL_Component_Array *array)
 {
   try
     {
@@ -540,8 +536,7 @@ TAO_Log_Constraint_Visitor::visit_special (ETCL_Special *special)
 
 int
 TAO_Log_Constraint_Visitor::visit_component (
-    ETCL_Component *component
-  )
+    ETCL_Component *component)
 {
   // If this component has no sub-component, only an identifier,
   // then we just visit the identifier, which puts a literal on
@@ -659,8 +654,7 @@ TAO_Log_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
 
 int
 TAO_Log_Constraint_Visitor::visit_unary_expr (
-    ETCL_Unary_Expr *unary_expr
-  )
+    ETCL_Unary_Expr *unary_expr)
 {
   ETCL_Constraint *subexpr = unary_expr->subexpr ();
 
@@ -700,8 +694,7 @@ TAO_Log_Constraint_Visitor::visit_unary_expr (
 
 int
 TAO_Log_Constraint_Visitor::visit_binary_expr (
-    ETCL_Binary_Expr *binary_expr
-  )
+    ETCL_Binary_Expr *binary_expr)
 {
 
   // Evaluate the constraint
@@ -736,8 +729,7 @@ TAO_Log_Constraint_Visitor::visit_binary_expr (
 
 int
 TAO_Log_Constraint_Visitor::visit_or (
-    ETCL_Binary_Expr *binary
-  )
+    ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
   CORBA::Boolean result = false;
@@ -778,8 +770,7 @@ TAO_Log_Constraint_Visitor::visit_or (
 
 int
 TAO_Log_Constraint_Visitor::visit_and (
-    ETCL_Binary_Expr *binary
-  )
+    ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
   CORBA::Boolean result = false;
@@ -821,8 +812,7 @@ TAO_Log_Constraint_Visitor::visit_and (
 int
 TAO_Log_Constraint_Visitor::visit_binary_op (
     ETCL_Binary_Expr *binary,
-    int op_type
-  )
+    int op_type)
 {
   int return_value = -1;
   ETCL_Constraint *lhs = binary->lhs ();
@@ -892,8 +882,7 @@ TAO_Log_Constraint_Visitor::visit_binary_op (
 
 int
 TAO_Log_Constraint_Visitor::visit_twiddle (
-    ETCL_Binary_Expr *binary
-  )
+    ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
   ETCL_Constraint *lhs = binary->lhs ();
@@ -922,8 +911,7 @@ TAO_Log_Constraint_Visitor::visit_twiddle (
 
 int
 TAO_Log_Constraint_Visitor::visit_in (
-    ETCL_Binary_Expr *binary
-  )
+    ETCL_Binary_Expr *binary)
 {
   int return_value = -1;
   ETCL_Constraint *lhs = binary->lhs ();
@@ -1003,8 +991,7 @@ TAO_Log_Constraint_Visitor::visit_in (
 
 int
 TAO_Log_Constraint_Visitor::visit_preference (
-    ETCL_Preference *
-  )
+    ETCL_Preference *)
 {
   // According to OMG 00-06-20 section 2.4.1, the Notification Service
   // does not use the preference operators. The method must be here
@@ -1016,8 +1003,7 @@ TAO_Log_Constraint_Visitor::visit_preference (
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::sequence_does_contain (
     const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+    TAO_ETCL_Literal_Constraint &item)
 {
   try
     {
@@ -1062,8 +1048,7 @@ TAO_Log_Constraint_Visitor::sequence_does_contain (
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::array_does_contain (
     const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+    TAO_ETCL_Literal_Constraint &item)
 {
   try
     {
@@ -1109,8 +1094,7 @@ TAO_Log_Constraint_Visitor::array_does_contain (
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::struct_does_contain (
     const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+    TAO_ETCL_Literal_Constraint &item)
 {
   try
     {
@@ -1158,8 +1142,7 @@ TAO_Log_Constraint_Visitor::struct_does_contain (
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::union_does_contain (
     const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+    TAO_ETCL_Literal_Constraint &item)
 {
   try
     {
@@ -1197,8 +1180,7 @@ TAO_Log_Constraint_Visitor::union_does_contain (
 CORBA::Boolean
 TAO_Log_Constraint_Visitor::any_does_contain (
     const CORBA::Any *any,
-    TAO_ETCL_Literal_Constraint &item
-  )
+    TAO_ETCL_Literal_Constraint &item)
 {
   const CORBA::Any *result = 0;
 
@@ -1220,12 +1202,14 @@ TAO_Log_Constraint_Visitor::simple_type_match (int expr_type,
         {
           return false;
         }
+      break;
     case ETCL_DOUBLE:
       if (tc_kind != CORBA::tk_double
           && tc_kind != CORBA::tk_float)
         {
           return false;
         }
+      break;
     case ETCL_INTEGER:
     case ETCL_SIGNED:
       if (tc_kind != CORBA::tk_short
@@ -1234,6 +1218,7 @@ TAO_Log_Constraint_Visitor::simple_type_match (int expr_type,
         {
           return false;
         }
+      break;
     case ETCL_UNSIGNED:
       if (tc_kind != CORBA::tk_ushort
           && tc_kind != CORBA::tk_ulong
@@ -1241,11 +1226,13 @@ TAO_Log_Constraint_Visitor::simple_type_match (int expr_type,
         {
           return false;
         }
+      break;
     case ETCL_BOOLEAN:
       if (tc_kind != CORBA::tk_boolean)
         {
           return false;
         }
+      break;
     default:
       return false;
   }
