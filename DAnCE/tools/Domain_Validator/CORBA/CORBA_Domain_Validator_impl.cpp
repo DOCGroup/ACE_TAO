@@ -462,7 +462,7 @@ DAnCE_Domain_Validator_i::build_late_list (const NODE_LIST &nodelist,
 DAnCE_Domain_Validator_i::validate_plan (const ::Deployment::DeploymentPlan & plan,
                                          ::CORBA::StringSeq_out late_nodes)
 {
-  bool retval;
+  bool retval = true;
   late_nodes = new ::CORBA::StringSeq (0);
 
   for (CORBA::ULong i = 0; i < plan.instance.length (); ++i)
