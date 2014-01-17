@@ -1,3 +1,8 @@
+Fri Jan 17 10:13:29 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.cpp:
+          Initialize local variable to fix Coverity warning
+
 Fri Jan 17 10:11:33 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/RepositoryManager/repository_manager_admin_exec.cpp:
