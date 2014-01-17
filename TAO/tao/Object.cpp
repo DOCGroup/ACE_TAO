@@ -972,6 +972,9 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
       if (!(cdr >> *ior))
         {
+          // Can't extrace the IOR, so delete the already allocated
+          // ior to not have a memory leak
+          delete ior;
           return false;
         }
 

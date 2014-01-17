@@ -1,3 +1,8 @@
+Fri Jan 17 09:43:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp:
+          Fixed potential memory leak
+
 Thu Jan 16 10:45:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
