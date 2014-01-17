@@ -914,8 +914,8 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
                     profile.profile_data.length ());
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-  CORBA::Octet major;
-  CORBA::Octet minor = CORBA::Octet();
+  CORBA::Octet major = 0;
+  CORBA::Octet minor = 0;
 
   // Read the version. We just read it here. We don't*do any*
   // processing.

@@ -1,3 +1,13 @@
+Fri Jan 17 10:20:51 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Acceptor.cpp:
+        * tao/Strategies/COIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+          Initialize major/minor with 0 to not log random memory in case
+          of a failure, fixes Coverity warnings
+
 Fri Jan 17 09:43:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp:
