@@ -1,3 +1,8 @@
+Sat Jan 18 19:30:18 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+          Fixed coverity error
+
 Sat Jan 18 18:34:30 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/MCAST_Parser.cpp:
