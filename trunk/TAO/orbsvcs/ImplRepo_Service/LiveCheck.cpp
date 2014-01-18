@@ -273,7 +273,10 @@ LiveEntry::status (LiveStatus l)
     }
   else
     {
-      this->owner_->remove_per_client_entry (this);
+      if (this->owner_->remove_per_client_entry (this))
+        {
+          delete (this);
+        }
     }
 }
 
@@ -480,8 +483,8 @@ PingReceiver::ping (void)
                           ACE_TEXT ("(%P|%t) PingReceiver::ping received from %C\n"),
                           this->entry_->server_name ()));
         }
-      this->entry_->status (LS_ALIVE);
       this->entry_->release_callback ();
+      this->entry_->status (LS_ALIVE);
     }
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());
@@ -510,8 +513,8 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
           {
             if (this->entry_ != 0)
               {
-                this->entry_->status (LS_TRANSIENT);
                 this->entry_->release_callback ();
+                this->entry_->status (LS_TRANSIENT);
              }
             break;
           }
@@ -519,8 +522,8 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
           {
             if (this->entry_ != 0)
               {
-                this->entry_->status (LS_DEAD);
                 this->entry_->release_callback ();
+                this->entry_->status (LS_DEAD);
              }
           }
         }
@@ -529,16 +532,16 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
     {
       if (this->entry_ != 0)
         {
-          this->entry_->status (LS_TIMEDOUT);
           this->entry_->release_callback ();
+          this->entry_->status (LS_TIMEDOUT);
         }
     }
   catch (CORBA::Exception &)
     {
       if (this->entry_ != 0)
         {
-          this->entry_->status (LS_DEAD);
           this->entry_->release_callback ();
+          this->entry_->status (LS_DEAD);
         }
     }
 
@@ -622,14 +625,17 @@ LiveCheck::LiveCheck ()
 
 LiveCheck::~LiveCheck (void)
 {
-  while (this->entry_map_.current_size() > 0)
+  for (LiveEntryMap::iterator em (this->entry_map_); !em.done(); em++)
     {
-      LiveEntryMap::iterator i (this->entry_map_);
-      LiveEntryMap::value_type *pair = 0;
-      i.next (pair);
-      this->entry_map_.unbind(pair);
-      delete pair->item();
+      delete em->int_id_;
     }
+  this->entry_map_.unbind_all();
+
+  for (PerClientStack::iterator pc (this->per_client_); !pc.done(); pc++)
+    {
+      delete *pc;
+    }
+  this->per_client_.reset ();
 }
 
 void
@@ -725,6 +731,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
           if (status != LS_PING_AWAY && status != LS_TRANSIENT)
             {
               this->per_client_.remove (entry);
+              delete entry;
             }
         }
     }
@@ -771,10 +778,10 @@ LiveCheck::remove_server (const char *server)
     delete entry;
 }
 
-void
+bool
 LiveCheck::remove_per_client_entry (LiveEntry *e)
 {
-  this->per_client_.remove (e);
+  return (this->per_client_.remove (e) == 0);
 }
 
 bool

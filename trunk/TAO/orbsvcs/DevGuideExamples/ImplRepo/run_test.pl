@@ -246,6 +246,12 @@ if ($SDN_status != 0) {
     exit 1;
 }
 
+$ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());
+
+if ($ACT_status != 0) {
+    print STDERR "ERROR: ImR_Activator returned $ACT_status\n";
+    $status = 1;
+}
 
 $IR_status = $IR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
 
@@ -254,12 +260,6 @@ if ($IR_status != 0) {
     $status = 1;
 }
 
-$ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());
-
-if ($ACT_status != 0) {
-    print STDERR "ERROR: ImR_Activator returned $ACT_status\n";
-    $status = 1;
-}
 
 $imr->DeleteFile ($implrepo_ior);
 $act->DeleteFile ($implrepo_ior);
