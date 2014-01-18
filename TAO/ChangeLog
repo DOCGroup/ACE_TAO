@@ -1,3 +1,13 @@
+Sat Jan 18 00:16:14 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/DevGuideExamples/ImplRepo/run_test.pl:
+          Fix the order of termination of activator & locator.
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+          Fix various valgrind reported errors including a memory leak
+          related to per-client activations and invalid memory access.
+
 Fri Jan 17 16:12:31 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:

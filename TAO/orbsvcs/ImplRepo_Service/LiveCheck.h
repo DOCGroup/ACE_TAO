@@ -254,7 +254,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
 
   void remove_server (const char *server);
 
-  void remove_per_client_entry (LiveEntry *entry);
+  bool remove_per_client_entry (LiveEntry *entry);
 
   bool add_listener (LiveListener *listener);
 
