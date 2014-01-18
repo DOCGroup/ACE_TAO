@@ -90,10 +90,6 @@ namespace ACE
         return *ACE_Unmanaged_Singleton<Context, ACE_SYNCH::MUTEX>::instance ();
       }
 
-    Context::Context (const Context&)
-      {
-      }
-
     Context::~Context ()
       {
       }

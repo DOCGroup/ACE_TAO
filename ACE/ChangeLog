@@ -1,3 +1,9 @@
+Sat Jan 18 18:38:50 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * protocols/ace/INet/HTTPS_Context.cpp:
+          Copy constructor is declared private so that it can't be used,
+          no need for an implementation, resolves Coverity error
+
 Fri Jan 17 10:11:41 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS/server/HTTP_Server.cpp:
