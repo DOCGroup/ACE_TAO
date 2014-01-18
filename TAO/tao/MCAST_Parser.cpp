@@ -136,7 +136,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           ACE_TCHAR addr[64];
           my_addr.addr_to_string (addr, sizeof(addr));
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT(" TAO (%P|%t) - MCAST_Parser: acceptor local address %s.\n"),
+                      ACE_TEXT("TAO (%P|%t) - MCAST_Parser: acceptor local address %s.\n"),
                       addr));
         }
 
@@ -255,9 +255,12 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                                    0,
                                    &tv) == -1)
                 {
-                  TAOLIB_ERROR ((LM_ERROR,
-                              ACE_TEXT ("%p\n"),
-                              ACE_TEXT ("multicast_query: unable to accept")));
+                  if (TAO_debug_level > 0)
+                    {
+                      TAOLIB_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("%p\n"),
+                                  ACE_TEXT ("multicast_query: unable to accept")));
+                    }
                   result = -1;
                 }
               else
@@ -272,10 +275,13 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                                           &tv);
                   if (result != (ssize_t)sizeof (ior_len))
                     {
-                      TAOLIB_ERROR ((LM_ERROR,
-                                  ACE_TEXT ("%p\n"),
-                                  ACE_TEXT ("multicast_query: unable to receive ")
-                                  ACE_TEXT ("ior length")));
+                      if (TAO_debug_level > 0)
+                        {
+                          TAOLIB_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("%p\n"),
+                                      ACE_TEXT ("multicast_query: unable to receive ")
+                                      ACE_TEXT ("ior length")));
+                        }
                       result = -1;
                     }
                   else
@@ -288,10 +294,13 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                           buf = CORBA::string_alloc (ior_len);
                           if (buf == 0)
                             {
-                              TAOLIB_ERROR ((LM_ERROR,
-                                          ACE_TEXT ("%p\n"),
-                                          ACE_TEXT ("multicast_query: unable to ")
-                                          ACE_TEXT ("allocate memory")));
+                              if (TAO_debug_level > 0)
+                                {
+                                  TAOLIB_ERROR ((LM_ERROR,
+                                              ACE_TEXT ("%p\n"),
+                                              ACE_TEXT ("multicast_query: unable to ")
+                                              ACE_TEXT ("allocate memory")));
+                                }
                               result = -1;
                             }
                         }

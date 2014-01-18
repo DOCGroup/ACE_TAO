@@ -1,3 +1,8 @@
+Sat Jan 18 18:34:30 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/MCAST_Parser.cpp:
+          Only log errors when TAO_debug_level > 0
+
 Sat Jan 18 00:16:14 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/DevGuideExamples/ImplRepo/run_test.pl:
