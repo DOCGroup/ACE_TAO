@@ -408,11 +408,11 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype_fwd (be_valuetype_fwd *)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> " << this->pre_ << f->local_name ()
-          << this->post_ << ").out ()";
+          << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "(strm << " << this->pre_ << f->local_name ()
-          << this->post_ << ").in ()";
+          << this->post_ << ".in ())";
       break;
     case TAO_CodeGen::TAO_CDR_SCOPE:
       // Nothing to be done because a valuetype cannot be declared inside a

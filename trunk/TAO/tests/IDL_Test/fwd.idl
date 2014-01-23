@@ -80,3 +80,27 @@ module fwd_mixed_intf
   interface mixed_conc_first : concrete_parent, abstract_parent {};
 };
 
+// Tests a bug found when the scope traversal was fixed. Forwarded valuetypes
+// have some different syntax supplied when used as initialization arguments
+// or in marshaling. This generated code did not compile.
+module obv_fwd
+{
+  valuetype ForwardedType;
+};
+
+module obv_fwd
+{
+  valuetype EnclosingType
+  {
+    public ::obv_fwd::ForwardedType forwarded;
+  };
+};
+
+module obv_fwd
+{
+  valuetype ForwardedType
+  {
+    public long number;
+  };
+
+};

@@ -44,6 +44,7 @@ project(*IDL): taoserver, messaging, gen_ostream {
     params.idl
     reopened_modules.idl
     struct.idl
+    string_value.idl
     reopen_include1.idl
     reopen_include2.idl
     typeprefix.idl
@@ -208,6 +209,8 @@ project(*DLL): taoidldefaults, taolib, messaging {
     simple2S.cpp
     simpleC.cpp
     simpleS.cpp
+    string_valueC.cpp
+    string_valueS.cpp
     structC.cpp
     structS.cpp
     typecodeA.cpp
