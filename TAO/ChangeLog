@@ -1,3 +1,31 @@
+Thu Jan 23 19:02:29 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+          The initializer for forward defined valuetypes used as members of
+          other values added a "const " to the type definition whereas the
+          initializer for fully defined valuetypes did not. This syntax seems
+          to have existed since support for object by value was first added
+          to TAO. A bug in name scope resolution actually hid this bug,
+          causing the compiler to treat forward defined valuetypes the same as
+          regular valutypes and getting the proper code generated. When the
+          scoping bug was fixed, forward defined valuetypes were distinguished
+          and got the bad implementation. Thanks to Colin Shen <cshen AT manh
+          DOT com> for reporting this age-old bug.
+
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+          The marshalling code for forwarded valuetypes was similarly
+          whacky and uncompilable.
+
+        * tests/IDL_Test/fwd.idl:
+          Add a regression test for the above.
+
+        * tao/Valuetype/Valuetype.mpc:
+        * tests/IDL_Test/IDL_Test.mpc:
+        * tests/IDL_Test/string_value.idl:
+          Generate StringValueA.* so that IDL code that includes
+          StringValue.pidl will be able to compile. Also added a test for
+          this case too. Thanks again to Colin Shen for reporting this bug.
+
 Sat Jan 18 19:30:18 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_operation/operation.cpp:
