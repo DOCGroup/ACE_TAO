@@ -183,7 +183,8 @@ ACE_Module<ACE_SYNCH_USE>::ACE_Module (const ACE_TCHAR *module_name,
                                        ACE_Task<ACE_SYNCH_USE> *reader_q,
                                        void *args,
                                        int flags /* = M_DELETE */)
-  : flags_ (M_FLAGS_NOT_SET)
+  : next_ (0),
+    flags_ (M_FLAGS_NOT_SET)
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE>::ACE_Module");
 
