@@ -68,8 +68,8 @@ ACE_RLECompressor::compress( const void *in_ptr,
 
                 } else if (run_code) {          // Are we in Compression?
                     // Finalise the Compression Run Length
-                    out_p[out_base] = ACE_UINT8(run_count | 0x80); 
-                    out_base    = out_index++; // Reset for Uncmpressed 
+                    out_p[out_base] = ACE_UINT8(run_count | 0x80);
+                    out_base    = out_index++; // Reset for Uncmpressed
                     run_count   = 0;
                     run_code    = false;
                     continue;                  // Now restart Uncompressed
