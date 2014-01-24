@@ -1,3 +1,8 @@
+Fri Jan 24 10:05:58 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Module.cpp:
+          Initialize pointer member with 0, fixes Coverity error
+
 Fri Jan 24 08:57:01 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Compression/rle/RLECompressor.cpp:
