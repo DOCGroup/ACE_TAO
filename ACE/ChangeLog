@@ -1,3 +1,11 @@
+Fri Jan 24 08:57:01 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/rle/RLECompressor.cpp:
+          Fix bug on a boundary condition where 128 bytes of exactly the same
+          character (ie 0x00) where that is the end of the compressor input
+          fails to produce the correct output. Thanks to Derek Dominish
+          <derek dot dominish at dsto dot defence dot gov dot au> for this fix
+
 Thu Jan 23 19:28:22 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * THANKS:
@@ -94,7 +102,6 @@ Mon Dec 30 11:18:12 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
         * tests/run_test.lst:
         * tests/tests.mpc:
           Two new C++11 tests
-
 
 Wed Dec 25 00:00:00 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
 
