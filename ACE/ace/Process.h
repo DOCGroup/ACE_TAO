@@ -469,31 +469,36 @@ protected:
 /**
  * @class ACE_Process
  *
- * @brief Process
+ * @brief A portable encapsulation for creating new processes.
  *
- * A Portable encapsulation for creating new processes.
- * Notice that on UNIX platforms, if the <setenv> is used, the
- * <spawn> is using the <execve> system call. It means that the
- * <command_line> should include a full path to the program file
- * (<execve> does not search the PATH).  If <setenv> is not used
- * then, the <spawn> is using the <execvp> which searches for the
- * program file in the PATH variable.
+ * ACE_Process provides a convenient way to:
+ *  - Spawn child processes, with convenient hooks for pre- and post-spawn
+ *    actions
+ *  - Check if a spawned process is still running
+ *  - Kill a spawned child process
+ *  - Wait for a spawned child process to exit.
+ *
+ * @see ACE_Process_Options because it is used to
+ * pass options when spawning child processes.
+ *
+ * @see ACE_Process_Manager for additional ways to manage spawned
+ * processes.
  */
 class ACE_Export ACE_Process
 {
 public:
   friend class ACE_Process_Manager;
 
-  /// Default construction.  Must use <ACE_Process::spawn> to start.
+  /// Default construction.  Must use ACE_Process::spawn() to start.
   ACE_Process (void);
 
   /// Destructor.
   virtual ~ACE_Process (void);
 
   /**
-   * Called just before <ACE_OS::fork> in the <spawn>.  If this
-   * returns non-zero, the <spawn> is aborted (and returns
-   * ACE_INVALID_PID).  The default simply returns zero.
+   * Called back from spawn() just before spawning the child.  If this
+   * returns non-zero, the spawn is aborted (and returns ACE_INVALID_PID).
+   * The default returns zero.
    */
   virtual int prepare (ACE_Process_Options &options);
 
@@ -503,47 +508,62 @@ public:
    * process id of the newly spawned child. Returns -1 on
    * failure. This will be fixed in the future versions of ACE when
    * the process id of the child will be returned regardless of the option.
+   *
+   * @note On UNIX platforms, spawn() uses the execvp() system call if
+   * ACE_Process_Options::inherit_environment() returns true (which is the
+   * default) and execve() if not. Since execve() does not search PATH, the
+   * ACE_Process_Options::command_line() should include a full path to the
+   * program file.
    */
   virtual pid_t spawn (ACE_Process_Options &options);
 
-  /// Called just after <ACE_OS::fork> in the parent's context, if the
-  /// <fork> succeeds.  The default is to do nothing.
+  /// Called back from spawn() just after spawning the child, in the parent's
+  /// context, if the fork succeeds.  The default simply returns.
   virtual void parent (pid_t child);
 
   /**
-   * Called just after <ACE_OS::fork> in the child's context.  The
-   * default does nothing.  This function is *not* called on Win32
+   * Called back from spawn() just after forking, in the child's context.  The
+   * default does nothing.
+   *
+   * @note This function is *not* called on Windows
    * because the process-creation scheme does not allow it.
    */
   virtual void child (pid_t parent);
 
-  /// Called by a Process_Manager that is removing this Process from
-  /// its table of managed Processes.  Default is to do nothing.
+  /// Called by a ACE_Process_Manager that is removing this object from
+  /// its table of managed processes. Default is to do nothing.
   virtual void unmanage (void);
 
   /**
-   * Wait for the process we've created to exit.  If @a status != 0, it
-   * points to an integer where the function store the exit status of
-   * child process to.  If @a wait_options == @c WNOHANG then return 0
-   * and don't block if the child process hasn't exited yet.  A return
-   * value of -1 represents the <wait> operation failed, otherwise,
-   * the child process id is returned.
+   * Wait for a previously spawned process to exit.
+   *
+   * @arg status Points to a location to receive the exit status of the
+   *      spawned process. Ignored if the value is 0.
+   * @arg wait_options If @c WNOHANG then return 0 and don't block if the
+   *      child process hasn't exited yet.
+   *
+   * @retval -1 the wait operation failed; consult @c errno for details.
+   * @retval other the child process id is returned on success.
    */
   pid_t wait (ACE_exitcode *status = 0,
               int wait_options = 0);
 
   /**
-   * Timed wait for the process we've created to exit.  A return value
-   * of -1 indicates that the something failed; 0 indicates that a
-   * timeout occurred.  Otherwise, the child's process id is returned.
-   * If @a status != 0, it points to an integer where the function
-   * stores the child's exit status.
+   * Timed wait for a previously spawned process to exit.
    *
-   * @note On UNIX platforms this function uses <ualarm>, i.e., it
+   * @arg tv A relative amount of time to wait for the process to exit.
+   * @arg status Points to a location to receive the exit status of the
+   *      spawned process. Ignored if the value is 0.
+   *
+   * @retval 0 the specified time period elapsed before the process exited.
+   * @retval -1 the wait operation failed; consult @c errno for details.
+   * @retval other the child process id is returned on success.
+   *
+   * @note On UNIX platforms this function uses @c ualarm(), i.e., it
    * overwrites any existing alarm.  In addition, it steals all
-   * <SIGCHLD>s during the timeout period, which will break another
-   * <ACE_Process_Manager> in the same process that's expecting
-   * <SIGCHLD> to kick off process reaping.
+   * @c SIGCHLD signals during the timeout period, which will break another
+   * ACE_Process_Manager in the same process that's expecting
+   * @c SIGCHLD to kick off process reaping.
    */
   pid_t wait (const ACE_Time_Value &tv,
               ACE_exitcode *status = 0);
@@ -555,7 +575,7 @@ public:
   /**
    * Terminate the process abruptly using ACE::terminate_process().
    * This call doesn't give the process a chance to cleanup, so use it
-   * with caution...
+   * with caution.
    */
   int terminate (void);
 
@@ -569,16 +589,16 @@ public:
   int running (void) const;
 
   /// Return the Process' exit code.  This method returns the raw
-  /// exit status returned from system APIs (such as <wait> or
-  /// <waitpid>).  This value is system dependent.
+  /// exit status returned from system APIs (such as @c wait() or
+  /// @c waitpid() ).  This value is system dependent.
   ACE_exitcode exit_code (void) const;
 
-  /// Return the Process' return value.  This method returns the
-  /// actual return value that a child process returns or <exit>s.
+  /// Return the process's return value.  This method returns the
+  /// actual return value that a child process returns or exits with.
   int return_value (void) const;
 
   /// Close all the handles in the set obtained from the
-  /// @arg ACE_Process_Options::dup_handles object used to spawn
+  /// @a ACE_Process_Options::dup_handles object used to spawn
   /// the process.
   void close_dup_handles (void);
 
