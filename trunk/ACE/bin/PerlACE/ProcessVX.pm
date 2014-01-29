@@ -201,7 +201,6 @@ sub iboot_cycle_power
     # of an outlet number, an iboot username, and an iboot password
     # in the environment.
     #
-
     if (defined($iboot_outlet) && defined($iboot_user) && defined($iboot_passwd)) {
         # We perform case #3
         # This case doesn't support shutdown
@@ -282,7 +281,7 @@ sub iboot_cycle_power
                         $iboot->send ("\e".$iboot_passwd."\e$ipal_cmd\r");
                     }
                     $iboot->recv ($text,128);
-                    print "iBoot is currently: $text\n" if ($v);
+                    print "iBoot is currently: $text (iteration $retries)\n" if ($v);
                     $iboot->close();
                     if (defined $iboot_outlet) {
                         $text = substr $text, $iboot_outlet - 1, 1;
@@ -307,7 +306,7 @@ sub iboot_cycle_power
                     }
                 }
                 else {
-                      print "ERROR: FAILED to execute 'reboot' command!\n";
+                      print "Unable to execute 'reboot' command, going to try another $retries times!\n";
                 }
             }
             if (!$is_open) {
