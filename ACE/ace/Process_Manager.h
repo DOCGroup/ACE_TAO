@@ -39,9 +39,9 @@ class ACE_Reactor;
  * @brief Manages a group of processes.
  *
  * This class allows applications to control groups of processes,
- * similar to how the ACE_Thread_Manager controls groups of
+ * similar to the way ACE_Thread_Manager controls groups of
  * threads.  Naturally, it doesn't work at all on platforms, such
- * as VxWorks or pSoS, that don't support process.
+ * as VxWorks or pSoS, that don't support multiple processes.
  * There are two main ways of using ACE_Process_Manager,
  * depending on how involved you wish to be with the termination
  * of managed processes.  If you want processes to simply
@@ -82,7 +82,7 @@ class ACE_Reactor;
  * spawned process exits, or when any process without a specific
  * ACE_Event_Handler exits.  When a process exits, the
  * appropriate ACE_Event_Handler's handle_input() method is called; the
- * ACE_HANDLE passed is either the process's HANDLE (on Win32),
+ * ACE_HANDLE passed is either the process's HANDLE (on Windows),
  * or its pid cast to an ACE_HANDLE (on POSIX).
  * It is also possible to call the wait() functions even when the
  * ACE_Process_Manager is registered with a reactor.
@@ -167,6 +167,8 @@ public:
   /**
    * Create a new process with specified @a options.
    * Register @a event_handler to be called back when the process exits.
+   * The @a proc object's ACE_Process::unmanage() method is called when
+   * the process is removed from ACE_Process_Manager.
    *
    * On success, returns the process id of the child that was created.
    * On failure, returns ACE_INVALID_PID.

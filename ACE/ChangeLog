@@ -1,3 +1,8 @@
+Wed Jan 29 20:52:37 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.h:
+        * ace/Process_Manager.h: Documentation improvements.
+
 Wed Jan 29 19:29:58 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/PerlACE/ProcessVX.pm:
