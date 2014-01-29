@@ -1,3 +1,15 @@
+Wed Jan 29 19:29:58 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/PerlACE/ProcessVX.pm:
+          Not see a problem using an iBoot as failure when we haven't
+          tried multiple times
+
+        * bin/PerlACE/ProcessWinCE.pm:
+          Add quotes around filenames when copying, solves problems when
+          using paths with spaces. This is not a full solution, it
+          solves one, but there are more, unless some structural work
+          gets done, don't use paths with spaces!
+
 Fri Jan 24 10:05:58 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Module.cpp:
