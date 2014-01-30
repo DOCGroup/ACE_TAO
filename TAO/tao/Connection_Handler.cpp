@@ -306,7 +306,7 @@ TAO_Connection_Handler::handle_input_internal (
                   t_id, handle, h, return_value));
     }
 
-  if (return_value == -1)
+  if (return_value != 0)
     {
       resume_handle.set_flag (TAO_Resume_Handle::TAO_HANDLE_LEAVE_SUSPENDED);
     }
