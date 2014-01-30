@@ -1,3 +1,7 @@
+Thu Jan 30 17:00:22 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.h: A few more doxygen adjustments.
+
 Wed Jan 29 20:52:37 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.h:

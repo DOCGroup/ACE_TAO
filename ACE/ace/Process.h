@@ -469,7 +469,7 @@ protected:
 /**
  * @class ACE_Process
  *
- * @brief A portable encapsulation for creating new processes.
+ * @brief A portable encapsulation for creating and managing new processes.
  *
  * ACE_Process provides a convenient way to:
  *  - Spawn child processes, with convenient hooks for pre- and post-spawn
@@ -489,7 +489,7 @@ class ACE_Export ACE_Process
 public:
   friend class ACE_Process_Manager;
 
-  /// Default construction.  Must use ACE_Process::spawn() to start.
+  /// Default construction.  Use ACE_Process::spawn() to start a process.
   ACE_Process (void);
 
   /// Destructor.
@@ -503,11 +503,15 @@ public:
   virtual int prepare (ACE_Process_Options &options);
 
   /**
-   * Launch a new process as described by @a options. On success,
-   * returns 1 if the option avoid_zombies is set, else returns the
-   * process id of the newly spawned child. Returns -1 on
-   * failure. This will be fixed in the future versions of ACE when
-   * the process id of the child will be returned regardless of the option.
+   * Launch a new process as described by @a options.
+   *
+   * @retval -1 on failure; check @c errno for error code.
+   * @retval 1 on success if the option @c avoid_zombies is set.
+   * @retval other the process id of the newly spawned child.
+   *
+   * @note The return value 1 may be changed in future versions of ACE to be
+   * the process id of the child will be returned regardless of the
+   * @c avoid_zombies option.
    *
    * @note On UNIX platforms, spawn() uses the execvp() system call if
    * ACE_Process_Options::inherit_environment() returns true (which is the
@@ -517,12 +521,12 @@ public:
    */
   virtual pid_t spawn (ACE_Process_Options &options);
 
-  /// Called back from spawn() just after spawning the child, in the parent's
-  /// context, if the fork succeeds.  The default simply returns.
+  /// Called back from spawn() in the parent's context just after forking,
+  /// if the fork succeeds.  The default simply returns.
   virtual void parent (pid_t child);
 
   /**
-   * Called back from spawn() just after forking, in the child's context.  The
+   * Called back from spawn() in the child's context just after forking.  The
    * default does nothing.
    *
    * @note This function is *not* called on Windows
@@ -568,7 +572,7 @@ public:
   pid_t wait (const ACE_Time_Value &tv,
               ACE_exitcode *status = 0);
 
-  /// Send the process a signal.  This is only portable to operating
+  /// Send the process a signal.  This only has an effect on operating
   /// systems that support signals, such as UNIX/POSIX.
   int kill (int signum = SIGINT);
 
@@ -588,7 +592,7 @@ public:
   /// Return 1 if running; 0 otherwise.
   int running (void) const;
 
-  /// Return the Process' exit code.  This method returns the raw
+  /// Return the process's exit code.  This method returns the raw
   /// exit status returned from system APIs (such as @c wait() or
   /// @c waitpid() ).  This value is system dependent.
   ACE_exitcode exit_code (void) const;
@@ -602,9 +606,8 @@ public:
   /// the process.
   void close_dup_handles (void);
 
-  /// Close all the handles in the set obtained from the
-  /// @arg ACE_Process_Options::passed_handles object used to spawn
-  /// the process.
+  /// Close all the passed handles in the set obtained from the
+  /// ACE_Process_Options object used to spawn the process.
   void close_passed_handles (void);
 
 #if defined (ACE_WIN32)
@@ -618,8 +621,8 @@ private:
   void operator= (const ACE_Process &);
 
 protected:
-  /// Set this process' <exit_code_>.  ACE_Process_Manager uses this
-  /// method to set the <exit_code_> after successfully waiting for
+  /// Set this process's exit code.  ACE_Process_Manager uses this
+  /// method to set the exit code after successfully waiting for
   /// this process to exit.
   void exit_code (ACE_exitcode code);
 
