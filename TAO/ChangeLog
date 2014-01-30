@@ -1,3 +1,12 @@
+Thu Jan 30 14:37:59 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Connection_Handler.cpp (handle_input_internal):
+          Make the resume handler stay suspended when the result is +1. This
+          can happen when using SSLIOP and there is leftover data in the SSL
+          read buffer. On at least Solaris, resuming the handler can cause the
+          reactor to dispatch another thread on the socket leading to a race
+          through SSL's decryption which ultimately fails.
+
 Thu Jan 23 19:02:29 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_argument/arglist.cpp:
