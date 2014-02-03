@@ -25,64 +25,70 @@ ACE_RLECompressor::compress( const void *in_ptr,
                              void *out_ptr,
                              ACE_UINT64 max_out_len )
 {
-    const ACE_UINT8 *in_p   = static_cast<const ACE_UINT8*>(in_ptr);
-    ACE_UINT8 *out_p        = static_cast<ACE_UINT8*>(out_ptr);
+    const ACE_Byte *in_p    = static_cast<const ACE_Byte *>(in_ptr);
+    ACE_Byte *out_p         = static_cast<ACE_Byte *>(out_ptr);
 
     ACE_UINT64 src_len      = in_len;  // Save for stats
     ACE_UINT64 out_index    = 0;
     ACE_UINT64 out_base     = 0;
     size_t     run_count    = 0;
+    bool       run_code     = false;
 
     if (in_p && out_p && in_len) {
 
-        ACE_UINT8 dup_byte, cur_byte = ACE_UINT8(*in_p ^ 0xFF);
+        while (in_len-- > 0) {
 
-        for (bool run_code = false; in_len--;) {
-
-            dup_byte = cur_byte; cur_byte = *in_p++;
+            ACE_Byte cur_byte = *in_p++;
 
             switch (out_index ? run_count : 128U) {  // BootStrap to 128
 
             case 128:
 
                 if ((out_base = out_index++) >= max_out_len) {
-                    return ACE_UINT64(-1); // Output Exhausted
+                    return ACE_UINT64(-1);      // Output Exhausted
                 }
-                run_code = false; run_count = 0; // Switch off compressing
+                run_code  = false; 
+                run_count = 0; // Switch off compressing
 
                 // Fall Through
 
-            default :
+            default:
 
                 // Fix problem where input exhaused but maybe compressing
-                if (in_len ? cur_byte == *in_p : cur_byte == dup_byte) {
+                if (in_len ? cur_byte == *in_p : run_code) {
 
                     if (run_code) {             // In Compression?
-                        out_p[out_base] = ACE_UINT8(run_count++ | 0x80);
+                        out_p[out_base] = ACE_Byte(run_count++ | 0x80);
                         continue;               // Stay in Compression
                     } else if (run_count) {     // Xfering to Compression
-                        out_base = out_index++;
+                        if ((out_base = out_index++) >= max_out_len) {
+                            return ACE_UINT64(-1); // Output Exhausted
+                        }
                         run_count = 0;
                     }
-                    run_code = true;            // We Are Now Compressing
+                    run_code  = true;           // We Are Now Compressing
 
                 } else if (run_code) {          // Are we in Compression?
                     // Finalise the Compression Run Length
-                    out_p[out_base] = ACE_UINT8(run_count | 0x80);
-                    out_base    = out_index++; // Reset for Uncmpressed
-                    run_count   = 0;
+                    out_p[out_base] = ACE_Byte(run_count | 0x80);
+                    // Reset for Uncmpressed
+                    if (in_len && (out_base = out_index++) >= max_out_len) {
+                        return ACE_UINT64(-1);  // Output Exhausted
+                    }
                     run_code    = false;
-                    continue;                  // Now restart Uncompressed
+                    run_count   = 0;
+                    continue;   // Now restart Uncompressed
                 }
 
-                out_p[out_base] = ACE_UINT8(run_count++ | (run_code ? 0x80 : 0));
-
-                if (out_index >= max_out_len) {
-                    return ACE_UINT64(-1);      // Output Exhausted
-                }
-                out_p[out_index++]  = cur_byte; // Save current byte
                 break;
             }
+
+            out_p[out_base] = ACE_Byte(run_count++ | (run_code ? 0x80 : 0));
+
+            if (out_index >= max_out_len) {
+                return ACE_UINT64(-1);          // Output Exhausted
+            }
+            out_p[out_index++] = cur_byte;
         }
         this->update_stats(src_len, out_index);
     }
@@ -99,12 +105,12 @@ ACE_RLECompressor::decompress( const void *in_ptr,
 {
     ACE_UINT64  out_len     = 0;
 
-    const ACE_UINT8 *in_p   = static_cast<const ACE_UINT8*>(in_ptr);
-    ACE_UINT8 *out_p        = static_cast<ACE_UINT8*>(out_ptr);
+    const ACE_Byte *in_p    = static_cast<const ACE_Byte *>(in_ptr);
+    ACE_Byte *out_p         = static_cast<ACE_Byte *>(out_ptr);
 
     if (in_p && out_p) while(in_len-- > 0) {
 
-        ACE_UINT8   cur_byte    = *in_p++;
+        ACE_Byte    cur_byte    = *in_p++;
         ACE_UINT32  cpy_len     = ACE_UINT32((cur_byte & ACE_CHAR_MAX) + 1);
 
         if (cpy_len > max_out_len) {
