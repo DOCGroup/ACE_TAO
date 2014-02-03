@@ -1,3 +1,9 @@
+Mon Feb  3 12:55:23 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Compression/rle/RLECompressor.cpp:
+          Fixed another boundary bug. Thanks to Derek Dominish
+          <derek dot dominish at dsto dot defence dot gov dot au> for this fix
+
 Thu Jan 30 17:00:22 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.h: A few more doxygen adjustments.
