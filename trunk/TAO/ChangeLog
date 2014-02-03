@@ -1,3 +1,8 @@
+Mon Feb  3 18:14:32 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp:
+          Fixed potential memory leak
+
 Thu Jan 30 14:37:59 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Connection_Handler.cpp (handle_input_internal):
