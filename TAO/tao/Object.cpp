@@ -972,15 +972,22 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
 
       if (!(cdr >> *ior))
         {
-          // Can't extrace the IOR, so delete the already allocated
+          // Can't extract the IOR, so delete the already allocated
           // ior to not have a memory leak
           delete ior;
           return false;
         }
 
-      ACE_NEW_RETURN (x,
-                      CORBA::Object (ior, orb_core),
-                      false);
+      ACE_NEW_NORETURN (x,
+                        CORBA::Object (ior, orb_core));
+
+      if (x == 0)
+        {
+          // Can't allocate a CORBA Object so delete first the
+          // memory we already allocated before we return
+          delete ior;
+          return false;
+        }
     }
 
   return (CORBA::Boolean) cdr.good_bit ();
