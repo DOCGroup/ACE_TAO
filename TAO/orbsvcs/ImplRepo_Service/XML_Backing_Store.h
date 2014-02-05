@@ -66,20 +66,9 @@ public:
   ///        existed when data was persisted
   /// @param extra_params extra name value pairs that
   ///        were reported for the server
-  virtual void load_server (
-    const ACE_CString& server_id,
-    const ACE_CString& server_name,
-    bool jacorb_server,
-    const ACE_CString& activator_name,
-    const ACE_CString& cmdline,
-    const ImplementationRepository::EnvironmentList& env_vars,
-    const ACE_CString& working_dir,
-    ImplementationRepository::ActivationMode actmode,
-    int start_limit,
-    const ACE_CString& partial_ior,
-    const ACE_CString& ior,
-    bool server_started,
-    const NameValues& extra_params);
+  virtual void load_server (Server_Info *info,
+                            bool server_started,
+                            const NameValues& extra_params);
 
   /// create the Activator_Info activator object
   /// @param activator_name the Activator_Info name

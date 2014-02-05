@@ -162,27 +162,11 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
       it.advance ();
 
       Server_Info_Ptr info = entry->int_id_;
-      if (info->jacorb_server)
-        {
-          ACE_CString jacorb_name (ACE_TEXT ("JACORB:") + info->name);
-         this->server_list_[i].server = jacorb_name.c_str ();
-        }
-      else
-        {
-          this->server_list_[i].server = info->name.c_str ();
-        }
-      this->server_list_[i].startup.command_line = info->cmdline.c_str ();
-      this->server_list_[i].startup.environment = info->env_vars;
-      this->server_list_[i].startup.working_directory = info->dir.c_str ();
-      this->server_list_[i].startup.activation = info->activation_mode;
-      this->server_list_[i].startup.activator = info->activator.c_str ();
-      this->server_list_[i].startup.start_limit = info->start_limit;
-      this->server_list_[i].partial_ior = info->partial_ior.c_str ();
-      this->server_list_[i].activeStatus = ImplementationRepository::ACTIVE_MAYBE;
+      info->setImRInfo (&this->server_list_[i]);
       if (this->pinger_ != 0)
         {
           ListLiveListener *l = 0;
-          ACE_NEW (l, ListLiveListener (info->name.c_str (),
+          ACE_NEW (l, ListLiveListener (info->key_name.c_str (),
                                         i,
                                         this,
                                         *this->pinger_));

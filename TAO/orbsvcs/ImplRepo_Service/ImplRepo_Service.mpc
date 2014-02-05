@@ -114,6 +114,7 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
     Forwarder.cpp
     ImR_Locator_i.cpp
     ImR_ResponseHandler.cpp
+    ImR_Utils.cpp
     INS_Locator.cpp
     LiveCheck.cpp
     Locator_XMLHandler.cpp
@@ -121,6 +122,7 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
     Locator_Options.cpp
     Iterator.cpp
     Server_Info.cpp
+    UpdateableServerInfo.cpp
     Locator_Repository.cpp
     Config_Backing_Store.cpp
     XML_Backing_Store.cpp
