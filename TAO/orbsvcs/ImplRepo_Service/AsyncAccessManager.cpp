@@ -27,7 +27,7 @@ AsyncAccessManager::AsyncAccessManager (const Server_Info &info,
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager::ctor server = %s\n"),
-                      this->info_->name.c_str()));
+                      this->info_->key_name.c_str()));
     }
 
 }
@@ -46,8 +46,7 @@ AsyncAccessManager::started_running (void)
 bool
 AsyncAccessManager::has_server (const char *s)
 {
-  int result = ACE_OS::strcmp (this->info_->name.c_str(),s);
-  return result == 0;
+  return this->info_->is_server(s) || this->info_->has_peer (s);
 }
 
 void
@@ -76,7 +75,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
 
   if (this->status_ == AAM_SERVER_READY || this->status_ == AAM_SERVER_STARTED_RUNNING)
     {
-      if (this->locator_.pinger().is_alive (this->info_->name.c_str()) == LS_ALIVE)
+      if (this->locator_.pinger().is_alive (this->info_->key_name.c_str()) == LS_ALIVE)
         {
           this->status_ = AAM_SERVER_READY;
           this->final_state();
@@ -91,7 +90,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
       // This is not a leak. The listener registers with
       // the pinger and will delete itself when done.
       AccessLiveListener *l = 0;
-      ACE_NEW (l, AccessLiveListener (this->info_->name.c_str(),
+      ACE_NEW (l, AccessLiveListener (this->info_->key_name.c_str(),
                                      this,
                                      this->locator_.pinger()));
       LiveListener_ptr llp(l);
@@ -213,7 +212,7 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
   this->info_->partial_ior = partial_ior;
   this->info_->server = ImplementationRepository::ServerObject::_duplicate (ref);
 
-  if (this->locator_.pinger().is_alive (this->info_->name.c_str()) == LS_ALIVE)
+  if (this->locator_.pinger().is_alive (this->info_->key_name.c_str()) == LS_ALIVE)
     {
       this->status (AAM_SERVER_READY);
       this->final_state ();
@@ -222,14 +221,14 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
   AccessLiveListener *l = 0;
   if (this->info_->activation_mode == ImplementationRepository::PER_CLIENT)
     {
-      ACE_NEW (l, AccessLiveListener (this->info_->name.c_str(),
+      ACE_NEW (l, AccessLiveListener (this->info_->key_name.c_str(),
                                      this,
                                      this->locator_.pinger(),
                                      this->info_->server.in()));
     }
   else
     {
-      ACE_NEW (l, AccessLiveListener (this->info_->name.c_str(),
+      ACE_NEW (l, AccessLiveListener (this->info_->key_name.c_str(),
                                      this,
                                      this->locator_.pinger()));
     }
@@ -332,7 +331,7 @@ AsyncAccessManager::send_start_request (void)
     ImplementationRepository::AMI_ActivatorHandler::_narrow (obj.in());
 
   ainfo->activator->sendc_start_server (cb.in(),
-                                        this->info_->name.c_str (),
+                                        this->info_->key_name.c_str (),
                                         this->info_->cmdline.c_str (),
                                         this->info_->dir.c_str (),
                                         this->info_->env_vars);

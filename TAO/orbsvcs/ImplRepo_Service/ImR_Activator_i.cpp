@@ -299,7 +299,7 @@ ImR_Activator_i::shutdown (bool wait_for_completion)
 }
 
 CORBA::Boolean
-ImR_Activator_i::kill_server (const char* name, CORBA::Short signum)
+ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Short signum)
 {
   if (debug_ > 1)
     ORBSVCS_DEBUG((LM_DEBUG,
@@ -318,6 +318,29 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Short signum)
                            "ImR Activator: Killing server <%s> "
                            "signal %d to pid %d, result = %d\n",
                            name, signum, pid, result));
+          return result == 0;
+        }
+    }
+  if (lastpid != 0)
+    {
+      pid_t pid = static_cast<pid_t>(lastpid);
+      int result = (signum != 9) ? ACE_OS::kill (pid, signum)
+        : ACE::terminate_process (pid);
+      if (debug_ > 1)
+        ORBSVCS_DEBUG((LM_DEBUG,
+                       "ImR Activator: Killing server <%s> based on supplied pid "
+                       "signal %d to pid %d, result = %d\n",
+                       name, signum, pid, result));
+      if (this->notify_imr_)
+        {
+          this->process_map_.bind (pid, name);
+#if (ACE_SIZEOF_VOID_P == 8)
+          ACE_INT64 token = static_cast<ACE_INT64>(pid);
+#else
+          ACE_INT32 token = static_cast<ACE_INT32>(pid);
+#endif
+          ACE_Reactor *r = this->orb_->orb_core()->reactor();
+          r->schedule_timer (this, reinterpret_cast<void *>(token), ACE_Time_Value ());
           return result == 0;
         }
     }
@@ -424,21 +447,18 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
   if (this->process_map_.find (pid, name) == 0)
     {
       this->process_map_.unbind (pid);
+    }
 
-      if (!CORBA::is_nil (this->locator_.in ()))
+  if (this->notify_imr_ && !CORBA::is_nil (this->locator_.in ()))
+    {
+      if (debug_ > 1)
         {
-          if (this->notify_imr_)
-            {
-              if (debug_ > 1)
-                {
-                  ORBSVCS_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT ("ImR Activator: Notifying ImR that ")
-                                  ACE_TEXT ("%s has exited.\n"),
-                                  name.c_str()));
-                }
-              this->locator_->child_death_pid (name.c_str(), pid);
-            }
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ImR Activator: Notifying ImR that ")
+                          ACE_TEXT ("server[%d], <%s> has exited.\n"),
+                          pid, name.c_str()));
         }
+      this->locator_->child_death_pid (name.c_str(), pid);
     }
 
   return 0;

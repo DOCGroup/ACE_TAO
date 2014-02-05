@@ -18,7 +18,7 @@ module ImplementationRepository
   interface ActivatorExt : Activator
   {
     /// Tells the activator to send a signal to a child process
-    boolean kill_server (in string name, in short signum);
+    boolean kill_server (in string name, in long pid, in short signum);
   };
 };
 

@@ -11,15 +11,25 @@ const ACE_TCHAR* Locator_XMLHandler::SERVER_INFO_TAG = ACE_TEXT("Servers");
 const ACE_TCHAR* Locator_XMLHandler::ACTIVATOR_INFO_TAG = ACE_TEXT("Activators");
 const ACE_TCHAR* Locator_XMLHandler::ENVIRONMENT_TAG = ACE_TEXT("EnvironmentVariables");
 
-Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo,
-                                        CORBA::ORB_ptr orb)
-: repo_(repo),
-  jacorb_server_ (false),
-  start_limit_(0),
-  server_started_(false),
-  repo_id_(0),
-  repo_type_(0),
-  orb_(CORBA::ORB::_duplicate(orb))
+const ACE_TCHAR* Locator_XMLHandler::SERVER_TAG = ACE_TEXT("server_id");
+const ACE_TCHAR* Locator_XMLHandler::POANAME_TAG = ACE_TEXT("poa_name");
+const ACE_TCHAR* Locator_XMLHandler::JACORB_TAG = ACE_TEXT("is_jacorb");
+const ACE_TCHAR* Locator_XMLHandler::ACTNAME_TAG = ACE_TEXT("activator");
+const ACE_TCHAR* Locator_XMLHandler::CMDLINE_TAG = ACE_TEXT("command_line");
+const ACE_TCHAR* Locator_XMLHandler::DIR_TAG = ACE_TEXT("working_dir");
+const ACE_TCHAR* Locator_XMLHandler::MODE_TAG = ACE_TEXT("activation_mode");
+const ACE_TCHAR* Locator_XMLHandler::LIMIT_TAG = ACE_TEXT("start_limit");
+const ACE_TCHAR* Locator_XMLHandler::PARTIOR_TAG = ACE_TEXT("partial_ior");
+const ACE_TCHAR* Locator_XMLHandler::IOR_TAG = ACE_TEXT("ior");
+const ACE_TCHAR* Locator_XMLHandler::STARTED_TAG = ACE_TEXT("started");
+const ACE_TCHAR* Locator_XMLHandler::PEER_TAG = ACE_TEXT("peer");
+const ACE_TCHAR* Locator_XMLHandler::PID_TAG = ACE_TEXT("pid");
+const ACE_TCHAR* Locator_XMLHandler::KEYNAME_TAG = ACE_TEXT("key_name");
+const ACE_TCHAR* Locator_XMLHandler::ALTKEY_TAG = ACE_TEXT("altkey");
+
+
+Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo)
+: repo_(repo)
 {
 }
 
@@ -35,36 +45,44 @@ static void convertEnvList (const Locator_XMLHandler::EnvList& in,
     }
 }
 
+static void convertPeerList (const Locator_XMLHandler::PeerList& in,
+                             CORBA::StringSeq& out)
+{
+  CORBA::ULong sz = static_cast<CORBA::ULong> (in.size ());
+  out.length (sz);
+  for (CORBA::ULong i = 0; i < sz; ++i)
+    {
+      out[i] = in[i].c_str ();
+    }
+}
+
+
 void
 Locator_XMLHandler::startElement (const ACEXML_Char*,
                                   const ACEXML_Char*,
                                   const ACEXML_Char* qName,
                                   ACEXML_Attributes* attrs)
 {
-  ACE_ASSERT (qName != 0);
   if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0)
     {
-      // We'll use this as a key to determine if we've got a valid record
-      this->server_name_ = ACE_TEXT("");
-      this->env_vars_.clear();
-      this->jacorb_server_ = false;
+      ACE_NEW (this->si_, Server_Info);
+      this->env_vars_.clear ();
 
       // if attrs exists and if the previously required 9 fields
       const size_t previous_size = 9;
       if (attrs != 0 && attrs->getLength () >= previous_size)
         {
           size_t index = 0;
-          this->server_id_ = attrs->getValue (index++);
-          this->server_name_ = attrs->getValue (index++);
-          this->activator_name_ = attrs->getValue (index++);
-          this->command_line_ = attrs->getValue (index++);
-          this->working_dir_ = attrs->getValue (index++);
-          this->activation_ = attrs->getValue (index++);
-          this->env_vars_.clear ();
-          int limit = ACE_OS::atoi (attrs->getValue (index++));
-          this->start_limit_ = limit;
-          this->partial_ior_ = attrs->getValue (index++);
-          this->server_object_ior_ = attrs->getValue (index++);
+          this->si_->server_id = attrs->getValue (index++);
+          this->si_->poa_name = attrs->getValue (index++);
+          this->si_->activator = attrs->getValue (index++);
+          this->si_->cmdline = attrs->getValue (index++);
+          this->si_->dir = attrs->getValue (index++);
+          this->si_->activation_mode =
+            ImR_Utils::stringToActivationMode (attrs->getValue (index++));
+          this->si_->start_limit_ = ACE_OS::atoi (attrs->getValue (index++));
+          this->si_->partial_ior = attrs->getValue (index++);
+          this->si_->ior = attrs->getValue (index++);
 
           if (attrs->getLength () >= index)
             {
@@ -73,15 +91,31 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
             }
           if (attrs->getLength () >= index)
             {
-              this->jacorb_server_ =
+              this->si_->is_jacorb =
                 (ACE_OS::atoi (attrs->getValue (index++)) != 0);
             }
+
           for ( ; index < attrs->getLength(); ++index)
             {
-              ACE_CString name (attrs->getLocalName(index));
-              ACE_CString value (attrs->getValue(index));
-              this->extra_params_.push_back(std::make_pair(name,
-                                                           value));
+              ACE_CString name (attrs->getLocalName (index));
+              ACE_CString value (attrs->getValue (index));
+              if (name == KEYNAME_TAG)
+                {
+                  this->si_->key_name = value;
+                }
+              else if (name == ALTKEY_TAG)
+                {
+                  this->si_->alt_key = value;
+                }
+              else if (name == PID_TAG)
+                {
+                  this->si_->pid =
+                    ACE_OS::atoi (attrs->getValue (index++));
+                }
+              else
+                {
+                  this->extra_params_.push_back (std::make_pair (name, value));
+                }
             }
         }
     }
@@ -101,8 +135,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
           {
             ACE_CString name (attrs->getLocalName(index));
             ACE_CString value (attrs->getValue(index));
-            extra_params.push_back(std::make_pair(name,
-                                                  value));
+            extra_params.push_back (std::make_pair (name, value));
           }
         this->repo_.load_activator (aname, token, ior, extra_params);
       }
@@ -117,6 +150,14 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
           this->env_vars_.push_back (ev);
         }
     }
+  else if (ACE_OS::strcasecmp (qName, PEER_TAG) == 0)
+    {
+      if (attrs != 0)
+        {
+          ACE_CString peer (attrs->getValue((size_t)0));
+          this->peer_list_.push_back (peer);
+        }
+    }
 }
 
 void
@@ -124,29 +165,20 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
                                 const ACEXML_Char*,
                                 const ACEXML_Char* qName)
 {
-  ACE_ASSERT(qName != 0);
-  if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0
-    && this->server_name_.length () > 0)
+  if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0)
   {
-    const int limit = this->start_limit_ < 1 ? 1 : this->start_limit_;
-    ImplementationRepository::ActivationMode amode =
-      ImR_Utils::parseActivationMode (this->activation_);
+    if (this->si_->key_name.length () == 0)
+      {
+        Server_Info::gen_key (this->si_->server_id,
+                              this->si_->poa_name,
+                              this->si_->key_name);
+      }
+    convertEnvList (this->env_vars_, this->si_->env_vars);
+    convertPeerList (this->peer_list_, this->si_->peers);
 
-    ImplementationRepository::EnvironmentList env_vars;
-    convertEnvList (this->env_vars_, env_vars);
-    this->repo_.load_server(this->server_id_,
-                            this->server_name_,
-                            this->jacorb_server_,
-                            this->activator_name_,
-                            this->command_line_,
-                            env_vars,
-                            this->working_dir_,
-                            amode,
-                            limit,
-                            this->partial_ior_,
-                            this->server_object_ior_,
-                            this->server_started_,
-                            this->extra_params_);
+    this->repo_.load_server (this->si_,
+                             this->server_started_,
+                             this->extra_params_);
   }
   // activator info is handled in the startElement
 }
