@@ -1,3 +1,12 @@
+Wed Feb  5 20:37:24 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+          Apply the same fix for forwarded interfaces as applied to forwarded
+          valuetypes on Jan 23 2014.
+
+        * orbsvcs/tests/ImplRepo/Bug_4152_Regression/run_test.pl:
+          Fix a typo.
+
 Wed Feb  5 11:39:11 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compression/RLECompressorTest.cpp:
