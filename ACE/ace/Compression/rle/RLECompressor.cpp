@@ -47,7 +47,7 @@ ACE_RLECompressor::compress( const void *in_ptr,
                 if ((out_base = out_index++) >= max_out_len) {
                     return ACE_UINT64(-1);      // Output Exhausted
                 }
-                run_code  = false; 
+                run_code  = false;
                 run_count = 0; // Switch off compressing
 
                 // Fall Through
