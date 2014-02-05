@@ -1,3 +1,11 @@
+Wed Feb  5 19:07:37 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * rpmbuild/ace-tao.spec: Added support for --without tao (and
+          --with tao), defaulting to --with tao. Allows one to build just
+          the ACE RPMs from an ACE-src tarball.
+
+        * NEWS: Added note about being able to build ACE RPMs.
+
 Mon Feb  3 12:55:23 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Compression/rle/RLECompressor.cpp:
