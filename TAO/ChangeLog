@@ -1,3 +1,10 @@
+Wed Feb  5 11:39:11 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compression/RLECompressorTest.cpp:
+          Extended this unit test further. Thanks to Derek Dominish
+          <derek dot dominish at dsto dot defence dot gov dot au> for these
+          additions
+
 Mon Feb  3 18:14:32 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Object.cpp:
