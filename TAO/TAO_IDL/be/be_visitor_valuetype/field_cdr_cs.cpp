@@ -300,7 +300,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
       *os << "(strm >> " << this->pre_ << f->local_name ()
-          << this->post_ << ").out ()";
+          << this->post_ << ".out ())";
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
       *os << "TAO::Objref_Traits< ::" << node->name ()
