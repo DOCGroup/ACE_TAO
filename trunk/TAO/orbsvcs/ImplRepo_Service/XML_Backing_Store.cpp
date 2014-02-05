@@ -94,28 +94,34 @@ XML_Backing_Store::persist (FILE* fp,
                             const NameValues& name_values)
 {
   ACE_CString server_id = ACEXML_escape_string (info.server_id);
-  ACE_CString name = ACEXML_escape_string (info.name);
+  ACE_CString pname = ACEXML_escape_string (info.poa_name);
+  ACE_CString keyname = ACEXML_escape_string (info.key_name);
+  ACE_CString altkey = ACEXML_escape_string (info.alt_key);
+
   ACE_CString activator = ACEXML_escape_string (info.activator);
   ACE_CString cmdline = ACEXML_escape_string (info.cmdline);
   ACE_CString wdir = ACEXML_escape_string (info.dir);
   ACE_CString partial_ior = ACEXML_escape_string (info.partial_ior);
   ACE_CString ior = ACEXML_escape_string (info.ior);
+  ACE_CString amodestr =
+    ImR_Utils::activationModeToString (info.activation_mode);
 
   ACE_OS::fprintf (fp,"%s<%s", tag_prepend,
     Locator_XMLHandler::SERVER_INFO_TAG);
-  ACE_OS::fprintf (fp," server_id=\"%s\"", server_id.c_str ());
-  ACE_OS::fprintf (fp," name=\"%s\"", name.c_str ());
-  ACE_OS::fprintf (fp," activator=\"%s\"", activator.c_str ());
-  ACE_OS::fprintf (fp," command_line=\"%s\"", cmdline.c_str ());
-  ACE_OS::fprintf (fp," working_dir=\"%s\"", wdir.c_str ());
-  ACE_CString amodestr =
-    ImR_Utils::activationModeToString (info.activation_mode);
-  ACE_OS::fprintf (fp," activation_mode=\"%s\"", amodestr.c_str ());
-  ACE_OS::fprintf (fp," start_limit=\"%d\"", info.start_limit);
-  ACE_OS::fprintf (fp," partial_ior=\"%s\"", partial_ior.c_str ());
-  ACE_OS::fprintf (fp," ior=\"%s\"", ior.c_str ());
-  ACE_OS::fprintf (fp," started=\"%d\"", !CORBA::is_nil(info.server.in()));
-  ACE_OS::fprintf (fp," jacorb_server=\"%d\"", info.jacorb_server);
+  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::SERVER_TAG, server_id.c_str ());
+  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::POANAME_TAG, pname.c_str ());
+  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::ACTNAME_TAG, activator.c_str ());
+  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::CMDLINE_TAG, cmdline.c_str ());
+  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::DIR_TAG, wdir.c_str ());
+  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::MODE_TAG, amodestr.c_str ());
+  ACE_OS::fprintf (fp, " %s=\"%d\"", Locator_XMLHandler::LIMIT_TAG, info.start_limit_);
+  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::PARTIOR_TAG, partial_ior.c_str ());
+  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::IOR_TAG, ior.c_str ());
+  ACE_OS::fprintf (fp, " %s=\"%d\"", Locator_XMLHandler::STARTED_TAG, !CORBA::is_nil(info.server.in()));
+  ACE_OS::fprintf (fp, " %s=\"%d\"", Locator_XMLHandler::JACORB_TAG, info.is_jacorb);
+  ACE_OS::fprintf (fp, " %s=\"%d\"", Locator_XMLHandler::PID_TAG, info.pid);
+  ACE_OS::fprintf (fp, " %s= \"%s\"", Locator_XMLHandler::KEYNAME_TAG, keyname.c_str ());
+  ACE_OS::fprintf (fp, " %s= \"%s\"", Locator_XMLHandler::ALTKEY_TAG, altkey.c_str ());
 
   NameValues::const_iterator name_value;
   for (name_value = name_values.begin(); name_value != name_values.end(); ++name_value)
@@ -124,11 +130,13 @@ XML_Backing_Store::persist (FILE* fp,
                        name_value->first.c_str(), name_value->second.c_str());
     }
 
-  const CORBA::ULong length = info.env_vars.length ();
-  if (length > 0)
+  CORBA::ULong elen = info.env_vars.length ();
+  CORBA::ULong plen = info.peers.length ();
+
+  if (elen + plen > 0)
     {
       ACE_OS::fprintf (fp,">\n");
-      for (CORBA::ULong i = 0; i < info.env_vars.length (); ++i)
+      for (CORBA::ULong i = 0; i < elen; ++i)
         {
           ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
             Locator_XMLHandler::ENVIRONMENT_TAG);
@@ -137,9 +145,16 @@ XML_Backing_Store::persist (FILE* fp,
           ACE_OS::fprintf (fp," value=\"%s\"", val.c_str());
           ACE_OS::fprintf (fp,"/>\n");
         }
+      for (CORBA::ULong i = 0; i < plen; ++i)
+        {
+          ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
+            Locator_XMLHandler::PEER_TAG);
+          ACE_CString name = ACEXML_escape_string(info.peers[i].in());
+          ACE_OS::fprintf (fp," name=\"%s\"", name.c_str());
+          ACE_OS::fprintf (fp,"/>\n");
+        }
 
-      ACE_OS::fprintf (fp,"%s</%s>\n", tag_prepend,
-        Locator_XMLHandler::SERVER_INFO_TAG);
+      ACE_OS::fprintf (fp,"%s</%s>\n", tag_prepend, Locator_XMLHandler::SERVER_INFO_TAG);
     }
   else
     {
@@ -180,7 +195,7 @@ XML_Backing_Store::init_repo(PortableServer::POA_ptr )
 int
 XML_Backing_Store::load (const ACE_TString& filename, FILE* open_file)
 {
-  Locator_XMLHandler xml_handler (*this, this->orb_.in());
+  Locator_XMLHandler xml_handler (*this);
   return load(filename, xml_handler, this->opts_.debug(), open_file);
 }
 
@@ -260,40 +275,20 @@ XML_Backing_Store::repo_mode() const
 }
 
 void
-XML_Backing_Store::load_server (
-  const ACE_CString& server_id,
-  const ACE_CString& server_name,
-  bool jacorb_server,
-  const ACE_CString& activator_name,
-  const ACE_CString& startup_cmd,
-  const ImplementationRepository::EnvironmentList& env_vars,
-  const ACE_CString& working_dir,
-  ImplementationRepository::ActivationMode actmode,
-  int start_limit,
-  const ACE_CString& partial_ior,
-  const ACE_CString& ior,
-  bool server_started,
-  const NameValues& )
+XML_Backing_Store::load_server (Server_Info *info,
+                                bool server_started,
+                                const NameValues& )
 {
-  const int limit = start_limit < 1 ? 1 : start_limit;
+  Server_Info_Ptr si (info);
 
-  Server_Info *serv_inf;
-  ACE_NEW (serv_inf,
-           Server_Info (server_id, server_name, jacorb_server,
-                        activator_name, startup_cmd, env_vars,
-                        working_dir, actmode, limit,
-                        partial_ior, ior));
+  this->servers().rebind (info->key_name, si);
 
-  Server_Info_Ptr si (serv_inf);
-
-  this->servers().rebind(server_name, si);
-
-  create_server(server_started, si);
+  create_server (server_started, si);
 }
 
 void
-XML_Backing_Store::create_server(bool server_started,
-                                 const Server_Info_Ptr& si)
+XML_Backing_Store::create_server (bool server_started,
+                                  const Server_Info_Ptr& si)
 {
   if (!server_started || si->ior.is_empty())
     {

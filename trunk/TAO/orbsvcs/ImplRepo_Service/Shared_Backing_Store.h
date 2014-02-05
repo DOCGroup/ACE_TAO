@@ -62,17 +62,11 @@ public:
     ACE_TString repo_id_str;
     ACE_TString unique_filename;
   };
-  typedef ACE_Hash_Map_Manager_Ex<ServerKey,
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
     UniqueId,
-    ACE_Hash<ServerKey>,
-    ACE_Equal_To<ServerKey>,
-    ACE_Null_Mutex> ServerUIMap;
-
-  typedef ACE_Hash_Map_Manager_Ex<ActivatorKey,
-    UniqueId,
-    ACE_Hash<ActivatorKey>,
-    ACE_Equal_To<ActivatorKey>,
-    ACE_Null_Mutex> ActivatorUIMap;
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
+    ACE_Null_Mutex> UniqueIdMap;
 
   enum ExtraParams { REPO_TYPE = 0, REPO_ID = 1 };
 
@@ -125,20 +119,9 @@ public:
   ///        existed when data was persisted
   /// @param extra_params extra name value pairs that
   ///        were reported for the server
-  virtual void load_server (
-    const ACE_CString& server_id,
-    const ACE_CString& server_name,
-    bool jacorb_server,
-    const ACE_CString& activator_name,
-    const ACE_CString& cmdline,
-    const ImplementationRepository::EnvironmentList& env_vars,
-    const ACE_CString& working_dir,
-    ImplementationRepository::ActivationMode actmode,
-    int start_limit,
-    const ACE_CString& partial_ior,
-    const ACE_CString& ior,
-    bool server_started,
-    const NameValues& extra_params);
+  virtual void load_server (Server_Info *info,
+                            bool server_started,
+                            const NameValues& extra_params);
 
   /// create the Activator_Info activator object
   /// @param activator_name the Activator_Info name
@@ -179,6 +162,26 @@ protected:
   /// create the Fault Tolerant ImR Locator IOR, using the peer_ior and
   /// this ImR Locator's IOR
   char* locator_service_ior(const char* peer_ior) const;
+
+private:
+  /// map management helper functions
+  void bind_unique_id (const ACE_CString& key,
+                       UniqueIdMap& unique_ids,
+                       const UniqueId& id);
+
+  void find_unique_id (const ACE_CString &key,
+                       UniqueIdMap &unique_ids,
+                       UniqueId &uid);
+
+  void update_unique_id (const ACE_CString &key,
+                         UniqueIdMap& unique_ids,
+                         Options::ImrType& entry_repo_type,
+                         unsigned int& entry_repo_id,
+                         UniqueId& uid);
+
+  void verify_unique_id (const ACE_CString& key,
+                         const XML_Backing_Store::NameValues& extra_params,
+                         UniqueIdMap& unique_ids);
 
 private:
   /**
@@ -292,9 +295,9 @@ private:
   /// an array associating ImrType with the appropriate name
   const char* IMR_REPLICA[3];
   /// map  for server unique ids
-  ServerUIMap server_uids_;
+  UniqueIdMap server_uids_;
   /// map  for activator unique ids
-  ActivatorUIMap activator_uids_;
+  UniqueIdMap activator_uids_;
   /// next unique repo id
   unsigned int repo_id_;
   /// extra parameters for XML

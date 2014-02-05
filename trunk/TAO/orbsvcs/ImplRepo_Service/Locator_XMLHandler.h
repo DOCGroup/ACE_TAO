@@ -13,8 +13,9 @@
 #define Locator_XMLHandler_H
 
 #include "ACEXML/common/DefaultHandler.h"
-
 #include "tao/ORB.h"
+#include "Server_Info.h"
+#include "Activator_Info.h"
 
 #include <vector>
 
@@ -37,6 +38,22 @@ public:
   static const ACE_TCHAR* ENVIRONMENT_TAG;
   static const ACE_TCHAR* ACTIVATOR_INFO_TAG;
 
+  static const ACE_TCHAR* SERVER_TAG;
+  static const ACE_TCHAR* POANAME_TAG;
+  static const ACE_TCHAR* JACORB_TAG;
+  static const ACE_TCHAR* ACTNAME_TAG;
+  static const ACE_TCHAR* CMDLINE_TAG;
+  static const ACE_TCHAR* DIR_TAG;
+  static const ACE_TCHAR* MODE_TAG;
+  static const ACE_TCHAR* LIMIT_TAG;
+  static const ACE_TCHAR* PARTIOR_TAG;
+  static const ACE_TCHAR* IOR_TAG;
+  static const ACE_TCHAR* STARTED_TAG;
+  static const ACE_TCHAR* PEER_TAG;
+  static const ACE_TCHAR* PID_TAG;
+  static const ACE_TCHAR* KEYNAME_TAG;
+  static const ACE_TCHAR* ALTKEY_TAG;
+
   struct EnvVar {
     ACE_TString name;
     ACE_TString value;
@@ -45,11 +62,11 @@ public:
   };
 
   typedef std::vector<EnvVar> EnvList;
+  typedef std::vector<ACE_CString> PeerList;
 
   /// constructor
   /// @param repo the repo to update based on XML
-  /// @param orb the orb (used to create server object)
-  Locator_XMLHandler (XML_Backing_Store& repo, CORBA::ORB_ptr orb);
+  Locator_XMLHandler (XML_Backing_Store& repo);
 
   /// provide implementation for handling a new XML element
   virtual void startElement (const ACEXML_Char* namespaceURI,
@@ -65,26 +82,11 @@ public:
  private:
   /// the repository
   XML_Backing_Store& repo_;
-
-  /// the server related parameters
-  ACE_CString server_id_;
-  ACE_TString server_name_;
-  bool jacorb_server_;
-  ACE_TString activator_name_;
-  ACE_TString command_line_;
-  ACE_TString activation_;
-  ACE_TString working_dir_;
-  ACE_TString server_object_ior_;
-  ACE_TString partial_ior_;
-  int start_limit_;
+  Server_Info *si_;
   bool server_started_;
   NameValues extra_params_;
-  unsigned int repo_id_;
-  unsigned int repo_type_;
   EnvList env_vars_;
-
-  /// the orb
-  CORBA::ORB_var orb_;
+  PeerList peer_list_;
 };
 
 #endif /* Locator_XMLHandler_H */

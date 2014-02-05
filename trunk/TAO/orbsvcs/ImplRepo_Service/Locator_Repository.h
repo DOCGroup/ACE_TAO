@@ -13,8 +13,8 @@
 */
 //=============================================================================
 
-#ifndef REPOSITORY_H
-#define REPOSITORY_H
+#ifndef LOCATOR_REPOSITORY_H
+#define LOCATOR_REPOSITORY_H
 
 #include "Server_Info.h"
 #include "Activator_Info.h"
@@ -44,44 +44,42 @@ class ImR_Locator_i;
 class Locator_Repository
 {
 public:
-  typedef ACE_CString ServerKey;
-  typedef ACE_Hash_Map_Manager_Ex<ServerKey,
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
     Server_Info_Ptr,
-    ACE_Hash<ServerKey>,
-    ACE_Equal_To<ServerKey>,
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
     ACE_Null_Mutex> SIMap;
 
-  typedef ACE_CString ActivatorKey;
-  typedef ACE_Hash_Map_Manager_Ex<ActivatorKey,
+  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
     Activator_Info_Ptr,
-    ACE_Hash<ActivatorKey>,
-    ACE_Equal_To<ActivatorKey>,
+    ACE_Hash<ACE_CString>,
+    ACE_Equal_To<ACE_CString>,
     ACE_Null_Mutex> AIMap;
 
   Locator_Repository(const Options& opts, CORBA::ORB_ptr orb);
 
   virtual ~Locator_Repository();
 
-  int unregister_if_address_reused (const ACE_CString& server_id,
-                                    const ACE_CString& name,
+  int unregister_if_address_reused (const ACE_CString& fqname,
                                     const char* partial_ior,
                                     ImR_Locator_i* imr_locator);
 
   /// Add a new server to the Repository
-  int add_server (const ACE_CString& server_id,
-    const ACE_CString& name,
-    bool jacorbs,
-    const ACE_CString& aname,
-    const ACE_CString& startup_command,
-    const ImplementationRepository::EnvironmentList& environment_vars,
-    const ACE_CString& working_dir,
-    ImplementationRepository::ActivationMode activation,
-    int start_limit,
-    const ACE_CString& partial_ior = ACE_CString(""),
-    const ACE_CString& ior = ACE_CString(""),
-    ImplementationRepository::ServerObject_ptr svrobj =
-      ImplementationRepository::ServerObject::_nil()
-    );
+  int add_server (const ACE_CString& fqname,
+                  const ImplementationRepository::StartupOptions &options);
+
+  int add_server (const ACE_CString& fqname,
+                  const ACE_CString& partial_ior,
+                  const ACE_CString& ior,
+                  ImplementationRepository::ServerObject_ptr svrobj);
+  int add_server_i (Server_Info *si);
+
+  /// create new records for poas that share a server instance. This is
+  /// a two step process, first the base poa must be registered then a
+  /// list of peers may be added.
+  int link_peers (Server_Info_Ptr base,
+                  const CORBA::StringSeq peers);
+
   /// Add a new activator to the Repository
   int add_activator (const ACE_CString& name,
     const CORBA::Long token,
@@ -96,7 +94,8 @@ public:
   int update_activator (const Activator_Info_Ptr& info);
 
   /// Returns information related to startup.
-  Server_Info_Ptr get_server (const ACE_CString& name, int pid = 0);
+  Server_Info_Ptr get_active_server (const ACE_CString& name, int pid = 0);
+  Server_Info_Ptr get_info (const ACE_CString& name);
   /// Returns information related to startup.
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
@@ -171,10 +170,9 @@ private:
 };
 
 /**
-* @class XML_Backing_Store
+* @class No_Backing_Store
 *
-* @brief XML backing store interface containing all ImR persistent information
-* in a single file
+* @brief Null implementation, used when persistence isn't desired
 *
 */
 class No_Backing_Store : public Locator_Repository
@@ -202,68 +200,4 @@ private:
   virtual int persistent_remove(const ACE_CString& name, bool activator);
 };
 
-/**
-* @class UpdateableServerInfo
-*
-* @brief Class for managing changes to ServerInfo memory to ensure
-* it is persisted
-*
-*/
-class UpdateableServerInfo
-{
-public:
-  /// constructor
-  /// @param repo the repo to report updates to
-  /// @param name the name of the server to retrieve
-  UpdateableServerInfo(Locator_Repository* repo,
-                       const ACE_CString& name,
-                       int pid = 0);
-
-  /// constructor
-  /// @param repo the repo to report updates to
-  /// @param si an already retrieved Server_Info_Ptr
-  UpdateableServerInfo(Locator_Repository* repo,
-                       const Server_Info_Ptr& si,
-                       bool reset_start_count = false);
-
-  /// constructor (no repo updates will be performed)
-  /// @param si a Server_Info to create a non-stored Server_Info_Ptr from
-  UpdateableServerInfo(const Server_Info& si);
-
-  /// destructor (updates repo if needed)
-  ~UpdateableServerInfo(void);
-
-  /// explicitly update repo if needed
-  void update_repo(void);
-
-  /// const Server_Info access
-  const Server_Info* operator->() const;
-
-  /// const Server_Info& access
-  const Server_Info& operator*() const;
-
-  /// retrieve smart pointer to non-const Server_Info
-  /// and indicate repo update required
-  const Server_Info_Ptr& edit(void);
-
-  /// force indication of update needed
-  void needs_update(void);
-
-  /// indicate it Server_Info_Ptr is null
-  bool null(void) const;
-
-private:
-  UpdateableServerInfo(const UpdateableServerInfo& );
-  const UpdateableServerInfo& operator=(const UpdateableServerInfo& );
-
-  /// the repo
-  Locator_Repository* const repo_;
-
-  /// the retrieved, passed, or non-stored server info
-  const Server_Info_Ptr si_;
-
-  /// the server info has changes and needs to be updated to the repo
-  bool needs_update_;
-};
-
-#endif /* REPOSITORY_H */
+#endif /* LOCATOR_REPOSITORY_H */

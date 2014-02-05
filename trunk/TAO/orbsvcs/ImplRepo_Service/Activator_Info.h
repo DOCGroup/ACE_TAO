@@ -16,14 +16,19 @@
 */
 struct Activator_Info
 {
+  Activator_Info (void);
+  Activator_Info (const Activator_Info& other);
+
   Activator_Info (const ACE_CString& aname,
     CORBA::Long atoken,
     const ACE_CString& aior,
     ImplementationRepository::Activator_ptr act =
     ImplementationRepository::Activator::_nil ());
 
+  void clear (void);
+
   /// Reset the connection portion
-  void reset();
+  void reset_runtime(void);
 
   ACE_CString name;
   CORBA::Long token;

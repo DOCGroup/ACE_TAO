@@ -1,3 +1,52 @@
+Wed Feb  5 21:13:37 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Activator_Info.h:
+        * orbsvcs/ImplRepo_Service/Activator_Info.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Utils.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.h:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/utils.h:
+          Add peer list and alternate key values to the Server_Info struct.
+          Together these enable the locator to know to start only one instance
+          of a server even if it receives "concurrent" requests for two POAs.
+          The POA name is not necessarily the key in the server repository as
+          it is possible for servers to be distinguished by server ID and
+          contain identically named POAs. It is up to system deployers to set
+          the server ID correctly in this case.
+
+          Heavily refactored the locator code that touches the Server_Info
+          data to rely on helper functions for initialization and entry
+          resolution. Refactored much of the persistence code for clarity.
+
+        * tao/ImR_Client/ImplRepo.idl:
+          Add an exception to the link command.
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          The locator now provides the last known pid for a server when a
+          server kill is requested. This allows the kill command to work even
+          if the activator is restarted after launching the wayward server.
+          In this case the activator will synthesize a child death event to
+          send to the locator. For this reason, it may still be possible that
+          a server is still running even though the locator believes it is not.
+
 Wed Feb  5 20:37:24 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:

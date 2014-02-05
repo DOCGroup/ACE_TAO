@@ -188,11 +188,6 @@ private:
 
   PortableServer::POA_ptr findPOA(const char* name);
 
-  void parse_id(const char* id,
-                ACE_CString& server_id,
-                ACE_CString& name,
-                bool& jacorb_server);
-
 private:
 
   static int debug_;

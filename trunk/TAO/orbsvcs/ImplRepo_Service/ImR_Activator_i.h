@@ -68,7 +68,7 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
                      const char* dir,
                      const ImplementationRepository::EnvironmentList & env);
 
-  CORBA::Boolean kill_server (const char* name, CORBA::Short signum);
+  CORBA::Boolean kill_server (const char* name, CORBA::Long pid, CORBA::Short signum);
 
   void shutdown(void);
 

@@ -271,22 +271,22 @@ Locator_Repository::lcase (const ACE_CString& s)
 }
 
 int
-Locator_Repository::unregister_if_address_reused (
-  const ACE_CString& server_id,
-  const ACE_CString& name,
-  const char* partial_ior,
-  ImR_Locator_i* imr_locator)
+Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
+                                                  const char* partial_ior,
+                                                  ImR_Locator_i* imr_locator)
 
 {
   if (this->opts_.debug() > 0)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t)ImR: checking reuse address ")
-      ACE_TEXT ("for server \"%C %C\" ior \"%C\"\n"),
-      server_id.c_str(),
-      name.c_str (),
-      partial_ior));
+                    ACE_TEXT ("(%P|%t)ImR: checking reuse address ")
+                    ACE_TEXT ("for server \"%C\" ior \"%C\"\n"),
+                    fqname.c_str(),
+                    partial_ior));
   }
+
+  ACE_CString key_name;
+  Server_Info::fqname_to_key (fqname.c_str(), key_name);
 
   ACE_Vector<ACE_CString> srvs;
 
@@ -299,72 +299,91 @@ Locator_Repository::unregister_if_address_reused (
     if (this->opts_.debug() > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
-        ACE_TEXT ("\"%C %C\" ior \"%C\"\n"), info->server_id.c_str(),
-        info->name.c_str (), info->partial_ior.c_str ()));
+                      ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
+                      ACE_TEXT ("\"%C %C\" ior \"%C\"\n"), info->server_id.c_str(),
+                      info->poa_name.c_str (), info->partial_ior.c_str ()));
     }
 
-    if (info->partial_ior == partial_ior
-      && name != info->name
-      && info->server_id != server_id)
-    {
-      if (this->opts_.debug() > 0)
+    if (info->partial_ior == partial_ior && info->key_name != key_name)
       {
-        ORBSVCS_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove server %C \n"),
-          info->partial_ior.c_str (), info->name.c_str ()));
+        if (this->opts_.debug() > 0)
+          {
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove server %C \n"),
+                            info->partial_ior.c_str (), info->poa_name.c_str ()));
+          }
+        if (! info->key_name.empty ())
+          {
+            srvs.push_back (info->key_name);
+          }
       }
-      if (! info->name.empty ())
-      {
-        srvs.push_back (info->name);
-      }
-    }
   }
 
   int err = 0;
   for (size_t i = 0; i < srvs.size (); ++i)
-  {
-    imr_locator->remove_aam (srvs[i].c_str());
-    if (this->remove_server (srvs[i]) != 0)
     {
-      err = -1;
+      imr_locator->remove_aam (srvs[i].c_str());
+      if (this->remove_server (srvs[i]) != 0)
+        {
+          err = -1;
+        }
     }
-  }
 
   return err;
 }
 
 int
-Locator_Repository::add_server (
-  const ACE_CString& server_id,
-  const ACE_CString& name,
-  bool jacorbs,
-  const ACE_CString& aname,
-  const ACE_CString& startup_command,
-  const ImplementationRepository::EnvironmentList& env_vars,
-  const ACE_CString& working_dir,
-  ImplementationRepository::ActivationMode activation,
-  int start_limit,
-  const ACE_CString& partial_ior,
-  const ACE_CString& ior,
-  ImplementationRepository::ServerObject_ptr svrobj)
+Locator_Repository::add_server
+  (const ACE_CString& fqname,
+   const ImplementationRepository::StartupOptions & options)
 {
+  Server_Info *si = 0;
+  ACE_NEW_RETURN (si,
+                  Server_Info (fqname,
+                               options.activator.in (),
+                               options.command_line.in (),
+                               options.environment,
+                               options.working_directory.in (),
+                               options.activation,
+                               options.start_limit),
+                  -1);
+  return this->add_server_i (si);
+}
+
+int
+Locator_Repository::add_server
+  (const ACE_CString& fqname,
+   const ACE_CString& partial_ior,
+   const ACE_CString& ior,
+   ImplementationRepository::ServerObject_ptr srvobj)
+{
+  Server_Info *si = 0;
+  ACE_NEW_RETURN (si,
+                  Server_Info (fqname, "", "",
+                               ImplementationRepository::EnvironmentList (),
+                               "", ImplementationRepository::NORMAL,
+                               1, partial_ior, ior, srvobj),
+                  -1);
+  return this->add_server_i (si);
+}
+
+int
+Locator_Repository::add_server_i (Server_Info *si)
+{
+  Server_Info_Ptr info(si);
+
   int err = sync_load ();
   if (err != 0)
     {
       return err;
     }
 
-  int limit = start_limit < 1 ? 1 : start_limit;
-  Server_Info_Ptr info(new Server_Info (server_id, name, jacorbs, aname,
-    startup_command, env_vars, working_dir, activation, limit, partial_ior,
-    ior, svrobj));
-
-  err = servers ().bind (name, info);
+  err = servers ().bind (si->key_name, info);
   if (err != 0)
     {
       return err;
     }
+
   this->persistent_update(info, true);
   return 0;
 }
@@ -405,18 +424,108 @@ Locator_Repository::update_activator (const Activator_Info_Ptr& info)
 }
 
 Server_Info_Ptr
-Locator_Repository::get_server (const ACE_CString& name, int pid)
+Locator_Repository::get_active_server (const ACE_CString& name, int pid)
 {
   sync_load ();
 
-  Server_Info_Ptr server (0);
-  servers ().find (name, server);
-  if (pid != 0 && server.get () != 0 && server->pid != pid)
+  Server_Info_Ptr si;
+  servers ().find (name, si);
+  if (si.get () != 0 && si->alt_key.length () != 0)
     {
-      server.reset ();
+      servers ().find (si->alt_key, si);
     }
-  return server;
+  if (pid != 0 && si.get () != 0 && si->pid != pid)
+    {
+      si.reset ();
+    }
+  return si;
 }
+
+Server_Info_Ptr
+Locator_Repository::get_info (const ACE_CString& name)
+{
+  sync_load ();
+
+  Server_Info_Ptr si;
+  servers ().find (name, si);
+  return si;
+}
+
+int
+Locator_Repository::remove_server (const ACE_CString& name)
+{
+  int err = sync_load ();
+  if (err != 0)
+    {
+      return err;
+    }
+  Server_Info_Ptr si;
+  this->servers().find (name, si);
+  int ret = this->servers().unbind (name);
+  if (ret != 0)
+    {
+      return ret;
+    }
+
+  if (si->alt_key.length() > 0)
+    {
+      // name is a peer to another an must be removed from other list
+      ACE_CString pname = si->poa_name;
+      this->servers().find (si->alt_key, si);
+      if (!si.null ())
+        {
+          bool found = false;
+          for (size_t i = 0; i < si->peers.length(); i++)
+            {
+              if (!found && pname == si->peers[i])
+                {
+                  found = true;
+                  continue;
+                }
+              if (found)
+                {
+                  si->peers[i-1] = si->peers[i];
+                }
+            }
+          si->peers.length (si->peers.length() - 1);
+        }
+    }
+  else if (si->peers.length () > 0)
+    {
+      for (size_t i = 0; i < si->peers.length(); i++)
+        {
+          ACE_CString key;
+          ACE_CString peer (si->peers[i]);
+          Server_Info::gen_key (si->server_id, peer, key);
+          this->servers ().unbind (key);
+        }
+    }
+  return persistent_remove (name, false);
+}
+
+int
+Locator_Repository::link_peers (Server_Info_Ptr base,
+                                const CORBA::StringSeq p)
+{
+  sync_load ();
+
+  base->peers.length (p.length());
+  for (size_t i = 0; i < p.length(); i++)
+    {
+      base->peers[i] =  p[i];
+      Server_Info *si;
+      ACE_CString peer(p[i]);
+      ACE_NEW_RETURN (si,
+                      Server_Info (base->server_id, peer, base->is_jacorb, base->poa_name),
+                      -1);
+      Server_Info_Ptr sip(si);
+      servers ().bind (si->key_name, sip);
+    }
+  return 0;
+
+}
+
+// -------------------------------------------------------------------------------------
 
 Activator_Info_Ptr
 Locator_Repository::get_activator (const ACE_CString& name)
@@ -435,23 +544,6 @@ Locator_Repository::has_activator (const ACE_CString& name)
   return activators().find (lcase (name), activator) == 0;
 }
 
-int
-Locator_Repository::remove_server (const ACE_CString& name)
-{
-  int err = sync_load ();
-  if (err != 0)
-    {
-      return err;
-    }
-
-  int ret = this->servers().unbind (name);
-  if (ret != 0)
-    {
-      return ret;
-    }
-
-  return persistent_remove(name, false);
-}
 
 int
 Locator_Repository::remove_activator (const ACE_CString& name)
@@ -508,84 +600,7 @@ Locator_Repository::registered () const
   return this->registered_;
 }
 
-UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
-                                            const ACE_CString& name,
-                                            int pid)
-: repo_(repo),
-  si_(repo->get_server (name,pid)),
-  needs_update_(false)
-{
-}
-
-UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
-                                            const Server_Info_Ptr& si,
-                                            bool reset_start_count)
-: repo_(repo),
-  si_(si),
-  needs_update_(false)
-{
-  if (reset_start_count)
-    {
-      needs_update_ = repo_ != 0;
-      si_->start_count = 0;
-    }
-}
-
-UpdateableServerInfo::UpdateableServerInfo (const Server_Info& si)
-: repo_(0),
-  si_(new Server_Info(si)),
-  needs_update_(false)
-{
-}
-
-UpdateableServerInfo::~UpdateableServerInfo ()
-{
-  update_repo();
-}
-
-void
-UpdateableServerInfo::update_repo ()
-{
-  if (!needs_update_)
-    return;
-
-  needs_update_ = false;
-  int err = repo_->update_server (si_);
-  ACE_ASSERT (err == 0);
-  ACE_UNUSED_ARG (err);
-}
-
-const Server_Info*
-UpdateableServerInfo::operator-> () const
-{
-  return si_.get();
-}
-
-const Server_Info&
-UpdateableServerInfo::operator* () const
-{
-  return *(si_.get());
-}
-
-
-const Server_Info_Ptr&
-UpdateableServerInfo::edit ()
-{
-  needs_update_ = repo_ != 0;
-  return si_;
-}
-
-void
-UpdateableServerInfo::needs_update ()
-{
-  needs_update_ = true;
-}
-
-bool
-UpdateableServerInfo::null() const
-{
-  return si_.null();
-}
+//--------------------------------------------------------------------------
 
 No_Backing_Store::No_Backing_Store (const Options& opts,
                                     CORBA::ORB_ptr orb)
