@@ -162,6 +162,8 @@ protected:
   CORBA::String_var imr_ior_;
 
 private:
+  Server_Info_Ptr find_by_poa (const ACE_CString &name);
+
   bool registered_;
   /// The in-memory list of the server information.
   SIMap server_infos_;
