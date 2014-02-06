@@ -205,7 +205,7 @@ module ImplementationRepository
   {
     /// Identify a set of peer poas that exist in the same process.
     void link_servers (in string server, in CORBA::StringSeq peers)
-      raises(NotFound);
+      raises(NotFound, CannotComplete);
 
     /// Have the approprate activator send a signal to the named server process
     void kill_server (in string server, in short signum)
