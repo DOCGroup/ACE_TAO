@@ -23,27 +23,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+struct Server_Info;
+typedef ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> Server_Info_Ptr;
+
 /**
 * @brief Information about IMR registered servers.
 */
 struct Server_Info
 {
-#if 0
-  Server_Info (const ACE_CString& serverId,
-               const ACE_CString& pname,
-               bool jacorbs,
-               const ACE_CString& aname,
-               const ACE_CString& cmdline,
-               const ImplementationRepository::EnvironmentList& env,
-               const ACE_CString& working_dir,
-               ImplementationRepository::ActivationMode amode,
-               int start_limit,
-               const ACE_CString& partial_ior = ACE_CString(""),
-               const ACE_CString& server_ior = ACE_CString(""),
-               ImplementationRepository::ServerObject_ptr svrobj = ImplementationRepository::ServerObject::_nil()
-    );
-#endif
-
   Server_Info (void);
   Server_Info (const Server_Info & other);
 
@@ -62,7 +49,9 @@ struct Server_Info
   Server_Info (const ACE_CString& serverId,
                const ACE_CString& pname,
                bool jacorb,
-               const ACE_CString& alt);
+               Server_Info_Ptr alt);
+
+  Server_Info & operator= (const Server_Info& other);
 
   void clear (void);
 
@@ -74,13 +63,26 @@ struct Server_Info
 
   bool is_server (const char *name);
   bool has_peer (const char *name);
+  bool is_mode (ImplementationRepository::ActivationMode m) const;
 
   // transform the supplied limit to always be at least 1
   void start_limit (int lim);
 
+  void update_options (const ImplementationRepository::StartupOptions &options);
+  void set_contact (const char *pior,
+                    const char *sior,
+                    ImplementationRepository::ServerObject_ptr svrobj);
+
+  Server_Info *active_info (void);
+  const Server_Info *active_info (void) const;
+
+  const char * ping_id (void) const;
+
   static bool parse_id (const char * id,
                         ACE_CString& server_id,
                         ACE_CString& poa_name);
+
+  static void gen_id (const Server_Info *si, ACE_CString& id);
 
   static void gen_key (const ACE_CString& server_id,
                        const ACE_CString& poa_name,
@@ -96,7 +98,7 @@ struct Server_Info
   bool is_jacorb;
 
   /// The fully qualified name of this info, combines the serverID and POA name
-  ACE_CString key_name;
+  ACE_CString key_name_;
 
   /// The name of the activator in which this server runs
   ACE_CString activator;
@@ -107,7 +109,7 @@ struct Server_Info
   /// The working directory.
   ACE_CString dir;
   /// The type of activation this supports.
-  ImplementationRepository::ActivationMode activation_mode;
+  ImplementationRepository::ActivationMode activation_mode_;
   /// Limit of retries to start the server
   int start_limit_;
   /// Current endpoint used by the server.
@@ -120,16 +122,14 @@ struct Server_Info
   ImplementationRepository::ServerObject_var server;
   /// A comma separated list of additional POAs bound to this server
   CORBA::StringSeq peers;
-  /// The key used to look up the full server entry. Linked POAs have
-  /// the same key
-  ACE_CString alt_key;
+  /// Alternate server info for sharing startup info between linked POAs
+  Server_Info_Ptr alt_info_;
 
   int start_count;
   int waiting_clients;
   bool starting;
   int pid;
-};
 
-typedef ACE_Strong_Bound_Ptr<Server_Info, ACE_Null_Mutex> Server_Info_Ptr;
+};
 
 #endif /* SERVER_INFO_H */

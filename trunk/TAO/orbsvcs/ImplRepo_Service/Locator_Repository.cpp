@@ -285,8 +285,9 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
                     partial_ior));
   }
 
-  ACE_CString key_name;
-  Server_Info::fqname_to_key (fqname.c_str(), key_name);
+  ACE_CString poa_name;
+  ACE_CString server_id;
+  Server_Info::parse_id (fqname.c_str(), server_id, poa_name);
 
   ACE_Vector<ACE_CString> srvs;
 
@@ -300,11 +301,11 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
-                      ACE_TEXT ("\"%C %C\" ior \"%C\"\n"), info->server_id.c_str(),
-                      info->poa_name.c_str (), info->partial_ior.c_str ()));
+                      ACE_TEXT ("\"%C:%C\" key = <%C> ior \"%C\"\n"), info->server_id.c_str(),
+                      info->poa_name.c_str (), info->key_name_.c_str(), info->partial_ior.c_str ()));
     }
 
-    if (info->partial_ior == partial_ior && info->key_name != key_name)
+    if (info->partial_ior == partial_ior && info->server_id != server_id)
       {
         if (this->opts_.debug() > 0)
           {
@@ -312,9 +313,9 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
                             ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove server %C \n"),
                             info->partial_ior.c_str (), info->poa_name.c_str ()));
           }
-        if (! info->key_name.empty ())
+        if (! info->key_name_.empty ())
           {
-            srvs.push_back (info->key_name);
+            srvs.push_back (info->key_name_);
           }
       }
   }
@@ -378,7 +379,7 @@ Locator_Repository::add_server_i (Server_Info *si)
       return err;
     }
 
-  err = servers ().bind (si->key_name, info);
+  err = servers ().bind (si->key_name_, info);
   if (err != 0)
     {
       return err;
@@ -424,17 +425,38 @@ Locator_Repository::update_activator (const Activator_Info_Ptr& info)
 }
 
 Server_Info_Ptr
+Locator_Repository::find_by_poa (const ACE_CString & name)
+{
+  Locator_Repository::SIMap::ENTRY* sientry = 0;
+  Locator_Repository::SIMap::ITERATOR siit (servers ());
+  for (; siit.next (sientry); siit.advance() )
+  {
+    Server_Info_Ptr& info = sientry->int_id_;
+    if (info->poa_name == name)
+      {
+        return info;
+      }
+  }
+  return Server_Info_Ptr();
+}
+
+Server_Info_Ptr
 Locator_Repository::get_active_server (const ACE_CString& name, int pid)
 {
   sync_load ();
 
   Server_Info_Ptr si;
   servers ().find (name, si);
-  if (si.get () != 0 && si->alt_key.length () != 0)
+  if (si.null())
     {
-      servers ().find (si->alt_key, si);
+      if (this->opts_.debug() > 5)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "get_active_server could not find %C\n", name.c_str()));
+        }
+      return find_by_poa (name);
     }
-  if (pid != 0 && si.get () != 0 && si->pid != pid)
+
+  if (pid != 0 && si->pid != pid)
     {
       si.reset ();
     }
@@ -467,28 +489,23 @@ Locator_Repository::remove_server (const ACE_CString& name)
       return ret;
     }
 
-  if (si->alt_key.length() > 0)
+  if (!si->alt_info_.null ())
     {
       // name is a peer to another an must be removed from other list
-      ACE_CString pname = si->poa_name;
-      this->servers().find (si->alt_key, si);
-      if (!si.null ())
+      bool found = false;
+      for (size_t i = 0; i < si->alt_info_->peers.length(); i++)
         {
-          bool found = false;
-          for (size_t i = 0; i < si->peers.length(); i++)
+          if (!found && si->poa_name == si->alt_info_->peers[i])
             {
-              if (!found && pname == si->peers[i])
-                {
-                  found = true;
-                  continue;
-                }
-              if (found)
-                {
-                  si->peers[i-1] = si->peers[i];
-                }
+              found = true;
+              continue;
             }
-          si->peers.length (si->peers.length() - 1);
+          if (found)
+            {
+              si->alt_info_->peers[i-1] = si->alt_info_->peers[i];
+            }
         }
+      si->alt_info_->peers.length (si->alt_info_->peers.length() - 1);
     }
   else if (si->peers.length () > 0)
     {
@@ -498,6 +515,7 @@ Locator_Repository::remove_server (const ACE_CString& name)
           ACE_CString peer (si->peers[i]);
           Server_Info::gen_key (si->server_id, peer, key);
           this->servers ().unbind (key);
+          this->persistent_remove (key, false);
         }
     }
   return persistent_remove (name, false);
@@ -516,10 +534,10 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
       Server_Info *si;
       ACE_CString peer(p[i]);
       ACE_NEW_RETURN (si,
-                      Server_Info (base->server_id, peer, base->is_jacorb, base->poa_name),
+                      Server_Info (base->server_id, peer, base->is_jacorb, base),
                       -1);
       Server_Info_Ptr sip(si);
-      servers ().bind (si->key_name, sip);
+      servers ().bind (si->key_name_, sip);
       this->persistent_update (sip, true);
     }
 

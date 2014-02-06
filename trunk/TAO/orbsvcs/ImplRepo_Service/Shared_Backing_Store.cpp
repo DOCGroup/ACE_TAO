@@ -470,16 +470,16 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
         }
     }
 
-  ACE_CString name = ACEXML_escape_string (info->key_name);
+  ACE_CString name = ACEXML_escape_string (info->key_name_);
 
   UniqueId uid;
-  this->find_unique_id (info->key_name, this->server_uids_, uid);
+  this->find_unique_id (info->key_name_, this->server_uids_, uid);
 
   const ACE_TString fname = this->filename_ + uid.unique_filename;
   if (this->opts_.debug() > 9)
     {
       ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("Persisting server to %s(%C)\n"),
-        fname.c_str(), info->key_name.c_str()));
+        fname.c_str(), info->key_name_.c_str()));
     }
   Lockable_File server_file (fname, O_WRONLY);
   const ACE_TString bfname = fname.c_str() + ACE_TString(".bak");
@@ -511,7 +511,7 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
     ImplementationRepository::repo_add :
     ImplementationRepository::repo_update;
   replicate<ImplementationRepository::ServerUpdate> (peer_replica_.in (),
-                                                     info->key_name, uid, type,
+                                                     info->key_name_, uid, type,
                                                      ++seq_num_);
   return 0;
 }
@@ -894,7 +894,7 @@ Shared_Backing_Store::write_listing (FILE* list)
       const Server_Info_Ptr& info = sientry->int_id_;
 
       find_unique_id (sientry->ext_id_, this->server_uids_, uid);
-      ACE_CString listing_name = ACEXML_escape_string (info->key_name);
+      ACE_CString listing_name = ACEXML_escape_string (info->key_name_);
       write_listing_item (list, uid.unique_filename, listing_name,
                           Locator_XMLHandler::SERVER_INFO_TAG);
     }
@@ -1017,31 +1017,18 @@ Shared_Backing_Store::load_server (Server_Info *info,
                                    const NameValues& extra_params)
 {
   // ensure there is an entry for this server
-  this->verify_unique_id (info->key_name,
+  this->verify_unique_id (info->key_name_,
                           extra_params,
                           this->server_uids_);
   Server_Info_Ptr si;
-  if (this->servers ().find (info->key_name, si) != 0)
+  if (this->servers ().find (info->key_name_, si) != 0)
     {
       // create new or replace the existing entry
       XML_Backing_Store::load_server (info, server_started, extra_params);
       return;
     }
 
-  si->ior = info->ior;
-  si->poa_name = info->poa_name;
-  si->server_id = info->server_id;
-  si->is_jacorb = info->is_jacorb;
-  si->activator = info->activator;
-  si->cmdline = info->cmdline;
-  si->env_vars = info->env_vars;
-  si->dir = info->dir;
-  si->activation_mode = info->activation_mode;
-  si->start_limit_ = info->start_limit_;
-  si->partial_ior = info->partial_ior;
-  si->peers = info->peers;
-  si->key_name = info->key_name;
-  si->alt_key = info->alt_key;
+  *si.get() = *info;
 
   if (!server_started)
     si->server = ImplementationRepository::ServerObject::_nil();
@@ -1330,7 +1317,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
         {
           ORBSVCS_ERROR((LM_ERROR,
             ACE_TEXT ("ERROR: could not remove server: %s\n"),
-            sientry->int_id_->key_name.c_str()));
+            sientry->int_id_->key_name_.c_str()));
         }
     }
 
