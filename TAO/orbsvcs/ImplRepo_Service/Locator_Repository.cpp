@@ -520,7 +520,11 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
                       -1);
       Server_Info_Ptr sip(si);
       servers ().bind (si->key_name, sip);
+      this->persistent_update (sip, true);
     }
+
+  this->persistent_update (base, true);
+
   return 0;
 
 }

@@ -490,15 +490,18 @@ TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
             {
               num++;
               c = ACE_OS::strchr (c, ',');
+              if (c != 0)
+                c++;
             }
           num += last;
           this->peers_.length (num);
           while (last < num)
             {
-              c = ACE_OS::strchr (arg, ',');
-              *c = 0;
+              if ((c = ACE_OS::strchr (arg, ',')) != 0)
+                *c = 0;
               this->peers_[last++] = CORBA::string_dup (arg);
-              arg = c+1;
+              if (c != 0)
+                arg = c+1;
             }
           break;
         }

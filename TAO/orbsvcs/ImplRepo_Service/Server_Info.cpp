@@ -1,44 +1,6 @@
 // $Id$
 #include "Server_Info.h"
 
-#if 0
-Server_Info::Server_Info (const ACE_CString& serverId,
-                          const ACE_CString& pname,
-                          bool jacorbs,
-                          const ACE_CString& aname,
-                          const ACE_CString& cmdline,
-                          const ImplementationRepository::EnvironmentList& env,
-                          const ACE_CString& working_dir,
-                          ImplementationRepository::ActivationMode amode,
-                          int limit,
-                          const ACE_CString& partial_ior,
-                          const ACE_CString& server_ior,
-                          ImplementationRepository::ServerObject_ptr svrobj)
-  : server_id (serverId)
-  , poa_name (pname)
-  , is_jacorb (jacorbs)
-  , key_name ()
-  , activator (aname)
-  , cmdline( cmdline)
-  , env_vars (env)
-  , dir (working_dir)
-  , activation_mode (amode)
-  , partial_ior (partial_ior)
-  , ior (server_ior)
-  , server(ImplementationRepository::ServerObject::_duplicate (svrobj))
-  , peers ()
-  , peer_count (0)
-  , alt_key ()
-  , start_count (0)
-  , waiting_clients (0)
-  , starting (false)
-  , pid (0)
-{
-  Server_Info::gen_key (this->server_id, this->poa_name, this->key_name);
-  this->start_limit (limit);
-}
-#endif
-
 Server_Info::Server_Info (void)
 {
   this->clear ();
@@ -122,7 +84,21 @@ Server_Info::Server_Info (const ACE_CString& serverId,
   , poa_name (pname)
   , is_jacorb (jacorb)
   , key_name ()
+  , activator ("")
+  , cmdline ("")
+  , env_vars ()
+  , dir ("")
+  , activation_mode (ImplementationRepository::NORMAL)
+  , start_limit_ (1)
+  , partial_ior ("")
+  , ior ("")
+  , server (ImplementationRepository::ServerObject::_nil())
+  , peers ()
   , alt_key (alt)
+  , start_count (0)
+  , waiting_clients (0)
+  , starting (false)
+  , pid (0)
 {
   Server_Info::gen_key (this->server_id, this->poa_name, this->key_name);
 }
