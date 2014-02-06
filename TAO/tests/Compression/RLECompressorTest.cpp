@@ -308,7 +308,7 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
 
     for (unsigned i = 0; i < sizeof(comp_data); i++) {
 
-        COMP_RESULT &result = comp_result[i]; // Get A reference to our result for testing output 
+        COMP_RESULT &result = comp_result[i]; // Get A reference to our result for testing output
 
         Compression::Buffer in_data(i, i, reinterpret_cast<CORBA::Octet*>(comp_data), false), &out_data = result.out;
 
@@ -329,7 +329,7 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
                 Compression::Buffer out_buf(i);     // Set maximum out space (exactly -> Ignored by TAO)
                 compressor->decompress(out_data, out_buf);
                 if (out_buf.length() == i) {        // Make sure we got our length back
-                    if (ACE_OS::memcmp(comp_data, out_buf.get_buffer(), i) == 0) { 
+                    if (ACE_OS::memcmp(comp_data, out_buf.get_buffer(), i) == 0) {
                         continue; // It is what we expected.
                     }
                 }
@@ -382,7 +382,7 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
                     ));
 
     if (comp_out.length() != sizeof(comp_128_out)  // Size must equal
-        || ACE_OS::memcmp(comp_out.get_buffer(), comp_128_out, comp_out.length())) 
+        || ACE_OS::memcmp(comp_out.get_buffer(), comp_128_out, comp_out.length()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test128) correctly.\n")),-1);
@@ -414,7 +414,7 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    const ACE_Byte_Array_ptr buff_129(new ACE_Byte[BUFF_129_SIZE]); 
+    const ACE_Byte_Array_ptr buff_129(new ACE_Byte[BUFF_129_SIZE]);
 
     ACE_OS::memset(buff_129.get(), 0, BUFF_129_SIZE);  // Set Buffer to zero.
 
@@ -445,7 +445,7 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
                 ));
 
     if (comp_out.length() != sizeof(comp_129A_out)  // Size must equal
-        || ACE_OS::memcmp(comp_out.get_buffer(), comp_129A_out, comp_out.length())) 
+        || ACE_OS::memcmp(comp_out.get_buffer(), comp_129A_out, comp_out.length()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test129A) correctly.\n")),-1);
@@ -477,7 +477,7 @@ static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    const ACE_Byte_Array_ptr buff_129(new ACE_Byte[BUFF_129_SIZE]); 
+    const ACE_Byte_Array_ptr buff_129(new ACE_Byte[BUFF_129_SIZE]);
 
     ACE_OS::memset(buff_129.get(), 0, BUFF_129_SIZE);  // Set Buffer to zero.
 
@@ -510,7 +510,7 @@ static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
                 ));
 
     if (comp_out.length() != sizeof(comp_129B_out)  // Size must equal
-        || ACE_OS::memcmp(comp_out.get_buffer(), comp_129B_out, comp_out.length())) 
+        || ACE_OS::memcmp(comp_out.get_buffer(), comp_129B_out, comp_out.length()))
     {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Did not Compress/Decompress (test129B) correctly.\n")),-1);
