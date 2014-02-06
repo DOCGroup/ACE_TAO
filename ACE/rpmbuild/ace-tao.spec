@@ -1106,11 +1106,11 @@ BASEHDR=`find \
     Kokyu \
     -name '*.h' -not -name 'config-*'`
 %if %{?_with_tao:1}%{!?_with_tao:0}
-TAO_MM_OPTS=-I TAO -I TAO/orbsvcs -I TAO/orbsvcs/orbsvcs
-BASEHDR=$BASEHDR `find \
+TAO_MM_OPTS="-I TAO -I TAO/orbsvcs -I TAO/orbsvcs/orbsvcs"
+BASEHDR="$BASEHDR `find \
     TAO/tao \
     TAO/orbsvcs/orbsvcs \
-    -name '*.h' -not -name 'config-*'`
+    -name '*.h' -not -name 'config-*'`"
 %endif
 for j in $BASEHDR; do
         echo $j >> rawhdrs.log
