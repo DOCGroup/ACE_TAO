@@ -1,3 +1,8 @@
+Thu Feb  6 15:55:00 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * rpmbuild/ace-tao.spec: Fixed syntax problems in TAO headers
+          collection.
+
 Wed Feb  5 19:07:37 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * rpmbuild/ace-tao.spec: Added support for --without tao (and
