@@ -47,8 +47,11 @@ UpdateableServerInfo::update_repo ()
 
   needs_update_ = false;
   int err = repo_->update_server (si_);
+  if (err == 0 && !si_->alt_info_.null ())
+    {
+      err = repo_->update_server (si_->alt_info_);
+    }
   ACE_ASSERT (err == 0);
-  ACE_UNUSED_ARG (err);
 }
 
 const Server_Info*

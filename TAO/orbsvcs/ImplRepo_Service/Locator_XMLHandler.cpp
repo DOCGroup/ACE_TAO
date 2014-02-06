@@ -78,7 +78,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
           this->si_->activator = attrs->getValue (index++);
           this->si_->cmdline = attrs->getValue (index++);
           this->si_->dir = attrs->getValue (index++);
-          this->si_->activation_mode =
+          this->si_->activation_mode_ =
             ImR_Utils::stringToActivationMode (attrs->getValue (index++));
           this->si_->start_limit_ = ACE_OS::atoi (attrs->getValue (index++));
           this->si_->partial_ior = attrs->getValue (index++);
@@ -101,11 +101,18 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
               ACE_CString value (attrs->getValue (index));
               if (name == KEYNAME_TAG)
                 {
-                  this->si_->key_name = value;
+                  this->si_->key_name_ = value;
                 }
               else if (name == ALTKEY_TAG)
                 {
-                  this->si_->alt_key = value;
+                  if (this->repo_.servers ().find (value, this->si_->alt_info_) != 0)
+                    {
+                      Server_Info *base_si = 0;
+                      ACE_NEW (base_si, Server_Info);
+                      base_si->key_name_ = value;
+                      this->si_->alt_info_.reset (base_si);
+                      this->repo_.servers ().bind (value, this->si_->alt_info_);
+                    }
                 }
               else if (name == PID_TAG)
                 {
@@ -167,11 +174,11 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
 {
   if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0)
   {
-    if (this->si_->key_name.length () == 0)
+    if (this->si_->key_name_.length () == 0)
       {
         Server_Info::gen_key (this->si_->server_id,
                               this->si_->poa_name,
-                              this->si_->key_name);
+                              this->si_->key_name_);
       }
     convertEnvList (this->env_vars_, this->si_->env_vars);
     convertPeerList (this->peer_list_, this->si_->peers);

@@ -179,13 +179,14 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
       for (;it.next (entry) != 0; it.advance ())
         {
           const Server_Info& info = *(entry->int_id_);
-
-          if (!CORBA::is_nil (info.server.in()) &&
-              !this->pinger_.has_server (info.key_name.c_str()))
+          ImplementationRepository::ServerObject_var svrobj =
+            info.alt_info_.null () ? info.server : info.alt_info_->server;
+          if (!CORBA::is_nil (svrobj.in()) &&
+              !this->pinger_.has_server (info.ping_id()))
             {
-              this->pinger_.add_server (info.key_name.c_str(),
+              this->pinger_.add_server (info.ping_id(),
                                         this->ping_external_,
-                                        info.server.in());
+                                        svrobj.in());
             }
         }
     }
@@ -423,7 +424,7 @@ ImR_Locator_i::notify_child_death
   UpdateableServerInfo info (this->repository_.get(), name);
   if (! info.null ())
     {
-      info.edit()->reset_runtime ();
+      info.edit ()->reset_runtime ();
     }
   else
     {
@@ -475,7 +476,7 @@ ImR_Locator_i::spawn_pid
   UpdateableServerInfo info(this->repository_.get(), name);
   if (! info.null ())
     {
-      info.edit()->pid = pid;
+      info.edit ()->active_info ()->pid = pid;
     }
   else
     {
@@ -589,7 +590,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
                                   ImR_ResponseHandler *rh)
 {
   AsyncAccessManager_ptr aam;
-  if (info->activation_mode == ImplementationRepository::PER_CLIENT)
+  if (info->is_mode(ImplementationRepository::PER_CLIENT))
     {
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
@@ -598,7 +599,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
     }
   else
     {
-      aam = this->find_aam (info->key_name.c_str());
+      aam = this->find_aam (info->ping_id ());
       if (aam.is_nil())
         {
           AsyncAccessManager *aam_raw;
@@ -688,14 +689,7 @@ ImR_Locator_i::add_or_update_server
         ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Updating server <%C>.\n"),
                     server));
 
-      info.edit ()->activator = options.activator.in ();
-      info.edit ()->cmdline = options.command_line.in ();
-      info.edit ()->env_vars = options.environment;
-      info.edit ()->dir = options.working_directory.in ();
-      info.edit ()->activation_mode = options.activation;
-      info.edit ()->start_limit (options.start_limit);
-      info.edit ()->start_count = 0;
-
+      info.edit ()->update_options (options);
       info.update_repo();
     }
 
@@ -741,7 +735,7 @@ ImR_Locator_i::link_servers
       _tao_rh->link_servers_excep (&h);
       return;
     }
-  else if (root_si->alt_key.length () > 0)
+  else if (!root_si->alt_info_.null())
     {
       ACE_CString errstr = name;
       errstr += " is not a base POA";
@@ -791,8 +785,13 @@ ImR_Locator_i::kill_server
       return;
     }
 
+  if (!si->alt_info_.null ())
+    {
+      si = si->alt_info_;
+    }
+
   UpdateableServerInfo info (this->repository_.get(), si, true);
-  if (info->activation_mode == ImplementationRepository::PER_CLIENT)
+  if (info->is_mode(ImplementationRepository::PER_CLIENT))
     {
       CORBA::Exception *ex =
         new ImplementationRepository::CannotComplete ("per-client server");
@@ -1001,13 +1000,13 @@ ImR_Locator_i::server_is_running
                       ACE_TEXT ("ImR: Server %C is running at %C.\n"),
                       id, partial_ior));
     }
-  CORBA::String_var ior = orb_->object_to_string (server_object);
+  CORBA::String_var sior = orb_->object_to_string (server_object);
 
   if (debug_ > 1)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("ImR: Server %C callback at %C.\n"),
-                      id, ior.in ()));
+                      id, sior.in ()));
     }
 
   if (this->unregister_if_address_reused_)
@@ -1017,7 +1016,9 @@ ImR_Locator_i::server_is_running
   ImplementationRepository::ServerObject_var srvobj =
     ImplementationRepository::ServerObject::_narrow (obj.in());
 
-  UpdateableServerInfo info(this->repository_.get(), id);
+  Server_Info_Ptr sip = this->repository_->get_info (id);
+
+  UpdateableServerInfo info(this->repository_.get(), sip);
   if (info.null ())
     {
       if (debug_ > 0)
@@ -1028,7 +1029,7 @@ ImR_Locator_i::server_is_running
         }
 
       Server_Info_Ptr si;
-      if (this->repository_->add_server (id, partial_ior, ior.in (), srvobj.in ()) == 0)
+      if (this->repository_->add_server (id, partial_ior, sior.in (), srvobj.in ()) == 0)
         {
           si = this->repository_->get_active_server (id);
         }
@@ -1046,7 +1047,7 @@ ImR_Locator_i::server_is_running
           _tao_rh->server_is_running_excep (&h);
           return;
         }
-      this->pinger_.add_server (si->key_name.c_str(), this->ping_external_, srvobj.in());
+      this->pinger_.add_server (si->ping_id (), this->ping_external_, srvobj.in());
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (*si, true, *this));
       AsyncAccessManager_ptr aam (aam_raw);
@@ -1055,17 +1056,15 @@ ImR_Locator_i::server_is_running
     }
   else
     {
-      if (info->activation_mode != ImplementationRepository::PER_CLIENT)
+      if (!info->is_mode(ImplementationRepository::PER_CLIENT))
         {
-          info.edit ()->ior = ior.in ();
-          info.edit ()->partial_ior = partial_ior;
-          info.edit ()->server = srvobj;
+          info.edit ()->set_contact (partial_ior, sior.in(), srvobj.in());
 
           info.update_repo();
           this->pinger_.add_server (id, true, srvobj.in());
         }
 
-      AsyncAccessManager_ptr aam(this->find_aam (info->key_name.c_str()));
+      AsyncAccessManager_ptr aam(this->find_aam (info->ping_id ()));
       if (!aam.is_nil())
         {
           if (ImR_Locator_i::debug () > 4)
@@ -1082,7 +1081,7 @@ ImR_Locator_i::server_is_running
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) ImR_Locator_i::send_start_request aam is nil\n")));
             }
-          if (info->activation_mode != ImplementationRepository::PER_CLIENT)
+          if (!info->is_mode(ImplementationRepository::PER_CLIENT))
             {
               AsyncAccessManager *aam_raw;
               ACE_NEW (aam_raw, AsyncAccessManager (*info, true, *this));
@@ -1119,11 +1118,11 @@ ImR_Locator_i::server_is_shutting_down
                 ACE_TEXT ("ImR: Server <%C> is shutting down.\n"),
                 fqname));
 
-  if (info->activation_mode != ImplementationRepository::PER_CLIENT)
+  if (!info->is_mode(ImplementationRepository::PER_CLIENT))
     {
-      this->pinger_.remove_server (info->key_name.c_str());
+      this->pinger_.remove_server (info->ping_id());
       {
-        AsyncAccessManager_ptr aam = this->find_aam (info->key_name.c_str());
+        AsyncAccessManager_ptr aam = this->find_aam (info->ping_id ());
         if (!aam.is_nil())
           {
             aam->server_is_shutting_down ();
@@ -1269,8 +1268,8 @@ ImR_Locator_i::auto_start_servers (void)
 
       try
         {
-          if (info->activation_mode == ImplementationRepository::AUTO_START
-              && info->cmdline.length () > 0)
+          if (info->is_mode (ImplementationRepository::AUTO_START)
+              && info->active_info()->cmdline.length () > 0)
             {
               ImR_ResponseHandler rh;
               this->activate_server_i (info, true, &rh);
@@ -1293,57 +1292,58 @@ ImR_Locator_i::auto_start_servers (void)
 void
 ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 {
-  if (! CORBA::is_nil (info->server.in ()))
+  Server_Info *sip = info.edit ()->active_info ();
+  if (! CORBA::is_nil (sip->server.in ()))
     {
-      if (!this->pinger_.has_server (info->key_name.c_str()))
+      if (!this->pinger_.has_server (sip->key_name_.c_str()))
         {
-          this->pinger_.add_server (info->key_name.c_str(),
+          this->pinger_.add_server (sip->key_name_.c_str(),
                                     this->ping_external_,
-                                    info->server.in());
+                                    sip->server.in());
         }
       return; // already connected
     }
 
-  if (info->ior.length () == 0)
+  if (sip->ior.length () == 0)
     {
-      info.edit ()->reset_runtime ();
+      sip->reset_runtime ();
       return; // can't connect
     }
 
   try
     {
-      CORBA::Object_var obj = orb_->string_to_object (info->ior.c_str ());
+      CORBA::Object_var obj = orb_->string_to_object (sip->ior.c_str ());
 
       if (CORBA::is_nil (obj.in ()))
         {
-          info.edit ()->reset_runtime ();
+          sip->reset_runtime ();
           return;
         }
 
       obj = this->set_timeout_policy (obj.in (), DEFAULT_SERVER_TIMEOUT);
 
-      info.edit ()->server =
+      sip->server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
 
-      if (CORBA::is_nil (info->server.in ()))
+      if (CORBA::is_nil (sip->server.in ()))
         {
-          info.edit ()->reset_runtime ();
+          sip->reset_runtime ();
           return;
         }
 
       if (debug_ > 1)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("ImR: Connected to server <%C>\n"),
-                    info->key_name.c_str ()));
-      this->pinger_.add_server (info->key_name.c_str(),
+                        ACE_TEXT ("ImR: Connected to server <%C>\n"),
+                        sip->key_name_.c_str ()));
+      this->pinger_.add_server (sip->key_name_.c_str(),
                                 this->ping_external_,
-                                info->server.in());
+                                sip->server.in());
 
 
     }
   catch (CORBA::Exception&)
     {
-      info.edit ()->reset_runtime ();
+      sip->reset_runtime ();
     }
 }
 
@@ -1353,7 +1353,7 @@ ImR_Locator_i::is_alive (UpdateableServerInfo& info)
   this->connect_server (info);
   SyncListener *listener = 0;
   ACE_NEW_RETURN (listener,
-                  SyncListener (info->key_name.c_str(),
+                  SyncListener (info->ping_id(),
                                 this->orb_.in(),
                                 this->pinger_),
                   false);

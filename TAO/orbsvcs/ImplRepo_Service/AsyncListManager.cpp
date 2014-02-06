@@ -166,7 +166,7 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong how_many)
       if (this->pinger_ != 0)
         {
           ListLiveListener *l = 0;
-          ACE_NEW (l, ListLiveListener (info->key_name.c_str (),
+          ACE_NEW (l, ListLiveListener (info->ping_id (),
                                         i,
                                         this,
                                         *this->pinger_));

@@ -95,8 +95,12 @@ XML_Backing_Store::persist (FILE* fp,
 {
   ACE_CString server_id = ACEXML_escape_string (info.server_id);
   ACE_CString pname = ACEXML_escape_string (info.poa_name);
-  ACE_CString keyname = ACEXML_escape_string (info.key_name);
-  ACE_CString altkey = ACEXML_escape_string (info.alt_key);
+  ACE_CString keyname = ACEXML_escape_string (info.key_name_);
+  ACE_CString altkey = "";
+  if (!info.alt_info_.null())
+    {
+      altkey = ACEXML_escape_string (info.alt_info_->key_name_);
+    }
 
   ACE_CString activator = ACEXML_escape_string (info.activator);
   ACE_CString cmdline = ACEXML_escape_string (info.cmdline);
@@ -104,7 +108,7 @@ XML_Backing_Store::persist (FILE* fp,
   ACE_CString partial_ior = ACEXML_escape_string (info.partial_ior);
   ACE_CString ior = ACEXML_escape_string (info.ior);
   ACE_CString amodestr =
-    ImR_Utils::activationModeToString (info.activation_mode);
+    ImR_Utils::activationModeToString (info.activation_mode_);
 
   ACE_OS::fprintf (fp,"%s<%s", tag_prepend,
     Locator_XMLHandler::SERVER_INFO_TAG);
@@ -281,7 +285,7 @@ XML_Backing_Store::load_server (Server_Info *info,
 {
   Server_Info_Ptr si (info);
 
-  this->servers().rebind (info->key_name, si);
+  this->servers().rebind (info->key_name_, si);
 
   create_server (server_started, si);
 }

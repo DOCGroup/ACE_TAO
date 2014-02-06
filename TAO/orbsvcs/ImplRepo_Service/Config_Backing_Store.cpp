@@ -90,8 +90,13 @@ Config_Backing_Store::loadServers ()
 
       while (config_.enumerate_sections (root, index, name) == 0)
         {
-          ACE_NEW (si, Server_Info);
-          si->key_name = name;
+          Server_Info_Ptr info;
+          if (this->servers ().find (name, info) != 0)
+            {
+              ACE_NEW (si, Server_Info);
+              info.reset (si);
+              si->key_name_ = name;
+            }
 
           ACE_Configuration_Section_Key key;
 
@@ -99,7 +104,7 @@ Config_Backing_Store::loadServers ()
           config_.open_section (root, name.c_str(), 0, key);
           if (!config_.get_string_value (key, POA, si->poa_name))
             {
-              si->poa_name = si->key_name;
+              si->poa_name = si->key_name_;
             }
 
           // Ignore any missing values. Server name is enough on its own.
@@ -112,7 +117,7 @@ Config_Backing_Store::loadServers ()
           config_.get_string_value (key, ENVIRONMENT, tmp);
           ImR_Utils::stringToEnvList (tmp, si->env_vars);
           config_.get_integer_value (key, ACTIVATION, tmp_int);
-          si->activation_mode =
+          si->activation_mode_ =
             static_cast <ImplementationRepository::ActivationMode> (tmp_int);
           config_.get_string_value (key, PARTIAL_IOR, si->partial_ior);
           config_.get_string_value (key, IOR, si->ior);
@@ -120,12 +125,20 @@ Config_Backing_Store::loadServers ()
           si->start_limit_ = tmp_int;
           config_.get_integer_value (key, PID, tmp_int);
           si->pid = tmp_int;
-          config_.get_string_value (key, ALTKEY, si->alt_key);
+          if (config_.get_string_value (key, ALTKEY, tmp))
+            {
+              if (this->servers ().find (tmp, si->alt_info_) != 0)
+                {
+                  Server_Info *base_si = 0;
+                  ACE_NEW (base_si, Server_Info);
+                  base_si->key_name_ = tmp;
+                  si->alt_info_.reset (base_si);
+                  this->servers ().bind (tmp, si->alt_info_);
+                }
+            }
           config_.get_string_value (key, PEERS, tmp);
           ImR_Utils::stringToPeerList (tmp, si->peers);
-
-          Server_Info_Ptr info (si);
-          servers ().bind (name, info);
+          this->servers ().bind (name, info);
           si = 0;
           ++index;
         }
@@ -183,11 +196,11 @@ int
 Config_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool )
 {
   ACE_Configuration_Section_Key key;
-  int err = get_key(this->config_, info->key_name, SERVERS_ROOT_KEY, key);
+  int err = get_key(this->config_, info->key_name_, SERVERS_ROOT_KEY, key);
   if (err != 0)
     {
       ORBSVCS_ERROR((LM_ERROR, ACE_TEXT ("ERROR: could not get key for %C\n"),
-        info->key_name.c_str ()));
+        info->key_name_.c_str ()));
       return err;
     }
 
@@ -205,13 +218,14 @@ Config_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool )
   this->config_.set_string_value (key, STARTUP_COMMAND, info->cmdline);
   this->config_.set_string_value (key, WORKING_DIR, info->dir);
   this->config_.set_string_value (key, ENVIRONMENT, envstr);
-  this->config_.set_integer_value (key, ACTIVATION, info->activation_mode);
+  this->config_.set_integer_value (key, ACTIVATION, info->activation_mode_);
   this->config_.set_integer_value (key, START_LIMIT, info->start_limit_);
   this->config_.set_string_value (key, PARTIAL_IOR, info->partial_ior);
   this->config_.set_string_value (key, IOR, info->ior);
   this->config_.set_integer_value (key, PID, info->pid);
-  this->config_.get_string_value (key, ALTKEY, info->alt_key);
-  this->config_.get_string_value (key, PEERS, peerstr);
+  this->config_.set_string_value (key, ALTKEY,
+                                  info->alt_info_.null () ? "" : info->alt_info_->key_name_);
+  this->config_.set_string_value (key, PEERS, peerstr);
 
   return 0;
 }

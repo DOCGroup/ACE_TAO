@@ -1,3 +1,23 @@
+Thu Feb  6 23:11:57 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+          More refactoring of Server_Info interactions to ensure linked infos
+          present the correct information for server access vs poa access.
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+          enhance the debug output to help resolve runtime error.
+
 Thu Feb  6 14:52:09 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
