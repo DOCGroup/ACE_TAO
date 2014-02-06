@@ -1,3 +1,10 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.2.0 and ACE-6.2.0a
+=====================================================
+
+. Added the ability to build RPMs for just ACE, using an ACE-src tarball.
+  To do this add "--without tao" to the rpmbuild command line.
+
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.9 and ACE-6.2.0
 ====================================================
 
