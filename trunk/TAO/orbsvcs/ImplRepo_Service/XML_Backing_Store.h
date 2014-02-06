@@ -52,16 +52,7 @@ public:
   virtual const ACE_TCHAR* repo_mode() const;
 
   /// create the Server_Info server object
-  /// @param server_id the Server_Info server_id
-  /// @param server_name the Server_Info server_name
-  /// @param activator_name the Server_Info activator
-  /// @param cmdline the Server_Info cmdline
-  /// @param env_vars the Server_Info env_vars
-  /// @param workin_dir the Server_Info dir
-  /// @param actmode the Server_Info activation_mode
-  /// @param start_limit the Server_Info start_limit
-  /// @param partial_ior the Server_Info partial_ior
-  /// @param ior the Server_Info ior
+  /// @param info the source Server_Info data
   /// @param server_started indicates if the server object
   ///        existed when data was persisted
   /// @param extra_params extra name value pairs that
@@ -105,6 +96,7 @@ protected:
   /// @param filename the filename to read the contents from
   /// @param xml_handler the ACEXML_DefaultHandler to use to parse
   ///        the file
+  /// @param debug the current debug level
   /// @param open_file the already open FILE stream for the
   ///        filename
   static int load(const ACE_TString& filename,

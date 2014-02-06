@@ -29,6 +29,7 @@ public:
   /// constructor
   /// @param repo the repo to report updates to
   /// @param name the name of the server to retrieve
+  /// @param pid an optional process id to further discriminate the server
   UpdateableServerInfo(Locator_Repository* repo,
                        const ACE_CString& name,
                        int pid = 0);
@@ -36,6 +37,7 @@ public:
   /// constructor
   /// @param repo the repo to report updates to
   /// @param si an already retrieved Server_Info_Ptr
+  /// @param reset_start_count controls the reset of the start count value
   UpdateableServerInfo(Locator_Repository* repo,
                        const Server_Info_Ptr& si,
                        bool reset_start_count = false);
