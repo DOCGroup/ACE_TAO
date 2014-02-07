@@ -45,7 +45,7 @@ AsyncAccessManager::started_running (void)
 bool
 AsyncAccessManager::has_server (const char *s)
 {
-  return ACE_OS::strcmp (this->info_->ping_id(), s);
+  return ACE_OS::strcmp (this->info_->ping_id(), s) == 0;
 }
 
 void
