@@ -493,7 +493,7 @@ Locator_Repository::remove_server (const ACE_CString& name)
     {
       // name is a peer to another an must be removed from other list
       bool found = false;
-      for (size_t i = 0; i < si->alt_info_->peers.length(); i++)
+      for (CORBA::ULong i = 0; i < si->alt_info_->peers.length(); i++)
         {
           if (!found && si->poa_name == si->alt_info_->peers[i])
             {
@@ -528,7 +528,7 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
   sync_load ();
 
   base->peers.length (p.length());
-  for (size_t i = 0; i < p.length(); i++)
+  for (CORBA::ULong i = 0; i < p.length(); i++)
     {
       base->peers[i] =  p[i];
       Server_Info *si;
