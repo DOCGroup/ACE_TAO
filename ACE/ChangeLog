@@ -1,3 +1,9 @@
+Fri Feb  7 21:57:00 UTC 2014  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/config-macosx-mavericks.h:
+        If ACE_HAS_CUSTOM_EXPORT_MACROS isn't set, disable it. Also disable
+        two deprecated functions (sbrk and tempnam).
+
 Thu Feb  6 15:55:00 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * rpmbuild/ace-tao.spec: Fixed syntax problems in TAO headers
