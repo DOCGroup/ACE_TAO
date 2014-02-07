@@ -1,5 +1,5 @@
 # Set the version number here.
-%define ACEVER  6.2.4
+%define ACEVER  6.2.0
 %define TAOVER  2.2.4
 %define CIAOVER 1.2.4
 
@@ -57,7 +57,7 @@
 %define OPTTAG .O0
 %endif
 
-%if %{?_with_tao:0}%{!?_with_tao:1}
+%if 0%{?_without_tao:1}
 Summary:      The ADAPTIVE Communication Environment (ACE)
 Name:         ace-tao
 %else
@@ -76,7 +76,7 @@ Release:      1%{?OPTTAG}%{?dist}
 Group:        Development/Libraries/C and C++
 URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
 License:      DOC License
-%if %{?_with_tao:0}%{!?_with_tao:1}
+%if 0%{?_without_tao:1}
 Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE-src-%{ACEVER}.tar.gz
 %else
 Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.gz
@@ -993,14 +993,14 @@ EOF
 %endif
 
 # Need to regenerate all of the GNUMakefiles ...
-%if %{?_with_tao:0}%{!?_with_tao:1}
+%if 0%{?_without_tao:1}
 bin/mwc.pl -type gnuace ACE.mwc
 %else
 bin/mwc.pl -type gnuace TAO/TAO_ACE.mwc
 %endif
 
 # Make everything that we have generated for
-%if %{?_with_tao:0}%{!?_with_tao:1}
+%if 0%{?_without_tao:1}
 make %{?_smp_mflags} -C $ACE_ROOT
 %else
 make %{?_smp_mflags} -C $TAO_ROOT
