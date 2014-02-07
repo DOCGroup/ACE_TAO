@@ -1,3 +1,8 @@
+Fri Feb  7 16:02:04 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+          More refactor cleanup.
+
 Fri Feb  7 15:43:59 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
