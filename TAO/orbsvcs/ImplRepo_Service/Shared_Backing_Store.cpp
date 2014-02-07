@@ -400,11 +400,14 @@ Shared_Backing_Store::verify_unique_id (const ACE_CString& key,
     Options::ImrType repo_type = this->imr_type_;
     for (unsigned int i = 0; i < size; ++i)
       {
-        ORBSVCS_DEBUG((LM_INFO,
-                       ACE_TEXT ("name values %C=%C (%C)\n"),
-                       extra_params[i].first.c_str(),
-                       extra_params[i].second.c_str(),
-                       this->repo_values_[i].first.c_str()));
+        if (this->opts_.debug() > 4)
+          {
+            ORBSVCS_DEBUG((LM_INFO,
+                           ACE_TEXT ("name values %C=%C (%C)\n"),
+                           extra_params[i].first.c_str(),
+                           extra_params[i].second.c_str(),
+                           this->repo_values_[i].first.c_str()));
+          }
       }
     if ((size > Shared_Backing_Store::REPO_TYPE) &&
         (extra_params[Shared_Backing_Store::REPO_TYPE].first ==
