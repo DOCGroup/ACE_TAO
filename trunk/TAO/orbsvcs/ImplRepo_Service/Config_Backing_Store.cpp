@@ -127,7 +127,8 @@ Config_Backing_Store::loadServers ()
           si->pid = tmp_int;
           if (config_.get_string_value (key, ALTKEY, tmp))
             {
-              if (this->servers ().find (tmp, si->alt_info_) != 0)
+              if (tmp.length () > 0 &&
+                  this->servers ().find (tmp, si->alt_info_) != 0)
                 {
                   Server_Info *base_si = 0;
                   ACE_NEW (base_si, Server_Info);
