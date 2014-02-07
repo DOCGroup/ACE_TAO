@@ -105,7 +105,8 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
                 }
               else if (name == ALTKEY_TAG)
                 {
-                  if (this->repo_.servers ().find (value, this->si_->alt_info_) != 0)
+                  if (value.length() > 0 &&
+                      this->repo_.servers ().find (value, this->si_->alt_info_) != 0)
                     {
                       Server_Info *base_si = 0;
                       ACE_NEW (base_si, Server_Info);
