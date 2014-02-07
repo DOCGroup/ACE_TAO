@@ -922,7 +922,7 @@ ImR_Locator_i::shutdown_server
 
   this->connect_server (info);
 
-  if (CORBA::is_nil (info->server.in ()))
+  if (CORBA::is_nil (info->active_info()->server.in ()))
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("ImR: shutdown_server () Cannot connect to server <%C>\n"),
@@ -942,7 +942,7 @@ ImR_Locator_i::shutdown_server
 
   try
     {
-      CORBA::Object_var obj = this->set_timeout_policy (info->server.in (),
+      CORBA::Object_var obj = this->set_timeout_policy (info->active_info()->server.in (),
                                                         DEFAULT_SHUTDOWN_TIMEOUT);
       ImplementationRepository::ServerObject_var server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
