@@ -205,7 +205,7 @@ Server_Info::has_peer (const char *name)
 bool
 Server_Info::is_server (const char *name)
 {
-  for (size_t i = 0; i < peers.length(); i++)
+  for (CORBA::ULong i = 0; i < peers.length(); i++)
     {
       if (ACE_OS::strcmp (peers[i], name) == 0)
         return true;
