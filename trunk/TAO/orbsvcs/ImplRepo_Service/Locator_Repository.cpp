@@ -509,7 +509,7 @@ Locator_Repository::remove_server (const ACE_CString& name)
     }
   else if (si->peers.length () > 0)
     {
-      for (size_t i = 0; i < si->peers.length(); i++)
+      for (CORBA::ULong i = 0; i < si->peers.length(); i++)
         {
           ACE_CString key;
           ACE_CString peer (si->peers[i]);

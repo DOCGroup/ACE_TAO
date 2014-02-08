@@ -183,28 +183,36 @@ any time. ImplRepo_Service can be reached through the usual methods of
 
 Commandline Arguments that can be passed to ImplRepo_Service
 
--d  debug information
--m  support multicast discovery.
--o  generate the ior.
--x  support persistence to the ImplRepo_Service. We use XML to support
-    persistence. Names of the activators registered with the locator,
-    their IORs, and the servers registered with each of the activators are
-    saved to the xml file. Use this option to pass the name of the file
-    where the data has to be saved.
--p  similar to "-x" but using an ACE_Configuration_Heap file to persist
-    the data.
--r  similar to "-p" but using an ACE_Configuration_Win32Registry to persist
-    the data. (only available on Win32 platforms)
---directory  similar to "-x" option, but the repository will be written out
-    to multiple files in the indicated directory: "imr_listings.xml" which
-    indicates all servers and activators in the repository indicating the
-    filename containing that server's or activator's persistence data.
-    This option is used along with the "--primary" or "--backup" option
-    to create a Fault Tolerant ImplRepo_Service.
---primary  pass along with "--directory <dir>" to startup the primary
-    ImR_Locator. See ft_imr_locator subsection.
---backup  pass along with "--directory <dir>" to startup the backup
-    ImR_Locator. See ft_imr_locator subsection.
+-d <level 0..10>   locator specific debug level
+-m                 support multicast discovery.
+-l                 lock the repository, making it read only.
+-o <filename>      write the ior to the file.
+-t <timeout>       specify a startup timeout value
+-s                 run as a winNT service
+-c <command>       execute the named service command: install, remove
+-x <filename>      support persistence to the ImplRepo_Service. We use XML to support
+                   persistence. Names of the activators registered with the locator,
+                   their IORs, and the servers registered with each of the activators are
+                   saved to the xml file. Use this option to pass the name of the file
+                   where the data has to be saved.
+-p <filename>      similar to "-x" but using an ACE_Configuration_Heap file to persist
+                   the data.
+-r                 similar to "-p" but using an ACE_Configuration_Win32Registry to persist
+                   the data. (only available on Win32 platforms)
+--directory <path> similar to "-x" option, but the repository will be written out
+                   to multiple files in the indicated directory: "imr_listings.xml" which
+                   indicates all servers and activators in the repository indicating the
+                   filename containing that server's or activator's persistence data.
+                   This option is used along with the "--primary" or "--backup" option
+                   to create a Fault Tolerant ImplRepo_Service.
+--primary          pass along with "--directory <dir>" to startup the primary
+                   ImR_Locator. See ft_imr_locator subsection.
+--backup           pass along with "--directory <dir>" to startup the backup
+                   ImR_Locator. See ft_imr_locator subsection.
+-UnregisterIfAddressReused Enable the verification that a newly started server is reusing
+                   the endpoint address of another server that it is not linked with. If it
+                   finds this case, and the existing server is not running, its registration
+                   is removed.
 
   And, of course, the ORB Options.
 
@@ -293,35 +301,18 @@ same information.
 
 The Commandline parameters that are valid for ImR_Activator are
 
--c:          Run the Service command.
--d:number    Debug Information
--l           lock the database.
--o           Generate the IOR to a file (just in case some one wants to read the
-             IOR)
--r           Enable Win32 regsitry implementation.
--s           Run as a service.
--t           Set a timeout value.
--h           Prints the help.
-
-        When Persistence of an ImR_Activator is required, we will save
-the information about the server's that this ImR_Activator is related
-to in a file (being the easy form of a persistent database). The
-information about each server include its startup options, location,
-working directory which are needed to execute the requests that can
-passed by tao_imr with regards to the server.
-
-        There are two ways in which you can store data in the
-file. One way is to use ACE_Configuration_Heap to save all
-the information to the file. To do this, we have to pass the '-p' option.
-
--p      Pass the ImplRepo service a filename to use for the
-             backing store. Uses ACE_Configuration_Heap.
-
-  The second way is to save in XML-ized format.
-
--x      Pass the filename where the repository information should
-             be saved. Use XML format.
-
+-c              Run the Service command: install, remove, install_no_imr
+-d <level 0..5> Debug Information
+-l              Notify the locator of server state changes
+-o <filename>   Write the IOR to a file
+-s              Run as a winNT service.
+-e <length>     Supply an Environment buffer length
+-m <count>      Supply a max number of Environment variables
+-delay <time>   A testing parameter used to impose a delay after the
+                detection of a child process death before notifying the
+                locator of the termination. Should not be used in
+                production environments
+-h              Prints the help.
 
 @subsection work So how does the whole thing work?
 
@@ -602,7 +593,7 @@ the registry under
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TAOIMRActivator\Parameters and
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TAOIMRLocator\Parameters.
 For example:
-ImR_Activator -c install -d 3 -l -m -o activator.ior -x persist.xml -t 30 -orbendpoint iiop://:9988 -orbdebuglevel 1
+ImR_Activator -c install -d 3 -l -m -o activator.ior -t 30 -orbendpoint iiop://:9988 -orbdebuglevel 1
 
 The order of arguments makes no difference, but you must run
 -c remove and then -c install if you want to change the parameters.
