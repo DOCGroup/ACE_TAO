@@ -56,6 +56,7 @@ Server_Info::Server_Info (const ACE_CString& fqname,
   , env_vars (env)
   , dir (working_dir)
   , activation_mode_ (amode)
+  , start_limit_ (1)
   , partial_ior (partial_ior)
   , ior (server_ior)
   , server(ImplementationRepository::ServerObject::_duplicate (svrobj))
