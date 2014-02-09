@@ -29,7 +29,12 @@ const ACE_TCHAR* Locator_XMLHandler::ALTKEY_TAG = ACE_TEXT("altkey");
 
 
 Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo)
-: repo_(repo)
+  : repo_(repo),
+    si_ (0),
+    server_started_ (false),
+    extra_params_ (),
+    env_vars_ (),
+    peer_list_ ()
 {
 }
 

@@ -726,7 +726,7 @@ ImR_Locator_i::link_servers
  const char * name,
  const CORBA::StringSeq & peers)
 {
-  Server_Info_Ptr root_si = this->repository_->get_info (name);
+  Server_Info_Ptr root_si = this->repository_->get_active_server (name);
   if (root_si.null())
     {
       CORBA::Exception *ex =
@@ -749,7 +749,7 @@ ImR_Locator_i::link_servers
   for (CORBA::ULong i = 0; i < peers.length(); i++)
     {
       ACE_CString peer(peers[i]);
-      Server_Info_Ptr si = this->repository_->get_info (peer);
+      Server_Info_Ptr si = this->repository_->get_active_server (peer);
       if (!si.null ())
         {
           ACE_CString errstr(peers[i]);
@@ -848,7 +848,7 @@ ImR_Locator_i::remove_server
   // be valid, and the actual Server_Info will be destroyed when the last
   // one goes out of scope.
 
-  Server_Info_Ptr info = this->repository_->get_info (id);
+  Server_Info_Ptr info = this->repository_->get_active_server (id);
   if (! info.null ())
     {
       ACE_CString poa_name = info->poa_name;
@@ -1016,9 +1016,7 @@ ImR_Locator_i::server_is_running
   ImplementationRepository::ServerObject_var srvobj =
     ImplementationRepository::ServerObject::_narrow (obj.in());
 
-  Server_Info_Ptr sip = this->repository_->get_info (id);
-
-  UpdateableServerInfo info(this->repository_.get(), sip);
+  UpdateableServerInfo info (this->repository_.get(), id);
   if (info.null ())
     {
       if (debug_ > 0)

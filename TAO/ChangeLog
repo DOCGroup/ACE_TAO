@@ -1,3 +1,13 @@
+Sun Feb  9 18:59:30 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Ensure incoming names are consistently parsed.
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+          Fix Coverity reported warnings.
+
 Sat Feb  8 02:59:31 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:

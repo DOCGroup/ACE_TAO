@@ -378,7 +378,6 @@ Locator_Repository::add_server_i (Server_Info *si)
     {
       return err;
     }
-
   err = servers ().bind (si->key_name_, info);
   if (err != 0)
     {
@@ -444,16 +443,17 @@ Server_Info_Ptr
 Locator_Repository::get_active_server (const ACE_CString& name, int pid)
 {
   sync_load ();
-
+  ACE_CString key;
+  Server_Info::fqname_to_key (name.c_str(), key);
   Server_Info_Ptr si;
-  servers ().find (name, si);
+  servers ().find (key, si);
   if (si.null())
     {
       if (this->opts_.debug() > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG, "get_active_server could not find %C\n", name.c_str()));
         }
-      return find_by_poa (name);
+      return find_by_poa (key);
     }
 
   if (pid != 0 && si->pid != pid)
