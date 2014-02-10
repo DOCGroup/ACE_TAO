@@ -1,3 +1,9 @@
+Mon Feb 10 09:19:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * docs/Download.html:
+        * etc/index.html:
+          Updated some links
+
 Sun Feb  9 18:01:10 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:
