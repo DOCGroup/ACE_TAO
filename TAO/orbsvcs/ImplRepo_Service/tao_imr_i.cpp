@@ -1109,10 +1109,15 @@ TAO_IMR_Op_List::run (void)
           ImplementationRepository::ServerInformation_var si;
 
           this->imr_->find (this->server_name_.c_str (), si);
-
-          this->verbose_server_information_ = 1;
-
-          this->display_server_information (si.in ());
+          if (server_name_ == si->server.in())
+            {
+              this->verbose_server_information_ = 1;
+              this->display_server_information (si.in ());
+            }
+          else
+            {
+              throw ImplementationRepository::NotFound ();
+            }
         }
     }
   catch (const ImplementationRepository::NotFound&)
@@ -1230,8 +1235,8 @@ TAO_IMR_Op_Register::run (void)
 
   try
     {
-      this->imr_->find(this->server_name_.c_str (),
-        server_information.out());
+      this->imr_->find (this->server_name_.c_str (),
+        server_information.out ());
 
       if (server_name_ == server_information->server.in())
         {

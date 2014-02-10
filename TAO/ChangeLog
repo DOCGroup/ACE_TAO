@@ -1,3 +1,11 @@
+Mon Feb 10 23:42:54 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Use the correct server key for removing from the repository.
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Do the right thing if a find comes back empty.
+
 Sun Feb  9 18:59:30 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
