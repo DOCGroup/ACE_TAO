@@ -852,7 +852,7 @@ ImR_Locator_i::remove_server
   if (! info.null ())
     {
       ACE_CString poa_name = info->poa_name;
-      if (this->repository_->remove_server (id) == 0)
+      if (this->repository_->remove_server (info->key_name_) == 0)
         {
           if (debug_ > 1)
             ORBSVCS_DEBUG ((LM_DEBUG,
