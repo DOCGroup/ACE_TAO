@@ -1,3 +1,10 @@
+Tue Feb 11 09:41:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macosx-mavericks.h:
+        * ace/config-macosx-mountainlion.h:
+          Moved some defines for disabling deprecated functions to the
+          mountainlion file
+
 Mon Feb 10 09:19:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/Download.html:
