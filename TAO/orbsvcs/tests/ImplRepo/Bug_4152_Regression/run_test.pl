@@ -226,7 +226,7 @@ sub validate_servers
     if ($count != 2) {
         print STDERR "ERROR: expected 2 server pids, got $count\n";
         for ($i = 0; $i < $count; $i++) {
-            kill $pid[$i];
+            kill $pids[$i];
         }
     }
 }
