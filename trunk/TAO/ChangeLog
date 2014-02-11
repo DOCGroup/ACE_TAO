@@ -1,3 +1,17 @@
+Tue Feb 11 23:01:07 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+          Add a note about new ImR capabilities.
+
+        * bin/tao_other_tests.lst:
+          run a new test.
+
+        * orbsvcs/tests/ImplRepo/Bug_4152_Regression/run_test.pl:
+          fix a typo.
+
+        * orbsvcs/tests/ImplRepo/link_poas:
+          New test to verify the tao_imr link command operation.
+
 Mon Feb 10 23:42:54 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
