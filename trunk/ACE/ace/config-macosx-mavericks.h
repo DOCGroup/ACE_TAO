@@ -2,21 +2,10 @@
 #ifndef ACE_CONFIG_MACOSX_MAVERICKS_H
 #define ACE_CONFIG_MACOSX_MAVERICKS_H
 
-
 // Mac OS X has broken symbol visibility.  Unless we're told otherwise,
 // disable it by default.
 #ifndef ACE_HAS_CUSTOM_EXPORT_MACROS
 #define ACE_HAS_CUSTOM_EXPORT_MACROS 0
-#endif
-
-// Deprecated in Mavericks
-#ifndef ACE_LACKS_SBRK
-#define ACE_LACKS_SBRK
-#endif
-
-// Deprecated in Mavericks
-#ifndef ACE_LACKS_TEMPNAM
-#define ACE_LACKS_TEMPNAM
 #endif
 
 #ifndef ACE_HAS_SSIZE_T
