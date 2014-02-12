@@ -1,3 +1,8 @@
+Wed Feb 12 20:08:40 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/link_poas/Test_i.cpp:
+          Scoreboard cleanup.
+
 Tue Feb 11 23:01:07 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * NEWS:
