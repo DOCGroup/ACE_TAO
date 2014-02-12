@@ -1,5 +1,6 @@
 /* -*- C++ -*- $Id$ */
 
+#include "ace/OS_NS_unistd.h"
 #include "Test_i.h"
 
 CORBA::Long
