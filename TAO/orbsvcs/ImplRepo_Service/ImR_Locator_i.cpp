@@ -1059,7 +1059,7 @@ ImR_Locator_i::server_is_running
           info.edit ()->set_contact (partial_ior, sior.in(), srvobj.in());
 
           info.update_repo();
-          this->pinger_.add_server (id, true, srvobj.in());
+          this->pinger_.add_server (info->ping_id(), true, srvobj.in());
         }
 
       AsyncAccessManager_ptr aam(this->find_aam (info->ping_id ()));
