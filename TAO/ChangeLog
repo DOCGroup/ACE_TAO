@@ -1,3 +1,15 @@
+Thu Feb 13 14:57:03 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Add new test.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Fix to find pid-identified servers after a shutdown reset
+          the last known pid.
+
+        * orbsvcs/tests/ImplRepo/kill_slow_server:
+          Test to verify the above works.
+
 Wed Feb 12 20:08:40 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/link_poas/Test_i.cpp:
