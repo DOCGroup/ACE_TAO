@@ -1,3 +1,11 @@
+Thu Feb 13 23:54:35 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Make sure servers added to the live checker use the proper ID.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Allow multiple link commands to be used to add multiple combined POAs.
+
 Thu Feb 13 14:57:03 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:
