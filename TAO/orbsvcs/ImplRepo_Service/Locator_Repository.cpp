@@ -531,11 +531,11 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
                                 const CORBA::StringSeq p)
 {
   sync_load ();
-
-  base->peers.length (p.length());
+  CORBA::ULong len = base->peers.length();
+  base->peers.length (len + p.length());
   for (CORBA::ULong i = 0; i < p.length(); i++)
     {
-      base->peers[i] =  p[i];
+      base->peers[len + i] =  p[i];
       Server_Info *si;
       ACE_CString peer(p[i]);
       ACE_NEW_RETURN (si,
