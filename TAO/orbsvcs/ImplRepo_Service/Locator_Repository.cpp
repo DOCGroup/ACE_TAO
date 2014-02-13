@@ -456,8 +456,13 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
       return find_by_poa (key);
     }
 
-  if (pid != 0 && si->pid != pid)
+  if (pid != 0 && si->pid != 0 && si->pid != pid)
     {
+      if (this->opts_.debug() > 5)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, "get_active_server could not find %C, %d != %d\n",
+                          name.c_str(), pid, si->pid));
+        }
       si.reset ();
     }
   return si;
