@@ -1,8 +1,19 @@
+Fri Feb 14 16:34:46 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp (dispatch_io_event): Do not dispatch to
+          a handler that is suspended. Prevents multiple callbacks to the
+          same handler at the same time when multiple threads are dispatching
+          and changing registrations at the same time. Fixes Bugzilla 4129.
+          Thank you to Alexey Zubko and Howard Finer for both coming up with
+          the same answer independently!
+
+        * THANKS: Added Alexey Zubo to the Hall of Fame.
+
 Tue Feb 11 17:54:42 UTC 2014  Abdullah Sowayan  <sowayan@gmail.com>
 
         * ace/config-macosx-iOS-hardware.h:
         * ace/config-macosx-iOS-simulator.h:
-          Use Mavericks (OSX 10.9) as the host build environment. 
+          Use Mavericks (OSX 10.9) as the host build environment.
 
 Tue Feb 11 09:41:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
