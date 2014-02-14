@@ -1,3 +1,12 @@
+Fri Feb 14 16:34:46 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp (dispatch_io_event): Do not dispatch to
+          a handler that is suspended. Prevents multiple callbacks to the
+          same handler at the same time when multiple threads are dispatching
+          and changing registrations at the same time. Fixes Bugzilla 4129.
+          Thank you to Alexey Zubko and Howard Finer for both coming up with
+          the same answer independently!
+
 Thu Dec 12 16:28:45 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/ATM_Stream.cpp: Add missing OS_NS_string.h
