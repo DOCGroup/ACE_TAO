@@ -1,3 +1,12 @@
+Fri Feb 14 16:34:46 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * ace/Dev_Poll_Reactor.cpp (dispatch_io_event): Do not dispatch to
+          a handler that is suspended. Prevents multiple callbacks to the
+          same handler at the same time when multiple threads are dispatching
+          and changing registrations at the same time. Fixes Bugzilla 4129.
+          Thank you to Alexey Zubko and Howard Finer for both coming up with
+          the same answer independently!
+
 Wed Feb  5 19:07:37 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * rpmbuild/ace-tao.spec: Added support for --without tao (and
