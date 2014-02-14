@@ -1187,10 +1187,10 @@ Key_List::output_hash_function (void)
   if (option[DEFAULTCHARS])
     {
       if (option[STRCASECMP])
-        ACE_OS::printf ("\n    };\n  return %sasso_values[(int) charmap[str[len - 1]]] + asso_values[(int) charmap[str[0]]];\n}\n\n",
+        ACE_OS::printf ("\n    };\n  return %sasso_values[static_cast<int>(charmap[str[len - 1]]]) + asso_values[static_cast<int>(charmap[str[0]])];\n}\n\n",
                 option[NOLENGTH] ? "" : "len + ");
       else
-        ACE_OS::printf ("\n    };\n  return %sasso_values[(int) str[len - 1]] + asso_values[(int) str[0]];\n}\n\n",
+        ACE_OS::printf ("\n    };\n  return %sasso_values[static_cast<int>(str[len - 1])] + asso_values[static_cast<int>(str[0])];\n}\n\n",
                 option[NOLENGTH] ? "" : "len + ");
     }
   else
@@ -1209,7 +1209,7 @@ Key_List::output_hash_function (void)
 
           for (; key_pos != WORD_END; )
             {
-              ACE_OS::printf (option[STRCASECMP] ? "asso_values[(int) charmap[str[%d]]]" : "asso_values[(int) str[%d]]", key_pos - 1);
+              ACE_OS::printf (option[STRCASECMP] ? "asso_values[static_cast<int>(charmap[str[%d]])]" : "asso_values[static_cast<int>(str[%d])]", key_pos - 1);
               if ((key_pos = option.get ()) != EOS)
                 ACE_OS::printf (" + ");
               else
@@ -1217,7 +1217,7 @@ Key_List::output_hash_function (void)
             }
 
           ACE_OS::printf ("%s;\n}\n\n", key_pos == WORD_END
-                  ? (option[STRCASECMP] ? "asso_values[(int) charmap[str[len - 1]]]" : "asso_values[(int) str[len - 1]]")
+                  ? (option[STRCASECMP] ? "asso_values[static_cast<int>(charmap[str[len - 1]])]" : "asso_values[static_cast<int>(str[len - 1])]")
                   : "");
         }
 
@@ -1236,12 +1236,12 @@ Key_List::output_hash_function (void)
               if (option[STRCASECMP])
 
                 for (i = max_key_len; i > 0; i--)
-                  ACE_OS::printf ("      case %d:\n        hval += asso_values[(int) charmap[(int) str[%d]]];\n", i, i - 1);
+                  ACE_OS::printf ("      case %d:\n        hval += asso_values[static_cast<int>(charmap[static_cast<int>(str[%d])])];\n", i, i - 1);
 
               else
 
                 for (i = max_key_len; i > 0; i--)
-                  ACE_OS::printf ("      case %d:\n        hval += asso_values[(int) str[%d]];\n", i, i - 1);
+                  ACE_OS::printf ("      case %d:\n        hval += asso_values[static_cast<int>(str[%d])];\n", i, i - 1);
 
               ACE_OS::printf ("    }\n  return hval;\n}\n\n");
             }
@@ -1256,15 +1256,15 @@ Key_List::output_hash_function (void)
                     ACE_OS::printf ("      case %d:\n", count);
 
                   ACE_OS::printf (option[STRCASECMP]
-                          ? "      case %d:\n        hval += asso_values[(int) charmap[(int) str[%d]]];\n"
-                          : "      case %d:\n        hval += asso_values[(int) str[%d]];\n",
+                          ? "      case %d:\n        hval += asso_values[static_cast<int>(charmap[static_cast<int>(str[%d])])];\n"
+                          : "      case %d:\n        hval += asso_values[static_cast<int>(str[%d])];\n",
                           key_pos, key_pos - 1);
                 }
               while ((key_pos = option.get ()) != EOS && key_pos != WORD_END);
 
               ACE_OS::printf ("    }\n  return hval%s;\n}\n\n",
                       key_pos == WORD_END
-                      ? (option[STRCASECMP] ? " + asso_values[(int) charmap[(int) str[len - 1]]]" : " + asso_values[(int) str[len - 1]]")
+                      ? (option[STRCASECMP] ? " + asso_values[static_cast<int>(charmap[static_cast<int>(str[len - 1])])]" : " + asso_values[static_cast<int>(str[len - 1])]")
                       : "");
             }
         }
