@@ -368,7 +368,10 @@ template <ACE_MEM_POOL_1, class ACE_LOCK>
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Local_Name_Space (
   ACE_Naming_Context::Context_Scope_Type scope_in,
   ACE_Name_Options *name_options)
-  : name_options_ (name_options)
+  : allocator_ (0),
+    name_space_map_ (0),
+    name_options_ (name_options),
+    lock_ (0)
 {
   ACE_TRACE ("ACE_Local_Name_Space::ACE_Local_Name_Space");
   if (this->open (scope_in) == -1)

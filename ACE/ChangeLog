@@ -1,3 +1,8 @@
+Fri Feb 14 18:42:12 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Local_Name_Space_T.cpp:
+          Fixed coverity warning about unitialized pointer fields
+
 Fri Feb 14 18:37:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/IO_Cntl_Msg.inl:
