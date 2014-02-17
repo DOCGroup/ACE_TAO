@@ -1177,12 +1177,13 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         info = this->handler_rep_.find (handle);
         if (info == 0)   // No registered handler any longer
           return 0;
-	// It is possible another thread has changed (and possibly re-armed)
-	// this handle mask before current thread obtained the repo lock.
-	// If that did happen and this handler is still suspended, don't
-	// dispatch on top of another callback. See Bugzilla 4129.
-	if (info->suspended)
-	  return 0;
+
+        // It is possible another thread has changed (and possibly re-armed)
+        // this handle mask before current thread obtained the repo lock.
+        // If that did happen and this handler is still suspended, don't
+        // dispatch on top of another callback. See Bugzilla 4129.
+        if (info->suspended)
+          return 0;
 
         // Figure out what to do first in order to make it easier to manage
         // the bit twiddling and possible pfds increment before releasing
