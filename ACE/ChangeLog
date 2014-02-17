@@ -1,3 +1,11 @@
+Mon Feb 17 11:23:13 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+          Added new commandline argument -x which enables Coverity
+          Test Analyzer test separation. This is not enabled by
+          default because enabling test separation increases the
+          size of the Coverity intermediate directory significantly
+
 Fri Feb 14 18:42:12 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Local_Name_Space_T.cpp:
