@@ -34,7 +34,7 @@ if (!defined $DDS_ROOT && -d "$ACE_ROOT/TAO/DDS") {
 
 ################################################################################
 
-if (!getopts ('adl:os:r:tCd') || $opt_h) {
+if (!getopts ('xadl:os:r:tCd') || $opt_h) {
     print "auto_run_tests.pl [-a] [-h] [-s sandbox] [-o] [-t]\n";
     print "\n";
     print "Runs the tests listed in auto_run_tests.lst\n";
@@ -49,6 +49,7 @@ if (!getopts ('adl:os:r:tCd') || $opt_h) {
     print "    -C             CIAO and DAnCE tests only\n";
     print "    -d             Run OpenDDS tests only\n";
     print "    -z             Run debug mode, no tests executed\n";
+    print "    -x             Enable coverity test separation\n";
     print "    -Config cfg    Run the tests for the <cfg> configuration\n";
     print "    -l list        Load the list and run only those tests\n";
     print "    -r dir         Root directory for running the tests\n";
@@ -176,9 +177,11 @@ foreach my $test_lst (@file_list) {
 
         if (! $is_ace_test) {
             print "auto_run_tests: $test\n";
-            #$ENV{COVERITY_TEST_NAME} = $test;
-            #$ENV{COVERITY_SUITE_NAME} = $test_lst;
-            #$ENV{COVERITY_TEST_SOURCE} = "$directory/$program";
+            if ($opt_x) {
+              $ENV{COVERITY_TEST_NAME} = $test;
+              $ENV{COVERITY_SUITE_NAME} = $test_lst;
+              $ENV{COVERITY_TEST_SOURCE} = "$directory/$program";
+            }
         }
 
         my($orig_dir) = $directory;
@@ -204,10 +207,10 @@ foreach my $test_lst (@file_list) {
         # when $opt_r is set make sure to *first* check the explicitly
         # specified directory and only when nothing found there check
         # the default dirs
-  if ($opt_r) {
-    unshift (@dirlist, $startdir."/$directory");
-    unshift (@dirlist, $startdir."/$orig_dir");
-  }
+        if ($opt_r) {
+          unshift (@dirlist, $startdir."/$directory");
+          unshift (@dirlist, $startdir."/$orig_dir");
+        }
         foreach my $path (@dirlist) {
           if (-d $path && ($status = chdir ($path))) {
             last;
