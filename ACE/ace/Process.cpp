@@ -116,13 +116,17 @@ ACE_Process::spawn (ACE_Process_Options &options)
 #if defined (ACE_WIN32)
 # if defined (ACE_WIN64)
 // silence warnings coming from MinGW64 compilers
+#  if defined (__GNUC__)
 #   pragma GCC diagnostic push
 #   pragma GCC diagnostic ignored "-Wformat"
 #   pragma GCC diagnostic ignored "-Wformat-extra-args"
+#  endif /* __GNUC__ */
           curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
                                        ACE_TEXT (" +H %I64p"),
                                        h);
+#  if defined (__GNUC__)
 #   pragma GCC diagnostic pop
+#  endif /* __GNUC__ */
 # else
           curr_len += ACE_OS::sprintf (&cmd_line_buf[curr_len],
                                        ACE_TEXT (" +H %p"),
