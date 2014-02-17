@@ -148,7 +148,6 @@ namespace CIAO_LOBO_Test_Sender_Impl
   void
   Sender_exec_i::get_started (void)
   {
-
     try
       {
         start ();
