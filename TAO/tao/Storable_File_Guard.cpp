@@ -94,6 +94,12 @@ TAO::Storable_File_Guard::init(Method_Type method_type)
   if( rwflags_ <= 0 )
     {
       errno = EINVAL;
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("(%P|%t) Storable_File_Guard:Invalid ")
+                         ACE_TEXT ("flags\n")));
+        }
       throw CORBA::PERSIST_STORE();
     }
 
@@ -104,6 +110,12 @@ TAO::Storable_File_Guard::init(Method_Type method_type)
       if (fl_->open() != 0)
         {
           delete fl_;
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("(%P|%t) Storable_File_Guard::Open ")
+                             ACE_TEXT ("failed in redundant\n")));
+            }
           throw CORBA::PERSIST_STORE();
         }
 
@@ -112,6 +124,12 @@ TAO::Storable_File_Guard::init(Method_Type method_type)
         {
           fl_->close();
           delete fl_;
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("(%P|%t) Storable_File_Guard:flock ")
+                             ACE_TEXT ("failed in redundant\n")));
+            }
           throw CORBA::INTERNAL();
         }
 
@@ -136,6 +154,12 @@ TAO::Storable_File_Guard::init(Method_Type method_type)
       if (fl_->open() != 0)
         {
           delete fl_;
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("(%P|%t) Storable_File_Guard:Open ")
+                             ACE_TEXT ("failed in non-redundant\n")));
+            }
           throw CORBA::PERSIST_STORE();
         }
 
