@@ -1,3 +1,11 @@
+Tue Feb 18 15:41:16 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+        * tao/Storable_File_Guard.cpp:
+          Added debug output during guard initialization to caputre
+          errors that raise exceptions. Also be sure to release the
+          mutex acquired before the throw.
+
 Thu Feb 13 23:54:35 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
