@@ -1,3 +1,9 @@
+Tue Feb 18 16:06:39 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Throw a more-apt exception when the server requested to be killed
+          is not running.
+
 Tue Feb 18 15:41:16 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
