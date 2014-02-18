@@ -1,3 +1,8 @@
+Tue Feb 18 21:39:29 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * rpmbuild/ace-tao.spec: Fixed --with tao, again. Some Linuxen's
+          rpmbuild treats %define differently. When in doubt, use %global.
+
 Mon Feb 17 12:10:59 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process.cpp:
