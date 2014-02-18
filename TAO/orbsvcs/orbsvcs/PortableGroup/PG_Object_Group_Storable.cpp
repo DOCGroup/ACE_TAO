@@ -1,6 +1,7 @@
 // $Id$
 
 #include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"
+#include "orbsvcs/Log_Macros.h"
 
 #include "tao/Storable_File_Guard.h"
 #include "tao/Storable_Factory.h"
@@ -26,6 +27,11 @@ namespace
     if (!cdr.good_bit ())
       {
         stream.clear ();
+        if (TAO_debug_level > 0)
+          {
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) read_cdr:IO error \n")));
+          }
         throw CORBA::INTERNAL ();
       }
   }
@@ -77,6 +83,12 @@ TAO::Object_Group_File_Guard::Object_Group_File_Guard (
 {
   if (object_group_.lock_.acquire() == -1)
     {
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard:acquire ")
+                          ACE_TEXT ("failed\n")));
+        }
       throw CORBA::INTERNAL ();
     }
   try
@@ -85,7 +97,36 @@ TAO::Object_Group_File_Guard::Object_Group_File_Guard (
     }
   catch (const TAO::Storable_Exception &)
     {
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard:caught ")
+                          ACE_TEXT ("Storable Exception\n")));
+        }
+      object_group_.lock_.release();
       throw CORBA::INTERNAL ();
+    }
+  catch (const CORBA::NO_MEMORY &)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard:caught ")
+                          ACE_TEXT ("CORBA::NO_MEMORY Exception\n")));
+        }
+      object_group_.lock_.release();
+      throw CORBA::INTERNAL ();
+    }
+  catch (...)
+    {
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard:caught ")
+                          ACE_TEXT ("Unknown Exception\n")));
+        }
+      object_group_.lock_.release();
+      throw ;
     }
 }
 
@@ -99,6 +140,12 @@ TAO::Object_Group_File_Guard::~Object_Group_File_Guard ()
 
   if (object_group_.lock_.release() == -1)
     {
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard:release ")
+                          ACE_TEXT ("failed\n")));
+        }
       throw CORBA::INTERNAL ();
     }
 }
@@ -451,7 +498,15 @@ TAO::PG_Object_Group_Storable::read (TAO::Storable_Base & stream)
       CORBA::Object_var member =
         this->orb_->string_to_object (member_ior.c_str ());
       if (CORBA::is_nil (member.in ()))
-        throw CORBA::INV_OBJREF ();
+        {
+          if (TAO_debug_level > 0)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) PG_Object_Group_Storable::")
+                              ACE_TEXT ("string_to_object failed\n")));
+            }
+          throw CORBA::INV_OBJREF ();
+        }
 
       ///// location /////
       PortableGroup::Location location;
