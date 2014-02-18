@@ -814,7 +814,7 @@ ImR_Locator_i::kill_server
   if (!actext->kill_server (name, si->pid, signum))
     {
       CORBA::Exception *ex =
-        new ImplementationRepository::NotFound;
+        new ImplementationRepository::CannotComplete ("server not running");
       ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
       _tao_rh->kill_server_excep (&h);
     }
