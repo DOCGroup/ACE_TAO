@@ -1109,7 +1109,7 @@ TAO_IMR_Op_List::run (void)
           ImplementationRepository::ServerInformation_var si;
 
           this->imr_->find (this->server_name_.c_str (), si);
-          if (server_name_ == si->server.in())
+          if (ACE_OS::strlen (si->server.in()) > 0)
             {
               this->verbose_server_information_ = 1;
               this->display_server_information (si.in ());

@@ -453,7 +453,30 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
         {
           ORBSVCS_DEBUG ((LM_DEBUG, "get_active_server could not find %C\n", name.c_str()));
         }
-      return find_by_poa (key);
+      si = find_by_poa (key);
+      if (si.null())
+        {
+          if (name.find ("JACORB:") == ACE_CString::npos)
+            {
+              ACE_CString jo_key ("JACORB:");
+              ACE_CString::size_type pos = name.find (':');
+              if (pos == ACE_CString::npos)
+                {
+                  jo_key += name;
+                }
+              else
+                {
+                  jo_key += name.substring (0, pos);
+                  jo_key += '/';
+                  jo_key += name.substring (pos+1);
+                }
+              return this->get_active_server (jo_key, pid);
+            }
+        }
+      else
+        {
+          return si;
+        }
     }
 
   if (pid != 0 && si->pid != 0 && si->pid != pid)
