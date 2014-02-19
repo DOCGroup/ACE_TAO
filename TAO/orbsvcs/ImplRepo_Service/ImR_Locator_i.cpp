@@ -1136,13 +1136,13 @@ ImR_Locator_i::find
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
  const char* id)
 {
-  UpdateableServerInfo info(this->repository_.get(), id);
+  Server_Info_Ptr si = this->repository_->get_active_server (id);
   ImplementationRepository::ServerInformation_var imr_info;
   try
     {
-      if (! info.null ())
+      if (! si.null ())
         {
-          imr_info = info->createImRServerInfo ();
+          imr_info = si->createImRServerInfo ();
 
           if (debug_ > 1)
             ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Found server %C.\n"), id));

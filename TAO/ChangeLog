@@ -1,3 +1,13 @@
+Wed Feb 19 01:57:07 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Be sure to check the JacORB server namespace in all instances when
+          searching for an active server info entry.
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Only report a specific server as not found if the name comes back empty.
+
 Tue Feb 18 16:06:39 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
