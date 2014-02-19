@@ -1,3 +1,9 @@
+Wed Feb 19 12:23:19 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-icc-common.h:
+          Intel C++ 2013 SP1 Update 2 has adequate C++11 support when
+          it is used in GCC 4.7 or higher emulation mode
+
 Tue Feb 18 21:39:29 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * rpmbuild/ace-tao.spec: Fixed --with tao, again. Some Linuxen's

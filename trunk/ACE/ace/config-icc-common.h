@@ -97,5 +97,21 @@
 # define ACE_HAS_IA32INTRIN_H
 #endif
 
+// We assume that Intel C++ 15 and higher do have correct C++11 support when
+// it runs with GCC 4.7 or higher emulation mode
+#if (__INTEL_COMPILER > 1400) && defined (__INTEL_CXX11_MODE__)
+# if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7))
+#  define ACE_HAS_CPP11
+# endif
+#endif
+
+// Intel C++ 14 Update 2 has correct C++11 support when it runs with GCC 4.7
+// or higher emulation mode
+#if (__INTEL_COMPILER == 1400) && (__INTEL_COMPILER_UPDATE >= 2) && defined (__INTEL_CXX11_MODE__)
+# if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7))
+#  define ACE_HAS_CPP11
+# endi
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_LINUX_ICC_COMMON_H */
