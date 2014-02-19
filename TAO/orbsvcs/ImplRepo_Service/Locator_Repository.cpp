@@ -444,8 +444,12 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
 {
   sync_load ();
   ACE_CString key;
-  Server_Info::fqname_to_key (name.c_str(), key);
   Server_Info_Ptr si;
+  if (name.length() == 0)
+    {
+      return si;
+    }
+  Server_Info::fqname_to_key (name.c_str(), key);
   servers ().find (key, si);
   if (si.null())
     {
