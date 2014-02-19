@@ -110,7 +110,7 @@
 #if (__INTEL_COMPILER == 1400) && (__INTEL_COMPILER_UPDATE >= 2) && defined (__INTEL_CXX11_MODE__)
 # if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7))
 #  define ACE_HAS_CPP11
-# endi
+# endif
 #endif
 
 #include /**/ "ace/post.h"
