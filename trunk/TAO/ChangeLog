@@ -1,3 +1,10 @@
+Wed Feb 19 20:26:32 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * tests/Bug_3574_Regression/test.cpp:
+          Improved C++BuilderXE support
+
 Wed Feb 19 01:57:07 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
