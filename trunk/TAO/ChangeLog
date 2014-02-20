@@ -1,3 +1,8 @@
+Thu Feb 20 07:51:03 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compression/RLECompressorTest.cpp:
+          Fixed C++Builder warnings
+
 Thu Feb 20 07:47:10 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connector.cpp:
