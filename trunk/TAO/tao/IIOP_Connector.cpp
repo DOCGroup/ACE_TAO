@@ -393,7 +393,7 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   return result;
 }
 
-namespace
+namespace TAO_IIOP
 {
   /// RAII holder for a TAO_Transport list
   class TList_Holder
@@ -435,7 +435,7 @@ TAO_IIOP_Connector::complete_connection (int result,
                                          TAO_LF_Multi_Event *mev,
                                          ACE_Time_Value *timeout)
 {
-  TList_Holder tlist(count);
+  TAO_IIOP::TList_Holder tlist(count);
 
   TAO_Transport *transport  = 0;
 
