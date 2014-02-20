@@ -31,9 +31,9 @@ files and compiles all core code and the DDS4CCM shapes example. As last step it
 example which dumps shapes information to the console.
 <pre>
 wget http://download.dre.vanderbilt.edu/ACE+TAO-distribution/ACE+TAO+CIAO-src.tar.bz2
-wget http://download.ociweb.com/OpenDDS/OpenDDS-3.4.1.tar.gz
+wget http://download.ociweb.com/OpenDDS/OpenDDS-3.5.tar.gz
 tar xvf ACE+TAO+CIAO-src.tar.bz2
-tar xvf OpenDDS-3.4.1.tar.gz
+tar xvf OpenDDS-3.5.tar.gz
 export DOC_ROOT=`pwd`
 export ACE_ROOT=$DOC_ROOT/ACE_wrappers
 export TAO_ROOT=$ACE_ROOT/TAO
@@ -93,7 +93,7 @@ which has to be triggered during the build step. Secondly we need to create $ACE
 tweak more settings in these 2 files, but we do recommend to do a full rebuild when changing any of these files.
 </p><p>
 The steps below assume that RTI DDS has been obtained from RTI including their CORBA Compatibility Kit (CCK). The environment
-variables NDDSHOME and NDDSARCHITECTURE must be defined accordingly the RTI documentation. 
+variables NDDSHOME and NDDSARCHITECTURE must be defined accordingly the RTI documentation.
 Make sure that when you have
 a path with spaces in it you don't use double quotes around the path when setting the environment variable.
 </p><p>
