@@ -1,3 +1,9 @@
+Thu Feb 20 07:47:10 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp:
+          Put TList_Holder in a named namespace to resolve some
+          invalid Intel C++ warnings
+
 Thu Feb 20 01:51:00 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
