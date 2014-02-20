@@ -254,6 +254,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
 
   void remove_server (const char *server);
 
+  void remove_deferred_servers (void);
+
   bool remove_per_client_entry (LiveEntry *entry);
 
   bool add_listener (LiveListener *listener);
@@ -278,6 +280,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                                   ACE_Equal_To<ACE_CString>,
                                   TAO_SYNCH_MUTEX> LiveEntryMap;
   typedef ACE_Unbounded_Set<LiveEntry *> PerClientStack;
+  typedef ACE_Unbounded_Set<ACE_CString> NameStack;
 
   LiveEntryMap entry_map_;
   PerClientStack per_client_;
@@ -288,6 +291,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   int handle_timeout_busy_;
   bool want_timeout_;
   ACE_Time_Value deferred_timeout_;
+  NameStack removed_entries_;
 };
 
 #endif /* IMR_LIVECHECK_H_  */

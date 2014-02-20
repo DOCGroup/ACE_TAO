@@ -571,6 +571,9 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
     }
 
   ++owner_->handle_timeout_busy_;
+
+  owner_->remove_deferred_servers ();
+
   if (owner_->want_timeout_)
     {
       ACE_Time_Value delay = ACE_Time_Value::zero;
@@ -636,6 +639,7 @@ LiveCheck::~LiveCheck (void)
       delete *pc;
     }
   this->per_client_.reset ();
+  this->removed_entries_.reset ();
 }
 
 void
@@ -773,9 +777,54 @@ LiveCheck::remove_server (const char *server)
 {
   ACE_CString s(server);
   LiveEntry *entry = 0;
-  int result = entry_map_.unbind (s, entry);
-  if (result == 0)
-    delete entry;
+  if (this->handle_timeout_busy_ > 0)
+    {
+      int result = entry_map_.unbind (s, entry);
+      if (result == 0)
+        delete entry;
+    }
+  else
+    {
+      if (ImR_Locator_i::debug () > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveCheck::remove_server %s ")
+                          ACE_TEXT ("called during handle_timeout\n"), server));
+        }
+      int result = entry_map_.find (s, entry);
+      if (result != -1 && entry != 0)
+        {
+          this->removed_entries_.insert_tail (s);
+        }
+    }
+}
+
+void
+LiveCheck::remove_deferred_servers (void)
+{
+  if (this->removed_entries_.size () == 0)
+    return;
+
+  NameStack::iterator re_end = this->removed_entries_.end();
+  for (NameStack::iterator re = this->removed_entries_.begin();
+       re != re_end;
+       ++re)
+    {
+      if (ImR_Locator_i::debug () > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_entries ")
+                          ACE_TEXT ("removing %s\n"), (*re).c_str()));
+        }
+      LiveEntry *entry = 0;
+      int result = entry_map_.unbind (*re, entry);
+      if (result == 0)
+        {
+          delete entry;
+        }
+    }
+  this->removed_entries_.reset ();
+
 }
 
 bool
