@@ -1,3 +1,8 @@
+Thu Feb 20 11:47:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Updated instructions to OpenDDS 3.5
+
 Thu Jan  9 13:02:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ciao.doxygen:
