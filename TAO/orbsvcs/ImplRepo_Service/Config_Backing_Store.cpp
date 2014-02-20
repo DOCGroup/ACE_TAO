@@ -225,7 +225,7 @@ Config_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool )
   this->config_.set_string_value (key, IOR, info->ior);
   this->config_.set_integer_value (key, PID, info->pid);
   this->config_.set_string_value (key, ALTKEY,
-                                  info->alt_info_.null () ? "" : info->alt_info_->key_name_);
+                                  info->alt_info_.null () ? ACE_CString("") : info->alt_info_->key_name_);
   this->config_.set_string_value (key, PEERS, peerstr);
 
   return 0;
