@@ -458,7 +458,19 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
                           ACE_TEXT ("server[%d], <%s> has exited.\n"),
                           pid, name.c_str()));
         }
-      this->locator_->child_death_pid (name.c_str(), pid);
+      try
+        {
+          this->locator_->child_death_pid (name.c_str(), pid);
+        }
+      catch (CORBA::Exception &ex)
+        {
+          if (debug_ > 1)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("ImR Activator: caught %s from locator\n"),
+                              ex._name()));
+            }
+        }
     }
 
   return 0;

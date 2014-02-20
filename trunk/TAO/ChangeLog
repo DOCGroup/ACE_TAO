@@ -1,3 +1,14 @@
+Thu Feb 20 01:51:00 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Catch exceptions when informing locator of child death.
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+          If a remove_server call is made during a handle_timeout, don't
+          remove the entry right away, rather defer the removal until after
+          the handle_timeout completes.
+
 Wed Feb 19 23:39:59 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
