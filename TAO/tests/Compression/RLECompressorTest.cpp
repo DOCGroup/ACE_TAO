@@ -279,9 +279,9 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
     }
 
     struct COMP_RESULT {
-        Compression::Buffer out; // We Compress to this buffer
-        const int len;           // We Expect this compressed Length
-        const ACE_Byte hex[16];  // We expect this compressed Data
+        Compression::Buffer out; // We compress to this buffer
+        int len;                 // We expect this compressed Length
+        ACE_Byte hex[16];        // We expect this compressed Data
     } comp_result[] = {
         /*00*/  { 0, 0, {0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}},
         /*01*/  { 2, 2, {0x00,0x41,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00}}, //".A"
