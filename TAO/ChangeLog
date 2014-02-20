@@ -1,3 +1,10 @@
+Thu Feb 20 11:39:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connection_Handler.cpp (handle_close):
+          Removed assert, looks the reactor can call it in certain
+          error conditions, now also visible on the scoreboard with
+          the new C++BuilerXE builds.
+
 Thu Feb 20 07:52:24 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
