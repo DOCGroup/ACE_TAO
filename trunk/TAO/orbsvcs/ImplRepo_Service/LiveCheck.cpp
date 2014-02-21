@@ -178,7 +178,9 @@ void
 LiveEntry::reset_status (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-  if ( this->liveliness_ == LS_ALIVE || this->liveliness_ == LS_LAST_TRANSIENT)
+  if ( this->liveliness_ == LS_ALIVE ||
+       this->liveliness_ == LS_LAST_TRANSIENT ||
+       this->liveliness_ == LS_TIMEDOUT)
     {
       this->liveliness_ = LS_UNKNOWN;
       this->repings_ = 0;

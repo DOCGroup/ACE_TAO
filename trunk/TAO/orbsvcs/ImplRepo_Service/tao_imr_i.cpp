@@ -1310,12 +1310,25 @@ TAO_IMR_Op_Register::run (void)
 void
 TAO_IMR_Op_List::display_server_information (const ImplementationRepository::ServerInformation &info)
 {
-  if (this->list_only_active_servers_ &&
-      info.activeStatus != ImplementationRepository::ACTIVE_YES)
-    return;
+  const char *maybe = "";
+  if (this->list_only_active_servers_)
+    {
+      switch (info.activeStatus)
+        {
+        case ImplementationRepository::ACTIVE_NO:
+          return;
+        case ImplementationRepository::ACTIVE_MAYBE:
+          maybe = "(maybe)";
+          break;
+        default:
+          break;
+        }
+    }
 
   if (this->verbose_server_information_)
     TAO_IMR_Op::display_server_information (info);
   else
-    ORBSVCS_DEBUG ((LM_DEBUG, "<%s>\n", info.server.in ()));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, "<%s> %s\n", info.server.in (), maybe));
+    }
 }

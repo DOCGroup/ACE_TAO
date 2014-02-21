@@ -150,7 +150,7 @@ sub servers_setup ()
 {
     if ($use_activator) {
 
-        $ACT->Arguments ("-d 0 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
+        $ACT->Arguments ("-l -d 0 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
 
         $ACT_status = $ACT->Spawn ();
         if ($ACT_status != 0) {
