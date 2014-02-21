@@ -305,33 +305,30 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
     ORBSVCS_DEBUG((LM_DEBUG,
                    "ImR Activator: Killing server <%s>...\n",
                    name));
+  pid_t pid = static_cast<pid_t>(lastpid);
+  bool found = false;
   for (ProcessMap::iterator iter = process_map_.begin();
-       iter != process_map_.end (); iter++)
+       !found && iter != process_map_.end (); iter++)
     {
       if (iter->item () == name)
         {
           pid_t pid = iter->key ();
-          int result = (signum != 9) ? ACE_OS::kill (pid, signum)
-            : ACE::terminate_process (pid);
-          if (debug_ > 1)
-            ORBSVCS_DEBUG((LM_DEBUG,
-                           "ImR Activator: Killing server <%s> "
-                           "signal %d to pid %d, result = %d\n",
-                           name, signum, pid, result));
-          return result == 0;
+          found = true;
         }
     }
-  if (lastpid != 0)
+#if defined (ACE_WIN32)
+  found = false; // sigchild apparently doesn't work on windows
+#endif
+  if (pid != 0)
     {
-      pid_t pid = static_cast<pid_t>(lastpid);
       int result = (signum != 9) ? ACE_OS::kill (pid, signum)
         : ACE::terminate_process (pid);
       if (debug_ > 1)
         ORBSVCS_DEBUG((LM_DEBUG,
-                       "ImR Activator: Killing server <%s> based on supplied pid "
+                       "ImR Activator: Killing server <%s> "
                        "signal %d to pid %d, result = %d\n",
                        name, signum, pid, result));
-      if (this->notify_imr_)
+      if (!found && result == 0 && this->notify_imr_)
         {
           this->process_map_.bind (pid, name);
 #if (ACE_SIZEOF_VOID_P == 8)
