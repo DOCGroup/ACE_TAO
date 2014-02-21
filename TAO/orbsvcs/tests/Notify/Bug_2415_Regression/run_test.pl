@@ -136,9 +136,6 @@ if ($SUP_status != 0) {
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 
-
-
-
 $SUP = $sup->CreateProcess ("Supplier",
                             "-ORBDebugLevel $debug_level " .
                             "-ORBInitRef NameService=iioploc://" .
@@ -207,10 +204,6 @@ if ($NFS_status != 0) {
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 $nfs->DeleteFile ($nfsiorfile);
-
-
-
-
 
 $NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
                             "-ORBInitRef NameService=corbaloc::" .
@@ -291,9 +284,6 @@ if ($SUP_status != 0) {
 
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
-
-
-
 
 $SUP = $sup->CreateProcess ("Supplier",
                             "-ORBDebugLevel $debug_level " .
