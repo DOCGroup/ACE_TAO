@@ -73,7 +73,7 @@ run_main (int, ACE_TCHAR*[])
   ACE_Process process;
   if (process.spawn (options) != -1)
     {
-      ACE_ERROR ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "ERROR: This should have failed due to the large "
                   "environment buffer\n"));
       test_status = 1;
@@ -82,7 +82,7 @@ run_main (int, ACE_TCHAR*[])
   options.enable_unicode_environment ();
   if (process.spawn (options) == -1)
     {
-      ACE_ERROR ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   "ERROR: This should have succeeded\n"));
       test_status = 1;
     }
@@ -99,7 +99,7 @@ run_main (int, ACE_TCHAR*[])
   ACE_Process process2;
   if (process2.spawn (opts2) == -1)
     {
-       ACE_ERROR ((LM_DEBUG,
+       ACE_ERROR ((LM_ERROR,
                   "ERROR: Failed to spawn process2.\n"));
       test_status = 1;
     }
@@ -107,13 +107,13 @@ run_main (int, ACE_TCHAR*[])
   process2.wait (&status);
   if (status != 1)
     {
-       ACE_ERROR ((LM_DEBUG,
+       ACE_ERROR ((LM_ERROR,
                   "ERROR: process2 did not inherit env var Z.\n"));
       test_status = 1;
     }
 
 #else
-  ACE_ERROR ((LM_INFO, "This test is for Win32 without ACE_USES_WCHAR\n"));
+  ACE_DEBUG ((LM_INFO, "This test is for Win32 without ACE_USES_WCHAR\n"));
 #endif /* ACE_WIN32 && !ACE_USES_WCHAR && !ACE_HAS_WINCE */
 
   ACE_END_TEST;
