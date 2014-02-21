@@ -40,7 +40,6 @@ $act = PerlACE::TestTarget::create_target (++$tgt_num) || die "Create target $tg
 $ti  = PerlACE::TestTarget::create_target (++$tgt_num) || die "Create target $tgt_num failed\n";
 $tinw = PerlACE::TestTarget::create_target (++$tgt_num) || die "Create target $tgt_num failed\n";
 $cli = PerlACE::TestTarget::create_target (++$tgt_num) || die "Create target $tgt_num failed\n";
-$clinw = PerlACE::TestTarget::create_target (++$tgt_num) || die "Create target $tgt_num failed\n";
 $srv = PerlACE::TestTarget::create_target (++$tgt_num) || die "Create target $tgt_num failed\n";
 
 $refstyle = " -ORBobjrefstyle URL";
@@ -71,7 +70,6 @@ $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 $TINW = $tinw->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 
 $CLI = $cli->CreateProcess ("client");
-$CLINW = $clinw->CreateProcess ("client");
 $SRV = $srv->CreateProcess ("server");
 $server_cmd = $SRV->Executable();
 $srv_server_cmd = $imr->LocalFile ($server_cmd);
@@ -179,21 +177,6 @@ sub run_client
     $CLI_status = $CLI->SpawnWaitKill ($client_wait_time);
     if ($CLI_status != 0) {
         print STDERR "ERROR: client returned $CLI_status\n";
-        $status = 1;
-    }
-}
-
-sub start_client_no_wait
-{
-    my $debugarg = "-ORBVerboseLogging 1 -ORBDebugLevel $debug_level -ORBLogfile $cltlogfile " if ($debug_level > 0);
-    my $endpointarg = "-orbdotteddecimaladdresses 1" if ($no_dns == 1);
-
-    $CLINW->Arguments ("-ORBInitRef Test=corbaloc::$imrhost:$imrport/TestObject_a ".
-                       "$debugarg $endpointarg");
-
-    $CLINW_status = $CLINW->Spawn ();
-    if ($CLINW_status != 0) {
-        print STDERR "ERROR: client nw returned $CLINW_status\n";
         $status = 1;
     }
 }
@@ -346,12 +329,6 @@ sub double_server_test
 
     print "killing server\n";
     kill_server ();
-
-    my $CLINW_status = $CLINW->TerminateWaitKill ($clinw->ProcessStopWaitInterval());
-    if ($CLINW_status != 0) {
-	print STDERR "ERROR: no-wait client returned $CLINW_status\n";
-	$status = 1;
-    }
 
     my $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());
     if ($ACT_status != 0) {
