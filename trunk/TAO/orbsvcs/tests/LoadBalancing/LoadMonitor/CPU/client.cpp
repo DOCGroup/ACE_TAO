@@ -82,7 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CosLoadBalancing::LoadList_var loads;
 
-      CORBA::Boolean retrieved_load = 0;
+      CORBA::Boolean retrieved_load = false;
 
       // Try a few times until a load is capable of being retrieved.
       for (int i = 0; i < MAX_RETRIES && retrieved_load == 0; ++i)
@@ -107,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "\nERROR: Unable to retrieve loads "
                            "from LoadManager.\n"),
-                          -1);
+                           1);
       else
         ACE_DEBUG ((LM_INFO,
                     " DONE\n"));
@@ -142,7 +142,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("CPU Load Monitor test:");
-      return -1;
+      return 1;
     }
 
   ACE_DEBUG ((LM_INFO, "CPU Load Monitor test passed.\n\n"));

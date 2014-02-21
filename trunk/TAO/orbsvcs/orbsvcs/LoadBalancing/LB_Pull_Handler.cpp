@@ -65,7 +65,7 @@ TAO_LB_Pull_Handler::handle_timeout (
       // Catch the exception and ignore it.
 
       if (TAO_debug_level > 0)
-        ex._tao_print_exception ("(%P|%t) PullHandler::handle_timeout()\n");
+        ex._tao_print_exception ("PullHandler::handle_timeout()\n");
     }
 
   return 0;

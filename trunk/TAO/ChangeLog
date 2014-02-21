@@ -1,3 +1,18 @@
+Fri Feb 21 11:01:28 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+          Implement retrieval of cpu load avarage on windows
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+          Initialize pointer with 0
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.cpp:
+          Can't print process/thread id within the _tao_print_exception
+          argument
+
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/client.cpp:
+          Return 1 instead of -1 on failure
+
 Fri Feb 21 07:58:22 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/ImplRepo/run_test.pl:
