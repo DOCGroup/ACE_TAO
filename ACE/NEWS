@@ -4,6 +4,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.4 and ACE-6.2.5
 . Added the ability to build RPMs for just ACE, using an ACE-src tarball.
   To do this add "--without tao" to the rpmbuild command line.
 
+. Added support for Embarcadero C++BuilderXE5 using
+  bcc32 in debug and release mode
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.3 and ACE-6.2.4
 ====================================================
 
@@ -25,7 +28,7 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.2 and ACE-6.2.3
 
 . Ended maintenance and support for FC12 CEEL
 
-. Further improvements of the Android port: Added new define 
+. Further improvements of the Android port: Added new define
   ACE_HAS_EXPLICIT_TEMPLATE_CLASS_INSTANTIATION and related macros
   ACE_SINGLETON_TEMPLATE_INSTANTIATION and ACE_SINGLETON_TEMPLATE_INSTANTIATE
   providing a cleaner way to support explicit template (static member or class)
