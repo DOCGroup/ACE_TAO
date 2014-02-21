@@ -14,6 +14,7 @@ $debug_level = 0;
 $no_dns = 0;
 $imrhost = "127.0.0.1";
 $poa_delay = 20;
+$signal = 9;
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
@@ -26,6 +27,10 @@ if ($#ARGV >= 0) {
         elsif ($ARGV[$i] eq '-p') {
             $i++;
             $poa_delay = $ARGV[$i];
+        }
+        elsif ($ARGV[$i] eq '-s') {
+            $i++;
+            $signal = $ARGV[$i];
         }
 	else {
 	    usage();
@@ -183,12 +188,13 @@ sub run_client
 
 sub shutdown_server
 {
+    my $expected = shift;
     # Shutting down any server object within the server will shutdown the whole server
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
                     "shutdown TestObject_a" );
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-    if ($TI_status != 0) {
-        print STDERR "ERROR: tao_imr shutdown returned $TI_status\n";
+    if ($TI_status != $expected) {
+        print STDERR "ERROR: tao_imr shutdown returned $TI_status expected $expected\n";
         $status = 1;
     }
 }
@@ -197,10 +203,10 @@ sub kill_server
 {
     # Shutting down any server object within the server will shutdown the whole server
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "kill TestObject_a -s 15" );
+                    "kill TestObject_a -s 9" );
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
-        print STDERR "ERROR: tao_imr shutdown returned $TI_status\n";
+        print STDERR "ERROR: tao_imr kill returned $TI_status\n";
         $status = 1;
     }
 }
@@ -220,10 +226,11 @@ sub start_server_no_wait
 
 sub start_server_complete
 {
+    my $expected = shift;
     $TI_status = $TINW->WaitKill ($tinw->ProcessStartWaitInterval());
 
-    if ($TI_status != 0) {
-        print STDERR "ERROR: tao_imr start returned $TI_status\n";
+    if ($TI_status != $expected) {
+        print STDERR "ERROR: tao_imr start returned $TI_status expected $expected\n";
         $status = 1;
     }
 }
@@ -310,19 +317,20 @@ sub double_server_test
     }
 
     print "Manual start\n";
-    manual_start_server ();
+    start_server_no_wait ();
 
     if ($status != 0) {
         return 1;
     }
 
     print "Shutdown server\n";
-    shutdown_server ();
+    shutdown_server (5);
 
     sleep (1);
 
     print "killing server\n";
     kill_server ();
+    start_server_complete (4);
 
     print "second manual start\n";
     manual_start_server ();
