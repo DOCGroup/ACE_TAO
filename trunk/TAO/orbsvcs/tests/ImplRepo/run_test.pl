@@ -661,7 +661,11 @@ sub nt_service_test_i
     print "Starting TAO Implementation Repository Services\n";
     # Starting the activator should start the ImR automatically
     #system("net start taoimr 2>&1");
-    system("net start taoimractivator 2>&1");
+    my $net_start_status = system("net start taoimractivator 2>&1");
+    if ($net_start_status != 0) {
+        print STDERR "ERROR: Starting ImR Activator service returned $net_start_status\n";
+        return 1;
+    }
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TI->Arguments ("$imr_initref add $a_srv_name[0] -c \"$imr_A_SRV_cmd[0] -s $a_srv_name[0]\" ".

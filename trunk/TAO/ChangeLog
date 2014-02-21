@@ -1,3 +1,9 @@
+Fri Feb 21 07:58:22 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Check the return value of net start, if that fails, don't
+          continue testing
+
 Fri Feb 21 00:50:20 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
