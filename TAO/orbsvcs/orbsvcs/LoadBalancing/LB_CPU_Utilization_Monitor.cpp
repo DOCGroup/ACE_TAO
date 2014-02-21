@@ -62,9 +62,7 @@ double calc_cpu_loading (void)
   prev_total = total;
 
   return percent_cpu_load;
-
 }
-
 
 TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (const char * location_id,
                                                                 const char * location_kind)
@@ -133,7 +131,7 @@ TAO_LB_CPU_Utilization_Monitor::loads (void)
   double load_double = calc_cpu_loading ();
   load = load_double;
 
-  CosLoadBalancing::LoadList * tmp;
+  CosLoadBalancing::LoadList * tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
                     CORBA::NO_MEMORY (

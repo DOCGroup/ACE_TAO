@@ -86,14 +86,28 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
   //    the number of processors and assume that any processor failure
   //    is a catastrophic one.
 
-#if 0
+#if defined (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0501)
 
   SYSTEM_INFO sys_info;
-  ::GetSystemInfo (&sys_info);
+  ::GetNativeSystemInfo (&sys_info);
 
-  ACE_ASSERT (sys_info.dwNumberOfProcessors > 0);
+  if (sys_info.dwNumberOfProcessors > 0)
+    {
+      // Retrieve systimes from windows
+      FILETIME idle;
+      FILETIME kernel;
+      FILETIME user;
+      ::GetSystemTimes (&idle, &kernel, &user);
 
-  load = ::GetLoadAvg () / sys_info.dwNumberOfProcessors;
+      // Convert all times to ULONGLONG so that we can calculate with them
+      ULONGLONG idle_ll = (((ULONGLONG) idle.dwHighDateTime) << 32) + idle.dwLowDateTime;
+      ULONGLONG kernel_ll = (((ULONGLONG) kernel.dwHighDateTime) << 32) + kernel.dwLowDateTime;
+      ULONGLONG user_ll = (((ULONGLONG) user.dwHighDateTime) << 32) + user.dwLowDateTime;
+      ULONGLONG system_ll = kernel_ll + user_ll;
+
+      // Calculate the load
+      load = ((system_ll - idle_ll) * 100 / system_ll)  / sys_info.dwNumberOfProcessors;
+    }
 
 #elif defined (linux) || defined (sun)
 
