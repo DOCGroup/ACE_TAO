@@ -1,3 +1,13 @@
+Fri Feb 21 07:31:21 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * debian/debian.changelog:
+        * debian/debian.control:
+        * debian/patches/series:
+        * debian/patches/reduce-doxygen-doc.diff:
+          Fixed debian packaging, thanks to Michael Dille
+          <mdille3 at andrew dot cmu dot edu> for providing
+          the patches
+
 Wed Feb 19 20:25:34 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Compression/rle/RLECompressor.cpp:
