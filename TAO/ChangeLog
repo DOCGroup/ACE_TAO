@@ -1,3 +1,16 @@
+Fri Feb 21 00:50:20 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Retry a ping on a poll request even if it was previously timed
+          out. A timed out server may still be alive in some sense, its
+          status is set to "maybe" so it is now listed with a tao_imr
+          list -a command, but with (maybe) following the server name.
+
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+          Make sure the activator informs the locator of server death so
+          that the killed server's state is updated appropriately.
+
 Fri Feb 21 00:11:22 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/kill_slow_server/run_test.pl:
