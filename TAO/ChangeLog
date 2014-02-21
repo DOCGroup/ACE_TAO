@@ -1,3 +1,8 @@
+Fri Feb 21 00:11:22 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/kill_slow_server/run_test.pl:
+          fix spurious error message on windows.
+
 Thu Feb 20 11:39:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/IIOP_Connection_Handler.cpp (handle_close):
