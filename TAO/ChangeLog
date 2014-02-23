@@ -1,3 +1,8 @@
+Sun Feb 23 18:27:00 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Another refactor fix to keep working on non-windows.
+
 Sun Feb 23 02:10:34 UTC 2014  Phil Mesnier  <mesnier_p@local>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:

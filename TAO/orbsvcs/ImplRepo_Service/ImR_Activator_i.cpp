@@ -307,6 +307,7 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
                    name));
   pid_t pid = static_cast<pid_t>(lastpid);
   bool found = false;
+  int result = -1;
   for (ProcessMap::iterator iter = process_map_.begin();
        !found && iter != process_map_.end (); iter++)
     {
@@ -321,7 +322,7 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
 #endif
   if (pid != 0)
     {
-      int result = (signum != 9) ? ACE_OS::kill (pid, signum)
+      result = (signum != 9) ? ACE_OS::kill (pid, signum)
         : ACE::terminate_process (pid);
       if (debug_ > 1)
         ORBSVCS_DEBUG((LM_DEBUG,
@@ -338,10 +339,9 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
 #endif
           ACE_Reactor *r = this->orb_->orb_core()->reactor();
           r->schedule_timer (this, reinterpret_cast<void *>(token), ACE_Time_Value ());
-          return result == 0;
         }
     }
-  return false;
+  return result == 0;
 }
 
 void
