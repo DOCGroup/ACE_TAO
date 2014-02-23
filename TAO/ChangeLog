@@ -1,3 +1,8 @@
+Sun Feb 23 02:10:34 UTC 2014  Phil Mesnier  <mesnier_p@local>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Missed part of the fix for windows support for kill.
+
 Fri Feb 21 19:08:58 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
