@@ -1,3 +1,19 @@
+Sun Feb 23 19:05:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/OC_Endpoint_Selector_Loader.cpp:
+        * tao/Strategies/advanced_resource.h:
+          Layout changes
+
+        * tests/Bug_3598a_Regression/ClientRequest_Interceptor.cpp:
+        * tests/Bug_3598a_Regression/client.cpp:
+        * tests/Bug_3598a_Regression/run_test.pl:
+        * tests/Bug_3598a_Regression/server.cpp:
+          Test always fails on windows, the error is from
+          the server that doesn't link the strategies library, but
+          does read in the svc.conf file. Reimplemented part of the client
+          to cleanly shutdown the ORB so that we don't get valgrind
+          reported leads
+
 Sun Feb 23 18:27:00 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:

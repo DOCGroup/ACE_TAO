@@ -39,6 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  int retval = 0;
   try
     {
       PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
@@ -75,27 +76,42 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Client about to make method call that is doomed to failure...\n"));
 
-      CORBA::String_var the_string =
-        hello->get_string ();
+      bool call_failed = false;
+      try
+      {
+        CORBA::String_var the_string =
+          hello->get_string ();
+      }
+      catch (const CORBA::Exception&)
+      {
+        call_failed = true;
+      }
 
-      ACE_ERROR_RETURN ((LM_DEBUG,
-                            "Error - the remote call succeeded which is bloody miraculous given that no server is running !!\n"),
-                            1);
-    }
-  catch (const CORBA::Exception&)
-    {
+      if (!call_failed)
+        {
+          ACE_ERROR ((LM_ERROR,
+                     "Error - the remote call succeeded which is bloody miraculous given that no server is running !!\n"));
+          ++retval;
+        }
+
       if (ClientRequest_Interceptor::success_flag_)
         {
           ACE_DEBUG ((LM_DEBUG, "Success - the server was unreachable and PI receive_exception was invoked.\n"));
-          return 0;
         }
       else
         {
-          ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Error: regression failed - interceptor receive_exception interception point was not invoked !!\n"),
-                            1);
+          ACE_ERROR ((LM_DEBUG,
+                     "Error: regression failed - interceptor receive_exception interception point was not invoked !!\n"));
+          ++retval;
         }
+
+      orb->destroy ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Exception caught:");
+      ++retval;
     }
 
-  return 1;
+  return retval;
 }

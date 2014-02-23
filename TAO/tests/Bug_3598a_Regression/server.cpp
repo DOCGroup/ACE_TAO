@@ -3,6 +3,8 @@
 #include "Hello.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "tao/Strategies/advanced_resource.h"
+#include "tao/Strategies/OC_Endpoint_Selector_Loader.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
 
