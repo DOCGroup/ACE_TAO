@@ -39,7 +39,6 @@
     CORBA::String_var op =
       ri->operation ();
 
-
     ACE_DEBUG ((LM_DEBUG,
                "TAO_FT (%P|%t): ClientRequest_Interceptor::send_poll called for operation: %C\n",
                     op.in ()));
@@ -52,7 +51,6 @@
     // Print debug
     CORBA::String_var op =
       ri->operation ();
-
 
     ACE_DEBUG ((LM_DEBUG,
                "ClientRequest_Interceptor::send_request called for operation: %C - things are going well...\n",
@@ -80,7 +78,6 @@
     // Print debug
     CORBA::String_var op =
       ri->operation ();
-
 
     ACE_DEBUG ((LM_DEBUG,
                "ClientRequest_Interceptor::receive_exception called for operation: %C - test has succeeded...\n",

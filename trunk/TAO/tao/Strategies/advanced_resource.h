@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #ifndef TAO_ADVANCED_RESOURCE_H
