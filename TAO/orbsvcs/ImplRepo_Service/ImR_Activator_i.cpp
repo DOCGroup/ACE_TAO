@@ -312,7 +312,7 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
     {
       if (iter->item () == name)
         {
-          pid_t pid = iter->key ();
+          pid = iter->key ();
           found = true;
         }
     }
