@@ -79,7 +79,7 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
   double t_avg = 0.0;
   if (seconds > 0.0)
     {
-      double t_avg = samples_count / seconds;
+      t_avg = samples_count / seconds;
     }
 
   ACELIB_DEBUG ((LM_DEBUG,
