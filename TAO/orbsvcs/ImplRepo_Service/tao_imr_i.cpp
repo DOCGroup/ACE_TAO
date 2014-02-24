@@ -16,7 +16,11 @@
 #include "ace/OS_NS_unistd.h"
 
 TAO_IMR_i::TAO_IMR_i (void)
-: imr_ (ImplementationRepository::Administration::_nil ())
+  : argc_ (0),
+    argv_ (0),
+    orb_ (),
+    imr_ (ImplementationRepository::Administration::_nil ()),
+    op_ ()
 {
   // Nothing
 }

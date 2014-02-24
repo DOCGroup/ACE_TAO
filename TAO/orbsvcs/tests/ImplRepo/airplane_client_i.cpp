@@ -10,7 +10,9 @@
 
 // Constructor.
 Airplane_Client_i::Airplane_Client_i (void)
-  : server_key_ (ACE::strnew (ACE_TEXT("key0"))),
+  : argc_ (0),
+    argv_ (0),
+    server_key_ (ACE::strnew (ACE_TEXT("key0"))),
     loop_count_ (10),
     server_ (Paper_Airplane_Server::_nil ())
 {

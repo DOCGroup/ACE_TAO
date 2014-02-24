@@ -22,7 +22,13 @@ const char SERVER_NAME[] = "nestea_server";
 const int SELF_DESTRUCT_SECS = 8; // Must coordinate with run_test.pl
 
 Nestea_Server_i::Nestea_Server_i (const char * /*filename*/)
-  : server_impl_ (0),
+  : argc_ (0),
+    argv_ (0),
+    orb_ (),
+    root_poa_ (),
+    nestea_poa_ (),
+    poa_manager_ (),
+    server_impl_ (0),
     ior_output_file_ (0)
 {
   // Nothing

@@ -1281,12 +1281,12 @@ Shared_Backing_Store::LocatorListings_XMLHandler::startElement (
         }
     }
   else
-    ORBSVCS_DEBUG((
-      LM_INFO,
-      ACE_TEXT ("LocatorListings_XMLHandler::startElement ")
-      ACE_TEXT ("incorrect number of attrs (%d)\n"),
-      attrs->getLength ()));
-
+    {
+      ORBSVCS_DEBUG(( LM_DEBUG,
+                      ACE_TEXT ("LocatorListings_XMLHandler::startElement ")
+                      ACE_TEXT ("incorrect number of attrs, %d not 2\n"),
+                      attrs == 0 ? 0 : attrs->getLength ()));
+    }
 }
 
 void
