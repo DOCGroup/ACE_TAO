@@ -221,7 +221,7 @@ TAO/orbsvcs/tests/Miop/McastFragmentation/run_test_ipv6.pl: IPV6 !MINIMUM !CORBA
 # The following 2 tests use dynamic loading to change the default reactor on Windows !VxWorks !VxWorks_RTP !LabVIEW_RT
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Application_Controlled/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS !ST
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/Infrastructure_Controlled/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS
-TAO/orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !NO_LOADAVG !DISABLE_ToFix_LynxOS_x86 !LynxOS
+TAO/orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !NO_LOADAVG !DISABLE_ToFix_LynxOS_x86 !LynxOS !Win32
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_App_Ctrl/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !NO_LOADAVG !DISABLE_ToFix_LynxOS_x86 !LynxOS !ST
 TAO/orbsvcs/tests/LoadBalancing/GenericFactory/DeadMemberDetection_Inf_Ctrl/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !NO_LOADAVG !DISABLE_ToFix_LynxOS_x86 !LynxOS !ST
 TAO/examples/RTCORBA/Activity/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !ACE_FOR_TAO
