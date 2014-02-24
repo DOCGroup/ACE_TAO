@@ -1,3 +1,9 @@
+Mon Feb 24 10:36:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+          New windows code triggers a warning but no time to sort out,
+          so comment it out for the moment
+
 Mon Feb 24 09:45:05 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Event/lib/Driver.cpp:
