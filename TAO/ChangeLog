@@ -1,3 +1,14 @@
+Mon Feb 24 14:45:47 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * tests/Bug_2809_Regression/server.cpp:
+          Coverity fixes.
+
 Mon Feb 24 11:43:59 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/HTTP_Parser.cpp:

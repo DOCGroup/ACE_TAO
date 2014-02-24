@@ -16,7 +16,13 @@
 const char SERVER_NAME[] = "airplane_server";
 
 Airplane_Server_i::Airplane_Server_i (void)
-  : server_impl_ (0),
+  : argc_ (0),
+    argv_ (0),
+    orb_ (),
+    root_poa_ (),
+    airplane_poa_ (),
+    poa_manager_ (),
+    server_impl_ (0),
     ior_output_file_ (0),
     server_name_(SERVER_NAME)
 {
