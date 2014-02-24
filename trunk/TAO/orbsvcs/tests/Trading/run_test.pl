@@ -36,7 +36,6 @@ my $import_iorfile = $import_test->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $import_test->DeleteFile($iorbase);
 
-
 #For ready file
 my $export_ready_file = $export_test->LocalFile ($ready);
 $export_test->DeleteFile($ready);
@@ -78,7 +77,7 @@ if ($client_status != 0) {
 }
 
 if ($export_test->WaitForFileTimed ($ready,
-                               $export_test->ProcessStartWaitInterval() + 100) == -1) {
+                               $export_test->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server_iorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     $CL1->Kill (); $CL1->TimedWait (1);
@@ -96,7 +95,7 @@ if ($import_test->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL2->SpawnWaitKill ($import_test->ProcessStartWaitInterval() + 45);
+$client_status = $CL2->SpawnWaitKill ($import_test->ProcessStartWaitInterval());
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
