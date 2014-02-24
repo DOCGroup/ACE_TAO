@@ -75,7 +75,10 @@ TAO_HTTP_Parser::parse_string (const char *nior,
         filename = ACE_OS::strdup(ptr);
       }
       else
+      {
+        delete [] hostname;
         return 0;
+      }
     }
   }
 
