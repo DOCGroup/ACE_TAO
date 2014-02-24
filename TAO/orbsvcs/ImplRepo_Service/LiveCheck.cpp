@@ -9,6 +9,8 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 #include "ace/High_Res_Timer.h"
+#include "ace/Timer_Queue.h"
+#include "ace/Timer_Queue_Iterator.h"
 
 LiveListener::LiveListener (const char *server)
   : server_ (server),
@@ -305,7 +307,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                          ACE_TEXT ("= %s, listeners = %d server %C\n"),
+                          ACE_TEXT ("= %s, listeners = %d server %S\n"),
                           status_name (this->liveliness_), this->listeners_.size (),
                           this->server_.c_str()));
         }
@@ -495,6 +497,7 @@ PingReceiver::ping (void)
 void
 PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
 {
+  const CORBA::ULong TAO_MINOR_MASK = 0x00000f80;
   try
     {
       if (ImR_Locator_i::debug () > 5)
@@ -507,8 +510,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
     }
   catch (CORBA::TRANSIENT &ex)
     {
-      const CORBA::ULong BITS_5_THRU_12_MASK = 0x00000f80;
-      switch (ex.minor () & BITS_5_THRU_12_MASK)
+      switch (ex.minor () & TAO_MINOR_MASK)
         {
         case TAO_POA_DISCARDING:
         case TAO_POA_HOLDING:
@@ -530,12 +532,19 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
           }
         }
     }
-  catch (CORBA::TIMEOUT &)
+  catch (CORBA::TIMEOUT &ex)
     {
       if (this->entry_ != 0)
         {
           this->entry_->release_callback ();
-          this->entry_->status (LS_TIMEDOUT);
+          if ((ex.minor () & TAO_MINOR_MASK) == TAO_TIMEOUT_CONNECT_MINOR_CODE)
+            {
+              this->entry_->status (LS_DEAD);
+            }
+          else
+            {
+              this->entry_->status (LS_TIMEDOUT);
+            }
         }
     }
   catch (CORBA::Exception &)
@@ -940,6 +949,29 @@ LiveCheck::schedule_ping (LiveEntry *entry)
       if (next > now)
         {
           delay = next - now;
+        }
+
+      ACE_Timer_Queue *tq = this->reactor ()->timer_queue ();
+      if (!tq->is_empty ())
+        {
+          for (ACE_Timer_Queue_Iterator_T<ACE_Event_Handler*> &i = tq->iter ();
+               !i.isdone (); i.next())
+            {
+              if (i.item ()->get_type () == this)
+                {
+                  if (next >= tq->earliest_time ())
+                    {
+                      if (ImR_Locator_i::debug () > 2)
+                        {
+                          ORBSVCS_DEBUG ((LM_DEBUG,
+                                          ACE_TEXT ("(%P|%t) LiveCheck::schedule_ping ")
+                                          ACE_TEXT ("already scheduled\n")));
+                        }
+                      return true;
+                    }
+                  break;
+                }
+            }
         }
       ++this->token_;
       if (ImR_Locator_i::debug () > 2)

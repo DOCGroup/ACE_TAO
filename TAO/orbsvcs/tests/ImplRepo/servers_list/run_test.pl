@@ -10,7 +10,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 $status = 0;
-$debug_level = '0';
+$debuglevel = 0;
 
 # Override default ping interval of 10 seconds so the test
 # can run faster when showing the list of active servers
@@ -27,8 +27,7 @@ my $use_activator = 1;
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
 	if ($ARGV[$i] eq '-debug') {
-	    $debug_level = '10';
-	    $i++;
+	    $debuglevel = 10;
 	}
 	elsif ($ARGV[$i] eq "-servers") {
 	    $i++;
@@ -100,23 +99,24 @@ for(my $i = 0; $i < $servers_count; $i++) {
     my $server_cmd = $SRV[$i]->Executable();
     push (@srv_server_cmd, $imr->LocalFile ($server_cmd));
 }
-# Make sure the files are gone, so we can wait on them.
-$imr->DeleteFile ($imriorfile);
-$act->DeleteFile ($imriorfile);
-$ti->DeleteFile ($imriorfile);
-$srv[0]->DeleteFile ($imriorfile);
-$act->DeleteFile ($actiorfile);
-$imr->DeleteFile ($persistxml);
-$imr->DeleteFile ($persistdat);
+
+my $imrlogfile = "imr.log";
+my $actlogfile = "act.log";
+my $imr_imrlogfile = $imr->LocalFile ($imrlogfile);
+my $act_actlogfile = $act->LocalFile ($actlogfile);
 
 my $stdout_file      = "test.out";
 my $stderr_file      = "test.err";
 my $ti_stdout_file = $ti->LocalFile ($stdout_file);
 my $ti_stderr_file = $ti->LocalFile ($stderr_file);
 
-# Clean up after exit call
-END
+sub delete_files
 {
+    my $logs_too = shift;
+    if ($logs_too == 1) {
+        $imr->DeleteFile ($imrlogfile);
+        $act->DeleteFile ($actlogfile);
+    }
     $imr->DeleteFile ($imriorfile);
     $act->DeleteFile ($imriorfile);
     $ti->DeleteFile ($imriorfile);
@@ -130,6 +130,12 @@ END
 
     # Remove any stray server status files caused by aborting services
     unlink <*.status>;
+}
+
+# Clean up after exit call
+END
+{
+    delete_files (0);
 }
 
 sub redirect_output()
@@ -149,8 +155,8 @@ sub restore_output()
 sub servers_setup ()
 {
     if ($use_activator) {
-
-        $ACT->Arguments ("-l -d 0 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
+        my $debugargs = "-d $debuglevel -ORBDebugLevel $debuglevel -ORBVerboseLogging 1 -ORBLogFile $actlogfile" if ($debuglevel > 0);
+        $ACT->Arguments ("-l $debugargs -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
 
         $ACT_status = $ACT->Spawn ();
         if ($ACT_status != 0) {
@@ -247,10 +253,25 @@ sub make_server_requests()
     sleep (server_request_delay);
 }
 
-sub shutdown_servers($)
+sub client_kill
 {
-    my $start_index = shift;
-    for(my $i = $start_index; $i < $servers_count; $i++ ) {
+    for (my $i = 0; $i < $servers_kill_count; $i++) {
+	$CLI->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" . '_' . $i .
+			 " -d $server_reply_delay -a");
+	$CLI_status = $CLI->SpawnWaitKill ($cli->ProcessStartWaitInterval());
+	if ($CLI_status != 0) {
+	    print STDERR "ERROR: client returned $CLI_status\n";
+	    $status = 1;
+	}
+	$SRV[$i]->Kill ();
+    }
+}
+
+sub shutdown_servers
+{
+    my $start = shift;
+    my $count = shift;
+    for(my $i = $start; $i < $count; $i++ ) {
 	my $status_file_name = $objprefix . "_$i.status";
         # Shutting down any server object within the server will shutdown the whole server
         $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
@@ -306,7 +327,8 @@ sub servers_list_test
 
     my $result = 0;
     my $start_time = time();
-    $IMR->Arguments ("-d $debug_level -ORBDebugLevel $debug_level -v 1000 -o $imr_imriorfile -orbendpoint iiop://:$port");
+    my $debugargs = "-d $debuglevel -ORBDebugLevel $debuglevel -ORBVerboseLogging 1 -ORBLogFile $imrlogfile" if ($debuglevel > 0);
+    $IMR->Arguments ("$debugargs -v 1000 -o $imr_imriorfile -orbendpoint iiop://:$port");
 
     ##### Start ImplRepo #####
     $IMR_status = $IMR->Spawn ();
@@ -351,18 +373,9 @@ sub servers_list_test
 
     # Kill servers and verify listing of active servers is correct.
     print "\nKilling $servers_kill_count servers\n";
-    for (my $i = 0; $i < $servers_kill_count; $i++) {
-	$CLI->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" . '_' . $i .
-			 " -d $server_reply_delay -a");
-	$CLI_status = $CLI->SpawnWaitKill ($cli->ProcessStartWaitInterval());
-	if ($CLI_status != 0) {
-	    print STDERR "ERROR: client returned $CLI_status\n";
-	    $status = 1;
-#	    return 1;
-	}
-	$SRV[$i]->Kill ();
-    }
 
+    #client_kill ();
+    shutdown_servers (0, $servers_kill_count);
     sleep (2);
 
     print "\nList of active servers after killing a server\n";
@@ -380,7 +393,7 @@ sub servers_list_test
 
     print "\n";
 
-    shutdown_servers($servers_kill_count);
+    shutdown_servers($servers_kill_count, $servers_count);
 
     if ($use_activator) {
 	my $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());
@@ -414,6 +427,8 @@ sub usage() {
 
 ###############################################################################
 ###############################################################################
+
+delete_files (1);
 
 my $ret = servers_list_test();
 

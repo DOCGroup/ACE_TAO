@@ -1,3 +1,18 @@
+Mon Feb 24 18:01:39 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+          Improve the handling of a timeout exception to identify a connection
+          failure vs a timeout due to busy server.
+
+          Also, optimize the scheduling of pings so that if a sufficiently close
+          time is already scheduled it won't schedule another one. This prevents
+          needless calls to handle_timeout ().
+
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+          Improve the test's debug capability and means of killing intermediate
+          servers. The latter was necessary because the tao_imr utility now lists
+          "running maybe" service in the active server list.
+
 Mon Feb 24 18:14:28 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:
