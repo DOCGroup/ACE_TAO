@@ -177,7 +177,6 @@ ClientApp::cleanup()
 {
 }
 
-
 int
 ClientApp::parse_args(int argc, ACE_TCHAR* argv[])
 {

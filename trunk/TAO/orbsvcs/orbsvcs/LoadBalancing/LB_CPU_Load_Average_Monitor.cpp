@@ -86,7 +86,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads (void)
   //    the number of processors and assume that any processor failure
   //    is a catastrophic one.
 
-#if defined (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0501)
+#if 0 // defined (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0501)
 
   SYSTEM_INFO sys_info;
   ::GetNativeSystemInfo (&sys_info);
