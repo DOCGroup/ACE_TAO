@@ -76,7 +76,11 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
     static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (elapsed_time / sf));
   seconds /= ACE_HR_SCALE_CONVERSION;
 
-  const double t_avg = samples_count / seconds;
+  double t_avg = 0.0;
+  if (seconds > 0.0)
+    {
+      double t_avg = samples_count / seconds;
+    }
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%s throughput: %.2f (events/second)\n"),
