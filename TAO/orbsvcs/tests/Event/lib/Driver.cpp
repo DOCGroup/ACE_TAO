@@ -61,6 +61,7 @@ EC_Driver::~EC_Driver (void)
 int
 EC_Driver::run (int argc, ACE_TCHAR* argv[])
 {
+  int retval = 0;
   try
     {
       // Calibrate the high resolution timer *before* starting the
@@ -78,12 +79,14 @@ EC_Driver::run (int argc, ACE_TCHAR* argv[])
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("EC_Driver::run");
+      ++retval;
     }
   catch (...)
     {
       ACE_ERROR ((LM_ERROR, "EC_Driver (%P|%t) non-corba exception raised\n"));
+      ++retval;
     }
-  return 0;
+  return retval;
 }
 
 void

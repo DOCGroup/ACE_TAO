@@ -1,3 +1,8 @@
+Mon Feb 24 09:45:05 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+          Return > 0 in case we have a failure
+
 Mon Feb 24 09:17:14 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Trading/run_test.pl:
