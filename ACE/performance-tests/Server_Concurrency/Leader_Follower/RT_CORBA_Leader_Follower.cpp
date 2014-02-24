@@ -371,7 +371,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               "(%P|%t) Throughput is [%f]\n",
               1000000000/ elapsed_time_per_invocation));
 
-
   for (i = 0; i < number_of_threads; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -384,9 +383,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return result;
 }
-
-
-
 
 #else /*if defined (ACE_HAS_THREADS)*/
 
