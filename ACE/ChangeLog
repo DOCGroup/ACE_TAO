@@ -1,3 +1,9 @@
+Mon Feb 24 09:39:49 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Throughput_Stats.cpp:
+          Guard for a divide by zero, triggered by the TAO Event
+          Service tests on Windows on more recent hardware
+
 Fri Feb 21 15:05:53 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Process_Env_Test.cpp:
