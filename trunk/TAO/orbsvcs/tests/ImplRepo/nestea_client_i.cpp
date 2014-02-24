@@ -10,7 +10,9 @@
 
 // Constructor.
 Nestea_Client_i::Nestea_Client_i (void)
-  : server_key_ (ACE::strnew (ACE_TEXT("key0")))
+  : argc_ (0)
+  , argv_ (0)
+  , server_key_ (ACE::strnew (ACE_TEXT("key0")))
   , server_ (Nestea_Bookshelf::_nil ())
   , shutdown_server_(false)
 {
