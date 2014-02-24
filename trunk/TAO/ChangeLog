@@ -1,3 +1,9 @@
+Mon Feb 24 18:14:28 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Don't run LoadBalancing/LoadMonitor/CPU on windows, we
+          don't have support to retrieve the CPU load on this platform
+
 Mon Feb 24 14:45:47 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
