@@ -1,3 +1,9 @@
+Mon Feb 24 09:17:14 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Trading/run_test.pl:
+          Shorten wait times, test really runs quickly, so the default
+          start times should be enough
+
 Sun Feb 23 19:05:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Strategies/OC_Endpoint_Selector_Loader.cpp:
