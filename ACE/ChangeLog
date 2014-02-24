@@ -1,3 +1,8 @@
+Mon Feb 24 11:31:01 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Throughput_Stats.cpp:
+          Fixed compile warning
+
 Mon Feb 24 09:39:49 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Throughput_Stats.cpp:
