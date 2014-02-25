@@ -1,3 +1,10 @@
+Tue Feb 25 09:32:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/auto_run_tests.pl:
+        * tests/run_test.pl:
+          Changed the way we enable coverity test separation, introduced
+          new Coverity test config instead of commandline option
+
 Mon Feb 24 11:31:01 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Throughput_Stats.cpp:
