@@ -115,7 +115,9 @@ sub run_program ($@)
     ## if the executable doesn't exist, the error will show
     ## up as part of the previous test.
     print "auto_run_tests: tests/$path $arguments\n";
-    #$ENV{COVERITY_TEST_NAME} = "tests/$path";
+    if ($config_list->check_config ('Coverity')) {
+      $ENV{COVERITY_TEST_NAME} = "tests/$path";
+    }
 
     my ($program, $dir, $suffix) = fileparse($path);
     my $start_dir = getcwd ();
@@ -409,7 +411,7 @@ if (!getopts ('dhtvo:l:') || $opt_h) {
     print "\n";
     print "Pass in configs using \"-Config XXXXX\"\n";
     print "\n";
-    print "Possible Configs: CHECK_RESOURCES Purify Codeguard Valgrind ",
+    print "Possible Configs: CHECK_RESOURCES Purify Codeguard Valgrind Coverity ",
            $config_list->list_configs (), "\n";
     exit (1);
 }
