@@ -91,8 +91,7 @@ if ($client->PutFile ($ior1file) == -1) {
     exit 1;
 }
 
-
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 285);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval());
 
 if ($client_status != 0) {
     print STDERR "ERROR: client returned $client_status\n";
@@ -112,7 +111,6 @@ if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
     $status = 1;
 }
-
 
 $server1->DeleteFile($ior1file);
 $server2->DeleteFile($ior2file);

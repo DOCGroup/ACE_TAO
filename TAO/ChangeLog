@@ -1,3 +1,16 @@
+Wed Feb 26 14:34:37 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Miop/McastHello/McastHello.cpp:
+        * orbsvcs/tests/Miop/McastHello/client.cpp:
+          Layout changes
+
+        * orbsvcs/tests/Miop/McastHello/run_test.pl:
+          Reduce the time we wait for a client, test looks to run
+          fast, no need to wait more than 4 minutes on the client
+
+        * tao/RTCORBA/RT_Current.cpp:
+          Const change
+
 Mon Feb 24 18:01:39 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/LiveCheck.cpp:

@@ -5,8 +5,6 @@
 #include "tao/Object_T.h"
 #include "orbsvcs/PortableGroup/MIOP.h"
 
-
-
 #define MAX_MIOP_OCTET_SEQUENCE  (ACE_MAX_DGRAM_SIZE - 272 /* MIOP_MAX_HEADER_SIZE */)
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
