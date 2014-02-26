@@ -31,7 +31,7 @@ TAO_RT_Current::the_priority (void)
 
   RTCORBA::Priority priority = 0;
 
-  int result =
+  int const result =
       tph->get_thread_CORBA_priority (priority);
 
   if (result == -1)
