@@ -7,6 +7,13 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.4 and ACE-6.2.5
 . Added support for Embarcadero C++BuilderXE5 using
   bcc32 in debug and release mode
 
+. When Intel C++ 2013 SP1 Update 2 is used with C++11 enabled
+  as compiler feature now also ACE_HAS_CPP11 will be defined,
+  this compiler is now able to compile all our C++11 feature
+  tests
+
+. Fixed several boundary bugs in the ACE RLE Compressor
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.3 and ACE-6.2.4
 ====================================================
 
