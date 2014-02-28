@@ -1,3 +1,17 @@
+Fri Feb 28 07:59:51 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * debian/debian.changelog:
+        * debian/debian.control:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Make x.2.5 public and prepare for next release
+
+        * ace/config-win32-borland.h:
+          Improved C++BuilderXE support
+
 Fri Feb 28 08:46:21 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.2.5 released.
