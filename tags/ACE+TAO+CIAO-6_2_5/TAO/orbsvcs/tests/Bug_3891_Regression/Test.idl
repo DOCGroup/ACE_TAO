@@ -1,0 +1,10 @@
+//
+// $Id$
+//
+
+module Test
+{
+  interface Hello
+  {
+  };
+};

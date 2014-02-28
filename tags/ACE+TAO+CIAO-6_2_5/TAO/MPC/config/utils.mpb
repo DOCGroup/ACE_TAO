@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : portableserver, pi {
+  after += TAO_Utils
+  libs  += TAO_Utils
+}

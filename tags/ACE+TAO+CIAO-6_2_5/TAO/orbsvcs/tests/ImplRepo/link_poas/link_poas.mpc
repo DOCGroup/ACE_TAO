@@ -1,0 +1,33 @@
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
+  }
+
+  custom_only = 1
+}
+
+project(*server): portableserver, orbsvcsexe, avoids_minimum_corba, imr_client, avoids_corba_e_micro, threads {
+  after += *idl
+  exename = server
+  IDL_Files {
+  }
+  Source_Files {
+    Test_i.cpp
+    server.cpp
+    TestC.cpp
+    TestS.cpp
+  }
+}
+
+project(*client): taoclient, anytypecode, avoids_minimum_corba, threads {
+  after += *idl
+  exename = client
+  Source_Files {
+    client.cpp
+    TestC.cpp
+  }
+  IDL_Files {
+  }
+}

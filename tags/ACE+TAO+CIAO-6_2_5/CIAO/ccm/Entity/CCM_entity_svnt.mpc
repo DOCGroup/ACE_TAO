@@ -1,0 +1,67 @@
+// $Id$
+
+project(CCM_entity_svnt_idl) : install, ciaolib_with_idl, valuetype {
+  requires += dummy_label
+  idlflags   += -Wb,export_include=CCM_Entity_Svnt_Export.h \
+                -Wb,export_macro=CCM_Entity_Svnt_Export
+  custom_only = 1
+  IDL_Files {
+    idlflags += -SS -Sci
+    CCM_EntityComponent.idl
+    CCM_EntityContext.idl
+  }
+
+  IDL_Files {
+    idlflags += -SS
+    CCM_StateIdFactory.idl
+    CCM_Entity2Context.idl
+    CCM_ComponentId.idl
+  }
+}
+
+project(CCM_entity_svnt) : install, orbsvcslib, orbsvcs_output \
+                           , portableserver \
+                           , valuetype \
+                           , ifr_client \
+                           , codecfactory \
+                           , pi \
+                           , ccm_lem_stub \
+                           , avoids_corba_e_compact \
+                           , avoids_corba_e_micro \
+                           , ccm_svnt {
+  requires += dummy_label
+  dynamicflags += CCM_ENTITY_SVNT_BUILD_DLL
+  after += CCM_entity_svnt_idl
+  IDL_Files {
+  }
+
+  Header_Files {
+    CCM_Entity_Svnt_Export.h
+    CCM_ComponentIdC.h
+    CCM_Entity2ContextC.h
+    CCM_EntityComponentC.h
+    CCM_EntityContextC.h
+    CCM_StateIdFactoryC.h
+    CCM_ComponentIdS.h
+    CCM_Entity2ContextS.h
+    CCM_EntityComponentS.h
+    CCM_EntityContextS.h
+    CCM_StateIdFactoryS.h
+  }
+
+  Inline_Files {
+    CCM_Session2ContextC.inl
+    CCM_StateIdFactoryC.inl
+    CCM_ComponentIdC.inl
+    CCM_Entity2ContextC.inl
+  }
+
+  Source_Files {
+    CCM_StateIdFactoryC.cpp
+    CCM_ComponentIdC.cpp
+    CCM_Entity2ContextC.cpp
+    CCM_EntityContextC.cpp
+    CCM_EntityComponentC.cpp
+  }
+}
+

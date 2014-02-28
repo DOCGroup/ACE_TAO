@@ -1,0 +1,14 @@
+$Id$
+
+This test verifies the ImplRepo service can tolerate servers that are slow to
+start. In some cases a server may have dependencies to resolve after creating
+its POAs but before activating them. During this time the server is unable to
+respond to shutdown requests, and a kill is required. This test ensures that
+following the failed shutdown and subsequent kill, the server can be restarted.
+
+The server instances append their pid to a status file, which the run script
+interogates for judging success.
+
+Runtime options are -debug to turn on verbose debugging to separate log files
+and -no_dns, which forces the use of 127.0.0.1 in endpoints for running in
+environments in which DNS is not properly configured.

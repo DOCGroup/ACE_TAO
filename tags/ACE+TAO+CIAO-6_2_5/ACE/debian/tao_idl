@@ -1,0 +1,6 @@
+#!/bin/sh
+
+ACE_ROOT=/usr/lib/ace; export ACE_ROOT;
+TAO_ROOT=$ACE_ROOT/TAO; export TAO_ROOT;
+
+exec $TAO_ROOT/tao_idl "$@"

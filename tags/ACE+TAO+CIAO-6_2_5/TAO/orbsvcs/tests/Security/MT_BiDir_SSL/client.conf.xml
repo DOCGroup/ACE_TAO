@@ -1,0 +1,14 @@
+<?xml version='1.0'?>
+<!-- Converted from ./orbsvcs/tests/Security/MT_SSLIOP/client.conf by svcconf-convert.pl -->
+<ACE_Svc_Conf>
+ <!--  -->
+ <!--  $Id$ -->
+ <!--  -->
+ <dynamic id="SSLIOP_Factory" type="Service_Object">
+   <initializer path="TAO_SSLIOP" init="_make_TAO_SSLIOP_Protocol_Factory" params="-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:ssl/client-key.pem -SSLCertificate PEM:ssl/client-cert.pem -SSLCAFile PEM:ssl/ca.pem"/>
+ </dynamic>
+<dynamic id="Advanced_Resource_Factory" type="Service_Object">
+   <initializer path="TAO_Strategies" init="_make_TAO_Advanced_Resource_Factory" params="-ORBProtocolFactory SSLIOP_Factory -ORBMuxedConnectionMax 1"/>
+ </dynamic>
+ <static id="Resource_Factory" params="-ORBConnectStrategy blocked"/>
+</ACE_Svc_Conf>

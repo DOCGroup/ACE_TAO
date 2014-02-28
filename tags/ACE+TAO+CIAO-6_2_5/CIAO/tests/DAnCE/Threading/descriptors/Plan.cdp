@@ -1,0 +1,268 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Threading_Depl_1</label>
+  <UUID>Threading_Depl_1</UUID>
+
+  <implementation xmi:id="CompSvrImpl">
+    <name>CompSvr</name>
+    <source />
+    <artifact xmi:idref="CompSvrArt" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.DAnCE.LocalityManager</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Component1Implementation">
+    <name>Component1Implementation</name>
+    <source/>
+    <artifact xmi:idref="Component1_ExecArtifact" />
+    <artifact xmi:idref="Component1_SvntArtifact" />
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Threading_Component1_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Threading_Component1_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component1_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component1_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Component2Implementation">
+    <name>Component2Implementation</name>
+    <source/>
+    <artifact xmi:idref="Component2_ExecArtifact" />
+    <artifact xmi:idref="Component2_SvntArtifact" />
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Threading_Component2_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Threading_Component2_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component2_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component2_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="CompSvr1Inst">
+    <name>ComponentServer1Instance</name>
+    <node>ComponentNode</node>
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>-ORBSvcConfDirective "static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'"</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="CompSvr2Inst">
+    <name>ComponentServer2Instance</name>
+    <node>ComponentNode</node>
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>-ORBSvcConfDirective "static Client_Strategy_Factory '-ORBWaitStrategy mt_noupcall'"</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+
+  <instance xmi:id="Component1Instance">
+    <name>Component1</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="Component1Implementation" />
+  </instance>
+
+  <instance xmi:id="Component2Instance">
+    <name>Component2</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="Component2Implementation" />
+  </instance>
+
+  <connection>
+    <name>component1_interface_2</name>
+    <internalEndpoint>
+      <portName>use_interface_2</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component1Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>prov_interface_2</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component2Instance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>component2_interface_1</name>
+    <internalEndpoint>
+      <portName>use_interface_1</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component2Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>prov_interface_1</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component1Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="Component1_ExecArtifact">
+    <name>Component1_exec</name>
+    <source/>
+    <node/>
+    <location>Component1_exec</location>
+  </artifact>
+  <artifact xmi:id="Component1_SvntArtifact">
+    <name>Component1_svnt</name>
+    <source/>
+    <node/>
+    <location>Component1_svnt</location>
+  </artifact>
+  <artifact xmi:id="Component1_StubArtifact">
+    <name>Component1_stub</name>
+    <source/>
+    <node/>
+    <location>Component1_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Component2_ExecArtifact">
+    <name>Component2_exec</name>
+    <source/>
+    <node/>
+    <location>Component2_exec</location>
+  </artifact>
+  <artifact xmi:id="Component2_SvntArtifact">
+    <name>Component2_svnt</name>
+    <source/>
+    <node/>
+    <location>Component2_svnt</location>
+  </artifact>
+  <artifact xmi:id="Component2_StubArtifact">
+    <name>Component2_stub</name>
+    <source/>
+    <node/>
+    <location>Component2_stub</location>
+  </artifact>
+
+  <artifact xmi:id="CompSvrArt">
+    <name>CompoSvrArtifactName</name>
+    <source />
+    <node />
+    <location>dance_locality_manager</location>
+  </artifact>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="CompSvr1Inst" />
+    <constrainedInstance xmi:idref="Component1Instance" />
+  </localityConstraint>
+
+  <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="CompSvr2Inst" />
+    <constrainedInstance xmi:idref="Component2Instance" />
+  </localityConstraint>
+
+</Deployment:DeploymentPlan>

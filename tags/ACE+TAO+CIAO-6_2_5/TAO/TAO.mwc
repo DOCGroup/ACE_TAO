@@ -1,0 +1,20 @@
+// $Id$
+
+workspace {
+  exclude {
+    CIAO
+    DAnCE
+  }
+
+  // The associate scope does not add directories to the workspace;
+  // it only associates a name with one or more directories.
+  associate(examples) {
+    examples
+  }
+  associate(tests) {
+    performance-tests
+    interop-tests
+    tests
+  }
+}
+

@@ -1,0 +1,1284 @@
+Fri Feb 28 08:46:21 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.2.5 released.
+
+Wed Feb 26 14:34:37 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Miop/McastHello/McastHello.cpp:
+        * orbsvcs/tests/Miop/McastHello/client.cpp:
+          Layout changes
+
+        * orbsvcs/tests/Miop/McastHello/run_test.pl:
+          Reduce the time we wait for a client, test looks to run
+          fast, no need to wait more than 4 minutes on the client
+
+        * tao/RTCORBA/RT_Current.cpp:
+          Const change
+
+Mon Feb 24 18:01:39 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+          Improve the handling of a timeout exception to identify a connection
+          failure vs a timeout due to busy server.
+
+          Also, optimize the scheduling of pings so that if a sufficiently close
+          time is already scheduled it won't schedule another one. This prevents
+          needless calls to handle_timeout ().
+
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+          Improve the test's debug capability and means of killing intermediate
+          servers. The latter was necessary because the tao_imr utility now lists
+          "running maybe" service in the active server list.
+
+Mon Feb 24 18:14:28 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Don't run LoadBalancing/LoadMonitor/CPU on windows, we
+          don't have support to retrieve the CPU load on this platform
+
+Mon Feb 24 14:45:47 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_client_i.cpp:
+        * orbsvcs/tests/ImplRepo/nestea_server_i.cpp:
+        * tests/Bug_2809_Regression/server.cpp:
+          Coverity fixes.
+
+Mon Feb 24 11:43:59 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/HTTP_Parser.cpp:
+          Fixed potential memory leak
+
+Mon Feb 24 10:36:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+          New windows code triggers a warning but no time to sort out,
+          so comment it out for the moment
+
+Mon Feb 24 09:45:05 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Event/lib/Driver.cpp:
+          Return > 0 in case we have a failure
+
+Mon Feb 24 09:17:14 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/Trading/run_test.pl:
+          Shorten wait times, test really runs quickly, so the default
+          start times should be enough
+
+Sun Feb 23 19:05:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/OC_Endpoint_Selector_Loader.cpp:
+        * tao/Strategies/advanced_resource.h:
+          Layout changes
+
+        * tests/Bug_3598a_Regression/ClientRequest_Interceptor.cpp:
+        * tests/Bug_3598a_Regression/client.cpp:
+        * tests/Bug_3598a_Regression/run_test.pl:
+        * tests/Bug_3598a_Regression/server.cpp:
+          Test always fails on windows, the error is from
+          the server that doesn't link the strategies library, but
+          does read in the svc.conf file. Reimplemented part of the client
+          to cleanly shutdown the ORB so that we don't get valgrind
+          reported leads
+
+Sun Feb 23 18:27:00 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Another refactor fix to keep working on non-windows.
+
+Sun Feb 23 02:10:34 UTC 2014  Phil Mesnier  <mesnier_p@local>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Missed part of the fix for windows support for kill.
+
+Fri Feb 21 19:08:58 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          make sure the kill command works on windows too.
+
+        * orbsvcs/tests/ImplRepo/kill_slow_server/run_test.pl:
+          clean up the test a bit more.
+
+Fri Feb 21 11:01:28 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Load_Average_Monitor.cpp:
+          Implement retrieval of cpu load avarage on windows
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.cpp:
+          Initialize pointer with 0
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_Pull_Handler.cpp:
+          Can't print process/thread id within the _tao_print_exception
+          argument
+
+        * orbsvcs/tests/LoadBalancing/LoadMonitor/CPU/client.cpp:
+          Return 1 instead of -1 on failure
+
+Fri Feb 21 07:58:22 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/tests/ImplRepo/run_test.pl:
+          Check the return value of net start, if that fails, don't
+          continue testing
+
+Fri Feb 21 00:50:20 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Retry a ping on a poll request even if it was previously timed
+          out. A timed out server may still be alive in some sense, its
+          status is set to "maybe" so it is now listed with a tao_imr
+          list -a command, but with (maybe) following the server name.
+
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+          Make sure the activator informs the locator of server death so
+          that the killed server's state is updated appropriately.
+
+Fri Feb 21 00:11:22 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/kill_slow_server/run_test.pl:
+          fix spurious error message on windows.
+
+Thu Feb 20 11:39:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connection_Handler.cpp (handle_close):
+          Removed assert, looks the reactor can call it in certain
+          error conditions, now also visible on the scoreboard with
+          the new C++BuilerXE builds.
+
+Thu Feb 20 07:52:24 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+          Fixed C++BuilderXE warning
+
+Thu Feb 20 07:51:03 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compression/RLECompressorTest.cpp:
+          Fixed C++BuilderXE warnings
+
+Thu Feb 20 07:47:10 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Connector.cpp:
+          Put TList_Holder in a named namespace to resolve some
+          invalid Intel C++ warnings
+
+Thu Feb 20 01:51:00 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Catch exceptions when informing locator of child death.
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+          If a remove_server call is made during a handle_timeout, don't
+          remove the entry right away, rather defer the removal until after
+          the handle_timeout completes.
+
+Wed Feb 19 23:39:59 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Be sure to use the correct server key to send a kill request to the
+          activator.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Don't try to process an empty server Id string.
+
+Wed Feb 19 20:26:32 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * tests/Bug_3574_Regression/test.cpp:
+          Improved C++BuilderXE support
+
+Wed Feb 19 01:57:07 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Be sure to check the JacORB server namespace in all instances when
+          searching for an active server info entry.
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Only report a specific server as not found if the name comes back empty.
+
+Tue Feb 18 16:06:39 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Throw a more-apt exception when the server requested to be killed
+          is not running.
+
+Tue Feb 18 15:41:16 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+        * tao/Storable_File_Guard.cpp:
+          Added debug output during guard initialization to caputre
+          errors that raise exceptions. Also be sure to release the
+          mutex acquired before the throw.
+
+Thu Feb 13 23:54:35 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Make sure servers added to the live checker use the proper ID.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Allow multiple link commands to be used to add multiple combined POAs.
+
+Thu Feb 13 14:57:03 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Add new test.
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Fix to find pid-identified servers after a shutdown reset
+          the last known pid.
+
+        * orbsvcs/tests/ImplRepo/kill_slow_server:
+          Test to verify the above works.
+
+Wed Feb 12 20:08:40 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/link_poas/Test_i.cpp:
+          Scoreboard cleanup.
+
+Tue Feb 11 23:01:07 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+          Add a note about new ImR capabilities.
+
+        * bin/tao_other_tests.lst:
+          run a new test.
+
+        * orbsvcs/tests/ImplRepo/Bug_4152_Regression/run_test.pl:
+          fix a typo.
+
+        * orbsvcs/tests/ImplRepo/link_poas:
+          New test to verify the tao_imr link command operation.
+
+Mon Feb 10 23:42:54 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Use the correct server key for removing from the repository.
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Do the right thing if a find comes back empty.
+
+Sun Feb  9 18:59:30 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Ensure incoming names are consistently parsed.
+
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+          Fix Coverity reported warnings.
+
+Sat Feb  8 02:59:31 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Scoreboard cleanup.
+
+        * orbsvcs/ImplRepo_Service/README:
+          Update the commandline arguments descriptions.
+
+Fri Feb  7 19:15:28 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+          Scoreboard cleanup.
+
+Fri Feb  7 16:02:04 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+          More refactor cleanup.
+
+Fri Feb  7 15:43:59 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+          More refactor cleanup.
+
+Fri Feb  7 01:56:49 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          More refactor cleanup.
+
+Thu Feb  6 23:11:57 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+          More refactoring of Server_Info interactions to ensure linked infos
+          present the correct information for server access vs poa access.
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+          enhance the debug output to help resolve runtime error.
+
+Thu Feb  6 14:52:09 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+          Doxygen fixes
+
+Thu Feb  6 05:56:12 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Fix up missing implementation for the link feature.
+
+Wed Feb  5 21:13:37 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Activator_Info.h:
+        * orbsvcs/ImplRepo_Service/Activator_Info.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Utils.cpp:
+        * orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.h:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.h:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/utils.h:
+          Add peer list and alternate key values to the Server_Info struct.
+          Together these enable the locator to know to start only one instance
+          of a server even if it receives "concurrent" requests for two POAs.
+          The POA name is not necessarily the key in the server repository as
+          it is possible for servers to be distinguished by server ID and
+          contain identically named POAs. It is up to system deployers to set
+          the server ID correctly in this case.
+
+          Heavily refactored the locator code that touches the Server_Info
+          data to rely on helper functions for initialization and entry
+          resolution. Refactored much of the persistence code for clarity.
+
+        * tao/ImR_Client/ImplRepo.idl:
+          Add an exception to the link command.
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          The locator now provides the last known pid for a server when a
+          server kill is requested. This allows the kill command to work even
+          if the activator is restarted after launching the wayward server.
+          In this case the activator will synthesize a child death event to
+          send to the locator. For this reason, it may still be possible that
+          a server is still running even though the locator believes it is not.
+
+Wed Feb  5 20:37:24 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+          Apply the same fix for forwarded interfaces as applied to forwarded
+          valuetypes on Jan 23 2014.
+
+        * orbsvcs/tests/ImplRepo/Bug_4152_Regression/run_test.pl:
+          Fix a typo.
+
+Wed Feb  5 11:39:11 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compression/RLECompressorTest.cpp:
+          Extended this unit test further. Thanks to Derek Dominish
+          <derek dot dominish at dsto dot defence dot gov dot au> for these
+          additions
+
+Mon Feb  3 18:14:32 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp:
+          Fixed potential memory leak
+
+Thu Jan 30 14:37:59 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Connection_Handler.cpp (handle_input_internal):
+          Make the resume handler stay suspended when the result is +1. This
+          can happen when using SSLIOP and there is leftover data in the SSL
+          read buffer. On at least Solaris, resuming the handler can cause the
+          reactor to dispatch another thread on the socket leading to a race
+          through SSL's decryption which ultimately fails.
+
+Thu Jan 23 19:02:29 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_argument/arglist.cpp:
+          The initializer for forward defined valuetypes used as members of
+          other values added a "const " to the type definition whereas the
+          initializer for fully defined valuetypes did not. This syntax seems
+          to have existed since support for object by value was first added
+          to TAO. A bug in name scope resolution actually hid this bug,
+          causing the compiler to treat forward defined valuetypes the same as
+          regular valutypes and getting the proper code generated. When the
+          scoping bug was fixed, forward defined valuetypes were distinguished
+          and got the bad implementation. Thanks to Colin Shen <cshen AT manh
+          DOT com> for reporting this age-old bug.
+
+        * TAO_IDL/be/be_visitor_valuetype/field_cdr_cs.cpp:
+          The marshalling code for forwarded valuetypes was similarly
+          whacky and uncompilable.
+
+        * tests/IDL_Test/fwd.idl:
+          Add a regression test for the above.
+
+        * tao/Valuetype/Valuetype.mpc:
+        * tests/IDL_Test/IDL_Test.mpc:
+        * tests/IDL_Test/string_value.idl:
+          Generate StringValueA.* so that IDL code that includes
+          StringValue.pidl will be able to compile. Also added a test for
+          this case too. Thanks again to Colin Shen for reporting this bug.
+
+Sat Jan 18 19:30:18 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+          Fixed coverity error
+
+Sat Jan 18 18:34:30 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/MCAST_Parser.cpp:
+          Only log errors when TAO_debug_level > 0
+
+Sat Jan 18 00:16:14 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/DevGuideExamples/ImplRepo/run_test.pl:
+          Fix the order of termination of activator & locator.
+
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+          Fix various valgrind reported errors including a memory leak
+          related to per-client activations and invalid memory access.
+
+Fri Jan 17 16:12:31 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Log/Log_Constraint_Visitors.cpp:
+          Added missing break statements, reported by Coverity
+
+Fri Jan 17 10:20:51 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/IIOP_Acceptor.cpp:
+        * tao/Strategies/COIOP_Acceptor.cpp:
+        * tao/Strategies/DIOP_Acceptor.cpp:
+        * tao/Strategies/SCIOP_Acceptor.cpp:
+        * tao/Strategies/UIOP_Acceptor.cpp:
+          Initialize major/minor with 0 to not log random memory in case
+          of a failure, fixes Coverity warnings
+
+Fri Jan 17 09:43:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Object.cpp:
+          Fixed potential memory leak
+
+Thu Jan 16 10:45:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Collocation_Opportunities/Collocation_Opportunities.cpp:
+          Small logging improvement
+
+Wed Jan 15 20:53:06 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ImR_Client/ImR_Client.cpp:
+          Fix a memory leak. It was trivial, but made ImplRepo tests
+          fail valgrind.
+
+Mon Jan 13 17:14:14 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator.cpp:
+          Fix a core dump at exit that occurs if initialization fails.
+
+Mon Jan 13 15:01:14 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Handle exception caused when the activator has a problem
+          unregistering during shutdown.
+
+Fri Jan 10 22:11:38 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Activator_Options.h:
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+          Fix for bug 4152. The Activator now uses new operations on the
+          Locator to provide the PID of a new server instance when started
+          and then again when the server process dies. The Locator notes
+          the startup PID and compares the termination PID to ensure they
+          match. If there is no match the termination signal is ignored.
+          This way if the activator host is so busy that it can't report
+          the child death and the locator decides that a new server instance
+          needs to be started, the tardy death notice won't cause trouble.
+
+        * orbsvcs/tests/ImplRepo/Bug_4152_Regression:
+          Test for the same.
+
+
+Fri Jan 10 20:07:11 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Endpoint.cpp:
+          Fix to work around problem exposed by a configuration issue
+          on windows 7. Even though there were apparently no IPv6 interfaces,
+          the system still successfully resolved an IPv6 address using
+          ::gethostbyname(). Since there were no usable interfaces, a subsequent
+          attempt to use that address failed, crashing the application. This is
+          not a universal problem, and the exact troubling configuration is yet
+          to be determined.
+
+Fri Jan 10 18:09:02 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/GIOP_Message_Base.cpp:
+          The problem affecting Sun CC 5.12 also appears to affect at least
+          some installations of Sun CC 5.11 as well.
+
+Thu Jan  9 12:33:08 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao.doxygen:
+        * etc/tao_anytypecode.doxygen:
+        * etc/tao_av.doxygen:
+        * etc/tao_compression.doxygen:
+        * etc/tao_cosevent.doxygen:
+        * etc/tao_cosnaming.doxygen:
+        * etc/tao_cosnotification.doxygen:
+        * etc/tao_costime.doxygen:
+        * etc/tao_costrader.doxygen:
+        * etc/tao_dynamicany.doxygen:
+        * etc/tao_dynamicinterface.doxygen:
+        * etc/tao_esf.doxygen:
+        * etc/tao_ifr.doxygen:
+        * etc/tao_implrepo.doxygen:
+        * etc/tao_iormanip.doxygen:
+        * etc/tao_iortable.doxygen:
+        * etc/tao_pi.doxygen:
+        * etc/tao_pi_server.doxygen:
+        * etc/tao_portablegroup.doxygen:
+        * etc/tao_portableserver.doxygen:
+        * etc/tao_rtcorba.doxygen:
+        * etc/tao_rtevent.doxygen:
+        * etc/tao_rtportableserver.doxygen:
+        * etc/tao_security.doxygen:
+        * etc/tao_smartproxies.doxygen:
+        * etc/tao_ssliop.doxygen:
+        * etc/tao_strategies.doxygen:
+        * etc/tao_transportcurrent.doxygen:
+        * etc/tao_ziop.doxygen:
+          Upgraded to doxygen 1.8.6
+
+Thu Jan  9 10:26:49 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+Thu Jan 09 09:18:31 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.2.4 released.
+
+Mon Jan  6 14:47:05 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/GIOP_Message_Base.cpp:
+          Removed const qualifier as part of cast to silence OpenVMS
+          warnings
+
+Mon Jan  6 09:44:58 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/AnyTypeCode/Indirected_Type_TypeCode.cpp:
+        * tests/Any/Indirected/test.idl:
+          Fuzz fixes.
+
+Sat Jan  4 10:32:38 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+          Removed unnecessary typedefs causing compile warnings.
+
+Sat Jan  4 10:11:14 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * tests/Any/Indirected/client.cpp:
+          Fixes for wchar build errors.
+
+Fri Jan  3 19:10:11 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Added Any/Indirected test.
+
+        * tao/AnyTypeCode/AnyTypeCode.mpc:
+        * tao/AnyTypeCode/Indirected_Type_TypeCode.h:
+        * tao/AnyTypeCode/Indirected_Type_TypeCode.inl:
+        * tao/AnyTypeCode/Indirected_Type_TypeCode.cpp:
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.h:
+        * tao/AnyTypeCode/Recursive_Type_TypeCode.cpp:
+        * tao/AnyTypeCode/TypeCode_CDR_Extraction.cpp:
+        * tao/AnyTypeCode/Value_TypeCode.h:
+        * tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+        * tests/Any/Indirected:
+        * tests/Any/Indirected/IndirectedTest.mpc:
+        * tests/Any/Indirected/README:
+        * tests/Any/Indirected/client.cpp:
+        * tests/Any/Indirected/run_test.pl:
+        * tests/Any/Indirected/test.idl:
+        * tests/Any/Recursive/Test.idl:
+        * tests/Any/Recursive/client.cpp:
+          Refactored recursive typecode handling/creation when demarshaling
+          such that the memory management problems due to circular referencing
+          are now a thing of the past (replaced the circular referencing by an
+          indirection).
+          Also (re-)synchronizes the recursive typecode handlling in the
+          AnyTypeCode library with the TypeCodeFactory.
+          Declaration and implementation of statically defined typecodes (as
+          generated by TAO_IDL) is not affected.
+
+        * tao/TypeCodeFactory/Recursive_TypeCode.h:
+        * tao/TypeCodeFactory/Recursive_TypeCode.inl:
+        * tao/TypeCodeFactory/Recursive_TypeCode.cpp:
+          Removed these files.
+
+Fri Jan  3 12:46:30 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/fe/lex.yy.cpp:
+          Include os_stdint.h as attempt to silense msvc warnings
+
+        * tao/Object_T.cpp:
+          Don't use explicit global scope
+
+Mon Dec 30 09:11:45 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Pseudo_VarOut_T.inl:
+        * tao/Range_Checking_T.h:
+          Don't use explicit global scope
+
+Wed Dec 25 00:00:00 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Merry Christmas everyone!
+
+Fri Dec 20 13:37:48 UTC 2013  Phil Mesnier  <mesnier_p@local>
+
+        * tao/IORTable/Table_Adapter.cpp:
+          Fix a cut & paste error.
+
+Thu Dec 19 16:02:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IORTable/Table_Adapter.cpp:
+          My Dec. 6 fix to ensure resource clean up introduced a regression
+          of bug 2683, this should restore harmony.
+
+Thu Dec 19 13:33:18 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/corba_e_compact.mpb:
+        * MPC/config/corba_e_micro.mpb:
+        * MPC/config/minimum_corba.mpb:
+        * MPC/config/taobaseidldefaults.mpb:
+          Changed CORBA/e feature support, move the feature
+          idl flags to taobaseidldefaults to not pull in
+          the IDL Files custom rules
+
+Wed Dec 18 19:19:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LoadMinimum.cpp:
+          Fixed GCC 4.8.2 warning
+
+Wed Dec 18 14:20:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao.doxygen:
+        * etc/tao_av.doxygen:
+        * etc/tao_compression.doxygen:
+        * etc/tao_cosevent.doxygen:
+        * etc/tao_cosnaming.doxygen:
+        * etc/tao_cosnotification.doxygen:
+        * etc/tao_costime.doxygen:
+        * etc/tao_costrader.doxygen:
+        * etc/tao_dynamicany.doxygen:
+        * etc/tao_dynamicinterface.doxygen:
+        * etc/tao_esf.doxygen:
+        * etc/tao_ifr.doxygen:
+        * etc/tao_implrepo.doxygen:
+        * etc/tao_iormanip.doxygen:
+        * etc/tao_iortable.doxygen:
+        * etc/tao_pi.doxygen:
+        * etc/tao_pi_server.doxygen:
+        * etc/tao_portablegroup.doxygen:
+        * etc/tao_portableserver.doxygen:
+        * etc/tao_rtcorba.doxygen:
+        * etc/tao_rtevent.doxygen:
+        * etc/tao_rtportableserver.doxygen:
+        * etc/tao_security.doxygen:
+        * etc/tao_smartproxies.doxygen:
+        * etc/tao_ssliop.doxygen:
+        * etc/tao_strategies.doxygen:
+        * etc/tao_transportcurrent.doxygen:
+        * etc/tao_ziop.doxygen:
+          Upgraded to doxygen 1.8.5
+
+Wed Dec 18 11:22:44 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao_anytypecode.doxygen:
+          Upgraded to doxygen 1.8.5
+
+Tue Dec 17 13:12:22 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/PortableInterceptor.h:
+          Removed several old deprecated macros
+
+Fri Dec 13 14:59:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+        * docs/Options.html:
+          Document new option. Also alphabetized the various factory options.
+
+        * orbsvcs/tests/ImplRepo/oneway/defsync.conf:
+        * tao/Client_Strategy_Factory.h:
+        * tao/ORB_Core.cpp:
+        * tao/Resource_Factory.h:
+        * tao/default_client.h:
+        * tao/default_client.cpp:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Moved the new DefSyncScope option from the resource factory to the client
+          strategy factory. It only affects client behavior so it makes more sense
+          to be a client strategy option.
+
+Fri Dec 13 00:24:50 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * orbsvcs/tests/ImplRepo/oneway/defsync.conf:
+          Fix for bug 4149 and update the test to reflect this status.
+
+Thu Dec 12 20:38:46 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+       * orbsvcs/tests/ImplRepo/oneway/Test_i.cpp:
+         fix for overaggressive file cleanup.
+
+Thu Dec 12 15:32:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/ImplRepo/oneway:
+          Added new test.
+
+        * tao/Messaging/Messaging_Policy_i.cpp:
+          Get the new configurable default sync scope if no policy is
+          defined.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+        * tao/Resource_Factory.h:
+        * tao/default_resource.h:
+        * tao/default_resource.cpp:
+          Allow a default sync scope to be set using -ORBDefaultSyncScope
+          on the resource strategy factory. If unset, the default is
+          SYNC_WITH_TRANSPORT. This feature allows for global sync scope
+          configuration without adding a dependency on the Messaging
+          library and adding a block of code to set scope via a policy.
+          The policy framework still works and will override this default
+          as expected.
+
+Thu Dec 12 00:10:01 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Acceptor_Registry.cpp:
+        * tao/IIOP_Acceptor.cpp:
+          Discriminate between windows platforms that support a dual IP
+          stack and those that don't. Since Windows Vista, the winsock
+          IP stack is capable of concurrent support of IPv4 and IPv6.
+
+Tue Dec 10 21:16:34 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Forwarder.cpp:
+          Fix a crash that occurs if the requested operation is a
+          oneway.
+
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * orbsvcs/orbsvcs/LoadBalancing/LB_LeastLoaded.cpp:
+          Clean up scoreboard warnings and wchar compile failure.
+
+Sun Dec  8 18:30:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_helper.cpp:
+        * TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO_IDL/be/be_visitor_attribute/set_from_extracted.cpp:
+          Fixed extraction of regular and bounded strings from an Any
+
+        * tests/ORB_Local_Config/Bunch/Test.cpp:
+          Clang fix
+
+Fri Dec  6 19:09:56 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+          Revert my change to var types for the iortable objects. Use the
+          ORB_Core::fini to remove the async iortable object instead.
+
+Fri Dec  6 16:50:00 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+          Make these resolve the same version of the IORTable service as
+          the locator main to ensure proper cleanup.
+
+        * tao/IORTable/Table_Adapter.cpp:
+          Force cleanup of the implementation instance on cleanup.
+
+        * tao/ORB_Core.h:
+        * tao/ORB_Core.inl:
+        * tao/ORB_Core.cpp:
+          Covert the base reference to the IORTable instance to a var
+          type so that references are released on ORB shutdown. Valgrind
+          revealed that the IORTable implementation objects were being
+          lost due to refcount never reaching 0. There are many Object_ptr
+          members of the ORB Core that may need to be converted to vars
+          for the same reason.
+
+        * orbsvcs/tests/ImplRepo/kill_server/Test.idl:
+        * orbsvcs/tests/ImplRepo/kill_server/Test_i.h:
+        * orbsvcs/tests/ImplRepo/kill_server/Test_i.cpp:
+        * orbsvcs/tests/ImplRepo/kill_server/client.cpp:
+        * orbsvcs/tests/ImplRepo/kill_server/run_test.pl:
+          Make the test capable of building on CORBA/e builds.
+
+Thu Dec  5 17:32:58 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Improve the performance of the kill command on windows.
+
+        * orbsvcs/tests/ImplRepo/kill_server/run_test.pl:
+          Make the test more windows friendly.
+
+Thu Dec  5 15:30:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Add a default signum for the kill command.
+
+        * orbsvcs/tests/ImplRepo/kill_server/run_test.pl:
+          Increase the time delay waiting for the server to actually
+          be killed. I believe this is the cause of test failures on
+          some nightly hosts.
+
+Thu Dec  5 10:11:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Simple/bank/AccountManager_i.cpp:
+          Deregister from the POA when it is not nil
+
+Wed Dec  4 17:13:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * bin/tao_other_tests.lst:
+          Added new test.
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Adding two new features to the IMR client interface. First is
+          a kill command that has the activator send a signal to a child
+          process. Also a new link command that allows the ImR locator
+          to recognize two or more POAs are part of the same process.
+          The link command implementation is still under development.
+
+        * orbsvcs/tests/ImplRepo/kill_server:
+          New test case for the kill command.
+
+        * tao/ImR_Client/ImplRepo.idl:
+          New extension interface added to define new operations.
+
+Wed Nov 27 02:37:17 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * VERSION: Updated the URL to point to Vandy not WUSTl.
+
+Mon Dec  2 10:12:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * VERSION:
+        * docs/implrepo/paper.html:
+          Updated the URL to point to Vandy not WUSTl.
+
+        * orbsvcs/orbsvcs/CosNaming.idl:
+          Doxygen improvements
+
+Mon Nov 25 21:05:04 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.cpp:
+          Fix scoreboard warnings for some Windows compilers.
+
+Thu Nov 21 17:29:02 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+          Fix for ensuring that externally killed servers can be restarted
+          through the ImR service.
+
+        * orbsvcs/ImplRepo_Service/AsyncListManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+          Fix for a potential memory leak when a list of active servers
+          includes some that are in some troubled state. Since the
+          participants are all reference counted, it isn't a true leak,
+          rather unbounded allocation of objects for which the refcount may
+          never reach 0. Also added more debugging output.
+
+Mon Nov 18 18:07:24 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.h:
+        * orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+          The file lock used in these classes is a process level lock.
+          This change adds a thread mutex to insure that only one thread
+          in the process holds the file lock.
+          Submitted on behalf of Rich Seibel <seibelr@ociweb.com>
+
+Mon Nov 11 09:43:02 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+        * tao/Codeset/Codeset_Manager_i.cpp:
+          Debug message change
+
+Mon Nov 11 09:17:34 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.2.3 released.
+
+Fri Nov  8 17:05:35 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * interop-tests/CdrOutArg/orbix/README:
+          Fix the Orbix version citation.
+
+Fri Nov  8 15:33:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * interop-tests/CdrOutArg/orbix/README:
+        * interop-tests/CdrOutArg/orbix/Server_ORBInitializer.h:
+        * interop-tests/CdrOutArg/orbix/Server_ORBInitializer.cxx:
+        * interop-tests/CdrOutArg/orbix/cxx_demo.mk:
+        * interop-tests/CdrOutArg/orbix/demo.mk:
+        * interop-tests/CdrOutArg/orbix/makefile:
+        * interop-tests/CdrOutArg/orbix/server.cxx:
+        * interop-tests/CdrOutArg/orbix/server_interceptor.h:
+        * interop-tests/CdrOutArg/orbix/server_interceptor.cxx:
+        * interop-tests/CdrOutArg/orbix/test_i.h:
+        * interop-tests/CdrOutArg/orbix/test_i.cxx:
+          Companion test to be built using Orbix 6.3. *UNSUPPORTED*
+          The DOC group can only support the TAO portion of the test.
+          Thanks to Mike McKnerney for supplying this test.
+
+Wed Oct 30 03:25:41 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
+
+        * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          The real fuzz fix.
+
+Tue Oct 29 22:27:08 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          Fuzz fix.
+
+Tue Oct 29 03:24:14 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+          Fix the output format.
+
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.h:
+        * tao/Valuetype/AbstractBase_Invocation_Adapter.cpp:
+          Add missing parameter.
+
+Mon Oct 28 21:27:19 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * NEWS:
+
+        * TAO_IDL/ast/ast_operation.cpp:
+        * TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO_IDL/include/ast_operation.h:
+          Add explicit detection of IN or INOUT operation arguments. If there
+          are none, then extend the Invocation Adatpter constructor call to
+          set the new has_in_args flag to false. For backwards compatibility
+          that flag is defaulted to true.
+
+        * interop-tests/CdrOutArg:
+          Added a new test to demonstrate the fix. There is no explicit
+          regression test for this problem since every CORBA request invokes
+          this code.
+
+        * tao/GIOP_Message_Generator_Parser_12.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.inl:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.h:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/operation_details.h:
+        * tao/operation_details.inl:
+          Add a new flag, has_in_args, which is true if any of the operation
+          aguments send data with the request. The CDR buffer taking the
+          request is aligned after the header only if there is an IN argument.
+
+Mon Oct 28 16:33:43 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:
+        * orbsvcs/Naming_Service/Naming_Service.cpp:
+          Report an error and exit if the service is unable to start the threads
+          requested with the -n command line parameter.
+
+Mon Oct 14 07:50:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/examples/ImR/Combined_Service/test.cpp:
+          No need to print filename
+
+Thu Oct  3 09:36:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepared for next release
+
+Thu Oct 03 09:47:23 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.2.2 released.
+
+Tue Sep 17 09:46:34 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          Improved TAO compile instructions
+
+Mon Sep 16 16:33:46 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO-INSTALL.html:
+          ACE_ROOT and TAO_ROOT are mandatory, for example MPC can't
+          run without TAO_ROOT
+
+        * tests/Bug_2734_Regression/client.cpp:
+          Zapped a lot of empty lines
+
+Wed Sep 11 07:50:52 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+        * tao/RTCORBA/RT_ORB.cpp:
+        * tests/Bug_3000_Regression/run_test.pl:
+        * tests/Bug_3630_Regression/run_test.pl:
+        * tests/Bug_3837_Regression/run_test.pl:
+        * tests/CodeSets/simple/run_test.pl:
+        * tests/OctetSeq/run_test.pl:
+        * tests/OctetSeq/run_test1.pl:
+        * tests/OctetSeq/run_test2.pl:
+        * tests/TransportCurrent/Framework/run_test.pl:
+        * tests/TransportCurrent/IIOP/run_test.pl:
+          Improvements for the Android port
+
+          commit f723a63d4ce65bcb102dbbf9a525467b01b7a14b
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 20:41:48 2013 +0200
+
+                    IDL_Test doesn't run on Android
+                  * TAO/bin/tao_orb_tests.lst:
+
+          commit 777c5eeaab1045f07eb30bbd074bba83792b1344
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 20:41:01 2013 +0200
+
+                    Copy conf files to target
+                  * TAO/tests/TransportCurrent/Framework/run_test.pl:
+                  * TAO/tests/TransportCurrent/IIOP/run_test.pl:
+
+          commit 29b35e6080087514395a9a800693052ab728f0f2
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 15:36:42 2013 +0200
+
+                    Disabled some tests for Android, can't run tao_idl on the device
+                  * TAO/bin/tao_orb_tests.lst:
+
+          commit 12d94d292feccc61bcfc1472eb10ab64bb9dcdd3
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 15:31:40 2013 +0200
+
+                    Copy svc conf files to target
+                  * TAO/tests/Bug_3837_Regression/run_test.pl:
+                  * TAO/tests/CodeSets/simple/run_test.pl:
+
+          commit 6773f79cfaeac77d7e279d86b76c98eee6194531
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Mon Sep 9 15:18:36 2013 +0200
+
+                    Copy svc conf files to target
+                  * TAO/tao/RTCORBA/RT_ORB.cpp:
+                  * TAO/tests/Bug_3000_Regression/run_test.pl:
+                  * TAO/tests/Bug_3630_Regression/run_test.pl:
+                  * TAO/tests/OctetSeq/run_test.pl:
+                  * TAO/tests/OctetSeq/run_test1.pl:
+                  * TAO/tests/OctetSeq/run_test2.pl:
+
+Sat Sep  7 17:32:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2593_Regression/run_test.pl:
+          Put svc conf file to target
+
+Thu Sep  5 18:42:06 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Bug_2112_Regression/client.cpp:
+
+          The previous fake IP address still isn't as invalid as it should
+          be. Now using 10.123.123.123. Probably the right thing to do is
+          run through the 10.* address space to ensure the test doesn't select
+          a real IP address, since the whole point of the test is to ensure
+          that a timeout occurs attempting to connect to an unavailable IP.
+
+Thu Sep  5 07:55:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_2174_Regression/run_test.pl:
+        * tests/Bug_3000_Regression/run_test.pl:
+        * tests/Bug_3531_Regression/run_test.pl:
+        * tests/Bug_3853_Regression/run_test.pl:
+        * tests/Bug_4010_Regression/run_test.pl:
+        * tests/Exposed_Policies/run_test.pl:
+        * tests/HandleExhaustion/run_test.pl:
+        * tests/Hang_Shutdown/run_test.pl:
+        * tests/Muxed_GIOP_Versions/run_test.pl:
+        * tests/OBV/TC_Alignment/run_test.pl:
+        * tests/Optimized_Connection/run_test.pl:
+        * tests/Server_Connection_Purging/run_test.pl:
+        * tests/TransportCurrent/Framework/run_test.pl:
+        * tests/TransportCurrent/IIOP/run_test.pl:
+          Fixes for the Android port
+
+          commit f90a0bf55e83d6565d0641ea0ba2fe2209f5305a
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Aug 23 15:41:29 2013 +0200
+
+                    Copy conf files to target
+                  * TAO/tests/Exposed_Policies/run_test.pl:
+
+          commit 25b050b9725f79351a75f48cdf978ae236702a70
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Aug 23 15:35:23 2013 +0200
+
+                    Also with the second spawn of the server pass the filename
+                    it should use for the IOR
+                  * TAO/tests/Hang_Shutdown/run_test.pl:
+
+          commit 6f0b01d790c1628e81e67c93c4db9f6f3ac37d71
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Aug 23 15:14:44 2013 +0200
+
+                    Removed printing of CommandLine, test framework
+                    can do that at a lower level and this method
+                    isn't supported on Android currently
+                  * TAO/tests/Bug_3000_Regression/run_test.pl:
+                  * TAO/tests/Bug_3531_Regression/run_test.pl:
+                  * TAO/tests/Bug_3853_Regression/run_test.pl:
+                  * TAO/tests/Bug_4010_Regression/run_test.pl:
+                  * TAO/tests/Muxed_GIOP_Versions/run_test.pl:
+                  * TAO/tests/OBV/TC_Alignment/run_test.pl:
+                  * TAO/tests/Server_Connection_Purging/run_test.pl:
+                  * TAO/tests/TransportCurrent/Framework/run_test.pl:
+                  * TAO/tests/TransportCurrent/IIOP/run_test.pl:
+
+          commit d5ebcd70308dbb06f97b98764038e2fdb13899e0
+          Author: Johnny Willemsen <jwillemsen@remedy.nl>
+          Date:   Fri Aug 23 15:13:08 2013 +0200
+
+                    Improved these scripts so that they will
+                    better behave on Android
+                  * TAO/tests/Bug_2174_Regression/run_test.pl:
+                  * TAO/tests/HandleExhaustion/run_test.pl:
+                  * TAO/tests/Optimized_Connection/run_test.pl:
+
+Wed Sep  4 18:13:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Strategies/Optimized_Connection_Endpoint_Selector.h:
+          Fixed mismatched guard. Thanks to
+          Yogesh Sharma <Yogesh dot Sharma at saabsensis dot com> for
+          reporting the bug and supplying a patch. Closes [BUGID:4127].
+
+Wed Sep  4 18:00:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+          Fixed mismatched guard. Thanks to
+          Yogesh Sharma <Yogesh dot Sharma at saabsensis dot com> for
+          reporting the bug and supplying a patch. Closes [BUGID:4126].
+
+Wed Sep  4 12:44:02 UTC 2013  Phil Mesnier  <mesnier_p@local>
+
+        * examples/mfc/server.cpp:
+
+          Explicit include fix.
+
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
+
+          Fix spurious scoreboard error for ACE_NLOGGING build.
+
+        * orbsvcs/tests/Bug_2112_Regression/client.cpp:
+
+          Use a new fake IP address as the old one is now a valid IP in the
+          wild and started messing with the test.
+
+Tue Sep  3 15:52:23 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/NamingViewer/NamingViewer.cpp:
+
+          explicit includes.
+
+Tue Sep  3 13:17:47 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/unit/Notify/MC/MonitorControlExt/MonitorControlExt.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic/Statistic.cpp:
+        * orbsvcs/tests/unit/Notify/MC/Statistic_Registry/Statistic_Registry.cpp:
+
+          Fix warnings reported as errors in the build with logging disabled.
+
+Mon Sep  2 15:01:46 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+
+          explicit includes.
+
+Sun Sep  1 00:28:39 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_interface.cpp:
+        * TAO_IDL/driver/drv_args.cpp:
+
+          Be explicit about including headers that used to be implicitly
+          implicitly.
+
+Fri Aug 16 08:36:23 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+        * ChangeLogs/ChangeLog-2013a:
+        * NEWS:
+          Prepared for next release
+
+Fri Aug 16 08:56:17 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.2.1 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

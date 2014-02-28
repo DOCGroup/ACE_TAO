@@ -1,0 +1,35 @@
+// $Id$
+
+#ifndef THREECOMP_IDL
+#define THREECOMP_IDL
+
+#pragma ciao lem "Base/ThreeCompE.idl"
+#pragma ciao ami4ccm interface "ThreeComp::MyFoo"
+#pragma ciao ami4ccm interface "ThreeComp::State"
+#pragma ciao lem "Base/ThreeCompAE.idl"
+#pragma ciao ami4ccm idl "Base/ThreeCompA.idl"
+
+
+module ThreeComp
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      long foo (in long cmd, out string answer)
+        raises (InternalError);
+    };
+  // Master/Sender interface
+  interface State
+    {
+      long bar (in long cmd, out string answer)
+        raises (InternalError);
+    };
+};
+
+#endif

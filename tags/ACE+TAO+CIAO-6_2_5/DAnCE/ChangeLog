@@ -1,0 +1,115 @@
+Fri Feb 28 08:46:21 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.5 released.
+
+Fri Jan 17 10:13:29 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.cpp:
+          Initialize local variable to fix Coverity warning
+
+Fri Jan 17 10:11:33 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/RepositoryManager/repository_manager_admin_exec.cpp:
+          Added missing break
+
+Fri Jan 17 09:48:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
+          Fixed dead code warning from Coverity
+
+Thu Jan  9 12:33:13 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/DAnCE.doxygen:
+          Upgraded to doxygen 1.8.6
+
+Thu Jan  9 10:26:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+Thu Jan 09 09:18:31 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.4 released.
+
+Wed Dec 18 14:22:27 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/DAnCE.doxygen:
+          Upgraded to doxygen 1.8.5
+
+Sun Dec  8 18:30:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * docs/schema/Basic_Deployment_Data.xsd:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/DataType_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc:
+        * tools/Config_Handlers/DynAny_Handler/DynString_Handler.h:
+        * tools/Config_Handlers/DynAny_Handler/DynString_Handler.cpp:
+          Corrected handling of bounded strings, the bound has to be in the
+          cdp and specified as below, the boundedString element with a bound
+          must be there
+          <type>
+            <kind>tk_string</kind>
+            <boundedString>
+              <bound>50</bound>
+            </boundedString>
+          </type>
+
+Mon Dec  2 10:13:05 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * VERSION:
+          Updated the URL to point to Vandy not WUSTl.
+
+Mon Nov 11 09:43:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+          Catch exceptions as const
+
+Mon Nov 11 09:17:34 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.3 released.
+
+Wed Oct 23 08:45:46 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
+
+        * dance/LocalityManager/Scheduler/Events/Action_Base.cpp:
+        * dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        commit eb9626a86511c55e5d46a65a260240af6103f8e4
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu Oct 3 10:19:06 2013 +0200
+
+                Solved singleton problems for android
+                * DAnCE/dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
+
+                * DAnCE/dance/LocalityManager/Scheduler/Events/Action_Base.cpp:
+                If InstanceDeploymentHandler is nil, don't call invoke
+
+Thu Oct  3 09:36:51 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepared for next release
+
+Thu Oct 03 09:47:23 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.2 released.
+
+Fri Aug 16 08:36:29 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+        * ChangeLogs/ChangeLog-2013a:
+        * NEWS:
+          Prepared for next release
+
+Fri Aug 16 08:56:17 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.1 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

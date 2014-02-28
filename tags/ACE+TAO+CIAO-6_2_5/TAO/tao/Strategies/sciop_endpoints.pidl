@@ -1,0 +1,29 @@
+//
+// $Id$
+
+/**
+ * This file contains idl definition for data structures used to
+ * encapsulate data in TAO_TAG_ENDPOINTS tagged component.  This
+ * TAO-specific component is used for transmission of multiple
+ * endpoints per single profile.  Data structures defined here are
+ * used for transmission of SCIOP Endpoints.  See SCIOP_Profile.*
+ * for more details.
+ */
+
+#ifndef _SCIOP_ENDPOINTS_IDL_
+#define _SCIOP_ENDPOINTS_IDL_
+
+/// Stores information for a single SCIOP endpoint.
+struct TAO_SCIOP_Endpoint_Info
+{
+  string host;
+  short _port;
+  short priority;
+};
+
+/// Stores information for a collection of SCIOP endpoints.
+typedef sequence <TAO_SCIOP_Endpoint_Info> TAO_SCIOPEndpointSequence;
+
+#pragma prefix ""
+
+#endif /* _SCIOP_ENDPOINTS_IDL_ */

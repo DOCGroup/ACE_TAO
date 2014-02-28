@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
+ */
+
+#ifndef SHAPES_CONTROLLERR_IDL
+#define SHAPES_CONTROLLERR_IDL
+
+#include <Components.idl>
+
+#include "../Base/Shapes_Contr_Base.idl"
+
+
+module Shapes
+{
+  component ShapesControllerR
+  {
+    uses shape_received shapeReceivedSub;
+    provides shapes_aggregates shapeAggrPub;
+    attribute unsigned short rate;
+  };
+};
+
+#endif

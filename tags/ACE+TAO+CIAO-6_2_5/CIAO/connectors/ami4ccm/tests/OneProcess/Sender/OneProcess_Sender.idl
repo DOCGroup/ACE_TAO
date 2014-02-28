@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef ONEPROCESS_SENDER_IDL
+#define ONEPROCESS_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/OneProcess.idl"
+
+#pragma ciao ami4ccm receptacle "OneProcess::Sender::run_my_foo"
+
+module OneProcess
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses MyFoo run_my_foo;
+  };
+};
+
+#endif

@@ -1,0 +1,7 @@
+$Id$
+
+This test runs checks the behavior of the IMR when a server shuts down
+while it is in the middle of handling a ping request from the ImR
+Locator. This scenario could happen in an MT server, although to avoid
+a race, an interceptor is used. The test succeeds if the ImR Locator
+does not crash.

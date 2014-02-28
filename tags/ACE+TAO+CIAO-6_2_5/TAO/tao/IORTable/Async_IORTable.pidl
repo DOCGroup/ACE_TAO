@@ -1,0 +1,33 @@
+/**
+ * @file Async_IORTable.pidl
+ *
+ * $Id$
+ *
+ * @author Phil Mesnier <mesnier_p@ociweb.com>
+ *
+ * @brief Pre-compiled IDL source for the IORTable module.
+ */
+
+#ifndef TAO_IORTABLE_ASYNC_IORTABLE_PIDL
+#define TAO_IORTABLE_ASYNC_IORTABLE_PIDL
+
+#include "tao/IORTable/IORTable.pidl"
+
+/// Define a module to avoid namespace pollution
+module IORTable
+{
+  /**
+   * The application can provide a callback interface to locate object
+   * keys dynamically.
+   */
+  native Locate_ResponseHandler;
+  local interface AsyncLocator : Locator
+  {
+    /// Uses AMH semantics to send IOR for @a object_key via the supplied
+    /// response handler
+    void async_locate (in Locate_ResponseHandler rh, in string object_key);
+
+  };
+};
+
+#endif /* TAO_IORTABLE_ASYNC_IORTABLE_PIDL */
