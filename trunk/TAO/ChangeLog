@@ -1,3 +1,7 @@
+Fri Feb 28 08:46:21 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.2.5 released.
+
 Wed Feb 26 14:34:37 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/tests/Miop/McastHello/McastHello.cpp:
