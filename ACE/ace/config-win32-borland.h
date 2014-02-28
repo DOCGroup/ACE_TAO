@@ -166,7 +166,9 @@
 #define ACE_HAS_ITOA 1
 
 #if defined (ACE_HAS_BCC64)
-# define ACE_LACKS_SWAB
+# if (__BORLANDC__ < 0x680)
+#  define ACE_LACKS_SWAB
+# endif
 #endif
 
 #if defined (ACE_HAS_BCC32)
