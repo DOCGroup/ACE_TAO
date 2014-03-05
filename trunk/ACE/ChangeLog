@@ -1,3 +1,8 @@
+Wed Mar  5 14:45:12 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-icc-common.h:
+          Intel C++ does support pragma once
+
 Fri Feb 28 07:59:51 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

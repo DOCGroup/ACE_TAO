@@ -79,11 +79,6 @@
 # define ACE_HAS_INTEL_ASSEMBLY
 #endif
 
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-  // We define it with a -D with make depend.
-# define ACE_LACKS_PRAGMA_ONCE
-#endif /* ! ACE_LACKS_PRAGMA_ONCE */
-
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #if (__INTEL_COMPILER >= 910)
