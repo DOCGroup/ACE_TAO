@@ -66,9 +66,7 @@ namespace TAO
         virtual char* local_host (void);
         //@}
 
-
       protected:
-
         /// Destructor
         /**
          * Protected destructor to enforce the fact this class is reference
@@ -96,7 +94,6 @@ namespace TAO
 
       };
   }
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

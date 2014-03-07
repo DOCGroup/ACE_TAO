@@ -17,9 +17,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-
 
 #include "tao/TransportCurrent/Current_Loader.h"
 
@@ -27,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   namespace Transport
   {
 
@@ -46,8 +43,6 @@ namespace TAO
   }
 }
 
-
-
 #if defined (TAO_AS_STATIC_LIBS)
 namespace TAO
 {
@@ -61,8 +56,6 @@ namespace TAO
 }
 
 #endif /* defined (TAO_AS_STATIC_LIBS) */
-
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Transport_Current,
                                TAO_Transport_IIOP_Current_Loader)
