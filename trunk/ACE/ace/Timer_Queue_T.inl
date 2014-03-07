@@ -22,15 +22,6 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::timer_skew (void) const
   return timer_skew_;
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_INLINE int
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (void)
-{
-  if (!this->is_empty ())
-    return this->expire (this->gettimeofday_static () + timer_skew_);
-  else
-    return 0;
-}
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dispatch_info (const ACE_Time_Value &cur_time,
                                                            ACE_Timer_Node_Dispatch_Info_T<TYPE> &info)

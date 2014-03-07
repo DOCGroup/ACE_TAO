@@ -117,9 +117,6 @@ public:
    */
   virtual int dispatch_info (const ACE_Time_Value &current_time,
                              ACE_Timer_Node_Dispatch_Info_T<TYPE> &info);
-
-
-
   //@{
   /**
    * Implement the gettimeofday() virtual function
