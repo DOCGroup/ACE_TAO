@@ -284,7 +284,8 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
     size_ (0),
     table_size_ (table_size),
     table_functor_ (this),
-    earliest_position_ (0)
+    earliest_position_ (0),
+    iterator_ (0)
 #if defined (ACE_WIN64)
   , pointer_base_ (0)
 #endif /* ACE_WIN64 */
