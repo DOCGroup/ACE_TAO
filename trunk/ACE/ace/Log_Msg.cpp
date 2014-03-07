@@ -2254,7 +2254,7 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
                            ACE_Log_Msg::STDERR)
           && !suppress_stderr) // This is taken care of by our caller.
         log_record.print (ACE_Log_Msg::local_host_,
-                          ACE_Log_Msg::flags_,
+                          flags,
                           stderr);
 
       if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::CUSTOM) ||
