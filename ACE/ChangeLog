@@ -1,3 +1,8 @@
+Fri Mar  7 15:30:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Missed one place where flags_ was used
+
 Fri Mar  7 15:26:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
