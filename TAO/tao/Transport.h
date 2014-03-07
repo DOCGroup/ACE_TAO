@@ -102,7 +102,7 @@ namespace TAO
    * Transport object determines the right parameters to use, and the
    * Transport object simply obeys those instructions.
    */
-  class Drain_Constraints : private ACE_Copy_Disabled
+  class Drain_Constraints
   {
   public:
     /// Default constructor
@@ -140,6 +140,9 @@ namespace TAO
     }
 
   private:
+    ACE_UNIMPLEMENTED_FUNC (Drain_Constraints (const Drain_Constraints &))
+    ACE_UNIMPLEMENTED_FUNC (Drain_Constraints &operator= (const Drain_Constraints &))
+
     ACE_Time_Value * timeout_;
     bool block_on_io_;
   };

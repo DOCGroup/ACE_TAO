@@ -58,7 +58,7 @@ typedef TAO_Acceptor** TAO_AcceptorSetIterator;
  * This class maintains a list of acceptor factories for all loaded ORB
  * protocols. There is one Acceptor_Registry per ORB_Core.
  */
-class TAO_Export TAO_Acceptor_Registry : private ACE_Copy_Disabled
+class TAO_Export TAO_Acceptor_Registry
 {
 public:
   // = Initialization and termination methods.
@@ -92,6 +92,8 @@ public:
   TAO_AcceptorSetIterator end (void);
 
 private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_Acceptor_Registry (const TAO_Acceptor_Registry &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Acceptor_Registry &operator= (const TAO_Acceptor_Registry &))
 
   /// Create a default acceptor for all loaded protocols.
   int open_default (TAO_ORB_Core *orb_core,

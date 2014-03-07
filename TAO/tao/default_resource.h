@@ -16,7 +16,6 @@
 #define TAO_DEFAULT_RESOURCE_H
 
 #include /**/ "ace/pre.h"
-#include "ace/Copy_Disabled.h"
 #include "ace/Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -57,7 +56,6 @@ class TAO_RSF_Timer_Queue_Ptr;
  *
  */
 class TAO_Export TAO_Codeset_Parameters
-  : public ACE_Copy_Disabled
 {
 public:
   TAO_Codeset_Parameters (void);
@@ -81,11 +79,12 @@ public:
   void apply_to (TAO_Codeset_Descriptor_Base *csd);
 
 private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_Codeset_Parameters (const TAO_Codeset_Parameters &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Codeset_Parameters &operator= (const TAO_Codeset_Parameters &))
+
   ACE_Unbounded_Queue<ACE_TCHAR*> translators_;
   ACE_TCHAR* native_;
 };
-
-
 
 /**
  * @class TAO_Default_Resource_Factory

@@ -15,7 +15,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Copy_Disabled.h"
 #include "tao/LF_CH_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -52,8 +51,7 @@ class TAO_Transport;
  * right protocol. This way, most of the common code for the
  * different protocols would be in this implementation.
  */
-class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event,
-                                          private ACE_Copy_Disabled
+class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event
 {
 public:
 
@@ -197,6 +195,9 @@ protected:
   //@}
 
 private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_Connection_Handler (const TAO_Connection_Handler &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Connection_Handler &operator= (const TAO_Connection_Handler &))
+
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core * const orb_core_;
 
