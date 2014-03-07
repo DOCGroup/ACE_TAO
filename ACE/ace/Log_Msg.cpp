@@ -192,7 +192,6 @@ ACE_Log_Msg_Manager::get_lock (void)
   // This function is called by the first thread to create an ACE_Log_Msg
   // instance.  It makes the call while holding a mutex, so we don't have
   // to grab another one here.
-
   if (ACE_Log_Msg_Manager::lock_ == 0)
     {
       ACE_NO_HEAP_CHECK;
@@ -1030,10 +1029,14 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   bool abort_prog = false;
   int exit_value = 0;
 
-  if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::VERBOSE))
+  // Retrieve the flags in a local variable on the stack, it is
+  // accessed by multiple threads and within this operation we
+  // check it several times, so this way we only lock once
+  u_long flags = this->flags ();
+
+  if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::VERBOSE))
     {
       // Prepend the program name onto this message
-
       if (ACE_Log_Msg::program_name_ != 0)
         {
           for (const ACE_TCHAR *s = ACE_Log_Msg::program_name_;
@@ -1607,7 +1610,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     ptrdiff_t const osave = ACE_Log_Msg::msg_off_;
 
-                    if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
+                    if (ACE_BIT_ENABLED (flags,
                                          ACE_Log_Msg::SILENT) &&
                         bspace > 1)
                       {
@@ -1618,7 +1621,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                     (*va_arg (argp, PTF))();
 
-                    if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
+                    if (ACE_BIT_ENABLED (flags,
                                          ACE_Log_Msg::SILENT) &&
                         bspace > (1 + ACE_OS::strlen (bp)))
                       {
@@ -2215,11 +2218,15 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 {
   ssize_t result = 0;
 
+  // Retrieve the flags in a local variable on the stack, it is
+  // accessed by multiple threads and within this operation we
+  // check it several times, so this way we only lock once
+  u_long flags = this->flags ();
+
   // Format the message and print it to stderr and/or ship it off to
   // the log_client daemon, and/or print it to the ostream.  Of
   // course, only print the message if "SILENT" mode is disabled.
-  if (ACE_BIT_DISABLED (ACE_Log_Msg::flags_,
-                        ACE_Log_Msg::SILENT))
+  if (ACE_BIT_DISABLED (flags, ACE_Log_Msg::SILENT))
     {
       bool tracing = this->tracing_enabled ();
       this->stop_tracing ();
@@ -2232,40 +2239,40 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
       // Do the callback, if needed, before acquiring the lock
       // to avoid holding the lock during the callback so we don't
       // have deadlock if the callback uses the logger.
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
-                           ACE_Log_Msg::MSG_CALLBACK)
+      if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::MSG_CALLBACK)
           && this->msg_callback () != 0)
-        this->msg_callback ()->log (log_record);
+        {
+          this->msg_callback ()->log (log_record);
+        }
 
       // Make sure that the lock is held during all this.
       ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
                                 *ACE_Log_Msg_Manager::get_lock (),
                                 -1));
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
+      if (ACE_BIT_ENABLED (flags,
                            ACE_Log_Msg::STDERR)
           && !suppress_stderr) // This is taken care of by our caller.
         log_record.print (ACE_Log_Msg::local_host_,
                           ACE_Log_Msg::flags_,
                           stderr);
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM) ||
-          ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG) ||
-          ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER))
+      if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::CUSTOM) ||
+          ACE_BIT_ENABLED (flags, ACE_Log_Msg::SYSLOG) ||
+          ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER))
         {
           // Be sure that there is a message_queue_, with multiple threads.
           ACE_MT (ACE_Log_Msg_Manager::init_backend ());
         }
 
-
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::LOGGER) ||
-          ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SYSLOG))
+      if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::LOGGER) ||
+          ACE_BIT_ENABLED (flags, ACE_Log_Msg::SYSLOG))
         {
           result =
             ACE_Log_Msg_Manager::log_backend_->log (log_record);
         }
 
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::CUSTOM) &&
+      if (ACE_BIT_ENABLED (flags, ACE_Log_Msg::CUSTOM) &&
           ACE_Log_Msg_Manager::custom_backend_ != 0)
         {
           result =
@@ -2274,11 +2281,11 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 
       // This must come last, after the other two print operations
       // (see the <ACE_Log_Record::print> method for details).
-      if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_,
+      if (ACE_BIT_ENABLED (flags,
                            ACE_Log_Msg::OSTREAM)
           && this->msg_ostream () != 0)
         log_record.print (ACE_Log_Msg::local_host_,
-                          ACE_Log_Msg::flags_,
+                          flags,
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
                           static_cast<FILE *> (this->msg_ostream ())
 #else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
@@ -2311,7 +2318,8 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   if (text)
     text_sz = ACE_OS::strlen (text);
 
-  size_t total_buffer_size =  ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN +text_sz;
+  size_t const total_buffer_size =
+    ACE_Log_Record::MAXLOGMSGLEN - ACE_Log_Record::VERBOSE_LEN + text_sz;
 
   ACE_Array<ACE_TCHAR> msg_buf(total_buffer_size);
   if (msg_buf.size() == 0)
@@ -2320,7 +2328,6 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
   ACE_TCHAR* end_ptr = &msg_buf[0] + total_buffer_size;
   ACE_TCHAR* wr_ptr = &msg_buf[0];
   msg_buf[0] = 0; // in case size = 0
-
 
   if (text)
     wr_ptr += ACE_OS::snprintf (wr_ptr,
