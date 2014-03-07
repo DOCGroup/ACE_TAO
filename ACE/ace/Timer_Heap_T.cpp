@@ -330,6 +330,7 @@ bool
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty (void) const
 {
   ACE_TRACE ("ACE_Timer_Heap_T::is_empty");
+
   return this->cur_size_ == 0;
 }
 
