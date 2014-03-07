@@ -1,3 +1,14 @@
+Fri Mar  7 20:28:55 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
+          Relocate the sending of a sync reply on sync_with_server to happen
+          before the request has a chance to be queued by CSD. In non-queuing
+          use cases the move has no practical effect, but when CSD is in use
+          and a request happens to be queued, the oneway client ends up being
+          blocked until the request is dequeued, which can lead to poor client
+          performance.
+
 Fri Mar  7 13:45:06 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Acceptor_Registry.h:

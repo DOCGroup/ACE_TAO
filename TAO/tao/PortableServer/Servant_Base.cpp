@@ -542,16 +542,6 @@ TAO_ServantBase::synchronous_upcall_dispatch (
   TAO_Skeleton skel;
   char const * const opname = req.operation ();
 
-  // It seems that I might have missed s/g here.  What if
-  // it is a one way that is SYNC_WITH_SERVER.
-  // Add the following line to handle this reply send as well.
-
-  // Handle the one ways that are SYNC_WITH_SERVER and not collocated
-  if (req.sync_with_server () && !req.collocated ())
-    {
-      req.send_no_exception_reply ();
-    }
-
   // Fetch the skeleton for this operation
   if (this->_find (opname,
                    skel,
