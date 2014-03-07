@@ -1,3 +1,14 @@
+Fri Mar  7 15:26:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.cpp:
+          Fixed a data race condition related to the ACE_Log_Msg::flags_
+          static variable. Setting/retrieving it from application code
+          was using a lock, but the ACE_Log_Msg::log didn't use the lock
+          in the part where it is building up the ACE Log Record. Put
+          a flags variable on the stack which we only set once using the
+          accessor method which uses the lock, than check that flag
+          inside the method.
+
 Fri Mar  7 12:37:04 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Hash_T.cpp:
