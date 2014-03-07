@@ -47,7 +47,7 @@ class TAO_MProfile;
 class TAO_ServerRequest;
 class TAO_Adapter;
 
-class TAO_Export TAO_Adapter_Registry : private ACE_Copy_Disabled
+class TAO_Export TAO_Adapter_Registry
 {
 public:
   explicit TAO_Adapter_Registry (TAO_ORB_Core *orb_core);
@@ -93,6 +93,9 @@ public:
   TAO_Adapter *find_adapter (const char *name) const;
 
 private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry (const TAO_Adapter_Registry &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry &operator= (const TAO_Adapter_Registry &))
+
   /// The ORB Core
   TAO_ORB_Core *orb_core_;
 

@@ -24,7 +24,6 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "ace/Array_Base.h"
-#include "ace/Copy_Disabled.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,7 +36,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * invoking the corresponding cleanup function on each object.  Hence,
  * there is a tight coupling between this class and the TAO ORB Core.
  */
-class TAO_Export TAO_Cleanup_Func_Registry : private ACE_Copy_Disabled
+class TAO_Export TAO_Cleanup_Func_Registry
 {
   friend class TAO_ORB_Core;
 
@@ -63,6 +62,8 @@ protected:
   void cleanup (ACE_Array_Base<void *> &ts_objects);
 
 private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Cleanup_Func_Registry &operator= (const TAO_Cleanup_Func_Registry &))
 
   /// Array of registered cleanup functions.  The number of
   /// registered cleanup functions should be the same as the number

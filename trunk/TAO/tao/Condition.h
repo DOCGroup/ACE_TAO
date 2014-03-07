@@ -40,7 +40,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * provide blocking.
  */
 template <class MUTEX>
-class TAO_Condition : private ACE_Copy_Disabled
+class TAO_Condition
 {
 public:
 
@@ -94,6 +94,8 @@ public:
   MUTEX *mutex (void);
 
 private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_Condition (const TAO_Condition<MUTEX> &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Condition &operator= (const TAO_Condition<MUTEX> &))
 
   /// Reference to mutex lock.
   MUTEX *mutex_;

@@ -21,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Null_Mutex.h"
-#include "ace/Copy_Disabled.h"
 
 #include "tao/Object_KeyC.h"
 #include /**/ "tao/Versioned_Namespace.h"
@@ -86,7 +85,7 @@ namespace TAO
    * will do that if our instrumentation shows the need for it.
    *
    */
-  class TAO_Export ObjectKey_Table : private ACE_Copy_Disabled
+  class TAO_Export ObjectKey_Table
   {
   public:
     /// Default Constructor and destructor..
@@ -119,6 +118,9 @@ namespace TAO
     int unbind_i (Refcounted_ObjectKey *&key);
 
   private:
+    ACE_UNIMPLEMENTED_FUNC (ObjectKey_Table (const ObjectKey_Table &))
+    ACE_UNIMPLEMENTED_FUNC (ObjectKey_Table &operator= (const ObjectKey_Table &))
+
     /// Some useful typedefs.
     typedef ACE_RB_Tree<TAO::ObjectKey,
                         TAO::Refcounted_ObjectKey *,
