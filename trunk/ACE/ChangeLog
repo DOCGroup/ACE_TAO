@@ -1,3 +1,17 @@
+Fri Mar  7 12:02:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Reactor_Token_T.cpp:
+          Use copy constructor instead of assignment operator
+
+        * ace/Timer_Hash_T.h:
+        * ace/Timer_List_T.h:
+        * ace/WFMO_Reactor.h:
+          Doxygen improvements
+
+        * ace/WFMO_Reactor.cpp:
+        * ace/Timer_Heap_T.cpp:
+          Layout changes
+
 Fri Mar  7 11:56:10 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Queue_T.h:

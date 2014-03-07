@@ -61,7 +61,7 @@ template <class ACE_TOKEN_TYPE> void
 ACE_Reactor_Token_T<ACE_TOKEN_TYPE>::sleep_hook (void)
 {
   ACE_TRACE ("ACE_Reactor_Token_T::sleep_hook");
-  ACE_Time_Value ping = ACE_Time_Value::zero;
+  ACE_Time_Value ping (ACE_Time_Value::zero);
   if (this->reactor_->notify (0, ACE_Event_Handler::EXCEPT_MASK, &ping) == -1)
     {
       if (errno == ETIME)
