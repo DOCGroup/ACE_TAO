@@ -1,3 +1,19 @@
+Fri Mar  7 11:56:10 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Queue_T.h:
+        * ace/Timer_Queue_T.inl:
+        * ace/Timer_Queue_T.cpp:
+          Moved the expire() method from the inline to the cpp, it is
+          virtual so can't be inlined. Further, the expire() method
+          had an optimization that it checked is_empty() before
+          callig the real expire that grabs the lock. This is causing
+          a potential data race because the timer hash overrides is_empty
+          and uses a member variable to determine whether the queue
+          is empty or not, this is now accessed without having the
+          timer queue locked. Therefor the optimization was removed,
+          we directly call into the real expire that first grabs its
+          lock
+
 Fri Mar  7 10:22:01 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/inspxe-cl.sup:
