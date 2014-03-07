@@ -310,7 +310,7 @@ public:
 
   // = Search structure operations.
 
-  /// Bind the <ACE_Event_Handler *> to the ACE_HANDLE. This is for
+  /// Bind the ACE_Event_Handler * to the ACE_HANDLE. This is for
   /// the simple event entry.
   int bind (ACE_HANDLE, ACE_Event_Handler *);
 
@@ -327,7 +327,7 @@ public:
   int unbind (ACE_HANDLE,
               ACE_Reactor_Mask mask);
 
-  /// Non-lock-grabbing version of <unbind>
+  /// Non-lock-grabbing version of unbind
   int unbind_i (ACE_HANDLE,
                 ACE_Reactor_Mask mask,
                 bool &changes_required);
@@ -482,11 +482,11 @@ protected:
 /**
  * @class ACE_WFMO_Reactor_Notify
  *
- * @brief Unblock the <ACE_WFMO_Reactor> from its event loop, passing
+ * @brief Unblock the ACE_WFMO_Reactor from its event loop, passing
  * it an optional ACE_Event_Handler to dispatch.
  *
  * This implementation is necessary for cases where the
- * <ACE_WFMO_Reactor> is run in a multi-threaded program.  In
+ * ACE_WFMO_Reactor is run in a multi-threaded program.  In
  * this case, we need to be able to unblock
  * <WaitForMultipleObjects> when updates occur other than in the
  * main <ACE_WFMO_Reactor> thread.  To do this, we signal an
@@ -500,7 +500,7 @@ public:
   /// Constructor
   ACE_WFMO_Reactor_Notify (size_t max_notifies = 1024);
 
-  /// Initialization. <timer_queue> is stored to call <gettimeofday>.
+  /// Initialization. @a timer_queue is stored to call <gettimeofday>.
   virtual int open (ACE_Reactor_Impl *wfmo_reactor,
                     ACE_Timer_Queue *timer_queue,
                     int disable_notify = 0);
@@ -525,7 +525,7 @@ public:
   virtual int dispatch_notifications (int &number_of_active_handles,
                                       ACE_Handle_Set &rd_mask);
 
-  /// Returns a handle to the <ACE_Auto_Event>.
+  /// Returns a handle to the ACE_Auto_Event.
   virtual ACE_HANDLE get_handle (void) const;
 
   /// Returns the ACE_HANDLE of the notify pipe on which the reactor
