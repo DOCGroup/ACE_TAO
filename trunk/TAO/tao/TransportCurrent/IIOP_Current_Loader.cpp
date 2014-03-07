@@ -56,13 +56,10 @@ namespace TAO
       Current_Loader::~Current_Loader ()
       {
       }
-
     }
-
   }
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (TAO_AS_STATIC_LIBS)
 

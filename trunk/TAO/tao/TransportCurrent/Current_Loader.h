@@ -32,22 +32,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  //  class ORBInitializer_Registry_Adapter;
-
   namespace Transport
   {
-
     class TAO_Transport_Current_Export Current_Loader
       : public ACE_Service_Object
     {
     public:
-
       /// Initializes object when dynamic linking occurs.
       virtual int init (int argc, ACE_TCHAR *argv[]);
 
     protected:
-
-      // Protected destructor to enforce reference counting discipline
+      /// Protected destructor to enforce reference counting discipline
       virtual ~Current_Loader (void);
     };
 
