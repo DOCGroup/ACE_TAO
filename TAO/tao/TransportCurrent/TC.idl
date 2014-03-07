@@ -25,14 +25,12 @@ module TAO
     /// context.  Also, this exception is thrown if no Transport has
     /// been selected for the current thread, for example in a
     /// collocated invocation.
-
     exception NoContext
     {
     };
 
-    // The primary interface, providing access to Transport
-    // information, available to the current thread.
-
+    /// The primary interface, providing access to Transport
+    /// information, available to the current thread.
     local interface Current
     {
       /// Transport ID, unique within the process.
