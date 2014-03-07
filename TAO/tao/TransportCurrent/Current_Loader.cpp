@@ -11,7 +11,6 @@
  */
 // =================================================================
 
-
 #include "ace/Service_Config.h"
 
 #include "tao/ORB_Constants.h"
@@ -29,8 +28,7 @@ namespace TAO
 {
   namespace Transport
   {
-
-    /// dtor
+    /// Destructor
     Current_Loader::~Current_Loader (void)
     {
     }

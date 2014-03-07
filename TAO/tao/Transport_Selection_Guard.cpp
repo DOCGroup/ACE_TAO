@@ -8,7 +8,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   Transport_Selection_Guard*
   Transport_Selection_Guard::current (TAO_ORB_Core* core, size_t tss_slot_id)
   {
@@ -27,46 +26,31 @@ namespace TAO
     ACE_UNUSED_ARG (tss_slot_id);
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-
     return TAO_TSS_Resources::instance ()->tsg_;
-
 #else  /* TAO_HAS_TRANSPORT_CURRENT != 1 */
-
     return 0;
-
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
   }
-
-
 
   /// Ctor
   Transport_Selection_Guard::Transport_Selection_Guard (TAO_Transport* t)
     :
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-
-    prev_ (TAO_TSS_Resources::instance ()->tsg_)
-    ,
-
+    prev_ (TAO_TSS_Resources::instance ()->tsg_) ,
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
     curr_ (t)
   {
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-
     TAO_TSS_Resources::instance ()->tsg_ = this;
-
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-
   }
 
   /// Dtor
   Transport_Selection_Guard::~Transport_Selection_Guard (void)
   {
-
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-
     TAO_TSS_Resources::instance ()->tsg_ = prev_;
     this->prev_ = 0;
-
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
     this->curr_ = 0;
   }

@@ -111,10 +111,8 @@ namespace TAO
     ACE_UNIMPLEMENTED_FUNC (Transport_Selection_Guard (const Transport_Selection_Guard&))
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
-
     /// This is pointing to the guard that was active prior to
     /// instantiating us.
-
     Transport_Selection_Guard* prev_;
 
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
