@@ -1,3 +1,13 @@
+Fri Mar  7 13:31:56 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.h:
+          Use ACE_UNIMPLEMENTED_FUNC instead of ACE_Copy_Disabled,
+          the first maps to =delete with C++11 and results in a small
+          footprint decrease
+
+        * tao/TransportCurrent/TC.idl:
+          Doxygen improvements
+
 Fri Feb 28 07:59:54 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

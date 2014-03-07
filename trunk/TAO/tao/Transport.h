@@ -30,7 +30,6 @@
 #include "tao/Message_Semantics.h"
 #include "ace/Time_Value.h"
 #include "ace/Basic_Stats.h"
-#include "ace/Copy_Disabled.h"
 
 struct iovec;
 
@@ -319,7 +318,7 @@ namespace TAO
  * https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/TAO/docs/pluggable_protocols/index.html?revision=HEAD
  *
  */
-class TAO_Export TAO_Transport : private ACE_Copy_Disabled
+class TAO_Export TAO_Transport
 {
 public:
 
@@ -1057,6 +1056,9 @@ protected:
   int notify_reactor_now (void);
 
 private:
+  ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport &))
+  ACE_UNIMPLEMENTED_FUNC (TAO_Transport &operator= (const TAO_Transport &))
+
   /// Assume the lock is held
   void send_connection_closed_notifications_i (void);
 
