@@ -1,3 +1,18 @@
+Fri Mar  7 13:45:06 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Acceptor_Registry.h:
+        * tao/Adapter_Registry.h:
+        * tao/Cleanup_Func_Registry.h:
+        * tao/Compression/zlib/ZlibCompressor_Factory.h:
+        * tao/Condition.h:
+        * tao/Connection_Handler.h:
+        * tao/ObjectKey_Table.h:
+        * tao/Transport.h:
+        * tao/default_resource.h:
+          Use ACE_UNIMPLEMENTED_FUNC instead of ACE_Copy_Disabled,
+          the first maps to =delete with C++11 and results in a small
+          footprint decrease
+
 Fri Mar  7 13:31:56 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.h:

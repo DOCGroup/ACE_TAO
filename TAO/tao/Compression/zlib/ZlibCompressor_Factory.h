@@ -23,35 +23,32 @@
 
 #include "tao/Compression/Compression.h"
 #include "tao/Compression/Compressor_Factory.h"
-
-#include "ace/Copy_Disabled.h"
-
 #include <map>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-    class TAO_ZLIBCOMPRESSOR_Export Zlib_CompressorFactory :
-      public ::TAO::CompressorFactory,
-      private ACE_Copy_Disabled
-    {
-      typedef std::map< ::Compression::CompressionLevel,
-          const ::Compression::Compressor_var> ZlibCompressorMap;
+  class TAO_ZLIBCOMPRESSOR_Export Zlib_CompressorFactory :
+    public ::TAO::CompressorFactory
+  {
+    typedef std::map< ::Compression::CompressionLevel,
+        const ::Compression::Compressor_var> ZlibCompressorMap;
 
-    public:
+  public:
+    Zlib_CompressorFactory (void);
 
-        Zlib_CompressorFactory (void);
+    virtual ::Compression::Compressor_ptr get_compressor (
+        ::Compression::CompressionLevel compression_level);
 
-        virtual ::Compression::Compressor_ptr get_compressor (
-            ::Compression::CompressionLevel compression_level);
+  private:
+    ACE_UNIMPLEMENTED_FUNC (Zlib_CompressorFactory (const Zlib_CompressorFactory &))
+    ACE_UNIMPLEMENTED_FUNC (Zlib_CompressorFactory &operator= (const Zlib_CompressorFactory &))
 
-    private:
-
-        // Ensure we can lock with imutability (i.e. const)
-        mutable TAO_SYNCH_MUTEX mutex_;
-        ZlibCompressorMap       compressors_;
-    };
+    // Ensure we can lock with imutability (i.e. const)
+    mutable TAO_SYNCH_MUTEX mutex_;
+    ZlibCompressorMap       compressors_;
+  };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
