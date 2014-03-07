@@ -1,3 +1,9 @@
+Fri Mar  7 12:37:04 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Hash_T.cpp:
+          Initialize pointer member explicitly to zero to resolve
+          Coverity error
+
 Fri Mar  7 12:02:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Reactor_Token_T.cpp:
