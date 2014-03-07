@@ -250,6 +250,16 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule (const TYPE &t
   return result;
 }
 
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (void)
+{
+  // We can't check here is the timer queue is empty, in some
+  // implementations (like the timer heap) calling is_empty()
+  // would at that moment access member variables without having
+  // locked ourself for thread safety
+  return this->expire (this->gettimeofday_static () + timer_skew_);
+}
+
 // Run the <handle_timeout> method for all Timers whose values are <=
 // <cur_time>.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
