@@ -350,14 +350,6 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
   {
     ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_DISPATCH_START);
 
-    // Handle the one ways that are SYNC_WITH_SERVER and not collocated.
-    // Do it here so that the client is unblocked before possibly queuing
-    // the request as what happens with CSD.
-    if (req.sync_with_server () && !req.collocated ())
-      {
-        req.send_no_exception_reply ();
-      }
-
     do_dispatch (req, servant_upcall);
   }
 

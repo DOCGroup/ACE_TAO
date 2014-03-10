@@ -18,6 +18,7 @@ TAO_ServerRequest::TAO_ServerRequest (void)
     response_expected_ (false),
     deferred_reply_ (false),
     sync_with_server_ (false),
+    is_queued_ (false),
     is_dsi_ (false),
     reply_status_ (GIOP::NO_EXCEPTION),
     orb_core_ (0),
@@ -98,6 +99,28 @@ TAO_ServerRequest::response_expected (CORBA::Boolean response)
   this->response_expected_ = response;
 }
 
+ACE_INLINE void
+TAO_ServerRequest::sync_before_dispatch (void)
+{
+  if (this->sync_with_server_ &&
+      this->transport_ != 0 &&
+      this->is_queued_)
+    {
+      this->send_no_exception_reply ();
+    }
+}
+
+ACE_INLINE void
+TAO_ServerRequest::sync_after_dispatch (void)
+{
+  if (this->sync_with_server_ &&
+      this->transport_ != 0 &&
+      !this->is_queued_)
+    {
+      this->send_no_exception_reply ();
+    }
+}
+
 ACE_INLINE CORBA::Boolean
 TAO_ServerRequest::sync_with_server (void) const
 {
@@ -108,6 +131,18 @@ ACE_INLINE void
 TAO_ServerRequest::sync_with_server (CORBA::Boolean sync_flag)
 {
   this->sync_with_server_ = sync_flag;
+}
+
+ACE_INLINE CORBA::Boolean
+TAO_ServerRequest::is_queued (void) const
+{
+  return this->is_queued_;
+}
+
+ACE_INLINE void
+TAO_ServerRequest::is_queued (CORBA::Boolean queued_flag)
+{
+  this->is_queued_ = queued_flag;
 }
 
 ACE_INLINE TAO::ObjectKey &

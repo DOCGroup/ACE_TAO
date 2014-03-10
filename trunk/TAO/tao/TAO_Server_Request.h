@@ -173,6 +173,19 @@ public:
   /// Set the sync_with_server flag.
   void sync_with_server (CORBA::Boolean sync_flag);
 
+  /// Is the request at risk of being queued?
+  CORBA::Boolean is_queued (void) const;
+
+  /// Set the queued flag.
+  void is_queued (CORBA::Boolean qeueued_flag);
+
+  /// Send a sync reply if needed after _dispatch is called
+  void sync_after_dispatch (void);
+
+  /// Send a sync reply if needed before _dispatch is called to avoid
+  /// possible queuing first.
+  void sync_before_dispatch (void);
+
   /// Used with reliable oneway requests.
   void send_no_exception_reply (void);
 
@@ -324,6 +337,10 @@ private:
   /// true: oneway (SYNC_WITH_SERVER)
   /// false: anything else
   CORBA::Boolean sync_with_server_;
+
+  /// true: this request is (or may be) queued by the POA
+  /// false: no POA queuing involved
+  CORBA::Boolean is_queued_;
 
   /// Did we get passed to a CORBA::ServerRequest?
   CORBA::Boolean is_dsi_;
