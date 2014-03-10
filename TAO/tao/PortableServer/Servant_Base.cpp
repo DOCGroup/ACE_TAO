@@ -542,6 +542,9 @@ TAO_ServantBase::synchronous_upcall_dispatch (
   TAO_Skeleton skel;
   char const * const opname = req.operation ();
 
+  // Handle the one ways that are SYNC_WITH_SERVER and not queued
+  req.sync_after_dispatch ();
+
   // Fetch the skeleton for this operation
   if (this->_find (opname,
                    skel,

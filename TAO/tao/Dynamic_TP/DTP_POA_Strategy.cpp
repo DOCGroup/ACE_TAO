@@ -139,6 +139,14 @@ TAO_DTP_POA_Strategy::dispatch_remote_request_i
   TAO::CSD::TP_Servant_State::HandleType servant_state =
                         this->get_servant_state (servant);
 
+  // Handle the one ways that are SYNC_WITH_SERVER and not collocated.
+  // before queuing the request and thus avoid delaying the client.
+  // This is a problem if the servant ends up throwing a Location Forward
+  // exception. If necessary, add an override config option here.
+  CORBA::Boolean early_sync = true;
+  server_request.is_queued (early_sync);
+  server_request.sync_before_dispatch ();
+
   // Now we can create the TP_Remote_Request object, and then add it to our
   // task_'s "request queue".
   //

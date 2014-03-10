@@ -1,3 +1,20 @@
+Mon Mar 10 16:25:23 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CSD_ThreadPool/CSD_TP_Strategy.cpp:
+        * tao/Dynamic_TP/DTP_POA_Strategy.cpp:
+        * tao/PortableServer/Object_Adapter.cpp:
+        * tao/PortableServer/Servant_Base.cpp:
+        * tao/TAO_Server_Request.h:
+        * tao/TAO_Server_Request.inl:
+          Refining the previous commit. It turns out that simply moving the
+          sync reply before the dispatch was problematic in the case where
+          a location forward exception may come from a default servant, such
+          as the case with the Implementation Repository. To accommodate both
+          the need to send the reply before the dispatch in case of queuing
+          and after in the case of IMR, I've integrated the logic into the
+          server request object and added a new condition that is set to true
+          only if the CSD_ThreadPool or Dynamic_TP_POA strategy is used.
+
 Fri Mar  7 20:28:55 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/PortableServer/Object_Adapter.cpp:
