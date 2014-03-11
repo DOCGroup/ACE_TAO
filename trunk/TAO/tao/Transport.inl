@@ -226,50 +226,66 @@ TAO::Transport::Stats::Stats ()
 ACE_INLINE void
 TAO::Transport::Stats::messages_sent (size_t message_length)
 {
-  this->messages_sent_++;
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_);
+
+  ++this->messages_sent_;
   this->bytes_sent_.sample (message_length);
 }
 
 ACE_INLINE CORBA::LongLong
 TAO::Transport::Stats::messages_sent (void) const
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, 0);
+
   return this->messages_sent_;
 }
 
 ACE_INLINE CORBA::LongLong
 TAO::Transport::Stats::bytes_sent (void) const
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, 0);
+
   return this->bytes_sent_.sum_;
 }
 
 ACE_INLINE void
 TAO::Transport::Stats::messages_received (size_t message_length)
 {
-  this->messages_rcvd_++;
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_);
+
+  ++this->messages_rcvd_;
   this->bytes_rcvd_.sample (message_length);
 }
 
 ACE_INLINE CORBA::LongLong
 TAO::Transport::Stats::messages_received (void) const
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, 0);
+
   return this->messages_rcvd_;
 }
 
 ACE_INLINE CORBA::LongLong
 TAO::Transport::Stats::bytes_received (void) const
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, 0);
+
   return this->bytes_rcvd_.sum_;
 }
 
 ACE_INLINE void
 TAO::Transport::Stats::opened_since (const ACE_Time_Value& tv)
 {
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_);
+
   this->opened_since_ = tv;
 }
 
 ACE_INLINE const ACE_Time_Value&
 TAO::Transport::Stats::opened_since (void) const
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, ACE_Time_Value::zero);
+
   return this->opened_since_;
 }
 
