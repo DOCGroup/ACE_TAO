@@ -1274,7 +1274,7 @@ namespace TAO
      *
      * @brief Used to collect stats on a transport.
      *
-     * The base class in (potentialy) extensible hierarchy used to
+     * The base class in (potentially) extensible hierarchy used to
      * specialize the information available for a specific protocol.
      *
      * This class is necessary for the implementation of the Transport
@@ -1303,14 +1303,17 @@ namespace TAO
       const ACE_Time_Value& opened_since (void) const;
 
     private:
-      // The bytes_rcvd_.samples_count() could have been used instead,
-      // however there was a suspicion that 32 bits would be
-      // insufficient.
+      /// Mutex guarding the internal state of the statistics
+      mutable TAO_SYNCH_MUTEX stat_mutex_;
+
+      /// The bytes_rcvd_.samples_count() could have been used instead,
+      /// however there was a suspicion that 32 bits would be
+      /// insufficient.
       CORBA::LongLong messages_rcvd_;
 
-      // The bytes_sent_.samples_count() could have been used instead,
-      // however there was a suspicion that 32 bits would be
-      // insufficient.
+      /// The bytes_sent_.samples_count() could have been used instead,
+      /// however there was a suspicion that 32 bits would be
+      /// insufficient.
       CORBA::LongLong messages_sent_;
 
       ACE_Basic_Stats bytes_rcvd_;

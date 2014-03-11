@@ -1,3 +1,14 @@
+Tue Mar 11 14:55:24 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Transport.h:
+        * tao/Transport.inl:
+          Added a mutext to the transport stats. These could be modified
+          by multiple threads causing a datarace. If you are not using
+          the transport stats at all, consider disabling them in your
+          TAO configuration by setting TAO_HAS_TRANSPORT_CURRENT to 0
+          in your config.h file or by adding transport_current=0 to your
+          default.features file
+
 Mon Mar 10 19:52:17 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/TAO_Server_Request.cpp:
