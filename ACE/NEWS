@@ -1,6 +1,7 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.2.5 and ACE-6.2.6
 ====================================================
 
+. Resolved several data races reported by Intel Inspector XE
 USER VISIBLE CHANGES BETWEEN ACE-6.2.4 and ACE-6.2.5
 ====================================================
 
