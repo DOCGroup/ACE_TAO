@@ -18,8 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Thread_Lane_Resources::TAO_Thread_Lane_Resources (
     TAO_ORB_Core &orb_core,
-    TAO_New_Leader_Generator *new_leader_generator
-  )
+    TAO_New_Leader_Generator *new_leader_generator)
   : orb_core_ (orb_core),
     acceptor_registry_ (0),
     connector_registry_ (0),
