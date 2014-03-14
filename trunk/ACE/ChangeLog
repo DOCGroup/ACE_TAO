@@ -1,3 +1,9 @@
+Fri Mar 14 15:58:19 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Auto_Event_Test.cpp:
+          Use atomic op for amount of timeouts to fix data race reported
+          by Intel Inspector XE
+
 Fri Mar  7 15:30:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.cpp:
