@@ -22,8 +22,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
-
-
+#include "ace/Atomic_Op.h"
 
 // msec that times are allowed to differ before test fails.
 #if defined (ACE_HAS_HI_RES_TIMER) || defined (ACE_HAS_AIX_HI_RES_TIMER) || \
@@ -50,7 +49,7 @@ static int n_iterations = 10;
 static size_t n_workers = 10;
 
 // Number of timeouts.
-static size_t timeouts = 0;
+static ACE_Atomic_Op<ACE_SYNCH_MUTEX, size_t> timeouts = 0;
 
 // Number of times to call test_timeout ().
 static size_t test_timeout_count = 3;
@@ -224,11 +223,11 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  size_t percent = (timeouts * 100) / (n_workers * n_iterations);
+  size_t percent = (timeouts.value () * 100) / (n_workers * n_iterations);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Worker threads timed out %d percent of the time\n"),
-              (int)percent));
+              ACE_TEXT ("Worker threads timed out %B percent of the time\n"),
+              percent));
 
   if (test_result == 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Auto_Event Test successful\n")));
