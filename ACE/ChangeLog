@@ -1,3 +1,14 @@
+Mon Mar 17 09:52:03 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/IO_SAP.h:
+        * ace/IO_SAP.cpp:
+        * ace/IPC_SAP.cpp:
+        * ace/IPC_SAP.h:
+          Don't try to cache the process id, but just call the ACE OS
+          method when needed (which is just in some cases and the operation
+          is inline). Fixes possible data races reported by Intel Inspector
+          XE.
+
 Mon Mar 17 09:50:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Process.inl:
