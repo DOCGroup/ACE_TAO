@@ -1,3 +1,13 @@
+Mon Mar 17 10:12:44 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Log_Msg.h:
+        * ace/Log_Msg.inl:
+        * ace/Log_Msg.cpp:
+          Don't try to cache the process id, but just call the ACE OS
+          method when needed (which is just in some cases and the operation
+          is inline). Fixes possible data races reported by Intel Inspector
+          XE.
+
 Mon Mar 17 09:52:03 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/IO_SAP.h:
