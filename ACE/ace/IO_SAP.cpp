@@ -33,21 +33,14 @@ ACE_IO_SAP::dump (void) const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("handle_ = %d"), this->handle_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d"), this->pid_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
-
-// Cache for the process ID.
-pid_t ACE_IO_SAP::pid_ = 0;
 
 int
 ACE_IO_SAP::enable (int value) const
 {
   ACE_TRACE ("ACE_IO_SAP::enable");
-  /* First-time in initialization. */
-  if (ACE_IO_SAP::pid_ == 0)
-    ACE_IO_SAP::pid_ = ACE_OS::getpid ();
 
   switch (value)
     {
@@ -57,7 +50,7 @@ ACE_IO_SAP::enable (int value) const
 #if defined (F_SETOWN)
       return ACE_OS::fcntl (this->handle_,
                             F_SETOWN,
-                            ACE_IO_SAP::pid_);
+                            ACE_OS::getpid ());
 #else
       ACE_NOTSUP_RETURN (-1);
 #endif /* F_SETOWN */
@@ -68,7 +61,7 @@ ACE_IO_SAP::enable (int value) const
 #if defined (F_SETOWN) && defined (FASYNC)
       if (ACE_OS::fcntl (this->handle_,
                          F_SETOWN,
-                         ACE_IO_SAP::pid_) == -1
+                         ACE_OS::getpid ()) == -1
           || ACE::set_flags (this->handle_,
                              FASYNC) == -1)
         return -1;
