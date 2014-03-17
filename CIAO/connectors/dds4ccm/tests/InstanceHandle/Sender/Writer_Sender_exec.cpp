@@ -58,7 +58,8 @@ namespace CIAO_Writer_Sender_Impl
    */
 
   Sender_exec_i::Sender_exec_i (void)
-    : keys_ (5)
+    : keys_ (5),
+      dds_writer_ (0)
   {
     ACE_NEW_THROW_EX (this->rh_,
                       StartHandler (*this),
