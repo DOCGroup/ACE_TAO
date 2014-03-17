@@ -801,7 +801,6 @@ namespace CIAO
         throw Components::CCMException (
                                  ::Components::SERVICE_INSTALLATION_ERROR);
       }
-    return CORBA::Object::_nil();
   }
 
   template <typename BASE>

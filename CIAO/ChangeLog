@@ -1,3 +1,8 @@
+Mon Mar 17 11:02:00 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Removed dead  code
+
 Mon Mar 17 10:58:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
