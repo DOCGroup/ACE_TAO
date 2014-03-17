@@ -48,8 +48,7 @@ ACE_Process::gethandle (void) const
 }
 
 ACE_INLINE pid_t
-ACE_Process::getpid (void)
-    const
+ACE_Process::getpid (void) const
 {
 #if defined (ACE_WIN32)
   return process_info_.dwProcessId;
