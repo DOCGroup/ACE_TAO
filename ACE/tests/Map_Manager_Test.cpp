@@ -894,9 +894,13 @@ run_test (int (*ptf) (size_t, size_t, int),
               et.user_time,
               et.system_time));
 
+  float time_result = 0.0;
+  if (iterations != 0)
+    time_result = (et.real_time / ACE_timer_t (iterations)) * 1000000;
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("time per call = %f usecs\n"),
-              (et.real_time / ACE_timer_t (iterations)) * 1000000));
+              time_result));
 
   return 0;
 }
