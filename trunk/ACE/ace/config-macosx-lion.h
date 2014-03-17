@@ -24,9 +24,6 @@
 # define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 #endif /* __x86_64__ */
 
-
-
-
 #define ACE_LACKS_UCONTEXT_H
 
 #endif // ACE_CONFIG_MACOSX_LION_H
