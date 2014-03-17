@@ -37,13 +37,8 @@ static ACE_Manual_Event evt ((unsigned int) 0);
 static long n_workers = 10;
 
 // Number of wakeups.
-#if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
-static ACE_Atomic_Op<ACE_Thread_Mutex, long>   n_awoken;
-static ACE_Atomic_Op<ACE_Thread_Mutex, long>   n_awoken2;
-#else
-static long                                    n_awoken;
-static long                                    n_awoken2;
-#endif
+static ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>   n_awoken;
+static ACE_Atomic_Op<ACE_SYNCH_MUTEX, long>   n_awoken2;
 
 // Explain usage and exit.
 static void
