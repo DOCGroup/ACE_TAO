@@ -668,9 +668,6 @@ private:
   /// Name of the local host (used when printing messages).
   static const ACE_TCHAR *local_host_;
 
-  /// Process id of the current process.
-  static pid_t pid_;
-
   /// Options flags used to hold the logger flag options, e.g.,
   /// STDERR, LOGGER, OSTREAM, MSG_CALLBACK, etc.
   static u_long flags_;
