@@ -508,7 +508,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Attempt to call register_initial_reference with a null Object.", // 27
       "Invalid component Id in portable interceptor.",             // 28
       "Invalid profile Id in portable interceptor.",               // 29
-      "Two or more Policy objects with the same PolicyType value supplied to Object::set_policy_overrides or PolicyManager::set_policy_overrides." // 30
+      "Two or more Policy objects with the same PolicyType value supplied to Object::set_policy_overrides or PolicyManager::set_policy_overrides.", // 30
       "Attempt to define a oneway operation with non-void result, out or inout parameters or user exceptions.", // 31
       "DII asked to create request for an implicit operation.",     // 32,
       "An OTS/XA integration xa_ call returned XAER_INVAL.",        // 33

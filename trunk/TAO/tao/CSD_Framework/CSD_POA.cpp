@@ -79,11 +79,14 @@ TAO_CSD_POA::new_POA (const String &name,
   TAO_CSD_Strategy_Repository *repo =
     ACE_Dynamic_Service<TAO_CSD_Strategy_Repository>::instance ("TAO_CSD_Strategy_Repository");
 
-  CSD_Framework::Strategy_var strategy = repo->find (name);
-
-  if (! ::CORBA::is_nil (strategy.in ()))
+  if (repo)
     {
-      poa->set_csd_strategy (strategy.in ());
+      CSD_Framework::Strategy_var strategy = repo->find (name);
+
+      if (! ::CORBA::is_nil (strategy.in ()))
+        {
+          poa->set_csd_strategy (strategy.in ());
+        }
     }
 
   return poa;
