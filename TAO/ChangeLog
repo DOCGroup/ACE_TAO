@@ -1,3 +1,11 @@
+Mon Mar 17 09:11:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/CSD_Framework/CSD_POA.cpp:
+          Fixed possible crash when pointer would be zero
+
+        * tao/SystemException.cpp:
+          Added missing comma
+
 Tue Mar 11 14:55:24 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Transport.h:
