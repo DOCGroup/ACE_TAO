@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 // $Id$
 
 #include "ace/OS_NS_string.h"
@@ -223,13 +222,7 @@ ACE_INLINE
 pid_t
 ACE_Log_Msg::getpid (void) const
 {
-  if (ACE_Log_Msg::pid_ == -2)
-    ACE_Log_Msg::pid_ = ACE_OS::getpid ();
-
-  return ACE_Log_Msg::pid_;
+  return ACE_OS::getpid ();
 }
 
-
-
 ACE_END_VERSIONED_NAMESPACE_DECL
-

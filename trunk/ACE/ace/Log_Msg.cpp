@@ -436,9 +436,6 @@ const ACE_TCHAR *ACE_Log_Msg::program_name_ = 0;
 /// Default is to use stderr.
 u_long ACE_Log_Msg::flags_ = ACE_Log_Msg::STDERR;
 
-/// Process id of the current process.
-pid_t ACE_Log_Msg::pid_ = -2;
-
 /// Current offset of msg_[].
 ptrdiff_t ACE_Log_Msg::msg_off_ = 0;
 
@@ -553,7 +550,6 @@ ACE_Log_Msg::sync (const ACE_TCHAR *prog_name)
       }
     }
 
-  ACE_Log_Msg::pid_ = ACE_OS::getpid ();
   ACE_Log_Msg::msg_off_ = 0;
 }
 
@@ -2430,7 +2426,6 @@ ACE_Log_Msg::dump (void) const
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nlocal_host_ = %s\n"),
               this->local_host_ ? this->local_host_
                                 : ACE_TEXT ("<unknown>")));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %d\n"), this->getpid ()));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nflags_ = 0x%x\n"), this->flags_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntrace_depth_ = %d\n"),
               this->trace_depth_));
