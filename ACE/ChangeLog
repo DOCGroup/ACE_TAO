@@ -1,3 +1,8 @@
+Mon Mar 17 10:20:30 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Manual_Event_Test.cpp:
+          Fixed data race
+
 Mon Mar 17 10:12:44 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Log_Msg.h:
