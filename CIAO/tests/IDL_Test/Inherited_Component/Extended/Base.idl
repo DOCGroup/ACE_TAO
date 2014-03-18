@@ -26,13 +26,19 @@ module Inherited
   };
 };
 
+#if !defined (CCM_NOEVENT)
+eventtype Message {};
+#endif
+
 module Inherited
 {
    component Base_comp
    {
       provides Inherited::base_interface prov_base;
       uses     Inherited::base_interface uses_base;
-
+#if !defined (CCM_NOEVENT)
+      publishes Message message_publisher;
+#endif
       attribute long base;
    };
 };

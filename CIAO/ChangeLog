@@ -1,3 +1,11 @@
+Tue Mar 18 14:38:53 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/Inherited_Component/Extended/Base.idl:
+        * tests/IDL_Test/Inherited_Component/Extended/Base.mpc:
+          Extended base component with a publishes, this triggers
+          a problem in the generated code, thanks to Sebastian Perk
+          <Sebastian dot Perk at hydrometer dot de> for reporting this
+
 Mon Mar 17 11:02:00 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Containers/Container_Base_T.cpp:
