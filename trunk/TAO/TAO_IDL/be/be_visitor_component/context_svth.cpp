@@ -242,7 +242,7 @@ be_visitor_context_svth::visit_publishes (be_publishes *node)
       << "::Components::Cookie * ck);" << be_uidt;
 
   os_ << be_uidt_nl << be_nl
-      << "private:" << be_idt_nl;
+      << "protected:" << be_idt_nl;
 
   os_ << "typedef std::map<ptrdiff_t," << be_nl
       << "                 ::" << obj_name
