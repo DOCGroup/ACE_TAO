@@ -1,3 +1,10 @@
+Tue Mar 18 14:40:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_component/context_svth.cpp:
+          Make the members for a publishes protected so that a derived
+          component can access them. Thanks to Sebastian Perk
+          <Sebastian dot Perk at hydrometer dot de> for reporting this
+
 Mon Mar 17 09:11:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/CSD_Framework/CSD_POA.cpp:
