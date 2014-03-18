@@ -28,7 +28,7 @@ project(Base_lem_gen) : ciaoidldefaults {
   }
 }
 
-project(Base_lem_stub) : ccm_svnt   {
+project(Base_lem_stub) : ccm_svnt {
   after += Base_lem_gen Base_stub
   libs  +=  Base_stub
 
@@ -52,7 +52,7 @@ project(Base_lem_stub) : ccm_svnt   {
   }
 }
 
-project(Base_stub) : ccm_stub   {
+project(Base_stub) : ccm_stub {
   after += Base_idl_gen
   libs  +=
 
@@ -76,7 +76,7 @@ project(Base_stub) : ccm_stub   {
   }
 }
 
-project(Base_exec) : ciao_executor   {
+project(Base_exec) : ciao_executor {
   after   += Base_lem_stub Base_stub
   sharedname = Base_exec
   libs += Base_stub Base_lem_stub
@@ -100,7 +100,7 @@ project(Base_exec) : ciao_executor   {
 }
 
 
-project(Base_svnt) : ciao_servant   {
+project(Base_svnt) : ciao_servant {
   after      +=   Base_lem_stub
   sharedname  = Base_svnt
   libs       += Base_stub Base_lem_stub
