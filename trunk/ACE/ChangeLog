@@ -1,3 +1,8 @@
+Fri Mar 21 19:58:03 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Map_Manager_Test.cpp:
+          Fix windows warnings
+
 Mon Mar 17 10:41:37 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Map_Manager_Test.cpp:
