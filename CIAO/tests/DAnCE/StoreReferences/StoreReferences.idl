@@ -1,0 +1,26 @@
+/**
+ * @file
+ * @author Michael Frommberger (michael.frommberger@gmx.net)
+ *
+ * $Id$
+ *
+ * component for testing binding and unbinding at the
+ * nameservice
+ */
+
+#ifndef STORE_REFERENCES_IDL_
+#define STORE_REFERENCES_IDL_
+
+#include  <Components.idl>
+
+module store_references_test
+{
+  component testComp
+  {
+  };
+
+   home testCompHome manages testComp
+   {
+   };
+};
+#endif
