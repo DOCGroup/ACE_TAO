@@ -1,0 +1,140 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+                          xmlns:Deployment="http://www.omg.org/Deployment"
+                          xmlns:xmi="http://www.omg.org/XMI"
+                          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                          xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>StoreReferences_Test</label>
+  <UUID>StoreReferences_Test</UUID>
+  <!-- Home implementation -->
+  <implementation xmi:id="testCompHomeImplementation">
+    <name>testCompHomeImplementation</name>
+    <source/>
+    <artifact xmi:idref="testCompExecArtifact"/>
+    <artifact xmi:idref="testCompSvntArtifact"/>
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>home factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_ComponentHome_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_store_references_test_testCompHome_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>testCompSvnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>testCompExec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <!-- Component implementation -->
+  <implementation xmi:id="testCompImplementation">
+    <name>testCompImplementation</name>
+    <source/>
+    <artifact xmi:idref="testCompExecArtifact"/>
+    <artifact xmi:idref="testCompSvntArtifact"/>
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.CCM.HomedComponent</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <!-- Home instance -->
+  <instance xmi:id="testCompHomeInstance">
+    <name>TestCompHome</name>
+    <node>Node1</node>
+    <source/>
+    <implementation xmi:idref="testCompHomeImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TestCompHome</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <!-- Component instance -->
+  <instance xmi:id="testCompInstance">
+    <name>TestComp</name>
+    <node>Node1</node>
+    <source/>
+    <implementation xmi:idref="testCompImplementation"/>
+    <configProperty>
+      <name>edu.vanderbilt.dre.CIAO.ComponentHomeId</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TestCompHome</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TestComp</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <!-- Artifacts declarations -->
+  <artifact xmi:id="testCompExecArtifact">
+    <name>testCompExec</name>
+    <source/>
+    <node/>
+    <location>StoreReferences_exec</location>
+  </artifact>
+  <artifact xmi:id="testCompSvntArtifact">
+    <name>testCompSvnt</name>
+    <source/>
+    <node/>
+    <location>StoreReferences_svnt</location>
+  </artifact>
+</Deployment:DeploymentPlan>
