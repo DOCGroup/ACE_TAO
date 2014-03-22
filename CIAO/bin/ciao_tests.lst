@@ -172,6 +172,7 @@ TAO/CIAO/tests/DAnCE/EM-Launch-Failures/run_test.pl:
 TAO/CIAO/tests/DAnCE/EM-Shutdown-Failures/run_test.pl:
 TAO/CIAO/tests/DAnCE/Executor-Destructor/run_test.pl:
 TAO/CIAO/tests/DAnCE/PartialShutdown/descriptors/run_test.pl:
+TAO/CIAO/tests/DAnCE/StoreReferences/run_test.pl:
 TAO/CIAO/tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl: !NO_IDL3_TO_XMI !CCM_NOEVENT
 TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Array/run_test.pl: !NO_IDL3_TO_XMI !CCM_NOEVENT
 TAO/CIAO/tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl: !NO_IDL3_TO_XMI !CCM_NOEVENT

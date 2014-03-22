@@ -1,3 +1,17 @@
+Sat Mar 22 13:39:42 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * tests/DAnCE/StoreReferences/DeploymentPlan.cdp:
+        * tests/DAnCE/StoreReferences/StoreReferences.idl:
+        * tests/DAnCE/StoreReferences/StoreReferences.mpc:
+        * tests/DAnCE/StoreReferences/StoreReferences_exec.h:
+        * tests/DAnCE/StoreReferences/StoreReferences_exec.cpp:
+        * tests/DAnCE/StoreReferences/client.cpp:
+        * tests/DAnCE/StoreReferences/run_test.pl:
+          Integrate unit test for bugzilla 4106, thanks to
+          Michael Frommberger <michael dot frommberger at gmx dot net>
+          for creating this
+
 Tue Mar 18 14:38:53 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IDL_Test/Inherited_Component/Extended/Base.idl:
