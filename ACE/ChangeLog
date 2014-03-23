@@ -1,3 +1,9 @@
+Sun Mar 23 22:55:42 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ACE+TAO+CIAO+DAnCE.json:
+          Exclude some OpenDDS logging macros from the test
+          coverage
+
 Fri Mar 21 19:58:03 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Map_Manager_Test.cpp:
