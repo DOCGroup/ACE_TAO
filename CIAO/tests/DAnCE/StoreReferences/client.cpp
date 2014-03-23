@@ -20,13 +20,13 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             // retrieve ns
             obj = orb->resolve_initial_references ("NameService");
             ns = CosNaming::NamingContextExt::_narrow (obj.in ());
-            if (true == CORBA::is_nil (obj.in ()))
-                ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Unable to resolve name server\n")));
+            if (CORBA::is_nil (obj.in ()))
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to resolve name server\n")));
         }
         catch (const CORBA::Exception& ex)
         {
             ex._tao_print_exception (ACE_TEXT ("Unable to resolve name server"));
-            return -1;
+            return 1;
         }
 
         try
@@ -35,20 +35,20 @@ int ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
             // retrieve deployed component
             obj = ns->resolve_str ("TestComp");
-            if (true == CORBA::is_nil (obj.in ()))
-                ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Unable to resolve deployed component\n")));
+            if (CORBA::is_nil (obj.in ()))
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to resolve deployed component\n")));
 
         }
         catch (const CORBA::Exception& ex)
         {
             ex._tao_print_exception (ACE_TEXT ("Unable to resolve deployed component"));
-            return -1;
+            return 2;
         }
     }
     catch (const CORBA::Exception& ex)
     {
         ex._tao_print_exception (ACE_TEXT ("Error while running test"));
-        return -1;
+        return 1;
     }
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("StoreReferences test OK\n")));

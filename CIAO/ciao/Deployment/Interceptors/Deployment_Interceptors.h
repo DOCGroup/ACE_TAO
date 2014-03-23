@@ -39,6 +39,10 @@ namespace CIAO
                          const ::CORBA::Any & reference,
                          const ::CORBA::Any & exception_thrown);
 
+    virtual void post_remove (const ::Deployment::DeploymentPlan & plan,
+                         ::CORBA::ULong instanceRef,
+                         const ::CORBA::Any & exception_thrown);
+
     virtual void configure(const Deployment::Properties&);
 
     CORBA::ORB_var orb_;

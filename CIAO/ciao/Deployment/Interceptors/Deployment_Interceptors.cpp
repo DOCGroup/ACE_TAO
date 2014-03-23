@@ -109,6 +109,53 @@ namespace CIAO
       }
   }
 
+  void CIAO_StoreReferences_i::post_remove (const ::Deployment::DeploymentPlan & plan,
+                                            ::CORBA::ULong instanceRef,
+                                            const ::CORBA::Any & exception_thrown)
+  {
+      const ::Deployment::InstanceDeploymentDescription &inst = plan.instance[instanceRef];
+
+      CIAO_DEBUG (9, (LM_TRACE, CLINFO
+                  "CIAO_StoreReferences_i::post_remove - "
+                  "Interceptor post remove for instance %C\n",
+                  plan.instance[instanceRef].name.in ()));
+
+      if (exception_thrown.type() != ::CORBA::_tc_null)
+      {
+          std::string result;
+          DAnCE::Utility::stringify_exception_from_any (exception_thrown,
+                  result);
+          CIAO_ERROR (3 , (LM_WARNING, CLINFO
+                      ACE_TEXT ("CIAO_StoreReferences_i::post_remove - ")
+                      ACE_TEXT ("Received exception while unregistering ")
+                      ACE_TEXT ("for instance ")
+                      ACE_TEXT ("<%C>:<%C>\n"),
+                      plan.instance[instanceRef].name.in (),
+                      result.c_str ()));
+          return;
+      }
+
+      for (CORBA::ULong i = 0; i < inst.configProperty.length (); ++i)
+      {
+          if (ACE_OS::strcmp (inst.configProperty[i].name.in (),
+                      DAnCE::REGISTER_NAMING) == 0)
+          {
+              const char * name = 0;
+              inst.configProperty[i].value >>= CORBA::Any::to_string (name, 0);
+
+              CIAO_DEBUG (9, (LM_TRACE, CLINFO
+                          "CIAO_StoreReferences_i::post_remove - "
+                          "Unregistering name %C for instance %C\n",
+                          name,
+                          plan.instance[instanceRef].name.in ()));
+
+              ::CosNaming::NamingContext_var ctx_safe =
+                  ::CosNaming::NamingContext::_duplicate (this->ctx_.in ());
+              Name_Utilities::unbind_object (name, ctx_safe.in ());
+          }
+      }
+  }
+
   void
   CIAO_StoreReferences_i::configure (const ::Deployment::Properties &props )
   {
