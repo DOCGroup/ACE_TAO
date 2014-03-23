@@ -80,6 +80,8 @@
             { line_regex: "CIAO::debug_level" },
             { line_regex: "DAnCE::debug_level" },
             { line_regex: "DANCE::debug_level" },
+            { line_regex: "VDBG" },
+            { line_regex: "VDBG_LVL" },
           ] },
           exclusion_reason: "policy indicates no need to test logging code",
         }
