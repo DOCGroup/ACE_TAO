@@ -1,3 +1,16 @@
+Sun Mar 23 13:04:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Remove registration from the naming service in the
+          post remove. Thanks to Michael Frommberger
+          <michael dot frommberger at gmx dot net> for providing this patch
+
+        * tests/DAnCE/StoreReferences/client.cpp:
+        * tests/DAnCE/StoreReferences/run_test.pl:
+          Small changes to make sure the test runs now perfect with the
+          patch integrated
+
 Sat Mar 22 13:39:42 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao_tests.lst:

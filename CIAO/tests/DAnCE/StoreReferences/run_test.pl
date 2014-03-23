@@ -44,8 +44,6 @@ $tg_exe_man = 0;
 $tg_executor = 0;
 $tg_client = 0;
 
-$nofail_plan = 'SimpleNoFailure.cdp';
-
 $status = 0;
 
 sub create_targets {
@@ -235,7 +233,7 @@ foreach $file (@files) {
     # start idl2 client to verify we are registered at naming service
     print "Testing NamingService registration of deployed component\n";
     $CL = $tg_client->CreateProcess ("client", "");
-    $status = $CL->SpawnWaitKill (120);
+    $status = $CL->SpawnWaitKill ($tg_client->ProcessStartWaitInterval ());
     if ($status != 0) {
         print STDERR "ERROR: NamingService registration failed [$status]!\n";
     }
@@ -257,18 +255,18 @@ foreach $file (@files) {
         # start idl2 client to verify we are no longer registered at naming service
         print "Testing NamingService deregistration of deployed component\n";
         $CL = $tg_client->CreateProcess ("client", "-ORBLogFile dummy.log");
-        $status = $CL->SpawnWaitKill (120);
-        if ($status == 0) {
-            print STDERR "ERROR: NamingService deregistration failed [$status]!\n";
+        $status = $CL->SpawnWaitKill ($tg_client->ProcessStartWaitInterval ());
+        if ($status == 2) {
+            print "Component successfully deregistered from NameService\n";
         }
         else {
-            print "Component successfully deregistered from NameService\n";
+            print STDERR "ERROR: NamingService deregistration failed [$status]!\n";
         }
     }
 
     delete_ior_files ();
     kill_open_processes ();
-    $tg_executor->DeleteFile ('dummy.log');
+    $tg_client->DeleteFile ('dummy.log');
     sleep 5;
 }
 
