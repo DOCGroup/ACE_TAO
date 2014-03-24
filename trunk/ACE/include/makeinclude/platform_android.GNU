@@ -87,7 +87,10 @@ DCFLAGS  += -ggdb
 DCCFLAGS += -ggdb
 DLD      = $(CXX)
 LD       = $(CXX)
-LIBS     += -ldl
+# make sure to add the required libs for RTTI and exceptions (libsupc++)
+# and a shared STL lib (libgnustl_shared by default)
+ANDROID_STL_DLL?=gnustl_shared
+LIBS     += -ldl -lsupc++ -l$(ANDROID_STL_DLL)
 
 ifeq ($(optimize),1)
   SOFLAGS += -Wl,-O3
