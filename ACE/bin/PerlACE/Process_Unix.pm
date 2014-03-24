@@ -223,14 +223,15 @@ sub CommandLine ()
         if (defined $self->{TARGET}->{LIBPATH}) {
             $libpath = PerlACE::concat_path ($libpath, $self->{TARGET}->{LIBPATH});
         }
+        # add working dir by default as for local executions
         my $run_script =
             # "if [ ! -e /tmp/.acerun ]; then mkdir /tmp/.acerun; fi\n".
             "cd $exedir\n".
-            "export LD_LIBRARY_PATH=$libpath:\$LD_LIBRARY_PATH\n".
-            "export DYLD_LIBRARY_PATH=$libpath:\$DYLD_LIBRARY_PATH\n".
-            "export LIBPATH=$libpath:\$LIBPATH\n".
-            "export SHLIB_PATH=$libpath:\$SHLIB_PATH\n".
-            "export PATH=\$PATH:$root/bin:$root/lib:$libpath\n";
+            "export LD_LIBRARY_PATH=$libpath:.:\$LD_LIBRARY_PATH\n".
+            "export DYLD_LIBRARY_PATH=$libpath:.:\$DYLD_LIBRARY_PATH\n".
+            "export LIBPATH=$libpath:.:\$LIBPATH\n".
+            "export SHLIB_PATH=$libpath:.:\$SHLIB_PATH\n".
+            "export PATH=\$PATH:$root/bin:$root/lib:$libpath:.\n";
         if (defined $self->{TARGET}->{dance_root}) {
           $run_script .=
             "export DANCE_ROOT=$self->{TARGET}->{dance_root}\n";
@@ -250,17 +251,19 @@ sub CommandLine ()
 
         while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {
             $run_script .=
-            "export $env_key=$env_value\n";
+            "export $env_key=\"$env_value\"\n";
         }
         $run_script .=
           "$commandline &\n";
         $run_script .=
           "MY_PID=\$!\n".
           "echo \$MY_PID > ".$self->{PIDFILE}."\n";
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            $run_script .=
+              "echo INFO: Process started remote with pid [\$MY_PID]\n";
+        }
         $run_script .=
           "wait \$MY_PID\n";
-        $run_script .=
-          "rm $self->{PIDFILE}\n";
         unless (open (RUN_SCRIPT, ">".$self->{SCRIPTFILE})) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                           "> failed to create ",$self->{SCRIPTFILE},"\n";
@@ -470,26 +473,24 @@ sub Spawn ()
     if (defined $self->{TARGET} && defined $self->{TARGET}->{REMOTE_SHELL}) {
         my $shell = $self->{TARGET}->{REMOTE_SHELL};
         my $pidfile = $self->{PIDFILE};
-        ## wait max 5 sec for pid file to appear
-        my $timeout = 5;
+        ## wait max 10 * $PerlACE::Process::WAIT_DELAY_FACTOR sec for pid file to appear
+        my $start_tm = time ();
+        my $max_wait = 10;
+        if ($PerlACE::Process::WAIT_DELAY_FACTOR > 0) {
+            $max_wait *= $PerlACE::Process::WAIT_DELAY_FACTOR;
+        }
         my $rc = 1;
-        while ($timeout-- != 0) {
-            $rc = int(`$shell 'test -e $pidfile && test -s $pidfile ; echo \$?'`);
-            if ($rc == 0) {
-                $timeout = 0;
-            } else {
-              sleep 1;
+        while ((time() - $start_tm) < $max_wait) {
+            select(undef, undef, undef, 0.2);
+            $rc = int(`$shell 'if [ -e $pidfile -a -s $pidfile ] ; then cat $pidfile; rm -f >/dev/null 2>&1; else echo 0; fi'`);
+            if ($rc != 0) {
+                $self->{REMOTE_PID} = $rc;
+                last;
             }
         }
-        if ($rc != 0) {
+        if (!defined $self->{REMOTE_PID}) {
             print STDERR "ERROR: Remote command failed <" . $cmdline . ">: $! No PID found.\n";
             return -1;
-        }
-        $self->{REMOTE_PID} = `$shell cat $pidfile`;
-        $self->{REMOTE_PID} =~ s/\s+//g;
-        system("$shell rm -f $pidfile 2>&1 >/dev/null");
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-            print STDERR "INFO: Process started remote with pid [",$self->{REMOTE_PID},"]\n";
         }
     }
 

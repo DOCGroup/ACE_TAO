@@ -103,6 +103,9 @@ sub GetConfigSettings ($)
     my $self = shift;
     my $config_name = shift;
     my $env_prefix = '';
+    my $fs_root;
+    my $tgt_fs_root;
+
     if (defined $config_name) {
         $env_prefix = $config_name."_";
     }
@@ -115,39 +118,78 @@ sub GetConfigSettings ($)
         # Fall back to naked ACE_ROOT if no config-specific one.
         $self->{ace_root} = $ENV{'ACE_ROOT'};
     }
+    $tgt_fs_root = dirname($self->{ace_root});
+    if (exists $ENV{'ACE_ROOT'}) {
+        $fs_root = dirname($ENV{'ACE_ROOT'});
+    } else {
+        $fs_root = $tgt_fs_root;
+    }
     $env_name = $env_prefix.'TAO_ROOT';
     if (exists $ENV{$env_name})
     {
       $self->{tao_root} = $ENV{$env_name};
+    } elsif ($fs_root ne $tgt_fs_root && -d "$fs_root/TAO") {
+        # flat directory structure
+        $self->{tao_root} = "$tgt_fs_root/TAO";
+    } elsif ($fs_root ne $tgt_fs_root && -d "$fs_root/ACE/TAO") {
+        # hierarchical struture
+        $self->{tao_root} = "$self->{ace_root}/TAO";
     } elsif (exists $ENV{'TAO_ROOT'}) {
-        $self->{tao_root} = $ENV{'TAO_ROOT'};
+        if ($fs_root ne $tgt_fs_root) {
+            $self->{tao_root} =
+                PerlACE::rebase_path ($ENV{'TAO_ROOT'}, $fs_root, $tgt_fs_root);
+        } else {
+            $self->{tao_root} = $ENV{'TAO_ROOT'};
+        }
     } else {
-        # assume there is a hierarchical struture
+        # fall back to assuming classic hierarchical struture
         $self->{tao_root} = "$self->{ace_root}/TAO";
     }
     $env_name = $env_prefix.'CIAO_ROOT';
     if (exists $ENV{$env_name}) {
         $self->{ciao_root} = $ENV{$env_name};
+    } elsif ($fs_root ne $tgt_fs_root && -d "$fs_root/CIAO") {
+        # flat directory structure
+        $self->{ciao_root} = "$tgt_fs_root/CIAO";
+    } elsif ($fs_root ne $tgt_fs_root && -d "$fs_root/ACE/TAO/CIAO") {
+        # hierarchical struture
+        $self->{ciao_root} = "$self->{tao_root}/CIAO";
     } elsif (exists $ENV{'CIAO_ROOT'}) {
-        $self->{ciao_root} = $ENV{'CIAO_ROOT'};
+        if ($fs_root ne $tgt_fs_root) {
+            $self->{ciao_root} =
+                PerlACE::rebase_path ($ENV{'CIAO_ROOT'}, $fs_root, $tgt_fs_root);
+        } else {
+            $self->{ciao_root} = $ENV{'CIAO_ROOT'};
+        }
     } else {
-        # assume there is a hierarchical struture
+        # fall back to assuming classic hierarchical struture
         $self->{ciao_root} = "$self->{tao_root}/CIAO";
     }
 
     $env_name = $env_prefix.'DANCE_ROOT';
     if (exists $ENV{$env_name}) {
         $self->{dance_root} = $ENV{$env_name};
+    } elsif ($fs_root ne $tgt_fs_root && -d "$fs_root/DAnCE") {
+        # flat directory structure
+        $self->{dance_root} = "$tgt_fs_root/DAnCE";
+    } elsif ($fs_root ne $tgt_fs_root && -d "$fs_root/ACE/TAO/DAnCE") {
+        # hierarchical struture
+        $self->{dance_root} = "$self->{tao_root}/DAnCE";
     } elsif (exists $ENV{'DANCE_ROOT'}) {
-        $self->{dance_root} = $ENV{'DANCE_ROOT'};
+        if ($fs_root ne $tgt_fs_root) {
+            $self->{dance_root} =
+                PerlACE::rebase_path ($ENV{'DANCE_ROOT'}, $fs_root, $tgt_fs_root);
+        } else {
+            $self->{dance_root} = $ENV{'DANCE_ROOT'};
+        }
     } else {
-        # assume there is a hierarchical struture
-        $self->{dance_root} = "$self->{tao_root}/DANCE";
+        # fall back to assuming classic hierarchical struture
+        $self->{dance_root} = "$self->{tao_root}/DAnCE";
     }
 
-    if ($self->{ace_root} ne $ENV{'ACE_ROOT'}) {
-      $self->{HOST_FSROOT} = dirname ($ENV{'ACE_ROOT'});
-      $self->{TARGET_FSROOT} = dirname ($self->{ace_root});
+    if ($fs_root ne $tgt_fs_root) {
+      $self->{HOST_FSROOT} = dirname ($fs_root);
+      $self->{TARGET_FSROOT} = dirname ($tgt_fs_root);
     }
 
     $env_name = $env_prefix.'EXE_SUBDIR';
@@ -274,6 +316,8 @@ sub GetConfigSettings ($)
         foreach my $x_env_s (@x_env) {
             if ($x_env_s =~ /(\w+)=(.*)/) {
                 $self->{EXTRA_ENV}->{$1} = $2;
+            } elsif (exists $ENV{$env_prefix.$x_env_s}) {
+                $self->{EXTRA_ENV}->{$x_env_s} = $ENV{$env_prefix.$x_env_s};
             }
         }
     }
@@ -416,7 +460,7 @@ sub AddLibPath ($)
         $self->{LIBPATH} = PerlACE::concat_path ($self->{LIBPATH}, $dir);
     } else {
         # add rebased path
-        $dir = Cwd::realpath (PerlACE::rebase_path ($dir, $self->{HOST_FSROOT}, $self->{TARGET_FSROOT}));
+        $dir = PerlACE::rebase_path ($dir, $self->{HOST_FSROOT}, $self->{TARGET_FSROOT});
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "Adding libpath $dir\n";
         }
@@ -474,15 +518,15 @@ sub WaitForFileTimed ($)
     my $self = shift;
     my $file = shift;
     my $timeout = shift;
-    my $newfile = $self->LocalFile($file);
+    my $newfile;
     if (defined $self->{REMOTE_SHELL} && defined $self->{REMOTE_FILETEST}) {
-        # If the target's config has a different ACE_ROOT, rebase the file
-        # from $ACE_ROOT to the target's root.
-        if ($self->ACE_ROOT () ne $ENV{'ACE_ROOT'}) {
-            $file = File::Spec->rel2abs($file);
-            $file = File::Spec->abs2rel($file, $ENV{'ACE_ROOT'});
-            $file = $self->{TARGET}->ACE_ROOT() . "/$file";
+        # Going to test on remote target so we have to make sure the
+        # local file path is mapped to what the target can access
+        $newfile = $self->LocalFile($file);
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            print STDERR "Waiting for remote $file using path $newfile\n";
         }
+
         $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
         my $cmd = $self->{REMOTE_SHELL};
         if ($self->{REMOTE_FILETEST} =~ /^\d*$/) {
@@ -491,15 +535,24 @@ sub WaitForFileTimed ($)
             $cmd .= $self->{REMOTE_FILETEST} . ' ' . $file;
         }
         my $rc = 1;
-        while ($timeout-- != 0) {
+        my $mark_tm = time (); # start time
+        while ($timeout > 0) {
             $rc = int(`$cmd`);
             if ($rc == 0) {
                 return 0;
             }
-            sleep 1;
+            select(undef, undef, undef, 0.1);
+            $timeout -= (time () - $mark_tm);
+            $mark_tm = time ();
         }
         return -1;
     } else {
+        # Going to test locally so we should not map the local
+        # file path, only expand it
+        $newfile = File::Spec->rel2abs($file);
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            print STDERR "Waiting for local $file using path $newfile\n";
+        }
         return PerlACE::waitforfile_timed ($newfile, $timeout);
     }
 }
