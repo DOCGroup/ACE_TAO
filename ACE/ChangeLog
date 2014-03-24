@@ -1,3 +1,13 @@
+Mon Mar 24 10:27:40 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/TestTarget.pm:
+          Improve remote (-shell) testing support.
+
+        * include/makeinclude/platform_android.GNU:
+          Add required standard libraries for rtti, exceptions and (shared)
+          stl support on Android.
+
 Sun Mar 23 22:55:42 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ACE+TAO+CIAO+DAnCE.json:
