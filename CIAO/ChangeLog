@@ -1,3 +1,8 @@
+Tue Mar 25 00:42:50 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Fixed compile errors with unicode enabled
+
 Sun Mar 23 13:04:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
