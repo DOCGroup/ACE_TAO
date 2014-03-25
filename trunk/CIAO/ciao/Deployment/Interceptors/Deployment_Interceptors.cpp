@@ -71,7 +71,7 @@ namespace CIAO
 
             if (!(reference >>= CORBA::Any::to_object (obj)))
               {
-                CIAO_ERROR (1, (LM_WARNING, CLINFO
+                CIAO_ERROR (1, (LM_ERROR, CLINFO
                                 "CIAO_StoreReferences_i::post_install - "
                                 "Unable to extract instance reference from Any\n"));
               }
@@ -125,11 +125,11 @@ namespace CIAO
           std::string result;
           DAnCE::Utility::stringify_exception_from_any (exception_thrown,
                   result);
-          CIAO_ERROR (3 , (LM_WARNING, CLINFO
-                      ACE_TEXT ("CIAO_StoreReferences_i::post_remove - ")
-                      ACE_TEXT ("Received exception while unregistering ")
-                      ACE_TEXT ("for instance ")
-                      ACE_TEXT ("<%C>:<%C>\n"),
+          CIAO_ERROR (3 , (LM_ERROR, CLINFO
+                      "CIAO_StoreReferences_i::post_remove - "
+                      "Received exception while unregistering "
+                      "for instance "
+                      "<%C>:<%C>\n",
                       plan.instance[instanceRef].name.in (),
                       result.c_str ()));
           return;
