@@ -255,19 +255,20 @@ foreach $file (@files) {
         # start idl2 client to verify we are no longer registered at naming service
         print "Testing NamingService deregistration of deployed component\n";
         $CL = $tg_client->CreateProcess ("client", "-ORBLogFile dummy.log");
-        $status = $CL->SpawnWaitKill ($tg_client->ProcessStartWaitInterval ());
+        $status = $CL->SpawnWaitKill ($tg_client->ProcessStartWaitInterval () + 60);
         if ($status == 2) {
             print "Component successfully deregistered from NameService\n";
+            $status = 0;
         }
         else {
             print STDERR "ERROR: NamingService deregistration failed [$status]!\n";
+            $status = 1;
         }
     }
 
-    delete_ior_files ();
     kill_open_processes ();
+    delete_ior_files ();
     $tg_client->DeleteFile ('dummy.log');
-    sleep 5;
 }
 
 exit $status;
