@@ -1,3 +1,8 @@
+Wed Mar 26 01:39:54 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DAnCE/StoreReferences/run_test.pl:
+          Fixed return value of the script itself
+
 Tue Mar 25 00:42:50 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
