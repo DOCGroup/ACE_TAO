@@ -1,3 +1,9 @@
+Thu Mar 27 09:34:54 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+          Added support for copying system libraries to emulator target.
+
 Mon Mar 24 10:27:40 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/Process_Unix.pm:
