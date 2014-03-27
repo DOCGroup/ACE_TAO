@@ -98,7 +98,8 @@ sub AddLibPath ($)
 sub CreateProcess
 {
     my $self = shift;
-    my $process = new PerlACE::ProcessAndroid (@_, $self);  return $process;
+    my $process = new PerlACE::ProcessAndroid ($self, @_);
+    return $process;
 }
 
 sub NeedReboot ($)

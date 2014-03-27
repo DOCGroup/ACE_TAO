@@ -17,6 +17,7 @@ sub new
     my $class = ref ($proto) || $proto;
     my $self = {};
 
+    $self->{TARGET} = shift;
     $self->{RUNNING} = 0;
     $self->{IGNOREEXESUBDIR} = 1;
     $self->{IGNOREHOSTROOT} = 0;
@@ -102,7 +103,7 @@ sub Wait ($)
     if (!defined $timeout || $timeout < 0) {
         waitpid ($self->{PROCESS}, 0);
     } else {
-        return TimedWait($self, $timeout);
+        return $self->TimedWait($timeout);
     }
 }
 
@@ -322,7 +323,10 @@ sub copy_executable ()
 
     if ($PerlACE::Static == 0) {
         my $vxtest_file = "$program" . '.vxtest';
-        copy_vxtest_files ($self, $vxtest_file);
+        $self->copy_vxtest_files ($vxtest_file);
+        if (defined $self->{TARGET} && defined $self->{TARGET}->{SYSTEM_LIBS}) {
+            $self->copy_system_libs ($self->{TARGET}->{SYSTEM_LIBS});
+        }
     }
 }
 
@@ -392,6 +396,22 @@ sub copy_library ()
     chdir ("$cdir");
 }
 
+sub copy_system_libs ()
+{
+    my $self = shift;
+    my $syslibs = shift;
+    my @liblist = split (',', $syslibs);
+    foreach my $lib (@liblist) {
+        if (-e $lib) {
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print STDERR "Found system library $lib\n";
+            }
+            $self->PutFile ($lib, "$self->{FSROOT}/lib/" . basename ($lib));
+        } else {
+            print STDERR "Cannot find system library $lib!\n";
+        }
+    }
+}
 
 sub PutFile ($)
 {
