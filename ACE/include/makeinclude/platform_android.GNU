@@ -89,8 +89,12 @@ DLD      = $(CXX)
 LD       = $(CXX)
 # make sure to add the required libs for RTTI and exceptions (libsupc++)
 # and a shared STL lib (libgnustl_shared by default)
-ANDROID_STL_DLL?=gnustl_shared
-LIBS     += -ldl -lsupc++ -l$(ANDROID_STL_DLL)
+static_libs_only ?=
+ANDROID_STL_DLL ?= gnustl_shared
+LIBS     += -ldl -lsupc++
+ifneq ($(static_libs_only),1)
+  LIBS   += -l$(ANDROID_STL_DLL)
+endif
 
 ifeq ($(optimize),1)
   SOFLAGS += -Wl,-O3
