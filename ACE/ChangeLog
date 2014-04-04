@@ -1,3 +1,8 @@
+Fri Apr  4 11:17:44 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * include/makeinclude/platform_android.GNU:
+          Make linking the shared STL library dependent on static_libs_only.
+
 Fri Apr  4 08:38:05 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/ProcessAndroid.pm:
@@ -5,10 +10,10 @@ Fri Apr  4 08:38:05 UTC 2014  Martin Corino  <mcorino@remedy.nl>
         * bin/PerlACE/TestTarget_Android.pm:
           Refactoring to improve functionality and stability of running
           tests on Android Virtual Device (AVD).
-        
+
         * bin/PerlACE/Process_Unix.pm:
           Small correction in remote PID retrieval.
-          
+
 
 Thu Mar 27 09:34:54 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
