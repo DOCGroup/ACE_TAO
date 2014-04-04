@@ -1,3 +1,10 @@
+Fri Apr  4 12:32:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_34_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          New C++ compiler feature test
+
 Fri Apr  4 11:17:44 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * include/makeinclude/platform_android.GNU:
