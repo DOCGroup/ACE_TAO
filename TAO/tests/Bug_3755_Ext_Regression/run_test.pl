@@ -54,6 +54,16 @@ sub run_one_test {
     my $server_svc_conf2 = $server->LocalFile ($svc2);
     my $dopt = "-ORBdebuglevel $debug_level";
 
+    # copy the configuation files
+    if ($server->PutFile ($svc1) == -1) {
+        print STDERR "ERROR: cannot set file <$server_svc_conf1>\n";
+        return 1;
+    }
+    if ($server->PutFile ($svc2) == -1) {
+        print STDERR "ERROR: cannot set file <$server_svc_conf2>\n";
+        return 1;
+    }
+
     $SV = $server->CreateProcess ("server",
         "-a \"AAA $dopt -ORBSvcConf $server_svc_conf1\" " .
         "-b \"BBB $dopt -ORBGestalt LOCAL -ORBSvcConf $server_svc_conf2\"");
@@ -69,42 +79,66 @@ sub run_one_test {
 }
 
 # Common tests.
-my @svcs = (
-    ["PI_Server", "pi_server_svc.conf", "pi_server_svc.conf"],
-);
+my @svcs = ();
+
+# add common runtime loaded library dependencies
+$server->AddRuntimeLibrary('TAO_PortableServer');
+$server->AddRuntimeLibrary('TAO_PI');
+$server->AddRuntimeLibrary('TAO_AnyTypeCode');
+$server->AddRuntimeLibrary('TAO_CodecFactory');
 
 if ($rt) {
     @svcs = (
         ["RTCORBA", "rt_svc.conf", "rt_svc.conf"],
     );
+    $server->AddRuntimeLibrary('TAO_RTCORBA');
 } elsif ($rtsched) {
     @svcs = (
         ["RTScheduler", "rt_scheduler_svc.conf", "rt_scheduler_svc.conf"],
     );
+    $server->AddRuntimeLibrary('TAO_RTCORBA');
+    $server->AddRuntimeLibrary('TAO_RTScheduler');
+    $server->AddRuntimeLibrary('TAO_Messaging');
+    $server->AddRuntimeLibrary('TAO_Valuetype');
+    $server->AddRuntimeLibrary('TAO_PI_Server');
 } elsif ($endpoint) {
     @svcs = (
         ["EndpointPolicy", "ep_svc.conf", "ep_svc.conf"],
     );
+    $server->AddRuntimeLibrary('TAO_EndpointPolicy');
 } elsif ($diffserv) {
     @svcs = (
         ["DiffServPolicy", "dp_svc.conf", "dp_svc.conf"]
     );
+    $server->AddRuntimeLibrary('TAO_DiffServPolicy');
 } elsif ($bidir) {
     @svcs = (
         ["BiDir_GIOP", "bidir_svc.conf", "bidir_svc.conf"],
     );
+    $server->AddRuntimeLibrary('TAO_BiDirGIOP');
 } elsif ($messaging) {
     @svcs = (
         ["Messaging", "messaging_svc.conf", "messaging_svc.conf"],
     );
+    $server->AddRuntimeLibrary('TAO_Messaging');
+    $server->AddRuntimeLibrary('TAO_Valuetype');
 } elsif ($csd) {
     @svcs = (
         ["CSD_Framework", "csd_svc.conf", "csd_svc.conf"],
     );
+    $server->AddRuntimeLibrary('TAO_CSD_Framework');
+    $server->AddRuntimeLibrary('TAO_CSD_ThreadPool');
 } elsif ($ziop) {
     @svcs = (
         ["ZIOP", "ziop_svc.conf", "ziop_svc.conf"],
     );
+    $server->AddRuntimeLibrary('TAO_ZIOP');
+    $server->AddRuntimeLibrary('TAO_Compression');
+} else {
+    @svcs = (
+        ["PI_Server", "pi_server_svc.conf", "pi_server_svc.conf"],
+    );
+    $server->AddRuntimeLibrary('TAO_PI_Server');
 }
 
 foreach my $svc_pair (@svcs) {

@@ -321,6 +321,7 @@ sub GetConfigSettings ($)
             }
         }
     }
+    $self->{RUNTIME_LIBDEP} = ();
 }
 
 ##################################################################
@@ -466,6 +467,13 @@ sub AddLibPath ($)
         }
         $self->{LIBPATH} = PerlACE::concat_path ($self->{LIBPATH}, $dir);
     }
+}
+
+sub AddRuntimeLibrary ($)
+{
+    my $self = shift;
+    my $lib = shift;
+    push(@{$self->{RUNTIME_LIBDEP}}, $lib);
 }
 
 sub SetEnv ($)

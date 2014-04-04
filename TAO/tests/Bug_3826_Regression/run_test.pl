@@ -22,6 +22,12 @@ my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 my $svc_conf = "orb_svc.conf";
 my $server_svc_conf = $server->LocalFile ($svc_conf);
 
+# copy the configuation file
+if ($server->PutFile ($svc_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svc_conf>\n";
+    return 1;
+}
+
 print STDOUT "Testing with -ORBSvcConf\n";
 
 $SV = $server->CreateProcess ("server",

@@ -21,6 +21,26 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 
 my $iorbase = "ior";
 
+my $svc_conf = 'svc.conf';
+
+# copy the configuation files
+if ($server->PutFile ($svc_conf) == -1) {
+    print STDERR "ERROR: cannot set file <".$server->LocalFile ($svc_conf).">\n";
+    exit 1;
+}
+if ($server->PutFile ($svc_conf.'.xml') == -1) {
+    print STDERR "ERROR: cannot set file <".$server->LocalFile ($svc_conf.'.xml').">\n";
+    exit 1;
+}
+if ($client->PutFile ($svc_conf) == -1) {
+    print STDERR "ERROR: cannot set file <".$client->LocalFile ($svc_conf).">\n";
+    exit 1;
+}
+if ($client->PutFile ($svc_conf.'.xml') == -1) {
+    print STDERR "ERROR: cannot set file <".$client->LocalFile ($svc_conf.'.xml').">\n";
+    exit 1;
+}
+
 @configurations =
     ({
         file => "ior_2",
