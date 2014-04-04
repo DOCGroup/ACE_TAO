@@ -1,3 +1,31 @@
+Fri Apr  4 08:40:43 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          Disabled a number of tests incompatible with AVD targets.
+
+        * tests/Bug_3251_Regression/run_test.pl:
+        * tests/Bug_3559_Regression/run_test.pl:
+        * tests/Bug_3755_Ext_Regression/run_test.pl:
+        * tests/Bug_3755_Regression/run_test.pl:
+        * tests/Bug_3826_Regression/run_test.pl:
+        * tests/Dynamic_TP/ORB_ThreadPool/run_test.pl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl:
+        * tests/HandleExhaustion/run_test.pl:
+        * tests/ORB_Local_Config/Bug_3049/run_test.pl:
+        * tests/ORB_Local_Config/Service_Dependency/run_test.pl:
+        * tests/Object_Loader/run_test.pl:
+        * tests/Optimized_Connection/run_test.pl:
+        * tests/RTCORBA/Banded_Connections/run_test.pl:
+        * tests/RTCORBA/Bug_3382_Regression/run_test.pl:
+        * tests/RTCORBA/Client_Propagated/run_test.pl:
+        * tests/RTCORBA/Linear_Priority/run_test.pl:
+        * tests/RTCORBA/Policy_Combinations/run_test.pl:
+        * tests/RTCORBA/Priority_Inversion_With_Bands/run_test.pl:
+        * tests/RTCORBA/Server_Declared/run_test.pl:
+        * tests/RTCORBA/Thread_Pool/run_test.pl:
+          Added missing support/instructions to be able to run these tests
+          on non-local targets.
+
 Tue Mar 18 14:40:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_component/context_svth.cpp:

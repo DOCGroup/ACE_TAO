@@ -10,6 +10,10 @@ use PerlACE::TestTarget;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
+# add dynamically loaded runtime lib dependencies
+$server->AddRuntimeLibrary ('TAO_PI');
+$server->AddRuntimeLibrary ('TAO_CodecFactory');
+
 $orb_log = "ORBLog.log";
 $orb_logfile = $server->LocalFile ($orb_log);
 $server->DeleteFile ($orb_log);

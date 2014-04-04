@@ -1,3 +1,15 @@
+Fri Apr  4 08:38:05 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+          Refactoring to improve functionality and stability of running
+          tests on Android Virtual Device (AVD).
+        
+        * bin/PerlACE/Process_Unix.pm:
+          Small correction in remote PID retrieval.
+          
+
 Thu Mar 27 09:34:54 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/ProcessAndroid.pm:

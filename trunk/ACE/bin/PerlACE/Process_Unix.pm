@@ -482,7 +482,7 @@ sub Spawn ()
         my $rc = 1;
         while ((time() - $start_tm) < $max_wait) {
             select(undef, undef, undef, 0.2);
-            $rc = int(`$shell 'if [ -e $pidfile -a -s $pidfile ] ; then cat $pidfile; rm -f >/dev/null 2>&1; else echo 0; fi'`);
+            $rc = int(`$shell 'if [ -e $pidfile -a -s $pidfile ] ; then cat $pidfile; rm -f $pidfile >/dev/null 2>&1; else echo 0; fi'`);
             if ($rc != 0) {
                 $self->{REMOTE_PID} = $rc;
                 last;
