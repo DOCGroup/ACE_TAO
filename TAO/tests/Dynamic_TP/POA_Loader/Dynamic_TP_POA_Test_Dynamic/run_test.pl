@@ -48,6 +48,12 @@ sub test_1
     my $server_logfile = $server->LocalFile ($lfname);
     my $svc_conf = $server->LocalFile($scname);
 
+    # copy the configuation file
+    if ($server->PutFile ($scname) == -1) {
+        print STDERR "ERROR: cannot set file <$svc_conf>\n";
+        return 1;
+    }
+
     $server->DeleteFile($lfname);
 
     $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
@@ -125,6 +131,12 @@ sub test_2
     my $client_iorfile = $client->LocalFile ($iorbase);
     my $server_logfile = $server->LocalFile ($lfname);
     my $svc_conf = $server->LocalFile($scname);
+
+    # copy the configuation file
+    if ($server->PutFile ($scname) == -1) {
+        print STDERR "ERROR: cannot set file <$svc_conf>\n";
+        return 1;
+    }
 
     $server->DeleteFile($lfname);
 
@@ -207,6 +219,12 @@ sub test_3
     my $server_logfile = $server->LocalFile ($lfname);
     my $svc_conf = $server->LocalFile($scname);
 
+    # copy the configuation file
+    if ($server->PutFile ($scname) == -1) {
+        print STDERR "ERROR: cannot set file <$svc_conf>\n";
+        return 1;
+    }
+
     $server->DeleteFile($lfname);
 
     $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
@@ -283,6 +301,12 @@ sub test_4
     my $client_iorfile = $client->LocalFile ($iorbase);
     my $server_logfile = $server->LocalFile ($lfname);
     my $svc_conf = $server->LocalFile($scname);
+
+    # copy the configuation file
+    if ($server->PutFile ($scname) == -1) {
+        print STDERR "ERROR: cannot set file <$svc_conf>\n";
+        return 1;
+    }
 
     $server->DeleteFile($lfname);
 

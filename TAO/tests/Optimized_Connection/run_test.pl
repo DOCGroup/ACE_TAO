@@ -21,6 +21,10 @@ my $client = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 
 my $iorbase = "oc.ior";
 my $client_iorfile = $client->LocalFile ($iorbase);
+if ($client->PutFile ($iorbase) == -1) {
+    print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+    exit 1;
+}
 
 $client_conf_base = "oc_svc$PerlACE::svcconf_ext";
 my $client_conf = $client->LocalFile ($client_conf_base);

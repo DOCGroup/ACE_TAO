@@ -26,6 +26,26 @@ $server->DeleteFile ($iorbase2);
 
 $status = 0;
 
+my $svc_conf = 'svc.conf';
+
+# copy the configuation files
+if ($server->PutFile ($svc_conf) == -1) {
+    print STDERR "ERROR: cannot set file <".$server->LocalFile ($svc_conf).">\n";
+    exit 1;
+}
+if ($server->PutFile ($svc_conf.'.xml') == -1) {
+    print STDERR "ERROR: cannot set file <".$server->LocalFile ($svc_conf.'.xml').">\n";
+    exit 1;
+}
+if ($client->PutFile ($svc_conf) == -1) {
+    print STDERR "ERROR: cannot set file <".$client->LocalFile ($svc_conf).">\n";
+    exit 1;
+}
+if ($client->PutFile ($svc_conf.'.xml') == -1) {
+    print STDERR "ERROR: cannot set file <".$client->LocalFile ($svc_conf.'.xml').">\n";
+    exit 1;
+}
+
 print STDERR "\n********** RTCORBA Priority Banded Connections Unit Test\n";
 
 # Different priority values for the bands on each OS.
@@ -49,6 +69,11 @@ elsif ($^O eq "irix") {
 else {
     $server_args =
         "-b bands.unix";
+    # since we only do remote testing on *nix platforms
+    if ($server->PutFile ('bands.unix') == -1) {
+        print STDERR "ERROR: cannot set file <".$server->LocalFile ('bands.unix').">\n";
+        exit 1;
+    }
 }
 
 $SV = $server->CreateProcess ("server", $server_args . " -n $server_iorfile1 -o $server_iorfile2"),

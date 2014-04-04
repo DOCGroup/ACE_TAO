@@ -18,6 +18,17 @@ $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile ($iorbase);
 $client->DeleteFile ($iorbase);
 
+my $svc_conf = 'svc.conf';
+
+# copy the configuation files
+if ($server->PutFile ($svc_conf) == -1) {
+    print STDERR "ERROR: cannot set file <".$server->LocalFile ($svc_conf).">\n";
+    exit 1;
+}
+if ($client->PutFile ($svc_conf) == -1) {
+    print STDERR "ERROR: cannot set file <".$client->LocalFile ($svc_conf).">\n";
+    exit 1;
+}
 
 $status = 0;
 

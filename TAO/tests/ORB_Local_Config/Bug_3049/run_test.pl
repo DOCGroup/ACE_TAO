@@ -11,6 +11,15 @@ use PerlACE::TestTarget;
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 $server->AddLibPath ('../lib');
 
+my $conffilebase = "a.conf";
+my $conffile = $server->LocalFile ($conffilebase);
+
+# copy the configuation file
+if ($server->PutFile ($conffilebase) == -1) {
+    print STDERR "ERROR: cannot set file <$conffile>\n";
+    return 1;
+}
+
 $SV = $server->CreateProcess ("Test");
 
 $test = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());

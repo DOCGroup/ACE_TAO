@@ -28,6 +28,9 @@ require PerlACE::ProcessAndroid;
 
 our @ISA = qw(PerlACE::TestTarget);
 
+$PerlACE::TestTarget_Android::EMULATOR_RUNNING = 0;
+$PerlACE::TestTarget_Android::LIBS = ();
+
 sub new
 {
     my $proto = shift;
@@ -48,7 +51,7 @@ sub new
     $self->{RUNNING} = 0;
 
     # Start the target.
-    if ($component == 1) {
+    if ($PerlACE::TestTarget_Android::EMULATOR_RUNNING == 0) {
         $self->start_target ();
     }
 
@@ -65,6 +68,8 @@ sub DESTROY
         }
         $self->KillAll ('emulator*');
         $self->KillAll ('adb');
+        $PerlACE::TestTarget_Android::EMULATOR_RUNNING = 0;
+        $PerlACE::TestTarget_Android::LIBS = ();
     }
 }
 
@@ -87,12 +92,19 @@ sub AddLibPath ($)
 {
     my $self = shift;
     my $dir = shift;
-    if ($PerlACE::Static == 0) {
-      if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-          print STDERR "Adding libpath $dir\n";
-      }
-      PerlACE::add_lib_path ($dir);
+    my $noarch = shift;
+
+    # If we have -Config ARCH, use the -ExeSubDir setting as a sub-directory
+    # of the lib path.  This is in addition to the regular LibPath.
+    if (!$noarch && defined $self->{ARCH}) {
+        $self->AddLibPath($dir, 1);
+        $dir .= '/' . $self->{EXE_SUBDIR};
     }
+
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+        print STDERR "Adding libpath $dir\n";
+    }
+    $self->{LIBPATH} = PerlACE::concat_path ($self->{LIBPATH}, $dir);
 }
 
 sub CreateProcess
@@ -222,6 +234,7 @@ sub start_target ()
     system ( $cmd );
 
     $self->{RUNNING} = 1;
+    $PerlACE::TestTarget_Android::EMULATOR_RUNNING = 1;
     return 0;
 }
 
@@ -233,7 +246,7 @@ sub WaitForFileTimed ($)
     my $silent;
 
     if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
-      $silent = "2> /dev/null"
+      $silent = ' > /dev/null 2>&1';
     }
 
     if ($PerlACE::Process::WAIT_DELAY_FACTOR > 0) {
@@ -249,11 +262,11 @@ sub WaitForFileTimed ($)
     # we will try to pull the file from the target to a local directory.
     # If succeed, the the file is there an we can continue.
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
-    my $fsroot_target = $ENV{'ANDROID_FS_ROOT'};
+    my $fsroot_target = $self->{FSROOT};
 
     my $cmd_copy_ior = $adb_process . ' pull ' . $newfile . ' ' .
                           File::Spec->tmpdir() . '/' .
-                          basename ($newfile) . ' $silent';
+                          basename ($newfile) . $silent;
 
     while ($timeout-- != 0) {
         # copy the ior back to the host sytem
@@ -273,9 +286,14 @@ sub DeleteFile ($)
     my $self = shift;
     my $file = shift;
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
+    my $silent;
+
+    if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
+      $silent = ' > /dev/null 2>&1';
+    }
 
     my $targetfile = $self->LocalFile ($file);
-    my $cmd = "$adb_process" . ' shell rm '. "$targetfile";
+    my $cmd = "$adb_process" . ' shell rm '. "$targetfile" . $silent;
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "DeleteFile cmd: $cmd\n";
@@ -375,6 +393,45 @@ sub GetFile ($)
     if ($? != 0) {
         return -1;
     }
+    return 0;
+}
+
+sub PutLib ($)
+{
+    my $self = shift;
+    my $newlib = shift;
+    my $tgtlib = shift;
+    my $silent;
+
+    if (!defined $ENV{'ACE_TEST_VERBOSE'}) {
+      $silent = "2> /dev/null"
+    }
+
+    foreach my $lib (@{$PerlACE::TestTarget_Android::LIBS}) {
+        if ($lib eq $newlib) {
+            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                print STDERR "Duplicate lib $newlib\n";
+            }
+            return 0;
+        }
+    }
+
+    my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
+
+    my $cmd = "$adb_process" . ' push '. "\"$newlib\" \"$tgtlib\" $silent";
+
+    if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+      print STDERR "PutLib cmd: $cmd\n";
+    }
+
+    system ( $cmd );
+    if ($? != 0) {
+        return -1;
+    }
+
+    # keep tabs on copied libs
+    push(@{$PerlACE::TestTarget_Android::LIBS}, $newlib);
+
     return 0;
 }
 

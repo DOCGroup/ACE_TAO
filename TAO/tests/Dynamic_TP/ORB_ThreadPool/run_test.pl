@@ -42,6 +42,20 @@ $middle->DeleteFile($siorbase);
 $middle->DeleteFile($miorbase);
 $client->DeleteFile($miorbase);
 
+# copy the configuation files
+if ($server->PutFile ('server.conf') == -1) {
+    print STDERR "ERROR: cannot set file <".$server->LocalFile ('server.conf').">\n";
+    exit 1;
+}
+if ($middle->PutFile ('middle.conf') == -1) {
+    print STDERR "ERROR: cannot set file <".$middle->LocalFile ('middle.conf').">\n";
+    exit 1;
+}
+if ($client->PutFile ('client.conf') == -1) {
+    print STDERR "ERROR: cannot set file <".$client->LocalFile ('client.conf').">\n";
+    exit 1;
+}
+
 $SV = $server->CreateProcess ("server", "$sdebug -ORBSvcConf server.conf -ORBDynamicThreadPoolName ORBPool -o $server_iorfile");
 $MD = $middle->CreateProcess ("middle", "$mdebug -ORBSvcConf middle.conf -ORBDynamicThreadPoolName ORBPool -o $middle_siorfile -k file://$middle_ciorfile");
 $CL = $client->CreateProcess ("client", "$cdebug -ORBSvcConf client.conf -k file://$client_iorfile -n $threads -s $delay -x");
@@ -62,13 +76,6 @@ if ($server->WaitForFileTimed ($siorbase,
 
 if ($server->GetFile ($siorbase) == -1) {
     print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    exit 1;
-}
-
-
-if ($middle->PutFile ($miorbase) == -1) {
-    print STDERR "ERROR: cannot set file <$middle_ciorfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     exit 1;
 }

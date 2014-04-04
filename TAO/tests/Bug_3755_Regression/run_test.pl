@@ -30,6 +30,16 @@ my $server_svc_conf2 = $server->LocalFile ($svc_conf2);
 $server->DeleteFile($mapping1);
 $server->DeleteFile($mapping2);
 
+# copy the configuation files
+if ($server->PutFile ($svc_conf1) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svc_conf1>\n";
+    return 1;
+}
+if ($server->PutFile ($svc_conf2) == -1) {
+    print STDERR "ERROR: cannot set file <$server_svc_conf2>\n";
+    return 1;
+}
+
 $SV = $server->CreateProcess ("server",
     "-a \"AAA -ORBdebuglevel $debug_level -ORBSvcConf $server_svc_conf1\" " .
     "-b \"BBB -ORBdebuglevel $debug_level -ORBGestalt LOCAL -ORBSvcConf $server_svc_conf2\" " .
