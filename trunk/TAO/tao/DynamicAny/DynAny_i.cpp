@@ -322,6 +322,14 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
         this->any_ >>= lhs_v;
         return ACE::is_equal (lhs_v, rhs_v);
       }
+    case CORBA::tk_longdouble:
+      {
+        CORBA::LongDouble rhs_v;
+        rhs_n->any_ >>= rhs_v;
+        CORBA::LongDouble lhs_v;
+        this->any_ >>= lhs_v;
+        return ACE::is_equal (lhs_v, rhs_v);
+      }
     case CORBA::tk_longlong:
       {
         CORBA::LongLong rhs_v;

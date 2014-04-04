@@ -74,6 +74,17 @@ Test_DynAny::run_test (void)
         DynamicAny::DynAny_var fa1 =
           dynany_factory->create_dyn_any (in1);
 
+        if (fa1->equal(fa1))
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "++ OK ++\n"));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Double Not equal\n"));
+            ++this->error_count_;
+          }
         fa1->insert_double (data.m_double1);
 
         CORBA::Double d_out =
@@ -128,6 +139,18 @@ Test_DynAny::run_test (void)
         in1 <<= data.m_longdouble2;
         DynamicAny::DynAny_var fa1 =
           dynany_factory->create_dyn_any (in1);
+
+        if (fa1->equal(fa1))
+          {
+            ACE_DEBUG ((LM_DEBUG,
+              "++ OK ++\n"));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Long Double Not equal\n"));
+            ++this->error_count_;
+          }
 
         fa1->insert_longdouble (data.m_longdouble1);
 
