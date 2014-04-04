@@ -1,3 +1,8 @@
+Fri Apr  4 16:13:34 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+          Type LongDouble was missing from the initializer.
+
 Fri Apr  4 15:33:08 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/DynamicAny/DynAny_i.cpp:
