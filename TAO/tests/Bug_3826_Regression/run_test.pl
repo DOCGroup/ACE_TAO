@@ -19,10 +19,16 @@ foreach $i (@ARGV) {
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-my $svc_conf = "orb_svc.conf";
+my $svc_conf = "svc.conf";
+my $orb_svc_conf = "orb_svc.conf";
 my $server_svc_conf = $server->LocalFile ($svc_conf);
+my $server_orb_svc_conf = $server->LocalFile ($orb_svc_conf);
 
 # copy the configuation file
+if ($server->PutFile ($orb_svc_conf) == -1) {
+    print STDERR "ERROR: cannot set file <$server_orb_svc_conf>\n";
+    return 1;
+}
 if ($server->PutFile ($svc_conf) == -1) {
     print STDERR "ERROR: cannot set file <$server_svc_conf>\n";
     return 1;
@@ -31,7 +37,7 @@ if ($server->PutFile ($svc_conf) == -1) {
 print STDOUT "Testing with -ORBSvcConf\n";
 
 $SV = $server->CreateProcess ("server",
-    "-a \"AAA -ORBdebuglevel $debug_level -ORBSvcConf $server_svc_conf -ORBGestalt LOCAL\" " .
+    "-a \"AAA -ORBdebuglevel $debug_level -ORBSvcConf $server_orb_svc_conf -ORBGestalt LOCAL\" " .
     "-b \"BBB\" -e 1");
 
 $server_status = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
