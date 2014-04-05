@@ -1,3 +1,12 @@
+Sat Apr  5 12:14:52 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3826_Regression/run_test.pl:
+        * tests/CodeSets/simple/run_test.pl:
+          Copy svc.conf to targets
+
+        * tests/CodeSets/simple/client.cpp:
+          Shutdown the orb to fix valgrind reported leaks
+
 Fri Apr  4 16:13:34 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/DynamicAny/DynAny_i.cpp:

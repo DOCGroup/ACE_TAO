@@ -138,6 +138,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_HAS_WCHAR */
 
       server->shutdown ();
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
