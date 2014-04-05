@@ -127,7 +127,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
       this->any_ <<= static_cast<CORBA::Double> (0);
       break;
     case CORBA::tk_longdouble:
-      this->any_ <<= static_cast<CORBA::LongDouble> (0);
+      this->any_ <<= static_cast<CORBA::LongDouble> (ACE_CDR_LONG_DOUBLE_INITIALIZER);
       break;
     case CORBA::tk_any:
       this->any_._tao_set_typecode (CORBA::_tc_null);
