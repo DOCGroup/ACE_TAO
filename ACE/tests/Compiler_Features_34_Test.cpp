@@ -23,7 +23,7 @@ run_main (int, ACE_TCHAR *[])
 
   B a;
   ACE_UNUSED_ARG (a);
-  
+
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("C++11 support ok\n")));
 
