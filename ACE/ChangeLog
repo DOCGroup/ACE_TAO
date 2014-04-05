@@ -1,3 +1,8 @@
+Sat Apr  5 10:13:26 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/OS_NS_stdlib.inl:
+          Fix ACE_OS::abort() on Android triggering segfaults.
+
 Fri Apr  4 12:32:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_34_Test.cpp:
