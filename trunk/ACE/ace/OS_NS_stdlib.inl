@@ -8,6 +8,9 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_errno.h"
 #include "ace/os_include/os_search.h"
+#if defined (ACE_ANDROID) && (__ANDROID_API__ < 19)
+# include "ace/os_include/os_signal.h"
+#endif
 
 #if defined (ACE_WCHAR_IN_STD_NAMESPACE)
 # define ACE_WCHAR_STD_NAMESPACE std
@@ -35,7 +38,9 @@ ACE_OS::_exit (int status)
 ACE_INLINE void
 ACE_OS::abort (void)
 {
-#if !defined (ACE_LACKS_ABORT)
+#if defined (ACE_ANDROID) && (__ANDROID_API__ < 19)
+  ACE_OS::_exit (128 + SIGABRT);
+#elif !defined (ACE_LACKS_ABORT)
   ::abort ();
 #else
   exit (1);
