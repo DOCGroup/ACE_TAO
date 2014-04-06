@@ -67,6 +67,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (do_shutdown)
         {
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Going to shutdown server\n"));
           hello->shutdown ();
         }
 
