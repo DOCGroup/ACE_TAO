@@ -1,3 +1,13 @@
+Sun Apr  6 18:57:09 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/TAO_Internal.cpp:
+          Fixed formatting of a debug statement consistent
+
+        * tests/Bug_3896_Regression/client.cpp:
+        * tests/Connect_Strategy_Test/client.cpp:
+          Print a message in the client before calling shutdown
+          on the server
+
 Sat Apr  5 19:30:37 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/DynamicAny/DynAny_i.cpp:

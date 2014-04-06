@@ -626,7 +626,7 @@ namespace
             if (TAO_debug_level > 0)
               {
                 TAOLIB_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) ORB_Core: ")
+                            ACE_TEXT ("TAO (%P|%t) - ORB_Core: ")
                             ACE_TEXT ("Unable to initialize ")
                             ACE_TEXT ("Codeset Manager\n")));
               }

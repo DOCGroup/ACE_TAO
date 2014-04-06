@@ -94,6 +94,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (shutdown_server)
         {
+          ACE_DEBUG ((LM_DEBUG,
+                     "(%P|%t) Calling shutdown on server\n"));
           hello->shutdown ();
         }
       else
