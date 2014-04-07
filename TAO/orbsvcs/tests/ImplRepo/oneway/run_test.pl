@@ -10,12 +10,12 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 $status = 0;
-$debug_level = '0';
+$debug_level = 0;
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
 	if ($ARGV[$i] eq '-debug') {
-	    $debug_level = '10';
+	    $debug_level = 10;
 	    $i++;
 	}
 	elsif ($ARGV[$i] eq "-servers") {
@@ -107,7 +107,8 @@ sub restore_output()
 
 sub server_setup ()
 {
-    $ACT->Arguments ("-d 2 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
+    my $act_dbg = "-ORBDebugLevel $debug_level -ORBLogFile act.log" if ($debug_level > 0);
+    $ACT->Arguments ("-d 5 -l -o $act_actiorfile $act_dbg -ORBInitRef ImplRepoService=file://$act_imriorfile");
 
     $ACT_status = $ACT->Spawn ();
     if ($ACT_status != 0) {
@@ -123,10 +124,12 @@ sub server_setup ()
 
     ##### Add servers to activator #####
     $srv->DeleteFile ($status_file_name);
+    my $srv_dbg = "-ORBDebugLevel $debug_level -ORBLogFile server.log " if ($debug_level > 0);
+
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
                     "add TestObject_a -c \"".
                     $srv_server_cmd.
-                    " -o server.ior -ORBUseIMR 1 ".
+                    " -o server.ior -ORBUseIMR 1 $srv_dbg".
                     "-ORBInitRef ImplRepoService=file://$imr_imriorfile\"");
 
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
