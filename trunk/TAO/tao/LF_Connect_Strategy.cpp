@@ -1,6 +1,7 @@
 // $Id$
 
 #include "tao/LF_Connect_Strategy.h"
+#include "tao/Nested_Upcall_Guard.h"
 #include "tao/LF_Multi_Event.h"
 #include "tao/Connection_Handler.h"
 #include "tao/LF_Follower.h"
@@ -11,9 +12,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LF_Connect_Strategy::TAO_LF_Connect_Strategy (
-    TAO_ORB_Core *orb_core)
-  : TAO_Connect_Strategy (orb_core)
+TAO_LF_Connect_Strategy::TAO_LF_Connect_Strategy (TAO_ORB_Core *orb_core,
+                                                  bool no_upcall)
+  : TAO_Connect_Strategy (orb_core),
+    no_upcall_ (no_upcall)
 {
 }
 
@@ -43,6 +45,8 @@ TAO_LF_Connect_Strategy::wait_i (TAO_LF_Event *ev,
 {
   if (transport == 0)
     return -1;
+
+  TAO::Nested_Upcall_Guard guard(transport, this->no_upcall_);
 
   TAO_Leader_Follower &leader_follower =
     this->orb_core_->leader_follower ();
