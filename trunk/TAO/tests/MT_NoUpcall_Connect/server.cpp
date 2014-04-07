@@ -5,6 +5,7 @@
 #include "ace/Task.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 const char *upper_ior = "corbaloc::127.10.100.4:34999/bogus";
