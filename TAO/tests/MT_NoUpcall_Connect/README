@@ -1,0 +1,20 @@
+$Id$
+
+This test represents a special case where a middle-tier server is waiting for
+a connect to complete and has to deal with an upcall request.
+
+While the MT_NOUPCALL wait strategy was working for reply waits, it was not
+being honored during connect waits. This test shows that connect waits will
+now also defer incoming requests. To do so, an invalid IP address must be used
+for the "upper" server address, since anything routable will either connect or
+fail too quickly for the test case to be observed.
+
+Run the test by starting the server:
+
+  ./server -ORBSvcConf mt_noupcall.conf
+
+And the client:
+
+  ./client
+
+Run the server without the -ORBSvcConf argument to observe the failure.

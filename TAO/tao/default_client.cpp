@@ -503,7 +503,7 @@ TAO_Default_Client_Strategy_Factory::create_connect_strategy (
       case TAO_LEADER_FOLLOWER_CONNECT :
         {
           ACE_NEW_RETURN (cs,
-                          TAO_LF_Connect_Strategy (orb_core),
+                          TAO_LF_Connect_Strategy (orb_core, this->wait_strategy_ == TAO_WAIT_ON_LF_NO_UPCALL),
                           0);
           break;
         }

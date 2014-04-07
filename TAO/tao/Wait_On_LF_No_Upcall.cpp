@@ -1,74 +1,13 @@
 // $Id$
 
 #include "tao/Wait_On_LF_No_Upcall.h"
-
-#include "tao/Transport.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB_Core_TSS_Resources.h"
-#include "tao/debug.h"
+#include "tao/Nested_Upcall_Guard.h"
 #include "tao/Leader_Follower.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class TAO_Transport;
-
 namespace TAO
 {
-  /**
-   * @class Nested_Upcall_Guard
-   *
-   * @brief: Magic class that sets the status of the thread in the
-   * TSS.
-   *
-   */
-  class Nested_Upcall_Guard
-  {
-  public:
-    // Maybe we should instead just take in a ptr to
-    // TAO_ORB_Core_TSS_Resources?  Or at least ORB_Core*?
-    explicit Nested_Upcall_Guard (TAO_Transport *t)
-      : t_ (t)
-    {
-      TAO_ORB_Core_TSS_Resources *tss =
-        t_->orb_core ()->get_tss_resources ();
-
-      tss->upcalls_temporarily_suspended_on_this_thread_ = true;
-
-      if (TAO_debug_level > 6)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) - Wait_On_LF_No_Upcall[%d]::wait, "
-                    "disabling upcalls\n", t->id ()));
-    }
-
-    ~Nested_Upcall_Guard (void)
-    {
-      TAO_ORB_Core_TSS_Resources *tss =
-        this->t_->orb_core ()->get_tss_resources ();
-
-      tss->upcalls_temporarily_suspended_on_this_thread_ = false;
-
-      if (TAO_debug_level > 6)
-        {
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - Wait_On_LF_No_Upcall[%d]::wait, "
-                      "re-enabling upcalls\n", this->t_->id ()));
-        }
-    }
-
-  private:
-    Nested_Upcall_Guard (void);
-
-    /// Disallow copying and assignment.
-    Nested_Upcall_Guard (const Nested_Upcall_Guard&);
-    Nested_Upcall_Guard &operator= (const Nested_Upcall_Guard&);
-
-  private:
-    /// Pointer to the transport that we plan to use.
-    TAO_Transport *t_;
-  };
-
-  //=================================================================
-
   Wait_On_LF_No_Upcall::Wait_On_LF_No_Upcall (TAO_Transport *t)
     : TAO_Wait_On_Leader_Follower (t)
   {

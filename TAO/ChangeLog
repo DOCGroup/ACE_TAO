@@ -1,3 +1,21 @@
+Mon Apr  7 16:16:15 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/LF_Connect_Strategy.h:
+        * tao/LF_Connect_Strategy.cpp:
+        * tao/Nested_Upcall_Guard.h:
+        * tao/Wait_On_LF_No_Upcall.cpp:
+        * tao/default_client.cpp:
+          Fix to enable client threads waiting for a connect completion
+          to enforce the same upcall deferral strategy as is used while
+          waiting for a reply. To do this the nested upcall guard used
+          by the LF_No_Upcall strategy is now shared with the connection
+          LF wait strategy. Its use is controled by the reply wait
+          configuration in the default client strategy factory.
+
+        * tests/MT_NoUpcall_Connect:
+        * bin/tao_orb_tests.lst:
+          A new test case to verify the new behavior.
+
 Mon Apr  7 16:14:40 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/oneway/run_test.pl:
