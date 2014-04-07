@@ -81,6 +81,11 @@ sub DESTROY
     if (defined $self->{SCRIPTFILE}) {
         unlink $self->{SCRIPTFILE};
     }
+    if (defined $self->{UNLINKLIST}) {
+        foreach my $ul (@{$self->{UNLINKLIST}}) {
+            unlink $ul;
+        }
+    }
 }
 
 ###############################################################################
@@ -91,6 +96,13 @@ sub Arguments
 
     if (@_ != 0) {
         $self->{ARGUMENTS} = shift;
+        if (defined $self->{SCRIPTFILE}) {
+          if (!defined $self->{UNLINKLIST}) {
+              $self->{UNLINKLIST} = ();
+          }
+          push(@{$self->{UNLINKLIST}}, $self->{SCRIPTFILE});
+          $self->{SCRIPTFILE} = undef;
+        }
     }
 
     return $self->{ARGUMENTS};
@@ -102,6 +114,13 @@ sub Executable
 
     if (@_ != 0) {
         $self->{EXECUTABLE} = shift;
+        if (defined $self->{SCRIPTFILE}) {
+          if (!defined $self->{UNLINKLIST}) {
+              $self->{UNLINKLIST} = ();
+          }
+          push(@{$self->{UNLINKLIST}}, $self->{SCRIPTFILE});
+          $self->{SCRIPTFILE} = undef;
+        }
     }
 
     my $executable = $self->{EXECUTABLE};
