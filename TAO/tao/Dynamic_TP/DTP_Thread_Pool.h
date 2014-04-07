@@ -106,6 +106,8 @@ protected:
 class TAO_Dynamic_TP_Export TAO_DTP_Thread_Pool
 {
 public:
+  friend class TAO_DTP_Thread_Pool_Threads;
+
   TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
                        CORBA::ULong id,
                        TAO_DTP_Definition &definition);
@@ -177,6 +179,10 @@ private:
 
   /// Lock to guard all members of the pool
   mutable TAO_SYNCH_MUTEX lock_;
+
+  /// synchronzing new threads with the requester of threads
+  TAO_SYNCH_MUTEX activation_lock_;
+  TAO_SYNCH_CONDITION activation_cond_;
 };
 
 /**

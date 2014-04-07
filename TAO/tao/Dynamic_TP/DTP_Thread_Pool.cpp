@@ -42,6 +42,25 @@ TAO_DTP_Thread_Pool_Threads::TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &p
 int
 TAO_DTP_Thread_Pool_Threads::svc (void)
 {
+
+  if (TAO_debug_level > 7)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) new DTP thread signaling waiter\n")));
+    }
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->pool_.activation_lock_,
+                      -1);
+    this->pool_.activation_cond_.broadcast ();
+  }
+  if (TAO_debug_level > 7)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) new DTP thread signal complete\n")));
+    }
+
   TAO_ORB_Core &orb_core = this->pool_.manager ().orb_core ();
   if (orb_core.has_shutdown ())
     return 0;
@@ -269,18 +288,41 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count, long thread_flags)
     orb_core.orb_params ()->thread_creation_flags ();
 
   int default_priority = 0;
-
+  int result = 0;
   // Activate the threads.
-  int result =
-    this->threads_.activate (flags,
-                             count,
-                             force_active,
-                             default_grp_id,
-                             default_priority,
-                             default_task,
-                             default_thread_handles,
-                             default_stack,
-                             stack_size_array);
+  if (TAO_debug_level > 7)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) new DTP thread requested\n")));
+    }
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->activation_lock_,
+                      -1);
+    result =
+      this->threads_.activate (flags,
+                               count,
+                               force_active,
+                               default_grp_id,
+                               default_priority,
+                               default_task,
+                               default_thread_handles,
+                               default_stack,
+                               stack_size_array);
+    if (TAO_debug_level > 7)
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO (%P|%t) new DTP thread requester waiting\n")));
+      }
+    this->activation_cond_.wait ();
+  }
+  if (TAO_debug_level > 7)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) new DTP thread requester running\n")));
+    }
+
   return result;
 }
 
@@ -293,7 +335,10 @@ TAO_DTP_Thread_Pool::TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
     definition_ (def),
     threads_ (*this),
     active_count_ (0),
-    new_thread_generator_ (*this)
+    new_thread_generator_ (*this),
+    lock_ (),
+    activation_lock_ (),
+    activation_cond_ (activation_lock_)
 {
   manager_.orb_core ().leader_follower ().set_new_leader_generator (
                                             &new_thread_generator_);
