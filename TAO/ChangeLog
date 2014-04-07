@@ -1,3 +1,23 @@
+Mon Apr  7 22:24:44 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_Thread_Pool.h:
+        * tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+          Added synchronization between the requester of new threads and
+          the and the newly spawned threads. This deals with a situation
+          where a heavily loaded machine takes a relatively long time to
+          activate a new thread allowing the requesting thread to spin,
+          repeatedly requesting more threads, perhaps 100s more.
+
+          The loop in question is part of the new test added to the
+          leader-follower wait strategy right before a client thread is
+          forced to become client leader. Although there is a thread yield
+          there, apparently that still isn't enough to ensure a new thread
+          is created to become the leader first.
+
+          I'm not entirely certain this patch will prevent all redundant
+          thread activation requests, but I do believe it will
+          significantly reduce the number.
+
 Mon Apr  7 18:55:17 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/MT_NoUpcall_Connect/server.cpp:
