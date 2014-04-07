@@ -1,3 +1,8 @@
+Mon Apr  7 18:55:17 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/MT_NoUpcall_Connect/server.cpp:
+          Scoreboard fix.
+
 Mon Apr  7 16:16:15 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/LF_Connect_Strategy.h:
