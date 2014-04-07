@@ -1,3 +1,8 @@
+Mon Apr  7 17:31:12 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ACE+TAO+CIAO+DAnCE.json:
+          Ignore OpenDDS Transport_debug_level
+
 Mon Apr  7 17:27:52 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ACE+TAO+CIAO+DAnCE.json:
