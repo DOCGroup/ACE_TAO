@@ -41,7 +41,7 @@ class TAO_Export TAO_LF_Connect_Strategy : public TAO_Connect_Strategy
 {
 public:
   /// Constructor
-  TAO_LF_Connect_Strategy (TAO_ORB_Core *orb);
+  TAO_LF_Connect_Strategy (TAO_ORB_Core *orb, bool no_upcall);
 
   /// Destructor
   ~TAO_LF_Connect_Strategy (void);
@@ -55,6 +55,7 @@ public:
 protected:
   virtual int wait_i (TAO_LF_Event *ev, TAO_Transport *t, ACE_Time_Value *val);
 
+  bool no_upcall_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
