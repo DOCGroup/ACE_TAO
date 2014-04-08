@@ -1,3 +1,12 @@
+Tue Apr  8 17:19:07 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3953_Regression/client.cpp:
+        * tests/Bug_3953_Regression/server.cpp:
+          Shutdown the ORB to fix valgrind reported memory leaks
+
+        * tests/Bug_3953_Regression/run_test.pl:
+          Copy svc.conf file to the targets
+
 Mon Apr  7 22:24:44 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_Thread_Pool.h:
