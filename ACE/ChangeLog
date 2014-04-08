@@ -1,3 +1,13 @@
+Tue Apr  8 19:27:23 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/SOCK_Connector.cpp:
+          Fix to allow the extended connection semantics on windows to be
+          overridden by adding #define ACE_NON_BLOCKING_BUG_DELAY 0 to
+          config.h prior to including config-win32.h. The default behavior
+          is unchanged but in cases where a tight connection timeout is
+          requested and the application's using local connections on newer
+          windows platforms, the wait then try again step may be skipped.
+
 Mon Apr  7 17:31:12 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ACE+TAO+CIAO+DAnCE.json:
