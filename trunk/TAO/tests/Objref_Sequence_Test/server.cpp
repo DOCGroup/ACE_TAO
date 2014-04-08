@@ -98,7 +98,6 @@ ServerServant::DeleteExtra (const ServerSequence &seq)
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Returned after deleting sequences\n"));
-
 }
 
 void

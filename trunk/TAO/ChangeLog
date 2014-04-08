@@ -1,3 +1,9 @@
+Tue Apr  8 17:55:52 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DiffServ/client.cpp:
+        * tests/DiffServ/server.cpp:
+          Shutdown orb/poa to fix valgrind reported memory leaks
+
 Tue Apr  8 17:19:07 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3953_Regression/client.cpp:
