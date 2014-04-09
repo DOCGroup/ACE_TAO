@@ -147,6 +147,17 @@ sub IgnoreExeSubDir
     return $self->{IGNOREEXESUBDIR};
 }
 
+sub IgnoreHostRoot
+{
+    my $self = shift;
+
+    if (@_ != 0) {
+        $self->{IGNOREHOSTROOT} = shift;
+    }
+
+    return $self->{IGNOREHOSTROOT};
+}
+
 ###############################################################################
 
 # Spawn the process and continue;
