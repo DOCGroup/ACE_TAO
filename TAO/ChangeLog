@@ -1,3 +1,14 @@
+Wed Apr  9 21:41:49 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Fix a case where a null pointer was supposed to be returned
+          but instead was dereferenced.
+
+        * tests/MT_NoUpcall_Connect/client.cpp:
+          Fix end-of-run access violation. The reference counted ORB Core
+          requires that all stubs and other entities need to be cleaned up
+          before the ORB is explicitly destroyed.
+
 Wed Apr  9 10:21:16 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
 
         * bin/tao_orb_tests.lst:
