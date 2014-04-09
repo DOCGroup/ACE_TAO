@@ -30,6 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-o <iorfile>"
+                           "-s <shutdown_iorfile>"
                            "\n",
                            argv [0]),
                           -1);
@@ -65,24 +66,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     policies[1] =
       rootPOA->create_servant_retention_policy (PortableServer::RETAIN );
 
-
     // ID Assignment Policy
     policies[2] =
       rootPOA->create_id_assignment_policy (PortableServer::USER_ID );
 
     // Request Processing Policy
     policies[3] =
-      rootPOA->create_request_processing_policy (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY );
+      rootPOA->create_request_processing_policy (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY);
 
     // Threading policy
     policies[4] =
-      rootPOA->create_thread_policy (PortableServer::ORB_CTRL_MODEL  );
+      rootPOA->create_thread_policy (PortableServer::ORB_CTRL_MODEL);
 
     PortableServer::POA_var demoPOA
       = rootPOA->create_POA ("HelloWorldServer",
                               poa_manager.in (),
-                              policies
-                              );
+                              policies);
 
     for (CORBA::ULong i = 0;
         i < policies.length ();
@@ -122,7 +121,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::ObjectId_var oid =  PortableServer::string_to_ObjectId ("hello");
         demoPOA->activate_object_with_id (oid.in (),  hello);
 
-
         // Create an object reference.
         CORBA::Object_var myhello = demoPOA->id_to_reference(oid.in());
 
@@ -134,14 +132,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         out.close();
     }
 
-
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
     poa_manager->activate ();
 
     std::cout << ior_output_file << " is ready " << std::endl;
     orb->run ();
-
 
     // Destroy the POA, waiting until the destruction terminates
     rootPOA->destroy (1, 1);

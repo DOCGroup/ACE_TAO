@@ -5,7 +5,6 @@
 
 Client_ORBInitializer::Client_ORBInitializer ()
 {
-
 }
 
 void
