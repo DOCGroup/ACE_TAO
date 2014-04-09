@@ -2,7 +2,8 @@
 # $Id$
 #
 # This file should allow to build ACE for mingw32 with mingw tools.
-#
+
+ACE_PLATFORM_CONFIG ?= config-win32.h
 
 mingw32 = 1
 
