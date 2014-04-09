@@ -1,3 +1,8 @@
+Wed Apr  9 08:22:45 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_VMS.pm:
+          Added missing IgnoreHostRoot() method.
+
 Wed Apr  9 07:30:51 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/ProcessAndroid.pm:
