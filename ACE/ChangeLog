@@ -1,3 +1,9 @@
+Wed Apr  9 07:30:51 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/ProcessAndroid.pm:
+          Copy new executable if changed through Executable() method.
+          Some code cleanup.
+
 Tue Apr  8 19:27:23 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/SOCK_Connector.cpp:
