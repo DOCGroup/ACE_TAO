@@ -285,7 +285,7 @@ TAO/tests/Crash_On_Write/run_test.pl: !ST !Win32
 TAO/tests/Mixed_Sync_ASync_Events/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Mixed_Sync_ASync_Events/run_exclusive_rw.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/MT_NoUpcall_Client_Leader/run_test.pl: !ST !CORBA_E_MICRO !NO_MESSAGING
-TAO/tests/MT_NoUpcall_Connnect/run_test.pl: !ST !CORBA_E_MICRO !NO_MESSAGING
+TAO/tests/MT_NoUpcall_Connect/run_test.pl: !ST !CORBA_E_MICRO !NO_MESSAGING
 TAO/tests/Nested_Upcall_Crash/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !OpenVMS_IA64Crash !QUICK
 TAO/tests/Nested_Upcall_Crash/run_test.pl -quick: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !OpenVMS_IA64Crash QUICK
 TAO/tests/NestedUpcall/Simple/run_test.pl: !ST
