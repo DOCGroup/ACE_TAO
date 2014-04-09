@@ -21,14 +21,11 @@ public:
   // Destructor
   virtual ~Demo_HelloWorld_i (void);
 
-  virtual void sayHello (
-      const char * msg
-    );
+  virtual void sayHello (const char * msg);
 
   virtual void shutdown();
 
 private:
-
   CORBA::ORB_var orb_;
 };
 

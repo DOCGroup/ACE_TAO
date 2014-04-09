@@ -14,16 +14,12 @@ Demo_HelloWorld_i::~Demo_HelloWorld_i (void)
 {
 }
 
-void Demo_HelloWorld_i::sayHello (
-    const char * msg
-  )
+void Demo_HelloWorld_i::sayHello (const char * msg)
 {
   ACE_OS::sleep(1);
   // Add your implementation here
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t)Demo_HelloWorld_i::sayHello %C\n"), msg));
 }
-
-
 
 void
 Demo_HelloWorld_i::shutdown()

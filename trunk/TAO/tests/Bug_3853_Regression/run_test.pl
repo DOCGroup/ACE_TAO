@@ -130,7 +130,6 @@ if ($server_status != 0) {
     $status = 1;
 }
 
-
 $server1->GetStderrLog();
 $server2->GetStderrLog();
 $client->GetStderrLog();

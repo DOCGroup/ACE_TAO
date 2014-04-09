@@ -1,3 +1,13 @@
+Wed Apr  9 09:16:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3853_Regression/Client_ORBInitializer.cpp:
+        * tests/Bug_3853_Regression/Hello_i.h:
+        * tests/Bug_3853_Regression/Hello_i.cpp:
+        * tests/Bug_3853_Regression/client_interceptor.cpp:
+        * tests/Bug_3853_Regression/run_test.pl:
+        * tests/Bug_3853_Regression/server.cpp:
+          Layout changes
+
 Tue Apr  8 17:55:52 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DiffServ/client.cpp:
