@@ -123,17 +123,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     result = (upcall_end > ACE_Time_Value::zero && upcall_end <= ping_end) ? 0 : 1;
 
-#if 0
-    int retries = 120;
-    while (upcall_end == ACE_Time_Value::zero && retries-- > 0)
-      {
-        ACE_Time_Value delay (1,0);
-        orb_->perform_work (&delay);
-      }
-
-#endif
-
     intf->farewell ();
+    intf = Test_Idl::SharedIntf::_nil ();
+    orb_->destroy ();
 
     ACE_DEBUG ((LM_INFO,"(%P|%t) Client Test %C\n",
                 (result == 0 ? "succeeded":"failed")));

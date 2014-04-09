@@ -476,10 +476,10 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
                 }
               return this->get_active_server (jo_key, pid);
             }
-        }
-      else
-        {
-          return si;
+          else
+            {
+              return si;
+            }
         }
     }
 
