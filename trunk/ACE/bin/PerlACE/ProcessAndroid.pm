@@ -115,12 +115,16 @@ sub Executable
     if (@_ != 0) {
         $self->{EXECUTABLE} = shift;
         if (defined $self->{SCRIPTFILE}) {
-          if (!defined $self->{UNLINKLIST}) {
-              $self->{UNLINKLIST} = ();
-          }
-          push(@{$self->{UNLINKLIST}}, $self->{SCRIPTFILE});
-          $self->{SCRIPTFILE} = undef;
+            if (!defined $self->{UNLINKLIST}) {
+                $self->{UNLINKLIST} = ();
+            }
+            push(@{$self->{UNLINKLIST}}, $self->{SCRIPTFILE});
+            $self->{SCRIPTFILE} = undef;
         }
+        # copy the (new) test executable to the target
+        # previously scanned .vxtest files and detected libraries
+        # will not be scanned/copied twice
+        $self->copy_executable ();
     }
 
     my $executable = $self->{EXECUTABLE};
@@ -132,12 +136,6 @@ sub Executable
         $executable = PerlACE::rebase_path ($executable,
                                             $ENV{'ACE_ROOT'},
                                             $self->{TARGET}->ACE_ROOT());
-    }
-
-    if ($self->{IGNOREHOSTROOT} == 0) {
-        if (PerlACE::is_vxworks_test()) {
-            $executable = PerlACE::VX_HostFile ($executable);
-        }
     }
 
     if ($self->{IGNOREEXESUBDIR}) {
