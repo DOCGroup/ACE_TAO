@@ -5,6 +5,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.5 and ACE-6.2.6
 
 . Added optional socket connection optimization for Windows
 
+. Improve functionality and stability of running tests on
+  Android Virtual Device (AVD).
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.4 and ACE-6.2.5
 ====================================================
 
