@@ -1,3 +1,8 @@
+Thu Apr 10 17:50:33 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/SSL/SSL_Context.cpp:
+          Removed not needed semi colon
+
 Thu Apr 10 11:54:12 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_02_Test.cpp:
