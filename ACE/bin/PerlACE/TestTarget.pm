@@ -526,11 +526,9 @@ sub WaitForFileTimed ($)
     my $self = shift;
     my $file = shift;
     my $timeout = shift;
-    my $newfile;
+    # expand path and possibly map to remote target root
+    my $newfile = $self->LocalFile($file);
     if (defined $self->{REMOTE_SHELL} && defined $self->{REMOTE_FILETEST}) {
-        # Going to test on remote target so we have to make sure the
-        # local file path is mapped to what the target can access
-        $newfile = $self->LocalFile($file);
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "Waiting for remote $file using path $newfile\n";
         }
@@ -555,9 +553,6 @@ sub WaitForFileTimed ($)
         }
         return -1;
     } else {
-        # Going to test locally so we should not map the local
-        # file path, only expand it
-        $newfile = File::Spec->rel2abs($file);
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "Waiting for local $file using path $newfile\n";
         }

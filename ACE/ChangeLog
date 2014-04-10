@@ -1,3 +1,8 @@
+Thu Apr 10 07:50:23 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/TestTarget.pm:
+          Fix file mapping problem on OpenVMS.
+
 Wed Apr  9 13:11:09 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_mingw32.GNU:
