@@ -18,8 +18,6 @@
 // does not compile the platform is just too broken.
 #include <set>
 
-
-
 int
 run_main (int, ACE_TCHAR *[])
 {

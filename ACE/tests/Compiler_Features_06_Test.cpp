@@ -23,8 +23,6 @@
 // header.  Only a few platforms enforce this though...
 #include <functional>
 
-
-
 int
 run_main (int, ACE_TCHAR *[])
 {

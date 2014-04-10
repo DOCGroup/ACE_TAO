@@ -19,8 +19,6 @@
 #include <set>
 #include <string>
 
-
-
 int
 run_main (int, ACE_TCHAR *[])
 {
