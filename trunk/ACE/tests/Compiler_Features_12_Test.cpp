@@ -14,8 +14,6 @@
 
 #include "test_config.h"
 
-
-
 template<typename T>
 struct Pair
 {

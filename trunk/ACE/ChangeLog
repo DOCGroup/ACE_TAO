@@ -1,3 +1,21 @@
+Thu Apr 10 11:54:12 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_02_Test.cpp:
+        * tests/Compiler_Features_04_Test.cpp:
+        * tests/Compiler_Features_05_Test.cpp:
+        * tests/Compiler_Features_06_Test.cpp:
+        * tests/Compiler_Features_07_Test.cpp:
+        * tests/Compiler_Features_11_Test.cpp:
+        * tests/Compiler_Features_12_Test.cpp:
+          Layout changes
+
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+        * tests/Compiler_Features_30_Test.cpp:
+          Removed this test, an empty initializer list for
+          an array of unknown size is illegal according to the
+          C++ spec
+
 Thu Apr 10 07:50:23 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/TestTarget.pm:
