@@ -1,3 +1,8 @@
+Thu Apr 10 12:52:30 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/tao.doxygen:
+          Let doxygen handle pidl files as idl files
+
 Wed Apr  9 21:41:49 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
