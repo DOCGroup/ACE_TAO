@@ -318,7 +318,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
         {
           ACE_DEBUG ((LM_DEBUG, "Ignoring argument <%s>\n",
                       current_arg));
-          arg_shifter.consume_arg ();
+          arg_shifter.ignore_arg ();
         }
     }
 }
