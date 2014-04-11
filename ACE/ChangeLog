@@ -1,3 +1,9 @@
+Fri Apr 11 21:26:28 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/SSL/SSL_Context.cpp:
+          Scoreboard cleanup. The directory add feature discussed in
+          bug 3337 still doesn't work on windows.
+
 Thu Apr 10 17:50:33 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/SSL/SSL_Context.cpp:

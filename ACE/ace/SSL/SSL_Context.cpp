@@ -406,10 +406,10 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
 
       // SSL_add_dir_cert_subjects_to_stack is defined at 0.9.8a (but not
       // on OpenVMS or Mac Classic); it may be available earlier. Change
-      // this comparison if so.
+      // this comparison if so. It's still (1.0.1g) broken on windows too.
 #if defined (OPENSSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x0090801fL)
 #  if !defined (OPENSSL_SYS_VMS) && !defined (OPENSSL_SYS_MACINTOSH_CLASSIC)
-#    if !defined (OPENSSL_SYS_WIN32) || (OPENSSL_VERSION_NUMBER > 0x0090807fL)
+#    if !defined (OPENSSL_SYS_WIN32)
 
       if (ca_dir != 0)
         {
@@ -430,7 +430,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
               return -1;
             }
         }
-#    endif /* !OPENSSL_SYS_WIN32 || OPENSSL_VERSION_NUMBER >= 0x0090807fL */
+#    endif /* !OPENSSL_SYS_WIN32 */
 #  endif /* !OPENSSL_SYS_VMS && !OPENSSL_SYS_MACINTOSH_CLASSIC */
 #endif /* OPENSSL_VERSION_NUMBER >= 0.9.8a release */
 
