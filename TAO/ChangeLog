@@ -1,3 +1,10 @@
+Fri Apr 11 21:38:18 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Trading/TT_Info.cpp:
+          Fix the skipping of unprocessed args so downstream functions
+          can have a go. This may be related to the scoreboard failures
+          but probably not.
+
 Thu Apr 10 12:52:30 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/tao.doxygen:
