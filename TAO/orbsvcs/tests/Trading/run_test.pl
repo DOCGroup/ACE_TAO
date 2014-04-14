@@ -47,7 +47,7 @@ $SV = $server->CreateProcess ("../../Trading_Service/tao_costrading",
 
 $CL1 = $export_test->CreateProcess ("export_test",
                                    "-ORBInitRef TradingService=corbaloc:::$port/TradingService " .
-                                   "-d $export_ready_file " .
+                                   "-d $ready " .
                                    "-quiet");
 
 $CL2 = $import_test->CreateProcess ("import_test",

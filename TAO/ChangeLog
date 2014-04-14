@@ -1,3 +1,9 @@
+Mon Apr 14 13:19:14 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Trading/run_test.pl:
+          The corresponding fix to the script to give the correct
+          ready file name to the exporter.
+
 Fri Apr 11 21:38:18 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Trading/TT_Info.cpp:
