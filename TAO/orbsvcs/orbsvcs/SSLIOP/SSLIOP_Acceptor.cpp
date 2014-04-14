@@ -559,7 +559,7 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) ")
                       ACE_TEXT ("SSLIOP_Acceptor::open_i - ")
-                      ACE_TEXT ("listening on: <%s:%u>\n"),
+                      ACE_TEXT ("listening on: <%C:%u>\n"),
                       this->hosts_[i],
                       this->ssl_component_.port));
         }

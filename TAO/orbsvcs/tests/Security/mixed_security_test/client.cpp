@@ -166,21 +166,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ClientTest::Results restricted_results =
         restricted.run (ClientTest::Results(true, false));
       ACE_DEBUG ((LM_DEBUG,
-                  "===> Restricted test %s: secure=%d, non-secure=%d\n",
+                  ACE_TEXT ("===> Restricted test %C: secure=%d, non-secure=%d\n"),
                   restricted_results.successful ? "PASSED" : "FAILED",
                   restricted_results.secure,
                   restricted_results.non_secure));
 
-      ACE_DEBUG ((LM_DEBUG, "mixed_security/client: set up permitted test\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("mixed_security/client: set up permitted test\n")));
       // Run the permitted test
       ClientTest permitted (orb.in (),
                             TAO_Mixed_Security_Test::permitted_ior);
 
-      ACE_DEBUG ((LM_DEBUG, "mixed_security/client: running permitted test\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("mixed_security/client: running permitted test\n")));
       ClientTest::Results permitted_results =
         permitted.run (ClientTest::Results(true, true));
       ACE_DEBUG ((LM_DEBUG,
-                  "===> Permitted test %s: secure=%d, non-secure=%d\n",
+                  ACE_TEXT ("===> Permitted test %C: secure=%d, non-secure=%d\n"),
                   permitted_results.successful ? "PASSED" : "FAILED",
                   permitted_results.secure,
                   permitted_results.non_secure));
@@ -200,7 +200,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (CORBA::Exception& ex)
     {
       ex._tao_print_exception
-        ("mized_security/client: caught unexpected exception ");
+        (ACE_TEXT ("mixed_security/client: caught unexpected exception "));
       return 1;
     }
 

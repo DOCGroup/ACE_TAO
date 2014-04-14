@@ -95,14 +95,11 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
 // Parses a X509 path. Beware: This function modifies
 // the buffer pointed to by arg!
 int
-TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char **path)
+TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char *&path)
 {
-  ACE_ASSERT (arg != 0);
-  ACE_ASSERT (path != 0);
-
   char *lst = 0;
   const char *type_name = ACE_OS::strtok_r (arg, ":", &lst);
-  *path = ACE_OS::strtok_r (0, "", &lst);
+  path = CORBA::string_dup (ACE_OS::strtok_r (0, "", &lst));
 
   if (ACE_OS::strcasecmp (type_name, "ASN1") == 0)
       return SSL_FILETYPE_ASN1;
@@ -117,10 +114,10 @@ TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char **path)
 int
 TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 {
-  char *certificate_path = 0;
-  char *private_key_path = 0;
-  char *dhparams_path = 0;
-  char *ca_file = 0;
+  CORBA::String_var certificate_path;
+  CORBA::String_var private_key_path;
+  CORBA::String_var dhparams_path;
+  CORBA::String_var ca_file;
   CORBA::String_var ca_dir;
   ACE_TCHAR *rand_path = 0;
 
@@ -220,7 +217,8 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              certificate_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), &certificate_path);
+              certificate_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), 
+                                                  certificate_path.out());
             }
         }
 
@@ -230,7 +228,8 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              private_key_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), &private_key_path);
+              private_key_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), 
+                                                  private_key_path.out ());
             }
         }
 
@@ -297,7 +296,8 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              dhparams_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), &dhparams_path);
+              dhparams_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), 
+                                               dhparams_path.out());
             }
         }
 
@@ -307,7 +307,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              (void) parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), &ca_file);
+              (void) parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), ca_file.out());
             }
         }
 
@@ -396,21 +396,21 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 
   // Load any trusted certificates explicitely rather than relying on
   // previously set SSL_CERT_FILE and/or SSL_CERT_PATH environment variable
-  if (ca_file != 0 || ca_dir.in () != 0)
+  if (ca_file.in () != 0 || ca_dir.in () != 0)
     {
-      if (ssl_ctx->load_trusted_ca (ca_file, ca_dir.in ()) != 0)
+      if (ssl_ctx->load_trusted_ca (ca_file.in (), ca_dir.in ()) != 0)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) Unable to load ")
-                      ACE_TEXT ("CA certs from %C%C%C\n"),
-                      ((ca_file != 0) ? ca_file : "a file pointed to by "
-                                                  ACE_SSL_CERT_FILE_ENV
-                                                  " env var (if any)"),
-                      ACE_TEXT (" and "),
-                      ((ca_dir.in () != 0) ?
-                          ca_dir.in () : "a directory pointed to by "
-                                         ACE_SSL_CERT_DIR_ENV
-                                         " env var (if any)")));
+                          ACE_TEXT ("TAO (%P|%t) Unable to load ")
+                          ACE_TEXT ("CA certs from %C%C%C\n"),
+                          ((ca_file.in () != 0) ? ca_file.in () : "a file pointed to by "
+                           ACE_SSL_CERT_FILE_ENV
+                           " env var (if any)"),
+                          ACE_TEXT (" and "),
+                          ((ca_dir.in () != 0) ?
+                           ca_dir.in () : "a directory pointed to by "
+                           ACE_SSL_CERT_DIR_ENV
+                           " env var (if any)")));
 
           return -1;
         }
@@ -418,16 +418,16 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         {
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_INFO,
-                        ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
-                        ACE_TEXT ("Trusted Certificates from %C%C%C\n"),
-                        ((ca_file != 0) ? ca_file : "a file pointed to by "
-                                                    ACE_SSL_CERT_FILE_ENV
-                                                    " env var (if any)"),
-                        ACE_TEXT (" and "),
-                        ((ca_dir.in () != 0) ?
-                            ca_dir.in () : "a directory pointed to by "
-                                           ACE_SSL_CERT_DIR_ENV
-                                           " env var (if any)")));
+                            ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
+                            ACE_TEXT ("Trusted Certificates from %C%C%C\n"),
+                            ((ca_file.in () != 0) ? ca_file.in () : "a file pointed to by "
+                             ACE_SSL_CERT_FILE_ENV
+                             " env var (if any)"),
+                            ACE_TEXT (" and "),
+                            ((ca_dir.in () != 0) ?
+                             ca_dir.in () : "a directory pointed to by "
+                             ACE_SSL_CERT_DIR_ENV
+                             " env var (if any)")));
         }
     }
 
@@ -435,7 +435,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   // then we do that here, otherwise we load them in from the cert file.
   // Note that we only do this on the server side, I think so we might
   // need to defer this 'til later in the acceptor or something...
-  if (dhparams_path == 0)
+  if (dhparams_path.in() == 0)
     {
       // If the user didn't explicitly specify a DH parameters file, we
       // also might find it concatenated in the certificate file.
@@ -444,43 +444,43 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       dhparams_type = certificate_type;
     }
 
-  if (dhparams_path != 0)
+  if (dhparams_path.in() != 0)
     {
-      if (ssl_ctx->dh_params (dhparams_path,
+      if (ssl_ctx->dh_params (dhparams_path.in(),
                               dhparams_type) != 0)
         {
-          if (dhparams_path != certificate_path)
+          if (ACE_OS::strcmp (dhparams_path.in(), certificate_path.in()))
             {
               // We only want to fail catastrophically if the user specified
               // a dh parameter file and we were unable to actually find it
               // and load from it.
               ORBSVCS_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
-                          ACE_TEXT ("unable to set ")
-                          ACE_TEXT ("DH parameters <%C>\n"),
-                          dhparams_path));
+                              ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
+                              ACE_TEXT ("unable to set ")
+                              ACE_TEXT ("DH parameters <%C>\n"),
+                              dhparams_path.in () ));
               return -1;
             }
           else
             {
               if (TAO_debug_level > 0)
                 ORBSVCS_DEBUG ((LM_INFO,
-                            ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
-                            ACE_TEXT ("No DH parameters found in ")
-                            ACE_TEXT ("certificate <%C>; either none ")
-                            ACE_TEXT ("are needed (RSA) or problems ")
-                            ACE_TEXT ("will ensue later.\n"),
-                            dhparams_path));
+                                ACE_TEXT ("(%P|%t) SSLIOP_Factory: ")
+                                ACE_TEXT ("No DH parameters found in ")
+                                ACE_TEXT ("certificate <%C>; either none ")
+                                ACE_TEXT ("are needed (RSA) or problems ")
+                                ACE_TEXT ("will ensue later.\n"),
+                                dhparams_path.in ()));
             }
         }
       else
         {
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_INFO,
-                        ACE_TEXT ("(%P|%t) SSLIOP loaded ")
-                        ACE_TEXT ("Diffie-Hellman params ")
-                        ACE_TEXT ("from %C\n"),
-                        dhparams_path));
+                            ACE_TEXT ("(%P|%t) SSLIOP loaded ")
+                            ACE_TEXT ("Diffie-Hellman params ")
+                            ACE_TEXT ("from %C\n"),
+                            dhparams_path.in ()));
         }
     }
 
@@ -488,16 +488,16 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   // ACE_SSL_Context attempts to check the private key for
   // consistency.  That check requires the certificate to be available
   // in the underlying SSL_CTX.
-  if (certificate_path != 0)
+  if (certificate_path.in() != 0)
     {
-      if (ssl_ctx->certificate (certificate_path,
+      if (ssl_ctx->certificate (certificate_path.in(),
                                 certificate_type) != 0)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                      ACE_TEXT ("SSL certificate <%C> ")
-                      ACE_TEXT ("in SSLIOP factory.\n"),
-                      certificate_path));
+                          ACE_TEXT ("TAO (%P|%t) Unable to set ")
+                          ACE_TEXT ("SSL certificate <%C> ")
+                          ACE_TEXT ("in SSLIOP factory.\n"),
+                          certificate_path.in()));
 
           return -1;
         }
@@ -505,23 +505,23 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         {
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_INFO,
-                        ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
-                        ACE_TEXT ("SSL certificate ")
-                        ACE_TEXT ("from %C\n"),
-                        certificate_path));
+                            ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
+                            ACE_TEXT ("SSL certificate ")
+                            ACE_TEXT ("from %C\n"),
+                            certificate_path.in()));
         }
     }
 
-  if (private_key_path != 0)
+  if (private_key_path.in() != 0)
     {
-      if (ssl_ctx->private_key (private_key_path, private_key_type) != 0)
+      if (ssl_ctx->private_key (private_key_path.in(), private_key_type) != 0)
         {
 
           ORBSVCS_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO (%P|%t) Unable to set ")
-                      ACE_TEXT ("SSL private key ")
-                      ACE_TEXT ("<%C> in SSLIOP factory.\n"),
-                      private_key_path));
+                          ACE_TEXT ("TAO (%P|%t) Unable to set ")
+                          ACE_TEXT ("SSL private key ")
+                          ACE_TEXT ("<%C> in SSLIOP factory.\n"),
+                          private_key_path.in ()));
 
           return -1;
         }
@@ -529,10 +529,10 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         {
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_INFO,
-                        ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
-                        ACE_TEXT ("Private Key ")
-                        ACE_TEXT ("from <%C>\n"),
-                        private_key_path));
+                            ACE_TEXT ("TAO (%P|%t) SSLIOP loaded ")
+                            ACE_TEXT ("Private Key ")
+                            ACE_TEXT ("from <%C>\n"),
+                            private_key_path.in ()));
         }
     }
 

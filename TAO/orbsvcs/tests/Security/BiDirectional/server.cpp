@@ -108,7 +108,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (obj.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, 
+                  ACE_TEXT ("(%P|%t) Server activated as <%C>\n"), ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -116,7 +117,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
           if (output_file == 0)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
+                               ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                                ior_output_file),
                               1);
           ACE_OS::fprintf (output_file, "%s", ior.in ());
@@ -140,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           // making remote calls to the client.
           retval = server_impl.call_client ();
         }
-      ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("event loop finished\n")));
 
       root_poa->destroy (1, 1);
 
@@ -148,7 +149,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Caught exception:");
+      ex._tao_print_exception (ACE_TEXT ("Caught exception:"));
       return 1;
     }
 
