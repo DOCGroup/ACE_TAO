@@ -101,9 +101,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var another_ior =
         orb->object_to_string (another_one.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Activated as <%C>\n"), ior.in ()));
 
-      ACE_DEBUG ((LM_DEBUG, "Activated another one as <%s>\n", another_ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Activated another one as <%C>\n"),
+                  another_ior.in ()));
 
       if (ior_table_name.length () != 0)
         {

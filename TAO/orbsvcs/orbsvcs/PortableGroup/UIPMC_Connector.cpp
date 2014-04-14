@@ -159,7 +159,8 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       if (retval == 0)
         {
 #if defined (ACE_HAS_IPV6)
-          const char* prefer_if = uipmc_endpoint->preferred_if();
+          const ACE_TCHAR* prefer_if = 
+            ACE_TEXT_CHAR_TO_TCHAR (uipmc_endpoint->preferred_if());
           if (prefer_if && ACE_OS::strlen(prefer_if))
             {
               if (svc_handler->peer ().set_nic(prefer_if, AF_INET6))

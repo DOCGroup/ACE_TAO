@@ -33,9 +33,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s ")
+                           ACE_TEXT ("-k <ior> ")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
@@ -56,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (CORBA::is_nil (poa_object.in ()))
         ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
+                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
                           1);
 
       PortableServer::POA_var root_poa =
@@ -131,7 +131,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (callback.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client callback activated as <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Client callback activated as <%C>\n"), ior.in ()));
 
       // Send the calback object to the server
       server->callback_object (callback.in ());
@@ -148,7 +149,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (r != 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) unexpected result = %d ",
+                      ACE_TEXT ("(%P|%t) unexpected result = %d "),
                       r));
         }
 
@@ -162,9 +163,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (cur_connections > pre_call_connections)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%P|%t) Expected %d "
-                      "connections in the transport cache, but found "
-                      "%d instead.  Aborting.\n",
+                      ACE_TEXT ("(%P|%t) Expected %d ")
+                      ACE_TEXT ("connections in the transport cache, but found ")
+                      ACE_TEXT ("%d instead.  Aborting.\n"),
                       pre_call_connections,
                       cur_connections));
 

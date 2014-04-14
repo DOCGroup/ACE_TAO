@@ -18,15 +18,13 @@ if ($client->PutFile ($client_conf_base) == -1) {
     exit 1;
 }
 
-$server_debug_level = '0';
-$client_debug_level = '0';
-$iterations = '5';
-$threads = '5';
+$debug = 0;
+$iterations = 5;
+$threads = 5;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
-        $server_debug_level = '10';
-        $client_debug_level = '10';
+        $debug = 10;
     }
 }
 
@@ -36,7 +34,10 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBdebuglevel $server_debug_level -o $server_iorfile");
+my $server_dbg = "-ORBdebuglevel $debug -ORBLogFile server.log" if ($debug > 0);
+my $client_dbg = "-ORBdebuglevel $debug -ORBLogFile client.log" if ($debug > 0);
+
+$SV = $server->CreateProcess ("server", "$server_dbg -o $server_iorfile");
 
 $server_status = $SV->Spawn ();
 
@@ -63,8 +64,7 @@ if ($client->PutFile ($iorbase) == -1) {
 }
 
 $CL = $client->CreateProcess ("client",
-                              "-ORBsvcconf $client_conf "
-                              . "-ORBdebuglevel $client_debug_level"
+                              "-ORBsvcconf $client_conf $client_dbg"
                               . " -k file://$client_iorfile "
                               . " -n $threads -i $iterations -d -x");
 
