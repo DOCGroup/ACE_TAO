@@ -94,7 +94,7 @@ namespace TAO
       ///
       /// Beware: This function modifies the buffer pointed to by arg!
       ///
-      static int parse_x509_file (char *arg, char **path);
+      static int parse_x509_file (char *arg, char *&path);
 
       /// Create and register the SSLIOP ORB initializer.
       int register_orb_initializer (

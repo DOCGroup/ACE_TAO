@@ -1,3 +1,25 @@
+Mon Apr 14 16:11:02 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+          Fix wchar + ipv6 compile error.
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+          Fix wchar debug output
+
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.h:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+          Wchar parameter parsing requires the use of an intermediate
+          string buffer.
+
+        * orbsvcs/tests/Security/BiDirectional/client.cpp:
+        * orbsvcs/tests/Security/BiDirectional/server.cpp:
+        * orbsvcs/tests/Security/MT_SSLIOP/server.cpp:
+        * orbsvcs/tests/Security/mixed_security_test/client.cpp:
+          Fix wchar debug output.
+
+        * tests/AMI/run_exclusive_rw.pl:
+          Enhance debug output.
+
 Mon Apr 14 13:19:14 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Trading/run_test.pl:
