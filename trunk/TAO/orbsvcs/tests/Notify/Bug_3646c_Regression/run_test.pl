@@ -78,7 +78,7 @@ if ($server1->GetFile ($ior1file) == -1) {
 
 if ($server2->PutFile ($ior1file) == -1) {
     print STDERR "ERROR: cannot set file <$server2_ior1file>\n";
-    $SV2->Kill (); $SV2->TimedWait (1);
+    $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
 }
 
@@ -86,6 +86,7 @@ $server_status = $SV2->Spawn ();
 
 if ($server_status != 0) {
     print STDERR "ERROR: server returned $server_status\n";
+    $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
 }
 
@@ -93,6 +94,7 @@ if ($server2->WaitForFileTimed ($ior2file,
                                $server2->ProcessStartWaitInterval()) == -1) {
     print STDERR "ERROR: cannot find file <$server2_ior2file>\n";
     $SV2->Kill (); $SV2->TimedWait (1);
+    $SV1->Kill (); $SV1->TimedWait (1);
     exit 1;
 }
 

@@ -217,7 +217,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              certificate_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), 
+              certificate_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                                   certificate_path.out());
             }
         }
@@ -228,7 +228,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              private_key_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), 
+              private_key_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                                   private_key_path.out ());
             }
         }
@@ -296,7 +296,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           curarg++;
           if (curarg < argc)
             {
-              dhparams_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]), 
+              dhparams_type = parse_x509_file (ACE_TEXT_ALWAYS_CHAR(argv[curarg]),
                                                dhparams_path.out());
             }
         }
