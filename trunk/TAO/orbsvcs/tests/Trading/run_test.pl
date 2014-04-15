@@ -41,13 +41,14 @@ my $export_ready_file = $export_test->LocalFile ($ready);
 $export_test->DeleteFile($ready);
 
 $SV = $server->CreateProcess ("../../Trading_Service/tao_costrading",
-                              "-ORBdebuglevel $debug_level " .
+                              "-ORBdebuglevel $debug_level ".
+                              "-ORBlogfile trader.log " .
                               "-ORBEndpoint iiop://:$port " .
                               "-TSdumpior $server_iorfile");
 
 $CL1 = $export_test->CreateProcess ("export_test",
                                    "-ORBInitRef TradingService=corbaloc:::$port/TradingService " .
-                                   "-d $ready " .
+                                   "-d $export_ready_file " .
                                    "-quiet");
 
 $CL2 = $import_test->CreateProcess ("import_test",
@@ -78,7 +79,7 @@ if ($client_status != 0) {
 
 if ($export_test->WaitForFileTimed ($ready,
                                $export_test->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$server_iorfile>\n";
+    print STDERR "ERROR: cannot find file <$ready>\n";
     $SV->Kill (); $SV->TimedWait (1);
     $CL1->Kill (); $CL1->TimedWait (1);
     exit 1;

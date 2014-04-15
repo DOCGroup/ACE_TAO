@@ -142,25 +142,18 @@ int failure = 0;
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Offer Exporter tests complete.\n")));
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Now serving dynamic properties.\n")));
 
-      // Next file can flag other external apps that we now arrived at serving
-      // dynamic properties.
-      size_t offset = 0;
-      ACE_TCHAR file[1024];
-      ACE_OS::strcpy(file, argv[0]);
-      if ((offset = (size_t)ACE_OS::strrchr(file, ACE_TEXT('/'))) != 0) {
-        offset -= ((size_t)file - 1);
-      }
-      ACE_OS::strcpy(file + offset, done_file);
-
-      FILE *ready_file =
-        ACE_OS::fopen (file, "w");
-      if (ready_file != 0) {
-        ACE_OS::fprintf (ready_file, "The export test is ready\n");
-        ACE_OS::fclose (ready_file);
-      }
-      else {
-        ACE_DEBUG ((LM_WARNING, ACE_TEXT("Unable to open %s for output.\n"), file));
-      }
+      FILE *ready_file = ACE_OS::fopen (done_file, ACE_TEXT("w"));
+      if (ready_file != 0) 
+        {
+          ACE_OS::fprintf (ready_file, "The export test is ready\n");
+          ACE_OS::fclose (ready_file);
+        }
+      else
+        {
+          ACE_DEBUG ((LM_WARNING, 
+                      ACE_TEXT("Unable to open %s for output.\n"), 
+                      done_file));
+        }
 
       orb_manager.run ();
     }
