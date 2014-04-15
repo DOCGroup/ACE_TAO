@@ -1,9 +1,20 @@
+Tue Apr 15 16:30:30 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
+        * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+        * orbsvcs/tests/Security/BiDirectional/server.cpp:
+          fuzz fix.
+
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/run_test.pl:
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
+          more wchar scoreboard cleanup.
+
 Tue Apr 15 15:11:48 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_other_tests.lst:
         * orbsvcs/tests/Trading/export_test.cpp:
         * orbsvcs/tests/Trading/run_test.pl:
-	  more wchar scoreboard cleanup.
+          more wchar scoreboard cleanup.
 
 Mon Apr 14 16:11:02 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
