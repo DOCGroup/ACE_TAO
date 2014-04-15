@@ -14,7 +14,10 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.4 and ACE-6.2.5
 . Added the ability to build RPMs for just ACE, using an ACE-src tarball.
   To do this add "--without tao" to the rpmbuild command line.
 
-. Added support for Embarcadero C++BuilderXE5 using
+. Added support for Embarcadero C++Builder XE5 using
+  bcc32 in debug and release mode
+
+. Added support for Embarcadero C++Builder XE6 using
   bcc32 in debug and release mode
 
 . When Intel C++ 2013 SP1 Update 2 is used with C++11 enabled
