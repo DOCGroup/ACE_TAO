@@ -143,15 +143,15 @@ int failure = 0;
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT("*** Now serving dynamic properties.\n")));
 
       FILE *ready_file = ACE_OS::fopen (done_file, ACE_TEXT("w"));
-      if (ready_file != 0) 
+      if (ready_file != 0)
         {
           ACE_OS::fprintf (ready_file, "The export test is ready\n");
           ACE_OS::fclose (ready_file);
         }
       else
         {
-          ACE_DEBUG ((LM_WARNING, 
-                      ACE_TEXT("Unable to open %s for output.\n"), 
+          ACE_DEBUG ((LM_WARNING,
+                      ACE_TEXT("Unable to open %s for output.\n"),
                       done_file));
         }
 
