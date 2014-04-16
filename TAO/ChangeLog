@@ -1,3 +1,9 @@
+Wed Apr 16 14:05:11 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
+        * orbsvcs/tests/Trading/export_test.cpp:
+          clean up more fuzz.
+
 Tue Apr 15 16:30:30 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
