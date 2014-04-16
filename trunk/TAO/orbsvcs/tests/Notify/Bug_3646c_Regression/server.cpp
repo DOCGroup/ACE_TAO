@@ -106,10 +106,10 @@ void loadunloadcycle()
   ACE_DEBUG(( LM_DEBUG,
               ACE_TEXT ("(%P|%t) loadunloadcycle - loading ORB done. Result: <%d>\n"),
               result));
-  
+
   DllORB * p_orb =
     ACE_Dynamic_Service<DllORB>::instance("testDllOrb");
-  
+
   if (p_orb == 0)
     {
       ACE_DEBUG(( LM_DEBUG,
@@ -142,10 +142,10 @@ void loadunloadcycle()
 
   if (p_notifyService == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, 
+      ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Could not resolve testNotifyService\n")));
     }
-  else 
+  else
     {
       p_notifyService->run ();
     }
@@ -172,22 +172,22 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   ACE_DEBUG((LM_DEBUG,
              ACE_TEXT ("(%P|%t) main - entered\n")));
-  
+
   if (parse_args (argc, argv) != 0)
     return 1;
-  
+
   for (int cnt = 0, max = 2; cnt < max; ++cnt)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) main - cycle %d ...\n"), 
+                  ACE_TEXT ("(%P|%t) main - cycle %d ...\n"),
                   cnt));
       loadunloadcycle();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) main - cycle %d done\n"), 
+                  ACE_TEXT ("(%P|%t) main - cycle %d done\n"),
                   cnt));
     }
-  
+
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) main - leaving\n")));
 
