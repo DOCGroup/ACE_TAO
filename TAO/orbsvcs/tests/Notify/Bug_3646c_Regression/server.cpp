@@ -12,30 +12,34 @@ char const * const scpc_orbId = "testDllOrb";
 
 const int max_length = 1000;
 
+#if defined (ACE_USES_WCHAR)
+# define LOAD_ORB_DIRECTIVE "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1 -ORBInitRef NameService=iioploc://%ls:%ls/NameService"
+#else
+# define LOAD_ORB_DIRECTIVE "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1 -ORBInitRef NameService=iioploc://%s:%s/NameService"
+#endif
+
 ACE_TCHAR scpc_loadOrb[max_length] = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug3646c",
   TAO_VERSION,
   "_make_DllORB",
-#if defined (ACE_USES_WCHAR)
-  "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1 -ORBInitRef NameService=iioploc://%ls:%ls/NameService"
-#else
-  "testDllOrb -ORBDebugLevel 0 -ORBId testDllOrb -ORBDottedDecimalAddresses 1 -ORBInitRef NameService=iioploc://%s:%s/NameService"
-#endif
+  LOAD_ORB_DIRECTIVE
 );
 
 ACE_TCHAR const * const scpc_unloadOrb = ACE_REMOVE_SERVICE_DIRECTIVE("testDllOrb");
+
+#if defined (ACE_USES_WCHAR)
+# define LOAD_NOTIFYSVC_DIRECTIVE "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 0 -ORBInitRef NameService=iioploc://%ls:%ls/NameService -IORoutput %ls"
+#else
+# define LOAD_NOTIFYSVC_DIRECTIVE "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 0 -ORBInitRef NameService=iioploc://%s:%s/NameService -IORoutput %s"
+#endif
 
 ACE_TCHAR scpc_loadNotifyService[max_length] = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testNotifyService",
   "TAO_Notify_Service",
   TAO_VERSION,
   "_make_TAO_Notify_Service_Driver",
-#if defined (ACE_USES_WCHAR)
-  "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 0 -ORBInitRef NameService=iioploc://%ls:%ls/NameService -IORoutput %ls"
-#else
-  "-Channel -ChannelName Channel1 -ChannelName Channel2 -RunThreads 0 -ORBInitRef NameService=iioploc://%s:%s/NameService -IORoutput %s"
-#endif
+  LOAD_NOTIFYSVC_DIRECTIVE
 );
 
 ACE_TCHAR const * const scpc_unloadNotifyService = ACE_REMOVE_SERVICE_DIRECTIVE("testNotifyService");
