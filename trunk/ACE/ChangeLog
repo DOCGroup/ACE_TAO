@@ -1,3 +1,14 @@
+Fri Apr 18 06:49:06 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/Process_Unix.pm:
+          Fix executable test for targets with mapped root.
+
+        * bin/PerlACE/TestTarget.pm:
+          Add IP_ADDRESS configuration option and auto determination.
+
+        * bin/PerlACE/TestTarget_Android.pm:
+          Small cleanup.
+
 Fri Apr 11 21:26:28 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/SSL/SSL_Context.cpp:

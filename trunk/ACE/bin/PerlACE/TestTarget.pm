@@ -13,6 +13,7 @@ use File::Copy;
 use File::Spec;
 use File::Basename;
 use PerlACE::Run_Test;
+use Socket;
 use Sys::Hostname;
 use Cwd;
 
@@ -237,6 +238,10 @@ sub GetConfigSettings ($)
     } else {
         $self->{HOSTNAME} = hostname();
     }
+    $env_name = $env_prefix.'IP_ADDRESS';
+    if (exists $ENV{$env_name}) {
+        $self->{IP_ADDRESS} = $ENV{$env_name};
+    }
     $env_name = $env_prefix.'IBOOT';
     if (exists $ENV{$env_name}) {
         $self->{IBOOT} = $ENV{$env_name};
@@ -354,6 +359,23 @@ sub HostName ($)
 {
     my $self = shift;
     return $self->{HOSTNAME};
+}
+
+sub IP_Address ($)
+{
+    my $self = shift;
+    if (!defined $self->{IP_ADDRESS}) {
+      my @host = gethostbyname($self->{HOSTNAME});
+      if (scalar(@host) == 0) {
+          $self->{IP_ADDRESS} = "not found";
+      } else {
+          $self->{IP_ADDRESS} = inet_ntoa($host[4]);
+      }
+      if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+          print STDERR "Target host [" . $self->{HOSTNAME} . "] has ipaddres : " . $self->{IP_ADDRESS};
+      }
+    }
+    return $self->{IP_ADDRESS};
 }
 
 sub ExeSubDir ($)
