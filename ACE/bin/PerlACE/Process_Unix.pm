@@ -384,7 +384,7 @@ sub Spawn ()
 
     if ($self->{IGNOREEXESUBDIR} == 0) {
         if (!defined $self->{REMOTEINFO} &&
-            (!defined $self->{TARGET} || !defined $self->{TARGET}->{REMOTE_SHELL}) &&
+            !(defined $self->{TARGET} && (defined $self->{TARGET}->{REMOTE_SHELL} || defined $self->{TARGET}->{TARGET_FSROOT})) &&
             !-f $self->Executable ()) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                          "> not found\n";
