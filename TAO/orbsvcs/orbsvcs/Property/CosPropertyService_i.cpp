@@ -769,7 +769,7 @@ TAO_PropertySet::get_properties (const CosPropertyService::PropertyNames &proper
 
   // Get values for all the names.
 
-  CORBA::Any_ptr any_ptr = 0;
+  CORBA::Any_var any_ptr = 0;
   CORBA::Boolean ret_val = 1;
 
   for (CORBA::ULong i = 0; i < n; i++)

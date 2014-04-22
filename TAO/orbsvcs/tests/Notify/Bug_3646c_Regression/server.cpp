@@ -114,12 +114,6 @@ void loadunloadcycle()
   DllORB * p_orb =
     ACE_Dynamic_Service<DllORB>::instance("testDllOrb");
 
-  if (p_orb == 0)
-    {
-      ACE_DEBUG(( LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) loadunloadcycle - failed to load testDllOrb\n")));
-    }
-
   CORBA::ORB_var v_orb = p_orb->orb();
   ACE_DEBUG((LM_DEBUG,
              ACE_TEXT ("(%P|%t) loadunloadcycle - v_orb OK\n")));
