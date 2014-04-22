@@ -1,0 +1,37 @@
+// $Id$
+
+#ifndef HELLO_IDL
+#define HELLO_IDL
+
+#pragma ciao lem "Base/HelloE.idl"
+#pragma ami4ccm interface "Hello::MyFoo"
+#pragma ciao lem "Base/HelloAE.idl"
+#pragma ami4ccm idl "Base/HelloA.idl"
+
+module Hello
+{
+  exception InternalError
+    {
+      long id;
+      string error_string;
+    };
+
+  // Sender/Receiver interface
+  interface MyFoo
+    {
+      long foo (in string in_str, out string answer)
+        raises (InternalError);
+      void hello (out long answer)
+        raises (InternalError);
+
+      attribute short rw_attrib
+        getraises (InternalError)
+        setraises (InternalError);
+
+      readonly attribute short ro_attrib
+        raises (InternalError);
+    };
+};
+
+#endif
+

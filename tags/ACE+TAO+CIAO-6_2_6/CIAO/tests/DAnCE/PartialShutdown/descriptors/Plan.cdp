@@ -1,0 +1,486 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>PartialShutdown_Depl_1</label>
+  <UUID>PartialShutdown_Depl_1</UUID>
+
+  <implementation xmi:id="Component1Implementation">
+    <name>Component1Implementation</name>
+    <source/>
+    <artifact xmi:idref="Component1_ExecArtifact" />
+    <artifact xmi:idref="Component1_SvntArtifact" />
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_PartialShutdown_Component1_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_PartialShutdown_Component1_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component1_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component1_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <implementation xmi:id="Component2Implementation">
+    <name>Component2Implementation</name>
+    <source/>
+    <artifact xmi:idref="Component2_ExecArtifact" />
+    <artifact xmi:idref="Component2_SvntArtifact" />
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_PartialShutdown_Component2_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_PartialShutdown_Component2_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component2_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component2_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <implementation xmi:id="Component3Implementation">
+    <name>Component3Implementation</name>
+    <source/>
+    <artifact xmi:idref="Component3_ExecArtifact" />
+    <artifact xmi:idref="Component3_SvntArtifact" />
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_PartialShutdown_Component3_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_PartialShutdown_Component3_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component3_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Component3_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="Component1Instance">
+    <name>Component1</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="Component1Implementation" />
+  </instance>
+  <instance xmi:id="Component2Instance">
+    <name>Component2</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="Component2Implementation" />
+  </instance>
+  <instance xmi:id="Component3Instance">
+    <name>Component3</name>
+    <node>ComponentNode</node>
+    <source/>
+    <implementation xmi:idref="Component3Implementation" />
+  </instance>
+
+  <!-- writer connections :
+    1 writes to 2
+    1 writes to 3
+    2 writes to 1
+    2 writes to 3
+    3 writes to 1
+    3 writes to 2
+  -->
+  <connection>
+    <name>component1_2_write</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write_to_comp_2</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component1Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_2_writer</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component2Instance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>component1_3_write</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write_to_comp_3</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component1Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_3_writer</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component3Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>component2_1_write</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write_to_comp_1</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component2Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_1_writer</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component1Instance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>component2_3_write</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write_to_comp_3</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component2Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_3_writer</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component3Instance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>component3_1_write</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write_to_comp_1</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component3Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_1_writer</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component1Instance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>component3_2_write</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>write_to_comp_2</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component3Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_2_writer</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component2Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <!-- reader connections :
+    1 reads from 2
+    1 reads from 3
+    2 reads from 1
+    2 reads from 3
+    3 reads from 1
+    3 reads from 2
+  -->
+  <connection>
+    <name>component1_2_read</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>read_from_comp_2</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component1Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_2_reader</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component2Instance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>component1_3_read</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>read_from_comp_3</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component1Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_3_reader</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component3Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>component2_1_read</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>read_from_comp_1</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component2Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_1_reader</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component1Instance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>component2_3_read</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>read_from_comp_3</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component2Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_3_reader</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component3Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>component3_1_read</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>read_from_comp_1</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component3Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_1_reader</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component1Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>component3_2_read</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>read_from_comp_2</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="Component3Instance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>comp_2_reader</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="Component2Instance" />
+    </internalEndpoint>
+  </connection>
+
+  <artifact xmi:id="Component1_ExecArtifact">
+    <name>Component1_exec</name>
+    <source/>
+    <node/>
+    <location>Component1_exec</location>
+  </artifact>
+  <artifact xmi:id="Component1_SvntArtifact">
+    <name>Component1_svnt</name>
+    <source/>
+    <node/>
+    <location>Component1_svnt</location>
+  </artifact>
+  <artifact xmi:id="Component1_StubArtifact">
+    <name>Component1_stub</name>
+    <source/>
+    <node/>
+    <location>Component1_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Component2_ExecArtifact">
+    <name>Component2_exec</name>
+    <source/>
+    <node/>
+    <location>Component2_exec</location>
+  </artifact>
+  <artifact xmi:id="Component2_SvntArtifact">
+    <name>Component2_svnt</name>
+    <source/>
+    <node/>
+    <location>Component2_svnt</location>
+  </artifact>
+  <artifact xmi:id="Component2_StubArtifact">
+    <name>Component2_stub</name>
+    <source/>
+    <node/>
+    <location>Component2_stub</location>
+  </artifact>
+
+  <artifact xmi:id="Component3_ExecArtifact">
+    <name>Component3_exec</name>
+    <source/>
+    <node/>
+    <location>Component3_exec</location>
+  </artifact>
+  <artifact xmi:id="Component3_SvntArtifact">
+    <name>Component3_svnt</name>
+    <source/>
+    <node/>
+    <location>Component3_svnt</location>
+  </artifact>
+  <artifact xmi:id="Component3_StubArtifact">
+    <name>Component3_stub</name>
+    <source/>
+    <node/>
+    <location>Component3_stub</location>
+  </artifact>
+</Deployment:DeploymentPlan>

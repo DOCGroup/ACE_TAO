@@ -1,0 +1,10 @@
+Document: libtao-reference
+Title: TAO online documentation
+Author: Douglas C. Schmidt and his research group
+Abstract: This set of documents provides help for developing applications
+ using the ACE, TAO and CIAO libraries.
+Section: Programming/C++
+
+Format: html
+Index: /usr/share/doc/libtao-doc/index.html
+Files: /usr/share/doc/libtao-doc/*.html

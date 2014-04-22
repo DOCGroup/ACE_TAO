@@ -1,0 +1,27 @@
+//
+// $Id$
+
+#include "orbsvcs/FT_NamingManager.idl"
+
+/// Put the interfaces in a module, to avoid global namespace pollution
+module Test
+{
+  typedef FT_Naming::LoadBalancingStrategyValue LoadBalancingStrategyValue;
+
+  /// A very simple interface
+  interface Basic
+  {
+    /// Return a simple string
+    string get_string ();
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+
+    /// A method to remove the servant from the NamingManager Object Group.
+    oneway void remove_member ();
+  };
+};
+

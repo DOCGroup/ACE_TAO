@@ -1,0 +1,12 @@
+// $Id$
+
+#ifndef NDDS_DCPS_INSTANCE_HANDLE_IDL
+#define NDDS_DCPS_INSTANCE_HANDLE_IDL
+
+#include "connectors/dds4ccm/idl/ndds/ndds_dcps_i_handle.idl"
+
+module DDS {
+    native HANDLE_NIL;
+};
+
+#endif

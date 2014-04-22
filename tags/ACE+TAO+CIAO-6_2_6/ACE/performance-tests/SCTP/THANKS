@@ -1,0 +1,30 @@
+Lockheed Martin Advanced Technology Laboratories (LM ATL) development
+of the SCIOP pluggable protocol for TAO was funded under DARPA/IXO's
+Program Composition for Embedded Systems (PCES) program.
+
+The LM ATL PCES project leads, Patrick Lardieri and Gautam Thaker,
+thank the following individuals for their contributions to the
+development TAO's SCIOP pluggable protocol.
+
+Jason Cohen         LM ATL
+Edward Mulholland   LM ATL
+Keith O'Hara        LM ATL
+Chuck Winters       LM ATL
+
+We also thank Mr. Brian Bidulock of OpenSS7 (www.openss7.org) for his
+rapid development of a fully functional Linux implementation of SCTP
+which made this work possible.
+
+We also thank the following individuals for their valuable review and
+critiques of our SCIOP designs and for the expert advice on the more
+arcane and subtle aspects of ACE and TAO.
+
+Dr. Chris Gill            DOC Group
+Balachandran Natarajan    DOC Group
+
+Dr. Douglas Schmidt       DARPA/IXO, DOC Group
+
+Steve Houston             OCI
+
+
+

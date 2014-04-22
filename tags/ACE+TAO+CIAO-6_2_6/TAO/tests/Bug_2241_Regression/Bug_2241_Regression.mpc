@@ -1,0 +1,6 @@
+// -*- MPC -*-
+// $Id$
+
+project(Bug_2241_Regression): taoserver {
+  exename = Bug_2241_Regression
+}

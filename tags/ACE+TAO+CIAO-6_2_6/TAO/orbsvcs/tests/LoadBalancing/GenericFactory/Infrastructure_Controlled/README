@@ -1,0 +1,10 @@
+$Id$
+
+This program tests the infrastructure controlled membership support
+of the Cygnus Load Balancer. The aim is to allow Cygnus to set the
+factories needed to create the "replicas", when the object group
+is created. This way, the load balancer can decide when to create
+the object group members.
+
+Please see $TAO_ROOT/orbsvcs/orbsvcs/Loadbalancing for the implementations
+of the Cygnus load balancer.

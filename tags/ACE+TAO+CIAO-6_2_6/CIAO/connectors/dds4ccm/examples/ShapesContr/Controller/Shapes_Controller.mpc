@@ -1,0 +1,138 @@
+// $Id$
+
+project(ShapesContr_Controller_idl_gen) : componentidldefaults{
+   custom_only = 1
+  after += Shapes_Contr_Base_stub
+  idlflags += -Wb,stub_export_macro=CONTROLLER_STUB_Export \
+              -Wb,stub_export_include=Controller_stub_export.h \
+              -Wb,skel_export_macro=CONTROLLER_SVNT_Export \
+              -Wb,skel_export_include=Controller_svnt_export.h \
+              -Wb,svnt_export_macro=CONTROLLER_SVNT_Export \
+              -Wb,svnt_export_include=Controller_svnt_export.h \
+              -Wb,exec_export_macro=CONTROLLER_EXEC_Export \
+              -Wb,exec_export_include=Controller_exec_export.h \
+              -I..
+
+  IDL_Files {
+    Shapes_Controller.idl
+  }
+}
+
+project(ShapesContr_Controller_lem_gen) : ciaoidldefaults {
+  after += ShapesContr_Controller_idl_gen Shapes_Contr_Base_lem_gen
+  custom_only = 1
+  idlflags += -Wb,export_macro=CONTROLLER_EXEC_Export \
+              -Wb,export_include=Controller_exec_export.h \
+              -SS
+
+  IDL_Files {
+    Shapes_ControllerE.idl
+  }
+}
+
+project(ShapesContr_Controller_stub) : ccm_stub {
+  after += ShapesContr_Controller_idl_gen Shapes_Contr_Base_stub
+  libs  += Shapes_Contr_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  sharedname = ShapesContr_Controller_stub
+  dynamicflags += CONTROLLER_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Shapes_ControllerC.cpp
+  }
+
+  Header_Files {
+    Shapes_ControllerC.h
+    Shapes_Controller_stub_export.h
+  }
+
+  Inline_Files {
+    Shapes_ControllerC.inl
+  }
+}
+
+project(ShapesContr_Controller_exec) : ciao_executor {
+  after   += ShapesContr_Controller_lem_gen ShapesContr_Controller_stub
+  sharedname = ShapesContr_Controller_exec
+  libs += ShapesContr_Controller_stub Shapes_Contr_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += CONTROLLER_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Shapes_ControllerEC.cpp
+    Shapes_Controller_exec.cpp
+  }
+
+  Header_Files {
+    Shapes_ControllerEC.h
+    Shapes_Controller_exec.h
+    Shapes_Controller_exec_export.h
+  }
+
+  Inline_Files {
+    Shapes_ControllerEC.inl
+  }
+}
+
+
+project(ShapesContr_Controller_svnt) : ciao_servant {
+  after      += Shapes_Contr_Base_skel ShapesContr_Controller_exec Shapes_Contr_Base_svnt Shapes_Contr_Base_stub
+  sharedname  = ShapesContr_Controller_svnt
+  libs       += ShapesContr_Controller_exec \
+                ShapesContr_Controller_stub \
+                Shapes_Contr_Base_svnt \
+                Shapes_Contr_Base_stub
+  libout = ../lib
+  libpaths += ../lib
+
+  dynamicflags += CONTROLLER_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    Shapes_ControllerS.cpp
+    Shapes_Controller_svnt.cpp
+  }
+
+  Header_Files {
+    Shapes_ControllerS.h
+    Shapes_Controller_svnt.h
+    Shapes_Controller_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+//project (Thread_starter) : ccm_stub, valuetype {
+//  exename = starter
+//  after += ShapesContr_Controller_stub
+//  libs  += ShapesContr_Controller_stub Shapes_Contr_Base_stub
+//  libout = ../lib
+//  libpaths += ../lib
+
+//  IDL_Files {
+//  }
+
+//  Source_Files {
+//    starter.cpp
+//  }
+
+//  Header_Files {
+//  }
+
+//  Inline_Files {
+//  }
+//}
+

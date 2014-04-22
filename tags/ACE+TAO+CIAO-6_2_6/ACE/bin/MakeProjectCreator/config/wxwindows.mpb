@@ -1,0 +1,15 @@
+// -*- MPC -*-
+// $Id$
+
+project {
+  requires += wxWindows
+  verbatim(gnuace,local) {
+    # work based on the configuration of the wxWindows installation
+    # PLATFORM_WX_* defined in includes/makeincludes/*_macros.GNU
+    CPPFLAGS += $(PLATFORM_WX_CPPFLAGS)
+    LDFLAGS  += $(PLATFORM_WX_LDFLAGS)
+    LDLIBS   += $(PLATFORM_WX_LIBS)
+  }
+
+ // TBD - support other platforms
+}

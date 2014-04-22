@@ -1,0 +1,132 @@
+// $Id$
+
+project(StoreReferences_idl_gen) : componentidldefaults {
+  after +=
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=STOREREFERENCES_STUB_Export \
+              -Wb,stub_export_include=StoreReferences_stub_export.h \
+              -Wb,skel_export_macro=STOREREFERENCES_SVNT_Export \
+              -Wb,skel_export_include=StoreReferences_svnt_export.h \
+              -Wb,exec_export_macro=STOREREFERENCES_EXEC_Export \
+              -Wb,exec_export_include=StoreReferences_exec_export.h \
+              -I ..
+
+  IDL_Files {
+    StoreReferences.idl
+  }
+}
+
+project(StoreReferences_lem_gen) : ciaoidldefaults {
+  after += StoreReferences_idl_gen
+  custom_only = 1
+  idlflags += -Wb,stub_export_macro=STOREREFERENCES_EXEC_Export \
+              -Wb,stub_export_include=StoreReferences_exec_export.h \
+              -SS -Gxhst -I ..
+
+  IDL_Files {
+    StoreReferencesE.idl
+  }
+}
+
+project(StoreReferences_lem_stub) : ccm_svnt {
+  after += StoreReferences_lem_gen StoreReferences_stub
+  libs  += StoreReferences_stub
+  sharedname = StoreReferences_lem_stub
+  dynamicflags += STOREREFERENCES_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    StoreReferencesEC.cpp
+  }
+
+  Header_Files {
+    StoreReferencesEC.h
+    StoreReferences_exec_export.h
+  }
+
+  Inline_Files {
+    StoreReferencesEC.inl
+  }
+}
+
+project(StoreReferences_stub) : ccm_stub {
+  after += StoreReferences_idl_gen
+  libs  +=
+  sharedname = StoreReferences_stub
+  dynamicflags += STOREREFERENCES_STUB_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    StoreReferencesC.cpp
+  }
+
+  Header_Files {
+    StoreReferencesC.h
+    StoreReferences_stub_export.h
+  }
+
+  Inline_Files {
+    StoreReferencesC.inl
+  }
+}
+
+project(StoreReferences_exec) : ciao_executor {
+  after   += StoreReferences_lem_stub StoreReferences_stub
+  sharedname = StoreReferences_exec
+  libs += StoreReferences_stub StoreReferences_lem_stub
+  dynamicflags += STOREREFERENCES_EXEC_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    StoreReferences_exec.cpp
+  }
+
+  Header_Files {
+    StoreReferences_exec.h
+    StoreReferences_exec_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+
+project(StoreReferences_svnt) : ciao_servant {
+  after      += StoreReferences_lem_stub
+  sharedname  = StoreReferences_svnt
+  libs       += StoreReferences_stub StoreReferences_lem_stub
+  dynamicflags += STOREREFERENCES_SVNT_BUILD_DLL
+
+  IDL_Files {
+  }
+
+  Source_Files {
+    StoreReferencesS.cpp
+    StoreReferences_svnt.cpp
+  }
+
+  Header_Files {
+    StoreReferencesS.h
+    StoreReferences_svnt.h
+    StoreReferences_svnt_export.h
+  }
+
+  Inline_Files {
+  }
+}
+
+project(*Client) : taoclient, naming {
+  Source_Files {
+      client.cpp
+  }
+
+  IDL_Files {
+  }
+}
+

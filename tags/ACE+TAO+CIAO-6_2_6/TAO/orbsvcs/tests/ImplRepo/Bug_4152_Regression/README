@@ -1,0 +1,15 @@
+$Id$
+
+This test verifies the fix for bug 4152 by starting the IMR Activator with a
+parameter to induce a delay between the time when a child server dies and when
+the Locator is informed of the death. This gap provides the opportunity for the
+Locator to request a new server child which would be lost prior to the fix,
+allowing for a spurious 3rd instance to be started. With the fix in place, only
+two instances are started.
+
+The server instances append their pid to a status file, which the run script
+interogates for judging success.
+
+Runtime options are -debug to turn on verbose debugging to separate log files
+and -no_dns, which forces the use of 127.0.0.1 in endpoints for running in
+environments inwhich DNS is not properly configured.
