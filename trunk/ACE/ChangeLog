@@ -1,3 +1,14 @@
+Tue Apr 22 08:29:26 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/ACE+TAO+CIAO+DAnCE.json:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * debian/debian.changelog:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Make x.2.6 public
+
 Tue Apr 22 08:44:41 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.2.6 released.

@@ -1,5 +1,11 @@
+USER VISIBLE CHANGES BETWEEN CIAO-1.2.6 and CIAO-1.2.7
+=======================================================
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.2.5 and CIAO-1.2.6
 =======================================================
+
+. When a component gets removed from a deployment it is
+  now unregistered from the naming service
 
 USER VISIBLE CHANGES BETWEEN CIAO-1.2.4 and CIAO-1.2.5
 =======================================================
