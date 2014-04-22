@@ -1,3 +1,13 @@
+Tue Apr 22 16:34:04 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
+          Fix Coverity warning by removing redundant debug output.
+
+        * orbsvcs/orbsvcs/Property/CosPropertyService_i.cpp:
+        * orbsvcs/tests/Property/client.cpp:
+        * orbsvcs/tests/Property/server.cpp:
+          Fix memory leaks reported by valgrind.
+
 Tue Apr 22 12:38:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Pseudo_VarOut_T.cpp:
