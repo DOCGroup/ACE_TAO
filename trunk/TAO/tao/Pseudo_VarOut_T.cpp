@@ -17,7 +17,7 @@ TAO_Pseudo_Var_T<T>::operator= (const TAO_Pseudo_Var_T<T> & p)
 {
   if (this != &p)
     {
-      ::CORBA::release (this->ptr_);
+      CORBA::release (this->ptr_);
       this->ptr_ = T::_duplicate (p.ptr ());
     }
 
