@@ -86,6 +86,7 @@
             { line_regex: "VDBG" },
             { line_regex: "VDBG_LVL" },
             { line_regex: "Transport_debug_level" },
+            { line_regex: "_tao_print_exception" },
           ] },
           exclusion_reason: "policy indicates no need to test logging code",
         }
