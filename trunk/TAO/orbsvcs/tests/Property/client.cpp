@@ -28,9 +28,9 @@ Client::init (int argc,
 {
   // Init the ORB.
   manager_.init (argc, argv);
-
+  CORBA::ORB_var orb = manager_.orb();
   // Initialize the naming services
-  if (my_name_client_.init (manager_.orb()) != 0)
+  if (my_name_client_.init (orb.in ()) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Unable to initialize "
                        "the TAO_Naming_Client.\n"),
@@ -266,12 +266,11 @@ Client::test_get_properties (void)
                                                            properties_out);
   ACE_UNUSED_ARG (return_val);
 
+  // Get the value to the _var.
+  CosPropertyService::Properties_var properties = properties_out.ptr ();
 
   if (TAO_debug_level > 0)
     {
-      // Get the value to the _var.
-      CosPropertyService::Properties_var properties = properties_out.ptr ();
-
       if (properties.ptr () != 0)
         {
           // Go thru the properties and print them out, if they are not
@@ -630,7 +629,7 @@ Client::test_get_property_value (void)
   try
     {
       // Get the ior property.
-      CORBA::Any_ptr any_ptr = this->propsetdef_->get_property_value ("PropertySetDef_IOR");
+      CORBA::Any_var any_ptr = this->propsetdef_->get_property_value ("PropertySetDef_IOR");
 
       // Check whether the IOR is fine.
       CORBA::Object_var propsetdef_object;
