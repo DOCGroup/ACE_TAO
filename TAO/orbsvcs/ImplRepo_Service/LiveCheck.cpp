@@ -228,20 +228,26 @@ LiveEntry::update_listeners (void)
        !i.done();
        i.advance ())
     {
+
       if ((*i)->status_changed (this->liveliness_))
         {
           remove.insert (*i);
         }
     }
-
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
     for (Listen_Set::ITERATOR i (remove);
          !i.done();
          i.advance ())
       {
-        this->listeners_.remove (*i);
+        LiveListener_ptr llp (*i);
+        int result = this->listeners_.remove (llp);
+        if (result == -1)
+          {
+          }
       }
+    LiveListener_ptr dummy;
+    this->listeners_.remove (dummy);
   }
 }
 
@@ -307,7 +313,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                          ACE_TEXT ("= %s, listeners = %d server %S\n"),
+                          ACE_TEXT ("= %s, listeners = %d server %C\n"),
                           status_name (this->liveliness_), this->listeners_.size (),
                           this->server_.c_str()));
         }

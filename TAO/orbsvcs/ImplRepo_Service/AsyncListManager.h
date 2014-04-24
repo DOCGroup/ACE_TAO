@@ -60,7 +60,10 @@ class AsyncListManager
   void _remove_ref (void);
 
  private:
+  void init_list (void);
   void list_i (CORBA::ULong start, CORBA::ULong count);
+  bool make_iterator (ImplementationRepository::ServerInformationIterator_out si,
+                      CORBA::ULong start);
   void final_state (void);
 
   const Locator_Repository *repo_;
@@ -70,6 +73,7 @@ class AsyncListManager
   LiveCheck *pinger_;
   ImplementationRepository::ServerInformationList server_list_;
   CORBA::ULong first_;
+  CORBA::ULong how_many_;
   CORBA::ULong waiters_;
   int refcount_;
   TAO_SYNCH_MUTEX lock_;

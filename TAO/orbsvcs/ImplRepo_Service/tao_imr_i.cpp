@@ -251,6 +251,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
 TAO_IMR_Op_List::TAO_IMR_Op_List (void)
 : verbose_server_information_ (0)
 , list_only_active_servers_ (0)
+, how_many_ (0)
 {
   // Nothing
 }
@@ -533,6 +534,7 @@ TAO_IMR_Op_List::print_usage (void)
     "    -v            Verbose: Displays more info for each server when\n"
     "                  displaying more than one server\n"
     "    -a            List only servers that are determined to be active\n"
+    "    -n <count>    Request no more than <count> entries and use an iterator\n"
     "    -h            Displays this\n"));
 }
 
@@ -548,7 +550,7 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "list" command
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vah"), server_flag);
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vahn:"), server_flag);
 
   int c;
 
@@ -561,6 +563,9 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
         break;
       case 'a':
         this->list_only_active_servers_ = 1;
+        break;
+      case 'n':
+        this->how_many_ = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'h':  // display help
         this->print_usage ();
@@ -1092,7 +1097,7 @@ TAO_IMR_Op_List::run (void)
       // at all of them.
       if (this->server_name_.length () == 0)
         {
-          this->imr_->list (0,
+          this->imr_->list (this->how_many_,
             this->list_only_active_servers_,
             server_list.out(),
             server_iter.out());
@@ -1106,7 +1111,17 @@ TAO_IMR_Op_List::run (void)
           for (CORBA::ULong i = 0; i < server_list->length (); i++)
             this->display_server_information (server_list[i]);
 
-          ACE_ASSERT (CORBA::is_nil (server_iter.in ()));
+          if (!CORBA::is_nil (server_iter.in ()))
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG, "An iterator was returned.\n"));
+              for (bool done = false; !done; )
+                {
+                  done = server_iter->next_n (this->how_many_, server_list.out());
+                  for (CORBA::ULong i = 0; i < server_list->length (); i++)
+                    this->display_server_information (server_list[i]);
+                }
+              server_iter->destroy ();
+            }
         }
       else
         {

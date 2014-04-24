@@ -1180,7 +1180,7 @@ ImR_Locator_i::list
     {
       ACE_NEW_THROW_EX (l,
                         AsyncListManager (this->repository_.get(),
-                                          this->imr_poa_.in(),
+                                          this->root_poa_.in(),
                                           active ? &this->pinger_ : 0),
                         CORBA::NO_MEMORY ());
       AsyncListManager_ptr lister (l);

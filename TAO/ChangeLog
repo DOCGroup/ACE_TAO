@@ -1,3 +1,31 @@
+Thu Apr 24 15:57:16 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncListManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+          Fix some bad list behavior. There were three issues involved.
+          First, the list manager assumed the configuration of the server
+          info repository was fixed over the duration of the information
+          gathering process. When active pinging of servers was requested
+          the IMR could take requests to add new servers which changed the
+          repository. Second, if a new entry was added to the repo during
+          an active list, an iterator was constructed. But the wrong POA
+          was used to activate it, which raised a user exception, but that
+          could not be marshaled because it wasn't defined in the IDL.
+          Finally, the list manager makes use of reference counted listener
+          objects to asynchronously keep track of ping results. These were
+          tracked using an ACE_Unbounded_Set which uses the head node as a
+          temporary container for a value to be removed. This makes for
+          efficient end-of-list detection, but since my values are reference
+          counting pointers, this means the managed objects linger.
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Add in the ability to deal with server info list iterators
+          returned when the number of servers is greater than the
+          maximum list size specified.
+
 Tue Apr 22 16:34:04 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/Notify/Bug_3646c_Regression/server.cpp:
