@@ -194,7 +194,7 @@ namespace CIAO
                 "Error returning loan to DDS - <%C>\n",
                 translate_retcode (retval)));
             }
-          throw ::CCM_DDS::InternalError (retcode, 1);
+          throw ::CCM_DDS::InternalError (retcode, 0);
         }
 
       ::DDS::ReturnCode_t const retval =
@@ -206,7 +206,7 @@ namespace CIAO
             "Error returning loan to DDS - <%C>\n",
             translate_retcode (retval)));
 
-          throw ::CCM_DDS::InternalError (retcode, 1);
+          throw ::CCM_DDS::InternalError (retcode, 0);
         }
 
       return true;
@@ -321,7 +321,7 @@ namespace CIAO
                     translate_retcode (retval)));
                 }
 
-              throw ::CCM_DDS::InternalError (retcode, 1);
+              throw ::CCM_DDS::InternalError (retcode, 0);
             }
           else if (data.length () == 1 && sample_info[0].valid_data)
             {
@@ -352,7 +352,7 @@ namespace CIAO
                 "Error returning loan to DDS - <%C>\n",
                 translate_retcode (retval)));
 
-              throw ::CCM_DDS::InternalError (retcode, 1);
+              throw ::CCM_DDS::InternalError (retcode, 0);
             }
         }
 
@@ -414,7 +414,7 @@ namespace CIAO
                     "Error returning loan to DDS - <%C>\n",
                     translate_retcode (retval)));
                 }
-              throw ::CCM_DDS::InternalError (retcode, 1);
+              throw ::CCM_DDS::InternalError (retcode, 0);
             }
           else if (data.length () == 1 && sample_info[0].valid_data)
             {
