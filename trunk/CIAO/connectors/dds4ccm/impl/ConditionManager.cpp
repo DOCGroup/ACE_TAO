@@ -101,7 +101,7 @@ namespace CIAO
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             ACE_TEXT ("ConditionManager::init_readcondition - ")
                             ACE_TEXT ("Error creating read condition.\n")));
-              return;
+              throw ::CCM_DDS::InternalError (retcode, 0);
             }
         }
 
@@ -114,7 +114,7 @@ namespace CIAO
                         ACE_TEXT ("ConditionManager::init_readcondition - ")
                         ACE_TEXT ("Unable to attach read condition to waitset. Error <%C>\n"),
                         translate_retcode (retcode)));
-          throw ::CCM_DDS::InternalError (retcode, 1);
+          throw ::CCM_DDS::InternalError (retcode, 0);
         }
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("ConditionManager::init_readcondition - ")
@@ -225,7 +225,7 @@ namespace CIAO
                             this->qc_getter_.in (),
                             this->qc_listener_.in ()));
 
-              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 1);
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
             }
           else
             {
