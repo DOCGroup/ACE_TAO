@@ -1,3 +1,12 @@
+Thu Apr 24 06:49:53 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+          Not being able to create a read condition should result in
+          a throw of an exception
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+          Pass 0 as index as part of the exception thrown
+
 Tue Apr 22 08:29:33 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
