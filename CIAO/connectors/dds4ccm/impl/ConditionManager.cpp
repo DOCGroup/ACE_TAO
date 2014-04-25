@@ -101,7 +101,7 @@ namespace CIAO
               DDS4CCM_ERROR (DDS4CCM_LOG_LEVEL_ERROR, (LM_ERROR, DDS4CCM_INFO
                             ACE_TEXT ("ConditionManager::init_readcondition - ")
                             ACE_TEXT ("Error creating read condition.\n")));
-              throw ::CCM_DDS::InternalError (retcode, 0);
+              throw ::CCM_DDS::InternalError (::DDS::RETCODE_ERROR, 0);
             }
         }
 
