@@ -33,6 +33,29 @@ TAO_DTP_New_Leader_Generator::no_leaders_available (void)
   return this->pool_.new_dynamic_thread ();
 }
 
+TAO_DTP_Termination_Waiter::TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &p)
+  : ACE_Task_Base (p.manager ().orb_core ().thr_mgr ()),
+    pool_ (p)
+{
+}
+
+int
+TAO_DTP_Termination_Waiter::svc (void)
+{
+  do
+    {
+      {
+        ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                          guard,
+                          this->pool_.termination_lock_,
+                          -1);
+        this->pool_.termination_cond_.wait ();
+      }
+    }
+  while (this->pool_.active_count_ > 0);
+  return 0;
+}
+
 TAO_DTP_Thread_Pool_Threads::TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &p)
   : ACE_Task_Base (p.manager ().orb_core ().thr_mgr ()),
     pool_ (p)
@@ -78,6 +101,14 @@ TAO_DTP_Thread_Pool_Threads::svc (void)
 
       ex._tao_print_exception ("");
     }
+
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                      guard,
+                      this->pool_.termination_lock_,
+                      -1);
+    this->pool_.termination_cond_.broadcast ();
+  }
 
   return 0;
 }
@@ -147,58 +178,6 @@ TAO_DTP_Thread_Pool::above_minimum (void)
     (int)this->active_count_ > this->definition_.min_threads_;
 }
 
-bool
-TAO_DTP_Thread_Pool::new_dynamic_thread (void)
-{
-  // Note that we are checking this condition below without the lock
-  // held.
-  if (TAO_debug_level > 0)
-    {
-      TAOLIB_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
-                     ACE_TEXT ("max = %d, current = %d\n"),
-                     this->id_, this->definition_.max_threads_,
-                     (int)this->threads_.thr_count ()));
-    }
-
-  if (this->manager_.orb_core ().has_shutdown () || this->shutdown_ ||
-      (this->definition_.max_threads_ > 0 &&
-       (int)this->active_count_ >= this->definition_.max_threads_))
-    {
-      return false;
-    }
-
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    mon,
-                    this->lock_,
-                    false);
-
-  if (this->definition_.max_threads_ == -1 ||
-      (int)this->active_count_ < this->definition_.max_threads_)
-    {
-      if (TAO_debug_level > 7)
-        TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
-                    ACE_TEXT ("count = %d, creating new thread\n"),
-                    this->id_,
-                    this->active_count_));
-
-      if (this->create_threads_i (1, THR_NEW_LWP | THR_JOINABLE))
-        {
-          if (TAO_debug_level > 0)
-            {
-              TAOLIB_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Pool %d Thread %t: ")
-                          ACE_TEXT ("cannot create dynamic thread\n"),
-                          this->id_));
-            }
-          return false;
-        }
-    }
-
-  return true;
-}
-
 CORBA::ULong
 TAO_DTP_Thread_Pool::current_threads (void) const
 {
@@ -251,15 +230,72 @@ TAO_DTP_Thread_Pool::create_initial_threads (void)
                   count));
     }
 
-  int result = this->create_threads_i (count, THR_NEW_LWP | THR_JOINABLE);
+  int result = this->create_threads_i (count);
+  if (result == 0)
+    {
+      this->waiter_.activate (THR_NEW_LWP | THR_JOINABLE);
+    }
   return result;
 }
 
+bool
+TAO_DTP_Thread_Pool::new_dynamic_thread (void)
+{
+  // Note that we are checking this condition below without the lock
+  // held.
+  if (TAO_debug_level > 0)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
+                     ACE_TEXT ("max = %d, current = %d\n"),
+                     this->id_, this->definition_.max_threads_,
+                     (int)this->threads_.thr_count ()));
+    }
+
+  if (this->manager_.orb_core ().has_shutdown () || this->shutdown_ ||
+      (this->definition_.max_threads_ > 0 &&
+       (int)this->active_count_ >= this->definition_.max_threads_))
+    {
+      return false;
+    }
+
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
+                    mon,
+                    this->lock_,
+                    false);
+
+  if (this->definition_.max_threads_ == -1 ||
+      (int)this->active_count_ < this->definition_.max_threads_)
+    {
+      if (TAO_debug_level > 7)
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) DTP Pool %d new_dynamic_thread, ")
+                    ACE_TEXT ("count = %d, creating new thread\n"),
+                    this->id_,
+                    this->active_count_));
+
+      if (this->create_threads_i (1))
+        {
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Pool %d Thread %t: ")
+                          ACE_TEXT ("cannot create dynamic thread\n"),
+                          this->id_));
+            }
+          return false;
+        }
+    }
+
+  return true;
+}
+
 int
-TAO_DTP_Thread_Pool::create_threads_i (size_t count, long thread_flags)
+TAO_DTP_Thread_Pool::create_threads_i (size_t count)
 {
   // Overwritten parameters.
   int force_active = 1;
+  long thread_flags = THR_NEW_LWP | THR_DETACHED;
 
   // Default parameters.
   int default_grp_id = -1;
@@ -334,11 +370,14 @@ TAO_DTP_Thread_Pool::TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
     shutdown_ (false),
     definition_ (def),
     threads_ (*this),
+    waiter_ (*this),
     active_count_ (0),
     new_thread_generator_ (*this),
     lock_ (),
     activation_lock_ (),
-    activation_cond_ (activation_lock_)
+    activation_cond_ (activation_lock_),
+    termination_lock_ (),
+    termination_cond_ (termination_lock_)
 {
   manager_.orb_core ().leader_follower ().set_new_leader_generator (
                                             &new_thread_generator_);
@@ -370,17 +409,7 @@ TAO_DTP_Thread_Pool::shutting_down (void)
 void
 TAO_DTP_Thread_Pool::wait (void)
 {
-  while (this->active_count_ > 0)
-    {
-      this->threads_.wait ();
-      if (TAO_debug_level > 7)
-        {
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) DTP_Thread_Pool::wait, ")
-                      ACE_TEXT ("active_count = %d, thread_count = %d\n"),
-                      this->active_count_, threads_.thr_count()));
-        }
-    }
+  this->waiter_.wait ();
 }
 
 #define TAO_THREAD_POOL_MANAGER_GUARD \
