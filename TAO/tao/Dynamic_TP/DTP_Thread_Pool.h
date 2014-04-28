@@ -75,7 +75,6 @@ private:
 class TAO_DTP_Thread_Pool_Threads : public ACE_Task_Base
 {
 public:
-
   /// Constructor.
   TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &pool);
 
@@ -93,6 +92,26 @@ protected:
   TAO_DTP_Thread_Pool &pool_;
 };
 
+/**
+ * @class TAO_DTP_Termination_Waiter
+ *
+ * @brief A thread pool helper that simply waits for the detached
+ * threads to signal their termination so ORB shutdown can be orderly
+ *
+ **/
+class TAO_DTP_Termination_Waiter : public ACE_Task_Base
+{
+public:
+  /// Constructor.
+  TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &pool);
+
+  /// Method executed when a thread is spawned.
+  int svc (void);
+
+protected:
+  /// Pool to which this thread belongs to.
+  TAO_DTP_Thread_Pool &pool_;
+};
 
 /**
  * @class TAO_DTP_Thread_Pool
@@ -107,6 +126,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_Thread_Pool
 {
 public:
   friend class TAO_DTP_Thread_Pool_Threads;
+  friend class TAO_DTP_Termination_Waiter;
 
   TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
                        CORBA::ULong id,
@@ -158,7 +178,7 @@ public:
 
 private:
 
-  int create_threads_i (size_t count, long thread_flags);
+  int create_threads_i (size_t count);
 
   TAO_DTP_Thread_Pool_Manager &manager_;
 
@@ -169,9 +189,8 @@ private:
   bool shutdown_;
 
   TAO_DTP_Definition definition_;
-
-  /// Array with all threads
   TAO_DTP_Thread_Pool_Threads threads_;
+  TAO_DTP_Termination_Waiter waiter_;
 
   CORBA::ULong active_count_;
 
@@ -183,6 +202,10 @@ private:
   /// synchronzing new threads with the requester of threads
   TAO_SYNCH_MUTEX activation_lock_;
   TAO_SYNCH_CONDITION activation_cond_;
+
+  /// synchronzing new threads with the requester of threads
+  TAO_SYNCH_MUTEX termination_lock_;
+  TAO_SYNCH_CONDITION termination_cond_;
 };
 
 /**
