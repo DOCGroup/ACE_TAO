@@ -52,7 +52,7 @@ create_timer_queue (void)
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask () : my_reactor_ (0) {}
+  MyTask () : my_reactor_ (0), my_tq_ (0) {}
 
   virtual ~MyTask () { stop (); }
 
@@ -68,6 +68,7 @@ private:
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Reactor *my_reactor_;
+  ACE_Timer_Queue *my_tq_;
 };
 
 ACE_Reactor*
@@ -86,9 +87,10 @@ MyTask::create_reactor (void)
 
   ACE_TEST_ASSERT (this->my_reactor_ == 0);
 
-  ACE_TP_Reactor * pImpl = 0;
+  this->my_tq_ = create_timer_queue ();
 
-  ACE_NEW_RETURN (pImpl,ACE_TP_Reactor (0, create_timer_queue ()), -1);
+  ACE_TP_Reactor * pImpl = 0;
+  ACE_NEW_RETURN (pImpl,ACE_TP_Reactor (0, this->my_tq_), -1);
 
   ACE_NEW_RETURN (my_reactor_,
                    ACE_Reactor (pImpl ,1),
@@ -116,7 +118,8 @@ MyTask::delete_reactor (void)
   this->reactor (0);
   delete this->my_reactor_;
   this->my_reactor_ = 0;
-
+  delete this->my_tq_;
+  this->my_tq_ = 0;
   return 0;
 }
 

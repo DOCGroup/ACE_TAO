@@ -1059,8 +1059,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // does *not* copy the timers, it just deletes the existing timer
   // queue ....
   main_reactor->timer_queue(tq.get());
-  // ... the reactor has assumed ownership, release the auto_ptr<> ...
-  tq.release();
+  // ... the reactor does not assume ownership
 
   /**
    * Stop_Handler's is supposed to stop the activity of all
@@ -1106,6 +1105,11 @@ run_main (int argc, ACE_TCHAR *argv[])
                               2,  // max_attempts_number
                               local_adapter) == -1)
         {
+          delete ping_handler;
+          delete [] ping_status;
+          delete stop_handler;
+          delete main_reactor;
+
           // If this process doesn't have privileges to open a raw socket, log
           // a warning instead of an error.
           if (errno == EPERM || errno == EACCES)
@@ -1137,6 +1141,11 @@ run_main (int argc, ACE_TCHAR *argv[])
                               ping_status,
                               2) == -1)   // max_attempts_number
         {
+          delete ping_handler;
+          delete [] ping_status;
+          delete stop_handler;
+          delete main_reactor;
+
           if (errno == EPERM || errno == EACCES)
             {
               ACE_ERROR ((LM_WARNING,
@@ -1164,6 +1173,13 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("main() - repeats_handler->open")));
+
+      delete repeats_handler;
+      delete ping_handler;
+      delete [] ping_status;
+      delete stop_handler;
+      delete main_reactor;
+
       ACE_OS::exit (-4);
     }
 
