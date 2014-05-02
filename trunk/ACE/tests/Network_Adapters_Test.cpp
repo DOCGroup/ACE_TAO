@@ -1107,8 +1107,8 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           delete ping_handler;
           delete [] ping_status;
-          delete stop_handler;
           delete main_reactor;
+          delete stop_handler;
 
           // If this process doesn't have privileges to open a raw socket, log
           // a warning instead of an error.
@@ -1143,8 +1143,8 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           delete ping_handler;
           delete [] ping_status;
-          delete stop_handler;
           delete main_reactor;
+          delete stop_handler;
 
           if (errno == EPERM || errno == EACCES)
             {
@@ -1177,8 +1177,8 @@ run_main (int argc, ACE_TCHAR *argv[])
       delete repeats_handler;
       delete ping_handler;
       delete [] ping_status;
-      delete stop_handler;
       delete main_reactor;
+      delete stop_handler;
 
       ACE_OS::exit (-4);
     }
@@ -1199,8 +1199,8 @@ run_main (int argc, ACE_TCHAR *argv[])
   delete repeats_handler;
   delete ping_handler;
   delete [] ping_status;
-  delete stop_handler;
   delete main_reactor;
+  delete stop_handler;
 
   ACE_END_TEST;
   return 0;
