@@ -87,6 +87,8 @@
 
 #define ACE_HAS_AIO_CALLS
 
+#define ACE_HAS_ICMP_SUPPORT 1
+
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
