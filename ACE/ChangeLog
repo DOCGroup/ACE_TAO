@@ -1,3 +1,14 @@
+Fri May  2 14:28:06 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/config-macosx-leopard.h:
+          MacOS supports ICMP.
+
+        * tests/Bug_4055_Regression_Test.cpp:
+        * tests/Message_Block_Large_Copy_Test.cpp:
+        * tests/Monotonic_Message_Queue_Test.cpp:
+        * tests/Network_Adapters_Test.cpp:
+          clean up some valgrind leak reports.
+
 Tue Apr 29 15:08:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE-INSTALL.html:

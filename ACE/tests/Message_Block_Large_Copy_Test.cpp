@@ -29,7 +29,7 @@ run_duplicate_test (const size_t msg_block_count,
     for (size_t j = 0; j != msg_block_count; ++j)
     {
       ACE_Message_Block* next = new ACE_Message_Block (block, msg_block_size);
-      next->copy (block);
+      next->wr_ptr (msg_block_size);
       mb->cont (next);
       mb = next;
     }
@@ -70,7 +70,7 @@ run_clone_test (const size_t msg_block_count,
     for (size_t j = 0; j != msg_block_count; ++j)
     {
       ACE_Message_Block* next = new ACE_Message_Block (block, msg_block_size);
-      next->copy (block);
+      next->wr_ptr (msg_block_size);
       mb->cont (next);
       mb = next;
     }
@@ -119,9 +119,7 @@ run_main (int , ACE_TCHAR *[])
                 MSG_BLOCK_TOTAL));
 
     char block[MSG_BLOCK_SIZE];
-    for(size_t j = 0 ; j != MSG_BLOCK_SIZE; j++)
-      block[j] = 'A';
-    block[MSG_BLOCK_SIZE-1] = 0;
+    memset (block, 'A', MSG_BLOCK_SIZE);
 
     size_t duplicate_total = run_duplicate_test (
       MSG_BLOCK_COUNT,
