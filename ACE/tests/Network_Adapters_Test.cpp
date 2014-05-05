@@ -88,8 +88,6 @@
  * as not a ICMP_ECHOREPLY message and further ICMP_ECHOREPLY
  * received. Don't worry, be happy - it's ok.
  */
-
-
 Echo_Handler::Echo_Handler (void)
   : ping_socket_ (),
     reply_wait_ (),
