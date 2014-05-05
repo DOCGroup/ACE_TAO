@@ -268,5 +268,5 @@ UnloadLibACE: !STATIC !WinCE !LabVIEW_RT
 UUID_Test: !NO_UUID !ACE_FOR_TAO
 Wild_Match_Test
 SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO
-SSL/SSL_Asynch_Stream_Test: SSL !ACE_FOR_TAO !BAD_AIO
+SSL/SSL_Asynch_Stream_Test: SSL !ACE_FOR_TAO !BAD_AIO !FIXED_BUGS_ONLY
 SSL/Thread_Pool_Reactor_SSL_Test: SSL
