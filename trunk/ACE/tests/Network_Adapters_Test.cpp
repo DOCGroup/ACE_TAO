@@ -1105,11 +1105,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                               2,  // max_attempts_number
                               local_adapter) == -1)
         {
-          delete ping_handler;
-          delete [] ping_status;
-          delete main_reactor;
-          delete stop_handler;
-
+          int res = 0;
           // If this process doesn't have privileges to open a raw socket, log
           // a warning instead of an error.
           if (errno == EPERM || errno == EACCES)
@@ -1117,16 +1113,21 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_ERROR ((LM_WARNING,
                           ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
                           ACE_TEXT ("insufficient privs to run this test\n")));
-              ACE_END_TEST;
-              return 0;
             }
           else
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) %p\n"),
                           ACE_TEXT ("main() - ping_handler->open")));
-              return -4;
+              res = -4;
             }
+          delete ping_handler;
+          delete [] ping_status;
+          delete main_reactor;
+          delete stop_handler;
+
+          ACE_END_TEST;
+          return res;
         }
     }
   else
@@ -1141,26 +1142,27 @@ run_main (int argc, ACE_TCHAR *argv[])
                               ping_status,
                               2) == -1)   // max_attempts_number
         {
-          delete ping_handler;
-          delete [] ping_status;
-          delete main_reactor;
-          delete stop_handler;
-
+          int res = 0;
           if (errno == EPERM || errno == EACCES)
             {
               ACE_ERROR ((LM_WARNING,
                           ACE_TEXT ("(%P|%t) main() - ping_handler->open: ")
                           ACE_TEXT ("insufficient privs to run this test\n")));
-              ACE_END_TEST;
-              return 0;
             }
           else
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) %p\n"),
                           ACE_TEXT ("main() - ping_handler->open")));
-              return -4;
+              res = -4;
             }
+          delete ping_handler;
+          delete [] ping_status;
+          delete main_reactor;
+          delete stop_handler;
+
+          ACE_END_TEST;
+          return res;
         }
     }
 
@@ -1180,7 +1182,8 @@ run_main (int argc, ACE_TCHAR *argv[])
       delete main_reactor;
       delete stop_handler;
 
-      ACE_OS::exit (-4);
+      ACE_END_TEST;
+      return -4;
     }
 
   stop_handler->register_handler (repeats_handler);
