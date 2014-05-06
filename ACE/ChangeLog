@@ -1,3 +1,8 @@
+Tue May  6 09:25:03 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/run_test.lst:
+          Changed ACE_Init_Test to require MFC in the test config
+
 Tue May  6 06:59:38 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Bug_3943_Regression_Test.cpp:
