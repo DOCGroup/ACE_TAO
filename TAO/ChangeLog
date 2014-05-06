@@ -1,3 +1,8 @@
+Tue May  6 09:15:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_orb_tests.lst:
+          4097 doens't compile with CORBA/e micro enabled
+
 Mon Apr 28 14:23:34 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_Thread_Pool.h:
