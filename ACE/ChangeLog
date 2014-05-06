@@ -1,3 +1,9 @@
+Tue May  6 06:59:38 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3943_Regression_Test.cpp:
+          This threads needs threads, so when that is not available
+          just exit by returning 0
+
 Mon May  5 14:58:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
