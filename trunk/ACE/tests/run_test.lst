@@ -16,7 +16,7 @@
 # Baz_Test only runs on Win32 configurations but not on Borland
 # configurations.
 
-ACE_Init_Test: MSVC
+ACE_Init_Test: MFC
 ACE_Test
 Aio_Platform_Test
 Arg_Shifter_Test
