@@ -56,7 +56,8 @@ public:
         ACE_HANDLE h = ACE_OS::open (file, O_RDONLY);
         if (h == ACE_INVALID_HANDLE)
           {
-            break;
+            std::cout << "Server: last handle encounterd at i = " << i << std::endl;
+            return;
           }
 
         // Save the last two file handles so that they can be closed later
@@ -64,6 +65,7 @@ public:
         this->slast_ = this->last_;
         this->last_ = h;
       }
+    std::cout << "Server: Descriptors::leak did not saturate fdset" << std::endl;
   }
 
   bool ok (void) const
@@ -189,12 +191,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Time_Value tv (10);
       orb->run (tv);
 
+      std::cout << "Server: closing some fds" << std::endl;
+
       descriptors.allow_accepts ();
       orb->run ();
       orb->destroy ();
 
       if (!descriptors.ok ())
-        ACE_ERROR_RETURN ((LM_ERROR, "The accept error never occurred\n"), 1);
+        {
+          std::cout << "Server: the accept error never occurred" << std::endl;
+          ACE_ERROR_RETURN ((LM_ERROR, "The accept error never occurred\n"), 1);
+        }
     }
   catch (const CORBA::Exception& ex)
     {
