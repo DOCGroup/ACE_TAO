@@ -59,6 +59,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for(size_t i = 0; i < 10; i++)
         try
           {
+            std::cout << "Client: calling simple, i = " << i << std::endl;
             // This first invocation will actually cause the connection to
             // the server.  Since the server has run out of file handles,
             // it can not accept the new connection.  On AIX, this will
@@ -71,10 +72,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
         catch (const CORBA::COMM_FAILURE&)
           {
+            std::cout << "Client: simple raised COMMFAIL, i = " << i << std::endl;
             ACE_OS::sleep (1);
           }
 
+      std::cout << "Client: calling simple again" << std::endl;
       test->simple ();
+      std::cout << "Client: calling shutdown" <<  std::endl;
       test->shutdown ();
 
       orb->destroy ();

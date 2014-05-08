@@ -73,7 +73,9 @@ if ($status == 0) {
     if (open(FH, $server_logfile)) {
         my $error_achieved = 0;
         my $reregister = 0;
+        print STDERR "processing <$server_logfile>\n";
         while(<FH>) {
+            print STDERR $_;
             if (/TAO_Acceptor::handle_accept_error.+Too many files open/) {
                 ++$error_achieved;
             }
@@ -84,16 +86,16 @@ if ($status == 0) {
         close(FH);
 
         if (!$error_achieved) {
-            print "ERROR: The error situation was not achieved\n";
+            print STDERR "ERROR: The error situation was not achieved\n";
             ++$status;
         }
         if (!$reregister) {
-            print "ERROR: The acceptor was not reregistered\n";
+            print STDERR "ERROR: The acceptor was not reregistered\n";
             ++$status;
         }
     }
     else {
-        print "ERROR: Unable to read $server_logfile\n";
+        print STDERR "ERROR: Unable to read $server_logfile\n";
         ++$status;
     }
 }
