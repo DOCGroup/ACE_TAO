@@ -1,3 +1,11 @@
+Thu May  8 22:20:57 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/HandleExhaustion/client.cpp:
+        * tests/HandleExhaustion/run_test.pl:
+        * tests/HandleExhaustion/server.cpp:
+          This test seems to fail only on the scoreboard. Adding some
+          output to hopefully gain insight into why it is failing.
+
 Tue May  6 09:15:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_orb_tests.lst:
