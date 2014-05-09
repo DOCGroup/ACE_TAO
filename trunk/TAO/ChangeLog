@@ -1,3 +1,10 @@
+Fri May  9 16:53:27 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_Task.h:
+        * tao/Dynamic_TP/DTP_Task.cpp:
+          Clean up a race condition that could allow too many threads
+          to exit if they were started concurrently.
+
 Fri May  9 12:18:49 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
 
         * tests/HandleExhaustion/client.cpp:
