@@ -3,6 +3,7 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/streams.h"
 
 static const ACE_TCHAR *ior = ACE_TEXT ("file://server.ior");
 
@@ -59,7 +60,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       for(size_t i = 0; i < 10; i++)
         try
           {
-            std::cout << "Client: calling simple, i = " << i << std::endl;
+            cout << "Client: calling simple, i = " << i << endl;
             // This first invocation will actually cause the connection to
             // the server.  Since the server has run out of file handles,
             // it can not accept the new connection.  On AIX, this will
@@ -72,13 +73,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
         catch (const CORBA::COMM_FAILURE&)
           {
-            std::cout << "Client: simple raised COMMFAIL, i = " << i << std::endl;
+            cout << "Client: simple raised COMMFAIL, i = " << i << endl;
             ACE_OS::sleep (1);
           }
 
-      std::cout << "Client: calling simple again" << std::endl;
+      cout << "Client: calling simple again" << endl;
       test->simple ();
-      std::cout << "Client: calling shutdown" <<  std::endl;
+      cout << "Client: calling shutdown" <<  endl;
       test->shutdown ();
 
       orb->destroy ();

@@ -7,6 +7,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_resource.h"
+#include "ace/streams.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 
@@ -56,7 +57,7 @@ public:
         ACE_HANDLE h = ACE_OS::open (file, O_RDONLY);
         if (h == ACE_INVALID_HANDLE)
           {
-            std::cout << "Server: last handle encounterd at i = " << i << std::endl;
+            cout << "Server: last handle encounterd at i = " << i << endl;
             return;
           }
 
@@ -65,7 +66,7 @@ public:
         this->slast_ = this->last_;
         this->last_ = h;
       }
-    std::cout << "Server: Descriptors::leak did not saturate fdset" << std::endl;
+    cout << "Server: Descriptors::leak did not saturate fdset" << endl;
   }
 
   bool ok (void) const
@@ -191,7 +192,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_Time_Value tv (10);
       orb->run (tv);
 
-      std::cout << "Server: closing some fds" << std::endl;
+      cout << "Server: closing some fds" << endl;
 
       descriptors.allow_accepts ();
       orb->run ();
@@ -199,7 +200,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (!descriptors.ok ())
         {
-          std::cout << "Server: the accept error never occurred" << std::endl;
+          cout << "Server: the accept error never occurred" << endl;
           ACE_ERROR_RETURN ((LM_ERROR, "The accept error never occurred\n"), 1);
         }
     }
