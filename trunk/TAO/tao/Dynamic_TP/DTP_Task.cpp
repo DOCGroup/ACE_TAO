@@ -236,6 +236,9 @@ TAO_DTP_Task::open (void* /* args */)
 
       delete[] stack_sz_arr;
     }
+
+  this->active_count_ = num;
+
   this->opened_ = true;
   this->accepting_requests_ = true;
 
@@ -331,7 +334,6 @@ TAO_DTP_Task::above_minimum (void)
 int
 TAO_DTP_Task::svc (void)
 {
-  this->add_active ();
   this->add_busy ();
   if (TAO_debug_level > 4)
     {
@@ -416,6 +418,7 @@ TAO_DTP_Task::svc (void)
             }
           else
             {
+              this->add_active ();
               if (TAO_debug_level > 4)
                 {
                   TAOLIB_DEBUG ((LM_DEBUG,
