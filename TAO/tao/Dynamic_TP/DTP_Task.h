@@ -126,7 +126,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// release the request, reset the accepting flag if necessary
       void clear_request (TAO::CSD::TP_Request_Handle &r);
 
-
+      void add_busy (void);
+      void remove_busy (void);
+      void add_active (void);
+      bool remove_active (bool);
+      bool need_active (void);
+      bool above_minimum (void);
 
       typedef TAO_SYNCH_MUTEX         LockType;
       typedef TAO_Condition<LockType> ConditionType;
@@ -150,6 +155,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// close(1) invocation (ie, a shutdown request) blocked until all
       /// of the worker threads have stopped running.
       ConditionType active_workers_;
+
+      /// The number of threads that are currently active. This may be
+      /// different than the total number of threads since the latter
+      /// may include threads that are shutting down but not reaped.
+      size_t active_count_;
 
       /// Flag used to indicate when this task will (or will not) accept
       /// requests via the the add_request() method.
