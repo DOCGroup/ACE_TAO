@@ -1,3 +1,11 @@
+Sat May 10 13:24:27 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+
+        * tests/HandleExhaustion/run_test.pl:
+        * tests/HandleExhaustion/server.cpp:
+          More output to investigate the cause of the failures. It looks
+          like the problem is related to bug 3326, and so the solution
+          may be to close enough fds to get under the reactor maximum.
+
 Fri May  9 20:38:01 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_Task.cpp:

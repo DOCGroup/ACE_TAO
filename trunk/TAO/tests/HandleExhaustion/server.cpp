@@ -36,16 +36,30 @@ class Descriptors
 {
 public:
   Descriptors (void)
-   : slast_ (ACE_INVALID_HANDLE),
-     last_ (ACE_INVALID_HANDLE),
-     ok_ (false)
+    : min_close_ (0),
+      max_close_ (0),
+      slast_ (ACE_INVALID_HANDLE),
+      last_ (ACE_INVALID_HANDLE),
+      ok_ (false)
   {
+    for (size_t i = 0; i < 0xffff; i++)
+      {
+        this->openfds_[i] = ACE_INVALID_HANDLE;
+      }
   }
 
   int allow_accepts (void)
   {
+    cout << "Server: closing " << (this->max_close_ - this->min_close_) + 1
+         << " fds" << endl;
+    for (size_t i = this->min_close_; i <= this->max_close_; i++)
+      {
+        ACE_OS::close (this->openfds_[i]);
+      }
+#if 0
     ACE_OS::close(this->slast_);
     ACE_OS::close(this->last_);
+#endif
     this->ok_ = true;
     return 0;
   }
@@ -54,8 +68,17 @@ public:
   {
     for (size_t i = 0; i < 0xffff; i++)
       {
-        ACE_HANDLE h = ACE_OS::open (file, O_RDONLY);
-        if (h == ACE_INVALID_HANDLE)
+        this->openfds_[i] = ACE_OS::open (file, O_RDONLY);
+        if ( i == 0)
+          {
+            this->min_close_ = (ACE_DEFAULT_SELECT_REACTOR_SIZE - 2)
+              - (this->openfds_[i] - 1);
+            cout << "Server: first leaked handle is "
+                 << this->openfds_[i] << " min_close is "
+                 << this->min_close_ << endl;
+          }
+        this->max_close_ = i;
+        if (this->openfds_[i] == ACE_INVALID_HANDLE)
           {
             cout << "Server: last handle encounterd at i = " << i << endl;
             return;
@@ -64,7 +87,7 @@ public:
         // Save the last two file handles so that they can be closed later
         // on.  We need two for this test to work with SHMIOP.
         this->slast_ = this->last_;
-        this->last_ = h;
+        this->last_ = openfds_[i];
       }
     cout << "Server: Descriptors::leak did not saturate fdset" << endl;
   }
@@ -75,6 +98,9 @@ public:
   }
 
 private:
+  ACE_HANDLE openfds_[0xffff];
+  size_t min_close_;
+  size_t max_close_;
   ACE_HANDLE slast_;
   ACE_HANDLE last_;
   bool ok_;
@@ -125,17 +151,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     rlimit rlim;
     if (ACE_OS::getrlimit(RLIMIT_NOFILE, &rlim) == 0)
       {
+        cout << "server evaluating rlimit, cur = "
+             << rlim.rlim_cur << " max = " << rlim.rlim_max
+             << " reactor max = "
+             << ACE_DEFAULT_SELECT_REACTOR_SIZE << endl;
         if (rlim.rlim_cur < static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE) &&
             rlim.rlim_max > static_cast<rlim_t> (ACE_DEFAULT_SELECT_REACTOR_SIZE))
           {
             rlim.rlim_cur = ACE_DEFAULT_SELECT_REACTOR_SIZE;
             rlim.rlim_max = ACE_DEFAULT_SELECT_REACTOR_SIZE;
             ACE_OS::setrlimit(RLIMIT_NOFILE, &rlim);
+            cout << "server set rlimit_nofile" << endl;
           }
       }
+#else
+    cout << "server does not support setting rlimit, reactor max = "
+         << ACE_DEFAULT_SELECT_REACTOR_SIZE << endl;
 #endif /* !ACE_LACKS_RLIMIT && RLIMIT_NOFILE */
 
-      CORBA::ORB_var orb =
+    CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var poa_object =

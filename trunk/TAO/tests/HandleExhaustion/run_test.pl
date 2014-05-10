@@ -69,7 +69,7 @@ if ($server->GetFile ($logbase) == -1) {
     exit 1;
 }
 
-if ($status == 0) {
+#if ($status == 0) {
     if (open(FH, $server_logfile)) {
         my $error_achieved = 0;
         my $reregister = 0;
@@ -98,7 +98,7 @@ if ($status == 0) {
         print STDERR "ERROR: Unable to read $server_logfile\n";
         ++$status;
     }
-}
+#}
 
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
