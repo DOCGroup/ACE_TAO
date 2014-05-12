@@ -54,7 +54,6 @@ public:
       {
         ACE_OS::close (this->openfds_[i]);
       }
-    this->ok_ = true;
     return 0;
   }
 
@@ -80,6 +79,7 @@ public:
         if (this->openfds_[i] == ACE_INVALID_HANDLE)
           {
             cout << "Server: last handle encounterd at i = " << i << endl;
+            this->ok_ = true;
             return;
           }
       }
@@ -88,7 +88,7 @@ public:
 
   bool ok (void) const
   {
-    return this->ok_ && this->last_ != ACE_INVALID_HANDLE;
+    return this->ok_;
   }
 
 private:
