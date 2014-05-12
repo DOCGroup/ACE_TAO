@@ -36,6 +36,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+  cout << "HandleExhaustion test not available on Windows" << endl;
+#else
   try
     {
       CORBA::ORB_var orb =
@@ -89,6 +94,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-
+#endif /* ACE_WIN32 */
   return 0;
 }
