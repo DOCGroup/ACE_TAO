@@ -38,8 +38,6 @@ public:
   Descriptors (void)
     : min_close_ (0),
       max_close_ (0),
-      slast_ (ACE_INVALID_HANDLE),
-      last_ (ACE_INVALID_HANDLE),
       ok_ (false)
   {
     for (size_t i = 0; i < 0xffff; i++)
@@ -56,10 +54,6 @@ public:
       {
         ACE_OS::close (this->openfds_[i]);
       }
-#if 0
-    ACE_OS::close(this->slast_);
-    ACE_OS::close(this->last_);
-#endif
     this->ok_ = true;
     return 0;
   }
@@ -71,8 +65,13 @@ public:
         this->openfds_[i] = ACE_OS::open (file, O_RDONLY);
         if ( i == 0)
           {
+#if defined (ACE_WIN32)
+            // the test is not valid on windows so just wing this value
+            this->min_close_ = 1000;
+#else
             this->min_close_ = (ACE_DEFAULT_SELECT_REACTOR_SIZE - 2)
               - (this->openfds_[i] - 1);
+#endif /* ACE_WIN32 */
             cout << "Server: first leaked handle is "
                  << this->openfds_[i] << " min_close is "
                  << this->min_close_ << endl;
@@ -83,11 +82,6 @@ public:
             cout << "Server: last handle encounterd at i = " << i << endl;
             return;
           }
-
-        // Save the last two file handles so that they can be closed later
-        // on.  We need two for this test to work with SHMIOP.
-        this->slast_ = this->last_;
-        this->last_ = openfds_[i];
       }
     cout << "Server: Descriptors::leak did not saturate fdset" << endl;
   }
@@ -101,8 +95,6 @@ private:
   ACE_HANDLE openfds_[0xffff];
   size_t min_close_;
   size_t max_close_;
-  ACE_HANDLE slast_;
-  ACE_HANDLE last_;
   bool ok_;
 };
 
@@ -135,6 +127,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+#if defined (ACE_WIN32)
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+  cout << "HandleExhaustion test not available on Windows" << endl;
+#else
   try
     {
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
@@ -243,6 +240,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Exception caught:");
       return 1;
     }
-
+#endif /* ACE_WIN32 */
   return 0;
 }
