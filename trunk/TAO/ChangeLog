@@ -1,15 +1,15 @@
-Mon May 12 11:48:06 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+Mon May 12 11:48:06 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/HandleExhaustion/server.cpp:
           Fix compile error.
 
-Mon May 12 02:26:46 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+Mon May 12 02:26:46 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/HandleExhaustion/client.cpp:
         * tests/HandleExhaustion/server.cpp:
           The test doesn't run on windows, but it has to build there.
 
-Sat May 10 13:24:27 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+Sat May 10 13:24:27 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/HandleExhaustion/run_test.pl:
         * tests/HandleExhaustion/server.cpp:
@@ -29,7 +29,7 @@ Fri May  9 16:53:27 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
           Clean up a race condition that could allow too many threads
           to exit if they were started concurrently.
 
-Fri May  9 12:18:49 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+Fri May  9 12:18:49 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/HandleExhaustion/client.cpp:
         * tests/HandleExhaustion/server.cpp:
@@ -219,7 +219,7 @@ Wed Apr  9 21:41:49 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
           requires that all stubs and other entities need to be cleaned up
           before the ORB is explicitly destroyed.
 
-Wed Apr  9 10:21:16 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+Wed Apr  9 10:21:16 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * bin/tao_orb_tests.lst:
           Too many n's.
@@ -538,7 +538,7 @@ Sun Feb 23 19:05:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
           to cleanly shutdown the ORB so that we don't get valgrind
           reported leads
 
-Sun Feb 23 18:27:00 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+Sun Feb 23 18:27:00 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
           Another refactor fix to keep working on non-windows.
@@ -786,7 +786,7 @@ Thu Feb  6 14:52:09 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
         * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
           Doxygen fixes
 
-Thu Feb  6 05:56:12 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+Thu Feb  6 05:56:12 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
         * orbsvcs/ImplRepo_Service/Server_Info.cpp:
@@ -1443,7 +1443,7 @@ Fri Nov  8 15:33:29 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
           The DOC group can only support the TAO portion of the test.
           Thanks to Mike McKnerney for supplying this test.
 
-Wed Oct 30 03:25:41 UTC 2013  Phil Mesnier  <mesnier_p@socket.net>
+Wed Oct 30 03:25:41 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/FT_Naming_Service/FT_Naming_Service.cpp:
         * orbsvcs/Naming_Service/Naming_Service.cpp:
