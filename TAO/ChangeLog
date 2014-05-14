@@ -1,3 +1,13 @@
+Wed May 14 20:04:21 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_Task.h:
+        * tao/Dynamic_TP/DTP_Task.cpp:
+          Fix another race condition that can cause the server to hang.
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl:
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/run_test.pl:
+          Always run all tests.
+
 Mon May 12 11:48:06 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/HandleExhaustion/server.cpp:
