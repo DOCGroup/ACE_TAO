@@ -23,6 +23,7 @@ TAO_DTP_Task::TAO_DTP_Task ()
     active_count_ (0),
     accepting_requests_ (false),
     shutdown_ (false),
+    check_queue_ (false),
     opened_ (false),
     num_queue_requests_ ((size_t)0),
     init_pool_threads_ ((size_t)0),
@@ -74,12 +75,11 @@ TAO_DTP_Task::add_request (TAO::CSD::TP_Request* request)
     // to perfom a "clone" operation on some underlying request data before
     // the request can be properly placed into a queue.
     request->prepare_for_queue();
-
     this->queue_.put(request);
   }
-
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->work_lock_, false);
+    this->check_queue_ = true;
     this->work_available_.signal ();
     if (TAO_debug_level > 4 )
       {
@@ -237,6 +237,13 @@ TAO_DTP_Task::open (void* /* args */)
       delete[] stack_sz_arr;
     }
 
+  if (TAO_debug_level > 4)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("(%P|%t) DTP_Task::open() activated %d initial threads\n"),
+                     num));
+    }
+
   this->active_count_ = num;
 
   this->opened_ = true;
@@ -272,7 +279,7 @@ TAO_DTP_Task::clear_request (TAO::CSD::TP_Request_Handle &r)
   if (TAO_debug_level > 4 )
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
+                  ACE_TEXT ("TAO (%P|%t) - DTP_Task::clear_request() ")
                   ACE_TEXT ("Decrementing num_queue_requests.")
                   ACE_TEXT ("New queue depth:%d\n"),
                   this->num_queue_requests_));
@@ -365,10 +372,13 @@ TAO_DTP_Task::svc (void)
 
               {
                 ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->work_lock_, false);
-                int wait_state = this->thread_idle_time_.sec () == 0
-                                 ? this->work_available_.wait ()
-                                 : this->work_available_.wait (&tmp_sec);
-
+                int wait_state = 0;
+                while (!(this->shutdown_ || this->check_queue_) && wait_state != -1)
+                  {
+                    wait_state = this->thread_idle_time_.sec () == 0
+                      ? this->work_available_.wait ()
+                      : this->work_available_.wait (&tmp_sec);
+                  }
                 // Check for timeout
                 if (this->shutdown_)
                   return 0;
@@ -385,6 +395,7 @@ TAO_DTP_Task::svc (void)
                         return 0;
                       }
                   }
+                this->check_queue_ = false;
               }
 
               this->add_busy ();
