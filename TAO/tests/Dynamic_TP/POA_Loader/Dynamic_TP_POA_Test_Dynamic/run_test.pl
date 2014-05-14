@@ -382,17 +382,10 @@ my $status = 0;
 # thread_timeout (in seconds)
 # max_queue_request_depth
 
-  while ()
-  {
-      $status = test_1($server, $client, $iorbase, $deletelogs);
-      last if ($status);
-      $status = test_2($server, $client, $iorbase, $deletelogs);
-      last if ($status);
-      $status = test_3($server, $client, $iorbase, $deletelogs);
-      last if ($status);
-      $status = test_4($server, $client, $iorbase, $deletelogs);
-      last;
-  }
+$status += test_1($server, $client, $iorbase, $deletelogs);
+$status += test_2($server, $client, $iorbase, $deletelogs);
+$status += test_3($server, $client, $iorbase, $deletelogs);
+$status += test_4($server, $client, $iorbase, $deletelogs);
 
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);

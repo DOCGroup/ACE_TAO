@@ -168,6 +168,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       /// Flag used to initiate a shutdown request to all worker threads.
       bool shutdown_;
 
+      /// Flag to indicate something is on the queue. works in conjunction with
+      /// the work_available condition
+      bool check_queue_;
+
       /// Flag used to avoid multiple open() calls.
       bool opened_;
 
