@@ -8,6 +8,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
+$server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+$client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
+$iorbase = "server.ior";
+$server_iorfile = $server->LocalFile ($iorbase);
+$client_iorfile = $client->LocalFile ($iorbase);
+$deletelogs = 1;
+
+$server->DeleteFile($iorbase);
+$client->DeleteFile($iorbase);
+
+my $status = 0;
 
 sub count_strings
 {
@@ -25,21 +36,49 @@ sub count_strings
     return($cnt);
 }
 
-sub test_1
+sub run_test
 {
-# Test 1:
-# This is a test for the creation of initial_pool_threads.
-# The test will start up a server with default pool values
-# and will result in 5 initial threads being started.
-
-    my $server = shift;
-    my $client = shift;
-    my $iorbase = shift;
-    my $deletelogs = shift;
+    my $test_num = shift;
+    my $test_name = "";
+    my $find_this = "";
+    my $expected_cnt = 0;
     my $status = 0;
+    my $num_clients = 1;
+    my $valid_num_exceptions = 0;
+    my $wait_sec = 0;
+    my $client_ext_args = "";
 
-    print "\nRunning Test 1....\n";
-    $test_num=1;
+    if ($test_num == 1) {
+        $test_name = "initial_pool_thread";
+        $find_this = "DTP_Task::svc() New thread created";
+        $expected_cnt = 5;
+    }
+    elsif ($test_num == 2) {
+        $test_name = "min_pool_thread";
+        $find_this = "DTP_Task::svc() Existing thread expiring";
+        $expected_cnt = 5;
+        $wait_sec = 15;
+    }
+    elsif ($test_num == 3) {
+        $test_name = "max_request_queue_depth";
+        $num_clients = 15;
+        $valid_num_exceptions = 5;
+        $client_ext_args = "-e 0 -n $num_clients -t max_queue -g $valid_num_exceptions";
+    }
+    elsif ($test_num == 4) {
+        $test_name = "max_pool_thread";
+        $find_this = "Growing threadcount.";
+        $expected_cnt = 4;
+        $num_clients = 10;
+        $valid_num_exceptions = 5;
+        $client_ext_args = "-e 0 -n $num_clients";
+    }
+    else {
+        print STDERR "ERROR: invalid test num $test_num\n";
+        exit 1;
+    }
+
+    print "\nRunning Test $test_num, $test_name....\n";
 
     my $lfname = "server_test" . $test_num . ".log";
     my $scname = "svc" . $test_num . ".conf";
@@ -56,8 +95,10 @@ sub test_1
 
     $server->DeleteFile($lfname);
 
-    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
-    $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
+    my $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
+    my $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
+
+    my $CLT = $client->CreateProcess ("client", "-k file://$client_iorfile $client_ext_args") if ($test_num > 2);
 
     $server_status = $SV->Spawn ();
 
@@ -73,24 +114,53 @@ sub test_1
         exit 1;
     }
 
+    if ($server->GetFile ($iorbase) == -1) {
+        print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
+        exit 1;
+    }
+    if ($client->PutFile ($iorbase) == -1) {
+        print STDERR "ERROR: cannot set file <$client_iorfile>\n";
+        $SV->Kill (); $SV->TimedWait (1);
+        exit 1;
+    }
+
+    if ($wait_sec > 0) {
+        # Sleep here for more than the timeout to let the threads die off and log.
+        print STDERR "INFO: sleeping $wait_sec seconds\n";
+        sleep($wait_sec);
+    }
+
+    if ($test_num > 2) {
+        $client_status = $CLT->SpawnWaitKill ($client->ProcessStopWaitInterval() * $num_clients);
+        if ($client_status != 0) {
+            print STDERR "ERROR: client $i returned $client_status\n";
+        }
+    }
+
     $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
     if ($client_status != 0) {
         print STDERR "ERROR: client $i returned $client_status\n";
     }
 
-     # Now find the spawned threads in the log file.
+    my $found_cnt = 0;
+    if ($expected_cnt > 0) {
+        if ($server->GetFile ($lfname) == -1) {
+            print STDERR "ERROR: cannot retrieve file <$server_iorfile>\n";
+            $SV->Kill (); $SV->TimedWait (1);
+            exit 1;
+        }
+        print STDERR "looking for $expected_cnt instances of \"$find_this\"\n";
+        $found_cnt = count_strings ($lfname, $find_this);
+    }
 
-    $find_this="DTP_Task::svc() New thread created.";
-    $found_cnt=0;
-
-    my($found_cnt) = count_strings($server_logfile,$find_this);
-
-    if ($found_cnt != 5) {
-       print STDERR "ERROR: initial_pool_thread test failed w/$found_cnt instead of 5\n";
-       $status = 1;
+    if ($found_cnt != $expected_cnt) {
+        print STDERR "ERROR: $test_name test failed w/$found_cnt instead of $expected_cnt\n";
+        $status = 1;
     }
     elsif ($deletelogs) {
         $server->DeleteFile($lfname);
+        unlink ($lfname);
       }
 
     $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
@@ -106,271 +176,6 @@ sub test_1
     return($status);
 }
 
-sub test_2
-{
-    # Test 2:
-    # This is a test for showing a process maintaining a min_pool_threads after
-    # the creation of initial_pool_threads is higher. This test will also
-    # exercise the thread_idle_time (timeout).
-    # The test will start up a server with 10 init_pool_threads and 5 min_pool_threads.
-    # After 10 seconds, 5 threads should expire leaving the minimum 5 threads.
-
-
-    my $server = shift;
-    my $client = shift;
-    my $iorbase = shift;
-    my $deletelogs = shift;
-    my $status = 0;
-
-
-    print "\nRunning Test 2....\n";
-    $test_num=2;
-    my $lfname = "server_test" . $test_num . ".log";
-    my $scname = "svc" . $test_num . ".conf";
-    my $server_iorfile = $server->LocalFile ($iorbase);
-    my $client_iorfile = $client->LocalFile ($iorbase);
-    my $server_logfile = $server->LocalFile ($lfname);
-    my $svc_conf = $server->LocalFile($scname);
-
-    # copy the configuation file
-    if ($server->PutFile ($scname) == -1) {
-        print STDERR "ERROR: cannot set file <$svc_conf>\n";
-        return 1;
-    }
-
-    $server->DeleteFile($lfname);
-
-    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
-    $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
-
-    $server_status = $SV->Spawn ();
-
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
-        exit 1;
-    }
-
-    if ($server->WaitForFileTimed ($iorbase,
-                                   $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-        $SV->Kill (); $SV->TimedWait (1);
-        exit 1;
-    }
-
-    # Sleep here for more than the timeout to let the threads die off and log.
-    print STDERR "INFO: sleeping 15 seconds\n";
-    sleep(15);
-
-    $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
-    if ($client_status != 0) {
-        print STDERR "ERROR: client $i returned $client_status\n";
-    }
-     # Now find the spawned threads in the log file.
-
-    $find_this="DTP_Task::svc() Existing thread expiring.";
-    $found_cnt=0;
-
-    my($found_cnt) = count_strings($server_logfile,$find_this);
-
-    if ($found_cnt != 5) {
-       print STDERR "ERROR: min_pool_thread test failed w/$found_cnt instead of 5\n";
-       $status = 1;
-    }
-    elsif ($deletelogs) {
-        $server->DeleteFile($lfname);
-    }
-
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
-
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
-        $status = 1;
-    }
-
-    $server->DeleteFile($iorbase);
-    $client->DeleteFile($iorbase);
-
-    return($status);
-}
-
-sub test_3
-{
-    # Test 3:
-    # This is a test for showing a process maintaining a max_request_queue_depth after
-    # more clients request service than the queue allows for.
-    # The test will start up a server with a max_request_queue_depth of 10 and
-    # will issue calls from 15 clients. There should be 5 CORBA exceptions found
-    # in the log after the run.
-    #
-    my $server = shift;
-    my $client = shift;
-    my $iorbase = shift;
-    my $deletelogs = shift;
-    my $status = 0;
-
-    print "\nRunning Test 3....\n";
-    my $test_num=3;
-    my $num_clients=15;
-    my $valid_num_exceptions=5;
-    my $lfname = "server_test" . $test_num . ".log";
-    my $scname = "svc" . $test_num . ".conf";
-    my $server_iorfile = $server->LocalFile ($iorbase);
-    my $client_iorfile = $client->LocalFile ($iorbase);
-    my $server_logfile = $server->LocalFile ($lfname);
-    my $svc_conf = $server->LocalFile($scname);
-
-    # copy the configuation file
-    if ($server->PutFile ($scname) == -1) {
-        print STDERR "ERROR: cannot set file <$svc_conf>\n";
-        return 1;
-    }
-
-    $server->DeleteFile($lfname);
-
-    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
-
-    $server_status = $SV->Spawn ();
-
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
-        exit 1;
-    }
-
-    if ($server->WaitForFileTimed ($iorbase,
-                                   $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-        $SV->Kill (); $SV->TimedWait (1);
-        exit 1;
-    }
-
-    $CLS = $client->CreateProcess ("client", "-k file://$client_iorfile -e 0 -n $num_clients -t max_queue -g $valid_num_exceptions");
-    $status = $CLS->SpawnWaitKill ($client->ProcessStopWaitInterval());
-
-    $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
-    $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
-    if ($client_status != 0) {
-        print STDERR "ERROR: client $i returned $client_status\n";
-    }
-
-    if ($status != 0)
-    {
-      print STDERR "ERROR: max_request_queue_depth test failed\n";
-      $status = 1;
-    }
-    elsif ($deletelogs) {
-        $server->DeleteFile($lfname);
-    }
-
-
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
-
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
-        $status = 1;
-    }
-
-    $server->DeleteFile($iorbase);
-    $client->DeleteFile($iorbase);
-
-    return($status);
-}
-
-sub test_4
-{
-
-    # Test 4:
-    # This is a test for showing a process maintaining a max_pool_threads after
-    # more clients request service than the queue allows for.
-    # The test will start up a server with a max_request_queue_depth of 10 and
-    # will issue calls from 10 clients. There should be 5 CORBA exceptions found
-    # in the log after the run.
-    #
-
-    my $server = shift;
-    my $client = shift;
-    my $iorbase = shift;
-    my $deletelogs = shift;
-    my $status = 0;
-
-    print "\nRunning Test 4....\n";
-    $test_num=4;
-    $num_clients=10;
-    my $lfname = "server_test" . $test_num . ".log";
-    my $scname = "svc" . $test_num . ".conf";
-    my $server_iorfile = $server->LocalFile ($iorbase);
-    my $client_iorfile = $client->LocalFile ($iorbase);
-    my $server_logfile = $server->LocalFile ($lfname);
-    my $svc_conf = $server->LocalFile($scname);
-
-    # copy the configuation file
-    if ($server->PutFile ($scname) == -1) {
-        print STDERR "ERROR: cannot set file <$svc_conf>\n";
-        return 1;
-    }
-
-    $server->DeleteFile($lfname);
-
-    $SV = $server->CreateProcess ("server", " -ORBDebugLevel 5 -ORBSvcConf $svc_conf -ORBLogFile $server_logfile -s 3 -o $server_iorfile");
-    $server_status = $SV->Spawn ();
-
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
-        exit 1;
-    }
-
-    if ($server->WaitForFileTimed ($iorbase,
-                                   $server->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$server_iorfile>\n";
-        $SV->Kill (); $SV->TimedWait (1);
-        exit 1;
-    }
-
-    $CLS = $client->CreateProcess ("client", "-k file://$client_iorfile -n $num_clients");
-    $status = $CLS->SpawnWaitKill ($client->ProcessStopWaitInterval() * $num_clients);
-
-    $SC = $client->CreateProcess ("client", "-k file://$client_iorfile -s");
-    $client_status = $SC->SpawnWaitKill ($client->ProcessStopWaitInterval());
-
-     # Now find the spawned threads in the log file.
-
-    $find_this="Growing threadcount.";
-    $found_cnt=0;
-    $valid_cnt=4;
-
-    my($found_cnt) = count_strings($server_logfile,$find_this);
-
-    if ($found_cnt != $valid_cnt) {
-       print STDERR "ERROR: max_pool_thread test failed w/$found_cnt instead of $valid_cnt\n";
-       $status = 1;
-    }
-    elsif ($deletelogs) {
-        $server->DeleteFile($lfname);
-    }
-
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval());
-
-    if ($server_status != 0) {
-        print STDERR "ERROR: server returned $server_status\n";
-        $status = 1;
-    }
-
-  $server->DeleteFile($iorbase);
-  $client->DeleteFile($iorbase);
-  return($status);
-}
-
-my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
-my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
-my $iorbase = "server.ior";
-my $server_iorfile = $server->LocalFile ($iorbase);
-my $client_iorfile = $client->LocalFile ($iorbase);
-my $deletelogs = 1;
-
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
-my $status = 0;
-
 # Each test below will start up a server and optionally some clients.
 # When a server gets a call it will sleep some number of seconds before responding.
 # The -s parameter controls how many seconds it will sleep.
@@ -382,13 +187,8 @@ my $status = 0;
 # thread_timeout (in seconds)
 # max_queue_request_depth
 
-$status += test_1($server, $client, $iorbase, $deletelogs);
-$status += test_2($server, $client, $iorbase, $deletelogs);
-$status += test_3($server, $client, $iorbase, $deletelogs);
-$status += test_4($server, $client, $iorbase, $deletelogs);
-
-$server->DeleteFile($iorbase);
-$client->DeleteFile($iorbase);
-
+for ($i = 0; $i < 4; $i++) {
+    $status += run_test ($i + 1);
+}
 exit $status;
 
