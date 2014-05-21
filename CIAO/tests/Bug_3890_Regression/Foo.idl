@@ -57,12 +57,12 @@ union Data2 switch (DataType2)
 };
 
 interface intf {};
-valuetype vtype {};
+valuetype vtype_ {};
 
 component Foo
 {
   attribute intf my_intf;
-  attribute vtype my_vtype;
+  attribute vtype_ my_vtype;
 
   attribute short  my_short;
   attribute long   my_long;
