@@ -1,3 +1,8 @@
+Wed May 21 09:49:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Added support for c++11 and c++1y as settings
+
 Tue May  6 09:25:03 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/run_test.lst:
