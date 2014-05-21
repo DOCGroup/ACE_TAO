@@ -44,7 +44,7 @@ endif
 # fix this
 pipes ?= 1
 
-# set archtecture specific build flags
+# set architecture specific build flags
 ifeq (arm,$(findstring arm,$(ANDROID_ARCH)))
 
   # Set ABI specific flags

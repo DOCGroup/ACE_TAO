@@ -1,3 +1,8 @@
+Wed May 21 12:58:27 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_android.GNU:
+          Fix typo in comment
+
 Wed May 21 09:49:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:
