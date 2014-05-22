@@ -832,8 +832,8 @@ prio_test (void)
   mq.enqueue_prio (&mb1);
   mq.enqueue_prio (&mb2);
 
-  ACE_Message_Block *mb1p;
-  ACE_Message_Block *mb2p;
+  ACE_Message_Block *mb1p = 0;
+  ACE_Message_Block *mb2p = 0;
 
   mq.dequeue_prio (mb1p);
   mq.dequeue_prio (mb2p);
