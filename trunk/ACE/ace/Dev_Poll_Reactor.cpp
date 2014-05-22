@@ -2480,9 +2480,11 @@ ACE_Dev_Poll_Reactor::reactor_mask_to_poll_event (ACE_Reactor_Mask mask)
   return events;
 }
 
+#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 namespace {
   void polite_sleep_hook (void *) { }
 }
+#endif
 
 int
 ACE_Dev_Poll_Reactor::Token_Guard::acquire_quietly (ACE_Time_Value *max_wait)

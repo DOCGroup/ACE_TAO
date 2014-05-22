@@ -1,3 +1,8 @@
+Thu May 22 18:40:24 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.cpp:
+          Fixed compile warning in single threaded build
+
 Thu May 22 11:48:35 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Message_Queue_Test.cpp:
