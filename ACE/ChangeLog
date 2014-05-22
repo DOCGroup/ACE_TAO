@@ -1,3 +1,8 @@
+Thu May 22 10:21:13 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Some make versions don't look to like my nested construct
+
 Thu May 22 07:51:53 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-g++-common.h:
