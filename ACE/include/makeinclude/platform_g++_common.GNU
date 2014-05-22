@@ -63,14 +63,18 @@ ifeq ($(c++1y),1)
   CCFLAGS += -std=c++1y
   # This is needed due to the use of the deprecated auto_ptr class
   CCFLAGS += -Wno-deprecated
-else ifeq ($(c++11),1)
-  CCFLAGS += -std=c++11
-  # This is needed due to the use of the deprecated auto_ptr class
-  CCFLAGS += -Wno-deprecated
-else ifeq ($(c++0x),1)
-  CCFLAGS += -std=c++0x
-  # This is needed due to the use of the deprecated auto_ptr class
-  CCFLAGS += -Wno-deprecated
+else
+  ifeq ($(c++11),1)
+    CCFLAGS += -std=c++11
+    # This is needed due to the use of the deprecated auto_ptr class
+    CCFLAGS += -Wno-deprecated
+  else
+    ifeq ($(c++0x),1)
+      CCFLAGS += -std=c++0x
+      # This is needed due to the use of the deprecated auto_ptr class
+      CCFLAGS += -Wno-deprecated
+    endif
+  endif
 endif
 
 ifeq ($(gcov),1)
