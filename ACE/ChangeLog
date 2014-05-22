@@ -1,3 +1,8 @@
+Thu May 22 11:48:35 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Message_Queue_Test.cpp:
+          Fix gcc 4.9 warning
+
 Thu May 22 10:21:13 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:
