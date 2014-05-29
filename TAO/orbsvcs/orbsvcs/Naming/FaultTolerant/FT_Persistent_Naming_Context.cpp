@@ -54,11 +54,7 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
   // Invoke the base class resolve operation to acquire the object at the
   // specified compound name.
   // Any exceptions should flow back to client.
-  CORBA::Object_var resolved_ref =
-    TAO_Persistent_Naming_Context::resolve(n);
-
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
-    CORBA::INTERNAL ());
+  CORBA::Object_var resolved_ref = TAO_Persistent_Naming_Context::resolve(n);
 
   // Get the locations of the object group members and we will use them to
   // do the load balancing

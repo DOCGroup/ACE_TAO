@@ -15,12 +15,10 @@ template <class ITERATOR, class TABLE_ENTRY>
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::TAO_Bindings_Iterator (
   TAO_Hash_Naming_Context *context,
   ITERATOR *hash_iter,
-  PortableServer::POA_ptr poa,
-  TAO_SYNCH_RECURSIVE_MUTEX &lock)
+  PortableServer::POA_ptr poa)
   : destroyed_ (false),
     context_ (context),
     hash_iter_ (hash_iter),
-    lock_ (lock),
     poa_ (PortableServer::POA::_duplicate (poa))
 
 {
@@ -57,11 +55,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
 
   b = binding;
 
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object is still valid.
   if (this->destroyed_)
     throw CORBA::OBJECT_NOT_EXIST ();
@@ -84,6 +77,11 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_one (
     }
   else
     {
+      ACE_READ_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX,
+                               ace_mon,
+                               this->context_->lock (),
+                               CORBA::INTERNAL ());
+
       // Return a binding.
       TABLE_ENTRY *hash_entry = 0;
       hash_iter_->next (hash_entry);
@@ -106,11 +104,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
   ACE_NEW_THROW_EX (bl,
                     CosNaming::BindingList (0),
                     CORBA::NO_MEMORY ());
-  // Obtain the lock.
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
 
   // Check to make sure this object is still valid.
   if (this->destroyed_)
@@ -134,6 +127,11 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
       return 0;
   else
     {
+      ACE_READ_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX,
+                               ace_mon,
+                               this->context_->lock (),
+                               CORBA::INTERNAL ());
+
       // Initially assume that the iterator has the requested number of
       // bindings.
       bl->length (how_many);
@@ -163,11 +161,6 @@ TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::next_n (
 template <class ITERATOR, class TABLE_ENTRY> void
 TAO_Bindings_Iterator<ITERATOR, TABLE_ENTRY>::destroy (void)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object is still valid.
   if (this->destroyed_)
     throw CORBA::OBJECT_NOT_EXIST ();

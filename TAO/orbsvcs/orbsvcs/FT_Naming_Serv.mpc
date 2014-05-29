@@ -16,6 +16,7 @@ project (FT_Naming_Serv) : orbsvcslib, orbsvcs_output, ftnaming, ftnaming_replic
     Naming/FaultTolerant/FT_Naming_Server.cpp
     Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp
     Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.cpp
+    Naming/FaultTolerant/FT_Random.cpp
     Naming/FaultTolerant/FT_Round_Robin.cpp
     Naming/FaultTolerant/FT_Storable_Naming_Context.cpp
     Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.cpp
@@ -29,6 +30,7 @@ project (FT_Naming_Serv) : orbsvcslib, orbsvcs_output, ftnaming, ftnaming_replic
     Naming/FaultTolerant/FT_Naming_Server.h
     Naming/FaultTolerant/FT_Persistent_Naming_Context.h
     Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h
+    Naming/FaultTolerant/FT_Random.h
     Naming/FaultTolerant/FT_Round_Robin.h
     Naming/FaultTolerant/FT_Storable_Naming_Context.h
     Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h

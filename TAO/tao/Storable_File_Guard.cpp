@@ -28,10 +28,11 @@ Storable_File_Guard (bool redundant, bool use_backup)
 TAO::Storable_File_Guard::
 ~Storable_File_Guard ()
 {
+  delete fl_;
 }
 
 void
-TAO::Storable_File_Guard::init(Method_Type method_type)
+TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
 {
 
   ACE_CString mode;
@@ -105,11 +106,15 @@ TAO::Storable_File_Guard::init(Method_Type method_type)
 
   // Create the stream
   fl_ = this->create_stream(mode.c_str ());
+}
+
+void
+TAO::Storable_File_Guard::reload (void)
+{
   if (redundant_)
     {
-      if (fl_->open() != 0)
+      if (fl_->open () != 0)
         {
-          delete fl_;
           if (TAO_debug_level > 0)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
@@ -120,10 +125,9 @@ TAO::Storable_File_Guard::init(Method_Type method_type)
         }
 
       // acquire a lock on it
-      if (fl_ -> flock(0, 0, 0) != 0)
+      if (fl_->flock (0, 0, 0) != 0)
         {
-          fl_->close();
-          delete fl_;
+          fl_->close ();
           if (TAO_debug_level > 0)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
@@ -149,18 +153,17 @@ TAO::Storable_File_Guard::init(Method_Type method_type)
     }
   else if ( ! this->is_loaded_from_stream () || (rwflags_ & mode_write) )
     {
-      bool file_has_data = fl_->exists();
+      bool file_has_data = fl_->exists ();
 
-      if (fl_->open() != 0)
+      if (fl_->open () != 0)
         {
-          delete fl_;
           if (TAO_debug_level > 0)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
                              ACE_TEXT ("(%P|%t) Storable_File_Guard:Open ")
                              ACE_TEXT ("failed in non-redundant\n")));
             }
-          throw CORBA::PERSIST_STORE();
+          throw CORBA::PERSIST_STORE ();
         }
 
       // now that the file is successfully opened
@@ -172,11 +175,13 @@ TAO::Storable_File_Guard::init(Method_Type method_type)
           this->load ();
         }
     }
-  else
-    {
-      // Need to insure that fl_ gets deleted
-      delete fl_;
-    }
+}
+
+void
+TAO::Storable_File_Guard::init(Method_Type method_type)
+{
+  this->init_no_load (method_type);
+  this->reload ();
 }
 
 bool
@@ -218,10 +223,9 @@ TAO::Storable_File_Guard::release (void)
             }
 
           // Release the lock
-          fl_->funlock(0, 0, 0);
+          fl_->funlock (0, 0, 0);
         }
-      fl_->close();
-      delete fl_;
+      fl_->close ();
       closed_ = 1;
     }
 
