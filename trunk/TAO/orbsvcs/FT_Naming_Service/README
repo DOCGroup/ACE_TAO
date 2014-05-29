@@ -22,6 +22,7 @@ How to Run the TAO FT Naming Service
                          [-g ft_naming_manager_ior_file]
                          [-o this_servers_object_ref_ior_file]
                          [-r directory_for_naming_context_replication]
+                         [-u directory_for_flat_file_persistence]
                          [-v directory_for_object_group_replication]
                          [-s context_size]
                          [-z time]
@@ -132,7 +133,7 @@ How to Run the TAO FT Naming Service
                reference information in a file per context. Each context file
                is placed in the directory specified. This option can be used
                when running the FT Naming Service standalone - without
-               fault tolerance/redundancyl.
+               fault tolerance/redundancy.
 
         -v directory
                Use redundant flat-file persistence for naming contexts that

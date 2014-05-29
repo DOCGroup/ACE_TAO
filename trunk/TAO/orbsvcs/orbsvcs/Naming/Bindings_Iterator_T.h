@@ -59,9 +59,7 @@ public:
    */
   TAO_Bindings_Iterator (TAO_Hash_Naming_Context *context,
                          ITERATOR *hash_iter,
-                         PortableServer::POA_ptr poa,
-                         TAO_SYNCH_RECURSIVE_MUTEX &lock);
-
+                         PortableServer::POA_ptr poa);
 
   /// Destructor.
   ~TAO_Bindings_Iterator (void);
@@ -116,10 +114,6 @@ private:
 
   /// A pointer to the hash map iterator.
   ITERATOR *hash_iter_;
-
-  /// Lock passed on from Naming Context to serialize access to the
-  /// internal data structure.
-  TAO_SYNCH_RECURSIVE_MUTEX &lock_;
 
   /// Implement a different _default_POA().
   PortableServer::POA_var poa_;

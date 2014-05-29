@@ -40,6 +40,12 @@ TAO_Hash_Naming_Context::~TAO_Hash_Naming_Context (void)
   delete context_;
 }
 
+TAO_SYNCH_RW_MUTEX&
+TAO_Hash_Naming_Context::lock (void)
+{
+  return this->lock_;
+}
+
 PortableServer::POA_ptr
 TAO_Hash_Naming_Context::_default_POA (void)
 {
@@ -49,7 +55,6 @@ TAO_Hash_Naming_Context::_default_POA (void)
 CosNaming::NamingContext_ptr
 TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name)
 {
-  // Naming context we will return.
   CosNaming::NamingContext_var result =
     CosNaming::NamingContext::_nil ();
 
@@ -62,8 +67,7 @@ TAO_Hash_Naming_Context::get_context (const CosNaming::Name &name)
                              const_cast<CosNaming::NameComponent*> (name.get_buffer ()));
   try
     {
-      // Resolve the name.
-      CORBA::Object_var context = resolve (comp_name);
+      CORBA::Object_var context = this->resolve (comp_name);
 
       // Try narrowing object reference to the NamingContext type.
       result = CosNaming::NamingContext::_narrow (context.in ());
@@ -132,9 +136,9 @@ TAO_Hash_Naming_Context::bind (const CosNaming::Name& n, CORBA::Object_ptr obj)
   // If we received a simple name, we need to bind it in this context.
   else
     {
-      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                          ace_mon, this->lock_,
-                          CORBA::INTERNAL ());
+      ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX,
+                                ace_mon, this->lock_,
+                                CORBA::INTERNAL ());
 
       // Try binding the name.
       int result = this->context_->bind (n[0].id,
@@ -171,7 +175,7 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
   // on target context.
   if (name_len > 1)
     {
-      CosNaming::NamingContext_var context = get_context (n);
+      CosNaming::NamingContext_var context = this->get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -190,9 +194,9 @@ TAO_Hash_Naming_Context::rebind (const CosNaming::Name& n,
     // If we received a simple name, we need to rebind it in this
     // context.
     {
-      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-                          this->lock_,
-                          CORBA::INTERNAL ());
+      ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX, ace_mon,
+                                this->lock_,
+                                CORBA::INTERNAL ());
 
       int result = this->context_->rebind (n[0].id,
                                            n[0].kind,
@@ -233,7 +237,7 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
   // target context.
   if (name_len > 1)
     {
-      CosNaming::NamingContext_var context = get_context (n);
+      CosNaming::NamingContext_var context = this->get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -251,9 +255,9 @@ TAO_Hash_Naming_Context::bind_context (const CosNaming::Name &n,
   // If we received a simple name, we need to bind it in this context.
   else
     {
-      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-                          this->lock_,
-                          CORBA::INTERNAL ());
+      ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX, ace_mon,
+                                this->lock_,
+                                CORBA::INTERNAL ());
 
       // Try binding the name.
       int result = this->context_->bind (n[0].id,
@@ -290,8 +294,7 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
   // on target context.
   if (name_len > 1)
     {
-      CosNaming::NamingContext_var context =
-        get_context (n);
+      CosNaming::NamingContext_var context = this->get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -310,9 +313,9 @@ TAO_Hash_Naming_Context::rebind_context (const CosNaming::Name &n,
     // If we received a simple name, we need to rebind it in this
     // context.
     {
-      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-                          this->lock_,
-                          CORBA::INTERNAL ());
+      ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX, ace_mon,
+                                this->lock_,
+                                CORBA::INTERNAL ());
 
       int result = this->context_->rebind (n[0].id,
                                            n[0].kind,
@@ -353,8 +356,8 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
   CORBA::Object_var result;
 
   {
-    ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_,
-                        CORBA::INTERNAL ());
+    ACE_READ_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX, ace_mon, this->lock_,
+                             CORBA::INTERNAL ());
     if (this->context_->find (n[0].id,
                               n[0].kind,
                               result.out (),
@@ -416,9 +419,9 @@ TAO_Hash_Naming_Context::resolve (const CosNaming::Name& n)
     }
   else
     {
-      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-                          this->lock_,
-                          CORBA::INTERNAL ());
+      ACE_READ_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX, ace_mon,
+                               this->lock_,
+                               CORBA::INTERNAL ());
 
       if (this->context_->find (n[0].id,
                                 n[0].kind,
@@ -453,8 +456,7 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
   // on target context.
   if (name_len > 1)
     {
-      CosNaming::NamingContext_var context =
-        get_context (n);
+      CosNaming::NamingContext_var context = this->get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
@@ -473,9 +475,9 @@ TAO_Hash_Naming_Context::unbind (const CosNaming::Name& n)
   // context.
   else
     {
-      ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
-                          this->lock_,
-                          CORBA::INTERNAL ());
+      ACE_WRITE_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX, ace_mon,
+                                this->lock_,
+                                CORBA::INTERNAL ());
 
       if (this->context_->unbind (n[0].id,
                                   n[0].kind) == -1)
@@ -504,8 +506,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
   // target context.
   if (name_len > 1)
     {
-      CosNaming::NamingContext_var context =
-        get_context (n);
+      CosNaming::NamingContext_var context = this->get_context (n);
 
       CosNaming::Name simple_name;
       simple_name.length (1);
