@@ -77,6 +77,16 @@ namespace TAO
     /// of this class.
     void init (Method_Type method_type);
 
+    /// Initializes the backing store file object but does not
+    /// actually load the data. This can be called without locks,
+    /// allowing the caller to decide whether or not to then lock
+    /// and complete the load.
+    void init_no_load (Method_Type method_type);
+
+    /// Complete the initialization of the containing object, should
+    /// be called with lock held after calling init_no_load
+    void reload (void);
+
     /// Check if the object is current with the last update.
     virtual bool object_obsolete (void);
 

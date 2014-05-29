@@ -216,6 +216,8 @@ public:
   /// Returns the Default POA of this Servant object
   virtual PortableServer::POA_ptr _default_POA (void);
 
+  TAO_SYNCH_RW_MUTEX &lock (void);
+
 protected:
   // = Helper method used by other methods.
 
@@ -244,7 +246,7 @@ protected:
   TAO_Naming_Context *interface_;
 
   /// Lock used to serialize access to the underlying data structure.
-  TAO_SYNCH_RECURSIVE_MUTEX lock_;
+  TAO_SYNCH_RW_MUTEX lock_;
 
   /**
    * Flag indicating whether this Naming Context is no longer valid.

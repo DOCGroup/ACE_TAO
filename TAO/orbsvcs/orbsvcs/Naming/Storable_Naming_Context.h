@@ -362,6 +362,19 @@ public:
 protected:
 
   /**
+   * A helper function to ensure the current object was not destroyed by raising
+   * an exception if it was. Uses the lock as a Reader.
+   */
+  void verify_not_destroyed (void);
+
+  /**
+   * A helper function to validate the name argument and return a final context
+   * if the supplied name is nested
+   */
+  bool nested_context (const CosNaming::Name &n,
+                       CosNaming::NamingContext_out nc);
+
+  /**
    * An internal callback invoked by the File_Open_Lock_and_Check object to
    * signal that this context was updated and written to disk.
    * This will have been done after the file is closed. Check the
@@ -433,9 +446,10 @@ public TAO::Storable_File_Guard
 {
 public:
 
-  /// Constructor - we always need the object which we guard.
+  /// Constructor
   File_Open_Lock_and_Check (TAO_Storable_Naming_Context * context,
-                            Method_Type method_type);
+                            Method_Type method_type,
+                            bool loadnow = true);
 
   ~File_Open_Lock_and_Check ();
 

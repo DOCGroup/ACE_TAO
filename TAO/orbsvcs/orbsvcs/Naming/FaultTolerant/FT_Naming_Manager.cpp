@@ -100,8 +100,8 @@ TAO_FT_Naming_Manager::create_object_group (
       throw PortableGroup::ObjectNotCreated ();
     }
 
-  /// Currently only FT_Naming::ROUND_ROBIN is supported
-  if (lb_strategy != FT_Naming::ROUND_ROBIN)
+  if (lb_strategy != FT_Naming::ROUND_ROBIN &&
+      lb_strategy != FT_Naming::RANDOM)
     {
       throw PortableGroup::ObjectNotCreated ();
     }
@@ -737,10 +737,6 @@ void
 TAO_FT_Naming_Manager::initialize (CORBA::ORB_ptr orb,
                                    PortableServer::POA_ptr naming_mgr_poa)
 {
-  ACE_GUARD (TAO_SYNCH_MUTEX,
-             guard,
-             this->lock_);
-
   // Initialize the components used to implement the PortableGroup interfaces
   this->factory_registry_.init (orb);
   PortableGroup::FactoryRegistry_var factory_ref =
@@ -759,18 +755,12 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
         {
           ORBSVCS_ERROR (
             (LM_ERROR,
-             ACE_TEXT ("TAO (%P|%t) - TAO_FT_Naming_Manager::add_member")
+             ACE_TEXT ("TAO (%P|%t) - TAO_FT_Naming_Manager::next_member ")
              ACE_TEXT ("Null object group provided.\n")
              ));
         }
       throw PortableGroup::ObjectGroupNotFound ();
     }
-
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
-                    monitor,
-                    this->lock_,
-                    CORBA::Object::_nil ()
-                    );
 
   ACE_Auto_Ptr<PortableGroup::Properties> props (
     this->get_properties (object_group));
@@ -805,6 +795,9 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
   {
   case ::FT_Naming::ROUND_ROBIN:
     result = this->round_robin_.next_location (object_group, this, next_location);
+    break;
+  case ::FT_Naming::RANDOM:
+    result = this->random_.next_location (object_group, this, next_location);
     break;
   default:
     ORBSVCS_ERROR ((LM_ERROR,

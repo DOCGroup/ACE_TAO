@@ -23,6 +23,7 @@
 #include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Support.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Random.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h"
 #include "tao/Condition.h"
 
@@ -299,10 +300,6 @@ private:
   /// the name parameter.
   bool group_name (PortableGroup::ObjectGroup_ptr group, char*& name);
 
-  /// Mutex that provides synchronization for the TAO_FT_Naming_Manager's
-  /// state.
-  TAO_SYNCH_MUTEX lock_;
-
   /// an object that manages default and type_id related properties
   TAO::PG_Properties_Support properties_support_;
 
@@ -315,13 +312,15 @@ private:
   /**
    * @name Built-in load balancing strategy implementations
    *
-   * "Built-in" load balancing strategies. Currently only RoundRobin
-   * is supported.
+   * "Built-in" load balancing strategies. Currently RoundRobin
+   * and Random are supported.
    */
   //@{
 
   /// The "RoundRobin" load balancing strategy.
   TAO_FT_Round_Robin round_robin_;
+  /// The "Random" load balancing strategy.
+  TAO_FT_Random random_;
   //@}
 
   /// Cached instance of the Property name
@@ -329,9 +328,6 @@ private:
   PortableGroup::Name built_in_balancing_strategy_name_;
 
   PortableGroup::Name object_group_property_name_;
-
-  TAO_SYNCH_MUTEX validate_lock_;
-  TAO_Condition<TAO_SYNCH_MUTEX> validate_condition_;
 
   bool shutdown_;
 

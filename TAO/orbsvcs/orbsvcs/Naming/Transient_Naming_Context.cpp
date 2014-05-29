@@ -185,16 +185,6 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 CosNaming::NamingContext_ptr
 TAO_Transient_Naming_Context::new_context (void)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-
-  // Check to make sure this object didn't have <destroy> method
-  // invoked on it.
-  if (this->destroyed_)
-    throw CORBA::OBJECT_NOT_EXIST ();
-
   // Generate a POA id for the new context.
   char poa_id[BUFSIZ];
   ACE_OS::sprintf (poa_id,
@@ -224,10 +214,9 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
                     CORBA::NO_MEMORY ());
 
   // Obtain a lock before we proceed with the operation.
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
+  ACE_READ_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX,
+                           ace_mon, this->lock_,
+                           CORBA::INTERNAL ());
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -289,7 +278,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
     {
       // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
-                        ITER_SERVANT (this, hash_iter, this->poa_.in (), this->lock_),
+                        ITER_SERVANT (this, hash_iter, this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
       // Release <hash_iter> from auto pointer, and start using

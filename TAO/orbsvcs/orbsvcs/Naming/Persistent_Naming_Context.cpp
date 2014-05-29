@@ -353,11 +353,6 @@ TAO_Persistent_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 CosNaming::NamingContext_ptr
 TAO_Persistent_Naming_Context::new_context (void)
 {
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
-
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
   if (this->destroyed_)
@@ -371,10 +366,10 @@ TAO_Persistent_Naming_Context::new_context (void)
                    (*this->counter_)++);
 
   CosNaming::NamingContext_var result =
-    make_new_context (this->poa_.in (),
-                      poa_id,
-                      this->persistent_context_->total_size (),
-                      this->index_);
+    this->make_new_context (this->poa_.in (),
+                            poa_id,
+                            this->persistent_context_->total_size (),
+                            this->index_);
 
   return result._retn ();
 }
@@ -390,12 +385,6 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   ACE_NEW_THROW_EX (bl,
                     CosNaming::BindingList (0),
                     CORBA::NO_MEMORY ());
-
-  // Obtain a lock before we proceed with the operation.
-  ACE_GUARD_THROW_EX (TAO_SYNCH_RECURSIVE_MUTEX,
-                      ace_mon,
-                      this->lock_,
-                      CORBA::INTERNAL ());
 
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -437,16 +426,22 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
   bl->length (n);
 
   ENTRY_DEF *hash_entry = 0;
+  {
+    // Obtain a lock before we proceed with the operation.
+    ACE_READ_GUARD_THROW_EX (TAO_SYNCH_RW_MUTEX,
+                             ace_mon,
+                             this->lock_,
+                             CORBA::INTERNAL ());
 
-  for (CORBA::ULong i = 0; i < n; i++)
-    {
-      hash_iter->next (hash_entry);
-      hash_iter->advance ();
+    for (CORBA::ULong i = 0; i < n; i++)
+      {
+        hash_iter->next (hash_entry);
+        hash_iter->advance ();
 
-      if (ITER_SERVANT::populate_binding (hash_entry, bl[i]) == 0)
+        if (ITER_SERVANT::populate_binding (hash_entry, bl[i]) == 0)
           throw CORBA::NO_MEMORY();
-    }
-
+      }
+  }
   // Now we are done with the BindingsList, and we can follow up on
   // the iterator business.
 
@@ -457,7 +452,7 @@ TAO_Persistent_Naming_Context::list (CORBA::ULong how_many,
     {
       // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
-                        ITER_SERVANT (this, hash_iter, this->poa_.in (), this->lock_),
+                        ITER_SERVANT (this, hash_iter, this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
       // Release <hash_iter> from auto pointer, and start using the

@@ -1,3 +1,49 @@
+Thu May 29 17:01:45 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/FT_Naming_Service/README:
+          minor cleanup.
+
+        * orbsvcs/orbsvcs/FT_Naming_Serv.mpc:
+          added FT_Random files.
+
+        * orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.h:
+        * orbsvcs/orbsvcs/Naming/Bindings_Iterator_T.cpp:
+          removed the redundant and confusing lock reference passed separately
+          through the constructor and replaced it with an accessor method on the
+          context being iterated. This also was necessary by the change to RW
+          locking for scalability improvement.
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Random.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Random.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+          Optimize the FT/LB performance by only taking a lock when necessary. The
+          underling context object synchronizes access to the context map, and the
+          Round Robin strategy object synchronizes access to the index. Added a
+          Random strategy that does not need a lock.
+
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Hash_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+          Replaced the Recursive locking with RW. There was no need for recursive
+          locking, even in the face of nested and possibly cyclic compound names.
+          Given that most operations on the name service are read-only resolves,
+          using RW locking allows for threadsafe concurrent access. In the case of
+          Storable contexts, the backing file is now checked to see if a reload is
+          necessary before grabbing a lock and loading from the file.
+
+        * tao/Storable_File_Guard.h:
+        * tao/Storable_File_Guard.cpp:
+          Split the init method implementation into two parts that can be
+          called separately. This allows for initialization of the related
+          file object without holding a lock, then aquiring a lock only if
+          loading from the file is necessary. Default behavior is unchanged.
+
 Mon May 19 20:25:18 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/run_test.pl:
