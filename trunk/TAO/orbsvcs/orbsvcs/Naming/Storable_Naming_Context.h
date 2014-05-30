@@ -426,6 +426,7 @@ protected:
 
   /// Disk time that match current memory state
   time_t last_changed_;
+  time_t last_check_;
 
   /// Flag to tell us whether we are redundant or not
   static int redundant_;
