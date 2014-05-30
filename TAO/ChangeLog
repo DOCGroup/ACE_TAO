@@ -1,3 +1,11 @@
+Fri May 30 22:55:56 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * tao/Storable_FlatFileStream.cpp:
+          Fix for the corner case of a race between redundant naming
+          servers sharing a storable context file.
+
 Thu May 29 17:01:45 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/FT_Naming_Service/README:

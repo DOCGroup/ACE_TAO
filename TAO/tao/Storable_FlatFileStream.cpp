@@ -128,7 +128,7 @@ TAO::Storable_FlatFileStream::Storable_FlatFileStream (const ACE_CString & file,
   , mode_(mode)
 {
   // filelock_ will be completely initialized in call to init ().
-  filelock_.handle_ = 0;
+  filelock_.handle_ = ACE_INVALID_HANDLE;
   filelock_.lockname_ = 0;
 }
 
@@ -263,7 +263,10 @@ time_t
 TAO::Storable_FlatFileStream::last_changed(void)
 {
   ACE_stat st;
-  if (ACE_OS::fstat(filelock_.handle_, &st) != 0)
+  int result = filelock_.handle_ != ACE_INVALID_HANDLE ?
+    ACE_OS::fstat(filelock_.handle_, &st) :
+    ACE_OS::stat (file_.c_str (), &st);
+  if (result != 0)
     {
       TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ")

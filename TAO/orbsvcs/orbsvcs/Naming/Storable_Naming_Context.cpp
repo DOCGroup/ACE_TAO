@@ -12,6 +12,7 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_sys_time.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -398,6 +399,7 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
     factory_ (factory),
     hash_table_size_ (hash_table_size),
     last_changed_ (0),
+    last_check_ (0),
     write_occurred_ (0)
 {
   ACE_TRACE("TAO_Storable_Naming_Context");
@@ -439,8 +441,10 @@ TAO_Storable_Naming_Context::context_written (void)
 bool
 TAO_Storable_Naming_Context::is_obsolete (time_t stored_time)
 {
-  return (this->context_ == 0) ||
-         (stored_time > this->last_changed_);
+  bool result = this->context_ == 0 ||
+    stored_time >= this->last_check_;
+  this->last_check_ = ACE_OS::gettimeofday ().sec ();
+  return result;
 }
 
 void
