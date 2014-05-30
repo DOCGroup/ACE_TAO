@@ -128,7 +128,7 @@ sub run_node_daemons {
 create_targets ();
 init_ior_files ();
 
-# Don't use a  naming service
+# Don't use a naming service
 
 # Invoke node daemon.
 print "Invoking node daemon\n";
