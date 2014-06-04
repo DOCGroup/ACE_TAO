@@ -1,3 +1,13 @@
+Wed Jun  4 10:09:44 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-msvc-11.h:
+        * ace/config-win32-msvc-12.h:
+        * ace/config-win32-msvc-14.h:
+        * ace/config-win32-msvc.h:
+          Addec config files for msvc10/12/14, they just include the
+          config file of the previous msvc version, makes it easier to
+          add specific settings for specific msvc versions
+
 Wed Jun  4 09:38:43 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc14nmake.mpb:
