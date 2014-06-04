@@ -1,3 +1,8 @@
+Wed Jun  4 10:15:04 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc14nmake.mpb:
+          vc14 has removed support for /Wp64
+
 Wed Jun  4 10:09:44 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-msvc-11.h:
