@@ -1447,12 +1447,12 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
       {
         if (ACE_OS::thr_equal (biter.next ()->thr_id_, tid))
           {
-            ACE_Thread_Descriptor_Base *tdb = biter.advance_and_remove (false);
-            if (ACE_Thread::join (tdb->thr_handle_, status) == -1)
+            ACE_Thread_Descriptor_Base *tdbl = biter.advance_and_remove (false);
+            if (ACE_Thread::join (tdbl->thr_handle_, status) == -1)
               {
                 return -1;
               }
-            delete tdb;
+            delete tdbl;
 
             // return immediately if we've found the thread we want to join.
             return 0;
