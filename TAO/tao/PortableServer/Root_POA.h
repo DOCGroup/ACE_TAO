@@ -769,11 +769,11 @@ public:
     CORBA::Short priority_;
     bool indirect_;
 
-    void set (PortableServer::ObjectId_var &system_id_,
-              const char *type_id_,
-              TAO_ServantBase *servant_,
-              CORBA::Boolean collocated_,
-              CORBA::Short priority_,
+    void set (PortableServer::ObjectId_var &system_id,
+              const char *type_id,
+              TAO_ServantBase *servant,
+              CORBA::Boolean collocated,
+              CORBA::Short priority,
               bool indirect);
   };
 
