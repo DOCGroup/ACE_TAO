@@ -1,3 +1,8 @@
+Thu Jun  5 14:24:58 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Add XL C++ 12.1 to the
+          set of compiler versions using the settings created for V9.
+
 Thu Jun  5 06:37:05 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Configuration.cpp:
