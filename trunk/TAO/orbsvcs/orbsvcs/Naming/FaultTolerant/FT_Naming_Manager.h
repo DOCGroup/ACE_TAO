@@ -278,6 +278,9 @@ public:
   /// Only valid when object group persistence is enabled.
   void set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info);
 
+  /// Initialize a global load balancing strategy
+  void set_global_strategy (const char *strat_name);
+
   /// Destructor.
   ~TAO_FT_Naming_Manager (void);
 
@@ -321,6 +324,11 @@ private:
   TAO_FT_Round_Robin round_robin_;
   /// The "Random" load balancing strategy.
   TAO_FT_Random random_;
+  /// A flag indicating that strategy is selected by the group if false
+  /// or the globally set strategy if true
+  bool use_global_;
+  /// The global strategy
+  ::FT_Naming::LoadBalancingStrategyValue global_strategy_;
   //@}
 
   /// Cached instance of the Property name
