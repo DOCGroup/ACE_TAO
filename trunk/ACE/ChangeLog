@@ -1,3 +1,14 @@
+Thu Jun  5 06:37:05 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Configuration.cpp:
+        * ace/Connector.cpp:
+        * ace/Thread_Manager.cpp:
+        * ace/config-win32-msvc-14.h:
+          Fixes for msvc14
+
+        * ace/OS_NS_time.inl:
+          Disable calling gmtime_s, doesn't work with ctp2014
+
 Wed Jun  4 10:15:04 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc14nmake.mpb:

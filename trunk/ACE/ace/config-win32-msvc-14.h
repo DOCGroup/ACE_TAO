@@ -28,5 +28,8 @@
 // Until we have specific msvc14 settings, include the msvc12 file
 #include "ace/config-win32-msvc-12.h"
 
+# define ACE_HAS_POSIX_TIME 1
+# define ACE_LACKS_TIMESPEC_T 1
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_14_H */

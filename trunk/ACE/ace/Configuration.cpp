@@ -1608,15 +1608,15 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   if (recursive)
     {
-      ACE_Configuration_Section_Key section;
-      if (open_section (key, sub_section, 0, section))
+      ACE_Configuration_Section_Key recursive_section;
+      if (open_section (key, sub_section, 0, recursive_section))
         return -1;
 
       int index = 0;
       ACE_TString name;
-      while (!enumerate_sections (section, index, name))
+      while (!enumerate_sections (recursive_section, index, name))
         {
-          if (remove_section (section, name.fast_rep (), true))
+          if (remove_section (recursive_section, name.fast_rep (), true))
             return -1;
 
           ++index;
@@ -1808,9 +1808,9 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
       ACE_TCHAR* pers_value =
  (ACE_TCHAR *) allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
-      ACE_Configuration_ExtId item_name (pers_name);
+      ACE_Configuration_ExtId new_item_name (pers_name);
       ACE_Configuration_Value_IntId item_value (pers_value);
-      if (section_int.value_hash_map_->bind (item_name, item_value, allocator_))
+      if (section_int.value_hash_map_->bind (new_item_name, item_value, allocator_))
         {
           allocator_->free (pers_value);
           allocator_->free (pers_name);

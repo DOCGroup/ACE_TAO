@@ -446,8 +446,6 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_i
       // ACE_NonBlocking_Connect_Handler with the ACE_Reactor so that
       // it will call us back when the connection is complete or we
       // timeout, whichever comes first...
-      int result;
-
       if (sh_copy == 0)
         result = this->nonblocking_connect (sh, synch_options);
       else
