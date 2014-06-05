@@ -116,10 +116,12 @@ TAO_IIOP_Profile::decode_profile (TAO_InputCDR& cdr)
       this->endpoint_.object_addr_.set_type (-1);
 
       const char* csv = this->orb_core()->orb_params()->preferred_interfaces();
-      bool const enforce =
-        this->orb_core()->orb_params()->enforce_pref_interfaces();
-      this->count_ += this->endpoint_.preferred_interfaces(csv, enforce, *this);
-
+      if (csv != 0 && *csv != '\0')
+        {
+          bool const enforce =
+            this->orb_core()->orb_params()->enforce_pref_interfaces();
+          this->count_ += this->endpoint_.preferred_interfaces(csv, enforce, *this);
+        }
       return 1;
     }
 

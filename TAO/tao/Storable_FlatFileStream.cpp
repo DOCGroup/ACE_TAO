@@ -102,8 +102,8 @@ namespace
             if (ferror (f1))
               {
                 TAOLIB_ERROR ((LM_ERROR,
-                            "%p\n",
-                            "fread error"));
+                               ACE_TEXT ("(%P|%t) %p\n"),
+                               ACE_TEXT ("ACE_OS::fread")));
               }
             return -1;
           }
@@ -170,24 +170,21 @@ TAO::Storable_FlatFileStream::open()
   if( ACE_OS::flock_init (&filelock_, flags,
                           ACE_TEXT_CHAR_TO_TCHAR (file_.c_str()), 0666) != 0 )
     TAOLIB_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open file %s for mode %s: (%d) %s\n",
-                       file_.c_str(), mode_.c_str(),
-                       errno, ACE_OS::strerror(errno)),
+                          ACE_TEXT ("(%P|%t) Cannot open file %s for mode %s: %p\n"),
+                          file_.c_str(), mode_.c_str(), ACE_TEXT ("ACE_OS::flock_init")),
                       -1);
 #else
   if( (filelock_.handle_= ACE_OS::open (file_.c_str(), flags, 0)) == ACE_INVALID_HANDLE )
     TAOLIB_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open file %s for mode %s: (%d) %s\n",
-                       file_.c_str(), mode_.c_str(),
-                       ACE_ERRNO_GET, ACE_OS::strerror(ACE_ERRNO_GET)),
+                          ACE_TEXT ("(%P|%t) Cannot open file %s for mode %s: %p\n"),
+                          file_.c_str(), mode_.c_str(), ACE_TEXT ("ACE_OS::open")),
                       -1);
 #endif
   this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR (fdmode));
   if (this->fl_ == 0)
     TAOLIB_ERROR_RETURN ((LM_ERROR,
-                       "Cannot fdopen file %s for mode %s: (%d) %s\n",
-                       file_.c_str(), mode_.c_str(),
-                       ACE_ERRNO_GET, ACE_OS::strerror(ACE_ERRNO_GET)),
+                          ACE_TEXT ("(%P|%t) Cannot open file %s for mode %s: %p\n"),
+                          file_.c_str(), mode_.c_str(), ACE_TEXT ("ACE_OS::fdopen")),
                       -1);
   return 0;
 }
