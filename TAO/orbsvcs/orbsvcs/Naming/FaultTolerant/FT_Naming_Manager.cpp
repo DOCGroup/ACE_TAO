@@ -26,6 +26,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_strings.h"
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
@@ -63,6 +64,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
   : factory_registry_ ("NamingManager::FactoryRegistry"),
     group_factory_ (),
+    use_global_ (false),
+    global_strategy_ (::FT_Naming::ROUND_ROBIN),
     built_in_balancing_strategy_name_ (1),
     object_group_property_name_ (1),
     shutdown_ (0)
@@ -85,6 +88,28 @@ TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager (void)
   this->built_in_balancing_strategy_name_.length (0);
 }
 
+void
+TAO_FT_Naming_Manager::set_global_strategy (const char *name)
+{
+  if (ACE_OS::strcasecmp (name,"round_robin") == 0)
+    {
+      this->use_global_ = true;
+      this->global_strategy_ = ::FT_Naming::ROUND_ROBIN;
+    }
+  else if (ACE_OS::strcasecmp (name,"random") == 0)
+    {
+      this->use_global_ = true;
+      this->global_strategy_ = ::FT_Naming::RANDOM;
+    }
+  else
+    {
+      this->use_global_ = false;
+      ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("TAO (%P|%t) Unrecognized load balancing ")
+                      ACE_TEXT ("strategy %C\n"),
+                      name));
+    }
+}
 
 CORBA::Object_ptr
 TAO_FT_Naming_Manager::create_object_group (
@@ -762,31 +787,33 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
       throw PortableGroup::ObjectGroupNotFound ();
     }
 
-  ACE_Auto_Ptr<PortableGroup::Properties> props (
-    this->get_properties (object_group));
-  PortableGroup::Value value;
-  CORBA::Boolean found =
-    TAO_PG::get_property_value (built_in_balancing_strategy_name_,
-                                *(props.get ()),
-                                value);
+  ::FT_Naming::LoadBalancingStrategyValue load_bal_strategy = this->global_strategy_;
+  if (!this->use_global_)
+    {
+      ACE_Auto_Ptr<PortableGroup::Properties> props
+        (this->get_properties (object_group));
+      PortableGroup::Value value;
+      CORBA::Boolean found =
+        TAO_PG::get_property_value (built_in_balancing_strategy_name_,
+                                    *(props.get ()),
+                                    value);
 
-  // If there is no TAO_FT_LOAD_BALANCING_STRATEGY property in the object group
-  // return failure
-  if (!found)
-  {
-    ORBSVCS_ERROR ((LM_ERROR,
-                ACE_TEXT ("TAO (%P|%t) - TAO_FT_Naming_Manager::next_member: ")
-                ACE_TEXT ("object group has no TAO_FT_LOAD_BALANCING_STRATEGY ")
-                ACE_TEXT ("property.\n")
-               ));
+      // If there is no TAO_FT_LOAD_BALANCING_STRATEGY property in the object group
+      // return failure
+      if (!found)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) - TAO_FT_Naming_Manager::next_member: ")
+                          ACE_TEXT ("object group has no TAO_FT_LOAD_BALANCING_STRATEGY ")
+                          ACE_TEXT ("property.\n")
+                          ));
 
-    return CORBA::Object::_nil();
-  }
+          return CORBA::Object::_nil();
+        }
 
-  // Extract the load balancing strategy value
-  ::FT_Naming::LoadBalancingStrategyValue load_bal_strategy;
-  value >>= load_bal_strategy;
-
+      // Extract the load balancing strategy value
+      value >>= load_bal_strategy;
+    }
   PortableGroup::Location next_location;
 
   bool result = false;

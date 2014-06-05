@@ -617,7 +617,7 @@ int
 TAO_FT_Naming_Server::parse_args (int argc,
                                   ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:c:do:p:s:f:m:z:r:u:v:g:h:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("b:c:do:p:s:f:m:z:r:u:v:g:h:l:"));
 
   // Define the arguments for primary and backup
   get_opts.long_option (ACE_TEXT ("primary"), ACE_Get_Opt::NO_ARG);
@@ -664,6 +664,9 @@ TAO_FT_Naming_Server::parse_args (int argc,
         break;
       case 'h': // outputs the object group manager ior to a file
         this->naming_manager_ior_file_name_ = get_opts.opt_arg ();
+        break;
+      case 'l':
+        this->naming_manager_.set_global_strategy (get_opts.opt_arg ());
         break;
       case 'p':
         this->pid_file_name_ = get_opts.opt_arg ();
@@ -750,6 +753,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-o <name_svc_ior_output_file>\n")
                            ACE_TEXT ("-g <multi-profile_naming_mgr_ior_file>\n")
                            ACE_TEXT ("-h <naming_mgr_ior_output_file>\n")
+                           ACE_TEXT ("-l <global_lb_strategy_name>\n")
                            ACE_TEXT ("-p <pid_file_name>\n")
                            ACE_TEXT ("-s <context_size>\n")
                            ACE_TEXT ("-b <base_address>\n")
