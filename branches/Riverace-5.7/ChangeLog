@@ -1,3 +1,8 @@
+Thu Jun  5 14:24:58 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * include/makeinclude/platform_aix_ibm.GNU: Add XL C++ 12.1 to the
+          set of compiler versions using the settings created for V9.
+
 Thu Dec 12 16:28:45 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/ATM_Stream.cpp: Add missing OS_NS_string.h

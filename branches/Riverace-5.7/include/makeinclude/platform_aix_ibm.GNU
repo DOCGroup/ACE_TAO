@@ -123,11 +123,15 @@ else
         CCFLAGS     += -qeh=v6
       endif
     else
-      # Until there's a reason to change, use the V9 settings for V10.1 and 11.
+      # Until there's a reason to change, use the V9 settings for V10.1, 11.1
+      # and 12.1.
       ifeq ($(XLCVERSION),0x0a01)
         XLCVERSION = 0x0900
       endif
       ifeq ($(XLCVERSION),0x0b01)
+        XLCVERSION = 0x0900
+      endif
+      ifeq ($(XLCVERSION),0x0c01)
         XLCVERSION = 0x0900
       endif
       ifeq ($(XLCVERSION),0x0900)
