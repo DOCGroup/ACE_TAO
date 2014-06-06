@@ -1,3 +1,9 @@
+Fri Jun  6 06:44:31 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-macosx-yosemite.h:
+        * include/makeinclude/platform_macosx_yosemite.GNU:
+          Added starter files for MacOSX Yosemite
+
 Thu Jun  5 14:24:58 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * include/makeinclude/platform_aix_ibm.GNU: Add XL C++ 12.1 to the
