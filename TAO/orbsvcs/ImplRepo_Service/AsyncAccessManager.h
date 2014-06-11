@@ -24,6 +24,7 @@
 
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
 #include "LiveCheck.h"
+#include "UpdateableServerInfo.h"
 
 class ImR_Locator_i;
 struct Server_Info;
@@ -67,7 +68,7 @@ enum AAM_Status
 class Locator_Export AsyncAccessManager
 {
  public:
-  AsyncAccessManager (const Server_Info &info,
+  AsyncAccessManager (UpdateableServerInfo &info,
                       bool manual,
                       ImR_Locator_i &locator);
 
@@ -95,7 +96,7 @@ class Locator_Export AsyncAccessManager
   void status (AAM_Status s);
   bool send_start_request (void);
 
-  Server_Info *info_;
+  UpdateableServerInfo info_;
   bool manual_start_;
   ImR_Locator_i &locator_;
   PortableServer::POA_var poa_;

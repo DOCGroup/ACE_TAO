@@ -42,15 +42,16 @@ public:
                        const Server_Info_Ptr& si,
                        bool reset_start_count = false);
 
-  /// constructor (no repo updates will be performed)
-  /// @param si a Server_Info to create a non-stored Server_Info_Ptr from
-  UpdateableServerInfo(const Server_Info& si);
+  UpdateableServerInfo(const UpdateableServerInfo& other );
 
   /// destructor (updates repo if needed)
   ~UpdateableServerInfo(void);
 
   /// explicitly update repo if needed
   void update_repo(void);
+
+  /// assign a server info
+  void server_info (const Server_Info_Ptr& si);
 
   /// const Server_Info access
   const Server_Info* operator->() const;
@@ -69,17 +70,16 @@ public:
   bool null(void) const;
 
 private:
-  UpdateableServerInfo(const UpdateableServerInfo& );
   const UpdateableServerInfo& operator=(const UpdateableServerInfo& );
 
   /// the repo
   Locator_Repository* const repo_;
 
   /// the retrieved, passed, or non-stored server info
-  const Server_Info_Ptr si_;
+  Server_Info_Ptr si_;
 
   /// the server info has changes and needs to be updated to the repo
-  bool needs_update_;
+  mutable bool needs_update_;
 };
 
 #endif /* UPDATEABLE_SERVER_INFO_H */

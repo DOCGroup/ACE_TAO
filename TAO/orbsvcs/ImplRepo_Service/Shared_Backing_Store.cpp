@@ -5,6 +5,7 @@
 #include "Server_Info.h"
 #include "Activator_Info.h"
 #include "utils.h"
+#include "LiveCheck.h"
 #include "Locator_XMLHandler.h"
 #include "ImR_LocatorC.h"
 #include "ace/File_Lock.h"
@@ -333,8 +334,8 @@ Shared_Backing_Store::find_unique_id (const ACE_CString& key,
   if (unique_ids.find (key, uid) != 0)
     {
       const unsigned int repo_id = this->repo_id_++;
-      create_uid (this->imr_type_, repo_id, uid);
-      bind_unique_id (key, unique_ids, uid);
+      ::create_uid (this->imr_type_, repo_id, uid);
+      this->bind_unique_id (key, unique_ids, uid);
     }
 }
 
@@ -348,8 +349,8 @@ Shared_Backing_Store::update_unique_id (const ACE_CString &key,
   UniqueId temp_id;
   const bool found = (unique_ids.find (key, temp_id) == 0);
 
-  create_uid (entry_repo_type, entry_repo_id, uid);
-  bind_unique_id (key, unique_ids, uid);
+  ::create_uid (entry_repo_type, entry_repo_id, uid);
+  this->bind_unique_id (key, unique_ids, uid);
 
   if (entry_repo_id == 0)
     {
@@ -768,7 +769,7 @@ int
 Shared_Backing_Store::persistent_load (bool only_changes)
 {
   Lockable_File listing_lf;
-  const XMLHandler_Ptr listings = get_listings(listing_lf, only_changes);
+  const XMLHandler_Ptr listings = this->get_listings (listing_lf, only_changes);
   if (listings.null())
     {
       // failed to retrieve listings
@@ -777,10 +778,10 @@ Shared_Backing_Store::persistent_load (bool only_changes)
 
   if (only_changes)
     {
-      listings->remove_unmatched(*this);
+      listings->remove_unmatched (*this);
     }
 
-  const ACE_Vector<ACE_TString>& filenames = listings->filenames();
+  const ACE_Vector<ACE_TString>& filenames = listings->filenames ();
   size_t sz = filenames.size ();
   if (this->opts_.debug() > 9)
     {
@@ -791,9 +792,9 @@ Shared_Backing_Store::persistent_load (bool only_changes)
       const ACE_TString& fname = filenames[i];
       Lockable_File file(fname, O_RDONLY);
 
-      if(load(fname, file.get_file()) != 0)
+      if (this->load_file (fname, file.get_file()) != 0)
         {
-          load(fname + ".bak");
+          this->load_file (fname + ".bak");
         }
     }
 
@@ -801,29 +802,35 @@ Shared_Backing_Store::persistent_load (bool only_changes)
 }
 
 Shared_Backing_Store::XMLHandler_Ptr
-Shared_Backing_Store::get_listings(Lockable_File& listing_lf,
-                                   bool only_changes) const
+Shared_Backing_Store::get_listings (Lockable_File& listing_lf,
+                                    bool only_changes) const
 {
-  XMLHandler_Ptr listings_handler;
+  LocatorListings_XMLHandler *raw_xml = 0;
   if (only_changes)
     {
-      listings_handler.reset(new LocatorListings_XMLHandler(
-        this->filename_, servers(), activators()));
+      ACE_NEW_RETURN (raw_xml,
+                      LocatorListings_XMLHandler (this->filename_,
+                                                  servers(),
+                                                  activators()),
+                      XMLHandler_Ptr());
     }
   else
     {
-      listings_handler.reset(new LocatorListings_XMLHandler(this->filename_));
+      ACE_NEW_RETURN (raw_xml,
+                      LocatorListings_XMLHandler (this->filename_),
+                      XMLHandler_Ptr());
     }
 
-  if (load(this->listing_file_,
-           *listings_handler,
-           this->opts_.debug(),
-           listing_lf.get_file(this->listing_file_, O_RDONLY)) != 0)
-    {
+  XMLHandler_Ptr listings_handler (raw_xml);
 
-      if (load(this->listing_file_ + ".bak",
-         *listings_handler,
-         this->opts_.debug()) != 0)
+  if (this->load_file (this->listing_file_,
+                       *listings_handler,
+                       this->opts_.debug(),
+                       listing_lf.get_file (this->listing_file_, O_RDONLY)) != 0)
+    {
+      if (this->load_file (this->listing_file_ + ".bak",
+                           *listings_handler,
+                           this->opts_.debug()) != 0)
          {
            listings_handler.reset();
          }
@@ -858,8 +865,8 @@ Shared_Backing_Store::sync_load ()
                          ACE_TEXT("(%P|%t) sync_load %s\n"),
                          fname->c_str()));
             }
-          Lockable_File file(*fname, O_RDONLY);
-          int ind_err = load(*fname, file.get_file());
+          Lockable_File file (*fname, O_RDONLY);
+          int ind_err = this->load_file (*fname, file.get_file());
           if (ind_err != 0)
             {
               err = ind_err;
@@ -886,9 +893,9 @@ Shared_Backing_Store::write_listing (FILE* list)
     {
       const Server_Info_Ptr& info = sientry->int_id_;
 
-      find_unique_id (sientry->ext_id_, this->server_uids_, uid);
+      this->find_unique_id (sientry->ext_id_, this->server_uids_, uid);
       ACE_CString listing_name = ACEXML_escape_string (info->key_name_);
-      write_listing_item (list, uid.unique_filename, listing_name,
+      ::write_listing_item (list, uid.unique_filename, listing_name,
                           Locator_XMLHandler::SERVER_INFO_TAG);
     }
 
@@ -898,10 +905,8 @@ Shared_Backing_Store::write_listing (FILE* list)
   for (; aiit.next (aientry); aiit.advance ())
     {
       const ACE_CString& aname = aientry->ext_id_;
-
-      find_unique_id (aname, this->activator_uids_, uid);
-
-      write_listing_item (list, uid.unique_filename, aname,
+      this->find_unique_id (aname, this->activator_uids_, uid);
+      ::write_listing_item (list, uid.unique_filename, aname,
                           Locator_XMLHandler::ACTIVATOR_INFO_TAG);
     }
 
@@ -1020,17 +1025,33 @@ Shared_Backing_Store::load_server (Server_Info *info,
       XML_Backing_Store::load_server (info, server_started, extra_params);
       return;
     }
+  bool is_started = info->is_running ();
+  bool was_started = si->is_running ();
 
-  *si.get() = *info;
+  *si.get () = *info;
 
   if (!server_started)
-    si->server = ImplementationRepository::ServerObject::_nil();
+    {
+      si->server = ImplementationRepository::ServerObject::_nil();
+    }
   else
-    // will create a new server below if no previous server
-    // or the ior has changed
-    server_started = CORBA::is_nil(si->server.in ());
+    {
+      // will create a new server below if no previous server
+      // or the ior has changed
+      server_started = CORBA::is_nil(si->server.in ());
+    }
+  this->create_server (server_started, si);
+  if (was_started && !is_started)
+    {
+      this->opts_.pinger ()->remove_server (info->key_name_.c_str ());
+    }
+  if (!was_started && is_started)
+    {
+      this->opts_.pinger ()->add_server (info->key_name_.c_str (),
+                                         this->opts_.ping_external (),
+                                         si->server);
+    }
 
-  create_server(server_started, si);
 }
 
 void
@@ -1067,8 +1088,9 @@ Shared_Backing_Store::notify_updated_server
   const ACE_CString name = server.name.in();
   if (server.type == ImplementationRepository::repo_remove)
     {
+      this->opts_.pinger ()->remove_server (name.c_str());
       // sync_needed_ doesn't change, since we handle the change
-      // imme;diately
+      // immediately
       this->servers().unbind (name);
       return;
     }

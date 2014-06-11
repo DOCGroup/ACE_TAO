@@ -1,3 +1,28 @@
+Wed Jun 11 14:56:47 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.h:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.cpp:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+          Ensure that active state updates are shared and acted on by
+          both primary and backup IMR locators. This fixes the case
+          where following a shutdown of the primary IMR locator, the
+          backup is not aware of which servers have been activated.
+
+        * orbsvcs/tests/ImplRepo/servers_list/run_test_ft.pl:
+        * bin/tao_other_tests.lst:
+          A new test for the behavior added to the ImR.
+
 Thu Jun  5 22:03:18 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:

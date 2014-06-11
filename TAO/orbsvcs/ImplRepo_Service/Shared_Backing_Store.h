@@ -70,8 +70,8 @@ public:
 
   enum ExtraParams { REPO_TYPE = 0, REPO_ID = 1 };
 
-  Shared_Backing_Store(const Options& opts,
-                       CORBA::ORB_ptr orb);
+  Shared_Backing_Store (const Options& opts,
+                        CORBA::ORB_ptr orb);
 
   virtual ~Shared_Backing_Store();
 
@@ -80,7 +80,7 @@ public:
 
   /// provide the implementation for being notified of a
   /// server update
-  virtual void notify_updated_server(
+  virtual void notify_updated_server (
     const ImplementationRepository::ServerUpdate& server);
 
   /// provide the implementation for being notified of a

@@ -27,16 +27,23 @@ UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
     }
 }
 
-UpdateableServerInfo::UpdateableServerInfo (const Server_Info& si)
-: repo_(0),
-  si_(new Server_Info(si)),
-  needs_update_(false)
+UpdateableServerInfo::UpdateableServerInfo(const UpdateableServerInfo& other)
+  :repo_ (other.repo_),
+   si_ (other.si_),
+   needs_update_(other.needs_update_)
 {
+  other.needs_update_ = false;
 }
 
 UpdateableServerInfo::~UpdateableServerInfo ()
 {
   update_repo();
+}
+
+void
+UpdateableServerInfo::server_info (const Server_Info_Ptr& si)
+{
+  this->si_ = si;
 }
 
 void

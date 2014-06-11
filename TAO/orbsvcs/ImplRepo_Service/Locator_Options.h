@@ -24,6 +24,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+class LiveCheck;
+
 /**
  * @class Options
  *
@@ -106,6 +108,9 @@ public:
   /// during indirect invocations, if this interval has elapsed.
   ACE_Time_Value ping_interval (void) const;
 
+  LiveCheck *pinger (void) const;
+  void pinger (LiveCheck *);
+
   bool unregister_if_address_reused (void) const;
 
   bool throw_shutdown_exceptions (void) const;
@@ -178,6 +183,8 @@ private:
   /// existing installations. There is no command line option for this yet, but I want
   /// to preserve the framework for future use.
   bool throw_shutdown_exceptions_;
+
+  LiveCheck *pinger_;
 };
 
 #endif

@@ -42,14 +42,14 @@ class XML_Backing_Store : public Locator_Repository
 public:
   typedef std::pair<ACE_CString, ACE_CString> NameValue;
   typedef std::vector<NameValue> NameValues;
-  XML_Backing_Store(const Options& opts,
-                    CORBA::ORB_ptr orb,
-                    bool suppress_erase = false);
+  XML_Backing_Store (const Options& opts,
+                     CORBA::ORB_ptr orb,
+                     bool suppress_erase = false);
 
-  virtual ~XML_Backing_Store();
+  virtual ~XML_Backing_Store (void);
 
   /// indicate the XML filename as the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const;
+  virtual const ACE_TCHAR* repo_mode (void) const;
 
   /// create the Server_Info server object
   /// @param info the source Server_Info data
@@ -74,22 +74,22 @@ public:
 protected:
   /// perform XML backing store specific initialization
   /// (loads servers and activators from the backing store)
-  virtual int init_repo(PortableServer::POA_ptr imr_poa);
+  virtual int init_repo (PortableServer::POA_ptr imr_poa);
 
   /// perform server persistent update
-  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
+  virtual int persistent_update (const Server_Info_Ptr& info, bool add);
 
   /// perform activator persistent update
-  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
+  virtual int persistent_update (const Activator_Info_Ptr& info, bool add);
 
   /// perform persistent remove
-  virtual int persistent_remove(const ACE_CString& name, bool activator);
+  virtual int persistent_remove (const ACE_CString& name, bool activator);
 
   /// load the contents of a file into the repo using a Locator_XMLHandler
   /// @param filename the filename to read the contents from
   /// @param open_file the already open FILE stream for the
   ///        filename
-  int load(const ACE_TString& filename, FILE* open_file = 0);
+  int load_file (const ACE_TString& filename, FILE* open_file = 0);
 
   /// load the contents of a file into the repo using the provided
   /// ACEXML_DefaultHandler
@@ -99,10 +99,10 @@ protected:
   /// @param debug the current debug level
   /// @param open_file the already open FILE stream for the
   ///        filename
-  static int load(const ACE_TString& filename,
-                  ACEXML_DefaultHandler& xml_handler,
-                  unsigned int debug,
-                  FILE* open_file = 0);
+  static int load_file (const ACE_TString& filename,
+                        ACEXML_DefaultHandler& xml_handler,
+                        unsigned int debug,
+                        FILE* open_file = 0);
 
   /// persist the server
   /// @param fp the FILE stream to persist the server contents to
