@@ -600,6 +600,18 @@ Options::ping_interval (void) const
   return this->ping_interval_;
 }
 
+LiveCheck *
+Options::pinger (void) const
+{
+  return this->pinger_;
+}
+
+void
+Options::pinger (LiveCheck *p)
+{
+  this->pinger_ = p;
+}
+
 Options::RepoMode
 Options::repository_mode (void) const
 {

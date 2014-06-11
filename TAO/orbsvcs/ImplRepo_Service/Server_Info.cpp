@@ -125,6 +125,29 @@ Server_Info::is_mode (ImplementationRepository::ActivationMode m) const
 }
 
 bool
+Server_Info::has_peer (const char *name) const
+{
+  return (this->key_name_ == name || this->poa_name == name);
+}
+
+bool
+Server_Info::is_server (const char *name) const
+{
+  for (CORBA::ULong i = 0; i < peers.length(); i++)
+    {
+      if (ACE_OS::strcmp (peers[i], name) == 0)
+        return true;
+    }
+  return false;
+}
+
+bool
+Server_Info::is_running (void) const
+{
+  return !CORBA::is_nil (this->server.in()) || this->ior.length () > 0;
+}
+
+bool
 Server_Info::parse_id (const char* id,
                        ACE_CString& server_id,
                        ACE_CString& pname)
@@ -195,23 +218,6 @@ Server_Info::fqname_to_key (const char * fqname, ACE_CString& key)
 
   Server_Info::parse_id (fqname, serverId, poa_name);
   Server_Info::gen_key (serverId, poa_name, key);
-}
-
-bool
-Server_Info::has_peer (const char *name)
-{
-  return (this->key_name_ == name || this->poa_name == name);
-}
-
-bool
-Server_Info::is_server (const char *name)
-{
-  for (CORBA::ULong i = 0; i < peers.length(); i++)
-    {
-      if (ACE_OS::strcmp (peers[i], name) == 0)
-        return true;
-    }
-  return false;
 }
 
 void
