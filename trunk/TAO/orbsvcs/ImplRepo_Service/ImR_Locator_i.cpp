@@ -68,8 +68,7 @@ ImR_Locator_i::ImR_Locator_i (void)
   // while allocating the INS_Locator.  So, we have to do it in
   // two steps.
   INS_Locator* locator;
-  ACE_NEW (locator,
-          INS_Locator (*this));
+  ACE_NEW (locator, INS_Locator (*this));
   ins_locator_ = locator;
 }
 
@@ -101,6 +100,8 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   this->dsi_forwarder_.init (orb);
   this->adapter_.init (& this->dsi_forwarder_);
   this->pinger_.init (orb, this->ping_interval_);
+
+  opts.pinger (&this->pinger_);
 
   // Register the Adapter_Activator reference to be the RootPOA's
   // Adapter Activator.
@@ -523,7 +524,9 @@ ImR_Locator_i::activate_server
     }
 
   ImR_ResponseHandler *rh = 0;
-  ACE_NEW (rh, ImR_Loc_ResponseHandler (ImR_Loc_ResponseHandler::LOC_ACTIVATE_SERVER, _tao_rh));
+  ACE_NEW (rh,
+           ImR_Loc_ResponseHandler (ImR_Loc_ResponseHandler::LOC_ACTIVATE_SERVER,
+                                    _tao_rh));
 
   // This is the version called by tao_imr to activate the server, manually
   // starting it if necessary.
@@ -593,7 +596,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
   if (info->is_mode(ImplementationRepository::PER_CLIENT))
     {
       AsyncAccessManager *aam_raw;
-      ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
+      ACE_NEW (aam_raw, AsyncAccessManager (info, manual_start, *this));
       aam = aam_raw;
       this->aam_set_.insert_tail (aam);
     }
@@ -603,7 +606,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
       if (aam.is_nil())
         {
           AsyncAccessManager *aam_raw;
-          ACE_NEW (aam_raw, AsyncAccessManager (*info, manual_start, *this));
+          ACE_NEW (aam_raw, AsyncAccessManager (info, manual_start, *this));
           aam = aam_raw;
           this->aam_set_.insert_tail (aam);
         }
@@ -1045,9 +1048,10 @@ ImR_Locator_i::server_is_running
           _tao_rh->server_is_running_excep (&h);
           return;
         }
+      info.server_info (si);
       this->pinger_.add_server (si->ping_id (), this->ping_external_, srvobj.in());
       AsyncAccessManager *aam_raw;
-      ACE_NEW (aam_raw, AsyncAccessManager (*si, true, *this));
+      ACE_NEW (aam_raw, AsyncAccessManager (info, true, *this));
       AsyncAccessManager_ptr aam (aam_raw);
       aam->started_running ();
       this->aam_set_.insert (aam);
@@ -1082,7 +1086,7 @@ ImR_Locator_i::server_is_running
           if (!info->is_mode(ImplementationRepository::PER_CLIENT))
             {
               AsyncAccessManager *aam_raw;
-              ACE_NEW (aam_raw, AsyncAccessManager (*info, true, *this));
+              ACE_NEW (aam_raw, AsyncAccessManager (info, true, *this));
               AsyncAccessManager_ptr aam (aam_raw);
               aam->started_running ();
               this->aam_set_.insert (aam);

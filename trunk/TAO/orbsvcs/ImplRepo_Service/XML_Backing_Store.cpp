@@ -189,25 +189,27 @@ XML_Backing_Store::persist (FILE* fp,
 }
 
 int
-XML_Backing_Store::init_repo(PortableServer::POA_ptr )
+XML_Backing_Store::init_repo (PortableServer::POA_ptr )
 {
   // ignore load return since files don't have to exist
-  load(this->filename_);
+  this->load_file (this->filename_);
   return 0;
 }
 
 int
-XML_Backing_Store::load (const ACE_TString& filename, FILE* open_file)
+XML_Backing_Store::load_file (const ACE_TString& filename, FILE* open_file)
 {
   Locator_XMLHandler xml_handler (*this);
-  return load(filename, xml_handler, this->opts_.debug(), open_file);
+  return XML_Backing_Store::load_file (filename, xml_handler,
+                                       this->opts_.debug(), open_file);
 }
 
+/* static */
 int
-XML_Backing_Store::load (const ACE_TString& filename,
-                         ACEXML_DefaultHandler& xml_handler,
-                         unsigned int debug,
-                         FILE* open_file)
+XML_Backing_Store::load_file (const ACE_TString& filename,
+                              ACEXML_DefaultHandler& xml_handler,
+                              unsigned int debug,
+                              FILE* open_file)
 {
   // xml input source will take ownership
   ACEXML_FileCharStream* fstm;
@@ -285,25 +287,25 @@ XML_Backing_Store::load_server (Server_Info *info,
 {
   Server_Info_Ptr si (info);
 
-  this->servers().rebind (info->key_name_, si);
+  this->servers ().rebind (info->key_name_, si);
 
-  create_server (server_started, si);
+  this->create_server (server_started, si);
 }
 
 void
 XML_Backing_Store::create_server (bool server_started,
                                   const Server_Info_Ptr& si)
 {
-  if (!server_started || si->ior.is_empty())
+  if (!server_started || si->ior.is_empty ())
     {
       return;
     }
 
-  CORBA::Object_var obj = this->orb_->string_to_object(si->ior.c_str());
+  CORBA::Object_var obj = this->orb_->string_to_object (si->ior.c_str ());
   if (!CORBA::is_nil(obj.in()))
     {
       si->server =
-        ImplementationRepository::ServerObject::_unchecked_narrow (obj.in());
+        ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
       si->last_ping = ACE_Time_Value::zero;
     }
 }

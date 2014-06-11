@@ -4,16 +4,16 @@
 #include "AsyncAccessManager.h"
 #include "ImR_Locator_i.h"
 #include "Locator_Repository.h"
-
+#include "UpdateableServerInfo.h"
 #include "orbsvcs/Log_Macros.h"
 
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
-AsyncAccessManager::AsyncAccessManager (const Server_Info &info,
+AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
                                         bool manual,
                                         ImR_Locator_i &locator)
-  :info_(0),
+  :info_(info),
    manual_start_ (manual),
    locator_(locator),
    poa_(locator.root_poa()),
@@ -22,18 +22,16 @@ AsyncAccessManager::AsyncAccessManager (const Server_Info &info,
    refcount_(1),
    lock_()
 {
-  this->info_ = new Server_Info (info);
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager::ctor server = %s\n"),
-                      this->info_->ping_id ()));
+                      this, this->info_->ping_id ()));
     }
 }
 
 AsyncAccessManager::~AsyncAccessManager (void)
 {
-  delete this->info_;
 }
 
 void
@@ -208,8 +206,9 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
     }
 
   this->status (AAM_WAIT_FOR_ALIVE);
-  this->info_->partial_ior = partial_ior;
-  this->info_->server = ImplementationRepository::ServerObject::_duplicate (ref);
+  this->info_.edit ()->partial_ior = partial_ior;
+  this->info_.edit ()->server =
+    ImplementationRepository::ServerObject::_duplicate (ref);
 
   if (this->locator_.pinger().is_alive (this->info_->ping_id()) == LS_ALIVE)
     {
@@ -307,7 +306,7 @@ AsyncAccessManager::send_start_request (void)
       return false;
     }
 
-  Server_Info *startup = this->info_->active_info ();
+  const Server_Info *startup = this->info_->active_info ();
 
   if (startup->cmdline.length () == 0)
     {

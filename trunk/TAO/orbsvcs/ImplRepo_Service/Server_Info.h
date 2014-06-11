@@ -61,9 +61,10 @@ struct Server_Info
 
   void reset_runtime (void);
 
-  bool is_server (const char *name);
-  bool has_peer (const char *name);
+  bool is_server (const char *name) const;
+  bool has_peer (const char *name) const;
   bool is_mode (ImplementationRepository::ActivationMode m) const;
+  bool is_running (void) const;
 
   // transform the supplied limit to always be at least 1
   void start_limit (int lim);

@@ -114,7 +114,7 @@ public:
   const AIMap& activators(void) const;
 
   /// indicate the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const = 0;
+  virtual const ACE_TCHAR* repo_mode(void) const = 0;
 
   /// convert to lower case
   static ACE_CString lcase (const ACE_CString& s);
@@ -129,32 +129,32 @@ public:
 
 protected:
   /// perform repo mode specific initialization
-  virtual int init_repo(PortableServer::POA_ptr imr_poa) = 0;
+  virtual int init_repo (PortableServer::POA_ptr imr_poa) = 0;
 
   /// perform sync of repo with backing store
   /// defaults to no-op, only shared backing stores
   /// need to sync
-  virtual int sync_load();
+  virtual int sync_load (void);
 
   /// perform server persistent update
-  virtual int persistent_update(const Server_Info_Ptr& info, bool add) = 0;
+  virtual int persistent_update (const Server_Info_Ptr& info, bool add) = 0;
 
   /// perform activator persistent update
-  virtual int persistent_update(const Activator_Info_Ptr& info, bool add) = 0;
+  virtual int persistent_update (const Activator_Info_Ptr& info, bool add) = 0;
 
   /// perform persistent remove
-  virtual int persistent_remove(const ACE_CString& name, bool activator) = 0;
+  virtual int persistent_remove (const ACE_CString& name, bool activator) = 0;
 
   /// report the ImR Locator's IOR
-  virtual int report_ior(PortableServer::POA_ptr imr_poa);
+  virtual int report_ior (PortableServer::POA_ptr imr_poa);
 
   /// recover the ImR Locator's IOR from the persisted file
-  virtual int recover_ior(void);
+  virtual int recover_ior (void);
 
   int setup_multicast (ACE_Reactor* reactor, const char* imr_ior);
-  void teardown_multicast();
+  void teardown_multicast ();
 
-  bool registered() const;
+  bool registered () const;
 
   const Options& opts_;
   TAO_IOR_Multicast ior_multicast_;
