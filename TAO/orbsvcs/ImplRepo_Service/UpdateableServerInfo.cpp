@@ -27,7 +27,7 @@ UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
     }
 }
 
-UpdateableServerInfo::UpdateableServerInfo(const UpdateableServerInfo& other)
+UpdateableServerInfo::UpdateableServerInfo (UpdateableServerInfo& other)
   :repo_ (other.repo_),
    si_ (other.si_),
    needs_update_(other.needs_update_)
