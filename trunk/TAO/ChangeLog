@@ -1,3 +1,11 @@
+Thu Jun 12 17:41:06 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.h:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.cpp:
+          Fix for timely repo updates. This also avoids a potential crash
+          at shutdown.
+
 Wed Jun 11 14:56:47 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:

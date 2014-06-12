@@ -42,7 +42,7 @@ public:
                        const Server_Info_Ptr& si,
                        bool reset_start_count = false);
 
-  UpdateableServerInfo(const UpdateableServerInfo& other );
+  UpdateableServerInfo(UpdateableServerInfo& other );
 
   /// destructor (updates repo if needed)
   ~UpdateableServerInfo(void);
@@ -73,13 +73,13 @@ private:
   const UpdateableServerInfo& operator=(const UpdateableServerInfo& );
 
   /// the repo
-  Locator_Repository* const repo_;
+  Locator_Repository* repo_;
 
   /// the retrieved, passed, or non-stored server info
   Server_Info_Ptr si_;
 
   /// the server info has changes and needs to be updated to the repo
-  mutable bool needs_update_;
+  bool needs_update_;
 };
 
 #endif /* UPDATEABLE_SERVER_INFO_H */
