@@ -1,3 +1,9 @@
+Thu Jun 12 23:16:02 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+          Reintroduce synchronization in the new_context operation, since
+          updates a shared object ID counter.
+
 Thu Jun 12 17:41:06 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
