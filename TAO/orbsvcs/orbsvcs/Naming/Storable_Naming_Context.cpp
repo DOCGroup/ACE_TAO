@@ -544,42 +544,54 @@ TAO_Storable_Naming_Context::make_new_context (
 CosNaming::NamingContext_ptr
 TAO_Storable_Naming_Context::new_context (void)
 {
-  ACE_TRACE("new_context");
+  ACE_TRACE ("new_context");
 
-  TAO_NS_Persistence_Global global;
-  TAO_Storable_Naming_Context_ReaderWriter rw(*gfl_.get());
-
-  if(redundant_)
-  {
-    // acquire a lock on the file that holds our counter
-    if (gfl_->open() != 0)
-      {
-        delete gfl_.release();
-        throw CORBA::PERSIST_STORE();
-      }
-    if (gfl_ -> flock(0, 0, 0) != 0)
-         throw CORBA::INTERNAL();
-    // get the counter from disk
-    rw.read_global(global);
-    gcounter_ = global.counter();
-    // use it to generate a new name
-  }
-
-  // Generate an Object id for the new context.
   char object_id[BUFSIZ];
-  ACE_OS::sprintf (object_id,
-                   "%s_%d",
-                   root_name_,
-                   gcounter_++);
-  // then save it back on disk
-  global.counter (gcounter_);
-  rw.write_global (global);
-  if (redundant_)
   {
-    // and release our lock
-    if (gfl_ -> flock(0, 0, 0) != 0)
-         throw CORBA::INTERNAL();
-    gfl_->close();
+    ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX, ace_mon,
+                              this->lock_,
+                              CORBA::INTERNAL ());
+
+    File_Open_Lock_and_Check flck (this, SFG::MUTATOR);
+    if (this->destroyed_)
+      throw CORBA::OBJECT_NOT_EXIST ();
+
+    TAO_NS_Persistence_Global global;
+    TAO_Storable_Naming_Context_ReaderWriter rw (*gfl_.get ());
+
+    if (redundant_)
+      {
+        // acquire a lock on the file that holds our counter
+        if (gfl_->open () != 0)
+          {
+            delete gfl_.release ();
+            throw CORBA::PERSIST_STORE ();
+          }
+        if (gfl_->flock (0, 0, 0) != 0)
+          {
+            throw CORBA::INTERNAL ();
+          }
+        // get the counter from disk
+        rw.read_global (global);
+        gcounter_ = global.counter ();
+        // use it to generate a new name
+      }
+
+    // Generate an Object id for the new context.
+    ACE_OS::sprintf (object_id,
+                     "%s_%d",
+                     root_name_,
+                     gcounter_++);
+    // then save it back on disk
+    global.counter (gcounter_);
+    rw.write_global (global);
+    if (redundant_)
+      {
+        // and release our lock
+        if (gfl_->funlock(0, 0, 0) != 0)
+          throw CORBA::INTERNAL();
+        gfl_->close();
+      }
   }
 
   // Create a new context.
