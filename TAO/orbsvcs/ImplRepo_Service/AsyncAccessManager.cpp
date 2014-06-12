@@ -115,6 +115,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
 void
 AsyncAccessManager::final_state (void)
 {
+  this->info_.update_repo ();
   for (size_t i = 0; i < this->rh_list_.size(); i++)
     {
       ImR_ResponseHandler *rh = this->rh_list_[i];
