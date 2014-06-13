@@ -1,3 +1,9 @@
+Fri Jun 13 21:19:05 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_list/run_test_ft.pl:
+          Fix the test on windows. Note, a commandline with a leading
+          space won't be spawned.
+
 Thu Jun 12 23:16:02 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
