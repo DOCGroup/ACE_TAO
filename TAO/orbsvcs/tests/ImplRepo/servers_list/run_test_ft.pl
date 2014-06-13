@@ -340,7 +340,7 @@ sub servers_list_test
     }
 
     if (do_ti_command (0, $servers_count, 1, "add",
-                       "-c \" $server_cmd -ORBUseIMR 1 -n ",
+                       "-c \"$server_cmd -ORBUseIMR 1 -n ",
                        "$act_initref\"") != 0) {
         return 1;
     }
