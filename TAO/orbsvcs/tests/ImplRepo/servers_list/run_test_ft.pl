@@ -311,11 +311,12 @@ sub list_active_servers
     $TI->Arguments ("$ti_initref list $list_options");
     # Redirect output so we can count number of lines in output
     redirect_output();
-    $result = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     my $list_time = time() - $start_time;
     restore_output();
     if ($TI_status != 0) {
-	return kill_imr ("tao_imr list returned $TI_status");
+        kill_imr ("tao_imr list returned $TI_status");
+        return -1;
     }
     open (FILE, $stderr_file) or die "Can't open $stderr_file: $!";
     $active_servers = 0;
@@ -356,12 +357,19 @@ sub servers_list_test
 
     print "\nList of active servers from primary\n";
     $active_servers_before_kill = list_active_servers("-a");
-
+    if ($active_servers_before_kill < 0) {
+        return 1;
+    }
     print "\nKilling primary IMR Locator\n";
     $IMR->Kill (); $IMR->TimedWait (1);
+    sleep (2);
 
     print "\nList of active servers from backup\n";
     $active_servers_after_kill = list_active_servers("-a");
+    if ($active_servers_after_kill < 0) {
+        return 1;
+    }
+
     if ($active_servers_after_kill != $active_servers_before_kill) {
 	print STDERR
 	    "ERROR: Excepted list of active servers after killing ".
