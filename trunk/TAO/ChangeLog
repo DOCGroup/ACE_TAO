@@ -1,3 +1,9 @@
+Mon Jun 16 16:30:40 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_list/run_test_ft.pl:
+          One more windows fix. A delay is required after killing primary
+          locator to avoid comm failures.
+
 Fri Jun 13 21:19:05 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/servers_list/run_test_ft.pl:
