@@ -266,7 +266,11 @@ sub run_clients ()
         $POSITIVE_TEST_RESULT);
 
     run_client (
-        "group_create -group ieed -policy rand",
+        "group_create -group ieed -policy random",
+        $POSITIVE_TEST_RESULT);
+
+    run_client (
+        "group_create -group ieec -policy least",
         $NEGATIVE_TEST_RESULT);
 
     run_client (

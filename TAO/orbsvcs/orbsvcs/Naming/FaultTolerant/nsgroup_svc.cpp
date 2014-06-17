@@ -31,6 +31,11 @@ NS_group_svc::determine_policy_string (
     value = FT_Naming::ROUND_ROBIN;
     rc = true;
   }
+  if (ACE_OS::strcasecmp (policy, ACE_TEXT_CHAR_TO_TCHAR ("random")) == 0)
+  {
+    value = FT_Naming::RANDOM;
+    rc = true;
+  }
 
   return rc;
 }
@@ -329,10 +334,14 @@ NS_group_svc::group_list (void)
   // naming manager IDL to support requesting the group list - which is a list of names
 
   /// Display object group list for each load balancing strategy
-  /// Currently only support FT_Naming::ROUND_ROBIN
   int rc = 0;
-  if( display_load_policy_group (FT_Naming::ROUND_ROBIN,
+  if (display_load_policy_group (FT_Naming::ROUND_ROBIN,
                                  ACE_TEXT ("Round Robin")) < 0 )
+  {
+    rc = -1;
+  }
+  if (rc == 0 && display_load_policy_group (FT_Naming::RANDOM,
+                                            ACE_TEXT ("Random")) < 0 )
   {
     rc = -1;
   }
