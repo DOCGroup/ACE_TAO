@@ -1,3 +1,14 @@
+Tue Jun 17 16:10:49 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/nsgroup_svc.cpp:
+          Update comments and parameter verification to allow setting a
+          load balancing policy of RANDOM.
+
+        * utils/nsgroup/nsgroup.cpp:
+        * utils/nsgroup/run_test.pl:
+          Update the test to demonstrate use of the RANDOM LB policy.
+
 Mon Jun 16 16:30:40 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/servers_list/run_test_ft.pl:
