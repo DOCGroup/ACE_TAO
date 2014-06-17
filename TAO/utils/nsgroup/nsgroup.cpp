@@ -473,7 +473,7 @@ NSGROUP::show_usage ( void )
   ACE_DEBUG ((LM_INFO,
     ACE_TEXT ("Usage:\n")
     ACE_TEXT ("  %s\n")
-    ACE_TEXT ("  group_create  -group <group> -policy <round> \n")
+    ACE_TEXT ("  group_create  -group <group> -policy <round|random> \n")
     ACE_TEXT ("  group_bind    -group <group> -name <name>\n")
     ACE_TEXT ("  group_unbind  -name <name>\n")
     ACE_TEXT ("  group_list\n")
