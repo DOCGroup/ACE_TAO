@@ -273,6 +273,7 @@ standard out.
 1. Syntax
 
         % NT_Naming_Server [-i value]
+                           [-c [args]]
                            [-r]
                            [-s]
                            [-k]
@@ -282,7 +283,10 @@ standard out.
 2. Optional Command-line Arguments
 
         -i value
-                Install this program as an NT service, with specified startup
+                Install this program as an NT service, with specified startup mode
+
+        -c [args]
+                Query or supply command line arguments for NT service.
 
         -r
                 Remove this program from the Service Manager
@@ -293,7 +297,7 @@ standard out.
                 Kill the service
 
         -t value
-                Set startup for an existing service
+                Set startup mode for an existing service
 
         -d
                 Debug; run as a regular application
@@ -332,6 +336,15 @@ standard out.
         the -i option) you can change its startup type to one of the
         other values above.  To do this, run NT_Naming_Service with
         -tn option. n is as explained above for -i.
+
+        Use the -c option to supply command line arguments to the service, or
+        to see what command line is currently set. Note that the arg parameter
+        must be quoted. Use of environment variables, such as %TAO_ROOT% or
+        %computername% is allowed in the arg parameter. Any existing arg value
+        is overwritten, and an empty quoted string will clear the argument list.
+        The current setting is printed to stdout when -c is used with no arg
+        parameter. Only Administrator can set args, but any user is able to
+        retrieve the setting.
 
         In order to debug the service's execution itself, use the -d
         option.
