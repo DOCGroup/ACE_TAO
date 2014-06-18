@@ -55,7 +55,15 @@ public:
   virtual int init (int argc,
                     ACE_TCHAR *argv[]);
 
+  /// Helper function for setting or reporting command line args
+  int set_args (const ACE_TCHAR *args);
+
 private:
+  void arg_manip (char *args, DWORD arglen, bool query);
+  void report_error (const ACE_TCHAR *format,
+                     const ACE_TCHAR *val,
+                     LONG result);
+
   // = Keep track of the "command-line" arguments.
   /// Argument count.
   int argc_;
