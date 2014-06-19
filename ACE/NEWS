@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.2.6 and ACE-6.2.7
 ====================================================
 
+. Added initial support for Microsoft Visual Studio 2014
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.5 and ACE-6.2.6
 ====================================================
 
