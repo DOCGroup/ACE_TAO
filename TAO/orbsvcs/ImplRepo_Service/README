@@ -28,13 +28,9 @@ as the specification for TAO's ImR.
 
 @ref usersguide - Overall documentation on how to use the ImR in your programs
 
-@ref future - Future Work
-
 @ref ntservice - Running the ImR as a NT Service
 
 @ref imrandnaming - Using the Naming Service with the Implementation Repository
-
-@ref movefromoldImR - Moving from IMR as in TAO 1.2.2 to the present version.
 
 @section authors Authors
 
@@ -58,99 +54,6 @@ It was later extended and enhanced by Justin Michel <michel_j@ociweb.com>
 
 */
 
-/**
-@page future Future Work
-
-As with any program, there is always a wishlist of things to do.
-
-@subsection ort Use Object Reference Template (ORT) Features
-
-   Use ORT so that the ImR-ified IORs doesn't have any information
-about the ImR_Activators. Right now, even though, the ImplRepo_Service is
-the one that is exposed to the client, the IOR will have a reference
-to the ImR_Activator. By using ORT features, we want the IOR to refer
-to the ImplRepo_Service rather than the underlying ImR_Activator. That way
-the ImR_Activator is totally blocked from the client using the ImR
-service.
-
-@subsection ort_design Design Considerations
-
-   For the above mentioned purposes, we can say that the ImplRepo_Service
-acts as the gateway which receives requests on behalf of the actual
-ImR_Activator.
-
-   The ImplRepo_Service will now need a new IDL method 'create_object'. The
-create_object method will take the interface_repository_id of the
-object that has to be gatewayed (ImR_Activator's) and the
-CORBA::Object_ptr of the gatewayed object. And, using these two will
-create an object which will point to the ImplRepo_Service and will also
-know that the ultimate receiver is the ImR_Activator.
-
-   So, this is how it works.
-
-   As before, we will first run the ImplRepo_Service. And, then run an
-ImR_Activator. We will use interceptors and in the post_init method,
-we will add an ior interceptor which will have the ImplRepo_Service
-object. By this, the IOR that is generated will actually point to the
-ImplRepo_Service rather than ImR_Activator. So, the IOR which is visible to
-the client will show that the IOR actually points to the ImplRepo_Service.
-
-   When a client sends a request to the ImplRepo_Service, the request
-will come to ImplRepo_Service which will send the request to the actual
-ImR_Activator.
-
-@subsection AMH Use AMH Features
-
-   Use the AMH features to improve the TAO IMR performance.
-
-@subsection logicalnames Logical Server names
-
-In the IDL interface, but not used on the server side or fully implemented in
-tao_ImR.
-
-@subsection shutdown Server Shutdown
-
-Only cooperative shutdown implemented right now.  Since we keep track of the
-Process ID, then we could kill the server if it doesn't cooperate.
-
-@subsection optimization Client-side Optimizations
-
-Nothing yet.
-
-@subsection security Server Security
-
-Nothing really here.  There is two main things I have in mind.
-
-First, the security service would be useful to restrict access to some
-of the Administration methods
-
-Second, without a security service we should provide some sort of flag to
-the ImR that disables the Administration methods.  That way, the database
-can be set up with the servers in a controlled run of the ImR.  Then the
-ImR could be run again reading in the database without Admin access.
-
-@subsection federations Federations
-
-Nothing yet.
-
-@subsection dllserver DLL servers
-
-Nothing yet.
-
-@subsection XML Database Support
-
-  As of now, the support is only to be able to have the information
-  about a registered server written to an XML file. Have to support
-retrieving information from the XML file to be able to do any actions
-on the registered servers.
-
-@subsection Remove ImR_Activator
-
-  We can now successfully register an ImR_Activator. But, we have to
-yet provide support to gracefully unregister the ImR_Activator from
-the ImplRepo_Service. The ImplRepo_Service then has to try to transfer the
-servers that were registered with this instance to other activators.
-*/
 
 /**
 @page usersguide Implementation Repository User's Guide
@@ -161,27 +64,27 @@ running status. These functions now are contained within the POA, so when a
 Persistent POA is used on a server that has -ORBUseImR specified, it will
 communicate with an Implementation Repository, if one is available.
 
-@subsection description The New ImR
+@subsection description The ImR
 
-   The new ImR is based on the ImR in TAO 1.2.2 with added
-features to help improve throughput and load balancing. The work to be
-performed by the Implementation Repository is distributed between two
-entities (ImplRepo_Service and ImR_Activator) to help achieve the goal of
-better throughput and load balance.
+The ImR is based on the ImR in TAO 1.2.2 with added features to help
+improve throughput and load balancing. The work to be performed by the
+Implementation Repository is distributed between two entities (locator
+and activator) to help achieve the goal of better throughput and load
+balance.
 
-@subsection locator ImplRepo_Service
+@subsection locator tao_imr_locator
 
-  The ImplRepo_Service acts as the main server which is visible to
-the application intending to use the ImR. It receives requests sent
-via tao_ImR and distributes the work to the registered ImR_Activators.
-It is stateless and does not maintain any information except about the
-ImR_Activators that are registered with it. Its job is to act as
-a mediator between the application and the actual ImR_Activator that does
-the real work. As of now, we only support one ImplRepo_Service to be running at
-any time. ImplRepo_Service can be reached through the usual methods of
+The locator acts as the main server which is visible to the
+application intending to use the ImR. It receives requests sent via
+tao_imr and distributes the work to the registered activators.  It is
+stateless and does not maintain any information except about the
+activators that are registered with it. Its job is to act as a
+mediator between the application and the actual activator that does
+the real work. As of now, we only support one locator to be running at
+any time. locator can be reached through the usual methods of
 -ORBInitRef and -ORBDefaultInitRef and multicast.
 
-Commandline Arguments that can be passed to ImplRepo_Service
+Commandline Arguments that can be passed to tao_imr_locator
 
 -d <level 0..10>   locator specific debug level
 -m                 support multicast discovery.
@@ -190,7 +93,7 @@ Commandline Arguments that can be passed to ImplRepo_Service
 -t <timeout>       specify a startup timeout value
 -s                 run as a winNT service
 -c <command>       execute the named service command: install, remove
--x <filename>      support persistence to the ImplRepo_Service. We use XML to support
+-x <filename>      support persistence to the locator. We use XML to support
                    persistence. Names of the activators registered with the locator,
                    their IORs, and the servers registered with each of the activators are
                    saved to the xml file. Use this option to pass the name of the file
@@ -204,7 +107,7 @@ Commandline Arguments that can be passed to ImplRepo_Service
                    indicates all servers and activators in the repository indicating the
                    filename containing that server's or activator's persistence data.
                    This option is used along with the "--primary" or "--backup" option
-                   to create a Fault Tolerant ImplRepo_Service.
+                   to create a Fault Tolerant locator.
 --primary          pass along with "--directory <dir>" to startup the primary
                    ImR_Locator. See ft_imr_locator subsection.
 --backup           pass along with "--directory <dir>" to startup the backup
@@ -234,7 +137,7 @@ The ImR_Locator implements a fault tolerant service with the following options:
   redundant service pair ImRService ior file, which it can only do after
   successfully starting the primary and backup ImRService instances. The ior
   file contains the combined profiles of the primary and backup ImRLocators. The
-  client must use the ior file to use the fault tolerent ImplRepo_Service.
+  client must use the ior file to use the fault tolerent locator.
 
 The primary and backup ImRLocator instances should have the same ORBEndPoint
 protocol list so that any client can send a request to either primary or backup
@@ -254,7 +157,7 @@ by the backup with the -o option can still be used as long as the ORBEndPoint
 list remains the same for both instances.
 
 As long as both the primary and backup ImR_Locators are not shutdown at the
-same time the Fault Tolerant ImplRepo_Service will always be available.
+same time the Fault Tolerant locator will always be available.
 
 @subsection ft_imr_locator_startup FaultTolerant_ImR_Locator Startup
 
@@ -284,22 +187,22 @@ same time the Fault Tolerant ImplRepo_Service will always be available.
   </li>
 </ol>
 
-@subsection activator ImR_Activator
+@subsection activator tao_imr_activator
 
-ImR_Activators, as you might have guessed, do the real work of
+Activators, as you might have guessed, do the real work of
 activating servers or shutting them down and maintaining the information
-about servers related to them. Only one instance of an ImR_Activator
-can be run on one host. The ImR_Activator is not exposed at all to the
-application. Only the ImplRepo_Service needs to and it is the only one that
-can contact the ImR_Activator.
+about servers related to them. Only one instance of an activator
+can be run on one host. The activator is not exposed at all to the
+application. Only the locator needs to and it is the only one that
+can contact the activator.
 
-  An instance of ImR_Activator first registers itself with the
-ImplRepo_Service so that it can begin to receive requests. When registering
-with the ImplRepo_Service, it passes the hostname where it is being run and
-its IOR to the ImplRepo_Service. And, the ImplRepo_Service reaches it using the
+  An instance of tao_imr_activator first registers itself with the
+locator so that it can begin to receive requests. When registering
+with the locator, it passes the hostname where it is being run and
+its IOR to the locator. And, the locator reaches it using the
 same information.
 
-The Commandline parameters that are valid for ImR_Activator are
+The Commandline parameters that are valid for tao_imr_activator are
 
 -c              Run the Service command: install, remove, install_no_imr
 -d <level 0..5> Debug Information
@@ -316,39 +219,38 @@ The Commandline parameters that are valid for ImR_Activator are
 
 @subsection work So how does the whole thing work?
 
-  The first thing to do is to have an ImplRepo_Service running. Once
-the ImplRepo_Service is running, we can instantiate one or more ImR_Activators
-as needed per the application. As mentioned already, the
-ImR_Activators, upon instantiation, register with the ImplRepo_Service to
-be able to receive requests.
+The first thing to do is to have a locator running. Once the locator
+is running, we can instantiate one or more activators as needed per
+the application. As mentioned already, the activators, upon
+instantiation, register with the locator to be able to receive
+requests.
 
-  When a new server has to be added or any change has to the
-done to an existing server, a request is to be sent to the ImplRepo_Service
-via the tao_imr utility. Startup commands, the working directory, the
-host where the server should be started up and such other information
-are passed to the ImplRepo_Service via the TAO_ImR command line arguments.
+When a new server has to be added or any change has to the done to an
+existing server, a request is to be sent to the locator via the
+tao_imr utility. Startup commands, the working directory, the host
+where the server should be started up and such other information are
+passed to the locator via the tao_imr command line arguments.
 
-  If the host where the server should be started up is passed
-while adding a new server, the ImplRepo_Service chooses the ImR_Activator
-that is running on that host to be responsible for the server's
-activities. Otherwise, an ImR_Activator is chosen based on the Round
-robin algorithm. We plan to use better algorithms based on the
-existing load for the same purpose in future. Whatever way the
-ImR_Activator is chosen for a server, once an ImR_Activator is chosen,
-that ImR_Activator remains responsible for the server throughout the
-server's lifetime.
+If the host where the server should be started up is passed while
+adding a new server, the locator chooses the activator that is running
+on that host to be responsible for the server's activities. Otherwise,
+an activator is chosen based on the Round robin algorithm. We plan to
+use better algorithms based on the existing load for the same purpose
+in future. Whatever way the activator is chosen for a server, once an
+activator is chosen, that activator remains responsible for the server
+throughout the server's lifetime.
 
-  After an ImR_Activator is chosen, the ImplRepo_Service passes the
-request to the chosen ImR_Activator. The ImR_Activator acts on the request
-and updates its database to reflect the new state of the server.
+After an activator is chosen, the locator passes the request to the
+chosen activator. The activator acts on the request and updates its
+database to reflect the new state of the server.
 
 @subsection run How is the ImR run?
 
 <ol>
-  <li>First run the <b>ImplRepo_Service</b>
-    <em>Example:<code> </code> </em><code> ImplRepo_Service -o locator.ior<br></code>
+  <li>First run the <b>tao_imr_locator</b>
+    <em>Example:<code> </code> </em><code> tao_imr_locator -o locator.ior<br></code>
   <li>Run the <b>Activator</b>
-    <em>Example:<code> </code> </em><code> ImR_Activator -ORBInitRef ImplRepoService=file://locator.ior<br></code>
+    <em>Example:<code> </code> </em><code> tao_imr_activator -ORBInitRef ImplRepoService=file://locator.ior<br></code>
 
 @subsection use How is the ImR used?
 
@@ -356,8 +258,8 @@ The main steps for the lifetime of a server that uses the ImR are generally
 the following:
 
 <ol>
-  <li>Register name and startup commands with the ImR using <b>tao_ImR<br>
-    </b><em>Example:<code>  </code> </em><code> tao_ImR -ORBInitRef
+  <li>Register name and startup commands with the ImR using <b>tao_imr<br>
+    </b><em>Example:<code>  </code> </em><code> tao_imr -ORBInitRef
     ImplRepoService=file://locator.ior add plane -c &quot;airplane_server -i
     -ORBInitRef ImplRepoService=file://locator.ior&quot;<br></code>
     <br>
@@ -370,25 +272,20 @@ the following:
   <li>Clients will use the IOR, which will automatically go through the ImR<br>
   <li>The ImR will start the server if it is not already running<br>
   <li>At any time when the server is not currently in use by a client, it can be
-      shut down using <strong>tao_ImR<br></strong><em>Example:</em><code> tao_ImR
+      shut down using <strong>tao_imr<br></strong><em>Example:</em><code> tao_imr
       -ORBInitRef ImplRepoService=file://locator.ior shutdown plane<br>
     </code>
   <li>After the server isn't needed anymore, it can be removed from the ImR database
-      using <strong>tao_ImR<br></strong><em>Example:<code> </em>tao_ImR -ORBInitRef
+      using <strong>tao_imr<br></strong><em>Example:<code> </em>tao_imr -ORBInitRef
       ImplRepoService=file://locator.ior remove plane</code>
 </ol>
 
 @subsection serverresponsibilities So what does the server need to do?
 
-As of TAO 1.0.9, the Implementation Repository support on the server-side has
-been integrated into the POA. Previously, the IR_Helper class needed to be
-used explicitly. Now only the &quot;-ORBUseImR 1&quot; command line
-argument needs to be used.
-
-There are a couple of restrictions on the server though. Only objects within
-a persistent POA will be supported by the ImR. Also the Implementation
-Repository will key its entries on POA name. What this means for the server
-is that each server must have unique persistent POA names.
+A server must be run with the argument &quot;-ORBUseImR 1&quot; supplied to
+ORB_init. Then any object managed by a <strong>persistent</strong> POA will
+be reachable via the ImR locator. The locator must also be reachable by the
+server, using -ORBInitRef ImplRepoService=<ior> or similar.
 
 @subsection defaultinitref Use of -ORBDefaultInitRef with the ImR
 
@@ -428,10 +325,10 @@ Services used in this way have two requirements:
 Each server can have one of three different types of activation modes:
 
 <ul>
-  <li>NORMAL is the default.  The server can be started via tao_ImR,
+  <li>NORMAL is the default.  The server can be started via tao_imr,
       the command line, and with client requests.
   <li>MANUAL specifies that the server shouldn't be activated with a
-      client request but can be activated through tao_ImR or via the
+      client request but can be activated through tao_imr or via the
       command line.
   <li>PER_CLIENT specifies that each request to the ImplRepo will
       result in a new server process started up.  Because clients
@@ -443,39 +340,41 @@ Each server can have one of three different types of activation modes:
       mode, so it cannot be used to shut down the servers.  So the
       servers must have an alternative way of shutting down.
   <li>AUTO_START specifies that a server should be activated when the
-      Implementation Repository is started.  tao_ImR also has an
+      Implementation Repository is started.  tao_imr also has an
       autostart command to activate all servers marked AUTO_START.
 </ul>
 
-@subsection taoImRior Using the tao_ImR ior command
+@subsection taoImRior Using the tao_imr ior command
 
 First, some background.
 
-For the longest time, there was no way with TAO's Implementation Repository
-to register a server and then start using the client immediately.  The server
-had to be started once just for the purpose of creating an IOR for the client
-to use.  The problem was that it was very difficult to create an IOR without
-running the server.
+For the longest time, there was no way with TAO's Implementation
+Repository to register a server and then start using the client
+immediately.  The server had to be started once just for the purpose
+of creating an IOR for the client to use.  The problem was that it was
+very difficult to create an IOR without running the server.
 
-It would be nice to be able to  generate a valid IOR without requiring the
-program to be run. A valid IOR in this case requires two major things.  First
-it requires the endpoint of the ImR. This is relatively easy to get, since it
-is encoded in the ImR's IOR.  Second it also requires an object key.  At the
-least, this involves both the POA hierarchy and the object name.
+It would be nice to be able to generate a valid IOR without requiring
+the program to be run. A valid IOR in this case requires two major
+things.  First it requires the endpoint of the ImR. This is relatively
+easy to get, since it is encoded in the ImR's IOR.  Second it also
+requires an object key.  At the least, this involves both the POA
+hierarchy and the object name.
 
-So if we knew the POA and object names, then we should be able to create an
-IOR for the server. One possibility would be to have tao_ImR ask for both the
-POA and the object, and then create the POA hierarchy to generate an IOR.
-Doing the generation is this manner (letting the POA create the reference)
-shields us from changes in the IOR generation schemes.  Since we are using
-the same code that the server would use, our IORs would be up to date.
+So if we knew the POA and object names, then we should be able to
+create an IOR for the server. One possibility would be to have tao_imr
+ask for both the POA and the object, and then create the POA hierarchy
+to generate an IOR.  Doing the generation is this manner (letting the
+POA create the reference) shields us from changes in the IOR
+generation schemes.  Since we are using the same code that the server
+would use, our IORs would be up to date.
 
-It ends up there is an easier way to do this.  The Interoperable Naming
-Service is intended to be used in situations where an IOR could be created by
-hand.  Using the same information as above, it is not difficult to take the
-endpoint information from the ImR and attach the POA name.  For example,
-let's say that we are running the ImR on ringil.ece.uci.edu at port 5000.
-The endpoint would be
+It ends up there is an easier way to do this.  The Interoperable
+Naming Service is intended to be used in situations where an IOR could
+be created by hand.  Using the same information as above, it is not
+difficult to take the endpoint information from the ImR and attach the
+POA name.  For example, let's say that we are running the ImR on
+ringil.ece.uci.edu at port 5000.  The endpoint would be
 &quot;corbaloc:iiop:1.2@ringil.ece.uci.edu:5000&quot;.  If we are
 creating an IOR for the nestea server, we'd just need to attach
 &quot;/nestea_server&quot; to the end of the endpoint.  Now we have an
@@ -530,7 +429,7 @@ the Implementation Repository will not have to re-ImR-ify the IORs of every serv
 registered to it each time it starts up. The way to accomplish this is to add<br>
 -ORBEndpoint iiop://(hostname):(portnumber)<br>
 
- to the ImR_Activator's startup command line. The host
+ to the activator's startup command line. The host
 name can be obtained portably in C++ code with the lines<br>
 
   ACE_INET_addr ad;<br>
@@ -562,15 +461,15 @@ persistent ImR is started up.
 /**
 @page ntservice Running as an NT service
 
-The ImplRepo_Service.exe can now also function as a Windows NT
-Service.  The -c option can be used to install and remove the service
-(this requires Administrator access on the machine).
+The tao_imr_locator.exe can function as a Windows NT Service.  The -c
+option can be used to install and remove the service (this requires
+Administrator access on the machine).
 
-@note When using the ImplRepo_Service as a service, it must have all
-of its required ACE/TAO DLL's in the path or in the same directory.
-For example, the run_test.pl copies ImplRepo_Service.exe to the
-ACE_wrappers@\bin directory before using "-c install".
-Alternatively, You can set the usual ACE_ROOT, TAO_ROOT, and PATH environment
+@note When using the locator as a service, it must have all of its
+required ACE/TAO DLL's in the path or in the same directory.  For
+example, the run_test.pl copies tao_imr_locator.exe to the
+ACE_wrappers@\bin directory before using "-c install".  Alternatively,
+You can set the usual ACE_ROOT, TAO_ROOT, and PATH environment
 variables on a system wide basis.
 
 The service can be then started either from the Windows NT "Services"
@@ -581,10 +480,10 @@ Admin Tool or via the "net" program on the command line:
 
 The Implementation Repository supports start and stop but not pause.
 
-When the Activator is installed using ImR_Activator -c install, it is added
-with a dependency on a locator service. If you don't wish to also install
-the locator on the same machine, then you must use the -c install_no_imr
-option instead.
+When the Activator is installed using tao_imr_activator -c install, it
+is added with a dependency on a locator service. If you don't wish to
+also install the locator on the same machine, then you must use the -c
+install_no_imr option instead.
 
 @subsection serviceopts Service Options
 
@@ -593,7 +492,7 @@ the registry under
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TAOIMRActivator\Parameters and
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TAOIMRLocator\Parameters.
 For example:
-ImR_Activator -c install -d 3 -l -m -o activator.ior -t 30 -orbendpoint iiop://:9988 -orbdebuglevel 1
+tao_imr_activator -c install -d 3 -l -m -o activator.ior -t 30 -orbendpoint iiop://:9988 -orbdebuglevel 1
 
 The order of arguments makes no difference, but you must run
 -c remove and then -c install if you want to change the parameters.
@@ -631,35 +530,6 @@ command to create corbaloc IORs.
 NameService was chosen because resolve_initial_references () uses that
 name.  And that allows us to do interesting things with ORBDefaultInitRef
 (as shown in the @ref defaultinitref section).
-
-*/
-
-/**
-@page movefromoldImR Transition from IMR in TAO 1.2.2
-
-
-While the previous version of ImR has a single focal point (ImplRepo_Service)
-for performing all the jobs including receiving various requests,
-maintaining the information about all the servers registered with it
-and actually activating the servers as needed, in the new IMR, we
-distribute the work load between two entities, ImplRepo_Service and
-ImR_Activator, to help achieve the goal of better throughput and load
-balance.
-
-<b>.</b> The added step that you would have to now do is run the
-ImR_Activator. You can just run one instance of it to get the same
-behavior as you were getting before.
-
-If you run the ImplRepo_Service in multicast mode, the
-ImR_Activator will be able to get access to it via
-multicast. Otherwise, you would have to use one of the reference
-initializing methods to give the ImR_Activator access to the
-ImplRepo_Service.
-
-<b>.</b> As I mentioned before, the previous commandline parameters
-that can be passed to ImplRepoService for the repository purposes will
-now be passed to the ImR_Activator since that is the one that is
-dealing with the database.
 
 */
 
