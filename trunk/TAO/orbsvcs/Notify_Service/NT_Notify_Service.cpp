@@ -9,6 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/ARGV.h"
 #include "ace/Reactor.h"
+#include "orbsvcs/Log_Macros.h"
 
 #define REGISTRY_KEY_ROOT HKEY_LOCAL_MACHINE
 #define TAO_REGISTRY_SUBKEY ACE_TEXT ("SOFTWARE\\ACE\\TAO")
@@ -52,6 +53,121 @@ TAO_NT_Notify_Service::handle_control (DWORD control_code)
 int
 TAO_NT_Notify_Service::handle_exception (ACE_HANDLE)
 {
+  return 0;
+}
+
+void
+TAO_NT_Notify_Service::report_error (const ACE_TCHAR *format,
+                                     const ACE_TCHAR *val,
+                                     LONG result)
+{
+  ACE_TCHAR msg[100];
+  ACE_TEXT_FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
+                          0,
+                          result,
+                          LANG_SYSTEM_DEFAULT,
+                          msg,
+                          100,0);
+  ORBSVCS_DEBUG ((LM_DEBUG, format, val, msg));
+}
+
+void
+TAO_NT_Notify_Service::arg_manip (char *args, DWORD arglen, bool query)
+{
+  HKEY hkey = 0;
+
+  // It looks in the NT Registry under
+  // \\HKEY_LOCAL_MACHINE\SOFTWARE\ACE\TAO for the value of
+  // "TaoNotifyServiceOptions" for any Notify Service options such as
+  // "-ORBListenEndpoints".
+
+  // Get/Set Notify Service options from the NT Registry.
+
+  LONG result = ACE_TEXT_RegOpenKeyEx (REGISTRY_KEY_ROOT,
+                                       TAO_REGISTRY_SUBKEY,
+                                       0,
+                                       query ? KEY_READ : KEY_WRITE,
+                                       &hkey);
+
+  DWORD type = REG_EXPAND_SZ;
+
+  if (query)
+    {
+      *args = '\0';
+      if (result == ERROR_SUCCESS)
+        {
+          result = ACE_TEXT_RegQueryValueEx (hkey,
+                                             TAO_NOTIFY_SERVICE_OPTS_NAME,
+                                             0,
+                                             &type,
+                                             (BYTE *)args,
+                                             &arglen);
+          if (result != ERROR_SUCCESS)
+            {
+              this->report_error (ACE_TEXT ("Could not query %s, %s\n"),
+                                  TAO_NOTIFY_SERVICE_OPTS_NAME, result);
+            }
+        }
+      else
+        {
+          this->report_error (ACE_TEXT ("No key for %s, %s\n"),
+                              TAO_REGISTRY_SUBKEY, result);
+        }
+    }
+  else
+    {
+      if (result != ERROR_SUCCESS)
+        {
+          result = ACE_TEXT_RegCreateKeyEx (REGISTRY_KEY_ROOT,
+                                            TAO_REGISTRY_SUBKEY,
+                                            0,
+                                            0,
+                                            0,
+                                            KEY_WRITE,
+                                            0,
+                                            &hkey,
+                                            0);
+        }
+      DWORD bufSize = static_cast<DWORD>(ACE_OS::strlen (args) + 1);
+      if (result == ERROR_SUCCESS)
+        {
+          result = ACE_TEXT_RegSetValueEx (hkey,
+                                           TAO_NOTIFY_SERVICE_OPTS_NAME,
+                                           0,
+                                           type,
+                                           (BYTE *)args,
+                                           bufSize);
+          if (result != ERROR_SUCCESS)
+            {
+               this->report_error (ACE_TEXT ("Could not set %s, %s\n"),
+                                   TAO_NOTIFY_SERVICE_OPTS_NAME, result);
+            }
+        }
+      else
+        {
+          this->report_error (ACE_TEXT ("Could not create key %s, %s\n"),
+                              TAO_REGISTRY_SUBKEY, result);
+        }
+    }
+
+  RegCloseKey (hkey);
+
+}
+
+int
+TAO_NT_Notify_Service::set_args (const ACE_TCHAR *args)
+{
+  char argbuf[ACE_DEFAULT_ARGV_BUFSIZ];
+  if (args == 0)
+    {
+      this->arg_manip (argbuf, ACE_DEFAULT_ARGV_BUFSIZ, true);
+      ACE_OS::printf ("%s\n", argbuf);
+    }
+  else
+    {
+      ACE_OS::strcpy (argbuf, ACE_TEXT_ALWAYS_CHAR (args));
+      this->arg_manip (argbuf, 0, false);
+    }
   return 0;
 }
 
@@ -139,7 +255,7 @@ TAO_NT_Notify_Service::svc (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("TAO NT Notify Service");
+      ex._tao_print_exception (ACE_TEXT ("TAO NT Notify Service"));
       return -1;
     }
 

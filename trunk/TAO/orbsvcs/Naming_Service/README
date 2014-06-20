@@ -12,7 +12,7 @@ The following describes how to run the TAO Naming Service.
 
 1. Syntax
 
-        % Naming_Service [-ORBNameServicePort nsport]
+        % tao_cosnaming  [-ORBNameServicePort nsport]
                          [-b base_address]
                          [-d ]
                          [-f persistence_file_name]
@@ -189,7 +189,7 @@ The following describes how to run the TAO Naming Service.
 
                 Example (Unix, same host):
 
-                        % $TAO_ROOT/orbsvcs/Naming_Service/Naming_Service -o ior_file
+                        % $TAO_ROOT/orbsvcs/Naming_Service/tao_cosnaming -o ior_file
                         % my_client -ORBInitRef NameService=file://ior_file
 
                         On the first line, we start the Naming
@@ -259,20 +259,12 @@ The following describes how to run the TAO Naming Service.
 
 How to use the NT_Naming_Service
 ================================
-
-To set the options for the TAO Naming Service, go to the Services icon
-in the Settings group under the start menu (start menu -> settings ->
-services).  There, highlight the NT_Naming_Service, which is the name
-used by the Naming Service when it is registered.  After it's
-highlighted, you should see at the bottom of the dialog box an area to
-specify options.  Just enter the options you wish in that edit box and
-everything should just work.  However, some options, such as
--ORBDebugLevel, won't work since an NT service can't write output to
-standard out.
+A command line interface is provided to install, configure, start,
+and stop the Naming service as a Windows service.
 
 1. Syntax
 
-        % NT_Naming_Server [-i value]
+        % tao_nt_cosnaming [-i [n]]
                            [-c [args]]
                            [-r]
                            [-s]
@@ -282,7 +274,7 @@ standard out.
 
 2. Optional Command-line Arguments
 
-        -i value
+        -i [n]
                 Install this program as an NT service, with specified startup mode
 
         -c [args]
@@ -296,7 +288,7 @@ standard out.
         -k
                 Kill the service
 
-        -t value
+        -t n
                 Set startup mode for an existing service
 
         -d
@@ -306,11 +298,13 @@ standard out.
 
         To see different stages of an NT service application, you have
         to run the program several times, with different options.
-        Please note: run with only one option at a time.
+        Please note: run with only one option at a time. Only the
+        Administrator can run commands that modify state such as the -i
+        or -c options.
 
         a. First, you must initialize the service in the NT SCM
-           database.  Run NT_Naming_Service with -in, where n is one of
-           the following startup options:
+           database.  Run tao_nt_cosnaming with -i [n], where n is a
+           number from 1 to 4, corresponding to these startup options:
 
            // Start Type (from WinNT.h)
            //
@@ -320,31 +314,37 @@ standard out.
            #define SERVICE_DISABLED        0x00000004
 
            If only -i is specified, SERVICE_DEMAND_START is default option.
+           This option may only be run as Administrator.
 
-        b. Now you are ready to run the actual service. Run
-           NT_Naming_Service again, this time with -s option. If the
-           service starts successfully, it will ring the system
-           bell every second or so until the service is stopped.
+        b. For System or Auto start modes, or even Demand start and using the
+           -s option to start, any command line options, such as endpoint
+           specification or IOR publication, must be stored in the Windows
+           registry. Use tao_nt_cosnaming -c with no additional arguments to
+           see the current command line setting. Use tao_nt_cosnaming -c "args"
+           to provide a new command line for the registered name service. Be
+           sure to quote the args string. For example:
 
-        c. To stop service execution, run NT_Naming_Service with the
-           -k option.
+           tao_nt_cosnaming -c "-ORBListenEndpoints iiop://%computername%:2809"
 
-        d. To remove the service from the Service Control Manager
-           database, run NT_Naming_Service with -r.
+           will yield:
+           tao_nt_cosnaming -c
+           -ORBListenEndpoints iiop://VIRTWIND:2809
+
+           Notice the environment variable used in the argument string was
+           expanded.
+
+        c. Now you are ready to run the actual service. Run
+           tao_nt_cosnaming -s.
+
+        d. To stop service execution, run tao_nt_cosnaming -k.
+
+        c. To remove the service from the Service Control Manager
+           database, run tao_nt_cosnaming -r.
 
         In addition, once you have initialized this service (by using
         the -i option) you can change its startup type to one of the
-        other values above.  To do this, run NT_Naming_Service with
-        -tn option. n is as explained above for -i.
-
-        Use the -c option to supply command line arguments to the service, or
-        to see what command line is currently set. Note that the arg parameter
-        must be quoted. Use of environment variables, such as %TAO_ROOT% or
-        %computername% is allowed in the arg parameter. Any existing arg value
-        is overwritten, and an empty quoted string will clear the argument list.
-        The current setting is printed to stdout when -c is used with no arg
-        parameter. Only Administrator can set args, but any user is able to
-        retrieve the setting.
+        other values above.  To do this, run tao_nt_cosnaming -t n, where
+        n is a number corresponding to one of the startup modes listed above.
 
         In order to debug the service's execution itself, use the -d
         option.
@@ -365,7 +365,7 @@ Check to see if you have multicasting enabled. In the case of Linux
 you will need to check the configuration of your kernel. RedHat users
 have multicasting enabled by default. Once you are sure that you have
 multicast enabled then move to the next step. Alternative is to start
-Naming_Service with multicast disabled.
+tao_cosnaming with multicast disabled.
 
 
 ---------------------------------------
@@ -423,4 +423,4 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 127.0.0.0       *               255.0.0.0       U     0      0        0 lo
 224.0.0.0       *               240.0.0.0       U     0      0        0 eth0
 
-At this point you should be able to run Naming_Service. Have fun!
+At this point you should be able to run tao_cosnaming. Have fun!
