@@ -9,7 +9,7 @@ Required libraries (in addition to ACE and TAO):
         ACE_ROOT/TAO/tao/IORTable/TAO_IORTable.(lib-ext)
         ACE_ROOT/TAO/orbsvcs/orbsvcs/TAO_Svc_Utils.(lib-ext)
 
-Executable name is IFR_Service.
+Executable name is tao_ifr.
 
 Command line options are:
 

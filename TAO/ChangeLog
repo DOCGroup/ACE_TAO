@@ -1,3 +1,17 @@
+Fri Jun 20 16:47:17 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/IFR_Service/README:
+        * orbsvcs/ImplRepo_Service/README:
+        * orbsvcs/Naming_Service/README:
+        * orbsvcs/Notify_Service/README:
+          update executable names and other content to be current.
+
+        * orbsvcs/Notify_Service/NT_Notify_Server.cpp:
+        * orbsvcs/Notify_Service/NT_Notify_Service.h:
+        * orbsvcs/Notify_Service/NT_Notify_Service.cpp:
+          Added command line interface for populating the service command line
+          arguments without the need to invoke regedit.
+
 Wed Jun 18 20:33:36 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
