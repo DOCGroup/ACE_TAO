@@ -1,0 +1,6 @@
+// $Id$
+
+This test is build with idlflag -Sp, to disable Thru_poa collocation.
+Running this test with -ORBCollocationStrategy Thru_poa should result in an Exception.
+
+

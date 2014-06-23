@@ -1,0 +1,165 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+  <!ENTITY applname "tao_nslist">
+  <!ENTITY man_tao_orb_options "<citerefentry><refentrytitle>TAO_ORB_Options</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY man_tao_cosnaming "<citerefentry><refentrytitle>tao_cosnaming</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY tao_cosnaming "<application>tao_cosnaming</application>">
+  <!ENTITY man_tao_nsdel "<citerefentry><refentrytitle>tao_nsdel</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY man_tao_nsadd "<citerefentry><refentrytitle>tao_nsadd</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY seealso "&man_tao_orb_options;, &man_tao_cosnaming;, &man_tao_nsadd;, &man_tao_nsdel;">
+]>
+<!-- This file was written by Marek Brudka <mbrudka@aster.pl>   -->
+<!-- on September 2010 for the Debian GNU/Linux operating system.             -->
+<!-- It is mainly a plain text to DocBook conversion of the USAGE file. -->
+
+<refentry>
+  <refmeta>
+    <refentrytitle>TAO_NSLIST</refentrytitle>
+    <manvolnum>1</manvolnum>
+  </refmeta>
+  <refnamediv>
+    <refname>&applname;</refname>
+    <refpurpose>Naming Service listing utility.</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <title>SYNOPSIS</title>
+    <cmdsynopsis>
+      <command>&applname;</command>
+      <group><arg>-ORBoptions</arg></group>
+      <arg rep="repeat"><replaceable>OPTION</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+  <refsect1>
+    <title>DESCRIPTION</title>
+    <para>
+      &applname; lists the current entries in the NamingService; in a nicely formatted manner.
+    </para>
+    <para>
+      When invoked without arguments &applname; displays the contents of the default NamingService,
+      including the protocol and endpoint of each object reference.
+    </para>    
+    <para>
+     &applname; requires a running NamingService.
+    </para>
+  </refsect1>
+  <refsect1>
+    <title>OPTIONS</title>
+      <variablelist>
+      <varlistentry>
+	<term><parameter>-ORBoptions</parameter></term>
+	<listitem>
+	  <para>
+	    The program follows the usual TAO ORB command line syntax. See
+	    &man_tao_orb_options;.
+	  </para>
+      </listitem>
+      </varlistentry>
+      <varlistentry>
+	<term><parameter>--nsior</parameter></term>
+	<listitem>
+	  <para>
+	  Display the naming service IOR and exit. This can be used to locate the TAO NameService for non-TAO applications and excludes using any other options.
+	  </para>	
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--ns</parameter> <replaceable>IOR</replaceable> </term>
+	<listitem>
+	  <para>	  
+	  Use given <replaceable>IOR</replaceable> for NamingService.
+	  </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--ior</parameter></term>
+	<listitem>
+	  <para>
+	  Print the contents of the NamingService, including the IOR of each
+	  reference entry and the IOR of the NameService itself.
+         </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--ctxior</parameter></term>
+	<listitem>
+	  <para>
+	  Print additionally the IORs of any subcontexts found within NamingService.
+         </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--tree</parameter> <replaceable>character</replaceable></term>
+	<listitem>
+	  <para>
+	  Print tree of object registered in NamingService using <replaceable>character</replaceable> for drawing tramlines, defaults to "|" .
+         </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--node</parameter> <replaceable>character</replaceable></term>
+	<listitem>
+	  <para>
+	  Print tree of object registered in NamingService using <replaceable>character</replaceable> for drawing nodes, defaults to "+" .
+	  </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--noloops</parameter></term>
+	<listitem>
+	  <para>
+	  Inhibit drawing of naming context loops.
+         </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--name</parameter> <replaceable>name</replaceable></term>
+	<listitem>
+	  <para>
+	  Lists sub-set of <replaceable>name</replaceable>, defaults to root.
+         </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--ctxsep</parameter> <replaceable>character</replaceable></term>
+	<listitem>
+	  <para>
+	  Set context separation <replaceable>character</replaceable>, defaults to "/".
+         </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--kindsep</parameter> <replaceable>character</replaceable></term>
+	<listitem>
+	  <para>
+	  Set ID/Kind separation <replaceable>character</replaceable>, defaults to ".".
+         </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--max</parameter> <replaceable>number</replaceable></term>
+	<listitem>
+	  <para>
+	  Set limit of displayed sub-context depth to <replaceable>number</replaceable>.
+         </para>
+	</listitem>
+	</varlistentry>
+	<varlistentry>
+	<term><parameter>--rtt</parameter> <replaceable>seconds</replaceable></term>
+	<listitem>
+	  <para>
+	  Set the relative round trip timeout policy to <replaceable>seconds</replaceable>.
+         </para>
+	</listitem>
+	</varlistentry>
+
+      </variablelist>
+  </refsect1>
+  <refsect1>
+    <title>SEE ALSO</title>
+    <para>&seealso;</para>
+  </refsect1>
+  <refsect1>
+    <title>AUTHOR</title>
+    <para>Thomas Lockhart<email>&lt;Thomas.Lockhart@jpl.nasa.gov&gt;</email> </para>
+    <para>Simon Massey <email>&lt;sma@prismtech.com&gt;</email> </para>
+  </refsect1>
+</refentry>

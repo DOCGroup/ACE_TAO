@@ -1,0 +1,11 @@
+// $Id$
+
+interface test
+{
+  /// Return a simple string
+  string get_string ();
+
+  void method ();
+  // A twoway operation.
+
+};

@@ -1,0 +1,14 @@
+// -*- MPC -*-
+// $Id$
+
+project: ace_x11 {
+  // this feature by default is set to 1 as projects dependent on Xt has their own features
+  requires += xt
+
+  // Depends on configuration from include/makeinclude/platform_*.GNU
+  verbatim(gnuace,local) {
+	CPPFLAGS += $(PLATFORM_XT_CPPFLAGS) $(PLATFORM_X11_CPPFLAGS)
+	LIBS += $(PLATFORM_XT_LIBS) $(PLATFORM_X11_LIBS)
+	LDFLAGS += $(PLATFORM_XT_LDFLAGS) $(PLATFORM_X11_LDFLAGS)
+  }
+}

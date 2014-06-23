@@ -1,0 +1,12 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Exe): taoserver {
+  exename = test
+  Source_Files {
+    main.cpp
+  }
+  IDL_Files {
+  }
+}
+

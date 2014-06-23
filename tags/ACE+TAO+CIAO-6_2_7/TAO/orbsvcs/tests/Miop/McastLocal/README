@@ -1,0 +1,32 @@
+/**
+$Id$
+
+@page McastLocal Test README File
+
+This test is a copy of the McastHello test but modified so that the
+servers are listening only on the loopback interface (via the
+  "-ORBListenerInterface *=127.0.0.1" in the svc_server1.conf for server1
+and the
+  "-ORBListenerInterface CopyPreferredInterfaces" in the svc_server2.conf
+and the server2's otherwise redundant command line
+  "-ORBPreferredInterface *=127.0.0.1" orb_init parameter).
+The client has also been modified to send the broadcast out on the
+loopback interface (via its
+  "-ORBPreferredInterface *=127.0.0.1" orb_init parameter).
+
+This is testing that these configuartion options are correctly working
+for MIOP.
+***********************************
+Note
+This test currently fails on Solaris (at least ultra10)
+as loopback multicasting seems to have a hardcoded (and unchangeable) SndSock
+size of 0. It then throws away all data that is being sent by the client,
+therefore the servers will timeout as they won't receive any message.
+
+Some other systems (AIX and MacOS) also have problems with loopback
+multicasting issuing errno such as "Network/address unreachable" for each
+send.
+
+This test should be disabled on such systems. There is a !NO_LOOPBACK_MCAST
+config item in TAO/bin/tao_other_tests.lst to cater for this.
+**/

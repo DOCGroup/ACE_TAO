@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef CONNECTOR_INST_CONN_IDL
+#define CONNECTOR_INST_CONN_IDL
+
+#include <Components.idl>
+#include "connector_conn.idl"
+
+#pragma ciao lem "connector_inst_connE.idl"
+
+struct Baz
+{
+  long a;
+};
+
+typedef sequence<Baz> BazSeq;
+
+module Two::Foo<Baz,BazSeq> MyConnInst;
+
+#endif
+

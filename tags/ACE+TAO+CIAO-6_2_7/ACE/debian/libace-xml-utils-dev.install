@@ -1,0 +1,3 @@
+usr/lib/libACE_XML_Utils.so
+usr/include/ace/XML_Utils/*
+usr/lib/pkgconfig/ACE_XML_Utils.pc

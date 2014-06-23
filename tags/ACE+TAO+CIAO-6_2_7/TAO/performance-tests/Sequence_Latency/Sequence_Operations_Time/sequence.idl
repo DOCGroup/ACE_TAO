@@ -1,0 +1,34 @@
+// $Id$
+
+#include "tao/StringSeq.pidl"
+
+struct Str_Sequences
+{
+  CORBA::StringSeq first_str;
+  CORBA::StringSeq second_str;
+};
+
+typedef sequence<Str_Sequences> StrSeqSeq;
+
+struct Sequence_Str_Sequences
+{
+  StrSeqSeq seq_str_seq;
+
+};
+
+typedef sequence<Sequence_Str_Sequences> Redundant_Sequences;
+
+struct Biglist_Struct
+{
+  Str_Sequences        strs;
+  Redundant_Sequences  red_seqs;
+};
+
+typedef sequence<Biglist_Struct> BigListSeq;
+
+struct Seq_Structs
+{
+  BigListSeq seq;
+};
+
+

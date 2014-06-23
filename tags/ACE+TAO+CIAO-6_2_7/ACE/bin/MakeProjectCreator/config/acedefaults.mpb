@@ -1,0 +1,50 @@
+// -*- MPC -*-
+// $Id$
+
+project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode, ace_idl_dependencies {
+  staticflags += ACE_AS_STATIC_LIBS
+  includes    += $(ACE_ROOT)
+  libpaths    += $(ACE_ROOT)/lib
+
+  // Support the alternative Borland Make project type
+  specific(bmake) {
+    unicode_flags += -DACE_USES_WCHAR
+    macros += MPC_LIB_MODIFIER=\\"$(LIBMODIFIER)$(ULIBMODIFIER)\\"
+    debug_macros += ACE_NO_INLINE=1
+  }
+
+  specific(prop:microsoft) {
+    macro_for_lib_modifier=1
+  }
+
+  specific(prop:windows) {
+    lit_libs += iphlpapi
+  }
+
+  specific(cdt6) {
+    win32::platform_libs += ws2_32 mswsock netapi32
+    release::macros += ACE_NDEBUG ACE_USE_RCSID=0
+  }
+
+}
+
+feature(ace_inline) {
+  specific(cdt6,cdt7) {
+    macros += __ACE_INLINE__
+  }
+}
+
+feature(!ace_inline) {
+  specific(cdt6,cdt7) {
+    macros += ACE_NO_INLINE
+  }
+}
+
+feature(!threads) {
+  specific(cdt6,cdt7) {
+    macros += ACE_MT_SAFE=0
+    // and without threads we must remove support for AIO.
+    macros -= ACE_HAS_AIO_CALLS
+    platform_libs -= rt
+  }
+}

@@ -1,0 +1,25 @@
+// $Id$
+
+/**
+ * @file Hello_Base.idl
+ * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
+ */
+
+#ifndef HELLO_BASE_IDL
+#define HELLO_BASE_IDL
+
+#pragma ndds typesupport "Base/Hello_BaseSupport.h"
+#pragma opendds typesupport "Base/Hello_BaseTypeSupportImpl.h"
+
+#pragma DCPS_DATA_TYPE "DDSHello"
+
+struct DDSHello {
+  string hello;
+  short iterator;
+};
+
+#if defined DDS4CCM_NEEDS_SEQUENCES_DEFINED
+typedef sequence<DDSHello> DDSHelloSeq;
+#endif
+
+#endif

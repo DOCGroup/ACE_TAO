@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef INTERRETURN_T_SENDER_IDL
+#define INTERRETURN_T_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/InterReturnT.idl"
+
+#pragma ciao ami4ccm receptacle "InterReturnT::Sender::run_my_foo"
+
+module InterReturnT
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses MyFoo run_my_foo;
+  };
+};
+
+#endif

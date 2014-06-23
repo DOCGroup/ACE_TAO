@@ -1,0 +1,9 @@
+Document: libkokyu-intro
+Title: Kokyu, middleware framework for flexible scheduling and dispatching
+Author: Douglas C. Schmidt and his research group
+Abstract: An introduction to Kokyu: what it is, use cases, configuration, usage
+Section: Programming/C++
+
+Format: html
+Index: /usr/share/doc/libkokyu-dev/docs/Kokyu.html
+Files: /usr/share/doc/libkokyu-dev/docs/Kokyu.html

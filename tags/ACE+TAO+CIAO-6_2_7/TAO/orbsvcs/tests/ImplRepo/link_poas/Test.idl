@@ -1,0 +1,6 @@
+// $Id$
+
+interface Test
+{
+  long server_pid ();
+};

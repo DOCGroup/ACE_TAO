@@ -1,0 +1,1259 @@
+Fri Aug 16 08:56:17 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.1 released.
+
+Mon Aug  12 09:48:27 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        *  connectors/dds4ccm/examples/ShapesContr/Base/Shapes_Base.mpc:
+        Remove dds4ccm from svnt
+        *  connectors/dds4ccm/examples/ShapesContr/ControllerR/Shapes_ControllerR_exec.cpp:
+        Delete ticker
+
+Fri Aug  9 16:57:32 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DAnCE/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
+          Use ACE_HAS_SCHED_GETAFFINITY instead of checking the
+          linux kernel version here
+
+Fri Aug  9 08:28:27 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+          Further extensions, test whether the default value of all
+          numeric fields works when they just use <value/> in the cdp
+
+Wed Aug  7 09:340:27 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors/USER_QOS_PROFILES.xml:
+        Qos file, needed if not using OPEN DDS .
+
+Tue Aug  6 08:00:27 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller_exec.cpp:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller_exec.h:
+        Missing files for test.
+
+Mon Aug  5 10:20:27 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        *  connectors/dds4ccm/examples/ShapesContr:
+        *  connectors/dds4ccm/examples/ShapesContr/Connector:
+        *  connectors/dds4ccm/examples/ShapesContr/Connector/Shapes_Connector.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Connector/Shapes_Connector.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/Base:
+        *  connectors/dds4ccm/examples/ShapesContr/Base/Shapes_Contr_Base.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/Base/Shapes_Base.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Base/Shapes_Base.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/README:
+        *  connectors/dds4ccm/examples/ShapesContr/Sender:
+        *  connectors/dds4ccm/examples/ShapesContr/Sender/Shapes_Sender_exec.h:
+        *  connectors/dds4ccm/examples/ShapesContr/Sender/Shapes_Sender.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Sender/Shapes_Sender_exec.cpp:
+        *  connectors/dds4ccm/examples/ShapesContr/Sender/Shapes_Sender.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors:
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors/plan.cdp:
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors/plan_nopub.cdp:
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors/plan_nopub.xml:
+        *  connectors/dds4ccm/examples/ShapesContr/descriptors/run_test.pl:
+        *  connectors/dds4ccm/examples/ShapesContr/ControllerR:
+        *  connectors/dds4ccm/examples/ShapesContr/ControllerR/Shapes_ControllerR.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/ControllerR/Shapes_ControllerR_exec.cpp:
+        *  connectors/dds4ccm/examples/ShapesContr/ontrollerR/Shapes_ControllerR.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/ControllerR/Shapes_ControllerR_exec.h:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller_exec.cpp:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/Controller/Shapes_Controller_exec.h:
+        *  connectors/dds4ccm/examples/ShapesContr/Receiver:
+        *  connectors/dds4ccm/examples/ShapesContr/Receiver/Shapes_Receiver_exec.h:
+        *  connectors/dds4ccm/examples/ShapesContr/Receiver/Shapes_Receiver.mpc:
+        *  connectors/dds4ccm/examples/ShapesContr/Receiver/Shapes_Receiver_exec.cpp:
+        *  connectors/dds4ccm/examples/ShapesContr/Receiver/Shapes_Receiver.idl:
+        *  connectors/dds4ccm/examples/ShapesContr/README:
+        Test where a controller componet starts and stops publishing of shapes and an
+        other controller component aggregates the received samples and makes them available for the outside world.
+
+Mon Aug  5 06:13:27 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fixed coverity warning
+
+Mon Aug  5 06:08:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fixed warning
+
+Sat Aug  3 19:01:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Another fix for compile errors related to long doubles.
+
+Fri Aug  2 06:25:59 UTC 2013  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fixed compile errors related to long doubles.
+
+Thu Aug  1 11:49:07 UTC 2013  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+          Added extended tests for array attributes. Expanded the
+          Bug_3769_Regression to test this. Added some more attributes
+          to test more cases.
+          Log:
+              commit d76669ffd4319f509fb70a23357bc625bd439394
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Thu Aug 1 13:03:49 2013 +0200
+
+                        Removed commented out code (issue #1551)
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAlias_Handler.cpp:
+
+              commit c48685af6b186881a3dd5c04e3f81bebc594a3c6
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Thu Aug 1 11:57:18 2013 +0200
+
+                  Changes after review
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                        Fixed some faulty error logs.
+
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                        Removed commented out code.
+
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+                        Fixed logging.
+
+              commit 332899620e9b6eaf272f69eff58daf9d8efbd54f
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Thu Aug 1 11:03:04 2013 +0200
+
+                  Removed commented out code
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+
+              commit 9ee6750d39e778a291333c09ec5520add22ab102
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Thu Aug 1 10:02:20 2013 +0200
+
+                  Fixed compile issues on windows by disabling the long double. Added
+                  comments.
+                  (refs #1551)
+
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+
+              commit 075179c1cdf06b39d53bddba009a32285e3bf7ad
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Thu Aug 1 09:35:20 2013 +0200
+
+                  Documented why chars and long doubles are not supported.
+                  Removed defaults in arguments of check_array.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+
+              commit 1c90d97e9afceeebad6a71fc5c879cf2d4839f28
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Thu Aug 1 09:20:26 2013 +0200
+
+                  Removed TODO list.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+
+              commit c781f16d4730a6f5a493fc7df52786d5ffb03f14
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Wed Jul 31 10:16:55 2013 +0200
+
+                  Layout changes.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+
+              commit 72a9515e4c3e3ee403283711eb3f01cb61299caf
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Wed Jul 31 10:02:21 2013 +0200
+
+                  Added a test for sequences in arrays.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit a6e12df7fe89528a5b168e820590488b053dc062
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Wed Jul 31 09:32:33 2013 +0200
+
+                  Added a sequence of arrays to test.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 6422409ab6f5ec56e998b1a570aee3234a5edafd
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Wed Jul 31 08:44:22 2013 +0200
+
+                  Disabled long doubles since a longdouble is defined in the xsd as double.
+                  We are then creating a long double initialized from a regular
+                  double. This is a very tricky conversion and doesn't work in
+                  combination with certain (versions of) compilers.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                        Removed long double checks
+
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                        Don't assign the type code in case a long double. Added comments
+                        above.
+
+              commit d539f68dc768da7032f08a9f3ae2537bd1fabe1a
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 20:36:49 2013 +0200
+
+                  Updated todo list.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+
+              commit 4160bc932f390e837244eb800dea190f272bcb85
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 20:35:55 2013 +0200
+
+                  Added a plain boolean attribute to test.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit a9b2197ca6320b481484f69f0abeb12f474acddf
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 20:24:31 2013 +0200
+
+                  Added an octet and a long double as attribute to the Foo component.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 2d59676cd472ab12bf14ac0ad17e75d615d46d84
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 30 20:09:35 2013 +0200
+
+                        Added some more todo
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+
+              commit e8f011ebb02e44895bc158525d6aef13cec64a24
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 16:37:00 2013 +0200
+
+                  Added checks on the array of octets.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+
+              commit 22970ae42a26d7d0df31e89bf080aa6f83853adb
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 16:26:48 2013 +0200
+
+                  Enabled an array of octets.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 5345db6e8dfb1acfcaf8082e1ce4b58b48ce8c7d
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 30 16:20:42 2013 +0200
+
+                        Cleanup octet/longdouble support and logging improvements
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAlias_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+
+              commit 6e23dde3fa5a79a47e9d20c80bec18b56adba5a9
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 30 15:59:42 2013 +0200
+
+                        Const fix
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+
+              commit 6769ad6d4e5adc000c84e628ff7783f9b9cf2d2d
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 15:58:29 2013 +0200
+
+                  References issue #1551
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                        Fixed compile issue
+
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                        Enabled long double test again.
+
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+                        Work in progress: Hunting the long double bug...
+
+              commit cacb9ef80d659eb1c925517d1e4a6f5d939daa45
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 14:04:24 2013 +0200
+
+                  Added an array of booleans.
+                  Added char and wstring arrays although these are not supported.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit ba45f218640e65e3c2f6ad23e9bbb06b0ba62a8e
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 13:47:44 2013 +0200
+
+                  References issue #1551
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                        Added float and longdouble arrays. Long double arrays do appear to
+                        have errors.
+
+                      * DAnCE/tools/Config_Handlers/Any_Handler.cpp:
+                        Removed newline character in exception logging.
+
+              commit 804983d47b0061dd55dec0b5d5e254c2a0d40903
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 12:56:34 2013 +0200
+
+                  Added an array of doubles. Skipped an array of chars since this is
+                  not supported.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                        Also layout changes
+
+              commit 3938d99a1a3705e99b888b192a189464f940d032
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 11:11:47 2013 +0200
+
+                  Added (unsigned) short arrays
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit d563ee6d2dcb4b8b843ee11b20df21a7bf40c035
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 11:03:04 2013 +0200
+
+                  Added a test for an array with unsigned long long values.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 17dfa9a0d26e48f39d9e41cce5644e05ef01da90
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 10:48:33 2013 +0200
+
+                  Added a long long array test.
+                  Also added a template class which check whether the content
+                  of the arrays are correct. This'll prevent multiple times the
+                  same code.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 92c6bf4f6d01c70b7b39df632312fc89133db6ef
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 09:55:28 2013 +0200
+
+                  Added a ulong array as test. Prepared the other basic types in arrays.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 8f76f00815805c094310085928bd2b61f4a132fa
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 08:47:56 2013 +0200
+
+                  Layout changes.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+
+              commit 756c6c355b7c89ba1b6cefcc91d7b5ee3d738748
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Tue Jul 30 08:37:30 2013 +0200
+
+                  Added a sequence in sequence test.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 6831e1364639cf497f81c49b9eb33f51b0ea1c20
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 16:51:29 2013 +0200
+
+                  References issue #1551
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                        Added an array in array tests.
+
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+                        Fixed issues regarding array in arrays and sequences in arrays.
+
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynSequence_Handler.cpp:
+                        Fixed issues regarding sequences in sequences and arrays. Need to add
+                        an extra test for this.
+
+              commit 99c188e25d6ecaecbd4ce57a22cb457adce5c627
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 14:31:24 2013 +0200
+
+                  Added test for a struct, containing one member which is an array of structs.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 8d21f4afe29e0f5d23957614ed74b959cbd3a666
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 13:46:34 2013 +0200
+
+                  Enabled the check on an array of bar structs. Prepared the next
+                  check as well.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 66b903a90ed5166633cd57729796cd2b72a8c76c
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Mon Jul 29 13:22:18 2013 +0200
+
+                        Remove commented out line
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+
+              commit 21432ee084eae5293a6799fe98091966ba789a14
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 13:15:02 2013 +0200
+
+                  Renamed error_ postfix to success_.
+                  (refs #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+
+              commit 34e1be7229a58cccea99581d7657100cea1196ba
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 13:00:32 2013 +0200
+
+                  References issue #1551
+
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+                        String array contains 3 instead of 5 entries.
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                        Improved naming of booleans by adding 'error_'.
+
+              commit 47985c348d9fc416c4e0406b8c259048c10e624b
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 11:52:57 2013 +0200
+
+                  Added test for arrays of strings.
+                  (issue #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit c17d5178d0c5095b2476043bc5d8014e05d55bb0
+              Author: Marcel Smit <msmit@remedy.nl>
+              Date:   Mon Jul 29 11:31:54 2013 +0200
+
+                  Improved error logging in ccm_activate.
+                  (issue #1551)
+
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+
+              commit 8241a2b161d6e0b5d56b08aaf3626f46f78e4f98
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 13:44:39 2013 +0200
+
+                        Fixed problems introduced by regeneration related to string
+                        unicode comparison and wrong namespace
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.cpp:
+
+              commit 87b32e82230e087aae351d59e430b41aa31f86d1
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 12:21:07 2013 +0200
+
+                        Removed comments from tao_idl
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+
+              commit 4898ab76fa271668e935891b5ae7bd7f7310a6cf
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 11:49:41 2013 +0200
+
+                        Test long array, commented out the other array, test needs major
+                        extensions
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+
+              commit 17a8a51ff550444f7e6d1646f0e94db31265ddb5
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 11:37:41 2013 +0200
+
+                        Added long array to the cdp
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit 26f5dccb4aec965f6b3a7bdfd3afaa004f20cd08
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 11:37:29 2013 +0200
+
+                        Extended IDL
+                      * CIAO/tests/Bug_3769_Regression/Foo.idl:
+
+              commit aa8d6195c6d2359a09c855d979432d911910c4c1
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 11:37:15 2013 +0200
+
+                        Fixed typecode handling
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+
+              commit 15ca519cf1bd8277e518fc846b58aec44cb5e84b
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Wed Jul 24 11:21:21 2013 +0200
+
+                        First try to add an array to the cdp
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+
+              commit e80ae72952d7253519ccb17873de1e15da023aa0
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 21:21:43 2013 +0200
+
+                        Added length to array definition
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.cpp:
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.hpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+
+              commit 2a439e37fe257e48b6471e5c8287cd79d46c9b40
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 21:16:55 2013 +0200
+
+                        Implemented some more array handling
+                      * DAnCE/docs/schema/Basic_Deployment_Data.xsd:
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.cpp:
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.hpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.h:
+
+              commit f44210381907f568d4295beb9cbf0a75743375b7
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 20:55:24 2013 +0200
+
+                        Updated array definition
+                      * DAnCE/docs/schema/Basic_Deployment_Data.xsd:
+
+              commit 5309ae3c49a7507b6c626e2c1b05e5cc60bed393
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 16:10:14 2013 +0200
+
+                        Initial copied files for DynArray support
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynArray_Handler.h:
+                        Added.
+
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+                      * DAnCE/tools/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc:
+
+              commit 1313b0f422d0420208e41c5f466ff0b961180bc9
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 16:00:47 2013 +0200
+
+                        Some initial test extensions
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.cpp:
+                      * CIAO/tests/Bug_3769_Regression/Foo_exec.h:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/run_test.pl:
+                      * CIAO/tests/Bug_3769_Regression/descriptors/run_test_cdr.pl:
+
+              commit 2fcba7d1938c0b37fff2c94fa0e65b78bef0def8
+              Author: Johnny Willemsen <jwillemsen@remedy.nl>
+              Date:   Tue Jul 23 15:50:30 2013 +0200
+
+                        Extended xsd with support for arrays
+                      * DAnCE/docs/schema/Basic_Deployment_Data.xsd:
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.cpp:
+                      * DAnCE/tools/Config_Handlers/Basic_Deployment_Data.hpp:
+
+Thu May 30 15:31:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/CIF/Events/client.cpp:
+          Removed dead code
+
+Mon May 27 10:18:33 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updates in preparation of releasing x.2.0
+
+Mon May 27 10:09:24 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.0 released.
+
+Mon May 13 07:14:04 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Make 1.1.9 public and prepare for the next minor release
+
+Mon May 13 08:52:11 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.9 released.
+
+Tue Apr 23 7:34:41 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/run_test.pl:
+          Changed nr of deamons.
+
+Fri Apr 19 10:22:41 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
+          Added lib Connector2_stub to svnt
+
+Thu Apr 18 18:37:16 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/CCM_DataReader.h:
+          Layout change
+
+        * connectors/dds4ccm/impl/ContentFilterSetting.cpp:
+          Log name of CFT
+
+Thu Apr 18 14:37:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
+          Make project names unique
+
+Thu Apr 18 13:04:48 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/DeploymentPlan.cdp:
+          Don't use qos_profile, not needed for this test
+
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/USER_QOS_PROFILES.xml:
+          Removed this file.
+
+Thu Apr 18 12:42:46 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+          Check if transport config exists before trying to create it,
+          fixes ResetTopic tests
+
+Thu Apr 18 10:25:57 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/06_compilation.html:
+          html fix
+
+Thu Apr 18 09:44:00 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.idl:
+        Fuzz error
+
+Thu Apr 18 08:50:34 UTC 2013  Marijke Hengstmengel  <mhengstmengel@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * connectors/dds4ccm/tests/HomeDerived:
+        * connectors/dds4ccm/tests/HomeDerived/Base:
+        * connectors/dds4ccm/tests/HomeDerived/Base/Hello_Base.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Base/Hello_Base.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Connector1:
+        * connectors/dds4ccm/tests/HomeDerived/Connector1/Hello_Connector.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Connector1/Hello_Connector.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Connector2:
+        * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Connector2/Hello_Connector2.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Sender:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.idl:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender.mpc:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/tests/HomeDerived/Sender/Hello_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/DeploymentPlan.cdp:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/tests/HomeDerived/descriptors/run_test.pl:
+        Test with derived homes and derived home components .
+
+Tue Apr 16 17:54:56 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Several fixes
+
+Tue Apr 16 17:30:31 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Detailed step by step instructions for DDS4CCM with RTI DDS on Linux
+
+Mon Apr 15 18:18:18 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * CIAO_DAnCE.mwc:
+
+          Added ami4ccm and dds4ccm connectors to this workspace.
+
+Mon Apr 15 08:59:47 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Added exact instructions how to compile DDS4CCM with OpenDDS
+          on linux. These can be copied to the console and will compile
+          everything
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_1.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_6.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_7.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.pl:
+          Make these running on trunk, only run_8.pl needs some more work
+
+Fri Apr 12 20:40:54 UTC 2013  Adam Mitz  <mitza@ociweb.com>
+
+        * ciao/Logger/Log_Macros.h:
+        * ciao/Logger/Log_Macros.cpp:
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+        * connectors/dds4ccm/impl/logger/Log_Macros.cpp:
+
+          Use distinct ACE Log Categories for both CIAO and DDS4CCM.
+
+Thu Apr 11 06:49:15 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+          Added missing includes in case an user includes this template
+          stand alone in his own custom connector
+
+Wed Apr 10 14:08:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Extended instructions for OpenDDS
+
+Thu Mar 14 12:42:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO_DAnCE_OpenDDS_shapes.mwc:
+          New workspace for compiling just the shapes example with everything
+          related to it
+
+Thu Mar 14 08:39:03 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.cpp:
+          Log topic_name with each message
+
+Thu Mar 14 09:04:46 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.8 released.
+
+Tue Mar 12 13:49:26 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_1.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_1.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_2.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_3.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_4.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_6.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_6.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_7.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_7.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_8.xml:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.cdp:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.pl:
+        * connectors/dds4ccm/examples/Shapes/descriptors/2013_interop_demo/run_9.xml:
+          Various plans for 2013 DDS interop demo
+
+Mon Mar  4 12:55:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Shapes/Base/Shapes_Base.idl:
+        * connectors/dds4ccm/examples/Shapes/Connector/Shapes_Connector.idl:
+        * connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h:
+        * connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.h:
+        * connectors/dds4ccm/examples/Shapes/descriptors/Plan.cdp:
+          Moved the ShapeType into a nested module and update the cdp
+          to set a fixed typename. Matches the 2013 version of the
+          shapes example
+
+Wed Feb 27 08:17:40 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/dds4ccm_Connector.idl:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.cpp:
+          Added a type_name attribute to the DDS TopicBase connector.
+          When the user doesn't specifiy this in the cdp we will
+          default to the DDS vendor specific type_name which is
+          not standardized. In case of interoperability problems
+          this type_name could be needed. This addition has been
+          reported to the OMG as issue 18499. Updated a few logging
+          statements to include type_name and don't use CORBA::is_nil
+          for checking whether a String_var has content
+
+Wed Feb 13 22:38:40 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * CIAO_TAO_OpenDDS.mwc:
+          Added exclude for nsgroup since it is not using the FT_Naming
+          service. Was causing build errors due to missing FT_NamingManager.
+
+Wed Feb  6 23:17:27 UTC 2013  Kevin Stanley  <stanleyk@ociweb.com>
+
+        * CIAO_TAO.mwc:
+          Added exclude for nsgroup since it is not using the FT_Naming
+          service. Was causing build errors due to missing FT_NamingManager.
+
+Mon Feb  4 08:11:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDS_Base_Connector_T.cpp (activate_topic):
+          Fixed logic error, when no listener is passed in we create
+          the default one, but always install a listener. Thanks to
+          Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for
+          reporting this problem. This fixes bugzilla 4089
+
+Sun Feb  3 18:37:32 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Added !NO_IDL3_TO_IDL2 to Bug_4087_Regression, invoking idl3_to_idl2
+          means we need gcc which we don't have on all targets
+
+Thu Jan 31 11:33:37 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          Fixed path 4087 test
+
+Tue Jan 29 12:20:08 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/idl3_to_idl2_visitor.cpp:
+          Fixed bugzilla 4087, thanks to
+          Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for
+          providing this patch
+
+Tue Jan 29 12:17:09 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * tests/Bug_4087_Regression:
+        * tests/Bug_4087_Regression/run_test.pl:
+        * tests/Bug_4087_Regression/test.idl:
+          New unit test for idl3_to_idl2, currently failing. Thanks to
+          Jiang Wei <jiangwei_1976 at yahoo dot com dot cn> for
+          creating this test.
+
+Mon Jan 28 10:11:13 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * tests/Bug_4086_Regression/Bug_4086_Regression.mpc:
+        * tests/Bug_4086_Regression/Foo.idl:
+        * tests/Bug_4086_Regression/Foo_exec.h:
+        * tests/Bug_4086_Regression/Foo_exec.cpp:
+        * tests/Bug_4086_Regression/descriptors/DeploymentPlan.cdp:
+        * tests/Bug_4086_Regression/descriptors/run_test.pl:
+        * tests/Bug_4086_Regression/descriptors/run_test_cdr.pl:
+          New test for components with attributes as part of
+          supported interfaces. Thanks to Jiang Wei
+          <jiangwei_1976 at yahoo dot com dot cn> for reporting this and
+          providing the patch and unit test
+
+Mon Jan 21 08:16:41 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+          QueryCondition DDS tests are NDDS only
+
+Thu Dec 27 09:19:07 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated in preparation of next release
+
+Thu Dec 27 10:00:49 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.7 released.
+
+Sun Dec 23 11:44:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Fixed post install
+
+Sat Dec 22 15:22:31 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Base/CIAO_Base.mpc:
+          Fixed location of ciao tools
+
+Thu Dec 20 13:55:46 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+          Fixed post install
+
+Thu Dec 20 07:13:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taoidl3toxmidefaults.mpb:
+          Updated location of tao_idl3_to_xmi
+
+Wed Dec 19 14:44:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * MPC/config/taobaseidl3toidl2defaults.mpb:
+        * docs/fm/CIAO.htm:
+        * tests/IDL3_to_XMI/Bug_3607_Regression/run_test.pl:
+        * tests/IDL3_to_XMI/IDL2XMI_Test/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Array/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Included_File/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Module_Reopen/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Native/run_test.pl:
+        * tests/IDL3_to_XMI/XMI_For_Sequence/run_test.pl:
+        * tools/IDL3_to_IDL2/IDL3_to_IDL2.mpc:
+        * tools/IDL3_to_XMI/IDL3_TO_XMI.mpc:
+          Install tao_idl3_to_idl2 and tao_idl3_to_xmi into ACE_ROOT/bin
+          to handle cross compilation in a flat layout more easily, this
+          way we can use the same approach as tao_idl does
+
+Wed Dec 19 08:30:15 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/Utils.h:
+          Extended PresentationQosPolicyAccessScopeKind and
+          SampleRejectedStatusKind. Both enums are extended by
+          RTI DDS 5.0.0 with some new enum values.
+
+Mon Dec 17 18:49:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/Condition.cpp:
+        * connectors/dds4ccm/impl/ndds/ContentFilteredTopic.cpp:
+        * connectors/dds4ccm/impl/ndds/DataWriter.cpp:
+        * connectors/dds4ccm/impl/ndds/DomainParticipantListener.h:
+        * connectors/dds4ccm/impl/ndds/QueryCondition.cpp:
+        * connectors/dds4ccm/impl/ndds/WaitSet.cpp:
+          Don't include ndds_cpp.h as first include, fixes problems
+          with msvc release mode compilation
+
+Mon Dec 17 10:14:59 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Using ACE::is_inequal to compare floating point and
+          double values.
+
+Sun Dec 16 09:49:50 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/Policies/dr_qos_test.cpp:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.h:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.cpp:
+          Fixed compile error with RTI DDS < 5
+
+Fri Dec 14 18:38:56 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/convertors/DataReaderQos.h:
+          Fixed compile error with RTI DDS < 5
+
+Thu Dec 13 08:40:18 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/ndds/convertors/DataReaderQos.h:
+        * connectors/dds4ccm/impl/ndds/convertors/TypeConsistencyEnforcementQosPolicy.h:
+        * connectors/dds4ccm/tests/Policies/dr_qos_test.cpp:
+        * connectors/dds4ccm/tests/Policies/policies.mpc:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.h:
+        * connectors/dds4ccm/tests/Policies/typeconsistencyenforcement_qos_test.cpp:
+          Added support for the new DDS TypeConsistencyEnforcementQosPolicy
+          which is coming from the DDS X-Types specification.
+
+        * connectors/dds4ccm/tests/On_Inconsistent_Topic/Base/OIT_Test_Base.idl:
+          Made both topics completely inconsistent, the topics
+          we had where seen as concistent by the DDS X-Types
+          specification
+
+Sun Dec  9 19:36:14 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DomainParticipantFactory.cpp:
+          Fixed coverity error
+
+Fri Nov 30 10:11:11 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/idl/ndds/ndds_dcps.idl:
+        * connectors/dds4ccm/impl/Utils.h:
+          Extended SampleRejectedStatusKind with the RTI defined extensions,
+          detected by Coverity
+
+Sat Nov 24 14:18:41 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fuzz : Trailing whitespaces
+
+Fri Nov 23 12:53:17 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Fixed fuzz and test.
+
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+          Fixed fuzz.
+
+Fri Nov 23 10:56:41 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Minor layout change.
+
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+          Added new attribute.
+
+        * bin/ciao_tests.lst:
+        * tests/Bug_3769_Regression/descriptors/run_test_cdr.pl:
+          New test: using CDR as input for the plan launcher.
+
+Fri Nov 23 10:28:23 UTC 2012  Marcel Smit  <msmit@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+          Expanded test. Added a struct within a struct which
+          is placed in a separate module. checking whether the
+          correct values are set.
+
+Mon Nov 19 18:15:16 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+          Layout changes
+
+        * connectors/dds4ccm/impl/DomainParticipantManager.cpp:
+          Check for (un)registration of nil domain participants, log
+          profile during unregistration
+
+Mon Nov 12 10:07:05 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Mon Nov 12 09:34:14 CET 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.6 released.
+
+Fri Oct 12 11:18:03 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ccm/CCM_Transaction.idl:
+          Removed old comment
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Fixed some logging statements
+
+Fri Oct 12 10:53:23 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for x.1.5
+
+Fri Oct 12 11:20:25 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.5 released.
+
+Mon Oct  8 08:02:52 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Component_Handler.cpp:
+        * ciao/Deployment/Handlers/Home_Handler.cpp:
+          Fixed logging messages
+
+Fri Oct  5 06:26:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello_Event/descriptors/run_test_shs.pl:
+          Fixed path
+
+Wed Oct  3 06:19:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Session/Session_Container.cpp:
+          Fixed typo in error message
+
+        * connectors/dds4ccm/impl/ndds/Topic.cpp:
+          layout changes
+
+        * connectors/dds4ccm/tests/Policies/run_test.pl:
+        * connectors/dds4ccm/tests/TimeConversion/run_test.pl:
+        * connectors/dds4ccm/tests/TypeSupport/run_test.pl:
+          Check all return values, directly exit when the test has ended
+
+        * examples/Hello_Event/descriptors/run_test_shs.pl:
+          Corrected path of sender
+
+Tue Oct  2 17:50:55 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/convertors/StringSeq.h:
+        * connectors/dds4ccm/tests/Policies/main.cpp:
+        * connectors/dds4ccm/tests/Policies/policies.mpc:
+        * connectors/dds4ccm/tests/Policies/string_seq.h:
+        * connectors/dds4ccm/tests/Policies/string_seq.cpp:
+          Test StringSeq conversion and fixed a bug in the conversion
+          from a tao sequence to a RTI sequence
+
+Tue Oct  2 17:29:33 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ndds/DataReader_T.cpp:
+          Only call the RTI narrow with a valid pointer, calling it with
+          null causes RTI to log an error
+
+Tue Oct  2 08:27:28 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Simplified logging statement
+
+Tue Oct  2 06:48:39 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello_Event/descriptors/run_test.pl:
+        * examples/Hello_Event/descriptors/run_test_PlanLocality_DifferentProcesses.pl:
+        * examples/Hello_Event/descriptors/run_test_PlanLocality_SameProcess.pl:
+        * examples/Hello_Event/descriptors/run_test_shs.pl:
+        * examples/Hello_Event/descriptors/run_test_without_ns.pl:
+          Updated location of the starter
+
+Mon Oct  1 18:26:08 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/PortStatusListener.cpp:
+        * connectors/dds4ccm/impl/PublisherListener.cpp:
+        * connectors/dds4ccm/impl/SubscriberListener.cpp:
+        * connectors/dds4ccm/impl/TopicListener.cpp:
+          Catch everywhere C++ exceptions and log a CORBA::BAD_INV_ORDER
+          at a lower priority, because that is a signal that the system
+          is shutting down
+
+Fri Sep 28 09:39:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Hello/Sender/Hello_Sender_exec.h:
+          Added missing file
+
+Thu Sep 27 09:29:38 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * examples/Hello:
+          Added new Hello test that isn't dependent on CCM events
+
+Thu Sep 27 08:59:45 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * examples/Hello:
+        * examples/Hello_Event:
+          Renamed Hello to Hello_Event, this version of the
+          Hello example uses the CCM events, will add another
+          version that just uses facet/receptacles
+
+        * examples/Null_Component/Null_Interface.idl:
+          Doxygen change
+
+Tue Sep 25 18:00:53 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Handlers/Component_Handler.h:
+        * ciao/Deployment/Handlers/Container_Handler.h:
+        * ciao/Deployment/Handlers/Home_Handler.h:
+        * ciao/Deployment/Handlers/Homed_Component_Handler.h:
+          Only locality manager stubs are used here
+
+Fri Sep 21 07:52:43 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+          Added DDS4CCM_PRINT_CORBA_EXCEPTION also in case there is no
+          logging
+
+Thu Sep 20 07:08:30 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Removed not needed ObjectId_to_string, the result is never
+          used
+
+        * ciao/Valuetype_Factories/Cookies.h:
+          Removed not needed include
+
+Thu Sep 20 07:06:41 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/DDSCallbackStatusHandler.cpp:
+        * connectors/dds4ccm/impl/DataReaderHandler_T.cpp:
+        * connectors/dds4ccm/impl/logger/Log_Macros.h:
+          During shutdown it can happen that still event handlers are
+          registered in the reactor and the DDS entities are already
+          removed. At that moment we get BAD_INV_ORDER exceptions which
+          is the only case we could get them, log them as warning
+          messages at that moment instead of real errors
+
+Wed Aug 29 07:36:27 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO_TAO.mwc:
+        * CIAO_TAO_DAnCE.mwc:
+        * CIAO_TAO_DAnCE_OpenDDS.mwc:
+        * CIAO_TAO_OpenDDS.mwc:
+          Be more specific in what we build
+
+        * tests/tests.mwc:
+          Removed this file.
+
+Wed Aug 29 07:34:37 UTC 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+        * ChangeLogs/ChangeLog-2012a:
+        * NEWS:
+          Prepared for the next release
+
+Wed Aug 29 08:16:04 CEST 2012  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.1.4 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

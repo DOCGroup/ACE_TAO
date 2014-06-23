@@ -1,0 +1,4 @@
+usr/include/ace/INet/*SSL*
+usr/include/ace/INet/*HTTPS*
+usr/lib/libACE_INet_SSL.so
+usr/lib/pkgconfig/ACE_INet_SSL.pc
