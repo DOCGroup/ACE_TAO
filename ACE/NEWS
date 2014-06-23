@@ -4,7 +4,7 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.7 and ACE-6.2.8
 USER VISIBLE CHANGES BETWEEN ACE-6.2.6 and ACE-6.2.7
 ====================================================
 
-. Added initial support for Microsoft Visual Studio 2014
+. Added configuration files for Microsoft Visual Studio 2014
 
 . Added configuration files for MacOSX Yosemite
 
