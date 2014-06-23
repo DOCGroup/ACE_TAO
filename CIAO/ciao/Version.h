@@ -5,5 +5,5 @@
 
 #define CIAO_MAJOR_VERSION 1
 #define CIAO_MINOR_VERSION 2
-#define CIAO_BETA_VERSION 6
-#define CIAO_VERSION "1.2.6"
+#define CIAO_BETA_VERSION 7
+#define CIAO_VERSION "1.2.7"
