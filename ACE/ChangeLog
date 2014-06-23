@@ -1,3 +1,21 @@
+Mon Jun 23 12:49:40 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * bin/diff-builds-and-group-fixed-tests-only.sh:
+        * bin/generate_export_file.pl:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Make x.2.7 public
+
+        * debian/debian.changelog:
+        * debian/debian.control:
+        * debian/libnetsvcs-6.2.7.docs:
+        * debian/libnetsvcs-6.2.7.install:
+        * debian/libnetsvcs-dev.docs:
+        * debian/libnetsvcs-dev.install:
+          Improved debian packaging
+
 Mon Jun 23 09:43:57 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.2.7 released.
