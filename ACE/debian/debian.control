@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Johnny Willemsen <jwillemsen@remedy.nl>
 Uploaders: Johnny Willemsen <jwillemsen@remedy.nl>
 DM-Upload-Allowed: yes
-Build-Depends: debhelper (>= 5), libssl-dev (>= 0.9.7d), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev, libfox-1.6-dev, zlib1g-dev, libzzip-dev, docbook-to-man, bzip2, libbz2-dev
+Build-Depends: debhelper (>= 5), libssl-dev (>= 0.9.7d), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev, libfox-1.6-dev, zlib1g-dev, libzzip-dev, docbook-to-man, bzip2, libbz2-dev, libxerces-c-dev
 Build-Depends-Indep: doxygen, graphviz
 Standards-Version: 3.9.2
 Vcs-Browser: https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/debian/
@@ -73,7 +73,7 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-6.2.5 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 6.2.7d), ${misc:Depends}
+Depends: libace-ssl-6.2.5 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 0.9.7d), ${misc:Depends}
 Description: ACE secure socket layer library - development files
  This package contains the header files and static library for the ACE
  SSL library.
@@ -154,7 +154,7 @@ Description: ACE Inet protocol library - development files
 Package: libace-inet-ssl-6.2.7
 Architecture: any
 Section: libs
-Depends: libace-inet-6.2.5, libace-ssl-6.2.7, ${shlibs:Depends}, ${misc:Depends}
+Depends: libace-inet-6.2.7, libace-ssl-6.2.7, ${shlibs:Depends}, ${misc:Depends}
 Description: ACE SSL-enabled Inet protocol library
  This package provides an ACE addon library for clients (and possibly
  servers at some point) using Inet protocols which support SSL, such as
@@ -202,6 +202,18 @@ Description: ACE SAX based XML parsing library
  ACEXML is a small footprint and portable library. It does not
  validate XML documents and supports only Unicode encoding.
 
+Package: libacexml-6.2.7
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE SAX based XML parsing library
+ This package provides interfaces for XML parsing based on Simple API
+ for XML (SAX) 2.0, defined by David Megginson. This is an
+ event-driven parsing approach.
+ .
+ ACEXML is a small footprint and portable library. It does not
+ validate XML documents and supports only Unicode encoding.
+
 Package: libacexml-dev
 Architecture: any
 Section: libdevel
@@ -210,6 +222,15 @@ Depends: libacexml-6.2.7 (= ${binary:Version}), libace-dev (= ${binary:Version})
 Description: ACE SAX based XML parsing library - development files
  This package contains the header files and static library for the ACE
  XML parsing library.
+
+Package: libace-xml-utils-6.2.7
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE XML utility classes and methods
+ This package provides useful classes and methods for XML parsing
+ .
+ ACE XML Utils is used by DAnCE and OpenDDS.
 
 Package: libkokyu-6.2.7
 Architecture: any
@@ -773,3 +794,38 @@ Description: TAO time service (transitional package)
  This package is a transitional package to tao-costime.
  .
  It can be safely removed after installation.
+
+Package: ace-netsvcs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE network service implementations
+ ACE network services provide reusable components for common
+ distributed system tasks such as logging, naming, locking, and time
+ synchronization.
+ .
+ This package contains driver programs and example configuration
+ files to link the various ACE network services together, either
+ statically or dynamically, and form complete server programs.
+
+Package: libnetsvcs-6.2.7
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE network service implementations - libraries
+ ACE network services provide reusable components for common
+ distributed system tasks such as logging, naming, locking, and time
+ synchronization.
+ .
+ This package contains runtime libraries for ACE network services.
+
+Package: libnetsvcs-dev
+Architecture: any
+Section: libdevel
+Depends: libnetsvcs-6.2.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Description: ACE network service implementations - development files
+ ACE network services provide reusable components for common
+ distributed system tasks such as logging, naming, locking, and time
+ synchronization.
+ .
+ This package contains header files and static library for the ACE
+ network services library.

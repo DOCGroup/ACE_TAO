@@ -118,7 +118,11 @@
           </ul>
           If you want to perform a full build with qt support, than run:
           <ul>
-            <li><code>yum install yum-utils gdb unzip glibc-devel openssl-devel.i686 xerces-c-devel.i686 glibc-devel.i686 libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.7.0-openjdk git-svn perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git glibc.i686 libstdc++.i686 ncurses-libs.i686 zlib.i686 telnet GitPython NetworkManager wget mailx</code></li>
+            <li><code>yum install yum-utils gdb unzip glibc-devel libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.7.0-openjdk git-svn perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git telnet GitPython NetworkManager wget mailx</code></li>
+          </ul>
+          For some optional i686 packages run
+          <ul>
+            <li><code>yum install openssl-devel.i686 xerces-c-devel.i686 glibc-devel.i686 glibc.i686 libstdc++.i686 ncurses-libs.i686 zlib.i686</code></li>
           </ul>
         </li>
         <li>
@@ -324,10 +328,10 @@
         cd doxygen<br>
         mkdir -p $HOME/.subversion<br>
         wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_7/ACE ACE_wrappers<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_7/TAO ACE_wrappers/TAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_7/CIAO ACE_wrappers/TAO/CIAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_7/DAnCE ACE_wrappers/TAO/DAnCE<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_8/ACE ACE_wrappers<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_8/TAO ACE_wrappers/TAO<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_8/CIAO ACE_wrappers/TAO/CIAO<br>
+        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_2_8/DAnCE ACE_wrappers/TAO/DAnCE<br>
         cd ACE_wrappers<br>
         export ACE_ROOT=$PWD<br>
         export TAO_ROOT=$ACE_ROOT/TAO<br>
