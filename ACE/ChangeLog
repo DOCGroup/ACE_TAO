@@ -11,7 +11,7 @@ Mon Jun 23 12:49:40 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
         * docs/Download.html:
         * docs/bczar/bczar.html:
         * etc/index.html:
-          Make x.2.7 public
+          Make x.2.7 publicly available
 
         * debian/debian.changelog:
         * debian/debian.control:
