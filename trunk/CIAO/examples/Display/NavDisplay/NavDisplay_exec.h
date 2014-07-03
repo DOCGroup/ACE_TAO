@@ -64,7 +64,7 @@ namespace MyImpl
   protected:
     /// Copmponent specific context
     HUDisplay::CCM_NavDisplay_Context_var context_;
-    // Needed for compatability with NavDisplayGUI
+    // Needed for compatibility with NavDisplayGUI
     CORBA::Long number_of_GPS_;
 
   };
