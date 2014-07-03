@@ -60,7 +60,7 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
     if (ACE::debug ())
         ACELIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("ACE (%P|%t) STDG::<ctor>, repo=%@")
-                    ACE_TEXT(", name=%s - begining at [%d]\n"),
+                    ACE_TEXT(", name=%s - beginning at [%d]\n"),
                     &this->repo_,
                     this->name_,
                     this->repo_begin_));

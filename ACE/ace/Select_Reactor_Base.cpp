@@ -1013,7 +1013,7 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
     {
     case ACE_Reactor::GET_MASK:
       // The work for this operation is done in all cases at the
-      // begining of the function.
+      // beginning of the function.
       break;
     case ACE_Reactor::CLR_MASK:
       ptmf = &ACE_Handle_Set::clr_bit;

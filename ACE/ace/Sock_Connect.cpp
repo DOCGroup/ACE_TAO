@@ -314,7 +314,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("ACE::get_bcast_addr:")
-                    ACE_TEXT ("Broadcast is not enable for this interface.")));
+                    ACE_TEXT ("Broadcast is not enabled for this interface.")));
 
       if (handle == ACE_INVALID_HANDLE)
         ACE_OS::close (s);

@@ -2284,7 +2284,7 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
     {
     case ACE_Reactor::GET_MASK:
       // The work for this operation is done in all cases at the
-      // begining of the function.
+      // beginning of the function.
       return old_mask;
 
     case ACE_Reactor::CLR_MASK:

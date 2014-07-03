@@ -4,9 +4,9 @@ Priority: optional
 Maintainer: Johnny Willemsen <jwillemsen@remedy.nl>
 Uploaders: Johnny Willemsen <jwillemsen@remedy.nl>
 DM-Upload-Allowed: yes
-Build-Depends: debhelper (>= 5), libssl-dev (>= 0.9.7d), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev, libfox-1.6-dev, zlib1g-dev, libzzip-dev, docbook-to-man, bzip2, libbz2-dev, libxerces-c-dev
+Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.2), libssl-dev (>= 0.9.7d), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.5), libfox-1.6-dev, zlib1g-dev, libzzip-dev, liblzo2-dev, docbook-to-man, bzip2, libbz2-dev, libxerces-c-dev
 Build-Depends-Indep: doxygen, graphviz
-Standards-Version: 3.9.2
+Standards-Version: 3.9.5.0
 Vcs-Browser: https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/debian/
 Homepage: http://www.dre.vanderbilt.edu/~schmidt/ACE.html
 
@@ -73,7 +73,7 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-6.2.5 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 0.9.7d), ${misc:Depends}
+Depends: libace-ssl-6.2.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev (>= 0.9.7d), ${misc:Depends}
 Description: ACE secure socket layer library - development files
  This package contains the header files and static library for the ACE
  SSL library.
@@ -202,18 +202,6 @@ Description: ACE SAX based XML parsing library
  ACEXML is a small footprint and portable library. It does not
  validate XML documents and supports only Unicode encoding.
 
-Package: libacexml-6.2.7
-Architecture: any
-Section: libs
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: ACE SAX based XML parsing library
- This package provides interfaces for XML parsing based on Simple API
- for XML (SAX) 2.0, defined by David Megginson. This is an
- event-driven parsing approach.
- .
- ACEXML is a small footprint and portable library. It does not
- validate XML documents and supports only Unicode encoding.
-
 Package: libacexml-dev
 Architecture: any
 Section: libdevel
@@ -228,15 +216,25 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: ACE XML utility classes and methods
- This package provides useful classes and methods for XML parsing
+ This package provides useful classes and methods for XML parsing with Xerces,
+ including simplified strings, schema resolution, validation and more.
  .
  ACE XML Utils is used by DAnCE and OpenDDS.
+
+Package: libace-xml-utils-dev
+Architecture: any
+Section: libdevel
+Replaces: libace-dev (<< 5.7.7-4)
+Depends: libace-xml-utils-6.2.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}, libxerces-c-dev
+Description: ACE XML utility classes and methods - development files
+ This package contains the header files and static library for the ACE XML
+ Utils library
 
 Package: libkokyu-6.2.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: libtao-2.2.5, libtao-orbsvcs-2.2.7
+Suggests: libtao-2.2.7, libtao-orbsvcs-2.2.7
 Description: ACE scheduling and dispatching library
  Kokyu is a library designed to provide flexible scheduling and
  dispatching services.
@@ -294,7 +292,7 @@ Description: ACE-GUI reactor integration for Xt
 Package: libace-xtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-xtreactor-6.2.5 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.2.7), ${misc:Depends}
+Depends: libace-xtreactor-6.2.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.2.7), ${misc:Depends}
 Description: ACE-GUI reactor integration for Xt - development files
  This package contains header files and static library for the ACE-Xt
  reactor integration.
@@ -327,7 +325,7 @@ Package: libace-flreactor-6.2.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: ACE-GUI reactor integration for Fl
+Description: ACE-GUI reactor integration for FLTK
  Recognizing the need to write reactor-based GUI applications, the ACE
  community has created several reactor extensions for use with X
  Window System. Each of these extends the ACE_Select_Reactor to work
@@ -341,9 +339,9 @@ Description: ACE-GUI reactor integration for Fl
 Package: libace-flreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-flreactor-6.2.5 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.2.7), ${misc:Depends}
-Description: ACE-GUI reactor integration for Fl - development files
- This package contains header files and static library for the ACE-Fl
+Depends: libace-flreactor-6.2.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.2.7), ${misc:Depends}
+Description: ACE-GUI reactor integration for FLTK - development files
+ This package contains header files and static library for the ACE-FLTK
  reactor integration.
 
 Package: libace-foxreactor-6.2.7
@@ -453,7 +451,7 @@ Package: libtao-flresource-2.2.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: TAO-GUI reactor integration for Fl
+Description: TAO-GUI reactor integration for FLTK
  The Fl resource factory integrates ACE FlReactor into TAO ORB
  reactor.
 
@@ -461,8 +459,8 @@ Package: libtao-flresource-dev
 Architecture: any
 Section: libdevel
 Depends: libtao-flresource-2.2.7 (= ${binary:Version}), libace-flreactor-dev (= ${binary:Version}), libtao-dev (= ${binary:Version}), ${misc:Depends}
-Description: TAO-GUI reactor integration for Fl - development files
- This package contains header files and static library for the TAO-Fl
+Description: TAO-GUI reactor integration for FLTK - development files
+ This package contains header files and static library for the TAO-FLTK
  reactor integration.
 
 Package: libtao-tkresource-2.2.7
@@ -486,7 +484,7 @@ Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: TAO-GUI reactor integration for FOX
- The Fl resource factory integrates ACE FoxReactor into TAO ORB
+ The FLTK resource factory integrates ACE FoxReactor into TAO ORB
  reactor.
 
 Package: libtao-foxresource-dev

@@ -316,9 +316,7 @@ private:
  */
 class ACE_Export ACE_Event_Handler_var
 {
-
 public:
-
   /// Default constructor.
   ACE_Event_Handler_var (void);
 
@@ -355,10 +353,36 @@ private:
   ACE_Event_Handler *ptr_;
 };
 
+#if defined ACE_HAS_CPP11
+
+namespace ACE
+{
+  /// With C++11 it is common to not use C++ new and delete, but
+  /// use std::make_shared and std::make_unique. This will not
+  /// work for ACE event handlers so we introduce a new
+  /// ACE::make_event_handler which can be used in user code to
+  /// allocate a new ACE event handler instance and directly assign
+  /// it to a ACE_Event_Handler_var
+  /// As user this now makes it for example possible to implement
+  /// the following when Simple_Handler is derived from ACE_Event_Handler
+  /// ACE_Event_Handler_var v =
+  ///   ACE::make_event_handler<Simple_Handler> (reactor.get());
+  template<class T,
+           typename = typename
+             std::enable_if<std::is_base_of<ACE_Event_Handler, T>::value>::type,
+           typename ...Args> inline
+  ACE_Event_Handler_var make_event_handler (Args&& ...args)
+  {
+    return ACE_Event_Handler_var (new T (std::forward<Args> (args)...));
+  }
+}
+
+#endif
+
 /**
  * @class ACE_Notification_Buffer
  *
- * @brief Simple wrapper for passing <ACE_Event_Handler *>s and
+ * @brief Simple wrapper for passing ACE_Event_Handler *s and
  * ACE_Reactor_Masks between threads.
  */
 class ACE_Export ACE_Notification_Buffer
