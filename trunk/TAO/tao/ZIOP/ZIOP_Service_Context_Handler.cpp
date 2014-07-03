@@ -44,7 +44,7 @@ TAO_ZIOP_Service_Context_Handler::process_service_context (
       return 0;
     }
 
-  // Extract each policy from the slots we recieved.
+  // Extract each policy from the slots we received.
   for (CORBA::ULong i = 0u; i < static_cast<CORBA::ULong> (policy_value_seq.length ()); ++i)
     {
       TAO_InputCDR policy_cdr (

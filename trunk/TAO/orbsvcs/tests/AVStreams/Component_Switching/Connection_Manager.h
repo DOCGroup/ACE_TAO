@@ -45,7 +45,7 @@ public:
   /// Initialize this class.
   int init (CORBA::ORB_ptr orb);
 
-  /// Method that binds the sender to the Naming Service and retreives
+  /// Method that binds the sender to the Naming Service and retrieves
   /// the references of any registered receivers.
   void bind_to_receivers (const ACE_CString &sender_name,
                           AVStreams::MMDevice_ptr sender);

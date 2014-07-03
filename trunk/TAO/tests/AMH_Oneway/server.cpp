@@ -218,7 +218,7 @@ ST_AMH_Server::run_event_loop ()
           ACE_Time_Value period (0, 11000);
           this->orb_->perform_work (&period);
 
-          // when all calls from client have been recieved, exit
+          // when all calls from client have been received, exit
           if (calls_received == num_calls )
             return;
         }

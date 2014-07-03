@@ -231,7 +231,7 @@ void
 TAO_Basic_StreamCtrl::push_event (const struct CosPropertyService::Property &/*the_event*/)
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, "\n(%P|%t) Recieved event \""));
+    ORBSVCS_DEBUG ((LM_DEBUG, "\n(%P|%t) Received event \""));
 }
 
 // Sets the flow protocol status.

@@ -207,7 +207,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       *os << be_nl;
       *os << "default:" << be_idt_nl;
       *os << "_tao_union._default ();" << be_nl;
-      *os << "// For maximum interop compatability, force the same value as transmitted" << be_nl;
+      *os << "// For maximum interop compatibility, force the same value as transmitted" << be_nl;
       *os << "_tao_union._d (_tao_discriminant);" << be_nl;
       *os << "break;" << be_uidt;
     }
