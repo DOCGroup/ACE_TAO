@@ -1,3 +1,82 @@
+Thu Jul  3 10:47:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Event_Handler.h:
+          Introduce ACE::make_event_handler<T> factory method which
+          is enabled when we have C++11 support. This is similar to
+          std::make_unique and std::make_shared, but can be used
+          to allocate ACE_Event_Handler instances and directly
+          assign them to a ACE_Event_Handler_var
+
+        * tests/Bug_2820_Regression_Test.cpp:
+          Use the new ACE::make_event_handler<T>
+
+        * ace/OS_NS_stdio.inl:
+        * ace/config-win32-msvc-14.h:
+          msvc14 has C99 compliant vsnprintf/vsnwprintf
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Get_Opt.cpp:
+        * ace/MMAP_Memory_Pool.cpp:
+        * ace/SOCK_Dgram_Bcast.cpp:
+        * ace/Select_Reactor_Base.cpp:
+        * ace/Service_Gestalt.cpp:
+        * ace/Sock_Connect.cpp:
+        * ace/WFMO_Reactor.cpp:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/buffer.h:
+        * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/daemon.h:
+        * bin/fuzz.pl:
+        * examples/Reactor/Proactor/test_udp_proactor.cpp:
+          Fixed typos
+
+        * debian/debian.control:
+        * debian/libace-6.2.7.lintian-overrides:
+        * debian/libace-dev.lintian-overrides:
+        * debian/libace-doc.lintian-overrides:
+        * debian/libace-flreactor-6.2.7.lintian-overrides:
+        * debian/libace-flreactor-dev.lintian-overrides:
+        * debian/libace-foxreactor-6.2.7.lintian-overrides:
+        * debian/libace-foxreactor-dev.lintian-overrides:
+        * debian/libace-htbp-6.2.7.lintian-overrides:
+        * debian/libace-htbp-dev.lintian-overrides:
+        * debian/libace-inet-6.2.7.lintian-overrides:
+        * debian/libace-inet-dev.lintian-overrides:
+        * debian/libace-inet-ssl-6.2.7.lintian-overrides:
+        * debian/libace-inet-ssl-dev.lintian-overrides:
+        * debian/libace-qtreactor-6.2.7.lintian-overrides:
+        * debian/libace-qtreactor-dev.lintian-overrides:
+        * debian/libace-rmcast-6.2.7.lintian-overrides:
+        * debian/libace-rmcast-dev.lintian-overrides:
+        * debian/libace-ssl-6.2.7.lintian-overrides:
+        * debian/libace-ssl-dev.lintian-overrides:
+        * debian/libace-tkreactor-6.2.7.lintian-overrides:
+        * debian/libace-tkreactor-dev.lintian-overrides:
+        * debian/libace-tmcast-6.2.7.lintian-overrides:
+        * debian/libace-tmcast-dev.lintian-overrides:
+        * debian/libace-xml-utils-6.2.7.lintian-overrides:
+        * debian/libace-xml-utils-dev.lintian-overrides:
+        * debian/libace-xtreactor-6.2.7.lintian-overrides:
+        * debian/libace-xtreactor-dev.lintian-overrides:
+        * debian/libacexml-6.2.7.lintian-overrides:
+        * debian/libacexml-dev.lintian-overrides:
+        * debian/libkokyu-6.2.7.lintian-overrides:
+        * debian/libkokyu-dev.lintian-overrides:
+        * debian/libnetsvcs-6.2.7.lintian-overrides:
+        * debian/libtao-2.2.7.lintian-overrides:
+        * debian/libtao-dev.lintian-overrides:
+        * debian/libtao-doc.lintian-overrides:
+        * debian/libtao-flresource-2.2.7.lintian-overrides:
+        * debian/libtao-flresource-dev.lintian-overrides:
+        * debian/libtao-foxresource-2.2.7.lintian-overrides:
+        * debian/libtao-foxresource-dev.lintian-overrides:
+        * debian/libtao-orbsvcs-2.2.7.lintian-overrides:
+        * debian/libtao-qtresource-2.2.7.lintian-overrides:
+        * debian/libtao-qtresource-dev.lintian-overrides:
+        * debian/libtao-tkresource-2.2.7.lintian-overrides:
+        * debian/libtao-tkresource-dev.lintian-overrides:
+        * debian/libtao-xtresource-2.2.7.lintian-overrides:
+        * debian/libtao-xtresource-dev.lintian-overrides:
+          Imported files from debian packaging
+
 Mon Jun 23 14:14:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/make_release.py:

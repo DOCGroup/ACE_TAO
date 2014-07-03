@@ -173,7 +173,7 @@ ACE_WFMO_Reactor_Handler_Repository::bit_ops (long &existing_masks,
     case ACE_Reactor::GET_MASK:
 
       // The work for this operation is done in all cases at the
-      // begining of the function.
+      // beginning of the function.
 
       ACE_UNUSED_ARG (change_masks);
 

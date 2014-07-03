@@ -50,8 +50,13 @@ run_main (int, ACE_TCHAR *[])
   auto_ptr<ACE_Reactor> reactor(
       new ACE_Reactor(new ACE_Select_Reactor, 1));
 
+#if defined ACE_HAS_CPP11
+  ACE_Event_Handler_var v =
+    ACE::make_event_handler<Simple_Handler> (reactor.get());
+#else
   ACE_Event_Handler_var v(
       new Simple_Handler(reactor.get()));
+#endif
 
   ACE_Event_Handler::Reference_Count pre_notify_count =
     v->add_reference();

@@ -260,7 +260,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
         {
           if (host_name != 0)
             ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%s]\n"),
-                        ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enable for this interface."),
+                        ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enabled for this interface."),
                         flags.ifr_name));
         }
     }

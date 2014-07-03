@@ -130,7 +130,7 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
     this->ordering_ = REQUIRE_ORDER;
 
   // Now, check to see if any or the following were passed at
-  // the begining of optstring: '+' same as POSIXLY_CORRECT;
+  // the beginning of optstring: '+' same as POSIXLY_CORRECT;
   // '-' turns off POSIXLY_CORRECT; or ':' which signifies we
   // should return ':' if a parameter is missing for an option.
   // We use a loop here, since a combination of "{+|-}:" in any
