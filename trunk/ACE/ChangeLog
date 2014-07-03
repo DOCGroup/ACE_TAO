@@ -26,7 +26,8 @@ Thu Jul  3 10:47:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
         * apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/daemon.h:
         * bin/fuzz.pl:
         * examples/Reactor/Proactor/test_udp_proactor.cpp:
-          Fixed typos
+          Fixed typos, triggered by a patch from Pau Garcia i Quiles
+          <pgquiles at elpauer dot org>
 
         * debian/debian.control:
         * debian/libace-6.2.7.lintian-overrides:
@@ -75,7 +76,9 @@ Thu Jul  3 10:47:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
         * debian/libtao-tkresource-dev.lintian-overrides:
         * debian/libtao-xtresource-2.2.7.lintian-overrides:
         * debian/libtao-xtresource-dev.lintian-overrides:
-          Imported files from debian packaging
+          Imported files from debian packaging, created by
+          Pau Garcia i Quiles <pgquiles at elpauer dot org> on the
+          pkg-ace debian packaging
 
 Mon Jun 23 14:14:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
