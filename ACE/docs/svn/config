@@ -153,6 +153,7 @@ enable-auto-props = yes
 *.pem=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.xme=svn:eol-style=native;svn:keywords=Author Date Id Revision
 *.features=svn:eol-style=native;svn:keywords=Author Date Id Revision
+*.lintian-overrides=svn:eol-style=native;svn:keywords=Author Date Id Revision
 Change?og*=svn:eol-style=native;svn:keywords=Author Date Id Revision
 README=svn:eol-style=native;svn:keywords=Author Date Id Revision
 "Makefile"="svn:eol-style=native;svn:keywords=Author Date Id Revision"

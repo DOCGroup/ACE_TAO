@@ -146,7 +146,7 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG,
                   "%s = %d\n",
-                  "bytes recieved immediately",
+                  "bytes received immediately",
                   number_of_bytes_recvd));
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       res = 0;

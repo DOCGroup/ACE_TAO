@@ -476,7 +476,7 @@ ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options (
     install_signal_handler_ (install_signal_handler)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool_Options::ACE_MMAP_Memory_Pool_Options");
-  // for backwards compatability
+  // for backwards compatibility
   if (base_addr_ == 0 && use_fixed_addr_ == ALWAYS_FIXED)
     use_fixed_addr_ = FIRSTCALL_FIXED;
 }

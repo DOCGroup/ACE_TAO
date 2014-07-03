@@ -2190,12 +2190,12 @@ sub check_for_TAO_Local_RefCounted_Object ()
 }
 
 # This test checks for the correct use of ORB_init() so as
-# to be compatiable with wide character builds.
+# to be compatible with wide character builds.
 sub check_for_ORB_init ()
 {
     return if is_suppressed ();
 
-    print "Running the ORB_init() wide character incompatability check\n";
+    print "Running the ORB_init() wide character incompatibility check\n";
     foreach $file (@files_cpp, @files_inl) {
         if (open (FILE, $file)) {
             my $disable = 0;

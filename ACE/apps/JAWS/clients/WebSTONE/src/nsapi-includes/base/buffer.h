@@ -199,7 +199,7 @@ int netbuf_grab(netbuf *buf, int sz);
 /*
  * netbuf_buf2sd will send n bytes from the (probably previously read)
  * buffer and send them to sd. If sd is -1, they are discarded. If n is
- * -1, it will continue until EOF is recieved. Returns IO_ERROR on error
+ * -1, it will continue until EOF is received. Returns IO_ERROR on error
  * and the number of bytes sent any other time.
  */
 
