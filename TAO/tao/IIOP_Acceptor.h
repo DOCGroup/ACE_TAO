@@ -50,7 +50,7 @@ class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 public:
 
   /*
-   * Hook that marks begining of all concrete i.e. non virtual
+   * Hook that marks beginning of all concrete i.e. non virtual
    * methods implemented in IIOP_Acceptor class.
    */
   //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START

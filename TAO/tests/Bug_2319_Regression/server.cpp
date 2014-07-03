@@ -114,7 +114,7 @@ void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr,
                              Test::Timestamp)
 {
-  ACE_OS::printf("Recieved Timestamp # %d\n", calls_received);
+  ACE_OS::printf("Received Timestamp # %d\n", calls_received);
   ACE_OS::sleep(1);
   ++calls_received;
 
@@ -216,7 +216,7 @@ void ST_AMH_Server::run_event_loop ()
         {
           this->orb_->perform_work (&period);
 
-          // when all calls from client have been recieved, exit
+          // when all calls from client have been received, exit
           if (calls_received == num_calls )
             return;
         }

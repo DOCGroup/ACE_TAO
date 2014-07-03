@@ -96,7 +96,7 @@ interface Logger
 
   void log_twoway (in Log_Record log_rec);
   // Like log (), but twoway such that applications will block until
-  // log messages are recieved by the logger
+  // log messages are received by the logger
 
   void logv_twoway (in Log_Record log_rec,
                     in Verbosity_Level level);
