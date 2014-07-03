@@ -1,3 +1,20 @@
+Thu Jul  3 11:02:19 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
+        * examples/Logging/Logger.idl:
+        * orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * orbsvcs/tests/AVStreams/Asynch_Three_Stage/Connection_Manager.h:
+        * orbsvcs/tests/AVStreams/Component_Switching/Connection_Manager.h:
+        * tao/IIOP_Acceptor.h:
+        * tao/RTScheduling/Request_Interceptor.cpp:
+        * tao/SystemException.cpp:
+        * tao/Valuetype/ValueBase.h:
+        * tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
+        * tests/AMH_Oneway/server.cpp:
+        * tests/Bug_2319_Regression/server.cpp:
+          Fixed typos, triggered by a patch from Pau Garcia i Quiles
+          <pgquiles at elpauer dot org>
+
 Mon Jun 23 12:49:44 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:

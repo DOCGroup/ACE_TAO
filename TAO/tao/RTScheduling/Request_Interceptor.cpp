@@ -309,7 +309,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   if (guid_var->length () == 0)
     {
       TAOLIB_ERROR ((LM_ERROR,
-                  "The scheduler MUST retreive and return the "
+                  "The scheduler MUST retrieve and return the "
                   "GUID from the service context\n"));
       return;
     }
