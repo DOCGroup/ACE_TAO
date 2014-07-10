@@ -84,6 +84,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       test1->destroy_POA ();
 
+      try
+        {
+          test2->method ();
+        }
+      catch (CORBA::Exception &ex)
+        {
+          ex._tao_print_exception ("expected");
+        }
+
       test_var test3 =
         test1->create_POA ();
 

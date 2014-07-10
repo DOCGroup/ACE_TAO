@@ -1,3 +1,11 @@
+Thu Jul 10 14:21:49 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/POA/Persistent_ID/client.cpp:
+        * tests/POA/Persistent_ID/server.cpp:
+          Fix the server to actually create an object on the persistent POA
+          and extend the test to add call to raise an exception. This aids
+          in testing the affect of the negative case on the server.
+
 Thu Jul  3 11:02:19 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_union/cdr_op_cs.cpp:
