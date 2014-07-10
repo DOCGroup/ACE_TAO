@@ -91,7 +91,9 @@ test_i::create_POA (void)
   policies.length (2);
 
   policies[0] =
-    this->poa_->create_id_assignment_policy (PortableServer::SYSTEM_ID);
+    this->poa_->create_id_assignment_policy
+    (this->oid_.ptr () == 0 ? PortableServer::SYSTEM_ID :
+     PortableServer::USER_ID);
 
   policies[1] =
     this->poa_->create_lifespan_policy (PortableServer::PERSISTENT);
@@ -99,7 +101,7 @@ test_i::create_POA (void)
   PortableServer::POAManager_var poa_manager =
     this->poa_->the_POAManager ();
 
-  ACE_CString name = "POA";
+  ACE_CString name = "childPOA";
   this->child_poa_ =
     this->poa_->create_POA (name.c_str (),
                             poa_manager.in (),
@@ -130,13 +132,9 @@ test_i::create_POA (void)
                                                  servant);
     }
 
-  PortableServer::ObjectId_var id =
-    this->poa_->activate_object (servant);
+  CORBA::Object_var object = this->child_poa_->id_to_reference (this->oid_.in ());
 
-  CORBA::Object_var object = this->poa_->id_to_reference (id.in ());
-
-  test_var test =
-    test::_narrow (object.in ());
+  test_var test = test::_narrow (object.in ());
 
   return test._retn ();
 }
