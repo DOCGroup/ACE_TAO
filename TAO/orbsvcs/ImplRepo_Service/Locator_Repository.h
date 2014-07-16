@@ -19,6 +19,7 @@
 #include "Server_Info.h"
 #include "Activator_Info.h"
 #include "Locator_Options.h"
+#include "ImR_LocatorC.h"
 
 #include "tao/IORTable/IORTable.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -92,6 +93,10 @@ public:
   int update_server (const Server_Info_Ptr& info);
   /// Update the associated information.
   int update_activator (const Activator_Info_Ptr& info);
+
+  /// Update the peer's access state
+  virtual void notify_remote_access (const char *id,
+                                     ImplementationRepository::AAM_Status state);
 
   /// Returns information related to startup.
   Server_Info_Ptr get_active_server (const ACE_CString& name, int pid = 0);

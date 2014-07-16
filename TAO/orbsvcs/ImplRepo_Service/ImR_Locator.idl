@@ -57,6 +57,27 @@ module ImplementationRepository
     SequenceNum seq_num;
   };
 
+  enum AAM_Status
+  {
+    AAM_INIT,
+    AAM_SERVER_STARTED_RUNNING,
+    AAM_ACTIVATION_SENT,
+    AAM_WAIT_FOR_RUNNING,
+    AAM_WAIT_FOR_PING,
+    AAM_WAIT_FOR_ALIVE,
+    AAM_SERVER_READY,
+    AAM_SERVER_DEAD,
+    AAM_NOT_MANUAL,
+    AAM_NO_ACTIVATOR,
+    AAM_NO_COMMANDLINE
+  };
+
+  struct AccessStateUpdate
+  {
+    string    name;
+    AAM_Status state;
+  };
+
   exception InvalidPeer
   {
     string reason;
@@ -64,6 +85,10 @@ module ImplementationRepository
 
   interface UpdatePushNotification
   {
+    /// provide information about access request status to allow primary
+    /// and backup ImR to both
+    oneway void notify_access_state_update (in AccessStateUpdate server);
+
     /// indicate existing server with name was updated
     oneway void notify_updated_server(in ServerUpdate server);
 

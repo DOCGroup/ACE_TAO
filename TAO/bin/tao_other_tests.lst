@@ -127,6 +127,7 @@ TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_listingcorrupt -replica: !MINI
 TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_activatorcorrupt -replica: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !Win32
 TAO/orbsvcs/tests/ImplRepo/run_test.pl persistent_servercorrupt -replica: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !Win32
 TAO/orbsvcs/tests/ImplRepo/NameService/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO
+TAO/orbsvcs/tests/ImplRepo/double_start/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !Win32
 TAO/orbsvcs/tests/ImplRepo/kill_server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/kill_slow_server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/oneway/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO

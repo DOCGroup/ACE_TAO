@@ -1,3 +1,35 @@
+Wed Jul 16 16:42:52 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.h:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.cpp:
+          This addresses certain situations when a primary and backup ImR
+          are coupled for fault tolerance, and a client detects the failure
+          of a server. The client may send a request to the backup ImR even
+          though the primary is running. This causes the backup ImR to send
+          a start request to the activator, but the started server will send
+          liveness updates to the primary, leaving the backup and the client
+          hung. Now the primary and backup ImR share liveness updates so the
+          backup can know when the server is ready and send a new forwardable
+          IOR back to the client.
+
+        * orbsvcs/tests/ImplRepo/double_start:
+        * bin/tao_other_tests.lst:
+          This is a new test that replicates the above scenario with the
+          added twist that a specialized "restart" script is the actual
+          process started by the activator which monitors the server exit
+          code and requests a restart if necessary. When combined with the
+          above failure, leads to a duplicate server running.
+
 Thu Jul 10 14:21:49 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/POA/Persistent_ID/client.cpp:
