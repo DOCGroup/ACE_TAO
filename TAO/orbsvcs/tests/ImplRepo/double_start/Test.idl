@@ -1,0 +1,20 @@
+// $Id$
+
+interface Test
+{
+
+  // Return the number of the server after a delay
+  short get_server_num (in short delay_secs);
+
+  // After replying, abort process
+  // delay_secs seconds.
+  oneway void abort ( in short delay_secs );
+
+
+  // for testing the crash recovery scenario
+  void arm ();
+
+  void trigger ();
+
+};
+

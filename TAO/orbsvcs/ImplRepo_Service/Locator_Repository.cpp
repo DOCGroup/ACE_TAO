@@ -423,6 +423,13 @@ Locator_Repository::update_activator (const Activator_Info_Ptr& info)
   return this->persistent_update(info, false);
 }
 
+void
+Locator_Repository::notify_remote_access (const char *,
+                                          ImplementationRepository::AAM_Status)
+{
+  // no-op default impl
+}
+
 Server_Info_Ptr
 Locator_Repository::find_by_poa (const ACE_CString & name)
 {

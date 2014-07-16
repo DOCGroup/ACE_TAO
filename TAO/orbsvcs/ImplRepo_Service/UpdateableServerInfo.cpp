@@ -37,13 +37,20 @@ UpdateableServerInfo::UpdateableServerInfo (UpdateableServerInfo& other)
 
 UpdateableServerInfo::~UpdateableServerInfo ()
 {
-  update_repo();
+  update_repo ();
 }
 
 void
 UpdateableServerInfo::server_info (const Server_Info_Ptr& si)
 {
   this->si_ = si;
+}
+
+void
+UpdateableServerInfo::notify_remote_access
+(ImplementationRepository::AAM_Status state)
+{
+  repo_->notify_remote_access (this->si_->ping_id (), state);
 }
 
 void

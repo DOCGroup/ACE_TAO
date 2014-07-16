@@ -13,6 +13,7 @@
 #define UPDATEABLE_SERVER_INFO_H
 
 #include "Server_Info.h"
+#include "ImR_LocatorC.h"
 
 class Locator_Repository;
 
@@ -49,6 +50,9 @@ public:
 
   /// explicitly update repo if needed
   void update_repo(void);
+
+  /// update remote access state
+  void notify_remote_access (ImplementationRepository::AAM_Status state);
 
   /// assign a server info
   void server_info (const Server_Info_Ptr& si);
