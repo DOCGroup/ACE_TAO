@@ -142,7 +142,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
       }
     case Options::REPO_SHARED_FILES:
       {
-        repository_.reset(new Shared_Backing_Store(opts, orb));
+        repository_.reset(new Shared_Backing_Store(opts, orb, this));
         break;
       }
     case Options::REPO_NONE:
@@ -407,6 +407,29 @@ ImR_Locator_i::unregister_activator_i (const char* aname)
 }
 
 void
+ImR_Locator_i::remote_access_update (const char *name,
+                                     ImplementationRepository::AAM_Status state)
+{
+  AsyncAccessManager_ptr aam (this->find_aam (name));
+  if (aam.is_nil())
+    {
+      UpdateableServerInfo info (this->repository_.get(), name);
+      if (info.null ())
+        {
+          if (debug_ > 0)
+            ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: remote_acccess %C unregistered.\n"),
+                            name));
+          return;
+        }
+      AsyncAccessManager *aam_raw;
+      ACE_NEW (aam_raw, AsyncAccessManager (info, true, *this));
+      aam = aam_raw;
+      this->aam_set_.insert_tail (aam);
+    }
+  aam->remote_state (state);
+}
+
+void
 ImR_Locator_i::notify_child_death
 (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
  const char* name)
@@ -520,7 +543,7 @@ ImR_Locator_i::activate_server
   if (debug_ > 1)
     {
       ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: Manually activating server <%C>\n"),
-                  server));
+                      server));
     }
 
   ImR_ResponseHandler *rh = 0;
@@ -1049,7 +1072,10 @@ ImR_Locator_i::server_is_running
           return;
         }
       info.server_info (si);
-      this->pinger_.add_server (si->ping_id (), this->ping_external_, srvobj.in());
+      if (!this->pinger_.has_server (si->ping_id ()))
+        {
+          this->pinger_.add_server (si->ping_id (), this->ping_external_, srvobj.in());
+        }
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (info, true, *this));
       AsyncAccessManager_ptr aam (aam_raw);
@@ -1063,7 +1089,10 @@ ImR_Locator_i::server_is_running
           info.edit ()->set_contact (partial_ior, sior.in(), srvobj.in());
 
           info.update_repo();
-          this->pinger_.add_server (info->ping_id(), true, srvobj.in());
+          if (!this->pinger_.has_server (info->ping_id ()))
+            {
+              this->pinger_.add_server (info->ping_id(), true, srvobj.in());
+            }
         }
 
       AsyncAccessManager_ptr aam(this->find_aam (info->ping_id ()));

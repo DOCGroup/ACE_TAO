@@ -25,25 +25,10 @@
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
 #include "LiveCheck.h"
 #include "UpdateableServerInfo.h"
+#include "ImR_LocatorC.h"
 
 class ImR_Locator_i;
 struct Server_Info;
-
-
-enum AAM_Status
-  {
-    AAM_INIT,
-    AAM_SERVER_STARTED_RUNNING,
-    AAM_ACTIVATION_SENT,
-    AAM_WAIT_FOR_RUNNING,
-    AAM_WAIT_FOR_PING,
-    AAM_WAIT_FOR_ALIVE,
-    AAM_SERVER_READY,
-    AAM_SERVER_DEAD,
-    AAM_NOT_MANUAL,
-    AAM_NO_ACTIVATOR,
-    AAM_NO_COMMANDLINE
-  };
 
 //----------------------------------------------------------------------------
 /*
@@ -77,9 +62,10 @@ class Locator_Export AsyncAccessManager
   void started_running (void);
 
   bool has_server (const char *name);
+  void remote_state (ImplementationRepository::AAM_Status s);
 
   void add_interest (ImR_ResponseHandler *rh);
-  AAM_Status status (void) const;
+  ImplementationRepository::AAM_Status status (void) const;
 
   void activator_replied (bool success);
   void server_is_running (const char *partial_ior,
@@ -90,10 +76,14 @@ class Locator_Export AsyncAccessManager
 
   AsyncAccessManager *_add_ref (void);
   void _remove_ref (void);
+  static const ACE_TCHAR *status_name (ImplementationRepository::AAM_Status s);
+  static bool is_final (ImplementationRepository::AAM_Status s);
 
  private:
   void final_state (void);
-  void status (AAM_Status s);
+  void notify_waiters (void);
+  void status (ImplementationRepository::AAM_Status s);
+  void update_status (ImplementationRepository::AAM_Status s);
   bool send_start_request (void);
 
   UpdateableServerInfo info_;
@@ -102,7 +92,7 @@ class Locator_Export AsyncAccessManager
   PortableServer::POA_var poa_;
   ACE_Vector<ImR_ResponseHandler *> rh_list_;
 
-  AAM_Status status_;
+  ImplementationRepository::AAM_Status status_;
 
   int refcount_;
   TAO_SYNCH_MUTEX lock_;

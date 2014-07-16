@@ -69,7 +69,6 @@ Server_Info::Server_Info (const ACE_CString& fqname,
 {
   this->is_jacorb = parse_id (fqname.c_str(), this->server_id, this->poa_name);
   Server_Info::gen_key (this->server_id, this->poa_name, this->key_name_);
-
   this->start_limit (limit);
 }
 
@@ -103,13 +102,13 @@ Server_Info::Server_Info (const ACE_CString& serverId,
 Server_Info *
 Server_Info::active_info (void)
 {
-   return this->alt_info_.null() ? this : this->alt_info_.get();
+  return this->alt_info_.null() ? this : this->alt_info_.get();
 }
 
 const Server_Info *
 Server_Info::active_info (void) const
 {
-   return this->alt_info_.null() ? this : this->alt_info_.get();
+  return this->alt_info_.null() ? this : this->alt_info_.get();
 }
 
 void

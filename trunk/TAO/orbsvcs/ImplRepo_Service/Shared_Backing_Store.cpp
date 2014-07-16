@@ -4,6 +4,8 @@
 #include "Shared_Backing_Store.h"
 #include "Server_Info.h"
 #include "Activator_Info.h"
+#include "AsyncAccessManager.h"
+#include "ImR_Locator_i.h"
 #include "utils.h"
 #include "LiveCheck.h"
 #include "Locator_XMLHandler.h"
@@ -291,15 +293,17 @@ namespace {
 //---------------------------------------------------------------------------
 
 Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
-                                           CORBA::ORB_ptr orb)
-: XML_Backing_Store(opts, orb, true),
-  listing_file_(opts.persist_file_name() + ACE_TEXT("imr_listing.xml")),
-  seq_num_(0),
-  replica_seq_num_(0),
-  imr_type_(opts.imr_type()),
-  sync_needed_(NO_SYNC),
-  repo_id_(1),
-  repo_values_(2)
+                                           CORBA::ORB_ptr orb,
+                                           ImR_Locator_i *loc_impl)
+: XML_Backing_Store (opts, orb, true),
+  listing_file_ (opts.persist_file_name() + ACE_TEXT("imr_listing.xml")),
+  seq_num_ (0),
+  replica_seq_num_ (0),
+  imr_type_ (opts.imr_type ()),
+  sync_needed_ (NO_SYNC),
+  repo_id_ (1),
+  repo_values_ (2),
+  loc_impl_ (loc_impl)
 {
   IMR_REPLICA[Options::PRIMARY_IMR] = ACE_TEXT ("ImR_ReplicaPrimary");
   IMR_REPLICA[Options::BACKUP_IMR] = ACE_TEXT ("ImR_ReplicaBackup");
@@ -1068,10 +1072,48 @@ Shared_Backing_Store::load_activator (const ACE_CString& activator_name,
 }
 
 void
+Shared_Backing_Store::notify_remote_access (const char * id,
+                                          ImplementationRepository::AAM_Status s)
+{
+  ImplementationRepository::AccessStateUpdate asu;
+  asu.name = id;
+  asu.state = s;
+  try
+    {
+      if (!CORBA::is_nil (this->peer_replica_))
+        {
+          this->peer_replica_->notify_access_state_update (asu);
+        }
+    }
+  catch (const CORBA::Exception &ex)
+    {
+      if (this->opts_.debug () > 0)
+        {
+          ex._tao_print_exception (ACE_TEXT ("notify remote access"));
+        }
+    }
+}
+
+
+void
+Shared_Backing_Store::notify_access_state_update
+(const ImplementationRepository::AccessStateUpdate& server)
+{
+  if (this->opts_.debug() > 4)
+    {
+      ORBSVCS_DEBUG ((LM_INFO,
+                      ACE_TEXT("(%P|%t) notify_access_state_update, %C now %s\n"),
+                      server.name.in(),
+                      AsyncAccessManager::status_name (server.state)));
+    }
+  this->loc_impl_->remote_access_update (server.name.in(), server.state);
+}
+
+void
 Shared_Backing_Store::notify_updated_server
 (const ImplementationRepository::ServerUpdate& server)
 {
-  if (this->opts_.debug() > 5)
+  if (this->opts_.debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT("(%P|%t) notify_updated_server=%C\n"),
                       server.name.in()));
@@ -1109,7 +1151,7 @@ void
 Shared_Backing_Store::notify_updated_activator(
   const ImplementationRepository::ActivatorUpdate& activator)
 {
-  if (this->opts_.debug() > 5)
+  if (this->opts_.debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_INFO,
                       ACE_TEXT("(%P|%t) notify_updated_activator = %C\n"),

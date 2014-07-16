@@ -71,22 +71,29 @@ public:
   enum ExtraParams { REPO_TYPE = 0, REPO_ID = 1 };
 
   Shared_Backing_Store (const Options& opts,
-                        CORBA::ORB_ptr orb);
+                        CORBA::ORB_ptr orb,
+                        ImR_Locator_i *loc_impl);
 
   virtual ~Shared_Backing_Store();
 
   /// indicate the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode() const;
 
+  virtual void notify_remote_access (const char *,
+                                     ImplementationRepository::AAM_Status);
+
+  virtual void notify_access_state_update
+  (const ImplementationRepository::AccessStateUpdate& server);
+
   /// provide the implementation for being notified of a
   /// server update
-  virtual void notify_updated_server (
-    const ImplementationRepository::ServerUpdate& server);
+  virtual void notify_updated_server
+  (const ImplementationRepository::ServerUpdate& server);
 
   /// provide the implementation for being notified of a
   /// activator update
-  virtual void notify_updated_activator(
-    const ImplementationRepository::ActivatorUpdate& activator);
+  virtual void notify_updated_activator
+  (const ImplementationRepository::ActivatorUpdate& activator);
 
   /// provide the implementation for registering a peer replica
   /// @param replica the peer replica
@@ -94,10 +101,10 @@ public:
   ///        as the replica's ImR IOR, passed back as fault
   ///        tolerant ImR IOR)
   /// @param seq_num current sequence number to return to replica
-  virtual void register_replica(
-    ImplementationRepository::UpdatePushNotification_ptr replica,
-    char*& ft_imr_ior,
-    ImplementationRepository::SequenceNum_out seq_num);
+  virtual void register_replica
+  (ImplementationRepository::UpdatePushNotification_ptr replica,
+   char*& ft_imr_ior,
+   ImplementationRepository::SequenceNum_out seq_num);
 
   /// enum to indicate whether the repo is in-sync, individual
   /// server and/or activator files need to be sync-ed or if
@@ -293,6 +300,8 @@ private:
   unsigned int repo_id_;
   /// extra parameters for XML
   XML_Backing_Store::NameValues repo_values_;
+  /// reference to the locator implmentation
+  ImR_Locator_i *loc_impl_;
 };
 
 #endif /* SHARED_BACKING_STORE_H */

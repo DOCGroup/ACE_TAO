@@ -165,6 +165,10 @@ public:
   void remove_aam (const char *name);
   AsyncAccessManager *find_aam (const char *name);
 
+  /// Receiving an update from remote peer
+  void remote_access_update (const char *name,
+                             ImplementationRepository::AAM_Status state);
+
 private:
 
   bool get_info_for_name (const char *name, Server_Info_Ptr &si);
