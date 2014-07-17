@@ -130,7 +130,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     IORTable::Table_var table = IORTable::Table::_narrow(obj.in());
     table->bind(poa_name_base.c_str (), test_ior.in());
 
-    ACE_DEBUG ((LM_DEBUG, "Started Server %s \n",
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Started Server %C \n"),
                 poa_name_base.c_str()));
 
     {
@@ -149,7 +149,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   }
   catch(const CORBA::Exception& ex) {
-    ex._tao_print_exception ("Server main()");
+    ex._tao_print_exception (ACE_TEXT("Server main()"));
     return 1;
   }
 
