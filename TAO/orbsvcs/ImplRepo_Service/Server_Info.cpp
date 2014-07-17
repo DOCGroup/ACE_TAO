@@ -305,11 +305,11 @@ Server_Info::ping_id (void) const
 }
 
 void
-Server_Info::set_contact (const char *partial_ior,
+Server_Info::set_contact (const char *pior,
                           const char *srv_ior,
                           ImplementationRepository::ServerObject_ptr svrobj)
 {
-  this->partial_ior = partial_ior;
+  this->partial_ior = pior;
   Server_Info *startup = this->active_info ();
   startup->ior = srv_ior;
   startup->server = ImplementationRepository::ServerObject::_duplicate (svrobj);
