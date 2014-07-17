@@ -89,15 +89,15 @@ TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager (void)
 }
 
 void
-TAO_FT_Naming_Manager::set_global_strategy (const char *name)
+TAO_FT_Naming_Manager::set_global_strategy (const ACE_TCHAR *name)
 {
-  if (ACE_OS::strcasecmp (name,"round") == 0 ||
-      ACE_OS::strcasecmp (name,"round_robin") == 0)
+  if (ACE_OS::strcasecmp (name, ACE_TEXT ("round")) == 0 ||
+      ACE_OS::strcasecmp (name, ACE_TEXT ("round_robin")) == 0)
     {
       this->use_global_ = true;
       this->global_strategy_ = ::FT_Naming::ROUND_ROBIN;
     }
-  else if (ACE_OS::strcasecmp (name,"random") == 0)
+  else if (ACE_OS::strcasecmp (name, ACE_TEXT ("random")) == 0)
     {
       this->use_global_ = true;
       this->global_strategy_ = ::FT_Naming::RANDOM;

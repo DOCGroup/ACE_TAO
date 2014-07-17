@@ -279,7 +279,7 @@ public:
   void set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info);
 
   /// Initialize a global load balancing strategy
-  void set_global_strategy (const char *strat_name);
+  void set_global_strategy (const ACE_TCHAR *strat_name);
 
   /// Destructor.
   ~TAO_FT_Naming_Manager (void);
