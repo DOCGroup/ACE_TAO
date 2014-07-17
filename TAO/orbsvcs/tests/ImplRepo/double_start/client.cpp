@@ -78,6 +78,7 @@ do_restart_test (void)
   try
     {
       test->trigger ();
+      ACE_DEBUG ((LM_DEBUG, "client trigger completed\n"));
       return;
     }
   catch (const CORBA::Exception& ex)

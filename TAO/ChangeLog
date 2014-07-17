@@ -1,3 +1,12 @@
+Thu Jul 17 19:14:51 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/double_start/client.cpp:
+        * orbsvcs/tests/ImplRepo/double_start/clt.conf:
+          add the reply close retry option and update the client output.
+
+        * orbsvcs/tests/ImplRepo/ping_interrupt/server.cpp:
+          Make the test wchar compatible.
+
 Thu Jul 17 13:19:54 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
