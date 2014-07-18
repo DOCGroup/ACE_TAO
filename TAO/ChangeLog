@@ -1,3 +1,9 @@
+Fri Jul 18 20:33:17 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+          Replace the error inducing exception report as the condition
+          is not an error.
+
 Thu Jul 17 21:41:37 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Server_Info.cpp:

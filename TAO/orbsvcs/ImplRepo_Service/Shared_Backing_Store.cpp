@@ -1087,9 +1087,13 @@ Shared_Backing_Store::notify_remote_access (const char * id,
     }
   catch (const CORBA::Exception &ex)
     {
-      if (this->opts_.debug () > 0)
+      if (this->opts_.debug () > 4)
         {
-          ex._tao_print_exception (ACE_TEXT ("notify remote access"));
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) notify remote access caught %C sending ")
+                          ACE_TEXT ("%C to %s\n"),
+                          ex._name (), id,
+                          AsyncAccessManager::status_name (s)));
         }
     }
 }
