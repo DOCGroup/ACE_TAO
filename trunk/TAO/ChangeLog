@@ -1,3 +1,12 @@
+Thu Jul 24 16:28:19 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Revert part of the change from Wed Jul 16 16:42:52 UTC 2014
+          that limited when servers were added to the liveness checker.
+          That change broke some of the tests such as the Bug 4152
+          regression test. See the note attached to the #if 0 compile
+          guard.
+
 Fri Jul 18 20:33:17 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
