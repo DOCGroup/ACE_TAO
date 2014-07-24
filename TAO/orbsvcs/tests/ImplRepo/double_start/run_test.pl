@@ -12,6 +12,8 @@ use PerlACE::TestTarget;
 $status = 0;
 $debuglevel = 0;
 $cltdbg = 1;
+$kill = 0;
+$server_pid = 0;
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
@@ -22,6 +24,9 @@ if ($#ARGV >= 0) {
             $i++;
 	    $cltdbg = $ARGV[$i];
 	}
+        elsif ($ARGV[$i] eq '-kill') {
+            $kill = 1;
+        }
 	else {
             usage();
 	    exit 1;
@@ -185,19 +190,46 @@ sub kill_imr
     return 1;
 }
 
+sub kill_primary
+{
+    print "Killing primary ImR\n";
+    $IMR->Kill (); $IMR->TimedWait (1);
+}
+
+sub get_server_pid
+{
+    my $pid = 0;
+    open (FILE, "server.pid") or die "Can't open server.pid: $!";
+    while (<FILE>) {
+      $pid = $_;
+    }
+    close FILE;
+    return $pid;
+}
+
+sub signal_server
+{
+    my $sig = shift;
+    $server_pid = get_server_pid () if ($server_pid == 0);
+    print "signal $sig to server $server_pid\n";
+    kill ($sig, $server_pid);
+}
+
 sub start_imr
 {
+    my $all = shift;
     my $debugbase = "-ORBDebugLevel $debuglevel " .
                     "-ORBVerboseLogging 1 -ORBLogFile ";
-    my $actargs = "-l -o $act_actiorfile $act_initref";
+    my $actargs = "-l -o $act_actiorfile $act_initref -ORBListenEndpoints iiop://127.0.0.1:
+";
 
-    my $imrargs = " -d $debuglevel -v 1000 " .
+    my $imrargs = " -d $debuglevel -i -v 1000 " .
         "--directory . --primary " .
-        "-ORBListenEndpoints iiop://localhost:$port";
+        "-ORBListenEndpoints iiop://127.0.0.1:$port";
 
-    my $rimrargs = " -d $debuglevel -v 1000 -o $imr_imriorfile " .
+    my $rimrargs = " -d $debuglevel -i -v 1000 -o $imr_imriorfile " .
         "--directory . --backup " .
-        "-ORBListenEndpoints iiop://localhost:$rport";
+        "-ORBListenEndpoints iiop://127.0.0.1:$rport";
 
     if ($debuglevel > 0) {
         $imrargs .= " $debugbase $imrlogfile";
@@ -225,51 +257,53 @@ sub start_imr
         return 1;
     }
 
-    $IMR_status = $RIMR->Spawn ();
-    if ($IMR_status != 0) {
-        print STDERR "ERROR: replica ImplRepo Service returned $IMR_status\n";
-        $IMR->Kill (); $IMR->TimedWait (1);
-        return 1;
-    }
-    if ($imr->WaitForFileTimed ($imriorfile, $imr->ProcessStartWaitInterval()) == -1) {
-        print STDERR "ERROR: cannot find file <$imr_imriorfile>\n";
-        $IMR->Kill (); $IMR->TimedWait (1);
-        $RIMR->Kill (); $RIMR->TimedWait (1);
-        return 1;
-    }
+    if ($all == 1) {
+        $IMR_status = $RIMR->Spawn ();
+        if ($IMR_status != 0) {
+            print STDERR "ERROR: replica ImplRepo Service returned $IMR_status\n";
+            $IMR->Kill (); $IMR->TimedWait (1);
+            return 1;
+        }
+        if ($imr->WaitForFileTimed ($imriorfile, $imr->ProcessStartWaitInterval()) == -1) {
+            print STDERR "ERROR: cannot find file <$imr_imriorfile>\n";
+            $IMR->Kill (); $IMR->TimedWait (1);
+            $RIMR->Kill (); $RIMR->TimedWait (1);
+            return 1;
+        }
 
-    if ($imr->GetFile ($imriorfile) == -1) {
-        print STDERR "ERROR: cannot retrieve file <$imr_imriorfile>\n";
-        $IMR->Kill (); $IMR->TimedWait (1);
-        $RIMR->Kill (); $RIMR->TimedWait (1);
-        return 1;
-    }
-    if ($act->PutFile ($imriorfile) == -1) {
-        print STDERR "ERROR: cannot set file <$act_imriorfile>\n";
-        $IMR->Kill (); $IMR->TimedWait (1);
-        $RIMR->Kill (); $RIMR->TimedWait (1);
-        return 1;
-    }
-    if ($ti->PutFile ($imriorfile) == -1) {
-        print STDERR "ERROR: cannot set file <$ti_imriorfile>\n";
-        $IMR->Kill (); $IMR->TimedWait (1);
-        $RIMR->Kill (); $RIMR->TimedWait (1);
-        return 1;
-    }
-    if ($srv->PutFile ($imriorfile) == -1) {
-        print STDERR "ERROR: cannot set file <$srv_imriorfile>\n";
-        $IMR->Kill (); $IMR->TimedWait (1);
-        $RIMR->Kill (); $RIMR->TimedWait (1);
-        return 1;
-    }
+        if ($imr->GetFile ($imriorfile) == -1) {
+            print STDERR "ERROR: cannot retrieve file <$imr_imriorfile>\n";
+            $IMR->Kill (); $IMR->TimedWait (1);
+            $RIMR->Kill (); $RIMR->TimedWait (1);
+            return 1;
+        }
+        if ($act->PutFile ($imriorfile) == -1) {
+            print STDERR "ERROR: cannot set file <$act_imriorfile>\n";
+            $IMR->Kill (); $IMR->TimedWait (1);
+            $RIMR->Kill (); $RIMR->TimedWait (1);
+            return 1;
+        }
+        if ($ti->PutFile ($imriorfile) == -1) {
+            print STDERR "ERROR: cannot set file <$ti_imriorfile>\n";
+            $IMR->Kill (); $IMR->TimedWait (1);
+            $RIMR->Kill (); $RIMR->TimedWait (1);
+            return 1;
+        }
+        if ($srv->PutFile ($imriorfile) == -1) {
+            print STDERR "ERROR: cannot set file <$srv_imriorfile>\n";
+            $IMR->Kill (); $IMR->TimedWait (1);
+            $RIMR->Kill (); $RIMR->TimedWait (1);
+            return 1;
+        }
 
-    $ACT_status = $ACT->Spawn ();
-    if ($ACT_status != 0) {
-        print STDERR "ERROR: ImR Activator returned $ACT_status\n";
-        return 1;
-    }
-    if ($act->WaitForFileTimed ($actiorfile,$act->ProcessStartWaitInterval()) == -1) {
-        return kill_imr ("cannot find file <$act_imriorfile>");
+        $ACT_status = $ACT->Spawn ();
+        if ($ACT_status != 0) {
+            print STDERR "ERROR: ImR Activator returned $ACT_status\n";
+            return 1;
+        }
+        if ($act->WaitForFileTimed ($actiorfile,$act->ProcessStartWaitInterval()) == -1) {
+            return kill_imr ("cannot find file <$act_imriorfile>");
+        }
     }
 }
 
@@ -290,7 +324,7 @@ sub run_client
     print "running client $args\n";
 
     $CLT->Arguments ($args);
-    if ($CLT->SpawnWaitKill ($clt->ProcessStartWaitInterval()) == -1) {
+    if ($CLT->SpawnWaitKill ($clt->ProcessStartWaitInterval() + 120) == -1) {
         print STDERR "ERROR: client failed\n";
         return 1;
     }
@@ -298,16 +332,11 @@ sub run_client
 
 sub do_ti_command
 {
-    my $delstat = shift;
     my $cmd = shift;
     my $cmdargs1 = shift;
     my $cmdargs2 = shift;
 
     my $obj_name = $objprefix . "0";
-    if ($delstat != 0) {
-        my $status_file_name = $obj_name . ".status";
-        $srv->DeleteFile ($status_file_name);
-    }
     my $cmdargs = $cmdargs1;
     $cmdargs .= "0 $cmdargs2" if (length ($cmdargs2) > 0);
     print "invoking ti cmd $cmd $obj_name $cmdargs\n" if ($debuglevel > 0);
@@ -343,26 +372,85 @@ sub list_active_servers
     return $active_servers;
 }
 
-sub servers_list_test
+sub kill_primary_test
+{
+    print "Running double server start test killing the primary ImR.\n";
+
+    my $result = 0;
+    my $start_time = time();
+
+    if (start_imr (1) != 0) {
+        return 1;
+    }
+
+    my $cmdline = $server_cmd . " -o $srviorfile -ORBUseIMR 1 -n 0 $act_initref "
+        . "-ORBListenEndpoints iiop://127.0.0.1:";
+    $cmdline = "./restart.sh -e \\\"$cmdline\\\" -p 0 -r 0 -s $objprefix" . "0";
+
+    if (do_ti_command ("add", "-c \"$cmdline\"") != 0) {
+        return 1;
+    }
+
+    if (do_ti_command ("start") != 0) {
+        return 1;
+    }
+
+    list_active_servers ("-v");
+
+    signal_server ("STOP");
+    kill_primary ();
+    sleep 2;
+    start_imr (0);
+    sleep 2;
+    print "starting client\n";
+
+    if (run_client () != 0) {
+        return 1;
+    }
+
+    signal_server ("CONT");
+
+    my $final_pid = get_server_pid ();
+    if ($final_pid != $server_pid) {
+        print "first server pid was $server_pid, but now there is $final_pid\n";
+        $server_pid = $final_pid;
+        signal_server ("TERM");
+        $status = 1;
+    }
+
+    if (do_ti_command ("shutdown") != 0) {
+        return 1;
+    }
+
+    kill_imr ("");
+
+    my $test_time = time() - $start_time;
+
+    print "\nFinished. The test took $test_time seconds.\n";
+
+    return $status;
+}
+
+sub double_server_test
 {
     print "Running double server start test.\n";
 
     my $result = 0;
     my $start_time = time();
 
-    if (start_imr () != 0) {
+    if (start_imr (1) != 0) {
         return 1;
     }
 
     my $cmdline = $server_cmd . " -o $srviorfile -ORBUseIMR 1 -n 0 $act_initref "
-        . "-ORBListenEndpoints iiop://localhost:";
+        . "-ORBListenEndpoints iiop://127.0.0.1:";
     $cmdline = "./restart.sh -e \\\"$cmdline\\\" -p 0 -r 0 -s $objprefix" . "0";
 
-    if (do_ti_command (0, "add", "-c \"$cmdline\"") != 0) {
+    if (do_ti_command ("add", "-c \"$cmdline\"") != 0) {
         return 1;
     }
 
-    if (do_ti_command (0, "start") != 0) {
+    if (do_ti_command ("start") != 0) {
         return 1;
     }
 
@@ -372,7 +460,7 @@ sub servers_list_test
         return 1;
     }
 
-    if (do_ti_command (1, "shutdown") != 0) {
+    if (do_ti_command ("shutdown") != 0) {
         return 1;
     }
 
@@ -396,6 +484,12 @@ sub usage() {
 
 delete_files (1);
 
-my $ret = servers_list_test();
+$ret = 0;
+if ($kill) {
+    $ret = kill_primary_test ();
+}
+else {
+    $ret = double_server_test ();
+}
 
 exit $ret;

@@ -1072,15 +1072,8 @@ ImR_Locator_i::server_is_running
           return;
         }
       info.server_info (si);
-#if 0 // temporarily suspended, it broke some tests, need to review motivation for this
-      // fix and refactor
-      if (!this->pinger_.has_server (si->ping_id ()))
-        {
-          this->pinger_.add_server (si->ping_id (), this->ping_external_, srvobj.in());
-        }
-#else
       this->pinger_.add_server (si->ping_id (), this->ping_external_, srvobj.in());
-#endif
+
       AsyncAccessManager *aam_raw;
       ACE_NEW (aam_raw, AsyncAccessManager (info, true, *this));
       AsyncAccessManager_ptr aam (aam_raw);
@@ -1094,15 +1087,7 @@ ImR_Locator_i::server_is_running
           info.edit ()->set_contact (partial_ior, sior.in(), srvobj.in());
 
           info.update_repo();
-#if 0 // temporarily suspended, it broke some tests, need to review motivation for this
-      // fix and refactor
-          if (!this->pinger_.has_server (info->ping_id ()))
-            {
-              this->pinger_.add_server (info->ping_id(), true, srvobj.in());
-            }
-#else
           this->pinger_.add_server (info->ping_id(), true, srvobj.in());
-#endif
         }
 
       AsyncAccessManager_ptr aam(this->find_aam (info->ping_id ()));

@@ -1051,6 +1051,10 @@ Shared_Backing_Store::load_server (Server_Info *info,
     }
   if (!was_started && is_started)
     {
+      CORBA::Object_var obj =
+        this->loc_impl_->set_timeout_policy (si->server.in (),
+                                             ACE_Time_Value (1,0));
+      si->server = ImplementationRepository::ServerObject::_narrow (obj.in ());
       this->opts_.pinger ()->add_server (info->key_name_.c_str (),
                                          this->opts_.ping_external (),
                                          si->server);

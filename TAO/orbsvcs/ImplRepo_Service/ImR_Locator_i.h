@@ -169,6 +169,10 @@ public:
   void remote_access_update (const char *name,
                              ImplementationRepository::AAM_Status state);
 
+  CORBA::Object_ptr set_timeout_policy(CORBA::Object_ptr obj,
+                                       const ACE_Time_Value& to);
+
+
 private:
 
   bool get_info_for_name (const char *name, Server_Info_Ptr &si);
@@ -184,9 +188,6 @@ private:
   void connect_activator (Activator_Info& info);
 
   void auto_start_servers(void);
-
-  CORBA::Object_ptr set_timeout_policy(CORBA::Object_ptr obj,
-                                       const ACE_Time_Value& to);
 
   void connect_server(UpdateableServerInfo& info);
 

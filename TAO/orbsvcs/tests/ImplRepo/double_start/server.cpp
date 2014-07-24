@@ -74,9 +74,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
         case '?':
           ACE_DEBUG ((LM_DEBUG,
-                      "usage: %s "
-                      "-d <seconds to delay before initializing POA> "
-                      "-n Number of the server\n",
+                      ACE_TEXT ("usage: %s ")
+                      ACE_TEXT ("-d <seconds to delay before initializing POA> ")
+                      ACE_TEXT ("-n Number of the server\n"),
                       argv[0]));
           return 1;
           break;
@@ -147,13 +147,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     mgr->activate();
 
     ACE_DEBUG ((LM_DEBUG,
-      "Started Server %s \n",
-      poa_name.c_str()));
+                ACE_TEXT ("Started Server <%C>\n"),
+                poa_name.c_str()));
 
+    ACE_CString pid_file = "server.pid";
     {
-      ACE_CString status_file = poa_name + ACE_CString(".status");
-      ofstream out(status_file.c_str ());
-      out << "started" << endl;
+      ofstream out(pid_file.c_str ());
+      out << ACE_OS::getpid () << endl;
     }
 
     orb->run();
@@ -161,9 +161,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     root_poa->destroy(1,1);
     orb->destroy();
 
+    ACE_OS::unlink (pid_file.c_str ());
+
   }
   catch(const CORBA::Exception& ex) {
-    ex._tao_print_exception ("Server main()");
+    ex._tao_print_exception (ACE_TEXT ("Server main()"));
     return 1;
   }
 
