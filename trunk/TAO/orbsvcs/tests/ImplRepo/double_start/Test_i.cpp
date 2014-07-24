@@ -49,8 +49,8 @@ Test_i::trigger (void)
 {
   if (this->armed_)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P) BOOM!\n"));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) BOOM!\n")));
       ACE_OS::exit (1);
     }
-  ACE_DEBUG ((LM_DEBUG, "(%P) Click! not armed, returning\n"));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) Click! not armed, returning\n")));
 }
