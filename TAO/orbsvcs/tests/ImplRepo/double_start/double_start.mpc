@@ -22,7 +22,7 @@ project(*server): portableserver, orbsvcsexe, avoids_minimum_corba, iortable, im
   }
 }
 
-project(*client): taoclient, orbsvcslib, messaging, pi, avoids_minimum_corba, threads {
+project(*client): taoclient, orbsvcslib, svc_utils, messaging, pi, avoids_minimum_corba, threads {
   after += *idl
   exename = client
   Source_Files {

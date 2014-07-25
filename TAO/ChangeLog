@@ -1,3 +1,8 @@
+Fri Jul 25 21:04:25 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/double_start/double_start.mpc:
+          add a missed dependency.
+
 Thu Jul 24 21:42:52 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
