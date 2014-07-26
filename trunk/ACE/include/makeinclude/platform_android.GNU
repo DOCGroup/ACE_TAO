@@ -34,7 +34,7 @@ ifeq (,$(CROSS_COMPILE))
     CROSS_COMPILE=arm-linux-androideabi-
   else
     ifeq ($(ANDROID_ARCH),x86)
-      CROSS_COMPILE=i686-android-linux-
+      CROSS_COMPILE=i686-linux-android-
     else
       CROSS_COMPILE=unknown-android-arch-
     endif
