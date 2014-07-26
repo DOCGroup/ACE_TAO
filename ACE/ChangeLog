@@ -1,3 +1,12 @@
+Sat Jul 26 17:57:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Mention ACE::make_event_handler<T>
+
+        * include/makeinclude/platform_android.GNU:
+          Corrected compiler prefix for x86, thanks to David Lifshitz
+          <dlifshitz at macadamian dot com> for reporting this
+
 Thu Jul  3 10:47:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Event_Handler.h:
