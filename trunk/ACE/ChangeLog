@@ -1,3 +1,18 @@
+Sun Jul 27 15:39:21 UTC 2014  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd:
+          If we are building ACE/TAO/CIAO/whatever for a target other than
+          the build host, we certainly shouln't be looking in the host
+          library directories to verify the existance of a library
+          for the purposes of the LIBCHECK step.
+
+          This introduces two new variables that a user may optionally
+          set to control where we look: LIBCHECK_PREFIX, onto which we
+          append /lib and /lib64 (e.g., $(LIBCHECK_PREFIX)/lib), which
+          defaults to /usr; LIBCHECK_EXTRA_PATHS, which allows the
+          user to specify extra places to look when we are seeking
+          to confirm the existance of libraries.
+
 Sat Jul 26 17:57:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
