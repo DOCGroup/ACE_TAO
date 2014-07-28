@@ -64,6 +64,7 @@ AsyncListManager::init_list (void)
         {
           ListLiveListener *l = 0;
           ACE_NEW (l, ListLiveListener (info->ping_id (),
+                                        info->pid,
                                         i,
                                         this,
                                         *this->pinger_));
@@ -77,7 +78,7 @@ AsyncListManager::init_list (void)
             }
           else
             {
-              if (!evaluate_status (i,l->status()))
+              if (!evaluate_status (i, l->status(), info->pid))
                 {
                   this->waiters_++;
                 }
@@ -271,7 +272,7 @@ AsyncListManager::list_i (CORBA::ULong start, CORBA::ULong count)
 }
 
 bool
-AsyncListManager::evaluate_status (CORBA::ULong index, LiveStatus status)
+AsyncListManager::evaluate_status (CORBA::ULong index, LiveStatus status, int pid)
 {
   bool is_final = true;
   switch (status)
@@ -286,8 +287,8 @@ AsyncListManager::evaluate_status (CORBA::ULong index, LiveStatus status)
         ImplementationRepository::ACTIVE_MAYBE;
       break;
     case LS_DEAD:
-      this->server_list_[index].activeStatus =
-        ImplementationRepository::ACTIVE_NO;
+      this->server_list_[index].activeStatus = (pid == 0) ?
+        ImplementationRepository::ACTIVE_NO : ImplementationRepository::ACTIVE_MAYBE;
       break;
     default:
       is_final = false;
@@ -296,16 +297,16 @@ AsyncListManager::evaluate_status (CORBA::ULong index, LiveStatus status)
 }
 
 void
-AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status)
+AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status, int pid)
 {
   if (ImR_Locator_i::debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncListManager(%@)::ping_replied, index = %d ")
-                      ACE_TEXT ("status = %C, waiters = %d\n"),
-                      this,index, LiveEntry::status_name (status), this->waiters_));
+                      ACE_TEXT ("status = %C, server pid = %d, waiters = %d\n"),
+                      this,index, LiveEntry::status_name (status), pid, this->waiters_));
     }
-  if (evaluate_status (index, status))
+  if (evaluate_status (index, status, pid))
     {
       if (--this->waiters_ == 0)
         {
@@ -341,6 +342,7 @@ AsyncListManager::_remove_ref (void)
 //---------------------------------------------------------------------------
 
 ListLiveListener::ListLiveListener (const char *server,
+                                    int pid,
                                     CORBA::ULong index,
                                     AsyncListManager *owner,
                                     LiveCheck &pinger)
@@ -349,7 +351,8 @@ ListLiveListener::ListLiveListener (const char *server,
    pinger_ (pinger),
    status_ (LS_UNKNOWN),
    index_ (index),
-   started_ (false)
+   started_ (false),
+   pid_ (pid)
 {
 }
 
@@ -388,7 +391,7 @@ ListLiveListener::status_changed (LiveStatus status)
   else
     {
       if (this->started_)
-        this->owner_->ping_replied (this->index_, status);
+        this->owner_->ping_replied (this->index_, status, this->pid_);
     }
   return true;
 }
