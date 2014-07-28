@@ -40,17 +40,17 @@ parse_args (int argc, ACE_TCHAR **argv)
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k IOR "
-                           "-x shutdown server "
-                           "\n",
+                           ACE_TEXT ("usage:  %s ")
+                           ACE_TEXT ("-k IOR ")
+                           ACE_TEXT ("-x shutdown server ")
+                           ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
       }
 
   if (IOR == 0)
     ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR\n"), -1);
+                       ACE_TEXT ("Please specify the IOR\n")), -1);
 
   return 0;
 }
@@ -90,7 +90,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       catch (CORBA::Exception &ex)
         {
-          ex._tao_print_exception ("expected");
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("caught expected %s\n"),
+                      ex._name));
         }
 
       test_var test3 =
@@ -109,7 +111,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Error!");
+      ex._tao_print_exception (ACE_TEXT ("Error!"));
       return -1;
     }
 
