@@ -1,3 +1,9 @@
+Mon Jul 28 13:59:12 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/POA/Persistent_ID/client.cpp:
+          Fix the reporting of an expected exception so it is not recorded
+          as an error.
+
 Fri Jul 25 21:04:25 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/double_start/double_start.mpc:
