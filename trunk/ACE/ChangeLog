@@ -1,3 +1,9 @@
+Mon Jul 28 18:24:09 UTC 2014  William R. Otte  <wotte@dre.vanderbilt.edu>
+
+        * ace/ace.mpc:
+          ace_install_pkgconfig.pl is required in the installed version
+          if a user wishes to compile TAO from an installed ACE.
+
 Mon Jul 28 17:27:49 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Timer_Wheel_T.cpp:
