@@ -92,7 +92,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("caught expected %s\n"),
-                      ex._name));
+                      ex._name()));
         }
 
       test_var test3 =
