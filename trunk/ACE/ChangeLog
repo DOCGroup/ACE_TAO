@@ -1,3 +1,10 @@
+Mon Jul 28 17:27:49 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Timer_Wheel_T.cpp:
+          Fixed compile error when using this template, thanks to
+          Erik Sohns <erik dot sohns at web dot de> for reporting this, this
+          fixed partly bugzilla 4172
+
 Sun Jul 27 15:39:21 UTC 2014  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * bin/MakeProjectCreator/templates/gnu.mpd:
