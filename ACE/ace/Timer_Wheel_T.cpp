@@ -809,14 +809,10 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter (void)
   return *this->iterator_;
 }
 
-/**
-* Dummy version of expire to get rid of warnings in Sun CC 4.2
-* Just call the expire of the base class.
-*/
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire ()
 {
-  return ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK>::expire ();
+  return ACE_Timer_Queue_T<TYPE,FUNCTOR,ACE_LOCK,TIME_POLICY>::expire ();
 }
 
 /**
