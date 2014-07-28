@@ -53,8 +53,8 @@ class AsyncListManager
   CORBA::ULong list (ImplementationRepository::AMH_ServerInformationIteratorResponseHandler_ptr _tao_rh,
                      CORBA::ULong start, CORBA::ULong count);
 
-  bool evaluate_status (CORBA::ULong index, LiveStatus status);
-  void ping_replied (CORBA::ULong index, LiveStatus status);
+  bool evaluate_status (CORBA::ULong index, LiveStatus status, int pid);
+  void ping_replied (CORBA::ULong index, LiveStatus status, int pid);
 
   AsyncListManager *_add_ref (void);
   void _remove_ref (void);
@@ -89,6 +89,7 @@ class ListLiveListener : public LiveListener
 {
  public:
   ListLiveListener (const char * server,
+                    int pid,
                     CORBA::ULong index,
                     AsyncListManager *owner,
                     LiveCheck &pinger);
@@ -105,6 +106,7 @@ class ListLiveListener : public LiveListener
   LiveStatus status_;
   CORBA::ULong index_;
   bool started_;
+  int pid_;
 };
 
 #endif /* IMR_ASYNCACCESSMANGER_H_  */

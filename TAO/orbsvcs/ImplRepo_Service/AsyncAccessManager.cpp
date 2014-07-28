@@ -340,6 +340,11 @@ AsyncAccessManager::ping_replied (LiveStatus server)
       {
         if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_PING)
           {
+            if (this->info_->pid != 0)
+              {
+                this->status (ImplementationRepository::AAM_SERVER_READY);
+                break;
+              }
             if (this->send_start_request ())
               {
                 return;
