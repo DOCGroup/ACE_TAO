@@ -1,3 +1,8 @@
+Wed Jul 30 13:14:34 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+          fix a VMS compile error.
+
 Mon Jul 28 20:39:57 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:

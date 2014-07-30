@@ -1084,7 +1084,7 @@ Shared_Backing_Store::notify_remote_access (const char * id,
   asu.state = s;
   try
     {
-      if (!CORBA::is_nil (this->peer_replica_))
+      if (!CORBA::is_nil (this->peer_replica_.in ()))
         {
           this->peer_replica_->notify_access_state_update (asu);
         }
