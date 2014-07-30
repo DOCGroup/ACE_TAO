@@ -442,7 +442,7 @@ sub double_server_test
         return 1;
     }
 
-    my $cmdline = $server_cmd . " -o $srviorfile -ORBUseIMR 1 -n 0 $act_initref "
+    my $cmdline = $server_cmd . " -o $srviorfile -ORBUseIMR 1 -m 10 -n 0 $act_initref "
         . "-ORBListenEndpoints iiop://127.0.0.1:";
     $cmdline = "./restart.sh -e \\\"$cmdline\\\" -p 0 -r 0 -s $objprefix" . "0";
 

@@ -1,3 +1,17 @@
+Wed Jul 30 16:47:24 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/double_start/Test.idl:
+        * orbsvcs/tests/ImplRepo/double_start/Test_i.h:
+        * orbsvcs/tests/ImplRepo/double_start/Test_i.cpp:
+        * orbsvcs/tests/ImplRepo/double_start/client.cpp:
+        * orbsvcs/tests/ImplRepo/double_start/double_start.mpc:
+        * orbsvcs/tests/ImplRepo/double_start/run_test.pl:
+        * orbsvcs/tests/ImplRepo/double_start/server.cpp:
+        * orbsvcs/tests/ImplRepo/double_start/Terminator.h:
+        * orbsvcs/tests/ImplRepo/double_start/Terminator.cpp:
+          Clean up the test to remove unused code, address a valgrind
+          reported leak.
+
 Wed Jul 30 16:04:35 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/DynamicAny/DynAny_i.cpp:
