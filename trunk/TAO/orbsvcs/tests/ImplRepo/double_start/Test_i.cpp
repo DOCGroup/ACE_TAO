@@ -1,41 +1,17 @@
 /* -*- C++ -*- $Id$ */
 
 #include "Test_i.h"
-#include "Terminator.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 
-Test_i::Test_i (CORBA::Short server_num, Terminator &terminator)
-  : server_num_ (server_num)
-  , terminator_ (terminator)
+Test_i::Test_i (CORBA::ORB_ptr orb)
+  : orb_ (CORBA::ORB::_duplicate (orb))
   , armed_ (false)
+  , exit_code_ (0)
 {
 }
 
 Test_i::~Test_i ()
 {
-  ACE_Message_Block *mb = 0;
-  ACE_NEW (mb,
-           ACE_Message_Block(0,
-                             ACE_Message_Block::MB_HANGUP));
-  terminator_.putq (mb);
-  terminator_.wait ();
-}
-
-CORBA::Short
-Test_i::get_server_num (const CORBA::Short delay_secs)
-{
-  ACE_OS::sleep (delay_secs);
-  return this->server_num_;
-}
-
-void
-Test_i::abort (CORBA::Short delay_secs)
-{
-  ACE_Message_Block *mb = 0;
-  ACE_NEW(mb, ACE_Message_Block(2));
-  ACE_OS::sprintf(mb->wr_ptr (), "%d", delay_secs);
-  terminator_.putq(mb);
 }
 
 void
@@ -50,7 +26,19 @@ Test_i::trigger (void)
   if (this->armed_)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) BOOM!\n")));
-      ACE_OS::exit (1);
+      //      ACE_OS::exit (1);
+      this->exit_code_ = 2;
+      this->orb_->shutdown (false);
     }
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P) Click! not armed, returning\n")));
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) Click! not armed, returning\n")));
+    }
+}
+
+int
+Test_i::exit_code (void) const
+{
+  return exit_code_;
 }

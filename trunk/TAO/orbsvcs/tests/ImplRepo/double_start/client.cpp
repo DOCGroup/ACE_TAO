@@ -9,14 +9,13 @@
 #include "tao/AnyTypeCode/Any.h"
 
 int request_delay_secs = 0;
-bool server_abort = false;
 const ACE_TCHAR *ior = ACE_TEXT ("");
 CORBA::ORB_var orb;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:d:a"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:d:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -24,10 +23,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'd':
         request_delay_secs = ACE_OS::atoi(get_opts.opt_arg ());
-        break;
-
-      case 'a':
-        server_abort = true;
         break;
 
       case 'k':
@@ -39,7 +34,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s ")
                            ACE_TEXT ("-d <request delay in seconds> ")
-                           ACE_TEXT ("-a [abort server] ")
                            ACE_TEXT ("\n"),
                            argv [0]),
                           -1);
@@ -86,27 +80,6 @@ set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& to)
 }
 
 void
-do_number_test (void)
-{
-  CORBA::Object_var obj = orb->resolve_initial_references("Test");
-  ACE_ASSERT (!CORBA::is_nil(obj.in()));
-  Test_var test = Test::_narrow( obj.in() );
-  ACE_ASSERT (!CORBA::is_nil(test.in()));
-
-  if (server_abort)
-    {
-      test->abort (request_delay_secs);
-    }
-  else
-    {
-      CORBA::Short n = test->get_server_num (request_delay_secs);
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Client received reply from server %d\n"),
-                  n));
-    }
-}
-
-void
 do_restart_test (void)
 {
   CORBA::Object_var obj = orb->string_to_object (ior);
@@ -128,20 +101,20 @@ do_restart_test (void)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-ACE_TEXT ("client sleeping %d seconds\n"),
-request_delay_secs));
+              ACE_TEXT ("client sleeping %d seconds\n"),
+              request_delay_secs));
   ACE_OS::sleep (request_delay_secs);
   try
     {
       test->trigger ();
       ACE_DEBUG ((LM_DEBUG,
-ACE_TEXT ("client trigger completed\n")));
+                  ACE_TEXT ("client trigger completed\n")));
       return;
     }
   catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_DEBUG,
-ACE_TEXT ("client caught %C during first trigger\n"),
+                  ACE_TEXT ("client caught %C during first trigger\n"),
                   ex._name ()));
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("client second trigger\n")));
@@ -157,15 +130,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (parse_args (argc, argv) != 0)
       return 1;
 
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("client ior = %s\n"), ior));
-    if (ACE_OS::strlen (ior) == 0)
-      {
-        do_number_test ();
-      }
-    else
-      {
-        do_restart_test ();
-      }
+    do_restart_test ();
     return 0;
 
   }

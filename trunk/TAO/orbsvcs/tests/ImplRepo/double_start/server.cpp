@@ -4,7 +4,6 @@
 // This version uses the Implementation Repository.
 
 #include "Test_i.h"
-#include "Terminator.h"
 
 #include "tao/IORTable/IORTable.h"
 #include "tao/PortableServer/Root_POA.h"
@@ -51,13 +50,15 @@ createPOA(PortableServer::POA_ptr root_poa, const char* poa_name)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  int ec = 0;
   try {
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
+    int max_run = 0;
     int server_num = 0;
     int init_delay_secs = 0;
     const ACE_TCHAR *ior_file_name = ACE_TEXT ("");
-    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("d:n:o:?"));
+    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("d:m:n:o:?"));
     int c;
 
     while ((c = get_opts ()) != -1)
@@ -65,6 +66,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
         case 'd':
           init_delay_secs = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
+        case 'm':
+          max_run = ACE_OS::atoi (get_opts.opt_arg ());
           break;
         case 'n':
           server_num = ACE_OS::atoi (get_opts.opt_arg ());
@@ -93,13 +97,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POA_var test_poa = createPOA(root_poa.in(), poa_name.c_str ());
 
-    Terminator terminator;
-    if (terminator.open (0) == -1)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("main Error opening terminator\n")),-1);
-
-    PortableServer::Servant_var<Test_i> test_servant =
-      new Test_i(server_num, terminator);
+    Test_i *impl = new Test_i(orb.in());
+    PortableServer::Servant_var<Test_i> test_servant = impl;
 
     PortableServer::ObjectId_var object_id =
       PortableServer::string_to_ObjectId("test_object");
@@ -156,8 +155,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       out << ACE_OS::getpid () << endl;
     }
 
-    orb->run();
-
+    if (max_run > 0)
+      {
+        ACE_Time_Value tv (max_run,0);
+        orb->run (tv);
+      }
+    else
+      {
+        orb->run ();
+      }
+    ec = impl->exit_code ();
     root_poa->destroy(1,1);
     orb->destroy();
 
@@ -169,5 +176,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return 1;
   }
 
-  return 0;
+  return ec;
 }
