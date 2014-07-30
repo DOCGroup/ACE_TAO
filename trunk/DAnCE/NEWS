@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.7 and DAnCE-1.2.8
 =======================================================
 
+. Any line starting with # in the localityconfig files is
+  now handled as comment line.
+
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.6 and DAnCE-1.2.7
 =======================================================
 
