@@ -1,2 +1,5 @@
-edu.vanderbilt.dre.DAnCE.DeploymentInterceptor DAnCE_Error_Interceptors create_DAnCE_Standard_Error
+# Standard installation handlers
 edu.vanderbilt.dre.DAnCE.InstanceHandler DAnCE_Locality_Handler create_Locality_Handler
+
+# Standard interceptors
+edu.vanderbilt.dre.DAnCE.DeploymentInterceptor DAnCE_Error_Interceptors create_DAnCE_Standard_Error
