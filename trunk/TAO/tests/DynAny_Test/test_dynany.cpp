@@ -334,9 +334,66 @@ Test_DynAny::run_test (void)
           ++this->error_count_;
         }
 
-
       fa3->destroy ();
       ftc3->destroy ();
+
+      ACE_DEBUG ((LM_DEBUG,
+                 "testing: equal\n"));
+
+      // Simple equal to self test for basic sequence
+      // Check equal to self, not equal for different length
+      // not equal for different values
+      CORBA::Any in4;
+      in4 <<= data.m_shortseq1;
+      DynamicAny::DynAny_var fa4 =
+        dynany_factory->create_dyn_any (in4);
+
+      // is equal to self
+      good = fa4->equal(fa4);
+
+      CORBA::ShortSeq ss5;
+      ss5.length(1);
+      ss5[0] = 5;
+      CORBA::Any in5;
+      in5 <<= ss5;
+      DynamicAny::DynAny_var fa5 =
+        dynany_factory->create_dyn_any (in5);
+
+      // is not equal for different lengths
+      good = good && !fa4->equal(fa5);
+
+      CORBA::ShortSeq ss6(data.m_shortseq1);
+      ss6[0]++;
+      CORBA::Any in6;
+      in6 <<= ss6;
+
+      DynamicAny::DynAny_var fa6 =
+        dynany_factory->create_dyn_any (in6);
+
+      // is not equal for different values 
+      good = good && !fa4->equal(fa6);
+
+
+      CORBA::Any in7;
+      in7 <<= data.m_shortseq1;
+      DynamicAny::DynAny_var fa7 =
+        dynany_factory->create_dyn_any (in7);
+
+
+      // is equal to identical sequence, not self
+      good = good && fa4->equal(fa7);
+
+
+      if (good)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                     "++ OK ++\n"));
+        }
+      else
+        {
+          ++this->error_count_;
+        }
+
     }
   catch (const CORBA::Exception& ex)
     {
