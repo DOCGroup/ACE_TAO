@@ -74,6 +74,9 @@ edu.vanderbilt.dre.DAnCE.ConfigPlugin DAnCE_LM_Config_Plugins create_Process_Nam
 edu.vanderbilt.dre.DAnCE.ConfigPlugin DAnCE_LM_Config_Plugins create_Process_Priority
 edu.vanderbilt.dre.DAnCE.ConfigPlugin DAnCE_LM_Config_Plugins create_CPU_Affinity
 
+Any line starting with a # is a comment line and will not be read at
+run-time.
+
 This allows you to load plug-ins at runtime without having to modify
 the source code of the locality manager.  Note that this configuration
 ability only applies currently to the locality manager.   There are
@@ -101,6 +104,3 @@ manager by supplying the following line in the localityconfig file in
 lieu of the standard error interceptor:
 
 edu.vanderbilt.dre.DAnCE.DeploymentInterceptor DAnCE_Error_Interceptors create_DAnCE_Best_Effort
-
-
-

@@ -1,3 +1,22 @@
+Wed Jul 30 13:32:40 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Handler/Plugin_Conf.cpp:
+          Any line starting with a # in a localityconfig file is now
+          handled as comment line, just printed to the log when the
+          logging level is set high enough. This fixes bugzilla 4174 and
+          RT2911
+
+        * bin/ciao.localityconfig:
+        * bin/nodemanager.localityconfig:
+          Added some comments to split the lines, to clarify the content
+          of these files, but also to test the change above
+
+        * docs/LocalityManager-Plugins.txt:
+          Extended with new comment line
+
+        * NEWS:
+          Added comment
+
 Mon Jun 23 12:49:50 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * NEWS:
