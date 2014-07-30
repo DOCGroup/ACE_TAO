@@ -1,3 +1,13 @@
+Wed Jul 30 16:04:35 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/DynamicAny/DynAny_i.cpp:
+          Added support for an equality test of dynamic anys holding
+          sequences of basic types. Thanks to <anonymous> for contributing
+          this fix.
+
+        * tests/DynAny_Test/test_dynany.cpp:
+          Extension to the test to add coverage of the above fix.
+
 Wed Jul 30 13:14:34 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
