@@ -63,11 +63,11 @@ Test_DynAny::run_test (void)
                                debug_);
       {
         ACE_DEBUG ((LM_DEBUG,
-                  "\t*=*=*=*= %C =*=*=*=*\n",
-                  data.labels[8]));
+                    "\t*=*=*=*= %C =*=*=*=*\n",
+                    data.labels[8]));
 
         ACE_DEBUG ((LM_DEBUG,
-                  "testing: constructor(Any)/insert/get\n"));
+                    "testing: constructor(Any)/insert/get\n"));
 
         CORBA::Any in1;
         in1 <<= data.m_double2;
@@ -93,7 +93,7 @@ Test_DynAny::run_test (void)
         if (ACE::is_equal (d_out, data.m_double1))
           {
             ACE_DEBUG ((LM_DEBUG,
-                      "++ OK ++\n"));
+                        "++ OK ++\n"));
           }
         else
           {
@@ -101,7 +101,7 @@ Test_DynAny::run_test (void)
           }
 
         ACE_DEBUG ((LM_DEBUG,
-                  "testing: constructor(TypeCode)/from_any/to_any\n"));
+                    "testing: constructor(TypeCode)/from_any/to_any\n"));
 
         d_out = data.m_double2;
         DynamicAny::DynAny_var ftc1 =
@@ -116,7 +116,7 @@ Test_DynAny::run_test (void)
         if (ACE::is_equal (d_out, data.m_double1))
           {
             ACE_DEBUG ((LM_DEBUG,
-                      "++ OK ++\n"));
+                        "++ OK ++\n"));
           }
         else
           {
@@ -129,11 +129,11 @@ Test_DynAny::run_test (void)
 
       {
         ACE_DEBUG ((LM_DEBUG,
-          "\t*=*=*=*= %C =*=*=*=*\n",
-          data.labels[17]));
+                    "\t*=*=*=*= %C =*=*=*=*\n",
+                    data.labels[17]));
 
         ACE_DEBUG ((LM_DEBUG,
-          "testing: constructor(Any)/insert/get\n"));
+                    "testing: constructor(Any)/insert/get\n"));
 
         CORBA::Any in1;
         in1 <<= data.m_longdouble2;
@@ -143,7 +143,7 @@ Test_DynAny::run_test (void)
         if (fa1->equal(fa1))
           {
             ACE_DEBUG ((LM_DEBUG,
-              "++ OK ++\n"));
+                        "++ OK ++\n"));
           }
         else
           {
@@ -159,7 +159,7 @@ Test_DynAny::run_test (void)
         if (ACE::is_equal (d_out, data.m_longdouble1))
           {
             ACE_DEBUG ((LM_DEBUG,
-              "++ OK ++\n"));
+                        "++ OK ++\n"));
           }
         else
           {
@@ -167,7 +167,7 @@ Test_DynAny::run_test (void)
           }
 
         ACE_DEBUG ((LM_DEBUG,
-          "testing: constructor(TypeCode)/from_any/to_any\n"));
+                    "testing: constructor(TypeCode)/from_any/to_any\n"));
 
         d_out = data.m_longdouble2;
         DynamicAny::DynAny_var ftc1 =
@@ -184,25 +184,25 @@ Test_DynAny::run_test (void)
         out_any1.in() >>= d_out;
 
         if (ACE::is_equal (d_out, data.m_longdouble1))
-        {
-          ACE_DEBUG ((LM_DEBUG,
-            "++ OK ++\n"));
-        }
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "++ OK ++\n"));
+          }
         else
-        {
-          ++this->error_count_;
-        }
+          {
+            ++this->error_count_;
+          }
 
         fa1->destroy ();
         ftc1->destroy ();
       }
 
       ACE_DEBUG ((LM_DEBUG,
-                 "\t*=*=*=*= %C =*=*=*=*\n",
-                 data.labels[12]));
+                  "\t*=*=*=*= %C =*=*=*=*\n",
+                  data.labels[12]));
 
       ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(Any)/insert/get\n"));
+                  "testing: constructor(Any)/insert/get\n"));
 
       CORBA::Any in;
       in <<= data.m_typecode2;
@@ -215,7 +215,7 @@ Test_DynAny::run_test (void)
       if (tc_out->equal (data.m_typecode1))
         {
           ACE_DEBUG ((LM_DEBUG,
-                     "++ OK ++\n"));
+                      "++ OK ++\n"));
         }
       else
         {
@@ -224,7 +224,7 @@ Test_DynAny::run_test (void)
 
 
       ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(TypeCode)/from_any/to_any\n"));
+                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       DynamicAny::DynAny_var ftc2 =
         dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_TypeCode);
@@ -241,7 +241,7 @@ Test_DynAny::run_test (void)
       if (equal)
         {
           ACE_DEBUG ((LM_DEBUG,
-                     "++ OK ++\n"));
+                      "++ OK ++\n"));
         }
       else
         {
@@ -253,11 +253,11 @@ Test_DynAny::run_test (void)
       ftc2->destroy ();
 
       ACE_DEBUG ((LM_DEBUG,
-                 "\t*=*=*=*= %C =*=*=*=*\n",
-                 data.labels[16]));
+                  "\t*=*=*=*= %C =*=*=*=*\n",
+                  data.labels[16]));
 
       ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(Any)/insert/get\n"));
+                  "testing: constructor(Any)/insert/get\n"));
 
       CORBA::Any in3;
       CORBA::ShortSeq ss;
@@ -284,10 +284,10 @@ Test_DynAny::run_test (void)
             }
         }
 
-     if (good)
+      if (good)
         {
           ACE_DEBUG ((LM_DEBUG,
-                     "++ OK ++\n"));
+                      "++ OK ++\n"));
         }
       else
         {
@@ -296,7 +296,7 @@ Test_DynAny::run_test (void)
 
 
       ACE_DEBUG ((LM_DEBUG,
-                 "testing: constructor(TypeCode)/from_any/to_any\n"));
+                  "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       DynamicAny::DynAny_var ftc3 =
         dynany_factory->create_dyn_any_from_type_code (CORBA::_tc_ShortSeq);
@@ -327,7 +327,7 @@ Test_DynAny::run_test (void)
       if (good)
         {
           ACE_DEBUG ((LM_DEBUG,
-                     "++ OK ++\n"));
+                      "++ OK ++\n"));
         }
       else
         {
@@ -338,7 +338,7 @@ Test_DynAny::run_test (void)
       ftc3->destroy ();
 
       ACE_DEBUG ((LM_DEBUG,
-                 "testing: equal\n"));
+                  "testing: equal\n"));
 
       // Simple equal to self test for basic sequence
       // Check equal to self, not equal for different length
@@ -370,7 +370,7 @@ Test_DynAny::run_test (void)
       DynamicAny::DynAny_var fa6 =
         dynany_factory->create_dyn_any (in6);
 
-      // is not equal for different values 
+      // is not equal for different values
       good = good && !fa4->equal(fa6);
 
 
@@ -387,7 +387,7 @@ Test_DynAny::run_test (void)
       if (good)
         {
           ACE_DEBUG ((LM_DEBUG,
-                     "++ OK ++\n"));
+                      "++ OK ++\n"));
         }
       else
         {
