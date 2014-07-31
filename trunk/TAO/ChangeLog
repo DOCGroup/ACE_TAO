@@ -1,3 +1,8 @@
+Thu Jul 31 17:13:54 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/DynAny_Test/test_dynany.cpp:
+          Unfuzz.
+
 Thu Jul 31 15:17:19 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/Bug_4152_Regression/client.cpp:
