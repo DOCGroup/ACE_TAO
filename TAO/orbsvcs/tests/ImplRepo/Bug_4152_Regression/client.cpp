@@ -62,8 +62,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
     catch (const CORBA::Exception &ex)
       {
-        ex._tao_print_exception ("Client caught: ");
-#if 0
+        ACE_DEBUG ((LM_DEBUG,
+                    "Client caught: %s on first attempt, retrying\n",
+                    ex._name ()));
         try
           {
             if (CORBA::is_nil (test.in()))
@@ -79,7 +80,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           {
             ex._tao_print_exception ("Client second attempt: ");
           }
-#endif
       }
     return 0;
 
