@@ -1,3 +1,10 @@
+Thu Jul 31 15:17:19 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_4152_Regression/client.cpp:
+          Fix the test to accommodate the possibility that the ImR
+          may return a reference to a dying server rather than start
+          a duplicate.
+
 Wed Jul 30 16:47:24 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/double_start/Test.idl:
