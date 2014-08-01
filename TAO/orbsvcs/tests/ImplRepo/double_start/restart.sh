@@ -39,22 +39,22 @@ if [ 0 -ne $reset_flag ]; then
 #        tao_imr shutdown $server_name
 #        status=$?
 #        echo shutdown returned $status
-        echo restart: calling tao_imr start
+        echo restart $$: calling tao_imr start
         tao_imr start $server_name
         status=$?
-        echo restart: tao_imr start returned $status
+        echo restart $$: tao_imr start returned $status
         exit;
     fi
 fi
 
-echo restart: running $exec_cmd
+echo restart $$: running $exec_cmd
 $exec_cmd &
 exec_cmd_pid=$!
-echo "restart: pid is $exec_cmd_pid, waiting"
+echo "restart $$: pid is $exec_cmd_pid, waiting"
 
 wait $exec_cmd_pid
 exec_cmd_status=$?
-echo "restart: status is $exec_cmd_status"
+echo "restart $$: status is $exec_cmd_status"
 
 if [[ 0 != $exec_cmd_status ]]; then
     ./restart.sh -e "$exec_cmd" -c $use_imr -p $$ -r 1 -s $server_name &

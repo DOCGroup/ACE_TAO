@@ -15,6 +15,9 @@
 
 #include "ace/os_include/os_netdb.h"
 
+static const char *unique_prefix = "\001\002\003\004";
+static size_t unique_prefix_len = 4;
+
 static ACE_CString getHostName ()
 {
   char host_name[MAXHOSTNAMELEN];
@@ -350,8 +353,26 @@ ImR_Activator_i::start_server(const char* name,
                               const char* dir,
                               const ImplementationRepository::EnvironmentList & env)
 {
+  bool unique = false;
+  if (ACE_OS::strlen (name) > unique_prefix_len &&
+      ACE_OS::strncmp (name, unique_prefix, unique_prefix_len) == 0)
+    {
+      unique = true;
+      name += unique_prefix_len;
+    }
+
   if (debug_ > 1)
-    ORBSVCS_DEBUG((LM_DEBUG, "ImR Activator: Starting server <%s>...\n", name));
+    ORBSVCS_DEBUG((LM_DEBUG,
+                   "ImR Activator: Starting %s <%s>...\n",
+                   (unique ? "unique server" : "server"), name));
+
+  if (unique && this->server_list_.find (name) == 0)
+    {
+      if (debug_ > 1)
+        ORBSVCS_DEBUG((LM_DEBUG,
+                       "ImR Activator: Unique instance already running\n"));
+      return;
+    }
 
   ACE_TString cmdline_tstr(ACE_TEXT_CHAR_TO_TCHAR(cmdline));
   size_t cmdline_buf_len = cmdline_tstr.length();
@@ -410,7 +431,10 @@ ImR_Activator_i::start_server(const char* name,
         }
       this->process_mgr_.register_handler (this, pid);
       this->process_map_.rebind (pid, name);
-
+      if (unique)
+        {
+          this->server_list_.insert (name);
+        }
       if (!CORBA::is_nil (this->locator_.in ()))
         {
           if (this->notify_imr_)
@@ -445,6 +469,8 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
     {
       this->process_map_.unbind (pid);
     }
+
+  this->server_list_.remove (name);
 
   if (this->notify_imr_ && !CORBA::is_nil (this->locator_.in ()))
     {

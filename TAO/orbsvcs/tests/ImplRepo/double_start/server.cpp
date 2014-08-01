@@ -146,14 +146,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     mgr->activate();
 
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Started Server <%C>\n"),
-                poa_name.c_str()));
+                ACE_TEXT ("Started Server <%C> pid = %d\n"),
+                poa_name.c_str(), ACE_OS::getpid ()));
 
     ACE_CString pid_file = "server.pid";
     {
-      ofstream out(pid_file.c_str ());
+      ofstream out(pid_file.c_str (), ios_base::app);
       out << ACE_OS::getpid () << endl;
+      out.close ();
     }
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("Server <%C> pid = %d closed pidfile\n"),
+                poa_name.c_str(), ACE_OS::getpid ()));
 
     if (max_run > 0)
       {
@@ -168,7 +172,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     root_poa->destroy(1,1);
     orb->destroy();
 
-    ACE_OS::unlink (pid_file.c_str ());
+    //    ACE_OS::unlink (pid_file.c_str ());
 
   }
   catch(const CORBA::Exception& ex) {

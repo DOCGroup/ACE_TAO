@@ -65,6 +65,7 @@ module ImplementationRepository
     AAM_WAIT_FOR_RUNNING,
     AAM_WAIT_FOR_PING,
     AAM_WAIT_FOR_ALIVE,
+    AAM_WAIT_FOR_DEATH,
     AAM_SERVER_READY,
     AAM_SERVER_DEAD,
     AAM_NOT_MANUAL,

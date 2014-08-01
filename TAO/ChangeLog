@@ -1,3 +1,31 @@
+Fri Aug  1 21:01:55 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+          Address potential race conditions when server starts are
+          requested via both the primary and backup ImRs.
+
+        * orbsvcs/tests/ImplRepo/double_start/client.cpp:
+        * orbsvcs/tests/ImplRepo/double_start/restart.sh:
+        * orbsvcs/tests/ImplRepo/double_start/run_test.pl:
+        * orbsvcs/tests/ImplRepo/double_start/server.cpp:
+          Refactor the kill test so that it better matches the original
+          complaint.
+
+Thu Jul 31 20:32:52 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+          A little more nuance to the solution for double started servers.
+          Now rather than returning a stale IOR for the client to fail, a
+          new state is added to the access manager to make it hold on to
+          client requests if the liveness checker reports server death but
+          there is still a nonzero PID. Once the server actually terminates
+          and the death is reported, then the locator will trigger the
+          start of a new server instance.
+
 Thu Jul 31 17:13:54 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/DynAny_Test/test_dynany.cpp:

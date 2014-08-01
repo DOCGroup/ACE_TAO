@@ -12,6 +12,7 @@ use PerlACE::TestTarget;
 $status = 0;
 $debuglevel = 0;
 $cltdbg = 1;
+$cltpause = 0;
 $kill = 0;
 $server_pid = 0;
 
@@ -26,6 +27,7 @@ if ($#ARGV >= 0) {
 	}
         elsif ($ARGV[$i] eq '-kill') {
             $kill = 1;
+            $cltpause = 5;
         }
 	else {
             usage();
@@ -201,7 +203,9 @@ sub get_server_pid
     my $pid = 0;
     open (FILE, "server.pid") or die "Can't open server.pid: $!";
     while (<FILE>) {
-      $pid = $_;
+        chomp;
+        $pid = $_;
+        $server_pid = $pid if ($server_pid == 0);
     }
     close FILE;
     return $pid;
@@ -210,7 +214,6 @@ sub get_server_pid
 sub signal_server
 {
     my $sig = shift;
-    $server_pid = get_server_pid () if ($server_pid == 0);
     print "signal $sig to server $server_pid\n";
     kill ($sig, $server_pid);
 }
@@ -220,8 +223,7 @@ sub start_imr
     my $all = shift;
     my $debugbase = "-ORBDebugLevel $debuglevel " .
                     "-ORBVerboseLogging 1 -ORBLogFile ";
-    my $actargs = "-l -o $act_actiorfile $act_initref -ORBListenEndpoints iiop://127.0.0.1:
-";
+    my $actargs = "-d $debuglevel -l -o $act_actiorfile $act_initref -ORBListenEndpoints iiop://127.0.0.1:";
 
     my $imrargs = " -d $debuglevel -i -v 1000 " .
         "--directory . --primary " .
@@ -307,7 +309,7 @@ sub start_imr
     }
 }
 
-sub run_client
+sub launch_client
 {
     if ($srv->GetFile ($srviorfile) == -1) {
         print STDERR "ERROR: cannot retrieve file <$srv_srviorfile>\n";
@@ -318,15 +320,26 @@ sub run_client
         return 1;
     }
 
-    my $args = "-k file://$srviorfile -ORBSvcConf clt.conf";
+    my $args = "-k file://$srviorfile -ORBSvcConf clt.conf -d $cltpause";
     $args .= " -ORBDebuglevel $cltdbg -ORBVerboseLogging 1 -ORBLogFile $cltlogfile" if ($debuglevel > 0);
 
     print "running client $args\n";
 
     $CLT->Arguments ($args);
-    if ($CLT->SpawnWaitKill ($clt->ProcessStartWaitInterval() + 120) == -1) {
+    if ($CLT->Spawn () == -1) {
         print STDERR "ERROR: client failed\n";
         return 1;
+    }
+    return 0;
+}
+
+sub run_client
+{
+    if (launch_client () == 0) {
+        if ($CLT->WaitKill ($clt->ProcessStartWaitInterval() + 120) == -1) {
+            print STDERR "ERROR: client failed\n";
+            return 1;
+        }
     }
 }
 
@@ -342,7 +355,7 @@ sub do_ti_command
     print "invoking ti cmd $cmd $obj_name $cmdargs\n" if ($debuglevel > 0);
     $TI->Arguments ("$ti_initref $cmd $obj_name $cmdargs");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-    if ($TI_status != 0) {
+    if ($TI_status != 0 && $TI_status != 5) {
         return kill_imr ("tao_imr $cmd $obj_name returned $TI_status");
     }
 }
@@ -375,7 +388,7 @@ sub list_active_servers
 sub kill_primary_test
 {
     print "Running double server start test killing the primary ImR.\n";
-
+    unlink "server.pid";
     my $result = 0;
     my $start_time = time();
 
@@ -394,23 +407,35 @@ sub kill_primary_test
     if (do_ti_command ("start") != 0) {
         return 1;
     }
+    my $firstpid = get_server_pid ();
+    print "first pid = $firstpid, server pid = $server_pid\n";
 
-    list_active_servers ("-v");
-
-    signal_server ("STOP");
-    kill_primary ();
-    sleep 2;
-    start_imr (0);
-    sleep 2;
     print "starting client\n";
 
-    if (run_client () != 0) {
+    if (launch_client () != 0) {
         return 1;
     }
+    sleep 2;
+    signal_server ("STOP");
+    kill_primary ();
+    sleep 4;
 
-    signal_server ("CONT");
+    start_imr (0);
 
+    signal_server ("KILL");
+    unlink "server.pid";
+    $server_pid = 0;
+
+    print "******waiting for client exit\n";
+    if ($CLT->WaitKill ($clt->ProcessStartWaitInterval() + 120) == -1) {
+        print STDERR "ERROR: client failed\n";
+        return 1;
+    }
+    print "******client done\n";
+
+    sleep 4;
     my $final_pid = get_server_pid ();
+    print "first server pid was $server_pid, but now there is $final_pid\n";
     if ($final_pid != $server_pid) {
         print "first server pid was $server_pid, but now there is $final_pid\n";
         $server_pid = $final_pid;
