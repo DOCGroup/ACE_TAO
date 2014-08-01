@@ -10,6 +10,8 @@
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
+static ACE_CString unique_prefix = "\001\002\003\004";
+
 AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
                                         bool manual,
                                         ImR_Locator_i &locator)
@@ -60,6 +62,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
                       status_name (this->status_)));
     }
 
+  this->info_.notify_remote_access (this->status_);
 
   if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
     {
@@ -207,6 +210,8 @@ AsyncAccessManager::status_name (ImplementationRepository::AAM_Status s)
       return ACE_TEXT ("WAIT_FOR_PING");
     case ImplementationRepository::AAM_WAIT_FOR_ALIVE:
       return ACE_TEXT ("WAIT_FOR_ALIVE");
+    case ImplementationRepository::AAM_WAIT_FOR_DEATH:
+      return ACE_TEXT ("WAIT_FOR_DEATH");
     case ImplementationRepository::AAM_SERVER_READY:
       return ACE_TEXT ("SERVER_READY");
     case ImplementationRepository::AAM_SERVER_DEAD:
@@ -314,6 +319,12 @@ AsyncAccessManager::notify_child_death (void)
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager, child death\n")));
     }
+  if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_DEATH &&
+      this->rh_list_.size() > 0)
+    {
+      this->send_start_request ();
+      return;
+    }
   this->status (ImplementationRepository::AAM_SERVER_DEAD);
   this->final_state ();
 }
@@ -342,8 +353,15 @@ AsyncAccessManager::ping_replied (LiveStatus server)
           {
             if (this->info_->pid != 0)
               {
-                this->status (ImplementationRepository::AAM_SERVER_READY);
-                break;
+                if (ImR_Locator_i::debug () > 4)
+                  {
+                    ORBSVCS_DEBUG ((LM_DEBUG,
+                                    ACE_TEXT ("(%P|%t) AsyncAccessManager::ping_replied pid = %d,")
+                                    ACE_TEXT (" transition to WAIT_FOR_DEATH\n"),
+                                    this->info_->pid));
+                  }
+                this->status (ImplementationRepository::AAM_WAIT_FOR_DEATH);
+                return;
               }
             if (this->send_start_request ())
               {
@@ -402,8 +420,19 @@ AsyncAccessManager::send_start_request (void)
   ImplementationRepository::AMI_ActivatorHandler_var cb =
     ImplementationRepository::AMI_ActivatorHandler::_narrow (obj.in());
 
+  ACE_CString servername;
+
+  if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
+    {
+      servername = startup->key_name_;
+    }
+  else
+    {
+      servername = unique_prefix + startup->key_name_;
+    }
+
   ainfo->activator->sendc_start_server (cb.in(),
-                                        startup->key_name_.c_str (),
+                                        servername.c_str (),
                                         startup->cmdline.c_str (),
                                         startup->dir.c_str (),
                                         startup->env_vars);
