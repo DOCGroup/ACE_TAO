@@ -99,6 +99,8 @@ private:
 
 private:
 
+  typedef ACE_Unbounded_Set<ACE_CString> UniqueServerList;
+
   typedef ACE_Hash_Map_Manager_Ex<pid_t,
                                   ACE_CString,
                                   ACE_Hash_pid_t,
@@ -127,6 +129,8 @@ private:
   ACE_CString name_;
 
   ProcessMap process_map_;
+
+  UniqueServerList server_list_;
 
   /// The default environment buffer length
   int env_buf_len_;

@@ -87,23 +87,28 @@ do_restart_test (void)
   obj = set_timeout_policy (obj.in (), ACE_Time_Value (5,0));
   Test_var test = Test::_narrow( obj.in () );
   ACE_ASSERT (!CORBA::is_nil(test.in ()));
-
-  try
+  int attempt = 2;
+  while (attempt > 0)
     {
-      test->arm ();
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("client caught %C during arm\n"),
-                  ex._name ()));
-      return;
+      try
+        {
+          test->arm ();
+          attempt = 0;
+        }
+      catch (const CORBA::Exception& ex)
+        {
+          attempt--;
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("client caught %C during arm, retrying\n"),
+                      ex._name ()));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("client sleeping %d seconds\n"),
               request_delay_secs));
   ACE_OS::sleep (request_delay_secs);
+
   try
     {
       test->trigger ();
