@@ -1,3 +1,68 @@
+Sat Aug  2 17:35:09 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_assert.h:
+        * ace/os_include/os_byteswap.h:
+        * ace/os_include/os_complex.h:
+        * ace/os_include/os_cpio.h:
+        * ace/os_include/os_fenv.h:
+        * ace/os_include/os_float.h:
+        * ace/os_include/os_fmtmsg.h:
+        * ace/os_include/os_fnmatch.h:
+        * ace/os_include/os_ftw.h:
+        * ace/os_include/os_glob.h:
+        * ace/os_include/os_grp.h:
+        * ace/os_include/os_iconv.h:
+        * ace/os_include/os_ifaddrs.h:
+        * ace/os_include/os_inttypes.h:
+        * ace/os_include/os_iso646.h:
+        * ace/os_include/os_kstat.h:
+        * ace/os_include/os_langinfo.h:
+        * ace/os_include/os_libgen.h:
+        * ace/os_include/os_local.h:
+        * ace/os_include/os_math.h:
+        * ace/os_include/os_monetary.h:
+        * ace/os_include/os_mqueue.h:
+        * ace/os_include/os_ndbm.h:
+        * ace/os_include/os_nl_types.h:
+        * ace/os_include/os_pdh.h:
+        * ace/os_include/os_pdhmsg.h:
+        * ace/os_include/os_poll.h:
+        * ace/os_include/os_pwd.h:
+        * ace/os_include/os_regex.h:
+        * ace/os_include/os_search.h:
+        * ace/os_include/os_setjmp.h:
+        * ace/os_include/os_spawn.h:
+        * ace/os_include/os_stdarg.h:
+        * ace/os_include/os_stdbool.h:
+        * ace/os_include/os_string.h:
+        * ace/os_include/os_syslog.h:
+        * ace/os_include/os_tar.h:
+        * ace/os_include/os_termios.h:
+        * ace/os_include/os_tgmath.h:
+        * ace/os_include/os_trace.h:
+        * ace/os_include/os_typeinfo.h:
+        * ace/os_include/os_ulimit.h:
+        * ace/os_include/os_utime.h:
+        * ace/os_include/os_utmpx.h:
+        * ace/os_include/os_wchar.h:
+        * ace/os_include/os_wctype.h:
+        * ace/os_include/os_wordexp.h:
+        * ace/os_include/sys/os_loadavg.h:
+        * ace/os_include/sys/os_pstat.h:
+        * ace/os_include/sys/os_statvfs.h:
+        * ace/os_include/sys/os_sysctl.h:
+        * ace/os_include/sys/os_sysinfo.h:
+        * ace/os_include/sys/os_timeb.h:
+        * ace/os_include/sys/os_times.h:
+        * ace/os_include/sys/os_utsname.h:
+          Remove all empty extern C blocks, not needed and just add LOC
+
+        * ace/os_include/os_assert.h:
+          Removed ACE_LACKS_ASSERT_MACRO, not set in any config file
+
+        * ace/os_include/os_string.h:
+          Removed ACE_LACKS_STRTOK_R_PROTOTYPE, not set in any config file
+
 Mon Jul 28 18:24:09 UTC 2014  William R. Otte  <wotte@dre.vanderbilt.edu>
 
         * ace/ace.mpc:
