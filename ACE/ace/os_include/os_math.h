@@ -30,15 +30,5 @@
 # include /**/ <math.h>
 #endif /* !ACE_LACKS_MATH_H */
 
-// Place all additions (especially function declarations) within extern "C" {}
-#ifdef __cplusplus
-extern "C"
-{
-#endif /* __cplusplus */
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_MATH_H */
