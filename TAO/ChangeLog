@@ -2,6 +2,7 @@ Mon Aug  4 22:11:34 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          add windows compatible dead server detection.
 
 Mon Aug  4 17:12:03 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
