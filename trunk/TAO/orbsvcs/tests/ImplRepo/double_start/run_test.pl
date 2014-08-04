@@ -12,7 +12,7 @@ use PerlACE::TestTarget;
 $status = 0;
 $debuglevel = 0;
 $cltdbg = 1;
-$cltpause = 0;
+$cltpause = 5;
 $kill = 0;
 $server_pid = 0;
 
@@ -481,13 +481,24 @@ sub double_server_test
 
     list_active_servers ("-v");
 
-    if (run_client () != 0) {
+    if (launch_client () != 0) {
         return 1;
     }
+
+    sleep 2;
 
     if (do_ti_command ("shutdown") != 0) {
         return 1;
     }
+
+    print "******waiting for client exit\n";
+    if ($CLT->WaitKill ($clt->ProcessStartWaitInterval() + 120) == -1) {
+        print STDERR "ERROR: client failed\n";
+        return 1;
+    }
+    print "******client done\n";
+
+    do_ti_command ("shutdown");
 
     kill_imr ("");
 
