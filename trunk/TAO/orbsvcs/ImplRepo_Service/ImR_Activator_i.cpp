@@ -347,6 +347,34 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
   return result == 0;
 }
 
+bool
+ImR_Activator_i::still_running (const char *name)
+{
+  bool is_running =  this->server_list_.find (name) == 0;
+#if defined (ACE_WIN32)
+  if (is_running)
+    {
+      pid_t pid = ACE_INVALID_PID;
+      for (ProcessMap::ITERATOR iter = this->process_map_.begin ();
+           iter != process_map_.end ();
+           iter++)
+        {
+          if (ACE_OS::strcmp (name, iter->item ().c_str()) == 0)
+            {
+              pid = iter->key ();
+              break;
+            }
+        }
+      if (pid != ACE_INVALID_PID)
+        {
+          pid_t waitp = this->process_mgr_.wait (pid, ACE_Time_Value::zero);
+          is_running = (waitp != pid);
+        }
+    }
+#endif /* ACE_WIN32 */
+  return is_running;
+}
+
 void
 ImR_Activator_i::start_server(const char* name,
                               const char* cmdline,
@@ -366,7 +394,7 @@ ImR_Activator_i::start_server(const char* name,
                    "ImR Activator: Starting %s <%s>...\n",
                    (unique ? "unique server" : "server"), name));
 
-  if (unique && this->server_list_.find (name) == 0)
+  if (unique && this->still_running (name))
     {
       if (debug_ > 1)
         ORBSVCS_DEBUG((LM_DEBUG,
@@ -411,7 +439,7 @@ ImR_Activator_i::start_server(const char* name,
       proc_opts.setenv (ACE_TEXT_CHAR_TO_TCHAR(env[i].name.in ()), env[i].value.in ());
     }
 
-  int pid = this->process_mgr_.spawn (proc_opts);
+  pid_t pid = this->process_mgr_.spawn (proc_opts, this);
   if (pid == ACE_INVALID_PID)
     {
       ORBSVCS_ERROR ((LM_ERROR,
@@ -429,7 +457,6 @@ ImR_Activator_i::start_server(const char* name,
           ORBSVCS_DEBUG((LM_DEBUG,
             "ImR Activator: register death handler for process %d\n", pid));
         }
-      this->process_mgr_.register_handler (this, pid);
       this->process_map_.rebind (pid, name);
       if (unique)
         {
