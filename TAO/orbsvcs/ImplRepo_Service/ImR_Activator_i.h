@@ -97,6 +97,8 @@ private:
   int handle_exit (ACE_Process * process);
   int handle_exit_i (pid_t pid);
 
+  bool still_running (const char *name);
+
 private:
 
   typedef ACE_Unbounded_Set<ACE_CString> UniqueServerList;
