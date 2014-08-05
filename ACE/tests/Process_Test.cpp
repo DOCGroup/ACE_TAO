@@ -17,6 +17,7 @@
 #include "ace/Process.h"
 #include "ace/Get_Opt.h"
 #include "ace/Lib_Find.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Dirent.h"
@@ -26,6 +27,41 @@
 // This will only work on Linux. Even UNIX-ish with /proc filesys lacks the
 // 'self' level and link to the opened file name.
 static const char *proc_self_fd = "/proc/self/fd/";
+
+
+int
+test_setenv (void)
+{
+  int status = 0;
+  ACE_Process_Options opts;
+  ACE_TCHAR bigval[5010] = ACE_TEXT ("");
+  for (int i = 0; i < 100; ++i)
+    ACE_OS::strcat (bigval,
+                    ACE_TEXT ("01234567890123456789012345678901234567890123456789"));
+# if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  const ACE_TCHAR *fmt = ACE_TEXT ("%ls");
+# else
+  const ACE_TCHAR *fmt = ACE_TEXT ("%s");
+# endif
+  if (0 != opts.setenv (ACE_TEXT ("A"), fmt, bigval))
+    {
+      status = errno;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("setenv")));
+    }
+  else
+    {
+      size_t env_len = ACE_OS::strlen (opts.env_buf ());
+      if (env_len != 5002)
+        {
+          status = 1;
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("setenv result should be 5002 chars, not %B\n"),
+                      env_len));
+        }
+    }
+  return status;
+}
+
 
 int
 check_temp_file (const ACE_TString &tmpfilename)
@@ -79,9 +115,11 @@ check_temp_file (const ACE_TString &tmpfilename)
   return 0;
 }
 
-void
+int
 run_parent (bool inherit_files)
 {
+  int status = 0;
+
   ACE_TCHAR t[] = ACE_TEXT ("ace_testXXXXXX");
 
   // Create tempfile. This will be tested for inheritance.
@@ -94,7 +132,10 @@ run_parent (bool inherit_files)
 
   ACE_HANDLE file_handle = ACE_OS::mkstemp (tempfile);
   if (file_handle == ACE_INVALID_HANDLE)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not get temp filename\n")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not get temp filename\n")));
+      status = 1;
+    }
 
   // Build child options
   ACE_TString exe_sub_dir;
@@ -120,7 +161,11 @@ run_parent (bool inherit_files)
 
   pid_t result = child.spawn (options);
   if (result == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Parent could NOT spawn child process\n")));
+    {
+      status = errno;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Parent could NOT spawn child process\n")));
+    }
   else
     ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
@@ -129,37 +174,28 @@ run_parent (bool inherit_files)
   ACE_exitcode child_status;
   result = child.wait (&child_status);
   if (result == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could NOT wait on child process\n")));
+    {
+      status = errno;
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could NOT wait on child process\n")));
+    }
   else if (child_status == 0)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Child %d finished ok\n"),
                 child.getpid ()));
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Child %d finished with status %d\n"),
-                child.getpid (), child_status));
+    {
+      status = child_status;
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Child %d finished with status %d\n"),
+                  child.getpid (), child_status));
+    }
+
+  return status;
 }
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-  // This test relies on the ability to get a list of open files for a process
-  // and examine each file descriptor to see which file is open, matching
-  // against an expected opened file name. Although most systems provide some
-  // mechanism to do this, the code in this test uses Linux-specific
-  // techniques. Thus, although it is possible to add the code for the
-  // checks on, for example, HP-UX (pstat_getproc, pstat_getpathname) and
-  // AIX (/proc is available, but there's no self and the fds are not links
-  // to the opened file names), the code isn't here at present.
-#if defined (ACE_LACKS_FORK) || defined (ACE_LACKS_READLINK) || !defined(ACE_LINUX)
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
-  ACE_START_TEST (ACE_TEXT ("Process_Test"));
-  ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("This test is not supported on this platform\n")));
-  ACE_END_TEST;
-#else
   int c = 0;
   int handle_inherit = 0; /* Disable inheritance by default */
   bool ischild = false;
@@ -214,15 +250,31 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_START_TEST (ACE_TEXT ("Process_Test"));
 
+      int status = test_setenv ();
+
+      // The rest of this test relies on the ability to get a list of open
+      // files for a process and examine each file descriptor to see which
+      // file is open, matching against an expected opened file name.
+      // Although most systems provide some mechanism to do this, the code
+      // in this test uses Linux-specific techniques. Thus, although it
+      // is possible to add the code for the checks on, for example,
+      // HP-UX (pstat_getproc, pstat_getpathname) and
+      // AIX (/proc is available, but there's no self and the fds are not links
+      // to the opened file names), the code isn't here at present.
+#if defined (ACE_LACKS_FORK) || defined (ACE_LACKS_READLINK) || !defined(ACE_LINUX)
+      ACE_ERROR ((LM_INFO,
+                  ACE_TEXT ("The remainder of this test is not supported on this platform\n")));
+#else
       // Test handle inheritance set to true
-      run_parent (true);
+      if (!status)
+        status = run_parent (true);
 
       // ... and set to false
-      run_parent (false);
-
-      ACE_END_TEST;
-    }
+      if (!status)
+        run_parent (false);
 #endif /* ! ACE_LACKS_FORK */
 
-  return 0;
+      ACE_END_TEST;
+      return status;
+    }
 }

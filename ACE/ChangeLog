@@ -1,3 +1,13 @@
+Tue Aug  5 17:14:04 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.cpp (setenv): Correctly re-process variable arg list if
+          first attempt at formatting the value(s) fails due to lack of
+          space. Fixes Bugzilla 4175.
+
+        * tests/Process_Test.cpp: Add test for the above problem. The setenv
+          test can run everywhere, as opposed to the spawning/file-checking
+          which can only run on Linux.
+
 Sat Aug  2 17:35:09 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/os_include/os_assert.h:
