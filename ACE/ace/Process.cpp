@@ -997,9 +997,15 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   ACE_NEW_RETURN (newformat, ACE_TCHAR[buflen], -1);
   ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_newformat (newformat);
 
+# if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+  const ACE_TCHAR *fmt = ACE_TEXT ("%ls=%ls");
+# else
+  const ACE_TCHAR *fmt = ACE_TEXT ("%s=%s");
+# endif
+
   // Add in the variable name.
   ACE_OS::sprintf (safe_newformat.get (),
-                   ACE_TEXT ("%s=%s"),
+                   fmt,
                    variable_name,
                    format);
 

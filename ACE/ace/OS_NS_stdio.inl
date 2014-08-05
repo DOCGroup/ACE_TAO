@@ -1110,7 +1110,9 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
   // was available.  Earlier variants of the vsnprintf() (e.g. UNIX98)
   // defined it to return -1. This method follows the C99 standard,
   // but needs to guess at the value; uses maxlen + 1.
-  if (result == -1)
+  // Note that a formatting failure also returns -1. On RHEL this is
+  // errno EINVAL. Don't indicate a simple memory shortage for that.
+  if (result == -1 && errno != EINVAL)
     result = static_cast <int> (maxlen + 1);
 
   return result;
