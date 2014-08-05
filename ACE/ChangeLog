@@ -1,3 +1,12 @@
+Tue Aug  5 21:49:12 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * ace/Process.cpp (setenv): Use the correct format string for
+          non-Windows wide-char builds. Fixes Bugzilla 4176.
+
+        * ace/OS_NS_stdio.inl (vsnprintf): When trying to adapt C99 vswprintf
+          to return a required destination memory area, don't be fooled by a
+          real error such as formatting errors. Fixes Bugzilla 4177.
+
 Tue Aug  5 17:14:04 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.cpp (setenv): Correctly re-process variable arg list if
