@@ -1,3 +1,9 @@
+Tue Aug  5 16:47:38 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/catior/catior.cpp:
+          Add an index number to improve the usefulness when processing
+          concatinated IOR sources.
+
 Mon Aug  4 22:11:34 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:

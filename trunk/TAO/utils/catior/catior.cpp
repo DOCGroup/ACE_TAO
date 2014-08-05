@@ -270,11 +270,13 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     ++decode_pass_count;
 
                     ACE_DEBUG ((LM_DEBUG,
-                                "\nhere is the IOR\n%C\n\n",
-                                aString.rep ()));
+                                "IOR %d: here is the IOR\n%C\n\n",
+                                decode_pass_count, aString.rep ()));
 
                     ACE_CString str;
-                    b = catior_impl.decode(aString, str);
+                    Catior_i fcatior_impl;
+
+                    b = fcatior_impl.decode(aString, str);
                     ACE_DEBUG ((LM_DEBUG, "%s", str.c_str()));
                   }
                 if (b == 1)
@@ -385,8 +387,8 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     ++decode_pass_count;
 
                     ACE_DEBUG ((LM_DEBUG,
-                                "\nhere is the IOR\n%C\n\n",
-                                aString.rep ()));
+                                "IOR: %d\nhere is the IOR\n%C\n\n",
+                                decode_pass_count, aString.rep ()));
 
                     ACE_CString str;
                     b = catior_impl.decode(aString, str);
