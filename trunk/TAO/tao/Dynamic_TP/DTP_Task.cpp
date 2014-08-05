@@ -130,21 +130,7 @@ TAO_DTP_Task::get_thread_idle_time ()
 int
 TAO_DTP_Task::open (void* /* args */)
 {
-  size_t num = 1;
-
-  // Open_Args* tmp = static_cast<Open_Args *> (args);
-
-  //if (tmp == 0)
-  //  {
-  //    //FUZZ: disable check_for_lack_ACE_OS
-  //    TAOLIB_ERROR_RETURN ((LM_ERROR,
-  //                       ACE_TEXT ("(%P|%t) DTP_Task::open() failed to open.  ")
-  //                       ACE_TEXT ("Invalid argument type passed to open().\n")),
-  //                      -1);
-  //    //FUZZ: enable check_for_lack_ACE_OS
-  //  }
-
-  num = this->init_pool_threads_;
+  size_t num = this->init_pool_threads_;
 
   // Set the busy_threads_ to the number of init_threads
   // now. When they startup they will decrement themselves
@@ -153,47 +139,45 @@ TAO_DTP_Task::open (void* /* args */)
   this->busy_threads_ = 0;
 
   if (TAO_debug_level > 4)
-  {
-    TAOLIB_DEBUG((LM_DEBUG,
-        ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() initialized with:\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() init_threads_ \t\t: [%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() min_pool_threads_ \t\t: [%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() max_pool_threads_ \t\t: [%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() max_request_queue_depth_ \t: [%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() thread_stack_size_ \t\t: [%d]\n")
-        ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() thread_idle_time_ \t\t: [%d]\n"),
-        this->init_pool_threads_,
-        this->min_pool_threads_,
-        this->max_pool_threads_,
-        this->max_request_queue_depth_,
-        this->thread_stack_size_,
-        this->thread_idle_time_.sec ())
-        );
-  }
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() initialized with:\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() init_threads_ \t\t: [%d]\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() min_pool_threads_ \t\t: [%d]\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() max_pool_threads_ \t\t: [%d]\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() max_request_queue_depth_ \t: [%d]\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() thread_stack_size_ \t\t: [%d]\n")
+                    ACE_TEXT ("TAO (%P|%t) - DTP_Task::open() thread_idle_time_ \t\t: [%d]\n"),
+                    this->init_pool_threads_,
+                    this->min_pool_threads_,
+                    this->max_pool_threads_,
+                    this->max_request_queue_depth_,
+                    this->thread_stack_size_,
+                    this->thread_idle_time_.sec ())
+                   );
+    }
 
   // We can't activate 0 threads.  Make sure this isn't the case.
   if (num < 1)
     {
-      TAOLIB_ERROR_RETURN ((LM_ERROR,
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) DTP_Task::open() failed to open.  ")
                          ACE_TEXT ("num_threads (%u) is less-than 1.\n"),
-                         num),
-                        -1);
+                         num));
+        }
+      return -1;
     }
 
   // We need the lock acquired from here on out.
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->aw_lock_, -1);
 
   // We can assume that we are in the proper state to handle this open()
-  // call as long as we haven't been open()'ed before.
+  // call as long as we haven't been opened before.
   if (this->opened_)
     {
-      //FUZZ: disable check_for_lack_ACE_OS
-      TAOLIB_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("TAO (%P|%t) DTP_Task::open() failed to open.  ")
-                         ACE_TEXT ("Task has previously been open()'ed.\n")),
-                        -1);
-      //FUZZ: enable check_for_lack_ACE_OS
+      return 0;
     }
   // Create the stack size arrays if the stack size is set > 0.
 
