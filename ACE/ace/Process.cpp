@@ -1003,10 +1003,6 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
                    variable_name,
                    format);
 
-  // Start varargs.
-  va_list argp;
-  va_start (argp, format);
-
   // Add the rest of the varargs.
   size_t tmp_buflen = buflen;
   if (DEFAULT_COMMAND_LINE_BUF_LEN > buflen)
@@ -1021,7 +1017,15 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
   do
     {
+      // Must restart varargs on each time through this loop,
+      va_list argp;
+      va_start (argp, format);
+
       retval = ACE_OS::vsnprintf (safe_stack_buf.get (), tmp_buflen, safe_newformat.get (), argp);
+
+      // End varargs.
+      va_end (argp);
+
       if (retval > ACE_Utils::truncate_cast<int> (tmp_buflen))
         {
           tmp_buflen *= 2;
@@ -1043,7 +1047,10 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
           // ALERT: Since we have to use vsprintf here, there is still a chance that
           // the stack_buf overflows, i.e., the length of the resulting string
           // can still possibly go beyond the allocated stack_buf.
+          va_list argp;
+          va_start (argp, format);
           retval = ACE_OS::vsprintf (safe_stack_buf.get (), safe_newformat.get (), argp);
+          va_end (argp);
           if (retval == -1)
             // vsprintf is failed.
             return -1;
@@ -1052,9 +1059,6 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
         // vsnprintf is failed.
         return -1;
     }
-
-  // End varargs.
-  va_end (argp);
 
   // Append the string to our environment buffer.
   if (this->setenv_i (safe_stack_buf.get (),
