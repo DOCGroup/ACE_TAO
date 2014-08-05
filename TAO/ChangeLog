@@ -1,3 +1,12 @@
+Tue Aug  5 20:58:52 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_Task.cpp:
+          Fix for the case when a threadpool is shared between POAs, it is OK
+          for DTP_Task::open to be called more than once.
+
+        * tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/server.cpp:
+          Extend the test to assure the above is true.
+
 Tue Aug  5 16:47:38 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/catior/catior.cpp:

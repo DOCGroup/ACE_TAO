@@ -60,6 +60,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
+      CORBA::PolicyList policies (0);
+
+      PortableServer::POA_var mp2 = root_poa->create_POA ("MyPOA2", poa_manager.in(), policies);
+
+
       if (parse_args (argc, argv) != 0)
         return 1;
 
