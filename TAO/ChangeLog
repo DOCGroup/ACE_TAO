@@ -1,3 +1,8 @@
+Wed Aug  6 19:59:20 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Dynamic_TP/DTP_Task.cpp:
+          Refactor the open method to avoid a race.
+
 Tue Aug  5 20:58:52 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_Task.cpp:

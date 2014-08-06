@@ -130,13 +130,15 @@ TAO_DTP_Task::get_thread_idle_time ()
 int
 TAO_DTP_Task::open (void* /* args */)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->aw_lock_, -1);
+  // We can assume that we are in the proper state to handle this open()
+  // call as long as we haven't been opened before.
+  if (this->opened_)
+    {
+      return 0;
+    }
+
   size_t num = this->init_pool_threads_;
-
-  // Set the busy_threads_ to the number of init_threads
-  // now. When they startup they will decrement themselves
-  // as they go into a wait state.
-
-  this->busy_threads_ = 0;
 
   if (TAO_debug_level > 4)
     {
@@ -170,15 +172,12 @@ TAO_DTP_Task::open (void* /* args */)
       return -1;
     }
 
-  // We need the lock acquired from here on out.
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->aw_lock_, -1);
+  // Set the busy_threads_ to the number of init_threads
+  // now. When they startup they will decrement themselves
+  // as they go into a wait state.
 
-  // We can assume that we are in the proper state to handle this open()
-  // call as long as we haven't been opened before.
-  if (this->opened_)
-    {
-      return 0;
-    }
+  this->busy_threads_ = 0;
+
   // Create the stack size arrays if the stack size is set > 0.
 
   // Activate this task object with 'num' worker threads.
