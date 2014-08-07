@@ -1,3 +1,9 @@
+Thu Aug  7 20:01:02 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/Bug_4152_Regression/run_test.pl:
+          accept a "server already shutdown" as not an error as it
+          happens due to process timing on some platforms.
+
 Wed Aug  6 19:59:20 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Dynamic_TP/DTP_Task.cpp:
