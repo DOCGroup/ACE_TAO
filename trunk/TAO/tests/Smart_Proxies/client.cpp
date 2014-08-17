@@ -31,7 +31,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-        ior = ACE_OS::strdup (get_opts.opt_arg ());
+        ior = get_opts.opt_arg ();
       break;
       case '?':
       default:
@@ -45,16 +45,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
   try
     {
-      CORBA::ORB_var orb =
-        CORBA::ORB_init (argc,
-                         argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;

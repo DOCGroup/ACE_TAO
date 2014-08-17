@@ -69,7 +69,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = ACE_OS::strdup (get_opts.opt_arg ());
+        ior_output_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
