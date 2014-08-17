@@ -1594,6 +1594,7 @@ namespace DAnCE
             case AST_Expression::EV_longlong:
               exprtype = LITERALS[ST_LL];
               str_value.reset (this->number_to_string (val->u.llval));
+              break;
             case AST_Expression::EV_ulonglong:
               exprtype = LITERALS[ST_ULL];
               str_value.reset (this->number_to_string (val->u.ullval));
