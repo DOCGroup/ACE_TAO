@@ -32,10 +32,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-        ior1 = ACE_OS::strdup (get_opts.opt_arg ());
+        ior1 = get_opts.opt_arg ();
         break;
       case 'j':
-        ior2 = ACE_OS::strdup (get_opts.opt_arg ());
+        ior2 = get_opts.opt_arg ();
         break;
        case 'f':
         one_shot_factory = ACE_OS::atoi (get_opts.opt_arg ());
@@ -122,6 +122,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       run_test (orb.in (), 1);
       run_test (orb.in (), 2);
 
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

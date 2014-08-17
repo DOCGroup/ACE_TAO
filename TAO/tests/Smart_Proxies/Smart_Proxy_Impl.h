@@ -6,7 +6,6 @@
 class Smart_Test_Factory : public virtual TAO_Test_Default_Proxy_Factory
 {
 public:
-
   Smart_Test_Factory (void);
 
   virtual Test_ptr create_proxy (Test_ptr proxy);

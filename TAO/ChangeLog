@@ -1,3 +1,23 @@
+Sun Aug 17 18:52:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
+          Removed if statements, the regular and else clause had the
+          exact same code, reported by Coverity
+
+        * tests/Smart_Proxies/Benchmark/client.cpp:
+        * tests/Smart_Proxies/Benchmark/server.cpp:
+        * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.h:
+        * tests/Smart_Proxies/Collocation/Smart_Proxy_Impl.cpp:
+        * tests/Smart_Proxies/On_Demand/client.cpp:
+        * tests/Smart_Proxies/On_Demand/server.cpp:
+        * tests/Smart_Proxies/Policy/Smart_Proxy_Impl.cpp:
+        * tests/Smart_Proxies/Policy/client.cpp:
+        * tests/Smart_Proxies/Policy/server.cpp:
+        * tests/Smart_Proxies/Smart_Proxy_Impl.h:
+        * tests/Smart_Proxies/client.cpp:
+        * tests/Smart_Proxies/server.cpp:
+          Fixed Coverity and valgrind reported errors
+
 Thu Aug  7 20:01:02 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/Bug_4152_Regression/run_test.pl:

@@ -67,7 +67,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-        ior = ACE_OS::strdup (get_opts.opt_arg ());
+        ior = get_opts.opt_arg ();
       break;
       case 'n':
         niterations = ACE_OS::atoi (get_opts.opt_arg ());
@@ -232,6 +232,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
        server1->shutdown ();
       */
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
