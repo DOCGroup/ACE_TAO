@@ -69,7 +69,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'o':
-        ior_output_file = ACE_OS::strdup (get_opts.opt_arg ());
+        ior_output_file = get_opts.opt_arg ();
         break;
       case '?':
       default:
@@ -87,11 +87,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc,
-                                            argv);
+      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -103,7 +101,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (object.in ());
-
 
       // Get the POAManager of the RootPOA.
       PortableServer::POAManager_var poa_manager =
@@ -145,8 +142,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "event loop finished\n"));
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (true, true);
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

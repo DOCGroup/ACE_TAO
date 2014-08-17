@@ -30,7 +30,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'i':
-        ior = ACE_OS::strdup (get_opts.opt_arg ());
+        ior = get_opts.opt_arg ();
       break;
       case '?':
       default:
@@ -43,7 +43,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
       }
   return 0;
 }
-
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -76,6 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server->shutdown ();
 
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

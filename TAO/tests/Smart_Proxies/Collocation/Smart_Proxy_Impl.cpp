@@ -36,13 +36,10 @@ Smart_Diamond_Top_Proxy::shape ()
   char *ans= 0;
   try
     {
-      ans =
-        ACE_OS::strdup (
-                Diamond::TAO_Diamond_Top_Smart_Proxy_Base::shape (
-              )
-          );
+      ans = ACE_OS::strdup (
+        Diamond::TAO_Diamond_Top_Smart_Proxy_Base::shape ());
 
-      ACE_DEBUG ((LM_DEBUG, "%s\n", ans));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", ans));
     }
   catch (const CORBA::Exception& ex)
     {

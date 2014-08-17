@@ -12,65 +12,36 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class Target, class Object> int
-TAO_ESF_Connected_Command<Target,Object>::execute (void* arg)
+TAO_ESF_Connected_Command<Target,Object>::execute (void* /*arg*/)
 {
-  if (arg != 0)
-    {
-      this->target_->connected_i (this->object_);
-    }
-  else
-    {
-      this->target_->connected_i (this->object_);
-    }
-
+  this->target_->connected_i (this->object_);
   return 0;
 }
 
 // ****************************************************************
 
 template<class Target, class Object> int
-TAO_ESF_Reconnected_Command<Target,Object>::execute (void* arg)
+TAO_ESF_Reconnected_Command<Target,Object>::execute (void* /*arg*/)
 {
-  if (arg != 0)
-    {
-      this->target_->reconnected_i (this->object_);
-    }
-  else
-    {
-      this->target_->reconnected_i (this->object_);
-    }
+  this->target_->reconnected_i (this->object_);
   return 0;
 }
 
 // ****************************************************************
 
 template<class Target, class Object> int
-TAO_ESF_Disconnected_Command<Target,Object>::execute (void* arg)
+TAO_ESF_Disconnected_Command<Target,Object>::execute (void* /*arg*/)
 {
-  if (arg != 0)
-    {
-      this->target_->disconnected_i (this->object_);
-    }
-  else
-    {
-      this->target_->disconnected_i (this->object_);
-    }
+  this->target_->disconnected_i (this->object_);
   return 0;
 }
 
 // ****************************************************************
 
 template<class Target> int
-TAO_ESF_Shutdown_Command<Target>::execute (void* arg)
+TAO_ESF_Shutdown_Command<Target>::execute (void* /*arg*/)
 {
-  if (arg != 0)
-    {
-      this->target_->shutdown_i ();
-    }
-  else
-    {
-      this->target_->shutdown_i ();
-    }
+  this->target_->shutdown_i ();
   return 0;
 }
 
