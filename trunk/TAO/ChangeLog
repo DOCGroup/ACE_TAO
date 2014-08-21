@@ -1,3 +1,8 @@
+Thu Aug 21 20:26:50 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+          Fix coverity reported errors and some whitespace cleanup.
+
 Sun Aug 17 18:52:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/ESF/ESF_Delayed_Command.cpp:
