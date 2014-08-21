@@ -24,103 +24,104 @@ namespace {
   class Lockable_File
   {
   public:
-    Lockable_File()
-    : file_(0),
-      flags_(0),
-      locked_(false),
-      unlink_in_destructor_(false)
+    Lockable_File (void)
+      : file_lock_ (),
+        file_ (0),
+        flags_ (0),
+        locked_ (false),
+        unlink_in_destructor_ (false),
+        filename_ ()
     {
     }
 
-    Lockable_File(const ACE_TString& file,
-                  const int flags,
-                  bool unlink_in_destructor = false)
-    : file_(0),
-      flags_(0),
-      locked_(false),
-      unlink_in_destructor_(false)
+    Lockable_File (const ACE_TString& file,
+                   const int flags,
+                   bool unlink_in_destructor = false)
+      : file_lock_ (),
+        file_(0),
+        flags_(0),
+        locked_(false),
+        unlink_in_destructor_(false),
+        filename_ ()
     {
       init_fl(file, flags, unlink_in_destructor);
     }
 
-    ~Lockable_File()
+    ~Lockable_File (void)
     {
-      release();
+      release ();
     }
 
-    void release()
+    void release (void)
     {
-      if (this->file_ == 0)
-        return;
-
-      close_file();
-      this->file_lock_.reset();
+      if (this->file_ != 0)
+        {
+          close_file ();
+          this->file_lock_.reset ();
+        }
       this->locked_ = false;
     }
 
-    FILE* get_file()
+    FILE* get_file (void)
     {
-      lock();
+      lock ();
 
       return this->file_;
     }
 
-    FILE* get_file(const ACE_TString& file,
-                   const int flags,
-                   bool unlink_in_destructor = false)
+    FILE* get_file (const ACE_TString& file,
+                    const int flags,
+                    bool unlink_in_destructor = false)
     {
-      init_fl(file, flags, unlink_in_destructor);
-      return get_file();
+      init_fl (file, flags, unlink_in_destructor);
+      return get_file ();
     }
 
   private:
-    void init_fl(const ACE_TString& file,
-                 const int flags,
-                 bool unlink_in_destructor = false)
+    void init_fl (const ACE_TString& file,
+                  const int flags,
+                  bool unlink_in_destructor = false)
     {
-      release();
+      release ();
 
       flags_ = flags | O_CREAT;
       unlink_in_destructor_ = unlink_in_destructor;
 
       const ACE_TCHAR* const flags_str =
-        ((flags_ & O_RDWR) != 0) ? ACE_TEXT("r+") :
-        (((flags_ & O_WRONLY) != 0) ? ACE_TEXT("w") : ACE_TEXT("r"));
+        ((flags_ & O_RDWR) != 0) ? ACE_TEXT ("r+") :
+        (((flags_ & O_WRONLY) != 0) ? ACE_TEXT ("w") : ACE_TEXT ("r"));
 #ifdef ACE_WIN32
       this->filename_ = file;
-      this->file_ = ACE_OS::fopen(file.c_str(), flags_str);
+      this->file_ = ACE_OS::fopen (file.c_str(), flags_str);
 #else
-      this->file_lock_.reset(
-        new ACE_File_Lock(ACE_TEXT_CHAR_TO_TCHAR(file.c_str ()),
-                          flags_,
-                          0666,
-                          unlink_in_destructor));
+      this->file_lock_.reset
+        (new ACE_File_Lock (ACE_TEXT_CHAR_TO_TCHAR (file.c_str ()),
+                            flags_, 0666, unlink_in_destructor));
 
       // Truncating output so this will not allow reading then writing
-
-      ACE_OS::ftruncate(this->file_lock_->get_handle(), 0);
-      this->file_ = ACE_OS::fdopen(this->file_lock_->get_handle(), flags_str);
+      ACE_OS::ftruncate (this->file_lock_->get_handle (), 0);
+      this->file_ = ACE_OS::fdopen (this->file_lock_->get_handle (), flags_str);
 #endif
     }
 
-    void close_file()
+    void close_file (void)
     {
       if (this->file_ == 0)
         return;
 
-      ACE_OS::fflush(this->file_);
-      ACE_OS::fclose(this->file_);
+      ACE_OS::fflush (this->file_);
+      ACE_OS::fclose (this->file_);
       this->file_ = 0;
 #ifdef ACE_WIN32
       if (this->unlink_in_destructor_)
         {
-          ACE_OS::unlink(this->filename_.c_str());
+          ACE_OS::unlink (this->filename_.c_str ());
           this->unlink_in_destructor_ = false;
         }
 #endif
     }
 
-    void lock()
+    void lock (void)
     {
 #ifndef ACE_WIN32
       if (this->locked_)
@@ -129,20 +130,31 @@ namespace {
       if (file_lock_.get () == 0)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      ACE_TEXT("(%P|%t) ERROR: attempting to lock ")
-                      ACE_TEXT ("an uninitialized Lockable_File.")));
+                          ACE_TEXT("(%P|%t) ERROR: Shared_Backing_Store ")
+                          ACE_TEXT("attempting to lock ")
+                          ACE_TEXT ("an uninitialized Lockable_File.\n")));
           this->locked_ = false;
           return;
         }
 
       if ((this->flags_ & O_RDWR) != 0)
-        file_lock_->acquire();
+        {
+          this->locked_ = (file_lock_->acquire() == 0);
+        }
       if ((this->flags_ & O_WRONLY) != 0)
-        file_lock_->acquire_write();
+        {
+          this->locked_ = (file_lock_->acquire_write() == 0);
+        }
       else
-        file_lock_->acquire_read();
-
-      this->locked_ = true;
+        {
+          this->locked_ = (file_lock_->acquire_read() == 0);
+        }
+      if (!this->locked_)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT("(%P|%t) Shared_Backing_Store ")
+                          ACE_TEXT("failed to acquire lock\n")));
+        }
 #endif
     }
 
