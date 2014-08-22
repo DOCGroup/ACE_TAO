@@ -3,7 +3,7 @@
 //
 
 #ifndef STACK_RECURSION_SERVER_TASK_H
-#define STACK_RECUSRION_SERVER_TASK_H
+#define STACK_RECURSION_SERVER_TASK_H
 #include /**/ "ace/pre.h"
 #include "tao/ORB.h"
 
@@ -36,4 +36,4 @@ private:
 };
 
 #include /**/ "ace/post.h"
-#endif /* STACK_RECUSRION_SERVER_TASK_H */
+#endif /* STACK_RECURSION_SERVER_TASK_H */

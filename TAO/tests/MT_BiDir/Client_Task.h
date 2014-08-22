@@ -2,7 +2,7 @@
 // $Id$
 //
 
-#ifndef MT_BIDIR__CLIENT_TASK_H
+#ifndef MT_BIDIR_CLIENT_TASK_H
 #define MT_BIDIR_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
 

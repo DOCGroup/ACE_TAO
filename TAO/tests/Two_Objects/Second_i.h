@@ -3,7 +3,7 @@
 // $Id$
 
 #ifndef TAO_TWO_OBJECTS_SECOND_I_H
-#define TAO_TWO_OBEJCTS_SECOND_I_H
+#define TAO_TWO_OBJECTS_SECOND_I_H
 
 #include "Two_ObjectsS.h"
 
@@ -33,4 +33,4 @@ private:
   ACE_Auto_Event &two_way_done_;
 };
 
-#endif /* TAO_TWO_OBEJCTS_SECOND_I_H*/
+#endif /* TAO_TWO_OBJECTS_SECOND_I_H*/
