@@ -35,8 +35,6 @@ Test_impl::get_something (
 
       OBV_AnyTest::VA *va_ptr = va._retn ();
       ret_val.inout () <<= &va_ptr;
-
-      //*ret_val <<= va.in ();
     }
 
   return ret_val._retn();
