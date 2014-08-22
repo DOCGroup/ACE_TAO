@@ -67,6 +67,7 @@
             { line_regex: "DDS4CCM_ERROR" },
             { line_regex: "DDS4CCM_ERROR_RETURN" },
             { line_regex: "DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION" },
+            { line_regex: "DDS4CCM_PRINT_CORBA_EXCEPTION" },
             { line_regex: "DDS4CCM_debug_level" },
             { line_regex: "CIAO_debug_level" },
             { line_regex: "TAO_debug_level" },
