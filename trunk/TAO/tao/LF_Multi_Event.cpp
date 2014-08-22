@@ -113,7 +113,7 @@ TAO_LF_Multi_Event::is_state_final (void)
 {
   int result = 1;
   for (Event_Node *n = this->events_; n != 0; n = n->next_)
-    if (!n->ptr_->is_state_final () == 0)
+    if (n->ptr_->is_state_final () == 0)
       result = 0;
   return result;
 }

@@ -114,8 +114,8 @@ TAO_FT_Service_Callbacks::is_profile_equivalent (const TAO_Profile *this_p,
           CORBA::Boolean this_byte_order;
           CORBA::Boolean that_byte_order;
 
-          if (this_cdr >> ACE_InputCDR::to_boolean (this_byte_order) == 0 ||
-              that_cdr >> ACE_InputCDR::to_boolean (that_byte_order) == 0)
+          if ((this_cdr >> ACE_InputCDR::to_boolean (this_byte_order)) == 0 ||
+              (that_cdr >> ACE_InputCDR::to_boolean (that_byte_order)) == 0)
             {
               // Have tags but full of garbage - not equivalent
               return TAO_Service_Callbacks::NOT_EQUIVALENT;

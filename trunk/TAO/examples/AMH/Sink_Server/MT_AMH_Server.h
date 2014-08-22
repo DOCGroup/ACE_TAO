@@ -14,7 +14,7 @@
 // =========================================================================
 
 
-#ifndef MT_AMH__SERVER_H
+#ifndef MT_AMH_SERVER_H
 #define MT_AMH_SERVER_H
 
 

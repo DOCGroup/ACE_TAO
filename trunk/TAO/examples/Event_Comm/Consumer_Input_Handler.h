@@ -12,7 +12,7 @@
 
 
 #ifndef CONSUMER_INPUT_HANDLER_H
-#define CONSUMER_INPUT_HANDLER_
+#define CONSUMER_INPUT_HANDLER_H
 
 #include "ace/Service_Config.h"
 #include "ace/Event_Handler.h"

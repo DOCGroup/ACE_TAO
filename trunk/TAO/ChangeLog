@@ -1,3 +1,25 @@
+Fri Aug 22 15:57:21 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * examples/AMH/Sink_Server/MT_AMH_Server.h:
+        * examples/Event_Comm/Consumer_Input_Handler.h:
+        * orbsvcs/tests/Security/MT_BiDir_SSL/Client_Task.h:
+        * tests/MT_BiDir/Client_Task.h:
+        * tests/Stack_Recursion/Server_Task.h:
+        * tests/Two_Objects/Second_i.h:
+          Correct the include guard macro.
+
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/HTIOP/HTIOP_Profile.cpp:
+        * tao/AnyTypeCode/Any_Impl.cpp:
+        * tao/Strategies/DIOP_Profile.cpp:
+        * tao/Strategies/SHMIOP_Profile.cpp:
+        * tao/Strategies/UIOP_Profile.cpp:
+          Make order of evaluation explicit.
+
+        * tao/LF_Multi_Event.cpp:
+          Fix logic error in final state detection. This code may be unused
+          as a clear error has never resulted in a runtime issue.
+
 Fri Aug 22 06:41:21 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/IORTable_Locator/client.cpp:
