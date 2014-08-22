@@ -1,3 +1,14 @@
+Fri Aug 22 06:41:21 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IORTable_Locator/client.cpp:
+          Fixed memory leak
+
+        * tests/OBV/Any/AnyS_impl.cpp:
+          Removed commented out code
+
+        * tests/Portable_Interceptors/Bug_3079/Server_ORBInitializer.h:
+          Layout change
+
 Thu Aug 21 20:26:50 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
