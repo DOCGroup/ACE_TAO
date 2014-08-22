@@ -1,7 +1,7 @@
 //$Id$
 
 #ifndef ACE_CACHING_STRATEGIES_T_CPP
-#define ACECACHING_STRATEGIES_T_CPP
+#define ACE_CACHING_STRATEGIES_T_CPP
 
 #include "ace/Caching_Strategies_T.h"
 #include "ace/Log_Category.h"
