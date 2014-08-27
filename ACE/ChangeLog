@@ -1,3 +1,14 @@
+Wed Aug 27 17:25:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Event_Handler.h:
+          When we enable ACE::make_event_handler<T> we set
+          the define ACE_HAS_ACE_MAKE_EVENT_HANDLER so that a higher
+          layer can easily check if this factory template is
+          available
+
+        * tests/Compiler_Features_32_Test.cpp:
+          Extended this C++11 unit test
+
 Fri Aug 22 15:51:48 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/Caching_Strategies_T.cpp:
