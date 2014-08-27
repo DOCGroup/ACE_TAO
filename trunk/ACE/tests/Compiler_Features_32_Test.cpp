@@ -15,6 +15,7 @@ class A
 {
 public:
   A () = default;
+  void clear ();
 private:
   union u_type_
   {
@@ -31,6 +32,11 @@ A::u_type_::u_type_ ()
 
 A::u_type_::~u_type_ ()
 {
+}
+
+void A::clear ()
+{
+  this->u_.string_member_.std::string::~string ();
 }
 
 int

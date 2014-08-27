@@ -355,6 +355,10 @@ private:
 
 #if defined ACE_HAS_CPP11
 
+/// Define that we can use in user code to check if this
+/// helper factory method is there
+#define ACE_HAS_ACE_MAKE_EVENT_HANDLER
+
 namespace ACE
 {
   /// With C++11 it is common to not use C++ new and delete, but
