@@ -39,7 +39,7 @@ void write (DDSDataWriter * writer)
       char key[7];
       QueryConditionTest new_key;
       sprintf (key, "KEY_%d", iter_key);
-      new_key.symbol = DDS_String_dup(key);
+      new_key.symbol = key;
       for (int iter = 1;
           iter < number_of_iterations_ + 1;
           ++iter)
