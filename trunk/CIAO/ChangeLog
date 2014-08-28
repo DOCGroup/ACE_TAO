@@ -1,3 +1,13 @@
+Thu Aug 28 09:18:06 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/ObO_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/TypeSupport/main.cpp:
+          Fixed valgrind reported memory leaks
+
 Sun Aug 17 18:52:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:

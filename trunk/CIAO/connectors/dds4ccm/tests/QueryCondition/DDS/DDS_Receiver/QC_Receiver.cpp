@@ -348,7 +348,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 DDS_NOT_READ_SAMPLE_STATE,
                                 DDS_NEW_VIEW_STATE | DDS_NOT_NEW_VIEW_STATE,
                                 DDS_ALIVE_INSTANCE_STATE | DDS_NOT_ALIVE_INSTANCE_STATE,
-                                DDS_String_dup ("iteration > %0 AND iteration < %1"),
+                                "iteration > %0 AND iteration < %1",
                                 parameters_run_1);
   if (!qc) {
     cerr << "RECEIVER: Error creating query condition" << endl;
