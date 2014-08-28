@@ -58,12 +58,10 @@ namespace TAO
   class TAO_Export Transport_Selection_Guard
   {
   public:
-
     static Transport_Selection_Guard* current (TAO_ORB_Core* core,
                                                size_t tss_slot_id);
 
   public:
-
     /// Ctor
     Transport_Selection_Guard (TAO_Transport* t);
 
@@ -186,9 +184,6 @@ namespace TAO
   };
 
 } /* namespace TAO */
-
-
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
