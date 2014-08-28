@@ -264,6 +264,11 @@ ACE_TMAIN (int , ACE_TCHAR **)
       /// No need to delete f1, f2, and f3 since ::close will delete them.
       pf.delete_participant(dp1);
       pf.delete_participant(dp2);
+
+#if (CIAO_DDS4CCM_NDDS==1)
+      DDSDomainParticipantFactory::finalize_instance ();
+#endif
+
     }
   catch (const ::CORBA::Exception& e)
     {

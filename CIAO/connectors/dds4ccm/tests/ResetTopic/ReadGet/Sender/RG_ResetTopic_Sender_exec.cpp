@@ -108,7 +108,7 @@ namespace CIAO_RG_ResetTopic_Sender_Impl
             throw ::CORBA::INTERNAL ();
           }
 
-        conn->topic_name (::CORBA::string_dup (this->topic_name_.c_str()));
+        conn->topic_name (this->topic_name_.c_str());
 
         ::CORBA::UShort key = 0;
         ::CORBA::UShort iter = 0;
@@ -140,7 +140,7 @@ namespace CIAO_RG_ResetTopic_Sender_Impl
                       "Inform the receiver that all samples were written\n"));
             starter->set_reader_properties (this->start_key_ - 1, this->start_iteration_ - 1);
 
-            starter->start_read (::CORBA::string_dup(this->topic_name_.c_str()));
+            starter->start_read (this->topic_name_.c_str());
           }
         else
           {
