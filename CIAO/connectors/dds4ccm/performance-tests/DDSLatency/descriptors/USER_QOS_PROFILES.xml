@@ -137,9 +137,11 @@
         <property>
           <value>
             <element>
-              <name>dds.transport.SHMEM.builtin.parent.message_size_max</name>
+              <name>dds.transport.shmem.builtin.parent.message_size_max</name>
               <value>8712</value>
-              <name>dds.transport.SHMEM.builtin.receive_buffer_size</name>
+            </element>
+            <element>
+              <name>dds.transport.shmem.builtin.receive_buffer_size</name>
               <value>17424</value>
             </element>
           </value>

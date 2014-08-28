@@ -1,3 +1,10 @@
+Thu Aug 28 10:15:41 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/USER_QOS_PROFILES.xml:
+          Committed some fixes prepared some time ago, fixed these QoS XML
+          files so that they work with RTI DDS 5.1.0
+
 Thu Aug 28 09:18:06 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
