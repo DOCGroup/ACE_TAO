@@ -80,7 +80,6 @@ namespace CIAO_cpuaffinity_A_Impl
         (!z_set || o_set))
       {
         ACE_ERROR ((LM_ERROR, "Error: Expected to only be on processor zero.\n"));
-        return;
       }
 
     if (cpu_affinity_ == 1 &&
