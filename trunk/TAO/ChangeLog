@@ -1,3 +1,18 @@
+Fri Aug 29 20:26:57 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/CDR.cpp:
+        * tao/DynamicInterface/DII_Arguments_Converter_Impl.cpp:
+        * tao/Messaging/AMI_Arguments_Converter_Impl.cpp:
+        * tao/PortableServer/Upcall_Wrapper.cpp:
+          Fixed a vulnerability. In cases where errno happened to be
+          zero when demarshaling a malformed string (length > available
+          buffer) does not result in an exception being raised, rather
+          a null char * will be passed to the servant. Also ensured the
+          errno is set to a known state as CDR does not set errno in all
+          failure cases, but always returns the status of the goodbit,
+          so a demashal fail with an errno of zero still needs to raise
+          the appropriate MARSHAL exception.
+
 Fri Aug 29 14:13:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/POA/TIE/client.cpp:
