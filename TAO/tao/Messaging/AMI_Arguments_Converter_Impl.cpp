@@ -26,6 +26,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_request (
   this->dsi_convert_request (server_request, output);
 
   TAO_InputCDR input (output);
+  errno = 0;
   for (CORBA::ULong j = 1; j < nargs; ++j)
     {
       if (!(args[j]->demarshal (input)))
@@ -66,6 +67,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_reply (
   if (server_request.operation_details ()->reply_dispatcher ())
     {
       TAO_OutputCDR output;
+      errno = 0;
       for (CORBA::ULong j = 0; j < nargs; ++j)
         {
           if (!(args[j]->marshal (output)))

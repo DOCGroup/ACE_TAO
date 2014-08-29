@@ -94,6 +94,7 @@ TAO_DII_Arguments_Converter_Impl::convert_reply (
     size_t nargs)
 {
   TAO_OutputCDR output;
+  errno = 0;
   for (CORBA::ULong j = 0; j < nargs; ++j)
     {
       if (!(args[j]->marshal (output)))

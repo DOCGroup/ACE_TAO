@@ -228,7 +228,7 @@ TAO::Upcall_Wrapper::pre_upcall (TAO_InputCDR & cdr,
   try {
     TAO::Argument * const * const begin = args + 1;  // Skip the return value.
     TAO::Argument * const * const end   = args + nargs;
-
+    errno = 0;
     for (TAO::Argument * const * i = begin; i != end; ++i)
       {
         if (!(*i)->demarshal (cdr))
@@ -255,6 +255,7 @@ TAO::Upcall_Wrapper::post_upcall (TAO_ServerRequest& server_request,
   TAO::Argument * const * const end   = args + nargs;
 
   try {
+    errno = 0;
     for (TAO::Argument * const * i = begin; i != end; ++i)
       {
         if (!(*i)->marshal (cdr))
