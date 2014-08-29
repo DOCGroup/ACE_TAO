@@ -178,6 +178,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Test<Outer::Inner::C, Outer::Inner::C_var>::run (orb.in (),
                                                        IOR[i++]);
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

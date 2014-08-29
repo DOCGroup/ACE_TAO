@@ -1,3 +1,12 @@
+Fri Aug 29 14:13:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/POA/TIE/client.cpp:
+        * tests/POA/TIE/run_test.pl:
+        * tests/POA/TIE/server.cpp:
+          Removed ACE_HAS_USING_KEYWORD that define has been removed
+          a long time ago, pass -debug also to client and server, looks
+          this test is broken, not part of our test suite
+
 Fri Aug 22 15:57:21 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * examples/AMH/Sink_Server/MT_AMH_Server.h:
