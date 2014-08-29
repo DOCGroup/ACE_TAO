@@ -1,3 +1,17 @@
+Fri Aug 29 07:40:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao.localityconfig:
+          Added the default shipped configuration plugins
+
+        * dance/LocalityManager/Configuration/CPU_Affinity.h:
+        * dance/LocalityManager/Configuration/Process_Name.h:
+        * dance/LocalityManager/Configuration/Process_Priority.h:
+          Layout changes
+
+        * dance/LocalityManager/Configuration/Process_Name.cpp:
+          Check the return value of the any extraction, if that fails
+          we throw an exception
+
 Wed Jul 30 13:32:40 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * dance/LocalityManager/Handler/Plugin_Conf.cpp:

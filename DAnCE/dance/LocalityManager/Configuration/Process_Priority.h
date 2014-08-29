@@ -32,11 +32,9 @@ namespace DAnCE
     // Destructor
     virtual ~Process_Priority (void);
 
-    virtual
-      char * type (void);
+    virtual char * type (void);
 
-    virtual
-      void configure (const ::Deployment::Property & prop);
+    virtual void configure (const ::Deployment::Property & prop);
   };
 }
 

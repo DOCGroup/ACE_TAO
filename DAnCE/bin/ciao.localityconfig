@@ -8,3 +8,8 @@ edu.vanderbilt.dre.DAnCE.InstanceHandler CIAO_Deployment_Handlers create_Homed_C
 edu.vanderbilt.dre.DAnCE.DeploymentInterceptor CIAO_Deployment_Interceptors create_CIAO_StoreReferences
 edu.vanderbilt.dre.DAnCE.DeploymentInterceptor CIAO_Deployment_Interceptors create_CIAO_ReferenceLookup
 edu.vanderbilt.dre.DAnCE.DeploymentInterceptor DAnCE_Error_Interceptors create_DAnCE_Standard_Error
+
+# Default shipped configuration plugins
+edu.vanderbilt.dre.DAnCE.ConfigPlugin DAnCE_LM_Config_Plugins create_Process_Name
+edu.vanderbilt.dre.DAnCE.ConfigPlugin DAnCE_LM_Config_Plugins create_CPU_Affinity
+edu.vanderbilt.dre.DAnCE.ConfigPlugin DAnCE_LM_Config_Plugins create_Process_Priority
