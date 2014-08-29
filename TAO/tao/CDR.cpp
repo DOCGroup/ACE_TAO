@@ -187,8 +187,6 @@ TAO_OutputCDR::throw_stub_exception (int error_num)
 {
   switch (error_num)
     {
-    case 0 :
-      break;
     case EINVAL : // wchar from a GIOP 1.0
       throw ::CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_NO);
       ACE_NOTREACHED (break);
@@ -211,9 +209,6 @@ TAO_OutputCDR::throw_skel_exception (int error_num )
 {
   switch (error_num)
     {
-    case 0 :
-      break;
-
     case EINVAL : // wchar from a GIOP 1.0
       throw ::CORBA::MARSHAL (CORBA::OMGVMCID | 5, CORBA::COMPLETED_YES);
       ACE_NOTREACHED (break);
@@ -314,8 +309,6 @@ TAO_InputCDR::throw_stub_exception (int error_num )
 {
   switch (error_num)
     {
-    case 0 :
-      break;
     case EINVAL : // wchar from a GIOP 1.0
       throw ::CORBA::MARSHAL (CORBA::OMGVMCID | 6, CORBA::COMPLETED_YES);
       ACE_NOTREACHED(break);
@@ -337,8 +330,6 @@ TAO_InputCDR::throw_skel_exception (int error_num )
 {
   switch (error_num)
     {
-    case 0 :
-      break;
     case EINVAL : // wchar from a GIOP 1.0
       throw ::CORBA::MARSHAL(CORBA::OMGVMCID | 5, CORBA::COMPLETED_NO);
       ACE_NOTREACHED(break);
