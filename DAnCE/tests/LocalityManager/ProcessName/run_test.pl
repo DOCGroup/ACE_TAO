@@ -230,7 +230,7 @@ if ($count ne "1\n") {
     print "ERROR: Process listing:\n";
     print `ps auxc`;
 } else {
-    print "Success!  Process name appears to have been changed appropriately.";
+    print "Success! Process name appears to have been changed appropriately.\n";
 }
 
 # Invoke executor - stop the application -.
