@@ -14,8 +14,6 @@
 
 #include <algorithm>
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implement conceptually abstract virtual functions in the base class
@@ -373,6 +371,26 @@ ACE_Event_Handler_var::reset (ACE_Event_Handler *p)
 {
   *this = p;
 }
+
+#if defined (ACE_HAS_CPP11)
+ACE_Event_Handler_var::operator bool() const
+{
+  return this->ptr_ == nullptr ? false : true;
+}
+
+bool
+ACE_Event_Handler_var::operator ==(std::nullptr_t) const
+{
+  return this->ptr_ == nullptr ? true : false;
+}
+
+bool
+ACE_Event_Handler_var::operator !=(std::nullptr_t) const
+{
+  return this->ptr_ == nullptr ? false : true;
+
+}
+#endif /* ACE_HAS_CPP11 */
 
 // ---------------------------------------------------------------------
 
