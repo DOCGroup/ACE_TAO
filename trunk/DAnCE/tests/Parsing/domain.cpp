@@ -32,7 +32,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       file.add_search_path (ACE_TEXT ("DANCE_ROOT"), ACE_TEXT ("/docs/schema/"));
       file.add_search_path (ACE_TEXT ("CIAO_ROOT"), ACE_TEXT ("/docs/schema/"));
       file.add_search_path (ACE_TEXT ("TAO_ROOT"), ACE_TEXT ("/docs/schema/"));
-      ::Deployment::Domain *plan = file.release_domain ();
+      ::Deployment::Domain const *plan = file.get_domain ();
       if (plan)
         {
           ACE_ERROR ((LM_ERROR, "No problems were found in domain <%C>\n",
