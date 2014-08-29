@@ -464,6 +464,43 @@ run_main (int, ACE_TCHAR *[])
     ACE_ERROR ((LM_INFO,
                 ACE_TEXT ("Test passed.\n")));
 
+#if defined (ACE_HAS_CPP11)
+  ACE_Event_Handler_var nullvar;
+  if (!nullvar)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("EH_var explicit operator bool ok\n")));
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("EH_var explicit operator bool FAILED\n")));
+    ++overall_result;
+  }
+  if (nullvar == nullptr)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("EH_var explicit operator== nullptr ok\n")));
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("EH_var explicit operator== nullptr FAILED\n")));
+    ++overall_result;
+  }
+  if (!(nullvar != nullptr))
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("EH_var explicit operator!= nullptr ok\n")));
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("EH_var explicit operator!= nullptr FAILED\n")));
+    ++overall_result;
+  }
+#endif
+
   ACE_END_TEST;
 
   return overall_result;
