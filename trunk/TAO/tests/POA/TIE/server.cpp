@@ -101,7 +101,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-
       // Policies for the firstPOA to be created.
       CORBA::PolicyList policies (2);
       policies.length (2);
@@ -124,7 +123,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               poa_manager.in (),
                               policies);
 
-
       ACE_OS::strcpy (str,"PortableServer::POA::create_POA");
 
       // Creation of POAs is over. Destroy the Policy objects.
@@ -145,7 +143,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Create C_i
       Outer_i::Inner_i::C_i c_impl (29, first_poa.in ());
 
-#if defined (ACE_HAS_USING_KEYWORD)
       // Create A tie
       Tie_i a_tie_i (30);
       POA_A_tie <Tie_i> a_tie_impl (a_tie_i, first_poa.in ());
@@ -158,12 +155,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Tie_i c_tie_i (32);
       POA_Outer::Inner::C_tie <Tie_i> c_tie_impl (c_tie_i, first_poa.in ());
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
       ACE_OS::strcpy (str, "POA_A::_this");
       // Get Object Reference for the a_impl object.
       A_var a = a_impl._this ();
-
 
       ACE_OS::strcpy (str, "POA_Outer::B::_this");
       // Get Object Reference for the b_impl object.
@@ -173,7 +167,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Get Object Reference for the c_impl object.
       Outer::Inner::C_var c = c_impl._this ();
 
-#if defined (ACE_HAS_USING_KEYWORD)
       ACE_OS::strcpy (str, "POA_A::_this");
       // Get Object Reference for the a_tie_impl object.
       A_var a_tie = a_tie_impl._this ();
@@ -185,8 +178,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::strcpy (str, "POA_Outer::C::_this");
       // Get Object Reference for the c_tie_impl object.
       Outer::Inner::C_var c_tie = c_tie_impl._this ();
-
-#endif /* ACE_HAS_USING_KEYWORD */
 
       ACE_OS::strcpy (str, "CORBA::ORB::object_to_string");
       // Stringyfy all the object references and print them out.
@@ -201,7 +192,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var third_ior =
         orb->object_to_string (c.in ());
 
-#if defined (ACE_HAS_USING_KEYWORD)
       // Stringyfy all the object references and print them out.
       CORBA::String_var forth_ior =
         orb->object_to_string (a_tie.in ());
@@ -233,11 +223,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fclose (output_file_3);
       ACE_OS::fclose (output_file_4);
 
-
       // Stringyfy all the object references and print them out.
       CORBA::String_var fifth_ior =
         orb->object_to_string (b_tie.in ());
-
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var sixth_ior =
@@ -258,11 +246,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fclose (output_file_5);
       ACE_OS::fclose (output_file_6);
 
-#endif /* ACE_HAS_USING_KEYWORD */
-
       poa_manager->activate ();
 
       orb->run ();
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+
+      root_poa->destroy (1, 1);
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {
