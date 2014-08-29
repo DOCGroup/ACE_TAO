@@ -347,6 +347,15 @@ public:
   /// Reset the handler.
   void reset (ACE_Event_Handler *p = 0);
 
+#if defined (ACE_HAS_CPP11)
+  /// Bool operator to check if the ACE_Event_Handler_var has a value
+  explicit operator bool() const;
+  /// Equality operator to compare with nullptr_t
+  bool operator ==(std::nullptr_t) const;
+  /// Not equal operator to compare with nullptr_t
+  bool operator !=(std::nullptr_t) const;
+#endif
+
 private:
 
   /// Handler.

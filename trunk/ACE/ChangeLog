@@ -1,3 +1,13 @@
+Fri Aug 29 11:32:31 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Event_Handler.h:
+        * ace/Event_Handler.cpp:
+        * tests/Reactor_Remove_Resume_Test.cpp:
+          Added new operator bool, operator==(nullptr),
+          and operator==(!nullptr) to easily check whether the
+          ACE_Event_Handler_var has a pointer or not. These
+          new operators are only enabled with C++11 features enabled
+
 Wed Aug 27 17:25:48 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Event_Handler.h:
