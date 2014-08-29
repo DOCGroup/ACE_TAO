@@ -1,3 +1,8 @@
+Fri Aug 29 07:46:41 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/LocalityManager/ProcessName/run_test.pl:
+          Added newline to get success line on its separate line
+
 Fri Aug 29 07:40:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/ciao.localityconfig:
