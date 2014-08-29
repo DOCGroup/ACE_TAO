@@ -1,3 +1,8 @@
+Fri Aug 29 07:39:43 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DAnCE/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
+          Removed not needed return
+
 Thu Aug 28 10:15:41 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * connectors/dds4ccm/performance-tests/DDSLatency/descriptors/USER_QOS_PROFILES.xml:
