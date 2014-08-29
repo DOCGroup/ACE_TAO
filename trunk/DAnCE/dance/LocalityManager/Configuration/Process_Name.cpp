@@ -38,7 +38,15 @@ namespace DAnCE
 # if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,9))
     const char *pname;
 
-    prop.value >>= CORBA::Any::to_string (pname, 0);
+    if (! (prop.value >>= CORBA::Any::to_string (pname, 0)))
+      {
+        DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
+                     (LM_ERROR, DLINFO
+                      ACE_TEXT ("Process_Name::configure - ")
+                      ACE_TEXT ("Unable to extract process name string")));
+        throw ::Deployment::StartError (prop.name.in (),
+                                        "Unable to extract process name string");
+      }
     unsigned long arg (0);
 
     ACE_Auto_Basic_Array_Ptr<char> safe_array;
