@@ -30,7 +30,7 @@ parse_args (int argc, ACE_TCHAR **argv)
     switch (c)
       {
       case 'k':
-        IOR = ACE_OS::strdup (get_opts.opt_arg ());
+        IOR = get_opts.opt_arg ();
         break;
 
       case 'x':

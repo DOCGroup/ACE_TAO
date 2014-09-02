@@ -202,26 +202,36 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       FILE *output_file_4 = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_4), "w");
 
       if (output_file_1)
+      {
         ACE_OS::fprintf (output_file_1,
                          "%s",
                          first_ior.in ());
+        ACE_OS::fclose (output_file_1);
+      }
+
       if (output_file_2)
+      {
         ACE_OS::fprintf (output_file_2,
                          "%s",
                          second_ior.in ());
+        ACE_OS::fclose (output_file_2);
+      }
+
       if (output_file_3)
+      {
         ACE_OS::fprintf (output_file_3,
                          "%s",
                          third_ior.in ());
+        ACE_OS::fclose (output_file_3);
+      }
+
       if (output_file_4)
+      {
         ACE_OS::fprintf (output_file_4,
                          "%s",
                          forth_ior.in ());
-
-      ACE_OS::fclose (output_file_1);
-      ACE_OS::fclose (output_file_2);
-      ACE_OS::fclose (output_file_3);
-      ACE_OS::fclose (output_file_4);
+        ACE_OS::fclose (output_file_4);
+      }
 
       // Stringyfy all the object references and print them out.
       CORBA::String_var fifth_ior =
@@ -235,16 +245,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       FILE *output_file_6 = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_6), "w");
 
       if (output_file_5)
+      {
         ACE_OS::fprintf (output_file_5,
                          "%s",
                          fifth_ior.in ());
+        ACE_OS::fclose (output_file_5);
+      }
+
       if (output_file_6)
+      {
         ACE_OS::fprintf (output_file_6,
                          "%s",
                          sixth_ior.in ());
-
-      ACE_OS::fclose (output_file_5);
-      ACE_OS::fclose (output_file_6);
+        ACE_OS::fclose (output_file_6);
+      }
 
       poa_manager->activate ();
 
