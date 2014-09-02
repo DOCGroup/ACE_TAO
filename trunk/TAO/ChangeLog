@@ -1,3 +1,9 @@
+Tue Sep  2 15:28:03 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+          Have the test use an iterator when listing servers to be a
+          regression test for bug 2843.
+
 Fri Aug 29 20:26:57 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/CDR.cpp:
