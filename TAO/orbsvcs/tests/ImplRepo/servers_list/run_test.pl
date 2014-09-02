@@ -18,7 +18,7 @@ $debuglevel = 0;
 # ping interval and ping occurs on startup.
 my $ping_interval_milliseconds = 1000;
 
-my $servers_count = 2;
+my $servers_count = 4;
 my $servers_kill_count = 1;
 my $server_init_delay = 0;
 my $server_reply_delay = 0;
@@ -298,6 +298,7 @@ sub list_active_servers($)
 {
     my $list_options = shift;
     my $start_time = time();
+    print "list active servers options = \"$list_options\"\n";
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile list $list_options");
     # Redirect output so we can count number of lines in output
     redirect_output();
@@ -314,10 +315,10 @@ sub list_active_servers($)
     $active_servers = 0;
     while (<FILE>) {
 	print STDERR $_;
-	$active_servers++;
+	$active_servers++ if (/TestObject/);
     }
     close FILE;
-    print STDERR "List took $list_time seconds.\n";
+    print STDERR "List took $list_time seconds, found $active_servers entries.\n";
     return $active_servers;
 }
 
@@ -369,7 +370,12 @@ sub servers_list_test
     make_server_requests();
 
     print "\nList of active servers before killing server(s)\n";
-    $active_servers_before_kill = list_active_servers("-a");
+    my $list_args = "-a";
+    if ($servers_count > 1) {
+        my $half = $servers_count / 2;
+        $list_args .= " -n $half";
+    }
+    $active_servers_before_kill = list_active_servers($list_args);
 
     # Kill servers and verify listing of active servers is correct.
     print "\nKilling $servers_kill_count servers\n";
