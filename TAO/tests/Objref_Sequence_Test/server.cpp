@@ -63,8 +63,11 @@ ServerServant::CreateExtra (CORBA::ULong len,
                                        this->orb_.in ()),
                         CORBA::NO_MEMORY ());
 
-      //      PortableServer::ServantBase_var owner_transfer(servant);
-      (*seq) [cnt] = servant->_this ();
+      PortableServer::ServantBase_var owner_transfer(servant);
+      PortableServer::ObjectId_var id =
+        this->root_poa_->activate_object (servant);
+      CORBA::Object_var object = this->root_poa_->id_to_reference (id.in ());
+      (*seq)[cnt] = Server::_narrow (object.in ());
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -77,7 +80,7 @@ void
 ServerServant::DeleteExtra (const ServerSequence &seq)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Deleting sequences\n"));
+              "(%P|%t) Deleting %d sequences\n", seq.length ()));
 
   PortableServer::ObjectId_var oid;
   PortableServer::ServantBase *servant = 0;
