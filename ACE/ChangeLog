@@ -1,3 +1,9 @@
+Thu Sep  4 16:41:40 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * apps/JAWS3/contrib/john_at_lyris_dot_com/jaws3-cntlC.code:
+        * examples/NT_Service/main.cpp:
+          Another attempt to fix the control handler function signature
+
 Thu Sep  4 09:00:56 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS3/contrib/john_at_lyris_dot_com/jaws3-cntlC.code:

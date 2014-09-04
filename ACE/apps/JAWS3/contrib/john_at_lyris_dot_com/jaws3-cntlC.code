@@ -17,7 +17,7 @@ bool PlatformSpecificInitialize() {
      return lyris_success;
 };
 
-BOOL handler_routine(DWORD signal) {
+BOOL WINAPI handler_routine(DWORD signal) {
 
      LYRIS_PROFILE("handler_routine");
 
