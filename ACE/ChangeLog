@@ -1,3 +1,15 @@
+Thu Sep  4 08:57:02 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/os_include/os_stropts.h:
+          Give struct strrecvfd a dummy member, empty structs have
+          undefined behavior and trigger a huge amount of warnings
+          with clang. This also fixes bugzilla 4150, thanks to
+          Yogesh Sharma <Yogesh dot Sharma at saabusa dot com> for
+          reporting this.
+
+        * tests/Compiler_Features_32_Test.cpp:
+          Extended this unit test and add some external references
+
 Fri Aug 29 11:32:31 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Event_Handler.h:
