@@ -2,7 +2,14 @@
 
 /**
  * This program checks if the compiler doesn't have a certain bug
- * that we encountered when testing C++11 features
+ * that we encountered when testing C++11 features.
+ *
+ * This test validates whether a alias can be used to explicitly
+ * call a destructor, which is related to DR244 (see
+ * http://wg21.cmeerw.net/cwg/issue244)
+ *
+ * This is fixed May 2014 in clang, see
+ * http://llvm.org/viewvc/llvm-project?view=revision&revision=209319
  */
 
 #include "test_config.h"
@@ -38,6 +45,15 @@ void A::clear ()
 {
   this->u_.string_member_.std::string::~string ();
 }
+
+struct B {
+  struct u_type_ {
+    std::string m;
+  } u_;
+  void clear() {
+    u_.m.std::string::~string();
+  }
+};
 
 int
 run_main (int, ACE_TCHAR *[])
