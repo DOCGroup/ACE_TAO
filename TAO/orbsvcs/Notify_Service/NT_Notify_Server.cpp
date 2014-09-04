@@ -175,8 +175,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 // Define a function to handle Ctrl+C to cleanly shut this down.
-
-static BOOL __stdcall
+static BOOL
 ConsoleHandler (DWORD /* ctrlType */)
 {
   SERVICE::instance ()->handle_control (SERVICE_CONTROL_STOP);

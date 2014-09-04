@@ -58,8 +58,6 @@ int PersistentPoa::init (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-
-
     // Policies for the new POA
     CORBA::PolicyList policies(3);
     policies.length (3);
