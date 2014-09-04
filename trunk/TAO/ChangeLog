@@ -1,3 +1,11 @@
+Thu Sep  4 22:38:17 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Objref_Sequence_Test/server.cpp:
+          On at least one build, the server was throwing a WrongPolicy
+          exception when servant->_this() was used to activate a new object.
+          Since there was only one POA, the root POA, I have no idea why an
+          exception was raised. Using explicit activation avoids the problem.
+
 Thu Sep  4 16:42:08 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/Naming_Service/NT_Naming_Server.cpp:
