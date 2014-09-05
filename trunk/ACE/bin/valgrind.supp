@@ -42,6 +42,13 @@
    obj:*/bin/ps
 }
 
+{
+   <Suppress all the leaks in ls>
+   Memcheck:Leak
+   ...
+   obj:*/bin/ls
+}
+
 # {
 #   <RTI warning>
 #   Memcheck:Param
