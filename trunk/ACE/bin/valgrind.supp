@@ -38,7 +38,6 @@
 {
    <Suppress all the leaks in grep>
    Memcheck:Leak
-   fun:*
    obj:*grep*
 }
 
@@ -310,20 +309,20 @@
    Memcheck:Param
    writev(vector[...])
    fun:writev
-   fun:_ZN3ACE5sendvEiPK5ioveciPK14ACE_Time_Value
-   fun:_ZN18TAO_IIOP_Transport4sendEP5ioveciRmPK14ACE_Time_Value
-   fun:_ZN13TAO_Transport18drain_queue_helperERiP5iovecRKN3TAO9Transport17Drain_ConstraintsE
-   fun:_ZN13TAO_Transport13drain_queue_iERKN3TAO9Transport17Drain_ConstraintsE
-   fun:_ZN13TAO_Transport27send_synch_message_helper_iER24TAO_Synch_Queued_MessageP14ACE_Time_Value
+   fun:*ACE*sendv*
+   fun:*TAO_IIOP_Transport*send*
+   fun:*TAO_Transport*drain_queue_helper*
+   fun:*TAO_Transport*drain_queue_i*
+   fun:*TAO_Transport*send_synch_message_helper*
    ...
-   fun:_ZN18TAO_IIOP_Transport12send_messageER13TAO_OutputCDRP8TAO_StubP17TAO_ServerRequest21TAO_Message_SemanticsP14ACE_Time_Value
+   fun:*TAO_IIOP_Transport*send_message*
 }
 
 {
    <uninitialized buffer>
    Memcheck:Value8
-   fun:_ZN3ACE10nibble2hexEj
-   fun:_ZN5CORBA3ORB16object_to_stringEPNS_6ObjectE
+   fun:*nibble2hex*
+   fun:*ORB*object_to_string*
 }
 
 {

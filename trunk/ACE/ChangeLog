@@ -1,3 +1,8 @@
+Fri Sep  5 07:41:02 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/valgrind.supp:
+          Improved suppress file for TAO
+
 Fri Sep  5 06:42:24 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/valgrind.supp:
