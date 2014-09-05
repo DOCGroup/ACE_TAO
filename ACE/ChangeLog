@@ -1,3 +1,10 @@
+Fri Sep  5 18:00:25 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_35_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          New C++11 compiler test
+
 Fri Sep  5 13:59:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/valgrind.supp:
