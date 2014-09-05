@@ -21,6 +21,27 @@
    obj:*perl*
 }
 
+{
+   <Suppress all the leaks in bash>
+   Memcheck:Leak
+   fun:*
+   obj:*bash*
+}
+
+{
+   <Suppress all the leaks in ps>
+   Memcheck:Leak
+   fun:*
+   obj:*ps*
+}
+
+{
+   <Suppress all the leaks in grep>
+   Memcheck:Leak
+   fun:*
+   obj:*grep*
+}
+
 # {
 #   <RTI warning>
 #   Memcheck:Param

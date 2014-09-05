@@ -1,3 +1,8 @@
+Fri Sep  5 06:42:24 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/valgrind.supp:
+          Suppress all leaks in ps/bash/grep
+
 Thu Sep  4 16:41:40 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * apps/JAWS3/contrib/john_at_lyris_dot_com/jaws3-cntlC.code:
