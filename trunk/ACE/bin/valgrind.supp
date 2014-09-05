@@ -18,28 +18,28 @@
    <Suppress all the leaks in perl>
    Memcheck:Leak
    ...
-   obj:/usr/bin/perl
+   obj:*/bin/perl
 }
 
 {
    <Suppress all the leaks in bash>
    Memcheck:Leak
    ...
-   obj:/bin/bash
+   obj:*/bin/bash
 }
 
 {
    <Suppress all the leaks in grep>
    Memcheck:Leak
    ...
-   obj:/usr/bin/grep
+   obj:*/bin/grep
 }
 
 {
    <Suppress all the leaks in ps>
    Memcheck:Leak
    ...
-   obj:/bin/ps
+   obj:*/bin/ps
 }
 
 # {
