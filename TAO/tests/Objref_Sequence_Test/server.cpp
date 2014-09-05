@@ -63,7 +63,6 @@ ServerServant::CreateExtra (CORBA::ULong len,
                                        this->orb_.in ()),
                         CORBA::NO_MEMORY ());
 
-      PortableServer::ServantBase_var owner_transfer(servant);
       PortableServer::ObjectId_var id =
         this->root_poa_->activate_object (servant);
       CORBA::Object_var object = this->root_poa_->id_to_reference (id.in ());

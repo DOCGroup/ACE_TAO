@@ -1,3 +1,8 @@
+Fri Sep  5 14:47:26 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/Objref_Sequence_Test/server.cpp:
+          Restored the explicit reference counting behavior.
+
 Thu Sep  4 22:38:17 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Objref_Sequence_Test/server.cpp:
