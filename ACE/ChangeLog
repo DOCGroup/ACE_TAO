@@ -1,3 +1,9 @@
+Fri Sep  5 08:11:27 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/valgrind.supp:
+          Suppress leaks coming from ps/perl/grep/bash, we aren't
+          interested in those
+
 Fri Sep  5 07:41:02 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/valgrind.supp:
