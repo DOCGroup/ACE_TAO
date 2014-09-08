@@ -21,6 +21,7 @@ class Foo
 {
 private:
   std::unique_ptr<foo_impl, foo_impl_deleter> impl_;
+  std::shared_ptr<foo_impl> impl2 {nullptr, foo_impl_deleter ()};
 } impl_;
 
 class foo_impl {};

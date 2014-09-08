@@ -1,3 +1,19 @@
+Mon Sep  8 12:12:24 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/OS_Log_Msg_Attributes.h:
+          Use ACE_UNIMPLEMENTED_FUNC because that maps to deleted
+          operations with C++11
+
+        * ace/config-g++-common.h:
+          Only define ACE_Proper_Export_Flag and ACE_Proper_Import_Flag
+          when they are not defined yet
+
+        * ace/os_include/os_stropts.h:
+          Updated fix for clang
+
+        * tests/Compiler_Features_35_Test.cpp:
+          Extended this unit test
+
 Fri Sep  5 18:00:25 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_35_Test.cpp:

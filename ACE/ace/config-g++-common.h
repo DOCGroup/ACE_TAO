@@ -113,8 +113,12 @@
 #  ifndef ACE_HAS_CUSTOM_EXPORT_MACROS
 #    define ACE_HAS_CUSTOM_EXPORT_MACROS
 #  endif  /* !ACE_HAS_CUSTOM_EXPORT_MACROS */
-#  define ACE_Proper_Export_Flag __attribute__ ((visibility("default")))
-#  define ACE_Proper_Import_Flag __attribute__ ((visibility("default")))
+#  ifndef ACE_Proper_Export_Flag
+#    define ACE_Proper_Export_Flag __attribute__ ((visibility("default")))
+#  endif /* !ACE_Proper_Export_Flag */
+#  ifndef ACE_Proper_Import_Flag
+#    define ACE_Proper_Import_Flag __attribute__ ((visibility("default")))
+#  endif /* !ACE_Proper_Import_Flag */
 
 #  if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 2))
 // Sadly, G++ 4.x silently ignores visibility attributes on
