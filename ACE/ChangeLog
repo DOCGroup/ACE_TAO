@@ -1,3 +1,9 @@
+Mon Sep  8 13:02:34 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_clang_common.GNU:
+          Support c++11 as setting and add -Wno-deprecated at that
+          moment to the compiler flags
+
 Mon Sep  8 12:38:47 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/Compiler_Features_24_Test.cpp:
