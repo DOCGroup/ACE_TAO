@@ -521,6 +521,18 @@ TAO_DTP_Task::set_max_request_queue_depth (size_t queue_depth)
 void
 TAO_DTP_Task::cancel_servant (PortableServer::Servant servant)
 {
+  if (servant == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - DTP_Task::cancel_servant ")
+                         ACE_TEXT ("called with null servant\n")
+                         ));
+        }
+      return;
+    }
+
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->queue_lock_);
 
   // Cancel the requests targeted for the provided servant.

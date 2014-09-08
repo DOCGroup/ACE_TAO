@@ -18,6 +18,7 @@ my $imr = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\
 my $srva = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $srvb = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 my $cli = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
+my $ti =  PerlACE::TestTarget::create_target (5) || die "Create target 4 failed\n";
 
 my $forward_opt = "-ORBForwardOnceOnObjectNotExist 1";
 my $delay = 0;
@@ -25,15 +26,17 @@ my $got_object_not_exist_exception = 0;
 my $protocol = "iiop";
 my $port = $imr->RandomPort ();
 my $srv_port_base = $srva->RandomPort ();
-my $srv_a_id = "AAA";
-my $srv_b_id = "BBB";
+my $srv_a_id = "-ORBServerId AAA ";
+my $srv_b_id = "-ORBServerId BBB ";
 my $client_duration = 30;
-my $ping_ext = '';
+my $do_link = 0;
+my $ping_ext = "-v 0 ";
 
 my $imr_debug = "";
 my $srva_debug = "";
 my $srvb_debug = "";
 my $clt_debug = "";
+
 
 foreach my $i (@ARGV) {
     if ($i eq '-debug') {
@@ -42,19 +45,30 @@ foreach my $i (@ARGV) {
         $srvb_debug = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile srvb.log ";
         $clt_debug = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile clt.log ";
     }
-    if ($i eq '-forwardalways') {
+    elsif ($i eq '-link') {
+        $do_link = 1;
+    }
+    elsif ($i eq '-noid') {
+        $srv_a_id = "";
+        $srv_b_id = "";
+    }
+    elsif ($i eq '-forwardalways') {
         $delay = '5';
         $forward_opt = "-ORBForwardInvocationOnObjectNotExist 1";
     }
-    if ($i eq '-forwardonce') {
+    elsif ($i eq '-forwardonce') {
         $delay = '5';
         $forward_opt = "-ORBForwardOnceOnObjectNotExist 1";
         $got_object_not_exist_exception = 1;
     }
-    if ($i eq '-pingexternal') {
+    elsif ($i eq '-pingexternal') {
         $delay = '5';
         $forward_opt = "-ORBForwardOnceOnObjectNotExist 1";
-        $ping_ext = '-i';
+        $ping_ext = "-i ";
+    }
+    else {
+        print STDERR "unrecognized argument $i\n";
+        exit 1;
     }
 }
 
@@ -70,6 +84,7 @@ my $imr_imrdbfile = $imr->LocalFile ($imrdbfile);
 my $srva_srvaiorfile = $srva->LocalFile ($srvaiorfile);
 my $srvb_srvbiorfile = $srvb->LocalFile ($srvbiorfile);
 my $cli_srvaiorfile = $cli->LocalFile ($srvaiorfile);
+my $ti_imriorfile = $ti->LocalFile ($imriorfile);
 
 $imr->DeleteFile ($imriorfile);
 $srva->DeleteFile ($imriorfile);
@@ -78,31 +93,32 @@ $imr->DeleteFile ($imrdbfile);
 $srva->DeleteFile ($srvaiorfile);
 $srvb->DeleteFile ($srvbiorfile);
 $cli->DeleteFile ($srvaiorfile);
-
+$ti->DeleteFile ($imriorfile);
 
 $IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator",
                             "-ORBEndpoint "."$protocol"."://:".$port." ".
                             "-UnregisterIfAddressReused $imr_debug".
-                            "$ping_ext ".
+                            $ping_ext .
                             "-o $imr_imriorfile ");
 
 $SRV_A = $srva->CreateProcess ("serverA",
                                "-ORBEndpoint " . $protocol . "://:" ."$srv_port_base/portspan=20 ".
                                "-ORBInitRef ImplRepoService=file://$srva_imriorfile ".
-                               "-ORBServerId $srv_a_id $srva_debug".
+                               $srv_a_id .
+                               $srva_debug .
                                "-ORBUseIMR 1 ".
                                "-o $srva_srvaiorfile");
 $SRV_B = $srvb->CreateProcess ("serverB",
                                "-ORBEndpoint " . $protocol . "://:" . "$srv_port_base/portspan=20 ".
                                "-ORBInitRef ImplRepoService=file://$srvb_imriorfile ".
-                               "-ORBServerId $srv_b_id $srvb_debug".
+                               $srv_b_id .
+                               $srvb_debug .
                                "-ORBUseIMR 1 ".
                                "-o $srvb_srvbiorfile");
 $CLI = $cli->CreateProcess ("client",
                             "$forward_opt -i file://$cli_srvaiorfile ".
                             "-t $client_duration $clt_debug".
                             "-e $got_object_not_exist_exception ");
-
 
 print STDERR $IMR->CommandLine () . "\n";
 $IMR_status = $IMR->Spawn ();
@@ -116,6 +132,42 @@ if ($imr->WaitForFileTimed ($imriorfile,$imr->ProcessStartWaitInterval()) == -1)
     $IMR->Kill (); $IMR->TimedWait (1);
     exit 1;
 }
+
+if ($do_link == 1) {
+    my $poaA = "AAA:" if ($srv_a_id =~ /AAA/);
+    $poaA .= "poaA";
+    my $poaC = "AAA:" if ($srv_a_id =~ /AAA/);
+    $poaC .= "poaC";
+
+    $TI = $ti->CreateProcess ("../../../ImplRepo_Service/tao_imr",
+                              "-ORBInitRef ImplRepoService=file://$srva_imriorfile ".
+                              "add $poaA -c serverA");
+    if ($ti->PutFile ($imriorfile) == -1) {
+        print STDERR "ERROR: cannot set file <$ti_imriorfile>\n";
+        $IMR->Kill (); $IMR->TimedWait (1);
+        exit 1;
+    }
+    print STDERR "=== linking POAs for serverA\n";
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "tao_imr register poaA returned $TI_status\n";
+    }
+    $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
+                    "link $poaA -p poaC");
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "tao_imr link poaC to poaA returned $TI_status\n";
+    }
+    $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
+                    "list -v");
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "tao_imr link poaC to poaA returned $TI_status\n";
+    }
+
+
+}
+
 if ($imr->GetFile ($imriorfile) == -1) {
     print STDERR "ERROR: cannot retrieve file <$imr_imriorfile>\n";
     $IMR->Kill (); $IMR->TimedWait (1);
@@ -219,7 +271,8 @@ $SRV_B = $srvb->CreateProcess ("serverB",
                                "_ORBDebugLevel = $debug_level ".
                                "-ORBEndpoint " . "$protocol" . "://:" . "$srv_port_base/portspan=20 ".
                                "-ORBInitRef ImplRepoService=file://$srvb_imriorfile ".
-                               "-ORBServerId $srv_b_id ".
+                               $srv_b_id .
+                               $srvb_debug .
                                "-ORBUseIMR 1 ".
                                "-o $srvb_srvbiorfile ".
                                "-l $delay");

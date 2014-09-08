@@ -1,3 +1,27 @@
+Mon Sep  8 16:17:12 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+          Logging improvments.
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+          Improve the performance when dealing with a new server registering
+          the same address of an already registered server. Rather than
+          expunging the existing server from the registry, treat it as a
+          dead server. Also improved the comparison of server identities.
+          It will still get tripped up by multiple POAs in a server that are
+          logically unlinked.
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
+          Cleaned up a confusing bit of boolean algebra.
+        * orbsvcs/tests/ImplRepo/ReconnectServer/run_test.pl:
+          Add a variation of the test to handle POAs that are logically linked
+          without using serverID.
+
+        * tao/Dynamic_TP/DTP_Task.cpp:
+          Add a sanity check before attempting to cancel a NUL servant.
+
+        * tao/Synch_Invocation.cpp:
+          Reformat a debug log message.
+
 Mon Sep  8 15:30:49 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/Connection_Handler.h:

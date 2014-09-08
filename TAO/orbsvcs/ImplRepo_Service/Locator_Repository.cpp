@@ -285,17 +285,28 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
                     partial_ior));
   }
 
+  ACE_CString key;
+  Server_Info_Ptr si;
+
+  Server_Info::fqname_to_key (fqname.c_str(), key);
+  servers ().find (key, si);
   ACE_CString poa_name;
   ACE_CString server_id;
-  Server_Info::parse_id (fqname.c_str(), server_id, poa_name);
-
-  ACE_Vector<ACE_CString> srvs;
+  if (si.null())
+    {
+      Server_Info::parse_id (fqname.c_str(), server_id, poa_name);
+    }
+  else
+    {
+      server_id = si->active_info ()->server_id;
+      poa_name = si->active_info ()->poa_name;
+    }
 
   Locator_Repository::SIMap::ENTRY* sientry = 0;
   Locator_Repository::SIMap::ITERATOR siit (servers ());
   for (; siit.next (sientry); siit.advance() )
   {
-    Server_Info_Ptr& info = sientry->int_id_;
+    Server_Info *info = sientry->int_id_->active_info ();
 
     if (this->opts_.debug() > 0)
     {
@@ -304,8 +315,12 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
                       ACE_TEXT ("\"%C:%C\" key = <%C> ior \"%C\"\n"), info->server_id.c_str(),
                       info->poa_name.c_str (), info->key_name_.c_str(), info->partial_ior.c_str ()));
     }
-
-    if (info->partial_ior == partial_ior && info->server_id != server_id)
+    bool same_server = info->server_id == server_id;
+    if (same_server && (server_id.length () == 0))
+      {
+        same_server = info->poa_name == poa_name;
+      }
+    if (info->partial_ior == partial_ior && !same_server)
       {
         if (this->opts_.debug() > 0)
           {
@@ -313,24 +328,17 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
                             ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove server %C \n"),
                             info->partial_ior.c_str (), info->poa_name.c_str ()));
           }
-        if (! info->key_name_.empty ())
+        imr_locator->pinger ().remove_server (info->key_name_.c_str());
+        AsyncAccessManager_ptr aam = imr_locator->find_aam (info->key_name_.c_str ());
+        if (!aam.is_nil())
           {
-            srvs.push_back (info->key_name_);
+            aam->server_is_shutting_down ();
           }
+        info->reset_runtime ();
       }
   }
 
-  int err = 0;
-  for (size_t i = 0; i < srvs.size (); ++i)
-    {
-      imr_locator->remove_aam (srvs[i].c_str());
-      if (this->remove_server (srvs[i]) != 0)
-        {
-          err = -1;
-        }
-    }
-
-  return err;
+  return 0;
 }
 
 int
@@ -553,6 +561,7 @@ Locator_Repository::remove_server (const ACE_CString& name)
           ACE_CString key;
           ACE_CString peer (si->peers[i]);
           Server_Info::gen_key (si->server_id, peer, key);
+
           this->servers ().unbind (key);
           this->persistent_remove (key, false);
         }

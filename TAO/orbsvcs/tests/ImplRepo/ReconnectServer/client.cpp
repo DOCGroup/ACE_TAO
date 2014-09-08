@@ -60,16 +60,25 @@ class Client_Task : public ACE_Task_Base
 
     bool test_passed () const
     {
-      return (! communication_failed_ && reconnected_ && ! expect_object_not_exist && ! caught_object_not_exist_)
-        || (communication_failed_ && ! reconnected_ && expect_object_not_exist && caught_object_not_exist_);
+      bool conn_test = communication_failed_ != reconnected_;
+      bool one_test = expect_object_not_exist == caught_object_not_exist_;
+      bool success = (conn_test && one_test);
+      if (!success)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t)Client results, cf = %d, r = %d, ")
+                      ACE_TEXT ("eone = %d, cone = %d\n"),
+                      communication_failed_, reconnected_,
+                      expect_object_not_exist, caught_object_not_exist_));
+        }
+      return success;
     }
 
-  private:
-
-    Test::Time_var test_;
-    bool communication_failed_;
-    bool reconnected_;
-    bool caught_object_not_exist_;
+private:
+  Test::Time_var test_;
+  bool communication_failed_;
+  bool reconnected_;
+  bool caught_object_not_exist_;
 };
 
 
