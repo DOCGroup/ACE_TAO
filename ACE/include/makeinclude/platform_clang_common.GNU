@@ -69,7 +69,15 @@ endif
 
 ifeq ($(c++0x),1)
   CCFLAGS += -std=c++0x
-endif
+  # This is needed due to the use of the deprecated auto_ptr class
+  CCFLAGS += -Wno-deprecated
+else
+  ifeq ($(c++11),1)
+    CCFLAGS += -std=c++11
+    # This is needed due to the use of the deprecated auto_ptr class
+    CCFLAGS += -Wno-deprecated
+  endif # c++11
+endif # c++0x
 
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
