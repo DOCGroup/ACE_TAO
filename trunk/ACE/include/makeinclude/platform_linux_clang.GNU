@@ -32,10 +32,10 @@ endif
 
 ifeq ($(c++0x),1)
   CCFLAGS += -std=c++0x
-endif
-
-ifeq ($(c++11),1)
-  CCFLAGS += -std=c++11
+else
+  ifeq ($(c++11),1)
+    CCFLAGS += -std=c++11
+  endif
 endif
 
 SOFLAGS += $(CPPFLAGS) -shared

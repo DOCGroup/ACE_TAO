@@ -1,3 +1,11 @@
+Mon Sep  8 15:36:03 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_clang_common.GNU:
+          Looks this 'common' file is only used for MacOSX
+
+        * include/makeinclude/platform_linux_clang.GNU:
+          Small improvements to only set one C++ flavor
+
 Mon Sep  8 13:30:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Auto_IncDec_T.h:
