@@ -32,10 +32,20 @@ endif
 
 ifeq ($(c++0x),1)
   CCFLAGS += -std=c++0x
+  deprecated_declarations ?= 0
 else
   ifeq ($(c++11),1)
     CCFLAGS += -std=c++11
+    deprecated_declarations ?= 0
   endif
+endif
+
+# If the user doesn't set a default we default show
+# deprecated declarations
+deprecated_declarations ?= 1
+
+ifeq ($(deprecated_declarations),0)
+  CCFLAGS += -Wno-deprecated-declarations
 endif
 
 SOFLAGS += $(CPPFLAGS) -shared
