@@ -1,3 +1,20 @@
+Mon Sep  8 17:59:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Base_Thread_Adapter.h:
+        * ace/CDR_Base.inl:
+        * ace/CDR_Base.cpp:
+        * ace/ETCL/ETCL_l.cpp:
+        * ace/ETCL/ETCL_l.cpp.diff:
+        * ace/ETCL/ETCL_y.cpp:
+        * ace/ETCL/ETCL_y.cpp.diff:
+        * ace/Global_Macros.h:
+        * ace/Handle_Set.cpp:
+        * ace/OS_NS_stdlib.cpp:
+        * ace/OS_NS_string.cpp:
+          C++11 deprecated the register keyword, so introduce a new
+          ACE_REGISTER define which normall expands to register, but
+          to nothing with C++11
+
 Mon Sep  8 15:41:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_linux_clang.GNU:

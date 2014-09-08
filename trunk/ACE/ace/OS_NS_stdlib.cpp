@@ -510,11 +510,11 @@ ACE_OS::realpath (const char *file_name,
 long
 ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
 {
-  register const char *s = nptr;
-  register unsigned long acc;
-  register int c;
-  register unsigned long cutoff;
-  register int neg = 0, any, cutlim;
+  ACE_REGISTER const char *s = nptr;
+  ACE_REGISTER unsigned long acc;
+  ACE_REGISTER int c;
+  ACE_REGISTER unsigned long cutoff;
+  ACE_REGISTER int neg = 0, any, cutlim;
 
   /*
    * Skip white space and pick up leading +/- sign if any.
@@ -592,11 +592,11 @@ ACE_OS::wcstol_emulation (const wchar_t *nptr,
         wchar_t **endptr,
         int base)
 {
-  register const wchar_t *s = nptr;
-  register unsigned long acc;
-  register int c;
-  register unsigned long cutoff;
-  register int neg = 0, any, cutlim;
+  ACE_REGISTER const wchar_t *s = nptr;
+  ACE_REGISTER unsigned long acc;
+  ACE_REGISTER int c;
+  ACE_REGISTER unsigned long cutoff;
+  ACE_REGISTER int neg = 0, any, cutlim;
 
   /*
    * Skip white space and pick up leading +/- sign if any.
@@ -658,13 +658,13 @@ ACE_OS::wcstol_emulation (const wchar_t *nptr,
 unsigned long
 ACE_OS::strtoul_emulation (const char *nptr,
                            char **endptr,
-                           register int base)
+                           ACE_REGISTER int base)
 {
-  register const char *s = nptr;
-  register unsigned long acc;
-  register int c;
-  register unsigned long cutoff;
-  register int neg = 0, any, cutlim;
+  ACE_REGISTER const char *s = nptr;
+  ACE_REGISTER unsigned long acc;
+  ACE_REGISTER int c;
+  ACE_REGISTER unsigned long cutoff;
+  ACE_REGISTER int neg = 0, any, cutlim;
 
   /*
    * See strtol for comments as to the logic used.
@@ -730,11 +730,11 @@ ACE_OS::wcstoul_emulation (const wchar_t *nptr,
          wchar_t **endptr,
          int base)
 {
-  register const wchar_t *s = nptr;
-  register unsigned long acc;
-  register int c;
-  register unsigned long cutoff;
-  register int neg = 0, any, cutlim;
+  ACE_REGISTER const wchar_t *s = nptr;
+  ACE_REGISTER unsigned long acc;
+  ACE_REGISTER int c;
+  ACE_REGISTER unsigned long cutoff;
+  ACE_REGISTER int neg = 0, any, cutlim;
 
   /*
    * See strtol for comments as to the logic used.
@@ -797,13 +797,13 @@ ACE_OS::wcstoul_emulation (const wchar_t *nptr,
 ACE_INT64
 ACE_OS::strtoll_emulation (const char *nptr,
          char **endptr,
-         register int base)
+         ACE_REGISTER int base)
 {
-  register const char *s = nptr;
-  register ACE_UINT64 acc;
-  register int c;
-  register ACE_UINT64 cutoff;
-  register int neg = 0, any, cutlim;
+  ACE_REGISTER const char *s = nptr;
+  ACE_REGISTER ACE_UINT64 acc;
+  ACE_REGISTER int c;
+  ACE_REGISTER ACE_UINT64 cutoff;
+  ACE_REGISTER int neg = 0, any, cutlim;
 
   /*
    * Skip white space and pick up leading +/- sign if any.
@@ -867,11 +867,11 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
          wchar_t **endptr,
          int base)
 {
-  register const wchar_t *s = nptr;
-  register ACE_UINT64 acc;
-  register int c;
-  register ACE_UINT64 cutoff;
-  register int neg = 0, any, cutlim;
+  ACE_REGISTER const wchar_t *s = nptr;
+  ACE_REGISTER ACE_UINT64 acc;
+  ACE_REGISTER int c;
+  ACE_REGISTER ACE_UINT64 cutoff;
+  ACE_REGISTER int neg = 0, any, cutlim;
 
   /*
    * Skip white space and pick up leading +/- sign if any.
@@ -934,13 +934,13 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
 ACE_UINT64
 ACE_OS::strtoull_emulation (const char *nptr,
                             char **endptr,
-                            register int base)
+                            ACE_REGISTER int base)
 {
-  register const char *s = nptr;
-  register ACE_UINT64 acc;
-  register int c;
-  register ACE_UINT64 cutoff;
-  register int neg = 0, any, cutlim;
+  ACE_REGISTER const char *s = nptr;
+  ACE_REGISTER ACE_UINT64 acc;
+  ACE_REGISTER int c;
+  ACE_REGISTER ACE_UINT64 cutoff;
+  ACE_REGISTER int neg = 0, any, cutlim;
 
   /*
    * See strtol for comments as to the logic used.
@@ -1006,11 +1006,11 @@ ACE_OS::wcstoull_emulation (const wchar_t *nptr,
           wchar_t **endptr,
           int base)
 {
-  register const wchar_t *s = nptr;
-  register ACE_UINT64 acc;
-  register int c;
-  register ACE_UINT64 cutoff;
-  register int neg = 0, any, cutlim;
+  ACE_REGISTER const wchar_t *s = nptr;
+  ACE_REGISTER ACE_UINT64 acc;
+  ACE_REGISTER int c;
+  ACE_REGISTER ACE_UINT64 cutoff;
+  ACE_REGISTER int neg = 0, any, cutlim;
 
   /*
    * See strtol for comments as to the logic used.
