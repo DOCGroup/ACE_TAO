@@ -643,11 +643,10 @@ namespace TAO
 
         if (TAO_debug_level > 4)
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
-                      ACE_TEXT ("handle_system_exception, profile forwarding ")
-                      ACE_TEXT ("on exception "),
-                      type_id.in (),
-                      ACE_TEXT ("\n")));
+                         ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
+                         ACE_TEXT ("handle_system_exception, profile forwarding ")
+                         ACE_TEXT ("on exception %C \n"),
+                         type_id.in ()));
 
         if (do_forward)
           this->stub ()->forwarded_on_exception (true);
