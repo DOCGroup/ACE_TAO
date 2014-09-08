@@ -78,7 +78,7 @@ extern "C"
 #endif /* __cplusplus */
 
 #if defined (ACE_LACKS_STRRECVFD)
-   struct strrecvfd {  int : 0; };
+   struct strrecvfd {  int dummy; };
 #endif /* ACE_LACKS_STRRECVFD */
 
 # if !defined (SIOCGIFBRDADDR)
