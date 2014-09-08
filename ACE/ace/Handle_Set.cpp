@@ -118,12 +118,12 @@ ACE_Handle_Set::count_bits (u_long n)
 
  ACE_TRACE ("ACE_Handle_Set::count_bits");
 #if defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
-  register int rval = 0;
+  ACE_REGISTER int rval = 0;
 
   // Count the number of enabled bits in <n>.  This algorithm is very
   // fast, i.e., O(enabled bits in n).
 
-  for (register u_long m = n;
+  for (ACE_REGISTER u_long m = n;
        m != 0;
        m &= m - 1)
     rval++;
@@ -144,8 +144,8 @@ ACE_Handle_Set::count_bits (u_long n)
 int
 ACE_Handle_Set::bitpos (u_long bit)
 {
-  register int l = 0;
-  register u_long n = bit - 1;
+  ACE_REGISTER int l = 0;
+  ACE_REGISTER u_long n = bit - 1;
 
   // This is a fast count method when have the most significative bit.
 
@@ -342,7 +342,7 @@ ACE_Handle_Set_Iterator::operator () (void)
     }
 #else /* !ACE_HAS_BIG_FD_SET */
    // Find the first word in fds_bits with bit on
-   register u_long lsb = this->word_val_;
+   ACE_REGISTER u_long lsb = this->word_val_;
 
    if (lsb == 0)
      {
@@ -383,7 +383,7 @@ ACE_Handle_Set_Iterator::operator () (void)
         // Remove least significative bit.
         this->word_val_ ^= lsb;
 
-        register u_long n = lsb - this->oldlsb_;
+        ACE_REGISTER u_long n = lsb - this->oldlsb_;
 
         // Move index to bit distance between new lsb and old lsb.
         do
