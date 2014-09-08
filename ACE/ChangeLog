@@ -1,3 +1,9 @@
+Mon Sep  8 13:30:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Auto_IncDec_T.h:
+          Fixed compile error because ACE_Copy_Disabled was implicitly
+          pulled in before
+
 Mon Sep  8 13:24:53 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * netsvcs/lib/Log_Message_Receiver.h:
