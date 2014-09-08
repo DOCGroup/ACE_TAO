@@ -175,7 +175,7 @@ private:
  * @brief Implementation with reference count.
  */
 template<ACE_SYNCH_DECL>
-class Log_Message_Receiver_Impl : private ACE_Copy_Disabled
+class Log_Message_Receiver_Impl
 {
 public:
   // Methods for handling reference count and instance lifetime
@@ -201,6 +201,8 @@ private:
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static ACE_SYNCH_MUTEX_T copy_lock_;
 #endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
+  ACE_UNIMPLEMENTED_FUNC (void operator= (const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &))
+  ACE_UNIMPLEMENTED_FUNC (Log_Message_Receiver_Impl (const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &))
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
