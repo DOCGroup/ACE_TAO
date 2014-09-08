@@ -1,3 +1,10 @@
+Mon Sep  8 15:41:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_linux_clang.GNU:
+          Added deprecated_declarations, default is 1 and than we just
+          let clang show all, with C++11 we set it to 0 to get rid of
+          them (if not set by the user)
+
 Mon Sep  8 15:36:03 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_clang_common.GNU:
