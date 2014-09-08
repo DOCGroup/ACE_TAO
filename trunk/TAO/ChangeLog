@@ -1,3 +1,8 @@
+Mon Sep  8 15:30:49 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tao/Connection_Handler.h:
+          Added missing include
+
 Fri Sep  5 14:47:26 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/Objref_Sequence_Test/server.cpp:
