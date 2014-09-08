@@ -23,6 +23,7 @@
 
 #include "tao/Basic_Types.h"
 #include "ace/Event_Handler.h"
+#include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK;
