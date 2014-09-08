@@ -489,9 +489,9 @@ __yy_memcpy (to, from, count)
      char *from;
      unsigned int count;
 {
-  register char *f = from;
-  register char *t = to;
-  register int i = count;
+  ACE_REGISTER char *f = from;
+  ACE_REGISTER char *t = to;
+  ACE_REGISTER int i = count;
 
   while (i-- > 0)
     *t++ = *f++;
@@ -504,9 +504,9 @@ __yy_memcpy (to, from, count)
 static void
 __yy_memcpy (char *to, char *from, unsigned int count)
 {
-  register char *t = to;
-  register char *f = from;
-  register int i = count;
+  ACE_REGISTER char *t = to;
+  ACE_REGISTER char *f = from;
+  ACE_REGISTER int i = count;
 
   while (i-- > 0)
     *t++ = *f++;
@@ -549,10 +549,10 @@ int
 yyparse(YYPARSE_PARAM_ARG)
      YYPARSE_PARAM_DECL
 {
-  register int yystate;
-  register int yyn;
-  register short *yyssp;
-  register YYSTYPE *yyvsp;
+  ACE_REGISTER int yystate;
+  ACE_REGISTER int yyn;
+  ACE_REGISTER short *yyssp;
+  ACE_REGISTER YYSTYPE *yyvsp;
   int yyerrstatus;  /*  number of tokens to shift before error messages enabled */
   int yychar1 = 0;    /*  lookahead token as an internal (translated) token number */
 

@@ -184,8 +184,8 @@
 -     int count;
 +     unsigned int count;
  {
-   register char *f = from;
-   register char *t = to;
+   ACE_REGISTER char *f = from;
+   ACE_REGISTER char *t = to;
 @@ -474,10 +498,10 @@
  /* This is the most reliable way to avoid incompatibilities
     in available built-in functions on various systems.  */
@@ -193,10 +193,10 @@
 -__yy_memcpy (char *to, char *from, int count)
 +__yy_memcpy (char *to, char *from, unsigned int count)
  {
--  register char *f = from;
-   register char *t = to;
-+  register char *f = from;
-   register int i = count;
+-  ACE_REGISTER char *f = from;
+   ACE_REGISTER char *t = to;
++  ACE_REGISTER char *f = from;
+   ACE_REGISTER int i = count;
  
    while (i-- > 0)
 @@ -486,8 +510,8 @@
