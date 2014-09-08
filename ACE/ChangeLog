@@ -1,3 +1,8 @@
+Mon Sep  8 12:38:47 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Compiler_Features_24_Test.cpp:
+          Extended this unit test
+
 Mon Sep  8 12:25:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Guard_T.h:

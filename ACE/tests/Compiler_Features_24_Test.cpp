@@ -12,58 +12,61 @@
 #include <type_traits>
 #include <memory>
 
-template <typename T>
-class o_r;
-
-template <typename T>
-struct o_t
+namespace FOO
 {
-  typedef o_r<T>       ref_type;
-};
-class T_base {};
+  template <typename T>
+  class o_r;
 
-template<typename T,
-         typename = typename std::enable_if<
-           std::is_base_of<T_base, T>::value>::type, typename ...Args>
-o_r<T> make_f(Args&& ...args);
+  template <typename T>
+  struct o_t
+  {
+    typedef o_r<T>       ref_type;
+  };
+  class T_base {};
 
-template <typename T>
-class o_r final
-{
-public:
-  template <typename _Tp1, typename, typename ...Args>
-  friend o_r<_Tp1> make_f(Args&& ...args);
-protected:
-  typedef std::shared_ptr<T>    shared_ptr_type;
-  template<typename _Tp1, typename = typename
-    std::enable_if<std::is_convertible<_Tp1*, T*>::value>::type>
-  explicit o_r (_Tp1*)
-    : stub_ ()
-  {}
-private:
-  shared_ptr_type stub_;
-};
+  template<typename T,
+          typename = typename std::enable_if<
+            std::is_base_of<T_base, T>::value>::type, typename ...Args>
+  o_r<T> make_f(Args&& ...args);
 
-template<typename T, typename, typename ...Args>
-inline o_r<T> make_f(Args&& ...args)
-{
-  return o_r<T> (new T (std::forward<Args> (args)...));
+  template <typename T>
+  class o_r final
+  {
+  public:
+    template <typename _Tp1, typename, typename ...Args>
+    friend o_r<_Tp1> make_f(Args&& ...args);
+  protected:
+    typedef std::shared_ptr<T>    shared_ptr_type;
+    template<typename _Tp1, typename = typename
+      std::enable_if<std::is_convertible<_Tp1*, T*>::value>::type>
+    explicit o_r (_Tp1*)
+      : stub_ ()
+    {}
+  private:
+    shared_ptr_type stub_;
+  };
+
+  template<typename T, typename, typename ...Args>
+  inline o_r<T> make_f(Args&& ...args)
+  {
+    return o_r<T> (new T (std::forward<Args> (args)...));
+  }
+
+  class A : public T_base
+  {
+  protected:
+    A () = default;
+    template <typename _Tp1, typename, typename ...Args>
+    friend o_r<_Tp1> make_f(Args&& ...args);
+  };
+
+  o_t<A>::ref_type create ()
+  {
+    return make_f<A>();
+  }
+
+  class B {};
 }
-
-class A : public T_base
-{
-protected:
-  A () = default;
-  template <typename _Tp1, typename, typename ...Args>
-  friend o_r<_Tp1> make_f(Args&& ...args);
-};
-
-o_t<A>::ref_type create ()
-{
-  return make_f<A>();
-}
-
-class B {};
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -73,10 +76,10 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Compiler Feature 24 Test does compile and run.\n")));
 
-  o_r<A> l = create();
-  o_r<A> l2 = make_f<A>();
+  FOO::o_r<FOO::A> l = FOO::create();
+  FOO::o_r<FOO::A> l2 = FOO::make_f<FOO::A>();
   // next line doesn't compile and shouldn't
-  //o_r<B> l3 = make_f<B>();
+  //FOO::o_r<FOO::B> l3 = FOO::make_f<FOO::B>();
 
   ACE_END_TEST;
 
