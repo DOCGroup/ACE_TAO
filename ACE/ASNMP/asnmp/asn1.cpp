@@ -50,6 +50,7 @@
 #include "asnmp/asn1.h"
 #include "asnmp/snmp.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Global_Macros.h"
 
 /*
  * parse_int - pulls a long out of an ASN int type.
@@ -375,7 +376,7 @@ u_char *asn1::parse_header( u_char *data,
 {
   ACE_TRACE("asn1::parse_header");
   u_char *bufp = data;
-  register int header_len;
+  ACE_REGISTER int header_len;
   u_long            asn_length;
 
   /* this only works on data types < 30, i.e. no extension octets */

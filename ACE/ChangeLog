@@ -1,3 +1,15 @@
+Tue Sep  9 06:41:24 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ASNMP/asnmp/asn1.cpp:
+          Use ACE_REGISTER
+
+        * ace/CDR_Base.h:
+          Add missing include for ACE_REGISTER
+
+        * contrib/minizip/unzip.c:
+        * contrib/minizip/zip.c:
+          Fix clang warnings
+
 Mon Sep  8 17:59:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Base_Thread_Adapter.h:
