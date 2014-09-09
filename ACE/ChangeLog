@@ -1,3 +1,8 @@
+Tue Sep  9 06:46:06 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Time_Value.cpp:
+          When using C++11 use std::abs
+
 Tue Sep  9 06:41:24 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ASNMP/asnmp/asn1.cpp:
