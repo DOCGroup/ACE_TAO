@@ -1,3 +1,15 @@
+Tue Sep  9 06:49:28 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/generate_doxygen.pl:
+          Use safe way to get an unique tmp file
+
+        * include/makeinclude/platform_linux_common.GNU:
+          Added support for detecting and using platform large file
+          flags
+
+          Thanks to Pau Garcia i Quiles <pgquiles at elpauer dot org>
+          for providing both patches
+
 Tue Sep  9 06:46:06 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Time_Value.cpp:
