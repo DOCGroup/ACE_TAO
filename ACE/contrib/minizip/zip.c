@@ -724,9 +724,9 @@ extern MINIZIP_EXPORT int zipOpenNewFileInZip3 (zipFile file,const char* filenam
   zi->ci.flag = 0;
   if ((level==8) || (level==9))
     zi->ci.flag |= 2;
-  if ((level==2))
+  if (level==2)
     zi->ci.flag |= 4;
-  if ((level==1))
+  if (level==1)
     zi->ci.flag |= 6;
   if (password != 0)
     zi->ci.flag |= 1;
