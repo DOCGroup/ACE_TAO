@@ -11,6 +11,7 @@ require File::Path;
 
 use Cwd;
 use File::Spec;
+use File::Temp qw/ tempfile tempdir /;
 use Env qw(ACE_ROOT TAO_ROOT CIAO_ROOT DDS_ROOT);
 
 # Configuration and default values
@@ -174,7 +175,7 @@ sub generate_doxy_files {
     }
 
     my $input = "$ROOT_DIR/etc/".$i.".doxygen";
-    my $output = "/tmp/".$i.".".$$.".doxygen";
+    ($fh, $output) = tempfile(TEMPLATE => 'XXXXXXXX', SUFFIX => '.doxygen', TMPDIR => 1, DESTROY => 1);
 
     open(DOXYINPUT, $input)
       || die "Cannot open doxygen input file $input\n";
