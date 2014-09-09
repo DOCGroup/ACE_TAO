@@ -1188,7 +1188,7 @@ extern MINIZIP_EXPORT int unzReadCurrentFile (unzFile file,voidp buf,unsigned le
         return UNZ_PARAMERROR;
 
 
-    if ((pfile_in_zip_read_info->read_buffer == 0))
+    if (pfile_in_zip_read_info->read_buffer == 0)
         return UNZ_END_OF_LIST_OF_FILE;
 
     if (len==0)
