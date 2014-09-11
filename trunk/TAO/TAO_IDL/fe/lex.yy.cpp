@@ -2567,7 +2567,7 @@ static void tao_yyensure_buffer_stack (void)
                 if ( ! (tao_yy_buffer_stack) )
                         TAO_YY_FATAL_ERROR( "out of dynamic memory in tao_yyensure_buffer_stack()" );
 
-                memset((tao_yy_buffer_stack), 0, num_to_alloc * sizeof(struct tao_yy_buffer_state*));
+                ACE_OS::memset((tao_yy_buffer_stack), 0, num_to_alloc * sizeof(struct tao_yy_buffer_state*));
 
                 (tao_yy_buffer_stack_max) = num_to_alloc;
                 (tao_yy_buffer_stack_top) = 0;
@@ -2588,7 +2588,7 @@ static void tao_yyensure_buffer_stack (void)
                         TAO_YY_FATAL_ERROR( "out of dynamic memory in tao_yyensure_buffer_stack()" );
 
                 /* zero only the new slots.*/
-                memset((tao_yy_buffer_stack) + (tao_yy_buffer_stack_max), 0, grow_size * sizeof(struct tao_yy_buffer_state*));
+                ACE_OS::memset((tao_yy_buffer_stack) + (tao_yy_buffer_stack_max), 0, grow_size * sizeof(struct tao_yy_buffer_state*));
                 (tao_yy_buffer_stack_max) = num_to_alloc;
         }
 }
@@ -2639,7 +2639,7 @@ TAO_YY_BUFFER_STATE tao_yy_scan_buffer  (char * base, tao_yy_size_t  size )
 TAO_YY_BUFFER_STATE tao_yy_scan_string (tao_yyconst char * tao_yystr )
 {
 
-        return tao_yy_scan_bytes(tao_yystr,strlen(tao_yystr) );
+        return tao_yy_scan_bytes(tao_yystr,ACE_OS::strlen(tao_yystr) );
 }
 
 /** Setup the input buffer state to scan the given bytes. The next call to tao_yylex() will
