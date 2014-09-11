@@ -314,6 +314,10 @@ sub GetConfigSettings ($)
     if (exists $ENV{$env_name}) {
         $self->{PS_CMD} = $ENV{$env_name};
     }
+    $env_name = $env_prefix.'KILLALL_CMD';
+    if (exists $ENV{$env_name}) {
+        $self->{KILLALL_CMD} = $ENV{$env_name};
+    }
     $self->{EXTRA_ENV} = {};
     $env_name = $env_prefix.'EXTRA_ENV';
     if (exists $ENV{$env_name}) {
@@ -470,7 +474,7 @@ sub AddLibPath ($)
 
     # If we have -Config ARCH, use the -ExeSubDir setting as a sub-directory
     # of the lib path.  This is in addition to the regular LibPath.
-    if (!$noarch && defined $self->{ARCH}) {
+    if ((defined $noarch && !$noarch) && defined $self->{ARCH}) {
         $self->AddLibPath($dir, 1);
         $dir .= '/' . $self->{EXE_SUBDIR};
     }
@@ -517,7 +521,7 @@ sub DeleteFile ($)
 {
     my $self = shift;
     my $file = shift;
-    my $newfile = PerlACE::LocalFile($file);
+    my $newfile = $self->LocalFile($file);
     unlink ($newfile);
 }
 
@@ -527,6 +531,14 @@ sub GetFile ($)
     my $self = shift;
     my $remote_file = shift;
     my $local_file = shift;
+    if (!defined $local_file) {
+        $local_file = $remote_file;
+        $remote_file = $self->LocalFile($local_file);
+    }
+    if (($remote_file ne $local_file) &&
+        (File::Spec->rel2abs($remote_file) ne File::Spec->rel2abs($local_file))) {
+        copy ($remote_file, $local_file);
+    }
     return 0;
 }
 
@@ -601,7 +613,18 @@ sub KillAll ($)
 {
     my $self = shift;
     my $procmask = shift;
-    PerlACE::Process::kill_all ($procmask, $self);
+    if (defined $self->{KILLALL_CMD}) {
+        my $cmd = $self->{KILLALL_CMD} . ' ' . $procmask;
+        if (defined $self->{REMOTE_SHELL}) {
+          $cmd = $self->{REMOTE_SHELL} . ' ' . $cmd;
+        }
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            print STDERR "Executing $cmd\n";
+        }
+        system ($cmd);
+    } else {
+        PerlACE::Process::kill_all ($procmask, $self);
+    }
 }
 
 1;

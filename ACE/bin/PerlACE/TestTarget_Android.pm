@@ -383,8 +383,11 @@ sub GetFile ($)
 
     my $adb_process = $ENV{'ANDROID_SDK_ROOT'} . "/platform-tools/adb";
 
-    my $targetfile = $self->LocalFile ($remote_file);
-    my $cmd = "$adb_process" . ' pull '. "$targetfile $local_file $silent";
+    if (!defined $local_file) {
+        $local_file = $remote_file;
+        $remote_file = $self->LocalFile($local_file);
+    }
+    my $cmd = "$adb_process" . ' pull '. "$remote_file $local_file $silent";
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
       print STDERR "GetFile cmd: $cmd\n";
