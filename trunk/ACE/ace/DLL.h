@@ -22,6 +22,7 @@
 
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_dlfcn.h"
+#include "ace/SString.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -200,6 +201,9 @@ public:
 
   /// Flag to record if the last operation had an error.
   bool error_;
+
+  /// Any error messages encountered during last operation.
+  ACE_TString errmsg_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

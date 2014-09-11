@@ -741,11 +741,21 @@ sub kill_all
             return 0;
         }
         @ps_fields = 0;
-    } elsif (! (defined $target && defined $target->{REMOTE_SHELL}) ) {
-        my $ps_file = `which ps`;
+    } else {
+        my $which_ps;
+        if (defined $target && defined $target->{REMOTE_SHELL}) {
+          $which_ps = $target->{REMOTE_SHELL} . ' which ps';
+        } else {
+          $which_ps = 'which ps';
+        }
+        my $ps_file = `$which_ps`;
+        if (defined $target && defined $target->{REMOTE_SHELL}) {
+          $which_ps = $target->{REMOTE_SHELL} . " readlink $ps_file";
+          $ps_file = `$which_ps`;
+        }
         $ps_file =~ s/^\s+//;
         $ps_file =~ s/\s+$//;
-        if ((-l $ps_file) and (readlink ($ps_file)) =~ /busybox/) {
+        if (($ps_file =~ /busybox/) or ((-l $ps_file) and (readlink ($ps_file)) =~ /busybox/)) {
             ## some embedded targets use BusyBox for base tools
             ## with different arguments
             $ps_cmd = 'ps w';

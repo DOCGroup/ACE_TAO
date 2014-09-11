@@ -136,6 +136,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
   ACE_TRACE ("ACE_DLL::open_i");
 
   this->error_ = 0;
+  this->errmsg_.clear (true);
 
   if (!dll_filename)
     {
@@ -162,12 +163,24 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
   this->open_mode_ = open_mode;
   this->close_handle_on_destruction_ = close_handle_on_destruction;
 
+  ACE_DLL_Handle::ERROR_STACK errors;
   this->dll_handle_ = ACE_DLL_Manager::instance()->open_dll (this->dll_name_,
                                                              this->open_mode_,
-                                                             handle);
+                                                             handle,
+                                                             &errors);
 
   if (!this->dll_handle_)
-    this->error_ = 1;
+    {
+      ACE_TString errtmp;
+      while (!errors.is_empty ())
+        {
+          errors.pop (errtmp);
+          if (this->errmsg_.length () > 0)
+            this->errmsg_ += ACE_TEXT ("\n");
+          this->errmsg_ += errtmp;
+        }
+      this->error_ = 1;
+    }
 
   return this->error_ ? -1 : 0;
 }
@@ -180,10 +193,11 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
   ACE_TRACE ("ACE_DLL::symbol");
 
   this->error_ = 0;
+  this->errmsg_.clear (true);
 
   void *sym = 0;
   if (this->dll_handle_)
-    sym = this->dll_handle_->symbol (sym_name, ignore_errors);
+    sym = this->dll_handle_->symbol (sym_name, ignore_errors, this->errmsg_);
 
   if (!sym)
     this->error_ = 1;
@@ -224,7 +238,7 @@ ACE_DLL::error (void) const
   ACE_TRACE ("ACE_DLL::error");
   if (this->error_)
     {
-      return ACE_OS::dlerror ();
+      return const_cast<ACE_TCHAR*> (this->errmsg_.c_str ());
     }
 
   return 0;
