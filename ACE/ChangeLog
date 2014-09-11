@@ -1,3 +1,23 @@
+Thu Sep 11 10:14:17 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/DLL.h:
+        * ace/DLL.cpp:
+        * ace/DLL_Manager.h:
+        * ace/DLL_Manager.cpp:
+          Provide support for retrieval of dynamic loader errors
+          with open() and symbol() methods by the calling code, such 
+          that is is not necessary anymore to run with ACELIB_DEBUG=1 
+          to make these (rather essential) errors visible.
+          Changes are backward compatible.
+
+        * bin/PerlACE/Process_Unix.pm:
+        * bin/PerlACE/TestTarget.pm:
+        * bin/PerlACE/TestTarget_Android.pm:
+          Fix Target DeleteFile() and GetFile() implementations for
+          targets with non-standard roots.
+          Add support for a configurable KILLALL_CMD to provide for
+          non-standard targets.
+
 Tue Sep  9 06:49:28 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/generate_doxygen.pl:
