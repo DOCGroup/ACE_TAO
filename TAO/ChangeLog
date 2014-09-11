@@ -1,3 +1,11 @@
+Thu Sep 11 10:50:18 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
+        * TAO_IDL/fe/lex.yy.cpp:
+          Fixed compile problems with gcc on window, thanks to
+          Milo H. Fields <mfields at paladin-sys dot com> for
+          providing the patch, this fixes bugzilla 4183
+
 Mon Sep  8 16:17:12 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:

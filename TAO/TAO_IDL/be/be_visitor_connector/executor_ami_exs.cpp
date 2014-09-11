@@ -179,7 +179,7 @@ be_visitor_executor_ami_exs::visit_provides (be_provides *node)
   AST_Decl *d = i.item ();
 
   const char * loc_name = node->local_name()->get_string();
-  const char *exec_ext = (strstr (loc_name, "sync") ? "1" : "0");
+  const char *exec_ext = (ACE_OS::strstr (loc_name, "sync") ? "1" : "0");
 
     os_ << d->local_name () << "_"
       << node->local_name () << " (void)" << be_nl
