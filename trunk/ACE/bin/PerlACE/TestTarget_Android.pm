@@ -385,8 +385,8 @@ sub GetFile ($)
 
     if (!defined $local_file) {
         $local_file = $remote_file;
-        $remote_file = $self->LocalFile($local_file);
     }
+    $remote_file = $self->LocalFile($remote_file);
     my $cmd = "$adb_process" . ' pull '. "$remote_file $local_file $silent";
 
     if (defined $ENV{'ACE_TEST_VERBOSE'}) {
