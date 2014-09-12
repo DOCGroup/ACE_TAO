@@ -70,6 +70,8 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
 
   CORBA::Boolean kill_server (const char* name, CORBA::Long pid, CORBA::Short signum);
 
+  CORBA::Boolean still_alive (CORBA::Long pid);
+
   void shutdown(void);
 
   /// Initialize the Server state - parsing arguments and waiting.
@@ -97,7 +99,7 @@ private:
   int handle_exit (ACE_Process * process);
   int handle_exit_i (pid_t pid);
 
-  bool still_running (const char *name);
+  bool still_running_i (const char *name);
 
 private:
 

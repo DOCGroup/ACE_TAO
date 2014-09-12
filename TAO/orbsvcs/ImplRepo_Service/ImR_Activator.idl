@@ -19,6 +19,9 @@ module ImplementationRepository
   {
     /// Tells the activator to send a signal to a child process
     boolean kill_server (in string name, in long pid, in short signum);
+
+    /// Check if the pid is still alive
+    boolean still_alive (in long pid);
   };
 };
 

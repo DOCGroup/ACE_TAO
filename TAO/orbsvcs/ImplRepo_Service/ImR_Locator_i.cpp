@@ -172,27 +172,79 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   int result = this->repository_->init(this->root_poa_.in (),
                                        this->imr_poa_.in (),
                                        ior);
-  if (result == 0)
+  if (result != 0)
     {
-      Locator_Repository::SIMap::ENTRY* entry = 0;
-      Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
-
-      for (;it.next (entry) != 0; it.advance ())
-        {
-          const Server_Info& info = *(entry->int_id_);
-          ImplementationRepository::ServerObject_var svrobj =
-            info.alt_info_.null () ? info.server : info.alt_info_->server;
-          if (!CORBA::is_nil (svrobj.in()) &&
-              !this->pinger_.has_server (info.ping_id()))
-            {
-              this->pinger_.add_server (info.ping_id(),
-                                        this->ping_external_,
-                                        svrobj.in());
-            }
-        }
+      return result;
     }
 
-  return result;
+  Locator_Repository::SIMap::ENTRY* entry = 0;
+  Locator_Repository::SIMap::ITERATOR it (this->repository_->servers ());
+
+  for (;it.next (entry) != 0; it.advance ())
+    {
+      Server_Info& info = *(entry->int_id_);
+      Server_Info *active = info.active_info ();
+      ImplementationRepository::ServerObject_var svrobj = active->server;
+      bool is_alive = !CORBA::is_nil (svrobj.in()) &&
+        !this->pinger_.has_server (info.ping_id());
+      if (this->debug_ > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("step 1: %C alive? %d pid = %d\n"),
+                          info.ping_id (), is_alive, active->pid));
+        }
+      if (active->pid > 0)
+        {
+          Activator_Info_Ptr ainfo =
+            this->get_activator (active->activator);
+
+          if (ainfo.null () ||
+              CORBA::is_nil (ainfo->activator.in ()))
+            {
+              if (this->debug_ > 0)
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("step 2: no activator\n")));
+                }
+              is_alive = false;
+            }
+          else
+            {
+              ImplementationRepository::ActivatorExt_var actx =
+                ImplementationRepository::ActivatorExt::_narrow (ainfo->activator.in ());
+              try
+                {
+                  is_alive = !CORBA::is_nil (actx.in ()) &&
+                    actx->still_alive (active->pid);
+                }
+              catch (CORBA::Exception &)
+                {
+                  is_alive = false;
+                }
+              if (this->debug_ > 0)
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("step 3: activator says alive = %d\n"),
+                                  is_alive));
+                }
+            }
+        }
+
+      if (is_alive)
+        {
+          this->pinger_.add_server (info.ping_id(),
+                                    active->pid > 0 || this->ping_external_,
+                                    svrobj.in());
+        }
+      else
+        {
+          active->reset_runtime ();
+        }
+
+    }
+
+  //only after verifying do we report the IOR and become open for business
+  return this->repository_->report_ior(this->imr_poa_.in ());
 }
 
 int
@@ -265,7 +317,7 @@ ImR_Locator_i::shutdown
         {
           Activator_Info_Ptr info = entry->int_id_;
           ACE_ASSERT (! info.null ());
-          connect_activator (*info);
+          this->connect_activator (*info);
           if (! CORBA::is_nil (info->activator.in ()))
             acts.push_back (info->activator);
         }
