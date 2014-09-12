@@ -131,6 +131,12 @@ public:
                                long token,
                                const ACE_CString& ior,
                                const NameValues& extra_params);
+
+  /// calls Locator_Repository::report_ior with the Fault Tolerant ImR
+  /// Locator's IOR if available, otherwise reporting the ior is delayed
+  /// until the peer replica registers with this replica
+  virtual int report_ior(PortableServer::POA_ptr imr_poa);
+
 protected:
   /// perform shared backing store specific initialization
   /// (activates this Shared_Backing_Store as the "ImR_Replica",
@@ -151,11 +157,6 @@ protected:
   /// perform sync of repo with backing store
   /// uses sync_needed_ and sync_files_ to determine what to update
   virtual int sync_load ();
-
-  /// calls Locator_Repository::report_ior with the Fault Tolerant ImR
-  /// Locator's IOR if available, otherwise reporting the ior is delayed
-  /// until the peer replica registers with this replica
-  virtual int report_ior(PortableServer::POA_ptr imr_poa);
 
   /// create the Fault Tolerant ImR Locator IOR, using the peer_ior and
   /// this ImR Locator's IOR

@@ -26,7 +26,7 @@ static const int DEFAULT_START_TIMEOUT = 60; // seconds
 Options::Options ()
 : repo_mode_ (REPO_NONE)
 , erase_repo_ (false)
-, debug_ (1)
+, debug_ (0)
 , multicast_ (false)
 , service_ (false)
 , ping_external_ (false)

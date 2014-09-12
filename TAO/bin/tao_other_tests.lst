@@ -151,6 +151,8 @@ TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl -hide_server 
 TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/run_test.pl -multistart: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
 TAO/orbsvcs/tests/ImplRepo/ping_interrupt/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
 TAO/orbsvcs/tests/ImplRepo/link_poas/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
+TAO/orbsvcs/tests/ImplRepo/RestartIMR/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
+TAO/orbsvcs/tests/ImplRepo/RestartIMR/run_test.pl -kill_server: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !OpenVMS
 TAO/orbsvcs/examples/ImR/Combined_Service/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ST !ACE_FOR_TAO !LynxOS !WCHAR
 TAO/orbsvcs/examples/CosEC/TypedSimple/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_IFR !ACE_FOR_TAO !WCHAR
 TAO/orbsvcs/tests/CosEvent/Timeout/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !NO_MESSAGING !ACE_FOR_TAO !LynxOS

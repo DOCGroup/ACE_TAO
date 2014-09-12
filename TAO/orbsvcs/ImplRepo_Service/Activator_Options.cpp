@@ -21,7 +21,7 @@ static const ACE_TCHAR *SERVICE_REG_PATH =
 #endif /* ACE_WIN32 */
 
 Activator_Options::Activator_Options ()
-: debug_ (1)
+: debug_ (0)
 , service_ (false)
 , notify_imr_ (false)
 , induce_delay_ (0)

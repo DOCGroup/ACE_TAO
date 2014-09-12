@@ -178,7 +178,7 @@ sub servers_setup ()
 	    $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
 			    "add $objprefix" . '_' . $i . " -c \"".
 			    $srv_server_cmd[i].
-			    " -ORBUseIMR 1d -n $i -d $server_init_delay ".
+			    " -ORBUseIMR 1 -n $i -d $server_init_delay ".
 			    "-ORBInitRef ImplRepoService=file://$imr_imriorfile\"");
 
 	    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());

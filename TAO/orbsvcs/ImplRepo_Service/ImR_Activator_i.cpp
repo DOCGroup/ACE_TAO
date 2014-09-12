@@ -349,8 +349,23 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
   return result == 0;
 }
 
+CORBA::Boolean
+ImR_Activator_i::still_alive (CORBA::Long pid)
+{
+  pid_t pt = static_cast<pid_t>(pid);
+  bool is_running =  this->process_map_.find (pt) == 0;
+#if defined (ACE_WIN32)
+  if (is_running)
+    {
+      pid_t waitp = this->process_mgr_.wait (pt, ACE_Time_Value::zero);
+      is_running = (waitp != pt);
+    }
+#endif /* ACE_WIN32 */
+  return is_running;
+}
+
 bool
-ImR_Activator_i::still_running (const char *name)
+ImR_Activator_i::still_running_i (const char *name)
 {
   bool is_running =  this->server_list_.find (name) == 0;
 #if defined (ACE_WIN32)
@@ -396,7 +411,7 @@ ImR_Activator_i::start_server(const char* name,
                    "ImR Activator: Starting %s <%s>...\n",
                    (unique ? "unique server" : "server"), name));
 
-  if (unique && this->still_running (name))
+  if (unique && this->still_running_i (name))
     {
       if (debug_ > 1)
         ORBSVCS_DEBUG((LM_DEBUG,

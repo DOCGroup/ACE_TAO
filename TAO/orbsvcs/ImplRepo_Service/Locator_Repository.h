@@ -132,6 +132,9 @@ public:
   /// Indicate if multicast should be used
   bool multicast() const;
 
+  /// report the ImR Locator's IOR
+  virtual int report_ior (PortableServer::POA_ptr imr_poa);
+
 protected:
   /// perform repo mode specific initialization
   virtual int init_repo (PortableServer::POA_ptr imr_poa) = 0;
@@ -149,9 +152,6 @@ protected:
 
   /// perform persistent remove
   virtual int persistent_remove (const ACE_CString& name, bool activator) = 0;
-
-  /// report the ImR Locator's IOR
-  virtual int report_ior (PortableServer::POA_ptr imr_poa);
 
   /// recover the ImR Locator's IOR from the persisted file
   virtual int recover_ior (void);
