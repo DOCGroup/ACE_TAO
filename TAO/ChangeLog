@@ -1,3 +1,8 @@
+Fri Sep 12 20:11:42 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/RestartIMR/run_test.pl:
+          Make the test windows compatible.
+
 Fri Sep 12 15:08:32 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/RestartIMR/server.cpp:
