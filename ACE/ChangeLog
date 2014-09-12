@@ -1,3 +1,8 @@
+Fri Sep 12 09:19:15 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * bin/PerlACE/TestTarget_Android.pm:
+          Fix GetFile for Android emulator testing.
+
 Thu Sep 11 10:14:17 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * ace/DLL.h:
@@ -5,8 +10,8 @@ Thu Sep 11 10:14:17 UTC 2014  Martin Corino  <mcorino@remedy.nl>
         * ace/DLL_Manager.h:
         * ace/DLL_Manager.cpp:
           Provide support for retrieval of dynamic loader errors
-          with open() and symbol() methods by the calling code, such 
-          that is is not necessary anymore to run with ACELIB_DEBUG=1 
+          with open() and symbol() methods by the calling code, such
+          that is is not necessary anymore to run with ACELIB_DEBUG=1
           to make these (rather essential) errors visible.
           Changes are backward compatible.
 
