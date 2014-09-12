@@ -124,16 +124,20 @@ delete_files (1);
 
 mkdir $persist_dir;
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator",
-                            "-ORBEndpoint iiop://:$port ".
-                            "-UnregisterIfAddressReused $imr_debug".
-                            "--directory $persist_dir " .
-                            $ping_ext .
-                            "-o $imr_imriorfile ");
+$IMR = $imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
+$ACT = $act->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_activator");
+$TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 
-$ACT = $act->CreateProcess ("../../../ImplRepo_Service/tao_imr_activator",
-                            "-l $act_debug -o $act_actiorfile " .
-                            "-ORBInitRef ImplRepoService=file://$act_imriorfile");
+$initref = "-ORBInitRef ImplRepoService=file://$ti_imriorfile";
+
+$IMR->Arguments ("-ORBEndpoint iiop://:$port ".
+                 "-UnregisterIfAddressReused $imr_debug".
+                 "--directory $persist_dir " .
+                 $ping_ext .
+                 "-o $imr_imriorfile ");
+
+$ACT->Arguments ("-l $act_debug -o $act_actiorfile " .
+                        "-ORBInitRef ImplRepoService=file://$act_imriorfile");
 
 my $srv_args = "-ORBInitRef ImplRepoService=file://$srv_imriorfile -ORBUseIMR 1 ".
     $srv_id_cmd . $srv_debug;
@@ -145,9 +149,7 @@ my $poaC = "$srv_id:poaC";
 
 my $srv_cmd = $act->LocalFile ($SRV->Executable());
 
-$TI = $ti->CreateProcess ("../../../ImplRepo_Service/tao_imr",
-                          "-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                          "add $poaA -c \"$srv_cmd $srv_args\"");
+$TI->Arguments ("$initref add $poaA -c \"$srv_cmd $srv_args\"");
 
 print STDERR "=== start Locator\n";
 print STDERR $IMR->CommandLine () . "\n";
@@ -201,16 +203,14 @@ $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {
     print STDERR "tao_imr register poaA returned $TI_status\n";
 }
-$TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                "link $poaA -p poaC");
+$TI->Arguments ("$initref link $poaA -p poaC");
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {
     print STDERR "tao_imr link poaC to poaA returned $TI_status\n";
 }
 
 print STDERR "=== start server\n";
-$TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                "start $poaA");
+$TI->Arguments ("$initref start $poaA");
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {
     print STDERR "tao_imr list returned $TI_status\n";
@@ -220,8 +220,7 @@ if ($srv->GetFile ($srvpidfile) == -1) {
 }
 
 print STDERR "=== list pre-kill\n";
-$TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                "list -v");
+$TI->Arguments ("$initref list -v");
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {
     print STDERR "tao_imr list poaC to poaA returned $TI_status\n";
@@ -274,21 +273,18 @@ if ($kill_act == 1) {
 }
 
 print STDERR "=== restart server via ImR\n";
-$TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                "start $poaA ");
+$TI->Arguments ("$initref start $poaA ");
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {
     print STDERR "tao_imr start $poaA returned $TI_status\n";
 }
-$TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                "list -v");
+$TI->Arguments ("$initref list -v");
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {
     print STDERR "tao_imr list returned $TI_status\n";
 }
 
-$TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                "shutdown $poaA ");
+$TI->Arguments ("$initref shutdown $poaA ");
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {
     print STDERR "tao_imr shutdown $poaA returned $TI_status\n";
