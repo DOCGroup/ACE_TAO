@@ -46,7 +46,6 @@ Locator_Repository::init (PortableServer::POA_ptr root_poa,
   poaman = imr_poa->the_POAManager ();
   poaman->activate ();
 
-  err = report_ior(imr_poa);
   return err;
 }
 

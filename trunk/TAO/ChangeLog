@@ -1,3 +1,27 @@
+Fri Sep 12 14:10:47 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/Activator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+          Set the default debug level to be 0 rather than 1.
+          Services should be quiet by default.
+
+        * orbsvcs/ImplRepo_Service/ImR_Activator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.h:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.h:
+          Add an enhancement to allow a restarted IMR Locator verify that
+          servers
+
+        * orbsvcs/tests/ImplRepo/RestartIMR:
+        * bin/tao_other_tests.lst:
+          Add new test to verify the feature.
+
+        * orbsvcs/tests/ImplRepo/servers_list/run_test.pl:
+          Fix a typo.
+
 Thu Sep 11 10:50:18 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO_IDL/be/be_visitor_connector/executor_ami_exs.cpp:
