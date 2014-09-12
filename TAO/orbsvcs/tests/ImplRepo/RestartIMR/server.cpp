@@ -1,8 +1,8 @@
 // $Id$
 #include "test_i.h"
 #include "tao/ImR_Client/ImR_Client.h"
-#include <ace/Task.h>
-#include <ace/Get_Opt.h>
+#include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR * pid_file = ACE_TEXT ("server.pid");
 
