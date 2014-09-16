@@ -1,3 +1,21 @@
+Tue Sep 16 18:11:58 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/Dev_Poll_Reactor.cpp:
+        * ace/Reactor.h:
+        * ace/Select_Reactor_T.cpp:
+        * ace/WFMO_Reactor.inl:
+          When using ACE_Event_Handler_var together with reference
+          counting it is easy to pass the var.handler() to the
+          cancel_timer() operation of the reactor to just cancel
+          all timers at shutdown. But, when the application specific
+          initialization fails which leads to the fact that the var
+          contains a nullptr, this leads to a crash. Updated all
+          cancel_timer operations to also check if a valid event
+          handler pointer has been passed. If not, we just return 0
+
+        * tests/MT_Reactor_Timer_Test.cpp:
+          Added test for use case mentioned above
+
 Fri Sep 12 09:19:15 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * bin/PerlACE/TestTarget_Android.pm:

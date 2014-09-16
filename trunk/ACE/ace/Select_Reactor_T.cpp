@@ -703,7 +703,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler 
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  if (this->timer_queue_ != 0)
+  if ((this->timer_queue_ != 0) && (handler != 0))
     return this->timer_queue_->cancel (handler, dont_call_handle_close);
   else
     return 0;

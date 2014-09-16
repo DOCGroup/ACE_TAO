@@ -625,6 +625,9 @@ public:
    * ACE_Event_Handler::remove_reference() will also be called once
    * for every timer associated with the event handler.
    *
+   * In case this operation is called with a nil event_handler
+   * it returns with 0 as the number of handlers cancelled.
+   *
    * Returns number of handlers cancelled.
    */
   virtual int cancel_timer (ACE_Event_Handler *event_handler,
