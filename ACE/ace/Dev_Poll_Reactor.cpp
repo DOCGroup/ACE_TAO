@@ -1961,17 +1961,17 @@ ACE_Dev_Poll_Reactor::reset_timer_interval (long timer_id,
 }
 
 int
-ACE_Dev_Poll_Reactor::cancel_timer (ACE_Event_Handler *event_handler,
+ACE_Dev_Poll_Reactor::cancel_timer (ACE_Event_Handler *handler,
                                     int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::cancel_timer");
 
   // Don't bother waking the poll - the worse that will happen is it will
   // wake up for a timer that doesn't exist then go back to waiting.
-  return (this->timer_queue_ == 0
-          ? 0
-          : this->timer_queue_->cancel (event_handler,
-                                        dont_call_handle_close));
+  if ((this->timer_queue_ != 0) && (handler != 0))
+    return this->timer_queue_->cancel (handler, dont_call_handle_close);
+  else
+    return 0;
 }
 
 int

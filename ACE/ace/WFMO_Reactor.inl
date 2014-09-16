@@ -499,7 +499,7 @@ ACE_WFMO_Reactor::cancel_timer (ACE_Event_Handler *handler,
                                 int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::cancel_timer");
-  if (0 != this->timer_queue_)
+  if ((0 != this->timer_queue_) && (0 != handler))
     return this->timer_queue_->cancel (handler, dont_call_handle_close);
   return 0;
 }

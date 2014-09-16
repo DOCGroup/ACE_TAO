@@ -114,6 +114,11 @@ Time_Handler::svc (void)
   ACE_TEST_ASSERT (r->cancel_timer (this->timer_id_[4]) == 1);
   this->timer_id_[4] = Time_Handler::TIMER_CANCELLED;
 
+  // Test that cancelling a timers through a nill ACE_Event_Handler
+  // pointer just does nothing instead of crash
+  ACE_Event_Handler_var timer_var;
+  ACE_TEST_ASSERT (r->cancel_timer (timer_var.handler()) == 0);
+
   return 0;
 }
 
