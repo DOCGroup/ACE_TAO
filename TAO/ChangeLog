@@ -1,3 +1,7 @@
+Wed Sep 24 19:51:44 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.2.8 released.
+
 Fri Sep 12 20:11:42 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/RestartIMR/run_test.pl:
