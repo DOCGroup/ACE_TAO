@@ -2,6 +2,5 @@
 // $Id$
 
 project: acedefaults, acenosubsets, ace_for_tao, versioned_namespace, pkgconfig {
-
 }
 

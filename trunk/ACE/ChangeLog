@@ -29,7 +29,7 @@ Thu Sep 11 10:14:17 UTC 2014  Martin Corino  <mcorino@remedy.nl>
         * ace/DLL_Manager.cpp:
           Provide support for retrieval of dynamic loader errors
           with open() and symbol() methods by the calling code, such
-          that is is not necessary anymore to run with ACELIB_DEBUG=1
+          that it is not necessary anymore to run with ACELIB_DEBUG=1
           to make these (rather essential) errors visible.
           Changes are backward compatible.
 
