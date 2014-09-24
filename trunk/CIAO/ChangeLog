@@ -1,3 +1,7 @@
+Wed Sep 24 19:51:44 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.8 released.
+
 Fri Aug 29 07:39:43 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tests/DAnCE/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
