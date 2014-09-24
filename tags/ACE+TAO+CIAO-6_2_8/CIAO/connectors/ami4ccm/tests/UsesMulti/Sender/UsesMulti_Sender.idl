@@ -1,0 +1,21 @@
+// $Id$
+
+#ifndef USESMULTI_SENDER_IDL
+#define USESMULTI_SENDER_IDL
+
+#include <Components.idl>
+
+#include "Base/UsesMulti.idl"
+
+#pragma ciao ami4ccm receptacle "UsesMulti::Sender::run_my_um_one"
+
+module UsesMulti
+{
+  component Sender
+  {
+    /// For synchronous invocation
+    uses multiple One run_my_um_one;
+  };
+};
+
+#endif

@@ -1,0 +1,38 @@
+// -*- MPC -*-
+// $Id$
+
+project(*IDL): taoidldefaults, ami {
+  IDL_Files {
+    Web_Server.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): messaging, taoserver, ami, namingexe {
+  exename = server
+  after += *IDL
+  avoids += ace_for_tao
+  Source_Files {
+    Web_ServerS.cpp
+    Web_ServerC.cpp
+    Content_Iterator_i.cpp
+    Iterator_Factory_i.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): messaging, taoserver, ami, namingexe {
+  exename = client
+  after += *IDL
+  avoids += ace_for_tao
+  Source_Files {
+    Web_ServerS.cpp
+    Web_ServerC.cpp
+    client.cpp
+    Iterator_Handler.cpp
+  }
+  IDL_Files {
+  }
+}

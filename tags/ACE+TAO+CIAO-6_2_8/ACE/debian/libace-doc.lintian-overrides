@@ -1,0 +1,8 @@
+libace-doc: extended-description-is-probably-too-short
+
+# Debian bug #736360 and https://lists.debian.org/debian-mentors/2012/11/msg00310.html
+libace-doc: embedded-javascript-library usr/share/doc/libace-doc/QoS/jquery.js please use libjs-jquery
+libace-doc: embedded-javascript-library usr/share/doc/libace-doc/inet/jquery.js please use libjs-jquery
+libace-doc: embedded-javascript-library usr/share/doc/libace-doc/jquery.js please use libjs-jquery
+libace-doc: embedded-javascript-library usr/share/doc/libace-doc/rmcast/jquery.js please use libjs-jquery
+libace-doc: embedded-javascript-library usr/share/doc/libace-doc/ssl/jquery.js please use libjs-jquery

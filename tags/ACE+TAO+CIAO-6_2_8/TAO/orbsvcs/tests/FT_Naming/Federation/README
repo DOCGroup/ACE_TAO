@@ -1,0 +1,70 @@
+$Id$
+
+This tests the federated fault tolerant naming service use case:
+
+To run all tests automatically -
+	execute Perl script run_test.pl
+
+Example Perl script execution output:
+$./run_test.pl
+Hello object bound in Naming Service B
+Root context of NS B bound in Naming Service A under name 'nsB'
+Wrote IOR file
+Starting client
+**** Narrowed root NamingContext
+**** Resolved #nsB/example/Hello
+(12960|3069859584) - string returned <Hello there!>
+INFO: server being killed.
+INFO: removing <NameService1>
+INFO: removing <NameService2>
+$
+
+To run tests manually -
+	start the 2 redundant pairs of tao_ft_naming (see
+	TAO/orbsvcs/Naming_Service/README for valid options),
+	then run ./server and ./client as shown below:
+
+NOTE: if running tests manually, the NameService1 and NameService2 directories
+must exist before starting the Naming Service and these directories must be
+cleaned out manually after stopping the Naming Service.
+
+1) server connects to Naming Service B (localhost:9932) and attempts to bind
+   context "example" to it.
+
+2) server attempts to bind "Hello" object to the newly created context "example".
+
+3) server connects to Naming Service A (localhost:9931) and bind
+   Naming Service B as name "nsB".
+
+4) server writes out ior file.
+
+5) client connects to Naming Service A (localhost:9931) and attempts to resolve
+   "nsB/example/Hello" from the root context.
+
+6) client attempts to narrow the Hello object and reports the output of the
+   Hello object's get_string() method.
+
+Example (on a Unix system):
+
+$tao_ft_naming --primary -ORBListenEndPoints iiop://localhost:9931 \
+ -r NameService1 &
+$tao_ft_naming --backup  -ORBListenEndPoints iiop://localhost:9933 -c ns1.ior \
+ -g nm1.ior -r NameService1 &
+
+$tao_ft_naming --primary -ORBListenEndPoints iiop://localhost:9932 \
+	-r NameService2 &
+$tao_ft_naming --backup  -ORBListenEndPoints iiop://localhost:9934 -c ns2.ior \
+ -g nm2.ior -r NameService2 &
+
+$./server -o test.ior &
+
+Hello object bound in Naming Service B
+Root context of NS B bound in Naming Service A under name 'nsB'
+Wrote IOR file
+
+$./client
+
+**** Narrowed root NamingContext
+**** Resolved #nsB/example/Hello
+(10911|3069798144) - string returned <Hello there!>
+

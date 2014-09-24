@@ -1,0 +1,19 @@
+// $Id$
+/**
+ * @file dds4ccm_QueryFilter.idl
+ */
+
+#ifndef DDS4CCM_QUERYFILTER_IDL3
+#define DDS4CCM_QUERYFILTER_IDL3
+
+#include "connectors/dds4ccm/idl/dds_rtf2_dcps.idl"
+
+module CCM_DDS
+{
+  struct QueryFilter {
+    string            expression;
+    ::DDS::StringSeq  parameters;
+  };
+};
+
+#endif

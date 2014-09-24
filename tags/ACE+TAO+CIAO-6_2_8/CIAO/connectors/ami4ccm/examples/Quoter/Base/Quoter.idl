@@ -1,0 +1,31 @@
+// $Id$
+
+#ifndef QUOTER_IDL
+#define QUOTER_IDL
+
+#pragma ciao lem "Base/QuoterE.idl"
+#pragma ciao ami4ccm interface "Quoter::StockManager"
+#pragma ciao lem "Base/QuoterAE.idl"
+#pragma ciao ami4ccm idl "Base/QuoterA.idl"
+
+module Quoter
+{
+  exception InvalidStock { string sym; };
+
+  interface StockManager {
+    attribute string stock_exchange_name;
+
+    boolean add_stock(in string symbol, in double quote);
+    void edit_stock(in string symbol, in double new_quote)
+      raises(InvalidStock);
+    void remove_stock(in string symbol, out double quote)
+      raises(InvalidStock);
+
+    boolean find_closest_symbol(inout string symbol);
+    double get_quote(in string symbol) raises(InvalidStock);
+  };
+
+};
+
+#endif
+

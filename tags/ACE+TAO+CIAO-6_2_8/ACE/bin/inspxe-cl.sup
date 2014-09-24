@@ -1,0 +1,136 @@
+suppression = {
+	type = {thread_start}
+	stacks = {
+		{
+			!!!;
+			func=_start,mod=ld-linux-x86-64.so.2,line=4496,func_line=4496;
+		}
+	}
+}
+suppression = {
+	type = {uninitialized_memory_access}
+	stacks = {
+		allocation={
+			!!!;
+			func=call_init,mod=ld-linux-x86-64.so.2,src=dl-init.c,line=84,func_line=50;
+		}
+		{
+			!!!;
+			func=strlen,mod=libc.so.6,src=strlen.S,line=205,func_line=139;
+		}
+	}
+}
+suppression = {
+	type = {uninitialized_memory_access}
+	stacks = {
+		allocation={
+			!!!;
+			func=call_init,mod=ld-linux-x86-64.so.2,src=dl-init.c,line=84,func_line=50;
+		}
+		{
+			!!!;
+			func=strlen,mod=libc.so.6,src=strlen.S,line=206,func_line=140;
+		}
+	}
+}
+suppression = {
+	type = {uninitialized_memory_access}
+	stacks = {
+		allocation={
+			!!!;
+			func=__libc_start_main,mod=libc.so.6,src=libc-start.c,line=269,func_line=150;
+		}
+		{
+			!!!;
+			func=strlen,mod=libc.so.6,src=strlen.S,line=205,func_line=139;
+		}
+	}
+}
+suppression = {
+	type = {uninitialized_memory_access}
+	stacks = {
+		allocation={
+			!!!;
+			func=__libc_start_main,mod=libc.so.6,src=libc-start.c,line=269,func_line=150;
+		}
+		{
+			!!!;
+			func=strlen,mod=libc.so.6,src=strlen.S,line=206,func_line=140;
+		}
+	}
+}
+suppression = {
+	type = {uninitialized_memory_access}
+	stacks = {
+		allocation={
+			!!!;
+			func=__libc_start_main,mod=libc.so.6,src=libc-start.c,line=269,func_line=150;
+		}
+		{
+			!!!;
+			func=strlen,mod=libc.so.6,src=strlen.S,line=204,func_line=138;
+		}
+	}
+}
+suppression = {
+	type = {invalid_memory_access}
+	stacks = {
+		{
+			!!!;
+			func=strlen,mod=libc.so.6,src=strlen.S,line=137,func_line=71;
+		}
+	}
+}
+suppression = {
+	type = {invalid_memory_access}
+	stacks = {
+		{
+			!!!;
+			func=__get_nprocs,mod=libc.so.6,src=getsysstats.c,line=132,func_line=5;
+		}
+	}
+}
+suppression = {
+	type = {uninitialized_memory_access}
+	stacks = {
+		allocation={
+			!!!;
+			func=__libc_start_main,mod=libc.so.6,src=libc-start.c,line=269,func_line=150;
+		}
+		{
+			!!!;
+			func=strlen,mod=libc.so.6,src=strlen.S,line=216,func_line=150;
+		}
+	}
+}
+suppression = {
+	type = {uninitialized_memory_access}
+	stacks = {
+		allocation={
+			!!!;
+			func=__libc_start_main,mod=libc.so.6,src=libc-start.c,line=269,func_line=150;
+		}
+		{
+			!!!;
+			func=strlen,mod=libc.so.6,src=strlen.S,line=217,func_line=151;
+		}
+	}
+}
+suppression = {
+	type = {unreachable_memory_leak}
+	stacks = {
+		allocation={
+			!!!;
+			func=strsignal,mod=libc.so.6,src=strsignal.c,line=56,func_line=15;
+		}
+	}
+}
+suppression = {
+	type = {reachable_memory_leak}
+	stacks = {
+		allocation={
+			!!!;
+			func=__cxa_finalize,mod=libc.so.6,src=cxa_finalize.c,line=56,func_line=26;
+		}
+	}
+}

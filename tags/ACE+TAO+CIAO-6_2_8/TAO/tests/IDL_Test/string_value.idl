@@ -1,0 +1,36 @@
+//=============================================================================
+
+/**
+ *  @file    string_value.idl
+ *
+ *  $Id$
+ *
+ *  This file contains depends on the TAO supplied StringValue type. Generated
+ *  code based on such IDL failed to compile since the IDL compiler inserted a
+ *  #include of a non-existent StringValueA.h.
+ *
+ *  Note that the include must be relative to $TAO_ROOT. If included as
+ *  "Valuetype/StringValue.pidl" The compiler assumes the generated A.h file
+ *  is in the tao/AnyTypeCode directory. This cannot work because it sets up a
+ *  circular dependency between libTAO_AnyTypeCode and libTAO_ValueType. It
+ *  also requires an additional -I$TAO_ROOT/tao which is non traditional.
+ *
+ */
+
+//=============================================================================
+
+
+#ifndef IDL_TEST_STRING_VALUE_IDL
+#define IDL_TEST_STRING_VALUE_IDL
+
+#include "tao/Valuetype/StringValue.pidl"
+
+module include_test
+{
+  valuetype StringTest
+  {
+    public ::CORBA::StringValue my_string_value;
+  };
+};
+
+#endif /* IDL_TEST_STRING_VALUE_IDL */

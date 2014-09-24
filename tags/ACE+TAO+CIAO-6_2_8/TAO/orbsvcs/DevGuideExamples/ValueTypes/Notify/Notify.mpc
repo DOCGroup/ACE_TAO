@@ -1,0 +1,22 @@
+// $Id$
+
+project(*supplier) : taoexe, portableserver, valuetype, notify, portableserver, event_skel {
+  exename = supplier
+  source_files {
+    supplier.cpp
+  }
+  header_files {
+    Event_i.h
+  }
+}
+
+project(*consumer) : taoexe, portableserver, valuetype, notify, portableserver, event_skel {
+  exename = consumer
+  source_files {
+    consumer.cpp
+  }
+  header_files {
+    Event_i.h
+  }
+}
+

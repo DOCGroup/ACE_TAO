@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                      "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+  <HEAD>
+    <TITLE>Performance Metrics Detailed Results</TITLE>
+    <LINK href="Stats.css" rel="stylesheet" type="text/css">
+  </HEAD>
+  <DIV align="center">
+  <H2>Performance Metrics Detailed Results</H2>
+  <TABLE cellpadding=0 cellspacing=0 border=0>
+  </DIV>
+  <TABLE>
+  <CENTER>
+  <TD>
+  <A HREF="http://www.dre.vanderbilt.edu/">
+  <IMG SRC="/image/doc.jpg" width="183" height="45"></A>
+  </TD>
+  </table>
+  </center>
+  <P><HR>
+  <BODY>
+
+
+    <P>
+      Results for the performance experiments in
+      <CODE>$TAO_ROOT/performance-tests/Latency</CODE>.
+      The results for all the tests are combined in a single chart.
+    </P>
+    <DIV align="center">
+      <P>
+	<IMG alt="All Invocation Modes and Configurations" border=0
+	  src="images/CORBA.png"
+    width="800" height="600">
+      </P>
+    </DIV>
+    <HR>
+    <P>The tests below are all located in
+      <CODE>$TAO_ROOT/performance-tests/Latency</CODE>.
+      Each test has a driver script that runs it,
+      these scripts run the tests over the loopback network
+      interface.
+      Unless indicated otherwise, the tests use the default ORB
+      configuration.
+    </P>
+    <DIV align="center">
+      <P>
+	<TABLE BORDER="2">
+	<THEAD>
+	  <TR>
+	    <TH>Test Name</TH>
+	    <TH>Chart</TH>
+	    <TH>Recent results</TH>
+	    <TH>Complete History</TH>
+	  </TR>
+	</THEAD>
+        <TBODY>
+	<TR>
+	  <TD>AMI</TD>
+	    <TD><A HREF="images/AMI.png">
+		<IMG height=240 width=320 ALT="AMI" SRC="images/AMI.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_AMI.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/AMI.txt">[Download]</A>
+	  </TD>
+	  </TR>
+	  <TR>
+	  <TD>AMH_Single_Threaded</TD>
+	    <TD><A HREF="images/AMH_Single_Threaded.png">
+		<IMG height=240 width=320 ALT="AMH_Single_Threaded" SRC="images/AMH_Single_Threaded.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_AMH_Single_Threaded.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/AMH_Single_Threaded.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>DII</TD>
+	    <TD><A HREF="images/DII.png">
+		<IMG height=240 width=320 ALT="DII" SRC="images/DII.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_DII.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/DII.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>DSI</TD>
+	    <TD><A HREF="images/DSI.png">
+		<IMG height=240 width=320 ALT="DSI" SRC="images/DSI.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_DSI.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/DSI.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>Deferred</TD>
+	    <TD><A HREF="images/Deferred.png">
+		<IMG height=240 width=320 ALT="Deferred" SRC="images/Deferred.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_Deferred.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/Deferred.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>Single_Threaded<BR>
+	      (Configuration optimized<BR>
+	       for single-threaded apps)<BR>
+	    </TD>
+	    <TD><A HREF="images/Single_Threaded.png">
+		<IMG height=240 width=320 ALT="Single_Threaded" SRC="images/Single_Threaded.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_Single_Threaded.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/Single_Threaded.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>Single_Threaded</TD>
+	    <TD><A HREF="images/Default.png">
+		<IMG height=240 width=320 ALT="Default" SRC="images/Default.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_Default.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/Default.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>Thread_Per_Connection</TD>
+	    <TD><A HREF="images/Thread_Per_Connection.png">
+		<IMG height=240 width=320 ALT="Thread_Per_Connection" SRC="images/Thread_Per_Connection.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_Thread_Per_Connection.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/Thread_Per_Connection.txt">[Download]</A>
+	  </TD>
+	</TR>
+	<TR>
+	  <TD>Thread_Pool</TD>
+	    <TD><A HREF="images/Thread_Pool.png">
+		<IMG height=240 width=320 ALT="Thread_Pool" SRC="images/Thread_Pool.png">
+		</A>
+	    </TD>
+	  <TD>
+	      <PRE>
+<!--#include file="data/LAST_Thread_Pool.txt" -->
+	      </PRE>
+	  </TD>
+	  <TD>
+	    <A HREF="data/Thread_Pool.txt">[Download]</A>
+	  </TD>
+	</TR>
+	</TBODY>
+      </TABLE>
+    </DIV>
+
+<!--#include file="navigation.html"-->
+<!--#include file="footer.html"-->
+
+  </BODY>
+</HTML>

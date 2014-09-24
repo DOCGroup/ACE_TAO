@@ -1,0 +1,60 @@
+/**
+ * @file NotificationServiceMC.idl
+ *
+ * @brief Define the Monitor/Control interface
+ *
+ * $Id$
+ *
+ * @author Chad Elliott <elliott_c@ociweb.com>
+ */
+
+#ifndef NOTIFICATIONSERVICEMC_IDL
+#define NOTIFICATIONSERVICEMC_IDL
+
+#include "tao/Monitor/Monitor_include.pidl"
+
+#pragma prefix "sandia.gov"
+
+module CosNotification
+{
+  interface NotificationServiceMonitorControl
+  {
+    exception InvalidName {
+      Monitor::NameList names;
+    };
+
+    Monitor::NameList get_statistic_names ();
+
+    Monitor::Data get_statistic (in string name)
+      raises (InvalidName);
+
+    Monitor::DataList get_statistics (in Monitor::NameList names)
+      raises (InvalidName);
+
+    Monitor::DataList get_and_clear_statistics (in Monitor::NameList names)
+      raises (InvalidName);
+
+    void clear_statistics (in Monitor::NameList names)
+      raises (InvalidName);
+
+    // Control commands begin here
+    void shutdown_event_channel (in string name)
+      raises (InvalidName);
+
+    void remove_consumer (in string name)
+      raises (InvalidName);
+
+    void remove_supplier (in string name)
+      raises (InvalidName);
+
+    void remove_consumeradmin (in string name)
+      raises (InvalidName);
+
+    void remove_supplieradmin (in string name)
+      raises (InvalidName);
+
+    oneway void shutdown ();
+  };
+};
+
+#endif /* NOTIFICATIONSERVICEMC_IDL */

@@ -1,0 +1,187 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+ xmlns:Deployment="http://www.omg.org/Deployment"
+ xmlns:xmi="http://www.omg.org/XMI"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Deployment_1</label>
+  <UUID>Deployment_1</UUID>
+
+  <!-- Implementations declarations -->
+
+<implementation xmi:id="TTSCConnectorComponentImplementation">
+    <name>TTSCConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="TTSCConnector_ExecArtifact"/>
+    <artifact xmi:idref="TTSCConnector_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_TTSCConnector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TTSCConnector_conn</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_TTSCConnector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>TTSCConnector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="SenderComponentImplementation">
+    <name>SenderComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Sender_ExecArtifact"/>
+    <artifact xmi:idref="Sender_SvntArtifact"/>
+    <execParameter>
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Sender_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Sender_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+
+  </implementation>
+
+
+ <instance xmi:id="TTCTest.ComponentImplementations.TTCTestImplementation.TTSCConnector">
+    <name>TTSCConnectorComponentInstance</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="TTSCConnectorComponentImplementation"/>
+  </instance>
+
+  <instance xmi:id="TTCTest.ComponentImplementations.TTCTestImplementation.TTCTest.Sender">
+    <name>SenderComponentInstance</name>
+    <node>Sender</node>
+    <source/>
+    <implementation xmi:idref="SenderComponentImplementation"/>
+  </instance>
+
+  <!-- Artifacts declarations -->
+  <artifact xmi:id="TTSCConnector_ExecArtifact">
+    <name>TTSCConnector_conn</name>
+    <source/>
+    <node/>
+    <location>TTSCConnector_conn</location>
+      <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_TTSCConnector_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+
+  </artifact>
+  <artifact xmi:id="TTSCConnector_SvntArtifact">
+    <name>TTSCConnector_svnt</name>
+    <source/>
+    <node/>
+    <location>TTSCConnector_svnt</location>
+    <execParameter>
+      <name>entryPoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_TTSCConnector_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+  </artifact>
+
+  <artifact xmi:id="Sender_ExecArtifact">
+    <name>Sender_exec</name>
+    <source/>
+    <node/>
+    <location>Sender_exec</location>
+  </artifact>
+  <artifact xmi:id="Sender_SvntArtifact">
+    <name>Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>Sender_svnt</location>
+  </artifact>
+
+ <localityConstraint>
+    <constraint>SameProcess</constraint>
+    <constrainedInstance xmi:idref="TTCTest.ComponentImplementations.TTCTestImplementation.TTCTest.Sender" />
+    <constrainedInstance xmi:idref="TTCTest.ComponentImplementations.TTCTestImplementation.TTSCConnector" />
+  </localityConstraint>
+
+
+</Deployment:DeploymentPlan>

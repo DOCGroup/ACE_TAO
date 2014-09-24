@@ -1,0 +1,54 @@
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Messenger.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): portableserver, orbsvcsexe, notification_skel, naming {
+  exename = MessengerServer
+  after += *idl
+  Source_Files {
+    EventSequenceSupplier_i.cpp
+    MessengerServer.cpp
+    Messenger_i.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): orbsvcsexe, notification, naming {
+  exename = MessengerClient
+  after += *idl
+  Source_Files {
+    MessengerC.cpp
+    MessengerClient.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Consumer): portableserver, orbsvcsexe, notification_skel, naming {
+  exename = MessengerConsumer
+  after += *idl
+  IDL_Files {
+  }
+  Source_Files {
+    MessengerConsumer.cpp
+    EventSequenceConsumer_i.cpp
+  }
+  Source_Files {
+    MessengerC.cpp
+    MessengerS.cpp
+  }
+}
+

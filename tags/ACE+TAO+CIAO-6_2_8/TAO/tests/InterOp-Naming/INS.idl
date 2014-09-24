@@ -1,0 +1,11 @@
+//$Id$
+
+#ifndef INS_TEST_IDL
+#define INS_TEST_IDL
+
+interface INS
+{
+  string test_ins ();
+};
+
+#endif /* INS_TEST_IDL */

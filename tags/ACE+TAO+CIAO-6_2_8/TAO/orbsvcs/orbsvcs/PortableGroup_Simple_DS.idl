@@ -1,0 +1,41 @@
+// -*- IDL -*-
+
+//=============================================================================
+/**
+ *  @file    PortableGroup_Simple_DS.idl
+ *
+ *  $Id$
+ *
+ *  The aim of this file is to provide a seperation between the actual
+ *  PortableGroup interface and some of the data structures defined in
+ *  this module. This would be apparent if you look at
+ *  FT_CORBA_ORB.idl. FT_CORBA_ORB.idl can get away by just including
+ *  this file and the generated code from this instead of linking in
+ *  PortableGroup and the likes.
+ */
+//=============================================================================
+
+#ifndef _PORTABLEGROUP_SIMPLE_DS_IDL_
+#define _PORTABLEGROUP_SIMPLE_DS_IDL_
+
+#include "tao/GIOP.pidl"
+
+module PortableGroup
+{
+  typeprefix PortableGroup "omg.org";
+
+  // Specification for Interoperable Object Group References
+  typedef string GroupDomainId;
+  typedef unsigned long long ObjectGroupId;
+  typedef unsigned long ObjectGroupRefVersion;
+
+  struct TagGroupTaggedComponent
+  { // tag = TAG_GROUP;
+    GIOP::Version component_version;
+    GroupDomainId group_domain_id;
+    ObjectGroupId object_group_id;
+    ObjectGroupRefVersion object_group_ref_version;
+  };
+};
+
+#endif /*_PORTABLEGROUP_SIMPLE_DS_IDL_*/

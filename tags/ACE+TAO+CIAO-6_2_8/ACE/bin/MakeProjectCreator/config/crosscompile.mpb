@@ -1,0 +1,23 @@
+
+// -*- MPC -*-
+// $Id$
+
+project {
+  avoids += cross_compile
+
+  specific(prop:microsoft) {
+    nocross = 1
+  }
+  specific(cdt6) {
+    nocross = 1
+  }
+  verbatim(gnuace, circuit) {
+    ifneq ($(CROSS-COMPILE),)
+      all clean realclean idl_stubs depend lib_warning require_warning avoid_warning install:
+      "	@echo This project will not build on CROSS-COMPILE platforms."
+    else
+  }
+  verbatim(gnuace, bottom) {
+    endif # CROSS-COMPILE
+  }
+}

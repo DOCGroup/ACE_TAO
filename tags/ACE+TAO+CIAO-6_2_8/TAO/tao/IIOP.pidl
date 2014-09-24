@@ -1,0 +1,31 @@
+// -*- IDL -*-
+// $Id$
+
+#ifndef TAO_IIOP_PIDL
+#define TAO_IIOP_PIDL
+
+// This is a OMG specified IDL. When IIOP modules start getting
+// complicated we may want to have them here.
+#pragma prefix "omg.org"
+
+#if !defined (TAO_LACKS_IIOP)
+
+module IIOP
+{
+  struct ListenPoint
+  {
+    string host;
+    unsigned short _port;
+  };
+
+  typedef sequence<ListenPoint> ListenPointList;
+
+  struct BiDirIIOPServiceContext
+  {
+    ListenPointList listen_points;
+  };
+};
+
+#endif /* TAO_LACKS_IIOP */
+
+#endif  /* TAO_IIOP_PIDL */

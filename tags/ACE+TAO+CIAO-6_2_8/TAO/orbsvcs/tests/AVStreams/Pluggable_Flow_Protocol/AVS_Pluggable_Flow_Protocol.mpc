@@ -1,0 +1,28 @@
+// -*- MPC -*-
+// $Id$
+
+project(*ts) : orbsvcslib, portableserver, avstreams, naming {
+  sharedname   = TAO_TS
+  dynamicflags += TAO_TS_BUILD_DLL
+
+  Source_Files {
+    TimeStamp.cpp
+  }
+}
+
+project(*send): avstreamsexe {
+  exename  = sender
+
+  Source_Files {
+    sender.cpp
+  }
+}
+
+project(*recv): avstreamsexe {
+  exename  = receiver
+
+  Source_Files {
+    receiver.cpp
+  }
+}
+

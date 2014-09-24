@@ -1,0 +1,4 @@
+libace-6.2.7: no-symbols-control-file usr/lib/libACE-6.2.7.so
+libace-6.2.7: no-symbols-control-file usr/lib/libACE_ETCL_Parser-6.2.7.so
+libace-6.2.7: no-symbols-control-file usr/lib/libACE_Monitor_Control-6.2.7.so
+libace-6.2.7: no-symbols-control-file usr/lib/libACE_ETCL-6.2.7.so

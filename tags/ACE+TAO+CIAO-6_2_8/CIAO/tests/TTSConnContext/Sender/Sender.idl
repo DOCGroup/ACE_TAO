@@ -1,0 +1,12 @@
+//$Id$
+
+#ifndef SENDER_IDL
+#define SENDER_IDL
+
+#include <Components.idl>
+
+component Sender
+  {
+  };
+
+#endif /*SENDER_IDL*/

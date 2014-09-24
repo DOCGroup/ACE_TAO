@@ -1,0 +1,145 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook V4.1//EN" [
+  <!ENTITY applname "tao_nsadd">
+  <!ENTITY man_tao_orb_options "<citerefentry><refentrytitle>TAO_ORB_Options</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY man_tao_cosnaming "<citerefentry><refentrytitle>tao_cosnaming</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY man_tao_nslist "<citerefentry><refentrytitle>tao_nslist</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY man_tao_nsdel "<citerefentry><refentrytitle>tao_nsdel</refentrytitle><manvolnum>1</manvolnum></citerefentry>">
+  <!ENTITY tao_cosnaming "<application>tao_cosnaming</application>">
+  <!ENTITY seealso "&man_tao_orb_options;, &man_tao_cosnaming;, &man_tao_nslist;, &man_tao_nsdel;">
+]>
+<!-- This file was written by Marek Brudka <mbrudka@aster.pl>   -->
+<!-- on September 2010 for the Debian GNU/Linux operating system.             -->
+<!-- It is mainly a plain text to DocBook conversion of the USAGE file. -->
+
+<refentry>
+  <refmeta>
+    <refentrytitle>TAO_NSADD</refentrytitle>
+    <manvolnum>1</manvolnum>
+  </refmeta>
+  <refnamediv>
+    <refname>&applname;</refname>
+    <refpurpose>Naming Service add utility.</refpurpose>
+  </refnamediv>
+  <refsynopsisdiv>
+    <title>SYNOPSIS</title>
+    <cmdsynopsis>
+      <command>&applname;</command>
+      <group><arg>-ORBoptions</arg></group>
+      <arg rep="repeat"><replaceable>OPTION</replaceable></arg>
+    </cmdsynopsis>
+  </refsynopsisdiv>
+  <refsect1>
+    <title>DESCRIPTION</title>
+    <para>
+      &applname; adds or replaces new entry to the NamingService.
+    </para>
+    <para>
+     &applname; requires a running NamingService.
+    </para>
+  </refsect1>
+  <refsect1>
+    <title>OPTIONS</title>
+      <variablelist>
+      <varlistentry>
+	<term><parameter>-ORBoptions</parameter></term>
+	<listitem>
+	  <para>
+	    The program follows the usual TAO ORB command line syntax. See
+	    &man_tao_orb_options;.
+	  </para>
+      </listitem>
+      </varlistentry>
+
+      <varlistentry>
+	<term><parameter>--ns</parameter> <replaceable>IOR</replaceable> </term>
+	<listitem>
+	  <para>	  
+	  Use NamingService <replaceable>IOR</replaceable> instead of default.
+	  </para>
+	</listitem>
+	</varlistentry>
+
+	<varlistentry>
+	<term><parameter>--name</parameter> <replaceable>name</replaceable> </term>
+	<listitem>
+	  <para>	  
+	  Register <replaceable>name</replaceable> in NamingService.
+	  </para>
+	</listitem>
+	</varlistentry>
+
+      <varlistentry>
+	<term><parameter>--ior</parameter><replaceable>IOR</replaceable></term>
+	<listitem>
+	  <para>
+	    <replaceable>IOR</replaceable> of the object to be registered.
+	  </para>
+	</listitem>
+	</varlistentry>
+
+	<varlistentry>
+	<term><parameter>--newcontext</parameter></term>
+	<term><parameter>--ctx</parameter></term>
+	<listitem>
+	  <para>
+	    If --ctx is NOT given; binds a final object.
+	  </para>
+	  <para>
+	    If both --ior and --ctx are specified; binds the existing\n" "naming context specified.
+	  </para>
+	  <para>
+	    If --ctx is given without --ior; binds a new naming context.
+	  </para>
+	</listitem>
+	</varlistentry>
+
+	<varlistentry>
+	<term><parameter>--rebind</parameter></term>
+	<listitem>
+	  <para>
+	    Replace the existing bindings of the same type (object or context).
+	  </para>
+	</listitem>
+	</varlistentry>
+
+	<varlistentry>
+	<term><parameter>--quiet</parameter></term>
+	<listitem>
+	  <para>
+	  Do not display all ID/Kinds found/created.
+	  </para>
+	</listitem>
+	</varlistentry>
+
+	<varlistentry>
+	<term><parameter>--ctxsep</parameter> <replaceable>character</replaceable></term>
+	<listitem>
+	  <para>
+	  Set context separation <replaceable>character</replaceable>, defaults to "/".
+         </para>
+	</listitem>
+	</varlistentry>
+
+
+	<varlistentry>
+	<term><parameter>--kindsep</parameter> <replaceable>character</replaceable></term>
+	<listitem>
+	  <para>
+	  Set ID/Kind separation <replaceable>character</replaceable>, defaults to ".".
+         </para>
+	</listitem>
+	</varlistentry>
+
+      </variablelist>
+  </refsect1>
+  <refsect1>
+    <title>SEE ALSO</title>
+    <para>&seealso;</para>
+  </refsect1>
+  <refsect1>
+    <title>AUTHOR</title>
+    <para>Simon Massey <email>&lt;sma@prismtech.com&gt;</email> </para>
+    <para>Carlos O'Ryan <email>&lt;coryan@uci.edu&gt;</email> </para>
+    <para>Paul Caffrey <email>&lt;denginere@hotmail.com&gt;</email> </para>
+  </refsect1>
+</refentry>

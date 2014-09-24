@@ -1,0 +1,417 @@
+Wed Sep 24 19:51:44 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.8 released.
+
+Fri Aug 29 07:39:43 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DAnCE/LocalityManager/CPUAffinity/CPUAffinity_exec.cpp:
+          Removed not needed return
+
+Thu Aug 28 10:15:41 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/descriptors/USER_QOS_PROFILES.xml:
+        * connectors/dds4ccm/performance-tests/Latency/descriptors/USER_QOS_PROFILES.xml:
+          Committed some fixes prepared some time ago, fixed these QoS XML
+          files so that they work with RTI DDS 5.1.0
+
+Thu Aug 28 09:18:06 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Receiver/QC_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS/DDS_Sender/QC_Sender.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Receiver/ObO_Receiver.cpp:
+        * connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/DDS_Sender/ObO_Sender.cpp:
+        * connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/TypeSupport/main.cpp:
+          Fixed valgrind reported memory leaks
+
+Sun Aug 17 18:52:15 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/IDL3_to_XMI/IDL3_to_XMI_visitor.cpp:
+          Fixed missing break as reported by Coverity
+
+Thu Jul  3 11:03:02 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * examples/Display/NavDisplay/NavDisplay_exec.h:
+          Fixed typos, triggered by a patch from Pau Garcia i Quiles
+          <pgquiles at elpauer dot org>
+
+Mon Jun 23 12:49:47 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Mon Jun 23 09:43:57 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.7 released.
+
+Wed May 21 22:20:27 UTC 2014  Simon McQueen  <simon.mcqueen@gmail.com>
+
+        * tests/Bug_3890_Regression/Foo.idl:
+          Work around woefully broken Sun Studio compiler.
+
+Fri Apr 25 06:24:28 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+          Fixed compile error
+
+Thu Apr 24 06:49:53 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/ConditionManager.cpp:
+          Not being able to create a read condition should result in
+          a throw of an exception
+
+        * connectors/dds4ccm/impl/Getter_T.cpp:
+          Pass 0 as index as part of the exception thrown
+
+Tue Apr 22 08:29:33 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Make x.2.6 public
+
+        * etc/ciao.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+          Handle pidl files as idl files
+
+Tue Apr 22 08:44:41 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.6 released.
+
+Wed Mar 26 01:39:54 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/DAnCE/StoreReferences/run_test.pl:
+          Fixed return value of the script itself
+
+Tue Mar 25 00:42:50 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Fixed compile errors with unicode enabled
+
+Sun Mar 23 13:04:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.h:
+        * ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+          Remove registration from the naming service in the
+          post remove. Thanks to Michael Frommberger
+          <michael dot frommberger at gmx dot net> for providing this patch
+
+        * tests/DAnCE/StoreReferences/client.cpp:
+        * tests/DAnCE/StoreReferences/run_test.pl:
+          Small changes to make sure the test runs now perfect with the
+          patch integrated
+
+Sat Mar 22 13:39:42 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao_tests.lst:
+        * tests/DAnCE/StoreReferences/DeploymentPlan.cdp:
+        * tests/DAnCE/StoreReferences/StoreReferences.idl:
+        * tests/DAnCE/StoreReferences/StoreReferences.mpc:
+        * tests/DAnCE/StoreReferences/StoreReferences_exec.h:
+        * tests/DAnCE/StoreReferences/StoreReferences_exec.cpp:
+        * tests/DAnCE/StoreReferences/client.cpp:
+        * tests/DAnCE/StoreReferences/run_test.pl:
+          Integrate unit test for bugzilla 4106, thanks to
+          Michael Frommberger <michael dot frommberger at gmx dot net>
+          for creating this
+
+Tue Mar 18 14:38:53 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/IDL_Test/Inherited_Component/Extended/Base.idl:
+        * tests/IDL_Test/Inherited_Component/Extended/Base.mpc:
+          Extended base component with a publishes, this triggers
+          a problem in the generated code, thanks to Sebastian Perk
+          <Sebastian dot Perk at hydrometer dot de> for reporting this
+
+Mon Mar 17 11:02:00 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          Removed dead  code
+
+Mon Mar 17 10:58:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+          Fixed uninitialized warning by Coverity
+
+Fri Feb 28 07:59:56 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Make x.2.5 public and prepare for next release
+
+Fri Feb 28 08:46:21 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.5 released.
+
+Thu Feb 20 11:47:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Updated instructions to OpenDDS 3.5
+
+Thu Jan  9 13:02:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+          Don't set include path
+
+Thu Jan  9 12:33:02 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+          Upgraded to doxygen 1.8.6
+
+Thu Jan  9 10:26:52 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+Thu Jan 09 09:18:31 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.4 released.
+
+Wed Dec 25 00:00:00 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * Merry Christmas everyone!
+
+Wed Dec 18 14:22:00 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+          Upgraded to doxygen 1.8.5
+
+Wed Dec 18 11:23:21 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao_dds4ccm.doxygen:
+          Upgraded to doxygen 1.8.5
+
+Tue Dec 17 13:36:01 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Containers/Container_Base_T.cpp:
+          RETAIN is the default servant retention policy, so no need
+          to explicitly set it
+
+Sun Dec  8 18:30:24 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_3769_Regression/Foo.idl:
+        * tests/Bug_3769_Regression/Foo_exec.h:
+        * tests/Bug_3769_Regression/Foo_exec.cpp:
+        * tests/Bug_3769_Regression/descriptors/DeploymentPlan.cdp:
+          Added various attributes that use bounded strings
+
+Wed Nov 27 02:37:17 UTC 2013  Douglas C. Schmidt  <schmidt@dre.vanderbilt.edu>
+
+        * VERSION: Updated the URL to point to Vandy not WUSTl.
+
+Sun Nov 17 19:17:50 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ciao/Deployment/Interceptors/Name_Utilities.cpp:
+          Improved logging and when we get invalid arguments directly return
+          after logging an error
+
+Wed Nov 13 18:19:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/03_executors.html:
+          Added missing commandline flags to specify the export file and macro
+          when generating the starter code
+
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp.mpc:
+        * connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp.mpc:
+          Added missing commandline flags to specify the export file and macro
+          when generating the starter code
+
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.cpp:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.h:
+        * connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.cpp:
+          Regenerated with the latest flags
+
+Mon Nov 11 09:43:10 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+Mon Nov 11 09:17:34 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.3 released.
+
+Fri Nov  8 12:15:15 UTC 2013  Marijke Hengstmengel  <MHengstmengel@remedy.nl>
+
+        * CIAO-INSTALL.html:
+        * NEWS:
+        Added information about Android port
+
+Mon Nov  4 14:13:28 UTC 2013  Marijke Hengstmengel  <MHengstmengel@remedy.nl>
+
+        * docs/CIAO_android_port.html:
+        Added environment variables
+
+Mon Oct 28 14:098:24 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
+
+        * docs/CIAO_android_port.html:
+        Description setup CIAO Android port.
+
+
+Wed Oct 23 08:48:24 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
+
+        * examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+
+        * examples/Hello/descriptors/run_test.pl:
+
+        * CIAO/examples/ciao_android.lst:
+        Changes for ANDROID port
+          commit 43a2b2dfd3cc68ed5c30f4d8994a36183d972202
+          Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+          Date:   Wed Oct 16 12:40:58 2013 +0200
+
+                  * CIAO/examples/ciao_android.lst:
+                  List tests running on CIAO Android port.
+
+          commit ac22da3990acafaa9e5c2e9ddf8fc08a8e86f2b0
+          Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+          Date:   Tue Oct 15 15:22:58 2013 +0200
+
+                  Made perl script ready for running on two different targets:
+                  local host and remote android target
+                  * CIAO/examples/Hello/descriptors/run_test.pl:
+
+          commit eb9626a86511c55e5d46a65a260240af6103f8e4
+          Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+          Date:   Thu Oct 3 10:19:06 2013 +0200
+
+                  * CIAO/examples/Hello/Receiver/Hello_Receiver_exec.cpp:
+                  Added extra debug info
+
+
+Tue Oct  8 12:39:51 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Reduced number of steps for which we use cygwin
+
+Mon Oct  7 14:55:11 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Added note that paths in environment variables shouldn't use
+          double quotes
+
+Mon Oct  7 13:50:49 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Corrected flag for x86_64
+
+Mon Oct  7 10:18:42 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Use perl explicitly when using mwc.pl on Windows
+
+Mon Oct  7 10:16:28 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Corrected windows slashes
+
+Mon Oct  7 08:15:16 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Document how with nmake we can generate Win64 projects
+
+Fri Oct  4 10:51:06 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Extended instructions
+
+Fri Oct  4 07:22:25 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Added nmake steps
+
+Thu Oct  3 19:33:20 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/DDS4CCM-INSTALL.html:
+          Added instructions how to compile DDS4CCM with RTI DDS
+          with Visual Studio on Windows
+
+Thu Oct  3 09:36:45 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepared for next release
+
+Thu Oct 03 09:47:23 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.2 released.
+
+Mon Sep  2 15:39:58 UTC 2013  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/Latency_Sender.cpp:
+        * connectors/dds4ccm/performance-tests/DDSLatency/DDS_Sender/NDDS_Latency_Sender.cpp:
+
+        * connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:
+
+          explicit includes.
+
+Sat Aug 31 14:05:45 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+          Removed error from a message, we also run this component
+          without a receiver, than this will happen
+
+Thu Aug 29 11:11:22 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * connectors/dds4ccm/impl/Coherent_Changes_Guard.h:
+        * connectors/dds4ccm/impl/DDS_Event_Connector_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.h:
+        * connectors/dds4ccm/impl/DDS_Listen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.h:
+        * connectors/dds4ccm/impl/DDS_StateListen_T.cpp:
+        * connectors/dds4ccm/impl/DDS_State_Connector_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderListener_T.cpp:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.h:
+        * connectors/dds4ccm/impl/DataReaderStateListener_T.cpp:
+        * connectors/dds4ccm/impl/Getter_T.h:
+        * connectors/dds4ccm/impl/LocalObject.h:
+        * connectors/dds4ccm/impl/Utils.h:
+          Fixes for the DDS State connector. The semantics of this
+          connector is that the state is kept in DDS, but the listeners
+          where doing a take which removed the data from DDS. The basic
+          and extended listener ports C++ templates are extended with a
+          new template argument which is used to control the semantics
+          of the listener, DDS4CCM_READ or DDS4CCM_TAKE. The State connector
+          does use read, the Event connector does use take. This fixes
+          bugzilla 4123
+
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * connectors/dds4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.h:
+        * connectors/dds4ccm/tests/KeyedSamples/Sender/Keyed_Test_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver_exec.h:
+        * connectors/dds4ccm/tests/ListenManyByMany/Receiver/LMBM_Test_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/ListenManyByMany/descriptors/Plan.cdp:
+        * connectors/dds4ccm/tests/MultiTopic/Connector/MultiTopic_Connector_T.h:
+        * connectors/dds4ccm/tests/MultipleTemp/Sender/MultipleTemp_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLManyByMany/Receiver/SL_ManyByMany_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.h:
+        * connectors/dds4ccm/tests/SLOneByOne/Receiver/SL_OneByOne_Receiver_exec.cpp:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.h:
+        * connectors/dds4ccm/tests/SLOneByOne/Sender/SL_OneByOne_Sender_exec.cpp:
+        * connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp:
+          Extended a few tests to check the state in DDS after they
+          have received some samples through the listener. In previous
+          versions this never returned data, with the updated DDS4CCM
+          State connector semantics this now returns data
+
+Fri Aug 16 08:36:26 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+        * ChangeLogs/ChangeLog-2013a:
+        * NEWS:
+          Prepared for next release
+
+Fri Aug 16 08:56:17 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * CIAO version 1.2.1 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

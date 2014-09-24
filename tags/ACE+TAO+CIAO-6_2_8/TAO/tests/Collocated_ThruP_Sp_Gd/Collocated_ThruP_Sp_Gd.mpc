@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+// Disable THRU_POA Collocation, enable Direct Collocation
+
+project(Coll_ThruP_Sp-Gd): taoserver {
+  exename = Coll_ThruP_Sp_Gd
+  idlflags += -Sp -Gd
+}

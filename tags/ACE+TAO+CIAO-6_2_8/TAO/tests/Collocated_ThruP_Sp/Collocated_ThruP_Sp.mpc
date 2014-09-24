@@ -1,0 +1,9 @@
+// -*- MPC -*-
+// $Id$
+
+// Disable THRU_POA Collocation
+
+project(Collocated_ThruP_Sp): taoserver {
+  exename = Collocated_ThruP_Sp
+  idlflags += -Sp
+}
