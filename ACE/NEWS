@@ -8,6 +8,12 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.7 and ACE-6.2.8
   automatically when a C++ compiler with adequate
   C++11 support is used.
 
+. For all reactor types calling cancel_timer with a
+  nullptr is now allowed, will result in a return of 0
+
+. ACE_DLL and ACE_DLL_Manager have been extended with
+  the support to retrieve any dynamic loader errors
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.6 and ACE-6.2.7
 ====================================================
 
