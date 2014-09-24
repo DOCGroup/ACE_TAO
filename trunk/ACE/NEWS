@@ -6,7 +6,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.7 and ACE-6.2.8
   event handlers. This template method is only enabled
   when ACE_HAS_CPP11 has been defined, which is set
   automatically when a C++ compiler with adequate
-  C++11 support is used.
+  C++11 support is used. Also ACE_Event_Handler_var is
+  extended with some C++11 specific operations
 
 . For all reactor types calling cancel_timer with a
   nullptr is now allowed, will result in a return of 0
