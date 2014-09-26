@@ -60,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::Any any_val;
 
       // Make this IOR as one of the properties in there.
-      any_val <<= propsetdef;
+      any_val <<= propsetdef.in ();
 
       CORBA::Object_var ior = CosPropertyService::PropertySetDef::_duplicate (propsetdef.in());
       CORBA::Object_ptr ior_ptr = ior.in ();

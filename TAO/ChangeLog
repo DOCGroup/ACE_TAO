@@ -1,3 +1,9 @@
+Fri Sep 26 10:16:30 UTC 2014  Olli Savia  <ops@iki.fi>
+
+        * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * orbsvcs/tests/Property/server.cpp:
+          Fixed compile warnings on LynxOS.
+
 Fri Sep 26 00:02:11 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
