@@ -15,6 +15,7 @@
 
 #include "test_config.h"
 #include "ace/Message_Block.h"
+#include "ace/OS_NS_string.h"
 
 size_t
 run_duplicate_test (const size_t msg_block_count,
@@ -119,7 +120,7 @@ run_main (int , ACE_TCHAR *[])
                 MSG_BLOCK_TOTAL));
 
     char block[MSG_BLOCK_SIZE];
-    memset (block, 'A', MSG_BLOCK_SIZE);
+    ACE_OS::memset (block, 'A', MSG_BLOCK_SIZE);
 
     size_t duplicate_total = run_duplicate_test (
       MSG_BLOCK_COUNT,
