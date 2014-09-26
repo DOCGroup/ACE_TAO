@@ -181,17 +181,17 @@ private:
                            bool manual_start,
                            ImR_ResponseHandler *rh);
 
-  bool is_alive(UpdateableServerInfo& info);
+  bool server_is_alive (UpdateableServerInfo& info);
 
-  void unregister_activator_i(const char* activator);
+  void unregister_activator_i (const char* activator);
 
   void connect_activator (Activator_Info& info);
 
-  void auto_start_servers(void);
+  void auto_start_servers (void);
 
-  void connect_server(UpdateableServerInfo& info);
+  void connect_server (UpdateableServerInfo& info);
 
-  PortableServer::POA_ptr findPOA(const char* name);
+  PortableServer::POA_ptr findPOA (const char* name);
 
 private:
 

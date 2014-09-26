@@ -129,8 +129,11 @@ struct Server_Info
   int start_count;
   int waiting_clients;
   bool starting;
-  int pid;
 
+  /// Last known process ID reported by the activator
+  int pid;
+  /// the locator should expect a notification on server death from activator
+  bool death_notify;
 };
 
 #endif /* SERVER_INFO_H */

@@ -24,7 +24,6 @@ static const ACE_TCHAR* ALTKEY = ACE_TEXT("AltKey");
 static const ACE_TCHAR* POA = ACE_TEXT("POA");
 static const ACE_TCHAR* PEERS = ACE_TEXT("Peers");
 static const ACE_TCHAR* PID = ACE_TEXT("Pid");
-
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
 #endif

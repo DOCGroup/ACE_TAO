@@ -32,6 +32,7 @@ Server_Info::operator= (const Server_Info &other)
   waiting_clients = other.waiting_clients;
   starting = other.starting;
   pid = other.pid;
+  death_notify = other.death_notify;
   peers = other.peers;
   env_vars = other.env_vars;
   return *this;
@@ -66,6 +67,7 @@ Server_Info::Server_Info (const ACE_CString& fqname,
   , waiting_clients (0)
   , starting (false)
   , pid (0)
+  , death_notify (false)
 {
   this->is_jacorb = parse_id (fqname.c_str(), this->server_id, this->poa_name);
   Server_Info::gen_key (this->server_id, this->poa_name, this->key_name_);
@@ -95,6 +97,7 @@ Server_Info::Server_Info (const ACE_CString& serverId,
   , waiting_clients (0)
   , starting (false)
   , pid (0)
+  , death_notify (false)
 {
   Server_Info::gen_key (this->server_id, this->poa_name, this->key_name_);
 }
@@ -272,6 +275,7 @@ Server_Info::clear (void)
   waiting_clients = 0;
   starting = false;
   pid = 0;
+  death_notify = false;
 }
 
 void
@@ -281,6 +285,7 @@ Server_Info::reset_runtime (void)
   Server_Info *startup = this->active_info ();
   startup->ior = "";
   startup->pid = 0;
+  startup->death_notify = false;
   startup->last_ping = ACE_Time_Value::zero;
   startup->server = ImplementationRepository::ServerObject::_nil ();
 }
