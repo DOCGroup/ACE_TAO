@@ -1069,7 +1069,7 @@ Shared_Backing_Store::load_server (Server_Info *info,
       si->server = ImplementationRepository::ServerObject::_narrow (obj.in ());
       this->opts_.pinger ()->add_server (info->key_name_.c_str (),
                                          this->opts_.ping_external (),
-                                         si->server);
+                                         si->server.in ());
     }
 
 }
