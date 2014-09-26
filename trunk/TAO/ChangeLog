@@ -1,3 +1,21 @@
+Fri Sep 26 00:02:11 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/Config_Backing_Store.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+          Refining the relationship between server infos, the locator and the
+          activator. Use an active ping when allowed to verify the server
+          liveness, then check with the activator to see if it still is the
+          server's parent. Use a new flag to indicate that a child death
+          notification is expected.
+
+        * orbsvcs/tests/ImplRepo/RestartIMR/run_test.pl:
+          Expand the test to account for new scenarios.
+
 Wed Sep 24 19:51:44 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * TAO version 2.2.8 released.
