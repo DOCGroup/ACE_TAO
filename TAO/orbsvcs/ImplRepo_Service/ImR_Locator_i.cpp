@@ -182,65 +182,49 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
 
   for (;it.next (entry) != 0; it.advance ())
     {
-      Server_Info& info = *(entry->int_id_);
-      Server_Info *active = info.active_info ();
-      ImplementationRepository::ServerObject_var svrobj = active->server;
-      bool is_alive = !CORBA::is_nil (svrobj.in()) &&
-        !this->pinger_.has_server (info.ping_id());
+      UpdateableServerInfo info (this->repository_.get(), entry->int_id_);
+      bool is_alive = this->server_is_alive (info);
+      Server_Info *active = info.edit()->active_info ();
       if (this->debug_ > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("step 1: %C alive? %d pid = %d\n"),
-                          info.ping_id (), is_alive, active->pid));
+                          ACE_TEXT ("server %C is_alive = %d\n"),
+                          active->ping_id(), is_alive));
         }
+
+      if (!is_alive)
+        {
+          info.edit()->reset_runtime ();
+          active->reset_runtime ();
+          continue;
+        }
+
+      active->death_notify = false;
       if (active->pid > 0)
         {
           Activator_Info_Ptr ainfo =
             this->get_activator (active->activator);
 
-          if (ainfo.null () ||
-              CORBA::is_nil (ainfo->activator.in ()))
-            {
-              if (this->debug_ > 0)
-                {
-                  ORBSVCS_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT ("step 2: no activator\n")));
-                }
-              is_alive = false;
-            }
-          else
+          if (!(ainfo.null () || CORBA::is_nil (ainfo->activator.in ())))
             {
               ImplementationRepository::ActivatorExt_var actx =
                 ImplementationRepository::ActivatorExt::_narrow (ainfo->activator.in ());
               try
                 {
-                  is_alive = !CORBA::is_nil (actx.in ()) &&
-                    actx->still_alive (active->pid);
+                  active->death_notify =
+                    !CORBA::is_nil (actx.in ()) && actx->still_alive (active->pid);
                 }
               catch (CORBA::Exception &)
                 {
-                  is_alive = false;
                 }
               if (this->debug_ > 0)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT ("step 3: activator says alive = %d\n"),
-                                  is_alive));
+                                  ACE_TEXT ("activator says death_notify = %d\n"),
+                                  active->death_notify));
                 }
             }
         }
-
-      if (is_alive)
-        {
-          this->pinger_.add_server (info.ping_id(),
-                                    active->pid > 0 || this->ping_external_,
-                                    svrobj.in());
-        }
-      else
-        {
-          active->reset_runtime ();
-        }
-
     }
 
   //only after verifying do we report the IOR and become open for business
@@ -553,6 +537,7 @@ ImR_Locator_i::spawn_pid
   if (! info.null ())
     {
       info.edit ()->active_info ()->pid = pid;
+      info.edit ()->active_info ()->death_notify = true;
     }
   else
     {
@@ -1426,7 +1411,7 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 }
 
 bool
-ImR_Locator_i::is_alive (UpdateableServerInfo& info)
+ImR_Locator_i::server_is_alive (UpdateableServerInfo& info)
 {
   this->connect_server (info);
   SyncListener *listener = 0;

@@ -26,6 +26,7 @@ my $server_pid = 0;
 
 my $kill_svr = 0;
 my $kill_act = 0;
+my $kill_imr = 1;
 
 my $imr_debug = "-d 1 ";
 my $act_debug = "";
@@ -40,10 +41,12 @@ foreach my $i (@ARGV) {
     }
     elsif ($i eq '-kill_act') {
         $kill_act = 1;
-        $kill_svr = 1;
     }
     elsif ($i eq '-kill_server') {
         $kill_svr = 1;
+    }
+    elsif ($i eq '-no_kill_imr') {
+        $kill_imr = 0;
     }
     elsif ($i eq '-noid') {
         $srv_id = "";
@@ -131,7 +134,7 @@ $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 $initref = "-ORBInitRef ImplRepoService=file://$ti_imriorfile";
 
 $IMR->Arguments ("-ORBEndpoint iiop://:$port ".
-                 "-UnregisterIfAddressReused $imr_debug".
+                 "-i -UnregisterIfAddressReused $imr_debug".
                  "--directory $persist_dir " .
                  $ping_ext .
                  "-o $imr_imriorfile ");
@@ -220,15 +223,17 @@ if ($srv->GetFile ($srvpidfile) == -1) {
 }
 
 print STDERR "=== list pre-kill\n";
-$TI->Arguments ("$initref list -v");
+$TI->Arguments ("$initref list -a");
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {
     print STDERR "tao_imr list poaC to poaA returned $TI_status\n";
 }
 
-print STDERR "=== kill ImR Locator\n";
-$IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
-$imr->DeleteFile ($imriorfile);
+if ($kill_imr == 1) {
+    print STDERR "=== kill ImR Locator\n";
+    $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
+    $imr->DeleteFile ($imriorfile);
+}
 
 if ($kill_act == 1) {
     print STDERR "=== kill ImR Activator\n";
@@ -243,16 +248,18 @@ if ($kill_svr == 1) {
     $srv->DeleteFile ($srvpidfile);
 }
 
-print STDERR "=== restart ImR Locator\n";
-$IMR_status = $IMR->Spawn ();
-if ($IMR_status != 0) {
-    print STDERR "ERROR: ImplRepo Service returned $IMR_status\n";
-    exit 1;
-}
-if ($imr->WaitForFileTimed ($imriorfile,$imr->ProcessStartWaitInterval()) == -1) {
-    print STDERR "ERROR: cannot find file <$imr_imriorfile>\n";
-    $IMR->Kill (); $IMR->TimedWait (1);
-    exit 1;
+if ($kill_imr == 1) {
+    print STDERR "=== restart ImR Locator\n";
+    $IMR_status = $IMR->Spawn ();
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: ImplRepo Service returned $IMR_status\n";
+        exit 1;
+    }
+    if ($imr->WaitForFileTimed ($imriorfile,$imr->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$imr_imriorfile>\n";
+        $IMR->Kill (); $IMR->TimedWait (1);
+        exit 1;
+    }
 }
 
 if ($kill_act == 1) {
@@ -272,22 +279,40 @@ if ($kill_act == 1) {
     }
 }
 
-print STDERR "=== restart server via ImR\n";
-$TI->Arguments ("$initref start $poaA ");
-$TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-if ($TI_status != 0) {
-    print STDERR "tao_imr start $poaA returned $TI_status\n";
-}
+print STDERR "=== post restart list (1)\n";
 $TI->Arguments ("$initref list -v");
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {
     print STDERR "tao_imr list returned $TI_status\n";
 }
 
-$TI->Arguments ("$initref shutdown $poaA ");
+
+if ($kill_svr == 1) {
+    print STDERR "=== restart server via ImR\n";
+    $TI->Arguments ("$initref start $poaA ");
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "tao_imr start $poaA returned $TI_status\n";
+    }
+}
+
+print STDERR "=== post restart list (2)\n";
+$TI->Arguments ("$initref list -a -v");
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {
-    print STDERR "tao_imr shutdown $poaA returned $TI_status\n";
+    print STDERR "tao_imr list returned $TI_status\n";
+}
+
+print STDERR "=== shutdown\n";
+$TI->Arguments ("$initref kill $poaA ");
+$TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+if ($TI_status != 0) {
+    print STDERR "tao_imr kill $poaA returned $TI_status\n";
+    $TI->Arguments ("$initref shutdown $poaA ");
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "tao_imr shutdown $poaA returned $TI_status\n";
+}
 }
 
 $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());

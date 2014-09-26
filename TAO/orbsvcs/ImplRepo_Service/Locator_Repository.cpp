@@ -613,7 +613,6 @@ Locator_Repository::has_activator (const ACE_CString& name)
   return activators().find (lcase (name), activator) == 0;
 }
 
-
 int
 Locator_Repository::remove_activator (const ACE_CString& name)
 {
@@ -628,6 +627,18 @@ Locator_Repository::remove_activator (const ACE_CString& name)
     {
       return ret;
     }
+
+  Locator_Repository::SIMap::ENTRY* sientry = 0;
+  Locator_Repository::SIMap::ITERATOR siit (servers ());
+  for (; siit.next (sientry); siit.advance() )
+  {
+    Server_Info *info = sientry->int_id_->active_info ();
+
+    if (info->death_notify && info->activator == name)
+      {
+        info->death_notify = false;
+      }
+  }
 
   return persistent_remove(name, true);
 }
