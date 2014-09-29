@@ -1,3 +1,8 @@
+Mon Sep 29 19:16:18 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/RestartIMR/server.cpp:
+          Scoreboard fix.
+
 Fri Sep 26 10:16:30 UTC 2014  Olli Savia  <ops@iki.fi>
 
         * orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:

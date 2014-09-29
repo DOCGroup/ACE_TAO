@@ -109,8 +109,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
                          pid_file),
                         1);
-
-    ACE_OS::fprintf (output_file, "%d\n", ACE_OS::getpid ());
+    int pid = static_cast<int> (ACE_OS::getpid ());
+    ACE_OS::fprintf (output_file, "%d\n", pid);
     ACE_OS::fclose (output_file);
 
     orb->run ();
