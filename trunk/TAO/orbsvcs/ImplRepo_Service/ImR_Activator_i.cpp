@@ -408,7 +408,7 @@ ImR_Activator_i::start_server(const char* name,
 
   if (debug_ > 1)
     ORBSVCS_DEBUG((LM_DEBUG,
-                   "ImR Activator: Starting %s <%s>...\n",
+                   "ImR Activator: Starting %C <%C>...\n",
                    (unique ? "unique server" : "server"), name));
 
   if (unique && this->still_running_i (name))
@@ -460,7 +460,7 @@ ImR_Activator_i::start_server(const char* name,
   if (pid == ACE_INVALID_PID)
     {
       ORBSVCS_ERROR ((LM_ERROR,
-        "ImR Activator: Cannot start server <%s> using <%s>\n", name, cmdline));
+        "ImR Activator: Cannot start server <%C> using <%s>\n", name, cmdline));
 
       throw ImplementationRepository::CannotActivate(
         CORBA::string_dup (
@@ -487,7 +487,7 @@ ImR_Activator_i::start_server(const char* name,
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
                                   ACE_TEXT ("ImR Activator: Notifying ImR that ")
-                                  ACE_TEXT ("%s has started.\n"),
+                                  ACE_TEXT ("<%C> has started.\n"),
                                   name));
                 }
               this->locator_->spawn_pid (name, pid);
@@ -524,7 +524,7 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("ImR Activator: Notifying ImR that ")
-                          ACE_TEXT ("server[%d], <%s> has exited.\n"),
+                          ACE_TEXT ("server[%d], <%C> has exited.\n"),
                           pid, name.c_str()));
         }
       try
