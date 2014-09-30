@@ -1,3 +1,8 @@
+Tue Sep 30 13:34:34 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * include/makeinclude/platform_g++_common.GNU:
+          Add -Wnon-virtual-dtor to the default CCFLAGS
+
 Fri Sep 26 09:58:57 UTC 2014  Olli Savia  <ops@iki.fi>
 
         * tests/Message_Block_Large_Copy_Test.cpp:
