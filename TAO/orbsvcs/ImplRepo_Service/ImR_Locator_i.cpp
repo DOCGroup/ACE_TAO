@@ -1,4 +1,4 @@
-// // $Id$
+// $Id$
 
 #include "orbsvcs/Log_Macros.h"
 #include "ImR_Locator_i.h"
@@ -655,7 +655,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
   AsyncAccessManager_ptr aam;
   if (info->is_mode(ImplementationRepository::PER_CLIENT))
     {
-      AsyncAccessManager *aam_raw;
+      AsyncAccessManager *aam_raw = 0;
       ACE_NEW (aam_raw, AsyncAccessManager (info, manual_start, *this));
       aam = aam_raw;
       this->aam_set_.insert_tail (aam);
@@ -665,7 +665,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
       aam = this->find_aam (info->ping_id ());
       if (aam.is_nil())
         {
-          AsyncAccessManager *aam_raw;
+          AsyncAccessManager *aam_raw = 0;
           ACE_NEW (aam_raw, AsyncAccessManager (info, manual_start, *this));
           aam = aam_raw;
           this->aam_set_.insert_tail (aam);
