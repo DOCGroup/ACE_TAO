@@ -1,7 +1,7 @@
 // -*- MPC -*-
 // $Id$
 
-project (FtNamingReplication) : ftnaming, orbsvcslib, orbsvcs_output, install, naming_serv, portablegroup, avoids_minimum_corba  {
+project (FtNamingReplication) : ftnaming, orbsvcslib, orbsvcs_output, install, naming_serv, portablegroup, avoids_minimum_corba, ftorbutils {
   sharedname   = TAO_FtNamingReplication
   idlflags    += -Wb,export_macro=TAO_FtNaming_Export -Wb,export_include=orbsvcs/Naming/FaultTolerant/ftnaming_export.h
   dynamicflags += TAO_FTNAMING_BUILD_DLL
@@ -20,6 +20,4 @@ project (FtNamingReplication) : ftnaming, orbsvcslib, orbsvcs_output, install, n
     FT_NamingReplicationC.h
     FT_NamingReplicationS.h
   }
-
 }
-
