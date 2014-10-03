@@ -1,6 +1,5 @@
 // $Id$
 #include "test_i.h"
-#include "ORB_Task.h"
 #include "tao/ImR_Client/ImR_Client.h"
 #include <ace/Task.h>
 #include <ace/Get_Opt.h>
@@ -53,10 +52,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     CORBA::Object_var object =
       orb->resolve_initial_references ("RootPOA");
-
-    ORB_Task worker (orb.in ());
-    worker.activate (THR_NEW_LWP | THR_JOINABLE,
-                      1);
 
     PortableServer::POA_var rootPOA =
       PortableServer::POA::_narrow (object.in ());
@@ -126,7 +121,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_OS::fprintf (output_file, "%s", ior.in ());
     ACE_OS::fclose (output_file);
 
-    worker.wait ();
+    orb->run ();
 
     rootPOA->destroy (1, 1);
     orb->destroy ();

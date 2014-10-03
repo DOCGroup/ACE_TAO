@@ -10,7 +10,7 @@
 
 
 class  Test_Dummy_i
-  : public virtual POA_Test::Dummy
+  : public virtual POA_taoimrtest::reconnectserver::Dummy
 {
 public:
   // Constructor
@@ -23,7 +23,7 @@ public:
 };
 
 class  Test_Time_i
-  : public virtual POA_Test::Time
+  : public virtual POA_taoimrtest::reconnectserver::TimeSrv
 {
 public:
   // Constructor
