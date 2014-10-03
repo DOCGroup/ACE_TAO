@@ -31,6 +31,7 @@ my $srv_b_id = "-ORBServerId BBB ";
 my $client_duration = 30;
 my $do_link = 0;
 my $ping_ext = "-v 0 ";
+my $use_java = 0;
 
 my $imr_debug = "";
 my $srva_debug = "";
@@ -45,6 +46,10 @@ foreach my $i (@ARGV) {
         $srvb_debug = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile srvb.log ";
         $clt_debug = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile clt.log ";
     }
+    elsif ($i eq '-java') {
+        $use_java = 1;
+        $delay = 5;
+    }
     elsif ($i eq '-link') {
         $do_link = 1;
     }
@@ -53,16 +58,16 @@ foreach my $i (@ARGV) {
         $srv_b_id = "";
     }
     elsif ($i eq '-forwardalways') {
-        $delay = '5';
+        $delay = 5;
         $forward_opt = "-ORBForwardInvocationOnObjectNotExist 1";
     }
     elsif ($i eq '-forwardonce') {
-        $delay = '5';
+        $delay = 5;
         $forward_opt = "-ORBForwardOnceOnObjectNotExist 1";
         $got_object_not_exist_exception = 1;
     }
     elsif ($i eq '-pingexternal') {
-        $delay = '5';
+        $delay = 5;
         $forward_opt = "-ORBForwardOnceOnObjectNotExist 1";
         $ping_ext = "-i ";
     }
@@ -115,10 +120,16 @@ $SRV_B = $srvb->CreateProcess ("serverB",
                                $srvb_debug .
                                "-ORBUseIMR 1 ".
                                "-o $srvb_srvbiorfile");
-$CLI = $cli->CreateProcess ("client",
-                            "$forward_opt -i file://$cli_srvaiorfile ".
-                            "-t $client_duration $clt_debug".
-                            "-e $got_object_not_exist_exception ");
+if ($use_java == 1) {
+    $CLI = $cli->CreateProcess ($ENV{'JACORB_HOME'} . "/bin/jaco",
+                                "-cp build/classes taoimrtest.reconnectserver.Client");
+}
+else {
+    $CLI = $cli->CreateProcess ("client",
+                                "$forward_opt -i file://$cli_srvaiorfile ".
+                                "-t $client_duration $clt_debug".
+                                "-e $got_object_not_exist_exception ");
+}
 
 print STDERR $IMR->CommandLine () . "\n";
 $IMR_status = $IMR->Spawn ();

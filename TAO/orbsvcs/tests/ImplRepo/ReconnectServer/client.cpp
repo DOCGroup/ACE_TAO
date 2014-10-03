@@ -12,8 +12,8 @@ bool expect_object_not_exist = false;
 class Client_Task : public ACE_Task_Base
 {
   public:
-    Client_Task (Test::Time_ptr obj)
-    : test_ (Test::Time::_duplicate (obj)),
+    Client_Task (taoimrtest::reconnectserver::TimeSrv_ptr obj)
+    : test_ (taoimrtest::reconnectserver::TimeSrv::_duplicate (obj)),
       communication_failed_ (false),
       reconnected_ (false),
       caught_object_not_exist_ (false)
@@ -23,8 +23,7 @@ class Client_Task : public ACE_Task_Base
     {
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       ACE_Time_Value elapsed;
-      int i = 0;
-      while (elapsed < ACE_Time_Value (test_duration_sec))
+      for (int i = 0; elapsed < ACE_Time_Value (test_duration_sec); i++)
       {
         try
         {
@@ -36,21 +35,17 @@ class Client_Task : public ACE_Task_Base
             communication_failed_ = false;
             reconnected_ = true;
           }
-          ACE_OS::sleep (1);
         }
         catch (const CORBA::OBJECT_NOT_EXIST &)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)caught OBJECT_NOT_EXIST exception for request %d\n"), i ));
           caught_object_not_exist_ = true;
-          ACE_OS::sleep (1);
         }
         catch (const CORBA::Exception & /*ex*/)
         {
-          //ex._tao_print_exception ("Exception caught:");
           communication_failed_ = true;
-          ACE_OS::sleep (1);
         }
-        ++i;
+        ACE_OS::sleep (1);
         elapsed = ACE_OS::gettimeofday () - start;
       }
 
@@ -75,7 +70,7 @@ class Client_Task : public ACE_Task_Base
     }
 
 private:
-  Test::Time_var test_;
+  taoimrtest::reconnectserver::TimeSrv_var test_;
   bool communication_failed_;
   bool reconnected_;
   bool caught_object_not_exist_;
@@ -130,7 +125,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     object = orb->string_to_object(ior_input_file);
 
-    Test::Time_var test = Test::Time::_narrow(object.in ());
+    taoimrtest::reconnectserver::TimeSrv_var test =
+      taoimrtest::reconnectserver::TimeSrv::_narrow(object.in ());
 
     if (CORBA::is_nil(test.in ()))
     {
