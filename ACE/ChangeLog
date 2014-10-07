@@ -1,3 +1,32 @@
+Tue Oct  7 21:55:51 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        Set of changes applicable to VxWorks, particularly 6.9. These changes
+        were contributed by Jeff Fowler and Gordon Hulpieu at NetApp. Feel
+        free to contact me with any issues.
+
+        * ace/OS_NS_Thread.{h cpp inl}: Change from using the VxWorks TCB
+          spare4 value to a new static member of ACE_TSS_Emulation. This
+          mechanism covers both VxWorks multicore (SMP) using the __thread
+          attribute and single core using Task Var. This change gets ACE out
+          of the way of the applications that use spare4 for their own
+          purposes.
+          Also fixes for various compiler warnings.
+
+        * ace/OS_NS_sys_socket.inl (accept): Add IPv6 case to the
+          ACE_HAS_BROKEN_ACCEPT_ADDR case.
+
+        * ace/config-vxworks6.9.h: Correct the ACE_HAS_BROKEN_ACCEPT_ADDR
+          setting for VxWorks 6.9+.
+
+        * ace/OS_NS_dlfcn.inl (dlsym): For VxWorks, use the symFind() call
+          instead of the deprecated symFindByName().
+
+        * ace/Process.cpp: Fix a weird compile diagnostic by adding what should
+          be a needless space.
+
+        * include/makeinclude/platform_vxworks6.9.GNU: Update MUNCH_FLAGS
+          for this version.
+
 Tue Sep 30 13:34:34 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * include/makeinclude/platform_g++_common.GNU:

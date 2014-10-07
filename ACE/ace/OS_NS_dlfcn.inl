@@ -154,6 +154,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
   ACE_OSCALL_RETURN (::cxxshl_load(fname, mode, 0L), ACE_SHLIB_HANDLE, 0);
 #   endif  /* aC++ vs. Hp C++ */
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
+  ACE_UNUSED_ARG (mode);
   MODULE* handle = 0;
   // Open readonly
   ACE_HANDLE filehandle = ACE_OS::open (fname,
@@ -252,14 +253,19 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
 
   // For now we use the VxWorks global symbol table
-  // which resolves the most recently loaded symbols .. which resolve mostly what we want..
+  // which resolves the most recently loaded symbols, which resolve
+  // mostly what we want..
   ACE_UNUSED_ARG (handle);
-  SYM_TYPE symtype;
-  char *value = 0;
   STATUS status;
-  ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, &value, &symtype), int, -1, status);
 
-  return status == OK ? reinterpret_cast <void*>(value) : 0;
+  SYMBOL_DESC symbolDesc;     /* symFind() descriptor */
+  ACE_OS::memset (&symbolDesc, 0, sizeof (SYMBOL_DESC));
+  symbolDesc.mask = SYM_FIND_BY_NAME;
+  symbolDesc.name = symbolname;
+
+  ACE_OSCALL (::symFind(sysSymTbl, &symbolDesc), int, -1, status);
+
+  return status == OK ? reinterpret_cast <void*>(symbolDesc.value) : 0;
 
 # else
 
