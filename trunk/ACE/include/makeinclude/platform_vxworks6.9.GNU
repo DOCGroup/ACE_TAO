@@ -13,3 +13,7 @@ include $(ACE_ROOT)/include/makeinclude/platform_vxworks6.8.GNU
 
 # override. we do not want -Wsystem-header (new in vx6.9)
 CC_WARNINGS_ALL = -Wall
+
+ifeq ($(CPU),SIMNT)
+override MUNCH_FLAGS := -c $(TOOLENV)
+endif

@@ -38,6 +38,12 @@
 # include "ace/ACE_export.h"
 # include "ace/Object_Manager_Base.h"
 
+#if defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+# if defined (ACE_HAS_VXTHREADS) && !defined (_WRS_CONFIG_SMP) && !defined (INCLUDE_AMP_CPU)
+#  include "taskVarLib.h" /* used by VxWorks < 6.9 */
+# endif /* VxWorks and ! SMP */
+#endif
+
 # if defined (ACE_EXPORT_MACRO)
 #   undef ACE_EXPORT_MACRO
 # endif
@@ -875,6 +881,15 @@ private:
 #   else  /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
   /// Location of current thread's TSS array.
   static void **&tss_base ();
+
+#     if defined (ACE_HAS_VXTHREADS)
+#       if (defined (_WRS_CONFIG_SMP) || defined (INCLUDE_AMP_CPU))
+  static __thread void* ace_tss_keys;
+#       else  /* ! VxWorks SMP */
+  static void* ace_tss_keys;
+#       endif /* ! VxWorks SMP */
+#     endif /* ACE_HAS_VXTHREADS */
+
 #   endif /* ! ACE_HAS_THREAD_SPECIFIC_STORAGE */
 
 #   if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)

@@ -57,7 +57,11 @@ ACE_OS::accept (ACE_HANDLE handle,
   // Apparently some platforms like VxWorks can't correctly deal with
   // a NULL addr.
 
+#    if defined (ACE_HAS_IPV6)
+   sockaddr_in6 fake_addr;
+#    else
    sockaddr_in fake_addr;
+#    endif /* ACE_HAS_IPV6 */
    int fake_addrlen;
 
    if (addrlen == 0)

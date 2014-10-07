@@ -235,7 +235,7 @@ ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
                                         "ace/OS.h" for details.
 ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         with a NULL addr to accept()
-                                        (e.g, VxWorks).
+                                        (e.g, VxWorks < 6.9).
 ACE_HAS_BROKEN_DGRAM_SENDV              Platform sendv() does not work
                                         properly with datagrams,
                                         i.e. it fails when the iovec

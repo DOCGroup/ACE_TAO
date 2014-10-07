@@ -77,7 +77,15 @@ ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
 ACE_TSS_Emulation::tss_destructor_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX]
  = { 0 };
 
-#  if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
+#  if !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) && defined (ACE_HAS_VXTHREADS)
+
+#     if (defined (_WRS_CONFIG_SMP) || defined (INCLUDE_AMP_CPU))
+__thread void* ACE_TSS_Emulation::ace_tss_keys = 0;
+#     else  /* ! VxWorks SMP */
+void* ACE_TSS_Emulation::ace_tss_keys = 0;
+#     endif /* ! VxWorks SMP */
+
+#  elif defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 
 bool ACE_TSS_Emulation::key_created_ = false;
 
@@ -4729,6 +4737,7 @@ ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
     }
   return 0;
 #elif defined (ACE_HAS_TASKCPUAFFINITYSET)
+  ACE_UNUSED_ARG (cpu_set_size);
   int result = 0;
   if (ACE_ADAPT_RETVAL (::taskCpuAffinitySet (thr_id, *cpu_mask), result) == -1)
     {
@@ -5125,13 +5134,13 @@ int
 spa (FUNCPTR entry, ...)
 {
   static const unsigned int ACE_MAX_ARGS = 10;
-  static char *argv[ACE_MAX_ARGS];
+  static char *argv[ACE_MAX_ARGS] = { 0 };
   va_list pvar;
   unsigned int argc;
 
   // Hardcode a program name because the real one isn't available
   // through the VxWorks shell.
-  argv[0] = "ace_main";
+  argv[0] = const_cast<char*> ("ace_main");
 
   // Peel off arguments to spa () and put into argv.  va_arg () isn't
   // necessarily supposed to return 0 when done, though since the
@@ -5260,7 +5269,7 @@ spae (FUNCPTR entry, ...)
 {
   static int const WINDSH_ARGS = 10;
   static int const ACE_MAX_ARGS    = 128;
-  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
+  static char* argv[ACE_MAX_ARGS]  = { const_cast<char*> ("ace_main"), 0 };
   va_list pvar;
   int argc = 1;
 
@@ -5314,7 +5323,7 @@ spaef (FUNCPTR entry, ...)
 {
   static int const WINDSH_ARGS = 10;
   static int const ACE_MAX_ARGS    = 128;
-  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
+  static char* argv[ACE_MAX_ARGS]  = { const_cast<char*> ("ace_main"), 0 };
   va_list pvar;
   int argc = 1;
 
@@ -5366,7 +5375,7 @@ int
 vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
 {
   static int const ACE_MAX_ARGS    = 128;
-  static char* argv[ACE_MAX_ARGS]  = { "ace_main", 0 };
+  static char* argv[ACE_MAX_ARGS]  = { const_cast<char*> ("ace_main"), 0 };
   int argc = 1;
 
   // Peel off arguments to run_main () and put into argv.
