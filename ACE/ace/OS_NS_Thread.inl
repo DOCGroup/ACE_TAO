@@ -45,12 +45,11 @@ void **&
 ACE_TSS_Emulation::tss_base ()
 {
 #    if defined (ACE_HAS_VXTHREADS)
-  #if (ACE_VXWORKS <= 0x680)
-  int &spare = taskIdCurrent->ACE_VXWORKS_SPARE;
-  #else // VxWorks 6.9 updated datatype (WIND00241209) see taskLib.h
-  long  &spare = taskIdCurrent->ACE_VXWORKS_SPARE;
-  #endif
-  return reinterpret_cast <void **&> (spare);
+#      if (!defined (_WRS_CONFIG_SMP) && !defined (INCLUDE_AMP_CPU))
+  if (taskVarGet(0, reinterpret_cast<int*>(&ace_tss_keys)) == ERROR)
+    taskVarAdd(0, reinterpret_cast<int*>(&ace_tss_keys));
+#      endif
+  return reinterpret_cast <void **&> (ace_tss_keys);
 #    else
   // Uh oh.
   ACE_NOTSUP_RETURN (0);
@@ -81,15 +80,13 @@ ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
     /* If someone wants tss_base make sure they get one.  This
        gets used if someone spawns a VxWorks task directly, not
        through ACE.  The allocated array will never be deleted! */
-    if (0 == taskIdCurrent->ACE_VXWORKS_SPARE)
+    if (ace_tss_keys == 0)
       {
-        taskIdCurrent->ACE_VXWORKS_SPARE =
-          reinterpret_cast<int> (new void *[ACE_TSS_THREAD_KEYS_MAX]);
+        ace_tss_keys = new void *[ACE_TSS_THREAD_KEYS_MAX];
 
         // Zero the entire TSS array.  Do it manually instead of using
         // memset, for optimum speed.  Though, memset may be faster :-)
-        void **tss_base_p =
-          reinterpret_cast<void **> (taskIdCurrent->ACE_VXWORKS_SPARE);
+        void **tss_base_p = reinterpret_cast<void **> (ace_tss_keys);
         for (u_int i = 0; i < ACE_TSS_THREAD_KEYS_MAX; ++i, ++tss_base_p)
           {
             *tss_base_p = 0;
@@ -1835,6 +1832,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   return result;
 #    endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #  elif defined (ACE_VXWORKS)
+  ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_UNUSED_ARG (max);

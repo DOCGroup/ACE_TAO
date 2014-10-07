@@ -624,7 +624,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
 # if defined (ACE_VXWORKS)
     {
       pid_t retv;
-      while ((retv = this->wait (status)) == ACE_INVALID_PID && errno == EINTR);
+      while ((retv = this->wait (status)) == ACE_INVALID_PID && errno == EINTR) ;
       return retv;
     }
 # else

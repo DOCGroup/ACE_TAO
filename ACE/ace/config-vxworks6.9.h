@@ -31,6 +31,14 @@
 # endif
 #endif
 
+// As of VxWorks 6.9, the networking APIs have been made conformant with
+// the POSIX sockets prototypes. See IEEE Std 1003.1 and Section 6.3.3 Socket
+// Functional Interface in the VxWorks reference document -
+// wr_net_stack_programmers_guide_vol3_6.9.pdf.
+#if defined (ACE_HAS_BROKEN_ACCEPT_ADDR)
+#  undef ACE_HAS_BROKEN_ACCEPT_ADDR
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_9_H */
 
