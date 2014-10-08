@@ -661,6 +661,18 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
+                     (ACE_TEXT("-ORBIIOPClientPortBase"))))
+        {
+          this->orb_params ()->iiop_client_port_base (ACE_OS::atoi (current_arg));
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
+                     (ACE_TEXT("-ORBIIOPClientPortSpan"))))
+        {
+          this->orb_params ()->iiop_client_port_span (ACE_OS::atoi (current_arg));
+          arg_shifter.consume_arg ();
+        }
+      else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreferredInterfaces"))) ||
                0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreferredInterface"))) )

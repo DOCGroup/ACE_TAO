@@ -254,6 +254,7 @@ TAO/tests/Hello/run_test.pl:
 TAO/tests/Objref_Sequence_Test/run_test.pl:
 TAO/tests/ICMG_Any_Bug/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/LongDouble/run_test.pl:
+TAO/tests/ClientPortSpan/run_test.pl:
 TAO/tests/IPV6/run_test.pl: IPV6
 TAO/tests/AlternateIIOP/run_test.pl: !DISABLE_ToFix_LynxOS_x86
 TAO/tests/Optimized_Connection/run_test.pl: !DISABLE_ToFix_LynxOS_x86 !ACE_FOR_TAO
