@@ -211,6 +211,31 @@ TAO_ORB_Parameters::ip_multicastloop (bool x)
   this->ip_multicastloop_ = x;
 }
 
+ACE_INLINE u_short
+TAO_ORB_Parameters::iiop_client_port_base (void)
+{
+  return this->iiop_client_port_base_;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::iiop_client_port_base (u_short b)
+{
+  this->iiop_client_port_base_ = b;
+}
+
+ACE_INLINE u_short
+TAO_ORB_Parameters::iiop_client_port_span (void)
+{
+  return this->iiop_client_port_base_ ?
+    this->iiop_client_port_span_ : 0;
+}
+
+ACE_INLINE void
+TAO_ORB_Parameters::iiop_client_port_span (u_short s)
+{
+  this->iiop_client_port_span_ = s;
+}
+
 ACE_INLINE int
 TAO_ORB_Parameters::ace_sched_policy (void) const
 {
