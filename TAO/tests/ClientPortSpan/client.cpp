@@ -2,6 +2,7 @@
 
 #include "TestC.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_unistd.h"
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
@@ -64,12 +65,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_OS::sleep (1);
           hello->shutdown ();
         }
-      catch (const CORBA::TRANSIENT& tex)
+      catch (const CORBA::TRANSIENT& )
         {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - caught expected transient\n"));
           result = 1;
         }
-      catch (const CORBA::COMM_FAILURE& cfex)
+      catch (const CORBA::COMM_FAILURE& )
         {
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - caught expected comm failure\n"));
         }
