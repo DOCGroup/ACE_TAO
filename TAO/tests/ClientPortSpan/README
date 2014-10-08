@@ -1,0 +1,20 @@
+/**
+
+$Id$
+
+@page ClientPortSpan Test README File
+
+  Based on the Hello test client & server. Server pauses before returning to
+  give all clients a chance to start.
+
+  Test demonstrates that clients can be constrained to opening IIOP connections
+  only on specific local side ports, and will fail if no ports in the range are
+  available.
+
+  To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+  the script returns 0 if the test was successful.
+
+*/

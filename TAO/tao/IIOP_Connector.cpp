@@ -351,7 +351,7 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
 {
   const ACE_INET_Addr &remote_address = iiop_endpoint->object_addr ();
 
-  u_short port = 0;
+  u_short port = this->orb_core ()->orb_params ()->iiop_client_port_base ();
   ACE_UINT32 const ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr(port, ia_any);
 
@@ -367,12 +367,14 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
 #endif /* ACE_HAS_IPV6 */
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::begin_connection, ")
-                ACE_TEXT ("to <%C:%d> which should %s\n"),
-                iiop_endpoint->host(),
-                iiop_endpoint->port(),
-                r->blocked_connect () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::begin_connection, ")
+                     ACE_TEXT ("to <%C:%d> which should %s\n"),
+                     iiop_endpoint->host(),
+                     iiop_endpoint->port(),
+                     r->blocked_connect () ? ACE_TEXT("block") : ACE_TEXT("nonblock")));
+    }
 
   // Get the right synch options
   ACE_Synch_Options synch_options;
@@ -384,11 +386,35 @@ TAO_IIOP_Connector::begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
   // was to cause the connection to timeout immediately.
   svc_handler = 0;
 
-  int const result =
-    this->base_connector_.connect (svc_handler,
-                                   remote_address,
-                                   synch_options,
-                                   local_addr);
+  int result = -1;
+  u_short span = this->orb_core ()->orb_params ()->iiop_client_port_span ();
+  for (u_short offset = 0; offset <= span; ++offset)
+    {
+      local_addr.set_port_number (port + offset);
+      if (TAO_debug_level > 0 && (port + offset) > 0 )
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - IIOP_Connector::begin_connection, ")
+                         ACE_TEXT ("trying local port %d\n"),
+                         port + offset));
+        }
+      result = this->base_connector_.connect (svc_handler,
+                                              remote_address,
+                                              synch_options,
+                                              local_addr);
+      if (result == 0 || (errno != EADDRINUSE && errno != EINVAL))
+        {
+          break;
+        }
+      else
+        {
+          if (svc_handler != 0)
+            {
+              svc_handler->remove_reference ();
+              svc_handler = 0;
+            }
+        }
+    }
 
   return result;
 }

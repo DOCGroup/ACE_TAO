@@ -1,3 +1,20 @@
+Wed Oct  8 20:14:18 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/IIOP_Connector.cpp:
+        * tao/ORB_Core.cpp:
+        * tao/params.h:
+        * tao/params.inl:
+          New feature added to constrain client ORBs using IIOP to only use
+          local TCP ports spanning a supplied range. Use new ORB_init
+          parameters -ORBIIOPClientPortBase <base> and -ORBIIOPClientPortSpan
+          <count> to specify a range from base to base + count. A base
+          supplied without a span indicates the client may use only a single
+          port. A span supplied without a base is silently ignored.
+
+        * tests/ClientPortSpan:
+        * bin/tao_orb_tests.lst:
+          New test to validate and demonstrate the new feature.
+
 Fri Oct  3 19:54:01 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/ReconnectServer/ReconnectServer.mpc:
