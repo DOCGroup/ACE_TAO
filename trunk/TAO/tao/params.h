@@ -105,6 +105,12 @@ public:
   bool ip_multicastloop (void);
   void ip_multicastloop (bool);
 
+  /// Set/Get client side port span values
+  u_short iiop_client_port_base (void);
+  void iiop_client_port_base (u_short);
+  u_short iiop_client_port_span (void);
+  void iiop_client_port_span (u_short);
+
   /**
    * Octet sequences are marshalled without doing any copies, we
    * simply append a block to the CDR message block chain. When the
@@ -330,6 +336,11 @@ private:
 
   /// 1 if we're using IP_MULTICAST_LOOP and 0 otherwise.
   bool ip_multicastloop_;
+
+  /// define a range for local ports to use with IIOP connections
+  /// default base 0 to use ephemeral port. Span will be 0 if base is 0.
+  u_short iiop_client_port_base_;
+  u_short iiop_client_port_span_;
 
   /// Control the strategy for copying vs. appending octet sequences in
   /// CDR streams.
