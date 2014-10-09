@@ -1,3 +1,12 @@
+Thu Oct  9 23:18:24 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/Transport.cpp:
+          Incorporate a change suggested 24 April 2012 by Martin Drlik
+          to address a problem of partial reads manifested at least by
+          SSLIOP connections with Java peers. This patch preserves the
+          partial message buffer in the case of a read returning an
+          EWOULDBLOCK or EAGAIN error.
+
 Thu Oct  9 14:22:54 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * docs/Options.html:
