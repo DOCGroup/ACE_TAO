@@ -555,6 +555,23 @@ this option is disabled (<code>0</code>) since domain names are
 more flexible address notations for IORs.</td>
       </tr>
       <tr>
+        <td><code>-ORBIIOPClientPortBase</code> <em>base</em></td>
+        <td><a name="-ORBIIOPClientPortBase"></a>Clients using IIOP can be
+constrained to connect <em>from</em> a range of ports. The range is set using
+this base value then supplying a span to make it from <code>base</code> to
+<code>base + span</code>. The default base port value is 0, meaning a system
+selected port is used. If there are no available ports in the range, the ORB
+will throw a TRANSIENT exception. </td>
+      </tr>
+      <tr>
+        <td><code>-ORBIIOPClientPortSpan</code> <em>span</em></td>
+        <td><a name="-ORBIIOPClientPortSpan"></a>Clients using IIOP can be
+constrained to connect <em>from</em> a range of ports. The range is set using
+a base port value along with this span to make a range from <code>base</code> to
+<code>base + span</code>. The default span is 0, meaning a client may connect from
+only the base port. The span is ignored if the base port number is 0.</td>
+      </tr>
+      <tr>
         <td><code>-ORBNoServerSideNameLookups</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBNoServerSideNameLookups"></a>Setting this to 1 will
 prevent the ORB from looking up the peer's hostname when accepting an incoming
