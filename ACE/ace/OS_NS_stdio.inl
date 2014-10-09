@@ -873,6 +873,7 @@ ACE_OS::rewind (FILE *fp)
 #endif /* ACE_HAS_WINCE */
 }
 
+#if !defined (ACE_DISABLE_TEMPNAM)
 ACE_INLINE char *
 ACE_OS::tempnam (const char *dir, const char *pfx)
 {
@@ -924,6 +925,7 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
 #endif /* ACE_LACKS_TEMPNAM */
 }
 #endif /* ACE_HAS_WCHAR */
+#endif /* !ACE_DISABLE_TEMPNAM */
 
 ACE_INLINE int
 ACE_OS::vasprintf (char **bufp, const char* format, va_list argptr)
