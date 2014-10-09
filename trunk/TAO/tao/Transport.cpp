@@ -2138,7 +2138,8 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
         {
 
           recv_size -= this->partial_message_->length ();
-          this->partial_message_->reset ();
+          // reset is done later to avoid problem in case of EWOULDBLOCK
+          // or EAGAIN errno
         }
       else
         {
@@ -2161,6 +2162,10 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
              ACE_TEXT ("Error - endless loop detection, closing connection"),
              this->id ()));
         }
+      if (this->partial_message_ != 0 && this->partial_message_->length () > 0)
+        {
+          this->partial_message_->reset ();
+        }
       return -1;
     }
 
@@ -2178,9 +2183,22 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
                                 max_wait_time);
 
   // If there is an error return to the reactor..
+  // do not reset partial message in case of n == 0 (EWOULDBLOCK || EAGAIN),
+  // we will need it during next try
   if (n <= 0)
     {
+      if ((n < 0) &&
+          (this->partial_message_ != 0 && this->partial_message_->length () > 0))
+        {
+          this->partial_message_->reset ();
+        }
+
       return n;
+    }
+
+  if (this->partial_message_ != 0 && this->partial_message_->length () > 0)
+    {
+      this->partial_message_->reset ();
     }
 
   if (TAO_debug_level > 3)
