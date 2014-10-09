@@ -42,7 +42,7 @@ private:
   char *line_data_;
   ifstream *inf_;
   FILE *outf_;
-  char *tempfilename_;
+  char tempfilename_[MAXPATHLEN];
   char *ace_src_;
 };
 
@@ -68,6 +68,7 @@ csdb_generator::csdb_generator ()
    outf_ (0)
 {
   ace_src_ = ACE_OS::getenv("ACE_ROOT");
+  tempfilename_[0] = '\0';
 }
 
 void
@@ -227,10 +228,25 @@ csdb_generator::init_output (const char *srcfile)
     ACE_ERROR_RETURN ((LM_ERROR,"You must first set $ACE_ROOT\n"),-1);
 
   time_t now = ACE_OS::time();
-  tempfilename_ = ACE_OS::tempnam (ace_src_,"csdb");
-  outf_ = ACE_OS::fopen (tempfilename_,"w");
-  if (outf_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "Unable to open output file, %s\n",tempfilename_),-1);
+  if (ACE_OS::strlen(ace_src_) > 0)
+    {
+      ACE_OS::sprintf (tempfilename_,
+                       "%s%s%s",
+                       ace_src_,
+                       ACE_DIRECTORY_SEPARATOR_STR,
+                       "csdbXXXXXX");
+    }
+  else
+    {
+      ACE_OS::strcpy (tempfilename_, "csdbXXXXXX");
+    }
+  int fd = ACE_OS::mkstemp (tempfilename_);
+  if (fd == -1)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       "Unable to open output file, %p\n",
+                       tempfilename_),
+                      -1);
+  outf_ = ACE_OS::fdopen (fd, "w");
 
   ACE_OS::fprintf (outf_,"// $ID: $\n");
   ACE_OS::fprintf (outf_,"/*\n * Codeset registry DB, generated %s * source: %s\n",
