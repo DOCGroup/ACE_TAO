@@ -1,3 +1,8 @@
+Thu Oct  9 14:22:54 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Options.html:
+          Document new client port options.
+
 Wed Oct  8 22:34:58 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/ClientPortSpan/client.cpp:
