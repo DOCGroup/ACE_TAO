@@ -38,6 +38,7 @@ project(*serverB): taoserver, imr_client, avoids_minimum_corba, avoids_corba_e_c
     testC.cpp
     testS.cpp
     serverB.cpp
+    ORB_Task.cpp
     test_i.cpp
   }
 }
