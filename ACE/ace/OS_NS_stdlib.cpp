@@ -277,7 +277,7 @@ ACE_OS::malloc (size_t nbytes)
   return ACE_MALLOC_FUNC (nbytes);
 }
 
-#if defined (ACE_LACKS_MKTEMP)
+#if defined (ACE_LACKS_MKTEMP) && !defined (ACE_DISBALE_MKTEMP)
 ACE_TCHAR *
 ACE_OS::mktemp (ACE_TCHAR *s)
 {
@@ -325,7 +325,7 @@ ACE_OS::mktemp (ACE_TCHAR *s)
       return s;
     }
 }
-#endif /* ACE_LACKS_MKTEMP */
+#endif /* ACE_LACKS_MKTEMP &7 !ACE_DISABLE_MKTEMP */
 
 void *
 ACE_OS::realloc (void *ptr, size_t nbytes)

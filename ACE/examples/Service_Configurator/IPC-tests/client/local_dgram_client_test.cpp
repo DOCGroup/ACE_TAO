@@ -13,7 +13,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 
-#if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
+#if defined (ACE_HAS_MSG) && !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS) && \
+  !defined (ACE_DISABLE_TEMPNAM)
 // Name of the program.
 static ACE_TCHAR *program_name;
 
@@ -113,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_ERROR_RETURN ((LM_ERROR,
-                     ACE_TEXT ("your platform must support sendmsg/recvmsg to run this test\n")),
+                     ACE_TEXT ("your platform must support sendmsg/recvmsg and tempnam to run this test\n")),
                     -1);
 }
 #endif /* ACE_HAS_MSG */

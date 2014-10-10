@@ -73,8 +73,9 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
 int
 File_Manager::open_passwd_file (void)
 {
-  const char *filename = ACE_OS::tempnam ();
-  FILE *fp = ACE_OS::fopen (filename, "w");
+  char *filename = "passwd-XXXXXX";
+  ACE_HANDLE f = ACE_OS::mkstemp (filename);
+  FILE *fp = ACE_OS::fdopen (f, "w");
 
   if (fp == 0)
     return -1;

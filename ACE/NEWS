@@ -1,3 +1,126 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.2.8 and ACE-6.2.9
+====================================================
+
+. New config macros were added:
+  ACE_DISABLE_MKTEMP:  Disables the availability of ACE_OS::mktemp().
+  ACE_DISABLE_TEMPNAM: Disables the availability of ACE_OS::tempnam().
+  These can be added to your $ACE_ROOT/ace/config.h to disable these
+  wrappers which are considered to be a potential security risk. Disabling
+  one or both will also disable the following:
+    - ACE_FILE_Addr::set () with the 'any' address specified.
+    - ACE_MMAP_Memory_Pool use of the 'unique' option.
+
+USER VISIBLE CHANGES BETWEEN ACE-6.2.7 and ACE-6.2.8
+====================================================
+
+. Add new ACE::make_event_handler<T>() which is similar
+  to std::make_shared but than for allocation of ACE
+  event handlers. This template method is only enabled
+  when ACE_HAS_CPP11 has been defined, which is set
+  automatically when a C++ compiler with adequate
+  C++11 support is used. Also ACE_Event_Handler_var is
+  extended with some C++11 specific operations
+
+. For all reactor types calling cancel_timer with a
+  nullptr is now allowed, will result in a return of 0
+
+. ACE_DLL and ACE_DLL_Manager have been extended with
+  the support to retrieve any dynamic loader errors
+
+USER VISIBLE CHANGES BETWEEN ACE-6.2.6 and ACE-6.2.7
+====================================================
+
+. Added configuration files for Microsoft Visual Studio 2014
+
+. Added configuration files for MacOSX Yosemite
+
+. Added configuration files for IBM AIX XL C++ 12.1
+
+USER VISIBLE CHANGES BETWEEN ACE-6.2.5 and ACE-6.2.6
+====================================================
+
+. Resolved several data races reported by Intel Inspector XE
+
+. Added optional socket connection optimization for Windows
+
+. Improve functionality and stability of running tests on
+  Android Virtual Device (AVD).
+
+USER VISIBLE CHANGES BETWEEN ACE-6.2.4 and ACE-6.2.5
+====================================================
+
+. Added the ability to build RPMs for just ACE, using an ACE-src tarball.
+  To do this add "--without tao" to the rpmbuild command line.
+
+. Added support for Embarcadero C++Builder XE5 using
+  bcc32 in debug and release mode
+
+. Added support for Embarcadero C++Builder XE6 using
+  bcc32 in debug and release mode
+
+. When Intel C++ 2013 SP1 Update 2 is used with C++11 enabled
+  as compiler feature now also ACE_HAS_CPP11 will be defined,
+  this compiler is now able to compile all our C++11 feature
+  tests
+
+. Fixed several boundary bugs in the ACE RLE Compressor
+
+USER VISIBLE CHANGES BETWEEN ACE-6.2.3 and ACE-6.2.4
+====================================================
+
+. Added support for FC20 and ended support for FC19
+
+. Extended C++11 feature test suite
+
+. Improved support for MingW64
+
+. Improvements to IPv6 support on Windows
+
+USER VISIBLE CHANGES BETWEEN ACE-6.2.2 and ACE-6.2.3
+====================================================
+
+. The ACE_OS::thr_join() method will detect if the thread to be waited on is
+  the calling thread and avert that deadlock. The support needed for this
+  method is available at Vista/Windows Server 2003 and higher; to enable
+  the deadlock prevention, compile ACE with _WIN32_WINNT=0x0502 or higher.
+
+. Ended maintenance and support for FC12 CEEL
+
+. Further improvements of the Android port: Added new define
+  ACE_HAS_EXPLICIT_TEMPLATE_CLASS_INSTANTIATION and related macros
+  ACE_SINGLETON_TEMPLATE_INSTANTIATION and ACE_SINGLETON_TEMPLATE_INSTANTIATE
+  providing a cleaner way to support explicit template (static member or class)
+  instantiation.
+
+' Improvements of the test framework for running tests in a mixed environment
+  where different targets run on different physiscal devices (possibly having
+  different OS).
+
+USER VISIBLE CHANGES BETWEEN ACE-6.2.1 and ACE-6.2.2
+====================================================
+
+. The max_len argument to ACE_Process::command_line_buf changed from int*
+  to size_t*. This corrects a mismatch between the argument type and the
+  data member in ACE_Process from which the value comes.
+
+. Removed some include files from ACE.h. These were not required for ACE.
+  The removed includes are OS_NS_math, Flag_Manip, Handle_Ops, Lib_Find,
+  Init_ACE, Sock_Connect.h. You may have to explicitly add one of these
+  in your own code to restore compiling.
+
+. Further improvements of the Android port, still work in progress.
+
+USER VISIBLE CHANGES BETWEEN ACE-6.2.0 and ACE-6.2.1
+====================================================
+
+. Added support for Fedora 19, ended daily maintenance
+  for Fedora 17 and 18
+
+. Added support for Embarcadero C++BuilderXE4 using
+  bcc32 in debug and release mode
+
+. Improved support for Android
+
 USER VISIBLE CHANGES BETWEEN ACE-6.1.9 and ACE-6.2.0
 ====================================================
 

@@ -194,7 +194,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("MM_Shared_Memory_Test"));
 
-#if !defined (ACE_LACKS_MMAP)
+#if !defined (ACE_LACKS_MMAP) && !defined (ACE_DISABLE_MKTEMP)
   ACE_TCHAR temp_file[MAXPATHLEN + 1];
 
   // Get the temporary directory,
@@ -219,8 +219,8 @@ run_main (int, ACE_TCHAR *[])
 
 #else /* !ACE_LACKS_MMAP */
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("mmap ")
-              ACE_TEXT ("is not supported on this platform\n")));
+              ACE_TEXT ("mmap and mktemp")
+              ACE_TEXT ("are required for this test\n")));
 #endif /* !ACE_LACKS_MMAP */
 
   ACE_END_TEST;

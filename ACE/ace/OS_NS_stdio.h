@@ -489,15 +489,17 @@ namespace ACE_OS {
   int sprintf (wchar_t *buf, const wchar_t *format, ...);
 # endif /* ACE_HAS_WCHAR */
 
+# if !defined (ACE_DISABLE_TEMPNAM)
   ACE_NAMESPACE_INLINE_FUNCTION
   char *tempnam (const char *dir = 0,
                  const char *pfx = 0);
 
-#if defined (ACE_HAS_WCHAR)
+#   if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *tempnam (const wchar_t *dir,
                     const wchar_t *pfx = 0);
-#endif /* ACE_HAS_WCHAR */
+#   endif /* ACE_HAS_WCHAR */
+# endif /* !ACE_DISABLE_TEMPNAM */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int vasprintf (char **bufp, const char *format, va_list argptr)

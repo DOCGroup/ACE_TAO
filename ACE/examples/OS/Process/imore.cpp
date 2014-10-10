@@ -89,7 +89,7 @@ parse_args (int argc, ACE_TCHAR **argv)
   return 0;
 }
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && !defined (ACE_DISABLE_TEMPNAM)
 static int
 setup_named_pipes (ACE_Process_Options &opt)
 {
@@ -227,9 +227,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if !defined (ACE_WIN32)
   ACE_Process_Options options;
 
-  if ((use_named_pipe ? ::setup_named_pipes :
-       ::setup_unnamed_pipe) (options) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+  if (use_named_pipe)
+    {
+#  if defined (ACE_DISABLE_TEMPNAM)
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ACE_DISABLE_TEMPNAM set; can't use named pipes\n"),
+                        -1);
+#  else
+      if (::setup_named_pipes (options) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+#  endif /* ACE_DISABLE_TEMPNAM */
+    }
+  else
+    {
+      if (::setup_unnamed_pipe (options) == -1)
+        ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+    }
 
   options.command_line (executable);
   if (new_process.spawn (options) == -1)
