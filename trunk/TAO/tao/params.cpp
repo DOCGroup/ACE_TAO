@@ -29,6 +29,8 @@ TAO_ORB_Parameters::TAO_ORB_Parameters (void)
   , sock_dontroute_ (0)
   , ip_hoplimit_ (-1)
   , ip_multicastloop_ (true)
+  , iiop_client_port_base_ (0)
+  , iiop_client_port_span_ (0)
   , cdr_memcpy_tradeoff_ (ACE_DEFAULT_CDR_MEMCPY_TRADEOFF)
   , max_message_size_ (0) // Disable outgoing GIOP fragments by default
   , use_dotted_decimal_addresses_ (0)

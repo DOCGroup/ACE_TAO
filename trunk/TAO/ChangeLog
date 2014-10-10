@@ -1,3 +1,8 @@
+Fri Oct 10 13:06:23 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tao/params.cpp:
+          Add initializers for new client port options.
+
 Thu Oct  9 23:18:24 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/Transport.cpp:
