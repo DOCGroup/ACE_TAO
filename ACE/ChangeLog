@@ -1,3 +1,43 @@
+Thu Oct  9 16:21:38 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Add description of the below changes.
+
+        * ace/OS_NS_stdlib.{h inl cpp}:
+        * ace/OS_NS_stdio.{h inl}:
+        * ace/README:
+          Added new feature config macros ACE_DISABLE_MKTEMP and
+          ACE_DISABLE_TEMPNAM. These disable the ACE wrappers for
+          mktemp() and tempnam(), respectively. Those functions are
+          considered insecure and better replaced by the use of mkstemp().
+
+        * ace/FILE_Addr.cpp (set): Call to set(const ACE_FILE_Addr&) using
+          the default "any" address will now fail if ACE_DISABLE_MKTEMP is
+          set.
+
+        * ace/FILE_Connector.cpp (connect): Specifying 'any' for the
+          address now uses ACE_OS::mkstemp(). Contrast this with setting a
+          ACE_FILE_Addr with 'any', above.
+
+        * ace/MMAP_Memory_Pool.cpp (constructor): Using the 'unique' option
+          will no longer work if ACE_DISABLE_MKTEMP is set.
+
+        * tests/MM_Shared_Memory_Test.cpp:
+          Will not work if ACE_DISABLE_MKTEMP is set.
+
+        * tests/Naming_Test.cpp:
+          Changed to avoid use of ACE_OS::tempnam.
+
+        * tests/Svc_Handler_Test.cpp: Modified to work with or without
+          ACE_DISABLE_MKTEMP.
+
+        * apps/mkcsregdb/mkcsregdb.cpp:
+        * apps/drwho/File_Manager.cpp:
+          Use ACE_OS::mkstemp.
+
+        * examples/OS/Process/imore.cpp:
+        * examples/Service_Configurator/IPC-tests/client/local_dgram_client.cpp:
+          Won't work if ACE_DISABLE_TEMPNAM is set.
+
 Tue Oct  7 21:55:51 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         Set of changes applicable to VxWorks, particularly 6.9. These changes

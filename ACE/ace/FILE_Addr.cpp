@@ -28,11 +28,17 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
 {
   if (sa.get_type () == AF_ANY)
     {
-#if defined (ACE_DEFAULT_TEMP_FILE)
+#if defined (ACE_DISABLE_MKTEMP)
+      // Built without mktemp support; punt back to caller.
+      errno = ENOTSUP;
+      return -1;
+#else
+
+#  if defined (ACE_DEFAULT_TEMP_FILE)
       // Create a temporary file.
       ACE_OS::strcpy (this->filename_,
                       ACE_DEFAULT_TEMP_FILE);
-#else /* ACE_DEFAULT_TEMP_FILE */
+#  else /* ACE_DEFAULT_TEMP_FILE */
       if (ACE::get_temp_dir (this->filename_, MAXPATHLEN - 15) == -1)
         // -15 for ace-file-XXXXXX
         {
@@ -45,12 +51,13 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
       // Add the filename to the end
       ACE_OS::strcat (this->filename_, ACE_TEXT ("ace-fileXXXXXX"));
 
-#endif /* ACE_DEFAULT_TEMP_FILE */
+#  endif /* ACE_DEFAULT_TEMP_FILE */
 
       if (ACE_OS::mktemp (this->filename_) == 0)
         return -1;
       this->base_set (AF_FILE,
                       static_cast<int> (ACE_OS::strlen (this->filename_) + 1));
+#endif /* ACE_DISABLE_MKTEMP */
     }
   else
     {
