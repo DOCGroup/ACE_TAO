@@ -32,6 +32,10 @@ ACE_DEFINES_DEFAULT_WIN32_SECURITY_ATTRIBUTES
                                         ACE_OS::default_win32_security_attributes
                                         as the default security
                                         object.
+ACE_DISABLE_MKTEMP                      Disable availability of
+                                        ACE_OS::mktemp().
+ACE_DISABLE_TEMPNAM                     Disable availability of
+                                        ACE_OS::tempnam().
 ACE_DISABLE_DEBUG_DLL_CHECK             Define this if you don't want
                                         debug version ACE search for
                                         debug version DLLs first

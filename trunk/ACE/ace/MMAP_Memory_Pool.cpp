@@ -181,7 +181,16 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
 
       // If requested an unique filename, use mktemp to get a random file.
       if (options && options->unique_)
+#  if defined (ACE_DISABLE_MKTEMP)
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("mktemp disabled; ")
+                         ACE_TEXT ("can't generate unique name")));
+          this->backing_store_name_[0] = 0;
+        }
+#  else
         ACE_OS::mktemp(this->backing_store_name_);
+#  endif /* ACE_DISABLE_MKTEMP */
 #endif /* ACE_DEFAULT_BACKING_STORE */
     }
   else

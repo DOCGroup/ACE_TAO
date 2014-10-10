@@ -231,18 +231,20 @@ namespace ACE_OS {
   ACE_HANDLE mkstemp_emulation (ACE_TCHAR * s);
 #endif /* ACE_LACKS_MKSTEMP */
 
-#if !defined (ACE_LACKS_MKTEMP)
+#if !defined (ACE_DISABLE_MKTEMP)
+#  if !defined (ACE_LACKS_MKTEMP)
   ACE_NAMESPACE_INLINE_FUNCTION
   char *mktemp (char *s);
 
-#  if defined (ACE_HAS_WCHAR)
+#    if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *mktemp (wchar_t *s);
-#  endif /* ACE_HAS_WCHAR */
-#else
+#    endif /* ACE_HAS_WCHAR */
+#  else
   extern ACE_Export
   ACE_TCHAR *mktemp (ACE_TCHAR *s);
-#endif /* !ACE_LACKS_MKTEMP */
+#  endif /* !ACE_LACKS_MKTEMP */
+#endif /* !ACE_DISABLE_MKTEMP */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int putenv (const char *string);

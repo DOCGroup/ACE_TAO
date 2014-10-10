@@ -244,8 +244,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // for Tru64 when the current directory is NFS mounted from a
       // system that does not properly support locking.
       ACE_TCHAR temp_dir [MAXPATHLEN];
-      if (ACE::get_temp_dir (temp_dir, MAXPATHLEN - 15) == -1)
-        // -15 for ace-file-XXXXXX
+      if (ACE::get_temp_dir (temp_dir, MAXPATHLEN) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Temporary path too long, ")
@@ -256,11 +255,17 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           ACE_OS::chdir (temp_dir);
         }
-      ACE_OS::strcpy (temp_file, pname);
-      ACE_OS::strcat (temp_file, ACE_TEXT ("XXXXXX"));
+      // Set the database name using the pid. mktemp isn't always available.
+      ACE_OS::snprintf(temp_file, BUFSIZ,
+#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+                       ACE_TEXT ("%ls%d"),
+#else
+                       ACE_TEXT ("%s%d"),
+#endif
+                       pname,
+                       ACE_OS::getpid ());
 
-      // Set the database name using mktemp to generate a unique file name
-      name_options->database (ACE_OS::mktemp (temp_file));
+      name_options->database (temp_file);
     }
   if (ns_context->open (ACE_Naming_Context::PROC_LOCAL, 1) == -1)
     {

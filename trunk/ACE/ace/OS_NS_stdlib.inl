@@ -272,24 +272,26 @@ ACE_OS::mkstemp (wchar_t *s)
 }
 #endif /* ACE_HAS_WCHAR */
 
-#if !defined (ACE_LACKS_MKTEMP)
+#if !defined (ACE_DISABLE_MKTEMP)
+
+#  if !defined (ACE_LACKS_MKTEMP)
 ACE_INLINE char *
 ACE_OS::mktemp (char *s)
 {
-# if defined (ACE_WIN32)
+#    if defined (ACE_WIN32)
   return ::_mktemp (s);
-# else /* ACE_WIN32 */
+#    else /* ACE_WIN32 */
   return ::mktemp (s);
-# endif /* ACE_WIN32 */
+#    endif /* ACE_WIN32 */
 }
 
-#  if defined (ACE_HAS_WCHAR)
+#    if defined (ACE_HAS_WCHAR)
 ACE_INLINE wchar_t *
 ACE_OS::mktemp (wchar_t *s)
 {
-#    if defined (ACE_WIN32)
+#      if defined (ACE_WIN32)
   return ::_wmktemp (s);
-#    else
+#      else
   // For narrow-char filesystems, we must convert the wide-char input to
   // a narrow-char string for mktemp (), then convert the name back to
   // wide-char for the caller.
@@ -299,11 +301,12 @@ ACE_OS::mktemp (wchar_t *s)
   ACE_Ascii_To_Wide wide_s (narrow_s.char_rep ());
   ACE_OS::strcpy (s, wide_s.wchar_rep ());
   return s;
-#    endif
+#      endif
 }
 #  endif /* ACE_HAS_WCHAR */
 
-#endif /* !ACE_LACKS_MKTEMP */
+#  endif /* !ACE_LACKS_MKTEMP */
+#endif /* !ACE_DISABLE_MKTEMP */
 
 ACE_INLINE int
 ACE_OS::putenv (const char *string)
