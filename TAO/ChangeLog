@@ -1,3 +1,10 @@
+Fri Oct 10 14:27:50 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/ReconnectServer/ReconnectServer.mpc:
+        * orbsvcs/tests/ImplRepo/ReconnectServer/serverB.cpp:
+          Revert the serverB changes from Fri Oct  3 19:54:01 UTC 2014
+          as it seems to have broken the forwardonce test.
+
 Fri Oct 10 13:06:23 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tao/params.cpp:
