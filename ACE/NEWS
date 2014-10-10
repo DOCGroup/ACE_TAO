@@ -1,6 +1,15 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.2.8 and ACE-6.2.9
 ====================================================
 
+. New config macros were added:
+  ACE_DISABLE_MKTEMP:  Disables the availability of ACE_OS::mktemp().
+  ACE_DISABLE_TEMPNAM: Disables the availability of ACE_OS::tempnam().
+  These can be added to your $ACE_ROOT/ace/config.h to disable these
+  wrappers which are considered to be a potential security risk. Disabling
+  one or both will also disable the following:
+    - ACE_FILE_Addr::set () with the 'any' address specified.
+    - ACE_MMAP_Memory_Pool use of the 'unique' option.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.7 and ACE-6.2.8
 ====================================================
 
