@@ -1,3 +1,7 @@
+Sat Oct 11 20:45:03 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * apps/drwho/File_Manager.cpp: Fixed const-ness compile warning.
+
 Thu Oct  9 16:21:38 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * NEWS: Add description of the below changes.
