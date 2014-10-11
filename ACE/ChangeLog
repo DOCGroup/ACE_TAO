@@ -1,3 +1,11 @@
+Sat Oct 11 21:09:07 UTC 2014  Steve Huston  <shuston@.riverace.com>
+
+        * ace/Process.cpp (ACE_Process_Options::setenv (const ACE_TCHAR *, ...):
+          Avoid the secret, magic number buried in ACE_OS::vsprintf() for
+          platforms that support ACE_OS::vsnprintf. Allows full use of
+          DEFAULT_COMMAND_LINE_BUF_LEN as well as customizing that value
+          to a higher size. Thanks to John Lilley for this improvement.
+
 Sat Oct 11 20:45:03 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * apps/drwho/File_Manager.cpp: Fixed const-ness compile warning.

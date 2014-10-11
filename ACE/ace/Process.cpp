@@ -962,16 +962,31 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
 {
   ACE_TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
+  int status;
   // Start varargs.
   va_list argp;
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  ACE_OS::vsprintf (stack_buf,
-                    format,
-                    argp);
+  // At the time of this writing, only one platform does not support
+  // vsnprintf (LynxOS). Should we get to the point where no platform
+  // sets ACE_LACKS_VSNPRINTF, this condition can be removed.
+#if defined (ACE_LACKS_VSNPRINTF)
+  status = ACE_OS::vsprintf (stack_buf,
+                             format,
+                             argp);
+#else
+  status = ACE_OS::vsnprintf (stack_buf,
+                              DEFAULT_COMMAND_LINE_BUF_LEN,
+                              format,
+                              argp);
+#endif /* ACE_LACKS_VSNPRINTF */
+
   // End varargs.
   va_end (argp);
+
+  if (status == -1)
+    return -1;
 
   // Append the string to are environment buffer.
   if (this->setenv_i (stack_buf,
