@@ -1,3 +1,7 @@
+Mon Oct 13 18:59:00 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * apps/mkcsregdb/mkcsregdb.cpp: Fix data type error on Windows.
+
 Mon Oct 13 17:24:21 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * docs/bczar/bczar.html:
