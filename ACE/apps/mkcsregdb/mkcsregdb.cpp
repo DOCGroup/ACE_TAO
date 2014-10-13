@@ -240,8 +240,8 @@ csdb_generator::init_output (const char *srcfile)
     {
       ACE_OS::strcpy (tempfilename_, "csdbXXXXXX");
     }
-  int fd = ACE_OS::mkstemp (tempfilename_);
-  if (fd == -1)
+  ACE_HANDLE fd = ACE_OS::mkstemp (tempfilename_);
+  if (fd == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open output file, %p\n",
                        tempfilename_),
