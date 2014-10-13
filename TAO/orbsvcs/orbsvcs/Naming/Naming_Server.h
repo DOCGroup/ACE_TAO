@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_NAMING_SERVER_H
 #define TAO_NAMING_SERVER_H
 #include /**/ "ace/pre.h"
@@ -135,7 +134,7 @@ public:
   /// Returns the IOR of the naming service.
   char * naming_service_ior (void);
 
-  /// Returns a <NamingContext_ptr> for the root Naming Context.
+  /// Returns a NamingContext_ptr for the root Naming Context.
   CosNaming::NamingContext_ptr operator-> (void) const;
 
 protected:
@@ -143,11 +142,11 @@ protected:
    * Helper method: create Naming Service locally. Can be specialized to
    * refine how Naming Service components are created and initialized
    * Make the root context of size
-   * <context_size>, register it under the <root_poa>, and make the Naming
-   * Service persistent if <persistence_location> is not 0.
-   * (<persistence_location> specifies name of the file to use for
+   * @a context_size, register it under the @a root_poa, and make the Naming
+   * Service persistent if @a persistence_location is not 0.
+   * (@a persistence_location specifies name of the file to use for
    * persistent storage).
-   * If <enable_multicast> is not zero then the service will respond
+   * If @a enable_multicast is not zero then the service will respond
    * to multicast location queries.
    */
   virtual int init_new_naming (CORBA::ORB_ptr orb,

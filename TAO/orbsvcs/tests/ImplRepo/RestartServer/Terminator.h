@@ -4,10 +4,8 @@
 
 class Terminator : public ACE_Task<ACE_MT_SYNCH>
 {
- public:
-
+public:
   virtual int open(void*);
-
   virtual int svc();
 };
 
