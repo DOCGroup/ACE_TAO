@@ -238,7 +238,7 @@ namespace TAO
               imr_info = ACE_CString (", IMR IOR=") + ior.in ();
             }
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Notifying ImR of startup%s\n"),
+                      ACE_TEXT ("Notifying ImR of startup%C\n"),
                       imr_info.c_str ()));
         }
 
@@ -304,7 +304,7 @@ namespace TAO
       if (TAO_debug_level > 0)
         {
           TAOLIB_DEBUG((LM_INFO,
-                        "\n\nfull_ior=<%s>\n\nior=<%s>\n\n",
+                        "\n\nfull_ior=<%C>\n\nior=<%C>\n\n",
                         full_ior.in(),
                         ior.in()));
         }

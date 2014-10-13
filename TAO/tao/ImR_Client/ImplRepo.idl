@@ -126,29 +126,29 @@ module ImplementationRepository
   {
     /// Activate server that is named @a server.
     ///
-    /// The <NotFound> exception is raised when <server> is not found
-    /// in the Implementation Repository.  The <CannotActivate> exception
-    /// is raised when <server> is found in the Repository but could not be
+    /// The @c NotFound exception is raised when @a server is not found
+    /// in the Implementation Repository.  The @c CannotActivate exception
+    /// is raised when @a server is found in the Repository but could not be
     /// activated.
     void activate_server (in string server)
       raises (NotFound, CannotActivate);
 
     /// Add/Update the the @a server.
-    /// The <NotFound> exception is raised when the activator specified
+    /// The @c NotFound exception is raised when the activator specified
     /// in the options is not registered.
     void add_or_update_server (in string server, in StartupOptions options)
       raises(NotFound);
 
     /// Remove @a server from the Implementation Repository.
     ///
-    /// The <NotFound> exception is raised when @a server is not found
+    /// The @c NotFound exception is raised when @a server is not found
     /// in the Implementation Repository.
     void remove_server (in string server)
       raises (NotFound);
 
     /// Tries to shutdown the server, first gracefully, then ungracefully.
     ///
-    /// The <NotFound> exception is raised when @a server is not found
+    /// The @c NotFound exception is raised when @a server is not found
     /// in the Implementation Repository.
     void shutdown_server (in string server)
       raises (NotFound);
@@ -156,7 +156,7 @@ module ImplementationRepository
     /// Used to notify the Implementation Repository that @a server is alive
     /// and well at @a partial_ior.
     ///
-    /// The <NotFound> exception is raised when @a server is not found
+    /// The @c NotFound exception is raised when @a server is not found
     /// in the Implementation Repository.
     void server_is_running (in string server,
                             in string partial_ior,
@@ -166,7 +166,7 @@ module ImplementationRepository
     /// Used to tell the Implementation Repository that @a server is shutting
     /// down.
     ///
-    /// The <NotFound> exception is raised when <server> is not found
+    /// The @c NotFound exception is raised when @a server is not found
     /// in the Implementation Repository.
 
     void server_is_shutting_down (in string server)
@@ -193,9 +193,6 @@ module ImplementationRepository
     oneway void shutdown(in boolean activators, in boolean servers);
   };
 
-
-
-
   /**
     * @brief The Extended Implementation Repository Administration Interface
     *
@@ -211,7 +208,6 @@ module ImplementationRepository
     void kill_server (in string server, in short signum)
       raises(NotFound, CannotComplete);
   };
-
 };
 
 #endif /* TAO_IMRCLIENT_IMPLREPO_PIDL */
