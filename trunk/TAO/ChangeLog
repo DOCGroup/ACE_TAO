@@ -1,3 +1,24 @@
+Mon Oct 13 17:25:22 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.h:
+          Doxygen improvements
+
+        * orbsvcs/orbsvcs/Naming/Naming_Server.cpp:
+          Removed duplicate include
+
+        * orbsvcs/tests/ImplRepo/NameService/test.cpp:
+          Zapped empty lines
+
+        * orbsvcs/tests/ImplRepo/RestartServer/Messenger.idl:
+        * orbsvcs/tests/ImplRepo/RestartServer/Terminator.h:
+          Layout changes
+
+        * tao/ImR_Client/ImR_Client.cpp:
+          Unicode logging fixes
+
+        * tao/ImR_Client/ImplRepo.idl:
+          Doxygen fixes
+
 Fri Oct 10 14:27:50 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/ReconnectServer/ReconnectServer.mpc:
