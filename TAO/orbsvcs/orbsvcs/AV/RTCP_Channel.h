@@ -207,9 +207,6 @@ private:
   /// The timestamp of the last RTP packet sent.
   unsigned int timestamp_;
 
-  /// The initial offset of the timestamp.
-  unsigned int timestamp_offset_;
-
   /// The total number of packets sent.
   unsigned int packets_sent_;
 

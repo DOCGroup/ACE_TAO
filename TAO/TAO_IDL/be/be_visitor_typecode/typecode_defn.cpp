@@ -57,10 +57,8 @@ Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard (void)
 be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
     : be_visitor_scope (ctx),
       recursion_detect_ (false),
-      computed_tc_size_ (0),
       computed_encap_len_ (0),
       computed_scope_encap_len_ (0),
-      tc_offset_ (0),
       index_ (0)
 {
   if (be_global->gen_anyop_files ())

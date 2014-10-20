@@ -10,7 +10,7 @@
 #include "ace/OS_NS_sys_time.h"
 
 const int WAIT_FOR_REGISTRATION_TIME = 10; //sec
-const int MAX_ID_STRING = 10;
+// const int MAX_ID_STRING = 10;
 
 EventChannelFactory_i::EventChannelFactory_i(const char* conf_filename, CORBA::ORB_ptr orb_ptr)
 : conf_file(conf_filename), id(0), orb(orb_ptr)
@@ -177,4 +177,3 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
 
   return 0;
 }
-

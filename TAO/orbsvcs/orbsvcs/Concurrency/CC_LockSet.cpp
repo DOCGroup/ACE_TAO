@@ -19,7 +19,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Default constructor.
 
 CC_LockSet::CC_LockSet (void)
-  : related_lockset_ (0)
 {
   try
     {
@@ -33,8 +32,7 @@ CC_LockSet::CC_LockSet (void)
 
 // Constructor used to create related lock sets.
 
-CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr related)
-  : related_lockset_ (related)
+CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr )
 {
   try
     {

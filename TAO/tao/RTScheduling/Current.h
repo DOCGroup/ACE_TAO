@@ -308,7 +308,7 @@ class DTTask : public ACE_Task <ACE_SYNCH>
 {
 public:
   DTTask (TAO_ORB_Core* orb,
-          DT_Hash_Map* dt_hash,
+          DT_Hash_Map* ,
           TAO_RTScheduler_Current_i*,
           RTScheduling::ThreadAction_ptr start,
           CORBA::VoidData data,
@@ -325,7 +325,7 @@ public:
 
  private:
   TAO_ORB_Core* orb_;
-  DT_Hash_Map* dt_hash_;
+  // DT_Hash_Map* dt_hash_;
   TAO_RTScheduler_Current_i* current_;
   RTScheduling::ThreadAction_var start_;
   CORBA::VoidData data_;

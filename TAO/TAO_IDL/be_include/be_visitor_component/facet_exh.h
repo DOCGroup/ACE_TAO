@@ -34,9 +34,8 @@ public:
                             TAO_OutStream *os);
 
 private:
-  const char *comment_start_border_;
-  const char *comment_end_border_;
+  // const char *comment_start_border_;
+  // const char *comment_end_border_;
 };
 
 #endif /* _BE_COMPONENT_FACET_EXH_H_ */
-

@@ -44,7 +44,7 @@ class TAO_FT_ClientORB_Export TAO_FT_Service_Callbacks : public TAO_Service_Call
 {
 public:
   /// Constructor
-  TAO_FT_Service_Callbacks (TAO_ORB_Core *orb_core);
+  TAO_FT_Service_Callbacks (TAO_ORB_Core *);
 
   /// Dtor
   virtual ~TAO_FT_Service_Callbacks (void);
@@ -94,9 +94,6 @@ private:
   CORBA::Boolean restart_policy_check (IOP::ServiceContextList &service_list,
                                        const TAO_Profile *profile);
 
-private:
-  /// The ORB core in which we have been activated
-  TAO_ORB_Core *orb_core_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

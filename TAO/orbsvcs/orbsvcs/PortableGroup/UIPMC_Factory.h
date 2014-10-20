@@ -58,8 +58,8 @@ public:
 private:
   /// Changing the version number can be used to provide backwards
   /// compatibility with old clients.
-  int major_;
-  int minor_;
+  // int major_;
+  // int minor_;
 
   /// Should we override the default behaviour (whatever it is) to listen on
   /// all interfaces

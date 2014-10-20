@@ -99,10 +99,10 @@ static long output_arg_index = 0;
 ACE_TCHAR const TCHAR_DIR_DOT[] = ACE_TEXT(".");
 
 #if defined (ACE_HAS_TCHAR_DIRENT)
-ACE_TCHAR const DIR_DOT[] = ACE_TEXT(".");
+// ACE_TCHAR const DIR_DOT[] = ACE_TEXT(".");
 ACE_TCHAR const DIR_DOT_DOT[] = ACE_TEXT("..");
 #else
-char const DIR_DOT[] = ".";
+// char const DIR_DOT[] = ".";
 char const DIR_DOT_DOT[] = "..";
 #endif /* ACE_HAS_TCHAR_DIRENT */
 

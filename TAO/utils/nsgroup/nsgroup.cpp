@@ -123,7 +123,6 @@ private:
   /// parsed command line arguments
   const ACE_TCHAR *group_arg_;
   const ACE_TCHAR *policy_arg_;
-  const ACE_TCHAR *typeid_arg_;
   const ACE_TCHAR *location_arg_;
   const ACE_TCHAR *ior_arg_;
   const ACE_TCHAR *namepath_arg_;
@@ -136,7 +135,6 @@ private:
     nsgroup_cmd_(NSGROUP::NSGROUP_NONE),
     group_arg_ (0),
     policy_arg_ (0),
-    typeid_arg_ (0),
     location_arg_ (0),
     ior_arg_ (0),
     namepath_arg_ (0)

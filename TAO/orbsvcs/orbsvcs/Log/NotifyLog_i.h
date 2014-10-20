@@ -150,7 +150,7 @@ private:
   CosNotifyChannelAdmin::EventChannel_var event_channel_;
 
   /// The Event Channel ID that the log uses.
-  CosNotifyChannelAdmin::ChannelID channelID_;
+  //  CosNotifyChannelAdmin::ChannelID channelID_;
 
   /// The EventChannelFactory used to create the EventChannel above.
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;

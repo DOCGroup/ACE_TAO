@@ -96,11 +96,6 @@ protected:
   virtual int handle_write_ready (const ACE_Time_Value *timeout);
   //@}
 
-private:
-  /// Flag that we will be passing to the event handler to indicate
-  /// whether the handle will be resumed by the method or not.
-  int resume_flag_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

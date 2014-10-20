@@ -1,6 +1,6 @@
 #ifndef lint
-static char const
-yyrcsid[] = "$Id$";
+// static char const
+// yyrcsid[] = "$Id$";
 #endif
 #include "ace/os_include/os_stdlib.h"
 #define YYBYACC 1

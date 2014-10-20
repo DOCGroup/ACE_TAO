@@ -67,8 +67,7 @@ TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
     use_global_ (false),
     global_strategy_ (::FT_Naming::ROUND_ROBIN),
     built_in_balancing_strategy_name_ (1),
-    object_group_property_name_ (1),
-    shutdown_ (0)
+    object_group_property_name_ (1)
 
 {
   // The name for the property which contains the load balancing strategy value

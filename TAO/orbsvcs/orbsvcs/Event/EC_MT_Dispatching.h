@@ -87,7 +87,7 @@ private:
   int active_;
 
   /// Service Object information
-  TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;
+  // TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

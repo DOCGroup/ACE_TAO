@@ -169,7 +169,7 @@ private:
    * <LockSetCoordinator> is not implemented (it has the
    * responsibilities of dropping the locks).
    */
-  CosConcurrencyControl::LockSet_ptr related_lockset_;
+  // CosConcurrencyControl::LockSet_ptr related_lockset_;
 
   /// Mapping between requested and held lock modes. Used by compatible
   /// (...).  Uses the internal enumeration as indices.

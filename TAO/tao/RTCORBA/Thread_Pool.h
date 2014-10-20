@@ -337,7 +337,7 @@ private:
   CORBA::Boolean allow_request_buffering_;
   CORBA::ULong max_buffered_requests_;
   CORBA::ULong max_request_buffer_size_;
-  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan const lifespan_;
+  //  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan const lifespan_;
   ACE_Time_Value const dynamic_thread_time_;
 
   TAO_Thread_Lane **lanes_;
