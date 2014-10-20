@@ -50,7 +50,7 @@ class TAO_Adapter;
 class TAO_Export TAO_Adapter_Registry
 {
 public:
-  explicit TAO_Adapter_Registry (TAO_ORB_Core *orb_core);
+  explicit TAO_Adapter_Registry (TAO_ORB_Core *);
 
   /// Close the
   ~TAO_Adapter_Registry (void);
@@ -95,9 +95,6 @@ public:
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry (const TAO_Adapter_Registry &))
   ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry &operator= (const TAO_Adapter_Registry &))
-
-  /// The ORB Core
-  TAO_ORB_Core *orb_core_;
 
   /**
    * @name A simple array of adapters.

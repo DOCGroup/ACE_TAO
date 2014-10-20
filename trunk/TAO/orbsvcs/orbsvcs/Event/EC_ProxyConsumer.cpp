@@ -233,11 +233,10 @@ TAO_EC_ProxyPushConsumer::_decr_refcnt (void)
 TAO_EC_ProxyPushConsumer_Guard::
     TAO_EC_ProxyPushConsumer_Guard (ACE_Lock *lock,
                                     CORBA::ULong &refcount,
-                                    TAO_EC_Event_Channel_Base *ec,
+                                    TAO_EC_Event_Channel_Base *,
                                     TAO_EC_ProxyPushConsumer *proxy)
  :   lock_ (lock),
      refcount_ (refcount),
-     event_channel_ (ec),
      proxy_ (proxy),
      locked_ (false)
 {

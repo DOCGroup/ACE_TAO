@@ -127,16 +127,13 @@ class TAO_CEC_Pull_Event : public TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer>
 {
 public:
   TAO_CEC_Pull_Event (TAO_CEC_ConsumerAdmin *consumer_admin,
-                      TAO_CEC_SupplierControl *control);
+                      TAO_CEC_SupplierControl *);
 
   virtual void work (TAO_CEC_ProxyPullConsumer *consumer);
 
 private:
   /// Used to propagate the events.
   TAO_CEC_ConsumerAdmin *consumer_admin_;
-
-  /// To report failed or dead suppliers
-  TAO_CEC_SupplierControl *supplier_control_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -114,7 +114,7 @@ private:
   friend class Scoped_Compute_Queue_Guard;
 
   /// the tc size of the node under consideration
-  ACE_CDR::Long computed_tc_size_;
+  // ACE_CDR::Long computed_tc_size_;
 
   /// the encap length of the node under consideration
   ACE_CDR::Long computed_encap_len_;
@@ -125,7 +125,7 @@ private:
   // the following are used for recursive and repeated typecodes
 
   /// current computed length of the typecode
-  ACE_CDR::Long tc_offset_;
+  // ACE_CDR::Long tc_offset_;
 
   /// queue to keep nodes
   ACE_Unbounded_Queue <QNode*> compute_queue_;

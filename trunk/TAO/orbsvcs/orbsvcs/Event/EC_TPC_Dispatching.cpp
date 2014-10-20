@@ -16,15 +16,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 extern unsigned long TAO_EC_TPC_debug_level;
 
-TAO_EC_TPC_Dispatching::TAO_EC_TPC_Dispatching (int nthreads,
+TAO_EC_TPC_Dispatching::TAO_EC_TPC_Dispatching (int ,
                                                 int thread_creation_flags,
                                                 int thread_priority,
-                                                int force_activate,
+                                                int ,
                                                 TAO_EC_Queue_Full_Service_Object* so)
-  : nthreads_(nthreads)
-  , thread_creation_flags_ (thread_creation_flags)
+  : thread_creation_flags_ (thread_creation_flags)
   , thread_priority_ (thread_priority)
-  , force_activate_ (force_activate)
   , consumer_task_map_(TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE)
   , queue_full_service_object_(so)
 {

@@ -19,7 +19,7 @@ typedef ACE_Unbounded_Queue_Iterator<Invocation*> InvocationIter;
 class PeerObject
 {
 public:
-  PeerObject (long ident, const char *name, PeerProcess *parent);
+  PeerObject (long ident, const char *name, PeerProcess * );
   virtual ~PeerObject (void);
 
   void add_invocation (Invocation *inv);
@@ -31,7 +31,7 @@ public:
 private:
   long ident_;
   ACE_CString name_;
-  PeerProcess *parent_;
+  //PeerProcess *parent_;
   Invocations invocations_;
 };
 

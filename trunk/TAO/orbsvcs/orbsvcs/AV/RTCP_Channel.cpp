@@ -316,7 +316,6 @@ RTCP_Channel_Out::RTCP_Channel_Out(void)
   :cname_ ("cname"),
    active_ (0),
    timestamp_ (0),
-   timestamp_offset_ (0),
    packets_sent_ (0),
    octets_sent_ (0)
 {

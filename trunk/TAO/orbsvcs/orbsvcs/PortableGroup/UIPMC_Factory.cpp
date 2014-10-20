@@ -16,8 +16,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Protocol_Factory::TAO_UIPMC_Protocol_Factory (void)
   :  TAO_Protocol_Factory (IOP::TAG_UIPMC),
-     major_ (TAO_DEF_GIOP_MAJOR),
-     minor_ (TAO_DEF_GIOP_MINOR),
+     // major_ (TAO_DEF_GIOP_MAJOR),
+     // minor_ (TAO_DEF_GIOP_MINOR),
      listen_on_all_ (false),
      listener_interfaces_ ()
 {

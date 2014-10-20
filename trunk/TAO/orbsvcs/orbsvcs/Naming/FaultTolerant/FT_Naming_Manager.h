@@ -337,8 +337,6 @@ private:
 
   PortableGroup::Name object_group_property_name_;
 
-  bool shutdown_;
-
 };
 
 
