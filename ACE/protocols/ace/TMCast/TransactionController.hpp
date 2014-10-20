@@ -92,7 +92,7 @@ namespace ACE_TMCast
     TransactionController (MessageQueue& in,
                            MessageQueue& send_out,
                            MessageQueue& recv_out)
-        : trace_ (false),
+      : //trace_ (false),
           voting_duration_ (0),
           separation_duration_ (0),
           in_ (in),
@@ -370,7 +370,7 @@ namespace ACE_TMCast
     typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
     // FUZZ: enable check_for_ACE_Guard
 
-    bool trace_;
+    // bool trace_;
 
     Protocol::Transaction current_;
 

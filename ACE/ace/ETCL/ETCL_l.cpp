@@ -498,6 +498,7 @@ static void yy_flex_strncpy YY_PROTO(( char *, yyconst char *, int ));
 static int yy_flex_strlen YY_PROTO(( yyconst char * ));
 #endif
 
+#if 0
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
 static int yyinput YY_PROTO(( void ));
@@ -505,6 +506,7 @@ static int yyinput YY_PROTO(( void ));
 static int input YY_PROTO(( void ));
 #endif
 #endif
+#endif /* 0 */
 
 #if YY_STACK_USED
 static int yy_start_stack_ptr = 0;
@@ -1329,6 +1331,7 @@ ACE_REGISTER char *yy_bp;
 #endif  /* ifndef YY_NO_UNPUT */
 #endif /* 0 */
 
+#if 0
 #ifdef __cplusplus
 static int yyinput()
 #else
@@ -1400,6 +1403,7 @@ static int input()
 
   return c;
   }
+#endif /* 0 */
 
 void yyflush_current_buffer (void)
 {

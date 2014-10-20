@@ -14,7 +14,7 @@ namespace ACE_RMCast
   class Flow : public Element
   {
   public:
-    Flow (Parameters const& params);
+    Flow (Parameters const& );
 
   public:
     virtual void
@@ -24,7 +24,7 @@ namespace ACE_RMCast
     recv (Message_ptr m);
 
   private:
-    Parameters const& params_;
+    // Parameters const& params_;
 
     Mutex mutex_;
     ACE_Time_Value nak_time_;

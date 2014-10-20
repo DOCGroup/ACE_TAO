@@ -52,7 +52,7 @@ sub new
             $PerlACE::Process::WAIT_DELAY_FACTOR = 10;
          }
          elsif (defined $self->{VALGRIND_CMD}) {
-            $PerlACE::Process::WAIT_DELAY_FACTOR = 5;
+            $PerlACE::Process::WAIT_DELAY_FACTOR = 10;
          }
          else {
             $PerlACE::Process::WAIT_DELAY_FACTOR = 1;
