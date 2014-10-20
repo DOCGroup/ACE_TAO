@@ -8,7 +8,7 @@
 
 ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (void)
   :  parent_ (0),
-     locator_ (0),
+     // locator_ (0),
      entityResolver_ (0),
      dtdHandler_ (0),
      contentHandler_ (0),
@@ -18,7 +18,7 @@ ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (void)
 
 ACEXML_XMLFilterImpl::ACEXML_XMLFilterImpl (ACEXML_XMLReader *parent)
   : parent_ (parent),
-    locator_ (0),
+    // locator_ (0),
     entityResolver_ (0),
     dtdHandler_ (0),
     contentHandler_ (0),

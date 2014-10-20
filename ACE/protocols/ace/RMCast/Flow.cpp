@@ -12,8 +12,8 @@
 namespace ACE_RMCast
 {
   Flow::
-  Flow (Parameters const& params)
-      : params_ (params),
+  Flow (Parameters const& )
+    : //params_ (params),
         nak_time_ (0, 0),
         sample_start_time_ (0, 0),
         sample_bytes_ (0),
@@ -127,4 +127,3 @@ namespace ACE_RMCast
     in_->recv (m);
   }
 }
-

@@ -7,8 +7,8 @@
 namespace ACE_RMCast
 {
   Reassemble::
-  Reassemble (Parameters const& params)
-      : params_ (params)
+  Reassemble (Parameters const& )
+  // : params_ (params)
   {
   }
 
