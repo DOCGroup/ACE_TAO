@@ -67,8 +67,6 @@ public:
 private:
   /// The name of the file from which data is read.
   ACE_TString file_name_;
-  /// A stream representing our current output.
-  FILE * input_;
 
   typedef ACE_Unbounded_Stack<Topology_Object*> TopoStack;
   TopoStack object_stack_;

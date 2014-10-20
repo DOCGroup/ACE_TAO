@@ -17,8 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (TAO_ORB_Core *orb_core)
-  : orb_core_ (orb_core)
+TAO_FT_Service_Callbacks::TAO_FT_Service_Callbacks (TAO_ORB_Core *)
 {
 }
 

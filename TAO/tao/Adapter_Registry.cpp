@@ -14,9 +14,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *oc)
-  : orb_core_ (oc),
-    adapters_capacity_ (16), // @@ Make it configurable
+TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *)
+  : adapters_capacity_ (16), // @@ Make it configurable
     adapters_count_ (0),
     adapters_ (0)
 {

@@ -574,7 +574,7 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
 }
 
 DTTask::DTTask (TAO_ORB_Core *orb,
-                DT_Hash_Map *dt_hash,
+                DT_Hash_Map *,
                 TAO_RTScheduler_Current_i* new_current,
                 RTScheduling::ThreadAction_ptr start,
                 CORBA::VoidData data,
@@ -582,7 +582,7 @@ DTTask::DTTask (TAO_ORB_Core *orb,
                 CORBA::Policy_ptr sched_param,
                 CORBA::Policy_ptr implicit_sched_param)
   :orb_ (orb),
-   dt_hash_ (dt_hash),
+   // dt_hash_ (dt_hash),
    current_ (new_current),
    start_ (RTScheduling::ThreadAction::_duplicate (start)),
    data_ (data),

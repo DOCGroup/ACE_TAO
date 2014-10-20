@@ -16,9 +16,9 @@
 
 be_visitor_executor_exh::be_visitor_executor_exh (
       be_visitor_context *ctx)
-  : be_visitor_component_scope (ctx),
-    comment_start_border_ ("/**"),
-    comment_end_border_ (" */")
+  : be_visitor_component_scope (ctx)
+    // comment_start_border_ ("/**"),
+    // comment_end_border_ (" */")
 {
   // This is initialized in the base class to svnt_export_macro()
   // or skel_export_macro(), since there are many more visitor

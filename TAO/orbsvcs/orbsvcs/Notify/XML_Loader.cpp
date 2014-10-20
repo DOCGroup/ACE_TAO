@@ -52,8 +52,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO_Notify
 {
   XML_Loader::XML_Loader ()
-    : input_ (0)
-    , live_ (false)
+    : live_ (false)
   {
   }
 

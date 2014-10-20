@@ -33,8 +33,8 @@ public:
   virtual int visit_provides (be_provides *node);
   virtual int visit_consumes (be_consumes *node);
 private:
-  const char *comment_start_border_;
-  const char *comment_end_border_;
+  // const char *comment_start_border_;
+  // const char *comment_end_border_;
 };
 
 // =============================================
@@ -58,4 +58,3 @@ private:
 };
 
 #endif /* _BE_COMPONENT_EXECUTOR_EXH_H_ */
-

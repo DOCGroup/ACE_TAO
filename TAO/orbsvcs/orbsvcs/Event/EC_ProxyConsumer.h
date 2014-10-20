@@ -206,7 +206,7 @@ private:
   CORBA::ULong &refcount_;
 
   /// The event channel used to destroy the proxy
-  TAO_EC_Event_Channel_Base *event_channel_;
+  // TAO_EC_Event_Channel_Base *event_channel_;
 
   /// The proxy whose lifetime is controlled by the reference count
   TAO_EC_ProxyPushConsumer *proxy_;

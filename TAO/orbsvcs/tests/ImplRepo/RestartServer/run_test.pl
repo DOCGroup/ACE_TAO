@@ -9,10 +9,14 @@ use PerlACE::TestTarget;
 
 $status = 0;
 $debug_level = '0';
+$mode = "-a NORMAL ";
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
+    }
+    elsif ($i eq '-manual') {
+        $mode = "-a MANUAL ";
     }
 }
 
@@ -83,9 +87,11 @@ $ACT = $act->CreateProcess ($imr_activator, "-d 1 ".
                                                "-o $act_actiorfile ".
                                                "-ORBInitRef ImplRepoService=file://$act_imriorfile");
 
-$TI = $ti->CreateProcess ($tao_imr, "-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                                               "add MessengerService ".
-                                               "-c \"$srv_server -orbobjrefstyle url -ORBUseIMR 1 -ORBInitRef ImplRepoService=file://$imr_imriorfile\" ");
+$TI = $ti->CreateProcess ($tao_imr,
+                          "-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
+                          "add MessengerService ".
+                          $mode .
+                          "-c \"$srv_server -orbobjrefstyle url -ORBUseIMR 1 -ORBInitRef ImplRepoService=file://$imr_imriorfile\" ");
 
 
 

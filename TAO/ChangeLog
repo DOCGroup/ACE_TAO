@@ -1,3 +1,54 @@
+Mon Oct 20 15:37:35 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
+        * TAO_IDL/be/be_visitor_component/facet_exh.cpp:
+        * TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO_IDL/be_include/be_visitor_component/executor_exh.h:
+        * TAO_IDL/be_include/be_visitor_component/facet_exh.h:
+        * TAO_IDL/be_include/be_visitor_typecode/typecode_defn.h:
+        * TAO_IDL/driver/drv_preproc.cpp:
+        * orbsvcs/FTRT_Event_Service/Factory_Service/EventChannelFactory_i.cpp:
+        * orbsvcs/orbsvcs/AV/RTCP_Channel.h:
+        * orbsvcs/orbsvcs/AV/RTCP_Channel.cpp:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.h:
+        * orbsvcs/orbsvcs/Concurrency/CC_LockSet.cpp:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.inl:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h:
+        * orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.inl:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_MT_Dispatching.cpp:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * orbsvcs/orbsvcs/Event/EC_ProxyConsumer.cpp:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
+        * orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.h:
+        * orbsvcs/orbsvcs/FaultTolerance/FT_Service_Callbacks.cpp:
+        * orbsvcs/orbsvcs/Log/NotifyLog_i.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h:
+        * orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+        * orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.h:
+        * orbsvcs/orbsvcs/Notify/XML_Loader.cpp:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.h:
+        * orbsvcs/orbsvcs/PortableGroup/UIPMC_Factory.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+        * orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+        * tao/Adapter_Registry.h:
+        * tao/Adapter_Registry.cpp:
+        * tao/RTCORBA/Thread_Pool.h:
+        * tao/RTCORBA/Thread_Pool.cpp:
+        * tao/RTScheduling/Current.h:
+        * tao/RTScheduling/Current.cpp:
+        * tao/Strategies/SHMIOP_Connection_Handler.h:
+        * utils/logWalker/GIOP_Buffer.cpp:
+        * utils/logWalker/PeerObject.h:
+        * utils/logWalker/PeerObject.cpp:
+        * utils/nsgroup/nsgroup.cpp:
+          Clean up unused member warnings identified by clang 6.0.
+
 Mon Oct 13 17:25:22 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/Naming/Naming_Server.h:

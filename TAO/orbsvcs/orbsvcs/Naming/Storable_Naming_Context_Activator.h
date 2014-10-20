@@ -52,7 +52,7 @@ public:
     CORBA::ORB_ptr orb,
     TAO::Storable_Factory *factory,
     TAO_Storable_Naming_Context_Factory *context_impl_factory,
-    const ACE_TCHAR *persistence_directory);
+    const ACE_TCHAR *);
 
   virtual ~TAO_Storable_Naming_Context_Activator();
 
@@ -82,8 +82,6 @@ private:
 
   /// The factory for constructing naming contexts within the index
   TAO_Storable_Naming_Context_Factory *context_impl_factory_;
-
-  const ACE_TCHAR *persistence_directory_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

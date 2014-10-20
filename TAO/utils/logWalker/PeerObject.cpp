@@ -4,10 +4,10 @@
 #include "PeerObject.h"
 #include "Invocation.h"
 
-PeerObject::PeerObject (long id, const char *name, PeerProcess *parent)
-  :ident_(id),
-   name_(name),
-   parent_(parent)
+PeerObject::PeerObject (long id, const char *name, PeerProcess *)
+  :ident_(id)
+  ,name_(name)
+   // ,parent_(parent)
 {
 }
 

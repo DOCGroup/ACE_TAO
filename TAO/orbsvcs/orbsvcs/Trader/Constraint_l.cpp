@@ -1227,7 +1227,7 @@ register char *yy_bp;
   }
 #endif  /* ifndef YY_NO_UNPUT */
 
-
+#if 0
 #ifndef YY_NO_INPUT
 #ifdef __cplusplus
 static int yyinput()
@@ -1301,6 +1301,7 @@ static int input()
   return c;
   }
 #endif /* YY_NO_INPUT */
+#endif /* 0 */
 
 #ifdef YY_USE_PROTOS
 void yyrestart( FILE *input_file )
