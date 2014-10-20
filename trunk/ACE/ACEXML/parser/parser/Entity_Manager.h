@@ -87,7 +87,7 @@ public:
 
 private:
   ACEXML_ENTITIES_MANAGER* entities_;
-  bool init_;
+  // bool init_;
 
 };
 

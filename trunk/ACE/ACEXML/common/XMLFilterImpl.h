@@ -249,7 +249,7 @@ protected:
 
 private:
   ACEXML_XMLReader *parent_;
-  ACEXML_Locator *locator_;
+  // ACEXML_Locator *locator_;
   ACEXML_EntityResolver *entityResolver_;
   ACEXML_DTDHandler *dtdHandler_;
   ACEXML_ContentHandler *contentHandler_;

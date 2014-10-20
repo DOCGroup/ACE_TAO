@@ -1,3 +1,19 @@
+Mon Oct 20 15:37:35 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ACEXML/common/XMLFilterImpl.h:
+        * ACEXML/common/XMLFilterImpl.cpp:
+        * ACEXML/parser/parser/Entity_Manager.h:
+        * ace/ETCL/ETCL_l.cpp:
+        * protocols/ace/RMCast/Flow.h:
+        * protocols/ace/RMCast/Flow.cpp:
+        * protocols/ace/RMCast/Reassemble.h:
+        * protocols/ace/RMCast/Reassemble.cpp:
+        * protocols/ace/TMCast/TransactionController.hpp:
+          Clean up unused member warnings identified by clang 6.0.
+
+        * bin/PerlACE/Process_Unix.pm:
+          increase the valgrind wait factor to accommodate slower machines.
+
 Mon Oct 13 18:59:00 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * apps/mkcsregdb/mkcsregdb.cpp: Fix data type error on Windows.
