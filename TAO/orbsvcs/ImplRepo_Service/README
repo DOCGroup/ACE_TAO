@@ -37,8 +37,8 @@ as the specification for TAO's ImR.
 The guy who first worked on ImR and provided a base for the current
 ImR is Darrell Brunsch
 @<<a href="mailto:brunsch@cs.wustl.edu">brunsch@cs.wustl.edu</a>@>.
-The current version is developed by Priyanka Gontla
-@<<a href="mailto:gontla_p@ociweb.com">gontla_p@ociweb.com</a>@>.
+The current version is developed by Phil Mesnier
+@<<a href="mailto:mesnier_p@ociweb.com">mesnier_p@ociweb.com</a>@>.
 You can reach us by either email (which is better), or through the
 <a href="http://www.cs.wustl.edu/~schmidt/ACE-mail.html">ACE mailing list</a>
 @<<a href="mailto:ace-useres@cs.wustl.edu">ace-users@cs.wustl.edu</a>@>,
@@ -90,7 +90,10 @@ Commandline Arguments that can be passed to tao_imr_locator
 -m                 support multicast discovery.
 -l                 lock the repository, making it read only.
 -o <filename>      write the ior to the file.
--t <timeout>       specify a startup timeout value
+-t <timeout>       specify a startup timeout value (default 60 seconds)
+-i                 periodically ping servers to check liveness.
+-v                 the minimum succcessful ping interval. (default 10 seconds)
+-g                 the timeout for ping attempts. (default 1 second)
 -s                 run as a winNT service
 -c <command>       execute the named service command: install, remove
 -x <filename>      support persistence to the locator. We use XML to support
@@ -532,4 +535,3 @@ name.  And that allows us to do interesting things with ORBDefaultInitRef
 (as shown in the @ref defaultinitref section).
 
 */
-

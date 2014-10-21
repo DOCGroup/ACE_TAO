@@ -108,6 +108,9 @@ public:
   /// during indirect invocations, if this interval has elapsed.
   ACE_Time_Value ping_interval (void) const;
 
+  /// When pinging, this is the timeout
+  ACE_Time_Value ping_timeout (void) const;
+
   LiveCheck *pinger (void) const;
   void pinger (LiveCheck *);
 
@@ -155,6 +158,9 @@ private:
 
   /// The amount of time between successive "are you started yet?" pings.
   ACE_Time_Value ping_interval_;
+
+  /// The amount of time to wait for a "are you started yet?" ping reply.
+  ACE_Time_Value ping_timeout_;
 
   /// The amount of time to wait for a server to response after starting it.
   ACE_Time_Value startup_timeout_;

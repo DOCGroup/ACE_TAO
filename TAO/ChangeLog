@@ -1,3 +1,12 @@
+Tue Oct 21 16:03:14 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/README:
+          Add a configuration parameter for ping timeout.
+
 Tue Oct 21 15:40:12 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/orbsvcs/CosTrading.mpc:
