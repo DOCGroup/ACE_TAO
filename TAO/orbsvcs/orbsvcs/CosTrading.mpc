@@ -128,6 +128,7 @@ project(CosTrading_Serv) : orbsvcslib, orbsvcs_output, install, trading_skel, dy
     .PHONY: Constraint_l
     Constraint_l:
     "	echo '#define YY_NO_UNPUT' > Trader/Constraint_l.cpp"
+    "	echo '#define YY_NO_INPUT' > Trader/Constraint_l.cpp"
     "	$(LEX) -L -t Trader/constraint.l | \\"
     "	sed -e 's/ NULL/ 0/g' \\"
     "	    -e 's/int offset /size_t offset /g' \\"
