@@ -21,8 +21,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Vector_T.h"
 
-static const ACE_Time_Value DEFAULT_SERVER_TIMEOUT (0, 10 * 1000); // 10ms
-
 /// We want to give shutdown a little more time to work, so that we
 /// can guarantee to the tao_imr utility that it has shutdown. The tao_imr
 /// utility prints a different message depending on whether shutdown succeeds
@@ -60,7 +58,10 @@ ImR_Locator_i::ImR_Locator_i (void)
   , ins_locator_ (0)
   , aam_set_ ()
   , read_only_ (false)
+  , startup_timeout_ (60)
   , ping_external_ (false)
+  , ping_interval_ (10)
+  , ping_timeout_ (1)
   , unregister_if_address_reused_ (false)
   , throw_shutdown_exceptions_ (false)
 {
@@ -90,6 +91,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   this->startup_timeout_ = opts.startup_timeout ();
   this->ping_external_ = opts.ping_external ();
   this->ping_interval_ = opts.ping_interval ();
+  this->ping_timeout_ = opts.ping_timeout ();
   this->unregister_if_address_reused_ = opts.unregister_if_address_reused ();
   this->throw_shutdown_exceptions_ = opts.throw_shutdown_exceptions ();
   CORBA::Object_var obj =
@@ -1075,7 +1077,7 @@ ImR_Locator_i::server_is_running
   if (this->unregister_if_address_reused_)
     this->repository_->unregister_if_address_reused (id, partial_ior, this);
 
-  CORBA::Object_var obj = this->set_timeout_policy (server_object,ACE_Time_Value (1,0));
+  CORBA::Object_var obj = this->set_timeout_policy (server_object, this->ping_timeout_);
   ImplementationRepository::ServerObject_var srvobj =
     ImplementationRepository::ServerObject::_narrow (obj.in());
 
@@ -1287,9 +1289,9 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
           return;
         }
 
-      if (startup_timeout_ > ACE_Time_Value::zero)
+      if (this->startup_timeout_ > ACE_Time_Value::zero)
         {
-          obj = this->set_timeout_policy (obj.in (), startup_timeout_);
+          obj = this->set_timeout_policy (obj.in (), this->startup_timeout_);
         }
 
       info.activator =
@@ -1383,7 +1385,7 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
           return;
         }
 
-      obj = this->set_timeout_policy (obj.in (), DEFAULT_SERVER_TIMEOUT);
+      obj = this->set_timeout_policy (obj.in (), this->ping_timeout_);
 
       sip->server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
@@ -1637,4 +1639,3 @@ ImR_Loc_ResponseHandler::send_exception (CORBA::Exception *ex)
     };
   delete this;
 }
-

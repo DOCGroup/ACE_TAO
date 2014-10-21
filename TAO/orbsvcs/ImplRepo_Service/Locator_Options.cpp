@@ -21,6 +21,7 @@ static const ACE_TCHAR *SERVICE_REG_PATH =
 #endif /* ACE_WIN32 */
 
 static const int DEFAULT_PING_INTERVAL = 10; // seconds
+static const int DEFAULT_PING_TIMEOUT = 1; // seconds
 static const int DEFAULT_START_TIMEOUT = 60; // seconds
 
 Options::Options ()
@@ -31,6 +32,7 @@ Options::Options ()
 , service_ (false)
 , ping_external_ (false)
 , ping_interval_ (DEFAULT_PING_INTERVAL)
+, ping_timeout_ (DEFAULT_PING_TIMEOUT)
 , startup_timeout_ (DEFAULT_START_TIMEOUT)
 , readonly_ (false)
 , service_command_ (SC_NONE)
@@ -250,6 +252,21 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->ping_interval_ =
             ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-n")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Error: -n option needs a value\n")));
+              this->print_usage ();
+              return -1;
+            }
+          this->ping_timeout_ =
+            ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
+        }
       else
         {
           shifter.ignore_arg ();
@@ -383,6 +400,11 @@ Options::save_registry_options ()
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
+  tmp = this->ping_timeout_.msec ();
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("PingTimeout"), 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof (DWORD));
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
   tmp = this->readonly_ ? 1 : 0;
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("Lock"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
@@ -478,6 +500,16 @@ Options::load_registry_options ()
     {
       ACE_ASSERT (type == REG_DWORD);
       ping_interval_.msec (static_cast<long> (tmp));
+    }
+
+  tmp = 0;
+  sz = sizeof(tmp);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("PingTimeout"), 0, &type,
+    (LPBYTE) &tmp, &sz);
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+      ping_timeout_.msec (static_cast<long> (tmp));
     }
 
   tmp = 0;
@@ -598,6 +630,12 @@ ACE_Time_Value
 Options::ping_interval (void) const
 {
   return this->ping_interval_;
+}
+
+ACE_Time_Value
+Options::ping_timeout (void) const
+{
+  return this->ping_timeout_;
 }
 
 LiveCheck *
