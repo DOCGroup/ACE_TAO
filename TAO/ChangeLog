@@ -1,3 +1,9 @@
+Tue Oct 21 15:40:12 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/orbsvcs/CosTrading.mpc:
+        * orbsvcs/orbsvcs/Trader/Constraint_l.cpp:
+          scoreboard cleanup.
+
 Mon Oct 20 15:37:35 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * TAO_IDL/be/be_visitor_component/executor_exh.cpp:
