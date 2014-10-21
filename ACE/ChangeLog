@@ -1,3 +1,8 @@
+Tue Oct 21 15:45:59 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * ace/ETCL/ETCL_l.cpp:
+          Scoreboard cleanup.
+
 Mon Oct 20 15:37:35 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ACEXML/common/XMLFilterImpl.h:
