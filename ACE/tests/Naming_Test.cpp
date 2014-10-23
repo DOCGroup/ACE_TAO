@@ -263,7 +263,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("%s%d"),
 #endif
                        pname,
-                       ACE_OS::getpid ());
+                       (int)(ACE_OS::getpid ()));
 
       name_options->database (temp_file);
     }

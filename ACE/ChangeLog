@@ -1,3 +1,8 @@
+Thu Oct 23 19:41:00 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * tests/Naming_Test.cpp: Fixed data type warning for conversion on
+          %d formatting for Mingw.
+
 Tue Oct 21 15:45:59 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * ace/ETCL/ETCL_l.cpp:
