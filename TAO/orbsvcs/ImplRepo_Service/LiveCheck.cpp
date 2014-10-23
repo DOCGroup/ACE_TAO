@@ -34,6 +34,12 @@ LiveListener::_add_ref (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
   ++this->refcount_;
+  if (ImR_Locator_i::debug () > 5)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("LiveListener::add_ref, %s, count = %d\n"),
+                      server_.c_str(), refcount_));
+    }
   return this;
 }
 
@@ -44,6 +50,12 @@ LiveListener::_remove_ref (void)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
     count = --this->refcount_;
+    if (ImR_Locator_i::debug () > 5)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT  ("LiveListener::remove_ref, %s, count = %d\n"),
+                        server_.c_str(), count));
+      }
   }
   if (count == 0)
     {

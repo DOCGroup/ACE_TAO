@@ -27,13 +27,19 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager::ctor server = %s\n"),
-                      info->ping_id ()));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server = %s\n"),
+                      this, info->ping_id ()));
     }
 }
 
 AsyncAccessManager::~AsyncAccessManager (void)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::dtor server = %s\n"),
+                      this, info_->ping_id ()));
+    }
 }
 
 void
@@ -58,7 +64,8 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager::add_interest status = %s\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::add_interest status = %s\n"),
+                      this,
                       status_name (this->status_)));
     }
 
@@ -122,19 +129,32 @@ AsyncAccessManager::remote_state (ImplementationRepository::AAM_Status state)
   this->status (state);
   if (AsyncAccessManager::is_final (state))
     {
-      this->notify_waiters ();
+      this->final_state (false);
     }
 }
 
 void
-AsyncAccessManager::final_state (void)
+AsyncAccessManager::final_state (bool active)
 {
-  this->info_.update_repo ();
+  if (active)
+    {
+      this->info_.update_repo ();
+    }
   this->notify_waiters ();
-  this->info_.notify_remote_access (this->status_);
+  if (active)
+    {
+      this->info_.notify_remote_access (this->status_);
+    }
   if (this->info_->is_mode (ImplementationRepository::PER_CLIENT) ||
       this->status_ != ImplementationRepository::AAM_SERVER_READY)
     {
+      if (ImR_Locator_i::debug () > 5)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state ")
+                          ACE_TEXT ("removing this from map, server = %s\n"),
+                          this, info_->ping_id ()));
+        }
       AsyncAccessManager_ptr aam (this);
       this->locator_.remove_aam (aam);
       aam._retn(); // release w/o decrementing since table held last reference.

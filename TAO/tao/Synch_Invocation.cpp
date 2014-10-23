@@ -32,6 +32,45 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace
+{
+  int
+  excep_for_type (const char *tid)
+  {
+    if (ACE_OS_String::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
+      {
+        return TAO::FOE_TRANSIENT;
+      }
+    else if (ACE_OS_String::strcmp (tid,
+                                    "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
+      {
+        return TAO::FOE_COMM_FAILURE;
+      }
+    else if (ACE_OS_String::strcmp (tid,
+                                    "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
+      {
+        return TAO::FOE_OBJECT_NOT_EXIST;
+      }
+    else if (ACE_OS_String::strcmp (tid,
+                                    "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
+      {
+        return TAO::FOE_INV_OBJREF;
+      }
+    else if (ACE_OS_String::strcmp (tid,
+                                    "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
+      {
+        return TAO::FOE_OBJ_ADAPTER;
+      }
+    else if (ACE_OS_String::strcmp (tid,
+                                    "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
+      {
+        return TAO::FOE_NO_RESPONSE;
+      }
+
+    return 0;
+  }
+}
+
 namespace TAO
 {
   Synch_Twoway_Invocation::Synch_Twoway_Invocation (
@@ -584,19 +623,7 @@ namespace TAO
         this->retry_state_->forward_on_exception_limit_used () &&
         (CORBA::CompletionStatus) completion == CORBA::COMPLETED_NO)
       {
-        if ((ACE_OS_String::strcmp (type_id.in (),
-                                   "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0 &&
-             this->retry_state_->forward_on_exception_increment (TAO::FOE_TRANSIENT)) ||
-            (ACE_OS_String::strcmp (type_id.in (),
-                                   "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0 &&
-             this->retry_state_->forward_on_exception_increment (TAO::FOE_COMM_FAILURE)) ||
-            (ACE_OS_String::strcmp (type_id.in (),
-                                   "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0 &&
-             this->retry_state_->forward_on_exception_increment (TAO::FOE_OBJECT_NOT_EXIST)) ||
-            (ACE_OS_String::strcmp (type_id.in (),
-                                   "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0 &&
-             this->retry_state_->forward_on_exception_increment (TAO::FOE_INV_OBJREF))
-            )
+        if (this->retry_state_->forward_on_exception_increment (excep_for_type (type_id.in ())))
           {
             retry_on_exception = true;
             this->retry_state_->sleep_at_starting_profile (*this->stub ());
@@ -605,38 +632,39 @@ namespace TAO
     else
       {
         int foe_kind = orb_params->forward_once_exception();
+        int ex_id = excep_for_type (type_id.in ());
 
-        retry_on_exception =
-          (CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES
-          && (((foe_kind & TAO::FOE_TRANSIENT) == 0
-               && ACE_OS_String::strcmp (type_id.in (),
-                                         "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0) ||
-              ACE_OS_String::strcmp (type_id.in (),
-                                     "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0 ||
-              ACE_OS_String::strcmp (type_id.in (),
-                                     "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0 ||
-              ((foe_kind & TAO::FOE_COMM_FAILURE) == 0
-               && ACE_OS_String::strcmp (type_id.in (),
-                                         "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0) ||
-              (orb_params->forward_invocation_on_object_not_exist ()
-               && ACE_OS_String::strcmp (type_id.in (),
-                                         "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0) ||
-              (do_forward = ! this->stub ()->forwarded_on_exception ()
-               && ((((foe_kind & TAO::FOE_OBJECT_NOT_EXIST) == TAO::FOE_OBJECT_NOT_EXIST)
-                    && (ACE_OS_String::strcmp (type_id.in (),
-                                               "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)) ||
-                   (((foe_kind & TAO::FOE_COMM_FAILURE) == TAO::FOE_COMM_FAILURE)
-                    && (ACE_OS_String::strcmp (type_id.in (),
-                                               "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)) ||
-                   (((foe_kind & TAO::FOE_TRANSIENT) == TAO::FOE_TRANSIENT)
-                    && (ACE_OS_String::strcmp (type_id.in (),
-                                               "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)) ||
-                   (((foe_kind & TAO::FOE_INV_OBJREF) == TAO::FOE_INV_OBJREF)
-                    && (ACE_OS_String::strcmp (type_id.in (),
-                                               "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)))));
+        // this logic is a little confusing but prior to  Jul 24 2009, TRANSIENT,
+        // OBJ_ADAPTER, NO_RESPONSE, and COMM_FAILURE were always retried if possible.
+        // Later, the ForwardOnceOn* were added, which reverts to default behavior
+        // when not set.
+        if ((CORBA::CompletionStatus) completion != CORBA::COMPLETED_YES)
+          {
+            switch (ex_id)
+              {
+              case TAO::FOE_TRANSIENT:
+              case TAO::FOE_COMM_FAILURE:
+                retry_on_exception = (foe_kind & ex_id) == 0;
+                break;
+              case TAO::FOE_OBJ_ADAPTER:
+              case TAO::FOE_NO_RESPONSE:
+                retry_on_exception = true;
+                break;
+              case TAO::FOE_OBJECT_NOT_EXIST:
+                retry_on_exception = orb_params->forward_invocation_on_object_not_exist ();
+                break;
+              default:
+                break;
+              }
+            if (!retry_on_exception)
+              {
+                do_forward = !this->stub ()->forwarded_on_exception () &&
+                  ((foe_kind & ex_id) == ex_id);
+              }
+          }
       }
 
-    if (retry_on_exception)
+    if (retry_on_exception || do_forward)
       {
         // If we are here then possibly we'll need a restart.
         mon.set_status (TAO_INVOKE_RESTART);

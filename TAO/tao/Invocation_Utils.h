@@ -78,6 +78,8 @@ namespace TAO
       FOE_COMM_FAILURE     = 0x2,
       FOE_TRANSIENT        = 0x4,
       FOE_INV_OBJREF       = 0x8,
+      FOE_OBJ_ADAPTER      = 0x10,
+      FOE_NO_RESPONSE      = 0x20,
       FOE_ALL              = 0xFFFFFFFF
     };
 }

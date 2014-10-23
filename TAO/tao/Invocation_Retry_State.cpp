@@ -15,14 +15,16 @@ namespace
                          TAO::Invocation_Retry_Params &client_factory_params,
                          TAO::Invocation_Retry_Params &result)
   {
-    if (command_line_params.forward_on_exception_limit_[ex] !=
-        result.forward_on_exception_limit_[ex])
-      result.forward_on_exception_limit_[ex] =
-        command_line_params.forward_on_exception_limit_[ex];
-    else if (client_factory_params.forward_on_exception_limit_[ex] !=
-             result.forward_on_exception_limit_[ex])
-      result.forward_on_exception_limit_[ex] =
-        client_factory_params.forward_on_exception_limit_[ex];
+#define FOEL forward_on_exception_limit_
+    if (command_line_params.FOEL[ex] != result.FOEL[ex])
+      {
+        result.FOEL[ex] = command_line_params.FOEL[ex];
+      }
+    else if (client_factory_params.FOEL[ex] != result.FOEL[ex])
+      {
+        result.FOEL[ex] = client_factory_params.FOEL[ex];
+      }
+#undef FOEL
   }
 
   /// Calculate the retry parameters by giving a command line parameter
