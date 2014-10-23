@@ -1,3 +1,20 @@
+Thu Oct 23 21:43:09 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+          Ensure that an AAM instance that is updated by the peer
+          Locator is properly finalized if the new state is final.
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/ImplRepo/manual_start:
+          A test verifying the above fix.
+
+        * tao/Invocation_Retry_State.cpp:
+        * tao/Invocation_Utils.h:
+        * tao/Synch_Invocation.cpp:
+          Refactor the retry decision code to be more comprehendable.
+
 Tue Oct 21 16:03:14 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:

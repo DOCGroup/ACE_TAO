@@ -80,7 +80,7 @@ class Locator_Export AsyncAccessManager
   static bool is_final (ImplementationRepository::AAM_Status s);
 
  private:
-  void final_state (void);
+  void final_state (bool active = true);
   void notify_waiters (void);
   void status (ImplementationRepository::AAM_Status s);
   void update_status (ImplementationRepository::AAM_Status s);
