@@ -1,3 +1,12 @@
+Fri Oct 24 18:41:42 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Bug_4189_Regression_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          New test for bugzilla 4189, on Windows it is not possible
+          at this moment to open a ACE_SOCK_Dgram_Bcast multiple times
+          on the same port, even when reuse_addr has been set to 1
+
 Thu Oct 23 19:41:00 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * tests/Naming_Test.cpp: Fixed data type warning for conversion on
