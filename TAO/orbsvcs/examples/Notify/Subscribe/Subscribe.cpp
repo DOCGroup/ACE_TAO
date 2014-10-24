@@ -1,8 +1,6 @@
 /* -*- C++ -*- $Id$ */
 #include "Subscribe.h"
 
-
-
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 
@@ -16,7 +14,7 @@
 
 #define EVENT_COUNT 4 // number of events we expect the consumer to get from the EC
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0; // we wait for 4 events.
+ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0; // we wait for 4 events.
 
 Subscribe::Subscribe (void)
   : done_ (0)
@@ -299,8 +297,7 @@ Subscribe_StructuredPushConsumer::disconnect (void)
 void
 Subscribe_StructuredPushConsumer::offer_change
    (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed*/
-    )
+    const CosNotification::EventTypeSeq & /*removed*/)
 {
   // No-Op.
 }

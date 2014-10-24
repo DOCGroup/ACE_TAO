@@ -1,3 +1,39 @@
+Fri Oct 24 07:25:44 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/tao_other_tests.lst:
+          Added new unit tests
+
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/examples/Notify/Filter/Filter.cpp:
+        * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+        * orbsvcs/tests/Notify/Basic/Sequence.cpp:
+          Layout changes
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Unicode logging fixes
+
+        * orbsvcs/tests/ImplRepo/NameService/test.cpp:
+          Added orb shutdown to reduce amount of valgrind reported
+          leaks
+
+        * orbsvcs/tests/ImplRepo/NotifyService/ImplRepo_NotifyService.mpc:
+        * orbsvcs/tests/ImplRepo/NotifyService/README:
+        * orbsvcs/tests/ImplRepo/NotifyService/run_test.pl:
+        * orbsvcs/tests/ImplRepo/NotifyService/test.cpp:
+          New test to reproduce bugzilla 4187, the notification
+          service can't be started by the ImR right now, have to fix
+          this
+
+        * orbsvcs/tests/ImplRepo/RestartServer/Messenger.idl:
+        * orbsvcs/tests/ImplRepo/RestartServer/MessengerClient.cpp:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+          Extended this test so that it can also run with manual
+          start, which reproduces bugzilla 4186
+
+        * tao/ImR_Client/ImR_Client.cpp:
+          Updated logging statements to be uniform and also that
+          we can easily determine that they are from the ImR_Client
+
 Thu Oct 23 21:43:09 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:

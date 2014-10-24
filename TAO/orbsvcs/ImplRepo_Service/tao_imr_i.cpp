@@ -217,8 +217,8 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
     }
 
   ORBSVCS_DEBUG ((LM_DEBUG,
-    "  Activator: %s\n"
-    "  Command Line: %s\n"
+    "  Activator: %C\n"
+    "  Command Line: %C\n"
     "  Working Directory: %s\n"
     "  Activation Mode: %C\n"
     "  Number of retries: %d\n"
@@ -239,7 +239,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
                 "  No running info available for PER_CLIENT mode\n"));
   else if (ACE_OS::strlen (info.partial_ior.in ()) > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                "  Running at endpoint: %s\n",
+                "  Running at endpoint: %C\n",
                 info.partial_ior.in ()));
   else   // I am assuming that a blank partial_ior means currently not running.
     ORBSVCS_DEBUG ((LM_DEBUG,
