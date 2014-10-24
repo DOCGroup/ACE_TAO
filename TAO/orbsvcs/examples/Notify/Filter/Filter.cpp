@@ -2,8 +2,6 @@
 
 #include "Filter.h"
 
-
-
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"
 #define CA_FILTER "threshold < 20"
@@ -13,7 +11,7 @@
 #define EVENTS_TO_SEND 30
 #define EVENTS_EXPECTED_TO_RECEIVE 9*4  // 2 consumers get the same events from 2 suppliers
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
+ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
 
 FilterClient::FilterClient (void)
   :done_ (0)

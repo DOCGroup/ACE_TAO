@@ -17,8 +17,7 @@ SequencePushConsumer::SequencePushConsumer (Sequence *test_client)
 
 void
 SequencePushConsumer::push_structured_events (
-    const CosNotification::EventBatch &batch
-  )
+    const CosNotification::EventBatch &batch)
 {
   this->test_client_->events_received_ += batch.length ();
 
@@ -35,8 +34,7 @@ SequencePushConsumer::push_structured_events (
 /***************************************************************************/
 
 SequencePushSupplier::SequencePushSupplier (
-    Sequence* test_client
-  )
+    Sequence* test_client)
   : test_client_ (test_client)
 {
 }
@@ -122,7 +120,7 @@ Sequence::init (int argc,
 
   this->supplier_->connect (this->supplier_admin_.in ());
 
-  consumer_start( 0 );
+  consumer_start (0);
 
   return 0;
 }
@@ -336,8 +334,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      events.init (argc,
-                   argv);
+      events.init (argc, argv);
 
       events.run_test ();
 

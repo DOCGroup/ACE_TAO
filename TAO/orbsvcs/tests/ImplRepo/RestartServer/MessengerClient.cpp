@@ -7,11 +7,15 @@
 
 const ACE_TCHAR *ior = ACE_TEXT("file://Messenger.ior");
 int seconds_between_requests = 4;
+// Number of times we try to invoke the operation
+int number_of_tries = 2;
+// Number of times the invocation should succeed
+int number_of_succeed = 2;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:d:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:d:t:s:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -25,12 +29,22 @@ parse_args (int argc, ACE_TCHAR *argv[])
         seconds_between_requests = ACE_OS::atoi (get_opts.opt_arg ());
         break;
 
+      case 't':
+        number_of_tries = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
+      case 's':
+        number_of_succeed = ACE_OS::atoi (get_opts.opt_arg ());
+        break;
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s "
                            "-k <ior> "
                            "-d <seconds> (Delay between requests) "
+                           "-t <number> (Number of times we try the invocation) "
+                           "-s <number> (Number of times the invocation should succeed) "
                            "\n",
                            argv [0]),
                           -1);
@@ -42,7 +56,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   // Detection of closed on read currently not working certain platforms.
 #if defined (sun) || defined (AIX) || defined (__FreeBSD_version)
   return 2;
@@ -71,19 +84,43 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     CORBA::String_var message = CORBA::string_dup( "Hello!" );
 
-    messenger->send_message( "TAO User", "Test 1", message.inout() );
+    int try_count = 0;
+    int succeeded = 0;
+    for (; try_count < number_of_tries; ++try_count)
+    {
+      ACE_DEBUG ((LM_INFO,
+                  "(%P|%t) - Sending message <%d> to server\n", try_count));
 
-    // Force server to abort to verify it will be brought
-    // back up when send_message() is called.
-    messenger->abort(2);
-    ACE_OS::sleep(seconds_between_requests);
+      try {
+        messenger->send_message( "TAO User", "Test 1", message.inout() );
 
-    ACE_DEBUG ((LM_INFO,
-                "(%P|%t) - Sending another message after abort of server\n"));
+        ACE_DEBUG ((LM_INFO,
+            "(%P|%t) - Successfully received response for message <%d> to server\n", try_count));
+        ++succeeded;
 
-    messenger->send_message( "TAO User", "Test 2", message.inout() );
+        // Force server to abort to verify it will be brought
+        // back up when send_message() is called.
+        messenger->abort(2);
+        ACE_OS::sleep(seconds_between_requests);
+      }
+      catch (const CORBA::Exception&)
+      {
+        // Swallow
+      }
+    }
 
-    std::cout << "messages were sent" << std::endl;
+    if (succeeded == number_of_succeed)
+    {
+      ACE_DEBUG ((LM_INFO,
+            "(%P|%t) - <%d> Messages where send to the server, <%d> succeeded\n", try_count, succeeded));
+    }
+    else
+    {
+      ACE_ERROR ((LM_INFO,
+            "(%P|%t) - ERROR: <%d> Messages where send to the server, <%d> succeeded, should be <%d>\n", try_count, succeeded, number_of_succeed));
+    }
+
+    orb->destroy ();
   }
   catch(const CORBA::Exception& ex) {
     std::cerr << "Client main() Caught CORBA::Exception: " << ex << std::endl;
