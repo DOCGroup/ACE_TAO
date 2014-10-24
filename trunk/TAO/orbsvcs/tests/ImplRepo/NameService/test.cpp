@@ -32,6 +32,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       inc->bind (name, ns_obj.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Test Successful\n"));
+
+      orb->destroy ();
     }
   catch (const CORBA::Exception& ex)
     {

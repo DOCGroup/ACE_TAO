@@ -43,8 +43,7 @@ struct Server_Info
                int start_limit,
                const ACE_CString& partial_ior = ACE_CString(""),
                const ACE_CString& server_ior = ACE_CString(""),
-               ImplementationRepository::ServerObject_ptr svrobj = ImplementationRepository::ServerObject::_nil()
-    );
+               ImplementationRepository::ServerObject_ptr svrobj = ImplementationRepository::ServerObject::_nil());
 
   Server_Info (const ACE_CString& serverId,
                const ACE_CString& pname,

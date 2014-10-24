@@ -10,13 +10,22 @@ use PerlACE::TestTarget;
 $status = 0;
 $debug_level = '0';
 $mode = "-a NORMAL ";
+$start_limit = 1;
+$number_tries = 2;
+$number_succeed = 2;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
     }
     elsif ($i eq '-manual') {
+        # in manual mode the server is manually started, so it should
+        # just succeed once
         $mode = "-a MANUAL ";
+        $number_succeed = 1;
+    }
+    elsif ($i eq '-start_limit') {
+        $start_limit = "1";
     }
 }
 
@@ -93,16 +102,14 @@ $TI = $ti->CreateProcess ($tao_imr,
                           $mode .
                           "-c \"$srv_server -orbobjrefstyle url -ORBUseIMR 1 -ORBInitRef ImplRepoService=file://$imr_imriorfile\" ");
 
-
-
 $SI = $si->CreateProcess ($tao_imr, "-ORBInitRef ImplRepoService=file://$si_imriorfile ".
                                                "ior MessengerService ".
                                                "-f $si_srviorfile ");
 
 $C1 = $c1->CreateProcess ("MessengerClient", "-k file://$c1_srviorfile ".
-			  "-ORBForwardOnReplyClosedLimit 20 -ORBForwardDelay 500 ".
-			  "-ORBSvcConf $c1_conffile -ORBdebuglevel $debug_level ".
-			  "-d $seconds_between_requests");
+        "-ORBForwardOnReplyClosedLimit 20 -ORBForwardDelay 500 ".
+        "-ORBSvcConf $c1_conffile -ORBdebuglevel $debug_level ".
+        "-d $seconds_between_requests -t $number_tries -s $number_succeed");
 
 $SDN = $sdn->CreateProcess ("$tao_imr", "-ORBInitRef ImplRepoService=file://$sdn_imriorfile ".
                                         "shutdown MessengerService");
@@ -178,9 +185,20 @@ if ($TI_status != 0) {
     exit 1;
 }
 
+if ($mode == "-a MANUAL ")
+{
+    print STDOUT "Manually starting MessengerService\n";
+    $TI->Arguments ("-ORBInitRef ImplRepoService=file://$si_imriorfile ".
+                    "start MessengerService" );
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "ERROR: tao_imr start returned $TI_status\n";
+        $status = 1;
+    }
+}
+
 print ">>> " . $SI->CommandLine() . "\n";
 $SI->IgnoreExeSubDir (1);
-
 
 $SI_status = $SI->SpawnWaitKill ($si->ProcessStartWaitInterval() + $extra_timeout);
 
