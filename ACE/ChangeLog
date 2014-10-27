@@ -1,3 +1,11 @@
+Mon Oct 27 18:06:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+          Don't define SO_REUSEPORT when it is not defined, the code
+          that uses this as argument to call ACE_OS::setsockopt only works
+          when this has been defined. Defining it here to a dummy value
+          causes us to call the Windows API with an invalid argument
+
 Mon Oct 27 12:32:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/config-win32-common.h:
