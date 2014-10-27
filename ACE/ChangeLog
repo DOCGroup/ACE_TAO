@@ -1,3 +1,10 @@
+Mon Oct 27 12:32:17 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ace/config-win32-common.h:
+        * ace/os_include/sys/os_types.h:
+          Introduce new ACE_LACKS_PID_T which is set on Windows, but
+          not with MinGW
+
 Mon Oct 27 07:57:57 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/OS_NS_sys_socket.inl:

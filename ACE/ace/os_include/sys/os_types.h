@@ -137,7 +137,7 @@ typedef DWORD nlink_t;
   typedef unsigned long useconds_t;
 #endif
 
-#if defined (ACE_WIN32) && !defined(__MINGW32__)
+#if defined (ACE_LACKS_PID_T)
    typedef int pid_t;
 #endif /* ACE_WIN32 */
 

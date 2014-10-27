@@ -310,6 +310,9 @@
 #if !defined(__MINGW32__) && !defined (__BORLANDC__)
 # define ACE_LACKS_MODE_T
 #endif
+#if !defined(__MINGW32__)
+# define ACE_LACKS_PID_T
+#endif
 #if !defined (__BORLANDC__)
 # define ACE_LACKS_NLINK_T
 # define ACE_LACKS_UID_T
