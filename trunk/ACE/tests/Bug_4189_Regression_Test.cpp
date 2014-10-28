@@ -30,7 +30,7 @@ const int SEC_TO_KEEP_SOCKET_OPEN = 2;
 int reuseAddr_test (void)
 {
   ACE_SOCK_Dgram_Bcast sock1;
-  if (sock1.open(ACE_INET_Addr(UDP_PORT),AF_INET,0,1) != 0)
+  if (sock1.open(ACE_INET_Addr(UDP_PORT),PF_INET,0,1) != 0)
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not open socket for broadcast on port %d\n"), UDP_PORT ));
     ++result;
