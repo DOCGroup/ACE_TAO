@@ -455,12 +455,12 @@ ImR_Locator_i::remote_access_update (const char *name,
       if (info.null ())
         {
           if (debug_ > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: remote_acccess %C unregistered.\n"),
+            ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("ImR: remote_acccess <%C> unregistered.\n"),
                             name));
           return;
         }
-      AsyncAccessManager *aam_raw;
-      ACE_NEW (aam_raw, AsyncAccessManager (info, true, *this));
+      AsyncAccessManager *aam_raw = 0;
+      ACE_NEW (aam_raw, AsyncAccessManager (info, *this));
       aam = aam_raw;
       this->aam_set_.insert_tail (aam);
     }
@@ -658,7 +658,7 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
   if (info->is_mode(ImplementationRepository::PER_CLIENT))
     {
       AsyncAccessManager *aam_raw = 0;
-      ACE_NEW (aam_raw, AsyncAccessManager (info, manual_start, *this));
+      ACE_NEW (aam_raw, AsyncAccessManager (info, *this));
       aam = aam_raw;
       this->aam_set_.insert_tail (aam);
     }
@@ -668,12 +668,12 @@ ImR_Locator_i::activate_server_i (UpdateableServerInfo& info,
       if (aam.is_nil())
         {
           AsyncAccessManager *aam_raw = 0;
-          ACE_NEW (aam_raw, AsyncAccessManager (info, manual_start, *this));
+          ACE_NEW (aam_raw, AsyncAccessManager (info, *this));
           aam = aam_raw;
           this->aam_set_.insert_tail (aam);
         }
     }
-  aam->add_interest (rh);
+  aam->add_interest (rh, manual_start);
 }
 
 CORBA::Object_ptr
@@ -1114,7 +1114,7 @@ ImR_Locator_i::server_is_running
       this->pinger_.add_server (si->ping_id (), this->ping_external_, srvobj.in());
 
       AsyncAccessManager *aam_raw;
-      ACE_NEW (aam_raw, AsyncAccessManager (info, true, *this));
+      ACE_NEW (aam_raw, AsyncAccessManager (info, *this));
       AsyncAccessManager_ptr aam (aam_raw);
       aam->started_running ();
       this->aam_set_.insert (aam);
@@ -1148,8 +1148,8 @@ ImR_Locator_i::server_is_running
             }
           if (!info->is_mode(ImplementationRepository::PER_CLIENT))
             {
-              AsyncAccessManager *aam_raw;
-              ACE_NEW (aam_raw, AsyncAccessManager (info, true, *this));
+              AsyncAccessManager *aam_raw = 0;
+              ACE_NEW (aam_raw, AsyncAccessManager (info, *this));
               AsyncAccessManager_ptr aam (aam_raw);
               aam->started_running ();
               this->aam_set_.insert (aam);

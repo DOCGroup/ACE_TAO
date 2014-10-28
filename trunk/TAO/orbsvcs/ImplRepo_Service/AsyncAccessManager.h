@@ -54,7 +54,6 @@ class Locator_Export AsyncAccessManager
 {
  public:
   AsyncAccessManager (UpdateableServerInfo &info,
-                      bool manual,
                       ImR_Locator_i &locator);
 
   ~AsyncAccessManager (void);
@@ -64,7 +63,7 @@ class Locator_Export AsyncAccessManager
   bool has_server (const char *name);
   void remote_state (ImplementationRepository::AAM_Status s);
 
-  void add_interest (ImR_ResponseHandler *rh);
+  void add_interest (ImR_ResponseHandler *rh, bool manual);
   ImplementationRepository::AAM_Status status (void) const;
 
   void activator_replied (bool success);
