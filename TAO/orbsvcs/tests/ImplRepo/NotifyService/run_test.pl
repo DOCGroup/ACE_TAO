@@ -9,7 +9,7 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 $status = 0;
-$debug_level = '0';
+$debug_level = '2';
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
@@ -67,7 +67,7 @@ $test->DeleteFile ($nsiorfile);
 ################################################################################
 ## Start the implementation Repository
 
-$IMR->Arguments ("-o $imr_imriorfile -d 2 -ORBDebugLevel $debug_level");
+$IMR->Arguments ("-o $imr_imriorfile -d $debug_level");
 $IMR_status = $IMR->Spawn ();
 if ($IMR_status != 0) {
     print STDERR "ERROR: ImplRepo Service returned $IMR_status\n";
