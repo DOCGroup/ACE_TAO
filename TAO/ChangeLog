@@ -1,3 +1,24 @@
+Tue Oct 28 07:44:13 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+          Fixed bugzilla 4186, a server that is registered with manual
+          start and which has been started once, than crashes, was
+          restarted by the ImR, this shouldn't be the case, at the
+          moment a manual started server crashes it should just stay
+          offlline. Thanks to Phil Mesnier for reviewing all changes
+          and making some improvements to them.
+
+        * orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+          Layout change in help output
+
+        * orbsvcs/orbsvcs/Notify/POA_Helper.cpp:
+          Formatting change
+
+        * orbsvcs/tests/ImplRepo/NotifyService/run_test.pl:
+          Default debug level 2 which is also passed to the ImR
+
 Fri Oct 24 07:25:44 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/tao_other_tests.lst:

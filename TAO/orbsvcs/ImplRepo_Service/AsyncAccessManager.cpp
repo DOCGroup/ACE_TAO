@@ -13,10 +13,9 @@
 static ACE_CString unique_prefix = "\001\002\003\004";
 
 AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
-                                        bool manual,
                                         ImR_Locator_i &locator)
   :info_(info),
-   manual_start_ (manual),
+   manual_start_ (false),
    locator_(locator),
    poa_(locator.root_poa()),
    rh_list_(),
@@ -27,7 +26,7 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server = %s\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server = %C\n"),
                       this, info->ping_id ()));
     }
 }
@@ -37,7 +36,7 @@ AsyncAccessManager::~AsyncAccessManager (void)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::dtor server = %s\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::dtor server = %C\n"),
                       this, info_->ping_id ()));
     }
 }
@@ -55,12 +54,16 @@ AsyncAccessManager::has_server (const char *s)
 }
 
 void
-AsyncAccessManager::add_interest (ImR_ResponseHandler *rh)
+AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
     this->rh_list_.push_back (rh);
   }
+  if (manual)
+    {
+      this->manual_start_ = true;
+    }
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -141,6 +144,7 @@ AsyncAccessManager::final_state (bool active)
       this->info_.update_repo ();
     }
   this->notify_waiters ();
+  this->manual_start_ = false;
   if (active)
     {
       this->info_.notify_remote_access (this->status_);
@@ -382,6 +386,13 @@ AsyncAccessManager::ping_replied (LiveStatus server)
                   }
                 this->status (ImplementationRepository::AAM_WAIT_FOR_DEATH);
                 return;
+              }
+            if (ImR_Locator_i::debug () > 4)
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("(%P|%t) AsyncAccessManager::ping_replied pid = %d,")
+                                ACE_TEXT (" trying to restart server\n"),
+                                this->info_->pid));
               }
             if (this->send_start_request ())
               {

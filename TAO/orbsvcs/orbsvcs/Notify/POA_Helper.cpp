@@ -162,8 +162,7 @@ TAO_Notify_POA_Helper::activate (PortableServer::Servant servant, CORBA::Long& i
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) POA_Helper Activating object with ")
                   ACE_TEXT ("id = %d in  POA : %C\n"),
-                  id, the_name.in ()
-                  ));
+                  id, the_name.in ()));
     }
 
   // Convert CORBA::Long to ObjectId
