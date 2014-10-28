@@ -5,6 +5,7 @@
 //
 // Please try to keep this alphabetically sorted.
 //
+build_dir_per_project = Specifies to use per project object file output dirs (VDIR and VSHDIR) if set to '1'.
 ciao = Indicates whether or not this project contains CIAO code.
 cidlc = The full path to the cidl compiler.
 cidlc_dep = The full path to the cidl compiler as a dependency.
