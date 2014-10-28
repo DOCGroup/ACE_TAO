@@ -453,12 +453,13 @@ ifneq ($(SHLIBA_UNCHECKED),)
 endif # SHLIBA_UNCHECKED
 
 # Let users override the default VDIR directories
+VDIR_PRJ ?=
 ifdef ARCH
-VDIR          ?= $(ARCH)/.obj/
-VSHDIR        ?= $(ARCH)/.shobj/
+VDIR          ?= $(ARCH)/.obj/$(VDIR_PRJ)
+VSHDIR        ?= $(ARCH)/.shobj/$(VDIR_PRJ)
 else
-VDIR          ?= .obj/
-VSHDIR        ?= .shobj/
+VDIR          ?= .obj/$(VDIR_PRJ)
+VSHDIR        ?= .shobj/$(VDIR_PRJ)
 endif
 
 # NOTE: VLDLIBS is defined below, in case it is overridden for static-

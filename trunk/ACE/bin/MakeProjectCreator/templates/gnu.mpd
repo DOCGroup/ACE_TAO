@@ -13,6 +13,9 @@
 <%marker(top)%>
 MAKEFILE         = <%project_file%>
 DEPENDENCY_FILE  = .depend.<%project_name%>
+<%if(compares(build_dir_per_project, 1))%>
+VDIR_PRJ = <%project_name%>/
+<%endif%>
 <%if(idl_files)%>
 
 <%if(contains(idlflags,-DGEN_IDL_MAKE_DEPS))%>
