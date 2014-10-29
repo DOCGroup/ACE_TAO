@@ -1,3 +1,8 @@
+Wed Oct 29 20:22:38 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * bin/MakeProjectCreator/templates/gnu.mpd: Change LDFLAGS for HP-UX to do install_rpath correctly.
+          Fixes Bugzilla #4170.
+
 Tue Oct 28 09:51:14 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * bin/MakeProjectCreator/docs/templates/gnu.txt:
