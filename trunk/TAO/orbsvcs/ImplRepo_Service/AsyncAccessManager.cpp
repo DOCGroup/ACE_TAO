@@ -16,12 +16,13 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
                                         ImR_Locator_i &locator)
   :info_(info),
    manual_start_ (false),
-   locator_(locator),
-   poa_(locator.root_poa()),
-   rh_list_(),
-   status_(ImplementationRepository::AAM_INIT),
-   refcount_(1),
-   lock_()
+   retries_ (info->start_limit_),
+   locator_ (locator),
+   poa_ (locator.root_poa ()),
+   rh_list_ (),
+   status_ (ImplementationRepository::AAM_INIT),
+   refcount_ (1),
+   lock_ ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -139,12 +140,16 @@ AsyncAccessManager::remote_state (ImplementationRepository::AAM_Status state)
 void
 AsyncAccessManager::final_state (bool active)
 {
+  bool success = this->status_ == ImplementationRepository::AAM_SERVER_READY;
+  this->info_.edit ()->started (success);
+  this->retries_ = this->info_->start_limit_;
   if (active)
     {
       this->info_.update_repo ();
     }
   this->notify_waiters ();
   this->manual_start_ = false;
+
   if (active)
     {
       this->info_.notify_remote_access (this->status_);
@@ -192,6 +197,9 @@ AsyncAccessManager::notify_waiters (void)
                     case ImplementationRepository::AAM_NO_COMMANDLINE:
                       throw ImplementationRepository::CannotActivate
                         ("No command line registered for server.");
+                    case ImplementationRepository::AAM_RETRIES_EXCEEDED:
+                      throw ImplementationRepository::CannotActivate
+                        ("Restart attempt count exceeded.");
                     default:
                       throw ImplementationRepository::CannotActivate
                         ("Unknown Failure");
@@ -214,7 +222,8 @@ AsyncAccessManager::is_final (ImplementationRepository::AAM_Status s)
           s == ImplementationRepository::AAM_SERVER_DEAD ||
           s == ImplementationRepository::AAM_NOT_MANUAL ||
           s == ImplementationRepository::AAM_NO_ACTIVATOR ||
-          s == ImplementationRepository::AAM_NO_COMMANDLINE);
+          s == ImplementationRepository::AAM_NO_COMMANDLINE ||
+          s == ImplementationRepository::AAM_RETRIES_EXCEEDED);
 }
 
 const ACE_TCHAR *
@@ -246,6 +255,8 @@ AsyncAccessManager::status_name (ImplementationRepository::AAM_Status s)
       return ACE_TEXT ("NO_ACTIVATOR");
     case ImplementationRepository::AAM_NO_COMMANDLINE:
       return ACE_TEXT ("NO_COMMANDLINE");
+    case ImplementationRepository::AAM_RETRIES_EXCEEDED:
+      return ACE_TEXT ("RETRIES_EXCEEDED");
     }
   return ACE_TEXT ("<undefined status>");
 }
@@ -417,8 +428,18 @@ AsyncAccessManager::send_start_request (void)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager::send_start_request\n")));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager::send_start_request, manual_start_ %d\n"),
+                      this->manual_start_));
     }
+
+  if ((this->locator_.opts ()->lockout () && !this->info_.edit ()->start_allowed ()) ||
+      (this->retries_ == 0))
+    {
+      this->status (ImplementationRepository::AAM_RETRIES_EXCEEDED);
+      return false;
+    }
+
+  --this->retries_;
 
   if (this->info_->is_mode (ImplementationRepository::MANUAL) &&
       !this->manual_start_)

@@ -23,14 +23,12 @@ Server_Info::operator= (const Server_Info &other)
   dir = other.dir;
   activation_mode_ = other.activation_mode_;
   start_limit_ = other.start_limit_;
+  start_count_ = other.start_count_;
   partial_ior = other.partial_ior;
   ior = other.ior;
   last_ping = other.last_ping;
   server = other.server;
   alt_info_ = other.alt_info_;
-  start_count = other.start_count;
-  waiting_clients = other.waiting_clients;
-  starting = other.starting;
   pid = other.pid;
   death_notify = other.death_notify;
   peers = other.peers;
@@ -58,14 +56,12 @@ Server_Info::Server_Info (const ACE_CString& fqname,
   , dir (working_dir)
   , activation_mode_ (amode)
   , start_limit_ (1)
+  , start_count_ (0)
   , partial_ior (partial_ior)
   , ior (server_ior)
   , server(ImplementationRepository::ServerObject::_duplicate (svrobj))
   , peers ()
   , alt_info_ ()
-  , start_count (0)
-  , waiting_clients (0)
-  , starting (false)
   , pid (0)
   , death_notify (false)
 {
@@ -88,14 +84,12 @@ Server_Info::Server_Info (const ACE_CString& serverId,
   , dir ("")
   , activation_mode_ (ImplementationRepository::NORMAL)
   , start_limit_ (1)
+  , start_count_ (0)
   , partial_ior ("")
   , ior ("")
   , server (ImplementationRepository::ServerObject::_nil())
   , peers ()
   , alt_info_ (alt)
-  , start_count (0)
-  , waiting_clients (0)
-  , starting (false)
   , pid (0)
   , death_notify (false)
 {
@@ -147,6 +141,28 @@ bool
 Server_Info::is_running (void) const
 {
   return !CORBA::is_nil (this->server.in()) || this->ior.length () > 0;
+}
+
+bool
+Server_Info::start_allowed (void)
+{
+  Server_Info *active = this->active_info ();
+  bool allowed = active->start_count_ < active->start_limit_;
+  if (allowed)
+    {
+      active->start_count_++;
+    }
+  return allowed;
+}
+
+void
+Server_Info::started (bool success)
+{
+  Server_Info *active = this->active_info ();
+  if (success)
+    {
+      active->start_count_ = 0;
+    }
 }
 
 bool
@@ -235,7 +251,7 @@ Server_Info::setImRInfo (ImplementationRepository::ServerInformation* info) cons
   info->startup.activation = startup->activation_mode_;
   info->startup.activator = startup->activator.c_str ();
   info->startup.start_limit =
-    startup->start_count >= startup->start_limit_ ? -startup->start_limit_ : startup->start_limit_;
+    startup->start_count_ >= startup->start_limit_ ? -startup->start_limit_ : startup->start_limit_;
   info->partial_ior = partial_ior.c_str();
   info->activeStatus = ImplementationRepository::ACTIVE_MAYBE;
 }
@@ -264,16 +280,14 @@ Server_Info::clear (void)
   env_vars.length (0);
   dir = "";
   activation_mode_ = ImplementationRepository::NORMAL;
-  start_limit_ = 0;
+  start_limit_ = 1;
+  start_count_ = 0;
   partial_ior = "";
   ior = "";
   last_ping = ACE_Time_Value::zero;
   server = ImplementationRepository::ServerObject::_nil ();
   peers.length (0);
   alt_info_.reset ();
-  start_count  = 0;
-  waiting_clients = 0;
-  starting = false;
   pid = 0;
   death_notify = false;
 }
@@ -300,7 +314,7 @@ Server_Info::update_options (const ImplementationRepository::StartupOptions &opt
   startup->dir = options.working_directory.in ();
   startup->activation_mode_ = options.activation;
   startup->start_limit (options.start_limit);
-  startup->start_count = 0;
+  startup->start_count_ = 0;
 }
 
 const char *

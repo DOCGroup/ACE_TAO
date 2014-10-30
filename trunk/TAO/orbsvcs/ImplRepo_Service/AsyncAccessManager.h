@@ -87,6 +87,7 @@ class Locator_Export AsyncAccessManager
 
   UpdateableServerInfo info_;
   bool manual_start_;
+  int retries_;
   ImR_Locator_i &locator_;
   PortableServer::POA_var poa_;
   ACE_Vector<ImR_ResponseHandler *> rh_list_;
