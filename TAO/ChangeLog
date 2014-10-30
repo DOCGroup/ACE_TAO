@@ -1,3 +1,31 @@
+Thu Oct 30 13:55:13 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+        * orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * orbsvcs/ImplRepo_Service/Locator_Options.h:
+        * orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * orbsvcs/ImplRepo_Service/Server_Info.h:
+        * orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * orbsvcs/ImplRepo_Service/UpdateableServerInfo.cpp:
+          Reintroduced the restart attempt limiting. In conditions where
+          implicit restarting is allowed (ie not MANUAL mode), the locator
+          will honor the specified start limit. This will result in a
+          TRANSIENT exception to the client and the count is reset. To
+          prevent any restart attempts after the limit is reached, start the
+          locator with the new command line argument --lockout. In this case
+          all attempts to restart are prevented until the tao_imr update
+          command is used to reset the start counter.
+
+          In addtion, this commit includes unused member removal and related
+          cleanup.
+
+        * bin/tao_other_tests.lst:
+        * orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+          Extended the test case to add lockout checking.
+
 Tue Oct 28 07:44:13 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:

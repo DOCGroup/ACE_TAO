@@ -64,6 +64,8 @@ struct Server_Info
   bool has_peer (const char *name) const;
   bool is_mode (ImplementationRepository::ActivationMode m) const;
   bool is_running (void) const;
+  bool start_allowed (void);
+  void started (bool success);
 
   // transform the supplied limit to always be at least 1
   void start_limit (int lim);
@@ -112,6 +114,8 @@ struct Server_Info
   ImplementationRepository::ActivationMode activation_mode_;
   /// Limit of retries to start the server
   int start_limit_;
+  /// Current number of start attempts
+  int start_count_;
   /// Current endpoint used by the server.
   ACE_CString partial_ior;
   /// IOR of the server object in the server.
@@ -124,10 +128,6 @@ struct Server_Info
   CORBA::StringSeq peers;
   /// Alternate server info for sharing startup info between linked POAs
   Server_Info_Ptr alt_info_;
-
-  int start_count;
-  int waiting_clients;
-  bool starting;
 
   /// Last known process ID reported by the activator
   int pid;

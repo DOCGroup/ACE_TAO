@@ -116,6 +116,8 @@ public:
 
   bool unregister_if_address_reused (void) const;
 
+  bool lockout (void) const;
+
   bool throw_shutdown_exceptions (void) const;
 
   /// Indicate what type of ImR Locator this is.
@@ -180,6 +182,10 @@ private:
   /// Should check the server address and remove previous server if
   /// the address is reused.
   bool unregister_if_address_reused_;
+
+  /// If enabled, use a global start count and lock access to the server without
+  /// user intervention. Otherwise start count is reset for every start request
+  bool lockout_;
 
   /// The type of ImR Locator this is.
   ImrType imr_type_;
