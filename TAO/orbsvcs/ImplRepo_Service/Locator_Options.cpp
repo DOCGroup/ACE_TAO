@@ -37,6 +37,7 @@ Options::Options ()
 , readonly_ (false)
 , service_command_ (SC_NONE)
 , unregister_if_address_reused_ (false)
+, lockout_ (false)
 , imr_type_ (STANDALONE_IMR)
 , throw_shutdown_exceptions_  (false)
 {
@@ -153,10 +154,19 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->repo_mode_ = REPO_HEAP_FILE;
           binary_persistence_used = true;
         }
-      else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("-UnregisterIfAddressReused")) == 0)
+      else if ((ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-UnregisterIfAddressReused")) == 0) ||
+               (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--UnregisterIfAddressReused")) == 0) ||
+               (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-u")) == 0))
         {
           this->unregister_if_address_reused_ = true;
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--lockout")) == 0)
+        {
+          this->lockout_ = true;
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-r")) == 0)
@@ -331,13 +341,13 @@ Options::print_usage (void) const
   ORBSVCS_ERROR ((LM_ERROR,
     ACE_TEXT ("Usage:\n")
     ACE_TEXT ("\n")
-    ACE_TEXT ("ImplRepo_Service [-c cmd] [-d 0|1|2] [-e] [-m] [-o file]\n")
+    ACE_TEXT ("ImplRepo_Service [-c cmd] [-d 0..5] [-e] [-m] [-o file]\n")
     ACE_TEXT (" [-r|-p file|-x file|--directory dir [--primary|--backup] ]\n")
     ACE_TEXT (" [-s] [-t secs] [-v msecs]\n")
     ACE_TEXT ("  -c command      Runs nt service commands ('install' or 'remove')\n")
-    ACE_TEXT ("  -d level        Sets the debug level (default 1)\n")
+    ACE_TEXT ("  -d level        Sets the debug level (default 0)\n")
     ACE_TEXT ("  -e              Erase the persisted repository at startup\n")
-    ACE_TEXT ("  -l              Lock the database\n")
+    ACE_TEXT ("  -l              Lock the database as read only\n")
     ACE_TEXT ("  -m              Turn on multicast\n")
     ACE_TEXT ("  -o file         Outputs the ImR's IOR to a file\n")
     ACE_TEXT ("  -p file         Use file for storing/loading settings\n")
@@ -350,7 +360,11 @@ Options::print_usage (void) const
     ACE_TEXT ("  -s              Run as a service\n")
     ACE_TEXT ("  -t secs         Server startup timeout.(Default = 60s)\n")
     ACE_TEXT ("  -v msecs        Server verification interval.(Default = 10000ms)\n")
-    ACE_TEXT ("  -i              Ping servers without activators too. (Default=false)\n")
+    ACE_TEXT ("  -n msecs        Ping request timeout.(Default = 10ms)\n")
+    ACE_TEXT ("  -i              Ping servers started without activators too.\n")
+    ACE_TEXT ("  --lockout       Prevent excessive restart attempts until manual reset.\n")
+    ACE_TEXT ("  --UnregisterIfAddressReused,\n")
+    ACE_TEXT ("  -u              Unregister server if its endpoint is used by another\n")
               ));
 }
 
@@ -407,6 +421,11 @@ Options::save_registry_options ()
 
   tmp = this->readonly_ ? 1 : 0;
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("Lock"), 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof (DWORD));
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
+  tmp = this->lockout_ ? 1 : 0;
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("LockOut"), 0, REG_DWORD,
     (LPBYTE) &tmp, sizeof (DWORD));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
@@ -520,6 +539,16 @@ Options::load_registry_options ()
     {
       ACE_ASSERT (type == REG_DWORD);
       readonly_ = tmp != 0;
+    }
+
+  tmp = 0;
+  sz = sizeof(tmp);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("LockOut"), 0, &type,
+    (LPBYTE) &tmp, &sz);
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+      lockout_ = tmp != 0;
     }
 
   sz = sizeof(this->repo_mode_);
@@ -672,6 +701,12 @@ bool
 Options::unregister_if_address_reused (void) const
 {
   return this->unregister_if_address_reused_;
+}
+
+bool
+Options::lockout (void) const
+{
+  return this->lockout_;
 }
 
 bool

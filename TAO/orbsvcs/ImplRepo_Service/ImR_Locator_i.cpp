@@ -57,13 +57,7 @@ ImR_Locator_i::ImR_Locator_i (void)
   : dsi_forwarder_ (*this)
   , ins_locator_ (0)
   , aam_set_ ()
-  , read_only_ (false)
-  , startup_timeout_ (60)
-  , ping_external_ (false)
-  , ping_interval_ (10)
-  , ping_timeout_ (1)
-  , unregister_if_address_reused_ (false)
-  , throw_shutdown_exceptions_ (false)
+  , opts_ (0)
 {
   // Visual C++ 6.0 is not smart enough to do a direct assignment
   // while allocating the INS_Locator.  So, we have to do it in
@@ -83,17 +77,10 @@ ImR_Locator_i::~ImR_Locator_i (void)
 }
 
 int
-ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
+ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
-  ImR_Locator_i::debug_ = opts.debug ();
-  this->read_only_ = opts.readonly ();
-  this->startup_timeout_ = opts.startup_timeout ();
-  this->ping_external_ = opts.ping_external ();
-  this->ping_interval_ = opts.ping_interval ();
-  this->ping_timeout_ = opts.ping_timeout ();
-  this->unregister_if_address_reused_ = opts.unregister_if_address_reused ();
-  this->throw_shutdown_exceptions_ = opts.throw_shutdown_exceptions ();
+  ImR_Locator_i::debug_ = this->opts_->debug ();
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("RootPOA");
   this->root_poa_ = PortableServer::POA::_narrow (obj.in ());
@@ -101,9 +88,9 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
 
   this->dsi_forwarder_.init (orb);
   this->adapter_.init (& this->dsi_forwarder_);
-  this->pinger_.init (orb, this->ping_interval_);
+  this->pinger_.init (orb, this->opts_->ping_interval ());
 
-  opts.pinger (&this->pinger_);
+  this->opts_->pinger (&this->pinger_);
 
   // Register the Adapter_Activator reference to be the RootPOA's
   // Adapter Activator.
@@ -125,31 +112,31 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
   const CORBA::String_var ior = this->orb_->object_to_string (obj.in ());
 
   // create the selected Locator_Repository with backing store
-  switch (opts.repository_mode())
+  switch (this->opts_->repository_mode ())
     {
     case Options::REPO_REGISTRY:
       {
-        repository_.reset(new Registry_Backing_Store(opts, orb));
+        repository_.reset(new Registry_Backing_Store(*this->opts_, orb));
         break;
       }
     case Options::REPO_HEAP_FILE:
       {
-        repository_.reset(new Heap_Backing_Store(opts, orb));
+        repository_.reset(new Heap_Backing_Store(*this->opts_, orb));
         break;
       }
     case Options::REPO_XML_FILE:
       {
-        repository_.reset(new XML_Backing_Store(opts, orb));
+        repository_.reset(new XML_Backing_Store(*this->opts_, orb));
         break;
       }
     case Options::REPO_SHARED_FILES:
       {
-        repository_.reset(new Shared_Backing_Store(opts, orb, this));
+        repository_.reset(new Shared_Backing_Store(*this->opts_, orb, this));
         break;
       }
     case Options::REPO_NONE:
       {
-        repository_.reset(new No_Backing_Store(opts, orb));
+        repository_.reset(new No_Backing_Store(*this->opts_, orb));
         break;
       }
     default:
@@ -236,6 +223,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb, Options& opts)
 int
 ImR_Locator_i::init (Options& opts)
 {
+  this->opts_ = &opts;
   ACE_CString cmdline = opts.cmdline ();
   cmdline += " -orbuseimr 0";
   ACE_ARGV av (cmdline.c_str ());
@@ -243,7 +231,7 @@ ImR_Locator_i::init (Options& opts)
   ACE_TCHAR** argv = av.argv ();
 
   CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "TAO_ImR_Locator");
-  int err = this->init_with_orb (orb.in (), opts);
+  int err = this->init_with_orb (orb.in ());
   return err;
 }
 
@@ -263,16 +251,16 @@ ImR_Locator_i::run (void)
                   ACE_TEXT ("\tStartup Timeout : %ds\n")
                   ACE_TEXT ("\tPersistence : %s\n")
                   ACE_TEXT ("\tMulticast : %C\n"),
-                  ping_interval_.msec (),
-                  startup_timeout_.sec (),
+                  this->opts_->ping_interval ().msec (),
+                  this->opts_->startup_timeout ().sec (),
                   this->repository_->repo_mode (),
                   (this->repository_->multicast () != 0 ?
                     "Enabled" : "Disabled")));
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\tDebug : %d\n")
-                  ACE_TEXT ("\tLocked : %C\n\n"),
-                  debug (),
-                  (read_only_ ? "True" : "False")));
+                      ACE_TEXT ("\tDebug : %d\n")
+                      ACE_TEXT ("\tReadOnly : %C\n\n"),
+                      debug (),
+                      (this->opts_->readonly () ? "True" : "False")));
     }
   this->auto_start_servers ();
 
@@ -344,6 +332,12 @@ void
 ImR_Locator_i::shutdown (bool wait_for_completion)
 {
   this->orb_->shutdown (wait_for_completion);
+}
+
+const Options *
+ImR_Locator_i::opts (void) const
+{
+  return this->opts_;
 }
 
 int
@@ -722,7 +716,7 @@ ImR_Locator_i::add_or_update_server
  const char* server,
  const ImplementationRepository::StartupOptions &options)
 {
-  if (this->read_only_)
+  if (this->opts_->readonly ())
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ImR: Cannot add/update server <%C> due to locked ")
@@ -895,7 +889,7 @@ ImR_Locator_i::remove_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
  const char* id)
 {
-  if (this->read_only_)
+  if (this->opts_->readonly ())
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("ImR: Can't remove server <%C> due to locked database.\n"),
@@ -1040,7 +1034,7 @@ ImR_Locator_i::shutdown_server
             ACE_TEXT ("ImR: Exception while shutting down <%C>\n"),
             id));
         }
-      if (this->throw_shutdown_exceptions_)
+      if (this->opts_->throw_shutdown_exceptions ())
         {
           ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
           _tao_rh->shutdown_server_excep (&h);
@@ -1074,10 +1068,10 @@ ImR_Locator_i::server_is_running
                       id, sior.in ()));
     }
 
-  if (this->unregister_if_address_reused_)
+  if (this->opts_->unregister_if_address_reused ())
     this->repository_->unregister_if_address_reused (id, partial_ior, this);
 
-  CORBA::Object_var obj = this->set_timeout_policy (server_object, this->ping_timeout_);
+  CORBA::Object_var obj = this->set_timeout_policy (server_object, this->opts_->ping_timeout ());
   ImplementationRepository::ServerObject_var srvobj =
     ImplementationRepository::ServerObject::_narrow (obj.in());
 
@@ -1111,9 +1105,9 @@ ImR_Locator_i::server_is_running
           return;
         }
       info.server_info (si);
-      this->pinger_.add_server (si->ping_id (), this->ping_external_, srvobj.in());
+      this->pinger_.add_server (si->ping_id (), this->opts_->ping_external (), srvobj.in());
 
-      AsyncAccessManager *aam_raw;
+      AsyncAccessManager *aam_raw = 0;
       ACE_NEW (aam_raw, AsyncAccessManager (info, *this));
       AsyncAccessManager_ptr aam (aam_raw);
       aam->started_running ();
@@ -1289,9 +1283,9 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
           return;
         }
 
-      if (this->startup_timeout_ > ACE_Time_Value::zero)
+      if (this->opts_->startup_timeout () > ACE_Time_Value::zero)
         {
-          obj = this->set_timeout_policy (obj.in (), this->startup_timeout_);
+          obj = this->set_timeout_policy (obj.in (), this->opts_->startup_timeout ());
         }
 
       info.activator =
@@ -1363,7 +1357,7 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
       if (!this->pinger_.has_server (sip->key_name_.c_str()))
         {
           this->pinger_.add_server (sip->key_name_.c_str(),
-                                    this->ping_external_,
+                                    this->opts_->ping_external (),
                                     sip->server.in());
         }
       return; // already connected
@@ -1385,7 +1379,7 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
           return;
         }
 
-      obj = this->set_timeout_policy (obj.in (), this->ping_timeout_);
+      obj = this->set_timeout_policy (obj.in (), this->opts_->ping_timeout ());
 
       sip->server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
@@ -1401,7 +1395,7 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
                         ACE_TEXT ("ImR: Connected to server <%C>\n"),
                         sip->key_name_.c_str ()));
       this->pinger_.add_server (sip->key_name_.c_str(),
-                                this->ping_external_,
+                                this->opts_->ping_external (),
                                 sip->server.in());
 
 

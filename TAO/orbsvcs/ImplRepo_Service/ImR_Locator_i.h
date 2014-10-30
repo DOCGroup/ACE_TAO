@@ -48,7 +48,7 @@ public:
   int init (Options& opts);
 
   /// Same as above, but use the given orb
-  int init_with_orb (CORBA::ORB_ptr orb, Options& opts);
+  int init_with_orb (CORBA::ORB_ptr orb); //, Options& opts);
 
   /// Cleans up any state created by init*.
   int fini (void);
@@ -58,6 +58,9 @@ public:
 
   /// Shutdown the orb.
   void shutdown (bool wait_for_completion);
+
+  /// Access the options
+  const Options *opts (void) const;
 
   static int debug (void);
   // Note : See the IDL for descriptions of the operations.
@@ -219,6 +222,8 @@ private:
 
   auto_ptr<Locator_Repository> repository_;
 
+  Options *opts_;
+#if 0
   bool read_only_;
   ACE_Time_Value startup_timeout_;
   bool ping_external_;
@@ -227,6 +232,7 @@ private:
 
   bool unregister_if_address_reused_;
   bool throw_shutdown_exceptions_;
+#endif
 };
 
 //----------------------------------------------------------------------------

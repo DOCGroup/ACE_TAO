@@ -23,7 +23,7 @@ UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
   if (reset_start_count)
     {
       needs_update_ = repo_ != 0;
-      si_->start_count = 0;
+      si_->active_info ()->start_count_ = 0;
     }
 }
 

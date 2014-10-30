@@ -70,7 +70,8 @@ module ImplementationRepository
     AAM_SERVER_DEAD,
     AAM_NOT_MANUAL,
     AAM_NO_ACTIVATOR,
-    AAM_NO_COMMANDLINE
+    AAM_NO_COMMANDLINE,
+    AAM_RETRIES_EXCEEDED
   };
 
   struct AccessStateUpdate
@@ -104,4 +105,3 @@ module ImplementationRepository
       raises (InvalidPeer);
   };
 };
-

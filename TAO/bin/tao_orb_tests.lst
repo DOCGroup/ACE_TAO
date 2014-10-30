@@ -380,7 +380,7 @@ TAO/tests/AMI_Buffering/run_timeout.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/AMI_Buffering/run_timeout_reactive.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
 TAO/tests/Big_AMI/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Big_Oneways/run_test.pl: !ST
-TAO/tests/Big_Twoways/run_test.pl: !ST
+TAO/tests/Big_Twoways/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Big_Reply/run_test.pl: !ST
 TAO/tests/Big_Request_Muxing/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Oneways_Invoking_Twoways/run_test.pl: !ST
@@ -502,4 +502,3 @@ TAO/DevGuideExamples/ValueTypes/Messenger/run_test.pl: !MINIMUM !CORBA_E_MICRO
 TAO/DevGuideExamples/ValueTypes/Bank/run_test.pl: !MINIMUM !CORBA_E_MICRO
 TAO/DevGuideExamples/AMH/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/DevGuideExamples/AMH_AMI/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
-
