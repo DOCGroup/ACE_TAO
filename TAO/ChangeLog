@@ -1,3 +1,9 @@
+Fri Oct 31 20:26:36 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/NotifyService/run_test.pl:
+          Fix up the various command line arguments to get the notify
+          service started by the implementation repository.
+
 Thu Oct 30 13:55:13 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
