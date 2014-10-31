@@ -1262,6 +1262,14 @@ project(Proactor Test) : acetest {
   }
 }
 
+project(Proactor_File Test) : acetest {
+  avoids += ace_for_tao
+  exename = Proactor_File_Test
+  Source_Files {
+    Proactor_File_Test.cpp
+  }
+}
+
 project(Proactor Timer Test) : acetest {
   avoids += ace_for_tao
   exename = Proactor_Timer_Test
