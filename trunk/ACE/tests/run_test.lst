@@ -178,6 +178,7 @@ Pipe_Test: !PHARLAP !VxWorks
 Priority_Buffer_Test
 Priority_Reactor_Test: !ACE_FOR_TAO
 Priority_Task_Test
+Proactor_File_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Proactor_Scatter_Gather_Test: !VxWorks !nsk !ACE_FOR_TAO
 Proactor_Test: !VxWorks !LynxOS !nsk !ACE_FOR_TAO !BAD_AIO
 Proactor_Timer_Test: !VxWorks !nsk !ACE_FOR_TAO

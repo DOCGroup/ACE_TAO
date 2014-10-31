@@ -548,11 +548,6 @@ public:
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor (void) const;
-
-protected:
-  /// This is the method which does the real work and is there so that
-  /// the ACE_Asynch_Write_File class can use it too.
-  int shared_write (ACE_WIN32_Asynch_Write_Stream_Result *result);
 };
 
 /**
@@ -943,7 +938,7 @@ private:
   /**
    * This method belongs to ACE_WIN32_Asynch_Write_Stream. It is here
    * to avoid compiler warnings. This method is forwarded to the
-   * ACE_WIN32_Asynch_Write_Stream class.
+   * Write_File specific method with 0 offset values.
    */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,

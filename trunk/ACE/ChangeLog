@@ -1,3 +1,17 @@
+Fri Oct 31 13:49:11 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/WIN32_Asynch_IO.h:
+        * ace/WIN32_Asynch_IO.cpp:
+          Changed ACE_WIN32_Asynch_Write classes to not use shared_write() method
+          for Stream and File IO but use specific write() implementations instead.
+          This fixes Asynch File IO support (specifically writing) for Windows.
+          Fixes Bugzilla #3762 and #3992.
+
+        * tests/Proactor_File_Test.cpp:
+        * tests/run_test.lst:
+        * tests/tests.mpc:
+          Added new example/regression test for Asynch File IO using Proactor.
+
 Wed Oct 29 20:22:38 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * bin/MakeProjectCreator/templates/gnu.mpd: Change LDFLAGS for HP-UX to do install_rpath correctly.
