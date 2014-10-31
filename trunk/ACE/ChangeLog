@@ -1,3 +1,8 @@
+Fri Oct 31 14:10:52 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * rpmbuild/ace-tao.spec:
+          No need for lsb
+
 Fri Oct 31 13:49:11 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * ace/WIN32_Asynch_IO.h:

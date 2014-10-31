@@ -104,7 +104,6 @@ BuildRequires:  sendmail
 BuildRequires:  openssl-devel
 BuildRequires:  gcc-c++
 BuildRequires:  libstdc++-devel
-BuildRequires:  lsb
 
 %if %{?_with_zlib:1}%{!?_with_zlib:0}
 BuildRequires:  zlib-devel
