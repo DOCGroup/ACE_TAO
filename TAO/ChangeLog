@@ -1,3 +1,10 @@
+Sun Nov  2 22:45:52 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
+
+        * orbsvcs/tests/ImplRepo/NotifyService/ntfy.conf:
+        * orbsvcs/tests/ImplRepo/NotifyService/run_test.pl:
+        * orbsvcs/tests/ImplRepo/NotifyService/test.cpp:
+          Fix to work on windows and to get past a Notify start up race.
+
 Fri Oct 31 20:26:36 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/NotifyService/run_test.pl:
