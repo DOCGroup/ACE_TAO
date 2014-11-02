@@ -17,9 +17,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            "Could not resolve Notify Service"),
                           1);
-
-      CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_ =
-        CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
+      try
+        {
+          CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_ =
+            CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
+        }
+      catch (CORBA::OBJECT_NOT_EXIST &)
+        {
+          ACE_DEBUG ((LM_DEBUG, "Test caught Object Not Exist, retrying\n"));
+          CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_ =
+            CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
+        }
 
       orb->destroy ();
 

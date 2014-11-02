@@ -68,7 +68,7 @@ $test->DeleteFile ($nsiorfile);
 ## Start the implementation Repository
 
 print "-------> Starting IMR Locator\n";
-$IMR->Arguments ("-o $imr_imriorfile -d 5"); #$debug_level");
+$IMR->Arguments ("-o $imr_imriorfile -d $debug_level");
 $IMR_status = $IMR->Spawn ();
 if ($IMR_status != 0) {
     print STDERR "ERROR: ImplRepo Service returned $IMR_status\n";
@@ -102,7 +102,7 @@ if ($ns->PutFile ($imriorfile) == -1) {
 }
 
 print "-------> Starting IMR Activator\n";
-$ACT->Arguments("-d 1 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile  -ORBDebugLevel $debug_level");
+$ACT->Arguments("-d 1 -l -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile  -ORBDebugLevel $debug_level");
 $ACT_status = $ACT->Spawn ();
 if ($ACT_status != 0) {
     print STDERR "ERROR: IMR Activator Service returned $ACT_status\n";
@@ -119,9 +119,10 @@ if ($act->WaitForFileTimed ($actiorfile,$act->ProcessStartWaitInterval()) == -1)
 ## Register the NotifyService
 
 print "-------> Register service\n";
+
 $TI->Arguments("-ORBInitRef ImplRepoService=file://$ti_imriorfile"
-               . " add CosNotify:1 -w ../../../Notify_Service/ -c \""
-               . "./tao_cosnotification -boot -NoNameSvc -Factory CosNotify:1/NotifyService -ORBServerId CosNotify -ORBInitRef ImplRepoService=file://$imr_imriorfile -ORBUseIMR 1 -ORBDebugLevel $debug_level"
+               . " add CosNotify:1 -c \""
+               . "$ns_cmd -boot -NoNameSvc -Factory CosNotify:1/NotifyService -ORBServerId CosNotify -ORBInitRef ImplRepoService=file://$imr_imriorfile -ORBUseIMR 1 -ORBSvcConf ntfy.conf"
                . "\"");
 
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval()+45);
