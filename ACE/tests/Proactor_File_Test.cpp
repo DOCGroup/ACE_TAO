@@ -49,6 +49,7 @@
 class FileIOHandler : public ACE_Handler
 {
 public:
+  FileIOHandler ();
   virtual ~FileIOHandler ();
 
   int
@@ -72,10 +73,22 @@ public:
   ACE_Asynch_Read_File reader_;
   ACE_Asynch_Write_File writer_;
 private:
-  int block_count_;
+  int   block_count_;
+#if defined (ACE_WIN32)  
+  bool  read_pending_;
+#endif  
   ACE_FILE_IO peer_;
   ACE_FILE_Connector connector_;
 };
+
+FileIOHandler::FileIOHandler ()
+  : ACE_Handler ()
+  , block_count_ (0)
+#if defined (ACE_WIN32)  
+  , read_pending_ (false)
+#endif
+{
+}
 
 FileIOHandler::~FileIOHandler ()
 {
@@ -162,11 +175,27 @@ int FileIOHandler::Connect()
       ACE_NEW_NORETURN(mb, ACE_Message_Block(FILE_FRAME_SIZE));
       if (reader_.read(*mb, mb->space()) != 0)
       {
-        ACE_ERROR(
-            (LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("FileIOHandler begin read failed")));
+        int errnr = ACE_OS::last_error ();
+        ACE_DEBUG(
+            (LM_INFO, ACE_TEXT("%p [%d]\n"), ACE_TEXT("FileIOHandler begin read failed"), errnr));
         mb->release();
+#if defined (ACE_WIN32)
+        // On older Win32 versions (WinXP, Win2003/2008) asynch IO with disk files is not
+        // reliable and may perform sync IO in certain cases like when the read offset denotes
+        // current end of file. Instead of scheduling a write operation the read will immediately
+        // return with an EOF error.
+        // We circumvent that situation here by not reporting an error and scheduling a read operation
+        // later when we are sure data has been written at the offset in question (after the write finishes).
+        if (errnr != ERROR_HANDLE_EOF)          
+#endif
         result = -1;
       }
+#if defined (ACE_WIN32)
+      else
+      {
+        this->read_pending_ = true;
+      }
+#endif
       // If read worked, psMsg is now controlled by Proactor framework.
     }
   }
@@ -217,8 +246,21 @@ FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
       // Our processing is done; prime the read process again
       ACE_Message_Block *new_mb;
       ACE_NEW_NORETURN(new_mb, ACE_Message_Block(FILE_FRAME_SIZE));
-      reader_.read(*new_mb, new_mb->space(),
-                   result.offset () + result.bytes_transferred ());
+      if (reader_.read(*new_mb, new_mb->space(),
+                       result.offset () + result.bytes_transferred ()) != 0)
+      {
+        int errnr = ACE_OS::last_error ();
+        ACE_DEBUG(
+            (LM_INFO, ACE_TEXT("%p [%d]\n"), ACE_TEXT("FileIOHandler continuing read failed"), errnr));
+        new_mb->release();
+#if defined (ACE_WIN32)
+        this->read_pending_ = false;
+      }
+      else
+      {
+        this->read_pending_ = true;
+#endif
+      }
     }
     else
     {
@@ -246,6 +288,27 @@ FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
   // When the write completes, we get the message block. It's been sent,
   // so we just deallocate it.
   result.message_block().release();
+#if defined (ACE_WIN32)
+  // to circumvent problems on older Win32 (see above) we schedule a read here if none
+  // is pending yet.
+  if (!this->read_pending_)
+  {
+    ACE_Message_Block *mb;
+    ACE_NEW_NORETURN(mb, ACE_Message_Block(FILE_FRAME_SIZE));
+    if (reader_.read(*mb, mb->space(),
+                     (this->block_count_ - 1) * FILE_FRAME_SIZE) != 0)
+    {
+      int errnr = ACE_OS::last_error ();
+      ACE_DEBUG(
+          (LM_INFO, ACE_TEXT("%p [%d]\n"), ACE_TEXT("FileIOHandler read after write failed"), errnr));
+      mb->release();
+    }
+    else
+    {
+      this->read_pending_ = true;
+    }
+  }
+#endif
 }
 
 //***************************************************************************

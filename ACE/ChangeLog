@@ -1,3 +1,13 @@
+Mon Nov  3 12:50:28 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/WIN32_Asynch_IO.cpp:
+          Do not pass holder for bytes written when using OVERLAPPED IO.
+          Pass NULL instead. Recommended by MSDN.
+
+        * tests/Proactor_File_Test.cpp:
+          Circumvent problems with unreliable Async IO on older Win32
+          (WinXP, Win2003/2008).
+
 Fri Oct 31 14:10:52 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * rpmbuild/ace-tao.spec:
