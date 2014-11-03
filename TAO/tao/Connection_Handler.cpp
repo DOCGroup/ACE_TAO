@@ -164,7 +164,11 @@ TAO_Connection_Handler::svc_i (void)
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Connection_Handler::svc_i - "
-                    "loop <%d>\n", current_timeout.msec ()));
+                       "loop <%d> shutdown = %d\n", current_timeout.msec (), this->is_closed_));
+      if (this->is_closed_)
+        {
+          return result;
+        }
     }
 
   if (TAO_debug_level > 0)

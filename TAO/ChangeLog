@@ -1,3 +1,15 @@
+Mon Nov  3 21:07:53 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * orbsvcs/tests/ImplRepo/NotifyService/test.cpp:
+          A single retry on a ONE exception wasn't sufficient in some
+          environments. Added a delay to be sure the notify server gets
+          time to finish its setup.
+
+        * tao/Connection_Handler.cpp:
+          When Thread-Per-Connection is used, a server side cache purge
+          failed as the servicing task held a reference to the connection
+          object but didn't know about the close.
+
 Sun Nov  2 22:45:52 UTC 2014  Phil Mesnier  <mesnier_p@socket.net>
 
         * orbsvcs/tests/ImplRepo/NotifyService/ntfy.conf:
