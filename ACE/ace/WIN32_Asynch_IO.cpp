@@ -585,7 +585,7 @@ ACE_WIN32_Asynch_Read_Stream::shared_read (ACE_WIN32_Asynch_Read_Stream_Result *
   int initiate_result = ::ReadFile (result->handle (),
                                     result->message_block ().wr_ptr (),
                                     bytes_to_read,
-                                    NULL,
+                                    0,
                                     result);
   if (initiate_result == 1)
     // Immediate success: the OVERLAPPED will still get queued.
