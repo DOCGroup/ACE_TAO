@@ -1,3 +1,13 @@
+Tue Nov  4 14:37:56 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ace_inet.doxygen:
+        * etc/ace_qos.doxygen:
+        * etc/ace_rmcast.doxygen:
+        * etc/ace_ssl.doxygen:
+        * etc/acexml.doxygen:
+          Set UML_LOOK to NO, with UML look all members/methods are shown
+          in the diagrams making them unusable
+
 Mon Nov  3 12:50:28 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * ace/WIN32_Asynch_IO.cpp:
