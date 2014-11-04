@@ -74,9 +74,9 @@ public:
   ACE_Asynch_Write_File writer_;
 private:
   int   block_count_;
-#if defined (ACE_WIN32)  
+#if defined (ACE_WIN32)
   bool  read_pending_;
-#endif  
+#endif
   ACE_FILE_IO peer_;
   ACE_FILE_Connector connector_;
 };
@@ -84,7 +84,7 @@ private:
 FileIOHandler::FileIOHandler ()
   : ACE_Handler ()
   , block_count_ (0)
-#if defined (ACE_WIN32)  
+#if defined (ACE_WIN32)
   , read_pending_ (false)
 #endif
 {
@@ -186,7 +186,7 @@ int FileIOHandler::Connect()
         // return with an EOF error.
         // We circumvent that situation here by not reporting an error and scheduling a read operation
         // later when we are sure data has been written at the offset in question (after the write finishes).
-        if (errnr != ERROR_HANDLE_EOF)          
+        if (errnr != ERROR_HANDLE_EOF)
 #endif
         result = -1;
       }
