@@ -1,3 +1,11 @@
+Tue Nov  4 14:38:36 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/ciao.doxygen:
+        * etc/ciao_dds4ccm.doxygen:
+        * tests/IDL_Test/Cornucopia/Cornucopia.doxygen:
+          Set UML_LOOK to NO, with UML look all members/methods are shown
+          in the diagrams making them unusable
+
 Wed Sep 24 19:51:44 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * CIAO version 1.2.8 released.
