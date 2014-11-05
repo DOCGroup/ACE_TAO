@@ -122,7 +122,7 @@ print "-------> Register service\n";
 
 $TI->Arguments("-ORBInitRef ImplRepoService=file://$ti_imriorfile"
                . " add CosNotify:1 -c \""
-               . "$ns_cmd -boot -NoNameSvc -Factory CosNotify:1/NotifyService -ORBServerId CosNotify -ORBInitRef ImplRepoService=file://$imr_imriorfile -ORBUseIMR 1 -ORBSvcConf ntfy.conf"
+               . "$ns_cmd -boot -NoNameSvc -Factory CosNotify:1/NotifyService -ORBServerId CosNotify -ORBInitRef ImplRepoService=file://$imr_imriorfile -ORBUseIMR 1"
                . "\"");
 
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval()+45);
