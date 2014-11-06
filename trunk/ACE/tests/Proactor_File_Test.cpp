@@ -324,7 +324,7 @@ FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
 //
 //***************************************************************************
 void
-FileIOHandler::handle_time_out(const ACE_Time_Value &/*tv*/, const void */*act*/)
+FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act*/)
 {
   // do not schedule more than 16 writes
   if (this->block_count_ < 16)
@@ -357,7 +357,7 @@ FileIOHandler::handle_time_out(const ACE_Time_Value &/*tv*/, const void */*act*/
 
 
 int
-run_main(int /*argc*/, ACE_TCHAR */*argv*/[])
+run_main(int /*argc*/, ACE_TCHAR * /*argv*/[])
 {
   ACE_START_TEST (ACE_TEXT ("Proactor_File_Test"));
 
