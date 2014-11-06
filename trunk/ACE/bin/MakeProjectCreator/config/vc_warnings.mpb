@@ -26,3 +26,9 @@ feature(vc_avoid_this_in_initializer_warnings) {
     DisableSpecificWarnings += 4355
   }
 }
+
+feature(vc_avoid_winsock_warnings) {
+  specific(prop:microsoft) {
+    macros += _WINSOCK_DEPRECATED_NO_WARNINGS
+  }
+}

@@ -1,3 +1,14 @@
+Thu Nov  6 19:45:38 UTC 2014  Johnny Willemsen  <willemsen_j@remedy.nl>
+
+        * bin/MakeProjectCreator/config/vc_warnings.mpb:
+          Visual Studio 2013 Update 3 gives a lot of warnings on deprecated
+          ascii winsock calls but they just work, so no need to change our
+          code. Added new feature vc_avoid_winsock_warnings which is enabled
+          by default, this adds _WINSOCK_DEPRECATED_NO_WARNINGS to the
+          compiler falgs. If you want to see all warnings, set 
+          vc_avoid_winsock_warnings to 0 in your default.features file before
+          generatin the project files
+
 Tue Nov  4 14:37:56 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * etc/ace_inet.doxygen:
