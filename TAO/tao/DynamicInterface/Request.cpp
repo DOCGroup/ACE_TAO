@@ -146,6 +146,9 @@ CORBA::Request::invoke (void)
        this->exceptions_.in (),
        this);
 
+  // forward requested byte order
+  _tao_call._tao_byte_order (this->_tao_byte_order ());
+
   _tao_call.invoke (0, 0);
 
   // If we returned without an exception being thrown the response
@@ -179,6 +182,9 @@ CORBA::Request::send_oneway (void)
       this->opname_,
       static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
       TAO::TAO_SYNCHRONOUS_INVOCATION);
+
+  // forward requested byte order
+  _tao_call._tao_byte_order (this->_tao_byte_order ());
 
   _tao_call.invoke (0, 0);
 }
@@ -222,6 +228,9 @@ CORBA::Request::send_deferred (void)
       this->orb_->orb_core (),
       this);
 
+  // forward requested byte order
+  _tao_call._tao_byte_order (this->_tao_byte_order ());
+
   _tao_call.invoke (0, 0);
 }
 
@@ -246,6 +255,9 @@ CORBA::Request::sendc (CORBA::Object_ptr handler)
        const_cast<char *> (this->opname_),
        static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
        0); // collocation proxy broker
+
+  // forward requested byte order
+  _tao_call._tao_byte_order (this->_tao_byte_order ());
 
   _tao_call.invoke (dynamic_cast<Messaging::ReplyHandler_ptr>(handler),
                     &CORBA::Request::_tao_reply_stub);

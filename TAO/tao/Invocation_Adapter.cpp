@@ -305,6 +305,9 @@ namespace TAO
     TAO::Synch_Twoway_Invocation synch (this->target_,  r, details,
                                         true);
 
+    // forward requested byte order
+    synch._tao_byte_order (this->byte_order_);
+
     synch.set_retry_state (retry_state);
 
     Invocation_Status const status = synch.remote_twoway (max_wait_time);
@@ -333,6 +336,9 @@ namespace TAO
                                      ACE_Time_Value *&max_wait_time)
   {
     TAO::Synch_Oneway_Invocation synch (this->target_, r, details);
+
+    // forward requested byte order
+    synch._tao_byte_order (this->byte_order_);
 
     Invocation_Status const s = synch.remote_oneway (max_wait_time);
 

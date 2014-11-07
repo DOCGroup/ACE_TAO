@@ -152,6 +152,8 @@ namespace TAO
 
         TAO_OutputCDR &cdr = transport->out_stream ();
 
+        CDR_Byte_Order_Guard cdr_guard (cdr, this->_tao_byte_order ());
+
         cdr.message_attributes (this->details_.request_id (),
                                 this->resolver_.stub (),
                                 TAO_Message_Semantics (),
@@ -182,6 +184,8 @@ namespace TAO
         s = this->send_message (cdr,
                                 TAO_Message_Semantics (),
                                 max_wait_time);
+
+        cdr_guard.reset (); // CDR_Byte_Order_Guard
 
         ace_mon.release();
 
@@ -812,70 +816,74 @@ namespace TAO
 
             TAO_OutputCDR &cdr = transport->out_stream ();
 
-            cdr.message_attributes (this->details_.request_id (),
-                                    this->resolver_.stub (),
-                                    TAO_Message_Semantics (TAO_Message_Semantics::
-                                                           TAO_ONEWAY_REQUEST),
-                                    max_wait_time);
+            {
+              CDR_Byte_Order_Guard cdr_guard (cdr, this->_tao_byte_order ());
 
-            this->write_header (cdr);
+              cdr.message_attributes (this->details_.request_id (),
+                                      this->resolver_.stub (),
+                                      TAO_Message_Semantics (TAO_Message_Semantics::
+                                                             TAO_ONEWAY_REQUEST),
+                                      max_wait_time);
 
-            this->marshal_data (cdr);
+              this->write_header (cdr);
 
-            countdown.update ();
+              this->marshal_data (cdr);
 
-            if (transport->is_connected ())
-              {
-                // We have a connected transport so we can send the message
-                s = this->send_message (cdr,
-                                        TAO_Message_Semantics (TAO_Message_Semantics::
-                                                               TAO_ONEWAY_REQUEST),
-                                        max_wait_time);
+              countdown.update ();
 
-                if (transport->wait_strategy ()->non_blocking () == 0 &&
-                    transport->orb_core ()->client_factory ()->use_cleanup_options ())
-                  {
-                    if (!transport->wait_strategy ()->is_registered())
-                      {
-                        ACE_Event_Handler * const eh =
-                          transport->event_handler_i ();
+              if (transport->is_connected ())
+                {
+                  // We have a connected transport so we can send the message
+                  s = this->send_message (cdr,
+                                          TAO_Message_Semantics (TAO_Message_Semantics::
+                                                                 TAO_ONEWAY_REQUEST),
+                                          max_wait_time);
 
-                        ACE_Reactor * const r =
-                          transport->orb_core ()->reactor ();
+                  if (transport->wait_strategy ()->non_blocking () == 0 &&
+                      transport->orb_core ()->client_factory ()->use_cleanup_options ())
+                    {
+                      if (!transport->wait_strategy ()->is_registered())
+                        {
+                          ACE_Event_Handler * const eh =
+                            transport->event_handler_i ();
 
-                        if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
-                          {
-                            if (TAO_debug_level > 0)
-                              TAOLIB_ERROR ((LM_ERROR,
-                                          ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
-                                          ACE_TEXT ("remote_oneway transport[%d] ")
-                                          ACE_TEXT ("registration withreactor ")
-                                          ACE_TEXT ("returned an error\n"),
-                                          transport->id ()));
-                          }
-                        else
-                          {
-                            // Only set this flag when registration succeeds
-                            transport->wait_strategy ()->is_registered (true);
-                          }
-                      }
-                  }
+                          ACE_Reactor * const r =
+                            transport->orb_core ()->reactor ();
 
-              }
-            else
-              {
-                if (TAO_debug_level > 4)
-                  TAOLIB_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
-                              ACE_TEXT ("remote_oneway, queueing message\n")));
+                          if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
+                            {
+                              if (TAO_debug_level > 0)
+                                TAOLIB_ERROR ((LM_ERROR,
+                                            ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
+                                            ACE_TEXT ("remote_oneway transport[%d] ")
+                                            ACE_TEXT ("registration withreactor ")
+                                            ACE_TEXT ("returned an error\n"),
+                                            transport->id ()));
+                            }
+                          else
+                            {
+                              // Only set this flag when registration succeeds
+                              transport->wait_strategy ()->is_registered (true);
+                            }
+                        }
+                    }
 
-                if (transport->format_queue_message (cdr,
-                                                     max_wait_time,
-                                                     this->resolver_.stub()) != 0)
-                  {
-                    s = TAO_INVOKE_FAILURE;
-                  }
-              }
+                }
+              else
+                {
+                  if (TAO_debug_level > 4)
+                    TAOLIB_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
+                                ACE_TEXT ("remote_oneway, queueing message\n")));
+
+                  if (transport->format_queue_message (cdr,
+                                                       max_wait_time,
+                                                       this->resolver_.stub()) != 0)
+                    {
+                      s = TAO_INVOKE_FAILURE;
+                    }
+                }
+            } // CDR_Byte_Order_Guard
           }
 
 #if TAO_HAS_INTERCEPTORS == 1

@@ -26,7 +26,22 @@ namespace TAO
     , collocation_opportunity_ (collocation_opportunity)
     , type_ (type)
     , mode_ (mode)
+    , byte_order_ (TAO_ENCAP_BYTE_ORDER)
   {
+  }
+
+  ACE_INLINE
+  void
+  Invocation_Adapter::_tao_byte_order (int byte_order)
+  {
+    this->byte_order_ = byte_order;
+  }
+
+  ACE_INLINE
+  int
+  Invocation_Adapter::_tao_byte_order ()
+  {
+    return this->byte_order_;
   }
 }
 

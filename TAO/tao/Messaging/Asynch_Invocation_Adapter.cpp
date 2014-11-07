@@ -189,6 +189,9 @@ namespace TAO
        op,
        this->safe_rd_.release ());
 
+    // forward requested byte order
+    asynch._tao_byte_order (this->_tao_byte_order ());
+
     Invocation_Status const s = asynch.remote_invocation (max_wait_time);
 
     if (s == TAO_INVOKE_RESTART &&
