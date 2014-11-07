@@ -1,3 +1,27 @@
+Fri Nov  7 10:01:43 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/DynamicInterface/DII_Invocation.h:
+        * tao/DynamicInterface/DII_Invocation.cpp:
+        * tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * tao/DynamicInterface/Request.cpp:
+        * tao/Invocation_Adapter.h:
+        * tao/Invocation_Adapter.inl:
+        * tao/Invocation_Adapter.cpp:
+        * tao/Messaging/Asynch_Invocation.cpp:
+        * tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * tao/Remote_Invocation.h:
+        * tao/Remote_Invocation.inl:
+        * tao/Remote_Invocation.cpp:
+        * tao/Synch_Invocation.cpp:
+          Refactored Invocation(_Adapter) classes to integrate support
+          for output byte_order overrides.
+          This makes supporting DII gateway byte_order overrides easier
+          and more consistent and removes some extra locks in the DII
+          invocation path.
+          Fixed broken support for DII AMI byte_order overrides and
+          cleaned up unused classes and unnecessary overrides.
+
 Tue Nov  4 23:58:48 UTC 2014  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * orbsvcs/tests/ImplRepo/NotifyService/run_test.pl:

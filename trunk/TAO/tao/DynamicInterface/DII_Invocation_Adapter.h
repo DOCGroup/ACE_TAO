@@ -21,6 +21,9 @@
 
 
 #include "tao/Invocation_Adapter.h"
+#include "tao/Asynch_Reply_Dispatcher_Base.h"
+#include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
+#include "ace/Auto_Functor.h"
 
 #if defined (TAO_HAS_AMI)
 #include "tao/Messaging/Messaging.h"
@@ -35,8 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Operation_Details;
 class TAO_Stub;
 class TAO_ORB_Core;
-class TAO_DII_Deferred_Reply_Dispatcher;
-class TAO_DII_Asynch_Reply_Dispatcher;
 namespace  CORBA
 {
   class Object;
@@ -133,7 +134,7 @@ namespace TAO
    * @brief This class is for deferred DII invocation.
    */
   class TAO_DynamicInterface_Export DII_Deferred_Invocation_Adapter
-    : protected Invocation_Adapter
+    : public Invocation_Adapter
   {
   public:
     DII_Deferred_Invocation_Adapter (
@@ -168,43 +169,14 @@ namespace TAO
     CORBA::Request *request_;
 
     /// Reply dispatcher for the current Invocation.
-    TAO_DII_Deferred_Reply_Dispatcher *rd_;
+    /// Use special autopointer like holder to prevent leaking memory from
+    /// the reply dispatcher that we create.
+    ACE_Utils::Auto_Functor <TAO_DII_Deferred_Reply_Dispatcher,
+                             ARDB_Refcount_Functor> rd_;
 
     /// Cache the orb_core
     TAO_ORB_Core * const orb_core_;
   };
-
-#if defined (TAO_HAS_AMI)
-  /**
-   * @class  DII_Asynch_Invocation_Adapter
-   *
-   * @brief This class is for asynchronous DII invocation.
-   */
-  class TAO_DynamicInterface_Export DII_Asynch_Invocation_Adapter
-    : protected DII_Invocation_Adapter
-  {
-  public:
-    DII_Asynch_Invocation_Adapter (
-       CORBA::Object *target,
-       Argument **args,
-       int arg_number,
-       const char *operation,
-       int op_len,
-       CORBA::Request *req,
-       TAO::Invocation_Mode mode = TAO_DII_ASYNCH_INVOCATION);
-
-    /// Invoke the target
-    void invoke_reply_handler (Messaging::ReplyHandler_ptr reply_handler_ptr);
-
-  protected:
-    virtual Invocation_Status invoke_twoway (
-                TAO_Operation_Details &op,
-                CORBA::Object_var &effective_target,
-                Profile_Transport_Resolver &r,
-                ACE_Time_Value *&max_wait_time,
-                Invocation_Retry_State *retry_state = 0);
-  };
-#endif /* TAO_HAS_AMI */
 
   /**
    * @class  DII_Oneway_Invocation_Adapter

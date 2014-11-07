@@ -5,12 +5,15 @@
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Stub.h"
 #include "tao/Connection_Handler.h"
-#include "tao/operation_details.h"
 #include "tao/ORB_Core.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Network_Priority_Protocols_Hooks.h"
 #include "tao/debug.h"
 #include "tao/SystemException.h"
+
+#if !defined (__ACE_INLINE__)
+# include "tao/Remote_Invocation.inl"
+#endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,6 +31,7 @@ namespace TAO
                        response_expected,
                        true /* request_is_remote */ )
     , resolver_ (resolver)
+    , byte_order_(TAO_ENCAP_BYTE_ORDER)
   {
   }
 
@@ -106,16 +110,6 @@ namespace TAO
       }
 
     this->resolver_.transport ()->assign_translators (0, &out_stream);
-  }
-
-  void
-  Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
-  {
-    // Marshal application data
-    if (this->details_.marshal_args (out_stream) == false)
-      {
-        throw ::CORBA::MARSHAL ();
-      }
   }
 
   Invocation_Status

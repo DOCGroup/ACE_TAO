@@ -66,51 +66,55 @@ namespace TAO
                           transport->output_cdr_lock (), TAO_INVOKE_FAILURE);
 
         TAO_OutputCDR & cdr =
-          this->resolver_.transport ()->messaging_object ()->out_stream ();
+          this->resolver_.transport ()->out_stream ();
 
-        // Oneway semantics.  See comments for below send_message()
-        // call.
-        cdr.message_attributes (this->details_.request_id (),
-                                this->resolver_.stub (),
-                                TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST,
-                                                       TAO_Message_Semantics::TAO_ASYNCH_CALLBACK),
-                                max_wait_time);
+        {
+          CDR_Byte_Order_Guard cdr_guard (cdr, this->_tao_byte_order ());
 
-        this->write_header (cdr);
+          // Oneway semantics.  See comments for below send_message()
+          // call.
+          cdr.message_attributes (this->details_.request_id (),
+                                  this->resolver_.stub (),
+                                  TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST,
+                                                         TAO_Message_Semantics::TAO_ASYNCH_CALLBACK),
+                                  max_wait_time);
 
-        this->marshal_data (cdr);
+          this->write_header (cdr);
 
-        // Register a reply dispatcher for this invocation. Use the
-        // preallocated reply dispatcher.
-        TAO_Bind_Dispatcher_Guard dispatch_guard (
-          this->details_.request_id (),
-          this->safe_rd_.get (),
-          transport->tms ());
+          this->marshal_data (cdr);
 
-        // Now that we have bound the reply dispatcher to the map, just
-        // loose ownership of the reply dispatcher.
-        this->safe_rd_.release ();
+          // Register a reply dispatcher for this invocation. Use the
+          // preallocated reply dispatcher.
+          TAO_Bind_Dispatcher_Guard dispatch_guard (
+            this->details_.request_id (),
+            this->safe_rd_.get (),
+            transport->tms ());
 
-        if (dispatch_guard.status () != 0)
-          {
-            // @@ What is the right way to handle this error? Do we need
-            // to call the interceptors in this case?
-            throw ::CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
-          }
+          // Now that we have bound the reply dispatcher to the map, just
+          // loose ownership of the reply dispatcher.
+          this->safe_rd_.release ();
 
-        // Do not unbind during destruction. We need the entry to be
-        // there in the map since the reply dispatcher depends on
-        // that. This is also a trigger to loose the ownership of the
-        // reply dispatcher.
-        dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
+          if (dispatch_guard.status () != 0)
+            {
+              // @@ What is the right way to handle this error? Do we need
+              // to call the interceptors in this case?
+              throw ::CORBA::INTERNAL (TAO::VMCID, CORBA::COMPLETED_NO);
+            }
 
-        // Send it as a oneway request. It will make all the required
-        // paraphernalia within the ORB to fire, like buffering if
-        // send blocks etc.
-        s = this->send_message (cdr,
-                                TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST,
-                                                       TAO_Message_Semantics::TAO_ASYNCH_CALLBACK),
-                                max_wait_time);
+          // Do not unbind during destruction. We need the entry to be
+          // there in the map since the reply dispatcher depends on
+          // that. This is also a trigger to loose the ownership of the
+          // reply dispatcher.
+          dispatch_guard.status (TAO_Bind_Dispatcher_Guard::NO_UNBIND);
+
+          // Send it as a oneway request. It will make all the required
+          // paraphernalia within the ORB to fire, like buffering if
+          // send blocks etc.
+          s = this->send_message (cdr,
+                                  TAO_Message_Semantics (TAO_Message_Semantics::TAO_ONEWAY_REQUEST,
+                                                         TAO_Message_Semantics::TAO_ASYNCH_CALLBACK),
+                                  max_wait_time);
+        } // CDR_Byte_Order_Guard
 
         ace_mon.release();
 
