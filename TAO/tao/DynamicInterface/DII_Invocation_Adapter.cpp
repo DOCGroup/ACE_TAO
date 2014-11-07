@@ -3,7 +3,6 @@
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/DynamicInterface/DII_Invocation_Adapter.h"
 #include "tao/DynamicInterface/DII_Invocation.h"
-#include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
 #include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
 #include "tao/DynamicInterface/Request.h"
 
@@ -122,21 +121,16 @@ namespace TAO
         throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
       }
 
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, transport->output_cdr_lock (),
-                      TAO_INVOKE_FAILURE);
-
-    transport->messaging_object ()->out_stream ().reset_byte_order (
-        request_->_tao_byte_order ());
-
     TAO::DII_Invocation synch (this->target_,
                                r,
                                op,
                                this->exception_list_,
                                this->request_);
 
-    ace_mon.release();
+    // forward requested byte order
+    synch._tao_byte_order (this->_tao_byte_order ());
 
-    Invocation_Status status = synch.remote_invocation (max_wait_time);
+    Invocation_Status status = synch.remote_twoway (max_wait_time);
 
     if (status == TAO_INVOKE_RESTART &&
         (synch.reply_status () == GIOP::LOCATION_FORWARD ||
@@ -186,12 +180,19 @@ namespace TAO
   {
     // New reply dispatcher on the heap, because we will go out of
     // scope and hand over the reply dispatcher to the ORB.
-    // So this->rd_ is 0, because we do not need to
-    // hold a pointer to it.
-    ACE_NEW_THROW_EX (this->rd_,
+    // Manage it in a reference counting Auto_Functor based autopointer
+    // to prevent memory leaks. The invoke may encounter errors
+    // before being able to handover the dispatcher to the invocation
+    // using and managing it.
+    TAO_DII_Deferred_Reply_Dispatcher *new_rd = 0;
+    ACE_NEW_THROW_EX (new_rd,
         TAO_DII_Deferred_Reply_Dispatcher (this->request_,
                                            this->orb_core_),
                       CORBA::NO_MEMORY ());
+
+    TAO_Asynch_Reply_Dispatcher_Base::intrusive_add_ref (new_rd);
+
+    this->rd_.reset (new_rd);
 
     Invocation_Adapter::invoke (ex, ex_count);
   }
@@ -245,20 +246,14 @@ namespace TAO
         throw CORBA::TRANSIENT (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
       }
 
-    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, transport->output_cdr_lock (),
-                      TAO_INVOKE_FAILURE);
-
-    transport->messaging_object ()->out_stream ().reset_byte_order (
-      request_->_tao_byte_order ());
-
     TAO::DII_Deferred_Invocation synch (
         this->target_,
         r,
         op,
-        this->rd_,
-        this->request_);
+        this->rd_.get ());
 
-    ace_mon.release ();
+    // forward requested byte order
+    synch._tao_byte_order (this->_tao_byte_order ());
 
     Invocation_Status status = synch.remote_invocation (max_wait_time);
 
@@ -268,36 +263,6 @@ namespace TAO
       }
 
     return status;
-  }
-
-  DII_Asynch_Invocation_Adapter::DII_Asynch_Invocation_Adapter (
-      CORBA::Object *target,
-      Argument **args,
-      int arg_count,
-      const char *operation,
-      int op_len,
-      CORBA::Request *req,
-      TAO::Invocation_Mode mode)
-    : DII_Invocation_Adapter (target,
-                              args,
-                              arg_count,
-                              operation,
-                              op_len,
-                              0,
-                              req,
-                              mode)
-  {
-  }
-
-  Invocation_Status
-  DII_Asynch_Invocation_Adapter::invoke_twoway (
-        TAO_Operation_Details &,
-        CORBA::Object_var &,
-        Profile_Transport_Resolver &,
-        ACE_Time_Value *&,
-        Invocation_Retry_State *)
-  {
-    return TAO_INVOKE_FAILURE;
   }
 
   DII_Oneway_Invocation_Adapter::DII_Oneway_Invocation_Adapter (

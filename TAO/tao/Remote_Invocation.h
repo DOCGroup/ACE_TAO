@@ -23,6 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "tao/operation_details.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Operation_Details;
@@ -63,7 +65,31 @@ namespace TAO
                        TAO_Operation_Details &detail,
                        bool response_expected);
 
+    /**
+     * @param byte_order The intended byte order for the message output
+     * stream. For use in message gateways that forward messages from
+     * sources with different byte order than the native order.
+     */
+    void _tao_byte_order (int byte_order);
+
+    /**
+     * Get the intended byte order for the message output stream.
+     * In case of gateway messages this could divert from the native
+     * byte order.
+     */
+    int _tao_byte_order ();
+
   protected:
+
+    struct CDR_Byte_Order_Guard
+    {
+      TAO_OutputCDR& cdr_;
+      int byte_order_;
+      int present_byte_order_;
+      void reset ();
+      CDR_Byte_Order_Guard(TAO_OutputCDR&, int);
+      ~CDR_Byte_Order_Guard(void);
+    };
 
     /// Initialize the @a spec.
     void init_target_spec (TAO_Target_Specification &spec, TAO_OutputCDR& output);
@@ -82,10 +108,17 @@ namespace TAO
   protected:
     /// Our resolver
     Profile_Transport_Resolver &resolver_;
+
+    /// Intended byte order for message output stream
+    int byte_order_;
   };
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+# include "tao/Remote_Invocation.inl"
+#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

@@ -127,6 +127,20 @@ namespace TAO
      */
     virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
 
+    /**
+     * @param byte_order The intended byte order for the message output
+     * stream. For use in message gateways that forward messages from
+     * sources with different byte order than the native order.
+     */
+    void _tao_byte_order (int byte_order);
+
+    /**
+     * Get the intended byte order for the message output stream.
+     * In case of gateway messages this could divert from the native
+     * byte order.
+     */
+    int _tao_byte_order ();
+
   protected:
 
     /**
@@ -279,6 +293,9 @@ namespace TAO
 
     /// The invocation mode
     Invocation_Mode const mode_;
+
+    /// Intended byte order for message output stream
+    int byte_order_;
   };
 } // End namespace TAO
 

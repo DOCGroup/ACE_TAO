@@ -57,7 +57,7 @@ namespace TAO
     virtual Dynamic::ParameterList *arguments (void);
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
-    Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time);
+  protected:
 
     virtual Invocation_Status handle_user_exception (TAO_InputCDR &cdr);
 
@@ -66,7 +66,6 @@ namespace TAO
 
     /// Back pointer to the DII request that created us.
     CORBA::Request_ptr host_;
-
   };
 
   class TAO_DynamicInterface_Export DII_Deferred_Invocation
@@ -79,53 +78,11 @@ namespace TAO
                              Profile_Transport_Resolver &resolver,
                              TAO_Operation_Details &detail,
                              TAO_DII_Deferred_Reply_Dispatcher *rd,
-                             CORBA::Request_ptr req,
                              bool response_expected = true);
 
 #if TAO_HAS_INTERCEPTORS ==1
     virtual Dynamic::ParameterList *arguments (void);
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
-
-    Invocation_Status remote_invocation (ACE_Time_Value *max_wait_time);
-
-  private:
-    /// Back pointer to the DII request that created us.
-    CORBA::Request_ptr host_;
-  };
-
-  /**
-   * @class TAO_GIOP_DII_Asynch_Invocation
-   *
-   * @brief This class is responsible to send the asynchronous
-   * invocation.
-   *
-   * This class is responsible to send the asynchronous
-   * invocation. This class connects (or looks up a connection from the cache)
-   * to the remote server, builds the CDR stream for the Request, send
-   * the CDR stream and returns.
-   *
-   */
-  class TAO_DynamicInterface_Export TAO_GIOP_DII_Asynch_Invocation
-    : public TAO::Asynch_Remote_Invocation
-  {
-  public:
-    TAO_GIOP_DII_Asynch_Invocation (TAO_Stub *data,
-                                    TAO_ORB_Core* orb_core,
-                                    CORBA::Boolean argument_flag,
-                                    const CORBA::Request_ptr req,
-                                    CORBA::Object_ptr reply_handler,
-                                    int byte_order = TAO_ENCAP_BYTE_ORDER);
-
-    int invoke (void);
-
-  private:
-    /// Implementation of the invoke() methods, handles the basic
-    /// send/reply code and the system exceptions.
-    int invoke_i (void);
-
-
-    /// Reply dispatcher for the current synchronous Asynch_Invocation.
-    TAO_DII_Asynch_Reply_Dispatcher *rd_;
   };
 
 }

@@ -74,12 +74,6 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
   Invocation_Status
-  DII_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
-  {
-    return Synch_Twoway_Invocation::remote_twoway (max_wait_time);
-  }
-
-  Invocation_Status
   DII_Invocation::handle_user_exception (TAO_InputCDR &cdr)
   {
     Reply_Guard mon (this, TAO_INVOKE_FAILURE);
@@ -158,15 +152,14 @@ namespace TAO
       Profile_Transport_Resolver &resolver,
       TAO_Operation_Details &detail,
       TAO_DII_Deferred_Reply_Dispatcher *rd,
-      CORBA::Request_ptr req,
       bool response_expected)
     : Asynch_Remote_Invocation (otarget,
                                 resolver,
                                 detail,
                                 rd,
                                 response_expected)
-      , host_ (req)
   {
+    this->safe_rd_->transport (this->resolver_.transport ());
   }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -199,14 +192,6 @@ namespace TAO
     return safe_parameter_list._retn ();
   }
 #endif /* TAO_HAS_INTERCEPTORS == 1*/
-
-  Invocation_Status
-  DII_Deferred_Invocation::remote_invocation (ACE_Time_Value *max_wait_time)
-  {
-    this->safe_rd_->transport (this->resolver_.transport ());
-
-    return Asynch_Remote_Invocation::remote_invocation (max_wait_time);
-  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
