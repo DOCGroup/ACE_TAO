@@ -32,10 +32,10 @@ namespace TAO
   }
 
   ACE_INLINE
-  Remote_Invocation::CDR_Byte_Order_Guard::CDR_Byte_Order_Guard (
+  CDR_Byte_Order_Guard::CDR_Byte_Order_Guard (
       TAO_OutputCDR& cdr, int byte_order)
-      : cdr_(cdr), byte_order_(byte_order), present_byte_order_(
-          cdr.byte_order())
+      : cdr_(cdr), byte_order_ (byte_order)
+      , present_byte_order_ (cdr.byte_order())
   {
     if (byte_order_ != present_byte_order_)
     {
@@ -44,19 +44,19 @@ namespace TAO
   }
 
   ACE_INLINE
-  Remote_Invocation::CDR_Byte_Order_Guard::~CDR_Byte_Order_Guard ()
-  {
-    this->reset ();
-  }
-
-  ACE_INLINE
-  void Remote_Invocation::CDR_Byte_Order_Guard::reset ()
+  void CDR_Byte_Order_Guard::reset ()
   {
     if (byte_order_ != present_byte_order_)
     {
       cdr_.reset_byte_order(byte_order_);
       present_byte_order_ = byte_order_;
     }
+  }
+
+  ACE_INLINE
+  CDR_Byte_Order_Guard::~CDR_Byte_Order_Guard ()
+  {
+    reset ();
   }
 }
 
