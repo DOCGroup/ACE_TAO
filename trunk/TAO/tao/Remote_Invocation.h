@@ -81,16 +81,6 @@ namespace TAO
 
   protected:
 
-    struct CDR_Byte_Order_Guard
-    {
-      TAO_OutputCDR& cdr_;
-      int byte_order_;
-      int present_byte_order_;
-      void reset ();
-      CDR_Byte_Order_Guard(TAO_OutputCDR&, int);
-      ~CDR_Byte_Order_Guard(void);
-    };
-
     /// Initialize the @a spec.
     void init_target_spec (TAO_Target_Specification &spec, TAO_OutputCDR& output);
 
@@ -111,6 +101,16 @@ namespace TAO
 
     /// Intended byte order for message output stream
     int byte_order_;
+  };
+
+  struct TAO_Export CDR_Byte_Order_Guard
+  {
+    TAO_OutputCDR& cdr_;
+    int byte_order_;
+    int present_byte_order_;
+    void reset ();
+    CDR_Byte_Order_Guard (TAO_OutputCDR&, int);
+    ~CDR_Byte_Order_Guard ();
   };
 }
 
