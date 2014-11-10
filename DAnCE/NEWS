@@ -1,8 +1,12 @@
-USER VISIBLE CHANGES BETWEEN DAnCE-1.2.8 and DAnCE-1.2.9
-=======================================================
+USER VISIBLE CHANGES BETWEEN DAnCE-1.2.8 and DAnCE-1.3.0
+========================================================
+
+. Reduced size of all doxygen documentation by changing the
+  type of diagrams shown
+
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.7 and DAnCE-1.2.8
-=======================================================
+========================================================
 
 . Any line starting with # in the localityconfig files is
   now handled as comment line.
@@ -11,22 +15,22 @@ USER VISIBLE CHANGES BETWEEN DAnCE-1.2.7 and DAnCE-1.2.8
   by default by the locality manager
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.6 and DAnCE-1.2.7
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.5 and DAnCE-1.2.6
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.4 and DAnCE-1.2.5
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.3 and DAnCE-1.2.4
-=======================================================
+========================================================
 
 . Fixed handling of bounded strings as part of the cdp.
   For bounded strings now a boundedString element with
@@ -34,17 +38,17 @@ USER VISIBLE CHANGES BETWEEN DAnCE-1.2.3 and DAnCE-1.2.4
   This bound has to match the bound in IDL.
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.2 and DAnCE-1.2.3
-=======================================================
+========================================================
 
 . Fixes for the Android port
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.1 and DAnCE-1.2.2
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.2.0 and DAnCE-1.2.1
-=======================================================
+========================================================
 
 . Extended DAnCE Config Handlers to support array
 
@@ -52,93 +56,93 @@ USER VISIBLE CHANGES BETWEEN DAnCE-1.2.0 and DAnCE-1.2.1
   basic types, will default to 0 or false for boolean
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.9 and DAnCE-1.2.0
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.8 and DAnCE-1.1.9
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.7 and DAnCE-1.1.8
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.6 and DAnCE-1.1.7
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.5 and DAnCE-1.1.6
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.4 and DAnCE-1.1.5
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.3 and DAnCE-1.1.4
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.2 and DAnCE-1.1.3
-=======================================================
+========================================================
 
-. The XML parsing support libraries have been moved to ACE
+. The XML parsing support libraries has been moved to ACE
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.1 and DAnCE-1.1.2
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.1.0 and DAnCE-1.1.1
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.8 and DAnCE-1.1.0
-=======================================================
+========================================================
 
 . Added support for specify an additional open_mode for each dance
   plugin. This open mode is than passed to ACE_DLL::open.
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.7 and DAnCE-1.0.8
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.6 and DAnCE-1.0.7
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.5 and DAnCE-1.0.6
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.4 and DAnCE-1.0.5
-=======================================================
+========================================================
 
 . Fixed some memory leaks
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.3 and DAnCE-1.0.4
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.2 and DAnCE-1.0.3
-=======================================================
+========================================================
 
 . None
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.1 and DAnCE-1.0.2
-=======================================================
+========================================================
 
 . Significant re-work of the internal DAnCE logging system.  Many log
   message levels have changed.  Details of the intended logging levels
@@ -166,16 +170,16 @@ USER VISIBLE CHANGES BETWEEN DAnCE-1.0.1 and DAnCE-1.0.2
   should now be propagated to the user with a human-readable error message.
 
 USER VISIBLE CHANGES BETWEEN DAnCE-1.0.0 and DAnCE-1.0.1
-=======================================================
+========================================================
 
 USER VISIBLE CHANGES BETWEEN DAnCE-0.8.3 and DAnCE-1.0.0
-=======================================================
+========================================================
 
 . The option --node-map to use a *.dat file for the node manager map
   has been replaced by the --cdd option with as argument a  *.cdd xml file.
 
 USER VISIBLE CHANGES BETWEEN DAnCE-0.8.2 and DAnCE-0.8.3
-=======================================================
+========================================================
 
 . DAnCE has been made an entirely separate product from CIAO, and has
   been moved from ACE_wrappers/TAO/CIAO/DAnCE to

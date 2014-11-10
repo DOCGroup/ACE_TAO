@@ -1,5 +1,8 @@
-USER VISIBLE CHANGES BETWEEN CIAO-1.2.8 and CIAO-1.2.9
+USER VISIBLE CHANGES BETWEEN CIAO-1.2.8 and CIAO-1.3.0
 =======================================================
+
+. Reduced size of all doxygen documentation by changing the
+  type of diagrams shown
 
 USER VISIBLE CHANGES BETWEEN CIAO-1.2.7 and CIAO-1.2.8
 =======================================================
