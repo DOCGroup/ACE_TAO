@@ -7,6 +7,10 @@ USER VISIBLE CHANGES BETWEEN TAO-2.2.8 and TAO-2.2.9
   A base supplied without a span indicates the client may use only a single port. A span
   supplied without a base is silently ignored.
 
+. Fixed the manual activation mode of the Implementation Repository
+
+. Reintroduced the restart attempt limiting of the Implementation Repository
+
 USER VISIBLE CHANGES BETWEEN TAO-2.2.7 and TAO-2.2.8
 ====================================================
 
