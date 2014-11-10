@@ -4,7 +4,6 @@
 
 #include "ace/Log_Msg.h"
 
-
 TestEventConsumer_i::TestEventConsumer_i (CORBA::ORB_ptr orb, bool hang)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     hang_ (hang),
@@ -38,7 +37,6 @@ TestEventConsumer_i::ORB_task::svc ()
     }
   return 0;
 }
-
 
 void
 TestEventConsumer_i::push (const CORBA::Any & data)

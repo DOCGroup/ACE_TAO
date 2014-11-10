@@ -26,7 +26,7 @@
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#endif
+#endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 #include "tao/Policy_ForwardC.h"
 #include "tao/Versioned_Namespace.h"

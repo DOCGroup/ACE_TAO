@@ -116,7 +116,6 @@ if ($client_status != 0) {
 $SV2->Kill ();
 $SV1->Kill ();
 
-
 $server1->DeleteFile($ior1file);
 $server2->DeleteFile($ior2file);
 $server2->DeleteFile($ior1file);

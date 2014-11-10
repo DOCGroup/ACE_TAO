@@ -61,6 +61,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // Initialize the ORB.
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var s_orb;
 
       // Find the Naming Service.
       CORBA::Object_var obj = orb->resolve_initial_references ("NameService");
@@ -133,8 +134,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           int no_args = 0;
           ACE_TCHAR **no_argv = 0;
-          CORBA::ORB_var s_orb = CORBA::ORB_init (no_args, no_argv,
-                                                  "Supplier_pure_client_ORB");
+          s_orb = CORBA::ORB_init (no_args, no_argv,
+                                   "Supplier_pure_client_ORB");
 
           CORBA::Object_var s_ec_obj = s_orb->string_to_object (ec_str.in ());
 
@@ -167,6 +168,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->run ();
 
       ACE_Thread_Manager::instance ()->wait ();
+      
+      if (!CORBA::is_nil (s_orb.in ()))
+	{
+	  s_orb->destroy ();
+	}
+
       orb->destroy ();
       return 0;
     }

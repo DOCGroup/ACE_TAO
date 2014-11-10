@@ -1,3 +1,18 @@
+Mon Nov 10 11:12:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+          Initialise pointers with 0
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * orbsvcs/tests/CosEvent/Timeout/TestEventConsumer_i.cpp:
+        * orbsvcs/tests/CosEvent/Timeout/run_test.pl:
+        * orbsvcs/tests/CosEvent/lib/Counting_Consumer.cpp:
+          Layout changes
+
+        * orbsvcs/tests/CosEvent/Timeout/TimeoutTestMain.cpp:
+          shutdown s_orb when it is not nil, fixes valgrind reported
+          leaks at shutdown
+
 Mon Nov 10 11:02:11 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
