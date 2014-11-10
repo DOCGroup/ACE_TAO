@@ -1,3 +1,8 @@
+Mon Nov 10 12:39:18 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * NEWS:
+          Updated.
+
 Thu Nov  6 19:45:38 UTC 2014  Johnny Willemsen  <willemsen_j@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc_warnings.mpb:
@@ -5,7 +10,7 @@ Thu Nov  6 19:45:38 UTC 2014  Johnny Willemsen  <willemsen_j@remedy.nl>
           ascii winsock calls but they just work, so no need to change our
           code. Added new feature vc_avoid_winsock_warnings which is enabled
           by default, this adds _WINSOCK_DEPRECATED_NO_WARNINGS to the
-          compiler falgs. If you want to see all warnings, set 
+          compiler falgs. If you want to see all warnings, set
           vc_avoid_winsock_warnings to 0 in your default.features file before
           generatin the project files
 
