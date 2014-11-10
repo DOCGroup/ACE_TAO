@@ -10,6 +10,13 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.8 and ACE-6.2.9
     - ACE_FILE_Addr::set () with the 'any' address specified.
     - ACE_MMAP_Memory_Pool use of the 'unique' option.
 
+. Reduced size of all doxygen documentation by changing the
+  type of diagrams shown
+
+. Removed Windows specific workarounds from ACE_OS::setsockopt, as a
+  result SO_REUSEPORT is not defined anymore on Windows and SO_REUSEADDR
+  is passed directly to the OS
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.7 and ACE-6.2.8
 ====================================================
 
