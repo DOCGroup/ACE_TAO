@@ -168,11 +168,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->run ();
 
       ACE_Thread_Manager::instance ()->wait ();
-      
+
       if (!CORBA::is_nil (s_orb.in ()))
-	{
-	  s_orb->destroy ();
-	}
+        {
+          s_orb->destroy ();
+        }
 
       orb->destroy ();
       return 0;
