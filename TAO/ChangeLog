@@ -1,3 +1,8 @@
+Mon Nov 10 11:02:11 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * orbsvcs/orbsvcs/CosEvent/CEC_Event_Loader.cpp:
+          Fix event channel cleanup.
+
 Sat Nov  8 10:31:26 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * tao/Remote_Invocation.h:
