@@ -430,19 +430,21 @@ TAO_CEC_Event_Loader::fini (void)
 
           t_poa->deactivate_object (t_id.in ());
         }
-#else
-      // Release the resources of the Event Channel
-      this->ec_impl_->destroy ();
-
-      // Deactivate the EC
-      PortableServer::POA_var poa =
-        this->ec_impl_->_default_POA ();
-
-      PortableServer::ObjectId_var id =
-        poa->servant_to_id (this->ec_impl_);
-
-      poa->deactivate_object (id.in ());
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
+      if (this->ec_impl_)
+        {
+          // Release the resources of the Event Channel
+          this->ec_impl_->destroy ();
+
+          // Deactivate the EC
+          PortableServer::POA_var poa =
+            this->ec_impl_->_default_POA ();
+
+          PortableServer::ObjectId_var id =
+            poa->servant_to_id (this->ec_impl_);
+
+          poa->deactivate_object (id.in ());
+        }
     }
   catch (const CORBA::Exception&)
     {
