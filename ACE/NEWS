@@ -16,6 +16,18 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.8 and ACE-6.3.0
 . Removed Windows specific workarounds from ACE_OS::setsockopt, as a
   result SO_REUSEPORT is not defined anymore on Windows and SO_REUSEADDR
   is passed directly to the OS
+  
+. Fix for Bugzilla #3868:
+
+  By adding a 'specific' section to a MPC (base) project it is now possible
+  to have object file output directories per project for GNUACE projects.
+  The following should be added to MPC projects:
+  specific(gnuace) {
+    build_dir_per_project=1
+  }
+  
+. Fix for Bugzilla #3762 and #3992: ACE_Asynch_Write_File will now correctly
+  accept non-socket (file, TTY ..) handles.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.2.7 and ACE-6.2.8
 ====================================================
