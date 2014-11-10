@@ -488,7 +488,7 @@ public:
   /// gateway.
   void reset_byte_order (int byte_order);
 
-  /// set GIOP version info
+  /// Set GIOP version info
   void set_version (ACE_CDR::Octet major, ACE_CDR::Octet minor);
 
   /// Set the underlying GIOP version..
@@ -518,13 +518,13 @@ private:
 
   /**
    * write an array of @a length elements, each of @a size bytes and the
-   * start aligned at a multiple of <align>. The elements are assumed
+   * start aligned at a multiple of @a align. The elements are assumed
    * to be packed with the right alignment restrictions.  It is mostly
    * designed for buffers of the basic types.
    *
-   * This operation uses <memcpy>; as explained above it is expected
-   * that using assignment is faster that <memcpy> for one element,
-   * but for several elements <memcpy> should be more efficient, it
+   * This operation uses @c memcpy; as explained above it is expected
+   * that using assignment is faster that @c memcpy for one element,
+   * but for several elements @c memcpy should be more efficient, it
    * could be interesting to find the break even point and optimize
    * for that case, but that would be too platform dependent.
    */
@@ -541,7 +541,7 @@ private:
   /**
    * Grow the CDR stream. When it returns @a buf contains a pointer to
    * memory in the CDR stream, with at least @a size bytes ahead of it
-   * and aligned to an <align> boundary. It moved the <wr_ptr> to <buf
+   * and aligned to an @a align boundary. It moved the <wr_ptr> to <buf
    * + size>.
    */
   int grow_and_adjust (size_t size,
@@ -1050,13 +1050,13 @@ private:
 
   /**
    * Read an array of @a length elements, each of @a size bytes and the
-   * start aligned at a multiple of <align>. The elements are assumed
+   * start aligned at a multiple of @a align. The elements are assumed
    * to be packed with the right alignment restrictions.  It is mostly
    * designed for buffers of the basic types.
    *
-   * This operation uses <memcpy>; as explained above it is expected
-   * that using assignment is faster that <memcpy> for one element,
-   * but for several elements <memcpy> should be more efficient, it
+   * This operation uses @c memcpy; as explained above it is expected
+   * that using assignment is faster that @c memcpy for one element,
+   * but for several elements @c memcpy should be more efficient, it
    * could be interesting to find the break even point and optimize
    * for that case, but that would be too platform dependent.
    */
@@ -1146,7 +1146,7 @@ protected:
                             const ACE_CDR::Octet *x);
 
   /// Efficiently read @a length elements of size @a size each from
-  /// <input> into <x>; the data must be aligned to <align>.
+  /// @a input into @a x; the data must be aligned to @a align.
   ACE_CDR::Boolean read_array (ACE_InputCDR& input,
                                void* x,
                                size_t size,
@@ -1169,7 +1169,7 @@ protected:
    * Exposes the stream implementation of <adjust>, this is useful in
    * many cases to minimize memory allocations during marshaling.
    * On success @a buf will contain a contiguous area in the CDR stream
-   * that can hold @a size bytes aligned to <align>.
+   * that can hold @a size bytes aligned to @a align.
    * Results
    */
   int adjust (ACE_OutputCDR& out,
