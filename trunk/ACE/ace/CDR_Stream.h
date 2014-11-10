@@ -426,7 +426,7 @@ public:
 
   /**
    * Utility function to allow the user more flexibility.
-   * Pads the stream up to the nearest <alignment>-byte boundary.
+   * Pads the stream up to the nearest @a alignment byte boundary.
    * Argument MUST be a power of 2.
    * Returns 0 on success and -1 on failure.
    */
@@ -581,8 +581,9 @@ private:
    * for such a beast is that in some setting a few (fast) machines
    * can be serving hundreds of slow machines with the opposite byte
    * order, so it makes sense (as a load balancing device) to put the
-   * responsibility in the writers.  THIS IS NOT A STANDARD IN CORBA,
-   * USE AT YOUR OWN RISK
+   * responsibility in the writers.
+   *
+   * @warning THIS IS NOT A STANDARD IN CORBA, USE AT YOUR OWN RISK
    */
   bool do_byte_swap_;
 
