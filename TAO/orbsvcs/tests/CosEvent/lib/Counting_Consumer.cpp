@@ -3,8 +3,6 @@
 #include "Counting_Consumer.h"
 #include "ace/OS_NS_unistd.h"
 
-
-
 CEC_Counting_Consumer::CEC_Counting_Consumer (const char* name)
   : event_count (0),
     disconnect_count (0),
