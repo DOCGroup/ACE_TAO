@@ -1,3 +1,12 @@
+Wed Nov 12 09:00:15 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.h:
+        * tao/DynamicInterface/AMH_DSI_Response_Handler.inl:
+        * tests/DSI_AMI_Gateway/My_DII_Reply_Handler.cpp:
+        * tests/DSI_AMI_Gateway/test_dsi.cpp:
+          Changes to fix problems with byte order delegation via
+          AMH reply handler.
+
 Mon Nov 10 11:12:45 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:

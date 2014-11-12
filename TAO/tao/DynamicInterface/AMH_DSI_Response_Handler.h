@@ -231,6 +231,20 @@ public:
   virtual void gateway_exception_reply (CORBA::ULong reply_status,
                                         TAO_InputCDR &encap);
 
+  /**
+   * @param byte_order The intended byte order for the message output
+   * stream. For use in message gateways that forward messages from
+   * sources with different byte order than the native order.
+   */
+  void _tao_byte_order (int byte_order);
+
+  /**
+   * Get the intended byte order for the message output stream.
+   * In case of gateway messages this could divert from the native
+   * byte order.
+   */
+  int _tao_byte_order ();
+
   /// Returns a CORBA::Object_ptr for the target object.
   CORBA::Object_ptr _this ();
 

@@ -113,8 +113,10 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request,
       return;
     }
 
-  // Outgoing reply must have the same byte order as the incoming one.
-  request->_tao_reply_byte_order (target_request->_tao_byte_order ());
+  // Regular replies are handled by the DII AMI/DSI AMH reply handler
+  // combination without further involvement of the request objects.
+  // The DII AMI reply handler must propagate the incoming reply
+  // byte order to the DSI AMH reply handler
 
   if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
     {

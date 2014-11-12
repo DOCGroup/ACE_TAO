@@ -3,6 +3,18 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_INLINE void
+TAO_AMH_DSI_Response_Handler::_tao_byte_order (int byte_order)
+{
+  this->_tao_out.reset_byte_order (byte_order);
+}
+
+ACE_INLINE int
+TAO_AMH_DSI_Response_Handler::_tao_byte_order ()
+{
+  return this->_tao_out.byte_order ();
+}
+
 ACE_INLINE TAO_AMH_DSI_Response_Handler_ptr
 TAO_AMH_DSI_Response_Handler::_duplicate (TAO_AMH_DSI_Response_Handler_ptr x)
 {
