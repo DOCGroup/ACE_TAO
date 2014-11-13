@@ -1,3 +1,10 @@
+Thu Nov 13 11:31:37 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * ace/config-lite.h: Adjust ACE_DECLARE_STL_REVERSE_ITERATORS to
+          work with Solaris Studio 12.4.
+
+        * NEWS: Note support for Solaris Studio 12.4.
+
 Mon Nov 10 15:45:42 UTC 2014  Johnny Willemsen  <willemsen_j@remedy.nl>
 
         * ace/CDR_Stream.h:

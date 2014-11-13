@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.2.8 and ACE-6.3.0
 ====================================================
 
+. ACE now supports Oracle Solaris Studio 12.4 on Solaris.
+
 . New config macros were added:
   ACE_DISABLE_MKTEMP:  Disables the availability of ACE_OS::mktemp().
   ACE_DISABLE_TEMPNAM: Disables the availability of ACE_OS::tempnam().
