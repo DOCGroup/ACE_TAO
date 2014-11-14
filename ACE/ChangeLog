@@ -1,3 +1,7 @@
+Fri Nov 14 08:38:16 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE version 6.3.0 released.
+
 Thu Nov 13 11:31:37 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * ace/config-lite.h: Adjust ACE_DECLARE_STL_REVERSE_ITERATORS to
