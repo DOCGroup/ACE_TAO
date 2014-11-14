@@ -41,9 +41,9 @@
 To: ciao-users@list.isis.vanderbilt.edu
 Subject: [area]: [synopsis]
 
-    CIAO VERSION: 1.2.8
-    TAO VERSION : 2.2.8
-    ACE VERSION : 6.2.8
+    CIAO VERSION: 1.3.0
+    TAO VERSION : 2.3.0
+    ACE VERSION : 6.3.0
 
     HOST MACHINE and OPERATING SYSTEM:
         If on Windows based OS's, which version of WINSOCK do you
