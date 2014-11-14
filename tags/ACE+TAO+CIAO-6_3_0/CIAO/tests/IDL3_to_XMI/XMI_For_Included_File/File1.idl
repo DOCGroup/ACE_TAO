@@ -1,0 +1,15 @@
+// $Id$
+
+#ifndef File_1_
+#define File_1_
+
+module File1 {
+
+    typedef sequence <short> Seq1;
+
+    typedef string type2;
+    typedef sequence <type2> Seq2;
+
+};
+
+#endif

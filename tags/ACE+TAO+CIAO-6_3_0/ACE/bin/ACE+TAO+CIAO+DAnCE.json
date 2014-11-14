@@ -1,0 +1,145 @@
+// Policy used in Coverity tests.
+//
+// Generates UNCALLED defects for functions which are not called by any test.
+// Generates INSUFFICIENT_COVERAGE defects for functions which do not have
+// 100% line coverage.
+// Generates INSUFFICIENT_FILE_COVERAGE defects for files which do not
+// have 100% line coverage.
+//
+// The line immediately following a coverity[TA.COVERAGE] annotation
+// (i.e. in source code comments) is ignored for coverage purposes.
+// Lines with xnocover annotations are ignored for coverage purposes.
+{
+  type: "Coverity test policy definition",
+  format_version: 1,
+  recent_date_cutoff: "2012-03-07", // 6.1.0
+  old_date_cutoff: "2010-12-14", // 6.0.0
+  rules: [
+    {
+      violation_name: "INSUFFICIENT_COVERAGE",
+      aggregation_granularity: "function",
+      minimum_line_coverage_pct: 100,
+      use_filters: [ "exclude_annotated_lines", "executed_code", "focus_on_my_source", "exclude_logging_code", "exclude_throw_statements", "exclude_error_handlers" ]
+    },
+  ],
+  define_filters: [
+    {
+      filter_name: "executed_code",
+      function_filters: [
+        { is_executed: true,
+          exclusion_reason: "unexecuted code",
+        }
+      ]
+    },
+    {
+      filter_name: "exclude_annotated_lines",
+
+      line_filters: [
+        { not: { or: [
+            { line_regex: "coverity\\[TA\\.COVERAGE\\]", line_offset: -1 },
+            { line_regex: "xnocover" },
+          ] },
+          exclusion_reason: "coverage annotation",
+        }
+      ]
+    },
+    {
+      filter_name: "exclude_logging_code",
+
+      line_filters: [
+        { not: { or: [
+            { line_regex: "ACE_DEBUG" },
+            { line_regex: "ACE_ERROR" },
+            { line_regex: "ACE_ERROR_RETURN" },
+            { line_regex: "ACELIB_DEBUG" },
+            { line_regex: "ACELIB_ERROR" },
+            { line_regex: "ACELIB_ERROR_RETURN" },
+            { line_regex: "TAOLIB_DEBUG" },
+            { line_regex: "TAOLIB_ERROR" },
+            { line_regex: "TAOLIB_ERROR_RETURN" },
+            { line_regex: "DANCE_DEBUG" },
+            { line_regex: "DANCE_ERROR" },
+            { line_regex: "DANCE_ERROR_RETURN" },
+            { line_regex: "CIAO_DEBUG" },
+            { line_regex: "CIAO_ERROR" },
+            { line_regex: "CIAO_ERROR_RETURN" },
+            { line_regex: "DDS4CCM_DEBUG" },
+            { line_regex: "DDS4CCM_ERROR" },
+            { line_regex: "DDS4CCM_ERROR_RETURN" },
+            { line_regex: "DDS4CCM_PRINT_DEBUG_CORBA_EXCEPTION" },
+            { line_regex: "DDS4CCM_PRINT_CORBA_EXCEPTION" },
+            { line_regex: "DDS4CCM_debug_level" },
+            { line_regex: "CIAO_debug_level" },
+            { line_regex: "TAO_debug_level" },
+            { line_regex: "DAnCE_debug_level" },
+            { line_regex: "DANCE_debug_level" },
+            { line_regex: "DDS4CCM_DEBUG_LEVEL" },
+            { line_regex: "CIAO_DEBUG_LEVEL" },
+            { line_regex: "DAnCE_DEBUG_LEVEL" },
+            { line_regex: "DANCE_DEBUG_LEVEL" },
+            { line_regex: "DDS4CCM::debug_level" },
+            { line_regex: "CIAO::debug_level" },
+            { line_regex: "DAnCE::debug_level" },
+            { line_regex: "DANCE::debug_level" },
+            { line_regex: "ORBSVCS_DEBUG" },
+            { line_regex: "ORBSVCS_ERROR" },
+            { line_regex: "ORBSVCS_ERROR_RETURN" },
+            { line_regex: "VDBG" },
+            { line_regex: "VDBG_LVL" },
+            { line_regex: "Transport_debug_level" },
+            { line_regex: "_tao_print_exception" },
+          ] },
+          exclusion_reason: "policy indicates no need to test logging code",
+        }
+      ]
+    },
+    {
+      filter_name: "exclude_throw_statements",
+
+      line_filters: [
+        { exclusion_reason: "on throw path",
+          not: {
+            contains_astnode: {
+              dominated_by_astnode: {
+                     expression_kind: "throw" ,
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      filter_name: "exclude_error_handlers",
+
+      line_filters: [
+        { not: { line_regex: "return\\s+-1" },
+          exclusion_reason: "policy indicates no need to test error handlers",
+        }
+      ]
+    },
+    {
+      filter_name: "focus_on_my_source",
+      file_filters: [
+        {
+            exclusion_reason: "outside interesting source locations",
+            and: [
+              { or: [
+                { file_name_regex: ".*/ACE/ace/.*" },
+                { file_name_regex: ".*/DDS/dds/DCPS/.*" },
+                { file_name_regex: ".*/TAO/tao/.*" },
+                { file_name_regex: ".*/TAO/orbsvcs/orbsvcs/Naming/.*" },
+                { file_name_regex: ".*/TAO/orbsvcs/orbsvcs/Notify/.*" },
+                { file_name_regex: ".*/TAO/orbsvcs/orbsvcs/Event/.*" },
+                { file_name_regex: ".*/CIAO/ciao/.*" },
+                { file_name_regex: ".*/CIAO/connectors/dds4ccm/impl/.*" },
+                { file_name_regex: ".*/DAnCE/dance/LocalityManager.*" },
+                { file_name_regex: ".*/DAnCE/tools/Config_Handlers/DynAny_Handler.*" }
+              ] },
+              { not: { file_name_regex: "CIAO/connectors/dds4ccm/impl/ndds" }}
+            ]
+        }
+      ]
+    },
+  ]
+}
+

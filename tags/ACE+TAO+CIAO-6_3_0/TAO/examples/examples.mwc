@@ -1,0 +1,10 @@
+// -*- MPC -*-
+// $Id$
+
+workspace {
+  cmdline += -include $PWD
+  exclude {
+   // todo : get the mfc projects working correctly.
+   mfc 
+  }
+}

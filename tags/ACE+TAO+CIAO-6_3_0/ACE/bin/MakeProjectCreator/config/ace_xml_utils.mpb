@@ -1,0 +1,7 @@
+// -*- MPC -*-
+// $Id$
+
+project : acelib, xerces {
+  after += ACE_XML_Utils
+  libs += ACE_XML_Utils
+}

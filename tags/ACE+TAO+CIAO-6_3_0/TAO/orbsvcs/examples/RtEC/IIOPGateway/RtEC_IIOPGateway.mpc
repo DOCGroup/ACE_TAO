@@ -1,0 +1,31 @@
+// -*- MPC -*-
+// $Id$
+
+project(*Consumer): messaging, rteventexe, naming {
+  exename = Consumer
+  Source_Files {
+    Consumer.cpp
+  }
+}
+
+project(*Supplier): messaging, rteventexe, naming {
+  exename = Supplier
+  Source_Files {
+    Supplier.cpp
+  }
+}
+
+project(*): messaging, rteventexe, rtevent_serv, naming {
+  exename = Gateway
+  Source_Files {
+    Gateway.cpp
+  }
+}
+
+project(*EC): messaging, rteventexe, rtevent_serv, naming {
+  exename = EC
+  Source_Files {
+    EC.cpp
+  }
+}
+

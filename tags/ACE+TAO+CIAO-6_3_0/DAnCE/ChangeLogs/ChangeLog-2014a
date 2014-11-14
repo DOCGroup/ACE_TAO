@@ -1,0 +1,188 @@
+Wed Sep 24 19:51:44 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.8 released.
+
+Fri Aug 29 08:28:42 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/Parsing/domain.cpp:
+          Fixed valgrind reported memory leak
+
+Fri Aug 29 07:46:41 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tests/LocalityManager/ProcessName/run_test.pl:
+          Added newline to get success line on its separate line
+
+Fri Aug 29 07:40:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * bin/ciao.localityconfig:
+          Added the default shipped configuration plugins
+
+        * dance/LocalityManager/Configuration/CPU_Affinity.h:
+        * dance/LocalityManager/Configuration/Process_Name.h:
+        * dance/LocalityManager/Configuration/Process_Priority.h:
+          Layout changes
+
+        * dance/LocalityManager/Configuration/Process_Name.cpp:
+          Check the return value of the any extraction, if that fails
+          we throw an exception
+
+Wed Jul 30 13:32:40 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Handler/Plugin_Conf.cpp:
+          Any line starting with a # in a localityconfig file is now
+          handled as comment line, just printed to the log when the
+          logging level is set high enough. This fixes bugzilla 4174 and
+          RT2911
+
+        * bin/ciao.localityconfig:
+        * bin/nodemanager.localityconfig:
+          Added some comments to split the lines, to clarify the content
+          of these files, but also to test the change above
+
+        * docs/LocalityManager-Plugins.txt:
+          Extended with new comment line
+
+        * NEWS:
+          Added comment
+
+Mon Jun 23 12:49:50 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Updated for next release
+
+Mon Jun 23 09:43:57 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.7 released.
+
+Tue Apr 22 08:29:35 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Make x.2.6 public
+
+        * etc/DAnCE.doxygen:
+          Handle pidl files as idl files
+
+Tue Apr 22 08:44:41 CEST 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.6 released.
+
+Fri Feb 28 07:59:59 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Make x.2.5 public and prepare for next release
+
+Fri Feb 28 08:46:21 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.5 released.
+
+Fri Jan 17 10:13:29 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.cpp:
+          Initialize local variable to fix Coverity warning
+
+Fri Jan 17 10:11:33 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/RepositoryManager/repository_manager_admin_exec.cpp:
+          Added missing break
+
+Fri Jan 17 09:48:16 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * dance/LocalityManager/Configuration/CPU_Affinity.cpp:
+          Fixed dead code warning from Coverity
+
+Thu Jan  9 12:33:13 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/DAnCE.doxygen:
+          Upgraded to doxygen 1.8.6
+
+Thu Jan  9 10:26:55 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+Thu Jan 09 09:18:31 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.4 released.
+
+Wed Dec 18 14:22:27 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * etc/DAnCE.doxygen:
+          Upgraded to doxygen 1.8.5
+
+Sun Dec  8 18:30:30 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * docs/schema/Basic_Deployment_Data.xsd:
+        * tools/Config_Handlers/Basic_Deployment_Data.hpp:
+        * tools/Config_Handlers/Basic_Deployment_Data.cpp:
+        * tools/Config_Handlers/DataType_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.cpp:
+        * tools/Config_Handlers/DynAny_Handler/DynAny_Handler.mpc:
+        * tools/Config_Handlers/DynAny_Handler/DynString_Handler.h:
+        * tools/Config_Handlers/DynAny_Handler/DynString_Handler.cpp:
+          Corrected handling of bounded strings, the bound has to be in the
+          cdp and specified as below, the boundedString element with a bound
+          must be there
+          <type>
+            <kind>tk_string</kind>
+            <boundedString>
+              <bound>50</bound>
+            </boundedString>
+          </type>
+
+Mon Dec  2 10:13:05 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * VERSION:
+          Updated the URL to point to Vandy not WUSTl.
+
+Mon Nov 11 09:43:07 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepare for next release
+
+        * dance/NodeApplication/NodeApplication_Impl.cpp:
+          Catch exceptions as const
+
+Mon Nov 11 09:17:34 CET 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.3 released.
+
+Wed Oct 23 08:45:46 UTC 2013  Marijke Hengstmengel  <MHengstmengel.remedy.nl>
+
+        * dance/LocalityManager/Scheduler/Events/Action_Base.cpp:
+        * dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
+        commit eb9626a86511c55e5d46a65a260240af6103f8e4
+        Author: Marijke Hengstmengel <MHengstmengel@remedy.nl>
+        Date:   Thu Oct 3 10:19:06 2013 +0200
+
+                Solved singleton problems for android
+                * DAnCE/dance/LocalityManager/Scheduler/Plugin_Manager.cpp:
+
+                * DAnCE/dance/LocalityManager/Scheduler/Events/Action_Base.cpp:
+                If InstanceDeploymentHandler is nil, don't call invoke
+
+Thu Oct  3 09:36:51 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+          Prepared for next release
+
+Thu Oct 03 09:47:23 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.2 released.
+
+Fri Aug 16 08:36:29 UTC 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ChangeLog:
+        * ChangeLogs/ChangeLog-2013a:
+        * NEWS:
+          Prepared for next release
+
+Fri Aug 16 08:56:17 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * DAnCE version 1.2.1 released.
+
+Local Variables:
+mode: change-log
+add-log-time-format: (lambda () (progn (setq tz (getenv "TZ")) (set-time-zone-rule "UTC") (setq time (format-time-string "%a %b %e %H:%M:%S %Z %Y" (current-time))) (set-time-zone-rule tz) time))
+indent-tabs-mode: nil
+End:

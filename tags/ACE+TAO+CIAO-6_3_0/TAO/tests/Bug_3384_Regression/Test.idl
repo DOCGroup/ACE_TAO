@@ -1,0 +1,20 @@
+// $Id$
+
+module Test
+{
+  interface Client
+  {
+    oneway void reply (in string msg);
+  };
+
+  interface Server
+  {
+    void setup (in Client cli);
+
+    oneway void request (in long sel);
+
+    oneway void shutdown ();
+  };
+
+};
+

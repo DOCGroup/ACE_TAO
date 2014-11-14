@@ -1,0 +1,24 @@
+/* XPM */
+static char * inactive_xpm[] = {
+/* width height ncolors cpp */
+"16 15 3 1",
+/* colors */
+"  c none",
+"X c #bbbbbb",
+"O c #aaaaaa",
+/* pixels */
+"                ",
+"     XXXXXX     ",
+"   XXOOOOOOXX   ",
+"  XOOOOOOOOOOX  ",
+"  XOOOOOOOOOOX  ",
+" XOOOOOOOOOOOOX ",
+" XOOOOOOOOOOOOX ",
+" XOOOOOOOOOOOOX ",
+" XOOOOOOOOOOOOX ",
+" XOOOOOOOOOOOOX ",
+"  XOOOOOOOOOOX  ",
+"  XOOOOOOOOOOX  ",
+"   XOOOOOOOXX   ",
+"     XXXXXX     ",
+"                "};

@@ -1,0 +1,36 @@
+// -*- MPC -*-
+// $Id$
+//
+
+project(*IDL): taoidldefaults {
+  IDL_Files {
+    test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server) : taoserver, portablegroup {
+  exename = bug4080_server
+  after += *IDL
+
+  Source_Files {
+    test_impl.cpp
+    testC.cpp
+    testS.cpp
+    server.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client) : taoclient, portablegroup {
+  exename = bug4080_client
+  after += *IDL
+
+  Source_Files {
+    testC.cpp
+    client.cpp
+  }
+  IDL_Files {
+  }
+}

@@ -1,0 +1,158 @@
+// -*- MPC -*-
+// $Id$
+
+project(*idl): taoidldefaults {
+  IDL_Files {
+    idlflags -= -Sa -St
+    param_test.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, codeset, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  after  += *idl
+
+  Source_Files {
+    param_testS.cpp
+    param_testC.cpp
+    param_test_i.cpp
+    server.cpp
+  }
+
+  Header_Files {
+    param_testS.h
+    param_testC.h
+    param_test_i.h
+  }
+
+  Inline_Files {
+    param_testC.inl
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*Client): taoserver, codeset, avoids_minimum_corba, avoids_ace_for_tao, dynamicinterface {
+  exename = client
+  after  += *idl
+
+  Source_Files {
+    param_testC.cpp
+    any.cpp
+    bd_array_seq.cpp
+    bd_long_seq.cpp
+    bd_short_seq.cpp
+    bd_string.cpp
+    bd_struct_seq.cpp
+    bd_str_seq.cpp
+    bd_wstring.cpp
+    bd_wstr_seq.cpp
+    big_union.cpp
+    client.cpp
+    complex_any.cpp
+    driver.cpp
+    except.cpp
+    fixed_array.cpp
+    fixed_struct.cpp
+    helper.cpp
+    multdim_array.cpp
+    nested_struct.cpp
+    objref.cpp
+    objref_struct.cpp
+    options.cpp
+    recursive_struct.cpp
+    recursive_union.cpp
+    results.cpp
+    short.cpp
+    small_union.cpp
+    typecode.cpp
+    ub_any_seq.cpp
+    ub_array_seq.cpp
+    ub_long_seq.cpp
+    ub_objref_seq.cpp
+    ub_short_seq.cpp
+    ub_string.cpp
+    ub_struct_seq.cpp
+    ub_str_seq.cpp
+    ub_wstring.cpp
+    ub_wstr_seq.cpp
+    ulonglong.cpp
+    var_array.cpp
+    var_struct.cpp
+  }
+
+  Header_Files {
+    param_testC.h
+    any.h
+    bd_array_seq.h
+    bd_long_seq.h
+    bd_short_seq.h
+    bd_string.h
+    bd_struct_seq.h
+    bd_str_seq.h
+    bd_wstring.h
+    bd_wstr_seq.h
+    big_union.h
+    client.h
+    complex_any.h
+    driver.h
+    except.h
+    fixed_array.h
+    fixed_struct.h
+    helper.h
+    multdim_array.h
+    nested_struct.h
+    objref.h
+    objref_struct.h
+    options.h
+    recursive_struct.h
+    recursive_union.h
+    results.h
+    short.h
+    small_union.h
+    typecode.h
+    ub_any_seq.h
+    ub_array_seq.h
+    ub_long_seq.h
+    ub_objref_seq.h
+    ub_short_seq.h
+    ub_string.h
+    ub_struct_seq.h
+    ub_str_seq.h
+    ub_wstring.h
+    ub_wstr_seq.h
+    ulonglong.h
+    var_array.h
+    var_struct.h
+  }
+
+  Inline_Files {
+    param_testC.inl
+  }
+
+  IDL_Files {
+  }
+}
+
+project(*Anyop): taoserver, codeset, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
+  exename = anyop
+  after  += *idl
+
+  Source_Files {
+    param_testC.cpp
+    anyop.cpp
+  }
+
+  Header_Files {
+    param_testC.h
+  }
+
+  Inline_Files {
+    param_testC.inl
+  }
+
+  IDL_Files {
+  }
+}
+

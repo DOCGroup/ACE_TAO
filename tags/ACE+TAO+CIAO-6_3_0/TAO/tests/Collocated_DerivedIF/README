@@ -1,0 +1,6 @@
+// $Id$
+CollocationStrategy direct and interface inheritance.
+
+The base needs to be generated also with direct collocation enabled,
+otherwise no direct collocation.
+

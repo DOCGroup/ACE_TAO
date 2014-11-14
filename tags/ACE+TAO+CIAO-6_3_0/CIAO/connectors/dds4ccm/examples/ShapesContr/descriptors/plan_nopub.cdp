@@ -1,0 +1,1609 @@
+<!-- $Id$ -->
+<Deployment:DeploymentPlan
+   xmlns:Deployment="http://www.omg.org/Deployment"
+   xmlns:xmi="http://www.omg.org/XMI"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.omg.org/Deployment Deployment.xsd">
+  <label>Shapes_Depl_1</label>
+  <UUID>Shapes_Depl_1</UUID>
+
+  <implementation xmi:id="CompSvrImpl">
+    <name>CompSvr</name>
+    <source />
+    <artifact xmi:idref="CompSvrArt" />
+    <execParameter>
+      <name>edu.vanderbilt.dre.DAnCE.ImplementationType</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>edu.vanderbilt.dre.DAnCE.LocalityManager</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="ReceiverComponentImplementation">
+    <name>ReceiverComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Receiver_ExecArtifact" />
+    <artifact xmi:idref="Receiver_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Shapes_Receiver_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Shapes_Receiver_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Receiver_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="Shapes_ConnectorComponentImplementation">
+    <name>Shapes_ConnectorComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Shapes_Connector_ExecArtifact" />
+    <artifact xmi:idref="Shapes_Connector_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Shapes_DDS_Event_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Shapes_DDS_Event_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Shapes_Connector_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Shapes_Connector_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+  <implementation xmi:id="SenderComponentImplementation">
+    <name>SenderComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Sender_ExecArtifact" />
+    <artifact xmi:idref="Sender_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Shapes_Sender_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Shapes_Sender_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Sender_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+ <implementation xmi:id="ControllerComponentImplementation">
+    <name>ControllerComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="Controller_ExecArtifact" />
+    <artifact xmi:idref="Controller_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Shapes_Controller_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Shapes_ShapesController_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Controller_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Controller_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <implementation xmi:id="ControllerRComponentImplementation">
+    <name>ControllerRComponentImplementation</name>
+    <source/>
+    <artifact xmi:idref="ControllerR_ExecArtifact" />
+    <artifact xmi:idref="ControllerR_SvntArtifact" />
+    <execParameter>
+      <!-- entrypoint as exec parameter (see 10.6.1) -->
+      <name>component factory</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Shapes_ControllerR_Impl</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantEntrypoint</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>create_Shapes_ShapesControllerR_Servant</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ServantArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ControllerR_svnt</string>
+        </value>
+      </value>
+    </execParameter>
+    <execParameter>
+      <name>edu.vanderbilt.dre.CIAO.ExecutorArtifact</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ControllerR_exec</string>
+        </value>
+      </value>
+    </execParameter>
+  </implementation>
+
+  <instance xmi:id="CompSvrReceiverInst">
+    <name>ComponentServerReceiverInstance</name>
+    <node>ReceiverNode</node>
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>-ORBDottedDecimalAddresses 1</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="SquareReceiverComponentInstance">
+    <name>SquareReceiverComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ReceiverComponentImplementation" />
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>1</ulong>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>get_data</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>read_data</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>raw_listen</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="CircleReceiverComponentInstance">
+    <name>CircleReceiverComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ReceiverComponentImplementation" />
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>1</ulong>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>get_data</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>read_data</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>raw_listen</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="TriangleReceiverComponentInstance">
+    <name>TriangleReceiverComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ReceiverComponentImplementation" />
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>1</ulong>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>get_data</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>read_data</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>raw_listen</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>true</boolean>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="CompSvrSenderInst">
+    <name>ComponentServerSenderInstance</name>
+    <node>SenderNode</node>
+    <source />
+    <implementation xmi:idref="CompSvrImpl" />
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.LocalityArguments</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>-ORBDottedDecimalAddresses 1</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="SquareShapes_ConnectorComponentInstance">
+    <name>SquareShapes_ConnectorComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Shapes_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>plan_nopub#square</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Square</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>type_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ShapeType</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="CircleShapes_ConnectorComponentInstance">
+    <name>CircleShapes_ConnectorComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Shapes_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>plan_nopub#circle</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Circle</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>type_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ShapeType</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="TriangleShapes_ConnectorComponentInstance">
+    <name>TriangleShapes_ConnectorComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Shapes_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>plan_nopub#triangle</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Triangle</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>type_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ShapeType</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="SquareShapes_ConnectorComponentInstance2">
+    <name>SquareShapes_ConnectorComponent2</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Shapes_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>plan_nopub#square</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Square</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>type_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ShapeType</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="CircleShapes_ConnectorComponentInstance2">
+    <name>CircleShapes_ConnectorComponent2</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Shapes_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>plan_nopub#circle</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Circle</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>type_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ShapeType</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="TriangleShapes_ConnectorComponentInstance2">
+    <name>TriangleShapes_ConnectorComponent2</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="Shapes_ConnectorComponentImplementation" />
+    <configProperty>
+      <name>qos_profile</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>plan_nopub#triangle</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>topic_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Triangle</string>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>type_name</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ShapeType</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="SquareControllerComponentInstance">
+    <name>SquareControllerComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ControllerComponentImplementation" />
+    <configProperty>
+      <name>publish_rate</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>0</ulong>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>max_size</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>50</ushort>
+        </value>
+      </value>
+    </configProperty>
+       <configProperty>
+      <name>max_x</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>225</ushort>
+        </value>
+      </value>
+    </configProperty>
+        <configProperty>
+      <name>max_y</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>250</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>resize_shape</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+       <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Square</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="SquareSenderComponentInstance">
+    <name>SquareSenderComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SenderComponentImplementation" />
+    <configProperty>
+      <name>color</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ORANGE</string>
+        </value>
+      </value>
+    </configProperty>
+   </instance>
+
+  <instance xmi:id="CircleControllerComponentInstance">
+    <name>CircleControllerComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ControllerComponentImplementation" />
+    <configProperty>
+      <name>publish_rate</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>0</ulong>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>max_size</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>50</ushort>
+        </value>
+      </value>
+    </configProperty>
+       <configProperty>
+      <name>max_x</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>225</ushort>
+        </value>
+      </value>
+    </configProperty>
+        <configProperty>
+      <name>max_y</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>250</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>resize_shape</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+       <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Circle</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="CircleSenderComponentInstance">
+    <name>CircleSenderComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SenderComponentImplementation" />
+    <configProperty>
+      <name>color</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ORANGE</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="TriangleControllerComponentInstance">
+    <name>TriangleControllerComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ControllerComponentImplementation" />
+    <configProperty>
+      <name>publish_rate</name>
+      <value>
+        <type>
+          <kind>tk_ulong</kind>
+        </type>
+        <value>
+          <ulong>0</ulong>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>max_size</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>50</ushort>
+        </value>
+      </value>
+    </configProperty>
+       <configProperty>
+      <name>max_x</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>225</ushort>
+        </value>
+      </value>
+    </configProperty>
+        <configProperty>
+      <name>max_y</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>250</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>resize_shape</name>
+      <value>
+        <type>
+          <kind>tk_boolean</kind>
+        </type>
+        <value>
+          <boolean>false</boolean>
+        </value>
+      </value>
+    </configProperty>
+       <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>Triangle</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <instance xmi:id="TriangleSenderComponentInstance">
+    <name>TriangleSenderComponent</name>
+    <node>SenderNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="SenderComponentImplementation" />
+    <configProperty>
+      <name>color</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ORANGE</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+ <instance xmi:id="SquareControllerRComponentInstance">
+    <name>SquareControllerRComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ControllerRComponentImplementation" />
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>10</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReceiverSquare</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="CircleControllerRComponentInstance">
+    <name>CircleControllerRComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ControllerRComponentImplementation" />
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>10</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReceiverCircle</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+  <instance xmi:id="TriangleControllerRComponentInstance">
+    <name>TriangleControllerRComponent</name>
+    <node>ReceiverNode</node>
+    <!-- hostname -->
+    <source/>
+    <implementation xmi:idref="ControllerRComponentImplementation" />
+    <configProperty>
+      <name>rate</name>
+      <value>
+        <type>
+          <kind>tk_ushort</kind>
+        </type>
+        <value>
+          <ushort>10</ushort>
+        </value>
+      </value>
+    </configProperty>
+    <configProperty>
+      <name>edu.vanderbilt.dre.DAnCE.RegisterNaming</name>
+      <value>
+        <type>
+          <kind>tk_string</kind>
+        </type>
+        <value>
+          <string>ReceiverTriangle</string>
+        </value>
+      </value>
+    </configProperty>
+  </instance>
+
+  <connection>
+   <name>square_control_shape_attribs</name>
+     <internalEndpoint>
+      <portName>shapeAttribsSub</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SquareSenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>shapeAttribsPub</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SquareControllerComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+   <name>square_control_change_changed</name>
+     <internalEndpoint>
+      <portName>shapeChangesPub</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SquareSenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>shapeChangesSub</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SquareControllerComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+   <name>shape_received_square</name>
+     <internalEndpoint>
+      <portName>shapeReceivedPub</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SquareReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>shapeReceivedSub</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SquareControllerRComponentInstance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+   <name>shape_received_circle</name>
+     <internalEndpoint>
+      <portName>shapeReceivedPub</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="CircleReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>shapeReceivedSub</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="CircleControllerRComponentInstance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+   <name>shape_received_triangle</name>
+     <internalEndpoint>
+      <portName>shapeReceivedPub</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="TriangleReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>shapeReceivedSub</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="TriangleControllerRComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+
+  <connection>
+   <name>triangle_control_shape_attribs</name>
+     <internalEndpoint>
+      <portName>shapeAttribsSub</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="TriangleSenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>shapeAttribsPub</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="TriangleControllerComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+   <name>triangle_control_change_changed</name>
+     <internalEndpoint>
+      <portName>shapeChangesPub</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="TriangleSenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>shapeChangesSub</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="TriangleControllerComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+   <name>circle_control_shape_attribs</name>
+     <internalEndpoint>
+      <portName>shapeAttribsSub</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="CircleSenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>shapeAttribsPub</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="CircleControllerComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+   <name>circle_control_change_changed</name>
+     <internalEndpoint>
+      <portName>shapeChangesPub</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="CircleSenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>shapeChangesSub</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="CircleControllerComponentInstance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>square_info_out_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SquareReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SquareShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>square_listenercontrol</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SquareReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SquareShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>square_portstatuslistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SquareReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SquareShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>square_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_data_listener</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SquareReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SquareShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>circle_info_out_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="CircleReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="CircleShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>circle_listenercontrol</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="CircleReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="CircleShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>circle_portstatuslistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="CircleReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="CircleShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>circle_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_data_listener</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="CircleReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="CircleShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>triangle_info_out_data</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="TriangleReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="TriangleShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>triangle_listenercontrol</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_data_control</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="TriangleReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_control</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="TriangleShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>triangle_portstatuslistener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_status</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="TriangleReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_status</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="TriangleShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>triangle_listener</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_out_data_listener</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="TriangleReceiverComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>push_consumer_data_listener</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="TriangleShapes_ConnectorComponentInstance2" />
+    </internalEndpoint>
+  </connection>
+
+  <connection>
+    <name>square_writer_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="SquareSenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="SquareShapes_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>circle_writer_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="CircleSenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="CircleShapes_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+  <connection>
+    <name>triangle_writer_connection</name>
+    <deployRequirement>
+      <name>edu.dre.vanderbilt.DAnCE.ConnectionType</name>
+      <resourceType>Local_Interface</resourceType>
+    </deployRequirement>
+    <internalEndpoint>
+      <portName>info_write_data</portName>
+      <provider>false</provider>
+      <kind>SimplexReceptacle</kind>
+      <instance xmi:idref="TriangleSenderComponentInstance" />
+    </internalEndpoint>
+    <internalEndpoint>
+      <portName>supplier_data</portName>
+      <provider>true</provider>
+      <kind>Facet</kind>
+      <instance xmi:idref="TriangleShapes_ConnectorComponentInstance" />
+    </internalEndpoint>
+  </connection>
+
+
+  <artifact xmi:id="CompSvrArt">
+    <name>CompoSvrArtifactName</name>
+    <source />
+    <node />
+    <location>dance_locality_manager</location>
+  </artifact>
+  <artifact xmi:id="Sender_ExecArtifact">
+    <name>Sender_exec</name>
+    <source/>
+    <node/>
+    <location>Sender_exec</location>
+  </artifact>
+  <artifact xmi:id="Sender_SvntArtifact">
+    <name>Sender_svnt</name>
+    <source/>
+    <node/>
+    <location>Sender_svnt</location>
+  </artifact>
+  <artifact xmi:id="Sender_StubArtifact">
+    <name>Sender_stub</name>
+    <source/>
+    <node/>
+    <location>Sender_stub</location>
+  </artifact>
+  <artifact xmi:id="Shapes_Connector_ExecArtifact">
+    <name>Shapes_Connector_exec</name>
+    <source/>
+    <node/>
+    <location>ShapesContr_Connector_exec</location>
+  </artifact>
+
+  <artifact xmi:id="Controller_ExecArtifact">
+    <name>Controller_exec</name>
+    <source/>
+    <node/>
+    <location>ShapesContr_Controller_exec</location>
+  </artifact>
+  <artifact xmi:id="Controller_SvntArtifact">
+    <name>Controller_svnt</name>
+    <source/>
+    <node/>
+    <location>ShapesContr_Controller_svnt</location>
+  </artifact>
+  <!--artifact xmi:id="Controller_StubArtifact">
+    <name>Controller_stub</name>
+    <source/>
+    <node/>
+    <location>ShapesContr_Controller_stub</location>
+  </artifact-->
+  <artifact xmi:id="ControllerR_ExecArtifact">
+    <name>ControllerR_exec</name>
+    <source/>
+    <node/>
+    <location>ShapesContr_ContrR_exec</location>
+  </artifact>
+  <artifact xmi:id="ControllerR_SvntArtifact">
+    <name>ControllerR_svnt</name>
+    <source/>
+    <node/>
+    <location>ShapesContr_ContrR_svnt</location>
+  </artifact>
+  <!--artifact xmi:id="ControllerR_StubArtifact">
+    <name>ControllerR_stub</name>
+    <source/>
+    <node/>
+    <location>ShapesContr_ContrR_stub</location>
+  </artifact-->
+  <artifact xmi:id="Shapes_Connector_SvntArtifact">
+    <name>Shapes_Connector_svnt</name>
+    <source/>
+    <node/>
+    <location>ShapesContr_Connector_svnt</location>
+  </artifact>
+  <artifact xmi:id="Shapes_Connector_StubArtifact">
+    <name>Shapes_Connector_stub</name>
+    <source/>
+    <node/>
+    <location>ShapesContr_Connector_stub</location>
+  </artifact>
+  <artifact xmi:id="Receiver_ExecArtifact">
+    <name>Receiver_exec</name>
+    <source/>
+    <node/>
+    <location>Receiver_exec</location>
+  </artifact>
+  <artifact xmi:id="Receiver_SvntArtifact">
+    <name>Receiver_svnt</name>
+    <source/>
+    <node/>
+    <location>Receiver_svnt</location>
+  </artifact>
+  <artifact xmi:id="Receiver_StubArtifact">
+    <name>Receiver_stub</name>
+    <source/>
+    <node/>
+    <location>Receiver_stub</location>
+  </artifact>
+</Deployment:DeploymentPlan>

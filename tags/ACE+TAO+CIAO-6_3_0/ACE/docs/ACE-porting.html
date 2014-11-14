@@ -1,0 +1,196 @@
+<!-- $Id$ -->
+
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+   <META NAME="Generator" CONTENT="Microsoft Word 97">
+   <META NAME="Template" CONTENT="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html
+.dot">
+   <META NAME="GENERATOR" CONTENT="Mozilla/4.05 [en] (Win95; I) [Netscape]">
+   <TITLE>Porting ACE and TAO to a New OS Platform</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#0000FF" VLINK="#FF0000">
+
+<HR><P> <H3>Porting ACE, TAO, and CIAO to a New OS Platform</H3><P>
+
+<A HREF="http://www.dre.vanderbilt.edu/ACE">ACE</A>, <A
+HREF="http://www.dre.vanderbilt.edu/TAO">TAO</A>, and <A
+HREF="http://www.dre.vanderbilt.edu/CIAO">CIAO</A> have been
+ported to <A HREF="http://www.dre.vanderbilt.edu/versions.html">many
+OS platforms</A>.  Porting ACE, TAO, and CIAO to new platforms is
+fairly easy.  The following document describes the step-by-step
+process to use when porting the various <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">components
+and layers</A> in ACE to a new OS platform.  Once ACE is ported, it is
+straightforward to port TAO and CIAO, as well.<P>
+
+Before starting a port that you plan to contribute back to the
+ACE+TAO+CIAO open-source community, we recommend that you do the
+following:
+
+<UL>
+<LI> Read and follow the <A HREF="ACE-guidelines.html">programming style
+    guidelines</A> we use when writing ACE, TAO, and CIAO code,
+    which will make it much easier to integrate and maintain your port
+    in the source tree. <P>
+
+<LI> Contact <A HREF="mailto:d.schmidt@vanderbilt.edu">Douglas
+    C. Schmidt</A> and let him know that you're planning to contribute
+    a port, which will make it make easier to work out the logistics
+    of when/how the port will be integrated. <P>
+</UL>
+
+<hr align=left width="50%"><P>
+<H4>Create a <CODE>config.h</CODE> Header File for the Target OS Platform</H4>
+
+A <CODE>config-*.h</CODE> header file exists in <A
+HREF="../ace/">$ACE_ROOT/ace</A> for each platform to which ACE has
+been ported.  This file contains the portability macros for each
+particular configuration of ACE.  A complete description of the
+existent macros can be found in the <A
+HREF="../ace/README">$ACE_ROOT/ace/README</A> file. <P>
+
+Currently, you must edit this file by hand to port it to new OS
+platforms.  It's a good idea to use
+the <CODE>config-*.h</CODE> files for platforms with similar
+characteristics as examples.
+
+<hr align=left width="50%"><P>
+<H4>Port the <CODE>ACE_OS</CODE> Namespace</H4>
+
+The <CODE>ACE_OS</CODE> namespace encapsulates most of variation
+between the different OS implementations, <EM>e.g.</EM>, UNIX, Win32,
+and various real-time operating systems.  It is the core of the ACE OS
+abstraction layer.  Most work required to port ACE to a new OS
+platform resides in this namespace.  There are <EM>many</EM> examples
+of how ACE has been ported to other operating systems in the
+<CODE>ACE_OS</CODE> class in the
+<CODE>$ACE_ROOT/ace/OS_NS_*.{h,inl,cpp}</CODE> files. <P>
+
+Optional features in pthreads are covered by <CODE>ACE_HAS_*</CODE>
+and/or <CODE>ACE_LACKS_*</CODE> macros, which are described in the <A
+HREF="../ace/README">$ACE_ROOT/ace/README</A> file.  Particular
+platform features, such as DCE pthreads calls that end in
+<CODE>_np</CODE>, should be bracketed by platform defines rather than
+by inventing more <CODE>ACE_HAS_*</CODE> or <CODE>ACE_LACKS_*</CODE>
+definitions. <P>
+
+An important part of porting ACE to a new platform is to map the
+threading API correctly.  Currently, ACE has support for the following
+thread APIs: <P>
+
+<UL>
+<LI> <B>UNIX International (UI) Threads</B>
+    (<CODE>ACE_HAS_STHREADS</CODE>) - Solaris.<P>
+
+<LI> <B>POSIX Pthreads</B> (<CODE>ACE_HAS_PTHREADS</CODE>) -Final standard (also
+    called draft 10) [MIT, Linux, and Solaris]. <P>
+
+<LI> <B>Win32 Threads</B> (<CODE>ACE_HAS_WTHREADS</CODE>) - Windows
+    NT, Windows '95/98, and Windows CE <P>
+
+<LI> <B>VxWorks Tasks</B> (<CODE>ACE_VXWORKS</CODE>) - VxWorks <P>
+</UL>
+
+If your OS platform does not support any of these threading packages,
+you must port the <CODE>ACE_OS::thr_*</CODE> functions. <P>
+
+<hr align=left width="50%"><P>
+<H4>Port the C++ Wrapper Facade Components</H4>
+
+After porting the <CODE>ACE_OS</CODE> namespace, the next step is to
+port all of the ACE C++ wrapper facade components, such as sockets,
+threads, synchronization mechanisms.  A full list of the categories
+and classes can be found in the <A
+HREF="ACE-categories.html">$ACE_ROOT/ACE-categories</a> file.  It is
+easiest to concentrate on porting one category at the time.  The ACE
+release contain a <A HREF="../tests/README">regression test suite</A>
+in the <A HREF="../tests/">$ACE_ROOT/tests/</A> directory.  These
+tests can be used to validate the correctness of the various ACE C++
+wrapper facades as they are ported. <P>
+
+<hr align=left width="50%"><P>
+<H4>Port the Higher-level Framework Components of ACE</H4>
+
+Having ported (and tested) all the components of the ACE OS adaptation
+layer and C++ wrapper facades, you can proceed to port the higher
+level components of ACE, such as the Reactor, Service Configurator,
+Connector, Acceptor, and Streams frameworks.  At this point, it should
+be relatively easy to port the rest of ACE because most of the
+platform-dependent code is localized in the lower layers of ACE. <P>
+
+<hr align=left width="50%"><P>
+<H4>Port TAO and CIAO</H4>
+
+After porting and successfully testing all the ACE framework
+components, it should be straightforward to port and <A
+HREF="../TAO/TAO-INSTALL.html">install</A> TAO and <A
+HREF="../TAO/CIAO/CIAO-INSTALL.html">install</A> CIAO because the bulk
+of their platform-dependent code is localized in ACE.  Typically, the
+only problems that arise when porting TAO and CIAO is bugs and
+limitations with C++ compilers. <P>
+
+<HR><P>
+<H3>C++ Features Required to Port ACE, TAO, and CIAO</H3>
+
+ACE, TAO, and CIAO have been ported to most C++ compilers.  The
+following is a list of which C++ features a compiler must support in
+order to compile ACE and TAO:
+
+<UL>
+<LI> <B>Templates</B> -- The C++ compiler must support templates.
+    However, it need not support template member functions and of
+    the advanced concepts outlined in <A
+    HREF="http://www.moderncppdesign.com/"> Modern C++ Design</A>. <P>
+
+<LI> <B>Multiple inheritance and dynamic binding</B> -- The C++
+    compiler must support multiple inheritance and dynamic
+    binding. <P>
+
+<LI> <B>Namespaces</B> -- ACE+TAO+CIAO utilizes C++ namespaces, so the
+    C++ compiler must support them.<P>
+
+<LI> <B>ANSI casts and RTTI</B> -- ACE+TAO+CIAO uses the ANSI C++
+    casts, so the C++ compiler  must support them, which implies
+    support for RTTI.<P>
+
+</UL>
+
+The following is a list of which C++ features that ACE, TAO, CIAO can
+take advantage of if a compiler supports them:
+
+<UL>
+<LI> <B>Exceptions</B> -- The ACE library itself is ``exception
+    neutral,'' <EM>i.e.,</EM> it does not catch or throw C++
+    exceptions.  However, you can use exceptions in code
+    that uses ACE including throwing exceptions inside call back
+    methods, as long as you provide the code to handle it.
+    TAO requires the use of C++ exceptions,
+    <CODE>ACE_HAS_EXCEPTIONS</CODE> must be defined. <P>
+
+<LI> <B>STL</B> -- Unfortunately many of the platforms that ACE
+        supports don't have an STL library.  Moreover, different versions
+        of STL behave differently.  ACE therefore does not depends on
+        STL and does not use it internally.  If your target
+        platform(s) support STL you should be able to
+        use it with ACE, TAO, and CIAO without problems, though your C++
+        compiler may have problems with it (this is beyond the scope
+        of ACE, however). <P>
+
+        If you are considering STL, you might consider
+        <A HREF="http://www.stlport.org/">STLport</a>,
+        which is a port of the SGI STL to numerous platforms that ACE,
+        TAO, and CIAO also support. <P>
+
+</UL>
+
+<P><HR><P>
+
+Back to the <A
+HREF="http://www.cs.wustl.edu/~schmidt/ACE-documentation.html">ACE
+documentation</A> page.<BR>
+Back to <A HREF="index.html">ACE Documentation Home</A>.
+
+<!--#include virtual="/~schmidt/cgi-sig.html" -->
+</BODY>
+</HTML>
