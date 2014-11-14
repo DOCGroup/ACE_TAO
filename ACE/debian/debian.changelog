@@ -1,3 +1,9 @@
+ace (6.3.0-1) experimental; urgency=low
+
+  * New upstream release.
+
+ -- Johnny Willemsen <jwillemsen@remedy.nl>  Fri, 14 November 2014 19:01:01 +0200
+
 ace (6.2.8-1) experimental; urgency=low
 
   * New upstream release.

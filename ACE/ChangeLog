@@ -1,3 +1,18 @@
+Fri Nov 14 08:14:39 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * NEWS:
+        * docs/Download.html:
+        * docs/bczar/bczar.html:
+        * etc/index.html:
+          Make 6.3.0 public
+
+        * bin/MakeProjectCreator/config/vc12.features:
+        * bin/MakeProjectCreator/config/vc14.features:
+          Missing features files
+
+        * bin/MakeProjectCreator/config/vc_warnings.mpb:
+          Disable warnings 4456, 4458, and 4459 with Visual Studio 2015
+
 Fri Nov 14 08:38:16 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.3.0 released.

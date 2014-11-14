@@ -32,3 +32,21 @@ feature(vc_avoid_winsock_warnings) {
     macros += _WINSOCK_DEPRECATED_NO_WARNINGS
   }
 }
+
+feature(vc_avoid_hides_local_declaration) {
+  specific(vc14) {
+    DisableSpecificWarnings += 4456
+  }
+}
+
+feature(vc_avoid_hides_global_declaration) {
+  specific(vc14) {
+    DisableSpecificWarnings += 4459
+  }
+}
+
+feature(vc_avoid_hides_class_member) {
+  specific(vc14) {
+    DisableSpecificWarnings += 4458
+  }
+}
