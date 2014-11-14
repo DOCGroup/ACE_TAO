@@ -1,3 +1,7 @@
+Fri Nov 14 08:38:16 CET 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * TAO version 2.3.0 released.
+
 Wed Nov 12 09:00:15 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * tao/DynamicInterface/AMH_DSI_Response_Handler.h:
