@@ -1,3 +1,8 @@
+Mon Nov 24 10:49:54 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Task.inl:
+          Removed unnecessary lock.
+
 Fri Nov 14 15:03:21 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * bin/MakeProjectCreator/config/vc14nmake.mpb:
