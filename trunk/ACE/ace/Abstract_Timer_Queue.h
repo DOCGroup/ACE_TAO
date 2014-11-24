@@ -184,7 +184,7 @@ public:
   /**
    * Determine the next event to timeout.  Returns @a max if there are
    * no pending timers or if all pending timers are longer than max.
-   * <the_timeout> should be a pointer to storage for the timeout value,
+   * @a the_timeout should be a pointer to storage for the timeout value,
    * and this value is also returned.  This method does not acquire a
    * lock internally since it doesn't modify internal state.  If you
    * need to call this method when the queue is being modified
