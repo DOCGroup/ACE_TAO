@@ -9,7 +9,6 @@ ACE_INLINE int
 ACE_Task_Base::grp_id (void) const
 {
   ACE_TRACE ("ACE_Task_Base::grp_id");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, const_cast <ACE_Thread_Mutex&>(this->lock_), -1));
   return this->grp_id_;
 }
 
