@@ -60,7 +60,7 @@ ACE_INLINE size_t
 ACE_Task_Base::thr_count (void) const
 {
   ACE_TRACE ("ACE_Task_Base::thr_count");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, const_cast <ACE_Thread_Mutex&>(this->lock_), 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, 0));
 
   return this->thr_count_;
 }
