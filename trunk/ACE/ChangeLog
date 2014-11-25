@@ -1,3 +1,10 @@
+Tue Nov 25 09:18:14 UTC 2014  Martin Corino  <mcorino@remedy.nl>
+
+        * ace/Task.h:
+        * ace/Task.inl:
+          Making the lock_ member mutable removes the need for 
+          const_cast<>()-ing in guard expressions.
+
 Mon Nov 24 11:20:09 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ace/Abstract_Timer_Queue.h:
