@@ -1,8 +1,15 @@
+Tue Nov 25 14:52:51 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+        * ACE-INSTALL.html:
+          Fixed cygwin setup instructions as reported by
+          Koh Onishi <k_onishi at mtj dot biglobe dot ne dot jp> in
+          bugzilla 4066
+
 Tue Nov 25 09:18:14 UTC 2014  Martin Corino  <mcorino@remedy.nl>
 
         * ace/Task.h:
         * ace/Task.inl:
-          Making the lock_ member mutable removes the need for 
+          Making the lock_ member mutable removes the need for
           const_cast<>()-ing in guard expressions.
 
 Mon Nov 24 11:20:09 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
