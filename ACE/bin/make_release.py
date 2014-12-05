@@ -199,7 +199,6 @@ def commit (files):
             print "Adding file " + file + " to commit"
             ex ("git add " + file)
 
-        commit_message =
         ex ("git commit -m\"" + version + "\"")
 
 #        print "Checked in files, resuling in revision ", rev.number
@@ -603,37 +602,37 @@ def update_latest_tag (which, branch):
     vprint ("Removing tag %s" % (tagname))
     ex ("git tag -d " + tagname)
     vprint ("Placing tag %s" % (tagname))
-    ex ("git tag -a " + tagname)
+    ex ("git tag -a " + tagname + " -m\"" + tagname + "\"")
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version """
     global comp_versions, opts
 
-    branch = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
+    tagname = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
                                         comp_versions["ACE_minor"],
                                         comp_versions["ACE_beta"])
 
     if opts.take_action:
-        vprint ("Placing tag %s on ATCD" % (branch))
-        ex ("git tag -a " + branch)
-        vprint ("Placing tag %s on MPC" % (branch))
-        ex ("git tag -a " + branch)
+        vprint ("Placing tag %s on ATCD" % (tagname))
+        ex ("git tag -a " + tagname + " -m\"" + tagname + "\"")
+        vprint ("Placing tag %s on MPC" % (tagname))
+        ex ("git tag -a " + tagname + " -m\"" + tagname + "\"")
 
         # Update latest tag
         if opts.release_type == "major":
-            update_latest_tag ("Major", branch)
+            update_latest_tag ("Major", tagname)
         elif opts.release_type == "minor":
-            update_latest_tag ("Minor", branch)
+            update_latest_tag ("Minor", tagname)
         elif opts.release_type == "beta":
-            update_latest_tag ("Beta", branch)
-            update_latest_tag ("Micro", branch)
+            update_latest_tag ("Beta", tagname)
+            update_latest_tag ("Micro", tagname)
             if comp_versions["ACE_beta"] == 1:
-                    update_latest_tag ("BFO", branch)
+                    update_latest_tag ("BFO", tagname)
     else:
-        vprint ("Placing tag %s on ATCD" % (branch))
-        vprint ("Placing tag %s on MPC" % (branch))
+        vprint ("Placing tag %s on ATCD" % (tagname))
+        vprint ("Placing tag %s on MPC" % (tagname))
         print "Creating tags:\n"
-        print "Placing tag " + branch + "\n"
+        print "Placing tag " + tagname + "\n"
 
 ##################################################
 #### Packaging methods
