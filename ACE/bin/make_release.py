@@ -325,7 +325,7 @@ def update_spec_file ():
 
     global comp_versions, opts
 
-    with open (doc_root + "/ACE/rpmbuild/ace-tao.spec", 'r+') as spec_file:
+    with open (doc_root + "/ATCD/ACE/rpmbuild/ace-tao.spec", 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
             if line.find ("define ACEVER ") is not -1:
@@ -352,7 +352,7 @@ def update_spec_file ():
             print "New spec file:"
             print "".join (new_spec)
 
-    return [doc_root + "/ACE/rpmbuild/ace-tao.spec"]
+    return [doc_root + "/ATCD/ACE/rpmbuild/ace-tao.spec"]
 
 def update_debianbuild ():
     """ Updates ACE_ROOT/debian directory.
@@ -376,7 +376,7 @@ def update_debianbuild ():
     mask = re.compile ("(libace|libkokyu|libtao)(.*)(\d+\.\d+\.\d+)(.*)")
     tao = re.compile ("tao", re.IGNORECASE)
 
-    for fname in glob.iglob(doc_root + '/ACE/debian/*'):
+    for fname in glob.iglob(doc_root + '/ATCD/ACE/debian/*'):
         print "Considering " + fname
         match = None
 
@@ -415,7 +415,7 @@ def update_debianbuild ():
         else:
             return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
 
-    with open (doc_root + "/ACE/debian/debian.control", 'r+') as control_file:
+    with open (doc_root + "/ATCD/ACE/debian/debian.control", 'r+') as control_file:
         new_ctrl = ""
         for line in control_file.readlines ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
@@ -434,7 +434,7 @@ def update_debianbuild ():
             print "New control file:"
             print "".join (new_ctrl)
 
-    files.append (doc_root + "/ACE/debian/debian.control")
+    files.append (doc_root + "/ATCD/ACE/debian/debian.control")
 
     # rewrite debian/dsc
     dsc_lines = """Format: 1.0
@@ -449,7 +449,7 @@ Files:
 
 """ % (comp_versions["ACE_version"], comp_versions["TAO_version"], comp_versions["ACE_version"])
     if opts.take_action:
-        with open (doc_root + "/ACE/debian/ace.dsc", 'r+') as dsc_file:
+        with open (doc_root + "/ATCD/ACE/debian/ace.dsc", 'r+') as dsc_file:
             dsc_file.seek (0)
             dsc_file.truncate (0)
             dsc_file.writelines (dsc_lines)
@@ -457,7 +457,7 @@ Files:
         print "New dsc file:\n"
         print dsc_lines
 
-    files.append (doc_root + "/ACE/debian/ace.dsc")
+    files.append (doc_root + "/ATCD/ACE/debian/ace.dsc")
 
     return files
 
@@ -600,9 +600,9 @@ def update_latest_tag (which, branch):
     global opts
     tagname = "Latest_" + which
     vprint ("Removing tag %s" % (tagname))
-    ex ("git tag -d " + tagname)
+    #ex ("cd $DOC_ROOT/ATCD && git tag -d " + tagname)
     vprint ("Placing tag %s" % (tagname))
-    ex ("git tag -a " + tagname + " -m\"" + tagname + "\"")
+    ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version """
@@ -614,9 +614,9 @@ def tag ():
 
     if opts.take_action:
         vprint ("Placing tag %s on ATCD" % (tagname))
-        ex ("git tag -a " + tagname + " -m\"" + tagname + "\"")
+        ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
         vprint ("Placing tag %s on MPC" % (tagname))
-        ex ("git tag -a " + tagname + " -m\"" + tagname + "\"")
+        ex ("cd $DOC_ROOT/MPC && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
         # Update latest tag
         if opts.release_type == "major":

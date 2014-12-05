@@ -238,16 +238,14 @@
         cd $HOME<br>
         rm -rf DOC_ROOT<br>
         mkdir DOC_ROOT<br>
-        export DOC_ROOT=$PWD/DOC_ROOT<br>
+        cd DOC_ROOT<br>
+        export DOC_ROOT=$PWD<br>
         export SIGNATURE="Johnny Willemsen"<br>
         export MAILID=jwillemsen@remedy.nl<br>
-        mkdir -p $HOME/.subversion<br>
-        wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
-        svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT<br>
-        svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC<br>
-        cd DOC_ROOT/<br>
-        ACE/bin/make_release.py --beta --update --tag<br>
-        ACE/bin/make_release.py --kit<br>
+        git clone https://github.com/DOCGroup/ATCD.git ATCD<br>
+        git clone https://github.com/DOCGroup/MPC.git MPC<br>
+        ATCD/ACE/bin/make_release.py --beta --update --tag<br>
+        ATCD/ACE/bin/make_release.py --kit<br>
       </code>
     <p>
       Feel free to cut and paste with suitable edits.
