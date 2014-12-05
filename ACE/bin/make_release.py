@@ -508,7 +508,7 @@ def get_and_update_versions ():
         print "Fatal error in get_and_update_versions."
         raise
 
-def create_changelogs (component):
+def create_changelog (component):
     """ Creates a changelog entry for the supplied component that includes
     the version number being released"""
     vprint ("Creating ChangeLog entry for " + component)
@@ -516,15 +516,13 @@ def create_changelogs (component):
     global old_comp_versions, comp_versions, opts
 
     old_tag = "ACE+TAO+CIAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
-                                                  old_comp_versions["ACE_minor"],
-                                                  old_comp_versions["ACE_beta"])
-
-    component_version = component + "-%d_%d_%d" & (comp_versions[component+"_major"], comp_versions[component+"_minor"], comp_versions[component+"ACE_beta"])
+                                         old_comp_versions["ACE_minor"],
+                                         old_comp_versions["ACE_beta"])
 
     # Generate changelogs per component
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + ace_version)
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + "_" + comp_versions[component + "_version_"])
 
-    return ["%s/ChangeLogs/%s%s" % (component, component, component_version)]
+    return ["%s/ChangeLogs/%s-%s" % (component, component, comp_versions[component + "_version_"])]
 
 def get_comp_versions (component):
     """ Extracts the current version number from the VERSION
@@ -597,10 +595,18 @@ def get_comp_versions (component):
         str (comp_versions[component + "_major"])  + '.' + \
         str (comp_versions[component + "_minor"])  + '.' + \
         str (comp_versions[component + "_beta"])
+    comp_versions [component + "_version_"] = \
+        str (comp_versions[component + "_major"])  + '_' + \
+        str (comp_versions[component + "_minor"])  + '_' + \
+        str (comp_versions[component + "_beta"])
 
     old_comp_versions [component + "_version"] = \
         str (old_comp_versions[component + "_major"])  + '.' + \
         str (old_comp_versions[component + "_minor"])  + '.' + \
+        str (old_comp_versions[component + "_beta"])
+    old_comp_versions [component + "_version_"] = \
+        str (old_comp_versions[component + "_major"])  + '_' + \
+        str (old_comp_versions[component + "_minor"])  + '_' + \
         str (old_comp_versions[component + "_beta"])
 
     vprint ("Updating from version %s to version %s" %
