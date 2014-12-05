@@ -520,7 +520,7 @@ def create_changelog (component):
                                          old_comp_versions["ACE_beta"])
 
     # Generate changelogs per component
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + "_" + comp_versions[component + "_version_"])
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + "-" + comp_versions[component + "_version_"])
 
     return ["%s/ChangeLogs/%s-%s" % (component, component, comp_versions[component + "_version_"])]
 
