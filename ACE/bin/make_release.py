@@ -8,7 +8,6 @@
 
 from __future__ import with_statement
 from time import strftime
-import pysvn
 import re
 import tempfile
 import shutil
@@ -25,7 +24,7 @@ opts=None
 """ Arguments from the command line """
 args=None
 
-""" Absolute path from the SVN workspace to be used for the
+""" Absolute path from the git workspace to be used for the
 release"""
 doc_root=None
 
@@ -58,27 +57,27 @@ bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vc
 ##################################################
 #### SVN Client Hooks
 ##################################################
-svn_auth_info = None
-def svn_login_callback (realm, username, may_save):
-    """ Callback used by the SVN library to obtain login credentials"""
-    global svn_auth_info
-    if svn_auth_info is None:
-        print "Please enter your Subversion login credentials.  They will be saved for the duration of this script."
-        username = raw_input ("Username: ")
-        password = raw_input ("Password: ")
+#svn_auth_info = None
+#def svn_login_callback (realm, username, may_save):
+#    """ Callback used by the SVN library to obtain login credentials"""
+#    global svn_auth_info
+#    if svn_auth_info is None:
+#        print "Please enter your Subversion login credentials.  They will be saved for the duration of this script."
+#        username = raw_input ("Username: ")
+#        password = raw_input ("Password: ")
+#
+#        svn_auth_info = (True, username, password, False)
+#
+#   return svn_autn_info
 
-        svn_auth_info = (True, username, password, False)
+#def svn_log_message_callback ():
+#    """ Callback used by the svn library to generate log messages
+#    for operations such as copy """
+#    return (True, "ChangeLogTag: %s  %s  <%s>" % (release_date, signature, mailid))
 
-    return svn_autn_info
-
-def svn_log_message_callback ():
-    """ Callback used by the svn library to generate log messages
-    for operations such as copy """
-    return (True, "ChangeLogTag: %s  %s  <%s>" % (release_date, signature, mailid))
-
-svn_client = pysvn.Client ()
-svn_client.callback_get_login = svn_login_callback
-svn_client.callback_get_log_message = svn_log_message_callback
+#svn_client = pysvn.Client ()
+#svn_client.callback_get_login = svn_login_callback
+#svn_client.callback_get_log_message = svn_log_message_callback
 
 ##################################################
 #### Utility Methods
@@ -95,12 +94,10 @@ def parse_args ():
     parser.add_option ("--beta", dest="release_type", action="store_const",
                        help="Create a beta release.", default=None, const="beta")
 
-
     parser.add_option ("--tag", dest="action", action="store_const",
                        help="Tag the release. DO NOT USE WITH --kit", default=None, const="tag")
     parser.add_option ("--update", dest="update", action="store_true",
                        help="Update the version numbers, only used with --tag", default=False)
-
 
     parser.add_option ("--kit", dest="action", action="store_const",
                        help="Create kits. DO NOT USE WITH --tag", default=None, const="kit")
@@ -189,27 +186,33 @@ def vprint (string):
 ##################################################
 def commit (files):
     """ Commits the supplied list of files to the repository. """
+    import shutil, os
     vprint ("Committing the following files: " + " ".join (files))
 
     if opts.take_action:
-        rev = svn_client.checkin (files,
-                                  "ChangeLogTag:%s  %s  <%s>" % (release_date, signature, mailid))
+        for file in files:
+            print "Adding file " file " to commit"
+            ex ("git add " + file)
 
-        print "Checked in files, resuling in revision ", rev.number
+        commit_message = "ChangeLogTag:%s  %s  <%s>" % (release_date, signature, mailid)
+        ex ("git commit -m\"" + commit_message + "\"")
+
+#        print "Checked in files, resuling in revision ", rev.number
 
 def check_workspace ():
     """ Checks that the DOC and MPC repositories are up to date.  """
-    global opts, doc_root, svn_client
+    global opts, doc_root
     # @@TODO: Replace with a svn library
     try:
-        rev = svn_client.update (doc_root)
+        #ex ("git pull")
+        #rev = svn_client.update (doc_root)
         print "Successfully updated ACE/TAO/CIAO/DAnCE working copy to revision "
     except:
         print "Unable to update ACE/TAO/CIAO/DAnCE workspace at " + doc_root
         raise
 
     try:
-        rev = svn_client.update (doc_root + "/ACE/MPC")
+        #rev = svn_client.update (doc_root + "/ACE/MPC")
         print "Successfully updated MPC working copy to revision "
     except:
         print "Unable to update the MPC workspace at " + doc_root + "/ACE/MPC"
@@ -217,13 +220,13 @@ def check_workspace ():
 
     # By default retrieve repo root from working copy
     if opts.repo_root is None:
-        info = svn_client.info2 (doc_root + "/ACE")[0]
-        opts.repo_root = info[1]["repos_root_URL"]
+        #info = svn_client.info2 (doc_root + "/ACE")[0]
+        #opts.repo_root = info[1]["repos_root_URL"]
 
     # By default retrieve MPC root from working copy
     if opts.mpc_root is None:
-        info = svn_client.info2 (doc_root + "/ACE/MPC")[0]
-        opts.mpc_root = info[1]["repos_root_URL"]
+        #info = svn_client.info2 (doc_root + "/ACE/MPC")[0]
+        #opts.mpc_root = info[1]["repos_root_URL"]
 
     vprint ("Repos root URL = " + opts.repo_root + "\n")
     vprint ("Repos MPC root URL = " + opts.mpc_root + "\n")
@@ -390,14 +393,15 @@ def update_debianbuild ():
 
         if fnewname is not None:
             if opts.take_action:
-                svn_client.move (fname, fnewname)
+                ex ("git move " + fname + " " + fnewname)
+                #svn_client.move (fname, fnewname)
             else:
                 print "Rename: " + fname + " to " + fnewname + "\n"
 
-            files.append (fname)
-            files.append (fnewname)
+            #files.append (fname)
+            #files.append (fnewname)
 
-            print "Appending " + fname + " and " + fnewname
+            #print "Appending " + fname + " and " + fnewname
 
     # update debianbuild/control
     def update_ver (match):
@@ -468,10 +472,10 @@ def get_and_update_versions ():
         files += update_version_files ("TAO")
         files += update_version_files ("CIAO")
         files += update_version_files ("DAnCE")
-        files += create_changelog ("ACE")
-        files += create_changelog ("TAO")
-        files += create_changelog ("CIAO")
-        files += create_changelog ("DAnCE")
+        #files += create_changelog ("ACE")
+        #files += create_changelog ("TAO")
+        #files += create_changelog ("CIAO")
+        #files += create_changelog ("DAnCE")
         files += update_spec_file ()
         files += update_debianbuild ()
 
@@ -593,10 +597,10 @@ ACE_wrappers/TAO/DAnCE %s/tags/%s/DAnCE
 """ % ((root_anon, branch) * 4)
     tagname = "Latest_" + which
     temp = tempfile.gettempdir () + "/" + tagname
-    svn_client.checkout (opts.repo_root + "/tags/" + tagname, temp, False)
-    svn_client.propset ("svn:externals", propval, temp)
-    svn_client.checkin (temp, "Updating for release " + branch)
-    shutil.rmtree (temp, True)
+    #svn_client.checkout (opts.repo_root + "/tags/" + tagname, temp, False)
+    #svn_client.propset ("svn:externals", propval, temp)
+    #svn_client.checkin (temp, "Updating for release " + branch)
+    #shutil.rmtree (temp, True)
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version """
@@ -608,12 +612,12 @@ def tag ():
 
     if opts.take_action:
         # Tag middleware
-        svn_client.copy (opts.repo_root + "/trunk",
-                        opts.repo_root + "/tags/" + branch)
+        #svn_client.copy (opts.repo_root + "/trunk",
+        #                opts.repo_root + "/tags/" + branch)
 
         # Tag MPC
-        svn_client.copy (opts.mpc_root + "/trunk",
-                        opts.mpc_root + "/tags/" + branch)
+        #svn_client.copy (opts.mpc_root + "/trunk",
+        #                opts.mpc_root + "/tags/" + branch)
 
         # Update latest tag
         if opts.release_type == "major":
@@ -639,24 +643,24 @@ def export_wc (stage_dir):
 
     # Export our working copy
     print ("Exporting ACE")
-    svn_client.export (doc_root + "/ACE",
-                       stage_dir + "/ACE_wrappers")
+    #svn_client.export (doc_root + "/ACE",
+    #                   stage_dir + "/ACE_wrappers")
 
     print ("Exporting MPC")
-    svn_client.export (doc_root + "/ACE/MPC",
-                       stage_dir + "/ACE_wrappers/MPC")
+    #svn_client.export (doc_root + "/ACE/MPC",
+    #                   stage_dir + "/ACE_wrappers/MPC")
 
     print ("Exporting TAO")
-    svn_client.export (doc_root + "/TAO",
-                       stage_dir + "/ACE_wrappers/TAO")
+    #svn_client.export (doc_root + "/TAO",
+    #                   stage_dir + "/ACE_wrappers/TAO")
 
     print ("Exporting CIAO")
-    svn_client.export (doc_root + "/CIAO",
-                       stage_dir + "/ACE_wrappers/TAO/CIAO")
+    #svn_client.export (doc_root + "/CIAO",
+    #                   stage_dir + "/ACE_wrappers/TAO/CIAO")
 
     print ("Exporting DAnCE")
-    svn_client.export (doc_root + "/DAnCE",
-                       stage_dir + "/ACE_wrappers/TAO/DAnCE")
+    #svn_client.export (doc_root + "/DAnCE",
+    #                   stage_dir + "/ACE_wrappers/TAO/DAnCE")
 
 
 def update_packages (text_files, bin_files, stage_dir, package_dir):
