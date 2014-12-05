@@ -187,15 +187,20 @@ def vprint (string):
 def commit (files):
     """ Commits the supplied list of files to the repository. """
     import shutil, os
-    vprint ("Committing the following files: " + " ".join (files))
+    global comp_versions
+
+    version = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
+                                         comp_versions["ACE_minor"],
+                                         comp_versions["ACE_beta"])
+    vprint ("Committing the following files for " + version + " ".join (files))
 
     if opts.take_action:
         for file in files:
-            print "Adding file " file " to commit"
+            print "Adding file " + file + " to commit"
             ex ("git add " + file)
 
-        commit_message = "ChangeLogTag:%s  %s  <%s>" % (release_date, signature, mailid)
-        ex ("git commit -m\"" + commit_message + "\"")
+        commit_message =
+        ex ("git commit -m\"" + version + "\"")
 
 #        print "Checked in files, resuling in revision ", rev.number
 
@@ -219,17 +224,17 @@ def check_workspace ():
         raise
 
     # By default retrieve repo root from working copy
-    if opts.repo_root is None:
+    #if opts.repo_root is None:
         #info = svn_client.info2 (doc_root + "/ACE")[0]
         #opts.repo_root = info[1]["repos_root_URL"]
 
     # By default retrieve MPC root from working copy
-    if opts.mpc_root is None:
+    #if opts.mpc_root is None:
         #info = svn_client.info2 (doc_root + "/ACE/MPC")[0]
         #opts.mpc_root = info[1]["repos_root_URL"]
 
-    vprint ("Repos root URL = " + opts.repo_root + "\n")
-    vprint ("Repos MPC root URL = " + opts.mpc_root + "\n")
+    #vprint ("Repos root URL = " + opts.repo_root + "\n")
+    #vprint ("Repos MPC root URL = " + opts.mpc_root + "\n")
 
 
 def update_version_files (component):
@@ -393,7 +398,8 @@ def update_debianbuild ():
 
         if fnewname is not None:
             if opts.take_action:
-                ex ("git move " + fname + " " + fnewname)
+                print "Rename: " + fname + " to " + fnewname + "\n"
+                ex ("git mv " + fname + " " + fnewname)
                 #svn_client.move (fname, fnewname)
             else:
                 print "Rename: " + fname + " to " + fnewname + "\n"
@@ -518,7 +524,7 @@ def get_comp_versions (component):
     """ Extracts the current version number from the VERSION
     file and increments it appropriately for the release type
     requested."""
-    vprint ("Detecting current version for" + component)
+    vprint ("Detecting current version for " + component)
 
     import re
 
@@ -580,6 +586,10 @@ def get_comp_versions (component):
         str (comp_versions[component + "_major"])  + '.' + \
         str (comp_versions[component + "_minor"])  + '.' + \
         str (comp_versions[component + "_beta"])
+
+    vprint ("Updating to version %s" %
+                (comp_versions [component + "_version"]))
+
     # else:
     #     comp_versions [component + "_version"] = \
     #                   str (comp_versions[component + "_major"])  + '.' + \
@@ -589,18 +599,11 @@ def get_comp_versions (component):
 def update_latest_tag (which, branch):
     """ Update one of the Latest_* tags externals to point the new release """
     global opts
-    root_anon = re.sub ("^https:", "svn:", opts.repo_root)
-    propval = """ACE_wrappers %s/tags/%s/ACE
-ACE_wrappers/TAO %s/tags/%s/TAO
-ACE_wrappers/TAO/CIAO %s/tags/%s/CIAO
-ACE_wrappers/TAO/DAnCE %s/tags/%s/DAnCE
-""" % ((root_anon, branch) * 4)
     tagname = "Latest_" + which
-    temp = tempfile.gettempdir () + "/" + tagname
-    #svn_client.checkout (opts.repo_root + "/tags/" + tagname, temp, False)
-    #svn_client.propset ("svn:externals", propval, temp)
-    #svn_client.checkin (temp, "Updating for release " + branch)
-    #shutil.rmtree (temp, True)
+    vprint ("Removing tag %s" % (tagname))
+    ex ("git tag -d " + tagname)
+    vprint ("Placing tag %s" % (tagname))
+    ex ("git tag -a " + tagname)
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version """
@@ -611,13 +614,10 @@ def tag ():
                                         comp_versions["ACE_beta"])
 
     if opts.take_action:
-        # Tag middleware
-        #svn_client.copy (opts.repo_root + "/trunk",
-        #                opts.repo_root + "/tags/" + branch)
-
-        # Tag MPC
-        #svn_client.copy (opts.mpc_root + "/trunk",
-        #                opts.mpc_root + "/tags/" + branch)
+        vprint ("Placing tag %s on ATCD" % (branch))
+        ex ("git tag -a " + branch)
+        vprint ("Placing tag %s on MPC" % (branch))
+        ex ("git tag -a " + branch)
 
         # Update latest tag
         if opts.release_type == "major":
@@ -630,38 +630,41 @@ def tag ():
             if comp_versions["ACE_beta"] == 1:
                     update_latest_tag ("BFO", branch)
     else:
+        vprint ("Placing tag %s on ATCD" % (branch))
+        vprint ("Placing tag %s on MPC" % (branch))
         print "Creating tags:\n"
-        print opts.repo_root + "/trunk -> " + opts.repo_root + "/tags/" + branch + "\n"
-        print opts.mpc_root + "/trunk -> " + opts.mpc_root + "/tags/" + branch + "\n"
+        print "Placing tag " + branch + "\n"
 
 ##################################################
 #### Packaging methods
 ##################################################
 def export_wc (stage_dir):
 
-    global doc_root
+    global doc_root, comp_versions
 
-    # Export our working copy
-    print ("Exporting ACE")
-    #svn_client.export (doc_root + "/ACE",
-    #                   stage_dir + "/ACE_wrappers")
+    tag = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
+                                        comp_versions["ACE_minor"],
+                                        comp_versions["ACE_beta"])
 
-    print ("Exporting MPC")
-    #svn_client.export (doc_root + "/ACE/MPC",
-    #                   stage_dir + "/ACE_wrappers/MPC")
+    # Clone the ACE repository with the needed tag
+    print ("Retrieving ACE with tag" + tag)
+    ex ("git clone --depth 1 --branch " + tag + "https://github.com/DOCGroup/ATCD.git " + stage_dir + "/ATCD")
 
-    print ("Exporting TAO")
-    #svn_client.export (doc_root + "/TAO",
-    #                   stage_dir + "/ACE_wrappers/TAO")
+    # Clone the MPC repository with the needed tag
+    print ("Retrieving MPC with tag" + tag)
+    ex ("git clone --depth 1 --branch " + tag + "https://github.com/DOCGroup/MPC.git " + stage_dir + "/MPC")
 
-    print ("Exporting CIAO")
-    #svn_client.export (doc_root + "/CIAO",
-    #                   stage_dir + "/ACE_wrappers/TAO/CIAO")
-
-    print ("Exporting DAnCE")
-    #svn_client.export (doc_root + "/DAnCE",
-    #                   stage_dir + "/ACE_wrappers/TAO/DAnCE")
-
+    # Settting up stage_dir
+    print ("Moving ACE")
+    ex ("mv " + stage_dir + "ATCD/ACE " + stage_dir + "/ACE_wrappers")
+    print ("Moving TAO")
+    ex ("mv " + stage_dir + "ATCD/TAO " + stage_dir + "/ACE_wrappers/TAO")
+    print ("Moving CIAO")
+    ex ("mv " + stage_dir + "ATCD/CIAO " + stage_dir + "/ACE_wrappers/TAO/CIAO")
+    print ("Moving DAnCE")
+    ex ("mv " + stage_dir + "ATCD/DAnCE " + stage_dir + "/ACE_wrappers/TAO_DAnCE")
+    print ("Moving MPC")
+    ex ("mv " + stage_dir + "MPC " + stage_dir + "/ACE_wrappers/MPC")
 
 def update_packages (text_files, bin_files, stage_dir, package_dir):
     import os
