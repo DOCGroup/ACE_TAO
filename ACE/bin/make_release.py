@@ -508,7 +508,7 @@ def get_and_update_versions ():
         print "Fatal error in get_and_update_versions."
         raise
 
-def create_changelog (component):
+def create_changelogs (component):
     """ Creates a changelog entry for the supplied component that includes
     the version number being released"""
     vprint ("Creating ChangeLog entry for " + component)
@@ -519,19 +519,12 @@ def create_changelog (component):
                                                   old_comp_versions["ACE_minor"],
                                                   old_comp_versions["ACE_beta"])
 
-    # Generate changelogs per project
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD ACE > ACE/ChangeLogs/ACE-%d_%d_%d" & (comp_versions["ACE_major"], old_comp_versions["ACE_minor"], old_comp_versions["ACE_beta"]))
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD TAO > TAO/ChangeLogs/TAO-%d_%d_%d" & (comp_versions["TAO_major"], old_comp_versions["TAO_minor"], old_comp_versions["TAO_beta"]))
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD CIAO > CIAO/ChangeLogs/CIAO-%d_%d_%d" & (comp_versions["CIAO_major"], old_comp_versions["CIAO_minor"], old_comp_versions["CIAO_beta"]))
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD DANCE > DAnCE/ChangeLogs/DAnCE-%d_%d_%d" & (comp_versions["CIAO_major"], old_comp_versions["CIAO_minor"], old_comp_versions["CIAO_beta"]))
+    component_version = component + "-%d_%d_%d" & (comp_versions[component+"_major"], comp_versions[component+"_minor"], comp_versions[component+"ACE_beta"])
 
-    # Add changelogs per project
-    ex ("cd $DOC_ROOT/ATCD && git add ACE/ACE-%d_%d_%d" & (comp_versions["ACE_major"], old_comp_versions["ACE_minor"], old_comp_versions["ACE_beta"]))
-    ex ("cd $DOC_ROOT/ATCD && git add TAO/TAO-%d_%d_%d" & (comp_versions["TAO_major"], old_comp_versions["TAO_minor"], old_comp_versions["TAO_beta"]))
-    ex ("cd $DOC_ROOT/ATCD && git add CIAO/CIAO-%d_%d_%d" & (comp_versions["CIAO_major"], old_comp_versions["CIAO_minor"], old_comp_versions["CIAO_beta"]))
-    ex ("cd $DOC_ROOT/ATCD && git add DAnCE/DAnCE-%d_%d_%d" & (comp_versions["DAnCE_major"], old_comp_versions["DAnCE_minor"], old_comp_versions["DAnCE_beta"]))
+    # Generate changelogs per component
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + ace_version)
 
-    return ["%s/ChangeLog" % (component)]
+    return ["%s/ChangeLogs/%s%s" % (component, component, component_version)]
 
 def get_comp_versions (component):
     """ Extracts the current version number from the VERSION
@@ -633,8 +626,8 @@ def update_latest_tag (which, branch):
     vprint ("Pushing tag %s" % (tagname))
     ex ("cd $DOC_ROOT/ATCD && git push origin " + tagname)
 
-def tag ():
-    """ Tags the DOC and MPC repositories for the version """
+def tag_and_push ():
+    """ Tags the DOC and MPC repositories for the version and push that remote """
     global comp_versions, opts
 
     tagname = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
@@ -1025,7 +1018,7 @@ def main ():
 
         check_workspace ()
         get_and_update_versions ()
-        tag ()
+        tag_and_push ()
 
     else:
         print "Creating a kit."
