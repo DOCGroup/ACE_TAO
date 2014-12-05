@@ -149,7 +149,7 @@ def ex (command):
 
     status = system(command)
     if status != 0:
-        print "ERROR: Nonzero retrun value from " + command
+        print "ERROR: Nonzero return value from " + command
         raise Exception
 
 ###
@@ -624,9 +624,14 @@ def update_latest_tag (which, branch):
     global opts
     tagname = "Latest_" + which
     vprint ("Removing tag %s" % (tagname))
+    # Remove tag locally
     #ex ("cd $DOC_ROOT/ATCD && git tag -d " + tagname)
+    # Place tag in the remote orgin
+    #ex ("cd $DOC_ROOT/ATCD && git push origin :refs/tags/" + tagname)
     vprint ("Placing tag %s" % (tagname))
     ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
+    vprint ("Pushing tag %s" % (tagname))
+    ex ("cd $DOC_ROOT/ATCD && git push origin " + tagname)
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version """
@@ -639,8 +644,12 @@ def tag ():
     if opts.take_action:
         vprint ("Placing tag %s on ATCD" % (tagname))
         ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
+        vprint ("Pushing tag %s on ATCD" % (tagname))
+        ex ("cd $DOC_ROOT/ATCD && git push origin tag " + tagname)
         vprint ("Placing tag %s on MPC" % (tagname))
         ex ("cd $DOC_ROOT/MPC && git tag -a " + tagname + " -m\"" + tagname + "\"")
+        vprint ("Pushing tag %s on MPC" % (tagname))
+        ex ("cd $DOC_ROOT/MPC && git push origin tag " + tagname)
 
         # Update latest tag
         if opts.release_type == "major":
