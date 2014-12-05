@@ -501,7 +501,7 @@ def get_and_update_versions ():
         commit (files)
 
         print ("Merging workbranch " + workbranch + " to master")
-        ex ("cd $DOC_ROOT/ATCD && git checkout master)
+        ex ("cd $DOC_ROOT/ATCD && git checkout master")
         ex ("cd $DOC_ROOT/ATCD && git merge --no-ff " + workbranch + " -m\"" + workbranch + "\"")
 
     except:
@@ -520,10 +520,10 @@ def create_changelog (component):
                                                   old_comp_versions["ACE_beta"])
 
     # Generate changelogs per project
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag "..HEAD ACE > ACE/ChangeLogs/ACE-%d_%d_%d" & (comp_versions["ACE_major"], old_comp_versions["ACE_minor"], old_comp_versions["ACE_beta"]))
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag "..HEAD TAO > TAO/ChangeLogs/TAO-%d_%d_%d" & (comp_versions["TAO_major"], old_comp_versions["TAO_minor"], old_comp_versions["TAO_beta"]))
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag "..HEAD CIAO > CIAO/ChangeLogs/CIAO-%d_%d_%d" & (comp_versions["CIAO_major"], old_comp_versions["CIAO_minor"], old_comp_versions["CIAO_beta"]))
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag "..HEAD DANCE > DAnCE/ChangeLogs/DAnCE-%d_%d_%d" & (comp_versions["CIAO_major"], old_comp_versions["CIAO_minor"], old_comp_versions["CIAO_beta"]))
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD ACE > ACE/ChangeLogs/ACE-%d_%d_%d" & (comp_versions["ACE_major"], old_comp_versions["ACE_minor"], old_comp_versions["ACE_beta"]))
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD TAO > TAO/ChangeLogs/TAO-%d_%d_%d" & (comp_versions["TAO_major"], old_comp_versions["TAO_minor"], old_comp_versions["TAO_beta"]))
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD CIAO > CIAO/ChangeLogs/CIAO-%d_%d_%d" & (comp_versions["CIAO_major"], old_comp_versions["CIAO_minor"], old_comp_versions["CIAO_beta"]))
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD DANCE > DAnCE/ChangeLogs/DAnCE-%d_%d_%d" & (comp_versions["CIAO_major"], old_comp_versions["CIAO_minor"], old_comp_versions["CIAO_beta"]))
 
     # Add changelogs per project
     ex ("cd $DOC_ROOT/ATCD && git add ACE/ACE-%d_%d_%d" & (comp_versions["ACE_major"], old_comp_versions["ACE_minor"], old_comp_versions["ACE_beta"]))
@@ -604,6 +604,11 @@ def get_comp_versions (component):
         str (comp_versions[component + "_major"])  + '.' + \
         str (comp_versions[component + "_minor"])  + '.' + \
         str (comp_versions[component + "_beta"])
+
+    old_comp_versions [component + "_version"] = \
+        str (old_comp_versions[component + "_major"])  + '.' + \
+        str (old_comp_versions[component + "_minor"])  + '.' + \
+        str (old_comp_versions[component + "_beta"])
 
     vprint ("Updating from version %s to version %s" %
                 (old_comp_versions [component + "_version"], comp_versions [component + "_version"]))
