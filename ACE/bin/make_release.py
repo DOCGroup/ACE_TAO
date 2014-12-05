@@ -42,6 +42,7 @@ COMPONENT_beta
 COMPONENT_minor
 COMPONENT_major """
 comp_versions = dict ()
+old_comp_versions = dict ()
 
 release_date = strftime (# ie: Mon Jan 23 00:35:37 CST 2006
                               "%a %b %d %H:%M:%S %Z %Y")
@@ -53,6 +54,8 @@ cpu_count = multiprocessing.cpu_count()
 converted to CRLF when being put into a ZIP file """
 bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt)$")
 
+git_atcd = "https://github.com/DOCGroup/ATCD.git"
+git_mpc = "https://github.com/DOCGroup/MPC.git"
 
 ##################################################
 #### SVN Client Hooks
@@ -465,12 +468,22 @@ def get_and_update_versions ():
     """ Gets current version information for each component,
     updates the version files, creates changelog entries,
     and commit the changes into the repository."""
+    global comp_versions, opts
 
     try:
         get_comp_versions ("ACE")
         get_comp_versions ("TAO")
         get_comp_versions ("CIAO")
         get_comp_versions ("DAnCE")
+
+        # Make all changes on a workbranch
+        workbranch = "ACE+TAO+CIAO-%d_%d_%d-stage" % (comp_versions["ACE_major"],
+                                                      comp_versions["ACE_minor"],
+                                                      comp_versions["ACE_beta"])
+
+        # Checkout a new brancy
+        print ("Checking out new branch " + workbranch)
+        ex ("cd $DOC_ROOT/ATCD && git checkout -b " + workbranch)
 
         files = list ()
         files += update_version_files ("ACE")
@@ -485,8 +498,12 @@ def get_and_update_versions ():
         files += update_debianbuild ()
 
         print "Committing " + str(files)
-
         commit (files)
+
+        print ("Merging workbranch " + workbranch + " to master")
+        ex ("cd $DOC_ROOT/ATCD && git checkout master)
+        ex ("cd $DOC_ROOT/ATCD && git merge --no-ff " + workbranch + " -m\"" + workbranch + "\"")
+
     except:
         print "Fatal error in get_and_update_versions."
         raise
@@ -496,26 +513,23 @@ def create_changelog (component):
     the version number being released"""
     vprint ("Creating ChangeLog entry for " + component)
 
-    global comp_versions, opts
+    global old_comp_versions, comp_versions, opts
 
-    # generate our changelog entry
-    changelog_entry = """%s  %s  <%s>
+    old_tag = "ACE+TAO+CIAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
+                                                  old_comp_versions["ACE_minor"],
+                                                  old_comp_versions["ACE_beta"])
 
-        * %s version %s released.
+    # Generate changelogs per project
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag "..HEAD ACE > ACE/ChangeLogs/ACE-%d_%d_%d" & (comp_versions["ACE_major"], old_comp_versions["ACE_minor"], old_comp_versions["ACE_beta"]))
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag "..HEAD TAO > TAO/ChangeLogs/TAO-%d_%d_%d" & (comp_versions["TAO_major"], old_comp_versions["TAO_minor"], old_comp_versions["TAO_beta"]))
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag "..HEAD CIAO > CIAO/ChangeLogs/CIAO-%d_%d_%d" & (comp_versions["CIAO_major"], old_comp_versions["CIAO_minor"], old_comp_versions["CIAO_beta"]))
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag "..HEAD DANCE > DAnCE/ChangeLogs/DAnCE-%d_%d_%d" & (comp_versions["CIAO_major"], old_comp_versions["CIAO_minor"], old_comp_versions["CIAO_beta"]))
 
-""" % (release_date, signature, mailid,
-       component,
-       comp_versions[component + "_version"])
-
-    vprint ("Changelog Entry for " + component + "\n" + changelog_entry)
-
-    with open ("%s/ChangeLog" % (component), 'r+') as changelog:
-        changelog_entry += changelog.read ()
-
-        if opts.take_action:
-            changelog.seek (0)
-            changelog.truncate (0)
-            changelog.write (changelog_entry)
+    # Add changelogs per project
+    ex ("cd $DOC_ROOT/ATCD && git add ACE/ACE-%d_%d_%d" & (comp_versions["ACE_major"], old_comp_versions["ACE_minor"], old_comp_versions["ACE_beta"]))
+    ex ("cd $DOC_ROOT/ATCD && git add TAO/TAO-%d_%d_%d" & (comp_versions["TAO_major"], old_comp_versions["TAO_minor"], old_comp_versions["TAO_beta"]))
+    ex ("cd $DOC_ROOT/ATCD && git add CIAO/CIAO-%d_%d_%d" & (comp_versions["CIAO_major"], old_comp_versions["CIAO_minor"], old_comp_versions["CIAO_beta"]))
+    ex ("cd $DOC_ROOT/ATCD && git add DAnCE/DAnCE-%d_%d_%d" & (comp_versions["DAnCE_major"], old_comp_versions["DAnCE_minor"], old_comp_versions["DAnCE_beta"]))
 
     return ["%s/ChangeLog" % (component)]
 
@@ -527,7 +541,7 @@ def get_comp_versions (component):
 
     import re
 
-    global comp_versions, opts
+    global old_comp_versions, comp_versions, opts
 
     beta = re.compile ("version (\d+)\.(\d+)\.(\d+)")
     minor = re.compile ("version (\d+)\.(\d+)[^\.]")
@@ -569,6 +583,11 @@ def get_comp_versions (component):
             print "FATAL ERROR: Unable to locate current version for " + component
             raise Exception
 
+    # Also store the current release (old from now)
+    old_comp_versions[component + "_major"] = comp_versions[component + "_major"]
+    old_comp_versions[component + "_minor"] = comp_versions[component + "_minor"]
+    old_comp_versions[component + "_beta"] = comp_versions[component + "_beta"]
+
     if opts.update:
         if opts.release_type == "major":
             comp_versions[component + "_major"] += 1
@@ -586,8 +605,8 @@ def get_comp_versions (component):
         str (comp_versions[component + "_minor"])  + '.' + \
         str (comp_versions[component + "_beta"])
 
-    vprint ("Updating to version %s" %
-                (comp_versions [component + "_version"]))
+    vprint ("Updating from version %s to version %s" %
+                (old_comp_versions [component + "_version"], comp_versions [component + "_version"]))
 
     # else:
     #     comp_versions [component + "_version"] = \
@@ -642,16 +661,16 @@ def export_wc (stage_dir):
     global doc_root, comp_versions
 
     tag = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
-                                        comp_versions["ACE_minor"],
-                                        comp_versions["ACE_beta"])
+                                     comp_versions["ACE_minor"],
+                                     comp_versions["ACE_beta"])
 
     # Clone the ACE repository with the needed tag
     print ("Retrieving ACE with tag" + tag)
-    ex ("git clone --depth 1 --branch " + tag + "https://github.com/DOCGroup/ATCD.git " + stage_dir + "/ATCD")
+    ex ("git clone --depth 1 --branch " + tag + git_atcd + " " + stage_dir + "/ATCD")
 
     # Clone the MPC repository with the needed tag
     print ("Retrieving MPC with tag" + tag)
-    ex ("git clone --depth 1 --branch " + tag + "https://github.com/DOCGroup/MPC.git " + stage_dir + "/MPC")
+    ex ("git clone --depth 1 --branch " + tag + git_mpc + " " + stage_dir + "/MPC")
 
     # Settting up stage_dir
     print ("Moving ACE")
