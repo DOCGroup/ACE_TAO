@@ -54,9 +54,6 @@ cpu_count = multiprocessing.cpu_count()
 converted to CRLF when being put into a ZIP file """
 bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt)$")
 
-git_atcd = "https://github.com/DOCGroup/ATCD.git"
-git_mpc = "https://github.com/DOCGroup/MPC.git"
-
 ##################################################
 #### SVN Client Hooks
 ##################################################
@@ -109,13 +106,13 @@ def parse_args ():
 
     parser.add_option ("--root", dest="repo_root", action="store",
                        help="Specify an alternate repository root",
-                       default=None)
+                       default="https://github.com/DOCGroup/ATCD.git")
                        # By default get repo root from working copy
                        # default="https://svn.dre.vanderbilt.edu/DOC/")
 
     parser.add_option ("--mpc_root", dest="mpc_root", action="store",
                        help="Specify an alternate MPC repository root",
-                       default=None)
+                       default="https://github.com/DOCGroup/MPC.git")
                        # By default get repo root from MPC root in working copy
 
     parser.add_option ("-n", dest="take_action", action="store_false",
@@ -211,33 +208,21 @@ def check_workspace ():
     global opts, doc_root
     # @@TODO: Replace with a svn library
     try:
-        #ex ("git pull")
-        #rev = svn_client.update (doc_root)
-        print "Successfully updated ACE/TAO/CIAO/DAnCE working copy to revision "
+        ex ("cd $DOC_ROOT/ATCD && git pull -p")
+        print "Successfully updated ACE/TAO/CIAO/DAnCE working copy"
     except:
         print "Unable to update ACE/TAO/CIAO/DAnCE workspace at " + doc_root
         raise
 
     try:
-        #rev = svn_client.update (doc_root + "/ACE/MPC")
+        ex ("cd $DOC_ROOT/MPC && git pull -p")
         print "Successfully updated MPC working copy to revision "
     except:
         print "Unable to update the MPC workspace at " + doc_root + "/ACE/MPC"
         raise
 
-    # By default retrieve repo root from working copy
-    #if opts.repo_root is None:
-        #info = svn_client.info2 (doc_root + "/ACE")[0]
-        #opts.repo_root = info[1]["repos_root_URL"]
-
-    # By default retrieve MPC root from working copy
-    #if opts.mpc_root is None:
-        #info = svn_client.info2 (doc_root + "/ACE/MPC")[0]
-        #opts.mpc_root = info[1]["repos_root_URL"]
-
-    #vprint ("Repos root URL = " + opts.repo_root + "\n")
-    #vprint ("Repos MPC root URL = " + opts.mpc_root + "\n")
-
+    vprint ("Repos root URL = " + opts.repo_root + "\n")
+    vprint ("Repos MPC root URL = " + opts.mpc_root + "\n")
 
 def update_version_files (component):
     """ Updates the version files for a given component.  This includes
@@ -641,6 +626,8 @@ def tag_and_push ():
                                         comp_versions["ACE_beta"])
 
     if opts.take_action:
+        vprint ("Pushing ATCD master to origin")
+        ex ("cd $DOC_ROOT/ATCD && git push origin master")
         vprint ("Placing tag %s on ATCD" % (tagname))
         ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
         vprint ("Pushing tag %s on ATCD" % (tagname))
@@ -679,11 +666,11 @@ def export_wc (stage_dir):
 
     # Clone the ACE repository with the needed tag
     print ("Retrieving ACE with tag" + tag)
-    ex ("git clone --depth 1 --branch " + tag + git_atcd + " " + stage_dir + "/ATCD")
+    ex ("git clone --depth 1 --branch " + tag + repo_root + " " + stage_dir + "/ATCD")
 
     # Clone the MPC repository with the needed tag
     print ("Retrieving MPC with tag" + tag)
-    ex ("git clone --depth 1 --branch " + tag + git_mpc + " " + stage_dir + "/MPC")
+    ex ("git clone --depth 1 --branch " + tag + mpc_root + " " + stage_dir + "/MPC")
 
     # Settting up stage_dir
     print ("Moving ACE")
