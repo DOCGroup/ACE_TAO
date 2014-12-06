@@ -609,9 +609,9 @@ def update_latest_tag (which, branch):
     tagname = "Latest_" + which
     vprint ("Removing tag %s" % (tagname))
     # Remove tag locally
-    #ex ("cd $DOC_ROOT/ATCD && git tag -d " + tagname)
-    # Place tag in the remote orgin
-    #ex ("cd $DOC_ROOT/ATCD && git push origin :refs/tags/" + tagname)
+    ex ("cd $DOC_ROOT/ATCD && git tag -d " + tagname)
+    # Remove tag in the remote orgin
+    ex ("cd $DOC_ROOT/ATCD && git push origin :refs/tags/" + tagname)
     vprint ("Placing tag %s" % (tagname))
     ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
     vprint ("Pushing tag %s" % (tagname))
