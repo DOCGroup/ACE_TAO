@@ -98,6 +98,8 @@ def parse_args ():
                        help="Tag the release. DO NOT USE WITH --kit", default=None, const="tag")
     parser.add_option ("--update", dest="update", action="store_true",
                        help="Update the version numbers, only used with --tag", default=False)
+    parser.add_option ("--push", dest="push", action="store_true",
+                       help="Push all changes to remote, only used with --tag", default=False)
 
     parser.add_option ("--kit", dest="action", action="store_const",
                        help="Create kits. DO NOT USE WITH --tag", default=None, const="kit")
@@ -122,15 +124,15 @@ def parse_args ():
                        default=False)
     (options, arguments) = parser.parse_args ()
 
-    if options.action is None:
-        parser.error ("Must specify an action, ie --tag or --kit")
-
     if options.action == "tag":
         if options.release_type is None:
             parser.error ("When tagging, must specify a release type")
 
         if options.update is False:
             print "Warning: You are tagging a release, but not requesting a version increment"
+
+        if options.push is False:
+            print "Warning: You are tagging a release, but not requesting a push to remote"
 
     return (options, arguments)
 
@@ -461,33 +463,34 @@ def get_and_update_versions ():
         get_comp_versions ("CIAO")
         get_comp_versions ("DAnCE")
 
-        # Make all changes on a workbranch
-        workbranch = "ACE+TAO+CIAO-%d_%d_%d-stage" % (comp_versions["ACE_major"],
-                                                      comp_versions["ACE_minor"],
-                                                      comp_versions["ACE_beta"])
+        if opts.update:
+            # Make all changes on a workbranch
+            workbranch = "ACE+TAO+CIAO-%d_%d_%d-stage" % (comp_versions["ACE_major"],
+                                                          comp_versions["ACE_minor"],
+                                                          comp_versions["ACE_beta"])
 
-        # Checkout a new brancy
-        print ("Checking out new branch " + workbranch)
-        ex ("cd $DOC_ROOT/ATCD && git checkout -b " + workbranch)
+            # Checkout a new brancy
+            print ("Checking out new branch " + workbranch)
+            ex ("cd $DOC_ROOT/ATCD && git checkout -b " + workbranch)
 
-        files = list ()
-        files += update_version_files ("ACE")
-        files += update_version_files ("TAO")
-        files += update_version_files ("CIAO")
-        files += update_version_files ("DAnCE")
-        files += create_changelog ("ACE")
-        files += create_changelog ("TAO")
-        files += create_changelog ("CIAO")
-        files += create_changelog ("DAnCE")
-        files += update_spec_file ()
-        files += update_debianbuild ()
+            files = list ()
+            files += update_version_files ("ACE")
+            files += update_version_files ("TAO")
+            files += update_version_files ("CIAO")
+            files += update_version_files ("DAnCE")
+            files += create_changelog ("ACE")
+            files += create_changelog ("TAO")
+            files += create_changelog ("CIAO")
+            files += create_changelog ("DAnCE")
+            files += update_spec_file ()
+            files += update_debianbuild ()
 
-        print "Committing " + str(files)
-        commit (files)
+            print "Committing " + str(files)
+            commit (files)
 
-        print ("Merging workbranch " + workbranch + " to master")
-        ex ("cd $DOC_ROOT/ATCD && git checkout master")
-        ex ("cd $DOC_ROOT/ATCD && git merge --no-ff " + workbranch + " -m\"" + workbranch + "\"")
+            print ("Merging workbranch " + workbranch + " to master")
+            ex ("cd $DOC_ROOT/ATCD && git checkout master")
+            ex ("cd $DOC_ROOT/ATCD && git merge --no-ff " + workbranch + " -m\"" + workbranch + "\"")
 
     except:
         print "Fatal error in get_and_update_versions."
@@ -594,8 +597,12 @@ def get_comp_versions (component):
         str (old_comp_versions[component + "_minor"])  + '_' + \
         str (old_comp_versions[component + "_beta"])
 
-    vprint ("Updating from version %s to version %s" %
-                (old_comp_versions [component + "_version"], comp_versions [component + "_version"]))
+    if opts.update:
+      vprint ("Updating from version %s to version %s" %
+                  (old_comp_versions [component + "_version"], comp_versions [component + "_version"]))
+    else:
+      vprint ("Found version %s" %
+                  (comp_versions [component + "_version"]))
 
     # else:
     #     comp_versions [component + "_version"] = \
@@ -607,17 +614,29 @@ def update_latest_tag (which, branch):
     """ Update one of the Latest_* tags externals to point the new release """
     global opts
     tagname = "Latest_" + which
-    vprint ("Removing tag %s" % (tagname))
+
     # Remove tag locally
+    vprint ("Removing tag %s" % (tagname))
     ex ("cd $DOC_ROOT/ATCD && git tag -d " + tagname)
-    # Remove tag in the remote orgin
-    ex ("cd $DOC_ROOT/ATCD && git push origin :refs/tags/" + tagname)
+
     vprint ("Placing tag %s" % (tagname))
     ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
-    vprint ("Pushing tag %s" % (tagname))
-    ex ("cd $DOC_ROOT/ATCD && git push origin " + tagname)
 
-def tag_and_push ():
+
+def push_latest_tag (which, branch):
+    """ Update one of the Latest_* tags externals to point the new release """
+    global opts
+    tagname = "Latest_" + which
+
+    if opts.push:
+        # Remove tag in the remote orgin
+        ex ("cd $DOC_ROOT/ATCD && git push origin :refs/tags/" + tagname)
+
+    if opts.push:
+        vprint ("Pushing tag %s" % (tagname))
+        ex ("cd $DOC_ROOT/ATCD && git push origin " + tagname)
+
+def tag ():
     """ Tags the DOC and MPC repositories for the version and push that remote """
     global comp_versions, opts
 
@@ -626,16 +645,15 @@ def tag_and_push ():
                                         comp_versions["ACE_beta"])
 
     if opts.take_action:
-        vprint ("Pushing ATCD master to origin")
-        ex ("cd $DOC_ROOT/ATCD && git push origin master")
+        if opts.push:
+            vprint ("Pushing ATCD master to origin")
+            ex ("cd $DOC_ROOT/ATCD && git push origin master")
+
         vprint ("Placing tag %s on ATCD" % (tagname))
         ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
-        vprint ("Pushing tag %s on ATCD" % (tagname))
-        ex ("cd $DOC_ROOT/ATCD && git push origin tag " + tagname)
+
         vprint ("Placing tag %s on MPC" % (tagname))
         ex ("cd $DOC_ROOT/MPC && git tag -a " + tagname + " -m\"" + tagname + "\"")
-        vprint ("Pushing tag %s on MPC" % (tagname))
-        ex ("cd $DOC_ROOT/MPC && git push origin tag " + tagname)
 
         # Update latest tag
         if opts.release_type == "major":
@@ -653,6 +671,40 @@ def tag_and_push ():
         print "Creating tags:\n"
         print "Placing tag " + tagname + "\n"
 
+def push ():
+    """ Tags the DOC and MPC repositories for the version and push that remote """
+    global comp_versions, opts
+
+    tagname = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
+                                        comp_versions["ACE_minor"],
+                                        comp_versions["ACE_beta"])
+
+    if opts.take_action:
+        vprint ("Pushing ATCD master to origin")
+        ex ("cd $DOC_ROOT/ATCD && git push origin master")
+
+        vprint ("Pushing tag %s on ATCD" % (tagname))
+        ex ("cd $DOC_ROOT/ATCD && git push origin tag " + tagname)
+
+        vprint ("Pushing tag %s on MPC" % (tagname))
+        ex ("cd $DOC_ROOT/MPC && git push origin tag " + tagname)
+
+        # Update latest tag
+        if opts.release_type == "major":
+            push_latest_tag ("Major", tagname)
+        elif opts.release_type == "minor":
+            push_latest_tag ("Minor", tagname)
+        elif opts.release_type == "beta":
+            push_latest_tag ("Beta", tagname)
+            push_latest_tag ("Micro", tagname)
+            if comp_versions["ACE_beta"] == 1:
+                    push_latest_tag ("BFO", tagname)
+    else:
+        vprint ("Pushing tag %s on ATCD" % (tagname))
+        vprint ("Pushing tag %s on MPC" % (tagname))
+        print "Pushing tags:\n"
+        print "Pushing tag " + tagname + "\n"
+
 ##################################################
 #### Packaging methods
 ##################################################
@@ -665,24 +717,24 @@ def export_wc (stage_dir):
                                      comp_versions["ACE_beta"])
 
     # Clone the ACE repository with the needed tag
-    print ("Retrieving ACE with tag" + tag)
-    ex ("git clone --depth 1 --branch " + tag + repo_root + " " + stage_dir + "/ATCD")
+    print ("Retrieving ACE with tag " + tag)
+    ex ("git clone --depth 1 --branch " + tag + " " + opts.repo_root + " " + stage_dir + "/ATCD")
 
     # Clone the MPC repository with the needed tag
-    print ("Retrieving MPC with tag" + tag)
-    ex ("git clone --depth 1 --branch " + tag + mpc_root + " " + stage_dir + "/MPC")
+    print ("Retrieving MPC with tag " + tag)
+    ex ("git clone --depth 1 --branch " + tag + " " + opts.mpc_root + " " + stage_dir + "/MPC")
 
     # Settting up stage_dir
     print ("Moving ACE")
-    ex ("mv " + stage_dir + "ATCD/ACE " + stage_dir + "/ACE_wrappers")
+    ex ("mv " + stage_dir + "/ATCD/ACE " + stage_dir + "/ACE_wrappers")
     print ("Moving TAO")
-    ex ("mv " + stage_dir + "ATCD/TAO " + stage_dir + "/ACE_wrappers/TAO")
+    ex ("mv " + stage_dir + "/ATCD/TAO " + stage_dir + "/ACE_wrappers/TAO")
     print ("Moving CIAO")
-    ex ("mv " + stage_dir + "ATCD/CIAO " + stage_dir + "/ACE_wrappers/TAO/CIAO")
+    ex ("mv " + stage_dir + "/ATCD/CIAO " + stage_dir + "/ACE_wrappers/TAO/CIAO")
     print ("Moving DAnCE")
-    ex ("mv " + stage_dir + "ATCD/DAnCE " + stage_dir + "/ACE_wrappers/TAO_DAnCE")
+    ex ("mv " + stage_dir + "/ATCD/DAnCE " + stage_dir + "/ACE_wrappers/TAO/DAnCE")
     print ("Moving MPC")
-    ex ("mv " + stage_dir + "MPC " + stage_dir + "/ACE_wrappers/MPC")
+    ex ("mv " + stage_dir + "/MPC " + stage_dir + "/ACE_wrappers/MPC")
 
 def update_packages (text_files, bin_files, stage_dir, package_dir):
     import os
@@ -1005,21 +1057,20 @@ def make_working_directories ():
 def main ():
     global opts
 
-    if opts.action == "tag":
-        print "Tagging a " + opts.release_type + " release."
-        raw_input ("Press enter to continue")
-
-        check_workspace ()
-        get_and_update_versions ()
-        tag_and_push ()
-
-    else:
+    if opts.action == "kit":
         print "Creating a kit."
         raw_input ("Press enter to continue")
 
         create_kit ()
 
+    else:
+        print "Tagging a " + opts.release_type + " release."
+        raw_input ("Press enter to continue")
 
+        check_workspace ()
+        get_and_update_versions ()
+        tag ()
+        push ()
 
 if __name__ == "__main__":
     (opts, args) = parse_args ()
