@@ -52,7 +52,7 @@ namespace TAO
    *
    * <B>See Also:</B>
    *
-   * https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/TAO/docs/transport_current/index.html?revision=HEAD
+   * http://htmlpreview.github.com/?https://github.com/DOCGroup/ATCD/blob/master/TAO/docs/transport_current/index.html
    *
    */
   class TAO_Export Transport_Selection_Guard

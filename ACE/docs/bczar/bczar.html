@@ -55,7 +55,7 @@
     </P>
     <P>
       The Build Czar is empowered to set up more builds on his own for his
-      convenience. This <a href="https://svn.dre.vanderbilt.edu/viewvc/autobuild/trunk/README?revision=HEAD">
+      convenience. This <a href="https://raw.githubusercontent.com/DOCGroup/autobuild/master/README">
         page </a>has a step by step instructions on how to do that.
     </P>
     <P>
@@ -63,7 +63,7 @@
       of the scoreboard.
     </P>
     <p>Pro-active involvement by the build czar is necessary. Being a pro-active
-      build czar requires monitoring the subversion archive carefully and responding
+      build czar requires monitoring the git repository carefully and responding
       quickly to suspected changes to keep the repo stays stable.</p>
     <p>After an email from the Coverity scan project check the Coverity project and
        check that there are no new errors reported. If so, contact the person who
@@ -113,7 +113,7 @@
           </ul>
           or on OpenSuSE
           <ul>
-            <li><code>zypper install perl subversion screen python-pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool python-gitpython</code></li>
+            <li><code>zypper install perl screen python-pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool python-gitpython</code></li>
             <li><code>zypper update</code></li>
           </ul>
           If you want to perform a full build with qt support, than run:
@@ -126,9 +126,11 @@
           </ul>
         </li>
         <li>
+          Setup your ssh access to github according to the github <a href="https://help.github.com/articles/generating-ssh-keys/">ssh documentation</a>
+        </li>
+        <li>
           Checkout a new workspace on a Fedora system with the last public release and with
           all patches installed.
-
         </li>
         <ul>
           <li>
@@ -139,11 +141,9 @@
             Checkout like this:
             <ul>
               <li>
-                <code>svn co --username &lt;your user id&gt;
-                https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT</code></li>
+                <code>git clone https://github.com/DOCGroup/ATCD.git ATCD</code></li>
               <li>
-                <code>svn co --username &lt;your user id&gt;
-                https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC</code></li>
+                <code>git clone https://github.com/DOCGroup/ATCD.git MPC</code></li>
             </ul>
         </ul>
         <li>
@@ -165,7 +165,7 @@
         </li>
         <li>
           Tag the release by executing<br>
-          <code>ACE/bin/make_release.py --beta --update --tag</code><br>
+          <code>ACE/bin/make_release.py --beta --update --tag -- push</code><br>
           This will only take a couple minutes to complete and once done successfully,
           you can carry on with BOTH creating the kits and generating the doxygen
           documentation in parallel. NOTE that <code>--beta</code> should be replaced
@@ -176,7 +176,7 @@
         <br>
         In the <em>EXTREMELY</em> unlikely event that something goes wrong during the <em>
           tagging</em> of the repo, the following files must be returned to the state
-        they were in before the release process started and then checked back into SVN:<br>
+        they were in before the release process started and then checked back into git:<br>
         <ul>
           <code>
             <li>
@@ -210,9 +210,8 @@
     ACE+TAO+CIAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
     Minor and Beta release numbers of the release that is to be restarted).<p>
       E.g.:<br>
-      <code>svn rm
-        https://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z<br />
-        svn rm https://svn.dre.vanderbilt.edu/DOC/MPC/tags/ACE+TAO+CIAO-X_Y_Z<br />
+      <code>cd ATCD && git tag -d ACE+TAO+CIAO-X_Y_Z<br />
+        cd MPC && git tag -d ACE+TAO+CIAO-X_Y_Z<br />
       </code>
       <br>
       Note that this <em>only</em> needs to be done if the <em>tagging</em> fails. If
@@ -238,16 +237,16 @@
         cd $HOME<br>
         rm -rf DOC_ROOT<br>
         mkdir DOC_ROOT<br>
-        export DOC_ROOT=$PWD/DOC_ROOT<br>
+        cd DOC_ROOT<br>
+        export DOC_ROOT=$PWD<br>
         export SIGNATURE="Johnny Willemsen"<br>
         export MAILID=jwillemsen@remedy.nl<br>
-        mkdir -p $HOME/.subversion<br>
-        wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
-        svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/Middleware/trunk DOC_ROOT<br>
-        svn co --username johnnyw https://svn.dre.vanderbilt.edu/DOC/MPC/trunk DOC_ROOT/ACE/MPC<br>
-        cd DOC_ROOT/<br>
-        ACE/bin/make_release.py --beta --update --tag<br>
-        ACE/bin/make_release.py --kit<br>
+        git clone https://github.com/DOCGroup/ATCD.git ATCD<br>
+        git clone https://github.com/DOCGroup/MPC.git MPC<br>
+        ATCD/ACE/bin/make_release.py --beta --update --verbose<br>
+        ATCD/ACE/bin/make_release.py --beta --tag --verbose<br>
+        ATCD/ACE/bin/make_release.py --beta --push --verbose<br>
+        ATCD/ACE/bin/make_release.py --kit<br>
       </code>
     <p>
       Feel free to cut and paste with suitable edits.
@@ -288,23 +287,16 @@
             version number being released e.g. 5_6_7)
             <br>
             <code>svn co
-              svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/ACE
-              ACE_wrappers<br>
-              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/TAO
-              ACE_wrappers/TAO<br>
-              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO
-              ACE_wrappers/TAO/CIAO<br>
-              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/DAnCE
-              ACE_wrappers/TAO/DAnCE</code>
+              git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_1 ATCD<br>
           </li>
-          <li>Change to the ACE_wrappers directory using <br>
-          cd ACE_wrappers</li>
+          <li>Change to the ATCD directory using <br>
+          cd ATCD</li>
           <li>
             Set the needed environment variables using<br>
-            <code>export ACE_ROOT=$PWD</code><br>
-        <code>export TAO_ROOT=$ACE_ROOT/TAO</code><br>
-        <code>export CIAO_ROOT=$TAO_ROOT/CIAO</code><br>
-        <code>export DANCE_ROOT=$TAO_ROOT/DAnCE</code><br>
+            <code>export ACE_ROOT=$PWD/ACE</code><br>
+        <code>export TAO_ROOT=$PWD/TAO</code><br>
+        <code>export CIAO_ROOT=$PWD/CIAO</code><br>
+        <code>export DANCE_ROOT=$PWD/DAnCE</code><br>
         <code>export DDS_ROOT=</code><br></li>
           <li>
             Check the doxygen version at the shell by executing the command:<br>
@@ -326,17 +318,12 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        mkdir -p $HOME/.subversion<br>
-        wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_3_0/ACE ACE_wrappers<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_3_0/TAO ACE_wrappers/TAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_3_0/CIAO ACE_wrappers/TAO/CIAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_3_0/DAnCE ACE_wrappers/TAO/DAnCE<br>
-        cd ACE_wrappers<br>
-        export ACE_ROOT=$PWD<br>
-        export TAO_ROOT=$ACE_ROOT/TAO<br>
-        export CIAO_ROOT=$TAO_ROOT/CIAO<br>
-        export DANCE_ROOT=$TAO_ROOT/DAnCE<br>
+        git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_1 ATCD
+        cd ATCD<br>
+        export ACE_ROOT=$PWD/ACE<br>
+        export TAO_ROOT=$PWD/TAO<br>
+        export CIAO_ROOT=$PWD/CIAO<br>
+        export DANCE_ROOT=$PWD/DAnCE<br>
         export DDS_ROOT=<br>
         $ACE_ROOT/bin/generate_rel_manpages<br>
         scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution
@@ -349,7 +336,7 @@
           <li>Get from bugzilla the bugs fixed. Use the following
               <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=ACE&product=CIAO&product=CoSMIC&product=MPC&product=OpenDDS&product=TAO&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailassigned_to1=1&emailtype1=substring&email1=&emailreporter2=1&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2010-07-04&chfieldto=Now&chfield=resolution&chfieldvalue=FIXED&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">query</a> as start query and update the start date.</li>
           <li>
-            Let <a href="mailto:schmidt@cs.wustl.edu">Doug Schmidt</a> review these before
+            Let <a href="mailto:d.schmidt@vanderbilt.edu">Doug Schmidt</a> review these before
             you do anything with them.</li></ul>
 
       <li>

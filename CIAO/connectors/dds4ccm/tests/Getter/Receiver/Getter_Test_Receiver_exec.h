@@ -22,7 +22,7 @@
  *       http://www.isis.vanderbilt.edu/
  *
  * Information about TAO is available at:
- *     http://www.cs.wustl.edu/~schmidt/TAO.html
+ *     http://www.dre.vanderbilt.edu/~schmidt/TAO.html
  **/
 #ifndef CIAO_GETTER_TEST_RECEIVER_EXEC_5BQU2A_H_
 #define CIAO_GETTER_TEST_RECEIVER_EXEC_5BQU2A_H_

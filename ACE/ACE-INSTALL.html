@@ -78,7 +78,7 @@ latest release, as described in <a href="docs/ACE-bug-process.html">
 docs/ACE-bug-process.html</a>.
 Thus, if you need more "predictable" help, or help with earlier versions of
 ACE, it's recommend that you check out the
-<a href="http://www.cs.wustl.edu/~schmidt/commercial-support.html">list of
+<a href="http://www.dre.vanderbilt.edu/support.html">list of
 commercial support companies</a> for additional assistance.
 </p>
 <p>The responsibility for maintaining ACE across the wide range of
@@ -98,7 +98,7 @@ to provide build results. Members of the ACE community that maintain ACE on
 platforms not maintained by the DOC group, Riverace, OCI, or Remedy IT are
 encouraged to provide build and regression test results for the scoreboard
 to ensure that all in-use platforms are represented.
-See the <a href="https://svn.dre.vanderbilt.edu/viewvc/autobuild/trunk/README?revision=HEAD" target="_blank">autobuild README</a> for more information about
+See the <a href="https://raw.githubusercontent.com/DOCGroup/autobuild/master/README" target="_blank">autobuild README</a> for more information about
 how to set up a build; contact one of the above groups to inquire about how
 to get your build results recorded on the scoreboard.</p>
 <p>Because older
@@ -2628,14 +2628,14 @@ You need to do one of the following:
 <li>If you have already obtained MPC, either move it underneath the
 ACE_wrappers directory or set your MPC_ROOT environment variable to point
 to the full path of MPC.</li>
-<li>Check out MPC from the DOC Group subversion repository
+<li>Check out MPC from the DOC Group git repository
 and set your MPC_ROOT environment variable.</li>
 </ol>
 
 You can check
-out MPC from the doc_group subversion server using the following command.
+out MPC from the DOCGroup git repository using the following command.
 
-<pre>svn co svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk MPC
+<pre>git clone https://github.com/DOCGroup/MPC.git MPC
 </pre>
 
 The <A HREF="MPC/docs/README">README</A> and <A HREF="MPC/docs/USAGE">USAGE</A> files in the MPC/docs directory are an up-to-date
@@ -2929,26 +2929,18 @@ show_uninit        Lists all uninitialized in object files built for
 </pre>
 
 </p><hr><p>
-</p><h2><a name="power">Building from Subversion (anonymous access)</a></h2>
-If users are building from our <a href="https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/">Subversion repository</a> the
+</p><h2><a name="power">Building from git</a></h2>
+If users are building from our <a href="https://github.com/DOCGroup/ATCD">Git repository</a> the
 GNUmakefiles, and project files for building on various platforms will
-not be available.  Subversion users are expected to <a href="#generate_using_mpc">generate them</a>
-using <a href="https://svn.dre.vanderbilt.edu/viewvc/MPC/trunk/docs/README?revision=HEAD">MPC</a> before building ACE, TAO or
+not be available.  Git users are expected to <a href="#generate_using_mpc">generate them</a>
+using <a href="https://raw.githubusercontent.com/DOCGroup/MPC/master/docs/README">MPC</a> before building ACE, TAO or
 CIAO. We point out some suggestions below to get bootstrapped
 quickly.
 
 <ul>
-  <li>You can checkout different subsets from the Subversion repository.
+  <li>You can clone all code easily from our git repository.
   <ul>
-  <li>To checkout ACE with MPC:<p>
-  <code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE .</code>
-  </li>
-  <li>To checkout ACE+TAO with MPC:<p>
-  <code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO .</code>
-  </li>
-  <li>To checkout ACE+TAO+CIAO with MPC:<p>
-  <code>svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO+CIAO .</code>
-  </li>
+  <code>git clone https://github.com/DOCGroup/ATCD.git</code>
   </ul>
   </p></li><li>Please make sure that you have <a href="http://www.perl.org/">
   perl</a> installed, preferably perl

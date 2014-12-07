@@ -5,7 +5,7 @@
 // Distributed Object Computing at Washington University, St. Louis.
 //
 // Information about TAO is available at:
-//                 http://www.cs.wustl.edu/~schmidt/TAO.html
+//                 http://www.dre.vanderbilt.edu/~schmidt/TAO.html
 
 #ifndef MESSENGER_IMPL_H_
 #define MESSENGER_IMPL_H_

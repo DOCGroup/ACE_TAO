@@ -8,7 +8,6 @@
 
 from __future__ import with_statement
 from time import strftime
-import pysvn
 import re
 import tempfile
 import shutil
@@ -25,7 +24,7 @@ opts=None
 """ Arguments from the command line """
 args=None
 
-""" Absolute path from the SVN workspace to be used for the
+""" Absolute path from the git workspace to be used for the
 release"""
 doc_root=None
 
@@ -43,6 +42,7 @@ COMPONENT_beta
 COMPONENT_minor
 COMPONENT_major """
 comp_versions = dict ()
+old_comp_versions = dict ()
 
 release_date = strftime (# ie: Mon Jan 23 00:35:37 CST 2006
                               "%a %b %d %H:%M:%S %Z %Y")
@@ -53,32 +53,6 @@ cpu_count = multiprocessing.cpu_count()
 """ This is a regex that detects files that SHOULD NOT have line endings
 converted to CRLF when being put into a ZIP file """
 bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt)$")
-
-
-##################################################
-#### SVN Client Hooks
-##################################################
-svn_auth_info = None
-def svn_login_callback (realm, username, may_save):
-    """ Callback used by the SVN library to obtain login credentials"""
-    global svn_auth_info
-    if svn_auth_info is None:
-        print "Please enter your Subversion login credentials.  They will be saved for the duration of this script."
-        username = raw_input ("Username: ")
-        password = raw_input ("Password: ")
-
-        svn_auth_info = (True, username, password, False)
-
-    return svn_autn_info
-
-def svn_log_message_callback ():
-    """ Callback used by the svn library to generate log messages
-    for operations such as copy """
-    return (True, "ChangeLogTag: %s  %s  <%s>" % (release_date, signature, mailid))
-
-svn_client = pysvn.Client ()
-svn_client.callback_get_login = svn_login_callback
-svn_client.callback_get_log_message = svn_log_message_callback
 
 ##################################################
 #### Utility Methods
@@ -95,12 +69,12 @@ def parse_args ():
     parser.add_option ("--beta", dest="release_type", action="store_const",
                        help="Create a beta release.", default=None, const="beta")
 
-
-    parser.add_option ("--tag", dest="action", action="store_const",
-                       help="Tag the release. DO NOT USE WITH --kit", default=None, const="tag")
+    parser.add_option ("--tag", dest="tag", action="store_true",
+                       help="Tag the repositorie with all needed tags", default=False)
     parser.add_option ("--update", dest="update", action="store_true",
-                       help="Update the version numbers, only used with --tag", default=False)
-
+                       help="Update the version numbers", default=False)
+    parser.add_option ("--push", dest="push", action="store_true",
+                       help="Push all changes to remote", default=False)
 
     parser.add_option ("--kit", dest="action", action="store_const",
                        help="Create kits. DO NOT USE WITH --tag", default=None, const="kit")
@@ -109,14 +83,11 @@ def parse_args ():
 
     parser.add_option ("--root", dest="repo_root", action="store",
                        help="Specify an alternate repository root",
-                       default=None)
-                       # By default get repo root from working copy
-                       # default="https://svn.dre.vanderbilt.edu/DOC/")
+                       default="https://github.com/DOCGroup/ATCD.git")
 
     parser.add_option ("--mpc_root", dest="mpc_root", action="store",
                        help="Specify an alternate MPC repository root",
-                       default=None)
-                       # By default get repo root from MPC root in working copy
+                       default="https://github.com/DOCGroup/MPC.git")
 
     parser.add_option ("-n", dest="take_action", action="store_false",
                        help="Take no action", default=True)
@@ -125,15 +96,15 @@ def parse_args ():
                        default=False)
     (options, arguments) = parser.parse_args ()
 
-    if options.action is None:
-        parser.error ("Must specify an action, ie --tag or --kit")
-
-    if options.action == "tag":
+    if options.tag:
         if options.release_type is None:
             parser.error ("When tagging, must specify a release type")
 
         if options.update is False:
             print "Warning: You are tagging a release, but not requesting a version increment"
+
+        if options.push is False:
+            print "Warning: You are tagging a release, but not requesting a push to remote"
 
     return (options, arguments)
 
@@ -149,7 +120,7 @@ def ex (command):
 
     status = system(command)
     if status != 0:
-        print "ERROR: Nonzero retrun value from " + command
+        print "ERROR: Nonzero return value from " + command
         raise Exception
 
 ###
@@ -189,45 +160,42 @@ def vprint (string):
 ##################################################
 def commit (files):
     """ Commits the supplied list of files to the repository. """
-    vprint ("Committing the following files: " + " ".join (files))
+    import shutil, os
+    global comp_versions
+
+    version = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
+                                         comp_versions["ACE_minor"],
+                                         comp_versions["ACE_beta"])
+    vprint ("Committing the following files for " + version + " ".join (files))
 
     if opts.take_action:
-        rev = svn_client.checkin (files,
-                                  "ChangeLogTag:%s  %s  <%s>" % (release_date, signature, mailid))
+        for file in files:
+            print "Adding file " + file + " to commit"
+            ex ("git add " + file)
 
-        print "Checked in files, resuling in revision ", rev.number
+        ex ("git commit -m\"" + version + "\"")
+
+#        print "Checked in files, resuling in revision ", rev.number
 
 def check_workspace ():
     """ Checks that the DOC and MPC repositories are up to date.  """
-    global opts, doc_root, svn_client
-    # @@TODO: Replace with a svn library
+    global opts, doc_root
     try:
-        rev = svn_client.update (doc_root)
-        print "Successfully updated ACE/TAO/CIAO/DAnCE working copy to revision "
+        ex ("cd $DOC_ROOT/ATCD && git pull -p")
+        print "Successfully updated ACE/TAO/CIAO/DAnCE working copy"
     except:
         print "Unable to update ACE/TAO/CIAO/DAnCE workspace at " + doc_root
         raise
 
     try:
-        rev = svn_client.update (doc_root + "/ACE/MPC")
+        ex ("cd $DOC_ROOT/MPC && git pull -p")
         print "Successfully updated MPC working copy to revision "
     except:
         print "Unable to update the MPC workspace at " + doc_root + "/ACE/MPC"
         raise
 
-    # By default retrieve repo root from working copy
-    if opts.repo_root is None:
-        info = svn_client.info2 (doc_root + "/ACE")[0]
-        opts.repo_root = info[1]["repos_root_URL"]
-
-    # By default retrieve MPC root from working copy
-    if opts.mpc_root is None:
-        info = svn_client.info2 (doc_root + "/ACE/MPC")[0]
-        opts.mpc_root = info[1]["repos_root_URL"]
-
     vprint ("Repos root URL = " + opts.repo_root + "\n")
     vprint ("Repos MPC root URL = " + opts.mpc_root + "\n")
-
 
 def update_version_files (component):
     """ Updates the version files for a given component.  This includes
@@ -318,7 +286,7 @@ def update_spec_file ():
 
     global comp_versions, opts
 
-    with open (doc_root + "/ACE/rpmbuild/ace-tao.spec", 'r+') as spec_file:
+    with open (doc_root + "/ATCD/ACE/rpmbuild/ace-tao.spec", 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
             if line.find ("define ACEVER ") is not -1:
@@ -345,7 +313,7 @@ def update_spec_file ():
             print "New spec file:"
             print "".join (new_spec)
 
-    return [doc_root + "/ACE/rpmbuild/ace-tao.spec"]
+    return [doc_root + "/ATCD/ACE/rpmbuild/ace-tao.spec"]
 
 def update_debianbuild ():
     """ Updates ACE_ROOT/debian directory.
@@ -369,7 +337,7 @@ def update_debianbuild ():
     mask = re.compile ("(libace|libkokyu|libtao)(.*)(\d+\.\d+\.\d+)(.*)")
     tao = re.compile ("tao", re.IGNORECASE)
 
-    for fname in glob.iglob(doc_root + '/ACE/debian/*'):
+    for fname in glob.iglob(doc_root + '/ATCD/ACE/debian/*'):
         print "Considering " + fname
         match = None
 
@@ -390,14 +358,10 @@ def update_debianbuild ():
 
         if fnewname is not None:
             if opts.take_action:
-                svn_client.move (fname, fnewname)
+                print "Rename: " + fname + " to " + fnewname + "\n"
+                ex ("git mv " + fname + " " + fnewname)
             else:
                 print "Rename: " + fname + " to " + fnewname + "\n"
-
-            files.append (fname)
-            files.append (fnewname)
-
-            print "Appending " + fname + " and " + fnewname
 
     # update debianbuild/control
     def update_ver (match):
@@ -406,7 +370,7 @@ def update_debianbuild ():
         else:
             return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
 
-    with open (doc_root + "/ACE/debian/debian.control", 'r+') as control_file:
+    with open (doc_root + "/ATCD/ACE/debian/debian.control", 'r+') as control_file:
         new_ctrl = ""
         for line in control_file.readlines ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
@@ -425,7 +389,7 @@ def update_debianbuild ():
             print "New control file:"
             print "".join (new_ctrl)
 
-    files.append (doc_root + "/ACE/debian/debian.control")
+    files.append (doc_root + "/ATCD/ACE/debian/debian.control")
 
     # rewrite debian/dsc
     dsc_lines = """Format: 1.0
@@ -440,7 +404,7 @@ Files:
 
 """ % (comp_versions["ACE_version"], comp_versions["TAO_version"], comp_versions["ACE_version"])
     if opts.take_action:
-        with open (doc_root + "/ACE/debian/ace.dsc", 'r+') as dsc_file:
+        with open (doc_root + "/ATCD/ACE/debian/ace.dsc", 'r+') as dsc_file:
             dsc_file.seek (0)
             dsc_file.truncate (0)
             dsc_file.writelines (dsc_lines)
@@ -448,7 +412,7 @@ Files:
         print "New dsc file:\n"
         print dsc_lines
 
-    files.append (doc_root + "/ACE/debian/ace.dsc")
+    files.append (doc_root + "/ATCD/ACE/debian/ace.dsc")
 
     return files
 
@@ -456,6 +420,7 @@ def get_and_update_versions ():
     """ Gets current version information for each component,
     updates the version files, creates changelog entries,
     and commit the changes into the repository."""
+    global comp_versions, opts
 
     try:
         get_comp_versions ("ACE")
@@ -463,21 +428,35 @@ def get_and_update_versions ():
         get_comp_versions ("CIAO")
         get_comp_versions ("DAnCE")
 
-        files = list ()
-        files += update_version_files ("ACE")
-        files += update_version_files ("TAO")
-        files += update_version_files ("CIAO")
-        files += update_version_files ("DAnCE")
-        files += create_changelog ("ACE")
-        files += create_changelog ("TAO")
-        files += create_changelog ("CIAO")
-        files += create_changelog ("DAnCE")
-        files += update_spec_file ()
-        files += update_debianbuild ()
+        if opts.update:
+            # Make all changes on a workbranch
+            workbranch = "ACE+TAO+CIAO-%d_%d_%d-stage" % (comp_versions["ACE_major"],
+                                                          comp_versions["ACE_minor"],
+                                                          comp_versions["ACE_beta"])
 
-        print "Committing " + str(files)
+            # Checkout a new brancy
+            print ("Checking out new branch " + workbranch)
+            ex ("cd $DOC_ROOT/ATCD && git checkout -b " + workbranch)
 
-        commit (files)
+            files = list ()
+            files += update_version_files ("ACE")
+            files += update_version_files ("TAO")
+            files += update_version_files ("CIAO")
+            files += update_version_files ("DAnCE")
+            files += create_changelog ("ACE")
+            files += create_changelog ("TAO")
+            files += create_changelog ("CIAO")
+            files += create_changelog ("DAnCE")
+            files += update_spec_file ()
+            files += update_debianbuild ()
+
+            print "Committing " + str(files)
+            commit (files)
+
+            print ("Merging workbranch " + workbranch + " to master")
+            ex ("cd $DOC_ROOT/ATCD && git checkout master")
+            ex ("cd $DOC_ROOT/ATCD && git merge --no-ff " + workbranch + " -m\"" + workbranch + "\"")
+
     except:
         print "Fatal error in get_and_update_versions."
         raise
@@ -487,38 +466,26 @@ def create_changelog (component):
     the version number being released"""
     vprint ("Creating ChangeLog entry for " + component)
 
-    global comp_versions, opts
+    global old_comp_versions, comp_versions, opts
 
-    # generate our changelog entry
-    changelog_entry = """%s  %s  <%s>
+    old_tag = "ACE+TAO+CIAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
+                                         old_comp_versions["ACE_minor"],
+                                         old_comp_versions["ACE_beta"])
 
-        * %s version %s released.
+    # Generate changelogs per component
+    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + "-" + comp_versions[component + "_version_"])
 
-""" % (release_date, signature, mailid,
-       component,
-       comp_versions[component + "_version"])
-
-    vprint ("Changelog Entry for " + component + "\n" + changelog_entry)
-
-    with open ("%s/ChangeLog" % (component), 'r+') as changelog:
-        changelog_entry += changelog.read ()
-
-        if opts.take_action:
-            changelog.seek (0)
-            changelog.truncate (0)
-            changelog.write (changelog_entry)
-
-    return ["%s/ChangeLog" % (component)]
+    return ["%s/ChangeLogs/%s-%s" % (component, component, comp_versions[component + "_version_"])]
 
 def get_comp_versions (component):
     """ Extracts the current version number from the VERSION
     file and increments it appropriately for the release type
     requested."""
-    vprint ("Detecting current version for" + component)
+    vprint ("Detecting current version for " + component)
 
     import re
 
-    global comp_versions, opts
+    global old_comp_versions, comp_versions, opts
 
     beta = re.compile ("version (\d+)\.(\d+)\.(\d+)")
     minor = re.compile ("version (\d+)\.(\d+)[^\.]")
@@ -560,6 +527,11 @@ def get_comp_versions (component):
             print "FATAL ERROR: Unable to locate current version for " + component
             raise Exception
 
+    # Also store the current release (old from now)
+    old_comp_versions[component + "_major"] = comp_versions[component + "_major"]
+    old_comp_versions[component + "_minor"] = comp_versions[component + "_minor"]
+    old_comp_versions[component + "_beta"] = comp_versions[component + "_beta"]
+
     if opts.update:
         if opts.release_type == "major":
             comp_versions[component + "_major"] += 1
@@ -576,6 +548,27 @@ def get_comp_versions (component):
         str (comp_versions[component + "_major"])  + '.' + \
         str (comp_versions[component + "_minor"])  + '.' + \
         str (comp_versions[component + "_beta"])
+    comp_versions [component + "_version_"] = \
+        str (comp_versions[component + "_major"])  + '_' + \
+        str (comp_versions[component + "_minor"])  + '_' + \
+        str (comp_versions[component + "_beta"])
+
+    old_comp_versions [component + "_version"] = \
+        str (old_comp_versions[component + "_major"])  + '.' + \
+        str (old_comp_versions[component + "_minor"])  + '.' + \
+        str (old_comp_versions[component + "_beta"])
+    old_comp_versions [component + "_version_"] = \
+        str (old_comp_versions[component + "_major"])  + '_' + \
+        str (old_comp_versions[component + "_minor"])  + '_' + \
+        str (old_comp_versions[component + "_beta"])
+
+    if opts.update:
+      vprint ("Updating from version %s to version %s" %
+                  (old_comp_versions [component + "_version"], comp_versions [component + "_version"]))
+    else:
+      vprint ("Found version %s" %
+                  (comp_versions [component + "_version"]))
+
     # else:
     #     comp_versions [component + "_version"] = \
     #                   str (comp_versions[component + "_major"])  + '.' + \
@@ -585,79 +578,125 @@ def get_comp_versions (component):
 def update_latest_tag (which, branch):
     """ Update one of the Latest_* tags externals to point the new release """
     global opts
-    root_anon = re.sub ("^https:", "svn:", opts.repo_root)
-    propval = """ACE_wrappers %s/tags/%s/ACE
-ACE_wrappers/TAO %s/tags/%s/TAO
-ACE_wrappers/TAO/CIAO %s/tags/%s/CIAO
-ACE_wrappers/TAO/DAnCE %s/tags/%s/DAnCE
-""" % ((root_anon, branch) * 4)
     tagname = "Latest_" + which
-    temp = tempfile.gettempdir () + "/" + tagname
-    svn_client.checkout (opts.repo_root + "/tags/" + tagname, temp, False)
-    svn_client.propset ("svn:externals", propval, temp)
-    svn_client.checkin (temp, "Updating for release " + branch)
-    shutil.rmtree (temp, True)
+
+    # Remove tag locally
+    vprint ("Removing tag %s" % (tagname))
+    ex ("cd $DOC_ROOT/ATCD && git tag -d " + tagname)
+
+    vprint ("Placing tag %s" % (tagname))
+    ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
+
+
+def push_latest_tag (which, branch):
+    """ Update one of the Latest_* tags externals to point the new release """
+    global opts
+    tagname = "Latest_" + which
+
+    if opts.push:
+        # Remove tag in the remote orgin
+        ex ("cd $DOC_ROOT/ATCD && git push origin :refs/tags/" + tagname)
+
+        vprint ("Pushing tag %s" % (tagname))
+        ex ("cd $DOC_ROOT/ATCD && git push origin " + tagname)
 
 def tag ():
-    """ Tags the DOC and MPC repositories for the version """
+    """ Tags the DOC and MPC repositories for the version and push that remote """
     global comp_versions, opts
 
-    branch = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
+    tagname = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
                                         comp_versions["ACE_minor"],
                                         comp_versions["ACE_beta"])
 
-    if opts.take_action:
-        # Tag middleware
-        svn_client.copy (opts.repo_root + "/trunk",
-                        opts.repo_root + "/tags/" + branch)
+    if opts.tag:
+        if opts.take_action:
+            vprint ("Placing tag %s on ATCD" % (tagname))
+            ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
-        # Tag MPC
-        svn_client.copy (opts.mpc_root + "/trunk",
-                        opts.mpc_root + "/tags/" + branch)
+            vprint ("Placing tag %s on MPC" % (tagname))
+            ex ("cd $DOC_ROOT/MPC && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
-        # Update latest tag
-        if opts.release_type == "major":
-            update_latest_tag ("Major", branch)
-        elif opts.release_type == "minor":
-            update_latest_tag ("Minor", branch)
-        elif opts.release_type == "beta":
-            update_latest_tag ("Beta", branch)
-            update_latest_tag ("Micro", branch)
-            if comp_versions["ACE_beta"] == 1:
-                    update_latest_tag ("BFO", branch)
-    else:
-        print "Creating tags:\n"
-        print opts.repo_root + "/trunk -> " + opts.repo_root + "/tags/" + branch + "\n"
-        print opts.mpc_root + "/trunk -> " + opts.mpc_root + "/tags/" + branch + "\n"
+            # Update latest tag
+            if opts.release_type == "major":
+                update_latest_tag ("Major", tagname)
+            elif opts.release_type == "minor":
+                update_latest_tag ("Minor", tagname)
+            elif opts.release_type == "beta":
+                update_latest_tag ("Beta", tagname)
+                update_latest_tag ("Micro", tagname)
+                if comp_versions["ACE_beta"] == 1:
+                        update_latest_tag ("BFO", tagname)
+        else:
+            vprint ("Placing tag %s on ATCD" % (tagname))
+            vprint ("Placing tag %s on MPC" % (tagname))
+            print "Creating tags:\n"
+            print "Placing tag " + tagname + "\n"
+
+def push ():
+    """ Tags the DOC and MPC repositories for the version and push that remote """
+    global comp_versions, opts
+
+    tagname = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
+                                        comp_versions["ACE_minor"],
+                                        comp_versions["ACE_beta"])
+
+    if opts.push:
+        if opts.take_action:
+            vprint ("Pushing ATCD master to origin")
+            ex ("cd $DOC_ROOT/ATCD && git push origin master")
+
+            vprint ("Pushing tag %s on ATCD" % (tagname))
+            ex ("cd $DOC_ROOT/ATCD && git push origin tag " + tagname)
+
+            vprint ("Pushing tag %s on MPC" % (tagname))
+            ex ("cd $DOC_ROOT/MPC && git push origin tag " + tagname)
+
+            # Update latest tag
+            if opts.release_type == "major":
+                push_latest_tag ("Major", tagname)
+            elif opts.release_type == "minor":
+                push_latest_tag ("Minor", tagname)
+            elif opts.release_type == "beta":
+                push_latest_tag ("Beta", tagname)
+                push_latest_tag ("Micro", tagname)
+                if comp_versions["ACE_beta"] == 1:
+                        push_latest_tag ("BFO", tagname)
+        else:
+            vprint ("Pushing tag %s on ATCD" % (tagname))
+            vprint ("Pushing tag %s on MPC" % (tagname))
+            print "Pushing tags:\n"
+            print "Pushing tag " + tagname + "\n"
 
 ##################################################
 #### Packaging methods
 ##################################################
 def export_wc (stage_dir):
 
-    global doc_root
+    global doc_root, comp_versions
 
-    # Export our working copy
-    print ("Exporting ACE")
-    svn_client.export (doc_root + "/ACE",
-                       stage_dir + "/ACE_wrappers")
+    tag = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
+                                     comp_versions["ACE_minor"],
+                                     comp_versions["ACE_beta"])
 
-    print ("Exporting MPC")
-    svn_client.export (doc_root + "/ACE/MPC",
-                       stage_dir + "/ACE_wrappers/MPC")
+    # Clone the ACE repository with the needed tag
+    print ("Retrieving ACE with tag " + tag)
+    ex ("git clone --depth 1 --branch " + tag + " " + opts.repo_root + " " + stage_dir + "/ATCD")
 
-    print ("Exporting TAO")
-    svn_client.export (doc_root + "/TAO",
-                       stage_dir + "/ACE_wrappers/TAO")
+    # Clone the MPC repository with the needed tag
+    print ("Retrieving MPC with tag " + tag)
+    ex ("git clone --depth 1 --branch " + tag + " " + opts.mpc_root + " " + stage_dir + "/MPC")
 
-    print ("Exporting CIAO")
-    svn_client.export (doc_root + "/CIAO",
-                       stage_dir + "/ACE_wrappers/TAO/CIAO")
-
-    print ("Exporting DAnCE")
-    svn_client.export (doc_root + "/DAnCE",
-                       stage_dir + "/ACE_wrappers/TAO/DAnCE")
-
+    # Settting up stage_dir
+    print ("Moving ACE")
+    ex ("mv " + stage_dir + "/ATCD/ACE " + stage_dir + "/ACE_wrappers")
+    print ("Moving TAO")
+    ex ("mv " + stage_dir + "/ATCD/TAO " + stage_dir + "/ACE_wrappers/TAO")
+    print ("Moving CIAO")
+    ex ("mv " + stage_dir + "/ATCD/CIAO " + stage_dir + "/ACE_wrappers/TAO/CIAO")
+    print ("Moving DAnCE")
+    ex ("mv " + stage_dir + "/ATCD/DAnCE " + stage_dir + "/ACE_wrappers/TAO/DAnCE")
+    print ("Moving MPC")
+    ex ("mv " + stage_dir + "/MPC " + stage_dir + "/ACE_wrappers/MPC")
 
 def update_packages (text_files, bin_files, stage_dir, package_dir):
     import os
@@ -980,21 +1019,19 @@ def make_working_directories ():
 def main ():
     global opts
 
-    if opts.action == "tag":
-        print "Tagging a " + opts.release_type + " release."
-        raw_input ("Press enter to continue")
-
-        check_workspace ()
-        get_and_update_versions ()
-        tag ()
-
-    else:
+    if opts.action == "kit":
         print "Creating a kit."
         raw_input ("Press enter to continue")
 
         create_kit ()
 
+    else:
+        print "Making a " + opts.release_type + " release."
+        raw_input ("Press enter to continue")
 
+        get_and_update_versions ()
+        tag ()
+        push ()
 
 if __name__ == "__main__":
     (opts, args) = parse_args ()
