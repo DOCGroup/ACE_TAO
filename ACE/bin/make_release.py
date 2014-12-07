@@ -429,15 +429,6 @@ def get_and_update_versions ():
         get_comp_versions ("DAnCE")
 
         if opts.update:
-            # Make all changes on a workbranch
-            workbranch = "ACE+TAO+CIAO-%d_%d_%d-stage" % (comp_versions["ACE_major"],
-                                                          comp_versions["ACE_minor"],
-                                                          comp_versions["ACE_beta"])
-
-            # Checkout a new brancy
-            print ("Checking out new branch " + workbranch)
-            ex ("cd $DOC_ROOT/ATCD && git checkout -b " + workbranch)
-
             files = list ()
             files += update_version_files ("ACE")
             files += update_version_files ("TAO")
@@ -452,10 +443,6 @@ def get_and_update_versions ():
 
             print "Committing " + str(files)
             commit (files)
-
-            print ("Merging workbranch " + workbranch + " to master")
-            ex ("cd $DOC_ROOT/ATCD && git checkout master")
-            ex ("cd $DOC_ROOT/ATCD && git merge --no-ff " + workbranch + " -m\"" + workbranch + "\"")
 
     except:
         print "Fatal error in get_and_update_versions."
