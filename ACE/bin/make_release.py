@@ -55,31 +55,6 @@ converted to CRLF when being put into a ZIP file """
 bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt)$")
 
 ##################################################
-#### SVN Client Hooks
-##################################################
-#svn_auth_info = None
-#def svn_login_callback (realm, username, may_save):
-#    """ Callback used by the SVN library to obtain login credentials"""
-#    global svn_auth_info
-#    if svn_auth_info is None:
-#        print "Please enter your Subversion login credentials.  They will be saved for the duration of this script."
-#        username = raw_input ("Username: ")
-#        password = raw_input ("Password: ")
-#
-#        svn_auth_info = (True, username, password, False)
-#
-#   return svn_autn_info
-
-#def svn_log_message_callback ():
-#    """ Callback used by the svn library to generate log messages
-#    for operations such as copy """
-#    return (True, "ChangeLogTag: %s  %s  <%s>" % (release_date, signature, mailid))
-
-#svn_client = pysvn.Client ()
-#svn_client.callback_get_login = svn_login_callback
-#svn_client.callback_get_log_message = svn_log_message_callback
-
-##################################################
 #### Utility Methods
 ##################################################
 def parse_args ():
@@ -205,7 +180,6 @@ def commit (files):
 def check_workspace ():
     """ Checks that the DOC and MPC repositories are up to date.  """
     global opts, doc_root
-    # @@TODO: Replace with a svn library
     try:
         ex ("cd $DOC_ROOT/ATCD && git pull -p")
         print "Successfully updated ACE/TAO/CIAO/DAnCE working copy"
@@ -386,14 +360,8 @@ def update_debianbuild ():
             if opts.take_action:
                 print "Rename: " + fname + " to " + fnewname + "\n"
                 ex ("git mv " + fname + " " + fnewname)
-                #svn_client.move (fname, fnewname)
             else:
                 print "Rename: " + fname + " to " + fnewname + "\n"
-
-            #files.append (fname)
-            #files.append (fnewname)
-
-            #print "Appending " + fname + " and " + fnewname
 
     # update debianbuild/control
     def update_ver (match):
