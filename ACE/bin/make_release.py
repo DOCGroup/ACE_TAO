@@ -109,13 +109,10 @@ def parse_args ():
     parser.add_option ("--root", dest="repo_root", action="store",
                        help="Specify an alternate repository root",
                        default="https://github.com/DOCGroup/ATCD.git")
-                       # By default get repo root from working copy
-                       # default="https://svn.dre.vanderbilt.edu/DOC/")
 
     parser.add_option ("--mpc_root", dest="mpc_root", action="store",
                        help="Specify an alternate MPC repository root",
                        default="https://github.com/DOCGroup/MPC.git")
-                       # By default get repo root from MPC root in working copy
 
     parser.add_option ("-n", dest="take_action", action="store_false",
                        help="Take no action", default=True)
