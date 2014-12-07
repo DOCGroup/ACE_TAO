@@ -244,7 +244,9 @@
         export MAILID=jwillemsen@remedy.nl<br>
         git clone https://github.com/DOCGroup/ATCD.git ATCD<br>
         git clone https://github.com/DOCGroup/MPC.git MPC<br>
-        ATCD/ACE/bin/make_release.py --beta --update --tag<br>
+        ATCD/ACE/bin/make_release.py --beta --update --verbose<br>
+        ATCD/ACE/bin/make_release.py --beta --tag --verbose<br>
+        ATCD/ACE/bin/make_release.py --beta --push --verbose<br>
         ATCD/ACE/bin/make_release.py --kit<br>
       </code>
     <p>
@@ -286,14 +288,10 @@
             version number being released e.g. 5_6_7)
             <br>
             <code>svn co
-              svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/ACE
-              ACE_wrappers<br>
-              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/TAO
-              ACE_wrappers/TAO<br>
-              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO
-              ACE_wrappers/TAO/CIAO<br>
-              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/DAnCE
-              ACE_wrappers/TAO/DAnCE</code>
+              git clone svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/ACE ACE_wrappers<br>
+              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/TAO ACE_wrappers/TAO<br>
+              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/CIAO ACE_wrappers/TAO/CIAO<br>
+              svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-X_Y_Z/DAnCE ACE_wrappers/TAO/DAnCE</code>
           </li>
           <li>Change to the ACE_wrappers directory using <br>
           cd ACE_wrappers</li>
@@ -324,17 +322,12 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        mkdir -p $HOME/.subversion<br>
-        wget https://svn.dre.vanderbilt.edu/viewvc/Middleware/trunk/ACE/docs/svn/config?view=co -O $HOME/.subversion/config<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_3_0/ACE ACE_wrappers<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_3_0/TAO ACE_wrappers/TAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_3_0/CIAO ACE_wrappers/TAO/CIAO<br>
-        svn co svn://svn.dre.vanderbilt.edu/DOC/Middleware/tags/ACE+TAO+CIAO-6_3_0/DAnCE ACE_wrappers/TAO/DAnCE<br>
-        cd ACE_wrappers<br>
-        export ACE_ROOT=$PWD<br>
-        export TAO_ROOT=$ACE_ROOT/TAO<br>
-        export CIAO_ROOT=$TAO_ROOT/CIAO<br>
-        export DANCE_ROOT=$TAO_ROOT/DAnCE<br>
+        git clone https://github.com/DOCGroup/ATCD.git ATCD
+        cd ATCD<br>
+        export ACE_ROOT=$PWD/ACE<br>
+        export TAO_ROOT=$PWD/TAO<br>
+        export CIAO_ROOT=$PWD/CIAO<br>
+        export DANCE_ROOT=$PWD/DAnCE<br>
         export DDS_ROOT=<br>
         $ACE_ROOT/bin/generate_rel_manpages<br>
         scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution
