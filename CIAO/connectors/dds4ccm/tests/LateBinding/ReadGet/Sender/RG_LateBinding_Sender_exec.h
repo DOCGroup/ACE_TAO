@@ -22,7 +22,7 @@
  *       http://www.isis.vanderbilt.edu/
  *
  * Information about TAO is available at:
- *     http://www.cs.wustl.edu/~schmidt/TAO.html
+ *     http://www.dre.vanderbilt.edu/~schmidt/TAO.html
  **/
 #ifndef CIAO_RG_LATEBINDING_SENDER_EXEC_YSJ9S8_H_
 #define CIAO_RG_LATEBINDING_SENDER_EXEC_YSJ9S8_H_

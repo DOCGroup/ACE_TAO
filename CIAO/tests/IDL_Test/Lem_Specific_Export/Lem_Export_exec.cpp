@@ -23,7 +23,7 @@
 //       http://www.isis.vanderbilt.edu/
 //
 // Information about TAO is available at:
-//     http://www.cs.wustl.edu/~schmidt/TAO.html
+//     http://www.dre.vanderbilt.edu/~schmidt/TAO.html
 
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1278

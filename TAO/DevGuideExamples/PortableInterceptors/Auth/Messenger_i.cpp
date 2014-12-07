@@ -5,7 +5,7 @@
 // Distributed Object Computing at Washington University, St. Louis.
 //
 // Information about TAO is available at:
-//                 http://www.cs.wustl.edu/~schmidt/TAO.html
+//                 http://www.dre.vanderbilt.edu/~schmidt/TAO.html
 
 #include "Messenger_i.h"
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY == 1)

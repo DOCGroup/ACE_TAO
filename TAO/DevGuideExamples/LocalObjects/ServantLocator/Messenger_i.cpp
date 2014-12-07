@@ -17,7 +17,7 @@
 //       http://doc.ece.uci.edu/
 //
 // Information about TAO is available at:
-//     http://www.cs.wustl.edu/~schmidt/TAO.html
+//     http://www.dre.vanderbilt.edu/~schmidt/TAO.html
 
 #include "Messenger_i.h"
 #include <iostream>
