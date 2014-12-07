@@ -94,12 +94,12 @@ def parse_args ():
     parser.add_option ("--beta", dest="release_type", action="store_const",
                        help="Create a beta release.", default=None, const="beta")
 
-    parser.add_option ("--tag", dest="action", action="store_const",
-                       help="Tag the release. DO NOT USE WITH --kit", default=None, const="tag")
+    parser.add_option ("--tag", dest="tag", action="store_true",
+                       help="Tag the repositorie with all needed tags", default=False)
     parser.add_option ("--update", dest="update", action="store_true",
-                       help="Update the version numbers, only used with --tag", default=False)
+                       help="Update the version numbers", default=False)
     parser.add_option ("--push", dest="push", action="store_true",
-                       help="Push all changes to remote, only used with --tag", default=False)
+                       help="Push all changes to remote", default=False)
 
     parser.add_option ("--kit", dest="action", action="store_const",
                        help="Create kits. DO NOT USE WITH --tag", default=None, const="kit")
@@ -124,7 +124,7 @@ def parse_args ():
                        default=False)
     (options, arguments) = parser.parse_args ()
 
-    if options.action == "tag":
+    if options.tag:
         if options.release_type is None:
             parser.error ("When tagging, must specify a release type")
 
@@ -632,7 +632,6 @@ def push_latest_tag (which, branch):
         # Remove tag in the remote orgin
         ex ("cd $DOC_ROOT/ATCD && git push origin :refs/tags/" + tagname)
 
-    if opts.push:
         vprint ("Pushing tag %s" % (tagname))
         ex ("cd $DOC_ROOT/ATCD && git push origin " + tagname)
 
@@ -644,32 +643,29 @@ def tag ():
                                         comp_versions["ACE_minor"],
                                         comp_versions["ACE_beta"])
 
-    if opts.take_action:
-        if opts.push:
-            vprint ("Pushing ATCD master to origin")
-            ex ("cd $DOC_ROOT/ATCD && git push origin master")
+    if opts.tag:
+        if opts.take_action:
+            vprint ("Placing tag %s on ATCD" % (tagname))
+            ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
-        vprint ("Placing tag %s on ATCD" % (tagname))
-        ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
+            vprint ("Placing tag %s on MPC" % (tagname))
+            ex ("cd $DOC_ROOT/MPC && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
-        vprint ("Placing tag %s on MPC" % (tagname))
-        ex ("cd $DOC_ROOT/MPC && git tag -a " + tagname + " -m\"" + tagname + "\"")
-
-        # Update latest tag
-        if opts.release_type == "major":
-            update_latest_tag ("Major", tagname)
-        elif opts.release_type == "minor":
-            update_latest_tag ("Minor", tagname)
-        elif opts.release_type == "beta":
-            update_latest_tag ("Beta", tagname)
-            update_latest_tag ("Micro", tagname)
-            if comp_versions["ACE_beta"] == 1:
-                    update_latest_tag ("BFO", tagname)
-    else:
-        vprint ("Placing tag %s on ATCD" % (tagname))
-        vprint ("Placing tag %s on MPC" % (tagname))
-        print "Creating tags:\n"
-        print "Placing tag " + tagname + "\n"
+            # Update latest tag
+            if opts.release_type == "major":
+                update_latest_tag ("Major", tagname)
+            elif opts.release_type == "minor":
+                update_latest_tag ("Minor", tagname)
+            elif opts.release_type == "beta":
+                update_latest_tag ("Beta", tagname)
+                update_latest_tag ("Micro", tagname)
+                if comp_versions["ACE_beta"] == 1:
+                        update_latest_tag ("BFO", tagname)
+        else:
+            vprint ("Placing tag %s on ATCD" % (tagname))
+            vprint ("Placing tag %s on MPC" % (tagname))
+            print "Creating tags:\n"
+            print "Placing tag " + tagname + "\n"
 
 def push ():
     """ Tags the DOC and MPC repositories for the version and push that remote """
@@ -679,31 +675,32 @@ def push ():
                                         comp_versions["ACE_minor"],
                                         comp_versions["ACE_beta"])
 
-    if opts.take_action:
-        vprint ("Pushing ATCD master to origin")
-        ex ("cd $DOC_ROOT/ATCD && git push origin master")
+    if opts.push:
+        if opts.take_action:
+            vprint ("Pushing ATCD master to origin")
+            ex ("cd $DOC_ROOT/ATCD && git push origin master")
 
-        vprint ("Pushing tag %s on ATCD" % (tagname))
-        ex ("cd $DOC_ROOT/ATCD && git push origin tag " + tagname)
+            vprint ("Pushing tag %s on ATCD" % (tagname))
+            ex ("cd $DOC_ROOT/ATCD && git push origin tag " + tagname)
 
-        vprint ("Pushing tag %s on MPC" % (tagname))
-        ex ("cd $DOC_ROOT/MPC && git push origin tag " + tagname)
+            vprint ("Pushing tag %s on MPC" % (tagname))
+            ex ("cd $DOC_ROOT/MPC && git push origin tag " + tagname)
 
-        # Update latest tag
-        if opts.release_type == "major":
-            push_latest_tag ("Major", tagname)
-        elif opts.release_type == "minor":
-            push_latest_tag ("Minor", tagname)
-        elif opts.release_type == "beta":
-            push_latest_tag ("Beta", tagname)
-            push_latest_tag ("Micro", tagname)
-            if comp_versions["ACE_beta"] == 1:
-                    push_latest_tag ("BFO", tagname)
-    else:
-        vprint ("Pushing tag %s on ATCD" % (tagname))
-        vprint ("Pushing tag %s on MPC" % (tagname))
-        print "Pushing tags:\n"
-        print "Pushing tag " + tagname + "\n"
+            # Update latest tag
+            if opts.release_type == "major":
+                push_latest_tag ("Major", tagname)
+            elif opts.release_type == "minor":
+                push_latest_tag ("Minor", tagname)
+            elif opts.release_type == "beta":
+                push_latest_tag ("Beta", tagname)
+                push_latest_tag ("Micro", tagname)
+                if comp_versions["ACE_beta"] == 1:
+                        push_latest_tag ("BFO", tagname)
+        else:
+            vprint ("Pushing tag %s on ATCD" % (tagname))
+            vprint ("Pushing tag %s on MPC" % (tagname))
+            print "Pushing tags:\n"
+            print "Pushing tag " + tagname + "\n"
 
 ##################################################
 #### Packaging methods
@@ -1064,10 +1061,9 @@ def main ():
         create_kit ()
 
     else:
-        print "Tagging a " + opts.release_type + " release."
+        print "Making a " + opts.release_type + " release."
         raw_input ("Press enter to continue")
 
-        check_workspace ()
         get_and_update_versions ()
         tag ()
         push ()
