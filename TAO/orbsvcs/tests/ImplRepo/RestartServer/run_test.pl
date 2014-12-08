@@ -61,7 +61,11 @@ my $actlogfile = "act.log";
 
 # Use client strategy factory for one of retry parameters.
 $c1_conf = "client.conf";
+my $stdout_file      = "test.out";
+my $stderr_file      = "test.err";
 
+my $ti_stdout_file = $ti->LocalFile ($stdout_file);
+my $ti_stderr_file = $ti->LocalFile ($stderr_file);
 my $imr_imriorfile = $imr->LocalFile ($implrepo_ior);
 my $act_imriorfile = $act->LocalFile ($implrepo_ior);
 my $ti_imriorfile = $ti->LocalFile ($implrepo_ior);
@@ -69,6 +73,20 @@ my $act_actiorfile = $act->LocalFile ($activator_ior);
 my $c1_srviorfile = $c1->LocalFile ($messenger_ior);
 my $c1_conffile = $c1->LocalFile ($c1_conf);
 my $act_srviorfile = $ti->LocalFile ($messenger_ior);
+
+sub redirect_output()
+{
+    open(OLDOUT, ">&", \*STDOUT) or die "Can't dup STDOUT: $!";
+    open(OLDERR, ">&", \*STDERR) or die "Can't dup STDERR: $!";
+    open STDERR, '>', $ti_stderr_file;
+    open STDOUT, '>', $ti_stdout_file;
+}
+
+sub restore_output()
+{
+    open(STDERR, ">&OLDERR") or die "Can't dup OLDERR: $!";
+    open(STDOUT, ">&OLDOUT") or die "Can't dup OLDOUT: $!";
+}
 
 # Make sure the files are gone, so we can wait on them.
 sub delete_files
@@ -81,6 +99,8 @@ sub delete_files
     $imr->DeleteFile ($implrepo_ior);
     $act->DeleteFile ($implrepo_ior);
     $ti->DeleteFile ($implrepo_ior);
+    $ti->DeleteFile ($stdout_file);
+    $ti->DeleteFile ($stderr_file);
     $act->DeleteFile ($activator_ior);
     $act->DeleteFile ($messenger_ior);
     $c1->DeleteFile ($messenger_ior);
@@ -155,14 +175,32 @@ sub ti_cmd
 
 sub list
 {
-    print "invoking ti list\n";# if ($debugging);
     $TI->Arguments ("$tiinitref list -v");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval() + $extra_timeout);
     if ($TI_status != 0 && $TI_status != 4) {
         return kill_imr ("tao_imr list returned $TI_status");
     }
     return 0;
+}
 
+sub list_active_servers
+{
+    # Redirect output so we can count number of lines in output
+    redirect_output();
+    $TI->Arguments ("$tiinitref list -v");
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval() + $extra_timeout);
+    restore_output();
+    if ($TI_status != 0 && $TI_status != 4) {
+        return kill_imr ("tao_imr list returned $TI_status");
+    }
+    open (FILE, $stderr_file) or die "Can't open $stderr_file: $!";
+    $active_servers = 0;
+    while (<FILE>) {
+      print STDERR $_;
+      $active_servers++ if (/Running/);
+    }
+    close FILE;
+    return $active_servers;
 }
 
 $IR_status = $IR->Spawn ();
@@ -268,6 +306,14 @@ if ($lockout eq " --lockout" ) {
 ti_cmd ("shutdown");
 
 list ();
+
+$running = list_active_servers ();
+if ($running != 0) {
+  print STDERR "ERROR We shouldn't have any reported running servers but have $running.\n";
+  ++$status;
+} else {
+  print STDOUT "Ok, no servers running.\n";
+}
 
 kill_imr ();
 
