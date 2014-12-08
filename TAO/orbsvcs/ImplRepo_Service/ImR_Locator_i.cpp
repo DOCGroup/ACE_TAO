@@ -1012,7 +1012,7 @@ ImR_Locator_i::shutdown_server
       // in which case the shutdown will need to be reissued.
       info.edit ()->reset_runtime ();
     }
-  catch (CORBA::TIMEOUT &to_ex)
+  catch (const CORBA::TIMEOUT &ex)
     {
       info.edit ()->reset_runtime ();
       // Note : This is a good thing. It means we didn't waste our time waiting for
@@ -1023,11 +1023,43 @@ ImR_Locator_i::shutdown_server
                       ACE_TEXT ("ImR: Timeout while waiting for <%C> shutdown.\n"),
                       id));
         }
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (to_ex._tao_duplicate());
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
       _tao_rh->shutdown_server_excep (&h);
       return;
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::COMM_FAILURE& ex)
+    {
+      info.edit ()->reset_runtime ();
+      if (debug_ > 1)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ImR: COMM_FAILURE while waiting for <%C> shutdown.\n"),
+                      id));
+        }
+      if (this->opts_->throw_shutdown_exceptions ())
+        {
+          ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
+          _tao_rh->shutdown_server_excep (&h);
+          return;
+        }
+    }
+  catch (const CORBA::TRANSIENT& ex)
+    {
+      info.edit ()->reset_runtime ();
+      if (debug_ > 1)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("ImR: TRANSIENT while waiting for <%C> shutdown.\n"),
+                      id));
+        }
+      if (this->opts_->throw_shutdown_exceptions ())
+        {
+          ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
+          _tao_rh->shutdown_server_excep (&h);
+          return;
+        }
+    }
+  catch (const CORBA::Exception &ex)
     {
       if (debug_ > 1)
         {
@@ -1042,7 +1074,6 @@ ImR_Locator_i::shutdown_server
           return;
         }
     }
-
 
   _tao_rh->shutdown_server ();
 }
@@ -1156,8 +1187,8 @@ ImR_Locator_i::server_is_running
 
 void
 ImR_Locator_i::server_is_shutting_down
-(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
- const char* fqname)
+  (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+   const char* fqname)
 {
   UpdateableServerInfo info (this->repository_.get(), fqname);
   if (info.null ())
@@ -1195,8 +1226,8 @@ ImR_Locator_i::server_is_shutting_down
 
 void
 ImR_Locator_i::find
-(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
- const char* id)
+  (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+   const char* id)
 {
   Server_Info_Ptr si = this->repository_->get_active_server (id);
   ImplementationRepository::ServerInformation_var imr_info;
