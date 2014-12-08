@@ -629,10 +629,11 @@ ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start,
   if (info.null ())
     {
       rh->send_exception ( new ImplementationRepository::NotFound );
-      return;
     }
-
-  this->activate_server_i (info, manual_start, rh);
+  else
+    {
+      this->activate_server_i (info, manual_start, rh);
+    }
 }
 
 void
