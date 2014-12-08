@@ -119,7 +119,7 @@ AsyncListManager::make_iterator (ImplementationRepository::ServerInformationIter
         ServerInformationIterator::_unchecked_narrow (obj.in ());
       return true;
     }
-  catch (CORBA::SystemException& ex)
+  catch (const CORBA::SystemException& ex)
     {
       ex._tao_print_exception ("AsyncListManager:final state constructing iterator\n");
       ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
@@ -127,12 +127,12 @@ AsyncListManager::make_iterator (ImplementationRepository::ServerInformationIter
         {
           this->primary_->list_excep (&h);
         }
-      catch (CORBA::Exception& ex2)
+      catch (const CORBA::Exception& ex2)
         {
           ex2._tao_print_exception ("AsyncListManager:final calling list_excep\n");
         }
     }
-  catch (CORBA::UserException& ex)
+  catch (const CORBA::UserException& ex)
     {
       ex._tao_print_exception ("AsyncListManager:final state constructing iterator\n");
       ImplementationRepository::AMH_AdministrationExceptionHolder h (new CORBA::INTERNAL);
@@ -140,7 +140,7 @@ AsyncListManager::make_iterator (ImplementationRepository::ServerInformationIter
         {
           this->primary_->list_excep (&h);
         }
-      catch (CORBA::Exception& ex2)
+      catch (const CORBA::Exception& ex2)
         {
           ex2._tao_print_exception ("AsyncListManager:final calling list_excep\n");
         }
@@ -197,7 +197,7 @@ AsyncListManager::final_state (void)
             {
               this->primary_->list (*sil, server_iterator.in ());
             }
-          catch (CORBA::Exception &ex)
+          catch (const CORBA::Exception &ex)
             {
               ex._tao_print_exception ("AsyncListManager:final state sending list\n");
               ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
@@ -214,7 +214,7 @@ AsyncListManager::final_state (void)
         {
           this->secondary_->next_n (done, *sil);
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           ex._tao_print_exception ("AsyncListManager:final state sending secondary list\n");
           ImplementationRepository::AMH_ServerInformationIteratorExceptionHolder h (ex._tao_duplicate());
