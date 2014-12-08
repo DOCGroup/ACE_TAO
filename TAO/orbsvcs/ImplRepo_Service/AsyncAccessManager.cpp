@@ -205,7 +205,7 @@ AsyncAccessManager::notify_waiters (void)
                         ("Unknown Failure");
                     }
                 }
-              catch (CORBA::Exception &ex)
+              catch (const CORBA::Exception &ex)
                 {
                   rh->send_exception (ex._tao_duplicate());
                 }
