@@ -23,23 +23,23 @@ $kill = 0;
 $server_pid = 0;
 
 if ($#ARGV >= 0) {
-    for (my $i = 0; $i <= $#ARGV; $i++) {
-	if ($ARGV[$i] eq '-debug') {
-	    $debuglevel = 10;
-	}
-	elsif ($ARGV[$i] eq '-cd') {
-            $i++;
-	    $cltdbg = $ARGV[$i];
-	}
-        elsif ($ARGV[$i] eq '-kill') {
-            $kill = 1;
-            $cltpause = 5;
-        }
-	else {
-            usage();
-	    exit 1;
-	}
+  for (my $i = 0; $i <= $#ARGV; $i++) {
+    if ($ARGV[$i] eq '-debug') {
+      $debuglevel = 10;
     }
+    elsif ($ARGV[$i] eq '-cd') {
+      $i++;
+      $cltdbg = $ARGV[$i];
+    }
+    elsif ($ARGV[$i] eq '-kill') {
+      $kill = 1;
+      $cltpause = 5;
+    }
+    else {
+      usage();
+      exit 1;
+    }
+  }
 }
 
 my $tgt_num = 0;
@@ -373,8 +373,8 @@ sub list_active_servers
     open (FILE, $stderr_file) or die "Can't open $stderr_file: $!";
     $active_servers = 0;
     while (<FILE>) {
-	print STDERR $_;
-	$active_servers++;
+      print STDERR $_;
+      $active_servers++;
     }
     close FILE;
     print STDERR "List took $list_time seconds.\n";
