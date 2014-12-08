@@ -155,6 +155,7 @@ sub ti_cmd
 
 sub list
 {
+    print "invoking ti list\n";# if ($debugging);
     $TI->Arguments ("$tiinitref list -v");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval() + $extra_timeout);
     if ($TI_status != 0 && $TI_status != 4) {
@@ -252,6 +253,8 @@ elsif ($C1_status != 0) {
     exit 1;
 }
 
+list ();
+
 if ($lockout eq " --lockout" ) {
     $C1_status = $C1->SpawnWaitKill ($c1->ProcessStartWaitInterval() + $extra_timeout);
     list ();
@@ -263,6 +266,9 @@ if ($lockout eq " --lockout" ) {
 }
 
 ti_cmd ("shutdown");
+
+list ();
+
 kill_imr ();
 
 exit $status;
