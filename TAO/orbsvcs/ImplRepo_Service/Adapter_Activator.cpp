@@ -76,7 +76,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
   catch (const CORBA::Exception& ex)
     {
       ORBSVCS_ERROR ((LM_ERROR,
-                  "IMR_Adapter_Activator::unknown_adapter - %s\n",
+                  "IMR_Adapter_Activator::unknown_adapter - %C\n",
                   exception_message));
       ex._tao_print_exception ("System Exception");
       return 0;
