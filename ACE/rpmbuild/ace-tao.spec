@@ -72,7 +72,7 @@ Release:      1%{?OPTTAG}%{?dist}
 %endif
 
 Group:        Development/Libraries/C and C++
-URL:          http://www.cs.wustl.edu/~schmidt/ACE.html
+URL:          http://www.dre.vanderbilt.edu/~schmidt/ACE.html
 License:      DOC License
 %if 0%{?_with_tao:1}%{?_without_tao:0}
 Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.gz
