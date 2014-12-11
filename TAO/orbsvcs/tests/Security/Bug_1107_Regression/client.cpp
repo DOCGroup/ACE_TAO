@@ -182,7 +182,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "secure_invocation_test returned <%d>\n",
                       status));
         }
-      catch (CORBA::Exception const &ex)
+      catch (const CORBA::Exception const &ex)
         {
           if (set_cert_file)
             {

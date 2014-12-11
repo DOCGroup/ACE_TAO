@@ -70,7 +70,7 @@ set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& to)
           ret = CORBA::Object::_duplicate (obj);
         }
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("set_timeout_policy ()"));
       ret = CORBA::Object::_duplicate (obj);

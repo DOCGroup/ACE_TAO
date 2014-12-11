@@ -248,8 +248,8 @@ While the state of the StockDistributor object is active, continue the following
 <li>Publish the stock information to all the StockNameConsumer objects that have subscribed.</li>
 <PRE>
     for (Stock_StockDistributor_i::CookieMap::iterator iter = this->subscribers_list_.begin ();
-	       iter != this->subscribers_list_.end ();
-	       ++iter)
+         iter != this->subscribers_list_.end ();
+         ++iter)
       {
         try
           {
@@ -265,7 +265,7 @@ While the state of the StockDistributor object is active, continue the following
             // in the service_context list of the GIOP message.
             STOCK_DATABASE->publish_stock_info (iter->second.first);
           }
-        catch (CORBA::Exception &ex)
+        catch (const CORBA::Exception &ex)
           {
             ACE_PRINT_EXCEPTION (ex, "Stock_StockDistributor_i::svc: ");
           }

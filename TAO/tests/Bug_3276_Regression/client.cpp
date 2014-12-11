@@ -78,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_OS::sleep (2);
           }
         }
-      catch (CORBA::TRANSIENT& ex)
+      catch (const CORBA::TRANSIENT& ex)
         {
           CORBA::ULong m = ex.minor () & 0x00000F80u;
           if (m == TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE &&

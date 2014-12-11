@@ -141,7 +141,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->run ();
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR, "Corba Exception: %s\n", ex._info ().c_str ()));
       return 1;

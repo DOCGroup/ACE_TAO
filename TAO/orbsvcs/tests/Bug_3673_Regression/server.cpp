@@ -134,7 +134,7 @@ int TestTask::svc()
 
     return 0;
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception ("CORBA exception: ");
   }

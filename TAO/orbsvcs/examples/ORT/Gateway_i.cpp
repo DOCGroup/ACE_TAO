@@ -132,7 +132,7 @@ Gateway_i::invoke (CORBA::ServerRequest_ptr request)
       // At this point the NVList contains all the out and inout
       // arguments, but we need to extract the return value...
     }
-  catch (CORBA::UnknownUserException& user_ex)
+  catch (const CORBA::UnknownUserException& user_ex)
     {
       // Pass the exception back to the server request...
       request->set_exception (user_ex.exception ());

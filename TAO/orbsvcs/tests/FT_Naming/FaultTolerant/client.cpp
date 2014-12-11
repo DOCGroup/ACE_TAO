@@ -1476,7 +1476,7 @@ do_persistence_objectgroup_test (
                                    RC_ERROR);
               }
             }
-            catch (CORBA::Exception& ex)
+            catch (const CORBA::Exception& ex)
             {
               ex._tao_print_exception ("ERROR: invoking get_string on Basic object.\n");
               return RC_ERROR;

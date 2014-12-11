@@ -49,7 +49,7 @@ namespace DAnCE
                         name, ex.source.in (), ex.reason.in ()));
           return false;
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::install_package - ")
                         ACE_TEXT ("Unexpected CORBA Exception while installing package with name: %s.  Reason: %C\n"),
@@ -106,7 +106,7 @@ namespace DAnCE
                         uuid));
           return false;
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::uninstall_package - ")
                         ACE_TEXT ("Unexpected CORBA Exception while uninstalling package with uuid: %s. Reason: %C\n"),
@@ -136,7 +136,7 @@ namespace DAnCE
           CORBA::StringSeq_var packages = this->rm_->getAllNames ();
           return packages._retn ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::list_packages - ")
                         ACE_TEXT ("Unexpected CORBA Exception while listing packages: %C\n"),
@@ -164,7 +164,7 @@ namespace DAnCE
           CORBA::StringSeq_var packages = this->rm_->getAllTypes ();
           return packages._retn ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::list_types - ")
                         ACE_TEXT ("Unexpected CORBA Exception while listing package types: %C\n"),
@@ -199,7 +199,7 @@ namespace DAnCE
           ::CORBA::StringSeq_var types = this->rm_->findNamesByType (ACE_TEXT_ALWAYS_CHAR (type));
           types._retn ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO ACE_TEXT ("Admin::find_by_type - ")
                         ACE_TEXT ("Unexpected CORBA Exception while listing packages of type %C: %C\n"),

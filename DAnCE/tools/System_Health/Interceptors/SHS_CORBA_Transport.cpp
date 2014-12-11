@@ -93,7 +93,7 @@ namespace DAnCE
                                            ACE_TEXT ("SHS_CORBA_Transport::configure - ")
                                            ACE_TEXT ("Unable to resolve SHS Daemon\n")));
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR, (LM_NOTICE, DLINFO
                                          ACE_TEXT ("SHS_CORBA_Transport::configure - ")
@@ -129,7 +129,7 @@ namespace DAnCE
                           ACE_TEXT (" nil daemon ref\n")));
 
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, DLINFO
                                          ACE_TEXT ("SHS_CORBA_Transport::push_event - ")

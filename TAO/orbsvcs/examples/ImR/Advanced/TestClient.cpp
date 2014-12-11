@@ -207,7 +207,7 @@ int TestClient::svc()
                 ::CORBA::Long instance = test->send_message(threadNum, i, objIter, requestIter);
                 ACE_UNUSED_ARG (instance);
               }
-              catch (CORBA::SystemException& ex)
+              catch (const CORBA::SystemException& ex)
               {
                 // If these exceptions are expected record the number of instances, otherwise rethrow
                 if (expectHolding_ == true && ex.minor() == TAO_POA_HOLDING)
@@ -254,7 +254,7 @@ int TestClient::svc()
 
     return 0;
   } // try
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
   {
     ACE_ERROR((LM_ERROR,"CORBA client error with (%d.%d.%d.%d):%s\n",
                threadNum, i, objIter, requestIter, currentIOR.c_str()));

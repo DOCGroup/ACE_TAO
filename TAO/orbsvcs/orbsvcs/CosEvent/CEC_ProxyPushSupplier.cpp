@@ -625,7 +625,7 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event)
     {
       control->consumer_not_exist (this);
     }
-  catch (CORBA::SystemException& sysex)
+  catch (const CORBA::SystemException& sysex)
     {
       control->system_exception (this,
                                  sysex);
@@ -669,7 +669,7 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
         }
      control->consumer_not_exist (this);
     }
-  catch (CORBA::SystemException& sysex)
+  catch (const CORBA::SystemException& sysex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -738,7 +738,7 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
         }
       control->consumer_not_exist (this);
     }
-  catch (CORBA::SystemException& sysex)
+  catch (const CORBA::SystemException& sysex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -813,7 +813,7 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
         }
       control->consumer_not_exist (this);
     }
-  catch (CORBA::SystemException& sysex)
+  catch (const CORBA::SystemException& sysex)
     {
       if (TAO_debug_level >= 4)
         {

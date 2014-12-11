@@ -156,7 +156,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
             deployment_config_.get_node_manager
             (initial_domain_.node[i].name.in ());
         }
-      catch (CORBA::Exception&)
+      catch (const CORBA::Exception&)
         {
           DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR, "DANCE::TM (%P|%t) DomainDataManager.cpp: "
                       "Error trying to contact NodeManager %s\n",
@@ -184,7 +184,7 @@ int DAnCE::DomainDataManager::call_all_node_managers ()
                                         target_mgr_.in (),
                                         log);
             }
-          catch (CORBA::Exception& ex)
+          catch (const CORBA::Exception& ex)
             {
               DANCE_ERROR (DANCE_LOG_ERROR, (LM_ERROR , "TM::Error in calling Join Domain==\n"));
               ex._tao_print_exception (

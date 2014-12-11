@@ -162,7 +162,7 @@ DAnCE_Domain_Validator_i::validate_node (const char * node_name)
           return false;
         }
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       DANCE_DEBUG (DANCE_LOG_EVENT_TRACE,
                    (LM_DEBUG, DLINFO
@@ -255,7 +255,7 @@ DAnCE_Domain_Validator_i::block_for_node (const char * node_name,
           if (!CORBA::is_nil (obj))
             break;
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_WARNING,
                        (LM_ERROR, DLINFO, ACE_TEXT ("Plan_Launcher - ")
@@ -283,7 +283,7 @@ DAnCE_Domain_Validator_i::block_for_node (const char * node_name,
         if (!non_existant)
           break;
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         DANCE_ERROR (DANCE_LOG_WARNING,
                      (LM_ERROR, DLINFO, ACE_TEXT ("Plan_Launcher - ")

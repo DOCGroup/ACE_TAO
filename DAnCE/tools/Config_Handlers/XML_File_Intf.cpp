@@ -78,7 +78,7 @@ namespace DAnCE
           if (this->idl_dp_.get ())
             return true;
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")
@@ -152,7 +152,7 @@ namespace DAnCE
           if (this->idl_domain_.get ())
             return true;
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
             (LM_ERROR, DLINFO ACE_TEXT ("XML_File_Intf::caught - ")

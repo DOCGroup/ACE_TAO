@@ -165,7 +165,7 @@ int main (int argc, char* argv[])
     </P>
 <PRE>
   }
-  catch (CORBA::Exception &ex) {
+  catch (const CORBA::Exception &ex) {
     std::cerr << "CORBA exception raised!" << std::endl;
   }
   return 0;
@@ -189,7 +189,7 @@ int main (int argc, char* argv[])
 
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
+  catch (const CORBA::Exception &ex) {
     std::cerr << "CORBA exception raised!" << std::endl;
   }
   return 0;

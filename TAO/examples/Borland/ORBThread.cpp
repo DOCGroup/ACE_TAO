@@ -31,7 +31,7 @@ __fastcall TORBThread::~TORBThread ()
     {
       orb_->shutdown (0);
     }
-  catch (CORBA::Exception&)
+  catch (const CORBA::Exception&)
     {
     }
 
@@ -44,7 +44,7 @@ void __fastcall TORBThread::Execute ()
     {
       orb_->run ();
     }
-  catch (CORBA::Exception& e)
+  catch (const CORBA::Exception& e)
     {
       ShowMessage (e._rep_id ());
       Application->Terminate ();

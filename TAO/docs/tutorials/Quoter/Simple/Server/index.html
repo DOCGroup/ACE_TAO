@@ -40,13 +40,13 @@ private:
 };
 </PRE>
     <P>In a server, CORBA objects and functions are implemented and
-      represented by programming language data and functions. These 
-      programming entities that implement and represent CORBA objects 
-      are called <I>servants</I>. <I>Object Adapters</I> link the world of 
-      CORBA objects to the world of programming language servants. They 
-      provide services for creation of CORBA objects and their object 
+      represented by programming language data and functions. These
+      programming entities that implement and represent CORBA objects
+      are called <I>servants</I>. <I>Object Adapters</I> link the world of
+      CORBA objects to the world of programming language servants. They
+      provide services for creation of CORBA objects and their object
       references and for dispatching requests to the appropriate
-      servants. 
+      servants.
     </P>
     <P>Notice the name of the base class.  TAO implements the CORBA 2.2
       specification, which includes the Portable Object Adapter (hence
@@ -63,7 +63,7 @@ private:
       file names can be controlled through IDL compiler options in
       most cases.
     </P>
-    <P>A server application may contain multiple POA instances, but all 
+    <P>A server application may contain multiple POA instances, but all
       server applications have at least one POA called the <I>RootPOA</I>.
     <P>We have to implement the operations and attributes:
     </P>
@@ -175,8 +175,8 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
       the client-side stubs and server-side skeletons are not related
       through inheritance.  You must either explicitly activate the
       servant (your implementation object) or use <CODE>_this()</CODE> to
-      activate it with its default POA.  <CODE>_this()</CODE> creates and 
-      registers a CORBA object under the RootPOA, and returns the created 
+      activate it with its default POA.  <CODE>_this()</CODE> creates and
+      registers a CORBA object under the RootPOA, and returns the created
       object reference for the new object. We will discuss more about
       explicit and implicit activation later, but at this point it is
       important to remove any thoughts about converting pointers to
@@ -262,7 +262,7 @@ int main (int argc, char* argv[])
     poa->destroy (1, 1);
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
+  catch (const CORBA::Exception &ex) {
     std::cerr << "CORBA exception raised!" << std::endl;
   }
   return 0;

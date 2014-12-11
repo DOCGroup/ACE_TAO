@@ -222,7 +222,7 @@ namespace CIAO
 
         throw;
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::connect_instance - "
@@ -357,7 +357,7 @@ namespace CIAO
         throw ::Deployment::InvalidConnection (conn.name.in (),
                                                ex._info ().c_str ());
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Connection_Handler::disconnect_instance - "

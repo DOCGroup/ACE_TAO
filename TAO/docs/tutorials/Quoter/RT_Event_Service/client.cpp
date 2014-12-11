@@ -65,7 +65,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     poa->destroy (1, 1);
     orb->destroy ();
   }
-  catch (CORBA::Exception &ex) {
+  catch (const CORBA::Exception &ex) {
     cerr << "CORBA exception raised!" << ex << endl;
   }
   return 0;

@@ -61,7 +61,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           orb2 =
             CORBA::ORB_init (three, argv2, "orb2" );
         }
-      catch (CORBA::BAD_PARAM bad_param)
+      catch (const CORBA::BAD_PARAM bad_param)
         {
           ACE_UNUSED_ARG (bad_param);
           ACE_DEBUG ((LM_ERROR, "Error - REGRESSION - ORB doesn't even accept the config option\n"));

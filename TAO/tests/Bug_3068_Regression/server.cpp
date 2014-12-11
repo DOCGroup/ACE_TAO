@@ -123,7 +123,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (1, 1);
     }
-  catch (CORBA::Exception &excep)
+  catch (const CORBA::Exception &excep)
     {
       excep._tao_print_exception ("Caught exception:");
       return 1;

@@ -105,7 +105,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager_factory
         = root_poa->the_POAManagerFactory ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception("initialization error ");
       return 1;
@@ -144,7 +144,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       good_pm = poa_manager_factory->create_POAManager ("goodPOAManager",
                                                         policies);
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("Failed to create reachable POA manager");
       return 1;
@@ -179,7 +179,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file, "%s", good_ior.in ());
       ACE_OS::fclose (output_file);
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("cannot run server");
     }

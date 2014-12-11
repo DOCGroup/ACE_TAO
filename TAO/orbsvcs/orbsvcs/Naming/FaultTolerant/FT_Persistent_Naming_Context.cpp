@@ -86,7 +86,7 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
     // object reference itself
     // No action required
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
   {
      ex._tao_print_exception (
         ACE_TEXT ("TAO_FT_Persistent_Naming_Context::resolve ")

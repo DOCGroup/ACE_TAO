@@ -42,7 +42,7 @@ Client_Task::svc (void)
 
            hello->shutdown ();
         }
-      catch (CORBA::INTERNAL)
+      catch (const CORBA::INTERNAL)
         {
           exception = true;
           ACE_DEBUG ((LM_DEBUG, "OK: Client_Task Expected exception received\n"));

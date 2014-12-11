@@ -114,11 +114,11 @@ TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
       else
         status = true;
     }
-  catch (CORBA::TIMEOUT&)
+  catch (const CORBA::TIMEOUT&)
     {
        status = true;
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       if (DEBUG_LEVEL > 0)
       {

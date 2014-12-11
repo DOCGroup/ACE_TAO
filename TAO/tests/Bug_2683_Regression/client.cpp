@@ -46,7 +46,7 @@ public:
                 target->shutdown ();
               }
           }
-        catch (CORBA::Exception &ex)
+        catch (const CORBA::Exception &ex)
           {
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) caught an exception - %C\n",ex._name()));
@@ -136,7 +136,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,"(%P|%t) client done\n"));
 
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ACE_DEBUG ((LM_DEBUG,"Main caught %s\n",ex._name()));
       return 1;

@@ -200,7 +200,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   (e.why_ == IORPublicationException::IO_FAILURE) ? "IO_FAILURE":
                   "<unknown>"));
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception
         ("mized_security/server: caught unexpected exception ");

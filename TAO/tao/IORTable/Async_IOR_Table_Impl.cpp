@@ -51,7 +51,7 @@ TAO_Async_IOR_Table_Impl::async_find (::IORTable::Locate_ResponseHandler handler
                 ior = this->locator_->locate (object_key);
                 rh->forward_ior (ior.c_str(), false);
               }
-            catch (CORBA::Exception &ex)
+            catch (const CORBA::Exception &ex)
               {
                 rh->raise_excep (ex);
               }

@@ -50,7 +50,7 @@ void Stock_StockNameConsumer_i::push_StockName (::Stock::StockNames *the_stockna
             {
               e._tao_print_exception ("Stock exception: invalid stock name: ");
             }
-          catch (CORBA::Exception &ex)
+          catch (const CORBA::Exception &ex)
             {
       ex._tao_print_exception ("Stock_StockNameConsumer_i::push_StockName: ");
             }

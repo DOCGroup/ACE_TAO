@@ -95,7 +95,7 @@ TAO::FT_PG_Object_Group_Storable::propagate_update_notification
       }
     peer->notify_updated_object_group (object_group_info);
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 3)
         ex._tao_print_exception (

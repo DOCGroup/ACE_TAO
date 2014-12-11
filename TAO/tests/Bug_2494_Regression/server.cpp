@@ -128,7 +128,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file, "%s", "OK\n");
       ACE_OS::fclose (output_file);
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
@@ -151,7 +151,7 @@ Worker::svc (void)
     {
       this->orb_->run ();
     }
-  catch (CORBA::Exception&)
+  catch (const CORBA::Exception&)
     {
     }
   return 0;

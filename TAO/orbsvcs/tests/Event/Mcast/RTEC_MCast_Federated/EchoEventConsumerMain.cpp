@@ -103,7 +103,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return 0;
 
   }
-  catch (CORBA::Exception& exc)
+  catch (const CORBA::Exception& exc)
   {
     ACE_ERROR ((LM_ERROR,
     "Caught CORBA::Exception\n%C (%C)\n",

@@ -83,7 +83,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           the_repo_ref = CORBA::ComponentIR::Repository::_narrow (objref.in ());
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           ex._tao_print_exception ("Can't narrow the IFR:");
           return 1;
@@ -107,7 +107,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           value_descr = value_def->describe_ext_value ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           ex._tao_print_exception ("Can't describe_ext_value:");
           return 1;
@@ -124,7 +124,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     current_member.name.in ()));
       }
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("MAIN: Unexpected CORBA exception caught:");
       return 1;

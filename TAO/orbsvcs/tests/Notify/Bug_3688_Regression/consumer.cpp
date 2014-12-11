@@ -170,7 +170,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       std::cerr << "CosEventChannelAdmin::AlreadyConnected" << std::endl;
       throw;
     }
-    catch (CORBA::SystemException& se)
+    catch (const CORBA::SystemException& se)
     {
       std::cerr << "System exception occurred during connect: " <<
         se << std::endl;

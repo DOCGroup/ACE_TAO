@@ -56,7 +56,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ifr = CORBA::ComponentIR::Repository::_narrow (obj.in());
         }
-      catch (CORBA::SystemException &)
+      catch (const CORBA::SystemException &)
         {
           ACE_DEBUG ((LM_DEBUG, "exception catched .. narrowing IFR object\n" ));
           return 1;

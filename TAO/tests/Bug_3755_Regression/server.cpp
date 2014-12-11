@@ -198,7 +198,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // END priority mapping demonstration
     }
-  catch (CORBA::SystemException const &sysEx)
+  catch (const CORBA::SystemException const &sysEx)
     {
       sysEx._tao_print_exception ("Caught SystemException in main:\n");
       return 1;

@@ -40,7 +40,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((LM_ERROR, "Error, wrong debug level, should be 10\n"), 1);
         }
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("Server main()");
       return 1;

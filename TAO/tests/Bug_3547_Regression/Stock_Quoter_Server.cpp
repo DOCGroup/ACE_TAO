@@ -64,7 +64,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_ERROR_RETURN ((LM_ERROR, "Not received send\n"), 1);
     }
   }
-  catch (CORBA::Exception& e)
+  catch (const CORBA::Exception& e)
   {
     e._tao_print_exception ("Exception caught:");
     return 1;

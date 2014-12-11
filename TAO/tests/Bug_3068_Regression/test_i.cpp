@@ -95,7 +95,7 @@ Caller::svc ()
           ACE_OS::sleep (tv);
         }
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ACE_DEBUG ((LM_DEBUG, "%t caught: %C\n", ex._name ()));
     }
@@ -104,7 +104,7 @@ Caller::svc ()
       ACE_OS::sleep (1);
       this->orb_->shutdown (0);
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ACE_DEBUG ((LM_DEBUG, "%t orb shutdown raised %C\n", ex._name ()));
     }

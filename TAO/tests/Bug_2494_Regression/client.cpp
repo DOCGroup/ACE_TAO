@@ -81,7 +81,7 @@ struct Worker : ACE_Task_Base
             CORBA::String_var ret = srv_->test_method (str.in ());
             if (0 != ACE_OS::strcmp (str.in (), ret.in ())) return 1;
           }
-        catch (CORBA::Exception& ex)
+        catch (const CORBA::Exception& ex)
           {
             ACE_DEBUG ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) Exception caught: \n%C\n"),
@@ -126,7 +126,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           wrk.thr_mgr ()->wait ();
         }
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%P|%t) ERROR: Exception caught: \n%C\n"),
                   ex._info ().c_str ()));

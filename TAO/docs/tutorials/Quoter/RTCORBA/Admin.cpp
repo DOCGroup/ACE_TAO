@@ -148,7 +148,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Cleanup the ORB.
       orb->destroy ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

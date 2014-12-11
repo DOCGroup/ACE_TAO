@@ -88,7 +88,7 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
     // object reference itself
     // No action required
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
        ACE_TEXT ("TAO_FT_Storable_Naming_Context::resolve - ")
@@ -123,7 +123,7 @@ TAO_FT_Storable_Naming_Context::propagate_update_notification (
     // Notify the naming_manager of the updated context
     peer->notify_updated_context (context_info);
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       if (TAO_debug_level > 3)
         ex._tao_print_exception (ACE_TEXT ("Unable to communicate with peer.\n"));

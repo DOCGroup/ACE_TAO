@@ -38,7 +38,7 @@ MT_Requestor::svc ()
                       ACE_TEXT ("Client thread %t delay succeeded\n")));
           break;
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Client thread %t caught %s\n"),

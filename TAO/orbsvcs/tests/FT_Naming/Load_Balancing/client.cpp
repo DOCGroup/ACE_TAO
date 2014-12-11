@@ -86,7 +86,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             Test::Basic::_narrow (tmp.in ());
 
         }
-        catch (CORBA::Exception& ex)
+        catch (const CORBA::Exception& ex)
           {
             ex._tao_print_exception (ACE_TEXT ("Error resolving name.\n"));
           }
@@ -110,7 +110,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       the_string.in ()));
 
         }
-        catch (CORBA::Exception& ex)
+        catch (const CORBA::Exception& ex)
           {
             ex._tao_print_exception (
               ACE_TEXT ("Error invoking get_string on Basic object.\n"));
@@ -125,7 +125,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               // Try removing a member
               basic->remove_member ();
             }
-            catch (CORBA::Exception& ex)
+            catch (const CORBA::Exception& ex)
               {
                 ex._tao_print_exception (
                   ACE_TEXT ("Error invoking get_string on Basic object.\n"));
@@ -141,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) - Shutting down server\n")));
       }
-      catch (CORBA::Exception& ex)
+      catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception (
           ACE_TEXT ("Error invoking get_string on Basic object.\n"));

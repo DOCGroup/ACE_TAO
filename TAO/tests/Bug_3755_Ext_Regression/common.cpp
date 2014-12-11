@@ -74,7 +74,7 @@ do_main (int argc, ACE_TCHAR *argv[], orbs_check_callback check)
                             1);
         }
     }
-  catch (CORBA::Exception const &ex)
+  catch (const CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught Exception in do_main:\n");
       return 1;

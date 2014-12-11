@@ -69,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("(%P|%t|%T) Client %d received reply from server %d\n"),
                       client_num, n));
         }
-      catch (CORBA::TRANSIENT &)
+      catch (const CORBA::TRANSIENT &)
         {
           if (expect_transient)
             {
