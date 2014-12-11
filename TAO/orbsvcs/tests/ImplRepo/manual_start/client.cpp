@@ -59,19 +59,23 @@ do_test (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  int retval = 0;
+
+  orb = CORBA::ORB_init( argc, argv );
+
   try {
-    orb = CORBA::ORB_init( argc, argv );
 
     if (parse_args (argc, argv) != 0)
       return 1;
 
     do_test ();
-    return 0;
-
   }
   catch(const CORBA::Exception& ex) {
     ex._tao_print_exception (ACE_TEXT ("client:"));
+    retval = -1;
   }
 
-  return -1;
+  orb->destroy();
+
+  return retval;
 }

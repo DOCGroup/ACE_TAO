@@ -223,16 +223,6 @@ private:
   auto_ptr<Locator_Repository> repository_;
 
   Options *opts_;
-#if 0
-  bool read_only_;
-  ACE_Time_Value startup_timeout_;
-  bool ping_external_;
-  ACE_Time_Value ping_interval_;
-  ACE_Time_Value ping_timeout_;
-
-  bool unregister_if_address_reused_;
-  bool throw_shutdown_exceptions_;
-#endif
 };
 
 //----------------------------------------------------------------------------

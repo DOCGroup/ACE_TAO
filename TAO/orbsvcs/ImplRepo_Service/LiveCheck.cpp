@@ -437,7 +437,7 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
                           ACE_TEXT ("sendc_ping returned OK\n")));
         }
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       if (ImR_Locator_i::debug () > 3)
         {
@@ -483,7 +483,7 @@ PingReceiver::cancel (void)
       PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
       poa_->deactivate_object (oid.in());
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       if (ImR_Locator_i::debug () > 4)
         {
@@ -526,7 +526,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
         }
       excep_holder->raise_exception ();
     }
-  catch (CORBA::TRANSIENT &ex)
+  catch (const CORBA::TRANSIENT &ex)
     {
       switch (ex.minor () & TAO_MINOR_MASK)
         {
@@ -550,7 +550,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
           }
         }
     }
-  catch (CORBA::TIMEOUT &ex)
+  catch (const CORBA::TIMEOUT &ex)
     {
       if (this->entry_ != 0)
         {
@@ -565,7 +565,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
             }
         }
     }
-  catch (CORBA::Exception &)
+  catch (const CORBA::Exception &)
     {
       if (this->entry_ != 0)
         {

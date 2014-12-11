@@ -30,7 +30,7 @@ INS_Locator::locate (const char* object_key)
         this->imr_locator_.activate_server_by_object (object_key);
       return located._retn();
     }
-  catch (CORBA::Exception &)
+  catch (const CORBA::Exception &)
     {
       throw CORBA::TRANSIENT (CORBA::SystemException::_tao_minor_code
                               (TAO_IMPLREPO_MINOR_CODE, 0),

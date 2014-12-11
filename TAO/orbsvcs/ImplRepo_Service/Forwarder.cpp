@@ -88,7 +88,7 @@ ImR_DSI_Forwarder::_dispatch (TAO_ServerRequest &request,
       // Delegate to user.
       this->invoke (dsi_request, rh.in());
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
