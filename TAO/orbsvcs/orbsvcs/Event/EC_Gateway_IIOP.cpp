@@ -522,10 +522,9 @@ TAO_EC_Gateway_IIOP::push_to_consumer (
     {
       ec_control_->event_channel_not_exist (this);
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException& sysex)
     {
-      ec_control_->system_exception (this,
-                                     sysex);
+      ec_control_->system_exception (this, sysex);
     }
   catch (const CORBA::Exception&)
     {

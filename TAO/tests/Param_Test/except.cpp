@@ -71,7 +71,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
 
       *o3->value () >>= this->out_;
     }
-  catch (const CORBA::UnknownUserException& user_ex)
+  catch (CORBA::UnknownUserException& user_ex)
     {
       Param_Test::Ooops* oops;
       Param_Test::BadBoy* bad_boy;

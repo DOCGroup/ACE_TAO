@@ -85,7 +85,7 @@ MIF_DT_Creator::wait (void)
         {
           (void)this->orb_->work_pending ();
         }
-      catch (const CORBA::BAD_INV_ORDER const &)
+      catch (const CORBA::BAD_INV_ORDER &)
         {
           // If there is BAD_INV_ORDER exception there is
           // no point in running this loop any more.

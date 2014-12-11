@@ -352,7 +352,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
           control->consumer_not_exist (this);
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException& sysex)
     {
       // Do not report errors for old consumers
       // NOTE: The comparison below is not completely correct, it
@@ -366,8 +366,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
           TAO_EC_ConsumerControl *control =
             this->event_channel_->consumer_control ();
 
-          control->system_exception (this,
-                                     sysex);
+          control->system_exception (this, sysex);
         }
     }
   catch (const CORBA::Exception&)
@@ -392,13 +391,12 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
 
       control->consumer_not_exist (this);
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException& sysex)
     {
       TAO_EC_ConsumerControl *control =
         this->event_channel_->consumer_control ();
 
-      control->system_exception (this,
-                                 sysex);
+      control->system_exception (this, sysex);
     }
   catch (const CORBA::Exception&)
     {
