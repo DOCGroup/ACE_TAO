@@ -85,7 +85,7 @@ namespace CIAO_locality_Shutdown_Impl
       {
         lm->shutdown ();
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         ACE_ERROR ((LM_ERROR, "Caught CORBA Exception %C\n",
                     ex._info ().c_str ()));

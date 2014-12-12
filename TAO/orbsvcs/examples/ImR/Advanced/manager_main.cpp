@@ -56,7 +56,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->destroy();
     return 0;
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
   {
     cerr << "Manager: " << ex << endl;
   }

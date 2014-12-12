@@ -43,11 +43,11 @@ Messenger_i::send_message (const CORBA::OctetSeq & user_name)
       user_name_as_any >>= name;
       ACE_DEBUG ((LM_DEBUG,  "User's name: %C\n", name));
     }
-  catch (CORBA::SystemException &ex)
+  catch (const CORBA::SystemException &ex)
     {
       ex._tao_print_exception ("ERROR");
     }
-  catch (CORBA::Exception &e)
+  catch (const CORBA::Exception &e)
     {
       e._tao_print_exception ("ERROR");
     }

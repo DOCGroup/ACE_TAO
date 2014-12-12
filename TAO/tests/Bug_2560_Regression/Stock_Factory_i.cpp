@@ -37,7 +37,7 @@ Quoter_Stock_Factory_i::get_stock (const char *symbol)
     } else if (ACE_OS::strcmp (symbol, "MSFT") == 0) {
       return Quoter::Stock::_duplicate(ref2_.in ());
     }
-  } catch (CORBA::Exception & e) {
+  } catch (const CORBA::Exception & e) {
     std::cerr << "CORBA exception raised: " << e << std::endl;
   }
   std::cerr << "Invalid_Stock_Symbol: " << symbol << std::endl ;

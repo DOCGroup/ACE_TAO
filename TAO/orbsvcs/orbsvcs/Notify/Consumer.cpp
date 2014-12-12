@@ -808,11 +808,11 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
       else
         status = true;
     }
-  catch (CORBA::TIMEOUT&)
+  catch (const CORBA::TIMEOUT&)
     {
        status = true;
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       if (DEBUG_LEVEL > 0)
       {

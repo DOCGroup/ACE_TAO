@@ -577,7 +577,7 @@ namespace CIAO
               PortableServer::POA::_duplicate(this->component_poa_.in ());
             svt = poa_safe->reference_to_servant (compref);
           }
-        catch (CORBA::Exception &ex)
+        catch (const CORBA::Exception &ex)
           {
             std::ostringstream err;
             err << "Internal Container Error: "

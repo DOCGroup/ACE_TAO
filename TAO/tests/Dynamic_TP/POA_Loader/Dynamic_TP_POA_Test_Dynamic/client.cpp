@@ -181,7 +181,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               else
                 break;
             }
-          catch (CORBA::TRANSIENT &)
+          catch (const CORBA::TRANSIENT &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT("Client: got a transient exception with %d tries remaining\n"),

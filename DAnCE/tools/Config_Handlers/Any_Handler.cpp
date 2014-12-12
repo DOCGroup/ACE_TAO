@@ -40,7 +40,7 @@ namespace DAnCE
 
           dyn->destroy ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO
                            ACE_TEXT ("Any_Handler::extract_into_any -")

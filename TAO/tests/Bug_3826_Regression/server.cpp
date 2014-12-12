@@ -110,7 +110,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("'-ORBConnectionCacheMax' is applied to the first ")
                   ACE_TEXT ("ORB only as expected.\n")));
     }
-  catch (CORBA::Exception const &ex)
+  catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Caught Exception in main:\n");
       return 1;

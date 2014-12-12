@@ -30,7 +30,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
               success = true;
             }
-          catch (CORBA::OBJECT_NOT_EXIST &)
+          catch (const CORBA::OBJECT_NOT_EXIST &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Test caught Object Not Exist, retry %d\n"),

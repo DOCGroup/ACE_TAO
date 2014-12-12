@@ -170,7 +170,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       orb->destroy ();
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("(%P|%t) Exception caught: \n%s\n"),
                   ACE_TEXT_CHAR_TO_TCHAR (ex._info ().c_str ())));
@@ -194,7 +194,7 @@ Worker::svc (void)
     {
       this->orb_->run ();
     }
-  catch (CORBA::Exception&)
+  catch (const CORBA::Exception&)
     {
     }
   return 0;

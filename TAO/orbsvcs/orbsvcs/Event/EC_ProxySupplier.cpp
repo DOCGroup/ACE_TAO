@@ -366,8 +366,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
           TAO_EC_ConsumerControl *control =
             this->event_channel_->consumer_control ();
 
-          control->system_exception (this,
-                                     sysex);
+          control->system_exception (this, sysex);
         }
     }
   catch (const CORBA::Exception&)
@@ -397,8 +396,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
       TAO_EC_ConsumerControl *control =
         this->event_channel_->consumer_control ();
 
-      control->system_exception (this,
-                                 sysex);
+      control->system_exception (this, sysex);
     }
   catch (const CORBA::Exception&)
     {

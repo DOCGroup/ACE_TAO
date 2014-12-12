@@ -221,7 +221,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager_factory
         = root_poa->the_POAManagerFactory ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception("initialization error ");
       return 1;
@@ -261,7 +261,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                              "defaulted hostname, but didn't.\n"),1);
         }
     }
-  catch (CORBA::PolicyError &)
+  catch (const CORBA::PolicyError &)
     {
       if (host_form == use_defaulted)
         {
@@ -272,7 +272,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          "ERROR: Unexpectedly caught PolicyError "
                          "exception host_form = %s\n", form_arg), 1);
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("Failed to create reachable POA manager");
       return 1;
@@ -288,7 +288,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       bad_pm = poa_manager_factory->create_POAManager ("badPOAManager",
                                                         policies);
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("Failed to create unreachable POA manager");
       return 1;
@@ -343,7 +343,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
         }
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("cannot run server");
     }
@@ -353,7 +353,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("CORBA exception during shutdown");
     }

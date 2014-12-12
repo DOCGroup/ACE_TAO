@@ -221,7 +221,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       big_time_test(10, 10, 10, true);
       big_time_test(100, 1, 10, true);
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("MAIN: Unexpected CORBA exception caught:");
       return 1;

@@ -96,7 +96,7 @@ ExecutionManager_Impl::preparePlan (::Deployment::AMH_ExecutionManagerResponseHa
                   ACE_TEXT("ExecutionManager_Impl::preparePlan - ")
                   ACE_TEXT("Domain Application Manager preparePlan has been called.\n")));
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
                    (LM_ERROR, DLINFO
@@ -184,7 +184,7 @@ ExecutionManager_Impl::getManagers (::Deployment::AMH_ExecutionManagerResponseHa
       _tao_rh->getManagers (managers);
       return;
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       CORBA::Exception* local_ex = ex._tao_duplicate ();
       ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
@@ -254,7 +254,7 @@ ExecutionManager_Impl::destroyManager (::Deployment::AMH_ExecutionManagerRespons
     ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);
     _tao_rh->destroyManager_excep (&amh_exholder);
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       CORBA::Exception* local_ex = ex._tao_duplicate ();
       ::Deployment::AMH_ExecutionManagerExceptionHolder amh_exholder (local_ex);

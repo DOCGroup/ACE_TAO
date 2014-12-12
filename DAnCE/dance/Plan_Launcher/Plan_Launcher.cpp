@@ -714,7 +714,7 @@ resolve_manager (ACE_Time_Value timeout, const ACE_TCHAR * ior, CORBA::ORB_ptr o
           else
             break;
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_WARNING,
                        (LM_ERROR, DLINFO, ACE_TEXT ("Plan_Launcher - ")
@@ -747,7 +747,7 @@ resolve_manager (ACE_Time_Value timeout, const ACE_TCHAR * ior, CORBA::ORB_ptr o
           break;
         ACE_OS::sleep (retry);
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         DANCE_ERROR (DANCE_LOG_WARNING,
                      (LM_ERROR, DLINFO, ACE_TEXT ("Plan_Launcher - ")

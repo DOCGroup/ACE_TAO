@@ -42,7 +42,7 @@ Foo_i::baz (void)
       // we go into this method, not whether the method itself operates
       // properly.
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR, "FOO (%P|%t) Caught exception, trying to obtain ClientCredentials"));
       ex._tao_print_exception ("Exception");

@@ -222,7 +222,7 @@ namespace CIAO
                                 "Unable to resolve external reference for connection %C\n",
                                 plan.connection[connRef].name.in ()));
               }
-            catch (CORBA::Exception &ex)
+            catch (const CORBA::Exception &ex)
               {
                 CIAO_ERROR (1, (LM_ERROR, CLINFO
                                 "CIAO_ReferenceLookup_i::pre_connect - "

@@ -74,7 +74,7 @@ do_primary_test (CORBA::Object_var &server,
         CORBA::Any::from_string(test_string.in(),30);
       req->sendc(callback.in());
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "Client caught exception: %C\n",ex._name()));

@@ -197,7 +197,7 @@ DAnCE_TargetManager_Module::init (CORBA::ORB_ptr orb,
                     }
                 }
             }
-          catch (CORBA::Exception&)
+          catch (const CORBA::Exception&)
             {
               DANCE_DEBUG (DANCE_LOG_ERROR,
                            (LM_WARNING, DLINFO ACE_TEXT ("DAnCE_TargetManager_Module::init - ")

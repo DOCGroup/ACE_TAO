@@ -56,7 +56,7 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
       // Register ourselves with the server.
       server_->add (receiver_var_, nickname_.c_str ());
     }
-  catch (CORBA::Exception &e)
+  catch (const CORBA::Exception &e)
     {
       ShowMessage ("CORBA Exception in TChatClientWindow constructor: "
                    + String (e._rep_id ()));

@@ -369,7 +369,7 @@ namespace CIAO
       {
         container->uninstall_home (ref);
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Home_Handler_i::remove_instance - "

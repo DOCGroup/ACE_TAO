@@ -88,7 +88,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           test2->method ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("caught expected %s\n"),

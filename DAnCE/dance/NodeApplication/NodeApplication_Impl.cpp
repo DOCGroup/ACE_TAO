@@ -220,7 +220,7 @@ NodeApplication_Impl::prepare_instance (const char *name,
                     ACE_TEXT ("Locality <%C> successfully prepared.\n"),
                     name));
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO
                        ACE_TEXT ("NodeApplication_Impl::prepare_instance - ")
@@ -448,7 +448,7 @@ NodeApplication_Impl::remove_instances (void)
                                            ex.reason.in ());
 
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR, (LM_ERROR, DLINFO
                            ACE_TEXT ("NodeApplication_Impl::remove_instances - ")
@@ -520,7 +520,7 @@ NodeApplication_Impl::remove_instances (void)
                                            ex.reason.in ());
 
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_TERMINAL_ERROR,
                        (LM_ERROR, DLINFO

@@ -217,7 +217,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       return 0;
     }
-  catch (CORBA::Exception &exception)
+  catch (const CORBA::Exception &exception)
     {
       ACE_ERROR ((LM_ERROR,
                   "Unexpected exception caught by client: %s (%s)\n",

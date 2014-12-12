@@ -42,7 +42,7 @@ TAO_Notify_Tests_RT_Test_FilterFactory::destroy (void)
         this->filter_poa_->servant_to_id (this);
       this->filter_poa_->deactivate_object (id.in());
     }
-  catch (CORBA::Exception&)
+  catch (const CORBA::Exception&)
     {
     }
 

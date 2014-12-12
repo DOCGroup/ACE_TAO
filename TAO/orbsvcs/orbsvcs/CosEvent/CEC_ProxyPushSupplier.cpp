@@ -627,8 +627,7 @@ TAO_CEC_ProxyPushSupplier::push_to_consumer (const CORBA::Any& event)
     }
   catch (CORBA::SystemException& sysex)
     {
-      control->system_exception (this,
-                                 sysex);
+      control->system_exception (this, sysex);
     }
   catch (const CORBA::Exception&)
     {
@@ -677,8 +676,7 @@ TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer (
             "during TAO_CEC_ProxyPushSupplier::reactive_push_to_consumer");
         }
 
-      control->system_exception (this,
-                                 sysex);
+      control->system_exception (this, sysex);
     }
   catch (const CORBA::Exception&)
     {
@@ -745,8 +743,7 @@ TAO_CEC_ProxyPushSupplier::invoke_to_consumer (const TAO_CEC_TypedEvent &typed_e
           sysex._tao_print_exception (
             "during TAO_CEC_ProxyPushSupplier::invoke_to_consumer");
         }
-      control->system_exception (this,
-                                 sysex);
+      control->system_exception (this, sysex);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -820,8 +817,7 @@ TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer (
           sysex._tao_print_exception (
             "during TAO_CEC_ProxyPushSupplier::reactive_invoke_to_consumer");
         }
-      control->system_exception (this,
-                                 sysex);
+      control->system_exception (this, sysex);
     }
   catch (const CORBA::Exception& ex)
     {

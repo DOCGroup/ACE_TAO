@@ -47,7 +47,7 @@ My_DII_Reply_Handler::handle_response(TAO_InputCDR &incoming)
                                              0 // result
                                             );
     }
-    catch (CORBA::SystemException &ex)
+    catch (const CORBA::SystemException &ex)
     {
       // in this case the response originates locally so we
       // need to reset the byte order again

@@ -270,7 +270,7 @@ DAnCE_ExecutionManager_Module::init (CORBA::ORB_ptr orb,
                 }
             }
         }
-      catch (CORBA::Exception&)
+      catch (const CORBA::Exception&)
         {
           DANCE_DEBUG (DANCE_LOG_NONFATAL_ERROR,
                        (LM_DEBUG,

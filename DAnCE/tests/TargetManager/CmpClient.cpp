@@ -259,7 +259,7 @@ namespace TM_Tester
       // Finally destroy the ORB
       orb->destroy ();
     }
-    catch (CORBA::Exception &)
+    catch (const CORBA::Exception &)
     {
       DANCE_ERROR (DANCE_LOG_EMERGENCY, (LM_ERROR,  "Error:TargetManager:CORBA exception raised!\n"));
     }

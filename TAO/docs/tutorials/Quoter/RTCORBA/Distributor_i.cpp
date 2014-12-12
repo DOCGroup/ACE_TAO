@@ -119,7 +119,7 @@ StockDistributor_i::provide_quoter_info (::Stock::Cookie *ck)
 
       return quoter_var._retn ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ex._tao_print_exception ("StockDistributor_i::provide_quoter_info");
       return ::Stock::StockQuoter::_nil ();
@@ -208,7 +208,7 @@ struct Stock_Publisher
         // publish!
         item.second.first->push_StockName (this->sn_.in ());
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         ex._tao_print_exception ("Distributor: Stock_Publisher");
       }

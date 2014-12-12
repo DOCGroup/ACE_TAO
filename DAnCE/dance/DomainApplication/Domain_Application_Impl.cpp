@@ -90,7 +90,7 @@ namespace DAnCE
                              (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::finishLaunch - ")
                               ACE_TEXT("finishLaunch has been called on a node application\n")));
               }
-            catch (CORBA::Exception& ex)
+            catch (const CORBA::Exception& ex)
               {
                 DANCE_ERROR (DANCE_LOG_ERROR,
                              (LM_ERROR, DLINFO
@@ -128,7 +128,7 @@ namespace DAnCE
               }
           }
       }
-    catch (CORBA::Exception& ex)
+    catch (const CORBA::Exception& ex)
       {
         CORBA::Exception* local_ex = ex._tao_duplicate ();
         ::Deployment::AMH_ApplicationExceptionHolder amh_exholder (local_ex);
@@ -208,7 +208,7 @@ namespace DAnCE
                              (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::start - ")
                               ACE_TEXT("start has been called on an application\n")));
               }
-            catch (CORBA::Exception& ex)
+            catch (const CORBA::Exception& ex)
               {
                 DANCE_ERROR (DANCE_LOG_ERROR,
                              (LM_ERROR, DLINFO
@@ -246,7 +246,7 @@ namespace DAnCE
               }
           }
       }
-    catch (CORBA::Exception& ex)
+    catch (const CORBA::Exception& ex)
       {
         CORBA::Exception* local_ex = ex._tao_duplicate ();
         ::Deployment::AMH_ApplicationExceptionHolder amh_exholder (local_ex);
@@ -331,7 +331,7 @@ namespace DAnCE
                          (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::startLaunch - ")
                           ACE_TEXT("startLaunch has been called on an application\n")));
           }
-        catch (CORBA::Exception& ex)
+        catch (const CORBA::Exception& ex)
           {
             DANCE_ERROR (DANCE_LOG_ERROR,
                          (LM_ERROR, DLINFO
@@ -434,7 +434,7 @@ namespace DAnCE
                            (LM_TRACE, DLINFO ACE_TEXT("DomainApplication_Impl::destroyApplication - ")
                             ACE_TEXT("destroyApplication has been called on node application manager\n")));
             }
-          catch (CORBA::Exception& ex)
+          catch (const CORBA::Exception& ex)
             {
               DANCE_ERROR (DANCE_LOG_ERROR,
                            (LM_ERROR, DLINFO
@@ -636,7 +636,7 @@ namespace DAnCE
                         this->node_id_.c_str ()));
           err << "StartError : " << ex.name.in () << "." << ex.reason.in ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR,
                        (LM_ERROR, DLINFO
@@ -718,7 +718,7 @@ namespace DAnCE
                         this->node_id_.c_str ()));
           err << "StopError : " << ex.name.in () << "." << ex.reason.in ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR,
                        (LM_ERROR, DLINFO
@@ -864,7 +864,7 @@ namespace DAnCE
                         this->node_id_.c_str ()));
           err << "InvalidConnection : " << ex.name.in () << "." << ex.reason.in ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR,
                        (LM_ERROR, DLINFO
@@ -940,7 +940,7 @@ namespace DAnCE
                         this->node_id_.c_str ()));
           err << "StartError : " << ex.name.in () << "." << ex.reason.in ();
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           DANCE_ERROR (DANCE_LOG_ERROR,
                        (LM_ERROR, DLINFO

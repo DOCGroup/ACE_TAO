@@ -234,7 +234,7 @@ namespace CIAO
       {
         cont->activate_component (comp.in ());
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Homed_Component_Handler_i::activate_instance - "
@@ -281,7 +281,7 @@ namespace CIAO
       {
         cont->passivate_component (comp.in ());
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         CIAO_ERROR (1, (LM_ERROR, CLINFO
                         "Homed_Component_Handler_i::passivate_instance - "

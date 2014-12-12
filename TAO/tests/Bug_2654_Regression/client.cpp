@@ -99,7 +99,7 @@ Worker::svc()
           ACE_OS::nanosleep (&ts);
 
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           excep = true;
           ACE_ERROR ((LM_ERROR,
@@ -122,7 +122,7 @@ Worker::svc()
     {
       this->orb_->shutdown();
     }
-  catch (CORBA::Exception &)
+  catch (const CORBA::Exception &)
     {
     }
 
@@ -284,7 +284,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       init_callback(worker);
 
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       ACE_ERROR ((LM_ERROR, "Exception caught: %s\"%s\"\n"
                   , ex._name(), ex._rep_id ()));

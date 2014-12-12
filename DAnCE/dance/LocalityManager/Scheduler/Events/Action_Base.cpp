@@ -69,7 +69,7 @@ namespace DAnCE
                 {
                   this->invoke (handler.in ());
                 }
-              catch (CORBA::UserException &ex)
+              catch (const CORBA::UserException &ex)
                 {
                   DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
                                (LM_INFO, DLINFO
@@ -79,7 +79,7 @@ namespace DAnCE
                                 this->name_.c_str ()));
                   this->instance_excep_ = DAnCE::Utility::create_any_from_user_exception (ex);
                 }
-              catch (CORBA::SystemException &ex)
+              catch (const CORBA::SystemException &ex)
                 {
                   DANCE_ERROR (DANCE_LOG_EVENT_TRACE,
                                (LM_INFO, DLINFO
@@ -138,7 +138,7 @@ namespace DAnCE
                       this->name_.c_str ()));
         this->holder_.set (result);
       }
-    catch (CORBA::UserException &ex)
+    catch (const CORBA::UserException &ex)
       {
         DANCE_ERROR (DANCE_LOG_MAJOR_EVENT,
                      (LM_INFO, DLINFO
@@ -158,7 +158,7 @@ namespace DAnCE
         this->holder_.set (result);
         return -1;
       }
-    catch (CORBA::SystemException &ex)
+    catch (const CORBA::SystemException &ex)
       {
         DANCE_ERROR (DANCE_LOG_MAJOR_EVENT,
                      (LM_INFO, DLINFO

@@ -363,7 +363,7 @@ Worker::setup (void)
 
           break;
         }
-      catch (CORBA::TRANSIENT &)
+      catch (const CORBA::TRANSIENT &)
         {
           ++j;
 
@@ -409,7 +409,7 @@ Worker::setup (void)
 
           break;
         }
-      catch (CORBA::TRANSIENT &)
+      catch (const CORBA::TRANSIENT &)
         {
           ACE_OS::sleep (1);
 

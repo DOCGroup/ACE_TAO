@@ -271,7 +271,7 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_NONE\n"));
     }
   }
-  catch (CORBA::TIMEOUT&) {
+  catch (const CORBA::TIMEOUT&) {
     if (flood && flush_strategy_ == BLOCKING) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected a timeout was received for SYNC_NONE.\n"));
     }
@@ -317,7 +317,7 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_EAGER_BUFFERING\n"));
     }
   }
-  catch (CORBA::TIMEOUT&) {
+  catch (const CORBA::TIMEOUT&) {
     if (flood && flush_strategy_ == BLOCKING) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected a timeout was received for SYNC_EAGER_BUFFERING\n"));
     }
@@ -353,7 +353,7 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_DELAYED_BUFFERING\n"));
     }
   }
-  catch (CORBA::TIMEOUT&) {
+  catch (const CORBA::TIMEOUT&) {
     if (flood && flush_strategy_ == BLOCKING) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected timeout received for SYNC_DELAYED_BUFFERING\n"));
     }
@@ -397,7 +397,7 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_WITH_TRANSPORT\n"));
     }
   }
-  catch (CORBA::TIMEOUT&) {
+  catch (const CORBA::TIMEOUT&) {
     if (flood) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected Timeout received for SYNC_WITH_TRANSPORT\n"));
     }
@@ -434,7 +434,7 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_WITH_SERVER\n"));
     }
   }
-  catch (CORBA::TIMEOUT&) {
+  catch (const CORBA::TIMEOUT&) {
     if (flood) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected Timeout received for SYNC_WITH_SERVER\n"));
     }
@@ -472,7 +472,7 @@ Client::test_oneway_timeout (bool flood)
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_WITH_TARGET\n"));
     }
   }
-  catch (CORBA::TIMEOUT&) {
+  catch (const CORBA::TIMEOUT&) {
     if (flood) {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Expected Timeout received for SYNC_WITH_TARGET\n"));
     }

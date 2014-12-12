@@ -107,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb_thread.wait();
       Orb->destroy ();
     } //destructor of ACE_Thread_Manager = implicit join
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR, "Corba Exception: %s\n", ex._info ().c_str ()));
       return 1;
@@ -126,7 +126,7 @@ OrbRunThread (void *arg)
     {
       Orb->run ();
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR,
                   "In OrbRunThread: Corba Exception: %s\n",
@@ -152,7 +152,7 @@ TestThread (void *arg)
             ACE_DEBUG ((LM_INFO, "(%t) collocated call returned\n"));
         }
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       ACE_DEBUG ((LM_ERROR,
                   "In TestThread: Corba Exception: %s\n",

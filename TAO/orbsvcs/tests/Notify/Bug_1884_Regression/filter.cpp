@@ -44,7 +44,7 @@ get_event_channel(CORBA::ORB_ptr orb)
   {
     channelIdSeq = factory->get_all_channels();
   }
-  catch (CORBA::SystemException& se )
+  catch (const CORBA::SystemException& se )
   {
     std::cerr << "System exception occurred during get_all_channels: "
       << se << std::endl;
@@ -58,7 +58,7 @@ get_event_channel(CORBA::ORB_ptr orb)
     {
       ec = factory->create_channel( init_qos, init_admin, id);
     }
-    catch (CORBA::SystemException& se )
+    catch (const CORBA::SystemException& se )
     {
       std::cerr << "System exception occurred during find_channel: "
         << se << std::endl;
@@ -77,7 +77,7 @@ get_event_channel(CORBA::ORB_ptr orb)
       exit(1);
     }
 
-    catch (CORBA::SystemException& se )
+    catch (const CORBA::SystemException& se )
     {
       std::cerr << "System exception occurred during get_event_channel: "
         << se << std::endl;
@@ -102,7 +102,7 @@ void match_structure_test (const CosNotifyFilter::Filter_var& filter,
   {
     std::cerr << "UnsupportedFilterableData!" << std::endl;
   }
-  catch (CORBA::SystemException& se )
+  catch (const CORBA::SystemException& se )
   {
     std::cerr << "System exception occurred during match_structured: "
       << se << std::endl;

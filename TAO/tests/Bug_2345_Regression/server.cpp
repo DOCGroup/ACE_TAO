@@ -36,7 +36,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch (CORBA::Exception&)
+  catch (const CORBA::Exception&)
   {
     // ... normally print an error here
   }

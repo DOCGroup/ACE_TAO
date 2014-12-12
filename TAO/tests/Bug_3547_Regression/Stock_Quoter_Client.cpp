@@ -86,7 +86,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->destroy ();
   }
-  catch (CORBA::Exception& e)
+  catch (const CORBA::Exception& e)
   {
     e._tao_print_exception ("Exception caught:");
     return 1;

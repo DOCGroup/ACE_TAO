@@ -85,7 +85,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server->shutdown ();
     }
-  catch (CORBA::SystemException &ex)
+  catch (const CORBA::SystemException &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

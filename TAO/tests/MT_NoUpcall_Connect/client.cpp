@@ -43,7 +43,7 @@ public:
       {
         excep->raise_exception ();
       }
-    catch (CORBA::Exception &)
+    catch (const CORBA::Exception &)
       {
       }
     ACE_DEBUG ((LM_DEBUG, "exception caught on upcall req\n"));

@@ -63,7 +63,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
     ACE_DEBUG((LM_DEBUG, "Controller: done.\n"));
 
     return 0;
-  } catch (CORBA::Exception& e) {
+  } catch (const CORBA::Exception& e) {
     e._tao_print_exception ("Controller:");
   }
   return 1;

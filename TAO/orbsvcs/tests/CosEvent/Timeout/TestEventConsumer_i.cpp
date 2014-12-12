@@ -29,7 +29,7 @@ TestEventConsumer_i::ORB_task::svc ()
       this->orb_->run ();
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("TestEventConsumer_i ORB_task exiting\n")));
     }
-  catch (CORBA::SystemException &e)
+  catch (const CORBA::SystemException &e)
     {
       e._tao_print_exception (
         ACE_TEXT (

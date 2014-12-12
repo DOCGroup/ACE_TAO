@@ -97,7 +97,7 @@ DomainApplicationManager_Impl::startLaunch (
                     ACE_TEXT("DomainApplicationManager_Impl::startLaunch - ")
                     ACE_TEXT("DomainApplication startLaunch has been called\n")));
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       CORBA::Exception* local_ex = ex._tao_duplicate ();
       ::Deployment::AMH_ApplicationManagerExceptionHolder amh_exholder (local_ex);
@@ -215,7 +215,7 @@ DomainApplicationManager_Impl::destroyApplication (
             }
         }
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       DANCE_ERROR (DANCE_LOG_ERROR,
                    (LM_ERROR, DLINFO
@@ -279,7 +279,7 @@ DomainApplicationManager_Impl::getApplications (
       _tao_rh->getApplications (running_app);
       return;
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       CORBA::Exception* local_ex = ex._tao_duplicate ();
       ::Deployment::AMH_DomainApplicationManagerExceptionHolder amh_exholder (local_ex);
@@ -316,7 +316,7 @@ DomainApplicationManager_Impl::getPlan (
       _tao_rh->getPlan (plan);
       return;
     }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       CORBA::Exception* local_ex = ex._tao_duplicate ();
       ::Deployment::AMH_DomainApplicationManagerExceptionHolder amh_exholder (local_ex);
@@ -453,7 +453,7 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
               _counter_ptr->decrement_exec_count ();
               // continue for next node
             }
-          catch (CORBA::Exception &ex)
+          catch (const CORBA::Exception &ex)
             {
               DANCE_ERROR (DANCE_LOG_ERROR,
                            (LM_ERROR, DLINFO
@@ -497,7 +497,7 @@ DomainApplicationManager_Impl::preparePlan(DAM_CompletionHandler* completion_han
                     ACE_TEXT("Propagating StartError exception caught here\n")));
       throw e;
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       DANCE_ERROR (DANCE_LOG_ERROR,
                    (LM_ERROR, DLINFO
@@ -567,7 +567,7 @@ DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion
                                 p));
                   p->destroyApplication (da_ch_ptr);
                 }
-              catch (CORBA::Exception &ex)
+              catch (const CORBA::Exception &ex)
                 {
                   DANCE_ERROR (DANCE_LOG_ERROR,
                                (LM_ERROR, DLINFO
@@ -614,7 +614,7 @@ DomainApplicationManager_Impl::destroyManager (DAM_CompletionHandler* completion
                     ACE_TEXT("Propagating StopError exception caught here\n")));
       throw e;
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       DANCE_ERROR (DANCE_LOG_ERROR,
                    (LM_ERROR, DLINFO
@@ -693,7 +693,7 @@ DomainApplicationManager_Impl::finishDestroyManager (const DAM_CompletionHandler
               (*iter).int_id_->sendc_destroyManager (dam_nm_handler.in (),
                                                     (*iter).ext_id_.in());
             }
-            catch (CORBA::Exception &ex)
+            catch (const CORBA::Exception &ex)
               {
                 DANCE_ERROR (DANCE_LOG_ERROR,
                              (LM_ERROR, DLINFO
@@ -742,7 +742,7 @@ DomainApplicationManager_Impl::finishDestroyManager (const DAM_CompletionHandler
       CORBA::Exception* local_ex = e._tao_duplicate ();
       ch_ptr->handle_exception (local_ex);
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       DANCE_ERROR (DANCE_LOG_ERROR,
                    (LM_ERROR, DLINFO
@@ -914,7 +914,7 @@ void DAM_NM_ReplyHandlerImpl::preparePlan_excep (
                     this->node_id_.c_str()));
       err << "StartError : " << ex.name.in () << "." << ex.reason.in ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       DANCE_ERROR (DANCE_LOG_ERROR,
                    (LM_ERROR, DLINFO
@@ -986,7 +986,7 @@ void DAM_NM_ReplyHandlerImpl::destroyManager_excep (
                     ACE_TEXT("StopError exception caught.\n")));
       err << "StopError : " << ex.name.in () << "." << ex.reason.in ();
     }
-  catch (CORBA::Exception &ex)
+  catch (const CORBA::Exception &ex)
     {
       DANCE_ERROR (DANCE_LOG_ERROR,
                    (LM_ERROR, DLINFO
@@ -1053,7 +1053,7 @@ DomainApplicationManager_Impl::StartLaunchCompletionHandler::handle_completion (
           da_servant,
           connections);
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
     {
       CORBA::Exception* local_ex = ex._tao_duplicate ();
       this->dam_servant_->fail_startLaunch (this->dam_rh_.in (),

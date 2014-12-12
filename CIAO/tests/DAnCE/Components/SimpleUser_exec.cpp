@@ -67,7 +67,7 @@ namespace CIAO_Simple_SimpleUser_Impl
       {
         trig->hello ("Test successful; hello from SimpleUser.");
       }
-    catch (CORBA::Exception &ex)
+    catch (const CORBA::Exception &ex)
       {
         ACE_ERROR ((LM_ERROR, "SimpleUser_exec_i::ccm_activate () - "
                      "Caught CORBA exception, details follow:\n"));

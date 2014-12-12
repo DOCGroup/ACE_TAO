@@ -399,7 +399,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
                 }
 
             }
-          catch (CORBA::TRANSIENT&)
+          catch (const CORBA::TRANSIENT&)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Transient exception during test () invocation %d\n",
@@ -409,7 +409,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               else
                 throw;
             }
-          catch (CORBA::TIMEOUT&)
+          catch (const CORBA::TIMEOUT&)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Timeout exception during test () invocation %d\n",
@@ -509,7 +509,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 
       return 0;
     }
-  catch (CORBA::TRANSIENT &)
+  catch (const CORBA::TRANSIENT &)
     {
       ACE_DEBUG ((LM_DEBUG, "caught transient exception\n"));
       if (force_timeout)
@@ -548,7 +548,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
           ACE_ERROR_RETURN ((LM_ERROR, "Error: Unexpected\n"), 1);
         }
     }
-  catch (CORBA::TIMEOUT &)
+  catch (const CORBA::TIMEOUT &)
     {
       ACE_DEBUG ((LM_DEBUG, "caught timeout exception\n"));
       if (force_timeout)

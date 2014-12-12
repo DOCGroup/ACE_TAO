@@ -1039,14 +1039,14 @@ TAO_PG_ObjectGroupManager::ping (CORBA::ORB_ptr orb,
   try {
     status = ! rtt_obj->_non_existent ();
   }
-  catch (CORBA::TIMEOUT& ex)
+  catch (const CORBA::TIMEOUT& ex)
   {
     if (TAO_debug_level > 8)
     {
       ex._tao_print_exception ("TAO_PG_ObjectGroupManager::ping");
     }
   }
-  catch (CORBA::Exception& ex)
+  catch (const CORBA::Exception& ex)
   {
     if (TAO_debug_level > 8)
     {

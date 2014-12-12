@@ -191,7 +191,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       exit_status = 1;
     }
 
-  catch (CORBA::PERSIST_STORE &)
+  catch (const CORBA::PERSIST_STORE &)
     {
       std::cout << "CORBA::PERSIST_STORE thrown" << std::endl;
       exit_status = 1;

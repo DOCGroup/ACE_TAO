@@ -149,7 +149,7 @@ namespace CIAO
         {
           ctx->unbind (nm);
         }
-      catch (CORBA::Exception &e)
+      catch (const CORBA::Exception &e)
         {
           CIAO_ERROR (1, (LM_ERROR, CLINFO
                           "Name_Utilities::unbind_object - "

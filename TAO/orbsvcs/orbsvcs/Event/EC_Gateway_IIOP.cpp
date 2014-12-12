@@ -524,8 +524,7 @@ TAO_EC_Gateway_IIOP::push_to_consumer (
     }
   catch (CORBA::SystemException& sysex)
     {
-      ec_control_->system_exception (this,
-                                     sysex);
+      ec_control_->system_exception (this, sysex);
     }
   catch (const CORBA::Exception&)
     {
