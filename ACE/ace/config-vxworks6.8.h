@@ -16,13 +16,6 @@
 
 #include "ace/config-vxworks6.7.h"
 
-#ifndef ACE_LACKS_RAND_R
-# define ACE_LACKS_RAND_R 1
-#endif
-
-#ifndef __RTP__
-# define ACE_LACKS_STD_WSTRING
-#endif
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_8_H */
