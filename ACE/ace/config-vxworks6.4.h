@@ -18,6 +18,14 @@
 # define ACE_VXWORKS 0x640
 #endif /* ! ACE_VXWORKS */
 
+#ifndef ACE_LACKS_RAND_R
+# define ACE_LACKS_RAND_R 1
+#endif
+
+#ifndef __RTP__
+# define ACE_LACKS_STD_WSTRING
+#endif
+
 #if !defined (__RTP__)
   // Fix for wrong typedef of time_t in kernel mode
   #ifndef _TIME_T

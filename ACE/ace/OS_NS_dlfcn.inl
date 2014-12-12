@@ -256,6 +256,14 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   // which resolves the most recently loaded symbols, which resolve
   // mostly what we want..
   ACE_UNUSED_ARG (handle);
+#if (ACE_VXWORKS < 0x690)
+  SYM_TYPE symtype;
+  char *value = 0;
+  STATUS status;
+  ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, &value, &symtype), int, -1, status);
+
+  return status == OK ? reinterpret_cast <void*>(value) : 0;
+#else
   STATUS status;
 
   SYMBOL_DESC symbolDesc;     /* symFind() descriptor */
@@ -266,6 +274,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_OSCALL (::symFind(sysSymTbl, &symbolDesc), int, -1, status);
 
   return status == OK ? reinterpret_cast <void*>(symbolDesc.value) : 0;
+#endif /* (ACE_VXWORKS < 0x690) */
 
 # else
 
