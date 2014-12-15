@@ -61,7 +61,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int retval = 0;
 
-  orb = CORBA::ORB_init( argc, argv );
+  try
+  {
+    orb = CORBA::ORB_init( argc, argv );
+  }
+  catch(const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("client ORB init:"));
+    return 1;
+  }
 
   try {
 
@@ -75,7 +83,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     retval = -1;
   }
 
-  orb->destroy();
+  try
+  {
+    orb->destroy();
+  }
+  catch(const CORBA::Exception& ex)
+  {
+    ex._tao_print_exception (ACE_TEXT ("client ORB destroy:"));
+    return 1;
+  }
 
   return retval;
 }
