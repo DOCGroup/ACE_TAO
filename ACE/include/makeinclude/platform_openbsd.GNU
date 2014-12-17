@@ -55,12 +55,12 @@ PLATFORM_FOX_CPPFLAGS ?= -I/usr/include/fox
 PLATFORM_FOX_LIBS ?= -lFOX
 PLATFORM_FOX_LDFLAGS ?=
 
-PLATFORM_TK_CPPFLAGS=$(shell . /usr/local/lib/tk*/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC) $(PLATFORM_X11_CPPFLAGS)
-PLATFORM_TK_LIBS=$(shell . /usr/local/lib/tk*/tkConfig.sh && echo -n $$TK_LIB_FLAG) $(PLATFORM_X11_LIBS)
+PLATFORM_TK_CPPFLAGS=$(shell . /usr/local/lib/tcl/tk*/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC) $(PLATFORM_X11_CPPFLAGS)
+PLATFORM_TK_LIBS=$(shell . /usr/local/lib/tcl/tk*/tkConfig.sh && echo -n $$TK_LIB_FLAG) $(PLATFORM_X11_LIBS)
 PLATFORM_TK_LDFLAGS=$(PLATFORM_X11_LDFLAGS)
 
-PLATFORM_TCL_CPPFLAGS=$(shell . /usr/local/lib/tcl*/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC)
-PLATFORM_TCL_LIBS=$(shell . /usr/local/lib/tcl*/tclConfig.sh && echo -n $$TCL_LIB_FLAG)
+PLATFORM_TCL_CPPFLAGS=$(shell . /usr/local/lib/tcl/tcl*/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC)
+PLATFORM_TCL_LIBS=$(shell . /usr/local/lib/tcl/tcl*/tclConfig.sh && echo -n $$TCL_LIB_FLAG)
 PLATFORM_TCL_LDFLAGS=
 
 # Test for template instantiation, add to versioned_so if versioned_so set,
