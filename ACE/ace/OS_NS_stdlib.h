@@ -48,11 +48,6 @@ extern "C" {
 }
 #endif /* ACE_WIN32 && _MSC_VER */
 
-// FreeBSD has atop macro (not related to ACE_OS::atop)
-#if defined (atop)
-# undef atop
-#endif
-
 /*
  * We inline and undef some functions that may be implemented
  * as macros on some platforms. This way macro definitions will

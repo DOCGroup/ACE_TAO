@@ -14,6 +14,11 @@
 // Make sure we source in the OS version.
 #include <osreldate.h>
 
+// Make sure system defined macro (not related to ACE_OS::atop)
+// is not defined during ACE compilation
+#include <machine/param.h>
+#undef atop
+
 #include "ace/config-posix.h"
 
 #include "ace/config-g++-common.h"
