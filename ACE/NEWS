@@ -5,6 +5,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.0 and ACE-6.3.1
   As part of the release process we now generate a ChangeLog
   for each release which is stored in the ChangeLogs directory
 
+. ACE has been ported to OpenBSD 5.6. Old versions of
+  OpenBSD are no longer supported.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.2.8 and ACE-6.3.0
 ====================================================
 
