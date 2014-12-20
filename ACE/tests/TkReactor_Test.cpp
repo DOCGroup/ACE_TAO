@@ -248,7 +248,7 @@ run_main (int, ACE_TCHAR *[])
   tk = Tk_MainWindow(tcl_interp);
   if (tk == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "Tk_Reactor_Test: %s\n", tcl_interp->result),1);
+      ACE_ERROR_RETURN ((LM_ERROR, "Tk_Reactor_Test: Tk_MainWindow() failed\n"),1);
     }
 
   char tcl_cmd[] = "source TkReactor_Test.tcl";
