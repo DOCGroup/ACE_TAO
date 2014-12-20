@@ -4,8 +4,6 @@
 #include "ace/TTY_IO.h"
 #include "ace/OS_NS_unistd.h"
 
-
-
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 2)
@@ -24,25 +22,21 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       1);
 
   ACE_TTY_IO::Serial_Params myparams;
-  myparams.baudrate = 19200;
-  myparams.xonlim = 0;
-  myparams.xofflim = 0;
-  myparams.readmincharacters = 0;
-  myparams.readtimeoutmsec = 10000;
-  myparams.paritymode = "EVEN";
-  myparams.ctsenb = false;
-  myparams.rtsenb = 0;
-  myparams.xinenb = false;
-  myparams.xoutenb = false;
-  myparams.modem = false;
-  myparams.rcvenb = true;
-  myparams.dsrenb = false;
-  myparams.dtrdisable = false;
-  myparams.databits = 8;
-  myparams.stopbits = 1;
+  // Try to read default parameters
+  if (write_dev.control (ACE_TTY_IO::GETPARAMS, &myparams) == -1)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("GETPARAMS is not supported\n")));
+    }
+  else
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("GETPARAMS is supported\n")));
+    }
 
-  if (write_dev.control (ACE_TTY_IO::SETPARAMS,
-                         &myparams) == -1)
+  myparams.baudrate = 19200;
+  myparams.readmincharacters = 0;
+  myparams.readtimeoutmsec = 10*1000; // 10 seconds
+
+  if (write_dev.control (ACE_TTY_IO::SETPARAMS, &myparams) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("control")),
