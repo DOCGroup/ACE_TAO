@@ -12,14 +12,14 @@ vlink="#ff0f0f"
 bgcolor="#ffffff">
 
 <hr>
-<h3>The ACE+TAO Development and Release Process</h3>
+<h3>The ACE+TAO+CIAO+DAnCE Development and Release Process</h3>
 
 To improve the quality of our software and minimize development
 effort, we try to follow the structured development and release
 process described below.<p>
 
 An important concept to keep in mind is <em>risk</em>.  Before you
-commit <em>any</em> change to ACE+TAO, please consider the effects
+commit <em>any</em> change to ACE+TAO+CIAO+DAnCE, please consider the effects
 that it will have.  Could it possibly cause a build failure, on any
 platform?  Could it possibly cause different run-time behavior?  And
 so on.  If so, it is your responsibility to adequately build and test
@@ -35,28 +35,29 @@ blocked for the duration of the broken build, the fix, and the
 rebuild.<p>
 
 <hr>
-<h3>The ACE+TAO+CIAO Development Process</h3>
+<h3>The ACE+TAO+CIAO+DAnCE Development Process</h3>
 
-The ACE+TAO+CIAO development process looks like:<p>
+The ACE+TAO+CIAO+DAnCE development process looks like:<p>
 <ol>
-  <li>Every change to ACE+TAO must have a bug report.  <em>Change</em>
+  <li>Every change to ACE+TAO+CIAO+DAnCE must have a bug report.  <em>Change</em>
     includes fixes, enhancements, updates, and so on.
   <li><a href="http://bugzilla.dre.vanderbilt.edu/">Create a
 bug report</a>.
   <li>Accept the bug report if you are going to implement the change.
-  <li>Implement the change in your workspace(s).
+  <li>Implement the change in your workspace(s) using a branch. Clearly
+    document each commit because that information is gathered into our
+    changelog
   <li>Test the change sufficiently to demonstrate that it both does
     what is intended, and doesn't break anything.  The test may be
-    as simple as building and running the ACE+TAO tests on at least two
+    as simple as building and running the ACE+TAO+CIAO+DAnCE tests on at least two
     platforms.
-    Or as complicated as rebuilding and test all of ACE+TAO on
+    Or as complicated as rebuilding and test all of ACE+TAO+CIAO+DAnCE on
     all platforms that we have.
-  <li>Create an appropriate ChangeLog entry.
-  <li>Commit the change using a ChangeLogTag commit message only when
+  <li>Merge the changes only to master when
     you are available the next 3 days to resolve any issues.
-    If you aren't available, hold your commit until you are available
+    If you aren't available, hold your merge until you are available
   <li>Respond to the requester of the change, if any.  Please do this
-    <em>after</em> committing your change.
+    <em>after</em> merging your change.
   <li>Make sure that the requester is listed in the THANKS file.
   <li>Update the bug report to indicate resolution.
   <li>Monitor the next round of build/tests for problems with your change.
@@ -174,7 +175,7 @@ commercial support</A> for ACE+TAO.<P>
 <H3>Contributions from the Open-Source Community</H3>
 <P>
 
-Over the years, ACE+TAO+CIAO have benefitted significantly from
+Over the years, ACE+TAO+CIAO have benefited significantly from
 contributions by <A
 HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-members.html">thousands</A>
 of developers in the open-source community.  To avoid fragmentation of
