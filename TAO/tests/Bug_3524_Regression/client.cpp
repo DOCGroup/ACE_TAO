@@ -37,7 +37,7 @@ call_method (::Test::A_ptr server,
              const char * arg1,
              ::CORBA::String_out & arg2,
              char *& arg3,
-             const char * error)
+             const char * error_message)
 {
   try
     {
@@ -48,7 +48,7 @@ call_method (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -59,7 +59,7 @@ call_method (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
