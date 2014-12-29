@@ -478,7 +478,7 @@ def get_comp_versions (component):
     minor = re.compile ("version (\d+)\.(\d+)[^\.]")
     major = re.compile ("version (\d+)[^\.]")
 
-    with open (component + "/VERSION") as version_file:
+    with open ("ATCD/" + component + "/VERSION") as version_file:
         for line in version_file:
             match = None
 
