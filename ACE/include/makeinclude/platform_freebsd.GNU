@@ -13,8 +13,8 @@ optimize ?= 1
 threads ?= 1
 versioned_so ?= 1
 
-CC              = gcc
-CXX             = g++
+CC              ?= gcc
+CXX             ?= g++
 
 AR              = ar
 ARFLAGS         = ruv
