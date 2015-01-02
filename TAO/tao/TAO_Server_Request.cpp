@@ -469,7 +469,6 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
       // user) when the client was not expecting a response.
       // However, in this case, we cannot close the connection
       // down, since it really isn't the client's fault.
-
       TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - ServerRequest::tao_send_reply_exception, ")
                   ACE_TEXT ("exception thrown ")

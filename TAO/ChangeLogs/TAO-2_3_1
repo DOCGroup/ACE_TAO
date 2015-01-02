@@ -1,0 +1,779 @@
+commit 4a1ecc377dd589421255f17b12dc2cb419d06b63
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 28 14:33:33 2014 +0100
+
+    Renamed argument from error to error_message to get rid of false tagged error in our nologging build
+        * TAO/tests/Bug_3524_Regression/client.cpp:
+
+commit 7f5ad4ddd9637748db68f1d26f7853c192f24322
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 15 09:33:51 2014 +0100
+
+    Fixed missing try/catch to resolve Coverity reported errors
+        * TAO/orbsvcs/tests/ImplRepo/manual_start/client.cpp:
+
+commit 2481a43058a2a3d514de2c7d96edefbaa9acf8b0
+Merge: d76de91 eb18ae3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 12 08:22:24 2014 +0100
+
+    Merge branch 'rite-jwi-catchconst'
+
+    Catch all CORBA exceptions as const& instead of &
+
+commit d76de9123a15f7148bcf5792ed69b6adb558b3cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 11 20:00:03 2014 +0100
+
+    Add the tao_imr fix
+        * TAO/NEWS:
+
+commit eb18ae391efe2ff359ce6cdcf4ee51b637c5a607
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 11 19:43:01 2014 +0100
+
+    Fixed compile errors
+        * TAO/examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+        * TAO/orbsvcs/examples/ORT/Gateway_i.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/client.cpp:
+        * TAO/tests/Bug_3755_Ext_Regression/common.cpp:
+        * TAO/tests/Bug_3755_Regression/server.cpp:
+        * TAO/tests/Bug_3826_Regression/server.cpp:
+        * TAO/tests/Param_Test/except.cpp:
+
+commit 39668e74d887084a2295d7cf3d445e7c42d7704e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 11 14:26:56 2014 +0100
+
+    Catch exceptions as const
+        * CIAO/ciao/Containers/Container_Base_T.cpp:
+        * CIAO/ciao/Deployment/Handlers/Connection_Handler.cpp:
+        * CIAO/ciao/Deployment/Handlers/Home_Handler.cpp:
+        * CIAO/ciao/Deployment/Handlers/Homed_Component_Handler.cpp:
+        * CIAO/ciao/Deployment/Interceptors/Deployment_Interceptors.cpp:
+        * CIAO/ciao/Deployment/Interceptors/Name_Utilities.cpp:
+        * CIAO/performance-tests/Protocols/Controller/Controller.cpp:
+        * CIAO/performance-tests/Protocols/Sender/Sender_exec.cpp:
+        * CIAO/tests/DAnCE/Components/Progressive_exec.cpp:
+        * CIAO/tests/DAnCE/Components/SimpleLocalUser_exec.cpp:
+        * CIAO/tests/DAnCE/Components/SimpleUser_exec.cpp:
+        * CIAO/tests/DAnCE/LocalityManager/UnexpectedShutdown/UnexpectedShutdown_exec.cpp:
+        * DAnCE/dance/DomainApplication/Domain_Application_Impl.cpp:
+        * DAnCE/dance/DomainApplicationManager/DomainApplicationManager_Impl.cpp:
+        * DAnCE/dance/ExecutionManager/ExecutionManager_Impl.cpp:
+        * DAnCE/dance/ExecutionManager/ExecutionManager_Module.cpp:
+        * DAnCE/dance/LocalityManager/Scheduler/Events/Action_Base.cpp:
+        * DAnCE/dance/NodeApplication/NodeApplication_Impl.cpp:
+        * DAnCE/dance/Plan_Launcher/Plan_Launcher.cpp:
+        * DAnCE/dance/RepositoryManager/repository_manager_admin.cpp:
+        * DAnCE/dance/TargetManager/DomainDataManager.cpp:
+        * DAnCE/dance/TargetManager/Target_Manager_Module.cpp:
+        * DAnCE/tests/TargetManager/CmpClient.cpp:
+        * DAnCE/tools/Config_Handlers/Any_Handler.cpp:
+        * DAnCE/tools/Config_Handlers/XML_File_Intf.cpp:
+        * DAnCE/tools/Domain_Validator/CORBA/CORBA_Domain_Validator_impl.cpp:
+        * DAnCE/tools/System_Health/Interceptors/SHS_CORBA_Transport.cpp:
+        * TAO/docs/tutorials/Quoter/AMI/client.cpp:
+        * TAO/docs/tutorials/Quoter/AMI/server.cpp:
+        * TAO/docs/tutorials/Quoter/Event_Service/client.cpp:
+        * TAO/docs/tutorials/Quoter/Event_Service/server.cpp:
+        * TAO/docs/tutorials/Quoter/Naming_Service/client.cpp:
+        * TAO/docs/tutorials/Quoter/Naming_Service/server.cpp:
+        * TAO/docs/tutorials/Quoter/On_Demand_Activation/client.cpp:
+        * TAO/docs/tutorials/Quoter/On_Demand_Activation/server.cpp:
+        * TAO/docs/tutorials/Quoter/RTCORBA/Admin.cpp:
+        * TAO/docs/tutorials/Quoter/RTCORBA/Broker.cpp:
+        * TAO/docs/tutorials/Quoter/RTCORBA/Distributor.cpp:
+        * TAO/docs/tutorials/Quoter/RTCORBA/Distributor_i.cpp:
+        * TAO/docs/tutorials/Quoter/RTCORBA/StockNameConsumer_i.cpp:
+        * TAO/docs/tutorials/Quoter/RTCORBA/docs/distributor.html:
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/client.cpp:
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/server.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Client/client.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Client/index.html:
+        * TAO/docs/tutorials/Quoter/Simple/Impl-Repo/client.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Impl-Repo/server.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/ImprovedServer/server.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Persistent/client.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Persistent/server.cpp:
+        * TAO/docs/tutorials/Quoter/Simple/Server/index.html:
+        * TAO/docs/tutorials/Quoter/Simple/Server/server.cpp:
+        * TAO/examples/Borland/ChatClient.cpp:
+        * TAO/examples/Borland/ChatClientWnd.cpp:
+        * TAO/examples/Borland/ORBThread.cpp:
+        * TAO/examples/RTScheduling/MIF_Scheduler/MIF_DT_Creator.cpp:
+        * TAO/orbsvcs/IFR_Service/be_produce.cpp:
+        * TAO/orbsvcs/Notify_Service/Notify_Service.cpp:
+        * TAO/orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * TAO/orbsvcs/examples/ImR/Advanced/client_main.cpp:
+        * TAO/orbsvcs/examples/ImR/Advanced/manager_main.cpp:
+        * TAO/orbsvcs/examples/ImR/Advanced/server_main.cpp:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/combined.cpp:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/controller.cpp:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/test.cpp:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/test_server.cpp:
+        * TAO/orbsvcs/examples/ORT/Gateway_i.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Gateway_IIOP.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxySupplier.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Consumer.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/ETCL_FilterFactory.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Supplier.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * TAO/orbsvcs/tests/Bug_2800_Regression/nsmain.cpp:
+        * TAO/orbsvcs/tests/Bug_2800_Regression/server.cpp:
+        * TAO/orbsvcs/tests/Bug_3215_Regression/client.cpp:
+        * TAO/orbsvcs/tests/Bug_3216_Regression/client.cpp:
+        * TAO/orbsvcs/tests/Bug_3673_Regression/nsmain.cpp:
+        * TAO/orbsvcs/tests/Bug_3673_Regression/server.cpp:
+        * TAO/orbsvcs/tests/COIOP_Naming_Test/NamingTask.cpp:
+        * TAO/orbsvcs/tests/CosEvent/Timeout/TestEventConsumer_i.cpp:
+        * TAO/orbsvcs/tests/CosEvent/Timeout/TimeoutTestMain.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/AddrServer/Server.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventConsumerMain.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/RTEC_MCast_Federated/EchoEventSupplierMain.cpp:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+        * TAO/orbsvcs/tests/FT_Naming/Federation/server.cpp:
+        * TAO/orbsvcs/tests/FT_Naming/Load_Balancing/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/MessengerClient.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/MessengerServer.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/NotifyService/test.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/double_start/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/ping_interrupt/server_interceptor.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/servers_interact_on_startup/server.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/Bug_2962_Regression/client.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/Bug_3155_Regression/test_idl.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/Bug_3174_Regression/test_idl.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_1884_Regression/common.h:
+        * TAO/orbsvcs/tests/Notify/Bug_1884_Regression/consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_1884_Regression/filter.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_1884_Regression/supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_3688_Regression/common.h:
+        * TAO/orbsvcs/tests/Notify/Bug_3688_Regression/consumer.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_3688_Regression/supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Test_Filter/RT_Test_FilterFactory.cpp:
+        * TAO/orbsvcs/tests/Security/Bug_1107_Regression/client.cpp:
+        * TAO/orbsvcs/tests/Security/EndpointPolicy/test.cpp:
+        * TAO/orbsvcs/tests/Security/InsecureReferences/test.cpp:
+        * TAO/orbsvcs/tests/Security/mixed_security_test/Foo_i.cpp:
+        * TAO/orbsvcs/tests/Security/mixed_security_test/client.cpp:
+        * TAO/orbsvcs/tests/Security/mixed_security_test/server.cpp:
+        * TAO/performance-tests/Sequence_Latency/Sequence_Operations_Time/test.cpp:
+        * TAO/tao/IORTable/Async_IOR_Table_Impl.cpp:
+        * TAO/tests/Bug_2241_Regression/Client_Task.cpp:
+        * TAO/tests/Bug_2345_Regression/server.cpp:
+        * TAO/tests/Bug_2494_Regression/client.cpp:
+        * TAO/tests/Bug_2494_Regression/server.cpp:
+        * TAO/tests/Bug_2560_Regression/Stock_Factory_i.cpp:
+        * TAO/tests/Bug_2560_Regression/client.cpp:
+        * TAO/tests/Bug_2560_Regression/server.cpp:
+        * TAO/tests/Bug_2654_Regression/client.cpp:
+        * TAO/tests/Bug_2683_Regression/client.cpp:
+        * TAO/tests/Bug_2683_Regression/server.cpp:
+        * TAO/tests/Bug_2809_Regression/server.cpp:
+        * TAO/tests/Bug_3068_Regression/client.cpp:
+        * TAO/tests/Bug_3068_Regression/server.cpp:
+        * TAO/tests/Bug_3068_Regression/test_i.cpp:
+        * TAO/tests/Bug_3276_Regression/client.cpp:
+        * TAO/tests/Bug_3531_Regression/client.cpp:
+        * TAO/tests/Bug_3531_Regression/server.cpp:
+        * TAO/tests/Bug_3531b_Regression/server.cpp:
+        * TAO/tests/Bug_3547_Regression/Stock_Quoter_Client.cpp:
+        * TAO/tests/Bug_3547_Regression/Stock_Quoter_Server.cpp:
+        * TAO/tests/Bug_3755_Ext_Regression/common.cpp:
+        * TAO/tests/Bug_3755_Regression/server.cpp:
+        * TAO/tests/Bug_3826_Regression/server.cpp:
+        * TAO/tests/Bug_933_Regression/Messenger_i.cpp:
+        * TAO/tests/Collocated_ThruP_Sp/Client_Task.cpp:
+        * TAO/tests/Collocated_ThruP_Sp_Gd/Client_Task.cpp:
+        * TAO/tests/CollocationLockup/CollocationLockup.cpp:
+        * TAO/tests/CollocationLockup/SimpleNamingService.cpp:
+        * TAO/tests/DII_AMI_Forward/DII_ReplyHandler.cpp:
+        * TAO/tests/DII_AMI_Forward/client.cpp:
+        * TAO/tests/DSI_AMI_Gateway/My_DII_Reply_Handler.cpp:
+        * TAO/tests/Dynamic_TP/ORB_ThreadPool/Client.cpp:
+        * TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Dynamic/client.cpp:
+        * TAO/tests/Dynamic_TP/POA_Loader/Dynamic_TP_POA_Test_Static/client.cpp:
+        * TAO/tests/MT_NoUpcall_Connect/client.cpp:
+        * TAO/tests/Native_Exceptions/client.cpp:
+        * TAO/tests/Native_Exceptions/server.cpp:
+        * TAO/tests/Oneway_Send_Timeouts/Client.cpp:
+        * TAO/tests/Oneway_Timeouts/client.cpp:
+        * TAO/tests/Oneway_Timeouts/server.cpp:
+        * TAO/tests/POA/EndpointPolicy/server.cpp:
+        * TAO/tests/POA/Persistent_ID/client.cpp:
+        * TAO/tests/Param_Test/except.cpp:
+        * TAO/tests/Storable/test.cpp:
+        * TAO/tests/UNKNOWN_Exception/client.cpp:
+        * TAO/utils/monitor/monitor_client.cpp:
+
+commit 8afe9a40cd22ddd77caded3c37764db3e5efbf0f
+Merge: e9c7b6e 132154f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 9 13:44:40 2014 +0100
+
+    Merge branch 'master' into rite-jwi-bugzilla-4192
+
+commit 132154fa12b98a56009b813262733a7f92e3a4d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 9 13:13:14 2014 +0100
+
+    Mention move to github and the fact that the ChangeLog is now generated as part of the release process
+        * ACE/NEWS:
+        * CIAO/NEWS:
+        * DAnCE/NEWS:
+        * TAO/NEWS:
+
+commit bbdd6b3ff977b54cb56cc46350c1cfe2d73d3941
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 20:02:32 2014 +0100
+
+    Check the POA state with a transient
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit 7051439da4c61e143ecf1f65e439874d7028e6fb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 20:02:00 2014 +0100
+
+    Catch exceptions by const&
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit fb0744eaba424e89dd4dd2efa34a51f1addf58a8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 20:01:26 2014 +0100
+
+    Check after a shutdown of the servers whether tao_imr reports 0 running
+        * TAO/orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+commit a9874f40bc9ac544e8b465f4e56b5ee75655c129
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 19:42:32 2014 +0100
+
+    Use spaces instaed of tabs
+        * TAO/orbsvcs/tests/ImplRepo/manual_start/run_test.pl:
+
+commit a7b5e71cb6468797e623445b9c769cc9e3d97bdc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 19:39:44 2014 +0100
+
+    Removed commented out code
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+
+commit 6c1efa7b1cea288d9850857b871f8f2ab8b4aecc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 19:39:28 2014 +0100
+
+    Catch all exceptions as const&
+        * TAO/orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 5ed9067deb2728b38cddf4bae0683b831a99771c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 19:33:53 2014 +0100
+
+    Handle comm_failure and transient during shutdown of a server, we do clear the status when we get those
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit 60d1212e4c59a398cceaf3e3b82be5f433b88b53
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 18:06:52 2014 +0100
+
+    Added some list commands to show ImR status
+        * TAO/orbsvcs/tests/ImplRepo/RestartServer/run_test.pl:
+
+commit 12bc3bda811d548e3d83014e39e8508038c24086
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 17:03:05 2014 +0100
+
+    Unicode fix
+        * TAO/orbsvcs/ImplRepo_Service/Adapter_Activator.cpp:
+
+commit fb5ac1fba4da66cd70dc9716381bbce7ee0d0586
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 15:14:34 2014 +0100
+
+    Simplyfing code by using Only one exit point of the function
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit 4d145f355c7d363fe3d2a5bf219436abea0436be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 8 11:58:59 2014 +0100
+
+    Fixed valgrind reported leaks due to not destroying the ORB
+        * TAO/orbsvcs/tests/ImplRepo/manual_start/client.cpp:
+
+commit 6e85b2d8191f7ee294bd663ad3e93fb5ce5d0026
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:32:35 2014 +0100
+
+    Updated links to point to http://www.dre.vanderbilt.edu/~schmidt/TAO.html
+        * CIAO/connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/examples/Hello/Sender/Hello_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/examples/Quoter/Client/Quoter_Client_exec.cpp:
+        * CIAO/connectors/ami4ccm/examples/Quoter/Client/Quoter_Client_exec.h:
+        * CIAO/connectors/ami4ccm/examples/Quoter/Producer/Quoter_Producer_exec.cpp:
+        * CIAO/connectors/ami4ccm/examples/Quoter/Producer/Quoter_Producer_exec.h:
+        * CIAO/connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/AsynchT/Receiver/AsynchT_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/AsynchT/Sender/AsynchT_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/DelReplyH/Receiver/DelReplyH_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/DelReplyH/Receiver/DelReplyH_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/DelReplyH/Sender/DelReplyH_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/Exceptions/Receiver/ExceptionT_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/Exceptions/Receiver/ExceptionT_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/Exceptions/Sender/ExceptionT_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/GetComp/Receiver/GetComp_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/GetComp/Sender/GetComp_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/InterInArgs/Receiver/InterInArgsT_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/InterInArgs/Sender/InterInArgsT_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/InterInOutArgs/Receiver/InterInOutT_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/InterInOutArgs/Sender/InterInOutT_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/InterMulti/Receiver/InterMulti_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/InterMulti/Receiver/InterMulti_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/InterMulti/Sender/InterMulti_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/InterOutArgs/Receiver/InterOutArgsT_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/InterOutArgs/Sender/InterOutArgsT_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/InterReturn/Receiver/InterReturnT_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/InterReturn/Receiver/InterReturnT_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/InterReturn/Sender/InterReturnT_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/NoConnection/Receiver/HelloT_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/NoConnection/Receiver/HelloT_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/NoConnection/Sender/HelloT_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/NoReplyH/Receiver/NoReplyH_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/NoReplyH/Receiver/NoReplyH_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/NoReplyH/Sender/NoReplyH_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/OneProcess/Receiver/OneProcess_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/OneProcess/Sender/OneProcess_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/OneReplyH/Receiver/OneReplyH_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/OneReplyH/Receiver/OneReplyH_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/OneReplyH/Sender/OneReplyH_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/PragmaT/Sender/PragmaT_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/SimplexMulti/Receiver/UsesSM_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/SimplexMulti/Sender/UsesSM_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/SyncPortConn/Sender/Hello_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/ThreeComp/Master/ThreeComp_Master_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/ThreeComp/Master/ThreeComp_Master_exec.h:
+        * CIAO/connectors/ami4ccm/tests/ThreeComp/Receiver/ThreeComp_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/ThreeComp/Receiver/ThreeComp_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/ThreeComp/Sender/ThreeComp_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/UsesMulti/Receiver/UsesMulti_Receiver_exec.h:
+        * CIAO/connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.cpp:
+        * CIAO/connectors/ami4ccm/tests/UsesMulti/Sender/UsesMulti_Sender_exec.h:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp_exec.cpp:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Hello_asm/Receiver_comp/src/Hello_Receiver_comp_exec.h:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.cpp:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Hello_asm/Sender_comp/src/Hello_Sender_comp_exec.h:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Receiver_comp_exec.cpp:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Receiver_comp_exec.h:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Sender_comp_exec.cpp:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Tutorial/Code/GeneratedExec/Hello_Sender_comp_exec.h:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Receiver_comp_exec.cpp:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Receiver_comp_exec.h:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Sender_comp_exec.cpp:
+        * CIAO/connectors/ami4ccm/tutorials/Hello/Tutorial/Code/ImplementedExec/Hello_Sender_comp_exec.h:
+        * CIAO/connectors/dds4ccm/examples/Large_Deployment/DDS_Sub/DDS_Sub_exec.cpp:
+        * CIAO/connectors/dds4ccm/examples/Large_Deployment/DDS_Sub/DDS_Sub_exec.h:
+        * CIAO/connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.cpp:
+        * CIAO/connectors/dds4ccm/examples/Quoter/Broker/Broker_exec.h:
+        * CIAO/connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.cpp:
+        * CIAO/connectors/dds4ccm/examples/Quoter/Distributor/Distributor_exec.h:
+        * CIAO/connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/examples/Shapes/Receiver/Shapes_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/examples/Shapes/Sender/Shapes_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/examples/ShapesContr/Receiver/Shapes_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/examples/ShapesContr/Receiver/Shapes_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/examples/ShapesContr/Sender/Shapes_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/examples/ShapesContr/Sender/Shapes_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleEC.h:
+        * CIAO/connectors/dds4ccm/idl/ndds/ndds_dcps_instance_handleS.h:
+        * CIAO/connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/performance-tests/Keyed/Receiver/Perf_Keyed_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/performance-tests/Keyed/Sender/Perf_Keyed_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/performance-tests/Latency/Receiver/LatencyTT_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/performance-tests/Latency/Sender/LatencyTT_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/performance-tests/Throughput/Receiver/Throughput_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/performance-tests/Throughput/Sender/Throughput_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/Receiver/CSL_SRTest_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/Sender/CSL_SRTest_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/Receiver/CSL_USTest_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/Sender/CSL_USTest_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/CoherentWriter/Receiver/CoherentWrite_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/CoherentWriter/Sender/CoherentWrite_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Receiver/CFTLE_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/EventListener/Sender/CFTLE_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/DDSEntity/Receiver/Writer_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/DDSEntity/Sender/Writer_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/Getter/Receiver/Getter_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/Getter/Sender/Getter_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/HomeTest/HomeComp/HomeT_HomeC_exec.h:
+        * CIAO/connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/InstanceHandle/Sender/Writer_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/KeyedSamples/Receiver/Keyed_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/KeyedWriter/Receiver/Writer_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Receiver/RG_LateBinding_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/Sender/RG_LateBinding_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver/WU_LateBinding_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Receiver/WU_LateBinding_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/LateBinding/UpdateWrite/Sender/WU_LateBinding_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Receiver/LNE_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ListenNotEnabled/Sender/LNE_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Component/TypeRegistration_Test_Component_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/MemLeakDetection/TypeRegistration/Component/TypeRegistration_Test_Component_exec.h:
+        * CIAO/connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/MultiTopic/Receiver/MultiTopic_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/MultiTopic/Sender/MultiTopic_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/PSLDeadline/Receiver/PSL_DeadlineTest_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/PSLDeadline/Sender/PSL_DeadlineTest_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/PSLSampleLost/Receiver/PSL_SampleLost_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/PSLSampleLost/Sender/PSL_SampleLost_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Receiver/Proxy_RW_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Receiver/Proxy_RW_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Sender/Proxy_RW_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/Sender/Proxy_RW_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Receiver/Different_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Sender/Different_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/Sender/Different_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Receiver/QCLE_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/EventListener/Sender/QCLE_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Receiver/ReadGet_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/Sender/ReadGet_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Receiver/QCLS_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/StateListener/Sender/QCLS_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Receiver/QCTL_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoListeners/Sender/QCTL_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Receiver/QCTQ_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/Sender/QCTQ_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Receiver/QCTQM_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/Sender/QCTQM_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/Reader/Receiver/Reader_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/Reader/Sender/Reader_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/Sender/RG_ResetTopic_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/ToEmpty/Sender/TE_ResetTopic_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/TooLong/Sender/TL_ResetTopic_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Receiver/UL_ResetTopic_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/UpdateListen/Sender/UL_ResetTopic_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Receiver/WL_ResetTopic_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/WriteListen/Sender/WL_ResetTopic_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/SLDisabled/Receiver/SL_Disabled_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/SLDisabled/Sender/SL_Disabled_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/SLManyByMany/Sender/SL_ManyByMany_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Receiver/Unkeyed_Test_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/UnkeyedSamples/Sender/Unkeyed_Test_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Receiver/Writer_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/Sender/Writer_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/Updater/Receiver/Updater_Receiver_exec.h:
+        * CIAO/connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/Updater/Sender/Updater_Sender_exec.h:
+        * CIAO/connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.cpp:
+        * CIAO/connectors/dds4ccm/tests/UserdataCopyCount/Component/UCC_Test_Component_exec.h:
+        * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Control_comp/src/Shapes_Control_comp_exec.h:
+        * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Receiver_comp/src/Shapes_Receiver_comp_exec.h:
+        * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/Shapes_Sender_comp/src/Shapes_Sender_comp_exec.h:
+        * CIAO/connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.cpp:
+        * CIAO/connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Control_comp/Shapes_Control_comp_exec.h:
+        * CIAO/connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.cpp:
+        * CIAO/connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Receiver_comp/Shapes_Receiver_comp_exec.h:
+        * CIAO/connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.cpp:
+        * CIAO/connectors/dds4ccm/tutorials/Shapes/Tutorial/Code/Shapes_Sender_comp/Shapes_Sender_comp_exec.h:
+        * CIAO/examples/Hello/Sender/Hello_Sender_exec.cpp:
+        * CIAO/examples/Hello/Sender/Hello_Sender_exec.h:
+        * CIAO/examples/Hello_Event/Receiver/Receiver_exec.cpp:
+        * CIAO/examples/Hello_Event/Receiver/Receiver_exec.h:
+        * CIAO/examples/Hello_Event/Sender/Sender_exec.cpp:
+        * CIAO/examples/Hello_Event/Sender/Sender_exec.h:
+        * CIAO/examples/Hello_Event/step-by-step.html:
+        * CIAO/tests/Bug_3834_Regression/CompA_exec.cpp:
+        * CIAO/tests/Bug_3834_Regression/CompA_exec.h:
+        * CIAO/tests/Bug_3834_Regression/CompB_exec.cpp:
+        * CIAO/tests/Bug_3834_Regression/CompB_exec.h:
+        * CIAO/tests/CIF/Component/CIF_Component_exec.cpp:
+        * CIAO/tests/CIF/Component/CIF_Component_exec.h:
+        * CIAO/tests/Collocation/Receiver/Receiver_exec.cpp:
+        * CIAO/tests/Collocation/Sender/Sender_exec.h:
+        * CIAO/tests/DAnCE/Components/ProcessColocation_exec.h:
+        * CIAO/tests/DAnCE/Components/Progressive_exec.cpp:
+        * CIAO/tests/DAnCE/Components/Progressive_exec.h:
+        * CIAO/tests/DAnCE/Executor-Destructor/Executor_Destructor_exec.cpp:
+        * CIAO/tests/DAnCE/Executor-Destructor/Executor_Destructor_exec.h:
+        * CIAO/tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.cpp:
+        * CIAO/tests/DAnCE/Launch-Failures/Component/Launch_Failure_exec.h:
+        * CIAO/tests/DAnCE/LocalityManager/UnexpectedShutdown/UnexpectedShutdown_exec.cpp:
+        * CIAO/tests/DAnCE/LocalityManager/UnexpectedShutdown/UnexpectedShutdown_exec.h:
+        * CIAO/tests/DAnCE/PartialShutdown/Component1/Component1_exec.cpp:
+        * CIAO/tests/DAnCE/PartialShutdown/Component1/Component1_exec.h:
+        * CIAO/tests/DAnCE/PartialShutdown/Component2/Component2_exec.cpp:
+        * CIAO/tests/DAnCE/PartialShutdown/Component2/Component2_exec.h:
+        * CIAO/tests/DAnCE/PartialShutdown/Component3/Component3_exec.cpp:
+        * CIAO/tests/DAnCE/PartialShutdown/Component3/Component3_exec.h:
+        * CIAO/tests/DAnCE/Threading/Component1/Component1_exec.cpp:
+        * CIAO/tests/DAnCE/Threading/Component1/Component1_exec.h:
+        * CIAO/tests/DAnCE/Threading/Component2/Component2_exec.cpp:
+        * CIAO/tests/DAnCE/Threading/Component2/Component2_exec.h:
+        * CIAO/tests/IDL_Test/Lem_Specific_Export/Lem_Export_exec.cpp:
+        * CIAO/tests/IDL_Test/Lem_Specific_Export/Lem_Export_exec.h:
+        * CIAO/tests/Minimum/Receiver/Receiver_exec.cpp:
+        * CIAO/tests/Minimum/Receiver/Receiver_exec.h:
+        * CIAO/tests/Minimum/Sender/Sender_exec.cpp:
+        * CIAO/tests/Minimum/Sender/Sender_exec.h:
+        * CIAO/tutorials/Quoter/Simple/Distributor/StockDistributor_exec.h:
+        * TAO/DevGuideExamples/AMH/AMH_Messenger_i.cpp:
+        * TAO/DevGuideExamples/AMH/AMH_Messenger_i.h:
+        * TAO/DevGuideExamples/AMH/Messenger_i.cpp:
+        * TAO/DevGuideExamples/AMH/Messenger_i.h:
+        * TAO/DevGuideExamples/AMH_AMI/inner_i.h:
+        * TAO/DevGuideExamples/AMH_AMI/middle_i.cpp:
+        * TAO/DevGuideExamples/GettingStarted/Messenger_i.cpp:
+        * TAO/DevGuideExamples/GettingStarted/Messenger_i.h:
+        * TAO/DevGuideExamples/LocalObjects/ServantLocator/Messenger_i.cpp:
+        * TAO/DevGuideExamples/LocalObjects/ServantLocator/Messenger_i.h:
+        * TAO/DevGuideExamples/Messaging/AMIcallback/Messenger_i.cpp:
+        * TAO/DevGuideExamples/Messaging/AMIcallback/Messenger_i.h:
+        * TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout/Messenger_i.cpp:
+        * TAO/DevGuideExamples/Messaging/RelativeRoundtripTimeout/Messenger_i.h:
+        * TAO/DevGuideExamples/Multithreading/DynamicThreadPool/Messenger_i.cpp:
+        * TAO/DevGuideExamples/Multithreading/DynamicThreadPool/Messenger_i.h:
+        * TAO/DevGuideExamples/Multithreading/GracefulShutdown/Messenger_i.cpp:
+        * TAO/DevGuideExamples/Multithreading/GracefulShutdown/Messenger_i.h:
+        * TAO/DevGuideExamples/Multithreading/Reactive/Messenger_i.cpp:
+        * TAO/DevGuideExamples/Multithreading/Reactive/Messenger_i.h:
+        * TAO/DevGuideExamples/Multithreading/ThreadPerConnection/Messenger_i.cpp:
+        * TAO/DevGuideExamples/Multithreading/ThreadPerConnection/Messenger_i.h:
+        * TAO/DevGuideExamples/Multithreading/ThreadPool/Messenger_i.cpp:
+        * TAO/DevGuideExamples/Multithreading/ThreadPool/Messenger_i.h:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/Messenger_i.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/Messenger_i.h:
+        * TAO/DevGuideExamples/PortableInterceptors/PICurrent/Messenger_i.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/PICurrent/Messenger_i.h:
+        * TAO/DevGuideExamples/RTCORBA/Messenger_i.h:
+        * TAO/DevGuideExamples/SmartProxies/Messenger_i.cpp:
+        * TAO/DevGuideExamples/SmartProxies/Messenger_i.h:
+        * TAO/docs/Security/Conformance.html:
+        * TAO/docs/Security/Download.html:
+        * TAO/docs/Security/FAQ.html:
+        * TAO/docs/Security/SSLIOP-USAGE.html:
+        * TAO/docs/Security/SSLIOP.html:
+        * TAO/docs/Security/Security_Service.html:
+        * TAO/docs/Security/index.html:
+        * TAO/docs/minimumTAO.html:
+        * TAO/docs/pluggable_protocols/index.html:
+        * TAO/docs/tutorials/Quoter/On_Demand_Activation/index.html:
+        * TAO/docs/tutorials/Quoter/Simple/Impl-Repo/index.html:
+        * TAO/docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
+        * TAO/docs/tutorials/Quoter/Simple/Persistent/index.html:
+        * TAO/interop-tests/AnyTypeCode/tao/Demo_i.cpp:
+        * TAO/interop-tests/AnyTypeCode/tao/Demo_i.h:
+        * TAO/interop-tests/wchar/interop_wchar_i.h:
+        * TAO/orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/Messenger_i.cpp:
+        * TAO/orbsvcs/DevGuideExamples/EventServices/OMG_TypedEC/Messenger_i.h:
+        * TAO/orbsvcs/DevGuideExamples/ImplRepo/Messenger_i.cpp:
+        * TAO/orbsvcs/DevGuideExamples/ImplRepo/Messenger_i.h:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/Messenger/Messenger_i.cpp:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/Messenger/Messenger_i.h:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Client/Messenger_i.cpp:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Client/Messenger_i.h:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/Messenger_i.cpp:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/Messenger_i.h:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Server/Messenger_i.cpp:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Server/Messenger_i.h:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/Messenger_i.cpp:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/Messenger_i.h:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/Messenger_i.cpp:
+        * TAO/orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/Messenger_i.h:
+        * TAO/orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/Messenger_i.cpp:
+        * TAO/orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/Messenger_i.h:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/MessengerI.cpp:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/Messenger_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/RestartServer/Messenger_i.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/Bug_3495_Regression/TestImpl.cpp:
+        * TAO/orbsvcs/tests/Security/ssliop_CSD/Messenger_i.cpp:
+        * TAO/tao/AnyTypeCode/Typecode_typesA.h:
+        * TAO/tao/AnyTypeCode/WrongTransactionA.cpp:
+        * TAO/tao/AnyTypeCode/WrongTransactionA.h:
+        * TAO/tao/Object_KeyC.cpp:
+        * TAO/tao/Object_KeyC.h:
+        * TAO/tao/PI/PolicyFactoryA.cpp:
+        * TAO/tao/PI/PolicyFactoryA.h:
+        * TAO/tao/PI/PolicyFactoryC.cpp:
+        * TAO/tao/PI/PolicyFactoryC.h:
+        * TAO/tao/PI/PolicyFactoryS.h:
+        * TAO/tao/PI_Server/ServerRequestInterceptorA.cpp:
+        * TAO/tao/PI_Server/ServerRequestInterceptorA.h:
+        * TAO/tao/PI_Server/ServerRequestInterceptorC.cpp:
+        * TAO/tao/PI_Server/ServerRequestInterceptorC.h:
+        * TAO/tao/PI_Server/ServerRequestInterceptorS.h:
+        * TAO/tao/PortableServer/PS_ForwardA.cpp:
+        * TAO/tao/PortableServer/PS_ForwardA.h:
+        * TAO/tao/PortableServer/PS_ForwardC.cpp:
+        * TAO/tao/PortableServer/PS_ForwardC.h:
+        * TAO/tao/PortableServer/PS_ForwardS.h:
+        * TAO/tao/RTCORBA/RT_ProtocolPropertiesA.cpp:
+        * TAO/tao/RTCORBA/RT_ProtocolPropertiesA.h:
+        * TAO/tao/RTCORBA/RT_ProtocolPropertiesC.cpp:
+        * TAO/tao/RTCORBA/RT_ProtocolPropertiesC.h:
+        * TAO/tao/RTCORBA/RT_ProtocolPropertiesS.h:
+        * TAO/tao/Typecode_typesC.cpp:
+        * TAO/tao/Typecode_typesC.h:
+        * TAO/tao/Typecode_typesS.h:
+        * TAO/tao/WrongTransactionC.cpp:
+        * TAO/tao/WrongTransactionC.h:
+        * TAO/tao/WrongTransactionS.h:
+        * TAO/tests/Bug_1495_Regression/test_i.h:
+        * TAO/tests/Bug_2188_Regression/broken_i.cpp:
+        * TAO/tests/Bug_2188_Regression/broken_i.h:
+        * TAO/tests/Bug_3766_Regression/TestI.cpp:
+        * TAO/tests/Bug_3766_Regression/TestI.h:
+        * TAO/tests/ORB_init/Portspan/simpleI.cpp:
+        * TAO/tests/ORB_init/Portspan/simpleI.h:
+
+commit 228fbda274e3960bae282c6d5dbf43938881c281
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:27:13 2014 +0100
+
+    Updated link for ACE-members.html
+        * ACE/ACE-INSTALL.html:
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/ACE-development-process.html:
+        * ACE/etc/DOC-way.html:
+        * TAO/docs/TAO-tutorials.html:
+
+commit 1c10f8ec74aca70417c54040ecc7f27dffd46511
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:26:14 2014 +0100
+
+    Updated links and documentation to point to github and latest pagest from Doug
+        * ACE/ACE-INSTALL.html:
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/ACE-development-process.html:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * TAO/TAO-INSTALL.html:
+
+commit 20f11264ceefe39999653c0400f7288c5ef8e268
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Dec 7 15:03:19 2014 +0100
+
+    Updated links to point to github
+        * TAO/tao/Transport.h:
+        * TAO/tao/Transport_Selection_Guard.h:
+
+commit f0f8061a94d4d20276bb855bf45373397f278b88
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 5 09:46:30 2014 +0100
+
+    Moved all changelogs to the ChangeLogs archive directory, release script
+    will generate a changelog for each release
+        * ACE/ChangeLog -> ACE/ChangeLogs/ChangeLog-2014b:
+        * CIAO/ChangeLog -> CIAO/ChangeLogs/ChangeLog-2014b:
+        * DAnCE/ChangeLog -> DAnCE/ChangeLogs/ChangeLog-2014b:
+        * TAO/ChangeLog -> TAO/ChangeLogs/ChangeLog-2014b:
+          Moved.
+
+commit 1b58abf342cb57ea7dd6fa208c111e38fbf5bae3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 14 09:03:05 2014 +0000
+
+    Fri Nov 14 08:14:41 UTC 2014  Johnny Willemsen  <jwillemsen@remedy.nl>
+
+            * NEWS:
+              Updated for next release
+

@@ -243,10 +243,11 @@
         export MAILID=jwillemsen@remedy.nl<br>
         git clone https://github.com/DOCGroup/ATCD.git ATCD<br>
         git clone https://github.com/DOCGroup/MPC.git MPC<br>
-        ATCD/ACE/bin/make_release.py --beta --update --verbose<br>
-        ATCD/ACE/bin/make_release.py --beta --tag --verbose<br>
-        ATCD/ACE/bin/make_release.py --beta --push --verbose<br>
-        ATCD/ACE/bin/make_release.py --kit<br>
+        cd ATCD<br>
+        ACE/bin/make_release.py --beta --update --verbose<br>
+        ACE/bin/make_release.py --beta --tag --verbose<br>
+        ACE/bin/make_release.py --beta --push --verbose<br>
+        ACE/bin/make_release.py --kit<br>
       </code>
     <p>
       Feel free to cut and paste with suitable edits.
@@ -318,15 +319,16 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_1 ATCD
+        git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_1 ATCD<br>
         cd ATCD<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
         export CIAO_ROOT=$PWD/CIAO<br>
         export DANCE_ROOT=$PWD/DAnCE<br>
         export DDS_ROOT=<br>
+        cd ACE<br>
         $ACE_ROOT/bin/generate_rel_manpages<br>
-        scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution
+        scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution<br>
  </code>
 <br>
       <li>

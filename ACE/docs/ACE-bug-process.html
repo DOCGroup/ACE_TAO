@@ -1,15 +1,15 @@
 <!-- $Id$ -->
 
 <HTML>
-    <TITLE>ACE, TAO, and CIAO Bug Fixing Policies</TITLE>
+    <TITLE>ACE, TAO, CIAO and DAnCE Bug Fixing Policies</TITLE>
   <BODY text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">
 
 <HR>
-<H3>ACE, TAO, and CIAO Bug Fixing Policies</H3>
+<H3>ACE, TAO, CIAO, and DAnCE Bug Fixing Policies</H3>
 
 As <A HREF="http://www.dre.vanderbilt.edu/ACE/">ACE</A>, <A
-HREF="http://www.dre.vanderbilt.edu/TAO/">TAO</A>, and <A
-HREF="http://www.dre.vanderbilt.edu/CIAO/">CIAO</A> have grown in
+HREF="http://www.dre.vanderbilt.edu/TAO/">TAO</A>, <A
+HREF="http://www.dre.vanderbilt.edu/CIAO/">CIAO</A>, and DAnCE have grown in
 popularity the volume of mail on the <A
 HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">mailing
 lists</A> and USENET newsgroup <A
@@ -26,7 +26,7 @@ traffic immediately.  Prompt bug fixes from the DOC group also
 discourage the creation of a larger community of <A
 HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-members.html">users</A> and
 <A
-HREF="www.dre.vanderbilt.edu/support.html">commercial
+HREF="http://www.dre.vanderbilt.edu/support.html">commercial
 support companies</A> who have deep knowledge of how ACE, TAO, and
 CIAO work and can help provide bug fixes and new features. <P>
 
@@ -47,7 +47,9 @@ lists</A> should be submitted using the appropriate bug report form in
 HREF="../TAO/PROBLEM-REPORT-FORM">$TAO_ROOT/PROBLEM-REPORT-FORM</A>
 (for TAO), <A
 HREF="../TAO/CIAO/PROBLEM-REPORT-FORM">$CIAO_ROOT/PROBLEM-REPORT-FORM</A>
-(for CIAO).  Please use these forms since bug reports that are not
+(for CIAO), <A
+HREF="../TAO/DAnCE/PROBLEM-REPORT-FORM">$DAnCE_ROOT/PROBLEM-REPORT-FORM</A>
+(for DAnCE).  Please use these forms since bug reports that are not
 submitted in this form are likely to fall through the cracks.  Here is
 our policy for addressing these bug reports: <P>
 
@@ -121,9 +123,8 @@ support</a> companies for ACE+TAO.<P>
     to <A
     HREF="mailto:taosupport@ociweb.com">taosupport@ociweb.com</A>.
     Likewise, if you find a problem with a version of TAO that was released by
-    <A HREF="http://www.prismtech.com">PrismTech</A> then please
-    report it to <A
-    HREF="mailto:technical-support@prismtech.com">technical-support@prismtech.com</A>.
+    <A HREF="http://www.microfocus.com">Micro Focus</A> then please
+    report it to MicroFocus.
     Their versions of TAO are different from the DOC group's
     version of TAO and thus they provide their own support. <P>
 
@@ -154,7 +155,14 @@ with our software here's the process for submitting it:
 
   <A HREF="https://github.com/DOCGroup/ATCD">https://github.com/DOCGroup/ATCD</A> <P>
 
-<LI> Create a ``unified diff'' and put this into Bugzilla at <P>
+<LI> Create a fork of the ATCD repository and prepare your fixes including documentation
+     changes and automated unit tests. For any change in ACE create (or augment) a test program
+     that validates your patch and integrate it into the  <A HREF="../tests">ACE_ROOT/tests</A>
+     directory. Clearly document each commit because that information
+     will end up in the ATCD ChangeLog. When you have tested your changes at least on Windows
+     and Linux prepare a <a href="https://help.github.com/articles/using-pull-requests/">pull request</a>.<P>
+
+<LI> Create a ``unified diff'' of all changs and put this into Bugzilla at <P>
 
   <A HREF="http://bugzilla.dre.vanderbilt.edu/">http://bugzilla.dre.vanderbilt.edu/</A> <P>
 
@@ -162,12 +170,7 @@ with our software here's the process for submitting it:
 HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">mailing
 list(s)</A> and/or <A HREF="news:comp.soft-sys.ace">newsgroup</A>
 newsgroup summarizing what the problem was and you've done to fix the
-problem, i.e., use the <A HREF="../ChangeLog"</A>ChangeLog</A>
-format. <P>
-
-<LI> Please create (or augment) a test program that
-  validates your patch and integrate it into the <A
-HREF="../tests">ACE_ROOT/tests</A> directory. <P>
+problem. <P>
 
 <LI> If your patch is for a platform/compiler that aren't part of our
 <A HREF="http://www.dre.vanderbilt.edu/scoreboard">autobuild

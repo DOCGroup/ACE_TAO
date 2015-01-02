@@ -37,7 +37,7 @@ call_method (::Test::A_ptr server,
              const char * arg1,
              ::CORBA::String_out & arg2,
              char *& arg3,
-             const char * error)
+             const char * error_message)
 {
   try
     {
@@ -48,7 +48,7 @@ call_method (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -59,7 +59,7 @@ call_method (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
@@ -72,7 +72,7 @@ call_method_s (::Test::A_ptr server,
                const char * arg1,
                ::CORBA::String_out & arg2,
                char *& arg3,
-               const char * error)
+               const char * error_message)
 {
   try
     {
@@ -83,7 +83,7 @@ call_method_s (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -94,7 +94,7 @@ call_method_s (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
@@ -107,7 +107,7 @@ call_seq_method (::Test::A_ptr server,
                  const ::Test::seq_bd_str & arg1,
                  ::Test::seq_bd_str_out & arg2,
                  ::Test::seq_bd_str & arg3,
-                 const char * error)
+                 const char * error_message)
 {
   try
     {
@@ -119,7 +119,7 @@ call_seq_method (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -130,7 +130,7 @@ call_seq_method (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
@@ -143,7 +143,7 @@ call_seq_method_s (::Test::A_ptr server,
                    const ::Test::seq_bds_str & arg1,
                    ::Test::seq_bds_str_out & arg2,
                    ::Test::seq_bds_str & arg3,
-                   const char * error)
+                   const char * error_message)
 {
   try
     {
@@ -155,7 +155,7 @@ call_seq_method_s (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -166,7 +166,7 @@ call_seq_method_s (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
@@ -179,7 +179,7 @@ call_arr_method (::Test::A_ptr server,
                  const ::Test::arr_bd_str & arg1,
                  ::Test::arr_bd_str_out & arg2,
                  ::Test::arr_bd_str & arg3,
-                 const char * error)
+                 const char * error_message)
 {
   try
     {
@@ -191,7 +191,7 @@ call_arr_method (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -202,7 +202,7 @@ call_arr_method (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
@@ -215,7 +215,7 @@ call_arr_method_s (::Test::A_ptr server,
                    const ::Test::arr_bds_str & arg1,
                    ::Test::arr_bds_str_out & arg2,
                    ::Test::arr_bds_str & arg3,
-                   const char * error)
+                   const char * error_message)
 {
   try
     {
@@ -227,7 +227,7 @@ call_arr_method_s (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -238,7 +238,7 @@ call_arr_method_s (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
@@ -251,7 +251,7 @@ call_sct_method (::Test::A_ptr server,
                  const ::Test::sct & arg1,
                  ::Test::sct_out & arg2,
                  ::Test::sct & arg3,
-                 const char * error)
+                 const char * error_message)
 {
   try
     {
@@ -263,7 +263,7 @@ call_sct_method (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -274,7 +274,7 @@ call_sct_method (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
@@ -287,7 +287,7 @@ call_unn_method (::Test::A_ptr server,
                  const ::Test::unn & arg1,
                  ::Test::unn_out & arg2,
                  ::Test::unn & arg3,
-                 const char * error)
+                 const char * error_message)
 {
   try
     {
@@ -299,7 +299,7 @@ call_unn_method (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -310,7 +310,7 @@ call_unn_method (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
@@ -323,7 +323,7 @@ call_vbx_method (::Test::A_ptr server,
                  ::Test::val_bd_str * arg1,
                  ::Test::val_bd_str_out arg2,
                  ::Test::val_bd_str *& arg3,
-                 const char * error)
+                 const char * error_message)
 {
   try
     {
@@ -335,7 +335,7 @@ call_vbx_method (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -346,7 +346,7 @@ call_vbx_method (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
@@ -359,7 +359,7 @@ call_vbx_method_s (::Test::A_ptr server,
                    ::Test::val_bds_str * arg1,
                    ::Test::val_bds_str_out arg2,
                    ::Test::val_bds_str *& arg3,
-                   const char * error)
+                   const char * error_message)
 {
   try
     {
@@ -371,7 +371,7 @@ call_vbx_method_s (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -382,7 +382,7 @@ call_vbx_method_s (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
@@ -395,7 +395,7 @@ call_vtp_method (::Test::A_ptr server,
                  ::Test::vtp * arg1,
                  ::Test::vtp_out arg2,
                  ::Test::vtp *& arg3,
-                 const char * error)
+                 const char * error_message)
 {
   try
     {
@@ -407,7 +407,7 @@ call_vtp_method (::Test::A_ptr server,
 
       ACE_ERROR ((LM_ERROR,
                   "ERROR: No %C",
-                  error));
+                  error_message));
       return 1;
     }
   catch (const CORBA::BAD_PARAM &)
@@ -418,7 +418,7 @@ call_vtp_method (::Test::A_ptr server,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Wrong %C",
-                  error));
+                  error_message));
       return 1;
     }
 
