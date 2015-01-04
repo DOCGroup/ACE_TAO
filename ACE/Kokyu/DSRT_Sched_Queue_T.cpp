@@ -258,7 +258,7 @@ change_prio(int old_prio, int new_prio, int policy)
     {
       PRIO_QUEUE_ITERATOR end_iter = dispatch_items_prio_queue_.end ();
       PRIO_QUEUE_ITERATOR iter;
-      int prio;
+      int prio = 0;
 
       iter = dispatch_items_prio_queue_.begin ();
       while( iter != end_iter )
