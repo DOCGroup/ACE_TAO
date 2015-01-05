@@ -1424,13 +1424,13 @@ ACE_INLINE int
 ACE_OS::sema_destroy (ACE_sema_t *s)
 {
   ACE_OS_TRACE ("ACE_OS::sema_destroy");
-# if defined (ACE_HAS_POSIX_SEM)
-  int result;
-#   if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION)
+#if defined (ACE_HAS_POSIX_SEM)
+  int result = 0;
+# if !defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION)
   ACE_OS::mutex_destroy (&s->lock_);
   ACE_OS::cond_destroy (&s->count_nonzero_);
-#   endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && !ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION */
-#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
+# endif /* !ACE_HAS_POSIX_SEM_TIMEOUT && !ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION */
+# if defined (ACE_LACKS_NAMED_POSIX_SEM)
   if (s->name_)
     {
       // Only destroy the semaphore if we're the ones who
@@ -1440,25 +1440,27 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
       delete s->name_;
       return result;
     }
-#   else
+# else
   if (s->name_)
     {
       ACE_OSCALL (::sem_unlink (s->name_), int, -1, result);
       ACE_OS::free ((void *) s->name_);
       ACE_OSCALL_RETURN (::sem_close (s->sema_), int, -1);
     }
-#   endif /*  ACE_LACKS_NAMED_POSIX_SEM */
+# endif /*  ACE_LACKS_NAMED_POSIX_SEM */
   else
     {
+# if !defined (ACE_LACKS_UNNAMED_SEMAPHORE)
       ACE_OSCALL (::sem_destroy (s->sema_), int, -1, result);
-#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
+# endif /* ACE_LACKS_UNNAMED_SEMAPHORE */
+# if defined (ACE_LACKS_NAMED_POSIX_SEM)
       if (s->new_sema_)
-#   endif /* ACE_LACKS_NAMED_POSIX_SEM */
+# endif /* ACE_LACKS_NAMED_POSIX_SEM */
         delete s->sema_;
       s->sema_ = 0;
       return result;
     }
-# elif defined (ACE_USES_FIFO_SEM)
+#elif defined (ACE_USES_FIFO_SEM)
   int r0 = 0;
   if (s->name_)
     {
@@ -1469,33 +1471,33 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   int r1 = ACE_OS::close (s->fd_[0]);      /* ignore error */
   int r2 = ACE_OS::close (s->fd_[1]);      /* ignore error */
   return r0 != 0 || r1 != 0 || r2 != 0 ? -1 : 0;
-# elif defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_STHREADS)
+#elif defined (ACE_HAS_THREADS)
+# if defined (ACE_HAS_STHREADS)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_destroy (s), result), int, -1);
-#   elif defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   int r1 = ACE_OS::mutex_destroy (&s->lock_);
   int r2 = ACE_OS::cond_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
-#   elif defined (ACE_HAS_WTHREADS)
-#     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
+# elif defined (ACE_HAS_WTHREADS)
+#  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
-#     else /* ACE_USES_WINCE_SEMA_SIMULATION */
+#  else /* ACE_USES_WINCE_SEMA_SIMULATION */
   // Free up underlying objects of the simulated semaphore.
   int const r1 = ACE_OS::thread_mutex_destroy (&s->lock_);
   int const r2 = ACE_OS::event_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
-#     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
-#   elif defined (ACE_VXWORKS)
+#  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
+# elif defined (ACE_VXWORKS)
   int result;
   ACE_OSCALL (::semDelete (s->sema_), int, -1, result);
   s->sema_ = 0;
   return result;
-#   endif /* ACE_HAS_STHREADS */
-# else
+# endif /* ACE_HAS_STHREADS */
+#else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_POSIX_SEM */
+#endif /* ACE_HAS_POSIX_SEM */
 }
 
 // NOTE: The previous four function definitions must appear before
@@ -1643,15 +1645,19 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #  endif /* ACE_LACKS_NAMED_POSIX_SEM */
   else
     {
+#  if defined (ACE_LACKS_UNNAMED_SEMAPHORE)
+      ACE_NOTSUP_RETURN (-1);
+#  else
       ACE_NEW_RETURN (s->sema_,
                       sem_t,
                       -1);
-#  if defined (ACE_LACKS_NAMED_POSIX_SEM)
+#   if defined (ACE_LACKS_NAMED_POSIX_SEM)
       s->new_sema_ = true;
-#  endif /* ACE_LACKS_NAMED_POSIX_SEM */
+#   endif /* ACE_LACKS_NAMED_POSIX_SEM */
       ACE_OSCALL_RETURN (::sem_init (s->sema_,
                                      type != USYNC_THREAD,
                                      count), int, -1);
+#  endif /* ACE_LACKS_UNNAMED_SEMAPHORE */
     }
 
 #elif defined (ACE_USES_FIFO_SEM)
