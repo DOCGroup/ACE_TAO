@@ -1,5 +1,3 @@
-// $Id: client.cpp
-
 #include "TestCallback.h"
 #include "ace/Get_Opt.h"
 

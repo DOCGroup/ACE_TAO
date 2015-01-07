@@ -3,8 +3,6 @@
 /**
  *  @file   Compressor.h
  *
- *  $Id: Compressor.h
- *
  *  @author ACE version by
  *  @author Derek Dominish <derek.dominish@dsto.defence.gov.au>
  */

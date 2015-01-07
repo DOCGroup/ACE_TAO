@@ -3,8 +3,6 @@
 /**
  *  @file   RLECompressor.h
  *
- *  $Id: RLECompressor.h
- *
  *  @author TAO version by
  *  @author Derek Dominish <derek.dominish@dsto.defence.gov.au>
  *  @author ACE version by
