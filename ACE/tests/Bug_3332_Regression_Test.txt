@@ -1,5 +1,3 @@
-// $Id$
-
 Bug_3332_Regression_Test: (RB_Tree nodes are swapped and "in use" nodes
 are deleted instead of the dropped node being unbound). This is an example
 of the tests output when the problem occurs:

@@ -1,4 +1,4 @@
-$Id$
+
 
 tao#532 - Bugzilla Bug 2962
 

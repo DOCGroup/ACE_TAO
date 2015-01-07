@@ -1,4 +1,4 @@
-$Id$
+
 
 This test is a reproducer for bug 3543. The master starts and waits until all servers
 have registered. Then master starts pinging all the servers with 10 threads. At that

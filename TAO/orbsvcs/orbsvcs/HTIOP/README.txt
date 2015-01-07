@@ -1,4 +1,4 @@
-$Id$
+
 
       HTTP Tunneling Inter-ORB Protocol
 

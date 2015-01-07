@@ -1,6 +1,6 @@
-/**  -*- HTML-Helper -*- $Id$
+/**  -*- HTML-Helper -*- 
 
-$Id$
+
 
 @mainpage ACEXML - A Small and Portable XML Parser
 

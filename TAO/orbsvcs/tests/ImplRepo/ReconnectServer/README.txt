@@ -1,4 +1,4 @@
-$Id$
+
 
 Tests reconnection when a group of servers share a portspan, and restart in a different
 order. Automated test uses C++ client only. To test Java, first build C++, then use

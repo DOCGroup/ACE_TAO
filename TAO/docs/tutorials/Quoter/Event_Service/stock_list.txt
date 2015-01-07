@@ -1,4 +1,4 @@
-$Id$
+
 MSFT
 Microsoft Inc.
 91
