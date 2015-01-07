@@ -7,7 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -pi -S $0 ${1+"$@"}'
 # You may want to run the "find" command with this script, which maybe
 # something like this:
 #
-# find . -type f \( -name "*.C" -o -name "*.cc" -o -name "*.c" -o -name "*.cpp" \) -print | xargs $ACE_ROOT/bin/zap_svn_id.pl
+# find . -type f \( -name "*.inl" -o -name "*.cc" -o -name "*.c" -o -name "*.cpp"  -o -name "*.h" \) -print | xargs $ACE_ROOT/bin/zap_svn_id.pl
 
 # The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
