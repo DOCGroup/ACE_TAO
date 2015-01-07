@@ -121,7 +121,7 @@ sub store_file ($)
     if ($name =~ /\.(c|cc|cpp|cxx|tpp)$/i) {
         push @files_cpp, ($name);
     }
-    elsif ($name =~ /\.(inl|i)$/i) {
+    elsif ($name =~ /\.(inl|i|ipp)$/i) {
         push @files_inl, ($name);
     }
     elsif ($name =~ /\.(h|hh|hpp|hxx)$/i) {
