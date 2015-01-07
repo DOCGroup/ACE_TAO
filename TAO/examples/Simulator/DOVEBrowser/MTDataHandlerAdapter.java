@@ -1,5 +1,3 @@
-// $Id$
-
 // This is an adapter class for a data handler to be used in a separate
 // thread.  The adapter provides a push method that places an event
 // set into its synchronized internal MTQueue.  It runs a separate thread

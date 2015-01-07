@@ -1,4 +1,3 @@
-// $Id$
 package demo;
 
 import Demo.BaseValue;

@@ -1,5 +1,3 @@
-// $Id$
-
 
 import java.util.Enumeration;
 
