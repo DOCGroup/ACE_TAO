@@ -6,7 +6,6 @@ package PerlACE::TestTarget_VxWorks;
 # Description : Creates a PerlACE::ProcessVX
 # Author      : Chad Elliott
 # Create Date : 6/20/2008
-#          
 # ******************************************************************
 
 # ******************************************************************
