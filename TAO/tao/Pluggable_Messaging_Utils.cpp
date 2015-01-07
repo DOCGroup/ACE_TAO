@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/ORB_Core.h"
 

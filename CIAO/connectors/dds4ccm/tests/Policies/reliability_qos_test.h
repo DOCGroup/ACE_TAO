@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef RELIABILITY_QOS_TEST_H_
 #define RELIABILITY_QOS_TEST_H_
 

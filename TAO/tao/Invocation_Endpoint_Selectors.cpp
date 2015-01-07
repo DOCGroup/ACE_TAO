@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/Invocation_Endpoint_Selectors.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"

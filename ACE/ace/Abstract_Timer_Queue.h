@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef ACE_ABSTRACT_TIMER_QUEUE_H
 #define ACE_ABSTRACT_TIMER_QUEUE_H
 

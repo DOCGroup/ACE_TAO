@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Connection_Manager.h"
 #include "tao/debug.h"
 

@@ -1,5 +1,3 @@
-//$Id$
-
 #include "NestedValueFactory.h"
 #include "NestedValueImpl.h"
 

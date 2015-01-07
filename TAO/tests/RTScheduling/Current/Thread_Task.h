@@ -1,4 +1,3 @@
-//$Id$
 #ifndef THREAD_TASK_H
 #define THREAD_TASK_H
 

@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 

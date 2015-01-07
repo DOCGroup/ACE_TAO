@@ -1,5 +1,3 @@
-//$Id$
-
 // This include is needed for static builds to initialize DII_Arguments_Converter
 // service object.
 //#include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"

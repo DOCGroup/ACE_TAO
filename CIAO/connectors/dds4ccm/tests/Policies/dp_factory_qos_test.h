@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef DP_FACTORY_QOS_TEST_H_
 #define DP_FACTORY_QOS_TEST_H_
 

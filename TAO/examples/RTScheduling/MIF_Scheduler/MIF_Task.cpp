@@ -1,5 +1,3 @@
-//$Id$
-
 #include "MIF_Task.h"
 #include "test.h"
 

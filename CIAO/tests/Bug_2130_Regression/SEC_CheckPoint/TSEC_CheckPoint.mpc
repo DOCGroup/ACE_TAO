@@ -1,5 +1,3 @@
-//$Id$
-
 project(TSEC_CheckPoint_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=TSEC_CHECKPOINT_STUB_Export \

@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef LIFESPAN_QOS_TEST_H_
 #define LIFESPAN_QOS_TEST_H_
 

@@ -1,5 +1,3 @@
-//$Id$
-
 # include "source_i.h"
 
 // A ThreeTier client that calls tick and/or tock

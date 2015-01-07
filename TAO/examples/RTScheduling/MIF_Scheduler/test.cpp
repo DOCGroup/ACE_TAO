@@ -1,5 +1,3 @@
-//$Id$
-
 #include "test.h"
 #include "../Task_Stats.h"
 #include "../Synch_i.h"

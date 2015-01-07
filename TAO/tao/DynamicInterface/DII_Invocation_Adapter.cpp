@@ -1,4 +1,3 @@
-//$Id$
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/DynamicInterface/DII_Invocation_Adapter.h"

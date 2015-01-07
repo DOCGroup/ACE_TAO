@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef MUF_SCHEDULER_H
 #define MUF_SCHEDULER_H
 

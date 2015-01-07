@@ -1,4 +1,3 @@
-//$Id$
 // Implementation of TAO's Demux_Test interface
 
 #include "demux_test_i.h"

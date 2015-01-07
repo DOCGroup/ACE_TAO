@@ -1,4 +1,3 @@
-//$Id$
 #ifndef MIF_TASK_H
 #define MIF_TASK_H
 

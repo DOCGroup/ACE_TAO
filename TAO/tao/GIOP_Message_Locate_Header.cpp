@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/GIOP_Message_Locate_Header.h"
 
 #if !defined (__ACE_INLINE__)

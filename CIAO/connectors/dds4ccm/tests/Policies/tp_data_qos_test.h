@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef TOPIC_DATA_QOS_TEST_H_
 #define TOPIC_DATA_QOS_TEST_H_
 

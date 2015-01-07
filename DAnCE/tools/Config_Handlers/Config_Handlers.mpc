@@ -1,5 +1,3 @@
-//$Id$
-
 project (XSC_XML_Generation) : install, xscdefaults {
   requires += xsc
 

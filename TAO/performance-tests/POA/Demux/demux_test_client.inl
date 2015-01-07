@@ -1,4 +1,3 @@
-//$Id$
 static void M302 (Demux_Test_ptr objref)
 {
   objref->M302 ();

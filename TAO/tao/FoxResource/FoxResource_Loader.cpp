@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/FoxResource/FoxResource_Loader.h"
 #include "tao/ORB_Core.h"
 #include "tao/FoxResource/FoxResource_Factory.h"

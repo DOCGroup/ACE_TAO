@@ -1,4 +1,3 @@
-//$Id$
 #include "tao/Thread_Per_Connection_Handler.h"
 #include "tao/Connection_Handler.h"
 #include "tao/debug.h"

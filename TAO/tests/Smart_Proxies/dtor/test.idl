@@ -1,5 +1,3 @@
-//$Id$
-
 // This test is to ensure if the destruction process
 // and the _non_existent() function in the smart proxy
 // is working properly.

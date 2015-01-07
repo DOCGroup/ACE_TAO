@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/operation_details.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Constants.h"

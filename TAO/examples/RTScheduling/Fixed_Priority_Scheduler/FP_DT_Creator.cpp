@@ -1,5 +1,3 @@
-//$Id$
-
 #include "FP_DT_Creator.h"
 #include "test.h"
 #include "FP_Task.h"

@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef TIME_BASED_FILTER_QOS_TEST_H_
 #define TIME_BASED_FILTER_QOS_TEST_H_
 

@@ -1,5 +1,3 @@
-//$Id$
-
 #include "testC.h"
 
 extern bool dtor_called;

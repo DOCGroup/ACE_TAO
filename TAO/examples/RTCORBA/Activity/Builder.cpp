@@ -1,4 +1,3 @@
-//$Id$
 #include "Builder.h"
 
 #include "ace/Get_Opt.h"

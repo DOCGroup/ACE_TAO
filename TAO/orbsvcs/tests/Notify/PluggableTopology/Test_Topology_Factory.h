@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-//$Id$
-
 #ifndef TEST_TOPOLOGY_FACTORY_H
 #define TEST_TOPOLOGY_FACTORY_H
 #include /**/ "ace/pre.h"

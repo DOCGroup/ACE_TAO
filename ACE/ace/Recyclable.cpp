@@ -1,4 +1,3 @@
-//$Id$
 #include "ace/Recyclable.h"
 
 

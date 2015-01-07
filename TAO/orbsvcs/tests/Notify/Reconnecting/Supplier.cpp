@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Supplier.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "tao/debug.h"

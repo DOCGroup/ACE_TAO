@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Client_i.h"
 #include "Event_Types_impl.h"
 

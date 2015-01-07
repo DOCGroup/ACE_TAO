@@ -1,5 +1,3 @@
-//$Id$
-
 
 /**
  * @file controller.cpp

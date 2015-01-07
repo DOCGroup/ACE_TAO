@@ -1,5 +1,3 @@
-//$Id$
-
 #include "string_seq.h"
 
 StringSequence::StringSequence ()

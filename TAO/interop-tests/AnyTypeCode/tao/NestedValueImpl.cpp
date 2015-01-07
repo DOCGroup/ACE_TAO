@@ -1,5 +1,3 @@
-//$Id$
-
 #include "NestedValueImpl.h"
 
 Demo_NestedValueImpl::Demo_NestedValueImpl (void)

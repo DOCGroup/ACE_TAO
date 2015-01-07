@@ -1,5 +1,3 @@
-//$Id$
-
 #include "MUF_Scheduler.h"
 #include "Kokyu_qosC.h"
 #include "utils.h"

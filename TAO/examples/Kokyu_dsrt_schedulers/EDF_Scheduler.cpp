@@ -1,5 +1,3 @@
-//$Id$
-
 #include "EDF_Scheduler.h"
 #include "Kokyu_qosC.h"
 #include "utils.h"

@@ -1,5 +1,3 @@
-//$Id$
-
 #include "ComponentPropertyDescription_Handler.h"
 #include "DataType_Handler.h"
 #include "dance/Deployment/Deployment_DataC.h"

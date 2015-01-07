@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Multiple_Impl.h"
 #include "Collocation_Tester.h"
 

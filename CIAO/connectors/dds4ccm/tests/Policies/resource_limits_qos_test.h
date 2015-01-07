@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef RESOURCE_LIMITS_QOS_TEST_H_
 #define RESOURCE_LIMITS_QOS_TEST_H_
 

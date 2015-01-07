@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef ACE_TIMER_QUEUE_ITERATOR_H
 #define ACE_TIMER_QUEUE_ITERATOR_H
 

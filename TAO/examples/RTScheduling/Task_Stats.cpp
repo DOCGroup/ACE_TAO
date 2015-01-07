@@ -1,4 +1,3 @@
-//$Id$
 #include "Task_Stats.h"
 #include "ace/Log_Msg.h"
 

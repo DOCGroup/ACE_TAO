@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef HISTORY_QOS_TEST_H_
 #define HISTORY_QOS_TEST_H_
 

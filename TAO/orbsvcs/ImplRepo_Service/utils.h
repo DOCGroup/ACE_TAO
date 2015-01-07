@@ -1,4 +1,3 @@
-//$Id$
 #ifndef TAO_IMR_UTILS_H
 #define TAO_IMR_UTILS_H
 

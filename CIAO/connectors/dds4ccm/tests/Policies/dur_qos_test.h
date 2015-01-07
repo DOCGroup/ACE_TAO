@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef DURABILITY_QOS_TEST_H_
 #define DURABILITY_QOS_TEST_H_
 

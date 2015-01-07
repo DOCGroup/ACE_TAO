@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Property_Handler.h"
 #include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"

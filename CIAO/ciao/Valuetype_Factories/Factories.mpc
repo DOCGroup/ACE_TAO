@@ -1,4 +1,3 @@
-//$Id$
 project(CCM_Cookie_Factory) : install, ccm_stub, ciao_lib {
    dynamicflags += COOKIE_FACTORY_BUILD_DLL
    Source_Files {

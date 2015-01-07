@@ -1,4 +1,3 @@
-//$Id$
 #ifndef STARTER_H
 #define STARTER_H
 

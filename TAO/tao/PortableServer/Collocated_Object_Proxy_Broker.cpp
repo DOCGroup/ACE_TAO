@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/PortableServer/Collocated_Object_Proxy_Broker.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Servant_Upcall.h"

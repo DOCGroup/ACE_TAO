@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/Base_Transport_Property.h"
 #include "ace/OS_Memory.h"
 

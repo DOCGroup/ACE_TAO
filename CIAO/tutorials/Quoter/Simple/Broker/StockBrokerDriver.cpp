@@ -1,4 +1,3 @@
-//$Id$
 /*
  * @file StockBrokerDriver.cpp
  *

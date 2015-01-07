@@ -1,5 +1,3 @@
-//$Id$
-
 #include "DataType_Handler.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"

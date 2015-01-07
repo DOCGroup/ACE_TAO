@@ -1,4 +1,3 @@
-//$Id$
 interface Messenger
 {
   long send_message(in long thread, in long iter, in long obj, in long req);

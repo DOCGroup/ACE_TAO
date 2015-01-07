@@ -1,4 +1,3 @@
-//$Id$
 #include "Activity.h"
 #include "Thread_Task.h"
 #include "Job_i.h"

@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef FP_DT_CREATOR_H
 #define FP_DT_CREATOR_H
 

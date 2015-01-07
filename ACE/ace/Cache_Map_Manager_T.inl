@@ -1,7 +1,5 @@
 // -*- C++ -*-
 //
-//$Id$
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class REVERSE_ITERATOR_IMPL, class CACHING_STRATEGY, class ATTRIBUTES> ACE_INLINE int

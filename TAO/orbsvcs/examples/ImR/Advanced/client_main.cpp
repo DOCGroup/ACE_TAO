@@ -1,4 +1,3 @@
-//$Id$
 #include "TestClient.h"
 
 #include <ace/streams.h>

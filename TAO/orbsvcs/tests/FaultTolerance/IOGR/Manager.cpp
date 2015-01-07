@@ -1,4 +1,3 @@
-//$Id$
 #include "Manager.h"
 #include "Client_i.h"
 #include "testC.h"

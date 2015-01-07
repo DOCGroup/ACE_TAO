@@ -1,4 +1,3 @@
-//$Id$
 project : csd_tp_test_lib, avoids_corba_e_micro {
   sharedname   = CSD_TP_Foo_C
   dynamicflags += CSD_TP_FOO_C_BUILD_DLL

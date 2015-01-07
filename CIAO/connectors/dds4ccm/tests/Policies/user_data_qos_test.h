@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef USER_DATA_QOS_TEST_H_
 #define USER_DATA_QOS_TEST_H_
 

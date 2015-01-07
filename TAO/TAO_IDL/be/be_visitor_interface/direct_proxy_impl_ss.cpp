@@ -1,5 +1,4 @@
 //
-//$Id$
 //
 
 #include "interface.h"

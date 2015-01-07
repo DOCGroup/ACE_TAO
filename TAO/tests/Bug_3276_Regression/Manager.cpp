@@ -1,5 +1,3 @@
-//$Id$
-
 #include "ace/SString.h"
 #include "Manager.h"
 #include "test_i.h"

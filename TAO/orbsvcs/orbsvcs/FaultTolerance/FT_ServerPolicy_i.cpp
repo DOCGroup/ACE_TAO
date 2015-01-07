@@ -1,4 +1,3 @@
-//$Id$
 #include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.h"
 
 #include "tao/debug.h"

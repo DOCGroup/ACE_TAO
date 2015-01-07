@@ -1,5 +1,3 @@
-//$Id$
-
 #include "ace/UUID.h"
 #include "ace/Guard_T.h"
 
