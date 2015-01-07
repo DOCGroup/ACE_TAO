@@ -2,7 +2,6 @@
 
 /**
  *  @file   Pollable.pidl
- *
  */
 
 #ifndef TAO_POLLABLE_PIDL

@@ -2,7 +2,6 @@
 
 /**
  *  @file   ParameterMode.pidl
- *
  */
 
 #ifndef TAO_PARAMETERMODE_IDL

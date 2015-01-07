@@ -2,7 +2,6 @@
 
 /**
  * @file CharSeq.pidl
- *
  */
 
 #ifndef TAO_CORBA_CHAR_SEQ_IDL

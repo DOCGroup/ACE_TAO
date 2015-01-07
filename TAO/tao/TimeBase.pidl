@@ -2,7 +2,6 @@
 
 /**
  *  @file TimeBase.pidl
- *
  */
 
 #ifndef TIME_BASE_PIDL

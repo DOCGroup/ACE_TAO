@@ -2,7 +2,6 @@
 
 /**
  *  @file   ValueModifier.pidl
- *
  */
 
 #ifndef TAO_VALUEMODIFIER_PIDL

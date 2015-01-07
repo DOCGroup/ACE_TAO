@@ -1,7 +1,6 @@
 // -*- IDL -*-
 /**
  *  @file Messaging_SyncScope.pidl
- *
  */
 #ifndef TAO_MESSAGING_SYNCSCOPE_PIDL
 #define TAO_MESSAGING_SYNCSCOPE_PIDL

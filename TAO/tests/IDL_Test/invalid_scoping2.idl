@@ -7,7 +7,6 @@
  *  caused problems in the past for the TAO IDL
  *  compiler. This test is to make sure the problems
  *  stay fixed.
- *
  */
 //=============================================================================
 
