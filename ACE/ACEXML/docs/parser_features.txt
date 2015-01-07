@@ -1,4 +1,4 @@
-/**  -*- HTML-Helper -*- 
+/**  -*- HTML-Helper -*-
 @defgroup acexml_parser_features Configurable Special Features of ACEXML Parser
 @{
 
