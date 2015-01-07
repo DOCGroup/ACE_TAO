@@ -9,7 +9,7 @@ package interop.wchar;
  * with the c++ version, wchar_reference.cpp
  *
  * @author Phil Mesnier
- * @version 
+ * @version
  */
 
 public class WCharReference
