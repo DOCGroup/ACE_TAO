@@ -2,8 +2,6 @@
 /**
  * @file GIOP.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the GIOP module.
  */
 

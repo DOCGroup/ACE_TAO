@@ -3,8 +3,6 @@
 /**
  * @file IFR_Basic.pidl
  *
- * $Id$
- *
  * This file is used to generate the code in IFR_BasicC.{h,inl,cpp}.
  * The original file Interface.idl was split into four pieces, to
  * keep the generated files to a manageable size and reduce build

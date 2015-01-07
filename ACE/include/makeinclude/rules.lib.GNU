@@ -1,6 +1,6 @@
 # -*- Makefile -*-
 #----------------------------------------------------------------------------
-#       $Id$
+#       
 #
 #       Build libraries (i.e., contain no binary executables)
 #       GNU version

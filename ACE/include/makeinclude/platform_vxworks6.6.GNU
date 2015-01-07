@@ -1,4 +1,3 @@
-# $Id$
 # VxWorks 6.6
 
 ifeq ($(VXWORKS_VERSION_FLAG),)

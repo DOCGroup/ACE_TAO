@@ -3,8 +3,6 @@
 /**
  * @file IORInterceptor.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the IOR Interceptor
  * components in the ORB.
  *

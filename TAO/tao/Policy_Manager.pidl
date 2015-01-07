@@ -1,8 +1,6 @@
 /**
  * @file Policy_Manager.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the CORBA::PolicyManager related
  * classes.
  *

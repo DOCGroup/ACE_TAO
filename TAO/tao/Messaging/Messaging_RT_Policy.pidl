@@ -3,7 +3,7 @@
 /**
  *  @file   Messaging_RT_Policy.pidl
  *
- *  $Id$
+ *  
  */
 
 #ifndef TAO_MESSAGING_RT_POLICY_PIDL

@@ -1,8 +1,6 @@
 /**
  * @file LifespanPolicy.pidl
  *
- * $Id$
- *
  * @brief PIDL source for the PortableServer module.
  */
 

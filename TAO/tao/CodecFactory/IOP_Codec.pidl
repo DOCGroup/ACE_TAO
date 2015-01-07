@@ -3,8 +3,6 @@
 /**
  * @file IOP_Codec.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the IOP module.
  */
 

@@ -3,7 +3,7 @@
 /**
  *  @file   Messaging.pidl
  *
- *  $Id$
+ *  
  */
 
 #ifndef TAO_MESSAGING_PIDL

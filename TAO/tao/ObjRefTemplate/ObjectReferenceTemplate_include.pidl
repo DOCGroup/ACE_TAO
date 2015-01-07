@@ -1,8 +1,6 @@
 /**
  * @file ObjectReferenceTemplate_include.pidl
  *
- * $Id$
- *
  * @brief Include file for use in applications that need ObjectReferenceTemplate.pidl.
  *
  * This file just includes ObjectReferenceTemplate.pidl. The *C.h file generated from

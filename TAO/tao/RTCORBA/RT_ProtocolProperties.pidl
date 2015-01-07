@@ -1,8 +1,6 @@
 /**
  * @file RT_ProtocolProperties.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the ProtocolProperties module.
  *
  */

@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 #
 # Common file help turn on/off explicit template instantiation
 

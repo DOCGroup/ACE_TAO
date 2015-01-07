@@ -1,8 +1,6 @@
 /**
  * @file ProcessingModePolicy.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the ProcessingModePolicy within
  * the PortableInterceptor module.
  *

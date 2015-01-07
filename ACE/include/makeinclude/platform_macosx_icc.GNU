@@ -1,4 +1,3 @@
-# $Id$
 
 threads ?= 1
 debug ?= 1

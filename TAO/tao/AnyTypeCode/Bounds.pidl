@@ -1,8 +1,6 @@
 /**
  * @file Bounds.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the CORBA::Bounds
  * exception.
  *

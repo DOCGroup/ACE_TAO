@@ -1,6 +1,5 @@
 # -*- Makefile -*-
 
-# $Id$
 
 # SunOS 5.x (Solaris 2.x) with Sun C++ 4.2 and 5.x
 #

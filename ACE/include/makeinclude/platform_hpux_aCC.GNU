@@ -1,4 +1,3 @@
-# $Id$
 #
 # This is for HP-UX 11.x using the aC++ compiler.
 #

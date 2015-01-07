@@ -1,8 +1,6 @@
 /**
  * @file ServantRetentionPolicy.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the PortableServer module.
  *
  * tao_idl.exe \

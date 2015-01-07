@@ -1,8 +1,6 @@
 /**
  * @file IORTable.pidl
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  *
  * @brief Pre-compiled IDL source for the IORTable module.

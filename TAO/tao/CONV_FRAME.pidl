@@ -3,8 +3,6 @@
 /**
  * @file CONV_FRAME.pidl
  *
- * $Id$
- *
  * This file is used to generate CONV_FRAMEC.*
  */
 

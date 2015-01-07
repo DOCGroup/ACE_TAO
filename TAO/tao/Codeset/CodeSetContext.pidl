@@ -3,8 +3,6 @@
 /**
  * @file CodeSetContext.pidl
  *
- * $Id$
- *
  * This file is used to generate CodeSetContextC.*
  */
 

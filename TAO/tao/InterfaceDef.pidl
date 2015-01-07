@@ -1,8 +1,6 @@
 /**
  * @file InterfaceDef.pidl
  *
- * $Id$
- *
  * @brief Define the CORBA::InterfaceDef type.
  *
  * This file is used to provide a definition for the CORBA::InterfaceDef

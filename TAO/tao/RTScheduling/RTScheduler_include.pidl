@@ -1,8 +1,6 @@
 /**
  * @file RTScheduler_include.pidl
  *
- * $Id$
- *
  * @brief Include file for use in applications that need RTScheduler.pidl.
  *
  * This file just includes RTScheduler.pidl. The *C.h file generated from

@@ -1,4 +1,3 @@
-# $Id$
 #
 
 buildbits ?= 64

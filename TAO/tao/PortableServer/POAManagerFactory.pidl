@@ -1,8 +1,6 @@
 /**
  * @file POAManagerFactory.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the PortableServer module.
  *
   $ACE_ROOT/bin/tao_idl \

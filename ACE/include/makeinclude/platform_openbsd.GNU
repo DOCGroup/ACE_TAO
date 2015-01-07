@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 # platform_openbsd.GNU
 

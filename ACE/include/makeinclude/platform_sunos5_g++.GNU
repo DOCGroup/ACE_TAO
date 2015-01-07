@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 # SunOS 5.x (Solaris 2.x) with g++
 

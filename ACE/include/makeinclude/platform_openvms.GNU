@@ -1,4 +1,3 @@
-# $Id$
 
 # for OpenVMS GNV
 

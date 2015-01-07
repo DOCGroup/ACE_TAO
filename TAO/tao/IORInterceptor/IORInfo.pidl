@@ -3,8 +3,6 @@
 /**
  * @file IORInfo.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the IORInfo
  * components in the ORB.
  *

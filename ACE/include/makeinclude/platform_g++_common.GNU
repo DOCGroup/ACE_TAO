@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 ifeq ($(openmp),1)
 FLAGS_C_CC += -fopenmp

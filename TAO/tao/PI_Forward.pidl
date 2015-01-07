@@ -3,8 +3,6 @@
 /**
  * @file PI_Forward.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for typedefs in the
  * PortableInterceptor module.
  *

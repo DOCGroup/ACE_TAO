@@ -1,8 +1,6 @@
 /**
  * @file Async_IORTable.pidl
  *
- * $Id$
- *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  *
  * @brief Pre-compiled IDL source for the IORTable module.

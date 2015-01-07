@@ -3,7 +3,7 @@
 /**
  *  @file   Messaging_SyncScope_Policy.pidl
  *
- *  $Id$
+ *  
  */
 
 #ifndef TAO_MESSAGING_SYNCSCOPE_POLICY_PIDL

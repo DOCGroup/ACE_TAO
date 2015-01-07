@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 # LynxOS with g++.  Defaults to LynxOS Version 4.0.0.  For Version 4.2.0,
 # for example, add "VERSION=4.2.0" to your make invocation.

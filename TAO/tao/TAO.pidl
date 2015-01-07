@@ -4,8 +4,6 @@
 /**
  *  @file TAO.pidl
  *
- *  $Id$
- *
  *  This file contains TAO-specific idl interfaces (not part of CORBA
  *  2.6).
  *

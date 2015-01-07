@@ -1,8 +1,6 @@
 /**
  * @file WrongTransaction.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the CORBA::WrongTransaction
  * exception.
  *

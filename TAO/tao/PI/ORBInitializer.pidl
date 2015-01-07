@@ -3,8 +3,6 @@
 /**
  * @file ORBInitializer.pidl
  *
- * $Id$
- *
  * @brief ORBInitializer part of the PortableInterceptor part of the CORBA
  * spec
  */

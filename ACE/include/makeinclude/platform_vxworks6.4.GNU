@@ -1,4 +1,3 @@
-# $Id$
 # VxWorks 6.4
 
 #### Notes:

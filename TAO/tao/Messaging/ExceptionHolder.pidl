@@ -4,8 +4,6 @@
 /**
  *  @file   ExceptionHolder.pidl
  *
- *  $Id$
- *
  *   tao_idl
  *        -o orig -Gp -Gd -GA -SS
  *        -Wb,export_macro=TAO_Messaging_Export

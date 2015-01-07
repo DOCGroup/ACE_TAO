@@ -2,8 +2,6 @@
 /**
  * @file Default_ORT.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the TAO_Default_ORT module.
  *
  * This file is used to generate Default_ORTC.{h,i,cpp}, using the following
