@@ -1,6 +1,5 @@
 #!/bin/sh
 
-# $Id$
 
 # Script to run all of the IDL_Cubit type tests for IIOP, UIOP and IIOP/UIOP
 # with the -ORBGIOPlite option.

@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id$
 # This script assumes it is being run by bash
 
 # ======= needed functions ======

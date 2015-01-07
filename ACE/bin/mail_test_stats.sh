@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id$
 
 if test -z $1; then CURRENTDATE=`date -u +%Y_%m_%d`; else CURRENTDATE=$1; fi
 if test -z $2; then PREFIX=`date -u +%Y%m%d%a`; else PREFIX=$2; fi

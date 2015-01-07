@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id$
-#
 # This simple script is used to gather compile time metrics.  You can use
 # it with make like this:
 #

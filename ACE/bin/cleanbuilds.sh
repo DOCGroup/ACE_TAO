@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id$
 
 if test -z $1; then CURRENTDATE=YYYY_MM_DD; else CURRENTDATE=$1; fi
 

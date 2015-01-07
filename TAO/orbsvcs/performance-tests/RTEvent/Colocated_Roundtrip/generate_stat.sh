@@ -1,5 +1,4 @@
 #/bin/sh
-# $Id$
 
 for i in $*; do
   echo $i

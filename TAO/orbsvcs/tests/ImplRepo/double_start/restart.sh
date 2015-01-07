@@ -1,5 +1,4 @@
 #!/bin/bash
-#$Id$
 
 exec_cmd=
 service_pid=

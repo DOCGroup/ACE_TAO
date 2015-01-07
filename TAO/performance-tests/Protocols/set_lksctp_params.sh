@@ -1,7 +1,5 @@
 #!/bin/sh
-# $Id$
 
-# $Id$
 
 B_PROC=/proc/sys/net/sctp
 
