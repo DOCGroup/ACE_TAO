@@ -59,3 +59,4 @@ BEGIN{undef $/;} s/\$Id\$//smg;
 
 BEGIN{undef $/;} s/\#         \n//smg;
 BEGIN{undef $/;} s/\*\* \n/\*\*\n/smg;
+BEGIN{undef $/;} s/\/\*\n\*\*\n\*\*\n/\/\*\n/smg;

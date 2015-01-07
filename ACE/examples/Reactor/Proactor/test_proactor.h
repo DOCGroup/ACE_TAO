@@ -1,5 +1,5 @@
 /*
-** 
+**
 */
 
 #ifndef _TEST_PROACTOR_H
