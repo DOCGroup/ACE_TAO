@@ -4,7 +4,7 @@
 /**
  * @file LB_IORInterceptor.h
  *
- * $Id$
+ * 
 
  * @author Ossama Othman <ossama@uci.edu>
  */

@@ -2,7 +2,7 @@
 /**
 *  @file   amh_rh_sh.cpp
 *
-*  $Id$
+*  
 *
 *  Specialized interface visitor for AMH-RH that generates code
 *  for RH interfaces in skeleton source files

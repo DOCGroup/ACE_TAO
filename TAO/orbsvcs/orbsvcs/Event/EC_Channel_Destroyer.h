@@ -5,7 +5,7 @@
  *
  * @author Marina Spivak <marina@atdesk.com>
  *
- * $Id$
+ * 
  */
 #ifndef EC_CHANNEL_DESTROYER__H_
 #define EC_CHANNEL_DESTROYER__H_

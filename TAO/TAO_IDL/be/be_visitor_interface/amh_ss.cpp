@@ -2,7 +2,7 @@
 /**
 *  @file   amh_ss.cpp
 *
-*  $Id$
+*  
 *
 *  Specialized interface visitor for AMH.
 *

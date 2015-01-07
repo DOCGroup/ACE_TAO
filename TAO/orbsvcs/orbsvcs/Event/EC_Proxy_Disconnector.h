@@ -5,7 +5,7 @@
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  *
- * $Id$
+ * 
  */
 #ifndef EC_PROXY_DISCONNECTOR__H_
 #define EC_PROXY_DISCONNECTOR__H_

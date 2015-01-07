@@ -2,7 +2,7 @@
 /**
 *  @file   be_visitor_arg_traits.cpp
 *
-*  $Id$
+*  
 *
 *  This visitor generates template specializations for argument traits classes.
 *

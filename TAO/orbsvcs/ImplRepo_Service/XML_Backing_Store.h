@@ -4,7 +4,7 @@
 /**
 *  @file XML_Backing_Store.h
 *
-*  $Id$
+*  
 *
 *  This class defines an implementation of the backing store as a single XML file.
 *

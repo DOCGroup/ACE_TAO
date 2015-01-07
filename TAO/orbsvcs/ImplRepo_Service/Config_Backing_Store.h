@@ -4,7 +4,7 @@
 /**
 *  @file Config_Backing_Store.h
 *
-*  $Id$
+*  
 *
 *  These classes define ACE_Configuration implementations of the backing store.
 *

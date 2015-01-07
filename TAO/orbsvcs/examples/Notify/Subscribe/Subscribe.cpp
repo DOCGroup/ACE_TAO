@@ -1,4 +1,4 @@
-/* -*- C++ -*- $Id$ */
+/* -*- C++ -*-  */
 #include "Subscribe.h"
 
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"

@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- * $Id$
+ * 
  */
 //=============================================================================
 
@@ -22,7 +22,7 @@
 #include "tao/TimeBaseC.h"
 
 /**
-* $Id$
+* 
 */
 class TAO249_ServerRequest_Interceptor2
 : public virtual PortableInterceptor::ServerRequestInterceptor,

@@ -1,4 +1,4 @@
-/* -*- C++ -*- $Id$ */
+/* -*- C++ -*-  */
 
 #include "Messenger_i.h"
 #include "ace/OS_NS_string.h"

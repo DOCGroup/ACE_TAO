@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <ACE_Svc_Conf>
   <!--  -->
-  <!--  $Id$ -->
+  <!--   -->
   <!--  -->
   <!--  ACE will locate the libraries for you automatically by reading your LD -->
   <!--  search path.  Moreover, ACE will automatically insert the correct suffix -->

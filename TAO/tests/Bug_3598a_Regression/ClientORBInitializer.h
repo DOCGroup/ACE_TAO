@@ -4,7 +4,7 @@
 /**
  *  @file     ClientORBInitializer.h
  *
- *  $Id$
+ *  
  */
 //=============================================================================
 #ifndef CLIENTORBINITIALIZER_H

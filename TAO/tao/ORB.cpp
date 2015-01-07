@@ -1,4 +1,4 @@
-// "$Id$"
+// ""
 
 #include "tao/ORB.h"
 #include "tao/ORB_Table.h"

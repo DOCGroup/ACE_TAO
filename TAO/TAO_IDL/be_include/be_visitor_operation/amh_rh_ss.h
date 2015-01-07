@@ -2,7 +2,7 @@
 /**
 *  @file   amh_rh_ss.h
 *
-*  $Id$
+*  
 *
 *  Creates code for AMH-RH operations.
 *

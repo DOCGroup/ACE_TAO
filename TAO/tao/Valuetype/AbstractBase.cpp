@@ -1,4 +1,4 @@
-// "$Id$"
+// ""
 
 #include "tao/Valuetype/AbstractBase.h"
 #include "tao/Valuetype/ValueBase.h"

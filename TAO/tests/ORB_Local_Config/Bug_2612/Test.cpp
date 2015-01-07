@@ -2,7 +2,7 @@
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  * @author Lothar Werzinger <lothar@tradescape.biz>
  *
- * $Id$
+ * 
  */
 
 #include "ace/Service_Config.h"

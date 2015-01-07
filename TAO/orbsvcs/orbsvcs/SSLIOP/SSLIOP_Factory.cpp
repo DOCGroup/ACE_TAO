@@ -17,7 +17,7 @@
 // An SSL session id seed value. Needs not be too unique, just somewhat
 // different. See the OpenSSL manual
 static const unsigned char session_id_context_[] =
-  "$Id$";
+  "";
 
 // Protocol name prefix
 static const char * const the_prefix[] = {"iiop", "ssliop"};

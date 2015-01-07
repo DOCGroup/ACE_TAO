@@ -2,7 +2,7 @@
 /**
 *  @file   be_visitor_traits.cpp
 *
-*  $Id$
+*  
 *
 *  This visitor generates template specializations for traits of various
 *  kinds for IDL declarations. These specialized template classes are then

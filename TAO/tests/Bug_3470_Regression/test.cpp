@@ -4,7 +4,7 @@
  * launch test like this:
  *  <execname> -ORBInitRef MyObjectId=file://myobj.ior
  *
- * $Id$
+ * 
  */
 
 #include "tao/ORB.h"

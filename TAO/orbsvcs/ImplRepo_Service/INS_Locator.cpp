@@ -2,7 +2,7 @@
 /**
 *  @file   INS_Locator.cpp
 *
-*  $Id$
+*  
 *
 *  @brief  Implementation of the ImR's INS Locator class
 *

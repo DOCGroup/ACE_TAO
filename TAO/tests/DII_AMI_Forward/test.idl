@@ -1,7 +1,7 @@
 /* -*- Mode: IDL; tab-width: 2; indent-tabs-mode: f; c-basic-offset: 2 -*- */
 
 /*
- * $Id$
+ * 
  */
 
 #include "tao/PortableServer/ForwardRequest.pidl"

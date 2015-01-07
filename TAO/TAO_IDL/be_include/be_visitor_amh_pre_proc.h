@@ -2,7 +2,7 @@
 /**
 *  @file   be_visitor_amh_pre_proc.h
 *
-*  $Id$
+*  
 *
 *  This visitor creates for AMH implied IDL constructs for the ResponseHandler,
 *  the appropriate AST

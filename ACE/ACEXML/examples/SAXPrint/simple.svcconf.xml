@@ -1,7 +1,7 @@
 <ACE_Svc_Conf>
 
 <!--  -->
-<!--  $Id$ -->
+<!--   -->
 <!--  -->
 
 <static id="ACE_Service_Manager" params="-d -p 4911"/>

@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /**
- *  $Id$
+ *  
  */
 
 #ifndef TEST_SAVER_H

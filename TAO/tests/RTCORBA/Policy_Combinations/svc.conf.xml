@@ -2,7 +2,7 @@
 <!-- Converted from svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
  <!--  -->
- <!--  $Id$ -->
+ <!--   -->
  <!--  -->
  <!--  Options required for regular testing -->
  <static id="RT_ORB_Loader" params="-ORBPriorityMapping continuous"/>
