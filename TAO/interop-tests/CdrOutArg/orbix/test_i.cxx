@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 
 CDR_Out_Arg_i::CDR_Out_Arg_i (CORBA::ORB_ptr orb)
