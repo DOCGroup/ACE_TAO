@@ -14,4 +14,5 @@ eval '(exit $?0)' && eval 'exec perl -pi -S $0 ${1+"$@"}'
 # Taken from perlrun man page.
 
 #undef $/; $s = <>; $s =~ s/ \*\n \* \$Id\$\n \*\n/ \*\n/m; print $s
-BEGIN{undef $/;} s/ \*\n \* \$Id\$\n \*\n/ \*\n/smg
+BEGIN{undef $/;} s/ \*\n \* \$Id\$\n \*\n/ \*\n/smg;
+BEGIN{undef $/;} s/\/\/\n\/\/ \$Id\$\n\/\/\n/\/\/\n/smg;
