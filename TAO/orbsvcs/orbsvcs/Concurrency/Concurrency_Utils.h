@@ -9,7 +9,6 @@
  *    thread per request concurrency model in order to let the
  *    clients block on the semaphores.
  *
- *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
 //=============================================================================

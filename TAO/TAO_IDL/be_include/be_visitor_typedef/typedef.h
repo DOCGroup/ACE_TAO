@@ -7,7 +7,6 @@
  *  Concrete visitor for the Typedef class
  *  This provides the generic visitors for the Typedef class.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

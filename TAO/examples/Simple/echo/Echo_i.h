@@ -6,7 +6,6 @@
  *
  *  This class implements the Echo IDL interface.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *  Driver for identity server, which is used to test/demonstrate
  *  the functionality of the Load Balancing service.
  *
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *  Visitor for generating code for IDL operations for the TIE class inside
  *  the server header
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

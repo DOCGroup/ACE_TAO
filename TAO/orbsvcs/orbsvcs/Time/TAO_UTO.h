@@ -6,7 +6,6 @@
  *
  *  This class implements the CosTime::UTO IDL interface.
  *
- *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
 //=============================================================================

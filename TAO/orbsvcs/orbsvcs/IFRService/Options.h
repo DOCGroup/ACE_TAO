@@ -8,7 +8,6 @@
  *  This class implements the Options container for the Interface
  *  Repository.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

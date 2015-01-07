@@ -5,7 +5,6 @@
  *
  *  Tests timeouts with AMI.
  *
- *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
 //=============================================================================

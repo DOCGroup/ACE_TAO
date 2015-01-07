@@ -6,7 +6,6 @@
  *  Concrete visitor for the Interface node.
  *  This one provides the code generation for TIE classes
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

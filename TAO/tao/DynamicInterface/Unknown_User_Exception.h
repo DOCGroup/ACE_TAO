@@ -6,7 +6,6 @@
  *
  *  Defines the way an exception is reported by a DII request.
  *
- *
  *  @author  Portions Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  Portions Copyright 1997-2003 by Washington University
  */

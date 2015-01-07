@@ -6,7 +6,6 @@
  *
  *  Header file for class ifr_adding_visitor.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

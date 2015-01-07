@@ -6,7 +6,6 @@
  *
  *  Run the TAO Notify Service as a Windows NT Service.
  *
- *
  *  @author John Tucker <jtucker@infoglide.com>
  *  @author Mike Vitalo <mvitalo@infoglide.com>
  *  @author David Robison <drrobison@openroadsconsulting.com>

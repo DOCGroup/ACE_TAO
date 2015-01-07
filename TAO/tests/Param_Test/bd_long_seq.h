@@ -5,7 +5,6 @@
  *
  *   Tests bounded long sequences
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

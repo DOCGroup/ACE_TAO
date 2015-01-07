@@ -6,7 +6,6 @@
  *
  *  This class tests the IFR support for CCM-related types.
  *
- *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

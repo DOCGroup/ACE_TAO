@@ -6,7 +6,6 @@
  *  Encapsulation of rules for declaring variables
  *  for Any extraction
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

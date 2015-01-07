@@ -5,7 +5,6 @@
  *
  *  Implements the CORBA object.
  *
- *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
 //=============================================================================

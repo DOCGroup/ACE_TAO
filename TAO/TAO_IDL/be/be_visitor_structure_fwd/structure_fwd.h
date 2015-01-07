@@ -5,7 +5,6 @@
  *
  *  Visitors for generation of code for be_structure_fwd
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

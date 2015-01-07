@@ -7,7 +7,6 @@
  *
  *  SNMP Counter64 class definition.
  *
- *
  *  @author Peter E Mellquist
  */
 //=============================================================================

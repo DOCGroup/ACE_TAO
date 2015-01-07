@@ -4,7 +4,6 @@
  *
  *  Header file for the class containing test constants.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

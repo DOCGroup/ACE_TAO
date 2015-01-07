@@ -14,7 +14,6 @@
 /*
  * shexp.h: Defines and prototypes for shell exp. match routines
  *
- *
  * This routine will match a string with a shell expression. The expressions
  * accepted are based loosely on the expressions accepted by zsh.
  *

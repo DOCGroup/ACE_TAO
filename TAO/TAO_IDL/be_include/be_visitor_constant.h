@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the constant class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

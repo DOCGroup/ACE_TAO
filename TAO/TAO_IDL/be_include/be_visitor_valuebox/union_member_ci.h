@@ -8,7 +8,6 @@
  *   This one generates code for accessor and modifier functions of
  *   union members.
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================

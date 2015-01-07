@@ -5,7 +5,6 @@
  *   Defines a series of "real time" property that an Object
  *   or a POA created on a RT-ORB can have.
  *
- *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
 //=============================================================================

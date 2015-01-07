@@ -5,7 +5,6 @@
  *
  *   Tests unbounded sequences of object references
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

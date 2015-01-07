@@ -6,7 +6,6 @@
  *    This class implements a client used to test the CosConcurrency
  *    service.
  *
- *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
 //=============================================================================

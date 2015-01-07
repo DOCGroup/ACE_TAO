@@ -7,7 +7,6 @@
  *  This provides for code generation for the facet servant
  *  class declaration
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

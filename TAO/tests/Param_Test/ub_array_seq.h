@@ -5,7 +5,6 @@
  *
  *   Tests unbounded array sequence
  *
- *
  *  @author   Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

@@ -10,7 +10,6 @@
  * sessions, gets, sets, etc. The class manages all SNMP
  * resources and provides complete retry and timeout capability.
  *
- *
  *  @author Peter E Mellquist  design
  *  @author first implementation Michael R. MacFaden port to ACE / use Reactor pattern
  */

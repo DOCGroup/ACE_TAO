@@ -7,7 +7,6 @@
  *  Since the Gateway is an <ACE_Service_Object>, this file defines
  *  the entry point into the Service Configurator framework.
  *
- *
  *  @author Doug Schmidt
  */
 //=============================================================================

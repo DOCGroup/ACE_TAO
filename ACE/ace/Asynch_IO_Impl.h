@@ -4,11 +4,9 @@
 /**
  *  @file    Asynch_IO_Impl.h
  *
- *
  *  This class contains asbtract base classes for all the concrete
  *  implementation classes for the various asynchronous operations
  *  that are used with the Praoctor.
- *
  *
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)

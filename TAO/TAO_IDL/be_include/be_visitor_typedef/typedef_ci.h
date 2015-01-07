@@ -8,7 +8,6 @@
  *  This provides the code generation for the Typedef class in the client
  *  inline.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

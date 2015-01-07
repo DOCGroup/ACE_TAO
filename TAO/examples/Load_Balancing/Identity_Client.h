@@ -8,7 +8,6 @@
  *  Identity_Server to test/demonstrate the functionality of the
  *  Load Balancing service.
  *
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

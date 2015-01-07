@@ -6,7 +6,6 @@
  *
  *  Visitor for generating code for IDL operations in server skeletons
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

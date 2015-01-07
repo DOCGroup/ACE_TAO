@@ -6,7 +6,6 @@
  *  Encapsulation the variations in setting read/write
  *  attributes from values extracted from an Any
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

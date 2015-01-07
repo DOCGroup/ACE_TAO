@@ -8,7 +8,6 @@
  *  Concrete visitor for the Module class
  *  This provides code generation for the module in the implementation header.
  *
- *
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */
 //=============================================================================

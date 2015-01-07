@@ -4,13 +4,11 @@
 /**
  *  @file    WIN32_Asynch_IO.h
  *
- *
  *  These classes only works on Win32 platforms.
  *
  *  The implementation of ACE_Asynch_Transmit_File,
  *  ACE_Asynch_Accept, and ACE_Asynch_Connect are only supported if
  *  ACE_HAS_WINSOCK2 is defined or you are on WinNT 4.0 or higher.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
@@ -484,7 +482,6 @@ protected:
  *
  * @brief This class is a factory for starting off asynchronous writes
  *    on a stream.
- *
  *
  *     Once open() is called, multiple asynchronous <writes>s can
  *     started using this class.  A ACE_Asynch_Write_Stream::Result
@@ -1340,7 +1337,6 @@ private:
 /**
  * @class ACE_WIN32_Asynch_Transmit_File_Result
  *
- *
  * @brief This class implements ACE_Asynch_Transmit_File::Result for
  *     WIN32 platforms.
  *
@@ -1847,7 +1843,6 @@ protected:
  *
  * @brief This class is a factory for starting off asynchronous writes
  *    on a UDP socket.
- *
  *
  *     Once <open> is called, multiple asynchronous <writes>s can
  *     started using this class.  A ACE_Asynch_Write_Stream::Result

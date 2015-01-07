@@ -6,7 +6,6 @@
  *
  *  This class implements the CosTime::TIO IDL interface.
  *
- *
  *  @author Vishal Kachroo  <vishal@cs.wustl.edu>
  */
 //=============================================================================

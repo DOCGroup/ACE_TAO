@@ -5,7 +5,6 @@
  *  Visitor that takes care of generation the implementation
  *  for the direct proxy implementation.
  *
- *
  *  @author Angelo Corsaro
  */
 //=============================================================================

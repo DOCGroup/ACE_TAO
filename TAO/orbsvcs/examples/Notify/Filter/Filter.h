@@ -5,7 +5,6 @@
  *
  * Class to demo structured event filtering.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

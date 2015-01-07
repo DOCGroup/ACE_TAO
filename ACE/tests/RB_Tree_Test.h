@@ -9,7 +9,6 @@
  *  ACE_RB_Tree_Reverse_Iterator classes.
  *  iterator over each.
  *
- *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  */
 //=============================================================================

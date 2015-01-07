@@ -7,7 +7,6 @@
  *  This class implements a simple CORBA client which controls a Nestea
  *  can database
  *
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================

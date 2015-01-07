@@ -7,7 +7,6 @@
  *  Visitor for Exceptions.
  *  For code generation in client stubs.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

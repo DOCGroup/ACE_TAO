@@ -5,7 +5,6 @@
  *
  * Test for EC Admin QoS properties.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *   Tests complex Anys
  *
- *
  *  @author  Aniruddha Gokhale
  *  @author Jeff Parsons
  *  @author Frank Buschmann

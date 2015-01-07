@@ -6,7 +6,6 @@
  *
  *  This class implements the interface calls for RMI.
  *
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

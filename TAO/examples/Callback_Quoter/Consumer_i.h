@@ -6,7 +6,6 @@
  *
  *  Defines the implementation header for the Consumer interface.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *  Extension of class AST_InterfaceFwd that provides additional
  *  means for C++ mapping of a forward declared interface.
  *
- *
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */

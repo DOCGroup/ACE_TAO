@@ -7,7 +7,6 @@
  *
  *   Header file for the push Web_Server::Iterator_Factory implementation.
  *
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

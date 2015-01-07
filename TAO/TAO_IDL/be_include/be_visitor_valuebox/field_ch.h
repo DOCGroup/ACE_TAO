@@ -13,7 +13,6 @@
  *   use it directly because a valuebox is not a scope and because
  *   the structure is visited prior to visiting the valuebox.
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================

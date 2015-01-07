@@ -6,7 +6,6 @@
  *
  *  Ftp client to send data
  *
- *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
 //=============================================================================

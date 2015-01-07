@@ -7,7 +7,6 @@
  *  This one provides code generation for valuetype factory
  *  in the (client) header.
  *
- *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
 //=============================================================================

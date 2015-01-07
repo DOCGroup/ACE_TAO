@@ -6,7 +6,6 @@
  *
  *  This class implements the client functionality of the UDP test.
  *
- *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
 //=============================================================================

@@ -4,7 +4,6 @@
 /**
  *  @file    Synch_Invocation.h
  *
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

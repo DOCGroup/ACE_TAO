@@ -9,7 +9,6 @@
  *  it for retrieval and use in the template module
  *  instantiation visitor
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

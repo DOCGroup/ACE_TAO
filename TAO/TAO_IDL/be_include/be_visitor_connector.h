@@ -6,7 +6,6 @@
  *
  *  Concrete visitors for the Connector
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

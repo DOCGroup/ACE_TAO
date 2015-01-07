@@ -4,7 +4,6 @@
  *
  *  Visitor for generating code for proxy implementations.
  *
- *
  *  @author Angelo Corsaro
  */
 //=============================================================================

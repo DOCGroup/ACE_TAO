@@ -8,7 +8,6 @@
  *   This one generates code for the discriminant of the Union in the client
  *   inline file.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

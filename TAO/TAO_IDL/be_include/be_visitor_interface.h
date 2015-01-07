@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the Interface class
  *
- *
  *  @author Carlos O'Ryan and Aniruddha Gokhale
  */
 //=============================================================================

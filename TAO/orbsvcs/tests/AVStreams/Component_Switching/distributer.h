@@ -7,7 +7,6 @@
  *  Process to receive data from the sender and send it to the
  *  receiver.
  *
- *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
 //=============================================================================

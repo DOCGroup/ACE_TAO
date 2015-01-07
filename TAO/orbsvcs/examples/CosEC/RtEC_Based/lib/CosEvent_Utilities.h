@@ -6,7 +6,6 @@
  *
  *  A few utility classes to make it easier to write EC applications.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

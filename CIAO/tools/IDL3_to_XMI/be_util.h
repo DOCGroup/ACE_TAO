@@ -6,7 +6,6 @@
  *
  *  Static helper methods used by multiple visitors.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

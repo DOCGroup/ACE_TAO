@@ -7,7 +7,6 @@
  *  This provides for code generation in the CIAO
  *  executor IDL
  *
- *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

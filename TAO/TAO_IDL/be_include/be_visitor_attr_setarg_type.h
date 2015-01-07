@@ -5,7 +5,6 @@
  *
  *  Encapsulation of rules for component attribute set arg.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

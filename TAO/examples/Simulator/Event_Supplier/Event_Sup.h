@@ -5,7 +5,6 @@
  *
  * Event Supplier for the simulation
  *
- *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================

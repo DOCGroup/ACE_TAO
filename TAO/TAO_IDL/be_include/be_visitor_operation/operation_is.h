@@ -5,7 +5,6 @@
  *
  *  Visitor for generating code for IDL operations in implementation skeleton
  *
- *
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */
 //=============================================================================

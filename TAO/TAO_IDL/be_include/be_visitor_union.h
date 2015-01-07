@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the Union class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Header file for the Alt_Mapping_Test client application.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -4,7 +4,6 @@
  *
  *   Defines test_i class for the test interface
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *  Visitor for generating code for OBV factory. This generates the
  *  operation signature.
  *
- *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
 //=============================================================================

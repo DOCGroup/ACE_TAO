@@ -6,7 +6,6 @@
  *  Concrete visitor for the Interface node.
  *  This provides code generation for smart proxy classes in the client stub.
  *
- *
  *  @author Kirthika Parameswaran
  */
 //=============================================================================

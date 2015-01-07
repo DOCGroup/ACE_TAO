@@ -6,7 +6,6 @@
  *
  *  Definition of the Chat Client class, Client_i.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  * This is a utility class is to be used by clients of the Notification
  * Service to implement the servant for CosNotifyComm::SequencePushConsumer
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

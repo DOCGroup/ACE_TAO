@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for Native generating code in the client header.
  *
- *
  *  @author Johnny Willemsen
  */
 //=============================================================================

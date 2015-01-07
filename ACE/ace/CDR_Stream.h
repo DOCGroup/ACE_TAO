@@ -26,7 +26,6 @@
  *  only when ACE_DISABLE_SWAP_ON_READ can be enabled. This option requires
  *  ACE CDR engine to do both marshaling and demarshaling.
  *
- *
  *  @author TAO version by Aniruddha Gokhale <gokhale@cs.wustl.edu>
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  *  @author ACE version by Jeff Parsons <parsons@cs.wustl.edu>

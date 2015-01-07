@@ -7,7 +7,6 @@
  *  Extension of class AST_Template_Module that provides additional means for C++
  *  mapping of a module.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

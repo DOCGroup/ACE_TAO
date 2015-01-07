@@ -7,7 +7,6 @@
  *  compiler "features" related to template instantiation...  It is
  *  only used by Priority_Reactor_Test.cpp.
  *
- *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *  Proxy for dealing with remote server process managing NET_LOCAL
  *  Name_Bindings.
  *
- *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt
  *  @author Prashant Jain

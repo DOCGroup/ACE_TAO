@@ -7,7 +7,6 @@
  *  compiler "features" related to template instantiation...  It is
  *  only used by Thread_Pool_Reactor_Test.cpp.
  *
- *
  *  @author   Irfan Pyarali <irfan@cs.wustl.edu>   Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

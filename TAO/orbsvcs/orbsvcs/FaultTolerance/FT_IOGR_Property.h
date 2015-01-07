@@ -6,7 +6,6 @@
  *
  *  This class implements the IOGR properties for the FT service
  *
- *
  *  @author  Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

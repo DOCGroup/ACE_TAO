@@ -13,7 +13,6 @@
  *     You must provide a ConsumerAdmin to <connect>.
  * 5. To disconnect, call <disconnect> this will also deactivate the object.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

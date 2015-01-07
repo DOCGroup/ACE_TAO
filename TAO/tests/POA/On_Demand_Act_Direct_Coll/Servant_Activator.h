@@ -6,7 +6,6 @@
  *
  *   Defines a ServantActivator class.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

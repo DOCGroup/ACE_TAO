@@ -7,7 +7,6 @@
  *
  * constants for Enterprise Traps
  *
- *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
 //=============================================================================

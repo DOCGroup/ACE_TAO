@@ -6,7 +6,6 @@
  *  Concrete visitor for the AMI4CCM Connector node.
  *  This provides for code generation in the exec impl header
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

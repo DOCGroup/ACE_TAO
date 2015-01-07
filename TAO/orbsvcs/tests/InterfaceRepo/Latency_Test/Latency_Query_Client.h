@@ -6,7 +6,6 @@
  *
  *  This class tests the latency of queries made on the IFR.
  *
- *
  *  @author Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
  */
 //=============================================================================

@@ -9,7 +9,6 @@
  *  reference to one inside another, and adds these nodes
  *  to the AST.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

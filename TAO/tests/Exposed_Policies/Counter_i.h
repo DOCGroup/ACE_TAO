@@ -5,7 +5,6 @@
  *
  *   This class implements the Counter IDL interface.
  *
- *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *
  *  An object respresenting a request/reply operation between mgr/agent
  *
- *
  *  @author Michael R. MacFaden
  */
 //=============================================================================

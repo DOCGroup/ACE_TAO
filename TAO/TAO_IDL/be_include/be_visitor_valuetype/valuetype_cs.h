@@ -6,7 +6,6 @@
  *  Concrete visitor for the Valuetype node.
  *  This one provides code generation for valuetypes in the client stubs.
  *
- *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
  */
 //=============================================================================

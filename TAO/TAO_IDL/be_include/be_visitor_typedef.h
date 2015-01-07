@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the Typedef class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

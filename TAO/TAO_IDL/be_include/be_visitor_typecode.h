@@ -6,7 +6,6 @@
  *
  *  Concrete visitor to generate code for TypeCodes
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

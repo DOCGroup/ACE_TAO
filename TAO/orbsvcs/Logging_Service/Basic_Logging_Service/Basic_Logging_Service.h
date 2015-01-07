@@ -7,7 +7,6 @@
  *  Front End of the Telecom Log Service
  *  Basic_Logging_Service
  *
- *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
 // ============================================================================

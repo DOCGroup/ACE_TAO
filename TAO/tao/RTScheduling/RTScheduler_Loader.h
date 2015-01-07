@@ -6,7 +6,6 @@
  *
  *   Header file for Loading RTScheduler.
  *
- *
  *  @author  Yamuna Krishnamurthy <yamuna@oomworks.com>
  */
 //=============================================================================

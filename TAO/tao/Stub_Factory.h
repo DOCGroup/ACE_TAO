@@ -8,7 +8,6 @@
  *   This class creates the default stub, that is used in
  *   plain CORBA.
  *
- *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
 //=============================================================================

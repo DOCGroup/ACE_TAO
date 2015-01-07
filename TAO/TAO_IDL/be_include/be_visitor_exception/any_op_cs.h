@@ -7,7 +7,6 @@
  *  Visitor for Exceptions.
  *  For code generation of Any operator in client stubs
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

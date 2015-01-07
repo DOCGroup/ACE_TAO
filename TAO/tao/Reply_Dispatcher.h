@@ -6,7 +6,6 @@
  *
  *   Define the interface for the Reply_Dispatcher strategies.
  *
- *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================

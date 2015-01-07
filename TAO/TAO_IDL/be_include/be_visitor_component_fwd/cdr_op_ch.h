@@ -8,7 +8,6 @@
  *  This one provides code generation for the CDR operators for the forward
  *  declared component in the client header, if the node is not later defined
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

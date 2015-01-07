@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the Structure class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

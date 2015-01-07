@@ -7,7 +7,6 @@
  *
  *  FinderDef servant class.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

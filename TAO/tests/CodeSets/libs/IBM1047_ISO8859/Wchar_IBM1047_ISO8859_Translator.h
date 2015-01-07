@@ -7,7 +7,6 @@
  *  Declares the arrays required to convert between IBM1047 (aka EBCDIC)  and ISO8859 (aka
  *  Latin/1).
  *
- *
  *  @author Jim Rogers (jrogers@viasoft.com)
  */
 //=============================================================================

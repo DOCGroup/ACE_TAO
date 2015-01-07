@@ -8,7 +8,6 @@
  *   This one generates code for the Any operators for the Union in the client
  *   header.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

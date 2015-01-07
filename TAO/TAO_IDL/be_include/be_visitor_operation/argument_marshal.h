@@ -7,7 +7,6 @@
  *  passing arguments to the CDR operators in a compiled marshaling
  *  stub/skeleton
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

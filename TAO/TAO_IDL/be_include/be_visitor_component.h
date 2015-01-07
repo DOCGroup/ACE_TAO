@@ -6,7 +6,6 @@
  *
  *  Concrete visitors for the Component class
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

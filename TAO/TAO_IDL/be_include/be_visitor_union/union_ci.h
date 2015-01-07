@@ -7,7 +7,6 @@
  *   Visitor for the Union class.
  *   This one generates code in the client inline file.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

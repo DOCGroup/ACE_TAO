@@ -8,7 +8,6 @@
  *  This one provides code generation for
  *  DDS type support IDL files.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

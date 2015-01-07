@@ -6,7 +6,6 @@
  *
  * Endpoint interface, part of TAO pluggable protocol framework.
  *
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

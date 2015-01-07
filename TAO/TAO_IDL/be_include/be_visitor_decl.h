@@ -5,7 +5,6 @@
  *
  *  Concrete visitor for the base "BE_Decl" node
  *
- *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */
 //=============================================================================

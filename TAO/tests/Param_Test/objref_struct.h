@@ -5,7 +5,6 @@
  *
  *   Tests variable sized structures
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

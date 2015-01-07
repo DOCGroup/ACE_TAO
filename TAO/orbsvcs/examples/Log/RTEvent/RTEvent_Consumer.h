@@ -7,7 +7,6 @@
  *  An example of using the RTEvent_Logging_Service.
  *  The RTEvent_Consumer consumes log-generated events.
  *
- *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
 // ============================================================================

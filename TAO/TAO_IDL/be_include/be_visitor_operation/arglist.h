@@ -6,7 +6,6 @@
  *  Visitor for generating code for IDL operations. This generates the
  *  operation signature.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

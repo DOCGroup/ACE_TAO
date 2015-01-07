@@ -7,7 +7,6 @@
  *
  *  Class definition for SMI Counter32 class.
  *
- *
  *  @author Peter E Mellquist
  */
 //=============================================================================

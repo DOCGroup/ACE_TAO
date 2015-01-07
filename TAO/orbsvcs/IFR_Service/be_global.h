@@ -6,7 +6,6 @@
  *
  *  Header file for class containing compiler back end global data.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

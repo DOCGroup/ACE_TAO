@@ -5,7 +5,6 @@
  *
  * Class to demo structured event subscription.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

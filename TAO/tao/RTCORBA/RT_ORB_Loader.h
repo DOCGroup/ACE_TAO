@@ -6,7 +6,6 @@
  *
  *   Header file for Loading RT_ORB.
  *
- *
  *  @author  Priyanka Gontla <gontla_p@ociweb.com>
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *  Server that sets up the ORB and handles the registration and execution
  *  of the Paper Airplane Server.
  *
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================

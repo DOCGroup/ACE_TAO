@@ -6,7 +6,6 @@
  *  Visitors for generation of code for Arguments. This generates the
  *  code to pass the arguments to the call to the marshaler/demarshaler
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

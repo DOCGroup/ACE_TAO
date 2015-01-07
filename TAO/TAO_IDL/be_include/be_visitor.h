@@ -7,7 +7,6 @@
  *  The abstract visitor class. The concrete classes are responsible for code
  *  generation.
  *
- *
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Carlos O'Ryan
  *  @author Aniruddha Gokhale

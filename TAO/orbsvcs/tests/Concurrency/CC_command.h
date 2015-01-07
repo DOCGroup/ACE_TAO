@@ -8,7 +8,6 @@
  *    an implementation of a command list used by the command parser to
  *    store the commands to be executed.
  *
- *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
 //=============================================================================

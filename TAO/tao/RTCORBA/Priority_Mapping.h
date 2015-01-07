@@ -6,7 +6,6 @@
  * Declares the Priority_Mapping interface, as defined in the
  * RT-CORBA spec.
  *
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

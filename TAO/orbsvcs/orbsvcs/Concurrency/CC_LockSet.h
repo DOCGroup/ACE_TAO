@@ -21,7 +21,6 @@
  *    - Use these classes from the classes that inherits the
  *      servant properties, i.e. the way CC_LockSet does now.
  *
- *
  *  @author   Torben Worm <tworm@cs.wustl.edu>
  */
 //=============================================================================

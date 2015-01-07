@@ -6,7 +6,6 @@
  *
  *  Loader for an instance of the UTF16_BOM_Translator.
  *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

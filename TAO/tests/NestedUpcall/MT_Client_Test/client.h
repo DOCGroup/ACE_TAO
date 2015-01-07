@@ -5,7 +5,6 @@
  *
  *  Test for multithreaded client using one global ORB (and Reactor)
  *
- *
  *  @author Michael Kircher
  */
 //=============================================================================

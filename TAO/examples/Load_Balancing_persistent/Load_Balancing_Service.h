@@ -6,7 +6,6 @@
  *
  *  Driver for Load Balancing service.
  *
- *
  *  @author Marina Spivak <marina@cs.wustl.edu> with modifications by Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

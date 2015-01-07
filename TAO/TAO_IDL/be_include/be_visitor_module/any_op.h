@@ -8,7 +8,6 @@
  *  This one provides visitors to generate the Any operators for elements in
  *  the Module's scope.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

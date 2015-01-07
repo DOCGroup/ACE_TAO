@@ -4,7 +4,6 @@
 /**
  *  @file    Dump.h
  *
- *
  * A prototype mechanism that allow all ACE objects to be registered
  * with a central in-memory "database" that can dump the state of all
  * live ACE objects (e.g., from within a debugger).
@@ -39,7 +38,6 @@
  *
  * 2. Adding support to allow particular classes of objects to
  *  be selectively dumped.
- *
  *
  *  @author Doug Schmidt
  */

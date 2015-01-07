@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the constant class generating code in the client header.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

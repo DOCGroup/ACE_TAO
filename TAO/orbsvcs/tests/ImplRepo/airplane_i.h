@@ -10,7 +10,6 @@
  *  An excellent book to have!  I personally recommend getting it just
  *  for the wing-flappers.
  *
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================

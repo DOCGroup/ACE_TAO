@@ -7,7 +7,6 @@
  *  Abstract class whose methods are implemented by the derived
  *  classes.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

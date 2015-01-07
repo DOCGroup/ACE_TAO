@@ -8,7 +8,6 @@
  *   This one generates code for private part of the union class for the union
  *   members in the client header.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

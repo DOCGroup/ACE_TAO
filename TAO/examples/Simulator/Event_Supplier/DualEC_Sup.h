@@ -6,7 +6,6 @@
  * Event supplier for visualization of scheduling behavior, using
  * arrival and dispatch data logged by an EC dispatch command object
  *
- *
  *  @author Chris Gill (cdgill@cs.wustl.edu) Adapted from the orginal DOVE simulation event supplier written by Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================

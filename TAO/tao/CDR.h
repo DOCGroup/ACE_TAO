@@ -29,7 +29,6 @@
  *   THREADING NOTE: CDR data structures must be protected against
  *   concurrent access by their owning thread.
  *
- *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  Aniruddha Gokhale
  *  @author  Carlos O'Ryan

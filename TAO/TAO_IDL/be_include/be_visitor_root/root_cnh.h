@@ -8,7 +8,6 @@
  *  This one provides code generation for elements of the Root node in the
  *  CIAO connector impl header.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

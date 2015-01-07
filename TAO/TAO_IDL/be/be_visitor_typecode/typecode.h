@@ -5,7 +5,6 @@
  *
  *  Visitors for generation of code for TypeCodes for various types
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

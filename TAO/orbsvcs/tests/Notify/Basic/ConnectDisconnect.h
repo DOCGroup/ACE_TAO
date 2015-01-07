@@ -5,7 +5,6 @@
  *
  * Test connect-disconnect methods of Notify.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

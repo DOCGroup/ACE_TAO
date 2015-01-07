@@ -7,7 +7,6 @@
  *  Concrete visitor for the Root class
  *  This one provides the generic visitor for the Root node.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

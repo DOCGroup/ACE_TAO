@@ -8,7 +8,6 @@
  *  This one provides code generation for the buffer type of the Sequence
  *  node.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

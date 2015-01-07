@@ -304,7 +304,6 @@ public:
  * @brief This class provides concrete implementation for
  *     <ACE_Asynch_Write_Stream::Result> on POSIX platforms.
  *
- *
  *     This class has all the information necessary for the
  *     @c handler to uniquiely identify the completion of the
  *     asynchronous write.
@@ -582,7 +581,6 @@ private:
  *
  * @brief This is that class which will be passed back to the
  *     handler when the asynchronous accept completes.
- *
  *
  *     This class has all the information necessary for the
  *     handler to uniquiely identify the completion of the

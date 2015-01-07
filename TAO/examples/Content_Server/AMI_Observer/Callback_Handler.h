@@ -7,7 +7,6 @@
  *   Header file for the Web_Server::AMI_CallbackHandler
  *   implementation.
  *
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

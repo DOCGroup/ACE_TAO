@@ -5,7 +5,6 @@
  *
  *  This provides code generation for facets in the exec impl header,
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

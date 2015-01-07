@@ -13,7 +13,6 @@
  * add suboid() method remove unnecessary overload, and update a few
  * names and types to improve clarity.
  *
- *
  *  @author Peter E Mellquist
  */
 //=============================================================================

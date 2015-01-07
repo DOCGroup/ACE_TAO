@@ -5,7 +5,6 @@
  *
  *  Visitor for generating code for IDL operations in client header
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

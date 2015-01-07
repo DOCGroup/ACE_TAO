@@ -6,7 +6,6 @@
  *
  *   Classes that marshal various IDL data types.
  *
- *
  *  @author  Aniruddha S. Gokhale
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Visitors for generation of code for Interface
  *
- *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */
 //=============================================================================

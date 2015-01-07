@@ -6,7 +6,6 @@
  *  Base class visitor for the AMI4CCM reply handler
  *  implementation concrete visitors.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

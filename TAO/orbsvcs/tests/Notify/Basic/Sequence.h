@@ -5,7 +5,6 @@
  *
  * Test Sequence support in Notification.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

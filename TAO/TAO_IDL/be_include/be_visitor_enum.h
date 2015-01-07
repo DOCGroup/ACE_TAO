@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the enum class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

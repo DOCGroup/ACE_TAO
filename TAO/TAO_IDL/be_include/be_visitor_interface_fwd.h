@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the interface_fwd class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *   Tests unbounded short sequence
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

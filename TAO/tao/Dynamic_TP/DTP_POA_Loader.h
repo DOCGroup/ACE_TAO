@@ -6,7 +6,6 @@
  *
  *   Header file for Loading DynamicTP.
  *
- *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

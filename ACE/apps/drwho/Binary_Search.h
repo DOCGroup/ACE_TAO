@@ -6,7 +6,6 @@
  *
  *  Defines a binary search abstraction for friend records.
  *
- *
  *  @author Douglas C. Schmidt
  */
 //=============================================================================

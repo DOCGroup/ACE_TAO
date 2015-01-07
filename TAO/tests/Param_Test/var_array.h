@@ -5,7 +5,6 @@
  *
  *   Tests arrays whose base types are of variable size
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

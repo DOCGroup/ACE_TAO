@@ -28,7 +28,6 @@ template<class Target> class TAO_ESF_Worker;
  *
  * @brief Implement the Copy_On_Read protocol
  *
- *
  * The class is parametric on the kind of collection and locking
  * mechanism used.
  */

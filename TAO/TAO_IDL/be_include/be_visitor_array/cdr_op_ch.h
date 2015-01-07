@@ -6,7 +6,6 @@
  *  Visitors for generation of code for Arrays in client header. This one
  *  generates the CDR operators.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -36,7 +36,6 @@ class TAO_EC_ProxyPushSupplier;
  *
  * @brief Implement the RtecEventChannelAdmin::SupplierAdmin interface.
  *
- *
  * <H2>Memory Management</H2>
  * It does not assume ownership of the TAO_EC_Event_Channel_Base object
  */

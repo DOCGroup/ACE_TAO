@@ -5,7 +5,6 @@
  *
  *  The classe define the templates for the client and server.
  *
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

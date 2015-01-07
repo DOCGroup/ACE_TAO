@@ -6,7 +6,6 @@
  *
  * Define an appropriate set of min()/max() functions using templates.
  *
- *
  *  @author Derek Dominish <Derek.Dominish@Australia.Boeing.com>
  */
 //=============================================================================

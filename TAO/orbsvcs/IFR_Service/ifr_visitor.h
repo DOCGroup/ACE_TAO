@@ -6,7 +6,6 @@
  *
  *  The Interface Repository administration visitor base class.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

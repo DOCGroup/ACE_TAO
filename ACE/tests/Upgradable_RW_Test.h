@@ -7,7 +7,6 @@
  *  compiler "features" related to template instantiation...  It is
  *  only used by Upgradable_RW_Test.cpp.
  *
- *
  *  @author Michael Kircher <mk1@cs.wustl.edu>
  */
 //=============================================================================

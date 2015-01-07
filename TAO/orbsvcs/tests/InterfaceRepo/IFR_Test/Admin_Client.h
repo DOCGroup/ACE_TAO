@@ -8,7 +8,6 @@
  *  IR objects into the repository by hand, querying them, moving them,
  *  and destroying them.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

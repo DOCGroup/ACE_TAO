@@ -6,7 +6,6 @@
  * Test to check if <offer_change> and <subscription_change> messages are
  * received correctly.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

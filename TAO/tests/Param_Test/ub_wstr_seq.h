@@ -5,7 +5,6 @@
  *
  *   Tests sequences of wide strings
  *
- *
  *  @author   Jeff Parsons
  */
 //=============================================================================

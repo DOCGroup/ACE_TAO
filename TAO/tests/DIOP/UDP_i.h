@@ -8,7 +8,6 @@
  *  We support only single threaded servers, as we have a null mutex
  *  for locking our state.
  *
- *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
 //=============================================================================

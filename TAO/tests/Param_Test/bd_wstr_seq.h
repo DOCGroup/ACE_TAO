@@ -5,7 +5,6 @@
  *
  *   Tests bounded sequences of wide strings
  *
- *
  *  @author   Jeff Parsons
  */
 //=============================================================================

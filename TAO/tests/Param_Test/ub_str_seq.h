@@ -5,7 +5,6 @@
  *
  *   Tests sequences of strings
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

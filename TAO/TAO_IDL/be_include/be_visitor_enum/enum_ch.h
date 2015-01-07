@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for Enums generating code in the client header.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *    This file contains class definitions needed for template
  *    instantiation in the MT_Reactor_Timer_Test.cpp file.
  *
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

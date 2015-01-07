@@ -6,7 +6,6 @@
  *
  *  Defines the implementation header for the Broadcaster interface.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

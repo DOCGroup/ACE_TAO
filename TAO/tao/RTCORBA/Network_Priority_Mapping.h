@@ -7,7 +7,6 @@
  *  Class that declares the Network Priority Mapping
  *  that can be overriden to provide different mappings
  *
- *
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
 //=============================================================================

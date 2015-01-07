@@ -34,7 +34,6 @@
  *  multiple peerd processes can already work together to play these
  *  different roles.
  *
- *
  *  @author Douglas C. Schmidt
  */
 //=============================================================================

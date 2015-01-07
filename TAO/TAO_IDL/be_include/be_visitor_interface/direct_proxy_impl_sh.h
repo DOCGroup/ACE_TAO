@@ -6,7 +6,6 @@
  *   visitor handle the generation of the proxy
  *   implementations Direct clas.
  *
- *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
 //=============================================================================

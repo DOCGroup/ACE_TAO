@@ -6,7 +6,6 @@
  *
  *  Implementation of the DsLogAdmin::BasicLog interface.
  *
- *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @David A. Hanvey <d.hanvey@qub.ac.uk>

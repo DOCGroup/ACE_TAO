@@ -7,7 +7,6 @@
  *
  * Well known Oids defined in RFC 1215
  *
- *
  *  @author Peter E Mellquist
  */
 //=============================================================================

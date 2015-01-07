@@ -6,7 +6,6 @@
  *  Concrete visitor for the Interface Forward node.
  *  This one provides code generation for interface forward node.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

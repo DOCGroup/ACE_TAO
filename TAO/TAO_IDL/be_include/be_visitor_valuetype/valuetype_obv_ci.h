@@ -7,7 +7,6 @@
  *  This one provides code generation for valuetype OBV_ class
  *  in the (client) header.
  *
- *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  *  @author based on code from Aniruddha Gokhale
  */

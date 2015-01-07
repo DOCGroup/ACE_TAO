@@ -6,7 +6,6 @@
  *
  *  This class implements the client calls to the Time example.
  *
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

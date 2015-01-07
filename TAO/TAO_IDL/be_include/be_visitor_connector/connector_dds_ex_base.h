@@ -5,7 +5,6 @@
  *
  *  Base class visitor for the DDS Connector node.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

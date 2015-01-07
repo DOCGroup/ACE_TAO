@@ -6,7 +6,6 @@
  *
  *  IIOP specific acceptor processing
  *
- *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */

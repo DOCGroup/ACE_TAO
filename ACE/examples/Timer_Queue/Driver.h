@@ -8,7 +8,6 @@
  *  This code builds an abstraction to factor out common code for
  *  the different implementations of the Timer_Queue.
  *
- *
  *  @author Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *  This class implements a simple CORBA server that keeps
  *   on sending stock values to the Notifier.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the be_structure_fwd class
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

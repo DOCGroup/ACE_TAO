@@ -4,7 +4,6 @@
  *
  * In this file we set the compile time defaults for the framework.
  *
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  *  http://doc.ece.uci.edu/~coryan/EC/index.html

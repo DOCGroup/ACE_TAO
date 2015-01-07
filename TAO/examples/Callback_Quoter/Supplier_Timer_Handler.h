@@ -6,7 +6,6 @@
  *
  *  Definition of the Supplier_Timer_Handler class.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

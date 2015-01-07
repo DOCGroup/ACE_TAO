@@ -6,7 +6,6 @@
  *  Concrete visitor for the Valuetype Forward node.
  *  This one provides code generation for valuetype forward node.
  *
- *
  *  @author Torsten Kuepper based on code from Aniruddha Gokhale
  */
 //=============================================================================

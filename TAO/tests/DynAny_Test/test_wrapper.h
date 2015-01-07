@@ -5,7 +5,6 @@
  *
  *  Header file for the DynAny basic test manager
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

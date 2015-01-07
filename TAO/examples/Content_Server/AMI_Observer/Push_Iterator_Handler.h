@@ -6,7 +6,6 @@
  *
  *   Header file for the AMI_Iterator_FactoryHandler implementation.
  *
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

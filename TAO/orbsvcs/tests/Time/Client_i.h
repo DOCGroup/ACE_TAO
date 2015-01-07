@@ -7,7 +7,6 @@
  *  This class implements a simple CORBA client that accesses a Time Service
  *  server.
  *
- *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
 //=============================================================================

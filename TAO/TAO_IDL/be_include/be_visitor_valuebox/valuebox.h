@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the Valuebox node.
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================

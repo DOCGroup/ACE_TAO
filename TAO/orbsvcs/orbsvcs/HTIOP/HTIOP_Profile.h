@@ -6,7 +6,6 @@
  *
  *   HTIOP profile specific processing
  *
- *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *  Concrete visitor for the DDS Connector node.
  *  This provides for code generation in the exec impl source.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

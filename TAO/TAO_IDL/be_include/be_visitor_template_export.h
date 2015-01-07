@@ -10,7 +10,6 @@
  *  Studio C++ (.NET 2002, .NET 2003, and Express 2005), documented in
  *  http://support.microsoft.com/default.aspx?scid=kb;en-us;309801
  *
- *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

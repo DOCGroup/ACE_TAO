@@ -6,7 +6,6 @@
  *
  *  The abstract AST visitor base class.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

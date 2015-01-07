@@ -7,7 +7,6 @@
  *  This one provides code generation for interfaces in the client
  *  header.
  *
- *
  *  @author Mayur Deshpande
  */
 //=============================================================================

@@ -8,7 +8,6 @@
  *   ACE_Blob_Writer which are created in response to calls to
  *   read/write, as appropriate
  *
- *
  *  @author Prashant Jain and Sumedh Mungee
  */
 //=============================================================================

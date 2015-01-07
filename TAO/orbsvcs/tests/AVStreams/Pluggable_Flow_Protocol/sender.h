@@ -7,7 +7,6 @@
  *  This application reads data from a file and sends it to s
  *  receiver.
  *
- *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
 //=============================================================================

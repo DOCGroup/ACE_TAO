@@ -9,7 +9,6 @@
  *  (actually just their declarations) for the valuetype forward
  *  declaration in the client inline.
  *
- *
  *  @author Boris Kolpackov <bosk@ipmce.ru> based on code from Torsten Kuepper based on code from Aniruddha Gokhale & Carlos O'Ryan
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *  This provides for code generation for the Servant
  *  class definition
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *   Defines a ServantActivator class, used with a POA having a
  *   RETAIN policy
  *
- *
  *  @author  Irfan Pyarali  Michael Kircher
  */
 //=============================================================================

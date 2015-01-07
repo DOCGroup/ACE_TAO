@@ -7,7 +7,6 @@
  *  This application receives data from a AV sender and writes it to
  *  a file.
  *
- *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
 //=============================================================================

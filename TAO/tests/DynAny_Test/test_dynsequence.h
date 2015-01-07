@@ -4,7 +4,6 @@
  *
  *  Header file for class to test DynSequence.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

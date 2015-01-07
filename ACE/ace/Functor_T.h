@@ -12,7 +12,6 @@
  *   method, while the STL-style functors are invoked via an
  *   <operator()> method.
  *
- *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  *  @author Based on Command Pattern implementations originally done by
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>

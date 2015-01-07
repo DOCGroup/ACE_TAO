@@ -5,7 +5,6 @@
  *
  * A couple of useful functions
  *
- *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
 //=============================================================================

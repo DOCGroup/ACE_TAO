@@ -7,7 +7,6 @@
  *  Extension of class AST_UnionFwd that provides additional
  *  means for C++ mapping of a union.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

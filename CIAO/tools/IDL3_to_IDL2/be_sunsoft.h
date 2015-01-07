@@ -6,7 +6,6 @@
  *
  *  SunSoft specific backend output generation
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

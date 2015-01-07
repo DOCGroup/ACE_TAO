@@ -5,7 +5,6 @@
  *
  * Tests system and user exceptions
  *
- *
  *  @author Carlos O'Ryan
  */
 //=============================================================================

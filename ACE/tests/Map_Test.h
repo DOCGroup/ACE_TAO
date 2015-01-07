@@ -8,7 +8,6 @@
  * Map_Test.cpp.  They have to be in a separate file so AIX xlC can
  * find them at auto-instantiate time.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

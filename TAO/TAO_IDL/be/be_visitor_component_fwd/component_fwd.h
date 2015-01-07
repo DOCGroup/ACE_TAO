@@ -5,7 +5,6 @@
  *
  *  Visitors for generation of code for forward declared Component
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

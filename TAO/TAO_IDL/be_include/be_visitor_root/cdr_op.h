@@ -8,7 +8,6 @@
  *  This one provides code generation for the CDR operators for elements of
  *  the Root scope.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the Exception class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

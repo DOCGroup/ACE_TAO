@@ -9,7 +9,6 @@
  *  of a '#pragma ciao ami4ccm receptacle' directive in
  *  the component's IDL file.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

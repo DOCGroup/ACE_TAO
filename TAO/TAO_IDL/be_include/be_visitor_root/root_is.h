@@ -7,7 +7,6 @@
  *  This one provides code generation for elements of the Root node in the
  *  implementation skeletons.
  *
- *
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */
 //=============================================================================

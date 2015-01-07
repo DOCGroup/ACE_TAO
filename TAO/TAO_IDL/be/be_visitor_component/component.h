@@ -5,7 +5,6 @@
  *
  *  Visitors for generation of code for Component.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

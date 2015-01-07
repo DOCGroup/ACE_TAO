@@ -6,7 +6,6 @@
  *  This provides code generation in the exec impl source for
  *  the attribute members' initialization in the constructor.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

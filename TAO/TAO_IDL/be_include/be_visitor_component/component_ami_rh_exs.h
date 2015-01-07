@@ -7,7 +7,6 @@
  *  This provides for code generation of the AMI4CCM reply
  *  handler implementation source.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

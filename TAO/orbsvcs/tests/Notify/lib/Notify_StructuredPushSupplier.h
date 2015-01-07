@@ -6,7 +6,6 @@
  * This class is to be used by clients of the Notification Service
  * to implement Structured Push Suppliers.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

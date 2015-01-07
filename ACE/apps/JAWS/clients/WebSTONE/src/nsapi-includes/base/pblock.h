@@ -14,7 +14,6 @@
 /*
  * pblock.h: Header for Parameter Block handling functions
  *
- *
  * A parameter block is a set of name=value pairs which are generally used
  * as parameters, but can be anything. They are kept in a hash table for
  * reasonable speed, but if you are doing any intensive modification or

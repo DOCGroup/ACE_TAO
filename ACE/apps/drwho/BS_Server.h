@@ -6,7 +6,6 @@
  *
  *  Provides the server's binary search lookup table abstraction.
  *
- *
  *  @author Douglas C. Schmidt
  */
 //=============================================================================

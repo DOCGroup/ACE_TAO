@@ -6,7 +6,6 @@
  *  Concrete visitor for the Component node.
  *  Provides code generation for components in the CIAO executor IDL
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

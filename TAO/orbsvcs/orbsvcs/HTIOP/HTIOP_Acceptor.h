@@ -6,7 +6,6 @@
  *
  *  HTIOP specific acceptor processing
  *
- *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
 //=============================================================================

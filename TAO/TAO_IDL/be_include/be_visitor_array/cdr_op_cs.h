@@ -9,7 +9,6 @@
  *  recursive type, they must also be generated in the .cpp file. That is
  *  the sole purpose of this visitor type.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

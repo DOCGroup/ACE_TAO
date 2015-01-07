@@ -6,7 +6,6 @@
  *
  *  Contains classes that do the work of the client side of the Quoter Test
  *
- *
  *  @author Darrell Brunsch
  */
 //=============================================================================

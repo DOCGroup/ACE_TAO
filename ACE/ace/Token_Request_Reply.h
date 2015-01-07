@@ -7,7 +7,6 @@
  *   Define the format used to exchange messages between the
  *   ACE_Token Server and its clients.
  *
- *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */

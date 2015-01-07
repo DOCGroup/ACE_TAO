@@ -6,7 +6,6 @@
  *
  *   Options is an Singleton for blobby
  *
- *
  *  @author Prashant Jain and Sumedh Mungee
  */
 //=============================================================================

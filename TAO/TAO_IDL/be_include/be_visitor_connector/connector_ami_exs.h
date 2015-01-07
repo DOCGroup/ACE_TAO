@@ -6,7 +6,6 @@
  *  Concrete connector_ami_exs for the AMI4CCM Connector node.
  *  This provides for code generation in the exec impl source
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

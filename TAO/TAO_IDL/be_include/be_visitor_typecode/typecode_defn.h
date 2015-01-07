@@ -7,7 +7,6 @@
  *  Concrete visitor for the generation of TypeCodes.
  *  This one generates the definitions.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

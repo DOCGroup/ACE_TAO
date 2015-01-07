@@ -8,7 +8,6 @@
  *  This code exercises the <ACE_Thread_Timer_Queue_Adapter> using
  *  an <ACE_Timer_Heap_T>.
  *
- *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================

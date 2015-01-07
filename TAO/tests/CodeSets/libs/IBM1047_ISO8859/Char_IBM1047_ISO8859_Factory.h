@@ -8,7 +8,6 @@
  *  one loads a modified version of ACE's IBM1047 (EBCDIC) to ISO8859 (ASCII)
  *  translator.
  *
- *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

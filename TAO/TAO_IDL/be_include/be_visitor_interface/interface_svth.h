@@ -7,7 +7,6 @@
  *  This provides for code generation in the CIAO
  *  servant header
  *
- *
  *  @author Marcel Smit
  */
 //=============================================================================

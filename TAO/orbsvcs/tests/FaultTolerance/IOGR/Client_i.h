@@ -6,7 +6,6 @@
  *
  *  A helper class for the client
  *
- *
  *  @author  Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

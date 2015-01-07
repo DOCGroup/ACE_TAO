@@ -9,7 +9,6 @@
  *  emits, publishes and consumes declarations,
  *  and adds the nodes to the AST.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

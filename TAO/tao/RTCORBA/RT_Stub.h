@@ -6,7 +6,6 @@
  *
  *  This file contains the declaration for the RTCORBA Stub.
  *
- *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */

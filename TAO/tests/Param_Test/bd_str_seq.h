@@ -5,7 +5,6 @@
  *
  *   Tests bounded sequences of strings
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

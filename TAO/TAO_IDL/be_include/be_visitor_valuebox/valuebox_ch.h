@@ -7,7 +7,6 @@
  *  Concrete visitor for the Valuebox node.
  *  This provides code generation for valueboxes in the client header.
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================

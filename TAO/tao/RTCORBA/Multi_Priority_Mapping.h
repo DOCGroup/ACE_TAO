@@ -7,7 +7,6 @@
  *
  * Declares a priority mapping to support cross platform communication.
  *
- *
  *  @author Brian Mendel (brian.r.mendel@boeing.com)
  */
 //=============================================================================

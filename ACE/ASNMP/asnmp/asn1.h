@@ -10,7 +10,6 @@
  * This implements a subset of the above International Standards that
  * is sufficient to implement SNMP.
  *
- *
  *  @author Steve Waldbusser/CMU ?
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Encapsulation of rules for declaring C++ class members
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

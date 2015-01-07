@@ -6,7 +6,6 @@
  *
  *  Definitions for Network_Adapters_Test.cpp.
  *
- *
  *  @author Robert S. Iakobashvili <roberti@go-WLAN.com> <coroberti@walla.co.il> Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> made aceing
  */
 //=============================================================================

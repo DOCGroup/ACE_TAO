@@ -12,7 +12,6 @@
  * Those assumptions are pretty good these days, with Crays being
  * the only known exception.
  *
- *
  *  @author TAO version by
  *  @author Aniruddha Gokhale <gokhale@cs.wustl.edu>
  *  @author Carlos O'Ryan<coryan@cs.wustl.edu>

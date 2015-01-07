@@ -14,7 +14,6 @@
  *  Non-templatized classes for implementing the GoF Command Pattern,
  *  also known as functors or function objects.
  *
- *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  *  @author Based on Command Pattern implementations originally done by
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>

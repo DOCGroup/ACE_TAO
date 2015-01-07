@@ -6,7 +6,6 @@
  *
  *  This class is an implementation of the Nestea Bookshelf interface.
  *
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================

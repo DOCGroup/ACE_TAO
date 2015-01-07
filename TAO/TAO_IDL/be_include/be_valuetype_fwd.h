@@ -7,7 +7,6 @@
  *  Extension of class AST_Interface_Fwd that provides additional
  *  means for C++ mapping of a valuetype.
  *
- *
  *  @author Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author Aniruddha Gokhale
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>

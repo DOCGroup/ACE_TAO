@@ -6,7 +6,6 @@
  *
  *  Timeout Handler for AMI timeouts
  *
- *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
 //=============================================================================

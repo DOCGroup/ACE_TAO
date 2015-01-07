@@ -7,7 +7,6 @@
  *  Visitors for generation of code for Arguments. These are used for the
  *  interpretive styled stubs and skeletons
  *
- *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */
 //=============================================================================

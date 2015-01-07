@@ -6,7 +6,6 @@
  *
  *   DIOP profile specific processing
  *
- *
  *  @author  Michael Kircher
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the native class
  *
- *
  *  @author Johnny Willemsen
  */
 //=============================================================================

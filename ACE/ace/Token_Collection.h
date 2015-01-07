@@ -12,7 +12,6 @@
  *
  *  The atomic group operations are not yet implemented.
  *
- *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */

@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the forward declared component class.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

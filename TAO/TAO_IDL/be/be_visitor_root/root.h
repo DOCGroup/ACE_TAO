@@ -5,7 +5,6 @@
  *
  *  Visitors for generation of code for Root
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

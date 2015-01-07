@@ -8,7 +8,6 @@
  *  header file to work around AIX C++ compiler "features" related
  *  to template instantiation...
  *
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *
  *  Header file for class ifr_removing_visitor.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

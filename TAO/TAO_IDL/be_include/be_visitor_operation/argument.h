@@ -6,7 +6,6 @@
  *  Visitor for generating code for IDL operations. This is a generic visitor
  *  that calls visitors for the Argument class.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

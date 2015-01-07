@@ -6,7 +6,6 @@
  *
  *  This visitor creates the explicit home interface
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

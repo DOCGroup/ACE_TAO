@@ -5,7 +5,6 @@
  *
  *  Encapsulation of rules for generating null return values
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

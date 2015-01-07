@@ -5,7 +5,6 @@
  *
  *  Visitor for generating code for IDL operations for the TIE class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

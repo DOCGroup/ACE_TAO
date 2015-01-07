@@ -6,7 +6,6 @@
  *  Visitor for generating code skelton code for IDL operations
  *  of AMI Reply Handlers.
  *
- *
  *  @author Michael Kircher
  */
 //=============================================================================

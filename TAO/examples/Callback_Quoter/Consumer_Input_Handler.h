@@ -6,7 +6,6 @@
  *
  *  Definition of the Callback_Qouter Consumer Client class, Consumer_Input_Handler.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

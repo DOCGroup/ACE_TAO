@@ -5,7 +5,6 @@
  *
  *  Visitors for generation of code for Valuetype_Fwd
  *
- *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *  Emits 'return x;' for all CORBA types and ACE-supported
  *  platforms.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *
  *  StructDef & UnionDef support class.
  *
- *
  *  @author Simon Massey <sma@prismtech.com>
  */
 //=============================================================================

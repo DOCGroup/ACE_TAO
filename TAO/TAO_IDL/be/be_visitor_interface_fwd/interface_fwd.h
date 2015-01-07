@@ -5,7 +5,6 @@
  *
  *  Visitors for generation of code for Interface_Fwd
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

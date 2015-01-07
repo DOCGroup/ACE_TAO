@@ -8,7 +8,6 @@
  *  it in a .h file for template instantiation (such as AIX C Set
  *  ++).
  *
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

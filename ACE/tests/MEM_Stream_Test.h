@@ -8,7 +8,6 @@
  * MEM_Stream_Test.cpp.  They have to be in a separate file so AIX xlC can
  * find them at auto-instantiate time.
  *
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

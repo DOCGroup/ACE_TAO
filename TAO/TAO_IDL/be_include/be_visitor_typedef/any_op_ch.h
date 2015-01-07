@@ -9,7 +9,6 @@
  *  This provides the code generation for the Any operators of the Typedef
  *  class in the client header.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

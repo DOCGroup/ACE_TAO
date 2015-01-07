@@ -10,7 +10,6 @@
  *  context information will be passed to the abstract/concrete visitor
  *  factory which in turn will use it to construct the right visitor.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

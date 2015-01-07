@@ -8,7 +8,6 @@
  *  This provides the code generation for the CDR operators of the Typedef
  *  class in the client stubs.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

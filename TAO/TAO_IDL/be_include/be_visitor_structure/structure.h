@@ -7,7 +7,6 @@
  *  Concrete visitor for the STRUCTURE class
  *  This one provides the generic visitor for the Structure node.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

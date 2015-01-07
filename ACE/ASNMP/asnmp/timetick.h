@@ -7,7 +7,6 @@
  *
  * Class definition for SMI Timeticks class.
  *
- *
  *  @author Michael R. MacFaden <mrm@cisco.com>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *  Concrete visitor for the base "BE_Union_Branch" node
  *  This generates code for structure members in the client header.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

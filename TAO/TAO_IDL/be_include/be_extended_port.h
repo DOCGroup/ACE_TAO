@@ -6,7 +6,6 @@
  *
  *  Extension of class AST_Extended_Port for C++ code generation.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

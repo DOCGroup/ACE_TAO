@@ -6,7 +6,6 @@
  *
  *   GIOP utility definitions
  *
- *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author  Carlos O' Ryan <coryan@uci.edu>
  */

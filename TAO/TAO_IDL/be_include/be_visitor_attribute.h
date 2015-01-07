@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the Attribute class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the Home class
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

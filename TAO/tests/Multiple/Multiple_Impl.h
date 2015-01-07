@@ -5,7 +5,6 @@
  *   This file contains the servant implementation used to test the
  *   new collocation collocation scheme.
  *
- *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
 //=============================================================================

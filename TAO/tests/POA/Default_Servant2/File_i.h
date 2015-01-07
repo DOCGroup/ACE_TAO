@@ -6,7 +6,6 @@
  *    Defines the implementation classes for the File IDL
  *   module
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

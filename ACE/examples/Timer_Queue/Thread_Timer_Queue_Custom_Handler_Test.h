@@ -8,7 +8,6 @@
  *  an <ACE_Timer_Heap_T>. It also demonstrates using a custom handler for
  *  timer events.
  *
- *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu> and Alon Diamant <diamant.alon@gmail.com>
  */
 //=============================================================================

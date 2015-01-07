@@ -1778,7 +1778,6 @@ private:
  * does not impose any restriction on how that ordering operator is
  * implemented.  The set is implemented as a linked list.
  *
- *
  * <b> Requirements and Performance Characteristics</b>
  *   - Internal Structure
  *       Double linked list

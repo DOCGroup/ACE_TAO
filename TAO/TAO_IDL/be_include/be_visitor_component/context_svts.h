@@ -7,7 +7,6 @@
  *  This provides for code generation for the Context
  *  class definition
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

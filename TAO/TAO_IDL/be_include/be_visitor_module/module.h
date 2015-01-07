@@ -7,7 +7,6 @@
  *  Concrete visitor for the Module class
  *  This one provides the generic visitor for the Module node.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

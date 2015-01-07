@@ -6,7 +6,6 @@
  *
  *  This class implements the  interface calls for RMI.
  *
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

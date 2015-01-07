@@ -6,7 +6,6 @@
  *
  *  Extension of class AST_PortType for C++ code generation.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

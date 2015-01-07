@@ -8,7 +8,6 @@
  *   This one generates code for accessor and modifier functions of
  *   valuetype state members (in the inline file).
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

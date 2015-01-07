@@ -6,7 +6,6 @@
  *
  *  This class implements IOR interface to the ORB
  *
- *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================

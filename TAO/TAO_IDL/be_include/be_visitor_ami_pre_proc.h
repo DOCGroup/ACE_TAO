@@ -9,7 +9,6 @@
  *  sets the corresponding interface or operation strategy
  *  on it and enteres the nodes into the AST.
  *
- *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
 //=============================================================================

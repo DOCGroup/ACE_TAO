@@ -8,7 +8,6 @@
  *  This provides code generation for the module in the header
  *  for the OBV_ namespace
  *
- *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
 //=============================================================================

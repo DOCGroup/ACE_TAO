@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the Module class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

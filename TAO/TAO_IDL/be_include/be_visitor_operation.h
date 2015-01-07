@@ -6,7 +6,6 @@
  *
  *  Concrete visitor for the Operation class
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

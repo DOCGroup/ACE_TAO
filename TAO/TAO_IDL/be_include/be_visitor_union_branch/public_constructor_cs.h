@@ -7,7 +7,6 @@
  *   Visitor for the Union class.
  *   This one generates code for the constructor of the union class
  *
- *
  *  @author Johnny Willemsen
  */
 //=============================================================================

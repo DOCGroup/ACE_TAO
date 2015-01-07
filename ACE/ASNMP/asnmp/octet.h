@@ -10,7 +10,6 @@
  * SNMP libraries. This class is portable across any platform
  * which supports C++.
  *
- *
  *  @author Peter E Mellquist  / design/original code Michael R. MacFaden / modified for ACE
  */
 //=============================================================================

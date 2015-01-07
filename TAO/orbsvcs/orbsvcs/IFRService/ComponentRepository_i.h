@@ -7,7 +7,6 @@
  *
  *  ComponentRepository servant class.
  *
- *
  *  @author Jeff Parsons <j.parsons@vanderbiltl.edu>
  */
 //=============================================================================

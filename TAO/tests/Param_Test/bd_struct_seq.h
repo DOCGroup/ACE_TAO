@@ -5,7 +5,6 @@
  *
  *   Tests bounded struct sequence
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

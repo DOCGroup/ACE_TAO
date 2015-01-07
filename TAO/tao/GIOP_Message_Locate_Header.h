@@ -6,7 +6,6 @@
  *
  *   Some assorted GIOP structure mappings
  *
- *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

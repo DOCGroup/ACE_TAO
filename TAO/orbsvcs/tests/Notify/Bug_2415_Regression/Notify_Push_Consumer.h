@@ -5,7 +5,6 @@
  *
  * A push consumer implementation.
  *
- *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
 //=============================================================================

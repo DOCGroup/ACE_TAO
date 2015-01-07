@@ -8,7 +8,6 @@
  *   This one generates code for public part of the union class for the union
  *   members in the client stubs.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

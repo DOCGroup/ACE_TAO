@@ -8,7 +8,6 @@
  *  specific to FT service. The TAO_ORB_Core holds an instance of this
  *  class.
  *
- *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

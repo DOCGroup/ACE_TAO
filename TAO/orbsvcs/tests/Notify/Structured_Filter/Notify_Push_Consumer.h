@@ -5,7 +5,6 @@
  *
  * A structured push consumer implementation.
  *
- *
  *  @author Chip Jones <jones_c@ociweb.com>
  */
 //=============================================================================

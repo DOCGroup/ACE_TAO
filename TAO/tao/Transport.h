@@ -313,7 +313,6 @@ namespace TAO
  * careful usages of the terms "blocking in the Reactor" as opposed to
  * "return back to the Reactor".
  *
- *
  * <B>See Also:</B>
  *
  * http://htmlpreview.github.com/?https://github.com/DOCGroup/ATCD/blob/master/TAO/docs/pluggable_protocols/index.html

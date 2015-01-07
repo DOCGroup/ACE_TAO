@@ -8,7 +8,6 @@
  *  converts a Name to a string and viceversa, forms a IIOPNAME
  *  url address and can resolve a stringified name.
  *
- *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================
