@@ -1,7 +1,7 @@
 /**
  * @file Container_Base.idl
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * $Id$
+ * 
  * Container local interface.
  */
 

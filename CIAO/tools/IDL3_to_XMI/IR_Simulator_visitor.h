@@ -1,7 +1,7 @@
 /**
  * @file IR_Simulator_visitor.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * $Id$
+ * 
  * Implements a visitor that generates XMI for the CARDAMOM
  * code generation facility.
  *

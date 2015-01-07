@@ -1,5 +1,5 @@
 /**
- * $Id$
+ * 
  * @file Plan_Launcher_Base_Impl_T.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *

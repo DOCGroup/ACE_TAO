@@ -3,7 +3,7 @@
  * @author William R. Otte
  *
  * Operations common to all CIAO handlers.
- * $Id$
+ * 
  */
 #ifndef CIAO_HANDLER_COMMON_H
 #define CIAO_HANDLER_COMMON_H

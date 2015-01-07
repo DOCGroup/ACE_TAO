@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# $Id$
 """ This script facilitates the update of binaries in a given DAnCE package.
     Note that it DOES NOT modify meta-data, only blindly replacing existing
     binaries that match by name EXACTLY"""

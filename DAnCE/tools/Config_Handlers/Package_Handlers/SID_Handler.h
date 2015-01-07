@@ -2,7 +2,7 @@
  * @file SID_Handler.h
  * @author William Otte <wotte@dre.vanderbilt.edu>
  *
- * $Id$
+ * 
  */
 
 

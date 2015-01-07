@@ -1,6 +1,6 @@
 /**
  * @file GPS_exec.h
- * $Id$
+ * 
  * Header file for the GPS component implementation.
  *
  */

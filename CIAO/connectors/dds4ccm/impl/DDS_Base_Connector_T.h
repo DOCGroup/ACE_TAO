@@ -1,7 +1,7 @@
 /**
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  *
- * $Id$
+ * 
  */
 #ifndef DDS_BASE_CONNECTOR_T_H_
 #define DDS_BASE_CONNECTOR_T_H_

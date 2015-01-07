@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!--  -->
 <!-- Default QoS specification for NDDS logger. -->
 <dds>
   <qos_library name="DAnCE">

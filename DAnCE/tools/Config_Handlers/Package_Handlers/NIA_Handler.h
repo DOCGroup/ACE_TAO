@@ -1,7 +1,7 @@
 /**
  * @file NIA_Handler.h
  * @author William Otte <wotte@dre.vanderbilt.edu>
- * $Id$
+ * 
  */
 
 #ifndef CIAO_PACKAGING_NIA_HANDLER_H

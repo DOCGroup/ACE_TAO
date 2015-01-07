@@ -2,7 +2,7 @@
  * @file Comp_Intf_Descr_Handler.h
  * @author William Otte <wotte@dre.vanderbilt.edu>
  *
- * $Id$
+ * 
  */
 
 #ifndef CIAO_PACKAGING_COMP_INTF_DESCR_HANDLER_H
