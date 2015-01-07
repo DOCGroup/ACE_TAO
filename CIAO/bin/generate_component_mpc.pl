@@ -286,8 +286,7 @@ else {
 
 }
 
-$mpc_template = '// $Id$
-// This file is generated with "'."generate_component_mpc.pl $flags".'"
+$mpc_template = '// This file is generated with "'."generate_component_mpc.pl $flags".'"
 
 project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults' . "$base_projs" . '{
   custom_only = 1'."

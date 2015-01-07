@@ -1,7 +1,5 @@
 #!/pkg/gnu/bin//perl5
 #
-#$Id$
-#
 
 $testbed = "conf/testbed";
 
