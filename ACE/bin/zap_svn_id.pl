@@ -66,5 +66,6 @@ BEGIN{undef $/;} s/ \*  \n/ \*\n/smg;
 BEGIN{undef $/;} s/\*\n\*  \n\*\n/\*\n/smg;
 BEGIN{undef $/;} s/ \*\n \*\n \*\n/ \*\n/smg;
 BEGIN{undef $/;} s/ \*\n \*\/\n/ \*\/\n/smg;
+BEGIN{undef $/;} s/\/\/  \n/\/\/\n/smg;
 
 

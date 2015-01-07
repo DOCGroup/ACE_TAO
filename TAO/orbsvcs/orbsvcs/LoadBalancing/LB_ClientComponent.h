@@ -4,8 +4,6 @@
 /**
  * @file LB_ClientComponent.h
  *
- *
-
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

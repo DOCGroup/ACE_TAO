@@ -4,8 +4,6 @@
 /**
  * @file LB_ObjectReferenceFactory.h
  *
- *
-
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================
