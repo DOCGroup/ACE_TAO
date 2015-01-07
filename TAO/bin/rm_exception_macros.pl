@@ -5,7 +5,6 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 # ******************************************************************
 #      Author: Chad Elliott
 #        Date: 1/24/2007
-#         
 # Description: This script attempts to remove the ACE related exception
 #              macros from source code provided on the comand line.  It
 #              is not perfect, but does handle a large number of cases.
