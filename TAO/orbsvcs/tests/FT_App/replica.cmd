@@ -1,4 +1,4 @@
-@REM $Id$
+@REM 
 
 @if "%1a" == "a" goto error
 @if "%2a" == "a" goto error
