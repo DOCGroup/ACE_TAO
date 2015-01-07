@@ -1,4 +1,4 @@
-/* 
+/*
  * Codeset registry DB, generated Fri Feb 28 21:01:30 2003
  * source: code_set_registry1.2g.txt
  *

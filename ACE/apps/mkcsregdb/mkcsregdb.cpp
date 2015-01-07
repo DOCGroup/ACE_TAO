@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * To populate the registry_db, construct a codeset registry text file based
  * on the OSF's Character and Code Set Registry. See DCE RFC 40.1 for details
