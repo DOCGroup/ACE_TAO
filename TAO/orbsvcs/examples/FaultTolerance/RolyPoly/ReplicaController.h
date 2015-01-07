@@ -1,7 +1,5 @@
 // file      : RolyPoly/ReplicaController.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef REPLICA_CONTROLLER_H
 #define REPLICA_CONTROLLER_H
 

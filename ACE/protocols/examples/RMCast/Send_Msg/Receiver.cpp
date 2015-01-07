@@ -1,7 +1,5 @@
 // file      : Receiver.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
-
 #include "ace/Vector_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"

@@ -1,7 +1,5 @@
 // file      : Agent.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #include <ace/streams.h>
 #if defined(ACE_USES_OLD_IOSTREAMS)
 #  if defined(_MSC_VER)

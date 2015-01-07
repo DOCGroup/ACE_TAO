@@ -13,7 +13,8 @@ eval '(exit $?0)' && eval 'exec perl -pi -S $0 ${1+"$@"}'
 # full path to perl, as long as it is in the user's PATH.
 # Taken from perlrun man page.
 
-#undef $/; $s = <>; $s =~ s/ \*\n \* \$Id\$\n \*\n/ \*\n/m; print $s
+# Replace the old cvs-id tag with nothing
+BEGIN{undef $/;} s/cvs-id    : //smg;
 # Replace a single doxygen style with two spaces before the Id with one space
 BEGIN{undef $/;} s/ \*\n \*  \$Id\$\n \*\n/ \*\n \* \$Id\$\n \*\n/smg;
 # Replace a three line doxygen style Id tag with just line *
@@ -42,3 +43,4 @@ BEGIN{undef $/;} s/\/\/ -\*- C\+\+ -\*-  \$Id\$\n/\/\/ -\*- C\+\+ -\*-\n/smg;
 BEGIN{undef $/;} s/\/\/ -\*- C\+\+ -\*- \$Id\$\n/\/\/ -\*- C\+\+ -\*-\n/smg;
 # Replace a three line doxygen style Id tag with just line *
 BEGIN{undef $/;} s/\/\*\n \* \$Id\$\n \*\n/\/\*\n/smg;
+

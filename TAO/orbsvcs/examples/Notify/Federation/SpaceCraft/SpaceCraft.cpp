@@ -1,7 +1,5 @@
 // file      : SpaceCraft.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #include "tao/corba.h"
 
 #include "orbsvcs/CosNotificationC.h"

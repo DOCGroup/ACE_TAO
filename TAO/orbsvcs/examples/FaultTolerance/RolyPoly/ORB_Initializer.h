@@ -1,7 +1,5 @@
 // file      : RolyPoly/ORB_Initializer.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef ORB_INITIALIZER_H
 #define ORB_INITIALIZER_H
 

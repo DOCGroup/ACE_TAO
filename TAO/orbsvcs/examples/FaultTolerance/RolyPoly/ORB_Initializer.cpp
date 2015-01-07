@@ -1,7 +1,5 @@
 // file      : RolyPoly/ORB_Initializer.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #include "ace/Auto_Ptr.h"
 #include "tao/corba.h"
 #include "tao/PI/ORBInitInfo.h"

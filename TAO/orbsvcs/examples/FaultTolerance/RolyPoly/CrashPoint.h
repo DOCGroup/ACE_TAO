@@ -1,7 +1,5 @@
 // file      : RolyPoly/CrashPoint.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef CRASH_POINT_H
 #define CRASH_POINT_H
 

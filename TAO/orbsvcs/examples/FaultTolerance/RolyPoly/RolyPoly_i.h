@@ -1,7 +1,5 @@
 // file      : RolyPoly/RolyPoly_i.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef ROLY_POLY_I_H
 #define ROLY_POLY_I_H
 

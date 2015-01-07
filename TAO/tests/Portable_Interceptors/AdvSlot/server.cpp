@@ -1,6 +1,4 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
-
 #include "tao/LocalObject.h"
 #include "tao/ORBInitializer_Registry.h"
 

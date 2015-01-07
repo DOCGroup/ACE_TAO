@@ -1,7 +1,5 @@
 // file      : RolyPoly/ReplicaController.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/DynamicC.h"

@@ -1,6 +1,4 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
-
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "tao/PI/PI.h"
