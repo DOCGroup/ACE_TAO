@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for the Constant node in the client header.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

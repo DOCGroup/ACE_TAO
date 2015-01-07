@@ -6,7 +6,6 @@
  *  Visitor generating code for CDR operators for interfaces. This uses
  *  compiled marshaling.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

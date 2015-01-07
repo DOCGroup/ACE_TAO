@@ -2,11 +2,9 @@
 /**
  *  @file    Removals.cpp
  *
- *
  *  Tests the Reactor's ability to handle simultaneous events.  If
  *  you pass anything on the command-line, then each handler
  *  requests to be removed from the Reactor after each event.
- *
  *
  *  @author Tim Harrison Irfan Pyarali
  */

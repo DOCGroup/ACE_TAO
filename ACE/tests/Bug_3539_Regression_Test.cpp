@@ -6,7 +6,6 @@
  *  This test is similar to TSS_Test but it's a bit simpler and it uses
  *  ACE_TSS in a main() thread. It uses TSS_Test_Errno.h.
  *
- *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
 //=============================================================================

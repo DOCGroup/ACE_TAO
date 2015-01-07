@@ -6,7 +6,6 @@
  *  OBV_ class
  *  (see C++ mapping OMG 20.17)
  *
- *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  *  @author based on interface_ch.cpp from Aniruddha Gokhale
  */

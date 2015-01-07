@@ -15,7 +15,6 @@
  *    No command line arguments are needed to run the test.
  *    Programs needs Athena Widgets to be compiled and run.
  *
- *
  *  @author Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Implementation of the AMI Test interface.
  *
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

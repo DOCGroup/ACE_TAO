@@ -6,7 +6,6 @@
  *  Visitor generating code for CDR operators for forward
  *  declarations of valuetypes. This uses compiled marshaling.
  *
- *
  *  @author Boris Kolpackov <bosk@ipmce.ru> base on code from Torsten Kuepper based on code from  Aniruddha Gokhale & Carlos O'Ryan (cdr_op_ci.cpp)
  */
 //=============================================================================

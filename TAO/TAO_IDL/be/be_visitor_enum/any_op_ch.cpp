@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Enums for the Any operators
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

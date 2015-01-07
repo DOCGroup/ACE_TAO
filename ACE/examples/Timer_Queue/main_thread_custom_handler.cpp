@@ -7,7 +7,6 @@
  *    threads.
  *    It also uses custom event handlers for timer events.
  *
- *
  *  @author Douglas Schmidt      <schmidt@cs.wustl.edu> && Sergio Flores-Gaitan <sergio@cs.wustl.edu>  && Alon Diamant         <diamant.alon@gmail.com>
  */
 //=============================================================================

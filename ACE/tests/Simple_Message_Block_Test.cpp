@@ -8,7 +8,6 @@
  *    are used, how memory is managed, and how continuation chains
  *    of message blocks are made. Ideally used with purify :-)
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

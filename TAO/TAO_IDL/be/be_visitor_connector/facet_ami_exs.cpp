@@ -5,7 +5,6 @@
  *  Visitor generating code for facets in the AMI connector
  *  impl source.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

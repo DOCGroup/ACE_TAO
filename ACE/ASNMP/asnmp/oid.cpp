@@ -7,7 +7,6 @@
  * includes all protected and public member functions. The oid class
  * may be compiled stand alone without the use of any other library.
  *
- *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
 //=============================================================================

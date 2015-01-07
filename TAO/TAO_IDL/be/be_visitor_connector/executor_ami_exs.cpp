@@ -6,7 +6,6 @@
  *  Visitor generating code for executors in the AMI connector
  *  impl source.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

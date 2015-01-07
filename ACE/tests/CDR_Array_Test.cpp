@@ -10,7 +10,6 @@
  *  Gives a measure of the speed of the ACE CDR streams wrt those
  *  operations.
  *
- *
  *  @author Cristian Ferretti <cristian_ferretti@yahoo.com>
  */
 //=============================================================================

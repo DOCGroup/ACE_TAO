@@ -7,7 +7,6 @@
  *   This one generates code for accessor and modifier functions of
  *  for valuebox struct members.
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================

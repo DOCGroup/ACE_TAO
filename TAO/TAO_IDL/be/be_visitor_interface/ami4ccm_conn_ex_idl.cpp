@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for AMI4CCM Interfaces in the executor IDL
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

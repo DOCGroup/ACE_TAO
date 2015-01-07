@@ -6,7 +6,6 @@
  *    This is a test that makes sure the <ACE_Reactor> works
  *    correctly in the face of C++ exceptions and threads.
  *
- *
  *  @author Luca Priorelli <lucapri@mbox.vol.it> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

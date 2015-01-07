@@ -7,7 +7,6 @@
  *    implements a client to the concurrency service.
  *    This file contains the main function for the test.
  *
- *
  *  @author   Torben Worm <tworm@cs.wustl.edu>
  */
 //=============================================================================

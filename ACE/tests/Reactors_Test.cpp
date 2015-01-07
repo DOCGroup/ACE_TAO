@@ -6,7 +6,6 @@
  *    This is a test that performs a torture test of multiple
  *    <ACE_Reactors> and <ACE_Tasks> in the same process.
  *
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author Detlef Becker <Detlef.Becker@med.siemens.de>
  *  @author and Douglas C. Schmidt <schmidt@cs.wustl.edu>

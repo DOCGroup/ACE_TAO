@@ -6,7 +6,6 @@
  *  Test all the member functions of the Target class.
  *  Not sure if this object is really required or not in the new framework
  *
- *
  *  @author Michael R. MacFaden <mrm@cisco.com>
  */
 //=============================================================================

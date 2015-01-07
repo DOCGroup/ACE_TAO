@@ -7,7 +7,6 @@
  *  GenAddress, MacAddress, IpxAddress, IpAddress, UdpAddress
  *  all which derive from abstract base class Address.
  *
- *
  *  @author Michael R. MacFaden <mrm@cisco.com>
  */
 //=============================================================================

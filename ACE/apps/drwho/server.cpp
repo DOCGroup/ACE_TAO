@@ -8,7 +8,6 @@
  * change are the functions registered with the communciations
  * manager.
  *
- *
  *  @author Douglas C. Schmidt
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *   IPv4 and IPv6 addresses and checks that the address formed by the
  *   class is valid.
  *
- *
  *  @author John Aughey (jha@aughey.com)
  */
 //=============================================================================

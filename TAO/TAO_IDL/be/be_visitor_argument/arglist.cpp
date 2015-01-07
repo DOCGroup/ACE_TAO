@@ -5,7 +5,6 @@
  *
  *  Visitor that generates the parameters in an Operation signature
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

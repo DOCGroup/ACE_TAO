@@ -5,7 +5,6 @@
  *
  *  The server for the GenericFactory for the quoter example.
  *
- *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================

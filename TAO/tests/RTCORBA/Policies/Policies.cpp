@@ -7,7 +7,6 @@
  *   through the generic ORB::create_policy interface and the
  *   RTCORBA specific interfaces.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

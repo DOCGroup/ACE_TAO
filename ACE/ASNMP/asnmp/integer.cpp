@@ -5,7 +5,6 @@
  *
  * Class implemtation for SMI Integer classes.
  *
- *
  *  @author Jeff MeyerMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
 //=============================================================================

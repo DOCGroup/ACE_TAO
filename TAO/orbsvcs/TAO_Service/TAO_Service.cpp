@@ -7,7 +7,6 @@
  * Service Configurator can dynamically configure an ORB and its
  * servants from a svc.conf file.
  *
- *
  *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================

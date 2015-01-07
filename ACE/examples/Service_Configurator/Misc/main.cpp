@@ -7,7 +7,6 @@
  * Service Configurator can configure static and dynamic services,
  * both from the command-line and from a svc.config file.
  *
- *
  *  @author Doug Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

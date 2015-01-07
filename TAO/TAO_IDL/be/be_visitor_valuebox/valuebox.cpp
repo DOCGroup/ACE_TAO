@@ -5,7 +5,6 @@
  *
  *  Visitor for generation of code for valuebox
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================

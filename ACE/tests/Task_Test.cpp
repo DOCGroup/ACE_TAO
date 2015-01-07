@@ -8,7 +8,6 @@
  *    <ACE_Task> and the <ACE_Thread_Manager>.  This also illustrates
  *    how the <ACE_Thread_Hook> mechanism works.
  *
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

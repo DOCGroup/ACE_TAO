@@ -4,7 +4,6 @@
  *
  *  Implementation of the DynArray test
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

@@ -19,7 +19,6 @@
  *
  *  This code used UTF16_BOM_Translator as a starting point.
  *
- *
  *  @author Iliyan Jeliazkov <jeliazkov_i@ociweb.com> Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================

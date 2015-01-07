@@ -4,7 +4,6 @@
  *
  *  Implementation of the server.
  *
- *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */

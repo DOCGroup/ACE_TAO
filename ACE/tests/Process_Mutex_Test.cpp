@@ -4,7 +4,6 @@
  *
  *  Tests an <ACE_Process_Mutex> shared between multiple child processes.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

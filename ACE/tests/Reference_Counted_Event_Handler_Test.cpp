@@ -6,7 +6,6 @@
  *  This test is used to check reference counting of the Event
  *  Handler when it interacts with the Reactor.
  *
- *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
 //=============================================================================

@@ -9,7 +9,6 @@
  *  explicitly and implicitly if needed from the connection cache
  *  maintained by the connector.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

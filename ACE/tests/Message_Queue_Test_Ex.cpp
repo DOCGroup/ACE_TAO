@@ -11,7 +11,6 @@
  *    2. An example of using a user-defined class to parameterize
  *       ACE_Message_Queue_Ex.
  *
- *
  *  @author Michael Vitlo <mvitalo@sprynet.com>
  *  @author copied the code from: Irfan Pyarali <irfan@cs.wustl.edu> and David L. Levine <levine@cs.wustl.edu>
  */

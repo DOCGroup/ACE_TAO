@@ -5,7 +5,6 @@
  *   This implements a simple CORBA client to tests the
  *   corbaname: style IOR parser
  *
- *
  *  @author  Craig Rodrigues <crodrigu@bbn.com>
  */
 //=============================================================================

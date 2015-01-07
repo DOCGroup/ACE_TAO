@@ -5,7 +5,6 @@
  *
  *  test structure that contains a sequence of itself
  *
- *
  *  @author Aniruddha Gokhale
  *  @author Jeff Parsons
  */

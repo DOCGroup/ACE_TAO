@@ -6,7 +6,6 @@
  *  Visitor generating code for the parameter list of the OBV factory
  *  signature.
  *
- *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
 //=============================================================================

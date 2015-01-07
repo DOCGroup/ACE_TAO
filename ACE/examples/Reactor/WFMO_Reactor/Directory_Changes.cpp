@@ -2,10 +2,8 @@
 /**
  *  @file    Directory_Changes.cpp
  *
- *
  *  This application tests the working of WFMO_Reactor when users
  *  are interested in monitoring changes in the filesystem.
- *
  *
  *  @author Irfan Pyarali
  */

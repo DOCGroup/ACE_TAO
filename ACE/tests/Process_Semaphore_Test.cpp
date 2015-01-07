@@ -5,7 +5,6 @@
  *
  *  Tests an ACE Semaphore shared between multiple child processes.
  *
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================

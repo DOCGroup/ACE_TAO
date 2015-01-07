@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Any operators in the client stubs
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

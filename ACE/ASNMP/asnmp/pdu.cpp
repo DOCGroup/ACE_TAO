@@ -6,7 +6,6 @@
  *  Pdu class implementation. Encapsulation of an SMI Protocol
  *  Data Unit (PDU) in C++.
  *
- *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
 //=============================================================================

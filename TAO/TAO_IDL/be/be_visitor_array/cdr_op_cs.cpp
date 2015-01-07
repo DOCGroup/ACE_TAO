@@ -6,7 +6,6 @@
  *  Visitor for code generation of Arrays for the CDR operators in the client
  *  stubs.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

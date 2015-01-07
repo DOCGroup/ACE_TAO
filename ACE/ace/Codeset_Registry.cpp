@@ -4,7 +4,6 @@
  *
  *  emulated codset regstry functions
  *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

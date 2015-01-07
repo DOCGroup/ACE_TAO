@@ -3,7 +3,6 @@
 /**
  *  @file    MT_Reference_Counted_Event_Handler_Test.cpp
  *
- *
  *  This test tries to represents what happens in the ORB wrt to
  *  event handlers, reactors, timer queues, threads, and connection
  *  caches, minus the other complexities.  The following reactors
@@ -15,7 +14,6 @@
  *  threaded or reactive. A purger thread is introduced to check the
  *  connection recycling and cache purging.  Nested upcalls are also
  *  tested.
- *
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */

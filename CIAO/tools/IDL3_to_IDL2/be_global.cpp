@@ -5,7 +5,6 @@
  *
  *  Stores global data specific to the compiler back end.
  *
- *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

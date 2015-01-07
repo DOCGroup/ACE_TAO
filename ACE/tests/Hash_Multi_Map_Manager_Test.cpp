@@ -6,7 +6,6 @@
  *    This test illustrates the use of <ACE_Hash_Multi_Map_Manager> to
  *    maintain a hash table using strings.
  *
- *
  *  @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
 //=============================================================================

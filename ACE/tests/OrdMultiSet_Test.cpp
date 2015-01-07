@@ -8,7 +8,6 @@
  *  them with type int.  No command line arguments are needed to run
  *  the test.
  *
- *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  */
 //=============================================================================

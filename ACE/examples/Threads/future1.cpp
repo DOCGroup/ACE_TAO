@@ -5,7 +5,6 @@
  *
  *  This example tests the ACE Future.
  *
- *
  *  @author Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

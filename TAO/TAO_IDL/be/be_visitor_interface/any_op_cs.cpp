@@ -6,7 +6,6 @@
  *  Visitor generating code for Any operators for Interface in the stubs
  *  file.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

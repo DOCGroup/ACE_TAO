@@ -2,7 +2,6 @@
 /**
  *  @file    Registration.cpp
  *
- *
  *  This test application tests a wide range of registration,
  *  suspension, resumption, and removal of events from Reactor.
  *
@@ -20,7 +19,6 @@
  *  - Suspension
  *  - Resumption
  *  - Removal (while active and while suspended)
- *
  *
  *  @author Irfan Pyarali
  */

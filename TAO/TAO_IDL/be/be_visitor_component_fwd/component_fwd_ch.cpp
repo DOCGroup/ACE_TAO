@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Component_Fwd node in the client header.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

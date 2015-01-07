@@ -5,7 +5,6 @@
  *
  *  Implementation of the Client_i class.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

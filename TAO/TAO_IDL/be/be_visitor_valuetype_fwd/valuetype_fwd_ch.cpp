@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for ValueTypeFwd node in the client header.
  *
- *
  *  @author Boris Kolpackov <bosk@ipmce.ru> based on code from  Torsten Kuepper based on code from Aniruddha Gokhale (interface_fwd_ch.cpp)
  */
 //=============================================================================

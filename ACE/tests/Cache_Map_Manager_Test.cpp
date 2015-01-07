@@ -8,7 +8,6 @@
  *   forward and reverse iterators, as well as the purging and
  *   caching features.
  *
- *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
 //=============================================================================

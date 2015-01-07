@@ -5,7 +5,6 @@
  *
  *  tests unbounded long sequences
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

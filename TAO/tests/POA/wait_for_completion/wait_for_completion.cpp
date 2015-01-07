@@ -5,7 +5,6 @@
  *
  *   This program tests the wait_for_completion feature of a POA.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

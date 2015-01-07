@@ -6,7 +6,6 @@
  *   This implements a simple CORBA client for the
  *   CosNaming::NamingContextExt example
  *
- *
  *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================

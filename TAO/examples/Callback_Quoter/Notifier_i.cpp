@@ -6,7 +6,6 @@
  * Implementation of the Notifier_i class. This class is the servant
  * object for the callback quoter server.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

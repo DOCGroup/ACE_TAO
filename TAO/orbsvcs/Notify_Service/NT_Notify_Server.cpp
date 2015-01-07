@@ -7,7 +7,6 @@
  *  Driver program that runs the TAO Notification Service as a Windows NT
  *  Service.
  *
- *
  *  @author John Tucker <jtucker@infoglide.com>
  *  @author Mike Vitalo <mvitalo@infoglide.com>
  *  @author and David Robison <drrobison@openroadsconsulting.com>

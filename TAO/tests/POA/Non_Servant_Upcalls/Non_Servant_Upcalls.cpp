@@ -8,7 +8,6 @@
  *   is being destroyed during because of a deactivate_object()
  *   call, tries to deactivate another object in its destructor.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

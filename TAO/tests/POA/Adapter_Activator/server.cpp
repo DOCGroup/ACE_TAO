@@ -11,7 +11,6 @@
  *  Similar to the Explicit_Activation, the client for this example
  *  is Generic_Servant.
  *
- *
  *  @author Irfan Pyarali
  */
 //=============================================================================

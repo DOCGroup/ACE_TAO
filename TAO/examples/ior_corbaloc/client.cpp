@@ -6,7 +6,6 @@
  *   This implements a simple CORBA client for the
  *   corbaloc: style IOR parser
  *
- *
  *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================

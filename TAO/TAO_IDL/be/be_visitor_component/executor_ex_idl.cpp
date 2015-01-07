@@ -6,7 +6,6 @@
  *  Visitor generating code for components
  *  in the CIAO executor IDL.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Operation in the stubs file.
  *
- *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================

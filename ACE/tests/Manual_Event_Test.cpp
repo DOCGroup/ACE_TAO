@@ -6,7 +6,6 @@
  *  This test verifies the functionality of the <ACE_Manual_Event>
  *  implementation.
  *
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================

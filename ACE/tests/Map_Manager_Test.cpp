@@ -7,7 +7,6 @@
  *   <ACE_Hash_Map_Manager> that illustrates how to use the forward
  *   and reverse iterators.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author and Kirthika Parameswaran  <kirthika@cs.wustl.edu>

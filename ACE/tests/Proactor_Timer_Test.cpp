@@ -7,7 +7,6 @@
  *    the <ACE_Proactor>.  Scheduling timers, handling expired timers and
  *    cancelling scheduled timers are all exercised in this test.
  *
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author and Miljenko Norsic <Miljenko.Norsic@etk.ericsson.se>

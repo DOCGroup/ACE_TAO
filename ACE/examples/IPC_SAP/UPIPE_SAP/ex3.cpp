@@ -7,7 +7,6 @@
  *  communication.  This example uses char buffers as input/output
  *  interface to the <ACE_UPIPE_Stream>.
  *
- *
  *  @author Gerhard Lenzer and Prashant Jain.
  */
 //=============================================================================

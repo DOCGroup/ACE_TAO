@@ -7,7 +7,6 @@
  *  process instance to figure out what to do.  This program only
  *  runs on Win32.
  *
- *
  *  @author Gonzalo Diethelm <gonzo@cs.wustl.edu> and Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

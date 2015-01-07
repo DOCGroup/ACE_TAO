@@ -13,7 +13,6 @@
  *    5. Events from the TCP/IP channel using ACE_Acceptor
  *    No command line arguments are needed to run the test.
  *
- *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================

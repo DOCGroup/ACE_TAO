@@ -5,7 +5,6 @@
  *
  *  tests unbounded string sequences
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

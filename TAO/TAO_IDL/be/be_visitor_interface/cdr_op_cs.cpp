@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for CDR operators for interfaces
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

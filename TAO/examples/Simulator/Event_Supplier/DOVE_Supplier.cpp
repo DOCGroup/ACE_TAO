@@ -6,7 +6,6 @@
  *  A wrapper around the event service initialization and
  *  marshalling
  *
- *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================

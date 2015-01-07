@@ -5,7 +5,6 @@
  *
  *  Implementation of the callback quoter Notifier_Input_Handler class.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

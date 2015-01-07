@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Operation in the implementation header
  *
- *
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */
 //=============================================================================

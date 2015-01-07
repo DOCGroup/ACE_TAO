@@ -6,7 +6,6 @@
  *   This is a simple test of the Auto Increment/Decrement Class in
  *   ACE.
  *
- *
  *  @author  Edan Ayal <EdanA@cti2.com>
  */
 //=============================================================================

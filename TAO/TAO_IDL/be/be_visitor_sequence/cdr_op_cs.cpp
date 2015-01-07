@@ -6,7 +6,6 @@
  *  Visitor for code generation of Sequences for the CDR operators
  *  in the client stubs.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

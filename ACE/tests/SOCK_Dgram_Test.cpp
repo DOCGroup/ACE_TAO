@@ -7,7 +7,6 @@
  *
  *   This test uses the same test setup as SOCK_Test.
  *
- *
  *  @author Brian Buesker (bbuesker@qualcomm.com)
  */
 //=============================================================================

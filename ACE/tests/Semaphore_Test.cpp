@@ -6,7 +6,6 @@
  *  This test verifies the functionality of the <ACE_Thread_Semaphore>
  *  implementation.
  *
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================

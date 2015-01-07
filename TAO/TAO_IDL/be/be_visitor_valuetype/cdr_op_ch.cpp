@@ -6,7 +6,6 @@
  *  Concrete visitor for valuetypes.
  *  This one provides code generation for the CDR operators.
  *
- *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
  */
 //=============================================================================

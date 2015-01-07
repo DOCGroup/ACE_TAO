@@ -6,7 +6,6 @@
  *  Visitor generating code for a servant class in the
  *  servant header.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

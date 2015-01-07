@@ -8,7 +8,6 @@
  *  tested. The notify() mechanism can also be tested with or
  *  without data.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

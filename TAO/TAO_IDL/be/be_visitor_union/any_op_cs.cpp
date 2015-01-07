@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Any operators for Union.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

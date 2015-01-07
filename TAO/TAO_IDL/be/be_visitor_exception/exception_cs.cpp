@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Exception in the stubs file
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

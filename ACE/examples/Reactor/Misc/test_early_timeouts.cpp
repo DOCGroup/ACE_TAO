@@ -7,7 +7,6 @@
  *  specified.  This tests counts the number of times this happens
  *  and the max early timeout.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

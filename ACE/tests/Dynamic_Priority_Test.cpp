@@ -36,7 +36,6 @@
  *  the messages should dequeue.  In the second test, measurements
  *  are made as non-intrusive as possible, with no ordering checks.
  *
- *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  */
 //=============================================================================

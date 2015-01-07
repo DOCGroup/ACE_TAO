@@ -4,7 +4,6 @@
  *
  *  Checks the functionality of ACE_Obstack<T>
  *
- *
  *  @author Steve Huston  <shuston@riverace.com>
  */
 //=============================================================================

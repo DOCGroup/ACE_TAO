@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Typedef in the client header
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *    does binds, rebinds, finds, and unbinds on name bindings using
  *    the local naming context.
  *
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

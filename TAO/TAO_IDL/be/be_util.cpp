@@ -5,7 +5,6 @@
  *
  *  Static helper methods used by multiple visitors.
  *
- *
  *  @author Gary Maxey
  *  @author Jeff Parsons
  */

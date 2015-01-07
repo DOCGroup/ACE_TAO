@@ -5,7 +5,6 @@
  *
  *  Generic visitor generating code for Unions
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

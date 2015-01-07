@@ -6,7 +6,6 @@
  *  Checks the functionality of the ACE CDR streams used for file
  *  I/O.
  *
- *
  *  @author Giga Giguashvili <gregoryg@ParadigmGeo.com> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Enums for the CDR operators
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

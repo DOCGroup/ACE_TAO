@@ -5,7 +5,6 @@
  *
  *  The implementation of a LifeCycle Service GenericFactory.
  *
- *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================

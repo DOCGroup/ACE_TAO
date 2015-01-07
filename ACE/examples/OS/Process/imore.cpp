@@ -11,7 +11,6 @@
  *  Unfortunately, on Win32, this program doesn't use any pipe at all because
  *  using pipes confuses MORE.COM on Win32 and it just acts like "cat" on Unix.
  *
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *    A client program for the Database IDL module
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

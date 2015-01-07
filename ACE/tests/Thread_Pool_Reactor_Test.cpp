@@ -26,7 +26,6 @@
  *        <client req# per conn>: ACE_MAX_THREADS
  *        <delay>:                50 usec
  *
- *
  *  @author   Irfan Pyarali <irfan@cs.wustl.edu> and   Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Homes in the servant header.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

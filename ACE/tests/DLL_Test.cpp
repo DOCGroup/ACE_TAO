@@ -5,7 +5,6 @@
  *
  *  This test illustrates the use of <ACE_DLL> wrapper class.
  *
- *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *  Tests adding of a secondary IP-address, using linux netlink
  *   sockets.
  *
- *
  *  @author Robert Iakobashvili
  *  @author coroberti@gmail.com
  */

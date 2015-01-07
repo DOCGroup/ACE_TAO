@@ -10,7 +10,6 @@
  *  % CC -g -o test_aiocb -lrt test_aiocb.cpp
  *  % ./test_aiocb
  *
- *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================

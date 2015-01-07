@@ -8,7 +8,6 @@
  *    but uses dlopen() to dynamically load libACE
  *    and then uses dlclose() to unload it.
  *
- *
  *  @author David Smith <dts@prismtech.com> and Don Sharp <Donald.Sharp@prismtech.com>
  */
 //=============================================================================

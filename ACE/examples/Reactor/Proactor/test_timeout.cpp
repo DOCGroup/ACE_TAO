@@ -5,13 +5,11 @@
  *
  *  $Id: test_timeout.cpp
  *
- *
  *  This example application shows how to write event loops that
  *  handle events for some fixed amount of time. Note that any
  *  thread in the Proactor thread pool can call back the handler. On
  *  POSIX4 systems, this test works only with POSIX_SIG_Proactor,
  *  which can work with multiple threads.
- *
  *
  *  @author Irfan Pyarali and Alexander Babu Arulanthu
  */

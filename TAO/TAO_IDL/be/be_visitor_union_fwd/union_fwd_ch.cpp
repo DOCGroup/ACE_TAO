@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for be_union_fwd node in the client header.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

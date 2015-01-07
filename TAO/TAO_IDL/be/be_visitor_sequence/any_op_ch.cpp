@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Any operators for the Sequence
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

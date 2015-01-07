@@ -5,7 +5,6 @@
  *
  *  Visitor for code generation of Constant code in the client stubs file.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

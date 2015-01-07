@@ -21,7 +21,6 @@
  *   as described in the non-DLL section below under DLL
  *   environments as well.
  *
- *
  *  @author Orlando Ribeiro <oribeiro@inescporto.pt>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *  This test is used to check reference counting of the Event
  *  Handler when it interacts with Timer Queues.
  *
- *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
 //=============================================================================

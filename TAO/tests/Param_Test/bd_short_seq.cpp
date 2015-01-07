@@ -5,7 +5,6 @@
  *
  *  tests bounded short sequences
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

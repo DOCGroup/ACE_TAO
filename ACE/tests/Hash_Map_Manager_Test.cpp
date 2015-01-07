@@ -8,7 +8,6 @@
  *    illustrates how the <ACE_Static_Allocator> works in
  *    conjunction with the <ACE_Hash_Map_Manager>.
  *
- *
  *  @author James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

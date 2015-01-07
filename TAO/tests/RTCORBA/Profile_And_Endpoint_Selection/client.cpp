@@ -5,7 +5,6 @@
  *
  *   This is a client implementation.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

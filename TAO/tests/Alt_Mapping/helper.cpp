@@ -6,7 +6,6 @@
  *  Defines a helper class that can generate values for the parameters used
  *  for the Alt_Mapping example
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

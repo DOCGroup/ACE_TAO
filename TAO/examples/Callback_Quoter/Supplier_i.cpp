@@ -4,7 +4,6 @@
  *
  *  Implementation of the Supplier class.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

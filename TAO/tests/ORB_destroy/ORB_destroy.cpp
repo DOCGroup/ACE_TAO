@@ -5,7 +5,6 @@
  *
  *   Simple ORB destruction test.
  *
- *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *  This class implements the Object A  of the
  *  Nested Upcalls - MT Client test.
  *
- *
  *  @author Michael Kircher
  */
 //=============================================================================

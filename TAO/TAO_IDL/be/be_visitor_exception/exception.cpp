@@ -5,7 +5,6 @@
  *
  *  Generic visitor generating code for Exceptions.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -13,7 +13,6 @@
  *   functions, but others should be added to completely cover the
  *   possible scenarios.
  *
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

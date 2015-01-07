@@ -8,7 +8,6 @@
  *    use native implementations provided by the OS to accelarate
  *    these operations.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

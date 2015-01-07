@@ -6,7 +6,6 @@
  * Verifies that reference counting is performed correctly for octet
  * sequence marshaling.
  *
- *
  *  @author Dave Meyer (dmeyer@std.saic.com)Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

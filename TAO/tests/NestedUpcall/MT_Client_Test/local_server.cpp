@@ -6,7 +6,6 @@
  *  This server will run the ORB briefly and then make
  *  several calls on the distant MT Object.
  *
- *
  *  @author Michael Kircher
  */
 //=============================================================================

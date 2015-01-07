@@ -6,7 +6,6 @@
  *  This test verifies the functionality of the <ACE_Intrusive_Auto_Ptr>
  *  implementation.
  *
- *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
 //=============================================================================

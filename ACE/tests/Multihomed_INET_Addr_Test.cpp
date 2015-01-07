@@ -7,7 +7,6 @@
  *   It creates several IPv4 addresses and checks that the
  *   address formed by the class is valid.
  *
- *
  *  @author Edward Mulholland (emulholl@atl.lmco.com)
  */
 //=============================================================================

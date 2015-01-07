@@ -7,7 +7,6 @@
  *   <ACE_Active_Map_Manager> that illustrates how lazy map managers
  *   allow the deletion of entries while iterating over the map.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

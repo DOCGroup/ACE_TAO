@@ -7,7 +7,6 @@
  *   including its initialization and reset as well as logging information
  *   through the backend.
  *
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

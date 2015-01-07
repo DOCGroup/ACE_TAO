@@ -6,7 +6,6 @@
  *  Visitor generating code for Any operators for an Interface in the client
  *  header.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

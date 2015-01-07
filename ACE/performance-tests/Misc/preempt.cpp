@@ -20,7 +20,6 @@
  *    yield.  It shouldn't be necessary to use that option, if preemption
  *    is supported.  It's a handy option for testing.
  *
- *
  *  @author David L. Levine
  */
 //=============================================================================

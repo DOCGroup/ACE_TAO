@@ -5,7 +5,6 @@
  *
  *  tests unbounded Any sequences
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

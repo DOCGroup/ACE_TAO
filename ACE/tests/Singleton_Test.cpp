@@ -5,7 +5,6 @@
  *
  *    This is a simple test of ACE Singleton
  *
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

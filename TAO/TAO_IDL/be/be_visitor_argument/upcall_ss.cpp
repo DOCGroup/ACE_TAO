@@ -6,7 +6,6 @@
  *  Visitor that generates code that passes argument variables to the
  *  upcall.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

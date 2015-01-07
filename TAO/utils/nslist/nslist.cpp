@@ -4,7 +4,6 @@
  *
  *  Naming Service listing utility
  *
- *
  *  @author  Thomas Lockhart, NASA/JPL <Thomas.Lockhart@jpl.nasa.gov>
  *  @date 1999-06-03
  *  Enhanced 21 Jun, 2006 Simon Massey <sma@prismtech.com>

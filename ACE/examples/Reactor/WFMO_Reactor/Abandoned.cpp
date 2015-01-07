@@ -3,9 +3,7 @@
 /**
  *  @file    Abandoned.cpp
  *
- *
  *  Tests the WFMO_Reactor's ability to handle abandoned mutexes.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

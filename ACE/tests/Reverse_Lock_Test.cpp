@@ -7,7 +7,6 @@
  *  ACE_Reverse_Lock. The test acquires and releases mutexes. No
  *  command line arguments are needed to run the test.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

@@ -16,7 +16,6 @@
  *   Windows NT. In fact, it was by reverse engineering these tools
  *   that this api was created.
  *
- *
  *  @author Michael R. MacFaden <mrm@cisco.com>
  */
 //=============================================================================

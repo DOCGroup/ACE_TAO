@@ -2,10 +2,8 @@
 /**
  *  @file    Prerun_State_Changes.cpp
  *
- *
  *  Tests the Reactor's ability to handle state changes before
  *  getting a chance to run.
- *
  *
  *  @author Irfan Pyarali
  */

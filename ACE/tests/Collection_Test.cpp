@@ -6,7 +6,6 @@
  *   This is a simple test of the ACE collection classes and its
  *   iterators.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

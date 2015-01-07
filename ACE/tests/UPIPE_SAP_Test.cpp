@@ -6,7 +6,6 @@
  *    This is a test that uses <ACE_UPIPE_SAP> and <ACE_Thread> for
  *    intra-process communication.
  *
- *
  *  @author Gerhard Lenzer <Gerhard.Lenzer@med.siemens.de>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author and Prashant Jain <pjain@cs.wustl.edu>

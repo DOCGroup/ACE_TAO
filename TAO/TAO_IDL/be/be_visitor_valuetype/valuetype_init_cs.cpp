@@ -6,7 +6,6 @@
  *  Visitor generating code for Valuetypes factory in the client header
  *  (see IDL to C++ mapping)
  *
- *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
 //=============================================================================

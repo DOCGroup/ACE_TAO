@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for returning the return type variable.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

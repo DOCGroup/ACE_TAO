@@ -7,7 +7,6 @@
  *    This code exercises the Timer_Queue_Test_Driver class using
  *    threads.
  *
- *
  *  @author Douglas Schmidt      <schmidt@cs.wustl.edu> && Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================

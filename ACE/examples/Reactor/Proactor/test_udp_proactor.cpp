@@ -7,7 +7,6 @@
  *  implement an application that does asynchronous operations using
  *  datagrams.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Roger Tragin <r.tragin@computer.org>
  */
 //=============================================================================

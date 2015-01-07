@@ -6,7 +6,6 @@
  *
  *  A tempate instantiation of the codeset translator factory from TAO.
  *
- *
  *  @author   Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================

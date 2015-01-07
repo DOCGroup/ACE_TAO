@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Root in the server template header
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

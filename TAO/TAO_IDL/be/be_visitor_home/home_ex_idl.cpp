@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Homes in the CIAO executor IDL.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

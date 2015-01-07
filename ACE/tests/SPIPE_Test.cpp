@@ -10,7 +10,6 @@
  *    them to use the named pipe to exchange data. No user input is
  *    required as far as command line arguments are concerned.
  *
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Visitor generating code in the exec impl header.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

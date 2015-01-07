@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for TypeCode declaration for a type
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

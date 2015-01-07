@@ -6,7 +6,6 @@
  *
  * A simple client to demonstrate the use of codeset translation
  *
- *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

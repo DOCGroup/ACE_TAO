@@ -5,7 +5,6 @@
  *
  *    This class implements a Concurrency_Service object.
  *
- *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
 //=============================================================================

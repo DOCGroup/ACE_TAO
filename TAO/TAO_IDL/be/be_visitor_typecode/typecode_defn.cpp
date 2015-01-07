@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for TypeCode definitions for types.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

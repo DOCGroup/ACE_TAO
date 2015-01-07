@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for discriminant of the union.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

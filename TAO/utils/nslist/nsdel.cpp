@@ -5,7 +5,6 @@
  *
  *  Naming Service del utility
  *
- *
  *  @author  Carlos O'Ryan <coryan@uci.edu>  enhanced Jan 15
  *  @author 2001 Paul Caffrey <denginere@hotmail.com>  redone   Jun 21
  *  @author 2006 Simon Massey <sma@prismtech.com>

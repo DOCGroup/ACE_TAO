@@ -7,7 +7,6 @@
  *  handlers when it interacts with the reactor notification
  *  mechanism.
  *
- *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
 //=============================================================================

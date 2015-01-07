@@ -5,7 +5,6 @@
  *
  *  In this example of using Persistent IDs.
  *
- *
  *  @author Irfan Pyarali
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  This is the client for the UDP performance test.
  *
- *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
 //=============================================================================

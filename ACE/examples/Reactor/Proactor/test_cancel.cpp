@@ -24,7 +24,6 @@
  * Then telnet to this port and send <read_size> bytes and your
  * connection should get closed down.
  *
- *
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  */
 //=============================================================================

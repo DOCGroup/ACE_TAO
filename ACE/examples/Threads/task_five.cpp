@@ -6,7 +6,6 @@
  * Stress testing thread creation and thread cancellation using
  * ACE_Task.
  *
- *
  *  @author Author: Detlef Becker <Detlef.Becker@med.siemens.de>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *  Visitor for code generation of Arrays for the Cdr operators in the client
  *  header.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Exception in the client header
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

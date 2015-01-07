@@ -5,7 +5,6 @@
  *
  *   This is a simple test servant implementation
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

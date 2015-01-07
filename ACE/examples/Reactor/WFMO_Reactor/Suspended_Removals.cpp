@@ -2,10 +2,8 @@
 /**
  *  @file    Suspended_Removals.cpp
  *
- *
  *  Tests the Reactor's ability to handle removal of suspended
  *  handles.
- *
  *
  *  @author Irfan Pyarali
  */

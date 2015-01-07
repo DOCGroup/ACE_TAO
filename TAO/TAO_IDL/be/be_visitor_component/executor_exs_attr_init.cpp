@@ -6,7 +6,6 @@
  *  Visitor generating code in the exec impl source for
  *  the initialization of attribute members in the constructor.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

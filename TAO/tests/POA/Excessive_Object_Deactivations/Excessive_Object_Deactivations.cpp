@@ -8,7 +8,6 @@
  *   and other POA with USER_ID.  The test also check for excessive
  *   deactivations during upcalls.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

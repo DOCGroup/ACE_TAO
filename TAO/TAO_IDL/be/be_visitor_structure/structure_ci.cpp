@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Structure in the inline file.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

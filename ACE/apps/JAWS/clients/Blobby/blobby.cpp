@@ -11,7 +11,6 @@
  *   It writes "length" number of bytes, after skipping offset "offset"
  *   to hostname, port and filename as specified (if -w specified)
  *
- *
  *  @author Prashant Jain and Sumedh Mungee
  */
 //=============================================================================

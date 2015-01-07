@@ -5,7 +5,6 @@
  *
  * Target class defines target SNMP agents.
  *
- *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
 //=============================================================================

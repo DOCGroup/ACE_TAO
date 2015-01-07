@@ -4,7 +4,6 @@
  *
  *  Tests an <ACE_RW_Process_Mutex> shared between multiple child processes.
  *
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

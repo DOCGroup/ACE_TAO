@@ -5,7 +5,6 @@
  *
  *  This test program tests large Message Block duplication and cloning.
  *
- *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
 //=============================================================================

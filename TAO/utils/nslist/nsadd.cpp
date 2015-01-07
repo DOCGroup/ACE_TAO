@@ -4,7 +4,6 @@
  *
  *  Naming Service add utility
  *
- *
  *  @author  Carlos O'Ryan  enhanced Nov 6
  *  @author 2002 Paul Caffrey <denginere@hotmail.com>  redone   Jun 21 2006 Simon Massey <sma@prismtech.com>
  */

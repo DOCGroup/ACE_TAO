@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Sequences in the client stubs file
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

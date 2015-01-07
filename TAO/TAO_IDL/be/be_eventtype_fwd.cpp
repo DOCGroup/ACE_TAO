@@ -6,7 +6,6 @@
  *  Extension of class be_valuetype_fwd that provides additional
  *  means for C++ mapping of an eventtype.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

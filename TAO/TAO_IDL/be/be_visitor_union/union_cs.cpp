@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Unions in the client stubs
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

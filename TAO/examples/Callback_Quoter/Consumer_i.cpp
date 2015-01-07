@@ -6,7 +6,6 @@
  *  Implements the Consumer_i class, which is used by the
  *  callback quoter client.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

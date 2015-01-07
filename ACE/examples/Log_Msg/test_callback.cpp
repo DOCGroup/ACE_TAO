@@ -7,7 +7,6 @@
  *   defined callback objects.  In particular, it tests to make sure
  *   that nested callbacks don't deadlock.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

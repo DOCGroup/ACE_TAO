@@ -10,7 +10,6 @@
  * objects and thus requires the Oid class. To use this class,
  * set oid, value then call valid() to be sure object was constructed correctly.
  *
- *
  *  @author S. Waldbusser (assumed)Michael R MacFaden  mrm@cisco.com - rework & ACE port
  */
 //=============================================================================

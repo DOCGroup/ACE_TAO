@@ -6,7 +6,6 @@
  *  Concrete visitor for valueboxes.
  *  This one provides code generation for the CDR operators.
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================

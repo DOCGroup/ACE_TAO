@@ -6,7 +6,6 @@
  *   This program tests if accessing the POA current before the
  *   RootPOA can cause any problems.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

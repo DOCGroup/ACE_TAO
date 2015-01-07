@@ -5,7 +5,6 @@
  *
  *  Implements the interface in Identity.idl.
  *
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

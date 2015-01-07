@@ -6,7 +6,6 @@
  *  Visitor for generation of code for CIAO component or home
  *  attribute initialization
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

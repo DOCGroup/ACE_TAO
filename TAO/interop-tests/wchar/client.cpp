@@ -6,7 +6,6 @@
  *
  *  C++ client side for testing interoperability with wchar data.
  *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

@@ -4,7 +4,6 @@
  *
  *  The Server for the Quoter Factory
  *
- *
  *  @author Darrell Brunsch (brunsch@cs.wustl.edu) Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  tests fixed sized structs
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

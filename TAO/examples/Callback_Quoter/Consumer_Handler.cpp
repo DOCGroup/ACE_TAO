@@ -5,7 +5,6 @@
  *
  *  Implementation of the Consumer_Handler class.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *   This is a test of the <ACE_MEM_Acceptor> and
  *   <ACE_MEM_Connector> classes.
  *
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

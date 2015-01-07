@@ -6,7 +6,6 @@
  *  Visitor generating code for Interfaces in the
  *  CIAO template servant source file.
  *
- *
  *  @author Marcel Smit
  */
 //=============================================================================

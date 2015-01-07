@@ -9,7 +9,6 @@
  * smaller interfaces.
  * TRADER_AVAILABLE is defined via compiler switch in the Makefile
  *
- *
  *  @author Michael Kircher  (mk1@cs.wustl.edu)
  */
 //=============================================================================

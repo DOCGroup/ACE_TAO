@@ -6,7 +6,6 @@
  *   This program tests the reactivation of a servant that has been
  *   deactivated but not removed from the Active Object Map yet.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

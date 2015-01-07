@@ -6,7 +6,6 @@
  *  Visitor generating code for Any operators for valueboxes in the stubs
  *  file.
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================

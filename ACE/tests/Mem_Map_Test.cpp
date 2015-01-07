@@ -8,7 +8,6 @@
  *    reverses the file and then reverses it again to get back the
  *    original file.
  *
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================

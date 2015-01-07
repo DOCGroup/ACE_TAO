@@ -7,7 +7,6 @@
  * Service Configuration framework and uses the singleton that
  * also lives in this library.
  *
- *
  *  @author Don Hinton <dhinton@ieee.org>
  */
 //=============================================================================

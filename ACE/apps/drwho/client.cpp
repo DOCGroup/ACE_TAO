@@ -5,7 +5,6 @@
  *
  *  Client driver program for drwho.
  *
- *
  *  @author Douglas C. Schmidt
  */
 //=============================================================================

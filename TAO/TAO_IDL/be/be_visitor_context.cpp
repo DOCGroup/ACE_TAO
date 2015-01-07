@@ -5,7 +5,6 @@
  *
  *   Maintains the context information for visitors
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

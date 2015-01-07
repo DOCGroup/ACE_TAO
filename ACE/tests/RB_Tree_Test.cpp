@@ -15,7 +15,6 @@
  *  and filled in, and the resulting order is checked via an
  *  iterator over each.
  *
- *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  */
 //=============================================================================

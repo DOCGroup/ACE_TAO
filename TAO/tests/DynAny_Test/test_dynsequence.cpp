@@ -4,7 +4,6 @@
  *
  *  Implementation of the simple DynSequence test
  *
- *
  *  @author Jeff Parsons <jp4@cs.wustl.edu>
  */
 //=============================================================================

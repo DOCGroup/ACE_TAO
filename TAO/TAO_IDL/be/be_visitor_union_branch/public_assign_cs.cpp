@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Union Branch for the assignment operator
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for valueboxes in the client stub file
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================

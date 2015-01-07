@@ -6,7 +6,6 @@
  *  Visitor generating code for AMI4CCM reply handler impl source
  *  files.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

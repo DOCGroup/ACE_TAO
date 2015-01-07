@@ -6,7 +6,6 @@
  *   This test program ensures that attributes set on a thread via the
  *   ACE_Task/ACE_Thread_Manager are honored.
  *
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

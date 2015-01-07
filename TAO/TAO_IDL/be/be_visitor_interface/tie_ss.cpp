@@ -6,7 +6,6 @@
  *  Visitor generating code for TIE classes for the Interface node in the
  *  inline file.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

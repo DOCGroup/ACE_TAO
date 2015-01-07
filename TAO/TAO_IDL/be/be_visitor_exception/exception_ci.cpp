@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Exception in the inline file.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

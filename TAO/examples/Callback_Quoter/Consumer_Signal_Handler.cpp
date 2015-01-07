@@ -6,7 +6,6 @@
  *
  *  Implementation of the Consumer_Signal_Handler class.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

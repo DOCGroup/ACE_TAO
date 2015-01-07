@@ -3,10 +3,8 @@
 /**
  *  @file    registration.cpp
  *
- *
  *  This test is used to measure the time it takes to register and
  *  activate an object in the POA.
- *
  *
  *  @author Irfan Pyarali
  */

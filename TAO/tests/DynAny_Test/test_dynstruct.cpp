@@ -4,7 +4,6 @@
  *
  *  Implementation of the DynStruct basic test
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

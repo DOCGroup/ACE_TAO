@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Components in the servant header.
  *
- *
  *  @author Marcel Smit
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  tests multidimensional fixed size arrays
  *
- *
  *  @author   Bala
  */
 //=============================================================================

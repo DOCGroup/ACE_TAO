@@ -6,7 +6,6 @@
  * Verifies that octet sequence marshaling does not affect
  * marshaling.
  *
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

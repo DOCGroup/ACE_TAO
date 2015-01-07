@@ -5,7 +5,6 @@
  *
  *  This example tests the timer queue mechanism of ACE_Reactor.
  *
- *
  *  @author Nanbor Wang <nw1@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================

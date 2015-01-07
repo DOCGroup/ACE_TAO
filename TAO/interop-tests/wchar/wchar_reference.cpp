@@ -8,7 +8,6 @@
  *  linked into both clients and servers so that both sides have common
  *  values for testing what is received or sent.
  *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

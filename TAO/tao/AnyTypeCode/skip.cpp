@@ -7,7 +7,6 @@
  *   Data types encoded as CDR streams need to be skipped when they
  *   are part of an Any.
  *
- *
  *  @author  Aniruddha Gokhale
  */
 //=============================================================================

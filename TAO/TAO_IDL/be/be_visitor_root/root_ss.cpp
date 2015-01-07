@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for the Root in the server skeletons file
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

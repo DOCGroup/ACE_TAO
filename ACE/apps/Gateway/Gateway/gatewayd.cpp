@@ -7,7 +7,6 @@
  *  completely generic code due to the Service Configurator
  *  framework!
  *
- *
  *  @author Douglas C. Schmidt
  */
 //=============================================================================

@@ -7,7 +7,6 @@
  *  also starting serveral client threads which call the MT Object too.
  *  The server does nested upcalls.
  *
- *
  *  @author Michael Kircher
  */
 //=============================================================================

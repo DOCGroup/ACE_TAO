@@ -10,7 +10,6 @@
  *   platforms, this test also ensures that there is no impact to
  *   platforms that natively support directory scanning operations.
  *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  *  @author Zvika Ashani <zvika@aspectusvi.com>
  *  @author Rich Newman <RNewman@directv.com>

@@ -10,7 +10,6 @@
  *    has the ACE_HAS_REACTOR_NOTIFICATION_QUEUE option enabled this
  *    test will also exercise this feature.
  *
- *
  *  @author   Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

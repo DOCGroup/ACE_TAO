@@ -6,7 +6,6 @@
  *  Visitor generating code for the contect class
  *  in the CIAO executor IDL.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

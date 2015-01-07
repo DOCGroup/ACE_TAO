@@ -9,7 +9,6 @@
  *  sender,i.e. ACE_Asynch_Write_File wf_  has been changed to
  *  ACE_Asynch_Write_Stream wf_.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Alexander Libman <Alibman@baltimore.com>.
  */
 //=============================================================================

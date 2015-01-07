@@ -6,7 +6,6 @@
  *  Base class visitor generating code for AMI4CCM reply handler impl\
  *  visitors.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

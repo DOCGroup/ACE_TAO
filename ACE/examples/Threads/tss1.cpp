@@ -10,7 +10,6 @@
  *   in the Errno class.  Note that each thread of control has its
  *   own unique TSS object.
  *
- *
  *  @author Detlef Becker <Detlef.Becker@med.siemens.de>
  */
 //=============================================================================

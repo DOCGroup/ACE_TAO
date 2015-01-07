@@ -9,7 +9,6 @@
  *  translator. In this case, wchars and wstrings are translated rather than
  *  strings and chars.
  *
- *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

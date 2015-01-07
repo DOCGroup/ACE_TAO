@@ -7,7 +7,6 @@
  *  <ACE_Buffered_Svc_Handler>.  This test also illustrates how the
  *  <ACE_FILE_IO> classes work.
  *
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

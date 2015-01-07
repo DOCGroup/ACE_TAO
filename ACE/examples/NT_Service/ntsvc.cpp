@@ -6,7 +6,6 @@
  *    This is the implementation of the NT service.  It beeps every 2
  *    seconds until the service is stopped.
  *
- *
  *  @author Gonzalo Diethelm <gonzo@cs.wustl.edu> and Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *   This program tests various features of ACE_Thread and the
  *   thread-specific storage variant of <ACE_Singleton>.
  *
- *
  *  @author Prashant Jain and Doug Schmidt
  */
 //=============================================================================

@@ -12,7 +12,6 @@
  *   will accept as arguments to thr_concurrency(), used by
  *   ACE_OS::thr_create(THR_NEW_LWP).
  *
- *
  *  @author Chris Cleeland <cleeland@ociweb.com>
  */
 //=============================================================================

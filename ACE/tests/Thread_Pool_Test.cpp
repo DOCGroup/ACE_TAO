@@ -11,7 +11,6 @@
  *   when (1) they receive a message block of length 0 or (2) the
  *   queue is deactivated.
  *
- *
  *  @author Karlheinz Dorn <Karlheinz.Dorn@med.siemens.de>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author and Prashant Jain <pjain@cs.wustl.edu>

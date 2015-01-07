@@ -23,7 +23,6 @@
  *    The second test also makes sure the high/low water mark
  *    signaling mechanism works flawlessly.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

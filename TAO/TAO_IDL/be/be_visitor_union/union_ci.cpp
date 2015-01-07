@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Union in the client inline file
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

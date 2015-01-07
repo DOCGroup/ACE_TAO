@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for the special constructor for Exceptions
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

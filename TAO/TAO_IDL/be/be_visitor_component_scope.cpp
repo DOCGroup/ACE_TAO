@@ -5,7 +5,6 @@
  *
  *  Abstract visitor providing ancestor scope visitation.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

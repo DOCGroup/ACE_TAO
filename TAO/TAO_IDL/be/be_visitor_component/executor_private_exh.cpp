@@ -6,7 +6,6 @@
  *  Visitor generating code for private facet members
  *  in the exec impl header.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

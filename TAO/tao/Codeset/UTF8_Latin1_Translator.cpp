@@ -7,7 +7,6 @@
  *  Defines the methods required to convert UTF-8 based unicode strings
  *  to the Latin-1 codeset.
  *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

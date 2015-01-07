@@ -5,7 +5,6 @@
  *
  *  This test confirms the function of the Based_Pointer_Repository
  *
- *
  *  @author Steve Williams  <steve@telxio>
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *  Visitor generating code for Any operators for a forward declared
  *  component in the client header.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

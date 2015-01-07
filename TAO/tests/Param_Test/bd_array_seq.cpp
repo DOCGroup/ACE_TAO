@@ -5,7 +5,6 @@
  *
  *  tests bounded array sequences
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

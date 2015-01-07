@@ -3,7 +3,6 @@
 /**
  *  @file    SOCK_SEQPACK_Association_Test.cpp
  *
- *
  * Tests the methods get_local_addrs and get_remote_addrs of class
  * ACE_SOCK_SEQPACK_Association.
  *
@@ -11,7 +10,6 @@
  * some output to a log file, so that an interested human can
  * inspect the output and get a vague notion of whether or not
  * the methods are working properly.
- *
  *
  *  @author Edward Mulholland (emulholl@atl.lmco.com)
  */

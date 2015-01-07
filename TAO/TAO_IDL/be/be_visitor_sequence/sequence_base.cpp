@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for the base type of the Sequence
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

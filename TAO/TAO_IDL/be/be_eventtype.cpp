@@ -6,7 +6,6 @@
  *  Extension of class AST_EventType and be_valuetype that provides
  *  additional means for C++ mapping of an eventtype.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

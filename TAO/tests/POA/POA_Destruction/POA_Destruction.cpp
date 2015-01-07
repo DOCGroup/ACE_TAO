@@ -6,7 +6,6 @@
  *   This program tests the destruction of a POA while there is an
  *   upcall in progress.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

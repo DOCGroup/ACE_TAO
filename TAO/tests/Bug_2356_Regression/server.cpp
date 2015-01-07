@@ -5,7 +5,6 @@
  *
  *  Implementation of the server.
  *
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

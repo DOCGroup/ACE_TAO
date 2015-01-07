@@ -7,7 +7,6 @@
  *  implement an application that does various asynchronous
  *  operations.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> modified by  Alexander Libman <alibman@baltimore.com> from original test_proactor.cpp
  */
 //=============================================================================

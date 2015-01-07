@@ -11,7 +11,6 @@
  *  explicitly purge connections from the process CONNECTION CACHE on
  *  demand.
  *
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

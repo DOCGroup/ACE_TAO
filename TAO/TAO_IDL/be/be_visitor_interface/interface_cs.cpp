@@ -4,7 +4,6 @@
  *
  *  Visitor generating code for Interfaces in the client stubs file.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

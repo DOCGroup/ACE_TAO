@@ -11,7 +11,6 @@
  * is increased, a little widget can be used to change the number of
  * polygons too.
  *
- *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
 //=============================================================================

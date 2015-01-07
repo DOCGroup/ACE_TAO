@@ -7,7 +7,6 @@
  *  <ACE_Reactor>s. Both the <ACE_WFMO_Reactor> and
  *  <ACE_Select_Reactor> can be tested.
  *
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

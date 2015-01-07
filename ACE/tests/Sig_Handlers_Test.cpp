@@ -8,7 +8,6 @@
  *  and then type ^C.  If everything is working properly the test
  *  will shutdown gracefully.
  *
- *
  *  @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu> and Andreas Drescher <ace at anticat dot ch>
  */
 //=============================================================================

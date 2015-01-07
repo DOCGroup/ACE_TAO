@@ -2,10 +2,8 @@
 /**
  *  @file    Registry_Changes.cpp
  *
- *
  *  This application tests the working of Reactor when users are
  *  interested in monitoring changes in the registry.
- *
  *
  *  @author Irfan Pyarali
  */

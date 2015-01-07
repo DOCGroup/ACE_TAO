@@ -7,7 +7,6 @@
  *    This class implements a simple CORBA client of the Cubit
  *    interface using DII functionality.
  *
- *
  *  @author   Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

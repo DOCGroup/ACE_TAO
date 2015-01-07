@@ -5,7 +5,6 @@
  *
  *  test union that contains a sequence of itself
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

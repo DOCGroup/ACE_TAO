@@ -9,7 +9,6 @@
  *   ACE_TSS::operator->() are delegated to the appropriate method
  *   in the Errno class.
  *
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

@@ -8,7 +8,6 @@
  *    running its own Reactor.  You can connect to this via telnet and
  *    keep typing until you enter '^D'.
  *
- *
  *  @author Doug Schmidt
  */
 //=============================================================================

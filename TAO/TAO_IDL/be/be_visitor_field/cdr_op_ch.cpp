@@ -5,7 +5,6 @@
  *
  *  Visitor generating CDR operator declarator for field in the client header
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

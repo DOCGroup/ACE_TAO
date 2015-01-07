@@ -6,7 +6,6 @@
  *  Visitor generating code for a context class in the
  *  servant source.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

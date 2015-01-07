@@ -8,7 +8,6 @@
  *  Stubs/Skeletons and client code is available in
  *  ../Generic_Servant.
  *
- *
  *  @author Irfan Pyarali
  */
 //=============================================================================

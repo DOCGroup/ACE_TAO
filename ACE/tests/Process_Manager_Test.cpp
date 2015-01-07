@@ -13,7 +13,6 @@
  *    an integer argument specifying how long to "process" (actually,
  *    the child just sleeps for the specified length of time).
  *
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Dave Madden <dhm@mersenne.com>
  */
 //=============================================================================

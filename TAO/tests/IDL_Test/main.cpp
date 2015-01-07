@@ -6,7 +6,6 @@
  *  We test the pragma prefixes generated in pragma.idl, and
  *  the values of some generated constants in constants.idl.
  *
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

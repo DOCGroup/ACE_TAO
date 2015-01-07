@@ -8,7 +8,6 @@
  *   upon the platform) and then tests various data exchange
  *   scenarios.
  *
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

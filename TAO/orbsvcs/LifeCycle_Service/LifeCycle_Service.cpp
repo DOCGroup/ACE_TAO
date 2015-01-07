@@ -5,7 +5,6 @@
  *
  *  The server for the LifeCycleService of the quoter example.
  *
- *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================

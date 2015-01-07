@@ -7,7 +7,6 @@
  *   This one generates code for accessor and modifier functions of
  *   for valuebox union members.
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================

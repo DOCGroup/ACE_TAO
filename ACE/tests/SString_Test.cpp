@@ -7,7 +7,6 @@
  *    and ACE_WString. No command line arguments are needed to run
  *    the test.
  *
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================

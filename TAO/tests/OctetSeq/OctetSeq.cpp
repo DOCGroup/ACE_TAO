@@ -8,7 +8,6 @@
  * optimizations do not break any code and that they effectively
  * improve performance.
  *
- *
  *  @author Carlos O'Ryan
  */
 //=============================================================================

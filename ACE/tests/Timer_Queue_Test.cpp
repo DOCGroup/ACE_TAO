@@ -10,7 +10,6 @@
  *    functionality of the timer queue is then tested. No command
  *    line arguments are needed to run the test.
  *
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author and Darrell Brunsch <brunsch@cs.wustl.edu>

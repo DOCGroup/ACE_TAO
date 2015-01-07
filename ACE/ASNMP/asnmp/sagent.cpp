@@ -7,7 +7,6 @@
  * approach for creating SNMP Agents. The sagent class is an encapsulation
  * of SNMP sessions, gets, sets, etc.
  *
- *
  *  @author Michael R. MacFaden
  */
 //=============================================================================

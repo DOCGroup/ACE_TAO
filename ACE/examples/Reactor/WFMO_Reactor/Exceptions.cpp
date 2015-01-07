@@ -2,7 +2,6 @@
 /**
  *  @file    Exceptions.cpp
  *
- *
  *  This test application tests the state of WFMO_Reactor when
  *  exceptions occurs when executing user callbacks.
  *
@@ -10,7 +9,6 @@
  *  WFMO_Reactor is not fouled up when exceptions occur in user code.
  *  This example also shows how to write event loops that survive
  *  user exceptions
- *
  *
  *  @author Irfan Pyarali
  */

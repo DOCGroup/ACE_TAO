@@ -18,7 +18,6 @@
  *        <client req# per conn>: 20
  *        <delay>:                0 usec
  *
- *
  *  @author   Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

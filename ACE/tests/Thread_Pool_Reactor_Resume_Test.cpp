@@ -23,7 +23,6 @@
  *        <client req# per conn>: ACE_MAX_THREADS
  *        <delay>:                50 usec
  *
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

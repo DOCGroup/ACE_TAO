@@ -5,7 +5,6 @@
  *
  *   Server to test the Servant Activator and Servant Locator for a POA.
  *
- *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

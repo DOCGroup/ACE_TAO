@@ -6,7 +6,6 @@
  *   Implementation of ServantActivator, which is used by a POA with
  *   a RETAIN policy.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

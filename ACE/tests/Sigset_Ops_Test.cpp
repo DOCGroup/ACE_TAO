@@ -7,7 +7,6 @@
  *   sigfillset(), sigemptyset(), sigaddset(), sigdelset(),
  *   sigismember().
  *
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

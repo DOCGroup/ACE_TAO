@@ -5,7 +5,6 @@
  *
  *  tests unbounded objref sequences
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

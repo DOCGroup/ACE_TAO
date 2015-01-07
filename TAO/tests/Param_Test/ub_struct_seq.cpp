@@ -6,7 +6,6 @@
  *
  *  tests unbounded struct sequences
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  tests unbounded wide strings
  *
- *
  *  @author   Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

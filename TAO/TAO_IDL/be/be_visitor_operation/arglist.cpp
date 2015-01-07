@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for the parameter list of the Operation signature.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

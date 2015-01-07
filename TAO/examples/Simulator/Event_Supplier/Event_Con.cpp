@@ -10,7 +10,6 @@
  * architecture expects an supplier which has inherited from the
  * Rtec Supplier.
  *
- *
  *  @author originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
  */
 //=============================================================================

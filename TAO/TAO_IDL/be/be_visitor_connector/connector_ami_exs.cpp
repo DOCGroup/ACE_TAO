@@ -6,7 +6,6 @@
  *  Visitor generating code for AMI4CCM Connectors in the exec
  *  impl source.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

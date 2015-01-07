@@ -2,7 +2,6 @@
 /**
  *  @file    Network_Events.cpp
  *
- *
  *  This application tests Reactor to make sure that it responds
  *  correctly to different kinds of network events.
  *
@@ -18,7 +17,6 @@
  *  To run this example, start an instance of this example and
  *  connect to it using telnet (to port
  *  ACE_DEFAULT_SERVER_PORT(20002)).
- *
  *
  *  @author Irfan Pyarali
  */

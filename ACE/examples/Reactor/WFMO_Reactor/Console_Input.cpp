@@ -3,10 +3,8 @@
 /**
  *  @file    Console_Input.cpp
  *
- *
  *  This application tests the working of WFMO_Reactor when users
  *  are interested in console input.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

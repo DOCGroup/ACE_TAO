@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for return type of the Operation node
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

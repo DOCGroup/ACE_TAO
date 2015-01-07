@@ -21,7 +21,6 @@
  *  % make
  *  % ./test_aiocb_ace
  *
- *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================

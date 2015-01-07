@@ -5,7 +5,6 @@
  *
  * Provides helper classes to print generated code to the output
  *
- *
  *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
  */
 //=============================================================================

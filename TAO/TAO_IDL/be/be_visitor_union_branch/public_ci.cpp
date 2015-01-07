@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Union Branch in the client inline file.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

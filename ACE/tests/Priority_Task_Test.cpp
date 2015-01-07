@@ -7,7 +7,6 @@
  *    ACE Tasks.  The test requires no options, but the -d option
  *    enables LM_DEBUG output.
  *
- *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
 //=============================================================================

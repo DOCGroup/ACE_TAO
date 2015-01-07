@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for the Root in the client inline
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

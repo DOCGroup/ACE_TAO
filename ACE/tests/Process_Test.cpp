@@ -5,7 +5,6 @@
  *
  *  Tests ACE_Process file handle inheritance for UNIX-like systems
  *
- *
  *  @author Christian Fromme <kaner@strace.org>
  */
 //=============================================================================

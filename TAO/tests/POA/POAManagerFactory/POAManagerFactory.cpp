@@ -7,7 +7,6 @@
  *   the POAManagerFactory interfaces such as create_POAManager(),
  *   list () and find ().
  *
- *
  *  @author  Yan Dai
  */
 //=============================================================================

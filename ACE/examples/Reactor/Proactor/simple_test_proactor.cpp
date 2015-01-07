@@ -5,7 +5,6 @@
  *
  *  Very simple version of test_proactor.cpp.
  *
- *
  *  @author Alexander Babu Arulanthu (alex@cs.wustl.edu)
  */
 //=============================================================================

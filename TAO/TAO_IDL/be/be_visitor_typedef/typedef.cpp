@@ -5,7 +5,6 @@
  *
  *  Generic visitor generating code for Typedefs
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

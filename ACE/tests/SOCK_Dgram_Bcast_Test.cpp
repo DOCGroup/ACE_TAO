@@ -11,7 +11,6 @@
  *   Tests that a call to open with an any address binds to the any address
  *   for the protocol passed in.
  *
- *
  *  @author Marek Brudka (mbrudka@elka.pw.edu.pl)
  */
 //=============================================================================

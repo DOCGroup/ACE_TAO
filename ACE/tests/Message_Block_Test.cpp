@@ -7,7 +7,6 @@
  *    <ACE_Message_Block> reference counting works in multi-threaded
  *    code.
  *
- *
  *  @author Doug Schmidt <schmidt@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

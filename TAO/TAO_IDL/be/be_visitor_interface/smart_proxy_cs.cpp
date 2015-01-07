@@ -6,7 +6,6 @@
  *  Visitor generating code for smart_proxy classes for an Interface in the
  *  client proxy file.
  *
- *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
 //=============================================================================

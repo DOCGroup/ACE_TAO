@@ -9,7 +9,6 @@
  *   around a bug in the VxWorks loader that constructs static objects
  *   multiple times.  It sounds hard to believe, but I've seen it!
  *
- *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
 //=============================================================================

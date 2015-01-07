@@ -8,7 +8,6 @@
  *   time, it makes sure that a servant can call itself or other
  *   servants in the same POA while in an upcall.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

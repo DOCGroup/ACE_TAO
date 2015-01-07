@@ -9,7 +9,6 @@
  *   executes client and server allowing them to connect and
  *   exchange data.
  *
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

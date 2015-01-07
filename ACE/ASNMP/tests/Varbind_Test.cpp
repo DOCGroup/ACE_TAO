@@ -6,7 +6,6 @@
  *  Test all the member functions of the Varbind class.
  * A varbind is a list of { oids and associated values }
  *
- *
  *  @author Michael R. MacFaden <mrm@cisco.com>
  */
 //=============================================================================

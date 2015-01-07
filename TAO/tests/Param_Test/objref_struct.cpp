@@ -5,7 +5,6 @@
  *
  *  test structures containing object references.
  *
- *
  *  @author   Aniruddha Gokhale
  */
 //=============================================================================

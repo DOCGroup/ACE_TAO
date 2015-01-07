@@ -9,7 +9,6 @@
  *  the wakeup while another thread is handling the closure of the
  *  connection and unregistering.
  *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

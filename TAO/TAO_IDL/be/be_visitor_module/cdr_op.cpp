@@ -6,7 +6,6 @@
  *  Visitor generating code for the CDR operators for types defined in Module's
  *  scope.
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

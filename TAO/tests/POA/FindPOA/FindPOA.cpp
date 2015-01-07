@@ -5,7 +5,6 @@
  *
  *   This Program tests the find_POA method of a POA.
  *
- *
  *  @author  Irfan Pyarali
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for value types in the server header
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  *   It creates several IPv6 addresses and checks that the
  *   address formed by the class is valid.
  *
- *
  *  @author Edward Mulholland (emulholl@atl.lmco.com) Brian Buesker (bbuesker@qualcomm.com) - Added testing of                                         ACE_Multihomed_INET_Addr class                                         using IPv6 addresses based on                                         Multihomed_INET_Addr_Test.
  */
 //=============================================================================

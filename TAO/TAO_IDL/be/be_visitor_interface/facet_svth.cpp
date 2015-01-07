@@ -6,7 +6,6 @@
  *  Visitor generating code for a facet servant class in the
  *  servant header.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

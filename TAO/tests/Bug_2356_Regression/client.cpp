@@ -5,7 +5,6 @@
  *
  *  A very simple client which uses the AMI callback model.
  *
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

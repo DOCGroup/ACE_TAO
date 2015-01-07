@@ -8,7 +8,6 @@
  *    cancelling scheduled timers from multiple threads.  No command
  *    line arguments are needed to run the test.
  *
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

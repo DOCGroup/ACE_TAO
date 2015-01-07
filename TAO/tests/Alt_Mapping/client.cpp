@@ -6,7 +6,6 @@
  *  This file contains the implementation of the client-side of the
  *  Alt_Mapping application.
  *
- *
  *  @author   Jeff Parsons
  */
 //=============================================================================

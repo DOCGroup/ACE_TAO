@@ -10,7 +10,6 @@
  * each allocator, specially under the light of potential
  * fragmentation in the main allocator.
  *
- *
  *  @author Carlos O'Ryan
  */
 //=============================================================================

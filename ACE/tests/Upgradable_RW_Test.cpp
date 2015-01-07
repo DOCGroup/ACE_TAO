@@ -8,7 +8,6 @@
  *    pthreads.  Use the RW_Mutex define switch to use
  *    readers/writer mutexes or regular mutexes.
  *
- *
  *  @author Michael Kircher <mk1@cs.wustl.edu>
  */
 //=============================================================================

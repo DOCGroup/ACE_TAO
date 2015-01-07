@@ -37,7 +37,6 @@
  *   This test is a "twin" of the Proactor_Test.cpp, so it can help for
  *   developers to provide independent of Reactor/Proactor solutions.
  *
- *
  *  @author   Alexander Libman <alibman@ihug.com.au>
  *  @author <alexl@rumblgroup.com>
  */

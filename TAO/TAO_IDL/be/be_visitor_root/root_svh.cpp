@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Root in the CIAO servant header
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

@@ -6,7 +6,6 @@
  * The basic SNMPv1 API - blocking version using UDP/IPv4 transport
  * and addressing.
  *
- *
  *  @author Peter E Mellquist class design/orig codeMichael R MacFaden  mrm@cisco.com / rework API
  *  @author use ACE facilities
  */

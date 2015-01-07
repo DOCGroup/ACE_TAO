@@ -5,7 +5,6 @@
  *
  *   This is a simple test of the ACE_Vector class and its iterators.
  *
- *
  *  @author Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com> and Karl-Heinz Wind <wind@itq.de>
  */
 //=============================================================================

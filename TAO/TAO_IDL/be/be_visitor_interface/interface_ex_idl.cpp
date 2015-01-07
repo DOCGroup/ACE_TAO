@@ -6,7 +6,6 @@
  *  Visitor generating code for Interfaces in the
  *  CIAO executor IDL file.
  *
- *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

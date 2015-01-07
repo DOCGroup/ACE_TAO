@@ -6,7 +6,6 @@
  *   Implementation of MyFooServantLocator class , used with a POA
  *   having a NON_RETAIN policy.
  *
- *
  *  @author  Irfan Pyarali  Michael Kircher
  */
 //=============================================================================

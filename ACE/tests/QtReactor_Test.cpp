@@ -28,7 +28,6 @@
  *    HandlersRegister     - register of event_handlers, responsible also for
  *                           the analysis of test results.
  *
- *
  *  @author Marek Brudka <mbrudka@elka.pw.edu.pl>
  */
 //=============================================================================

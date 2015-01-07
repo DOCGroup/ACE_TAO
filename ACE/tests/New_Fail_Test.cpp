@@ -12,7 +12,6 @@
  *  In these cases, the test puts a message in the log noting that a failed
  *  new will throw an exception, and trust that the user accepts that risk.
  *
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

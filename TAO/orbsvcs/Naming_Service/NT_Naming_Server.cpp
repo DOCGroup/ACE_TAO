@@ -7,7 +7,6 @@
  *  Driver program that runs the TAO Naming Service as a Windows NT
  *  Service.
  *
- *
  *  @author John Tucker <jtucker@infoglide.com> and Mike Vitalo <mvitalo@infoglide.com>
  */
 //=============================================================================

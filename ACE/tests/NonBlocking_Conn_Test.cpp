@@ -10,7 +10,6 @@
  *  - non-blocking connections without waiting for completions
  *  - non-blocking connections with timeouts
  *
- *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
 //=============================================================================

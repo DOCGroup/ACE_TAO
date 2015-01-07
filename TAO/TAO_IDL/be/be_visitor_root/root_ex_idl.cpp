@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Root in the CIAO executor IDL
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for CDR operators for unions
  *
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

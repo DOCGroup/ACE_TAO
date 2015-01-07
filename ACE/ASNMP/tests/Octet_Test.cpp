@@ -6,7 +6,6 @@
  *  Test all the member functions of the OCTET class. An Object
  *  representing an ASN.1 Integer64 SMI OCTET STRING SYNTAX.
  *
- *
  *  @author Michael R. MacFaden <mrm@cisco.com>
  */
 //=============================================================================

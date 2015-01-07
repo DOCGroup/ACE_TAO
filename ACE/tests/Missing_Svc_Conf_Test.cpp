@@ -15,7 +15,6 @@
  *  true, since adding a default svc.conf file in this directory my
  *  impact other tests.
  *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for Connectors in the exec impl source.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

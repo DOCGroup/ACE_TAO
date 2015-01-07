@@ -6,7 +6,6 @@
  * Implementation of the Broadcaster_i class. This class is the servant
  * object for the chat server.
  *
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

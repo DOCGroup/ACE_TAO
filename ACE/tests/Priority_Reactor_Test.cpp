@@ -13,7 +13,6 @@
  *   The test itself is interesting, it shows how to write very
  *   simple <ACE_Svc_Handler>, <ACE_Connectors> and <ACE_Acceptors>.
  *
- *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
 //=============================================================================

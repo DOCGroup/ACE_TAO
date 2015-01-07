@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for facets in the exec impl header.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

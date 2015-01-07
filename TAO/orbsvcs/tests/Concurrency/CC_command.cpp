@@ -4,7 +4,6 @@
  *
  *    This is the command classes for the test of the concurrency service.
  *
- *
  *  @author   Torben Worm <tworm@cs.wustl.edu>
  */
 //=============================================================================

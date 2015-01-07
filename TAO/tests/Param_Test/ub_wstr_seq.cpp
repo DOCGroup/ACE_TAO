@@ -5,7 +5,6 @@
  *
  *  tests unbounded wide string sequences
  *
- *
  *  @author   Jeff Parsons
  */
 //=============================================================================

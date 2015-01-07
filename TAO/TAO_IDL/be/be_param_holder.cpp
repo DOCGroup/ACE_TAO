@@ -6,7 +6,6 @@
  *  Place holder referenced by AST_Field (or subclass)
  *  representing a corresponding template parameter in IDL.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

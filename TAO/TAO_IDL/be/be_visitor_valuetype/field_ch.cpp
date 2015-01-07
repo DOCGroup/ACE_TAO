@@ -6,7 +6,6 @@
  *  Visitor generating the accessor and modifier declarations
  *  for valuetype fields in the valuetype class (header).
  *
- *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  *   derived from be_visitor_union_branch/public_ch.cpp
  */

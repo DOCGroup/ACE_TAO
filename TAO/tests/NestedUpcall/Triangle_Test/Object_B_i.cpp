@@ -6,7 +6,6 @@
  *  This class implements the Object B  of the
  *  Nested Upcalls - Triangle test.
  *
- *
  *  @author Michael Kircher
  */
 //=============================================================================

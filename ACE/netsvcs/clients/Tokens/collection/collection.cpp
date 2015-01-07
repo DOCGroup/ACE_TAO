@@ -8,7 +8,6 @@
  *   thread to operate on each.  The threads use the collective
  *   acquire, renew, and release features of ACE_Token_Collection.
  *
- *
  *  @author Tim Harrison
  */
 //=============================================================================

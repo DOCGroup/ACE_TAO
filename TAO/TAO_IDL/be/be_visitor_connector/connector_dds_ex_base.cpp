@@ -6,7 +6,6 @@
  *  Base class for visitors generating code for DDS Connectors in
  *  the exec impl.
  *
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

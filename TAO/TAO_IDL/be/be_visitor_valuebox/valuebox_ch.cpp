@@ -5,7 +5,6 @@
  *
  *  Visitor generating code for valueboxes in the client header
  *
- *
  *  @author Gary Maxey
  */
 //=============================================================================
