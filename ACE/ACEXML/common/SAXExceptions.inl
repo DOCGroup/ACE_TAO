@@ -1,4 +1,4 @@
-// -*- C++ -*- $Id$
+// -*- C++ -*-
 
 ACEXML_INLINE const ACEXML_Char *
 ACEXML_SAXException::message (void) const
