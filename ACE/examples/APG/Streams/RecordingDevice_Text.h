@@ -1,7 +1,5 @@
 /* -*- C++ -*- */
 /*
- * $Id$
- *
  * A RecordingDevice that listens to a socket and collects text.
  */
 

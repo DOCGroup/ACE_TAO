@@ -40,3 +40,5 @@ BEGIN{undef $/;} s/\/\/ -\*- C\+\+ -\*-   \$Id\$\n/\/\/ -\*- C\+\+ -\*-\n/smg;
 BEGIN{undef $/;} s/\/\/ -\*- C\+\+ -\*-  \$Id\$\n/\/\/ -\*- C\+\+ -\*-\n/smg;
 # Replace a one line start C++ line with Id with
 BEGIN{undef $/;} s/\/\/ -\*- C\+\+ -\*- \$Id\$\n/\/\/ -\*- C\+\+ -\*-\n/smg;
+# Replace a three line doxygen style Id tag with just line *
+BEGIN{undef $/;} s/\/\*\n \* \$Id\$\n \*\n/\/\*\n/smg;
