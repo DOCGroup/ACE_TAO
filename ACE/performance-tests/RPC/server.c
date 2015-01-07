@@ -1,5 +1,4 @@
 /*
- * 
  */
 
 #include "ping.h"

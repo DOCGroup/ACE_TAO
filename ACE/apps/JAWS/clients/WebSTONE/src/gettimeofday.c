@@ -8,7 +8,6 @@
  *
  *  FUNCTIONS:
  *     SHARED   _gettimeofday
- *
  */
 
 

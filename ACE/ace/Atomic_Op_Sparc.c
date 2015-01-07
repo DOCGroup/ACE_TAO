@@ -1,4 +1,4 @@
-/* 
+/*
  *
  * This is a C file for a reason.  The Sun C++ compiler does not accept
  * inline assembler.

@@ -26,7 +26,6 @@
  * Mike Belshe
  * mbelshe@netscape.com
  * 11-5-95
- *
  */
 
 #ifndef WIN32
