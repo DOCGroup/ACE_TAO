@@ -4,7 +4,7 @@
 /**
  * @file LB_Component.h
  *
- * 
+ *
 
  * @author Ossama Othman <ossama@uci.edu>
  */

@@ -1,7 +1,6 @@
 /**
  * @file Action_Base.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * 
  */
 
 #ifndef ACTION_BASE_H

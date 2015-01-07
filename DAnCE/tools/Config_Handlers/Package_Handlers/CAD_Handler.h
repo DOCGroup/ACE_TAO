@@ -1,8 +1,6 @@
 /**
  * @file CAD_Handler.h
  * @author William Otte <wotte@dre.vanderbilt.edu>
- *
- * 
  */
 
 #ifndef CIAO_PACKAGING_CAD_HANDLER_H

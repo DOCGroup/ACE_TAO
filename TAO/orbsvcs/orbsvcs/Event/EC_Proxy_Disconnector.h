@@ -4,8 +4,6 @@
  * @file EC_Proxy_Disconnector.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
- * 
  */
 #ifndef EC_PROXY_DISCONNECTOR__H_
 #define EC_PROXY_DISCONNECTOR__H_

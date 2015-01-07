@@ -2,7 +2,7 @@
  * @file Deployment_Scheduler.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * 
+ *
  * Active-object based scheduler for deployment events.
  */
 #ifndef DEPLOYMENT_SCHEDULER_H

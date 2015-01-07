@@ -1,8 +1,6 @@
 /*
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  * @author Lothar Werzinger <lothar@tradescape.biz>
- *
- * 
  */
 
 #ifndef DllOrb_h

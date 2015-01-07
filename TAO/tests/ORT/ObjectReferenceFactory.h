@@ -4,7 +4,7 @@
 /**
  * @file ObjectReferenceFactory.h
  *
- * 
+ *
 
  * @author Ossama Othman <ossama@uci.edu>
  */

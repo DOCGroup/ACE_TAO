@@ -1,5 +1,4 @@
 /*
- * 
  */
 #include "ace/Stats.h"
 #include "ace/High_Res_Timer.h"

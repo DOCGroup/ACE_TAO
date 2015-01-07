@@ -1,7 +1,5 @@
 /**
  * @file test.cpp
- *
- * 
  */
 
 #include "TestC.h"

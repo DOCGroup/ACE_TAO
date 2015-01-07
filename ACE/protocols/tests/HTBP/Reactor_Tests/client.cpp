@@ -1,7 +1,5 @@
 /**
  * client for a reactor based connection establishment test using HTBP
- *
- * 
  */
 
 #include "ace/Log_Msg.h"

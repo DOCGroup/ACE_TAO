@@ -1,8 +1,6 @@
 /**
  * @file CIAO_State.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
- * 
  */
 
 #ifndef CIAO_STATE_H

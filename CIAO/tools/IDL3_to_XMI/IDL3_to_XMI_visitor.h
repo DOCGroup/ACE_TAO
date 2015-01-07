@@ -1,7 +1,7 @@
 /**
  * @file IDL3_to_XMI_visitor.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * 
+ *
  * Implements a visitor that generates XMI for the CARDAMOM
  * code generation facility.
  *

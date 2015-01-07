@@ -1,7 +1,6 @@
 // -*- C++ -*-
 
 /*
- * 
  */
 
 #include "tao/DynamicInterface/Request.h"  /* This must come first for

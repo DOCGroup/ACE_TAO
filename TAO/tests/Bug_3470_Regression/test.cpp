@@ -3,8 +3,6 @@
  *
  * launch test like this:
  *  <execname> -ORBInitRef MyObjectId=file://myobj.ior
- *
- * 
  */
 
 #include "tao/ORB.h"
