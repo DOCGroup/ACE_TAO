@@ -2,7 +2,6 @@
  * @file Federated_Test.idl
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
- *
  */
 
 #include "tao/ULongLongSeq.pidl"

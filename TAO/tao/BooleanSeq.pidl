@@ -2,7 +2,6 @@
 /**
  * @file BooleanSeq.pidl
  *
- * 
  */
 
 #ifndef TAO_CORBA_BOOLEAN_SEQ_IDL

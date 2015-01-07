@@ -3,7 +3,7 @@
  * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
- * 
+ *
  * Contains IDL definitions for the Stock Broker in the Publish/Subscribe Real-time CORBA
  * Stock Quoter Service.
  */

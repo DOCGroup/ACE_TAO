@@ -12,7 +12,6 @@
  *  is in the tao/AnyTypeCode directory. This cannot work because it sets up a
  *  circular dependency between libTAO_AnyTypeCode and libTAO_ValueType. It
  *  also requires an additional -I$TAO_ROOT/tao which is non traditional.
- *
  */
 
 //=============================================================================

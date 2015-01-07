@@ -3,7 +3,6 @@
 /**
  *  @file   Messaging_SyncScope_Policy.pidl
  *
- *  
  */
 
 #ifndef TAO_MESSAGING_SYNCSCOPE_POLICY_PIDL

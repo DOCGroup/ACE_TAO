@@ -3,7 +3,6 @@
  *
  * @brief Pre-compiled IDL source for the CORBA::PolicyManager related
  * classes.
- *
  */
 
 #ifndef TAO_CORBA_POLICYMANAGER_PIDL

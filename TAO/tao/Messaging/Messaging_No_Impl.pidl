@@ -3,7 +3,6 @@
 /**
  *  @file   Messaging_No_Impl.pidl
  *
- *  
  */
 
 #ifndef TAO_MESSAGING_NO_IMPL_PIDL

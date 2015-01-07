@@ -13,7 +13,6 @@
  * directly or indirectly from CORBA::ValueBase. This separate file
  * has been created to remove the dependency from the rest of module
  * PortableInterceptor.
- *
  */
 
 // File: IORInfo.idl

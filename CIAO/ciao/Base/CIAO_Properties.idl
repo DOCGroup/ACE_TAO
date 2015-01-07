@@ -1,7 +1,7 @@
 /**
  * @file CIAO_Properties.idl
  * @author William R. Otte
- * 
+ *
  * Standardizes names of config values used by CIAO.
  */
 

@@ -1,6 +1,5 @@
 /**
  * @file Test.idl
- *
  */
 
 union FirstUnion switch (boolean) {

@@ -4,7 +4,6 @@
  * interface below from the real security service pulls in
  * 250Kb of footprint
  *
- * 
  */
 
 #if !defined (CIAO_SECURITY_IDL)

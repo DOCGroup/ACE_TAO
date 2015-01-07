@@ -3,7 +3,6 @@
 /**
  *  @file   Messaging_RT_Policy.pidl
  *
- *  
  */
 
 #ifndef TAO_MESSAGING_RT_POLICY_PIDL

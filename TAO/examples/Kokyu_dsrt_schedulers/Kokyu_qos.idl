@@ -1,7 +1,6 @@
 
 /**
  * @file Kokyu_qos.idl
- *
  */
 
 #ifndef _KOKYU_DSRT_QOS_PIDL_

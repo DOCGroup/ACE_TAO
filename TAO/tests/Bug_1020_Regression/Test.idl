@@ -2,7 +2,6 @@
  * @file Test.idl
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef BUG_1020_REGRESSION_TEST_IDL
 #define BUG_1020_REGRESSION_TEST_IDL

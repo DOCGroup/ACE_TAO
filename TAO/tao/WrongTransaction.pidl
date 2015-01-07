@@ -19,7 +19,6 @@
  *
  * cp orig/WrongTransactionC.{h,inl,cpp} .
  * cp orig/WrongTransactionS.h .
- *
  */
 #ifndef TAO_CORBA_WRONGTRANSACTION_PIDL
 #define TAO_CORBA_WRONGTRANSACTION_PIDL

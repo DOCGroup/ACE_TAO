@@ -3,7 +3,6 @@
 /**
  *  @file TimeBase.pidl
  *
- *  
  */
 
 #ifndef TIME_BASE_PIDL
@@ -19,7 +18,6 @@
  * to manipulate and express time.
  * Over time these data structures have found their way into core
  * components of CORBA, such as CORBA Messaging, RT CORBA, etc.
- *
  */
 module TimeBase
 {

@@ -2,7 +2,6 @@
  * @file Test.idl
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef Test__idl_
 #define Test__idl_

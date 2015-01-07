@@ -6,7 +6,6 @@
  * This file is used to provide a definition for the CORBA::InterfaceDef
  * type, it is *NOT* pre-compiled, but included from other
  * pre-compiled files.
- *
  */
 
 #ifndef TAO_CORBA_INTERFACEDEF_PIDL

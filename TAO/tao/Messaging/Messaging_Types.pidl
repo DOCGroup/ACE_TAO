@@ -3,7 +3,6 @@
 /**
  *  @file   Messaging_Types.pidl
  *
- *  
  */
 
 #ifndef TAO_MESSAGING_NO_IMPL_TYPES_PIDL
