@@ -174,7 +174,6 @@ namespace
 }
 
 //
-//
 class InvokeMeImpl: public virtual POA_InvokeMe
 {
 public:
@@ -202,7 +201,6 @@ private:
 };
 
 
-//
 //
 class ReplicaController: public virtual ServerRequestInterceptor,
                          public virtual ::CORBA::LocalObject
@@ -269,7 +267,6 @@ public:
 };
 
 
-//
 //
 class ORB_Initializer : public virtual ORBInitializer,
                         public virtual ::CORBA::LocalObject

@@ -14,7 +14,6 @@
 
 // State management
 //
-//
 
 PortableInterceptor::SlotId
 state_slot_id ();
@@ -23,7 +22,6 @@ void
 state_slot_id (PortableInterceptor::SlotId slot_id);
 
 // ReplicaController
-//
 //
 
 class ReplicaController

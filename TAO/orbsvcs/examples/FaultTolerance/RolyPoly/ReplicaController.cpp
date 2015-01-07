@@ -19,7 +19,6 @@
 
 // State slot.
 //
-//
 
 namespace
 {
@@ -73,7 +72,6 @@ associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state)
 }
 
 // ReplyLogger
-//
 //
 
 ReplicaController::

@@ -28,7 +28,6 @@
 // ==========================================================================//
 //------------- General Requirements on a Log Message Receiver --------------//
 // ==========================================================================//
-//
 //  The requirements on a log manager receiver, T, are quite simple.
 //  1: There must exist one "log_record" member function with the following
 //     prototype:
@@ -60,7 +59,6 @@
 // ==========================================================================//
 // ------------ General Description of a Log Message Receiver -------------- //
 // ==========================================================================//
-//
 //  Log Message Receivers, LRMs, are processing log records. It is the
 //  LRM that writes a log message to stderr, stdout, a log file and maybee
 //  converts some of the log messages to notifications, warnings, alarms
@@ -113,7 +111,6 @@ public:
 // Instance based log message receiver
 
 // ------------------------ Log_Message_Receiver --------------------------- //
-//
 //  Log_Message_Receiver is little more complicated log message receiver.
 //  It is instance based and have a reference counted implementation.
 //  Log_Message_Receiver is the envelope class for Log_Message_Receiver_Impl.

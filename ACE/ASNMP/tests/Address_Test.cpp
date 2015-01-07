@@ -281,7 +281,6 @@ Ipx Address semantics:  Total length must be 21
 //   Second string length must be 12
 //   Each char must take on value 0-F
 //
-//
 // Input formats recognized
 //
 //  XXXXXXXX.XXXXXXXXXXXX

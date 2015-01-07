@@ -37,7 +37,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 //   (none of the above)
 //   => shift/masks using 32bit words.
 //
-//
 // Some things you could find useful to know if you intend to mess
 // with this optimizations for swaps:
 //

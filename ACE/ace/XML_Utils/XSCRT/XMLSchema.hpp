@@ -512,7 +512,6 @@ namespace XMLSchema
 
 // Traversal
 //
-//
 
 #include "ace/XML_Utils/XSCRT/Traversal.hpp"
 
@@ -566,7 +565,6 @@ namespace XMLSchema
 
 
 // ExtendedTypeInfo for XML Schema types
-//
 //
 
 #include "ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp"

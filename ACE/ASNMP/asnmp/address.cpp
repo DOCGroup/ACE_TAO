@@ -1315,7 +1315,6 @@ SnmpSyntax *IpxAddress::clone() const
 //   Second string length must be 12
 //   Each char must take on value 0-F
 //
-//
 // Input formats recognized
 //
 //  XXXXXXXX.XXXXXXXXXXXX
@@ -1879,7 +1878,6 @@ SnmpSyntax& MacAddress::operator=( SnmpSyntax &val)
 //   XXXXXXXXXXXX
 //   Total length must be 17
 //   Each char must take on value 0-F
-//
 //
 int MacAddress::parse_address( const char *inaddr)
 {
