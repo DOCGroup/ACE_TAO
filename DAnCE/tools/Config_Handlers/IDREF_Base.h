@@ -1,5 +1,5 @@
 /**
-* 
+*
 * @file IDREF_Base.h
 * @author Will Otte <wotte@dre.vanderbilt.edu>
 *

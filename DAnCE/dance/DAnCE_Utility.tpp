@@ -1,4 +1,3 @@
-// $Id$
 #ifndef DAnCE_Utility_TPP
 #define DAnCE_Utility_TPP
 

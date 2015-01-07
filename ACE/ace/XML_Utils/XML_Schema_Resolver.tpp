@@ -1,4 +1,3 @@
-// $Id$
 #ifndef XML_SCHEMA_RESOLVER_TPP
 #define XML_SCHEMA_RESOLVER_TPP
 

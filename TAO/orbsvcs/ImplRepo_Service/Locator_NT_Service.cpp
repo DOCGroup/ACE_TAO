@@ -46,8 +46,6 @@ Locator_NT_Service::handle_control (DWORD control_code)
 }
 
 
-/**
- */
 int
 Locator_NT_Service::handle_exception (ACE_HANDLE)
 {

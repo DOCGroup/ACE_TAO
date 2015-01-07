@@ -49,8 +49,6 @@ Activator_NT_Service::handle_control (DWORD control_code)
 }
 
 
-/**
- */
 int
 Activator_NT_Service::handle_exception (ACE_HANDLE)
 {

@@ -17,8 +17,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- */
 class Dynamic_Bitset
 {
   typedef unsigned block;

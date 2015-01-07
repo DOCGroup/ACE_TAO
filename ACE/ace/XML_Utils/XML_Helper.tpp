@@ -1,4 +1,3 @@
-//$Id$
 #include "XML_Helper.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
