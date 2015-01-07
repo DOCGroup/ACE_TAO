@@ -1,4 +1,4 @@
-$Id$
+
 
 This client and server in this test both load the UIPMC protocol plug in
 (see svc.conf).

@@ -1,4 +1,4 @@
-$Id$
+
 
 In order to use dds4ccm correctly, you must first create a PICML
 model of the dds4ccm IDL files that can be used as a GME library

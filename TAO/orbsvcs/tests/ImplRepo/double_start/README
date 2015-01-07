@@ -1,4 +1,4 @@
-$Id$
+
 
 This test demonstrates that a client may safely obtain a new reference to a
 previously crashed server by connecting to either a primary or backup ImR.

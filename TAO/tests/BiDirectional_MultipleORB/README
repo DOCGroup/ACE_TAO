@@ -1,4 +1,4 @@
-$Id$
+
 
 This is a test that creates a birectional GIOP policy for a POA and then
 attempts to repeat this, after destructing and re-creating the ORB. This used to

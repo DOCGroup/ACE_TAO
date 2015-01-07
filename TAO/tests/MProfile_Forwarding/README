@@ -1,4 +1,4 @@
-$Id$
+
 
 This test evalutes ORB fault tolerance support, based on one of the
 problems that was reported by the DOORS team at Lucent. The test is

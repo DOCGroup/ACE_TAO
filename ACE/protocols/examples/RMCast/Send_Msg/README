@@ -1,4 +1,4 @@
-$Id$
+
 
 In this example SENDER sends a number (defined in Protocol.h, 10000
 by default) of messages  to the multicast group. Each message has

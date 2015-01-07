@@ -1,4 +1,4 @@
-$Id$
+
 
 This test serves a dual purpose, verifying that the new feature allowing a
 default sync scope to be set via the resource factory, as well as a regression

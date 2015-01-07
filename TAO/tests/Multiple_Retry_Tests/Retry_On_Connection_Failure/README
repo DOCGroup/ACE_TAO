@@ -1,4 +1,4 @@
-$Id$
+
 
   This tests shows that by using -ORBForwardOnTransientLimit and -ORBForwardDelay
   options on a client, the client will retry establishing

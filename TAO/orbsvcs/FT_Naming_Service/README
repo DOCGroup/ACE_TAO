@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains files that implement a server for the TAO
 FT Naming Service. The FT Naming Service supports a dual redundant

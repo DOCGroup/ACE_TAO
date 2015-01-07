@@ -1,5 +1,3 @@
-// $Id$
-
 // ============================================================================
 // This test covers the use of std::string as an alternate C++  mapping for
 // CORBA strings, and the use of std::vector<T> as an alternate C++ mapping

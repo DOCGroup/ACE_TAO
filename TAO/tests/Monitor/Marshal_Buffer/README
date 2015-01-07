@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains a simple example of the marshaling
 buffer size monitor. A marshaling buffer is identical, in

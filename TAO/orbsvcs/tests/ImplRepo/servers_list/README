@@ -1,4 +1,4 @@
-$Id$
+
 
 This test runs various servers registered with the ImR and verifies
 that the number of servers returned by the tao_imr list command is

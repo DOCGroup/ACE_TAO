@@ -1,4 +1,4 @@
-$Id$
+
 
 This subdirectory illustrates a number of the ACE ASX framework
 features using an ACE_Stream application called the Event Server.  For

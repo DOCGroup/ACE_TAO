@@ -2,7 +2,7 @@
 
 @page ForwardUponObjectNotExist Test README File
 
-$Id$
+
 
 	This is test for feature of request forwarding when client receives
 	OBJECT_NOT_EXIST exception. The feature is enabled and disabled by

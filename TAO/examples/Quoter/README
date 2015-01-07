@@ -1,4 +1,4 @@
-$Id$
+
 
 Here is a Stock Quoter example that features the use of the TAO IDL
 compiler, the different types of configuration settings (global vs

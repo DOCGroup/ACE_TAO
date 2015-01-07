@@ -1,4 +1,4 @@
-$Id$
+
 
 This utility provides a command line interface for the tao_ft_naming service.
 tao_ft_naming service supports the NameService and NamingManager interfaces.

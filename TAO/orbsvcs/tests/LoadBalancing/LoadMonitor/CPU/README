@@ -1,4 +1,4 @@
-$Id$
+
 
 This test verifies that Cygnus' CPU load monitor is working correctly.
 Run the test using the `run_test.pl' Perl script.  The expected test

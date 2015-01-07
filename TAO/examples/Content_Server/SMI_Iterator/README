@@ -1,4 +1,4 @@
-$Id$
+
 
 This program illustrates how to implement a simple client and server
 using CORBA, IIOP, and synchronous method invocations (SMI).  Client

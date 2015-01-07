@@ -1,4 +1,4 @@
-$Id$
+
 
 This is a test of the ImplRepo being accessed by a variable number of clients trying to send a request
 to a server registered with the ImplRepo and launched using the activator.

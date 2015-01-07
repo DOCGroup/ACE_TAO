@@ -1,4 +1,4 @@
-$Id$
+
 
 Here are a few tests for the ImplRepo.  The best way to test is to
 use the run_test.pl passing it one of the following arguments:

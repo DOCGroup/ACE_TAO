@@ -1,4 +1,4 @@
-$Id$
+
 
 This test verifies that CodecFactory and CDR encapsulation Codec
 support is working properly.

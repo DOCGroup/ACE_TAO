@@ -1,4 +1,4 @@
-$Id$
+
 
 This test verifies that PolicyFactory support is working properly.
 Working PolicyFactory support requires the following on the server side:

@@ -1,4 +1,4 @@
-$Id$
+
 
 This test simulates the sending of a GIOP CloseConnection message.
 Since TAO does not send this GIOP message, a perl script

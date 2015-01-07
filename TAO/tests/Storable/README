@@ -1,4 +1,4 @@
-$Id$
+
 
 This test verifies that TAO::Storable_FlatFileStream along
 with TAO::Storable_File_Guard can be used to save/restore

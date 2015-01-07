@@ -1,4 +1,4 @@
-$Id$
+
 
 	This directory contains a generic client program. The program
 takes an object reference as a commandline parameter and checks if it

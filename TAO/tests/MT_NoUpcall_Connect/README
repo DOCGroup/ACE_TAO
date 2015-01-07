@@ -1,4 +1,4 @@
-$Id$
+
 
 This test represents a special case where a middle-tier server is waiting for
 a connect to complete and has to deal with an upcall request.

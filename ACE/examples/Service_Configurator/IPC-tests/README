@@ -1,4 +1,4 @@
-$Id$
+
 
 This file describes how to invoke the tests in the
 $ACE_ROOT/examples/Service_Configurator/IPC-test/{client,server}

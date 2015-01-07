@@ -1,4 +1,4 @@
-$Id$
+
 
 This example simulates spacecraft constellation. Each spacecraft
 connects to a constellation-wide multicast group to which it

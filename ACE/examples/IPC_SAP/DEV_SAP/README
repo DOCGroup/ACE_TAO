@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains a test example for the DEV_SAP
 class category. It implements a class TTY_IO that is

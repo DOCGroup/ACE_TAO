@@ -1,4 +1,4 @@
-$Id$
+
 
 This test is based on the Filter example.
 It tests the persistent filter changes. The filter constraints

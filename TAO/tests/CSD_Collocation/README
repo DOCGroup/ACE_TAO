@@ -1,4 +1,4 @@
-$Id$
+
 
 This is the Collocation test adapted to use CSD, specifically CSD's thread-pool
 (TP) stragegy.  Collocation.cpp has been modified to shut down and restart the

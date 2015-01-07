@@ -1,4 +1,4 @@
-$Id$
+
 
 The Export example is just an example that both shows off and tests
 the macros created by generate_export_file.pl (or the earlier

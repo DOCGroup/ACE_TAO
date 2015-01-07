@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory provides programs that measure the round trip latency
 of synchronous octet messaging using ACE wrapper-facades for the SCTP

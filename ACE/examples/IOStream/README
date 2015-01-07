@@ -1,4 +1,4 @@
-$Id$
+
 
 This example illustrates the use of the ACE_IOStream and
 ACE_Streambuf_T templates to create an object based on ACE_*_Stream

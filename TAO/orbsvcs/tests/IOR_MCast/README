@@ -1,4 +1,4 @@
-$Id$
+
 
 This is a simple test for testing the multicast ior parser with format
 mcast://multicast_address:port:nicaddress:ttl

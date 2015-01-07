@@ -1,4 +1,4 @@
-$Id$
+
 
 Client in this test tries to set TTL / hop limit to 1. It's done in IIOP, DIOP,
 and MIOP. When testing MIOP we also test for support of -ORBIPMulticastLoop.

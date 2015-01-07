@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains a test for the ACE_Name_Server library.  This
 test program also illustrates how to use the ACE Service_Config

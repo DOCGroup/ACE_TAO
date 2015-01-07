@@ -1,4 +1,4 @@
-$Id$
+
 
 Member example shows how you can build a simple multicast group
 using transactional multicast (TMCast). Each member can be either

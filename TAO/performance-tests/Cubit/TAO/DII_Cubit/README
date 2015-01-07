@@ -1,4 +1,4 @@
-$Id$
+
 
 This is the cubit example that does everything using DII requests.
 It uses the server in IDL_Cubit. Getting a reference

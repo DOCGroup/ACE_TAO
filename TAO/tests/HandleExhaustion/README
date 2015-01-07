@@ -1,4 +1,4 @@
-$Id$
+
 
 This test is designed to test the very rare situation where an accept() will
 fail due to the fact that no file descriptors are available to the process

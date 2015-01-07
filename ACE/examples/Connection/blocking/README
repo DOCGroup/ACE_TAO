@@ -1,4 +1,4 @@
-$Id$
+
 
 Presently, this directory contains only one example application for
 SPIPEs.  The test source code is contained in SPIPE-acceptor.h and

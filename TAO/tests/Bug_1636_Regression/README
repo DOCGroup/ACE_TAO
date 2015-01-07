@@ -1,4 +1,4 @@
-$Id$
+
 
 An Any is populated with a union whose member is not empty.
 Call dynAny->from_any (Any);

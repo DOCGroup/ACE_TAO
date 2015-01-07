@@ -1,4 +1,4 @@
-$Id$
+
 
 This example illustrates the working of a Kokyu
 based DSRT scheduler. There are 2 threads waiting

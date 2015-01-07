@@ -1,5 +1,3 @@
-// $Id$
-
 This test is used to test collocation.
 
 CIAO has to be build with ccm_direct_collocation=1

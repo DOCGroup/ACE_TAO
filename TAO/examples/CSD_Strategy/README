@@ -1,4 +1,4 @@
-$Id$
+
 
 The example ThreadPool, ThreadPool2 and ThreadPool3 use the same idl file which
 defines some twoway calls and a simple oneway call and they are different just

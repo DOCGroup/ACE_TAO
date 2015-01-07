@@ -1,4 +1,4 @@
-$Id$
+
 
 This test is a collection of IDL files that once caused IDL compiler
 or C++ compiler errors, plus a dummy main.cpp for the build. There is

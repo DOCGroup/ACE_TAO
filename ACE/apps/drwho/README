@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains the "distributed rwho" (drwho) program.  Drwho
 alleviates certain rwho(1) limitations.  For instance it adds

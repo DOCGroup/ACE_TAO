@@ -1,4 +1,4 @@
-$Id$
+
 
 This tests the methods work_pending() and perform_work() methods of
 the orb.  The simple time server, instead of calling orb->run(), has

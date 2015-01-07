@@ -1,4 +1,4 @@
-$Id$
+
 
 This is an short example to show how to integrate TAO and MFC base GUI
 applications.  The server is an MFC-based GUI application, which

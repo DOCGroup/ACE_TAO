@@ -1,4 +1,4 @@
-$Id$
+
 
 This program tests dead member detection feature on Load Balancer.
 The group uses application controlled membership. Three servers

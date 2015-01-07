@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains a test case used to verify that the client
 exposed policies get embedded correctly in the IOR and exposed to the

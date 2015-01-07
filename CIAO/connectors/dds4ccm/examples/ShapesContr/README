@@ -1,4 +1,4 @@
-$Id$
+
 
 This test uses a Controller component  to start and stop publishing of shapes by the Sender component.
 The Receiver component receives these samples and collects them.

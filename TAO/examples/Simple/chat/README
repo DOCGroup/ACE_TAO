@@ -1,4 +1,4 @@
-$Id$
+
 
 This is a simple chat application that uses the TAO CORBA ORB.  It
 consists of a client and server programs.  The server broadcasts

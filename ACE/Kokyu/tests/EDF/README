@@ -1,4 +1,4 @@
-$Id$
+
 
 This example is a very simple example, showing how to use the Kokyu
 dispatcher to dispatch command objects in a EDF manner. The test
