@@ -1,4 +1,4 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
 
 #include "Print_Handler.h"
 #include "ace/ACE.h"

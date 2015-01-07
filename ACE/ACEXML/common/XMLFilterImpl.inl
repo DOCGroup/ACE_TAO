@@ -1,4 +1,4 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
 
 ACEXML_INLINE int
 ACEXML_XMLFilterImpl::setupParser (void)

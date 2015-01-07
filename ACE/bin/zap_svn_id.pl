@@ -35,8 +35,6 @@ BEGIN{undef $/;} s/\/\/\$Id\$\n\n//smg;
 # Replace a one line c-style id tag with nothing
 BEGIN{undef $/;} s/\/\/\$Id\$\n//smg;
 # Replace a one line start C++ line with Id with
-BEGIN{undef $/;} s/\/\/ -\*- C\+\+ -\*- \$Id\$\n/\/\/ -\*- C++ -\*-\n/smg;
-
-
-
-
+BEGIN{undef $/;} s/\/\/ -\*- C\+\+ -\*-  \$Id\$\n/\/\/ -\*- C\+\+ -\*-\n/smg;
+# Replace a one line start C++ line with Id with
+BEGIN{undef $/;} s/\/\/ -\*- C\+\+ -\*- \$Id\$\n/\/\/ -\*- C\+\+ -\*-\n/smg;
