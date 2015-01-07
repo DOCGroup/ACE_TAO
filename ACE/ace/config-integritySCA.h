@@ -8,7 +8,7 @@
  * Integrity RTOS with SCA from Green Hills Software
  * http://www.ghs.com/products/rtos/integrity.html
  *
- * $Id$
+ * 
  */
 
 #define ghs

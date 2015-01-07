@@ -1,5 +1,5 @@
 /*
- * $Id$
+ * 
  */
 
 #include "ping.h"

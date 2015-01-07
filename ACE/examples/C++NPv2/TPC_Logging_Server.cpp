@@ -1,5 +1,5 @@
 /*
-** $Id$
+** 
 **
 ** This is the Thread-per-connection logging server example from Chapter 7.
 **

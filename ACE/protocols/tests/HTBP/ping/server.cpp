@@ -1,7 +1,7 @@
 /**
  * server for a basic connection establishment test using HTBP
  *
- * $Id$
+ * 
  */
 
 #include "ace/Log_Msg.h"

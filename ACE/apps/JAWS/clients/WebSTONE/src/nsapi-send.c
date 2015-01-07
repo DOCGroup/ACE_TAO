@@ -1,4 +1,3 @@
-/* $Id$ */
 /*
  * Send random bits file
  * Once this service function is installed, any file with the extension

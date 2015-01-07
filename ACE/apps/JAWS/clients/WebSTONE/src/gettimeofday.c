@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /*
  *  This file defines functions that are required for unix compatibility.
  *

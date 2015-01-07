@@ -1,5 +1,3 @@
-/* $Id$ */
-
 /* FUZZ: disable check_for_improper_main_declaration */
 
 #include <stdio.h>

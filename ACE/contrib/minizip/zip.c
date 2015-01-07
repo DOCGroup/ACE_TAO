@@ -7,7 +7,7 @@
    Copyright (C) 1998-2005 Gilles Vollant
 
    Read zip.h for more info
-   $Id$
+   
 */
 
 

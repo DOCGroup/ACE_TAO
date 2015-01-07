@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
 /*
-** $Id$
+** 
 **
 ** Example program from The ACE Programmer's Guide, Chapter 8.
 ** Copyright 2003 Addison-Wesley. All Rights Reserved.

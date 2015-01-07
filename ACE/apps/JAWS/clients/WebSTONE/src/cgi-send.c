@@ -1,4 +1,3 @@
-/* $Id$ */
 /*
  * Send 10K file; send random bits.
  *

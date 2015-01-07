@@ -1,7 +1,7 @@
 /*
  * ACE reactor demonstration
  *
- * $Id$
+ * 
  * Date: 26-Jan-2006
  */
 
