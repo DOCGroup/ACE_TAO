@@ -2,8 +2,6 @@
 /**
 *  @file  IRDD_Handler.h
 *
-*  
-*
 *  @author Jules White <jules@dre.vanderbilt.edu>
 */
 //================================================================

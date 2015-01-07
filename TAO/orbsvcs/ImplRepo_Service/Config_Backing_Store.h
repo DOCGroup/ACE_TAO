@@ -4,8 +4,6 @@
 /**
 *  @file Config_Backing_Store.h
 *
-*  
-*
 *  These classes define ACE_Configuration implementations of the backing store.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

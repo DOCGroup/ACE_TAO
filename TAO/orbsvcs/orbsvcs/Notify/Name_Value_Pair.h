@@ -4,8 +4,6 @@
 /**
 *  @file    Name_Value_Pair.h
 *
-*  
-*
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
 *  @file    Reconnect_Worker_T.h
 *
-*  
-*
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
 //=============================================================================

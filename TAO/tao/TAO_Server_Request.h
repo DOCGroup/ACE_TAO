@@ -4,8 +4,6 @@
 /**
 *  @file    TAO_Server_Request.h
 *
-*  
-*
 *  Header file for CORBA's Server Skeleton Interface's
 *  "Server Request" type.
 *

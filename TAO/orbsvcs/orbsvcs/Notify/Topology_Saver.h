@@ -4,8 +4,6 @@
 /**
 *  @file    Topology_Saver.h
 *
-*  
-*
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
 //=============================================================================

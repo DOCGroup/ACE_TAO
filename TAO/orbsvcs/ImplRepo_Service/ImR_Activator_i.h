@@ -3,8 +3,6 @@
 /**
 *  @file   ImR_Activator_i.h
 *
-*  
-*
 *  @author Priyanka Gontla <gontla_p@ociweb.com>
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 */

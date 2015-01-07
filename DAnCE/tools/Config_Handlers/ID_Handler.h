@@ -3,8 +3,6 @@
 /**
 *  @file  ID_Handler.h
 *
-*  
-*
 *  @author Jules White <jules@dre.vanderbilt.edu>
 */
 //================================================================

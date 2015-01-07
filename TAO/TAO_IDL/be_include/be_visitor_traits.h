@@ -2,8 +2,6 @@
 /**
 *  @file   be_visitor_traits.h
 *
-*  
-*
 *  This visitor generates template specializations for traits of various
 *  kinds for IDL declarations. These specialized template classes are then
 *  used in other template classes in the ORB.

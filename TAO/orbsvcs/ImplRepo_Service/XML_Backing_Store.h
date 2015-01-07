@@ -4,8 +4,6 @@
 /**
 *  @file XML_Backing_Store.h
 *
-*  
-*
 *  This class defines an implementation of the backing store as a single XML file.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

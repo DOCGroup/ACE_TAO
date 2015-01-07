@@ -4,8 +4,6 @@
 /**
 *  \file    Save_Persist_Worker_T.h
 *
-*  
-*
 *  \author Jonathan Pollack <pollack_j@ociweb.com>
 */
 //=============================================================================
