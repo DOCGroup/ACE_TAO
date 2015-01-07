@@ -70,6 +70,7 @@ BEGIN{undef $/;} s/\/\/  \n/\/\/\n/smg;
 BEGIN{undef $/;} s/ \*\n \*\n/ \*\n/smg;
 
 BEGIN{undef $/;} s/\/\/\n\/\/\n/\/\/\n/smg;
+BEGIN{undef $/;} s/  \n/\n/smg;
 
 # Empty header
 BEGIN{undef $/;} s/\/\*\n \*\/\n//smg;

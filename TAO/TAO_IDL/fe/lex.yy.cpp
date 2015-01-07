@@ -929,7 +929,7 @@ int tao_yy_flex_debug = 0;
 
 char tao_yytext[TAO_YYLMAX];
 char *tao_yytext_ptr;
-/*  
+/*
 
 COPYRIGHT
 

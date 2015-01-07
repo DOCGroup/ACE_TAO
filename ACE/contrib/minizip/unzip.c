@@ -4,7 +4,7 @@
    Copyright (C) 1998-2005 Gilles Vollant
 
    Read unzip.h for more info
-   
+ 
 */
 
 /* Decryption code comes from crypt.c by Info-ZIP but has been greatly reduced in terms of

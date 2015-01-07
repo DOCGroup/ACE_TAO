@@ -2,7 +2,7 @@
   Additional tools for Minizip
   Code: Xavier Roche '2004
   License: Same as ZLIB (www.gzip.org)
-  
+
 */
 
 /* Code */
