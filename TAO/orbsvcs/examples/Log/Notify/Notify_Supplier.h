@@ -6,8 +6,6 @@
  *
  *  An example of using the Notify_Logging_Service.
  *
- *
- *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
 // ============================================================================

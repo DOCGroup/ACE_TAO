@@ -14,8 +14,6 @@
  *  USHRT_MAX and decremented for 'ports_to_test' port values and tested
  *  if the highest port number used agrees with ACE_MAX_DEFAULT_PORT value.
  *
- *
- *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */
 //=============================================================================

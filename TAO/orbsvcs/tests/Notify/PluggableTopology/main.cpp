@@ -1,5 +1,5 @@
 /**
- *  
+ *
  */
 
 #include "orbsvcs/CosNotifyChannelAdminC.h"

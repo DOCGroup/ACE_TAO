@@ -94,8 +94,6 @@ namespace details
  * };
  * </PRE>
  *
- *
- *
  * @todo There is no control on a per-sequence type basis, only on a
  *       per-underlying type basis, for example, the following two IDL
  *       sequences would get the same behavior:

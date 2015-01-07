@@ -2,7 +2,7 @@
 /**
  *  @file    array_ch.cpp
  *
- *  
+ *
 
  *
  *  Visitor for Array code generation in client header

@@ -3,7 +3,7 @@
 /**
  *  @file     ClientRequest_Interceptor.h
  *
- *  
+ *
  */
 //=============================================================================
 #ifndef CLIENTREQUEST_INTERCEPTOR_H

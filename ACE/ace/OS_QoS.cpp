@@ -2,7 +2,7 @@
 ///**
 // *  @file   OS_QoS.cpp
 // *
-// *  
+// *
 // *
 // *  @brief  Contains OS specific data structures for QoS networking.
 // *

@@ -6,8 +6,6 @@
  *
  *  An test of using the Basic_Logging_Service
  *
- *
- *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
 // ============================================================================

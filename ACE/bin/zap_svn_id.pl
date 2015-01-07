@@ -56,9 +56,12 @@ BEGIN{undef $/;} s/\#\$Id\$\n//smg;
 BEGIN{undef $/;} s/\# \$Id\$\n//smg;
 BEGIN{undef $/;} s/\$Id\$//smg;
 
-
+# Trailing whitespaces
 BEGIN{undef $/;} s/\#         \n//smg;
 BEGIN{undef $/;} s/\*\* \n/\*\*\n/smg;
 BEGIN{undef $/;} s/\/\*\n\*\*\n\*\*\n/\/\*\n/smg;
 BEGIN{undef $/;} s/\/\* \n/\/\*\n/smg;
+BEGIN{undef $/;} s/ \*  \n/ \*\n/smg;
 BEGIN{undef $/;} s/\*\n\*  \n\*\n/\*\n/smg;
+BEGIN{undef $/;} s/ \*\n \*\n \*\n/ \*\n/smg;
+BEGIN{undef $/;} s/ \*\n \*\/\n/ \*\/\n/smg;
