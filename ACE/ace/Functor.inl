@@ -8,7 +8,6 @@
  *  and template specializations implementing the GOF Command Pattern,
  *  and STL-style functors.
  *
- *
  *  @author Chris Gill           <cdgill@cs.wustl.edu>
  *
  * Based on Command Pattern implementations originally done by
