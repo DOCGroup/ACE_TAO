@@ -3,8 +3,6 @@
  *
  * @brief Unit test for unbounded sequences of octet types
  *
- * $Id$
- *
  * @author Johnny Willemsen
  */
 

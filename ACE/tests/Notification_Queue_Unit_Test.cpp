@@ -1,8 +1,6 @@
 /**
  * @file Notification_Queue_Unit_Test.cpp
  *
- * $Id$
- *
  * A unit test for the ACE_Notification_Queue class.
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>

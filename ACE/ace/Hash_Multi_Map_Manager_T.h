@@ -4,8 +4,6 @@
 /**
  * @file    Hash_Multi_Map_Manager_T.h
  *
- * $Id$
- *
  * The code in Hash_Multi_Map_Manager_T.* was based on the code in
  * Hash_Map_Manager_T.*.
  *

@@ -3,8 +3,6 @@
 /**
  * @file ECG_Adapters.h
  *
- * $Id$
- *
  * @author Marina Spivak <marina@atdesk.com>
  *
  * Define interfaces ECG Receivers and Mcast and UDP handlers can use

@@ -4,8 +4,6 @@
  * @brief Unit test for unbounded sequences of forward declared object
  * references.
  *
- * $Id$
- *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 #include "testing_object_reference_traits.hpp"

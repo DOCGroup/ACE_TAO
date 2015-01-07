@@ -4,8 +4,6 @@
 /**
  * @file PG_Group_List_Store.h
  *
- * $Id$
- *
  * @author Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================

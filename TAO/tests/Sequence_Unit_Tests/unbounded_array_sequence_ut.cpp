@@ -3,8 +3,6 @@
  *
  * @brief Unit test for unbounded sequences of arrays.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

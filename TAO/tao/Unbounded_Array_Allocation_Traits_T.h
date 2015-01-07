@@ -6,8 +6,6 @@
  * @brief Details can be found in the documentation for
  * TAO::details::generic_sequence
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

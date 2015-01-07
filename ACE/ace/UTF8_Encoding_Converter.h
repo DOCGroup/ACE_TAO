@@ -4,8 +4,6 @@
 /**
  * @file UTF8_Encoding_Converter.h
  *
- * $Id$
- *
  * This class contains declarations for methods that convert between
  * UTF-8 and the native ACE_TCHAR representation.
  *

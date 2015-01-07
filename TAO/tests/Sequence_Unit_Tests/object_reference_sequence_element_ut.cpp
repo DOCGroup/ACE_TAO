@@ -4,8 +4,6 @@
  * @brief Unit test for object_reference_sequence_element, this is the
  *        type returned by operator[] from a string sequence.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "testing_object_reference_traits.hpp"

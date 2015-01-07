@@ -1,8 +1,6 @@
 /**
  * @file Server_i.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  *
  */

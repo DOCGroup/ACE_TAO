@@ -3,8 +3,6 @@
  *
  * @brief Unit test for bounded string sequences.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #define TAO_USER_DEFINED_SEQUENCE_RANGE_CHECKING_INCLUDE \

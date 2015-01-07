@@ -4,8 +4,6 @@
 /**
  * @file   FT_Naming_Manager.cpp
  *
- * $Id$
- *
  * @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================

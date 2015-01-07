@@ -4,8 +4,6 @@
 /**
  * @file Truncate.h
  *
- * $Id$
- *
  * @author Steve Huston  <shuston@riverace.com>
  * @author Ossama Othman <ossama_othman@symantec.com>
  * @author Russell Mora  <russell_mora@symantec.com>

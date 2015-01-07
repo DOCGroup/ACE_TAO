@@ -4,8 +4,6 @@
 /**
  * @file sum_server_i.h
  *
- * $Id$
- *
  * Implementation header for the "server" IDL interface for the
  * ORT example.
  *

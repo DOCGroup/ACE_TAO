@@ -4,8 +4,6 @@
 /**
  * @file ExecutionManager_Module.h
  *
- * $Id$
- *
  * @brief
  *
  * @author Vinzenz Tornow <vt@prismtech.com>

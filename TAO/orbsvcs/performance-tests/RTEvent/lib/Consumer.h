@@ -1,8 +1,6 @@
 /**
  * @file Consumer.h
  *
- * $Id$
- *
  */
 
 #ifndef TAO_PERF_RTEC_CONSUMER_H

@@ -21,8 +21,6 @@
  * In lieu of template specialization code separate iterators exist
  * for sequences that manage memory. Here are those iterators.
  *
- * $Id$
- *
  * @author Joe Hoffert
  */
 

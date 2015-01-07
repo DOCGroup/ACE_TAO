@@ -3,8 +3,6 @@
 /**
  *  @file    Marshal.cpp
  *
- * $Id$
- *
  *  Implements the Marshal_Object class and the factory
  *  The original encoder and decoder code now appears in files encode.cpp and
  *  decode.cpp

@@ -2,8 +2,6 @@
  * @file Client_Task.cpp
  * @author Will Otte <wotte@dre.vanderbilt.edu
  *
- * $Id$
- *
  * Implements the Client_Task class defined in Client_Task.h.
  */
 

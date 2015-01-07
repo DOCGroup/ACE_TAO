@@ -4,8 +4,6 @@
 /**
  * @file Codeset_Manager_Factory.cpp
  *
- * $Id$
- *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  *
  */

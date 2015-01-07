@@ -1,8 +1,6 @@
 /**
  * @file RT_Class.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

@@ -1,8 +1,6 @@
 /**
  * @file Clock_Ticks.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  *
  */

@@ -1,8 +1,6 @@
 /**
  * @file Bug_2497_Regression_Test.cpp
  *
- * $Id$
- *
  * Reproduces the problems reported in bug 2497
  *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2497
  *

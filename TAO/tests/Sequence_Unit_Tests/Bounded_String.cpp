@@ -4,8 +4,6 @@
  * @brief Smoke test (basically just compile) the bounded sequences
  *        for strings.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "tao/Bounded_Basic_String_Sequence_T.h"

@@ -4,8 +4,6 @@
 /**
  * @file test.idl
  *
- * $Id$
- *
  * "test" IDL interface for the CORBA_MARSHALL exception with sequence<octed>
  * as inout parameters (bug#1254).
  *

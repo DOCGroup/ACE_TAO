@@ -1,8 +1,6 @@
 /**
  * @file Echo_Caller.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  *
  */

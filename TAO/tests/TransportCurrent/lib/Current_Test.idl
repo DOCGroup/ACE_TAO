@@ -4,8 +4,6 @@
 /**
  * @file   Current_Test.idl
  *
- * $Id$
- *
  * Simple IDL file to test TAO::TranspotCurrent
  * support.
  *

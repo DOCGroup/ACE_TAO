@@ -4,8 +4,6 @@
 /**
  * @file Current_Loader.cpp
  *
- * $Id$
- *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  *
  */

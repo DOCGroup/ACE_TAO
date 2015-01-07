@@ -4,8 +4,6 @@
 /**
  * @file ClientRequestInfo.h
  *
- * $Id$
- *
  * This is the implementation of the
  * PortableInterceptor::ClientRequestInfo interface.
  *

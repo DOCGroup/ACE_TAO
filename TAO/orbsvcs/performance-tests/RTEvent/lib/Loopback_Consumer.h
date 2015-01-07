@@ -1,8 +1,6 @@
 /**
  * @file Loopback_Consumer.h
  *
- * $Id$
- *
  */
 
 #ifndef TAO_PERF_RTEC_LOOPBACK_CONSUMER_H

@@ -1,8 +1,6 @@
 /**
  * @file EC_Destroyer.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

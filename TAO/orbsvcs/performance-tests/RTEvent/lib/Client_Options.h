@@ -1,8 +1,6 @@
 /**
  * @file Client_Options.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  *
  */

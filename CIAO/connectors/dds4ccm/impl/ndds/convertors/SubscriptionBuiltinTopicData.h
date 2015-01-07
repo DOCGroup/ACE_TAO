@@ -1,8 +1,6 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  *
- * $Id$
- *
  */
 
 #ifndef SUBSCRIPTIONBUILTINTOPICDATA_H_

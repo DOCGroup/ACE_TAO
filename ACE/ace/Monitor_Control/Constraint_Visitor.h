@@ -4,8 +4,6 @@
 /**
  * @file Constraint_Visitor.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

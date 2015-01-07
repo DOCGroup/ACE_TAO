@@ -4,8 +4,6 @@
 /**
  * @file   ServerORBInitializer.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

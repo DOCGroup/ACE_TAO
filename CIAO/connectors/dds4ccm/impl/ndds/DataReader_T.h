@@ -1,8 +1,6 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  *
- * $Id$
- *
  * Common dataReader class for the Getter, Reader,
  * and, Listen port
  *

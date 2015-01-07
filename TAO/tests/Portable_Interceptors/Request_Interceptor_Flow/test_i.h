@@ -4,8 +4,6 @@
 /**
  * @file test_i.h
  *
- * $Id$
- *
  * Implementation header for the "test" IDL interface for the
  * request interceptor flow test.
  *

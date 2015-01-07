@@ -1,8 +1,6 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  *
- * $Id$
- *
  * Wrapper facade for NDDS.
  */
 #ifndef DDS_TOPICBASE_CONNECTOR_H

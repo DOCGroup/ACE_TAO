@@ -1,8 +1,6 @@
 /**
  * @file Reactor_Notification_Queue_Test.cpp
  *
- * $Id$
- *
  * Verify that the notification queue can be used with large numbers
  * of events.
  *

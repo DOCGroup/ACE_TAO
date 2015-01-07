@@ -4,8 +4,6 @@
 /**
  * @file   ORT_test_IORInterceptor.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  * @author Priyanka Gontla <gontla_p@ociweb.com>
  */

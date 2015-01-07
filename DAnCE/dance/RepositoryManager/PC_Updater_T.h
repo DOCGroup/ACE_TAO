@@ -5,8 +5,6 @@
 /**
  *  file  PC_Updater_T.h
  *
- * $Id$
- *
  *  author Stoyan Paunov <spaunov@isis.vanderbilt.edu>
  */
 //=====================================================================

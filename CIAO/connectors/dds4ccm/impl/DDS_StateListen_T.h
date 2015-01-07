@@ -1,8 +1,6 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  *
- * $Id$
- *
  * DDS4CCM StateListen port
  */
 #ifndef DDS_STATELISTEN_T_H_

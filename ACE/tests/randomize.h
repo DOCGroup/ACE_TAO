@@ -4,8 +4,6 @@
 /**
  * @file randomize.h
  *
- * $Id$
- *
  * Randomize the contents of an array.
  *
  * @author Ossama Othman

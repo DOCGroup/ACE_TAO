@@ -4,8 +4,6 @@
 /**
  * @file DLL_Test_Parent.h
  *
- * $Id$
- *
  * @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  * @author Ossama Othman  <ossama@dre.vanderbilt.edu>
  */

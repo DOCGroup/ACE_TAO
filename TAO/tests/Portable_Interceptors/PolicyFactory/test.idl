@@ -4,8 +4,6 @@
 /**
  * @file test.idl
  *
- * $Id$
- *
  * "test" IDL interface for the PolicyFactory test.
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>

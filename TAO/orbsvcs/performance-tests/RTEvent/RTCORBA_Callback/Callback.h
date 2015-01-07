@@ -1,8 +1,6 @@
 /**
  * @file Callback.h
  *
- * $Id$
- *
  */
 
 #ifndef CALLBACK_H

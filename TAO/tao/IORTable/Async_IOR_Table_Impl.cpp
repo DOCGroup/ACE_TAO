@@ -1,8 +1,6 @@
 /**
  * @file Async_IOR_Table_Impl.cpp
  *
- * $Id$
- *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  *
  */

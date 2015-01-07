@@ -51,8 +51,6 @@
  * - get_buffer(true) may modify multiple elements
  * - length(CORBA::ULong) may modify multiple elements!
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

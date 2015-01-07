@@ -4,8 +4,6 @@
 /**
  * @file IIOP_Server_Request_Interceptor.h
  *
- * $Id$
- *
  * Implementation header for the server request interceptor for the
  * IIOP_Threading test.
  *

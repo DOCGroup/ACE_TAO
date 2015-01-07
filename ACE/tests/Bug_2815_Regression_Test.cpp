@@ -1,8 +1,6 @@
 /**
  * @file Bug_2815_Regression_Test.cpp
  *
- * $Id$
- *
  * Verify that the notification queue can be used with large numbers
  * of event handlers.
  *

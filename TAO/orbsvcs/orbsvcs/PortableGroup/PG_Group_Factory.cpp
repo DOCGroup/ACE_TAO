@@ -4,8 +4,6 @@
 /**
  * @file  PG_Group_Factory.cpp
  *
- * $Id$
- *
  * @author Dale Wilson <wilson_d@ociweb.com>
  * @author Byron Harris <harrisb@ociweb.com>
  */

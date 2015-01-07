@@ -4,8 +4,6 @@
 /**
  * @file Notify_EventChannelFactory_i.h
  *
- * $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

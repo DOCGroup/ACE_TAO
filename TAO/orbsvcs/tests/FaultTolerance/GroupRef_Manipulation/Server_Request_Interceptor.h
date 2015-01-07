@@ -4,8 +4,6 @@
 /**
  * @file Server_Request_Interceptor.h
  *
- * $Id$
- *
  * Implementation header for the server request interceptor for the
  * IOGR manipulation  test
  *

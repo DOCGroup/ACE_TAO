@@ -3,8 +3,6 @@
 /**
  * @file ETCL_Constraint_Visitor.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@cs.wustl.edu>
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

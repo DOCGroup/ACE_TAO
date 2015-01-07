@@ -4,8 +4,6 @@
 /**
  * @file    config-aix-7.h
  *
- * $Id$
- *
  * This is the config file for AIX 7 and higher.
  *
  * @author Steve Huston <shuston@riverace.com>

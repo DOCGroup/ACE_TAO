@@ -1,8 +1,6 @@
 /**
  * @file Client_Pair.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

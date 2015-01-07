@@ -1,8 +1,6 @@
 /**
  * @file Bug_2820_Regression_Test.cpp
  *
- * $Id$
- *
  * Verify that the event handler reference counting works correctly
  * when the reactor is destroyed.
  *

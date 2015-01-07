@@ -4,8 +4,6 @@
 /**
  * @file FOO_IORInterceptor_ORBInitializer.h
  *
- * $Id$
- *
  * Implementation header for the "FOO" IOR test interceptor ORB
  * initializer.
  *

@@ -4,8 +4,6 @@
 /**
  * @file IORTable.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  *
  */

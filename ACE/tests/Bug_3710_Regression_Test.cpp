@@ -1,8 +1,6 @@
 /**
  * @file Bug_3710_Regression_Test.cpp
  *
- * $Id$
- *
  * Reproduces the problems reported in bug 3710
  *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=3710
  */

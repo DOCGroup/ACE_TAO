@@ -1,8 +1,6 @@
 /**
  * @file Loopback_Supplier.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

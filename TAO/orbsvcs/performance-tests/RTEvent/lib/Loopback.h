@@ -1,8 +1,6 @@
 /**
  * @file Loopback.h
  *
- * $Id$
- *
  */
 
 #ifndef TAO_RTEC_PERF_LOOPBACK_H

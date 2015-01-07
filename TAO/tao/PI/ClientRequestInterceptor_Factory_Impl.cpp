@@ -4,8 +4,6 @@
 /**
  * @file ClientRequestInterceptor_Factory_Impl.cpp
  *
- * $Id$
- *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  *
  */

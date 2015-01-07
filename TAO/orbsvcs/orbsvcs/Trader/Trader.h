@@ -4,8 +4,6 @@
 /**
  * @file Trader.h
  *
- * $Id$
- *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Seth Widoff <sbw1@cs.wustl.edu>
  * @author Irfan Pyarali <irfan@cs.wustl.edu>

@@ -3,8 +3,6 @@
  *
  * @brief Defines the CosNotifyFilter module
  *
- * $Id$
- *
  * This module is taken from the standard CORBA Notification Service
  * 1.0, as described in:
  *

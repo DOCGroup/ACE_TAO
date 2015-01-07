@@ -1,8 +1,6 @@
 /**
  * @file Server_Interceptor.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 

@@ -1,8 +1,6 @@
 /**
  * @file Bug_2540_Regression_Test.cpp
  *
- * $Id$
- *
  * Reproduces the problems reported in bug 2540
  *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2540
  *

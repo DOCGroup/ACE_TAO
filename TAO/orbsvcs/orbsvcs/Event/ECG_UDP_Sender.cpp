@@ -1,8 +1,6 @@
 /**
  * @file ECG_UDP_Sender.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  *
  * http://doc.ece.uci.edu/~coryan/EC/index.html

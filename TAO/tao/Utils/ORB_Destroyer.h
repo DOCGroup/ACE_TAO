@@ -4,8 +4,6 @@
 /**
  * @file ORB_Destroyer.h
  *
- * $Id$
- *
  * @author Marina Spivak <marina@atdesk.com>
  */
 //=============================================================================

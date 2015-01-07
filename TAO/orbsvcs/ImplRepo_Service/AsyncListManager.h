@@ -2,8 +2,6 @@
 /*
  * @file AsyncListManager.h
  *
- * $Id$
- *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 

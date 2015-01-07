@@ -5,8 +5,6 @@
  *
  * @brief CORBA::Any insertion/extraction for std::vector
  *
- * $Id$
- *
  * @author Jeff Parsons
  */
 

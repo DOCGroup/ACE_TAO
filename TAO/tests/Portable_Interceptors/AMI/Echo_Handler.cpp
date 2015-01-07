@@ -1,8 +1,6 @@
 /**
  * @file Echo_Handler.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 #include "Echo_Handler.h"

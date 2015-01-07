@@ -4,8 +4,6 @@
 /**
  * @file FOO_IORInterceptor.h
  *
- * $Id$
- *
  * Implementation header for the "FOO" IOR test interceptor.
  *
  * @author Ossama Othman <ossama@uci.edu>

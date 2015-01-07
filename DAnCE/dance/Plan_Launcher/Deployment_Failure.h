@@ -2,8 +2,6 @@
  * @file Deployment_Failure.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * $Id$
- *
  * Defines exceptions used internally to the Plan Launcher
  */
 

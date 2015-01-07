@@ -1,8 +1,6 @@
 /**
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  *
- * $Id$
- *
  * Wrapper facade for NDDS.
  */
 #ifndef DDS_UPDATE_T_H_

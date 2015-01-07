@@ -4,8 +4,6 @@
 /**
  * @file FT_ServerRequest_Interceptor.h
  *
- * $Id$
- *
  * ServerRequest_Interceptor for the FTORB
  *
  * @author Ossama Othman <ossama@uci.edu>

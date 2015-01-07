@@ -1,8 +1,6 @@
 /**
  * @file Server_Peer.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  *
  */

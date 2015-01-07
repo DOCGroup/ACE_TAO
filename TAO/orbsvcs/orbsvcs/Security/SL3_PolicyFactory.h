@@ -4,8 +4,6 @@
 /**
  * @file SL3_PolicyFactory.h
  *
- * $Id$
- *
  * PolicyFactory implementation for the SecurityLevel3 policies.
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>

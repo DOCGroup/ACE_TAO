@@ -3,8 +3,6 @@
 /**
  * @file PolicyList_Destroyer.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 //=============================================================================

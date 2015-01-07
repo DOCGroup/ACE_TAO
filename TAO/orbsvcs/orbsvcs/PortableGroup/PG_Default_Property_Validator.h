@@ -4,8 +4,6 @@
 /**
  * @file PG_Default_Property_Validator.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

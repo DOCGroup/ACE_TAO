@@ -4,8 +4,6 @@
 /**
  * @file Request_Interceptor.h
  *
- * $Id$
- *
  * Implementation header for the request interceptor base class for
  * the request interceptor flow test.
  *

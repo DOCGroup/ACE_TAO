@@ -1,8 +1,6 @@
 /**
  * @file Shutdown.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 #ifndef TAO_PERF_RTEC_SHUTDOWN_H

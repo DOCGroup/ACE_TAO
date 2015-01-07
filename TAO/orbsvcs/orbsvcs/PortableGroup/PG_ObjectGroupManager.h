@@ -4,8 +4,6 @@
 /**
  * @file PG_ObjectGroupManager.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

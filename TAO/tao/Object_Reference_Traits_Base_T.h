@@ -5,8 +5,6 @@
  *
  * @brief Base class for the object reference traits.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

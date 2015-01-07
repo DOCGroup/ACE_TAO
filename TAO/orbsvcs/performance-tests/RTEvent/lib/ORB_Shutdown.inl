@@ -3,8 +3,6 @@
 /**
  * @file ORB_Shutdown.inl
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

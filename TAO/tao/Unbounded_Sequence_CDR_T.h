@@ -5,8 +5,6 @@
  *
  * @brief Extract the sequence
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  * @author Johnny Willemsen
  */

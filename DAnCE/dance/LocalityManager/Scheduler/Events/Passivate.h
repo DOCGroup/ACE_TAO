@@ -2,8 +2,6 @@
  * @file Passivate.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * $Id$
- *
  */
 
 #ifndef EVENT_PASSIVATE_H

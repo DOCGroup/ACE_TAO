@@ -1,8 +1,6 @@
 /**
  * @file ORB_Task_Activator.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

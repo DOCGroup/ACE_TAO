@@ -4,8 +4,6 @@
 /**
  * @file    Numeric_Limits.h
  *
- * $Id$
- *
  * Traits containing basic integer limits.  Useful for template-based
  * code on platforms that lack @c std::numeric_limits<>.
  *

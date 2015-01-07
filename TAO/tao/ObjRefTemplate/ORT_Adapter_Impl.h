@@ -4,8 +4,6 @@
 /**
  * @file ORT_Adapter_Impl.h
  *
- * $Id$
- *
  * This is the implementation of the TAO::ORT_Adapter
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>

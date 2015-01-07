@@ -4,8 +4,6 @@
 /**
  * @file    Versioned_Namespace.h
  *
- * $Id$
- *
  * Versioned namespace support.
  *
  * Useful for preventing conflicts when using a third party library.

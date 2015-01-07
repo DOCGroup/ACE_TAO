@@ -4,8 +4,6 @@
 /**
  * @file IIOP_Current_Loader.cpp
  *
- * $Id$
- *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  *
  */

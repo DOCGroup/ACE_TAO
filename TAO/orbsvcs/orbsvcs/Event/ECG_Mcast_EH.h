@@ -3,8 +3,6 @@
 /**
  * @file ECG_Mcast_EH.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  * @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
  * @author Marina Spivak <marina@atdesk.com>

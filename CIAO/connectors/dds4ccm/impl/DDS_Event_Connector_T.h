@@ -1,8 +1,6 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  *
- * $Id$
- *
  * DDS Event Connector implementation
  */
 #ifndef DDS_EVENT_CONNECTOR_T_H_

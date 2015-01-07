@@ -4,8 +4,6 @@
 /**
  * @file Monitor_Base.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

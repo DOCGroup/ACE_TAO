@@ -5,8 +5,6 @@
  *
  * @brief Base class for the valuetype traits.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

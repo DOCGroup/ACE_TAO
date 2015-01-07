@@ -4,8 +4,6 @@
 /**
  * @file Repository_Manager_Module.h
  *
- * $Id$
- *
  * @brief  To start RepositoryManager by starter
  *
  * @author Vinzenz Tornow <vt@prismtech.com>

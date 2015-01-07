@@ -1,8 +1,6 @@
 /**
  * @file Server_Interceptor.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 #ifndef Server_Interceptor__h_

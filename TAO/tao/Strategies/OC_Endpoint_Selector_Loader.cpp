@@ -2,8 +2,6 @@
 /**
  * @file OC_Endpoint_Selector_Loader.cpp
  *
- * $Id$
- *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  *
  */

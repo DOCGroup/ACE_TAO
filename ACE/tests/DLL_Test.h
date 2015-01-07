@@ -4,8 +4,6 @@
 /**
  * @file DLL_Test.h
  *
- * $Id$
- *
  * @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
 // ================================================================

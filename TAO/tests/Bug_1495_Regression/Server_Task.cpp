@@ -2,8 +2,6 @@
  * @file Server_Task.cpp
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
- * $Id$
- *
  * Implements the Server_Task class which acts as the process colocated
  * corba server for Bug_1495_Regression test.
  */

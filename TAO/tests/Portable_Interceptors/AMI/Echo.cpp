@@ -1,8 +1,6 @@
 /**
  * @file Echo.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 #include "Echo.h"

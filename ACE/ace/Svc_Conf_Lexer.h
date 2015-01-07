@@ -4,8 +4,6 @@
 /**
  * @file Svc_Conf_Lexer.h
  *
- * $Id$
- *
  * This class is a hand-coded replacement for the lexer generated from
  * Svc_Conf.l that correctly supports Unicode.
  *

@@ -4,8 +4,6 @@
 /**
  * @file Test_i.h
  *
- * $Id$
- *
  * Implementation header for the "Test" IDL interface for the DLL ORB
  * test.
  *

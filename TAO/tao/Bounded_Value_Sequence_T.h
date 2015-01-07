@@ -6,8 +6,6 @@
  * @brief Implement bounded sequences for types with value-like
  * semantics.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

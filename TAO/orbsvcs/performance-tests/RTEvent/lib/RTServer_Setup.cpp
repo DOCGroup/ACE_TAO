@@ -1,8 +1,6 @@
 /**
  * @file RTServer_Setup.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

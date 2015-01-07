@@ -4,8 +4,6 @@
 /**
  * @file Object_Factory_i.h
  *
- * $Id$
- *
  * Implementation header for the "Gateway" IDL interface for the
  * ORT example.
  *

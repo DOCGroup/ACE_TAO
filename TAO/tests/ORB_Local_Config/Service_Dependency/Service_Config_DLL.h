@@ -4,8 +4,6 @@
 /**
  * @file Service_Config_DLL.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

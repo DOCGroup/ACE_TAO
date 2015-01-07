@@ -4,8 +4,6 @@
 /**
  * @file Num_Threads_Monitor.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

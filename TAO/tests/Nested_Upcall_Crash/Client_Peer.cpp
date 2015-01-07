@@ -1,8 +1,6 @@
 /**
  * @file Client_Peer.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  *
  */

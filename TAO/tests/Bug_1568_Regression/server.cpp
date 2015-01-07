@@ -1,8 +1,6 @@
 /**
  * @file server.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 #include "TestS.h"

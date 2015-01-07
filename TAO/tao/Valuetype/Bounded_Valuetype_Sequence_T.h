@@ -5,8 +5,6 @@
  *
  * @brief Implement bounded sequences for object references.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "Bounded_Valuetype_Allocation_Traits_T.h"

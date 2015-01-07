@@ -1,8 +1,6 @@
 /**
  * @file Async_Table_Adapter.cpp
  *
- * $Id$
- *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  *
  */

@@ -4,8 +4,6 @@
 /**
  * @file MC_Test_Utilities.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

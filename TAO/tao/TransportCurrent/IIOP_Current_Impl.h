@@ -3,8 +3,6 @@
  *
  * @brief Provide implementation for the IIOPTraits interface
  *
- * $Id$
- *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
 

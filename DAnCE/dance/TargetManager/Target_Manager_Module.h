@@ -4,8 +4,6 @@
 /**
  * @file Target_Manager_Module.h
  *
- * $Id$
- *
  * @brief  To start TargetManager by starter
  *
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

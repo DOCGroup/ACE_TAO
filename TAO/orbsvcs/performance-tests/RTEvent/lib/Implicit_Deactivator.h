@@ -1,8 +1,6 @@
 /**
  * @file Implicit_Deactivator.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 #ifndef TAO_PERF_RTEC_IMPLICIT_DEACTIVATOR_H

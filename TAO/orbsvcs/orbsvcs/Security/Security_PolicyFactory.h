@@ -4,8 +4,6 @@
 /**
  * @file Security_PolicyFactory.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

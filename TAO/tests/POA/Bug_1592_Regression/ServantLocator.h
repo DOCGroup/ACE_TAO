@@ -4,8 +4,6 @@
 /**
  * @file ServantLocator.h
  *
- * $Id$
- *
  * Implementation header for the PortableServer::ServantLocator for
  * the PortableInterceptor / ServantLocator test.
  *

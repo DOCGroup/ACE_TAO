@@ -4,8 +4,6 @@
 /**
  * @file SHMIOP_Factory.h
  *
- * $Id$
- *
  * @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

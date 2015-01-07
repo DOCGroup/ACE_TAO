@@ -4,8 +4,6 @@
 /**
  * @file    ServerRequestInterceptor.h
  *
- * $Id$
- *
  * @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

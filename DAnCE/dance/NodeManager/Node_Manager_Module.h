@@ -4,8 +4,6 @@
 /**
  * @file Node_Manager_Module.h
  *
- * $Id$
- *
  * @brief  To start NodeManager by starter
  *
  * @author Vinzenz Tornow <vt@prismtech.com>

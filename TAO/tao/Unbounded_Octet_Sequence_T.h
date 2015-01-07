@@ -5,8 +5,6 @@
  *
  * @brief Implement octet sequences
  *
- * $Id$
- *
  * @author Johnny Willemsen
  */
 #include "tao/orbconf.h"

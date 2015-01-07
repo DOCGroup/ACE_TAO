@@ -1,8 +1,6 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  *
- * $Id$
- *
  */
 
 #ifndef PUBLICATIONBUILTINTOPICDATA_H_

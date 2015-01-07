@@ -4,8 +4,6 @@
 /**
  * @file Client_Request_Interceptor.h
  *
- * $Id$
- *
  * Implementation header for the client request interceptor for the
  * Transport::Current test.
  *

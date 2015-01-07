@@ -4,8 +4,6 @@
 /**
  * @file FreeBSD_Network_Interface_Monitor.h
  *
- * $Id$
- *
  * @author Boyan Kasarov
  */
 //=============================================================================

@@ -4,8 +4,6 @@
  * @brief Smoke test (basically just compile) the unbounded sequences
  *        for octets.
  *
- * $Id$
- *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 #include "tao/Basic_Types.h"

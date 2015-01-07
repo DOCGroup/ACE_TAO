@@ -4,8 +4,6 @@
 /**
  * @file RepositoryManager_Impl.cpp
  *
- * $Id$
- *
  * Description: Actial implementation of the RepoMan
  *
  * @author Stoyan Paunov

@@ -4,8 +4,6 @@
 /**
  * @file LocalObject.h
  *
- * $Id$
- *
  * Header file for CORBA's base "LocalObject" type.
  *
  * A "LocalObject" is an entity that can be the target of a local

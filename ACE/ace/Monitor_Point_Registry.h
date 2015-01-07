@@ -4,8 +4,6 @@
 /**
  * @file Monitor_Point_Registry.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

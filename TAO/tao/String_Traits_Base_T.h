@@ -6,8 +6,6 @@
  * @brief Isolate the string_traits from the accidental differences
  * between wstring and string.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

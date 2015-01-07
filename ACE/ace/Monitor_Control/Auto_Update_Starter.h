@@ -4,8 +4,6 @@
 /**
  * @file Auto_Update_Starter.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

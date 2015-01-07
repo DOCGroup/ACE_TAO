@@ -2,8 +2,6 @@
 /**
  * @file Integer_Truncate_Test.cpp
  *
- * $Id$
- *
  * Test @c ACE_Utils::truncate_cast<> function template.
  *
  * @author Ossama Othman <ossama_othman at symantec dot com>

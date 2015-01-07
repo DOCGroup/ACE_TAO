@@ -4,8 +4,6 @@
 /**
  * @file FT_ServerService_Activate.h
  *
- * $Id$
- *
  * A concrete implementation of a service callback
  *
  * @author Bala Natarajan <bala@cs.wustl.edu>

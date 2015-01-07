@@ -4,8 +4,6 @@
 /**
  *  @file    FT_Naming_Server.h
  *
- * $Id$
- *
  *    Implement functionality necessary for fault tolerant naming service.
  *    Adds support for Object Group Manager interfaces as well.  This class
  *    extends the TAO_Naming_Server.

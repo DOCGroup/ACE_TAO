@@ -3,8 +3,6 @@
 /**
  * @file ORB_Task.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  *
  */

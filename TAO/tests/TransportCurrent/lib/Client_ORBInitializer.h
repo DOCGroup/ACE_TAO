@@ -4,8 +4,6 @@
 /**
  * @file Client_ORBInitializer.h
  *
- * $Id$
- *
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  */
 //=============================================================================

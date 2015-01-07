@@ -1,8 +1,6 @@
 /**
  * @file Server_Task.h
  *
- * $Id$
- *
  * @author Balachandran Natarajan <bala@isis-server.isis.vanderbilt.edu>
  *
  */

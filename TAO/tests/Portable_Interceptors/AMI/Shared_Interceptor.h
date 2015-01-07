@@ -1,8 +1,6 @@
 /**
  * @file Shared_Interceptor.h
  *
- * $Id$
- *
  */
 #ifndef Shared_Interceptor__h_
 #define Shared_Interceptor__h_

@@ -4,8 +4,6 @@
 /**
  * @file Encoding_Converter_Factory.h
  *
- * $Id$
- *
  * This class can be used to create encoding converters of various types.
  *
  * @author Chad Elliott <elliott_c@ociweb.com>

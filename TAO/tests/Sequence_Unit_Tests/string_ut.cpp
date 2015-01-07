@@ -3,8 +3,6 @@
  *
  * @brief Unit test for CORBA string
  *
- * $Id$
- *
  * @author Johnny Willemsen
  */
 #include "testing_string_traits.hpp"

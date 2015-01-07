@@ -1,8 +1,6 @@
 /**
  * @file Bug_1890_Regression_Test.cpp
  *
- * $Id$
- *
  * Reproduces the problems reported in bug 1890
  *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1890
  *

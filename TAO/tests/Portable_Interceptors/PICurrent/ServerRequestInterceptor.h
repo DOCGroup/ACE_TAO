@@ -4,8 +4,6 @@
 /**
  * @file    ServerRequestInterceptor.h
  *
- * $Id$
- *
  * Implementation header for the server request interceptor for the
  * PortableInterceptor::Current test.
  *

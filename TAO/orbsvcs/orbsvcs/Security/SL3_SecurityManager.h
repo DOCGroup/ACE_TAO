@@ -4,8 +4,6 @@
 /**
  * @file SL3_SecurityManager.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  * @file Foo_i.h
  *
- * $Id$
- *
  * Implementation header for the Null_Cipher test.
  *
  * @author Ossama Othman <ossama@uci.edu>

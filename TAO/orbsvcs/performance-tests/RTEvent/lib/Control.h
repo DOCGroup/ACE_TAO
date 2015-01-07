@@ -1,8 +1,6 @@
 /**
  * @file Control.h
  *
- * $Id$
- *
  */
 
 #ifndef TAO_RTEC_PERF_CONTROL_H

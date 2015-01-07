@@ -3,8 +3,6 @@
 /**
  * @file MIF_Scheduling.idl
  *
- * $Id$
- *
  */
 
 #include "tao/RTScheduling/RTScheduler_include.pidl"

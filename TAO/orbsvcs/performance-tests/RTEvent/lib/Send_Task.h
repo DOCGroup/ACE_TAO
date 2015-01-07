@@ -1,8 +1,6 @@
 /**
  * @file Send_Task.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

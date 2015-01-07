@@ -4,8 +4,6 @@
 /**
  * @file  Storable_Factory.h
  *
- * $Id$
- *
  * @author Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================

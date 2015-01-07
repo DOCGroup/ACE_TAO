@@ -3,8 +3,6 @@
 /**
  * @file ECG_Simple_Mcast_EH.h
  *
- * $Id$
- *
  * @author Marina Spivak <marina@atdesk.com>
  *
  */

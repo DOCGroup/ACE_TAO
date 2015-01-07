@@ -1,8 +1,6 @@
 /**
  * @file Echo_Handler.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 #ifndef Echo_Handler__h_

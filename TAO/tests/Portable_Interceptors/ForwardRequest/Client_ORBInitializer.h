@@ -4,8 +4,6 @@
 /**
  * @file Client_ORBInitializer.h
  *
- * $Id$
- *
  * Implementation header for the PortableInterceptor::ForwardRequest
  * exception test client side ORB initializer.
  *

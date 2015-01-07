@@ -1,8 +1,6 @@
 /**
  * @file Low_Priority_Setup.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

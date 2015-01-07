@@ -2,8 +2,6 @@
  * @file Server_Task.h
  * @author Will Otte <w.otte@dre.vanderbilt.edu>
  *
- * $Id$
- *
  * Defines the Server_Task class that acts as a process colocated ORB server
  * for Bug_1495_Regression.
  */
