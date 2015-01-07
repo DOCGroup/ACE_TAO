@@ -2,7 +2,6 @@
  * @file ORB_Task.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef IMR_REGRESSION_ORB_TASK_H
 #define IMR_REGRESSION_ORB_TASK_H

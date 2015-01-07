@@ -4,8 +4,6 @@
  *  @file Method_Request_Shutdown.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_METHOD_REQUEST_SHUTDOWN_H
@@ -28,7 +26,6 @@ class TAO_Notify_ThreadPool_Task;
  * @class TAO_Notify_Method_Request_Shutdown
  *
  * @brief Shutdown message for the ThreadPool_Task
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Shutdown : public TAO_Notify_Method_Request_Queueable
 {

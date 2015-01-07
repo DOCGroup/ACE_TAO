@@ -8,8 +8,6 @@
  * SMIValue class definition. Superclass for the various types
  * of SNMP values (Address, Oid, Octet, etc.).  Provides
  * only a few functions, most info is in subclass.
- *
- *
  */
 //=============================================================================
 

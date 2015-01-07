@@ -31,7 +31,6 @@ class TAO_PortableGroup_Loader;
  * @class PortableGroup_Request_Dispatcher
  *
  * @brief A class that strategizes the request dispatching procedure.
- *
  */
 class TAO_PortableGroup_Export PortableGroup_Request_Dispatcher
   : public TAO_Request_Dispatcher

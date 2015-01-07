@@ -722,7 +722,6 @@ prep_timer ()
 
 /*
  *                    R E A D _ T I M E R
- *
  */
 double
 read_timer (char *str, int len)

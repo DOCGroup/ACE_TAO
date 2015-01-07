@@ -25,7 +25,6 @@
  * @class ACE_ID_Generator
  *
  * @brief An unique ID generator.
- *
  */
 class ACE_ID_Generator
 

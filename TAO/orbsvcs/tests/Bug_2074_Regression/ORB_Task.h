@@ -4,7 +4,6 @@
  * @file ORB_Task.h
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
- *
  */
 #include "tao/ORB.h"
 #include "ace/Task.h"

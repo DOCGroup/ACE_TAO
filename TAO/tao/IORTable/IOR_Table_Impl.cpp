@@ -2,7 +2,6 @@
  * @file IOR_Table_Impl.cpp
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
- *
  */
 
 #include "tao/IORTable/IOR_Table_Impl.h"

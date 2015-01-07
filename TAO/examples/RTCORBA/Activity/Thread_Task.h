@@ -23,7 +23,6 @@
  * exceeds its <exec_time_>, it is "late".
  * if <exec_time_> is greater than the <period_>, the activity(s) for the
  * overlapped period(s) are considered "missed".
- *
  */
 class activity_Export Thread_Task : public Periodic_Task
 {

@@ -30,7 +30,6 @@ class TAO_Notify_Peer;
  *
  * @brief Base class for Supplier and Consumer classes.
  *        This object delegates its reference count to its creator proxy object.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Peer
 {

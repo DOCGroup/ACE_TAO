@@ -6,8 +6,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *
  * The COS Event Channel service.
- *
- *
  */
 //=============================================================================
 

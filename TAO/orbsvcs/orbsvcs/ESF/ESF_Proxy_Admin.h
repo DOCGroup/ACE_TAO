@@ -57,7 +57,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * PROXY::_ptr_type
  * PROXY::activate (void) throw ();
  * @endverbatim
- *
  */
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE>
 class TAO_ESF_Proxy_Admin

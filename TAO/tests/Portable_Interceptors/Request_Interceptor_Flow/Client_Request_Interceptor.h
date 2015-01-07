@@ -36,7 +36,6 @@
  *
  * @brief Client request interceptor that exercises
  * PortableInterceptor::ForwardRequest support.
- *
  */
 class Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,

@@ -7,8 +7,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *
  * Defines a simple Push Supplier.
- *
- *
  */
 //=============================================================================
 

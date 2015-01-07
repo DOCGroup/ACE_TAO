@@ -3,8 +3,6 @@
  *  @file Driver_Base.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_APPLICATION_STARTER_H
@@ -21,7 +19,6 @@
  * @class TAO_Notify_Tests_Driver_Base
  *
  * @brief Base class for Driver.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Driver_Base
 {

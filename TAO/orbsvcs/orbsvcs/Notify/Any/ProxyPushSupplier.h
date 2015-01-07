@@ -3,8 +3,6 @@
  *  @file ProxyPushSupplier.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROXYPUSHSUPPLIER_H
@@ -39,7 +37,6 @@ TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::ProxyPushSupplier>;
  * @class TAO_Notify_ProxyPushSupplier
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::ProxyPushSupplier>

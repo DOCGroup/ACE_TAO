@@ -38,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * transform them back into a push() call.
  * This is an abstract class to represent all the different
  * strategies for EC distribution.
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Gateway
   : public POA_RtecEventChannelAdmin::Observer

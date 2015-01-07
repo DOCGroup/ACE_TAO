@@ -3,8 +3,6 @@
  *  @file FilterFactory.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_FILTERFACTORY_H
@@ -29,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_FilterFactory
  *
  * @brief Service Object to obtain a CosNotifyFilter::FilterFactory reference.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_FilterFactory
   : public ACE_Service_Object, public TAO_Notify::Topology_Object

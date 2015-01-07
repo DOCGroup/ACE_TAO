@@ -18,7 +18,6 @@
  * @class Send_Task_Stopper
  *
  * @brief Implement a helper class to activate and stop Send_Tasks.
- *
  */
 class TAO_RTEC_Perf_Export Send_Task_Stopper : public Task_Activator<Send_Task>
 {

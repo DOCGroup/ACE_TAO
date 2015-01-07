@@ -83,7 +83,6 @@ private:
  *
  * @brief Defines a class template that allows us to invoke a member
  * function using the GoF command style callback.
- *
  */
 template <class RECEIVER>
 class ACE_Member_Function_Command : public ACE_Command_Base

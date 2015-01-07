@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_QoSProperties
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_QoSProperties : public TAO_Notify_PropertySeq
 {

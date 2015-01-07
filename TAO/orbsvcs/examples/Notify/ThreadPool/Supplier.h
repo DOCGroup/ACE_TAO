@@ -3,8 +3,6 @@
  *  @file Supplier.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SUPPLIER_H
@@ -23,7 +21,6 @@
  * @class TAO_Notify_ThreadPool_Supplier
  *
  * @brief Implement a Structured Supplier.
- *
  */
 class TAO_Notify_ThreadPool_Supplier
   : public POA_CosNotifyComm::StructuredPushSupplier

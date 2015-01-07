@@ -1,7 +1,6 @@
 /**
  * @file Endpoint.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
  */
 
 #ifndef EVENT_ENDPOINT_H

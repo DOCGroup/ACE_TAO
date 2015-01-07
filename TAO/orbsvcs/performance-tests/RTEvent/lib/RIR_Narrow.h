@@ -3,7 +3,6 @@
  *
  * @author Jody Hagins <jody@atdesk.com>
  * @author Carlos O'Ryan <coryan@uci.edu>
- *
  */
 #ifndef TAO_PERF_RTEC_RIR_NARROW_H
 #define TAO_PERF_RTEC_RIR_NARROW_H
@@ -16,7 +15,6 @@
  *
  * @brief Implement a helper method to narrow the results from
  *        resolve_initial_references.
- *
  */
 template<class Interface>
 class RIR_Narrow

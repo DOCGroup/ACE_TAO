@@ -251,8 +251,7 @@ public:
 };
 
 /**
- * @brief Function object for hashing a void *
- */
+ * @brief Function object for hashing a void */
 template<>
 class ACE_Export ACE_Hash<void *>
 {

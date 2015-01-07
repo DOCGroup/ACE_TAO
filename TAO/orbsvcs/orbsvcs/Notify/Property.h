@@ -3,8 +3,6 @@
  *  @file Property.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROPERTY_H

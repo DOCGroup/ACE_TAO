@@ -4,7 +4,6 @@
  *  @file ECG_Simple_Address_Server.h
  *
  *  @author Marina Spivak (marina@atdesk.com)
- *
  */
 
 #ifndef TAO_ECG_SIMPLE_ADDRESS_SERVER_H

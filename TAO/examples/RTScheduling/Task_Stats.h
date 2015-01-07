@@ -37,7 +37,6 @@ typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
  * @class Task_Stats
  *
  * @brief maintains readings recorded by tasks.
- *
  */
 class RTSCHEDTESTLIB_Export Task_Stats
 {

@@ -3,8 +3,6 @@
  *  @file Command.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_COMMAND_H
@@ -32,7 +30,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Tests_Command
  *
  * @brief Base Class for all command objects.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command
 {

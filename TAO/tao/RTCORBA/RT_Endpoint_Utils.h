@@ -36,7 +36,6 @@ namespace TAO
  * @class RT_Endpoint_Utils
  *
  * @brief Commonly used utility methods used by the RT_Endpoint_Selectors.
- *
  */
 class TAO_RTCORBA_Export TAO_RT_Endpoint_Utils
 {

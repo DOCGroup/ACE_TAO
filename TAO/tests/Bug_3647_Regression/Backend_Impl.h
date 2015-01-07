@@ -10,7 +10,6 @@ namespace Bug_3647_Regression
  * @class Backend
  *
  * Implement the Bug_3647_Regression::Backend interface
- *
  */
 class Backend_Impl : public POA_Bug_3647_Regression::Backend
 {

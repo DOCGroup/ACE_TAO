@@ -25,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PI_Server_Init
- *
  */
 class TAO_PI_Server_Export TAO_PI_Server_Init
 {

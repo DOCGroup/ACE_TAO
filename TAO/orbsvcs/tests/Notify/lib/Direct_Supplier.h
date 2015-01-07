@@ -3,8 +3,6 @@
  *  @file Direct_Supplier.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_DIRECT_SUPPLIER_H
@@ -23,7 +21,6 @@
  * @class TAO_Notify_Tests_Direct_Supplier
  *
  * @brief Send Directly to a consumer.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Direct_Supplier : public TAO_Notify_Tests_Periodic_Supplier
 {

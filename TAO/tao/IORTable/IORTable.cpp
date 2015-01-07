@@ -5,7 +5,6 @@
  * @file IORTable.cpp
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
- *
  */
 // =================================================================
 

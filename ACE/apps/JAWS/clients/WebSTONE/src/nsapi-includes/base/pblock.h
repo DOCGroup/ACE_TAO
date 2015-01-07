@@ -30,7 +30,6 @@
  * first character of name.
  *
  * Rob McCool
- *
  */
 
 #ifndef PBLOCK_H

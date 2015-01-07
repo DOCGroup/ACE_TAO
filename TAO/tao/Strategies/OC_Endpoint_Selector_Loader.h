@@ -42,7 +42,6 @@ class TAO_Optimized_Connection_Endpoint_Selector;
  * header to ensure that all the necessary dependencies are met. In
  * addition, the svc config directive is required for setting any
  * initialization parameters for the endpoint selector.
- *
  */
 class TAO_Strategies_Export TAO_OC_Endpoint_Selector_Loader
 {

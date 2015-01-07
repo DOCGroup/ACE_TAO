@@ -20,7 +20,6 @@ class RTCORBA_Setup;
  * @class RTPOA_Setup
  *
  * @brief Simplify the initialization of performance tests.
- *
  */
 class TAO_RTEC_Perf_Export RTPOA_Setup
 {

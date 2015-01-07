@@ -149,7 +149,6 @@ protected:
  *
  * @brief This class abstracts out the common things needed for
  * implementing Asynch_Operation for WIN32 platform.
- *
  */
 class ACE_Export ACE_WIN32_Asynch_Operation : public virtual ACE_Asynch_Operation_Impl
 {
@@ -1671,7 +1670,6 @@ protected:
  *     will be passed back to the @a handler when the asynchronous
  *     reads completes through the <ACE_Handler::handle_read_stream>
  *     callback.
- *
  */
 class ACE_Export ACE_WIN32_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dgram_Impl,
                                                public ACE_WIN32_Asynch_Operation

@@ -25,7 +25,6 @@
  * @class NContextExt_Client_i
  *
  * @brief NContextExt Client Implementation
- *
  */
 class NContextExt_Client_i
 {

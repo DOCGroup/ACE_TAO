@@ -4,7 +4,6 @@
  *  @file   ECG_Reactive_ConsumerEC_Control.h
  *
  *  @author Johnny Willemsen (jwillemsen@remedy.nl)
- *
  */
 
 #ifndef TAO_ECG_REACTIVE_CONSUMEREC_CONTROL_H

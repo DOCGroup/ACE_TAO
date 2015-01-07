@@ -3,8 +3,6 @@
  *  @file Application_Command.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_APPLICATION_COMMAND_H
@@ -26,7 +24,6 @@ class TAO_Notify_Tests_Application_Command;
  * @class TAO_Notify_Tests_Application_Command
  *
  * @brief Command to control the Application.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Application_Command : public TAO_Notify_Tests_Command
 {

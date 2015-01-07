@@ -22,7 +22,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_ESF_Immediate_Changes
  *
  * @brief Implement the Immediate_Changes strategy
- *
  */
 template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
 class TAO_ESF_Immediate_Changes : public TAO_ESF_Proxy_Collection<PROXY>

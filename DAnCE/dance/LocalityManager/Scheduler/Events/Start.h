@@ -1,7 +1,6 @@
 /**
  * @file Start.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
  */
 
 #ifndef EVENT_START_H

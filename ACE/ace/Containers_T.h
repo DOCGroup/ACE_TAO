@@ -70,7 +70,6 @@ class ACE_Allocator;
  *       -# Default constructor
  *       -# Copy constructor
  *       -# operator=
- *
  */
 template <class T>
 class ACE_Bounded_Stack
@@ -201,7 +200,6 @@ private:
  *       -# Default constructor
  *       -# Copy constructor
  *       -# operator=
- *
  */
 template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Stack
@@ -366,7 +364,6 @@ private:
  *       -# Default constructor
  *       -# Copy constructor
  *       -# operator=
- *
  */
 template <class T>
 class ACE_Unbounded_Stack
@@ -815,7 +812,6 @@ public:
  *       -# Default constructor
  *       -# Copy constructor
  *       -# operator=
- *
  */
 template <class T>
 class ACE_Double_Linked_List
@@ -1394,7 +1390,6 @@ public:
  *       -# Copy constructor
  *       -# operator=
  *       -# operator==
- *
  */
 template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set
@@ -1587,7 +1582,6 @@ private:
  *       -# Copy constructor
  *       -# operator=
  *       -# operator==
- *
  */
 template <class T>
 class ACE_Bounded_Set
@@ -1808,8 +1802,6 @@ private:
  *       -# operator=
  *       -# operator==
  *       -# operator<
- *
- *
  */
 template <class T>
 class ACE_Ordered_MultiSet

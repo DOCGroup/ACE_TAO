@@ -20,7 +20,6 @@
  *
  *  If you add support for a new platform, please add a bullet to the
  *  above list with durable references to the origins of your code.
- *
  */
 //=============================================================================
 

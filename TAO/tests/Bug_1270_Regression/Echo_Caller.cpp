@@ -2,7 +2,6 @@
  * @file Echo_Caller.cpp
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Echo_Caller.h"
 #include "Server_Timer.h"

@@ -4,7 +4,6 @@
  *  @file   ECG_Reconnect_ConsumerEC_Control.h
  *
  *  @author Johnny Willemsen (jwillemsen@remedy.nl)
- *
  */
 
 #ifndef TAO_ECG_RECONNECT_CONSUMEREC_CONTROL_H

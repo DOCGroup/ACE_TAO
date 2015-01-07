@@ -10,7 +10,6 @@
  *  mechanisms. Currently it includes Base64 content transfer-encoding as
  *  specified by RFC 2045, Multipurpose Internet Mail Extensions (MIME) Part
  *  One: Format of Internet Message Bodies.
- *
  */
 //=============================================================================
 
@@ -39,7 +38,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class provides methods to encode or decode a stream of bytes
  * to/from Base64 encoding. It doesn't convert the input stream to a
  * canonical form before encoding.
- *
  */
 class ACE_Export ACE_Base64
 {

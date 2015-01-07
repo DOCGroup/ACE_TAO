@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_FilterAdmin
  *
  * @brief FilterAdmin interface methods implementation.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   : public TAO_Notify::Topology_Object

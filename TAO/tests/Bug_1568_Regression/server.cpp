@@ -14,7 +14,6 @@
  * @class Simple_C
  *
  * @brief A simple implementation of the 'C' object.
- *
  */
 class Simple_C
   : public virtual POA_Baz::AMH_C

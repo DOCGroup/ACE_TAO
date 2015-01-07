@@ -43,7 +43,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class just serves as a base class for any of the TAO
  * RT Mutex implementations.  Instances of these classes should
  * be created using the RTCORBA::create_mutex() method.
- *
  */
 
 class TAO_RTCORBA_Export TAO_RT_Mutex
@@ -82,7 +81,6 @@ protected:
  * @class TAO_Named_RT_Mutex
  *
  * @brief Extension to TAO_RT_Mutex to support named mutexes.
- *
  */
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex : public TAO_RT_Mutex
 {

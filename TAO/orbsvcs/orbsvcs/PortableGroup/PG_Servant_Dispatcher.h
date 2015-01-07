@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This class just calls _dispatch on the servant_upcall.  No extra
  * processing is done or needed.
- *
  */
 class TAO_PortableGroup_Export TAO_PG_Servant_Dispatcher
   : public TAO_Servant_Dispatcher

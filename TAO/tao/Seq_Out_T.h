@@ -26,7 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Seq_Out_T
  *
  * @brief Parametrized implementation of _out class for sequences.
- *
  */
 template <typename T>
 class TAO_Seq_Out_T

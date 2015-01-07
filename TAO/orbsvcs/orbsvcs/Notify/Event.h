@@ -3,8 +3,6 @@
  *  @file Event.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_NOTIFY_EVENT_H
@@ -38,7 +36,6 @@ class TAO_Notify_EventType;
  * @class TAO_Notify_Event
  *
  * @brief Base class abstraction for Events flowing through the EventChannel.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Event
     : public TAO_Notify_Refcountable

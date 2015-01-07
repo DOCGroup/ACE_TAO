@@ -1,7 +1,6 @@
 /**
  * @file Disconnect.h
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
- *
  */
 
 #ifndef EVENT_DISCONNECT_H

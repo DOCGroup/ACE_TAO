@@ -142,7 +142,6 @@ private:
  *       -# Default constructor
  *       -# Copy constructor
  *       -# operator=
- *
  */
 template <class T>
 class ACE_Unbounded_Queue

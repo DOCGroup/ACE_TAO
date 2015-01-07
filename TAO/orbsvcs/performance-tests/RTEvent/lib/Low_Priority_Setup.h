@@ -27,7 +27,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  * @class Low_Priority_Setup
  *
  * @brief Simplify the initialization of performance tests clients
- *
  */
 template<class Client_Type>
 class Low_Priority_Setup

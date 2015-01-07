@@ -19,7 +19,6 @@
  * @class Supplier
  *
  * @brief Implement a simple supplier to keep track of the latency
- *
  */
 class TAO_RTEC_Perf_Export Supplier
   : public virtual POA_RtecEventComm::PushSupplier

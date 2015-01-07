@@ -26,7 +26,6 @@
 
 /**
  * @class Custom_Time_Policy_Strategy
- *
  */
 class TPTEST_Export Custom_Time_Policy_Strategy
   : public TAO_Time_Policy_Strategy

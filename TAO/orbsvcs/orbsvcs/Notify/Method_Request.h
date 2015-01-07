@@ -31,7 +31,6 @@ class TAO_Notify_Method_Request_Queueable;
  * @class TAO_Notify_Method_Request
  *
  * @brief Base class for Method Requests
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request
 {
@@ -50,7 +49,6 @@ public:
  * @class TAO_Notify_Method_Request_Queueable
  *
  * @brief Interface for NS method Requests
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Queueable
   : public ACE_Message_Block

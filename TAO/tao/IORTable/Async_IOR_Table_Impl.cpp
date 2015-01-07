@@ -2,7 +2,6 @@
  * @file Async_IOR_Table_Impl.cpp
  *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
- *
  */
 
 #include "tao/IORTable/Async_IOR_Table_Impl.h"

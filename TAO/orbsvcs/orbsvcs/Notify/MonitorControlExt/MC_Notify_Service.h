@@ -25,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_MC_Notify_Service
  *
  * @brief Implemetation of the TAO_Notify_Service interface for Monitoring
- *
  */
 class TAO_Notify_MC_Ext_Export TAO_MC_Notify_Service: public TAO_CosNotify_Service
 {

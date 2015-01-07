@@ -3,8 +3,6 @@
  *  @file CosNotify_Service.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_COSNOTIFY_SERVICE_H
@@ -30,7 +28,6 @@ class TAO_Notify_EventChannelFactory;
  * @class TAO_CosNotify_Service
  *
  * @brief A service object for creating the  Notify Service Factory.
- *
  */
 class TAO_Notify_Serv_Export TAO_CosNotify_Service : public TAO_Notify_Service
 {

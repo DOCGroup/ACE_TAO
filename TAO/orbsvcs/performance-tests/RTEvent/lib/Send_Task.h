@@ -23,7 +23,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  * @class Send_Task
  *
  * @brief Implement a simple ACE_Task to send the events
- *
  */
 class TAO_RTEC_Perf_Export Send_Task : public ACE_Task_Base
 {

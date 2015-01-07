@@ -8,8 +8,6 @@
  *  presence of declarations other than non-code-generating
  *  IDL3+ constructs. Prevents the generation of illegal
  *  empty modules in the *_IDL2 artifact.
- *
- *
  */
 //=============================================================================
 

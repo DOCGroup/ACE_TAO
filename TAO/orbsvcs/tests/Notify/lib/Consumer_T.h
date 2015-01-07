@@ -3,8 +3,6 @@
  *  @file Consumer_T.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_CONSUMER_T_H
@@ -37,7 +35,6 @@ class TAO_Notify_Tests_ConsumerAdmin_Ext_Traits
  * @class TAO_Notify_Tests_Consumer_T
  *
  * @brief Base template to implement Consumers.
- *
  */
 template <class Consumer_Traits>
 class TAO_Notify_Tests_Consumer_T : public TAO_Notify_Tests_Peer_T <Consumer_Traits>

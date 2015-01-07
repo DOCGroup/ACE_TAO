@@ -18,7 +18,6 @@
  * @class Test_i
  *
  * @brief Implement the Test interface
- *
  */
 class OLT_Export Test_i : public POA_Test
 {

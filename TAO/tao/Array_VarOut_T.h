@@ -40,7 +40,6 @@ namespace TAO
  * @class TAO_Array_Forany_T
  *
  * @brief Parametrized implementation of _forany class for arrays.
- *
  */
 template<typename T, typename T_slice, typename TAG>
 class TAO_Array_Forany_T
@@ -91,7 +90,6 @@ private:
  * @class TAO_Array_Var_Base_T
  *
  * @brief Parametrized implementation of _var base class for arrays.
- *
  */
 template<typename T, typename T_slice, typename TAG>
 class TAO_Array_Var_Base_T
@@ -133,7 +131,6 @@ protected:
  *
  * @brief Parametrized implementation of _var class for arrays with
  * elements of fixed size.
- *
  */
 template<typename T, typename T_slice, typename TAG>
 class TAO_FixedArray_Var_T : public TAO_Array_Var_Base_T<T,T_slice,TAG>
@@ -164,7 +161,6 @@ private:
  *
  * @brief Parametrized implementation of _var class for arrays with
  * elements of variable size.
- *
  */
 template<typename T, typename T_slice, typename TAG>
 class TAO_VarArray_Var_T : public TAO_Array_Var_Base_T<T,T_slice,TAG>
@@ -196,7 +192,6 @@ private:
  * @class TAO_Array_Out_T
  *
  * @brief Parametrized implementation of _out class for arrays.
- *
  */
 template<typename T, typename T_var, typename T_slice, typename TAG>
 class TAO_Array_Out_T

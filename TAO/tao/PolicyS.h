@@ -5,7 +5,6 @@
  *
  * The file is almost empty and only present to keep other IDL files
  * that include Policy.pidl happy.
- *
  */
 //=============================================================================
 

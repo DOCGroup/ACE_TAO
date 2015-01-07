@@ -3,8 +3,6 @@
  *  @file Consumer_Client.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_CONSUMER_CLIENT_H
@@ -25,7 +23,6 @@ class TAO_Notify_ThreadPool_Consumer;
  * @class TAO_Notify_ThreadPool_Consumer_Client
  *
  * @brief
- *
  */
 class TAO_Notify_ThreadPool_Consumer_Client  : public ACE_Task_Base
 {

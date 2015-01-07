@@ -3,8 +3,6 @@
  *  @file Command_Builder.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_COMMAND_BUILDER_H
@@ -32,7 +30,6 @@ class TAO_Notify_Tests_Command;
  * @class TAO_Notify_Tests_Command_Builder
  *
  * @brief Class for collating and serially executing command objects.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Builder : public ACE_Service_Object
 {

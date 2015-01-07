@@ -1,6 +1,5 @@
 /**
  * @file Callback.h
- *
  */
 
 #ifndef CALLBACK_H
@@ -17,7 +16,6 @@
  * @class Callback
  *
  * @brief Implicit the Test::Callback interface
- *
  */
 class Callback
   : public virtual POA_Test::Callback

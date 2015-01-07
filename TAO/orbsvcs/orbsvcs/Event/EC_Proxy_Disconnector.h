@@ -34,7 +34,6 @@ struct TAO_RTEvent_Serv_Export TAO_EC_Supplier_Proxy_Disconnect_Functor
  *
  * @brief Helper class to disconnect a PushConsumer from the event
  *        channel.
- *
  */
 typedef ACE_Utils::Auto_Functor<
             RtecEventComm::PushSupplier,
@@ -61,7 +60,6 @@ struct TAO_RTEvent_Serv_Export TAO_EC_Consumer_Proxy_Disconnect_Functor
  *
  * @brief Helper class to disconnect a PushSupplier from the event
  *        channel.
- *
  */
 typedef ACE_Utils::Auto_Functor<
             RtecEventComm::PushConsumer,

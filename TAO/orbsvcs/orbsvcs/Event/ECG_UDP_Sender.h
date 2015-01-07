@@ -30,7 +30,6 @@
  * @todo The class makes an extra copy of the events, we need to
  * investigate if closer collaboration with its collocated EC could
  * be used to remove that copy.
- *
  */
 
 #ifndef TAO_ECG_UDP_SENDER_H
@@ -96,7 +95,6 @@ private:
  *        NOT THREAD-SAFE.
  * This class connect as a consumer to an EventChannel
  * and forwards the events it receives from that EC using UDP.
- *
  */
 class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender :
   public virtual POA_RtecEventComm::PushConsumer,

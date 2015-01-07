@@ -2,7 +2,6 @@
  * @file Server_Timer.cpp
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Server_Timer.h"
 #include "ace/Reactor.h"

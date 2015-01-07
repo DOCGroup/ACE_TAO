@@ -33,7 +33,6 @@ class TAO_FTEC_ProxyPushSupplier;
  *
  * @brief Implements the ConsumerAdmin interface, i.e. the factory for
  * TAO_FTEC_ProxyPushSupplier objects.
- *
  */
 class TAO_FTEC_ConsumerAdmin
   : public TAO_EC_ConsumerAdmin

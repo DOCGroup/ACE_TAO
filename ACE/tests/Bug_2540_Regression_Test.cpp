@@ -65,7 +65,6 @@ private:
  * in a repeating interval.  On the first @c initial_iterations the Timer
  * writes data through all of its handlers.  On iteration @c initial_iteration
  * it triggers bug 2540 by removing two handlers from the reactor.
- *
  */
 class Timer : public ACE_Event_Handler
 {

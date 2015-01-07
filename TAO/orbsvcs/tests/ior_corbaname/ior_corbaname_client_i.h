@@ -24,7 +24,6 @@
  * @class IOR_corbaname_Client_i
  *
  * @brief NContextExt Client Implementation
- *
  */
 class IOR_corbaname_Client_i
 {

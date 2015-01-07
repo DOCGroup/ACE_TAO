@@ -26,7 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief This class specializes the TAO_Persistent_Naming_Context
  * 'ConcreteImplementor' in the Bridge pattern architecture of the
  * CosNaming::NamingContext implementation.
- *
  */
 class TAO_FtNaming_Export TAO_FT_Persistent_Naming_Context :
       public TAO_Persistent_Naming_Context

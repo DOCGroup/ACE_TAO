@@ -7,7 +7,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
- *
  */
 //=============================================================================
 

@@ -3,8 +3,6 @@
  *  @file Admin.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ADMIN_H
@@ -32,7 +30,6 @@ template <class TYPE> class TAO_Notify_Container_T;
  * @class TAO_Notify_Admin
  *
  * @brief Base class for the ConsumerAdmin and SupplierAdmin.
- *
  */
 
 class TAO_Notify_Serv_Export TAO_Notify_Admin : public TAO_Notify::Topology_Parent

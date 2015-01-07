@@ -6,8 +6,6 @@
  *  @file    snmperrs.h
  *
  * Definition of error macros and error strings
- *
- *
  */
 //=============================================================================
 

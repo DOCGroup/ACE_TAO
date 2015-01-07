@@ -3,8 +3,6 @@
  *  @file StructuredProxyPushSupplier.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_STRUCTUREDPROXYPUSHSUPPLIER_H
@@ -39,8 +37,6 @@ TAO_Notify_ProxySupplier_T<POA_Event_Forwarder::StructuredProxyPushSupplier>;
  * @class TAO_Notify_StructuredProxyPushSupplier
  *
  * @brief Implements the CosNotifyChannelAdmin::StructuredProxyPushSupplier methods.
- *
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_StructuredProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_Event_Forwarder::StructuredProxyPushSupplier>

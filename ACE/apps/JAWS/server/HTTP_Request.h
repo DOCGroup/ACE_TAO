@@ -28,7 +28,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  * @class HTTP_Request
  *
  * @brief This parses the client request of an HTTP transaction.
- *
  */
 class HTTP_Request
 {

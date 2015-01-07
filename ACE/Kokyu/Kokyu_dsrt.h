@@ -3,7 +3,6 @@
  *  @file   Kokyu_dsrt.h
  *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
- *
  */
 
 #ifndef KOKYU_DSRT_H

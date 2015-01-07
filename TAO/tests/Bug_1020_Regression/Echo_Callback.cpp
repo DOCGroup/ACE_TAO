@@ -2,7 +2,6 @@
  * @file Echo_Callback.cpp
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Echo_Callback.h"
 

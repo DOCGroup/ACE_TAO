@@ -1,7 +1,6 @@
 /**
  * @file Literals.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
  */
 
 #ifndef XMI_LITERALS_H

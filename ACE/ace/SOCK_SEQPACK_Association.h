@@ -9,7 +9,6 @@
  *  @author  Gaurav Naik, Lockheed Martin ATL
  *  @author  based on SOCK_Stream
  *            by Douglas C. Schmidt <schmidt@cs.wustl.edu>
- *
  */
 //=============================================================================
 

@@ -3,8 +3,6 @@
  *  @file Supplier_Client.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SUPPLIER_CLIENT_H
@@ -21,7 +19,6 @@ class TAO_Notify_ThreadPool_Supplier;
  * @class TAO_Notify_ThreadPool_Supplier_Client
  *
  * @brief Supplier Client
- *
  */
 class TAO_Notify_ThreadPool_Supplier_Client : public ACE_Task_Base
 {

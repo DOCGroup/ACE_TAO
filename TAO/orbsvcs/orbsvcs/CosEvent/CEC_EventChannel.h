@@ -8,8 +8,6 @@
  *
  * A new implementation of the COS Event Channel.
  * This version does not rely on the RTEC in its implementation.
- *
- *
  */
 //=============================================================================
 

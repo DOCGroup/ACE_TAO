@@ -5,7 +5,6 @@
  * @file Current_Loader.cpp
  *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
- *
  */
 // =================================================================
 

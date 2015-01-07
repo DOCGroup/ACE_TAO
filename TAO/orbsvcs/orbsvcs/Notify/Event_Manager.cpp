@@ -19,7 +19,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_ProxyConsumer_Update_Worker
  *
  * @brief Inform ProxyConsumer of updates.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxyConsumer>
 {
@@ -40,7 +39,6 @@ protected:
  * @class TAO_Notify_ProxySupplier_Update_Worker
  *
  * @brief Inform ProxySupplier of updates.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
 {

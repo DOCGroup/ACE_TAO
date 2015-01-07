@@ -31,7 +31,6 @@ class TAO_Notify_Peer;
  * @class TAO_Notify_Proxy
  *
  * @brief Base class proxy for all proxys in NS.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Proxy
   : public TAO_Notify::Topology_Parent

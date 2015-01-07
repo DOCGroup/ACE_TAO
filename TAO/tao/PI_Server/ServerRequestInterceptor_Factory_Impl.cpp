@@ -5,7 +5,6 @@
  * @file ServerRequestInterceptor_Factory_Impl.cpp
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
- *
  */
 // =================================================================
 

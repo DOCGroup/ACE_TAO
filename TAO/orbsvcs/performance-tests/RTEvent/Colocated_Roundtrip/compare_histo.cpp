@@ -1,6 +1,5 @@
 /**
  * @file compare_histo.cpp
- *
  */
 
 #include <utility>

@@ -1,7 +1,6 @@
 /**
  * @file Configured.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
  */
 
 #ifndef EVENT_CONFIGURED_H

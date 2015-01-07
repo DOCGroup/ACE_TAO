@@ -5,8 +5,6 @@
  *  @file    basic_visitor.h
  *
  *  Base class for other visitors in this backend.
- *
- *
  */
 //=============================================================================
 

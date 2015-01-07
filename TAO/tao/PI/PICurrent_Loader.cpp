@@ -5,7 +5,6 @@
  * @file PICurrent_Loader.cpp
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
- *
  */
 // =================================================================
 

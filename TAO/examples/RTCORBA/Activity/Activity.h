@@ -35,7 +35,6 @@ class Builder;
  *
  * @brief Driver class that maintains the orb and collections of objects for
  * generating activity in this process.
- *
  */
 class activity_Export Activity
 {

@@ -72,7 +72,6 @@ class ACE_TSS_Adapter;
  * instances of this type are dynamicaly allocated. On the stack it is
  * typically allocated inside the ACE_Thread::svc() method which
  * limits its lifetime appropriately.
- *
  */
 template <class TYPE>
 class ACE_TSS : private ACE_Copy_Disabled

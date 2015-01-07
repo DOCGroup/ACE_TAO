@@ -4,7 +4,6 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * Contains the generic implementation of plan launcher logic for both EM and NM deployments.
- *
  */
 
 #ifndef PLAN_LAUNCHER_BASE_IMPL_H

@@ -3,8 +3,6 @@
  *  @file RT_Application_Command.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_RT_APPLICATION_COMMAND_H
@@ -23,7 +21,6 @@
  * @class TAO_Notify_Tests_RT_Application_Command
  *
  * @brief
- *
  */
 class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_Application_Command : public TAO_Notify_Tests_Application_Command
 {

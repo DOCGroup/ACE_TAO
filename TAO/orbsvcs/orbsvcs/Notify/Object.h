@@ -4,8 +4,6 @@
  *  @file Object.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_OBJECT_H
@@ -40,7 +38,6 @@ class TAO_Notify_RT_Builder;
  * @class TAO_Notify_Object
  *
  * @brief Base Object for RT_Notify's CORBA Objects.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Object : public TAO_Notify_Refcountable
 {

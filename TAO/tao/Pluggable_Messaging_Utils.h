@@ -94,7 +94,6 @@ private:
  * @class TAO_Pluggable_Reply_Params
  *
  * @brief TAO_Pluggable_Connector_Params
- *
  */
 class TAO_Export TAO_Pluggable_Reply_Params
   : public TAO_Pluggable_Reply_Params_Base

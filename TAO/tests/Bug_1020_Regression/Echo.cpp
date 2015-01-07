@@ -2,7 +2,6 @@
  * @file Echo.cpp
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Echo.h"
 

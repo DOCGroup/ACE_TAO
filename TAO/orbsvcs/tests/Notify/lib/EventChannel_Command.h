@@ -3,8 +3,6 @@
  *  @file EventChannel_Command.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_EVENTCHANNEL_COMMAND_H
@@ -30,7 +28,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Tests_EventChannel_Command
  *
  * @brief Command object for event channels.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_EventChannel_Command : public TAO_Notify_Tests_Command
 {

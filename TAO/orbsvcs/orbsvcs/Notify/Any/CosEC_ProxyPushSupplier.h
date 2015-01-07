@@ -3,8 +3,6 @@
  *  @file CosEC_ProxyPushSupplier.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_COSEC_PROXYPUSHSUPPLIER_H
@@ -38,7 +36,6 @@ TAO_Notify_ProxySupplier_T<POA_CosEventChannelAdmin::ProxyPushSupplier>;
  * @class TAO_Notify_CosEC_ProxyPushSupplier
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_CosEC_ProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_CosEventChannelAdmin::ProxyPushSupplier>

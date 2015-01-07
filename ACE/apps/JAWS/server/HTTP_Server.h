@@ -48,7 +48,6 @@ typedef HTTP_SOCK_Acceptor HTTP_Acceptor;
  *
  * @brief This server is used to create HTTP Handlers for the Web
  * server
- *
  */
 class ACE_Svc_Export HTTP_Server : public ACE_Service_Object
 {

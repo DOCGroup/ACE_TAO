@@ -5,7 +5,6 @@
  * @file Async_IORTable.cpp
  *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
- *
  */
 // =================================================================
 

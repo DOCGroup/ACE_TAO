@@ -4,7 +4,6 @@
  *  @file   Invocation_Retry_State.h
  *
  *  @author Byron Harris (harrisb@ociweb.com)
- *
  */
 //=============================================================================
 

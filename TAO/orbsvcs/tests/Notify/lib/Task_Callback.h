@@ -3,8 +3,6 @@
  *  @file Task_Callback.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_TASK_CALLBACK_H
@@ -24,7 +22,6 @@ class TAO_Notify_Tests_Periodic_Consumer;
  * @class TAO_Notify_Tests_Task_Callback
  *
  * @brief
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Task_Callback
 {

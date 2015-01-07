@@ -39,7 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Implement the dispatching queues for FIFO and Priority
  * dispatching.
- *
  */
 class TAO_Event_Serv_Export TAO_CEC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {

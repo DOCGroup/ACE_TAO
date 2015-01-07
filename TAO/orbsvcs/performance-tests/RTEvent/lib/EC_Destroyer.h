@@ -19,7 +19,6 @@
  *
  * @brief Implement a helper class to destroy a Real-time Event
  * Channel.
- *
  */
 class TAO_RTEC_Perf_Export EC_Destroyer
 {

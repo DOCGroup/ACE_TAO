@@ -86,7 +86,6 @@ private:
  * @class TAO_EC_Per_Supplier_Filter_Builder
  *
  * @brief Create Per_Supplier_Filter objects
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Per_Supplier_Filter_Builder : public TAO_EC_Supplier_Filter_Builder
 {

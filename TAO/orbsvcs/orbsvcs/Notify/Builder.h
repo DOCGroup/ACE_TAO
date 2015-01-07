@@ -3,8 +3,6 @@
  *  @file Builder.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_BUILDER_H
@@ -41,7 +39,6 @@ class TAO_Notify_Object;
  * @class TAO_Notify_Builder
  *
  * @brief Helper class to create and activate CORBA objects.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Builder
 {

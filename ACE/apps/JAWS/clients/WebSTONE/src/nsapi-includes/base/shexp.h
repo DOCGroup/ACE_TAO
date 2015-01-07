@@ -34,7 +34,6 @@
  * The public interface to these routines is documented below.
  *
  * Rob McCool
- *
  */
 
 #ifndef SHEXP_H

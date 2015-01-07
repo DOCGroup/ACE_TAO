@@ -21,7 +21,6 @@
  * @class EC_Inversion
  *
  * @brief Measure priority inversions in the EC.
- *
  */
 class EC_Inversion : public EC_Driver
 {

@@ -2,7 +2,6 @@
  * @file Echo_Caller.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef BUG_1020_BASIC_REGRESSION_ECHO_CALLER_H
 #define BUG_1020_BASIC_REGRESSION_ECHO_CALLER_H

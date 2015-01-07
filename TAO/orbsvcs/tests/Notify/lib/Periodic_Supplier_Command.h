@@ -25,7 +25,6 @@ class TAO_Notify_Tests_Periodic_Supplier;
  * @class TAO_Notify_Tests_Periodic_Supplier_Command
  *
  * @brief Command for Periodic Suppliers.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Supplier_Command : public TAO_Notify_Tests_Command
 {

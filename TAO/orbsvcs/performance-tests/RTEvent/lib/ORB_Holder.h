@@ -18,7 +18,6 @@
  * @class ORB_Holder
  *
  * @brief Implement a helper class to initialize and destroy an ORB.
- *
  */
 class TAO_RTEC_Perf_Export ORB_Holder
 {

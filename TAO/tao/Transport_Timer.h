@@ -32,7 +32,6 @@ class TAO_Transport;
  *        notifications from the Reactor.  In other words, implements
  *        the Adapter Role, of the Adapter Pattern, where the Adaptee
  *        is a TAO_Transport and the client is the Reactor.
- *
  */
 class TAO_Transport_Timer : public ACE_Event_Handler
 {

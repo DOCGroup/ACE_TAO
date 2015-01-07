@@ -3,7 +3,6 @@
  *  @file  DSRT_Direct_Dispatcher_Impl_T.h
  *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
- *
  */
 
 #ifndef DSRT_DIRECT_DISPATCHER_IMPL_T_H

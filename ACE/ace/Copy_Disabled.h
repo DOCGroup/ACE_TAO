@@ -42,7 +42,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * {
  * // code here
  * };
- *
  */
 class ACE_Export ACE_Copy_Disabled
 {

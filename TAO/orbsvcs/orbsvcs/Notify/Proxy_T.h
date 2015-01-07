@@ -4,8 +4,6 @@
  *  @file Proxy_T.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROXY_T_H
@@ -30,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief The is a base class for all proxys , templatized by the servant
  * type. All the Filter Admin and QoS Admin interface methods are
  * implemented here by delegating to the admin implementations.
- *
  */
 template <class SERVANT_TYPE>
 class TAO_Notify_Proxy_T : public SERVANT_TYPE, public virtual TAO_Notify_Proxy

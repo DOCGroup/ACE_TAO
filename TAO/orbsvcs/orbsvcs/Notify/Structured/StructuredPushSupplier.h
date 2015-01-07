@@ -3,8 +3,6 @@
  *  @file StructuredPushSupplier.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_STRUCTUREDPUSHSUPPLIER_H
@@ -28,7 +26,6 @@ class TAO_Notify_ProxyConsumer;
  * @class TAO_Notify_StructuredPushSupplier
  *
  * @brief Wrapper for the StructuredPushSupplier that connect to the EventChannel.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_StructuredPushSupplier : public TAO_Notify_Supplier
 {

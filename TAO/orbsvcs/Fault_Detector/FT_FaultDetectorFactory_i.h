@@ -74,7 +74,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  It then closes the ACE_Thread_Manager to ensure that all
  *  detector threads have departed before the factory itself is
  *  deleted.
- *
  */
 
 namespace TAO

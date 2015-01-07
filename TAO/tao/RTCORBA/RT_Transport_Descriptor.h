@@ -30,7 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * The TAO_RT_Transport_Descriptor contains Descriptor Properties.
  * It uses the "Chain of Command" pattern in the implementation of the <_is_equivalent> method.
- *
  */
 class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor
   : public TAO_Transport_Descriptor_Interface

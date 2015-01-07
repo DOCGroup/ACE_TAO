@@ -3,7 +3,6 @@
  * @file OC_Endpoint_Selector_Loader.cpp
  *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
- *
  */
 // =================================================================
 

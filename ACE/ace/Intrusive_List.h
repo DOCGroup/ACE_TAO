@@ -50,7 +50,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @todo The ACE_Message_Queue is an example of an intrusive list (or
  * queue) but it is not implemented in terms of this class.
- *
  */
 template <class T>
 class ACE_Intrusive_List

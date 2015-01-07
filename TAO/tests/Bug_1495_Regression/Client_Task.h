@@ -6,7 +6,6 @@
  *
  * Defines the Client_Task class which acts as the process colocated client
  * thread for the Bug1492_Regression test.
- *
  */
 
 

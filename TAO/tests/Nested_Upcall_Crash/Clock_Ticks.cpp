@@ -2,7 +2,6 @@
  * @file Clock_Ticks.cpp
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Clock_Ticks.h"
 

@@ -1,7 +1,6 @@
 /**
  * @file Install.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
  */
 
 #ifndef EVENT_INSTALL_H

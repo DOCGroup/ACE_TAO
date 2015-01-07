@@ -3,8 +3,6 @@
  *  @file AdminProperties.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ADMINPROPERTIES_H
@@ -35,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_AdminProperties
  *
  * @brief The AdminProperties per EventChannel.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_AdminProperties
   : public TAO_Notify_PropertySeq

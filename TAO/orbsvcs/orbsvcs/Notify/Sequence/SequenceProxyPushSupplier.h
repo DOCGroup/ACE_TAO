@@ -3,8 +3,6 @@
  *  @file SequenceProxyPushSupplier.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SEQUENCEPROXYPUSHSUPPLIER_H
@@ -38,8 +36,6 @@ TAO_Notify_ProxySupplier_T<POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>
  * @class TAO_Notify_SequenceProxyPushSupplier
  *
  * @brief Implements the CosNotifyChannelAdmin::SequenceProxyPushSupplier methods.
- *
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_SequenceProxyPushSupplier
   : public virtual TAO_Notify_ProxySupplier_T <POA_CosNotifyChannelAdmin::SequenceProxyPushSupplier>

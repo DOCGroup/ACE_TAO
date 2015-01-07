@@ -19,7 +19,6 @@
  * @class RTServer_Setup
  *
  * @brief Simplify the initialization of performance tests.
- *
  */
 class TAO_RTEC_Perf_Export RTServer_Setup : public RTClient_Setup
 {

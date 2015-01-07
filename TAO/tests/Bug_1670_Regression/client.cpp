@@ -2,7 +2,6 @@
  * @file client.cpp
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "TestC.h"
 

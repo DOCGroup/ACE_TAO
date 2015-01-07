@@ -34,8 +34,6 @@ namespace FtRtecEventChannelAdmin {
  * @class TAO_FTEC_SupplierAdmin
  *
  * @brief Implement the RtecEventChannelAdmin::SupplierAdmin interface.
- *
- *
  */
 class TAO_FTEC_SupplierAdmin
   : public TAO_EC_SupplierAdmin

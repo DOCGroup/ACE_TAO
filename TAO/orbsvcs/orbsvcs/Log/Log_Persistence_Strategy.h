@@ -39,7 +39,6 @@ namespace CORBA
  * @class TAO_Log_Persistence_Strategy
  *
  * @brief Base Strategy for Log / Log Record Storage
- *
  */
 class TAO_Log_Serv_Export TAO_Log_Persistence_Strategy
   : public ACE_Service_Object

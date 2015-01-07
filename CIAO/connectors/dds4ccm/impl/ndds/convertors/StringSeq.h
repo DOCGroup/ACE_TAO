@@ -1,7 +1,6 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  * @author Johnny Willemsen (jwillemsen@remedy.nl)
- *
  */
 
 #ifndef DDS4CCM_STRINGSEQ_T_H_

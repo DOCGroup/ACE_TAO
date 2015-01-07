@@ -7,8 +7,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *
  * This is a test class for the Cos Event Service.
- *
- *
  */
 //=============================================================================
 

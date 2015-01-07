@@ -5,7 +5,6 @@
  *  @file    FlowSpec_Entry.h
  *
  *  @author  Nagarajan Surendran <naga@cs.wustl.edu>
- *
  */
 // ============================================================================
 

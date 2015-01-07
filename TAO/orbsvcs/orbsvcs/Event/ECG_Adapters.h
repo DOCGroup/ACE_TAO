@@ -9,7 +9,6 @@
  * to communicate with each other.
  * Use of these interfaces eliminates the coupling of specific
  * Receivers on specific handlers, and vice versa.
- *
  */
 #ifndef TAO_ECG_ADAPTERS_H
 #define TAO_ECG_ADAPTERS_H

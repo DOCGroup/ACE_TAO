@@ -2,7 +2,6 @@
  * @file Async_Table_Adapter.cpp
  *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
- *
  */
 
 #include "tao/IORTable/Async_Table_Adapter.h"

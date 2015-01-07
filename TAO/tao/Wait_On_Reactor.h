@@ -25,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Wait_On_Reactor
  *
  * Wait on the Reactor. Happens in a single threaded client environment.
- *
  */
 class TAO_Wait_On_Reactor : public TAO_Wait_Strategy
 {

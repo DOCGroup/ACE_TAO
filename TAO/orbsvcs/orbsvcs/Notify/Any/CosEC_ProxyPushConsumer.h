@@ -3,8 +3,6 @@
  *  @file CosEC_ProxyPushConsumer.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_COSEC_PROXYPUSHCONSUMER_H
@@ -33,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_CosEC_ProxyPushConsumer
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_CosEC_ProxyPushConsumer
   : public virtual TAO_Notify_ProxyConsumer_T <POA_CosEventChannelAdmin::ProxyPushConsumer>

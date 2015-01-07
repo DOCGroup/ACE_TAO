@@ -154,7 +154,6 @@ typedef struct t_bind  ACE_TBIND;
  * @namespace ACE_OS
  *
  * @brief This class is a wrapper for the XTI/TLI operations
- *
  */
 namespace ACE_OS
 {

@@ -3,8 +3,6 @@
  *  @file Event_Manager.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_EVENT_MANAGER_H
@@ -51,7 +49,6 @@ namespace CORBA
  * @class TAO_Notify_Event_Manager
  *
  * @brief A class that manages the Consumer and Supplier maps.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Event_Manager : public TAO_Notify_Refcountable
 {

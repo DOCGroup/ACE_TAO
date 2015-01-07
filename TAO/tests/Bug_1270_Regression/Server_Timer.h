@@ -2,7 +2,6 @@
  * @file Server_Timer.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 
 #ifndef Server_Timer__h_

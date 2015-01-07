@@ -37,7 +37,6 @@ namespace TAO
  * @class TAO_Value_Var_T
  *
  * @brief Parametrized implementation of _var class for valuetypes.
- *
  */
 template <typename T>
 class TAO_Value_Var_T : private TAO_Base_var
@@ -88,7 +87,6 @@ private:
  * @class TAO_Value_Var_T
  *
  * @brief Parametrized implementation of _out class for valuetypes.
- *
  */
 template <typename T>
 class TAO_Value_Out_T

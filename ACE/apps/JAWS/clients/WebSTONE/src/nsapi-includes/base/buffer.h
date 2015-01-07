@@ -30,7 +30,6 @@
  * may not be accurate in a threaded environment.
  *
  * Rob McCool
- *
  */
 
 

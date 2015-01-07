@@ -3,8 +3,6 @@
  *  @file Factories_Define.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_FACTORIES_DEFINE_H

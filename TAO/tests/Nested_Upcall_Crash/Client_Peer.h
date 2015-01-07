@@ -2,7 +2,6 @@
  * @file Client_Peer.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef Client_Peer__h_
 #define Client_Peer__h_

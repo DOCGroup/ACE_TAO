@@ -32,7 +32,6 @@ typedef Job_i** JOB_LIST;
  * @class Builder
  *
  * @brief A service object that creates Tasks, Jobs, POAs.
- *
  */
 class activity_Export Builder : public ACE_Service_Object
 {

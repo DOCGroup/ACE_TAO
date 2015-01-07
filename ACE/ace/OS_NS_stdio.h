@@ -47,7 +47,6 @@
  * as macros on some platforms. This way macro definitions will
  * be usable later as there is no way to save the macro definition
  * using the pre-processor.
- *
  */
 inline void ace_clearerr_helper (FILE *stream)
 {

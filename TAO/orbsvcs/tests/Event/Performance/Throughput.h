@@ -21,7 +21,6 @@
  * @class EC_Throughput
  *
  * @brief Test the EC throughput
- *
  */
 class EC_Throughput : public EC_Driver
 {

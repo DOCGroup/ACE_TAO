@@ -3,8 +3,6 @@
  *  @file Name.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_NAME_H
@@ -21,7 +19,6 @@
  * @class TAO_Notify_Tests_Name
  *
  * @brief Define the names for command objects and other common strings.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Name
 {

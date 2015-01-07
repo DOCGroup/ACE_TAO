@@ -25,7 +25,6 @@ class TAO_Notify_Tests_Periodic_Consumer;
  * @class TAO_Notify_Tests_Periodic_Consumer_Command
  *
  * @brief Options for Periodic Consumers.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Consumer_Command : public TAO_Notify_Tests_Command
 {

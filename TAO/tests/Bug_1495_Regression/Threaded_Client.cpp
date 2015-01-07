@@ -12,7 +12,6 @@
  *
  * The test passes if the thread id of the thread that services the get_thread_id
  * request is the same as the thread that makes the request.
- *
  */
 
 #include "Server_Task.h"

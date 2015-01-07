@@ -3,8 +3,6 @@
  *  @file Relay_Consumer.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_RELAY_CONSUMER_H
@@ -23,7 +21,6 @@
  * @class TAO_Notify_Tests_Relay_Consumer
  *
  * @brief Relay events to a destination consumer.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Relay_Consumer : public TAO_Notify_Tests_Direct_Consumer
 {

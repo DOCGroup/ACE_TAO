@@ -3,8 +3,6 @@
  *  @file SequencePushConsumer.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SEQUENCEPUSHCONSUMER_H

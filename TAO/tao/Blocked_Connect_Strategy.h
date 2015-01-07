@@ -25,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Concrete implementation of a connect strategy that blocks
  *  during connects
- *
  */
 class TAO_Export TAO_Blocked_Connect_Strategy : public TAO_Connect_Strategy
 {

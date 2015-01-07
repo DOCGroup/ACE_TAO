@@ -23,7 +23,6 @@
  * @class UDP_i:
  *
  * @brief UDP Object Implementation
- *
  */
 class UDP_i: public POA_UDP
 {

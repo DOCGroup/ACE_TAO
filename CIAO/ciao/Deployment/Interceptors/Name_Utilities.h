@@ -3,7 +3,6 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * 
  * A set of utility methods to manages references.
- *
  */
 
 #ifndef NAME_UTILITIES_H

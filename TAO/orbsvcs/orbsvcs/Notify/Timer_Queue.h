@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Timer_Queue
  *
  * @brief ACE_Timer_Queue based timer.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Timer_Queue : public TAO_Notify_Timer
 {

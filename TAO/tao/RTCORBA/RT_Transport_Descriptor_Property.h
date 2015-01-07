@@ -27,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_RT_Transport_Descriptor_Property
  *
  * @brief Base RT Transport Descriptor Property that can be <insert> ed into the TAO_RT_Transport_Descriptor class.
- *
  */
 class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Property
 {
@@ -62,7 +61,6 @@ private:
  * Holds info necessary to identify private connections and
  * store/look them up in the Transport Cache.  (For description
  * of private connections see RTCORBA::PrivateTransportPolicy.)
- *
  */
 class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Private_Connection_Property
   : public TAO_RT_Transport_Descriptor_Property
@@ -100,7 +98,6 @@ private:
  * @brief Descriptor Property for Banded Connections.
  *
  * This property holds the Band information necessary to identify a banded connection.
- *
  */
 class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Banded_Connection_Property
   : public TAO_RT_Transport_Descriptor_Property

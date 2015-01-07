@@ -9,8 +9,6 @@
  *   Allows applications to test that invariants are always
  *   satisfied.  Can test mutexes and readers/writer locks.  Does
  *   not test recursive acquisition.
- *
- *
  */
 //=============================================================================
 

@@ -43,7 +43,6 @@ class TAO_Thread_Pool_Manager;
  * @class TAO_Named_RT_Mutex_Manager
  *
  * @brief Manages the names of named and unnamed RT Mutexes
- *
  */
 class TAO_RTCORBA_Export TAO_Named_RT_Mutex_Manager
 {

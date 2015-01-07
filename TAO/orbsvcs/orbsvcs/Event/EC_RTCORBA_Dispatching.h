@@ -30,7 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_EC_RTCORBA_Dispatching
  *
  * @brief RTCORBA-based dispatching strategy
- *
  */
 class TAO_RTCORBAEvent_Export TAO_EC_RTCORBA_Dispatching : public TAO_EC_Dispatching
 {

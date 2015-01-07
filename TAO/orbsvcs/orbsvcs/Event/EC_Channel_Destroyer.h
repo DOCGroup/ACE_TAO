@@ -33,7 +33,6 @@ struct TAO_RTEvent_Serv_Export TAO_EC_Channel_Destroyer_Functor
  * @class TAO_EC_Channel_Destroyer
  *
  * @brief Helper class to destroy event channel.
- *
  */
 typedef ACE_Utils::Auto_Functor<
             TAO_EC_Event_Channel_Base,

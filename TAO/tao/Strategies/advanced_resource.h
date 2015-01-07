@@ -31,7 +31,6 @@ public:
  * factory can return resource instances which are, e.g., global,
  * stored in thread-specific storage, stored in shared memory,
  * etc.
- *
  */
 class TAO_Strategies_Export TAO_Advanced_Resource_Factory :
   public TAO_Default_Resource_Factory

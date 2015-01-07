@@ -10,7 +10,6 @@ namespace Bug_3647_Regression
  * @class Middle
  *
  * Implement the Bug_3647_Regression::Middle interface
- *
  */
 class Middle_Impl : public POA_Bug_3647_Regression::Middle
 {

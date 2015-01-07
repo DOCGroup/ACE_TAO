@@ -5,8 +5,6 @@
  *  @file    supplier.h
  *
  *  This class implements  driver for the Publish/Subscribe example
- *
- *
  */
 //=============================================================================
 

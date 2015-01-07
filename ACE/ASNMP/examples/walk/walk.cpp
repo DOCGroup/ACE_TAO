@@ -6,7 +6,6 @@
  *  Sample application demonstrating synchronous Snmp::get, get_next API
  *  to access an SNMP Version 1 agent.
  *
- *
  */
 //=============================================================================
 

@@ -9,7 +9,6 @@
  * @author Don Hinton <dhinton@ieee.org>
  *
  * http://doc.ece.uci.edu/~coryan/EC/index.html
- *
  */
 #ifndef TAO_ECG_MCAST_EH_H
 #define TAO_ECG_MCAST_EH_H

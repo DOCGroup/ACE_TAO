@@ -3,8 +3,6 @@
  *  @file Command_Factory_T.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_COMMAND_FACTORY_T_H
@@ -26,7 +24,6 @@ class TAO_Notify_Tests_Command;
  * @class TAO_Command_Factory_T
  *
  * @brief Template class to create COMMAND specific factories.
- *
  */
 #ifdef HPUX_11
    // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h

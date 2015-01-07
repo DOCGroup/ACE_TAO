@@ -4,7 +4,6 @@
  * @file Echo.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "TestS.h"
 

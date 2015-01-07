@@ -3,7 +3,6 @@
  *  @file  DSRT_Sched_Queue_T.h
  *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
- *
  */
 
 #ifndef DSRT_SCHED_QUEUE_T_H

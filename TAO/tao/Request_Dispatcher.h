@@ -41,7 +41,6 @@ namespace CORBA
  * @class TAO_Request_Dispatcher
  *
  * @brief A class that strategizes the request dispatching procedure.
- *
  */
 class TAO_Export TAO_Request_Dispatcher
 {

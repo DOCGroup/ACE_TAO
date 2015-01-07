@@ -34,7 +34,6 @@
  * @brief A Reactor implementation that uses the FOX toolkit (www.fox-toolkit.org)
  * for event demultiplexing.  This will let us integrate the FOX
  * toolkit with ACE and/or TAO.
- *
  */
 class ACE_FoxReactor_Export ACE_FoxReactor : public FXObject, public ACE_Select_Reactor
 {

@@ -49,7 +49,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * TypeCode, Object, AbstractBase, NamedValue, NVList,
  * Principal, Request, Context, ORB, LocalObject,
  * and Environment.
- *
  */
 template <typename T>
 class TAO_Pseudo_Var_T : private TAO_Base_var
@@ -98,7 +97,6 @@ private:
  * TypeCode, Object, AbstractBase, NamedValue, NVList,
  * Principal, Request, Context, ORB, LocalObject,
  * and Environment.
- *
  */
 template <typename T>
 class TAO_Pseudo_Out_T

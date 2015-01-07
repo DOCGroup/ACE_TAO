@@ -12,7 +12,6 @@
  * empty."
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 
 #include "test_config.h"

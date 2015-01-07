@@ -2,7 +2,6 @@
  * @file Echo_Caller.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef Echo_Caller__h_
 #define Echo_Caller__h_

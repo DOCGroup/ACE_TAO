@@ -80,7 +80,6 @@ protected:
  *
  * @brief This class defines the abstract interface for an I/O handler class in
  * the context of Web-likes servers
- *
  */
 class JAWS_IO_Handler
 {
@@ -131,7 +130,6 @@ public:
  * @class JAWS_Synch_IO
  *
  * @brief This class defines the interface for a Synchronous I/O class.
- *
  */
 class JAWS_Synch_IO : public JAWS_IO
 {
@@ -176,7 +174,6 @@ protected:
  * @class JAWS_Asynch_IO
  *
  * @brief This class defines the interface for a Asynchronous I/O class.
- *
  */
 class JAWS_Asynch_IO : public JAWS_IO, public ACE_Handler
 {

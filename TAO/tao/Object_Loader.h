@@ -43,7 +43,6 @@ namespace CORBA
  * an object reference (CORBA::Object_ptr).  This class is used to
  * dynamically load such components, and encapsulate the creation of
  * the object reference.
- *
  */
 class TAO_Export TAO_Object_Loader : public ACE_Service_Object
 {

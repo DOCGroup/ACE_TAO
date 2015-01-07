@@ -9,7 +9,6 @@
  *  statistics about the test.
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
- *
  */
 // =========================================================================
 

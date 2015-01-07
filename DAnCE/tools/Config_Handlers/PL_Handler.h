@@ -3,7 +3,6 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
  * Handles PlanLocality elements
- *
  */
 
 #ifndef CIAO_CONFIG_HANDLERS_PL_HANDLER_

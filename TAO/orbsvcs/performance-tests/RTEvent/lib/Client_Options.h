@@ -2,7 +2,6 @@
  * @file Client_Options.h
  *
  * @author Carlos O'Ryan <coryan@uci.edu>
- *
  */
 
 #ifndef TAO_RTEC_PERF_CLIENT_OPTIONS_H

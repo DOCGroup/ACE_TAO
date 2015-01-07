@@ -4,7 +4,6 @@
  *  @file   EC_TPC_Dispatching.h
  *
  *  @author Chris Cleeland <cleeland at ociweb.com>
- *
  */
 
 #ifndef TAO_EC_TPC_DISPATCHING_H

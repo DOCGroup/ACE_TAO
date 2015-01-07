@@ -8,8 +8,6 @@
  * other members of the DOC group. More details can be found in:
  *
  * http://doc.ece.uci.edu/~coryan/EC/index.html
- *
- *
  */
 
 #ifndef TAO_EC_GATEWAY_SCHED_H

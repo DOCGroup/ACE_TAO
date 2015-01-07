@@ -38,7 +38,6 @@ class TAO_Codeset_Manager;
  * The base also provides a default implementation which
  * instantiates nothing. This default impl is replaced by the actual
  * implementation if libTAO_Codeset is loaded.
- *
  */
 
 class TAO_Export TAO_Codeset_Manager_Factory_Base : public ACE_Service_Object

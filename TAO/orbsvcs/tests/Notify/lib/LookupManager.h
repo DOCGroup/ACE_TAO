@@ -3,8 +3,6 @@
  *  @file LookupManager.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_LOOKUPMANAGER_H
@@ -33,7 +31,6 @@ class TAO_Notify_Tests_Priority_Mapping;
  * @class TAO_Notify_Tests_LookupManager
  *
  * @brief Utility to register and resolve object references.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_LookupManager
 {

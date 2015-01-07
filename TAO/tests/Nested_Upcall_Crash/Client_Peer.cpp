@@ -2,7 +2,6 @@
  * @file Client_Peer.cpp
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Client_Peer.h"
 #include "Clock_Ticks.h"

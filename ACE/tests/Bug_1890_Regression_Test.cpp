@@ -61,7 +61,6 @@ private:
  * writes data through all of its handlers.  On iteration @c initial_iteration
  * it triggers bug 1890 by removing all the handlers from the reactor, and
  * then re-adding one handler.
- *
  */
 class Timer : public ACE_Event_Handler
 {

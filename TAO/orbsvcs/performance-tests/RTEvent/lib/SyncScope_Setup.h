@@ -18,7 +18,6 @@
  * @class SyncScope_Setup
  *
  * @brief Simplify the initialization of performance tests.
- *
  */
 class TAO_RTEC_Perf_Export SyncScope_Setup
 {

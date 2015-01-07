@@ -33,7 +33,6 @@ typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq
  * @class TAO_Notify_Method_Request_Updates
  *
  * @brief Command Object to send updates to proxys.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates
   : public TAO_Notify_Method_Request_Updates_Base
@@ -62,7 +61,6 @@ typedef TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq&
  * @class TAO_Notify_Method_Request_Updates_No_Copy
  *
  * @brief Command Object to send updates to proxys.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates_No_Copy
   : public TAO_Notify_Method_Request_Updates_No_Copy_Base

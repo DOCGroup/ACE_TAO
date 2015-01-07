@@ -8,7 +8,6 @@
  *
  * A new implementation of the COS Typed Event Channel, based on
  * the untyped version by Carlos O'Ryan (coryan@cs.wustl.edu)
- *
  */
 //=============================================================================
 

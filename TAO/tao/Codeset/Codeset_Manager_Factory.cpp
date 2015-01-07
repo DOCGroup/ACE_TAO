@@ -5,7 +5,6 @@
  * @file Codeset_Manager_Factory.cpp
  *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
- *
  */
 // =================================================================
 

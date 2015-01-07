@@ -4,7 +4,6 @@
  * @file ORB_Task.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "tao/ORB.h"
 #include "ace/Task.h"

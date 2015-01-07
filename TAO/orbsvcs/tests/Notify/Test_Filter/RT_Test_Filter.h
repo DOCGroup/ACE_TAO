@@ -3,8 +3,6 @@
  *  @file RT_Test_Filter.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_RT_Test_FILTER_H
@@ -28,7 +26,6 @@
  * @class TAO_RT_Test_Filter
  *
  * @brief Implementation of CosNotifyFilter::Filter servant.
- *
  */
 class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_Filter
   : public POA_CosNotifyFilter::Filter

@@ -1,6 +1,5 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
- *
  */
 
 #ifndef TOPICBUILTINTOPICDATA_H_

@@ -35,7 +35,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Time_Policy_Strategy
  *
  * @brief Abstract base class for time policy strategy services.
- *
  */
 class TAO_Export TAO_Time_Policy_Strategy
   : public ACE_Service_Object

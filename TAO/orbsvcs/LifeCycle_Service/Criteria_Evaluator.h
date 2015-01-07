@@ -20,7 +20,6 @@
 
 /**
  * @class Criteria_Evaluator//
- *
  */
 class Criteria_Evaluator// : public LifeCycleService::Criteria_Evaluator
 {

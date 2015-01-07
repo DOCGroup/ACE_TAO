@@ -3,8 +3,6 @@
  *  @file StructuredEvent.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 #ifndef TAO_Notify_STRUCTUREDEVENT_H
 #define TAO_Notify_STRUCTUREDEVENT_H
@@ -28,7 +26,6 @@ class TAO_Notify_StructuredEvent;
  * @class TAO_Notify_StructuredEvent_No_Copy
  *
  * @brief StructuredEvent implementation.
- *
  */
 
 class TAO_Notify_Serv_Export TAO_Notify_StructuredEvent_No_Copy : public TAO_Notify_Event
@@ -87,7 +84,6 @@ protected:
  * @class TAO_Notify_StructuredEvent
  *
  * @brief StructuredEvent implementation.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_StructuredEvent : public TAO_Notify_StructuredEvent_No_Copy
 {

@@ -53,7 +53,6 @@ private:
  *
  * @brief Implement the dispatching queues for FIFO and Priority
  * dispatching.
- *
  */
 class Dispatcher_Task : public ACE_Task<ACE_SYNCH>
 {

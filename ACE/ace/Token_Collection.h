@@ -54,7 +54,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @bug Although ACE_Token_Collection inherits from ACE_Token_Proxy, it
  * can not be including in a collection.  This is because <clone>
  * returns zero for now.
- *
  */
 class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
 {

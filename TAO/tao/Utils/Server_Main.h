@@ -41,7 +41,6 @@
  *      parse_args, self_register, self_unregister return 0 if ok, nonzero for error.
  *      idle returns 0 to continue execution; nonzero to exit -- returning "result" from the process
  *      identity provides a string to identify this servant in log messages.
- *
  */
 //=============================================================================
 

@@ -4,8 +4,6 @@
  *  @file    notifier.h
  *
  *  This class implements notifier  driver for the Publish/Subscribe example
- *
- *
  */
 //=============================================================================
 

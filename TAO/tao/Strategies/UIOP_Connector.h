@@ -42,7 +42,6 @@ class TAO_Endpoint;
  * @class TAO_UIOP_Connector
  *
  * @brief UIOP-specific Connector bridge for pluggable protocols.
- *
  */
 class TAO_Strategies_Export TAO_UIOP_Connector : public TAO_Connector
 {

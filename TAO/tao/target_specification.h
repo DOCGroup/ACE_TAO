@@ -50,7 +50,6 @@ namespace TAO
  * @class TAO_Target_Specification
  *
  * @brief A class to encapsulate all the ways of specifying targets.
- *
  */
 class TAO_Export TAO_Target_Specification
 {

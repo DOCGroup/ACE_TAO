@@ -2,7 +2,6 @@
  * @file Server_Task.h
  *
  * @author Balachandran Natarajan <bala@isis-server.isis.vanderbilt.edu>
- *
  */
 #ifndef BUG_1020_SERVER_TASK_H
 #define BUG_1020_SERVER_TASK_H

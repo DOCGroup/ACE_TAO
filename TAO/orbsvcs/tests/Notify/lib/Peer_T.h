@@ -20,7 +20,6 @@
  * @class TAO_Notify_Tests_Peer_T
  *
  * @brief Base implementation for all Supplier and Consumer Classes.
- *
  */
 template <class Peer_Traits>
 class TAO_Notify_Tests_Peer_T : public TAO_Notify_Tests_Peer, public Peer_Traits::SKELETON

@@ -4,7 +4,6 @@
  * @file Echo_Callback.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "TestS.h"
 

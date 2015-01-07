@@ -8,8 +8,6 @@
  *
  * This has the implementation of the
  * CosEventChannelAdmin::SupplierAdmin interface.
- *
- *
  */
 //=============================================================================
 

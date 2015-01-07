@@ -151,7 +151,6 @@ public:
  *
  * @brief This class is used to create new HTTP handlers that will use
  * Synch IO
- *
  */
 class Synch_HTTP_Handler_Factory : public HTTP_Handler_Factory
 {
@@ -175,7 +174,6 @@ public:
  *
  * @brief This class is used to create new HTTP handlers that will use
  * Synch IO without caching
- *
  */
 class No_Cache_Synch_HTTP_Handler_Factory : public HTTP_Handler_Factory
 {
@@ -200,7 +198,6 @@ public:
  *
  * @brief This class is used to create new HTTP handlers that will use
  * Asynchronous IO.  This only works on Win32.
- *
  */
 class Asynch_HTTP_Handler_Factory : public HTTP_Handler_Factory, public ACE_Service_Handler
 {

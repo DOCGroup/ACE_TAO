@@ -21,7 +21,6 @@
  * @class EC_BCast
  *
  * @brief Test the EC bcast
- *
  */
 class EC_BCast : public EC_Driver
 {

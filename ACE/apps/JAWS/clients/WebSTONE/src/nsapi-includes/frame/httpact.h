@@ -92,7 +92,6 @@ char *servact_translate_uri(char *uri, Session *sn);
 /*
  * Resolves the given hostname, first trying to find a resolver
  * function from obj.conf, and if that fails, just calls gethostbyname().
- *
  */
 struct hostent *servact_gethostbyname(char *host, Session *sn, Request *rq);
 
@@ -108,7 +107,6 @@ struct hostent *servact_gethostbyname(char *host, Session *sn, Request *rq);
  *
  * Returns -1 (REQ_ABORT) on failure to connect.  The caller should not
  * attempt to use the native connect.
- *
  */
 int servact_connect(char *host, int port, Session *sn, Request *rq);
 

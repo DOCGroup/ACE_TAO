@@ -11,8 +11,6 @@
  *  consumer suppliers, as well as being active objects.  This is
  *  accomplished with adapters to prevent the use of multiple
  *  inheritance (which is this root of all evil.)
- *
- *
  */
 //=============================================================================
 

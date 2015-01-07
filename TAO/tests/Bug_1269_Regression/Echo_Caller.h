@@ -4,7 +4,6 @@
  * @file Echo_Caller.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "TestS.h"
 

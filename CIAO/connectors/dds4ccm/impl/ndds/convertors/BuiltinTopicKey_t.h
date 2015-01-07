@@ -1,6 +1,5 @@
                                       /**
  * @author Marcel Smit <msmit@dre.vanderbilt.edu>
- *
  */
 
 #ifndef BUILTINTOPICKEY_T_H_

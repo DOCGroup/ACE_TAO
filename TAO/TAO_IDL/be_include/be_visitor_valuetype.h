@@ -5,8 +5,6 @@
  *  @file    be_visitor_valuetype.h
  *
  *  Concrete visitor for the Valuetype class
- *
- *
  */
 //=============================================================================
 

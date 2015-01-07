@@ -3,8 +3,6 @@
  *  @file SequenceProxyPushConsumer.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SEQUENCEPROXYPUSHCONSUMER_H
@@ -33,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_SequenceProxyPushConsumer
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_SequenceProxyPushConsumer
   : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::SequenceProxyPushConsumer>

@@ -21,7 +21,6 @@
  * @class Base_Time
  *
  * @brief maintains readings recorded by tasks.
- *
  */
 class Kokyu_DSRT_Schedulers_Export Base_Time
 {
@@ -36,7 +35,6 @@ typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
  * @class Task_Stats
  *
  * @brief maintains readings recorded by tasks.
- *
  */
 class Kokyu_DSRT_Schedulers_Export Task_Stats
 {

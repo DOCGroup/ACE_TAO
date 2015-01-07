@@ -28,7 +28,6 @@ class TAO_Transport;
  * @class TAO_GIOP_Message_Generator_Parser_12
  *
  * @brief Implementation for GIOP v1.2
- *
  */
 
 class TAO_GIOP_Message_Generator_Parser_12 :

@@ -52,7 +52,6 @@ class TAO_EC_Reactive_SupplierControl;
  * like it may be a good idea to change some naming and templatize...
  * @todo The same templates should be used for the Notification and
  * COS Event services.
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_SupplierControl_Adapter : public ACE_Event_Handler
 {

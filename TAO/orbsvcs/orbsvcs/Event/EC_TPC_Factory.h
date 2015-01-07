@@ -1,7 +1,6 @@
 // -*- C++ -*-
 /**
  *  @file   EC_TPC_Factory.h
- *
  */
 
 #ifndef TAO_EC_TPC_FACTORY_H

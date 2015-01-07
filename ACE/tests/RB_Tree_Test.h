@@ -20,7 +20,6 @@
  *
  * @brief Implements a templatized test class for the RB_Tree ADT and its
  * iterators.
- *
  */
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Test

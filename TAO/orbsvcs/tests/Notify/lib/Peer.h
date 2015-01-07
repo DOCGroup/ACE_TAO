@@ -3,8 +3,6 @@
  *  @file Peer.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_PEER_H
@@ -26,7 +24,6 @@
  * @class TAO_Notify_Tests_Peer
  *
  * @brief
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Peer
 {

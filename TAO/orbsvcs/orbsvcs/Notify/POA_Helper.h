@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_POA_Helper
  *
  * @brief POA Abstraction.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_POA_Helper : private ACE_Copy_Disabled
 {

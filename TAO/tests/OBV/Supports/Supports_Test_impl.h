@@ -6,8 +6,6 @@
 
 /**
  * \class node_impl
- *
- *
  */
 class node_impl :
   public virtual OBV_Supports_Test::Node,

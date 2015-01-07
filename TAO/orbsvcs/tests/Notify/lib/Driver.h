@@ -3,8 +3,6 @@
  *  @file Driver.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_DRIVER_H
@@ -31,7 +29,6 @@ class TAO_Notify_Tests_Activation_Manager;
  * @class TAO_Notify_Tests_Worker
  *
  * @brief A Task to execute commands asynchronously.
- *
  */
 class TAO_Notify_Tests_Worker : public ACE_Task_Base
 {
@@ -86,7 +83,6 @@ private:
  * @class TAO_Notify_Tests_Driver
  *
  * @brief A default Application Starter.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Driver : public TAO_Notify_Tests_Driver_Base
 {

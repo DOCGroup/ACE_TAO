@@ -3,7 +3,6 @@
  *  @file   Kokyu_defs.h
  *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
- *
  */
 
 #ifndef KOKYU_DEFS_H

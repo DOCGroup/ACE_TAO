@@ -3,8 +3,6 @@
  *  @file Consumer.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_NOTIFY_CONSUMER_H
@@ -37,7 +35,6 @@ class TAO_Notify_Method_Request_Event;
  * @class TAO_Notify_Consumer
  *
  * @brief Astract Base class for wrapping consumer objects that connect to the EventChannel
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Consumer
   : public TAO_Notify_Peer

@@ -7,7 +7,6 @@
  * in:
  *
  *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3715
- *
  */
 
 #include "test_config.h"

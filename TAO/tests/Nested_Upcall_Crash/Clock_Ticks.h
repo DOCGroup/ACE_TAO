@@ -4,7 +4,6 @@
  * @file Clock_Ticks.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 
 namespace Clock_Ticks

@@ -27,7 +27,6 @@ class RTCORBA_Setup;
  *
  * @brief Implement a helper method to initialize and instance of
  * TAO's Real-time Event Service
- *
  */
 class TAO_RTEC_Perf_Export RTEC_Initializer
 {

@@ -3,8 +3,6 @@
  *  @file RT_Test_FilterFactory.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_RT_Test_FILTERFACTORY_H
@@ -29,7 +27,6 @@
  * @class TAO_Notify_Tests_RT_Test_FilterFactory
  *
  * @brief
- *
  */
 class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_FilterFactory
   : public virtual POA_CosNotifyFilter::FilterFactory

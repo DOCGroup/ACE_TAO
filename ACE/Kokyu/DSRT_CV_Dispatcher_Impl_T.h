@@ -3,7 +3,6 @@
  *  @file  DSRT_CV_Dispatcher_Impl_T.h
  *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
- *
  */
 
 #ifndef DSRT_CV_DISPATCHER_IMPL_T_H

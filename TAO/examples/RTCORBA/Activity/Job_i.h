@@ -20,7 +20,6 @@
  * @class Job_i
  *
  * @brief Implements a Job that performs some cpu bound work.
- *
  */
 class activity_Export Job_i : public POA_Job
 {

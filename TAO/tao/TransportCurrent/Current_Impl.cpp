@@ -4,7 +4,6 @@
  * @file Current_Impl.cpp
  *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
- *
  */
 
 #include "tao/Transport.h"

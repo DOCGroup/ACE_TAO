@@ -3,8 +3,6 @@
  *  @file ORB_Objects.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ORB_OBJECTS_H
@@ -20,7 +18,6 @@
  * @class TAO_Notify_ORB_Objects
  *
  * @brief Handy Objects that we keep asking the ORB for.
- *
  */
 class TAO_Notify_ORB_Objects
 {

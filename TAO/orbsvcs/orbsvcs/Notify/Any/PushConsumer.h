@@ -3,8 +3,6 @@
  *  @file PushConsumer.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PUSHCONSUMER_H
@@ -26,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_PushConsumer
  *
  * @brief Wrapper for the PushConsumer that connect to the EventChannel.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_PushConsumer : public TAO_Notify_Consumer
 {

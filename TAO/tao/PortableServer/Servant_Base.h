@@ -54,7 +54,6 @@ class TAO_Operation_Table;
  * servant instance to one. The default assignment
  * implementation merely returns *this and does not affect the
  * reference count.
- *
  */
 class TAO_PortableServer_Export TAO_ServantBase
   : public virtual TAO_Abstract_ServantBase

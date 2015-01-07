@@ -3,8 +3,6 @@
  *  @file Default_Factory.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_DEFAULT_FACTORY_H
@@ -25,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Default_Factory
  *
  * @brief Default_Factory interface for creating Notify Objects.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Default_Factory : public TAO_Notify_Factory
 {

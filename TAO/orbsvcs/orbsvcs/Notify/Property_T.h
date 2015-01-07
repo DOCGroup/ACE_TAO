@@ -29,7 +29,6 @@ class TAO_Notify_PropertySeq;
  * @class TAO_Notify_PropertyBase_T
  *
  * @brief
- *
  */
 template <class TYPE>
 class TAO_Notify_PropertyBase_T
@@ -88,7 +87,6 @@ protected:
  * @class TAO_Notify_Property_T
  *
  * @brief
- *
  */
 template <class TYPE>
 class TAO_Notify_Property_T : public TAO_Notify_PropertyBase_T<TYPE>
@@ -114,7 +112,6 @@ public:
  * @class TAO_Notify_StructProperty_T
  *
  * @brief
- *
  */
 template <class TYPE>
 class TAO_Notify_StructProperty_T

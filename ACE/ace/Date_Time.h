@@ -5,7 +5,6 @@
  *  @file    Date_Time.h
  *
  *  @author Tim Harrison (harrison@cs.wustl.edu) (and he's darn proud of this ;-))
- *
  */
 //==========================================================================
 

@@ -40,7 +40,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class provides base functionality for configuration objects
  * that are persisted in files.  It takes an ACE_Configuration
  * object that it populates with the data read.
- *
  */
 class ACE_Export ACE_Config_ImpExp_Base
 {
@@ -87,7 +86,6 @@ private:
  * @todo
  *  - Add dynamic buffer when importing.  currently it will not allow
  *    importing of values greater than a fixed amount (4096 bytes)
- *
  */
 class ACE_Export ACE_Registry_ImpExp : public ACE_Config_ImpExp_Base
 {

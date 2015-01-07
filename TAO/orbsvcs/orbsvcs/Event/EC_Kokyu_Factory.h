@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_EC_Kokyu_Factory
  *
  * @brief Extend the default factory to support scheduling
- *
  */
 class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Factory : public TAO_EC_Default_Factory
 {

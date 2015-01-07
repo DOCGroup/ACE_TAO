@@ -21,7 +21,6 @@
  * @class Consumer
  *
  * @brief Simple consumer object
- *
  */
 class Consumer : public EC_Counting_Consumer
 {

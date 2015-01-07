@@ -26,7 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Seq_Worker_T
  *
  * @brief Helper to construct a sequence of IDS in a collections.
- *
  */
 template <class TYPE>
 class TAO_Notify_Serv_Export TAO_Notify_Seq_Worker_T

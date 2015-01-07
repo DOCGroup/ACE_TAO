@@ -23,7 +23,6 @@
  * @class POA_Holder
  *
  * @brief An options holder for parameters to creating a poa.
- *
  */
 class RTSCHEDTESTLIB_Export POA_Holder
 {

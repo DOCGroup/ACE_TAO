@@ -1,7 +1,6 @@
 /**
  * @file SHS_CORBA_Transport.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
  */
 
 #ifndef SHS_CORBA_TRANSPORT_H

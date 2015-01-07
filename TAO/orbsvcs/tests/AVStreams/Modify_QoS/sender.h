@@ -49,7 +49,6 @@ SENDER_ENDPOINT_STRATEGY;
  *
  * @brief Class is responsible for streaming (and pacing) data to a
  * receiver.
- *
  */
 class Sender
 {

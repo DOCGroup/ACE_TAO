@@ -37,8 +37,6 @@ typedef ACE_Message_Queue<ACE_MT_SYNCH> Message_Queue;
  *
  * @brief This class provides all the synchrnoisers used in this
  *  test.
- *
- *
  */
 
 /// Forward declaration..

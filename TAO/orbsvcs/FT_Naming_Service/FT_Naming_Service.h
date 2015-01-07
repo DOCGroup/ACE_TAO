@@ -24,7 +24,6 @@
  *
  * @brief Defines a class that encapsulates the implementation of the
  * Fault Tolerant Naming Service.
- *
  */
 class TAO_FT_Naming_Service
 {

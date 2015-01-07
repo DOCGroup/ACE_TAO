@@ -3,8 +3,6 @@
  *  @file RT_Priority_Mapping.h
  *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_RT_PRIORITY_MAPPING_H
@@ -24,7 +22,6 @@
  * @class TAO_Notify_Tests_RT_Priority_Mapping
  *
  * @brief Delegates to a RTCORBA::PriorityMapping
- *
  */
 class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_Priority_Mapping : public TAO_Notify_Tests_Priority_Mapping
 {

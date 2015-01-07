@@ -34,7 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_HR_Time_Policy_Strategy
  *
  * @brief Time policy strategy providing Highres time.
- *
  */
 class TAO_Export TAO_HR_Time_Policy_Strategy
   : public TAO_Time_Policy_Strategy

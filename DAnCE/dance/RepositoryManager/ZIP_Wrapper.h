@@ -10,8 +10,6 @@
  *            class that allows a program to become ZIP-aware
  *
  *  @author   Stoyan Paunov, Vipul Singh
- *
- *
  */
 //=======================================================================
 

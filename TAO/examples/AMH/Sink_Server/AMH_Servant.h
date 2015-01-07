@@ -5,7 +5,6 @@
  *  @file  AMH_Servant.h
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
- *
  */
 // =========================================================================
 
