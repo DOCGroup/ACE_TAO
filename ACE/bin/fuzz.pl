@@ -259,9 +259,7 @@ sub check_for_inline_in_cpp ()
     }
 }
 
-# This test checks to make sure files have the $Id string in them.
-# Commit_check should find these when checking in files, but this can
-# be used locally or to check for files
+# This test checks to make sure we have no files with $Id string in them.
 sub check_for_id_string ()
 {
     return if is_suppressed ();
@@ -288,8 +286,8 @@ sub check_for_id_string ()
                 }
             }
             close (FILE);
-            if ($found == 0) {
-                print_error ("$file:1: No \$Id\$ string found.");
+            if ($found == 1) {
+                print_error ("$file:1: \$Id\$ string found, not used anymore.");
             }
         }
         else {
