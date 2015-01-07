@@ -1,5 +1,3 @@
-/*
- */
 
 #include "ping.h"
 #include <rpc/rpc.h>

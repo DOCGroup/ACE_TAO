@@ -129,8 +129,6 @@ private:
 
 
 //----------------------------------------------------------------------------
-/*
- */
 
 class AccessLiveListener : public LiveListener
 {

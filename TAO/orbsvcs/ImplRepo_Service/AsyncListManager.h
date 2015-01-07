@@ -80,8 +80,6 @@ class AsyncListManager
 typedef TAO_Intrusive_Ref_Count_Handle<AsyncListManager> AsyncListManager_ptr;
 
 //----------------------------------------------------------------------------
-/*
- */
 
 class ListLiveListener : public LiveListener
 {

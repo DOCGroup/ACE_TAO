@@ -39,8 +39,6 @@ DAMAGES.
 #include "test_config.h"
 
 // test the GenAddress interface
-/*
- */
 static void TestGenAddr()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress: Tests: var(expected) [actual]\n"));
