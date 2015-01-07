@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef AMI_BUFFERING_CLIENT_TASK_H
 #define AMI_BUFFERING_CLIENT_TASK_H

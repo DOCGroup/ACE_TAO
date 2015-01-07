@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Process_Factory.h"
 #include "Startup_Callback.h"
 #include "ace/Process.h"

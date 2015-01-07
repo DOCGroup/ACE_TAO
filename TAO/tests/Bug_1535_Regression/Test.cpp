@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Test.h"
 
 Hello::Hello (PortableServer::POA_ptr poa) :

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 module UnionIecs
 {
   enum E_type_num

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"

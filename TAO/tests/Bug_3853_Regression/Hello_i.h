@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef HELLO_I_H
 #define HELLO_I_H

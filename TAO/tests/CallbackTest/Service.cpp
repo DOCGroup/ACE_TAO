@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Service.h"
 
 Service::Service (CORBA::ORB_ptr orb)

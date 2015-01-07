@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Crashed_Callback.h"
 
 Crashed_Callback::Crashed_Callback (void)

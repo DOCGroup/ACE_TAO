@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Memory_Growth.h"
 #include "ace/Manual_Event.h"
 

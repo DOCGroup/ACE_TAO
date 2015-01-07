@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef ONEWAY_BUFFERING_H
 #define ONEWAY_BUFFERING_H

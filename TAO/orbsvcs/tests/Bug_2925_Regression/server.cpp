@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/GOA.h"

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "Session_Task.h"
 #include "Session.h"

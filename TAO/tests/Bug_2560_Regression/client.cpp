@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 // Include the generated names....
 #include "QuoterC.h"

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef TAO_MONITOR_IMPL_H
 #define TAO_MONITOR_IMPL_H

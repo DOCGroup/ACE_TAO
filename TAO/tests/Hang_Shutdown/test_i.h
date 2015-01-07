@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #ifndef TAO_HANG_TEST_I_H
 #define TAO_HANG_TEST_I_H
 #include /**/ "ace/pre.h"

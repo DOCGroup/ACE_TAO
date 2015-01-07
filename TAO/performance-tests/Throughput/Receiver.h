@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef THROUGHPUT_RECEIVER_H
 #define THROUGHPUT_RECEIVER_H

@@ -1,8 +1,5 @@
 #ifndef Bug_3647_Regression_Middle_Impl_h
 #define Bug_3647_Regression_Middle_Impl_h
-//
-// $Id$
-//
 
 #include "TestS.h"
 

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "simple_test_i.h"
 

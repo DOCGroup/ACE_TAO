@@ -1,8 +1,5 @@
 //
 // Server interface definition.
-//
-// $Id$
-//
 
 #include "client.idl"
 

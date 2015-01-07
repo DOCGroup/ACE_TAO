@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "ServerRequest_Interceptor2.h"
 #include "Hello.h"

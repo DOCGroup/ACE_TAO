@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 /// A module to keep the namespace clean
 module Test {

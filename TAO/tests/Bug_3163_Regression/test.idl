@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "tao/CharSeq.pidl"
 
 interface ctest {

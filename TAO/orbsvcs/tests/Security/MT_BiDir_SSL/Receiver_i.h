@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef MT_BIDIR_RECEIVER_I_H
 #define MT_BIDIR_RECEIVER_I_H

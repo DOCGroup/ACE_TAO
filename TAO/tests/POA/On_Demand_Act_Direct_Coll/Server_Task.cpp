@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Server_Task.h"
 #include "Servant_Activator.h"
 #include "ace/OS_NS_stdio.h"

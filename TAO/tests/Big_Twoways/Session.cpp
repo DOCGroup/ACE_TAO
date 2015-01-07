@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Session.h"
 #include "tao/debug.h"
 

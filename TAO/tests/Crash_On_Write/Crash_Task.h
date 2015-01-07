@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CRASH_TASK_H
 #define CRASH_TASK_H

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "Stock_i.h"
 #include "ace/OS_NS_unistd.h"

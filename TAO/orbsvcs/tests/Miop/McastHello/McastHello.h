@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef MCASTHELLO_H
 #define MCASTHELLO_H

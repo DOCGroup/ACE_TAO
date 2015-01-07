@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "GoodDay.h"
 
 GoodDay::GoodDay (CORBA::ORB_ptr orb)

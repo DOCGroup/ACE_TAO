@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 typedef sequence<octet> act;
 

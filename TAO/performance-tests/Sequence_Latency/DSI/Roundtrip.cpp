@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "TestC.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"

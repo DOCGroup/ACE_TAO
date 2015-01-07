@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef STACK_RECURSION_SERVER_TASK_H
 #define STACK_RECURSION_SERVER_TASK_H

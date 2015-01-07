@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "LatencyTest.h"
 
 LatencyTest::LatencyTest (CORBA::ORB_ptr orb)

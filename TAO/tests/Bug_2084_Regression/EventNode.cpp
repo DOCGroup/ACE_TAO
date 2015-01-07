@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "EventNode.h"
 #include "tid_to_int.h"
 #include "tao/ORB_Core.h"

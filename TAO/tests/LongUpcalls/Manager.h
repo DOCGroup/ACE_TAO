@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef LONGUPCALLS_MANAGER_H
 #define LONGUPCALLS_MANAGER_H

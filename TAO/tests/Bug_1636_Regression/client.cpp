@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "testC.h"

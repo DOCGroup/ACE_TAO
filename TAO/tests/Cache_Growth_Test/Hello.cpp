@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Hello.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport_Cache_Manager.h"

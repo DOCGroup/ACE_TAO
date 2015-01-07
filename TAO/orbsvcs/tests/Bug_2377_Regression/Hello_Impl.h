@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "HelloS.h"
 #include "ace/Mutex.h"

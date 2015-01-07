@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Startup_Callback.h"
 
 Startup_Callback::Startup_Callback (void)

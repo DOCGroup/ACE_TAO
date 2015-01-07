@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Oneway_Receiver.h"
 #include "Shutdown_Helper.h"
 

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef BIG_REPLY_CLIENT_TASK_H
 #define BIG_REPLY_CLIENT_TASK_H

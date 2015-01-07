@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "Manager_Handler.h"
 

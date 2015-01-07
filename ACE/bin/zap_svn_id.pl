@@ -14,5 +14,9 @@ eval '(exit $?0)' && eval 'exec perl -pi -S $0 ${1+"$@"}'
 # Taken from perlrun man page.
 
 #undef $/; $s = <>; $s =~ s/ \*\n \* \$Id\$\n \*\n/ \*\n/m; print $s
+# Replace a three line doxygen style Id tag with just line *
 BEGIN{undef $/;} s/ \*\n \* \$Id\$\n \*\n/ \*\n/smg;
+# Replace a three line c-style id tag with an empty line below that with nothing
+BEGIN{undef $/;} s/\/\/\n\/\/ \$Id\$\n\/\/\n\n//smg;
+# Replace a three line c-style id tag with nothing
 BEGIN{undef $/;} s/\/\/\n\/\/ \$Id\$\n\/\/\n//smg;

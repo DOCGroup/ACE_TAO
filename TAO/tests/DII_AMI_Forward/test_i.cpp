@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-//
 
 #include "test_i.h"
 #include "tao/debug.h"

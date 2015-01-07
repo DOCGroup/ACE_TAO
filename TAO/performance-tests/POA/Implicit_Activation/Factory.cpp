@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Factory.h"
 #include "Simple.h"
 

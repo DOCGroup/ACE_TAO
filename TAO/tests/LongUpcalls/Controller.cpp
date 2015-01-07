@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Controller.h"
 
 Controller::Controller (void)

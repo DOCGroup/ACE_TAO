@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Server_Task.h"
 #include "test_i.h"
 #include "ace/OS_NS_time.h"

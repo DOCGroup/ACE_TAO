@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "be_union_label.h"
 #include "be_visitor.h"

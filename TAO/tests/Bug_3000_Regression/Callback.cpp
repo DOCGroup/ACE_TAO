@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Callback.h"
 
 Callback::Callback (void)

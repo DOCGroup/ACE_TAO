@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Payload_Receiver.h"
 
 Payload_Receiver::Payload_Receiver (void)

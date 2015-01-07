@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "AMH_Servant.h"
 #include "Timer_Handler.h"

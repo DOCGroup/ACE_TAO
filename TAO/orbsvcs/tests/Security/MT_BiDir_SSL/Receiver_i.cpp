@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Receiver_i.h"
 
 Receiver_i::Receiver_i (void)

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef STOCKFACTORY_H
 #define STOCKFACTORY_H

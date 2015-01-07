@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef MUXING_CLIENT_TASK_H
 #define MUXING_CLIENT_TASK_H

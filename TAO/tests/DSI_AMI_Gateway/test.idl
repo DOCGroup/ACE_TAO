@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 typedef sequence<long> DSI_LongSeq;
 

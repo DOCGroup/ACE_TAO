@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Sleep_Service.h"
 #include "ace/OS_NS_unistd.h"
 

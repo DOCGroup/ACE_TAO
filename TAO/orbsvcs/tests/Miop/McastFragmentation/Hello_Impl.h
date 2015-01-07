@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef _HELLOS_IMPL_H_
 #define _HELLOS_IMPL_H_
