@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/Thread.h"
 #include "ace/Log_Category.h"
 

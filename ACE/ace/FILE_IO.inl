@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/ACE.h"
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_unistd.h"

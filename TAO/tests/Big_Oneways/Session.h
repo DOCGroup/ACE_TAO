@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef BIG_ONEWAYS_SESSION_H
 #define BIG_ONEWAYS_SESSION_H
 

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "StubFaultAnalyzer.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"

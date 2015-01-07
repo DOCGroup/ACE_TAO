@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 // Detection of flags in the CDR Stream
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

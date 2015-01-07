@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef ACE_LINUX_ICC_COMMON_H
 #define ACE_LINUX_ICC_COMMON_H
 #include /**/ "ace/pre.h"

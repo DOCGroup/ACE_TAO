@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 //Test for different topictypes with DDS_Event connector, look for 'SUBSCRIPTION_MATCHED_STATUS
 
 #include "VTopic_Receiver_exec.h"

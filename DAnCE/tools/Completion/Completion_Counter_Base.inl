@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 namespace DAnCE
   {
 

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "tao/Invocation_Retry_State.h"
 #include "tao/ORB_Core.h"
 #include "tao/Client_Strategy_Factory.h"

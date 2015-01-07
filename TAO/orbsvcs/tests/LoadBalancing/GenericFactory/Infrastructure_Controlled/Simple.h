@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef SIMPLE_H
 #define SIMPLE_H
 

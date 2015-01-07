@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "QosProfile_Test_Component_exec.h"
 
 namespace CIAO_QosProfile_Test_QosProfileComponent_Impl

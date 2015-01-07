@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/MEM_Stream.h"
 #include "ace/OS_NS_sys_socket.h"
 

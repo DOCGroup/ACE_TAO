@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "Exception_Test_Component_exec.h"
 
 namespace CIAO_CFT_Exception_Test_CFTTestComponent_Impl

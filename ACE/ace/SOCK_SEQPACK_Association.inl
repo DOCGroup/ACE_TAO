@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/OS_NS_sys_socket.h"
 

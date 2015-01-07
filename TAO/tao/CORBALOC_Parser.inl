@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #if (TAO_HAS_CORBALOC_PARSER == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

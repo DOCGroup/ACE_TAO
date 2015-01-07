@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef TAO_SINGLETON_CPP
 #define TAO_SINGLETON_CPP
 

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 ACE_INLINE
 ACE_Sig_Handler::ACE_Sig_Handler (void)
 {

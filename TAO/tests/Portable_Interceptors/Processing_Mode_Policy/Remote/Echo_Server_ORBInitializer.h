@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef TAO_ECHO_SERVER_ORB_INITIALIZER_H
 #define TAO_ECHO_SERVER_ORB_INITIALIZER_H
 

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "tao/ORB_Core.h"
 #include "ace/Reverse_Lock_T.h"
 

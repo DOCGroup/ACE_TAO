@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #if !defined (CORBA_E_MICRO)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

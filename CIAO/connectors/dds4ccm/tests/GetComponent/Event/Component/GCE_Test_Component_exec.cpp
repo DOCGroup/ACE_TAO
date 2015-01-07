@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "GCE_Test_Component_exec.h"
 
 namespace CIAO_GCE_Test_GetComponentEventTestComponent_Impl

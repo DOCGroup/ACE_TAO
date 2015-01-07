@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 /**
  * @file test_i.cpp
  * @author Will Otte <wotte@dre.vanderbilt.edu>

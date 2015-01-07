@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Return the name of file that is mapped (if any).

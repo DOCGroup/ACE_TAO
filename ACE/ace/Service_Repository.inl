@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 // Returns a count of the number of currently valid entries (counting
 // both resumed and suspended entries).
 

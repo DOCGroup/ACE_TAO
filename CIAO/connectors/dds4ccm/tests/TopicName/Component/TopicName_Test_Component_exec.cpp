@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "TopicName_Test_Component_exec.h"
 
 namespace CIAO_TopicName_Test_TopicNameTestComponent_Impl

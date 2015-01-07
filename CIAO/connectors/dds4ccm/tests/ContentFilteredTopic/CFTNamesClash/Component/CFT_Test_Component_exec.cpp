@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "CFT_Test_Component_exec.h"
 
 namespace CIAO_CFT_Test_CFTTestComponent_Impl

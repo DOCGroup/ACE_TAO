@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
 #include "Manager_i.h"
 
 Manager_i::Manager_i (long retryCount)

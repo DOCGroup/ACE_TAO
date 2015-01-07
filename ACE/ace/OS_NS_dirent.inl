@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/OS_Memory.h"
 
 #if defined (ACE_LACKS_ALPHASORT)

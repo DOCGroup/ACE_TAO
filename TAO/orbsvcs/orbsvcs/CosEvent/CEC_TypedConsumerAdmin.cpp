@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
 
 #include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"

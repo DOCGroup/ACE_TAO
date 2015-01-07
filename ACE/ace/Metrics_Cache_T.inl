@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef ACE_METRICS_CACHE_T_INL
 #define ACE_METRICS_CACHE_T_INL
 

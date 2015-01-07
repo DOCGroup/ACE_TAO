@@ -3,9 +3,6 @@
 // Based on NamingViewer Version 1.0 by Chris Hafey (chris@stentorsoft.com)
 //
 // @author:  Charlie Frasch (cfrasch@atdesk.com)
-//
-// $Id$
-
 #include "ace/Init_ACE.h"
 #include "pch.h"
 #include "wx/resource.h"

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "PortUsageEvent_Component_exec.h"
 
 #include "ace/OS_NS_unistd.h"

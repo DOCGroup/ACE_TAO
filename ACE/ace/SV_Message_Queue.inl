@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_sys_msg.h"
 

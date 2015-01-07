@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/CosEvent/CEC_DynamicImplementation.h"
 #include "tao/DynamicInterface/Request.h"

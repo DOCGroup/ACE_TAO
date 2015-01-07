@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/TypeCode_Traits.h"
 

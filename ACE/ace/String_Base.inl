@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/Malloc_Base.h"
 #include "ace/Min_Max.h"
 #include "ace/OS_NS_string.h"

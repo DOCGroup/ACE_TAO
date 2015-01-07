@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/Guard_T.h"
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Category.h"

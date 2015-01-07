@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef BIG_TWOWAYS_SESSION_H
 #define BIG_TWOWAYS_SESSION_H
 

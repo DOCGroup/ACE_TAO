@@ -1,7 +1,4 @@
 //  -*- MPC -*-
-//
-// $Id$
-
 // The ACE_FOR_TAO subset is designed primarily for use with the
 // TAO CosNotification service.  It is not intended to be used
 // for some of other TAO features and services, such as the TAO

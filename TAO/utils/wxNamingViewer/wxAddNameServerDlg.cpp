@@ -1,9 +1,6 @@
 // @file wxAddNameServerDlg.cpp
 //
 // @author Charlie Frasch  <cfrasch@atdesk.com>
-//
-// $Id$
-
 #include "pch.h"
 #include "wxAddNameServerDlg.h"
 
