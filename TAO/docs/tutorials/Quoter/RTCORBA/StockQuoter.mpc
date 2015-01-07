@@ -1,5 +1,4 @@
 // -*- MPC -*-
-// $Id:  StockQuoter.mpc
 // $author: Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
 // Contains project definitions for the Publish/Subscribe Real-time CORBA
 // Stock Quoter Service.
