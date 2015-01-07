@@ -1,4 +1,3 @@
-/* $Id$ */
 #ifndef KOKYU_CONFIG_H
 #define KOKYU_CONFIG_H
 

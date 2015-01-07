@@ -1,5 +1,3 @@
-/* $Id$ */
-
 #include "Timer.h"
 #include "Task_Client.h"
 

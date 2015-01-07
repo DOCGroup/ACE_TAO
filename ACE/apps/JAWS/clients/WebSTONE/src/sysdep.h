@@ -1,6 +1,5 @@
 #ifndef __SYSDEP_H__
 #define __SYSDEP_H__
-/* $Id$ */
 /**************************************************************************
  *                                                                        *
  *               Copyright (C) 1995 Silicon Graphics, Inc.                *
