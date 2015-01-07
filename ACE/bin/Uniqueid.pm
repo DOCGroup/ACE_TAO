@@ -1,5 +1,4 @@
 #! /usr/bin/perl
-# $Id$
 sub uniqueid
 {
   if ($^O eq "MSWin32")

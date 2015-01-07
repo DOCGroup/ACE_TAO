@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * @file Threaded_Client.cpp
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *

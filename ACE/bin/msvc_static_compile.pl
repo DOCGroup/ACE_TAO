@@ -1,4 +1,3 @@
-# $Id$
 #   Win32 auto_compile script.
 if (!$ENV{ACE_ROOT}) {
     $ACE_ROOT = getcwd ()."\\";

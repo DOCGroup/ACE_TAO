@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# $Id$
 # -*- perl -*-
 
 # This is a Perl Script that runs the corbaloc: style URL tests.

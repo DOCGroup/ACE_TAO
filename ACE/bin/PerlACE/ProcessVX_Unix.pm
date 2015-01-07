@@ -1,5 +1,4 @@
 #! /usr/bin/perl
-# $Id$
 
 package PerlACE::ProcessVX;
 

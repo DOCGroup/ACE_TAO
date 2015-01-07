@@ -5,7 +5,7 @@ eval '(exit $?0)' && eval 'exec perl -pi -S $0 ${1+"$@"}'
 # You may want to run the "find" command with this script, which maybe
 # something like this:
 #
-# find . -type f \( -name "*.inl" -o -name "*.h" -o -name "*.cpp" -o -name "*.mpc" -o -name "*.idl" -o -name "*.conf" -o -name "*.mpb" -o -name "*.hpp" -o -name "*.pl"  \) -print | xargs $ACE_ROOT/bin/zap_svn_id.pl
+# find . -type f \( -name "*.inl" -o -name "*.h" -o -name "*.cpp" -o -name "*.mpc" -o -name "*.idl" -o -name "*.conf" -o -name "*.mpb" -o -name "*.hpp" -o -name "*.pl"  -o -name "*.mpt"   -o -name "*.pm" -o -name "*.html" \) -print | xargs $ACE_ROOT/bin/zap_svn_id.pl
 
 # The first three lines above let this script run without specifying the
 # full path to perl, as long as it is in the user's PATH.
@@ -17,6 +17,8 @@ BEGIN{undef $/;} s///smg;
 BEGIN{undef $/;} s/ \*\n \*  \$Id\$\n \*\n/ \*\n \* \$Id\$\n \*\n/smg;
 # Replace a three line doxygen style Id tag with just line *
 BEGIN{undef $/;} s/ \*\n \* \$Id\$\n \*\n/ \*\n/smg;
+# Replace a three line doxygen style Id tag with just line *
+BEGIN{undef $/;} s/\*\*\n \* \$Id\$\n \*\n/\*\*\n/smg;
 # Replace a three line c-style id tag with an empty line below that with nothing
 BEGIN{undef $/;} s/\/\/\n\/\/ \$Id\$\n\/\/\n\n//smg;
 # Replace a three line c-style id tag with nothing
@@ -50,3 +52,7 @@ BEGIN{undef $/;} s/ \#\n \# \$Id\$\n \#\n/ \#\n/smg;
 BEGIN{undef $/;} s/\#\n\# \$Id\$\n\#\n/\#\n/smg;
 BEGIN{undef $/;} s/ \#\n \#\$Id\$\n \#\n/ \#\n/smg;
 BEGIN{undef $/;} s/\#\n\#\$Id\$\n\#\n/\#\n/smg;
+BEGIN{undef $/;} s/\#\$Id\$\n//smg;
+BEGIN{undef $/;} s/\# \$Id\$\n//smg;
+
+

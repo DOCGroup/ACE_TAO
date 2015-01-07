@@ -4,7 +4,6 @@ package FileLocator;
 # Description   : Base class for file locators.
 # Author        : Chad Elliott
 # Create Date   : 6/18/2002
-# $Id$
 # ************************************************************
 
 # ************************************************************

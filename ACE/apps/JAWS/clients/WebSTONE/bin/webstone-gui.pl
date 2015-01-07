@@ -1,6 +1,5 @@
 #!/pkg/gnu/bin//perl5
 #
-#$Id$
 
 require 'conf/paths.pl';
 

@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 #   Fuzz is a script whose purpose is to check through ACE/TAO/CIAO files for
 #   easy to spot (by a perl script, at least) problems.
 

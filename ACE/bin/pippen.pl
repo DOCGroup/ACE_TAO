@@ -1,4 +1,3 @@
-# $Id$
 
 BEGIN {
     use Cwd;

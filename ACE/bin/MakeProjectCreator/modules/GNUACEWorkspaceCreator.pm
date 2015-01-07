@@ -4,7 +4,6 @@ package GNUACEWorkspaceCreator;
 # Description   : A GNU Workspace (GNUmakefile) creator for ACE
 # Author        : Chad Elliott
 # Create Date   : 5/13/2002
-# $Id$
 # ************************************************************
 
 # ************************************************************

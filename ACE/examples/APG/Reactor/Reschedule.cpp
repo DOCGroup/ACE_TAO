@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * Changing the interval
  */
 

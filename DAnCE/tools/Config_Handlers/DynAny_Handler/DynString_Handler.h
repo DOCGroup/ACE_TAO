@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * @file DynString_Handler.h
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */

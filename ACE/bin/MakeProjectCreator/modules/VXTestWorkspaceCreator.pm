@@ -4,7 +4,6 @@ package VXTestWorkspaceCreator;
 # Description   : VxTest Workspace create
 # Author        : Johnny Willemsen
 # Create Date   : 28/03/2008
-# $Id$
 # ************************************************************
 
 # ************************************************************

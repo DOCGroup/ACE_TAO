@@ -1,5 +1,4 @@
 #! /usr/bin/perl
-# $Id$
 #
 # The TestTarget class is for operations that are per-target while testing.
 # They can be overridden for specific needs like embedded systems, etc.

@@ -3,7 +3,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     if 0;
 
 # -*- perl -*-
-# $Id$
 # Replacement for the old trusty GenExportH.bat
 # Creates the nice little *_export file which is used for
 # importing and exporting of symbols in DLLs.

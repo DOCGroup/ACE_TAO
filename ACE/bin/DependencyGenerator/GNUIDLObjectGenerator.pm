@@ -4,7 +4,6 @@ package GNUIDLObjectGenerator;
 # Description   : Generates object files for GNU IDL Makefiles.
 # Author        : Chip Jones
 # Create Date   : 11/01/2011
-# $Id$
 # ************************************************************
 
 # ************************************************************

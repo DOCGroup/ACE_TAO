@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * A simple client program using ACE_Svc_Handler and ACE_Connector.
  */
 

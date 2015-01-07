@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * ACE_Get_Opt long_only examples. Sample code from The ACE
  * Programmer's Guide, Copyright 2003 Addison-Wesley. All Rights Reserved.
  */

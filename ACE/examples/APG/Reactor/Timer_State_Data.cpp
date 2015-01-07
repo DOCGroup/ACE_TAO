@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * Reactor examples
  *
  * Timers & state data

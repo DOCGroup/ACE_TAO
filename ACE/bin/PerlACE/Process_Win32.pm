@@ -1,5 +1,4 @@
 #! /usr/bin/perl
-# $Id$
 
 use PerlACE::Run_Test;
 
