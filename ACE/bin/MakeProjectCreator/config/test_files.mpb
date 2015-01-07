@@ -1,4 +1,3 @@
-// $Id$
 project {
   Define_Custom(Test) {
     automatic=0

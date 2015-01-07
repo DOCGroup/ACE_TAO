@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : acelib, ace_fox {
   requires += ace_foxreactor
   after    += ACE_FoxReactor

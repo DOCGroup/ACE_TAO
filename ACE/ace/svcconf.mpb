@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 feature(ace_svcconf) {
   macros -= ACE_LACKS_ACE_SVCCONF
 

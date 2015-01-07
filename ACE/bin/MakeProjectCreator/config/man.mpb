@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project {
   Define_Custom(Man) {
     automatic = 1

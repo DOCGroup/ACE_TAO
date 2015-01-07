@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project {
   // Set the idl3_to_idl2 compiler and flags as template values
   specific {

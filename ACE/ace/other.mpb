@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 feature(ace_other) {
   Source_Files(ACE_COMPONENTS) {
     Local_Name_Space.cpp

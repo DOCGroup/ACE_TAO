@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : ciao_connector_base, messaging {
   after += AMI4CCM_stub
   libs += AMI4CCM_stub

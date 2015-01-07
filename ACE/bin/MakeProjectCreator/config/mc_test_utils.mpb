@@ -1,4 +1,3 @@
-// $Id$
 project {
   includes += ../../.. //TODO: support for ^(HERE) variable expansion
   libpaths += ..

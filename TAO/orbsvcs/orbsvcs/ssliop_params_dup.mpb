@@ -1,5 +1,3 @@
-//$Id$
-
 feature(mfc) {
   Source_Files(ORBSVCS_COMPONENTS) {
     SSLIOP {

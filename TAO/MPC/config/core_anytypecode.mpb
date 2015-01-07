@@ -1,5 +1,4 @@
 // -*- MPC -*-
-// $Id$
 // N.B. This project is only intended for use within ORB core mpc files.
 // Use anytypecode.mpb in all other circumstances.
 

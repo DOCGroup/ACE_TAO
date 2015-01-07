@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : dds4ccm_stub {
   libs += DDS4CCM_skel
   after += DDS4CCM_skel

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : ftorbutils, pi, interceptors, threads, svc_utils {
   avoids    += ace_for_tao      // Requires ace/UUID
   after     += FT_ClientORB

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 feature (ccm_noevent) : taobaseidldefaults {
   macros += CCM_NOEVENT
   idlflags += -DCCM_NOEVENT -Gcm

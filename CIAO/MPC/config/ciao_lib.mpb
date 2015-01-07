@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : ciao {
   libout = $(ACE_ROOT)/lib
 }

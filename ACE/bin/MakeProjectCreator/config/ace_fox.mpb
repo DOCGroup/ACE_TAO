@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project {
   requires += fox
   // Depends on configuration from include/makeinclude/platform_*.GNU

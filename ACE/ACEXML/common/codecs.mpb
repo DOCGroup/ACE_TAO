@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 feature(ace_codecs, !ace_for_tao) {
   Source_Files {
     XML_Codecs.cpp

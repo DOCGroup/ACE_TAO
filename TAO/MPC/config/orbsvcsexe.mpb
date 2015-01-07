@@ -1,5 +1,3 @@
 // -*- MPC -*-
-// $Id$
-
 project : taoexe, negotiate_codesets, anytypecode {
 }

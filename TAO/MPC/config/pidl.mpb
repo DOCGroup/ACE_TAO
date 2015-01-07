@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project {
   Define_Custom(PIDL) {
     automatic = 1

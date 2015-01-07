@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project: aceexe, crosscompile {
   after += gperf
   avoids += uses_wchar

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : ftorbutils, portablegroup, pi_server, interceptors, svc_utils {
   after     += FT_ServerORB
   libs      += TAO_FT_ServerORB

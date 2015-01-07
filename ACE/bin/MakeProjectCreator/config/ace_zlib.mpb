@@ -1,4 +1,2 @@
-// $Id$
-
 feature(zlib): zlib {
 }

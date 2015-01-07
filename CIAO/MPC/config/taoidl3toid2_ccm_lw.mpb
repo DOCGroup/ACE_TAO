@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 feature (ccm_lw) : taobaseidl3toidl2defaults {
   macros += CCM_LW
   idl3toidl2flags += -DCCM_LW

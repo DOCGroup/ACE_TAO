@@ -1,4 +1,3 @@
-// $Id$
 //
 // This base project changes all projects to generate DLLs regardless of
 // whether it's an exe or a dll project. The DLLs still go in the place the

@@ -1,7 +1,4 @@
 // -*- MPC -*-
-//
-// $Id$
-
 // This base project is only meant to be used by the core TAO
 // libraries and the orbsvcs libraries.
 
