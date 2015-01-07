@@ -6,8 +6,6 @@
  * @brief Mock an forward declared object reference so we can test the sequences
  *        in isolation.
  *
- * $Id$
- *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 #include "ace/config-all.h"

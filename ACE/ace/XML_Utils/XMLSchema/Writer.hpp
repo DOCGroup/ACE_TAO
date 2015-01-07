@@ -1,7 +1,5 @@
 // file      : XMLSchema/Writer.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef XMLSCHEMA_WRITER_HPP
 #define XMLSCHEMA_WRITER_HPP
 

@@ -6,8 +6,6 @@
  * @brief Mock an object reference so we can test the sequences in
  *        isolation.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "ace/config-all.h"

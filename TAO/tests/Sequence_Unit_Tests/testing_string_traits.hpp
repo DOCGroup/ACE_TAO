@@ -5,8 +5,6 @@
  *
  * @brief Specialize the string traits so they can be used in testing.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

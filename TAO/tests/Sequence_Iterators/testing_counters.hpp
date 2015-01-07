@@ -7,8 +7,6 @@
  * called.   Here we implement some simple helper classes for that
  * purpose.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

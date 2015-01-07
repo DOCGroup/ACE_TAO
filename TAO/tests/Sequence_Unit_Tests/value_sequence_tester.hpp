@@ -5,8 +5,6 @@
  *
  * @brief Helper class to implement tests for *_value_sequence
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "tao/Basic_Types.h"

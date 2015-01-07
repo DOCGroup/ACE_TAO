@@ -6,8 +6,6 @@
  * @brief Specialize the range_checking traits in a manner suitable
  * for testing.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

@@ -1,7 +1,5 @@
 // file      : XSCRT/Parser.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef XSCRT_PARSER_HPP
 #define XSCRT_PARSER_HPP
 

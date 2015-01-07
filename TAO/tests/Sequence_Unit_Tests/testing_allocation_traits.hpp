@@ -6,8 +6,6 @@
  * @brief Specialize the allocation traits in a manner suitable for
  * testing.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

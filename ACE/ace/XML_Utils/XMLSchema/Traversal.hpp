@@ -1,7 +1,5 @@
 // file      : XMLSchema/Traversal.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef XMLSCHEMA_TRAVERSAL_HPP
 #define XMLSCHEMA_TRAVERSAL_HPP
 

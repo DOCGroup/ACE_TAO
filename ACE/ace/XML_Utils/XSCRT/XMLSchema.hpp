@@ -1,7 +1,5 @@
 // file      : XSCRT/XMLSchema.hpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef XSCRT_XMLSCHEMA_HPP
 #define XSCRT_XMLSCHEMA_HPP
 

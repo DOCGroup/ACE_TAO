@@ -6,8 +6,6 @@
  *
  * @brief Mock an IDL-generated array
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "testing_counters.hpp"
