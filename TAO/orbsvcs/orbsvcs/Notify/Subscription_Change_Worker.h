@@ -3,8 +3,6 @@
 /**
  *  @file Subscription_Change_Worker.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

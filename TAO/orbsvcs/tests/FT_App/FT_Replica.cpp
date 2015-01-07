@@ -3,8 +3,6 @@
 /**
  *  @file    FT_Replica.cpp
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  Implement the FT_TEST::Replica IDL interface.
  *

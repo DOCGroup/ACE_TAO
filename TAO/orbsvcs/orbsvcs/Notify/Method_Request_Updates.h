@@ -3,8 +3,6 @@
 /**
  *  @file Method_Request_Updates.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

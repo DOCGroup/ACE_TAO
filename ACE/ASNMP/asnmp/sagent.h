@@ -5,8 +5,6 @@
 /**
  *  @file    sagent.h
  *
- *  $Id$
- *
  * SNMP agent class defintion. The sagent class provides an object oriented
  * approach for creating SNMP Agents. The sagent class is an encapsulation of SNMP
  * sessions, gets, sets, etc.

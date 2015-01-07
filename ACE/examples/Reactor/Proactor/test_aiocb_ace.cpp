@@ -3,8 +3,6 @@
 /**
  *  @file    test_aiocb_ace.cpp
  *
- *  $Id$
- *
  *  This program helps you to test the <aio_*> calls on a
  *  platform.
  *

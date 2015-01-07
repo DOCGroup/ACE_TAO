@@ -4,8 +4,6 @@
 /**
  *  @file sender.h
  *
- *  $Id$
- *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
 //=============================================================================

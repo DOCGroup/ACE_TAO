@@ -3,8 +3,6 @@
 /**
  *  @file     client.cpp
  *
- *  $Id$
- *
  *   This is a client that uses oneways with buffering constraints
  *   and roundtrip timeout constraints.
  *

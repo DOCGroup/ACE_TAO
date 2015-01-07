@@ -3,8 +3,6 @@
 /**
  *  @file    ami_handler_reply_stub_operation_cs.h
  *
- *  $Id$
- *
  *  Visitor for generating code skelton code for IDL operations
  *  of AMI Reply Handlers.
  *

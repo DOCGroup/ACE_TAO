@@ -3,8 +3,6 @@
 /**
  *  @file    union_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Union in the client inline file
  *
  *

@@ -2,8 +2,6 @@
 /**
  *  @file    TimeUtilities.h
  *
- *  $Id$
- *
  *  @author  Marcel Smit (msmit@remedy.nl)
  */
 //=============================================================================

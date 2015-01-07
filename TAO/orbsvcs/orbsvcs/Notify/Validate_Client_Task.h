@@ -3,8 +3,6 @@
 /**
  *  @file   Validate_Client_Task.h
  *
- *  $Id$
- *
  *  @author Yan Dai (dai_y@ociweb.com)
  */
 //=============================================================================

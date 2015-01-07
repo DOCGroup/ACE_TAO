@@ -2,8 +2,6 @@
 /**
  *  @file   EC_Kokyu_Filter_Builder.h
  *
- *  $Id$
- *
  *  @author Bryan Thrall (thrall@cs.wustl.edu)
  *
  * Based on previous work by Carlos O'Ryan (coryan@cs.wustl.edu) and

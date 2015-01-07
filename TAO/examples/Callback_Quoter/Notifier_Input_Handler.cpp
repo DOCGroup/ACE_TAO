@@ -3,8 +3,6 @@
 /**
  *  @file    Notifier_Input_Handler.cpp
  *
- *  $Id$
- *
  *  Implementation of the callback quoter Notifier_Input_Handler class.
  *
  *

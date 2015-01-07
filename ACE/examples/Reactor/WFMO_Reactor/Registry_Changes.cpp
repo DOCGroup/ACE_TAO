@@ -2,8 +2,6 @@
 /**
  *  @file    Registry_Changes.cpp
  *
- *  $Id$
- *
  *
  *  This application tests the working of Reactor when users are
  *  interested in monitoring changes in the registry.

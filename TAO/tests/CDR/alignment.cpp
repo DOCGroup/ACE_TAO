@@ -3,8 +3,6 @@
 /**
  *  @file   alignment.cpp
  *
- *  $Id$
- *
  * Verifies that octet sequence marshaling does not affect
  * marshaling.
  *

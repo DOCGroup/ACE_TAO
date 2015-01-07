@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_dds_ts_idl.h
  *
- *  $Id$
- *
  *  Concrete visitor.
  *  This one provides code generation for
  *  DDS type support IDL files.

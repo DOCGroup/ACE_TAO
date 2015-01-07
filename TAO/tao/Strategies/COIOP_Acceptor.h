@@ -4,8 +4,6 @@
 /**
  *  @file    COIOP_Acceptor.h
  *
- *  $Id$
- *
  *  COIOP specific acceptor processing
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>

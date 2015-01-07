@@ -4,8 +4,6 @@
 /**
  *  @file    be_decl.h
  *
- *  $Id$
- *
  *  Extension of the AST_Decl class.
  *
  *

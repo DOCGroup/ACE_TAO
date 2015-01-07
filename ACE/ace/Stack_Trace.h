@@ -3,8 +3,6 @@
 /**
  *  @file   Stack_Trace.h
  *
- *  $Id$
- *
  *  @author Chris Cleeland (cleeland.ociweb.com)
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file    Servant_Impl_T.h
  *
- *  $Id$
- *
  *  This file contains the declaration of a mixin base class for
  *  the generated servant class.
  *

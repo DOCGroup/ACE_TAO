@@ -2,8 +2,6 @@
 /**
  *  @file   EC_TPC_Factory.h
  *
- *  $Id$
- *
  */
 
 #ifndef TAO_EC_TPC_FACTORY_H

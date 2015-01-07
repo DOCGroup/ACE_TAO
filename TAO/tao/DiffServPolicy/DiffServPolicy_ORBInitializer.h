@@ -4,8 +4,6 @@
 /**
  *  @file DiffServPolicy_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Johnny Willemsen <jwillemsen@remedy.nl>
  */

@@ -4,8 +4,6 @@
 /**
  *  @file    Sender_QoS_Event_Handler.cpp
  *
- *  $Id$
- *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
 //=============================================================================

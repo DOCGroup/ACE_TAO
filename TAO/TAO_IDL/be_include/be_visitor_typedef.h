@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_typedef.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Typedef class
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes in the client header
  *  (see C++ mapping OMG 20.17)
  *

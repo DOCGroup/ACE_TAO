@@ -4,8 +4,6 @@
 /*
  *  @file Codeset_Manager_i.h
  *
- *  $Id$
- *
  *  Interface for the TAO CodeSet Manager.
  *
  *  @author  Phil Mesnier

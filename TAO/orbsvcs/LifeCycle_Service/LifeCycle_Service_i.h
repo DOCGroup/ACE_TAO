@@ -3,8 +3,6 @@
 /**
  *  @file    LifeCycle_Service_i.h
  *
- *  $Id$
- *
  *  A Life Cycle Service for the Quoter example.
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Home_Servant_Impl_T.h
  *
- *  $Id$
- *
  *  This file contains the declaration of a mixin base class for
  *  the generated home servant class.
  *

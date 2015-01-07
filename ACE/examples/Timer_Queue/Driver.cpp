@@ -3,8 +3,6 @@
 /**
  *  @file    Driver.cpp
  *
- *  $Id$
- *
  *  This code builds an abstraction to factor out common code for
  *  the different implementations of the Timer_Queue.
  *

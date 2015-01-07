@@ -4,8 +4,6 @@
 /**
  *  @file    TAO_UTO.h
  *
- *  $Id$
- *
  *  This class implements the CosTime::UTO IDL interface.
  *
  *

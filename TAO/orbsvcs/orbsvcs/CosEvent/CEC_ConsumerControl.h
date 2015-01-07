@@ -4,8 +4,6 @@
 /**
  *  @file   CEC_ConsumerControl.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)More details can be found in:http://www.cs.wustl.edu/~coryan/EC/index.html
  */
 //=============================================================================

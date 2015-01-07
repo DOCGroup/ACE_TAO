@@ -3,8 +3,6 @@
 /**
  *  @file    server_B.h
  *
- *  $Id$
- *
  *    This class implements a simple server for the
  *    Nested Upcalls - Triangle test
  *

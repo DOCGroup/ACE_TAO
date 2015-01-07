@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_Strategy_Proxy.h
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

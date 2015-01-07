@@ -4,8 +4,6 @@
 /**
  *  @file    IIOP_SSL_Acceptor.h
  *
- *  $Id$
- *
  *  SSL-aware IIOP specific acceptor processing
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

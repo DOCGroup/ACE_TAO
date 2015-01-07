@@ -2,8 +2,6 @@
 /**
  *  @file    Basic_Types_Test.cpp
  *
- *  $Id$
- *
  *  Checks the #defines in ace/Basic_Types.h, and a few other basics.
  *
  *

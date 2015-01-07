@@ -4,8 +4,6 @@
 /**
  *  @file LifespanStrategyFactoryImpl.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

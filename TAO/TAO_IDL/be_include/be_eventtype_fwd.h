@@ -4,8 +4,6 @@
 /**
  *  @file    be_eventtype_fwd.h
  *
- *  $Id$
- *
  *  Extension of class AST_EventType_Fwd that provides additional
  *  means for C++ mapping of an eventtype.
  *

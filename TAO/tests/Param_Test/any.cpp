@@ -3,8 +3,6 @@
 /**
  *  @file    any.cpp
  *
- *  $Id$
- *
  *  tests Anys
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file     oid.cpp
  *
- *  $Id$
- *
  * This module contains the implementation of the oid class. This
  * includes all protected and public member functions. The oid class
  * may be compiled stand alone without the use of any other library.

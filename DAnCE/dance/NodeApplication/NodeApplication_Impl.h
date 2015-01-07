@@ -4,8 +4,6 @@
 /**
  *  @file    NodeApplication_Impl.h
  *
- *  $Id$
- *
  * @brief  Implementation of Deployment::NodeApplication
  *
  * @author Erwin Gottlieb <eg@prismtech.com>

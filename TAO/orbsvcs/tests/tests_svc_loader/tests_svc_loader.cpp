@@ -3,8 +3,6 @@
 /**
  *  @file    tests_svc_loader.cpp
  *
- *  $Id$
- *
  * This directory contains a client that checks if a given object
  * reference points to an existing object or not and prints a debug
  * statement to reflect the same. This client is to be used in

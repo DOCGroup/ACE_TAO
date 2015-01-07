@@ -3,8 +3,6 @@
 /**
  *  @file    objref.cpp
  *
- *  $Id$
- *
  *  tests object references
  *
  *

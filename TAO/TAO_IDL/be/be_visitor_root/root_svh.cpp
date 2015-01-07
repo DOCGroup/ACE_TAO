@@ -3,8 +3,6 @@
 /**
  *  @file    root_svh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the CIAO servant header
  *
  *

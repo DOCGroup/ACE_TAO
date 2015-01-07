@@ -4,8 +4,6 @@
 /**
  *  @file    NVList.h
  *
- *  $Id$
- *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  Aniruddha Gokhale <gokhale@cs.wustl.edu>
  */

@@ -5,8 +5,6 @@
 /**
  *  @file    HomeDef_i.h
  *
- *  $Id$
- *
  *  HomeDef servant class.
  *
  *

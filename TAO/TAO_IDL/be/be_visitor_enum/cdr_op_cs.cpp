@@ -3,8 +3,6 @@
 /**
  *  @file    cdr_op_cs.cpp
  *
- *  $Id$
- *
  *  Visitors for generation of code for Enum for the CDR operators
  *
  *

@@ -5,8 +5,6 @@
 /**
  *  @file    demux_test_macros.h
  *
- *  $Id$
- *
  *  Constants used by both the server and client
  *
  *  @author Aniruddha Gokhale

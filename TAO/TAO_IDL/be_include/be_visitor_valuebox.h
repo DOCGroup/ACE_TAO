@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_valuebox.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuebox class
  *
  *

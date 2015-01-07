@@ -3,8 +3,6 @@
 /**
  *  @file   IdAssignment.h
  *
- *  $Id$
- *
  * Test to check if ec, admin  are assigned id's correctly.
  *
  *

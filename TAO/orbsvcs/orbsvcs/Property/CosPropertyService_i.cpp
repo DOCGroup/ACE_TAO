@@ -3,8 +3,6 @@
 /**
  *  @file   CosPropertyService_i.cpp
  *
- *  $Id$
- *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================

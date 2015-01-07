@@ -3,8 +3,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Implementation of the server running the Timeout object.
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>

@@ -3,8 +3,6 @@
 /**
  *  @file    argument.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arguments
  *
  *

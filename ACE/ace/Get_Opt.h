@@ -4,8 +4,6 @@
 /**
  *  @file    Get_Opt.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Don Hinton <dhinton@gmx.net> (added long option support)
  */

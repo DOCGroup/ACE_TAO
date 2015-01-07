@@ -2,8 +2,6 @@
 /**
  *  @file    main_thread_custom_handler.cpp
  *
- *  $Id$
- *
  *    Implements a threaded timer queue.
  *    This code exercises the Timer_Queue_Test_Driver class using
  *    threads.

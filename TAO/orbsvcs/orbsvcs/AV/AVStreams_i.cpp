@@ -2,8 +2,6 @@
 /**
  *  @file   AVStreams_i.cpp
  *
- *  $Id$
- *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu> Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================

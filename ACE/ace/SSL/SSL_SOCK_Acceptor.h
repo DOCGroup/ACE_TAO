@@ -4,8 +4,6 @@
 /**
  *  @file    SSL_SOCK_Acceptor.h
  *
- *  $Id$
- *
  *  @author John Heitmann
  *  @author Chris Zimman
  *  @author Ossama Othman <ossama@uci.edu>

@@ -4,8 +4,6 @@
 /**
  *  @file    Process_Strategy_Test.h
  *
- *  $Id$
- *
  *  This file contains the definition of Counting_Service and
  *  Options.  Some compilers need it in a .h file for template
  *  instantiation (such as AIX C Set ++).

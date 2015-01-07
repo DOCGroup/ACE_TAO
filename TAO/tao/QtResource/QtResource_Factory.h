@@ -4,8 +4,6 @@
 /**
  *  @file   QtResource_Factory.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */

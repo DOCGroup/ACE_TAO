@@ -3,8 +3,6 @@
 /**
  *  @file   except.cpp
  *
- *  $Id$
- *
  * tests exception
  *
  *

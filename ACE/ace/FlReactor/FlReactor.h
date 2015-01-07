@@ -4,8 +4,6 @@
 /**
  *  @file   FlReactor.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  *  @author Based in part in the ACE_XtReactor implementation by
  *  @author Eric C. Newton's <ecn@clark.net>

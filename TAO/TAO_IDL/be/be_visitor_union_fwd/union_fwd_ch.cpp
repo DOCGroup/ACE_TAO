@@ -3,8 +3,6 @@
 /**
  *  @file    union_fwd_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for be_union_fwd node in the client header.
  *
  *

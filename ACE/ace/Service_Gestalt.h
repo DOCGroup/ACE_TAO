@@ -4,8 +4,6 @@
 /**
  *  @file    Service_Gestalt.h
  *
- *  $Id$
- *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
 //====================================================================

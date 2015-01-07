@@ -3,8 +3,6 @@
 /**
  *  @file    component_exs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Components in the exec impl source.
  *
  *

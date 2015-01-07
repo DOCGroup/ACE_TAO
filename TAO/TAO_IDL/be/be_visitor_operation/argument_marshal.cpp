@@ -3,8 +3,6 @@
 /**
  *  @file    argument_marshal.cpp
  *
- *  $Id$
- *
  *  Visitor to pass arguments to the CDR operators. This one helps in
  *  generating the && and the , at the right place. This one is for the
  *  skeleton side.

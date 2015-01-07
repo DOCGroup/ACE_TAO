@@ -3,8 +3,6 @@
 /**
  *  @file    exception_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Exception in the inline file.
  *
  *

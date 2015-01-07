@@ -4,8 +4,6 @@
 /**
  *  @file    Server_Request.h
  *
- *  $Id$
- *
  *  Header file for CORBA's Dynamic Server Skeleton Interface's
  *  "Server Request" type.
  *

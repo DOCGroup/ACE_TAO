@@ -5,8 +5,6 @@
 /**
  *  @file    ExtInterfaceDef_i.h
  *
- *  $Id$
- *
  *  ExtInterfaceDef_i servant class.
  *
  *

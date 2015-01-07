@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynunion.h
  *
- *  $Id$
- *
  *  Header file for class to test DynUnion.
  *
  *

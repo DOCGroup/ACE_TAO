@@ -3,8 +3,6 @@
 /**
  *  @file    Time_Service_Test.cpp
  *
- *  $Id$
- *
  *  This example tests the Time Service server and clerk
  *  components. The test forks and execs two processes to run both
  *  the clerk and the time server. The clerk and the server

@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor.h
  *
- *  $Id$
- *
  *  The abstract visitor class. The concrete classes are responsible for code
  *  generation.
  *

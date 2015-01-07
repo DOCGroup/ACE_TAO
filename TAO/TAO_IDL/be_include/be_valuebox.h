@@ -3,8 +3,6 @@
 /**
  *  @file    be_valuebox.h
  *
- *  $Id$
- *
  *  Extension of class AST_Valuebox that provides additional means for C++
  *  mapping.
  *

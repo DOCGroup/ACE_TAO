@@ -4,8 +4,6 @@
 /**
  *  @file    Objref_TypeCode_Static.h
  *
- *  $Id$
- *
  *  Header file for static
  *    @c tk_abstract_interface,
  *    @c tk_component,

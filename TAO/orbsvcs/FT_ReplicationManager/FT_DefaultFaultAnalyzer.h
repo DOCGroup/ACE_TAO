@@ -3,8 +3,6 @@
 /**
  *  @file    FT_DefaultFaultAnalyzer.h
  *
- *  $Id$
- *
  *  This file is part of TAO's implementation of Fault Tolerant CORBA.
  *  This is the default implementation of a fault analyzer that
  *  implements the interface of the abstract base class

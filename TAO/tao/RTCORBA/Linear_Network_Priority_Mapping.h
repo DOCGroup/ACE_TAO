@@ -5,8 +5,6 @@
 /**
  *  @file   Linear_Network_Priority_Mapping.h
  *
- *  $Id$
- *
  * Declares the Linear_Network_Priority_Mapping interface,
  *
  *

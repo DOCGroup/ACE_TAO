@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_ami_pre_proc.h
  *
- *  $Id$
- *
  *  This visitor creates for AMI implied IDL constructs
  *  the appropriate AST (Abstract Syntax Tree) node,
  *  sets the corresponding interface or operation strategy

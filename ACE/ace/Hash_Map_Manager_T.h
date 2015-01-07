@@ -4,8 +4,6 @@
 /**
  *  @file    Hash_Map_Manager_T.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

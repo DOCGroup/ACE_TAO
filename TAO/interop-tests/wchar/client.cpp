@@ -4,8 +4,6 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *  C++ client side for testing interoperability with wchar data.
  *
  *

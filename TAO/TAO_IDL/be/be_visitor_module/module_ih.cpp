@@ -3,8 +3,6 @@
 /**
  *  @file    module_ih.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Module in the implementation header
  *
  *

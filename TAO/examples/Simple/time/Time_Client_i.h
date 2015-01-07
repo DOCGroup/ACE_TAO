@@ -4,8 +4,6 @@
 /**
  *  @file    Time_Client_i.h
  *
- *  $Id$
- *
  *  This class implements the client calls to the Time example.
  *
  *

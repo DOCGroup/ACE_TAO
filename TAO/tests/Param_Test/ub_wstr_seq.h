@@ -3,8 +3,6 @@
 /**
  *  @file    ub_wstr_seq.h
  *
- *  $Id$
- *
  *   Tests sequences of wide strings
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Consumer_Input_Handler.h
  *
- *  $Id$
- *
  *  Definition of the Callback_Qouter Consumer Client class, Consumer_Input_Handler.
  *
  *

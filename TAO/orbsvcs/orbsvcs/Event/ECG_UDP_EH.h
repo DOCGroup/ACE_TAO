@@ -3,8 +3,6 @@
 /**
  *  @file   ECG_UDP_EH.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Marina Spivak (marina@atdesk.com)
  *

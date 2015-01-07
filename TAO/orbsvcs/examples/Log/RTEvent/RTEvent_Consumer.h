@@ -4,8 +4,6 @@
 /**
  *  @file   RTEvent_Consumer.h
  *
- *  $Id$
- *
  *  An example of using the RTEvent_Logging_Service.
  *  The RTEvent_Consumer consumes log-generated events.
  *

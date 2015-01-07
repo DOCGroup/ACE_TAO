@@ -3,8 +3,6 @@
 /**
  *  @file   Load_Balancer_i.h
  *
- *  $Id$
- *
  *  Defines classes that implement interfaces in Load_Balancer.idl
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    BiDirPolicy_Validator.h
  *
- *  $Id$
- *
  *  This file contains the declaration for the BiDir policy validator
  *  interface.
  *

@@ -5,8 +5,6 @@
 /**
  *  @file   Multi_Priority_Mapping.h
  *
- *  $Id$
- *
  * Declares a priority mapping to support cross platform communication.
  *
  *

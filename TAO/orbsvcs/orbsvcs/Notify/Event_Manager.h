@@ -2,8 +2,6 @@
 /**
  *  @file Event_Manager.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

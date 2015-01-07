@@ -3,8 +3,6 @@
 /**
  *  @file    Main.cpp
  *
- *  $Id$
- *
  *   This is a wrapper for the test programs.  It obviates the test cpp's
  *   from having to always include OS.h.
  *

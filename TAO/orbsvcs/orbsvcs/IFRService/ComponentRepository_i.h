@@ -5,8 +5,6 @@
 /**
  *  @file    ComponentRepository_i.h
  *
- *  $Id$
- *
  *  ComponentRepository servant class.
  *
  *

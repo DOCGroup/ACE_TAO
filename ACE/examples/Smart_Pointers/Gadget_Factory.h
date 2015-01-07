@@ -3,8 +3,6 @@
 /**
  *  @file    Gadget_Factory.h
  *
- *  $Id$
- *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Utils.h
  *
- *  $Id$
- *
  *  Utility methods
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>

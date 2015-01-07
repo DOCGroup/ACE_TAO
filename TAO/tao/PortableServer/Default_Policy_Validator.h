@@ -4,8 +4,6 @@
 /**
  *  @file    Default_Policy_Validator.h
  *
- *  $Id$
- *
  *  This file contains the declaration for the default POA policy validator.
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>

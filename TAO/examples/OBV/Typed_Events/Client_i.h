@@ -4,8 +4,6 @@
 /**
  *  @file    Client_i.h
  *
- *  $Id$
- *
  *  This class is a template for a CORBA client.
  *  run () sends some valuetypes to a server and
  *  gets back a list of valuetypes.

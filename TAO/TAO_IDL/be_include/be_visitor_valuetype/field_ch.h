@@ -4,8 +4,6 @@
 /**
  *  @file    field_ch.h
  *
- *  $Id$
- *
  *  Visitor generating code for valuetype fields in the valuetype class
  *  (header).
  *

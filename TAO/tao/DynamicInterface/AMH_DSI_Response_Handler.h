@@ -4,8 +4,6 @@
 /**
  *  @file AMH_DSI_Response_Handler.h
  *
- *  $Id$
- *
  *  @brief Handle the Response appropriately.
  */
 //=====================================================================

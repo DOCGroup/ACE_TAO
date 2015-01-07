@@ -4,8 +4,6 @@
 /**
  *  @file    BPR_Drivers.h
  *
- *  $Id$
- *
  *  This code builds abstractions to factor out common code from
  *  the different possible implementations of the Timer_Queue based
  *  bounded packet relay example.

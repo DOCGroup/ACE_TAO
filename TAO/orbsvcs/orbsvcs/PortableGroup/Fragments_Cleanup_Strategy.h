@@ -4,8 +4,6 @@
 /**
  *  @file   Fragments_Cleanup_Strategy.h
  *
- *  $Id$
- *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
 // ================================================================

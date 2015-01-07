@@ -4,8 +4,6 @@
 /**
  *  @file    Remote_Object_Proxy_Broker.h
  *
- *  $Id$
- *
  *  This files contains the Remote Proxy Broker implementation
  *  for the CORBA Object.
  *

@@ -3,8 +3,6 @@
 /**
  *  @file Activity.h
  *
- *  $Id$
- *
  *  An activity is a process that contains Tasks.
  *  Each Task is composed of certain units of Jobs.
  *  A Job can perform work that is local/remote.

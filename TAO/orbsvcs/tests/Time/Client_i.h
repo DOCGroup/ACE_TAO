@@ -4,8 +4,6 @@
 /**
  *  @file    Client_i.h
  *
- *  $Id$
- *
  *  This class implements a simple CORBA client that accesses a Time Service
  *  server.
  *

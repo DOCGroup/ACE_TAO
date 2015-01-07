@@ -4,8 +4,6 @@
 /**
  *  @file    Any_Insert_Policy_T.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    bd_struct_seq.cpp
  *
- *  $Id$
- *
  *  tests bounded struct sequences
  *
  *

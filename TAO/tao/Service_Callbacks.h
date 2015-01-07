@@ -4,8 +4,6 @@
 /**
  *  @file    Service_Callbacks.h
  *
- *  $Id$
- *
  * This is a generic interface that would be used to override many
  * of the default functionalities that the ORB provides by the
  * services if they have been loaded in to the ORB_Core

@@ -4,8 +4,6 @@
 /**
  *  @file    IIOP_Acceptor.h
  *
- *  $Id$
- *
  *  IIOP specific acceptor processing
  *
  *

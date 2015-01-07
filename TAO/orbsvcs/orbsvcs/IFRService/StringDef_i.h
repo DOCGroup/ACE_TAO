@@ -5,8 +5,6 @@
 /**
  *  @file    StringDef_i.h
  *
- *  $Id$
- *
  *  StringDef servant class.
  *
  *

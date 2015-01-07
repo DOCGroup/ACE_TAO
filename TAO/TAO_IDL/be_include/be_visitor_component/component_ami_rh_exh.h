@@ -3,8 +3,6 @@
 /**
  *  @file    component_ami_rh_exh.h
  *
- *  $Id$
- *
  *  Concrete visitor for the AMI4CCM Component node.
  *  This provides for code generation of the AMI4CCM reply
  *  handler implementation header, triggered by the presence

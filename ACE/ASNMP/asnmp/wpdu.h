@@ -5,8 +5,6 @@
 /**
  *  @file    wpdu.h
  *
- *  $Id$
- *
  *  Adapter class. Converts a Pdu and GenTarget into a format
  *  that can be stuffed out a I/O port
  *

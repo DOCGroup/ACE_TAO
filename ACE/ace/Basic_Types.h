@@ -4,8 +4,6 @@
 /**
  *  @file    Basic_Types.h
  *
- *  $Id$
- *
  *  @author David L. Levine
  *
  *  #defines the list of preprocessor macros below.  The config.h file can

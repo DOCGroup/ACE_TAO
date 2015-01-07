@@ -5,8 +5,6 @@
 /**
  *  @file    ctr64.h
  *
- *  $Id$
- *
  *  SNMP Counter64 class definition.
  *
  *

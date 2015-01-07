@@ -4,8 +4,6 @@
 /**
  *  @file    root_ci.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Root class
  *  This one provides code generation for elements of the Root node in the
  *  client inline.

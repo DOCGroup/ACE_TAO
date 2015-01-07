@@ -3,8 +3,6 @@
 /**
  *  @file    main.cpp
  *
- *  $Id$
- *
  *  This is the main program - it just hands control off to the
  *  process instance to figure out what to do.  This program only
  *  runs on Win32.

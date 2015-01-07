@@ -2,8 +2,6 @@
 /**
  *  @file    valuetype_obv_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes in the client header
  *  OBV_ class
  *  (see C++ mapping OMG 20.17)

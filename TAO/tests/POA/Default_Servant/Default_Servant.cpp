@@ -3,8 +3,6 @@
 /**
  *  @file     Default_Servant.cpp
  *
- *  $Id$
- *
  *   This program tests the behavior of POA::id_to_servant() and
  *   POA::reference_to_servant() with the use of default servants.
  *

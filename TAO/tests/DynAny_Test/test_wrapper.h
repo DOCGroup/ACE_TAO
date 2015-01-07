@@ -3,8 +3,6 @@
 /**
  *  @file    test_wrapper.h
  *
- *  $Id$
- *
  *  Header file for the DynAny basic test manager
  *
  *

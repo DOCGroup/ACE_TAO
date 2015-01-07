@@ -4,8 +4,6 @@
 /**
  *  @file     Server_Manager.h
  *
- *  $Id$
- *
  *   Helper class for the server application.
  *
  *

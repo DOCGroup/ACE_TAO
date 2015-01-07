@@ -3,8 +3,6 @@
 /**
  *  @file    SPIPE_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test of Named Pipes that uses
  *    ACE_SPIPE_Acceptor and ACE_SPIPE_Connector classes. The test
  *    forks two processes or spawns two threads (depending upon the

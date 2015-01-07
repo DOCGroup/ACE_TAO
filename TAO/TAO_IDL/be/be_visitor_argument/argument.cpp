@@ -3,8 +3,6 @@
 /**
  *  @file    argument.cpp
  *
- *  $Id$
- *
  *  generic visitor for Argument node
  *
  *

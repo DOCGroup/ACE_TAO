@@ -3,8 +3,6 @@
 /**
  *  @file    connector_dds_exs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Connectors in the exec impl source.
  *
  *

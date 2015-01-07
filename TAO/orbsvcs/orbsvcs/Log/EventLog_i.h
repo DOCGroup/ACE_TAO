@@ -4,8 +4,6 @@
 /**
  *  @file   EventLog_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::EventLog interface.
  *  File also conatins TAO_Event_LogConsumer which is used
  *  to write events to the Log.

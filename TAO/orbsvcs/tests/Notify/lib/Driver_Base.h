@@ -2,8 +2,6 @@
 /**
  *  @file Driver_Base.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

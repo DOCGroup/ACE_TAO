@@ -3,8 +3,6 @@
 /**
  *  @file    ub_array_seq.h
  *
- *  $Id$
- *
  *   Tests unbounded array sequence
  *
  *

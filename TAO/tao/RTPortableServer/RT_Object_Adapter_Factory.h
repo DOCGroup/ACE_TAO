@@ -4,8 +4,6 @@
 /**
  *  @file    RT_Object_Adapter_Factory.h
  *
- *  $Id$
- *
  *  @author  Frank Hunleth
  */
 // ===================================================================

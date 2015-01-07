@@ -4,8 +4,6 @@
 /**
  *  @file    Asynch_Pseudo_Task.h
  *
- *  $Id$
- *
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
 //=============================================================================

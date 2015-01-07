@@ -3,8 +3,6 @@
 /**
  *  @file    DLL_Test.cpp
  *
- *  $Id$
- *
  *  This test illustrates the use of <ACE_DLL> wrapper class.
  *
  *

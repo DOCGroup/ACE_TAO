@@ -3,8 +3,6 @@
 /**
  *  @file    Dynamic_Priority_Test.cpp (based on Priority_Buffer_Test.cpp)
  *
- *  $Id$
- *
  *  This is a test to verify and illustrate the static and dynamic
  *  priority mechanisms of the <ACE_Message_Queue> class and the
  *  <ACE_Dynamic_Message_Queue> class.  As in the

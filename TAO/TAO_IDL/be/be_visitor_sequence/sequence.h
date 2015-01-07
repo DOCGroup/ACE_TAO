@@ -3,8 +3,6 @@
 /**
  *  @file    sequence.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Sequence
  *
  *

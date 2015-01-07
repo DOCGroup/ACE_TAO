@@ -3,8 +3,6 @@
 /**
  *  @file   config-win32-msvc-10.h
  *
- *  $Id$
- *
  *  @brief  Microsoft Visual C++ 10.0 configuration file.
  *
  *  This file is the ACE configuration file for Microsoft Visual C++ version 10.

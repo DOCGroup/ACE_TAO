@@ -4,8 +4,6 @@
 /**
  *  @file    Functor_String.h
  *
- *  $Id$
- *
  *   Class template specializations for ACE_*String types implementing
  *   function objects that are used in  various places in ATC. They
  *   could be placed in Functor.h. But we don't want to couple string

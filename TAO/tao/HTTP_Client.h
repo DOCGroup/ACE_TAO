@@ -5,8 +5,6 @@
 /**
  *  @file    HTTP_Client.h
  *
- *  $Id$
- *
  *   This is the HTTP_Client class, which is the API for doing file
  *   uploads/downloads.
  *

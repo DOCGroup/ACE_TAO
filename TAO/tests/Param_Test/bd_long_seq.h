@@ -3,8 +3,6 @@
 /**
  *  @file    bd_long_seq.h
  *
- *  $Id$
- *
  *   Tests bounded long sequences
  *
  *

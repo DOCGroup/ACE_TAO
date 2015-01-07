@@ -3,8 +3,6 @@
 /**
  *  @file    Console_Input.cpp
  *
- *  $Id$
- *
  *
  *  This application tests the working of WFMO_Reactor when users
  *  are interested in console input.

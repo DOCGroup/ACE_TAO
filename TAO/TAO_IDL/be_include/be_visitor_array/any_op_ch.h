@@ -3,8 +3,6 @@
 /**
  *  @file    any_op_ch.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arrays in client header. This one
  *  generates the Any operators.
  *

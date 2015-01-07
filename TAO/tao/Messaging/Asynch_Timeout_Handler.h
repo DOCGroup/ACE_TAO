@@ -4,8 +4,6 @@
 /**
  *  @file   Asynch_Timeout_Handler.h
  *
- *  $Id$
- *
  *  Timeout Handler for AMI timeouts
  *
  *

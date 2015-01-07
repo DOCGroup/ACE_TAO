@@ -3,8 +3,6 @@
 /**
  *  @file    Concurrency_Service.cpp
  *
- *  $Id$
- *
  *    This class implements a Concurrency_Service object.
  *
  *

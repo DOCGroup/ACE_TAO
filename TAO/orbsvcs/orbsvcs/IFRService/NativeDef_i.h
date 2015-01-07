@@ -5,8 +5,6 @@
 /**
  *  @file    NativeDef_i.h
  *
- *  $Id$
- *
  *  NativeDef servant class.
  *
  *

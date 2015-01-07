@@ -3,8 +3,6 @@
 /**
  *  @file    array_cs.cpp
  *
- *  $Id$
- *
  *  Visitor for code generation of Arrays in the client stubs
  *
  *

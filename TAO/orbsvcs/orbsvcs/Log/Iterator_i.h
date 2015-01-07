@@ -4,8 +4,6 @@
 /**
  *  @file   Iterator_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::Iterator interface.
  *
  *

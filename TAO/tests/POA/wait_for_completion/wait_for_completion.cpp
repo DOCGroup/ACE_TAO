@@ -3,8 +3,6 @@
 /**
  *  @file     wait_for_completion.cpp
  *
- *  $Id$
- *
  *   This program tests the wait_for_completion feature of a POA.
  *
  *

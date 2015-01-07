@@ -3,8 +3,6 @@
 /**
  *  @file    be_expression.h
  *
- *  $Id$
- *
  *  Extension of class AST_Expression that provides additional means for C++
  *  mapping.
  *

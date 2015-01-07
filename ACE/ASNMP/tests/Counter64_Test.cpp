@@ -3,8 +3,6 @@
 /**
  *  @file    Counter64_Test.cpp
  *
- *  $Id$
- *
  *  Test all the member functions of the Counter64 class. An Object
  *  representing an ASN.1 Counter64 SMI 64 bit Integer SYNTAX.
  * (SNMPv2c)

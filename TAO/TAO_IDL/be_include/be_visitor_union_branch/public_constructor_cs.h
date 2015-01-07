@@ -4,8 +4,6 @@
 /**
  *  @file    public_constructor_cs.h
  *
- *  $Id$
- *
  *   Visitor for the Union class.
  *   This one generates code for the constructor of the union class
  *

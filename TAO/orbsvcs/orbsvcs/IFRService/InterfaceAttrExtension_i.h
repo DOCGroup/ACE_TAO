@@ -4,8 +4,6 @@
 /**
  *  @file    InterfaceAttrExtension_i.h
  *
- *  $Id$
- *
  *  InterfaceAttrExtension_i servant class.
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file     DiffServPolicy_Factory.h
  *
- *  $Id$
- *
  *  @author  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */

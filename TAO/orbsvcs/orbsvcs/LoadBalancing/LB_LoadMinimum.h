@@ -4,8 +4,6 @@
 /**
  *  @file LB_LoadMinimum.h
  *
- *  $Id$
- *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Ossama Othman <ossama@uci.edu>
  */

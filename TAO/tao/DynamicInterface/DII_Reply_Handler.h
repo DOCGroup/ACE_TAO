@@ -4,8 +4,6 @@
 /**
  *  @file DII_Reply_Handler.h
  *
- *  $Id$
- *
  *  @brief Handler of DII twoway asynch replies type.
  */
 // =============================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    facet_ami_exs.h
  *
- *  $Id$
- *
  *  This provides code generation for facets in the AMI connector
  *  impl source
  *

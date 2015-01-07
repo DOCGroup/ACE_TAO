@@ -3,8 +3,6 @@
 /**
  *  @file   EC_Kokyu_Dispatching.h
  *
- *  $Id$
- *
  *  @author Bryan Thrall (thrall@cs.wustl.edu)
  *
  * Based on previous work by Carlos O'Ryan (coryan@cs.wustl.edu) and

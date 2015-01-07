@@ -4,8 +4,6 @@
 /**
  *  @file   SHMIOP_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 // ===================================================================

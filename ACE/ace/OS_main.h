@@ -4,8 +4,6 @@
 /**
  *  @file   OS_main.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...

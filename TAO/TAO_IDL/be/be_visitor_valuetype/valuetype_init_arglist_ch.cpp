@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_init_arglist_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the parameter list of the OBV factory
  *  signature.
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Asynch_IO.h
  *
- *  $Id$
- *
  *  This works on Win32 (defined (ACE_WIN32) && !defined
  *  (ACE_HAS_WINCE)) platforms and on POSIX4 platforms with {aio_*}
  *  routines (defined (ACE_HAS_AIO_CALLS))

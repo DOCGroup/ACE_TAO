@@ -3,8 +3,6 @@
 /**
  *  @file    ub_string.cpp
  *
- *  $Id$
- *
  *  tests unbounded strings
  *
  *

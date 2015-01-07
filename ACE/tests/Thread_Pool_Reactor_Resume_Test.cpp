@@ -3,8 +3,6 @@
 /**
  *  @file    Thread_Pool_Reactor_Resume_Test.cpp
  *
- *  $Id$
- *
  *    This program is an additional torture test of thread pool
  *    reactors.  This test  is based on Thread_Pool_Reactor_Test.cpp
  *    in $ACE_ROOT/tests. This test differs from the other one

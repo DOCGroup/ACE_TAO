@@ -3,8 +3,6 @@
 /**
  *  @file    main_reactor.cpp
  *
- *  $Id$
- *
  *    Implements an reactive timer queue.
  *    This code exercises the Timer_Queue_Test_Driver class using
  *    a reactor.

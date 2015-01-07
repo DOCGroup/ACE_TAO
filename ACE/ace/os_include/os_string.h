@@ -6,8 +6,6 @@
  *
  *  string operations
  *
- *  $Id$
- *
  *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */

@@ -3,8 +3,6 @@
 /**
  *  @file    constant_cs.cpp
  *
- *  $Id$
- *
  *  Visitor for code generation of Constant code in the client stubs file.
  *
  *

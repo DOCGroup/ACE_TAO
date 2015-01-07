@@ -5,8 +5,6 @@
 /**
  *  @file    ValueBoxDef_i.h
  *
- *  $Id$
- *
  *  ValueBoxDef servant class.
  *
  *

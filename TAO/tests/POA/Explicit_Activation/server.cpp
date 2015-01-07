@@ -3,8 +3,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Explicit creation of servants.
  *
  *

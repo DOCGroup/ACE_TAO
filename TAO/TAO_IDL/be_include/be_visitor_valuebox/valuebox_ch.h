@@ -4,8 +4,6 @@
 /**
  *  @file    valuebox_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuebox node.
  *  This provides code generation for valueboxes in the client header.
  *

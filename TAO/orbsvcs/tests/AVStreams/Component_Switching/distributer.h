@@ -4,8 +4,6 @@
 /**
  *  @file    distributer.h
  *
- *  $Id$
- *
  *  Process to receive data from the sender and send it to the
  *  receiver.
  *

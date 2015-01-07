@@ -6,8 +6,6 @@
  *
  *  SCIOP implementation of PP Framework Endpoint interface.
  *
- *  $Id$
- *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */

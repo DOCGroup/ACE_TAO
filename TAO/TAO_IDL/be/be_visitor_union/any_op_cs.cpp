@@ -3,8 +3,6 @@
 /**
  *  @file    any_op_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operators for Union.
  *
  *

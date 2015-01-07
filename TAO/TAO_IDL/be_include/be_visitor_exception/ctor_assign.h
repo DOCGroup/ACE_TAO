@@ -4,8 +4,6 @@
 /**
  *  @file    ctor_assign.h
  *
- *  $Id$
- *
  *  Visitor for Exceptions.
  *  For code generation for the special constructor and assignment operator
  *  for exceptions.

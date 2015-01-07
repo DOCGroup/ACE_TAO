@@ -4,8 +4,6 @@
 /**
  *  @file    File_Lock.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

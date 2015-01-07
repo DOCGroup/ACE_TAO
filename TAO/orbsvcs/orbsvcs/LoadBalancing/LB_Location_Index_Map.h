@@ -4,8 +4,6 @@
 /**
  *  @file    LB_Location_Index_Map.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=======================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file     Acceptor_Registry.h
  *
- *  $Id$
- *
  *  Interface for the TAO pluggable protocol framework.
  *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>

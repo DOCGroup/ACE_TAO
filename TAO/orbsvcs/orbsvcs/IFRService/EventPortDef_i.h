@@ -5,8 +5,6 @@
 /**
  *  @file    EventPortDef_i.h
  *
- *  $Id$
- *
  *  EventPortDef_i servant class.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    String_Alloc.h
  *
- *  $Id$
- *
  *  Header file for the CORBA string types.
  *
  *  @author DOC Group at Wash U, UCI, and Vanderbilt U.

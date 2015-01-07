@@ -4,8 +4,6 @@
 /**
  *  @file    Current_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    be_helper.cpp
  *
- *  $Id$
- *
  * Provides helper classes to print generated code to the output
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file   RLECompressor.h
  *
- *  $Id$
- *
  *  @author Derek Dominish  <derek.dominish@dsto.defence.gov.au>
  */
 // ===================================================================

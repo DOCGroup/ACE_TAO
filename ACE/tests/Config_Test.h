@@ -3,8 +3,6 @@
 /**
  *  @file    Config_Test.h
  *
- *  $Id$
- *
  *    This is a test that makes sure the <import_config_as_strings> of
  *    <ACE_Configuration_Heap> class works correctly.
  *

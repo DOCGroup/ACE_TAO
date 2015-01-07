@@ -4,8 +4,6 @@
 /**
  *  @file    exception.h
  *
- *  $Id$
- *
  *  Visitor for Exceptions.
  *  This is the generic (common) visitor for all exceptions.
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Static_Object_Lock.h
  *
- *  $Id$
- *
  *  @author David L. Levine <levine@cs.wustl.edu>
  *  @author Matthias Kerkhoff
  *  @author Per Andersson

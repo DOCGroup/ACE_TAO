@@ -3,8 +3,6 @@
 /**
  *  @file    Abandoned.cpp
  *
- *  $Id$
- *
  *
  *  Tests the WFMO_Reactor's ability to handle abandoned mutexes.
  *

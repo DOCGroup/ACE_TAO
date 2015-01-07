@@ -5,8 +5,6 @@
 /**
  *  @file    EmitsDef_i.h
  *
- *  $Id$
- *
  *  EmitsDef servant class.
  *
  *

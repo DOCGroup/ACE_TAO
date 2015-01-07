@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynsequence.h
  *
- *  $Id$
- *
  *  Header file for class to test DynSequence.
  *
  *

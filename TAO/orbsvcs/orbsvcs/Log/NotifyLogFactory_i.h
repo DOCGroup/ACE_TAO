@@ -4,8 +4,6 @@
 /**
  *  @file   NotifyLogFactory_i.h
  *
- *  $Id$
- *
  *  Implements the Factory for NotifyLog Objects.
  *
  *

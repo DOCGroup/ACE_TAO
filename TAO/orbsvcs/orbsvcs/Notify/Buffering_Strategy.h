@@ -2,8 +2,6 @@
 /**
  *  @file Buffering_Strategy.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

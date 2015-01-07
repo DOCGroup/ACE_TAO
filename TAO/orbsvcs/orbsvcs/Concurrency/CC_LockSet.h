@@ -4,8 +4,6 @@
 /**
  *  @file      CC_LockSet.h
  *
- *  $Id$
- *
  *    This class implements the lock set interface from the
  *    concurrency service.
  *

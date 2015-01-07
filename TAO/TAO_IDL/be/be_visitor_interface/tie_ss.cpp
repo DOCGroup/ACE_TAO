@@ -3,8 +3,6 @@
 /**
  *  @file    tie_ss.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for TIE classes for the Interface node in the
  *  inline file.
  *

@@ -4,8 +4,6 @@
 /**
  *  @file ImplicitActivationStrategy.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

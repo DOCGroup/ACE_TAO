@@ -3,8 +3,6 @@
 /**
  *  @file    be_visitor_scope.cpp
  *
- *  $Id$
- *
  *  Visitor for the base be_scope node. This serves to maintain the current
  *  state (context) of code generation for the derived visitor.
  *

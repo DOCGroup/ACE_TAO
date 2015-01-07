@@ -3,8 +3,6 @@
 /**
  *  @file    array_ci.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arrays in client inline.
  *
  *

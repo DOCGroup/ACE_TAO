@@ -3,8 +3,6 @@
 /**
  *  @file    Priority_Reactor_Test.cpp
  *
- *  $Id$
- *
  *   This is a test of the <ACE_Priority_Reactor>.  The test forks
  *   two processes (for a total of three processes) which connect to
  *   the main process and The clients send data to a connector,

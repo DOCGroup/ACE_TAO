@@ -3,8 +3,6 @@
 /**
  *  @file    any_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the Any operators for Exceptions
  *
  *

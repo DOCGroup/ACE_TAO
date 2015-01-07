@@ -3,8 +3,6 @@
 /**
  *  @file   ami_test_i.h
  *
- *  $Id$
- *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
 //=============================================================================

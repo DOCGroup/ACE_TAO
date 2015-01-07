@@ -3,8 +3,6 @@
 /**
  *  @file   Storable_Naming_Context.h
  *
- *  $Id$
- *
  *  @author Bruce Trask <trask_b@ociweb.com>
  */
 //=============================================================================

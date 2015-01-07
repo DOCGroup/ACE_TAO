@@ -5,8 +5,6 @@
 /**
  *  @file    EnumDef_i.h
  *
- *  $Id$
- *
  *  EnumDef servant class.
  *
  *

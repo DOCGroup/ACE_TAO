@@ -3,8 +3,6 @@
 /**
  *  @file   Atomic_Reconnect.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

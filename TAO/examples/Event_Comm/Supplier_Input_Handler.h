@@ -4,8 +4,6 @@
 /**
  *  @file    Supplier_Input_Handler.h
  *
- *  $Id$
- *
  *  Handle input from the keyboard.
  *
  *

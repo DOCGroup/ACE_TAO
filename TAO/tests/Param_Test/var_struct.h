@@ -3,8 +3,6 @@
 /**
  *  @file    var_struct.h
  *
- *  $Id$
- *
  *   Tests variable sized structures
  *
  *

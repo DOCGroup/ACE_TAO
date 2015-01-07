@@ -3,8 +3,6 @@
 /**
  *  @file    ulonglong.h
  *
- *  $Id$
- *
  *   Tests 64bit unsigned longs.
  *
  *

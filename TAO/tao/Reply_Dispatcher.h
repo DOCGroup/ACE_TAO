@@ -4,8 +4,6 @@
 /**
  *  @file     Reply_Dispatcher.h
  *
- *  $Id$
- *
  *   Define the interface for the Reply_Dispatcher strategies.
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file   SHMIOP_Transport.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */

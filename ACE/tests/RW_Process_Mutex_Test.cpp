@@ -2,8 +2,6 @@
 /**
  *  @file    RW_Process_Mutex_Test.cpp
  *
- *  $Id$
- *
  *  Tests an <ACE_RW_Process_Mutex> shared between multiple child processes.
  *
  *

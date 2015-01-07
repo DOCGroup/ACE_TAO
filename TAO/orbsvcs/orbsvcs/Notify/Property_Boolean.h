@@ -3,8 +3,6 @@
 /**
  *  @file Property_Boolean.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

@@ -4,8 +4,6 @@
 /**
  *  @file    TypeCode_Struct_Field.h
  *
- *  $Id$
- *
  *  Header file for @c TAO::TypeCode::Struct_Field type.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

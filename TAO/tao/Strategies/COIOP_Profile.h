@@ -4,8 +4,6 @@
 /**
  *  @file     COIOP_Profile.h
  *
- *  $Id$
- *
  *   COIOP profile specific processing
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>

@@ -3,8 +3,6 @@
 /**
  *  @file    Client_i.cpp
  *
- *  $Id$
- *
  *  Implementation of the Client_i class.
  *
  *

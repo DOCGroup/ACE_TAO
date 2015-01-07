@@ -4,8 +4,6 @@
 /**
  *  @file LB_LoadAverage.h
  *
- *  $Id$
- *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */

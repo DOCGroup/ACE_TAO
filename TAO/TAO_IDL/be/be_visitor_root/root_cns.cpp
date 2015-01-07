@@ -3,8 +3,6 @@
 /**
  *  @file    root_cns.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the CIAO
  *  connector impl source
  *

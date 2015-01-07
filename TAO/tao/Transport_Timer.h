@@ -4,8 +4,6 @@
 /**
  *  @file Transport_Timer.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================

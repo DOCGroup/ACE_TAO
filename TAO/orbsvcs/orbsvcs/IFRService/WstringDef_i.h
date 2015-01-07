@@ -5,8 +5,6 @@
 /**
  *  @file    WstringDef_i.h
  *
- *  $Id$
- *
  *  WstringDef servant class.
  *
  *

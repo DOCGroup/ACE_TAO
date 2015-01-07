@@ -3,8 +3,6 @@
 /**
  *  @file    typecode.h
  *
- *  $Id$
- *
  *   Tests typecodes
  *
  *

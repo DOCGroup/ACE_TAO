@@ -2,8 +2,6 @@
 /**
  *  @file client.cpp
  *
- *  $Id$
- *
  *  This class implements a CORBA test client for the Fault Tolerant Naming Service.
  *
  *  @author Rich Seibel <seibel_r@ociweb.com>

@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynarray.cpp
  *
- *  $Id$
- *
  *  Implementation of the DynArray test
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    test_timeout_st.cpp
  *
- *  $Id$
- *
  *
  *  This example application shows how to write event loops that
  *  handle events for some fixed amount of time. This is the single

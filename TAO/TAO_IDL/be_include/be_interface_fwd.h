@@ -4,8 +4,6 @@
 /**
  *  @file    be_interface_fwd.h
  *
- *  $Id$
- *
  *  Extension of class AST_InterfaceFwd that provides additional
  *  means for C++ mapping of a forward declared interface.
  *

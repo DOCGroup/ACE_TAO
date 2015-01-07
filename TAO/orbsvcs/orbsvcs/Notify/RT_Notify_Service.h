@@ -3,8 +3,6 @@
 /**
  *  @file RT_Notify_Service.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

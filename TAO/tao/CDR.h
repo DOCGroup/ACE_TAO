@@ -4,8 +4,6 @@
 /**
  *  @file    CDR.h
  *
- *  $Id$
- *
  *   Common Data Representation (CDR) marshaling streams.
  *
  *   This implementation assumes that the native numeric

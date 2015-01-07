@@ -4,8 +4,6 @@
 /**
  *  @file    TypeCode_Case_Enum_T.h
  *
- *  $Id$
- *
  *  Header file for @c TAO::TypeCode::Case_T template.
  *
  *  @author Ossama Othman

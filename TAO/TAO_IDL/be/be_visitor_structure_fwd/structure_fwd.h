@@ -3,8 +3,6 @@
 /**
  *  @file    structure_fwd.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for be_structure_fwd
  *
  *

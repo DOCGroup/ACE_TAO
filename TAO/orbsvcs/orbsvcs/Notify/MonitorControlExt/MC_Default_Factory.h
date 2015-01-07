@@ -1,8 +1,6 @@
 /**
  *  @file MC_Default_Factory.h
  *
- *  $Id$
- *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
 

@@ -4,8 +4,6 @@
 /**
  *  @file     Pagefile_Memory_Pool.h
  *
- *  $Id$
- *
  *  @author Dougls C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */

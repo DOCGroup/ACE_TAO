@@ -3,8 +3,6 @@
 /**
  *  @file    var_struct.cpp
  *
- *  $Id$
- *
  *  test variable sized structures
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    snmp.cpp
  *
- *  $Id$
- *
  * The basic SNMPv1 API - blocking version using UDP/IPv4 transport
  * and addressing.
  *

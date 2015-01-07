@@ -3,8 +3,6 @@
 /**
  *  @file    any_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operators for a forward declared interface
  *  in the client header.
  *

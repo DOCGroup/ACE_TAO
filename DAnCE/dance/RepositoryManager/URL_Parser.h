@@ -4,8 +4,6 @@
 /**
  *  @file    URL_Parser.h
  *
- *  $Id$
- *
  *  Parses a URL into its logical chunks
  *
  *  @author Stoyan Paunov

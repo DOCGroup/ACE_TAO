@@ -4,8 +4,6 @@
 /**
  *  @file    DII_Invocation.h
  *
- *  $Id$
- *
  *  @brief The DII invocation classes.
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>

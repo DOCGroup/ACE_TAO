@@ -3,8 +3,6 @@
 /**
  *  @file     File.idl
  *
- *  $Id$
- *
  *   A simple File Descriptor and File System IDL interface.
  *
  *

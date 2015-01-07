@@ -4,8 +4,6 @@
 /**
  *  @file    Grid_i.h
  *
- *  $Id$
- *
  *  This class implements the Grid IDL interface.
  *
  *

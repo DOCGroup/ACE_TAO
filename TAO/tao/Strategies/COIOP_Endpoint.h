@@ -4,8 +4,6 @@
 /**
  *  @file     COIOP_Endpoint.h
  *
- *  $Id$
- *
  *   COIOP implementation of PP Framework Endpoint interface.
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>

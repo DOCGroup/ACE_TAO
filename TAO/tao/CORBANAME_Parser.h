@@ -4,8 +4,6 @@
 /**
  *  @file   CORBANAME_Parser.h
  *
- *  $Id$
- *
  *  @author Priyanka Gontla (pgontla@uci.edu)
  */
 //=============================================================================

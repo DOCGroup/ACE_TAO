@@ -3,8 +3,6 @@
 /**
  *  @file    test.idl
  *
- *  $Id$
- *
  *  Test to verify the correctness of the fix for bug 4141
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>

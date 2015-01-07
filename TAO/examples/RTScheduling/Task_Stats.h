@@ -3,8 +3,6 @@
 /**
  *  @file Task_Stats.h
  *
- *  $Id$
- *
  *  Utility Stats class that maintains the readings.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>

@@ -4,8 +4,6 @@
 /**
  *  @file    Intrusive_Ref_Count_Object_T.h
  *
- *  $Id$
- *
  *  @authors Yan Dai  <dai_y@ociweb.com>
  */
 //=============================================================================

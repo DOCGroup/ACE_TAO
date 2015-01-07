@@ -3,8 +3,6 @@
 /**
  *  @file    short.h
  *
- *  $Id$
- *
  *   Tests shorts
  *
  *

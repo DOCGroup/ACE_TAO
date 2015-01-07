@@ -4,8 +4,6 @@
 /**
  *  @file    Exception.h
  *
- *  $Id$
- *
  *   This file defines way in which CORBA exceptions are reported.
  *
  *  @author DOC Group at Vanderbilt U., Wash U, and UCI

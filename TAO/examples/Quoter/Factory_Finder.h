@@ -3,8 +3,6 @@
 /**
  *  @file    Factory_Finder.h
  *
- *  $Id$
- *
  *  Server for the Quoter Factory Finder
  *
  *

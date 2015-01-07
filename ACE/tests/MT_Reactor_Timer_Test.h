@@ -4,8 +4,6 @@
 /**
  *  @file    MT_Reactor_Timer_Test.h
  *
- *  $Id$
- *
  *    This file contains class definitions needed for template
  *    instantiation in the MT_Reactor_Timer_Test.cpp file.
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes in the client stubs file.
  *
  *

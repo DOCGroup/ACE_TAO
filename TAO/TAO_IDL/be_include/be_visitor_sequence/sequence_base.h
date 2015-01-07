@@ -4,8 +4,6 @@
 /**
  *  @file    sequence_base.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Sequence class
  *  This one provides code generation for the base typ of the Sequence node.
  *

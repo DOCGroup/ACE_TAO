@@ -3,8 +3,6 @@
 /**
  *  @file    Log_Msg_Test.cpp
  *
- *  $Id$
- *
  *   This program tests the <ACE_Log_Msg> class in various ways and
  *   also illustrates many of the features of the <ACE_Log_Msg> For
  *   instance, this program tests the <ACE_Log_Msg> abstraction wrt

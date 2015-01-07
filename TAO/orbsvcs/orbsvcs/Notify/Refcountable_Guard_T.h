@@ -3,8 +3,6 @@
 /**
  *  @file Refcountable_Guard_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

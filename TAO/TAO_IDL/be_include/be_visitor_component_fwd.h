@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_component_fwd.h
  *
- *  $Id$
- *
  *  Concrete visitor for the forward declared component class.
  *
  *

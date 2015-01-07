@@ -4,8 +4,6 @@
 /**
  *  @file    SStringfwd.h
  *
- *  $Id$
- *
  *  Forward declarations and typedefs of ACE string types.
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>

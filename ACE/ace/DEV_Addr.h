@@ -4,8 +4,6 @@
 /**
  *  @file    DEV_Addr.h
  *
- *  $Id$
- *
  *  @author Gerhard Lenzer and Douglas C. Schmidt
  */
 //==========================================================================

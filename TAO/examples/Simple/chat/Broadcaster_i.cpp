@@ -3,8 +3,6 @@
 /**
  *  @file    Broadcaster_i.cpp
  *
- *  $Id$
- *
  * Implementation of the Broadcaster_i class. This class is the servant
  * object for the chat server.
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    Message_Queue_Notifications_Test.cpp
  *
- *  $Id$
- *
  *    There are two tests that test 2 different notification
  *    mechanisms in Message Queue.
  *

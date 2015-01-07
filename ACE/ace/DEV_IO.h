@@ -4,8 +4,6 @@
 /**
  *  @file    DEV_IO.h
  *
- *  $Id$
- *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt
  */

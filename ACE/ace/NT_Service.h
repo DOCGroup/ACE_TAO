@@ -4,8 +4,6 @@
 /**
  *  @file    NT_Service.h
  *
- *  $Id$
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //==========================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file   BasicLog_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::BasicLog interface.
  *
  *

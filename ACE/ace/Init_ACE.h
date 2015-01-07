@@ -4,8 +4,6 @@
 /**
  *  @file   Init_ACE.h
  *
- *  $Id$
- *
  *  Initialize and finalize the ACE library services.  You can
  *  generally execute the @a ACE::init() and @a ACE::fini() sequence
  *  multiple times, but be aware that nothing that ACE controls (e.g.,

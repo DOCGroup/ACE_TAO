@@ -4,8 +4,6 @@
 /**
  *  @file    FlowSpec_Dbase.h
  *
- *  $Id$
- *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file    ftp.h
  *
- *  $Id$
- *
  *  Ftp client to send data
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    Consumer_Handler.cpp
  *
- *  $Id$
- *
  *  Implementation of the Consumer_Handler class.
  *
  *

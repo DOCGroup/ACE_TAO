@@ -2,8 +2,6 @@
 /**
  *  @file    Load_Balancing_Service.cpp
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

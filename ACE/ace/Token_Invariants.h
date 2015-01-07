@@ -4,8 +4,6 @@
 /**
  *  @file    Token_Invariants.h
  *
- *  $Id$
- *
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  *
  *   Allows applications to test that invariants are always

@@ -3,8 +3,6 @@
 /**
  *  @file    any_op_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the valuetype node.
  *  This one provides code generation for the Any operators
  *

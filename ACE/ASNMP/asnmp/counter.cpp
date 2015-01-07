@@ -3,8 +3,6 @@
 /**
  *  @file     counter.cpp
  *
- *  $Id$
- *
  *  Class implementation for SMI Counter32 class.
  *
  *

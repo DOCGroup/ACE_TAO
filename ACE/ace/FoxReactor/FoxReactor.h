@@ -4,8 +4,6 @@
 /**
  *  @file   FoxReactor.h
  *
- *  $Id$
- *
  *  @author Dmitriy Nikitinskiy <nick@bel.ru>
  *  @author Based in part in the ACE_XtReactor implementation by
  *  @author Eric C. Newton's <ecn@clark.net>

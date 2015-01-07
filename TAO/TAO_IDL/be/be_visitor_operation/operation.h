@@ -3,8 +3,6 @@
 /**
  *  @file    operation.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Operation
  *
  *

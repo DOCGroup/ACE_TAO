@@ -3,8 +3,6 @@
 /**
  *  @file    gatewayd.cpp
  *
- *  $Id$
- *
  *  Driver for the gateway daemon (gatewayd).  Note that this is
  *  completely generic code due to the Service Configurator
  *  framework!

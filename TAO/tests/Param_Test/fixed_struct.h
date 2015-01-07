@@ -3,8 +3,6 @@
 /**
  *  @file    fixed_struct.h
  *
- *  $Id$
- *
  *   Tests fixed size structs
  *
  *

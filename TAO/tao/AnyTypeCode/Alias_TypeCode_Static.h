@@ -4,8 +4,6 @@
 /**
  *  @file    Alias_TypeCode_Static.h
  *
- *  $Id$
- *
  *  Header file for a static @c tk_alias and @c tk_value_box
  *  @c CORBA::TypeCode.
  *

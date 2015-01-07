@@ -2,8 +2,6 @@
 /**
  *  @file   Storable_Naming_Context_Activator.cpp
  *
- *  $Id$
- *
  *  @author Byron Harris <harris_b@ociweb.com>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file   RT_Policy_i.h
  *
- *  $Id$
- *
  *  @author Marina Spivak (marina@cs.wustl.edu)
  */
 //=============================================================================

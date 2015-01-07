@@ -4,8 +4,6 @@
 /**
  *  @file   LB_server.h
  *
- *  $Id$
- *
  *  @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */

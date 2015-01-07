@@ -3,8 +3,6 @@
 /**
  *  @file    basic_func.h
  *
- *  $Id$
- *
  *  For use with basic_perf.cpp.
  *
  *

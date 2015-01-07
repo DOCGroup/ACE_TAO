@@ -3,8 +3,6 @@
 /**
  *  @file    operation_ch.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations in client header
  *
  *

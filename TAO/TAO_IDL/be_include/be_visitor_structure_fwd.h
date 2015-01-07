@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_structure_fwd.h
  *
- *  $Id$
- *
  *  Concrete visitor for the be_structure_fwd class
  *
  *

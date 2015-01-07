@@ -3,8 +3,6 @@
 /**
  *  @file RT_Transport_Descriptor_Property.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

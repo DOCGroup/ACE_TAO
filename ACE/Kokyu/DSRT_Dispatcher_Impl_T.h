@@ -2,8 +2,6 @@
 /**
  *  @file   DSRT_Dispatcher_Impl_T.h
  *
- *  $Id$
- *
  */
 
 #ifndef DSRT_DISPATCHER_IMPL_H

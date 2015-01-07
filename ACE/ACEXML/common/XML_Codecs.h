@@ -3,8 +3,6 @@
 /**
  *  @file   XML_Codecs.h
  *
- *  $Id$
- *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  *
  *  XML_Codecs is a generic wrapper for various encoding and decoding

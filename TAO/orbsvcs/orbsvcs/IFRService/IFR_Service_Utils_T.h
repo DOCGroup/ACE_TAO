@@ -4,8 +4,6 @@
 /**
  *  @file    IFR_Service_Utils_T.h
  *
- *  $Id$
- *
  *  Template methods useful to IFR Service.
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>

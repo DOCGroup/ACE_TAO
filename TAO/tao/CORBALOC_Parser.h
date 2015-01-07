@@ -4,8 +4,6 @@
 /**
  *  @file   CORBALOC_Parser.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Priyanka Gontla (pgontla@uci.edu)
  */

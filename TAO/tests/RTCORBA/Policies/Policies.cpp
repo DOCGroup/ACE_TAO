@@ -3,8 +3,6 @@
 /**
  *  @file     Policies.cpp
  *
- *  $Id$
- *
  *   This program tests the construction of RTCORBA policies, both
  *   through the generic ORB::create_policy interface and the
  *   RTCORBA specific interfaces.

@@ -4,8 +4,6 @@
 /**
  *  @file   Malloc_Allocator.h
  *
- *  $Id$
- *
  *  @author Based on code that formerly existed in another ACE file.
  */
 //==========================================================================

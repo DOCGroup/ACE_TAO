@@ -3,8 +3,6 @@
 /**
  *  @file    ncontextext_client_i.cpp
  *
- *  $Id$
- *
  *  This class implements a simple CORBA client which
  *  converts a Name to a string and viceversa, forms a IIOPNAME
  *  url address and can resolve a stringified name.

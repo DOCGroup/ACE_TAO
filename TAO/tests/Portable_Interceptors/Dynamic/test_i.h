@@ -4,8 +4,6 @@
 /**
  *  @file   test_i.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */

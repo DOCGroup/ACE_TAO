@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_TP_Queue_Visitor.h
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

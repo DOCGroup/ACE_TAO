@@ -3,8 +3,6 @@
 /**
  *  @file    any_op.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operators for elements in the scope of
  *  the Module.
  *

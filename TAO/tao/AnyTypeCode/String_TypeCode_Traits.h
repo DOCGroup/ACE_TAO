@@ -4,8 +4,6 @@
 /**
  *  @file    String_TypeCode_Traits.h
  *
- *  $Id$
- *
  *  Header file for bound
  *    @c tk_string,
  *    @c tk_wstring,

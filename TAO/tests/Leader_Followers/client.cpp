@@ -3,8 +3,6 @@
 /**
  *  @file     client.cpp
  *
- *  $Id$
- *
  *   See README.
  *
  *

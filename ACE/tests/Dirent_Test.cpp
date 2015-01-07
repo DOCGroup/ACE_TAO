@@ -3,8 +3,6 @@
 /**
  *  @file    Dirent_Test.cpp
  *
- *  $Id$
- *
  *   This is a test of the opendir and readdir emulation provided by the
  *   class ACE_Dirent.  It is used to ensure that the emulation code
  *   works properly on platforms that don't support this capability

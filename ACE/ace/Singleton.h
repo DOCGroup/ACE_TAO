@@ -4,8 +4,6 @@
 /**
  *  @file    Singleton.h
  *
- *  $Id$
- *
  *  @brief
  *
  *  @author Tim Harrison <harrison@cs.wustl.edu>

@@ -3,8 +3,6 @@
 /**
  *  @file    connector_ami_exh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for AMI4CCM Connectors in the exec impl header.
  *
  *

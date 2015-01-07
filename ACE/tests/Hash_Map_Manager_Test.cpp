@@ -3,8 +3,6 @@
 /**
  *  @file    Hash_Map_Manager_Test.cpp
  *
- *  $Id$
- *
  *    This test illustrates the use of <ACE_Hash_Map_Manager> to
  *    maintain a hash table using strings.  In addition, it also
  *    illustrates how the <ACE_Static_Allocator> works in

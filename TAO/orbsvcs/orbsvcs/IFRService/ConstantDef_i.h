@@ -5,8 +5,6 @@
 /**
  *  @file    ConstantDef_i.h
  *
- *  $Id$
- *
  *  ConstantDef servant class.
  *
  *

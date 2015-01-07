@@ -3,8 +3,6 @@
 /**
  *  @file    Sigset_Ops_Test.cpp
  *
- *  $Id$
- *
  *   This program tests the correctness of following functions.
  *   sigfillset(), sigemptyset(), sigaddset(), sigdelset(),
  *   sigismember().

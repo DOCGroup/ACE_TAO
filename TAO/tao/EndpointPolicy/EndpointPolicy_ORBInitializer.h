@@ -4,8 +4,6 @@
 /**
  *  @file EndpointPolicy_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
 //=============================================================================

@@ -2,8 +2,6 @@
 /**
  *  @file    Network_Events.cpp
  *
- *  $Id$
- *
  *
  *  This application tests Reactor to make sure that it responds
  *  correctly to different kinds of network events.

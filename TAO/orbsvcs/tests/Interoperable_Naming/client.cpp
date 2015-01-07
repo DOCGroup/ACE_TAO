@@ -3,8 +3,6 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *   This implements a simple CORBA client for the
  *   CosNaming::NamingContextExt example
  *

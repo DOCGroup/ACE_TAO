@@ -4,8 +4,6 @@
 /**
  *  @file    CC_Lock.h
  *
- *  $Id$
- *
  *    This class implements a lock used by the lock set from the
  *    concurrency control service
  *

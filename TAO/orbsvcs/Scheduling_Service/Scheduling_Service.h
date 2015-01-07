@@ -2,8 +2,6 @@
 /**
  *  @file    Scheduling_Service.h
  *
- *  $Id$
- *
  *    This class implements the functionality of a Scheduling Service in
  *    a stand-alone process.
  *

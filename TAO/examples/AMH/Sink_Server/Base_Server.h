@@ -4,8 +4,6 @@
 /**
  *  @file  Base_Server.h
  *
- *  $Id$
- *
  *  @desc  Implements common CORBA server ORB and POA initialisations.
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>

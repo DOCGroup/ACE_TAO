@@ -4,8 +4,6 @@
 /**
  *  @file    TkReactor.h
  *
- *  $Id$
- *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================

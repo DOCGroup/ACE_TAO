@@ -3,8 +3,6 @@
 /**
  *  @file   octet_sequence.cpp
  *
- *  $Id$
- *
  * Verifies that reference counting is performed correctly for octet
  * sequence marshaling.
  *

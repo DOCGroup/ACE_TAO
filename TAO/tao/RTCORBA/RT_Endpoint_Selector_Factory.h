@@ -4,8 +4,6 @@
 /**
  *  @file   RT_Endpoint_Selector_Factory.h
  *
- *  $Id$
- *
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    Catior_i.cpp
  *
- *  $Id$
- *
  *  Reads stringified IORs and outputs the encoded information.
  *
  *

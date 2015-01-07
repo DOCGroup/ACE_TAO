@@ -4,8 +4,6 @@
 /**
  *  @file    Client_i.h
  *
- *  $Id$
- *
  *  A helper class for the client
  *
  *

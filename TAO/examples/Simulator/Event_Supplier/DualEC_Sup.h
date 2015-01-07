@@ -3,8 +3,6 @@
 /**
  *  @file    DualEC_Sup.h
  *
- *  $Id$
- *
  * Event supplier for visualization of scheduling behavior, using
  * arrival and dispatch data logged by an EC dispatch command object
  *

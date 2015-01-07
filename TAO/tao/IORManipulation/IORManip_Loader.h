@@ -5,8 +5,6 @@
 /**
  *  @file    IORManip_Loader.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================

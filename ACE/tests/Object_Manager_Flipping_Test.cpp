@@ -3,8 +3,6 @@
 /**
  *  @file    Object_Manager_Flipping_Test.cpp
  *
- *  $Id$
- *
 
  *  Tests the basic function of the ACE_Service_Config in scenarios
  *  where the ACE_Object_Manager is being

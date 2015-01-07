@@ -4,8 +4,6 @@
 /**
  *  @file    TSS_Test_Errno.h
  *
- *  $Id$
- *
  *  This file contains the definition of Errno.  Some compilers need
  *  it in a .h file for template instantiation (such as AIX C Set
  *  ++).

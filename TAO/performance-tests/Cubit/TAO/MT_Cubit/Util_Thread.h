@@ -4,8 +4,6 @@
 /**
  *  @file    Util_Thread.h
  *
- *  $Id$
- *
  *  @author Andy Gokhale
  *  @author Sumedh Mungee
  *  @author Sergio Flores-Gaitan and Nagarajan Surendran.

@@ -4,8 +4,6 @@
 /**
  *  @file    airplane_server_i.h
  *
- *  $Id$
- *
  *  Server that sets up the ORB and handles the registration and execution
  *  of the Paper Airplane Server.
  *

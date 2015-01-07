@@ -4,8 +4,6 @@
 /**
  *  @file   ORB_Time_Policy.h
  *
- *  $Id$
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================

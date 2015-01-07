@@ -4,8 +4,6 @@
 /**
  *  @file   Interceptor_List_T.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */

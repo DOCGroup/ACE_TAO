@@ -2,8 +2,6 @@
 /**
  *  @file    Netlink_Addr.cpp
  *
- *  $Id$
- *
  *  @author Robert Iakobashvilli <coroberti@gmail.com>
  *  @author Raz Ben Yehuda <raziebe@gmail.com>
  */

@@ -4,8 +4,6 @@
 /**
  *  @file    TypeCodeFactory_Loader.cpp
  *
- *  $Id$
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

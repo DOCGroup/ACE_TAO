@@ -3,8 +3,6 @@
 /**
  *  @file    Reference_Counted_Event_Handler_Test.cpp
  *
- *  $Id$
- *
  *  This test is used to check reference counting of the Event
  *  Handler when it interacts with the Reactor.
  *

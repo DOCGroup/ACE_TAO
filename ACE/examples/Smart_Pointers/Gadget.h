@@ -3,8 +3,6 @@
 /**
  *  @file    Gadget.h
  *
- *  $Id$
- *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
 //=============================================================================

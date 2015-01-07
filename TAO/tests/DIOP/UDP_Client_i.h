@@ -4,8 +4,6 @@
 /**
  *  @file    UDP_Client_i.h
  *
- *  $Id$
- *
  *  This class implements the client functionality of the UDP test.
  *
  *

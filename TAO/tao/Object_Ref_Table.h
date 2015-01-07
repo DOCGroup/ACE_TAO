@@ -4,8 +4,6 @@
 /**
  *  @file     Object_Ref_Table.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

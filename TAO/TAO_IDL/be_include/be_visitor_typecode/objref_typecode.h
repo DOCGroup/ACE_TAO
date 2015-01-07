@@ -4,8 +4,6 @@
 /**
  *  @file  objref_typecode.h
  *
- *  $Id$
- *
  *  Object reference TypeCode generation visitor.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>

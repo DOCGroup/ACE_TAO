@@ -3,8 +3,6 @@
 /**
  *  @file   Sequence.h
  *
- *  $Id$
- *
  * Test Sequence support in Notification.
  *
  *

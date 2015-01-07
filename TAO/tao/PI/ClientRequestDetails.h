@@ -4,8 +4,6 @@
 /**
  *  @file    ClientRequestDetails.h
  *
- *  $Id$
- *
  *   This file declares a class that manages the details
  *   about a registered client request interceptor.  Policies can be
  *   used when interceptors are registered, and the policy values

@@ -4,8 +4,6 @@
 /**
  *  @file    ifr_removing_visitor.h
  *
- *  $Id$
- *
  *  Header file for class ifr_removing_visitor.
  *
  *

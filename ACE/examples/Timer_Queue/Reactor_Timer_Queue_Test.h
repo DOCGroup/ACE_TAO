@@ -5,8 +5,6 @@
 /**
  *  @file    Reactor_Timer_Queue_Test.h
  *
- *  $Id$
- *
  *  This code is an implementation of a test driver for a reactor based
  *  timer queue.
  *

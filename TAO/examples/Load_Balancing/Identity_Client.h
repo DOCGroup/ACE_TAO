@@ -4,8 +4,6 @@
 /**
  *  @file    Identity_Client.h
  *
- *  $Id$
- *
  *  Code for Identity_Client, which is used in conjunction with
  *  Identity_Server to test/demonstrate the functionality of the
  *  Load Balancing service.

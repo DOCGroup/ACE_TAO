@@ -3,8 +3,6 @@
 /**
  *  @file    operation_ih.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the implementation header
  *
  *

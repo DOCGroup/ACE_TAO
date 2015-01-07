@@ -4,8 +4,6 @@
 /**
  *  @file    nestea_client_i.h
  *
- *  $Id$
- *
  *  This class implements a simple CORBA client which controls a Nestea
  *  can database
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Concrete_Connection_Handlers.h
  *
- *  $Id$
- *
  *  These are all the subclasses of Connection_Handler that define the
  *  appropriate threaded/reactive Consumer/Supplier behavior.
  *

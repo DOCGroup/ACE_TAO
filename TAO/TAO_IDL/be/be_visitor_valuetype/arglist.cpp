@@ -3,8 +3,6 @@
 /**
  *  @file    arglist.cpp
  *
- *  $Id$
- *
  *  Visitor generating the parameter list of operations
  *  in the Valuetype class.
  *

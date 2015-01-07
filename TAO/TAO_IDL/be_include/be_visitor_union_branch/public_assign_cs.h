@@ -4,8 +4,6 @@
 /**
  *  @file    public_assign_cs.h
  *
- *  $Id$
- *
  *   Visitor for the Union class.
  *   This one generates code for the assignment operator of the union class
  *   for the union members in the client stubs.

@@ -4,8 +4,6 @@
 /**
  *  @file    UserException.h
  *
- *  $Id$
- *
  *  CORBA::UserException class header.
  *
  *  @author DOC Group at Vanderbilt U, Wash U, and UCI

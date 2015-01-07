@@ -4,8 +4,6 @@
 /**
  *  @file    Persistent_File_Allocator.h
  *
- *  $Id$
- *
  *  A Persistent_File_Allocator manages a free list and allocates and
  *  deallocates blocks from a Random_File.  There should be only one
  *  Persistent_File_Allocator for each Random_File.

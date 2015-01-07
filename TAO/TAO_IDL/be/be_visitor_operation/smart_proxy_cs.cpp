@@ -3,8 +3,6 @@
 /**
  *  @file    smart_proxy_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the stubs file.
  *
  *

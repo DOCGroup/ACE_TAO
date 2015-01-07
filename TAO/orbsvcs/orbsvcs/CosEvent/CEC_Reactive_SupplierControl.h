@@ -4,8 +4,6 @@
 /**
  *  @file   CEC_Reactive_SupplierControl.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * More details can be found in:

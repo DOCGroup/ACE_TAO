@@ -3,8 +3,6 @@
 /**
  *  @file     server.cpp
  *
- *  $Id$
- *
  *   Server to test the Servant Activator and Servant Locator for a POA.
  *
  *

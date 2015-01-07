@@ -4,8 +4,6 @@
 /**
  *  @file   Notify_Default_EMO_Factory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

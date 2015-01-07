@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_TP_Strategy.h
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

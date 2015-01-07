@@ -3,8 +3,6 @@
 /**
  *  @file    be_string.h
  *
- *  $Id$
- *
  *  Extension of class AST_String that provides additional means for C++
  *  mapping.
  *

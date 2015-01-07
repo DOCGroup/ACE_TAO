@@ -3,8 +3,6 @@
 /**
  *  @file    Proactor_Timer_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test that illustrates the timer mechanism of
  *    the <ACE_Proactor>.  Scheduling timers, handling expired timers and
  *    cancelling scheduled timers are all exercised in this test.

@@ -3,8 +3,6 @@
 /**
  *  @file Periodic_Task.h
  *
- *  $Id$
- *
  *  Base class for Periodic Tasks
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>

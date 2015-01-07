@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_template_export.h
  *
- *  $Id$
- *
  *  This visitor generates an explicit export of a sequence's
  *  template base class. It is conditionally launched by a
  *  command line option and is motivated by a bug in Visual

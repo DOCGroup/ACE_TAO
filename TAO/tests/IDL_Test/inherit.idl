@@ -3,8 +3,6 @@
 /**
  *  @file    inherit.idl
  *
- *  $Id$
- *
  *  Tests of interface inheritance in IDL constructs
  *
  *

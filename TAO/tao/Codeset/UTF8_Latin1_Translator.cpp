@@ -4,8 +4,6 @@
 /**
  *  @file    UTF8_Latin1_Translator.cpp
  *
- *  $Id$
- *
  *  Defines the methods required to convert UTF-8 based unicode strings
  *  to the Latin-1 codeset.
  *

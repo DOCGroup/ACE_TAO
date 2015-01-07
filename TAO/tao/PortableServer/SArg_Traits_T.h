@@ -4,8 +4,6 @@
 /**
  *  @file    SArg_Traits_T.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */

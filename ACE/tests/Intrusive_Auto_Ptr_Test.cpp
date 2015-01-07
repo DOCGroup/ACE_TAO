@@ -3,8 +3,6 @@
 /**
  *  @file    Intrusive_Auto_Ptr_Test.cpp
  *
- *  $Id$
- *
  *  This test verifies the functionality of the <ACE_Intrusive_Auto_Ptr>
  *  implementation.
  *

@@ -2,8 +2,6 @@
 /**
  *  @file SequencePushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

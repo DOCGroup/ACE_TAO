@@ -4,8 +4,6 @@
 /**
  *  @file    exception_cs.h
  *
- *  $Id$
- *
  *  Visitor for Exceptions.
  *  For code generation in client stubs.
  *

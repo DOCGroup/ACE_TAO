@@ -4,8 +4,6 @@
 /**
  *  @file    Thread_Mutex.h
  *
- *  $Id$
- *
  *   Moved from Synch.h.
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>

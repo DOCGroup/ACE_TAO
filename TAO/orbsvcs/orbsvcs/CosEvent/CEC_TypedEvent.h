@@ -4,8 +4,6 @@
 /**
  *  @file   CEC_TypedEvent.h
  *
- *  $Id$
- *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  */
 //=============================================================================

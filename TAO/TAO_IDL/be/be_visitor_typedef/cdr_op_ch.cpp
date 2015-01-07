@@ -3,8 +3,6 @@
 /**
  *  @file    cdr_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Cdr operators of a Typedef node
  *
  *

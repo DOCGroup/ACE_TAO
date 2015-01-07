@@ -4,8 +4,6 @@
 /**
  *  @file    Thread_Bounded_Packet_Relay.h
  *
- *  $Id$
- *
  *  This code provides a thread based implementation
  *  of the bounded packet relay example.
  *

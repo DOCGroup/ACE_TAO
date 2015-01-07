@@ -4,8 +4,6 @@
 /**
  *  @file    be_component_fwd.h
  *
- *  $Id$
- *
  *  Extension of class AST_ComponentFwd that provides additional
  *  means for C++ mapping of a forward declared component.
  *

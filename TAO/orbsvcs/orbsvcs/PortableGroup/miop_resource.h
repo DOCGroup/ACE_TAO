@@ -4,8 +4,6 @@
 /**
  *  @file   miop_resource.h
  *
- *  $Id$
- *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
 //=============================================================================

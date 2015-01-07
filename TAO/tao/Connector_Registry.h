@@ -4,8 +4,6 @@
 /**
  *  @file    Connector_Registry.h
  *
- *  $Id$
- *
  *  Interface for the TAO Connector Registry
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>

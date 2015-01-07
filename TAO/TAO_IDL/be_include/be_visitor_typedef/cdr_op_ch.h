@@ -4,8 +4,6 @@
 /**
  *  @file    cdr_op_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Typedef class
  *  This provides the code generation for the CDR operators of the Typedef
  *  class in the client header.

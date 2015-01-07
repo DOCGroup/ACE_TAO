@@ -3,8 +3,6 @@
 /**
  *  @file    structure.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Structures. This is a generic visitor.
  *
  *

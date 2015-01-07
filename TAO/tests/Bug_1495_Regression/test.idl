@@ -3,8 +3,6 @@
 /**
  *  @file    test.idl
  *
- *  $Id$
- *
  * Simple IDL file to test regression of bug 1495
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Condition.h
  *
- *  $Id$
- *
  *  @author From ACE to TAO by Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

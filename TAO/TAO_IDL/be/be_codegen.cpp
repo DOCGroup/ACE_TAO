@@ -2,8 +2,6 @@
 /**
  *  @file    be_codegen.cpp
  *
- *  $Id$
- *
  * Code generation
  *
  *

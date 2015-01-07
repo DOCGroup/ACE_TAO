@@ -3,8 +3,6 @@
 /**
  *  @file   ECG_Complex_Address_Server.h
  *
- *  $Id$
- *
  *  @author Marina Spivak (marina@atdesk.com)
  *
  */

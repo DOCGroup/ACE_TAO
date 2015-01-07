@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_init_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes factory in the client header
  *  (see IDL to C++ mapping)
  *

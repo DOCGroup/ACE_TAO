@@ -4,8 +4,6 @@
 /**
  *  @file    sender.cpp
  *
- *  $Id$
- *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
 //=============================================================================

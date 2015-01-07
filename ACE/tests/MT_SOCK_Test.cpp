@@ -4,8 +4,6 @@
 /**
  *  @file    MT_SOCK_Test.cpp
  *
- *  $Id$
- *
  *   This is a multi-threaded torture test of the
  *   <ACE_SOCK_Acceptor> and <ACE_SOCK_Connector> classes. The test
  *   forks 30 processes or spawns 30 threads (depending upon the

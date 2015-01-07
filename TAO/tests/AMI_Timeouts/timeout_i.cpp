@@ -3,8 +3,6 @@
 /**
  *  @file    timeout_i.cpp
  *
- *  $Id$
- *
  *  Implements the timeout CORBA Object and its reply handler.
  *
  *

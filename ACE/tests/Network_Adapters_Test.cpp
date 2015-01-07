@@ -2,8 +2,6 @@
 /**
  *  @file    Network_Adapters_Test.cpp
  *
- *  $Id$
- *
  *  Tests the ICMP-echo support in ACE.
  *
  *

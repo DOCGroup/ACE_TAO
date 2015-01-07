@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Object_Group_Storable.h
  *
- *  $Id$
- *
  * Contains declaration for class PG_Object_Group_Storable.
  *
  *  @author Byron Harris <harrisb@ociweb.com>

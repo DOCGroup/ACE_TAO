@@ -3,8 +3,6 @@
 /**
  *  @file    facet_svth.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This provides for code generation for the facet servant
  *  class declaration

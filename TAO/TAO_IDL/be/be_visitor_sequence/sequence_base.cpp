@@ -3,8 +3,6 @@
 /**
  *  @file    sequence_base.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the base type of the Sequence
  *
  *

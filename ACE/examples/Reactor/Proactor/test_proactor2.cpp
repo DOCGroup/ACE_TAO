@@ -3,8 +3,6 @@
 /**
  *  @file    test_proactor2.cpp
  *
- *  $Id$
- *
  *  Alexander Libman <Alibman@baltimore.com> modified
  *  <test_proactor> and made this test. Instead of writing received
  *  data to the file, the receiver sends them back to the

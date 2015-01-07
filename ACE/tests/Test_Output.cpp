@@ -4,8 +4,6 @@
 /**
  *  @file Test_Output.cpp
  *
- *  $Id$
- *
  *   This file factors out common macros and other utilities used by the
  *   ACE automated regression tests.
  *

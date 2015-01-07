@@ -5,8 +5,6 @@
 /**
  *  @file    InterfaceDef_i.h
  *
- *  $Id$
- *
  *  InterfaceDef servant class.
  *
  *

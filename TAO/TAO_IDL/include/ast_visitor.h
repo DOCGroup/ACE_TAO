@@ -4,8 +4,6 @@
 /**
  *  @file    ast_visitor.h
  *
- *  $Id$
- *
  *  The abstract AST visitor base class.
  *
  *

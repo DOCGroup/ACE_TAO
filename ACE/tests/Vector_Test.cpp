@@ -3,8 +3,6 @@
 /**
  *  @file    Vector_Test.cpp
  *
- *  $Id$
- *
  *   This is a simple test of the ACE_Vector class and its iterators.
  *
  *

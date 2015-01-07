@@ -4,8 +4,6 @@
 /**
  *  @file    ExceptionList.h
  *
- *  $Id$
- *
  *  This file defines the ExceptionList datatype used in
  *  dynamic invocations.
  *

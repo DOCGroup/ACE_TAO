@@ -3,8 +3,6 @@
 /**
  *  @file    Thread_Creation_Threshold_Test.cpp
  *
- *  $Id$
- *
  *   This test program stresses how many threads can be
  *   consecutively (not simultaneously) created on a platform.
  *   Rather than testing exhaustively, it establishes a

@@ -4,8 +4,6 @@
 /**
  *  @file    Marshal.h
  *
- *  $Id$
- *
  *   Classes that marshal various IDL data types.
  *
  *

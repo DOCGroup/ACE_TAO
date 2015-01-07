@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Endpoint.h
  *
- *  $Id$
- *
  *  UIPMC implementation of PP Framework Endpoint interface.
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>

@@ -4,8 +4,6 @@
 /**
  *  @file    Widget_Impl.h
  *
- *  $Id$
- *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
 //=============================================================================

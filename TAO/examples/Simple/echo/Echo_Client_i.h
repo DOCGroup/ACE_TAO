@@ -4,8 +4,6 @@
 /**
  *  @file    Echo_Client_i.h
  *
- *  $Id$
- *
  *  This class implements the  interface calls for RMI.
  *
  *

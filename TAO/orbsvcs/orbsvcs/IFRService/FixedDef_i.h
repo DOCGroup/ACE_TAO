@@ -5,8 +5,6 @@
 /**
  *  @file    FixedDef_i.h
  *
- *  $Id$
- *
  *  FixedDef servant class.
  *
  *

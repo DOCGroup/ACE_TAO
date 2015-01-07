@@ -3,8 +3,6 @@
 /**
  *  @file     Single_Threaded_POA.cpp
  *
- *  $Id$
- *
  *   This program tests to make sure that two threads cannot call
  *   servants in a single threaded POA simultaneously. At the same
  *   time, it makes sure that a servant can call itself or other

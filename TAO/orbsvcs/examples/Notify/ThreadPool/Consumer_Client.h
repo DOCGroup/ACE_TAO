@@ -2,8 +2,6 @@
 /**
  *  @file Consumer_Client.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

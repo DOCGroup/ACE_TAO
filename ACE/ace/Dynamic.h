@@ -4,8 +4,6 @@
 /**
  *  @file    Dynamic.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt
  *  @author Irfan Pyarali.
  */

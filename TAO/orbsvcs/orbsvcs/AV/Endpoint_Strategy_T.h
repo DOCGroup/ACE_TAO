@@ -4,8 +4,6 @@
 /**
  *  @file   Endpoint_Strategy_T.h
  *
- *  $Id$
- *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */

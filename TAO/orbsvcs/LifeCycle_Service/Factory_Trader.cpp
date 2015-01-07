@@ -3,8 +3,6 @@
 /**
  *  @file   Factory_Trader.cpp
  *
- *  $Id$
- *
  * A colocated instance of the Trading Service, only part of
  * the functionality provided is used. This class serves
  * as Wrapper around the Trading Service and provides

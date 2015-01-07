@@ -6,8 +6,6 @@
  *
  *  declarations for sysctl
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

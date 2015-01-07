@@ -5,8 +5,6 @@
 /**
  *  @file    Time_Utilities.h
  *
- *  $Id$
- *
  *  @author  David Levine <levine@cs.wustl.edu>
  */
 //=============================================================================

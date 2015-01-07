@@ -4,8 +4,6 @@
 /**
  *  @file    HTIOP_Connector.h
  *
- *  $Id$
- *
  *  HTIOP specific connector processing
  *
  *

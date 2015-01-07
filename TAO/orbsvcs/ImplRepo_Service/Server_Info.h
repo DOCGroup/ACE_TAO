@@ -2,8 +2,6 @@
 /**
  *  @file    Server_Info.h
  *
- *  $Id$
- *
  *  This class implements the Server_Info for the Implementation Repository.
  *
  *

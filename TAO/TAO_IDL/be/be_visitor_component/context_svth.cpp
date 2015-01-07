@@ -3,8 +3,6 @@
 /**
  *  @file    context_svth.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for a context class in the
  *  servant header.
  *

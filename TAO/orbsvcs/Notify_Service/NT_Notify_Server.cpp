@@ -4,8 +4,6 @@
 /**
  *  @file    NT_Notify_Server.cpp
  *
- *  $Id$
- *
  *  Driver program that runs the TAO Notification Service as a Windows NT
  *  Service.
  *

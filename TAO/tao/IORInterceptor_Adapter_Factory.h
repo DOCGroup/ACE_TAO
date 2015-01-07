@@ -4,8 +4,6 @@
 /**
  *  @file    IORInterceptor_Adapter_Factory.h
  *
- *  $Id$
- *
  *  @author  George Edwards <g.edwards@vanderbilt.edu>
  */
 //=============================================================================

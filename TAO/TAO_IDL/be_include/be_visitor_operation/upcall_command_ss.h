@@ -4,8 +4,6 @@
 /**
  *  @file    upcall_command_ss.h
  *
- *  $Id$
- *
  *  Visitor that generates operation-specific TAO::Upcall_Command
  *  objects in skeletons.
  *

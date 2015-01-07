@@ -4,8 +4,6 @@
 /**
  *  @file    INS_i.h
  *
- *  $Id$
- *
  *  This class implements the INS interface.
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    XtMotifReactor_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test that illustrates the possibility to integrate
  *    ACE to the X Main Loop. This program uses ACE_XtReactor class to
  *    schedule three additional event sources:

@@ -4,8 +4,6 @@
 /**
  *  @file    Persistent_Context_Index.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

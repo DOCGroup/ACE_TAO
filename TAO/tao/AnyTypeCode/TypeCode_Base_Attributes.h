@@ -4,8 +4,6 @@
 /**
  *  @file    TypeCode_Base_Attributes.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

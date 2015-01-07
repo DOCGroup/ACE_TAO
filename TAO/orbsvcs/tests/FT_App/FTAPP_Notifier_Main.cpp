@@ -3,8 +3,6 @@
 /**
  *  @file    FTAPP_Notifier_Main.cpp
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  This file provides the main routine for a stub implementation
  *  of the FaultNotifier interface.

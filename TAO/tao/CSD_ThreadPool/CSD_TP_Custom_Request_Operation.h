@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_TP_Custom_Request_Operation.h
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

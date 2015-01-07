@@ -4,8 +4,6 @@
 /**
  *  @file   Policy_Current_Impl.h
  *
- *  $Id$
- *
  * An implementation for the CORBA::PolicyManager interface.
  *
  *

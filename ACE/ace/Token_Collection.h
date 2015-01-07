@@ -4,8 +4,6 @@
 /**
  *  @file    Token_Collection.h
  *
- *  $Id$
- *
  *  The ACE_Token class offers methods for acquiring, renewing,
  *  and releasing a synchronization token on a per-token basis.  The
  *  ACE_Token_Collection offers an interface for performing

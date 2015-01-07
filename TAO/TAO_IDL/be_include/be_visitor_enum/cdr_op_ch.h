@@ -4,8 +4,6 @@
 /**
  *  @file    cdr_op_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for Enums generating code for the CDR operators
  *
  *

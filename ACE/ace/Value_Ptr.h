@@ -4,8 +4,6 @@
 /**
  *  @file Value_Ptr.h
  *
- *  $Id$
- *
  *  Value_Ptr implementation based on code in Herb Sutter's book "More
  *  Exceptional C++".
  *

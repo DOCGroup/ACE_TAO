@@ -2,8 +2,6 @@
 /**
  *  @file  STD_PC_Intf.h
  *
- *  $Id$
- *
  *  @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
 //================================================================

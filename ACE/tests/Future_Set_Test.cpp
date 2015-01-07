@@ -3,8 +3,6 @@
 /**
  *  @file    Future_Set_Test.cpp
  *
- *  $Id$
- *
  *  This example tests the ACE Future Set and illustrates an
  *  implementation of the Active Object pattern, which is available
  *  at <http://www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.  The

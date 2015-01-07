@@ -3,8 +3,6 @@
 /**
  *  @file     complex_any.h
  *
- *  $Id$
- *
  *   Tests complex Anys
  *
  *

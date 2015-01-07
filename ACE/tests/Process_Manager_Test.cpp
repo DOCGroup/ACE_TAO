@@ -3,8 +3,6 @@
 /**
  *  @file    Process_Manager_Test.cpp
  *
- *  $Id$
- *
  *    This program tests the various methods provided by
  *    <ACE_Process_Manager>.  It illustrates both the explicit <wait>
  *    functions and the Reactor-style auto-reaping.  There's an

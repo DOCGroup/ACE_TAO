@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_Default_Servant_Dispatcher.h
  *
- *  $Id$
- *
  *  @author Yan Dai (dai_y@ociweb.com)
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    Timer_Queue_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test of <ACE_Timer_Queue> and four of its
  *    subclasses (<ACE_Timer_List>, <ACE_Timer_Heap>,
  *    <ACE_Timer_Wheel>, and <ACE_Timer_Hash>).  The test sets up a

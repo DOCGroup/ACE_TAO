@@ -2,8 +2,6 @@
 /**
  *  @file    proxy_impl_xh.h
  *
- *  $Id$
- *
  *  Visitor for generating code for proxy implementations.
  *
  *

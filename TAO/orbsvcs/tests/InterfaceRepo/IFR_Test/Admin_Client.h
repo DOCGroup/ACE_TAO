@@ -4,8 +4,6 @@
 /**
  *  @file    Admin_Client.h
  *
- *  $Id$
- *
  *  This class tests the functionality of the IFR methods by inserting
  *  IR objects into the repository by hand, querying them, moving them,
  *  and destroying them.

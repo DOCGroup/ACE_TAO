@@ -4,8 +4,6 @@
 /**
  *  @file    Broadcaster_i.h
  *
- *  $Id$
- *
  *  Defines the implementation header for the Broadcaster interface.
  *
  *

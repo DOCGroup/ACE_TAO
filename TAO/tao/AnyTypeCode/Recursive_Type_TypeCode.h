@@ -4,8 +4,6 @@
 /**
  *  @file    Recursive_Type_TypeCode.h
  *
- *  $Id$
- *
  *  Header file for a recursive type (@c struct, @c union or
  *  @c valuetype) CORBA::TypeCode.
  *

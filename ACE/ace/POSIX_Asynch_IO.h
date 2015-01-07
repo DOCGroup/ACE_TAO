@@ -4,8 +4,6 @@
 /**
  *  @file    POSIX_Asynch_IO.h
  *
- *  $Id$
- *
  *  The implementation classes for POSIX implementation of Asynch
  *  Operations are defined here in this file.
  *

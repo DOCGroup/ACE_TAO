@@ -3,8 +3,6 @@
 /**
  *  @file    test_udp_proactor.cpp
  *
- *  $Id$
- *
  *  This program illustrates how the <ACE_Proactor> can be used to
  *  implement an application that does asynchronous operations using
  *  datagrams.

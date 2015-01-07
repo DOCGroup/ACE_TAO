@@ -3,8 +3,6 @@
 /**
  *  @file    MT_Reactor_Timer_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test that illustrates the timer mechanism of
  *    the reactor scheduling timers, handling expired timers and
  *    cancelling scheduled timers from multiple threads.  No command

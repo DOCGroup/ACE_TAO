@@ -3,8 +3,6 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *  The Chat client program entry point.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    big_union.h
  *
- *  $Id$
- *
  *   Tests Anys
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    be_visitor_field.h
  *
- *  $Id$
- *
  *  Concrete visitor for the base "BE_Field" node
  *
  *

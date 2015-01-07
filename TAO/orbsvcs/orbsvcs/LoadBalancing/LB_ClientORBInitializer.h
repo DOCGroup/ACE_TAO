@@ -4,8 +4,6 @@
 /**
  *  @file LB_ClientORBInitializer.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

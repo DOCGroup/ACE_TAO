@@ -3,8 +3,6 @@
 /**
  *  @file    simple_test_proactor.cpp
  *
- *  $Id$
- *
  *  Very simple version of test_proactor.cpp.
  *
  *

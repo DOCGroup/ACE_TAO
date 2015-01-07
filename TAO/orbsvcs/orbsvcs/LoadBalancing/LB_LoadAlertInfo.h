@@ -4,8 +4,6 @@
 /**
  *  @file    LB_LoadAlertInfo.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=======================================================================

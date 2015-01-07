@@ -2,8 +2,6 @@
 /**
  *  @file    interface_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interfaces in the client stubs file.
  *
  *

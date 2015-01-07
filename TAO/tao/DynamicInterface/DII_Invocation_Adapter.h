@@ -4,8 +4,6 @@
 /**
  *  @file    DII_Invocation_Adapter.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

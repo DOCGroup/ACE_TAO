@@ -3,8 +3,6 @@
 /**
  *  @file    FT_FaultDetectorFactory_i.cpp
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>

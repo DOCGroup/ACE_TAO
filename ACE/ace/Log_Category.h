@@ -4,8 +4,6 @@
 /**
  *  @file    Log_Category.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <huangh@ociweb.com>
  */
 //=============================================================================

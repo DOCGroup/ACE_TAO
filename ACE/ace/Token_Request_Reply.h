@@ -4,8 +4,6 @@
 /**
  *  @file    Token_Request_Reply.h
  *
- *  $Id$
- *
  *   Define the format used to exchange messages between the
  *   ACE_Token Server and its clients.
  *

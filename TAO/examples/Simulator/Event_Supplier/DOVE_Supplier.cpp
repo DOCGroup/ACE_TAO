@@ -3,8 +3,6 @@
 /**
  *  @file    DOVE_Supplier.cpp
  *
- *  $Id$
- *
  *  A wrapper around the event service initialization and
  *  marshalling
  *

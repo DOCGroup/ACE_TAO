@@ -4,8 +4,6 @@
 /**
  *  @file   Refcountable_T.h
  *
- *  $Id$
- *
  * @author Doug Schmidt
  * @author Johnny Willemsen
  */

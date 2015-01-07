@@ -4,8 +4,6 @@
 /**
  *  @file RTScheduler_Initializer.h
  *
- *  $Id$
- *
  *  @author Yamuna Krishnamurthy <yamuna@oomworks.com>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file   Logger_i.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  *  @author and Matthew Braun <mjb2@cec.wustl.edu>

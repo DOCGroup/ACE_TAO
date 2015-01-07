@@ -4,8 +4,6 @@
 /**
  *  @file LF_Event_Loop_Thread_Helper.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================

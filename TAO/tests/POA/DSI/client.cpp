@@ -3,8 +3,6 @@
 /**
  *  @file     client.cpp
  *
- *  $Id$
- *
  *    A client program for the Database IDL module
  *
  *

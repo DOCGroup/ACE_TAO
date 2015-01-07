@@ -2,8 +2,6 @@
 /**
  *  @file EventChannelFactory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

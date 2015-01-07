@@ -4,8 +4,6 @@
 /**
  *  @file    TypeCode_CDR_Extraction.h
  *
- *  $Id$
- *
  *  Header file for TAO TypeCode CDR extraction operations.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

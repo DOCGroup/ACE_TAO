@@ -4,8 +4,6 @@
 /**
  *  @file    Operation_Table_Binary_Search.h
  *
- *  $Id$
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

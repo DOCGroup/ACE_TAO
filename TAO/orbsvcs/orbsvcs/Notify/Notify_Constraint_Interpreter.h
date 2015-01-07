@@ -4,8 +4,6 @@
 /**
  *  @file   Notify_Constraint_Interpreter.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file     IOGRTest.cpp
  *
- *  $Id$
- *
  * This program tests the basic functionality FT IOGR implementation
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    DTP_POA_Strategy.h
  *
- *  $Id$
- *
  *  @author  Marc Neeley <neeleym@ociweb.com>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file GIOP_Message_Base.h
  *
- *  $Id$
- *
  *  @author Initially Copyrighted by Sun Microsystems Inc., 1994-1995,
  *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */

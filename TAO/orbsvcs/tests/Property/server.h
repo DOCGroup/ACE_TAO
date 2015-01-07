@@ -4,8 +4,6 @@
 /**
  *  @file    server.h
  *
- *  $Id$
- *
  *  Test server for the CosPropertyService.
  *
  *

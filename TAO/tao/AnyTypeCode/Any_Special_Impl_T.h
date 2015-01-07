@@ -4,8 +4,6 @@
 /**
  *  @file    Any_Special_Impl_T.h
  *
- *  $Id$
- *
  *  @author  Carlos O'Ryan and Jeff Parsons
  */
 //=============================================================================

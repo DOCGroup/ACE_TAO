@@ -3,8 +3,6 @@
 /**
 *  @file    Reactor_Timer_Queue_Test.cpp
  *
- *  $Id$
- *
  *  This example tests the timer queue mechanism of ACE_Reactor.
  *
  *

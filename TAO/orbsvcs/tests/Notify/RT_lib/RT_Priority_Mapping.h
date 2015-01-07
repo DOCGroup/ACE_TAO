@@ -2,8 +2,6 @@
 /**
  *  @file RT_Priority_Mapping.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

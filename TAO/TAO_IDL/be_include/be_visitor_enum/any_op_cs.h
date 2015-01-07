@@ -4,8 +4,6 @@
 /**
  *  @file    any_op_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for Enums generating code for the Any operators
  *
  *

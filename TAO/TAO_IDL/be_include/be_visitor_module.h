@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_module.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Module class
  *
  *

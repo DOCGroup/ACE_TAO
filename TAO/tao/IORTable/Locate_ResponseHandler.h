@@ -5,8 +5,6 @@
 /**
  *  @file    Locate_ResponseHandler.h
  *
- *  $Id$
- *
  *  @author Phil Mesnier <mesnier_p@ociweb>
  */
 //=============================================================================

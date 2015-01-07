@@ -4,8 +4,6 @@
 /**
  *  @file    RW_Process_Mutex.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

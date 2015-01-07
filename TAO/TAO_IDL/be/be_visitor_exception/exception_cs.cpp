@@ -3,8 +3,6 @@
 /**
  *  @file    exception_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Exception in the stubs file
  *
  *

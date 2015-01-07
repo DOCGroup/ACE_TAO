@@ -4,8 +4,6 @@
 /**
  *  @file    any_op_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Structure class
  *  This one provides code generation for the Any operators for the structure
  *  in the client header.

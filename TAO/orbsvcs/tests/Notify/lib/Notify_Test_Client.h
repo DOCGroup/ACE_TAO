@@ -3,8 +3,6 @@
 /**
  *  @file   Notify_Test_Client.h
  *
- *  $Id$
- *
  * Prototype Test Driver for all the Notify tests.
  *
  *

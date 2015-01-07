@@ -4,8 +4,6 @@
 /**
  *  @file    StandardConfigurator_Impl.h
  *
- *  $Id$
- *
  *  This file contains implementation for the servant of
  *  Components::StandardConfigurator interface.
  *

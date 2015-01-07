@@ -3,8 +3,6 @@
 /**
  *  @file    exception_ctor.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the special constructor for Exceptions
  *
  *

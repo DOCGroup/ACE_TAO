@@ -3,8 +3,6 @@
 /**
  *  @file    root_sh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the server header
  *
  *

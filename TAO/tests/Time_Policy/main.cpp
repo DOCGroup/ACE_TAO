@@ -2,8 +2,6 @@
 /**
  *  @file    main.cpp
  *
- *  $Id$
- *
  *  Implementation of the server.
  *
  *

@@ -2,8 +2,6 @@
 /**
  *  @file nsgroup_svc.h
  *
- *  $Id$
- *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
 //==========================================================================

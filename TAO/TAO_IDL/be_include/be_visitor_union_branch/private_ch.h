@@ -4,8 +4,6 @@
 /**
  *  @file    private_ch.h
  *
- *  $Id$
- *
  *   Visitor for the Union class.
  *   This one generates code for private part of the union class for the union
  *   members in the client header.

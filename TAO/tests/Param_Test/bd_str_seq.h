@@ -3,8 +3,6 @@
 /**
  *  @file    bd_str_seq.h
  *
- *  $Id$
- *
  *   Tests bounded sequences of strings
  *
  *

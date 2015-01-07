@@ -2,8 +2,6 @@
 /**
  *  @file  DSRT_Dispatch_Item_T.h
  *
- *  $Id$
- *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
  *
  */

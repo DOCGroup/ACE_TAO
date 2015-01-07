@@ -2,8 +2,6 @@
 /**
  *  @file    SOCK_Netlink.h
  *
- *  $Id$
- *
  *  @author Robert Iakobashvilli <coroberti@gmail.com>
  *  @author Raz Ben Yehuda <raziebe@013.net.il>
  */

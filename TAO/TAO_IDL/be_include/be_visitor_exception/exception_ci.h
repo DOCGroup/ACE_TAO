@@ -4,8 +4,6 @@
 /**
  *  @file    exception_ci.h
  *
- *  $Id$
- *
  *  Visitor for Exceptions.
  *  For code generation in client inline.
  *

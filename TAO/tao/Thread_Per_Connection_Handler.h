@@ -4,8 +4,6 @@
 /**
  *  @file Thread_Per_Connection_Handler.h
  *
- *  $Id$
- *
  *  Definition of a connection handler for the thread-per-connection
  *  strategy.
  *

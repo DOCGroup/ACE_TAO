@@ -4,8 +4,6 @@
 /**
  *  @file     PortableGroup_Loader.h
  *
- *  $Id$
- *
  *  Loads and initializes the PortableGroup extensions to TAO.
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>

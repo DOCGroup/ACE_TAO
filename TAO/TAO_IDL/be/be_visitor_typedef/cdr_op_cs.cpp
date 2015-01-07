@@ -3,8 +3,6 @@
 /**
  *  @file    cdr_op_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Cdr operators in the client stubs
  *
  *

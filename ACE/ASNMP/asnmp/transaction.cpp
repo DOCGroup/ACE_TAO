@@ -3,8 +3,6 @@
 /**
  *  @file    transaction.cpp
  *
- *  $Id$
- *
  *  implements blocking SNMPv1 API using a simple state machine
  * transactions over UDP/IP networks
  *

@@ -4,8 +4,6 @@
 /**
  *  @file     test_i.h
  *
- *  $Id$
- *
  *   Defines implementation classes for the interfaces
  *
  *

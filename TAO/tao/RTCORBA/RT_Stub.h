@@ -4,8 +4,6 @@
 /**
  *  @file    RT_Stub.h
  *
- *  $Id$
- *
  *  This file contains the declaration for the RTCORBA Stub.
  *
  *

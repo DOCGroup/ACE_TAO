@@ -2,8 +2,6 @@
 
 /** @file   URL_Addr.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  *

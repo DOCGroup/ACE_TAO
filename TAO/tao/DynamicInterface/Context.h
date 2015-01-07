@@ -4,8 +4,6 @@
 /**
  *  @file    Context.h
  *
- *  $Id$
- *
  *  Header file for CORBA Context class.
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>

@@ -3,8 +3,6 @@
 /**
  *  @file    Logging_Strategy_Test.cpp
  *
- *  $Id$
- *
  *   This program tests the <ACE_Logging_Strategy> class in various
  *   ways and also illustrates many of the features of the
  *   <ACE_Log_Msg>.  The test works as follows:

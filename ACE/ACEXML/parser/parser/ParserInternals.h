@@ -4,8 +4,6 @@
 /**
  *  @file    ParserInternals.h
  *
- *  $Id$
- *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
 //=============================================================================

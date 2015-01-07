@@ -4,8 +4,6 @@
 /**
  *  @file   Basic_Logging_Service.h
  *
- *  $Id$
- *
  *  Front End of the Telecom Log Service
  *  Basic_Logging_Service
  *

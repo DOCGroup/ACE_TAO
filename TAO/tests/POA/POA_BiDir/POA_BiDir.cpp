@@ -3,8 +3,6 @@
 /**
  *  @file    POA_BiDir.cpp
  *
- *  $Id$
- *
  *  This program is an extension of $TAO_ROOT/example/POA/NewPOA. In
  *  the many POA's created this example adds a BiDirGIOP policy to
  *  one of the POA's.

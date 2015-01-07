@@ -4,8 +4,6 @@
 /**
  *  @file   EventLogFactory_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsEventLogAdmin::EventLogFactory interface.
  *
  *

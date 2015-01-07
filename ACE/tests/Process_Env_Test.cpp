@@ -3,8 +3,6 @@
 /**
  *  @file    Process_Env_Test.cpp
  *
- *  $Id$
- *
  * This program tests the limits of the Windows CreateProcess
  * environment buffer.
  *

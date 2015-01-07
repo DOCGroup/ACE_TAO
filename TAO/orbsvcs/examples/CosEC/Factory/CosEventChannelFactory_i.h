@@ -4,8 +4,6 @@
 /**
  *  @file    CosEventChannelFactory_i.h
  *
- *  $Id$
- *
  *  This class implements the CosEventChannelFactory
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file     Pluggable_Messaging_Utils.h
  *
- *  $Id$
- *
  *   Utility classes for the TAO pluggable messaging framework.
  *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>

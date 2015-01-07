@@ -3,8 +3,6 @@
 /**
  *  @file   Priority_Mapping.h
  *
- *  $Id$
- *
  * Declares the Priority_Mapping interface, as defined in the
  * RT-CORBA spec.
  *

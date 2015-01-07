@@ -5,8 +5,6 @@
 /**
  *  @file    module_ih.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Module class
  *  This provides code generation for the module in the implementation header.
  *

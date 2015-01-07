@@ -4,8 +4,6 @@
 /**
  *  @file    Nested_Upcall_Guard.h
  *
- *  $Id$
- *
  *  @author  Chris Cleeland <cleeland@ociweb.com>
  */
 //=============================================================================

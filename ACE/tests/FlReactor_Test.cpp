@@ -4,8 +4,6 @@
 /**
  *  @file   FlReactor_Test.cpp
  *
- *  $Id$
- *
  * A simple test that ilustrates the integration of the fast-light
  * toolkit (http://fltk.easysw.org/) with ACE, it uses FL to create
  * an OpenGL window and display a polygon, it uses ACE to open an

@@ -3,8 +3,6 @@
 /**
  *  @file    Thread_Pool_Reactor_Test.cpp
  *
- *  $Id$
- *
  *    This program is a torture test of thread pool reactors.  It
  *    starts by spawning several server threads waiting to handle
  *    events.  Several other client threads are spawned right after

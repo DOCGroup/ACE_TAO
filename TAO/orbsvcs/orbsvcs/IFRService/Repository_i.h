@@ -5,8 +5,6 @@
 /**
  *  @file    Repository_i.h
  *
- *  $Id$
- *
  *  Repository servant class.
  *
  *

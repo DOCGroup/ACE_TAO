@@ -3,8 +3,6 @@
 /**
  *  @file     Etherealization.cpp
  *
- *  $Id$
- *
  *   This program tests for deactivation and etherealization of
  *   reference counted and non reference counted servants.
  *

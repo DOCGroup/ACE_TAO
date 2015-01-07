@@ -3,8 +3,6 @@
 /**
  *  @file    test_aiocb.cpp
  *
- *  $Id$
- *
  *  Checkout $ACE_ROOT/examples/Reactor/Proactor/test_aiocb_ace.cpp,
  *  which is the ACE'ified version of this program.
  *

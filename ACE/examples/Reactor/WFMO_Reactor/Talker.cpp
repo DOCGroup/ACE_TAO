@@ -3,8 +3,6 @@
 /**
  *  @file    Talker.cpp
  *
- *  $Id$
- *
  *
  *  This test application tests a wide range of events that can be
  *  demultiplexed using various ACE utilities.  Events used include

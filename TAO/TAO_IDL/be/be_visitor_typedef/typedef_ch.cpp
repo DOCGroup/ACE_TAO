@@ -3,8 +3,6 @@
 /**
  *  @file    typedef_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Typedef in the client header
  *
  *

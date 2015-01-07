@@ -3,8 +3,6 @@
 /**
  *  @file    operation.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the stubs file.
  *
  *

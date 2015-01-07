@@ -3,8 +3,6 @@
 /**
  *  @file    timeout_i.h
  *
- *  $Id$
- *
  *  Implements the CORBA object.
  *
  *

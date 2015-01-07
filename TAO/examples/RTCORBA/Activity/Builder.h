@@ -3,8 +3,6 @@
 /**
  *  @file Builder.h
  *
- *  $Id$
- *
  *  The builder creates Tasks, Jobs, POAs.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>

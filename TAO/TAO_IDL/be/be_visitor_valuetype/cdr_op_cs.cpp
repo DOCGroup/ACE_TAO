@@ -3,8 +3,6 @@
 /**
  *  @file    cdr_op_cs.cpp
  *
- *  $Id$
- *
  *  Concrete visitor for valuetypes.
  *  This one provides code generation for the CDR operators.
  *

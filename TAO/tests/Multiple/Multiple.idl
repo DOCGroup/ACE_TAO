@@ -3,8 +3,6 @@
 /**
  *  @file    Multiple.idl
  *
- *  $Id$
- *
  *  IDL definition of a Diamond shaped hierarchy
  *  of IDL interfaces. This Diamond shaped hierarchy
  *  is used for testing the collocation.

@@ -3,8 +3,6 @@
 /**
  *  @file    component_ami_rh_exs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the AMI4CCM component receptacle.
  *  This provides for code generation of the AMI4CCM reply
  *  handler implementation source.

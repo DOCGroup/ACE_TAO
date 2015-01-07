@@ -4,8 +4,6 @@
 /**
  *  @file Synch_Queued_Message.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================

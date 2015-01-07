@@ -4,8 +4,6 @@
 /**
  *  @file    Argument.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */

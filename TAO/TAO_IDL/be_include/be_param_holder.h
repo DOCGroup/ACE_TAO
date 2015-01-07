@@ -4,8 +4,6 @@
 /**
  *  @file    be_param_holder.h
  *
- *  $Id$
- *
  *  Place holder referenced by AST_Field (or subclass)
  *  representing a corresponding template parameter in IDL.
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    be_decl.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Decl that provides additional means for C++
  *  mapping.
  *

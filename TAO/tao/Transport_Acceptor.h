@@ -4,8 +4,6 @@
 /**
  *  @file Transport_Acceptor.h
  *
- *  $Id$
- *
  *  Interface for the Acceptor component of the TAO pluggable protocol
  *  framework.
  *

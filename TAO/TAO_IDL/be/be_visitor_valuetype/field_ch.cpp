@@ -3,8 +3,6 @@
 /**
  *  @file    field_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating the accessor and modifier declarations
  *  for valuetype fields in the valuetype class (header).
  *

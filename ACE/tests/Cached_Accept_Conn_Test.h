@@ -3,8 +3,6 @@
 /**
  *  @file    Cached_Accept_Conn_Test.h
  *
- *  $Id$
- *
  *  Define class needed for generating templates. IBM C++ requires this to
  *  be in its own file for auto template instantiation.
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    be_global.cpp
  *
- *  $Id$
- *
  *  Stores global data specific to the compiler back end.
  *
  *

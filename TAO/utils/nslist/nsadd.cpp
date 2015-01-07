@@ -2,8 +2,6 @@
 /**
  *  @file    nsadd.cpp
  *
- *  $Id$
- *
  *  Naming Service add utility
  *
  *

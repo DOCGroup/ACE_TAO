@@ -6,8 +6,6 @@
 /**
  *  @file    Catior_i.h
  *
- *  $Id$
- *
  *  Reads stringified IORs and outputs the encoded information.
  *
  *

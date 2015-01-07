@@ -3,8 +3,6 @@
 /**
  *  @file   Endpoint_Strategy.cpp
  *
- *  $Id$
- *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  */
 //=============================================================================

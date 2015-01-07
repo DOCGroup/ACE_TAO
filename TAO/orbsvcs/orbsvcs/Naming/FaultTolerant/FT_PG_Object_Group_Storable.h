@@ -4,8 +4,6 @@
 /**
  *  @file    FT_PG_Object_Group_Storable.h
  *
- *  $Id$
- *
  * Contains declaration for class FT_PG_Object_Group_Storable.
  *
  *  @author Byron Harris <harrisb@ociweb.com>

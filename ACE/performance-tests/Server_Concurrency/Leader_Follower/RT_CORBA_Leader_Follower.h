@@ -2,8 +2,6 @@
 /**
  *  @file    RT_CORBA_Leader_Follower.h
  *
- *  $Id$
- *
  *   The leader follower test modified to suit RTCORBA tests. The
  *   original  leader follower test has too many things that doesnt
  *   get what we are looking for (read it as just confusing enough)

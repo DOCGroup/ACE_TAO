@@ -4,8 +4,6 @@
 /**
  *  @file    Wait_On_Read.h
  *
- *  $Id$
- *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================

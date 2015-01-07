@@ -3,8 +3,6 @@
 /**
  *  @file    typecode.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for TypeCodes for various types
  *
  *

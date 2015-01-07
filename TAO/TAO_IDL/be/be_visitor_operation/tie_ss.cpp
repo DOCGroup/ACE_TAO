@@ -3,8 +3,6 @@
 /**
  *  @file    tie_ss.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for operations for the TIE class.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *  This is the client for the UDP simple performance test.
  *
  *

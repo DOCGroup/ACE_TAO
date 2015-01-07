@@ -3,8 +3,6 @@
 /**
  *  @file    interface.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Interface
  *
  *

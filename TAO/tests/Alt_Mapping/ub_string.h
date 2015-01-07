@@ -3,8 +3,6 @@
 /**
  *  @file    ub_string.h
  *
- *  $Id$
- *
  *   Tests unbounded string
  *
  *

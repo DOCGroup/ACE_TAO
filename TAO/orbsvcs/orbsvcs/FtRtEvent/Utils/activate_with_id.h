@@ -3,8 +3,6 @@
 /**
  *  @file   activate_with_id.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

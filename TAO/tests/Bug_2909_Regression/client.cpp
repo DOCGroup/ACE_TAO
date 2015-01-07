@@ -3,8 +3,6 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  * A client which uses the AMI callback model and tests whether exceptions
  * are redirected to the reply handler when client and servant are
  *

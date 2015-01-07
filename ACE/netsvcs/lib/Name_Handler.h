@@ -4,8 +4,6 @@
 /**
  *  @file    Name_Handler.h
  *
- *  $Id$
- *
  *  @author Prashant Jain
  *  @author Gerhard Lenzer
  *  @author and Douglas C. Schmidt

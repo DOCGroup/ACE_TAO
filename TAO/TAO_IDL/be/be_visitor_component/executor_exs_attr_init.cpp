@@ -3,8 +3,6 @@
 /**
  *  @file    executor_exs_attr_init.cpp
  *
- *  $Id$
- *
  *  Visitor generating code in the exec impl source for
  *  the initialization of attribute members in the constructor.
  *

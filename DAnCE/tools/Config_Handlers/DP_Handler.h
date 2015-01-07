@@ -2,8 +2,6 @@
 /**
  *  @file  DP_Handler.h
  *
- *  $Id$
- *
  *  @author Bala Natarajan <bala@dre.vanderbilt.edu>
  */
 //================================================================

@@ -5,8 +5,6 @@
 /**
  *  @file    ComponentModuleDef_i.h
  *
- *  $Id$
- *
  *  ComponentModuleDef_i servant class.
  *
  *

@@ -2,8 +2,6 @@
 /**
  *  @file    direct_proxy_impl_sh.h
  *
- *  $Id$
- *
  *   Concrete visitor for the Interface node. This
  *   visitor handle the generation of the proxy
  *   implementations Direct clas.

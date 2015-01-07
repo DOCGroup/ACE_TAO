@@ -5,8 +5,6 @@
 /**
  *  @file    OperationDef_i.h
  *
- *  $Id$
- *
  *  OperationDef servant class.
  *
  *

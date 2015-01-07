@@ -5,8 +5,6 @@
 /**
  *  @file    TypedefDef_i.h
  *
- *  $Id$
- *
  *  TypedefDef servant class.
  *
  *

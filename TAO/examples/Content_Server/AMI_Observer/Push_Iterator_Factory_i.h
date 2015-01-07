@@ -5,8 +5,6 @@
 /**
  *  @file     Push_Iterator_Factory_i.h
  *
- *  $Id$
- *
  *   Header file for the push Web_Server::Iterator_Factory implementation.
  *
  *

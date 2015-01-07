@@ -3,8 +3,6 @@
 /**
  *  @file    any_op.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the Any operators for types defined in Root's
  *  scope.
  *

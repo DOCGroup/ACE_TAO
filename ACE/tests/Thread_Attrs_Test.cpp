@@ -3,8 +3,6 @@
 /**
  *  @file    Thread_Attrs_Test.cpp
  *
- *  $Id$
- *
  *   This test program ensures that attributes set on a thread via the
  *   ACE_Task/ACE_Thread_Manager are honored.
  *

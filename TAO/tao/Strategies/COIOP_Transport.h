@@ -4,8 +4,6 @@
 /**
  *  @file   COIOP_Transport.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
 //=============================================================================

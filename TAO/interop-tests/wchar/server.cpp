@@ -4,8 +4,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  C++ server side for testing interoperability with wchar data.
  *
  *

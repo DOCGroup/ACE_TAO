@@ -3,8 +3,6 @@
 /**
  *  @file    Identity.cpp
  *
- *  $Id$
- *
  *  This program demonstrates and tests how to move between id,
  *  reference, and servants.
  *

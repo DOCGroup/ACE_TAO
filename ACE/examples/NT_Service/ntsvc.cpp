@@ -3,8 +3,6 @@
 /**
  *  @file    ntsvc.cpp
  *
- *  $Id$
- *
  *    This is the implementation of the NT service.  It beeps every 2
  *    seconds until the service is stopped.
  *

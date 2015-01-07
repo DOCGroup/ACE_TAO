@@ -4,8 +4,6 @@
 /**
  *  @file Monotonic_Time_Policy.h
  *
- *  $Id$
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 #include /**/ "ace/pre.h"

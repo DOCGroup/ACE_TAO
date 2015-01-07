@@ -4,8 +4,6 @@
 /**
  *  @file    Sched_Params.h
  *
- *  $Id$
- *
  *  @author David Levine <levine@cs.wustl.edu>
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */

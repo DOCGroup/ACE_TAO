@@ -3,8 +3,6 @@
 /**
  *  @file    ior_corbaname_client_i.cpp
  *
- *  $Id$
- *
  *  This example implements a simple client which sends a corbaname:
  *  style url to the server and gets a response from the
  *  server to indicate that the server has received the request.

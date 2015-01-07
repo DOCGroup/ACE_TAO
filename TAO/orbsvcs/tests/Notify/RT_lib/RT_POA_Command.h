@@ -2,8 +2,6 @@
 /**
  *  @file RT_POA_Command.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file   NotifyLogNotification.h
  *
- *  $Id$
- *
  *  Methods to enable log-generated events.
  *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>

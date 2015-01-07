@@ -4,8 +4,6 @@
 /**
  *  @file     GIOP_Utils.h
  *
- *  $Id$
- *
  *   GIOP utility definitions
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file DTP_Thread_Pool.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali
  *  @author Johnny Willemsen
  *  @author Phil Mesnier

@@ -5,8 +5,6 @@
 /**
  *  @file    ExtValueDef_i.h
  *
- *  $Id$
- *
  *  ExtValueDef_i servant class.
  *
  *

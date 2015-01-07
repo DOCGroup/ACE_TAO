@@ -2,8 +2,6 @@
 /**
  *  @file    nslist.cpp
  *
- *  $Id$
- *
  *  Naming Service listing utility
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    HTIOP_Acceptor.h
  *
- *  $Id$
- *
  *  HTIOP specific acceptor processing
  *
  *

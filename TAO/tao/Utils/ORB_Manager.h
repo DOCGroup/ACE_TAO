@@ -4,8 +4,6 @@
 /**
  *  @file   ORB_Manager.h
  *
- *  $Id$
- *
  *  @author Chris Cleeland <cleeland@cs.wustl.edu>
  */
 //=============================================================================

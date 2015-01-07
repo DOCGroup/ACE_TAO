@@ -4,8 +4,6 @@
 /**
  *  @file    BPR_Drivers_T.h
  *
- *  $Id$
- *
  *  This code factors out common class templates for use in
  *  the different possible implementations of the Timer_Queue
  *  based bounded packet relay example.

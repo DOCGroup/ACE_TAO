@@ -3,8 +3,6 @@
 /**
  *  @file Thread_Task.h
  *
- *  $Id$
- *
  *  A periodic task implementation that uses sleep.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>

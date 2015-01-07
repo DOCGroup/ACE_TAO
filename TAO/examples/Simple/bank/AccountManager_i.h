@@ -4,8 +4,6 @@
 /**
  *  @file    AccountManager_i.h
  *
- *  $Id$
- *
  *  This class implements the Bank::AccountManager IDL interface.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    be_native.h
  *
- *  $Id$
- *
  *  The native IDL type
  *
  *

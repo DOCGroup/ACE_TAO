@@ -3,8 +3,6 @@
 /**
  *  @file   Codeset_Registry.inl
  *
- *  $Id$
- *
  * ACE wrapper around access functions for the OSF's DCE codeset registry
  * access functions - the inline functions either call the system supplied
  * DCE based codeset regsitry function, or calls the emulation

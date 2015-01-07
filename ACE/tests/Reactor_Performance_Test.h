@@ -3,8 +3,6 @@
 /**
  *  @file    Reactor_Performance_Test.h
  *
- *  $Id$
- *
  *  This file includes template class definitions for the
  *  Reactor_Performance_Test.cpp program.  This class gets its own
  *  header file to work around AIX C++ compiler "features" related

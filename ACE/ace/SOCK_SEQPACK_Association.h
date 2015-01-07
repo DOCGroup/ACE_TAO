@@ -5,8 +5,6 @@
  *
  *  @file    SOCK_SEQPACK_Association.h
  *
- *  $Id$
- *
  *  @author  Patrick J. Lardieri <plardier@atl.lmco.com>
  *  @author  Gaurav Naik, Lockheed Martin ATL
  *  @author  based on SOCK_Stream

@@ -5,8 +5,6 @@
 /**
  *  @file    EventDef_i.h
  *
- *  $Id$
- *
  *  EventDef servant class.
  *
  *

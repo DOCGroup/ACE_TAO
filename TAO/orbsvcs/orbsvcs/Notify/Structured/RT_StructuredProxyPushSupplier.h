@@ -2,8 +2,6 @@
 /**
  *  @file RT_StructuredProxyPushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

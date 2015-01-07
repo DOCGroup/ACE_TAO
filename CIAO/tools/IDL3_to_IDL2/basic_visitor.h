@@ -4,8 +4,6 @@
 /**
  *  @file    basic_visitor.h
  *
- *  $Id$
- *
  *  Base class for other visitors in this backend.
  *
  *

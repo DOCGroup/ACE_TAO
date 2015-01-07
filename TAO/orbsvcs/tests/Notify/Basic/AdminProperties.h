@@ -3,8 +3,6 @@
 /**
  *  @file   AdminProperties.h
  *
- *  $Id$
- *
  * Test for EC Admin QoS properties.
  *
  *

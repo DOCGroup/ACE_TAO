@@ -3,8 +3,6 @@
 /**
  *  @file    Svc_Conf_Tokens.h
  *
- *  $Id$
- *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
 //====================================================================

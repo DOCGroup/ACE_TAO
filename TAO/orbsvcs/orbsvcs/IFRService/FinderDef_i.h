@@ -5,8 +5,6 @@
 /**
  *  @file    FinderDef_i.h
  *
- *  $Id$
- *
  *  FinderDef servant class.
  *
  *

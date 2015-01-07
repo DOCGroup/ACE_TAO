@@ -3,8 +3,6 @@
 /**
  *  @file    DynAnyFactory.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================

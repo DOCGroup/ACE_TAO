@@ -3,8 +3,6 @@
 /**
  *  @file    CORBA_methods.h
  *
- *  $Id$
- *
  *  Declarations of common methods in the CORBA namespace.
  *
  *  @author Jeff Parsons

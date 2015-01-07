@@ -4,8 +4,6 @@
 /**
  *  @file     Acceptor_Impl.cpp
  *
- *  $Id$
- *
  *  @author  Carlos O'Ryan <coryan@uci.edu>  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

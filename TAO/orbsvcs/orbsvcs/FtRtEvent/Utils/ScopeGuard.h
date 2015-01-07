@@ -3,8 +3,6 @@
 /**
  *  @file   ScopeGuard.h
  *
- *  $Id$
- *
  *  @brief This is the code published at
  *         http://www.cuj.com/documents/s=8000/cujcexp1812alexandr/alexandr.htm
  */

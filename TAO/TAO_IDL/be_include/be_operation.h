@@ -3,8 +3,6 @@
 /**
  *  @file    be_operation.h
  *
- *  $Id$
- *
  *  Extension of class AST_Operation that provides additional means for C++
  *  mapping.
  *

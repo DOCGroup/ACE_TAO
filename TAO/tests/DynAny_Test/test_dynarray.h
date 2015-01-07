@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynarray.h
  *
- *  $Id$
- *
  *  Header file for class to test DynArray.
  *
  *

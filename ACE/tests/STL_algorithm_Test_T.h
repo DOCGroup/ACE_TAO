@@ -6,8 +6,6 @@
  *
  *  Test ACE containers compatibility with STL <algorithm> header.
  *
- *  $Id$
- *
  *  @author  James H. Hill <j.hill@vanderbilt.edu>
  */
 //=============================================================================

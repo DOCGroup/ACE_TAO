@@ -2,8 +2,6 @@
 /**
  *  @file     test_i.h
  *
- *  $Id$
- *
  *   Defines test_i class for the test interface
  *
  *

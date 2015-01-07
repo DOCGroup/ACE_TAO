@@ -4,8 +4,6 @@
 /**
  *  @file    union_member_ci.h
  *
- *  $Id$
- *
  *   Visitor for the Valuebox class.
  *   This one generates code for accessor and modifier functions of
  *   union members.

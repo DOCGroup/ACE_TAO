@@ -3,8 +3,6 @@
 /**
  *  @file    WUCS4_UTF16_Factory.h
  *
- *  $Id$
- *
  *
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>

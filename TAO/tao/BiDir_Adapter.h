@@ -4,8 +4,6 @@
 /**
  *  @file    BiDir_Adapter.h
  *
- *  $Id$
- *
  *  @author  Balachandran Natarajan <parsons@cs.wustl.edu>
  */
 //=============================================================================

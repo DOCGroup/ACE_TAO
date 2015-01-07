@@ -4,8 +4,6 @@
 /**
  *  @file    TypeCode_Case_Base_T.h
  *
- *  $Id$
- *
  *  Header file for @c TAO::TypeCode::Case type.
  *
  *  @author Ossama Othman

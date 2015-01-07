@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_init_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuetype node.
  *  This one provides code generation for valuetype factory
  *  in the (client) header.

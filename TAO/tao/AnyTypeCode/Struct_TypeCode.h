@@ -4,8 +4,6 @@
 /**
  *  @file    Struct_TypeCode.h
  *
- *  $Id$
- *
  *  Header file for a @c tk_struct and @c tk_except
  *  @c CORBA::TypeCodes.
  *

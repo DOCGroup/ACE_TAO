@@ -3,8 +3,6 @@
 /**
  *  @file    bd_short_seq.cpp
  *
- *  $Id$
- *
  *  tests bounded short sequences
  *
  *

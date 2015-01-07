@@ -4,8 +4,6 @@
 /**
  *  @file    Consumer_Handler.h
  *
- *  $Id$
- *
  *  Subclass of Corba_Handler that sets up the Consumer handler
  *  for use with the ACE ACE_Reactor.
  *

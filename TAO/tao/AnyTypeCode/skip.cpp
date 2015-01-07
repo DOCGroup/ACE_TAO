@@ -2,8 +2,6 @@
 /**
  *  @file     skip.cpp
  *
- *  $Id$
- *
  *   Code for skipping different data types
  *
  *   Data types encoded as CDR streams need to be skipped when they

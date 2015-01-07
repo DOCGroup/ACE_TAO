@@ -4,8 +4,6 @@
 /**
  *  @file    Buffer_Allocator_T.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen (jwillemsen@remedy.nl)
  */
 //=============================================================================

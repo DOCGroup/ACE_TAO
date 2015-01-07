@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_constant.h
  *
- *  $Id$
- *
  *  Concrete visitor for the constant class
  *
  *

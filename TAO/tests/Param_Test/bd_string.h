@@ -3,8 +3,6 @@
 /**
  *  @file    bd_string.h
  *
- *  $Id$
- *
  *   Tests bounded string
  *
  *

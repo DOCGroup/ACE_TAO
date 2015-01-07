@@ -3,8 +3,6 @@
 /**
  *  @file    TSS_Static_Test.cpp
  *
- *  $Id$
- *
  *   This program tests the interaction between TSS and thread keys
  *   created during static construction.  VxWorks static construction
  *   is quite broken.  This test is designed to test changes to work

@@ -4,8 +4,6 @@
 /**
  *  @file    be_enum_val.h
  *
- *  $Id$
- *
  *  Extension of class AST_EnumVal that provides additional means for C++
  *  mapping.
  *

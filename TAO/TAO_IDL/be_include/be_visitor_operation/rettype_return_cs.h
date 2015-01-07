@@ -3,8 +3,6 @@
 /**
  *  @file    rettype_return_cs.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations. This generates the return
  *  statement for returning the return type variable in the client stub.
  *

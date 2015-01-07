@@ -5,8 +5,6 @@
 /**
  *  @file    IFR_Service_Utils.h
  *
- *  $Id$
- *
  *    Implement wrappers useful to IFR Service clients and servers.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    obv_module.cpp
  *
- *  $Id$
- *
  *  Concrete visitor for the Module class
  *  This provides code generation for the module in the header
  *  for the OBV_ namespace (see C++ mapping OMG 20.17)

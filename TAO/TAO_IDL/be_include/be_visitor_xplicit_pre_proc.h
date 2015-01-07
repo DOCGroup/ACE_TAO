@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_xplicit_pre_proc.h
  *
- *  $Id$
- *
  *  This visitor creates the explicit home interface
  *
  *

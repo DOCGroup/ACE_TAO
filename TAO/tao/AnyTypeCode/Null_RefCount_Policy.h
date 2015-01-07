@@ -4,8 +4,6 @@
 /**
  *  @file    Null_RefCount_Policy.h
  *
- *  $Id$
- *
  *  Header file for TAO's reference count policy (unrelated to CORBA
  *  policies).
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    valuebox_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for valueboxes in the client inline file
  *
  *

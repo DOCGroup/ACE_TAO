@@ -3,8 +3,6 @@
 /**
  *  @file    home_svh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Homes in the servant header.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    valuebox_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for valueboxes in the client stub file
  *
  *

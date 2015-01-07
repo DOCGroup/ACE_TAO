@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_attribute.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Attribute class
  *
  *

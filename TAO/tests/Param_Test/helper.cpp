@@ -3,8 +3,6 @@
 /**
  *  @file    helper.cpp
  *
- *  $Id$
- *
  *  Defines a helper class that can generate values for the parameters used
  *  for the Param_Test example
  *

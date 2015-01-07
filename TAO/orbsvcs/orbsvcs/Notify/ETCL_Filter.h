@@ -2,8 +2,6 @@
 /**
  *  @file ETCL_Filter.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

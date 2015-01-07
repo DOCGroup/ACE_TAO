@@ -3,8 +3,6 @@
 /**
  *  @file    Generic_Factory.cpp
  *
- *  $Id$
- *
  *  The server for the GenericFactory for the quoter example.
  *
  *

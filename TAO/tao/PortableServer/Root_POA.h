@@ -4,8 +4,6 @@
 /**
  *  @file    Root_POA.h
  *
- *  $Id$
- *
  *  Header file for CORBA's ORB type.
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>

@@ -4,8 +4,6 @@
 /**
  *  @file    Server_Main.h
  *
- *  $Id$
- *
  *  Declares a generic object that acts as "main" for a CORBA server.
  *  @author Dale Wilson <wilson_d@ociweb.com>
  *

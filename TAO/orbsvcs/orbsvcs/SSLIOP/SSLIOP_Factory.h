@@ -4,8 +4,6 @@
 /**
  *  @file     SSLIOP_Factory.h
  *
- *  $Id$
- *
  *  SSLIOP implementation of PP Framework Protocol_Factory interface.
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>

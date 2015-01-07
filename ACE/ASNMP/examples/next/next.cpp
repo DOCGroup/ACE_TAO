@@ -3,8 +3,6 @@
 /**
  *  @file    next.cpp
  *
- *  $Id$
- *
  *  Sample application demonstrating synchronous Snmp::get_next API
  *  to access an SNMP Version 1 agent.
  *

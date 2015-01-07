@@ -8,8 +8,6 @@
  *  template described in the book "C++ Templates" by Vandevoorde and
  *  Josuttis.
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

@@ -2,8 +2,6 @@
 /**
  *  @file    Naming_Service_Container.cpp
  *
- *  $Id$
- *
  *  @author Bruce Trask <trask_b@ociweb.com>
  */
 //=============================================================================

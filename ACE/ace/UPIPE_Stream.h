@@ -4,8 +4,6 @@
 /**
  *  @file    UPIPE_Stream.h
  *
- *  $Id$
- *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt
  */

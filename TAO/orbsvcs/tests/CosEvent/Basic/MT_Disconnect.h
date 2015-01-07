@@ -3,8 +3,6 @@
 /**
  *  @file   MT_Disconnect.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

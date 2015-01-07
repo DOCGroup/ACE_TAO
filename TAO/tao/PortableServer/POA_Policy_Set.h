@@ -4,8 +4,6 @@
 /**
  *  @file POA_Policy_Set.h
  *
- *  $Id$
- *
  *  POA
  *
  *  @author  Irfan Pyarali

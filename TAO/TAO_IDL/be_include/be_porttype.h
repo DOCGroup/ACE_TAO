@@ -4,8 +4,6 @@
 /**
  *  @file    be_porttype.h
  *
- *  $Id$
- *
  *  Extension of class AST_PortType for C++ code generation.
  *
  *

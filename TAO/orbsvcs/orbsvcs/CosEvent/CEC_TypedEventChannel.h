@@ -6,8 +6,6 @@
  *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  *
- *  $Id$
- *
  * A new implementation of the COS Typed Event Channel, based on
  * the untyped version by Carlos O'Ryan (coryan@cs.wustl.edu)
  *

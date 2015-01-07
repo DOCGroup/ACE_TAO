@@ -4,8 +4,6 @@
 /**
  *  @file    Functor_T.h
  *
- *  $Id$
- *
  *   Templatized classes for implementing function objects that are
  *   used in various places in ACE.  There are currently two major
  *   categories of function objects in ACE: GOF Command Pattern

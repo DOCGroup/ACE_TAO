@@ -3,8 +3,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  This example shows how to use reference counted servants to
  *  automatically manage dynamic memory for servants.
  *  Stubs/Skeletons and client code is available in

@@ -4,8 +4,6 @@
 /**
  *  @file    POSIX_CB_Proactor.h
  *
- *  $Id$
- *
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    Codeset_Descriptor.cpp
  *
- *  $Id$
- *
  *  The base for all the translator factories. Translator factories are
  *  responsible for supplying the proper translator on demand.
  *

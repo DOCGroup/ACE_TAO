@@ -4,8 +4,6 @@
 /**
  *  @file    Thread_Manager.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

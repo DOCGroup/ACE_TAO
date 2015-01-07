@@ -4,8 +4,6 @@
 /**
  *  @file   Transport_Selection_Guard.h
  *
- *  $Id$
- *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
 // ===================================================================

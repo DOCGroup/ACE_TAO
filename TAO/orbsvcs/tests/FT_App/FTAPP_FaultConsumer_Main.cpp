@@ -3,8 +3,6 @@
 /**
  *  @file    FTAPP_FaultConsumer_Main.cpp
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  This file provides the main routine for a stub FaultConsumer.
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Dev_Poll_Reactor.h
  *
- *  $Id$
- *
  *  @c /dev/poll (or Linux @c sys_epoll) based Reactor implementation.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>

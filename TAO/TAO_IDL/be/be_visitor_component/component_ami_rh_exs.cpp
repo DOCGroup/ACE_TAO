@@ -3,8 +3,6 @@
 /**
  *  @file    component_ami_rh_exs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for AMI4CCM reply handler impl source
  *  files.
  *

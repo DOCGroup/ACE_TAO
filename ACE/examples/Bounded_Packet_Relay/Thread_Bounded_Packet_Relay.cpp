@@ -3,8 +3,6 @@
 /**
  *  @file    Thread_Bounded_Packet_Relay.cpp
  *
- *  $Id$
- *
  *  Method definitions for the threaded-bounded packet relay class.
  *
  *

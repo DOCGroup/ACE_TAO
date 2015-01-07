@@ -3,8 +3,6 @@
 /**
  *  @file   TruncatableS_impl.h
  *
- *  $Id$
- *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
 //=============================================================================

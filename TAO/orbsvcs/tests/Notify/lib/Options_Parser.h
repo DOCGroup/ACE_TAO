@@ -2,8 +2,6 @@
 /**
  *  @file Options_Parser.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

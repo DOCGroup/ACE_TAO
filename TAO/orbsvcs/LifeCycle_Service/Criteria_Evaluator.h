@@ -3,8 +3,6 @@
 /**
  *  @file    Criteria_Evaluator.h
  *
- *  $Id$
- *
  *  An Evaluator for the CosLifeCycle Criteria
  *
  *

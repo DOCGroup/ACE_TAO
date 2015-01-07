@@ -4,8 +4,6 @@
 /**
  *  @file    analyzer.h
  *
- *  $Id$
- *
  *  This file contains a DynAny analyzer that dumps the contents of a DynAny
  *  to the ace logging using ACE_DEBUG.
  *

@@ -2,8 +2,6 @@
 /**
  *  @file    data.h
  *
- *  $Id$
- *
  *  Header file for the class containing test constants.
  *
  *

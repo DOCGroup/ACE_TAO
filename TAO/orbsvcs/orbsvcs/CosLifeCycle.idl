@@ -4,8 +4,6 @@
 /**
  *  @file    CosLifeCycle.idl
  *
- *  $Id$
- *
  *  Described in CORBAservices: Common Object Services Specification,
  *  chapter 6.
  *  The life cycle service description can be downloaded from:

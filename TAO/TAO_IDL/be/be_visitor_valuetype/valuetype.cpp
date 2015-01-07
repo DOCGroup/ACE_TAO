@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes. This is a generic visitor.
  *
  *

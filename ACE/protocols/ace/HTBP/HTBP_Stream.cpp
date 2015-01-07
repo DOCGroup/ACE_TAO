@@ -4,8 +4,6 @@
 /**
  *  @file    HTBP_Stream.cpp
  *
- *  $Id$
- *
  *  @author Phil Mesnier, Priyanka Gontla
  */
 //=============================================================================

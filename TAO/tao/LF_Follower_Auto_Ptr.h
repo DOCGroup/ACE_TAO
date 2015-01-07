@@ -4,8 +4,6 @@
 /**
  *  @file LF_Follower_Auto_Ptr.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================

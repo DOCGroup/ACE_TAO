@@ -4,8 +4,6 @@
 /**
  *  @file    Free_List.h
  *
- *  $Id$
- *
  *  @author Darrell Brunsch (brunsch@cs.wustl.edu)
  */
 //=============================================================================

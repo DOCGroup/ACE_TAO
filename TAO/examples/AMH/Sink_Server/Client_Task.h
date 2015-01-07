@@ -4,8 +4,6 @@
 /**
  *  @file  Client_Task.h
  *
- *  $Id$
- *
  *  @desc  Provides common functionality needed to run a client
  *  thread. Also incorporates functionality to collect and print
  *  statistics about the test.

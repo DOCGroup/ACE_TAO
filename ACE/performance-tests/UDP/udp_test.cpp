@@ -3,8 +3,6 @@
 /**
  *  @file    udp_test.cpp
  *
- *  $Id$
- *
  *  Measures UDP round-trip performance.
  *
  *

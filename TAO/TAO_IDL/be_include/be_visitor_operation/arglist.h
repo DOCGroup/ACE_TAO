@@ -3,8 +3,6 @@
 /**
  *  @file    arglist.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations. This generates the
  *  operation signature.
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Reactor_Token_T.h
  *
- *  $Id$
- *
  *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================

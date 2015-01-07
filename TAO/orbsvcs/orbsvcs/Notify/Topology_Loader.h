@@ -4,8 +4,6 @@
 /**
  *  @file    Topology_Loader.h
  *
- *  $Id$
- *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
 //=============================================================================

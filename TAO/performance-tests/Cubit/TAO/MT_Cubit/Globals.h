@@ -7,8 +7,6 @@
 /**
  *  @file    Globals.h
  *
- *  $Id$
- *
  *  All the globally defined classes, functions, types, and #defines
  *  are centralized here.
  *

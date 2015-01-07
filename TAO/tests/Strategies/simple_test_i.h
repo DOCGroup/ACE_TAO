@@ -3,8 +3,6 @@
 /**
  *  @file   simple_test_i.h
  *
- *  $Id$
- *
  *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
  */
 //=============================================================================

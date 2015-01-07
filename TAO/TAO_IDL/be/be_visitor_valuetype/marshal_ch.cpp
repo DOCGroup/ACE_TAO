@@ -3,8 +3,6 @@
 /**
  *  @file    marshal_ch.cpp
  *
- *  $Id$
- *
  *  Concrete visitor for valuetypes.
  *  This one provides code generation for marshalling.
  *

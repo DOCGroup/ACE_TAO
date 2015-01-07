@@ -4,8 +4,6 @@
 /**
  *  @file    structure_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Structure class
  *  This one provides code generation for the structure in the client stubs.
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Sequence_TypeCode.h
  *
- *  $Id$
- *
  *  Header file for @c tk_sequence and @c tk_array @c CORBA::TypeCodes.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

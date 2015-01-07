@@ -3,8 +3,6 @@
 /**
  *  @file    Object_Manager_Test.cpp
  *
- *  $Id$
- *
  *  Tests the basic functions of the ACE_Object_Manager.
  *
  *

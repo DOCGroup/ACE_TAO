@@ -2,8 +2,6 @@
 /**
  *  @file   amh_rh_ss.cpp
  *
- *  $Id$
- *
  *  Creates code for AMH-RH operations.
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>

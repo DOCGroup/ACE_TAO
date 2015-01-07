@@ -3,8 +3,6 @@
 /**
  *  @file   ExtendedFilter.h
  *
- *  $Id$
- *
  * Filter test any supplier to any consumer.
  *
  *

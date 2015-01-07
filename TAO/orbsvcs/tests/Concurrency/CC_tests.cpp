@@ -3,8 +3,6 @@
 /**
  *  @file    CC_tests.cpp
  *
- *  $Id$
- *
  *    This class implements a number of test objects to test the
  *    concurrency service.
  *

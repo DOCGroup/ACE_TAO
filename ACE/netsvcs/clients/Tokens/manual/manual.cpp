@@ -3,8 +3,6 @@
 /**
  *  @file    manual.cpp
  *
- *  $Id$
- *
  *  Allows manual operations on local and remote tokens.
  *
  *

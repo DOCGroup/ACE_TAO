@@ -3,8 +3,6 @@
 /**
  *  @file   Notify_Service.h
  *
- *  $Id$
- *
  * Notification Service front end.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>

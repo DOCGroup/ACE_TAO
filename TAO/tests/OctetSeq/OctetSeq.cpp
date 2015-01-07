@@ -4,8 +4,6 @@
 /**
  *  @file    OctetSeq.cpp
  *
- *  $Id$
- *
  * TAO optimizes octet sequences, this test verifies that the
  * optimizations do not break any code and that they effectively
  * improve performance.

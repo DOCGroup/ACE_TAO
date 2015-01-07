@@ -3,8 +3,6 @@
 /**
  *  @file    Timeprobe.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

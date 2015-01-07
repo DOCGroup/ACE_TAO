@@ -3,8 +3,6 @@
 /**
  *  @file    root_svts.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the CIAO template servant source
  *
  *

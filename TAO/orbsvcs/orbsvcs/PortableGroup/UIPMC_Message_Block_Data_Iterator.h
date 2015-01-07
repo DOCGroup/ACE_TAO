@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Message_Block_Data_Iterator.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth <frank@hunleth.com>
  */
 //=============================================================================

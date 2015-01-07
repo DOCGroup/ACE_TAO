@@ -4,8 +4,6 @@
 /**
  *  @file   Portable_Group_Map.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================

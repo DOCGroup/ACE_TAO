@@ -3,8 +3,6 @@
 /**
  *  @file    FT_ReplicationManager.h
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *
  *  @author Curt Hibbs <hibbs_c@ociweb.com>

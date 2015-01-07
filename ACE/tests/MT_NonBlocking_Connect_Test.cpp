@@ -3,8 +3,6 @@
 /**
  *  @file    MT_NonBlocking_Connect_Test.cpp
  *
- *  $Id$
- *
  *
  *  This test makes non-blocking connects from multiple threads. Things are
  *  complicated by the fact that after the connection is attempted reactor's

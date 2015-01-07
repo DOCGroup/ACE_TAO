@@ -3,8 +3,6 @@
 /**
  *  @file     gauge.cpp
  *
- *  $Id$
- *
  * Class implemtation for SMI Gauge32 class.
  * NOTES: This does not behave exactly as a Gauge described in RFC 1155
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    client.h
  *
- *  $Id$
- *
  *    This class tests the facilities to connect to the naming service.
  *
  *

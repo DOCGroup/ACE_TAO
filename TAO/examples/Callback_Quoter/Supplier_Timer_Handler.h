@@ -4,8 +4,6 @@
 /**
  *  @file    Supplier_Timer_Handler.h
  *
- *  $Id$
- *
  *  Definition of the Supplier_Timer_Handler class.
  *
  *

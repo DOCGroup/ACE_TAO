@@ -3,8 +3,6 @@
 /**
  *  @file    Object_A_i.h
  *
- *  $Id$
- *
  *  This class implements the Object A of the
  *  Nested Upcalls - Triangle test.
  *

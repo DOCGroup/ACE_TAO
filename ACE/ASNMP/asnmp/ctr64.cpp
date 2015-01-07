@@ -3,8 +3,6 @@
 /**
  *  @file     ctr64.cpp
  *
- *  $Id$
- *
  *  Implementation for Counter64 ( 64 bit counter class).
  *
  *

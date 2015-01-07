@@ -4,8 +4,6 @@
 /**
  *  @file    any_op_ch.h
  *
- *  $Id$
- *
  *   Visitor for the Union class.
  *   This one generates code for the Any operators for the Union in the client
  *   header.

@@ -3,8 +3,6 @@
 /**
  *  @file   Safe_InputCDR.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file    Container_Base_T.h
  *
- *  $Id$
- *
  *  Header file for CIAO's container implementations
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>

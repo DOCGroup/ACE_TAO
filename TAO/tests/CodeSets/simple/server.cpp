@@ -4,8 +4,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  A simple server to demonstrate the use of codeset translation
  *
  *

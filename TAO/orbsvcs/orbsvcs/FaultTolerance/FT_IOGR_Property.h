@@ -4,8 +4,6 @@
 /**
  *  @file    FT_IOGR_Property.h
  *
- *  $Id$
- *
  *  This class implements the IOGR properties for the FT service
  *
  *

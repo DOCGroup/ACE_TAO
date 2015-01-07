@@ -4,8 +4,6 @@
 /**
  *  @file Resume_Handle.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

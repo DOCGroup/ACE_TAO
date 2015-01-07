@@ -3,8 +3,6 @@
 /**
  *  @file   ESF_Peer_Workers.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  *  http://doc.ece.uci.edu/~coryan/ESF/index.html

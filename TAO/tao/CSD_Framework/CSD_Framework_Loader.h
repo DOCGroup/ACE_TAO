@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_Framework_Loader.h
  *
- *  $Id$
- *
  *   Header file for loading CSD framework service objects.
  *
  *  @author Yan Dai (dai_y@ociweb.com)

@@ -3,8 +3,6 @@
 /**
  *  @file    be_interface_fwd.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_InterfaceFwd that provides additional means for C++
  *  mapping of an interface.
  *

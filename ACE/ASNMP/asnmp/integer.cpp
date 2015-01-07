@@ -3,8 +3,6 @@
 /**
  *  @file     integer.cpp
  *
- *  $Id$
- *
  * Class implemtation for SMI Integer classes.
  *
  *

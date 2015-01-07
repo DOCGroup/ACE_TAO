@@ -4,8 +4,6 @@
 /**
  *  @file    OS_NS_sys_sendfile.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

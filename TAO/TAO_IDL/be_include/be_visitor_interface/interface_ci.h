@@ -3,8 +3,6 @@
 /**
  *  @file    interface_ci.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This one provides code generation for interfaces in the client inline.
  *

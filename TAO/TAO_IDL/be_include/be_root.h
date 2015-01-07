@@ -4,8 +4,6 @@
 /**
  *  @file    be_root.h
  *
- *  $Id$
- *
  *  Extension of class AST_Root that provides the backend
  *
  *

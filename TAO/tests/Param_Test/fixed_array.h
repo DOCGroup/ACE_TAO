@@ -3,8 +3,6 @@
 /**
  *  @file    fixed_array.h
  *
- *  $Id$
- *
  *   Tests fixed size array
  *
  *

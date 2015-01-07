@@ -2,8 +2,6 @@
 /**
  *  @file    corbaname_client.cpp
  *
- *  $Id$
- *
  *   This implements a simple CORBA client to tests the
  *   corbaname: style IOR parser
  *

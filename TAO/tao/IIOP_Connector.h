@@ -4,8 +4,6 @@
 /**
  *  @file    IIOP_Connector.h
  *
- *  $Id$
- *
  *  IIOP specific connector processing
  *
  *

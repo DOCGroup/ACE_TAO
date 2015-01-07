@@ -5,8 +5,6 @@
 /**
  *  @file    ArrayDef_i.h
  *
- *  $Id$
- *
  *  ArrayDef servant class.
  *
  *

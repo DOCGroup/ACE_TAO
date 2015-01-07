@@ -4,8 +4,6 @@
 /**
  *  @file   OS_Errno.h
  *
- *  $Id$
- *
  *  @author (Originally in OS.h)Doug Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

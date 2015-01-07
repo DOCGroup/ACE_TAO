@@ -3,8 +3,6 @@
 /**
  *  @file    ast_visitor_context.cpp
  *
- *  $Id$
- *
  *   Maintains the context information for visitors
  *
  *

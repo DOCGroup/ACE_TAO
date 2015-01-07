@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Factory.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================

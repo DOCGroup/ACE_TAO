@@ -4,8 +4,6 @@
 /**
  *  @file    discriminant_ch.h
  *
- *  $Id$
- *
  *   Visitor for the Union class.
  *   This one generates code for the discriminant of the Union in the client
  *   header.

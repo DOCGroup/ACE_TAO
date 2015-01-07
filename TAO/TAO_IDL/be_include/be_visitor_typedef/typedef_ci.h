@@ -4,8 +4,6 @@
 /**
  *  @file    typedef_ci.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Typedef class
  *  This provides the code generation for the Typedef class in the client
  *  inline.

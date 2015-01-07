@@ -5,8 +5,6 @@
 /**
  *  @file    ModuleDef_i.h
  *
- *  $Id$
- *
  *  ModuleDef servant class.
  *
  *

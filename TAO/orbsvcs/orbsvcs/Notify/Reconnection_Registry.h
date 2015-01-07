@@ -3,8 +3,6 @@
 /**
  *  @file Reconnection_Registry.h
  *
- *  $Id$
- *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 

@@ -3,8 +3,6 @@
 /**
  *  @file    Recursive_Condition_Bug_Test.cpp
  *
- *  $Id$
- *
  *    This test program validates the functionality of the
  *    ACE_Condition<ACE_Recursive_Thread_Mutex> template
  *    specialization when combined with the

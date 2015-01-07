@@ -4,8 +4,6 @@
 /**
  *  @file ZIOP.h
  *
- *  $Id$
- *
  *  Dynamic loader object for the ZIOP library
  *
  *

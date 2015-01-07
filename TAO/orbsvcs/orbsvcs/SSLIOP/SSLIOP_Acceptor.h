@@ -4,8 +4,6 @@
 /**
  *  @file    SSLIOP_Acceptor.h
  *
- *  $Id$
- *
  *  IIOP/SSL specific acceptor processing
  *
  *

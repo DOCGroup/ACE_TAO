@@ -4,8 +4,6 @@
 /**
  *  @file    UIPMC_Wait_Never.h
  *
- *  $Id$
- *
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================

@@ -6,8 +6,6 @@
  *
  * Initially contains a function to escape strings for use in XML files.
  *
- *  $Id$
- *
  *  @author Justin Michel <michel_j@ociweb.com>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file   FT_Storable_Naming_Context.h
  *
- *  $Id$
- *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================

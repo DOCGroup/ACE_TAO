@@ -3,8 +3,6 @@
 /**
  *  @file    exceptlist_cs.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations. This generates the tables
  *  for the exceptions used by the stubs.
  *

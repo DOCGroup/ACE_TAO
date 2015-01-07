@@ -3,8 +3,6 @@
 /**
  *  @file    MT_Reference_Counted_Notify_Test.cpp
  *
- *  $Id$
- *
  *  This test is used to check reference counting of the event
  *  handlers when it interacts with the reactor notification
  *  mechanism.

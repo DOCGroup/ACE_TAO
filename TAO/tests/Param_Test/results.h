@@ -3,8 +3,6 @@
 /**
  *  @file    results.h
  *
- *  $Id$
- *
  *  Printing the results
  *
  *

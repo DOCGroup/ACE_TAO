@@ -3,8 +3,6 @@
 /**
  *  @file    bd_wstring.h
  *
- *  $Id$
- *
  *   Tests bounded wide string
  *
  *

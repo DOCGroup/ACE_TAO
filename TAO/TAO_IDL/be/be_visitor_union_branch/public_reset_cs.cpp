@@ -3,8 +3,6 @@
 /**
  *  @file    public_reset_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Union Branch in the client inline file.
  *
  *

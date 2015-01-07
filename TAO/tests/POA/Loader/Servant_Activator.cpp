@@ -3,8 +3,6 @@
 /**
  *  @file     Servant_Activator.cpp
  *
- *  $Id$
- *
  *   Implementation of <ServantActivator>, which is used by a POA
  *   with a RETAIN policy.
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    Buffer_Stream_Test.cpp
  *
- *  $Id$
- *
  *   This program illustrates an implementation of the classic
  *   "bounded buffer" program using an ASX STREAM containing two
  *   Modules.  Each ACE_Module contains two Tasks.  Each ACE_Task

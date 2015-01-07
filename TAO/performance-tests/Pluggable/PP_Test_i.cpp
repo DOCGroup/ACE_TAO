@@ -3,8 +3,6 @@
 /**
  *  @file    PP_Test_i.cpp
  *
- *  $Id$
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

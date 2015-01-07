@@ -2,8 +2,6 @@
 /**
  *  @file  IAD_Handler.h
  *
- *  $Id$
- *
  *  @author William Otte  <wotte@dre.vanderbilt.edu>
  */
 //================================================

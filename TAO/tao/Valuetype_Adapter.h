@@ -4,8 +4,6 @@
 /**
  *  @file    Valuetype_Adapter.h
  *
- *  $Id$
- *
  *  @author  Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

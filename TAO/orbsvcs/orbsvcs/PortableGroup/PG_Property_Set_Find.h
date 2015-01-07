@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Property_Set_Find.h
  *
- *  $Id$
- *
  *  This is a companion function for the properties docoder
  *  to work around compilers that don't support templated methods.
  *

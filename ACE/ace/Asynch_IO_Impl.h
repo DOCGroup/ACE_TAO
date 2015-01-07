@@ -4,8 +4,6 @@
 /**
  *  @file    Asynch_IO_Impl.h
  *
- *  $Id$
- *
  *
  *  This class contains asbtract base classes for all the concrete
  *  implementation classes for the various asynchronous operations

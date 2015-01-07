@@ -4,8 +4,6 @@
 /**
  *  @file    ifr_adding_visitor_union.h
  *
- *  $Id$
- *
  *  Header file for class ifr_adding_visitor_union.
  *
  *

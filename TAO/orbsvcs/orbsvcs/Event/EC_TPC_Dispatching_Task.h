@@ -3,8 +3,6 @@
 /**
  *  @file   EC_TPC_Dispatching_Task.h
  *
- *  $Id$
- *
  *  @author Chris Cleeland <cleeland at ociweb.com>
  */
 

@@ -3,8 +3,6 @@
 /**
  *  @file    bd_array_seq.h
  *
- *  $Id$
- *
  *   Tests bounded array sequence
  *
  *

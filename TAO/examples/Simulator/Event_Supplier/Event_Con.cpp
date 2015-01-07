@@ -3,8 +3,6 @@
 /**
  *  @file    Event_Con.cpp
  *
- *  $Id$
- *
  * This demo just tests the basic functionality of the Event Service
  * One Conumer which inherits from the Rtec Consumer.  One Supplier
  * with an internal Rtec Consumer and one internal Rtec Supplier.

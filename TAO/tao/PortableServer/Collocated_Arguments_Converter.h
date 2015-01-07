@@ -4,8 +4,6 @@
 /**
  *  @file    Collocated_Arguments_Converter.h
  *
- *  $Id$
- *
  *  @author  Yan Dai <dai_y@ociweb.com>
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */

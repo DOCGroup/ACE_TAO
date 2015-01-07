@@ -3,8 +3,6 @@
 /**
  *  @file    tie_ss.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations for the TIE class
  *
  *

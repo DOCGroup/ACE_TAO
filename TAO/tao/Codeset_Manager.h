@@ -4,8 +4,6 @@
 /*
  *  @file Codeset_Manager.h
  *
- *  $Id$
- *
  *  Interface for the TAO CodeSet Manager.
  *
  *  @author  Mahesh Vedantam <mahesh@ociweb.com>

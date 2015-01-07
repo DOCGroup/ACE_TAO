@@ -3,8 +3,6 @@
 /**
  *  @file    FT_ReplicationManagerFaultAnalyzer.cpp
  *
- *  $Id$
- *
  *  This file is part of TAO's implementation of Fault Tolerant CORBA.
  *
  *  @author Steve Totten <totten_s@ociweb.com>

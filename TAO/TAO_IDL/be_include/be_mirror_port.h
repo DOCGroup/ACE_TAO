@@ -4,8 +4,6 @@
 /**
  *  @file    be_mirror_port.h
  *
- *  $Id$
- *
  *  Extension of class AST_Mirror_Port for C++ code generation.
  *
  *

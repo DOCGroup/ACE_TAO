@@ -5,8 +5,6 @@
 /**
  *  @file    StructDef_i.h
  *
- *  $Id$
- *
  *  StructDef servant class.
  *
  *

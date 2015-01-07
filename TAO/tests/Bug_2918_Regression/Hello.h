@@ -4,8 +4,6 @@
 /**
  *  @file    Hello.h
  *
- *  $Id$
- *
  *  Header file for recursive type Any insertion and extraction test.
  *
  *  @author Ossama Othman

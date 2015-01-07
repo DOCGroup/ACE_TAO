@@ -3,8 +3,6 @@
 /**
  *  @file    FT_TestReplica.idl
  *
- *  $Id$
- *
  *  This file defines an interface used to test Fault Tolerant CORBA.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>

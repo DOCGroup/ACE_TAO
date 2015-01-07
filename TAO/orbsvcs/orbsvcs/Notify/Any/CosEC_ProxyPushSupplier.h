@@ -2,8 +2,6 @@
 /**
  *  @file CosEC_ProxyPushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    field_cdr_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Field in the client stubs file.
  *
  *

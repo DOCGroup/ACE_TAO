@@ -4,8 +4,6 @@
 /**
  *  @file    Connection_Handler_Connector.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt
  */
 //=============================================================================

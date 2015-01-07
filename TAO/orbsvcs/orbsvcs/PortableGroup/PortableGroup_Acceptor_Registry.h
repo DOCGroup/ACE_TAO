@@ -4,8 +4,6 @@
 /**
  *  @file     PortableGroup_Acceptor_Registry.h
  *
- *  $Id$
- *
  *  Registry for dynamically created acceptors.
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>

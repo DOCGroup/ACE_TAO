@@ -3,8 +3,6 @@
 /**
  *  @file   Big_Reply_i.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  **/
 // ===================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file     FT_ServerORBInitializer.h
  *
- *  $Id$
- *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

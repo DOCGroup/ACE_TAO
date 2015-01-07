@@ -3,8 +3,6 @@
 /**
  *  @file    exception_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Exception in the client header
  *
  *

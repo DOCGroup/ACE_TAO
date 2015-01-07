@@ -3,8 +3,6 @@
 /**
  *  @file    structure_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Structures in the client stubs file.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    Widget.h
  *
- *  $Id$
- *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
 //=============================================================================

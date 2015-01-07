@@ -3,8 +3,6 @@
 /**
  *  @file    interface.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interfaces. This is a generic visitor.
  *
  *

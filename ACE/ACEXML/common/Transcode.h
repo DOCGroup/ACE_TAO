@@ -7,8 +7,6 @@
  * This file declares functions to convert char string among different
  * unicode encoding (utf8, utf16, utf32)
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

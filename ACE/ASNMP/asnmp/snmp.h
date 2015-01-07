@@ -5,8 +5,6 @@
 /**
  *  @file    snmp.h
  *
- *  $Id$
- *
  * SNMP class defintion. The Snmp class provides an object oriented
  * approach to SNMP. The SNMP class is an encapsulation of SNMP
  * sessions, gets, sets, etc. The class manages all SNMP

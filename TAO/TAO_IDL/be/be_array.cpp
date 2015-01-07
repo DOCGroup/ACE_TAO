@@ -3,8 +3,6 @@
 /**
  *  @file    be_array.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Array that provides additional means for C++
  *  mapping.
  *

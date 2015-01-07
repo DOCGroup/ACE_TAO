@@ -4,8 +4,6 @@
 /**
  *  @file    Load_Balancing_Service.h
  *
- *  $Id$
- *
  *  Driver for Load Balancing service.
  *
  *

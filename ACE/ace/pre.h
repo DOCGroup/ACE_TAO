@@ -4,8 +4,6 @@
 /**
  *  @file    pre.h
  *
- *  $Id$
- *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  *
  *  This file saves the original alignment rules and changes the alignment

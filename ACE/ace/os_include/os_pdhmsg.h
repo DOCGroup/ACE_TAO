@@ -6,8 +6,6 @@
  *
  *  definitions for the windows pdh API
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

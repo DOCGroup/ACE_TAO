@@ -3,8 +3,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Test server for the CosPropertyService
  *
  *

@@ -2,8 +2,6 @@
 /**
  *  @file    Memcpy_Test.cpp
  *
- *  $Id$
- *
  *  @author Mike Marinez <mmartinez@oci.com>
  *
  * This test compares the performance of ACE_OS::memcpy with

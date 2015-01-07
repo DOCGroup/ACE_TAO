@@ -3,8 +3,6 @@
 /**
  *  @file   Filter.h
  *
- *  $Id$
- *
  * Class to demo structured event filtering.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    field_ch.cpp
  *
- *  $Id$
- *
  *   Visitor for the structure fields in valuebox class.
  *   This one generates code for access to strucuture members
  *   in the client header.

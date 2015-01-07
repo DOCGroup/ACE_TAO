@@ -4,8 +4,6 @@
 /**
  *  @file    client.h
  *
- *  $Id$
- *
  *  Test client for the Property Service.
  *
  *

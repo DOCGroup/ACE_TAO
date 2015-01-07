@@ -4,8 +4,6 @@
 /**
  *  @file     ValueFactory_Map.h
  *
- *  $Id$
- *
  *  @author  Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
 //=============================================================================

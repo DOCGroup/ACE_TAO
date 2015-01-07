@@ -2,8 +2,6 @@
 /**
  *  @file RT_Test_Filter.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

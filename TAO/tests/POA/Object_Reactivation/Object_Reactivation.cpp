@@ -3,8 +3,6 @@
 /**
  *  @file     Object_Reactivation.cpp
  *
- *  $Id$
- *
  *   This program tests the reactivation of a servant that has been
  *   deactivated but not removed from the Active Object Map yet.
  *

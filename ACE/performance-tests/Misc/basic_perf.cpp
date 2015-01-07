@@ -3,8 +3,6 @@
 /**
  *  @file    basic_perf.cpp
  *
- *  $Id$
- *
  *  Times various simple operations.
  *
  *  With Sun C++, use -O2: make CFLAGS="-mt -O2" BIN=basic_perf

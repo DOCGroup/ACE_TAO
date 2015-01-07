@@ -4,8 +4,6 @@
 /**
  *  @file BiDir_Service_Context_Handler.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================

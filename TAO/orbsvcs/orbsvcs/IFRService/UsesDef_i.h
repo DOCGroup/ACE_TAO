@@ -5,8 +5,6 @@
 /**
  *  @file    UsesDef_i.h
  *
- *  $Id$
- *
  *  UsesDef servant class.
  *
  *

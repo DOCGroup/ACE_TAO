@@ -3,8 +3,6 @@
 /**
  *  @file    MT_Reference_Counted_Event_Handler_Test.cpp
  *
- *  $Id$
- *
  *
  *  This test tries to represents what happens in the ORB wrt to
  *  event handlers, reactors, timer queues, threads, and connection

@@ -3,8 +3,6 @@
 /**
  *  @file    collection.cpp
  *
- *  $Id$
- *
  *   Shows how applications can use the ACE_Token_Collection
  *   utility.  This example creates three collections and spawns a
  *   thread to operate on each.  The threads use the collective

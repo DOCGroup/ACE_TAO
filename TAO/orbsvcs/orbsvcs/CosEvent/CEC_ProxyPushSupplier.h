@@ -4,8 +4,6 @@
 /**
  *  @file   CEC_ProxyPushSupplier.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  */

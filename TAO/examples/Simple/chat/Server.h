@@ -3,8 +3,6 @@
 /**
  *  @file    Server.h
  *
- *  $Id$
- *
  *  Definition of the Server class for the chat.
  *
  *

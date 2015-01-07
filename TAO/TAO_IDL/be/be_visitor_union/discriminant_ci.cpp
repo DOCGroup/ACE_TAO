@@ -3,8 +3,6 @@
 /**
  *  @file    discriminant_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for discriminant of the union.
  *
  *

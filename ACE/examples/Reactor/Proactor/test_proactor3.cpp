@@ -3,8 +3,6 @@
 /**
  *  @file    test_proactor3.cpp
  *
- *  $Id$
- *
  *  This program illustrates how the <ACE_Proactor> can be used to
  *  implement an application that does various asynchronous
  *  operations.

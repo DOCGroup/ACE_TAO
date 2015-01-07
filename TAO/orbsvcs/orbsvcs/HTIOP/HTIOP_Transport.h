@@ -4,8 +4,6 @@
 /**
  *  @file   HTIOP_Transport.h
  *
- *  $Id$
- *
  *  @author Originally by Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */

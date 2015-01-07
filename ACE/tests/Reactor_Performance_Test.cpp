@@ -3,8 +3,6 @@
 /**
  *  @file    Reactor_Performance_Test.cpp
  *
- *  $Id$
- *
  *  This test is used to time the dispatching mechanisms of the
  *  <ACE_Reactor>s. Both the <ACE_WFMO_Reactor> and
  *  <ACE_Select_Reactor> can be tested.

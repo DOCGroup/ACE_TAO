@@ -4,8 +4,6 @@
 /**
  *  @file   OC_Endpoint_Selector_Loader.h
  *
- *  $Id$
- *
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
  *

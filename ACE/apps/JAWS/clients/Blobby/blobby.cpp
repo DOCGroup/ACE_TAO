@@ -3,8 +3,6 @@
 /**
  *  @file    blobby.cpp
  *
- *  $Id$
- *
  *   Simple client application to illustrate the use of the ACE_Blob class
  *
  *   It reads "length" number of bytes, after skipping offset "offset"

@@ -3,8 +3,6 @@
 /**
  *  @file     Servant_Manager.cpp
  *
- *  $Id$
- *
  *   Implementation of the helper class for the ServantActivator_i
  *   and the ServantLocator_i.
  *

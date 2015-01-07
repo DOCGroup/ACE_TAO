@@ -5,8 +5,6 @@
 /**
  *  @file    integer.h
  *
- *  $Id$
- *
  *  Class definition for Integer classes convertable to SMI.
  *
  *

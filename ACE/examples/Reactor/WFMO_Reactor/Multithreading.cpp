@@ -2,8 +2,6 @@
 /**
  *  @file    Multithreading.cpp
  *
- *  $Id$
- *
  *
  *  This application tests multiple threads simultaneously calling
  *  Reactor::handle_events(). It also shows how different threads

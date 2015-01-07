@@ -4,8 +4,6 @@
 /**
  *  @file    Continuous_Priority_Mapping.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali
  */
 // ===================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    root_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the Root in the client inline
  *
  *

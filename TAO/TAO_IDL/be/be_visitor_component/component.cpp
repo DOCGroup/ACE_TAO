@@ -3,8 +3,6 @@
 /**
  *  @file    component.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Components. This is a generic visitor.
  *
  *

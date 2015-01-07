@@ -3,8 +3,6 @@
 /**
  *  @file    array.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Array
  *
  *

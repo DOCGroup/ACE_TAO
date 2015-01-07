@@ -4,8 +4,6 @@
 /**
  *  @file    CharStream.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

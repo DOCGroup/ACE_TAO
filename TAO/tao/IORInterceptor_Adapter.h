@@ -4,8 +4,6 @@
 /**
  *  @file    IORInterceptor_Adapter.h
  *
- *  $Id$
- *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

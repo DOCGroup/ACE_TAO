@@ -2,8 +2,6 @@
 /**
  *  @file    demux_test_server.h
  *
- *  $Id$
- *
  *  Server-side demux_test class
  *
  *  @author Aniruddha Gokhale

@@ -3,8 +3,6 @@
 /**
  *  @file    FT_FaultEventDescriptor.cpp
  *
- *  $Id$
- *
  *  This file is part of TAO's implementation of Fault Tolerant CORBA.
  *  This file provides the implementation of the
  *  TAO::FT_FaultEventDescriptor structure.  The

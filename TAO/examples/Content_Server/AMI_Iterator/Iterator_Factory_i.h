@@ -4,8 +4,6 @@
 /**
  *  @file     Iterator_Factory_i.h
  *
- *  $Id$
- *
  *   Header file for the Web_Server::Iterator_Factory implementation.
  *
  *

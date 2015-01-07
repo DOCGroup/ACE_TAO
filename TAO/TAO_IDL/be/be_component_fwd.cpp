@@ -3,8 +3,6 @@
 /**
  *  @file    be_component_fwd.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_ComponentFwd that provides additional means for C++
  *  mapping of a forward declared component.
  *

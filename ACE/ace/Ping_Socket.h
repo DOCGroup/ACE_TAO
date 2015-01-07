@@ -4,8 +4,6 @@
 /**
  *  @file    Ping_Socket.h
  *
- *  $Id$
- *
  *  @author Robert S. Iakobashvili <coroberti@gmail.com> <coroberti@walla.co.il>
  *  @author Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com>
  */

@@ -5,8 +5,6 @@
 /**
  *  @file    Contained_i.h
  *
- *  $Id$
- *
  *  Contained servant class.
  *
  *

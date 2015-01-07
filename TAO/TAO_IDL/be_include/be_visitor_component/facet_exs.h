@@ -3,8 +3,6 @@
 /**
  *  @file    facet_exs.h
  *
- *  $Id$
- *
  *  This provides code generation for facets in the exec impl source.
  *
  *

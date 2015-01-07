@@ -3,8 +3,6 @@
 /**
  *  @file    amh_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the AMH-RH Interface node.
  *  This one provides code generation for interfaces in the client
  *  header.

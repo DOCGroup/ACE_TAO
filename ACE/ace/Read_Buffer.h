@@ -4,8 +4,6 @@
 /**
  *  @file    Read_Buffer.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Seth Widoff
  */

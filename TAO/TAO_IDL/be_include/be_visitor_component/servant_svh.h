@@ -3,8 +3,6 @@
 /**
  *  @file    servant_svh.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Component node.
  *  This provides for code generation for the Servant
  *  class declaration

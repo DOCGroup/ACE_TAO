@@ -3,8 +3,6 @@
 /**
  *  @file    Tokens_Test.cpp
  *
- *  $Id$
- *
  *   This application tests the ACE Token library including local
  *   and remote readers/writer and mutex locks, and token
  *   collections.  This is accomplished with the ACE Token Invariant

@@ -3,8 +3,6 @@
 /**
  *  @file    be_param_holder.cpp
  *
- *  $Id$
- *
  *  Place holder referenced by AST_Field (or subclass)
  *  representing a corresponding template parameter in IDL.
  *

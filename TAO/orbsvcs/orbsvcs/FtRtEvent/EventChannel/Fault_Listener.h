@@ -4,8 +4,6 @@
 /**
  *  @file   Fault_Listener.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

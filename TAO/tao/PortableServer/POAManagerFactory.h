@@ -4,8 +4,6 @@
 /**
  *  @file    POAManagerFactory.h
  *
- *  $Id$
- *
  *   POAManagerFactory
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>

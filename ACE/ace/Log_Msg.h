@@ -4,8 +4,6 @@
 /**
  *  @file    Log_Msg.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

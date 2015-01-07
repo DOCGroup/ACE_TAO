@@ -4,8 +4,6 @@
 /**
  *  @file    Options.h
  *
- *  $Id$
- *
  *   Options is an Singleton for blobby
  *
  *

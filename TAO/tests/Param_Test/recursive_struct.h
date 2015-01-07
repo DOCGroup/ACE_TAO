@@ -3,8 +3,6 @@
 /**
  *  @file    recursive_struct.h
  *
- *  $Id$
- *
  *  Tests a structure that contains a sequence of itself
  *
  *

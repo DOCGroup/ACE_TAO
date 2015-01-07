@@ -4,8 +4,6 @@
 /**
  *  @file    LSOCK_Connector.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

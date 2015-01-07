@@ -4,8 +4,6 @@
 /**
  *  @file   Notify_Consumer.h
  *
- *  $Id$
- *
  *  An example of using the Notify_Logging_Service.
  *  The Notify_Consumer consumes log-generated events.
  *

@@ -2,8 +2,6 @@
 /**
  *  @file   Storable_Base.cpp
  *
- *  $Id$
- *
  *  @author Bruce Trask <trask_b@ociweb.com>
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  *  @author Byron Harris <harrisb@ociweb.com>

@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynenum.h
  *
- *  $Id$
- *
  *  Header file for class to test DynEnum.
  *
  *

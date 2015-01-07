@@ -4,8 +4,6 @@
 /**
  *  @file   CEC_TypedConsumerAdmin.h
  *
- *  $Id$
- *
  *  @author Jon Astle (jon@astle45.fsnet.co.uk)
  *
  *  Based on the untyped version by Carlos O'Ryan (coryan@cs.wustl.edu)

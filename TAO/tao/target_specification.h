@@ -4,8 +4,6 @@
 /**
  *  @file    target_specification.h
  *
- *  $Id$
- *
  *  A class that encapsulates the target identification details.
  *
  *  @author  Balachandran  Natarajan <bala@cs.wustl.edu>

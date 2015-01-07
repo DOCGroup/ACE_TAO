@@ -3,8 +3,6 @@
 /**
  *  @file    options.cpp
  *
- *  $Id$
- *
  *  Options for the Param_Test application
  *
  *

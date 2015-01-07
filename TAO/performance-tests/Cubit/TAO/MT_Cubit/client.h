@@ -4,8 +4,6 @@
 /**
  *  @file    client.h
  *
- *  $Id$
- *
  *  @author Andy Gokhale
  *  @author Brian Mendel
  *  @author Sumedh Mungee

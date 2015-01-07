@@ -2,8 +2,6 @@
 /**
  *  @file ETCL_FilterFactory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

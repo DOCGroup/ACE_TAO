@@ -3,8 +3,6 @@
 /**
  *  @file    Event_Sup.cpp
  *
- *  $Id$
- *
  * Event Supplier for the flight simulator
  *
  *

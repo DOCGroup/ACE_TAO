@@ -3,8 +3,6 @@
 /**
  *  @file    Upgradable_RW_Test.cpp
  *
- *  $Id$
- *
  *    This test program verifies the functionality of the ACE_OS
  *    implementation of readers/writer locks on Win32 and Posix
  *    pthreads.  Use the RW_Mutex define switch to use

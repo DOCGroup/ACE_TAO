@@ -4,8 +4,6 @@
 /**
  *  @file    Thread_Timer_Queue_Custom_Handler_Test.h
  *
- *  $Id$
- *
  *  This code exercises the <ACE_Thread_Timer_Queue_Adapter> using
  *  an <ACE_Timer_Heap_T>. It also demonstrates using a custom handler for
  *  timer events.

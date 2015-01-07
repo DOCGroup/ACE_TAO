@@ -2,8 +2,6 @@
 /**
  *  @file    imore.cpp (imore stands for indirect more.)
  *
- *  $Id$
- *
  *  This program demonstrates how to redirect stdout of a parent
  *  process to the stdin of its child process using either unnamed pipe
  *  or named pipes to relay data to subprocess which runs "more" to

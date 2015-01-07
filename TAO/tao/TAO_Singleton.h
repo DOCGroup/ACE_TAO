@@ -4,8 +4,6 @@
 /**
  *  @file    TAO_Singleton.h
  *
- *  $Id$
- *
  *   Header file for the TAO-specific Singleton implementation.
  *   Based entirely on ace/Singleton.*.
  *

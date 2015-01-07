@@ -3,8 +3,6 @@
 /**
  *  @file    tie_sh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for TIE class for an Interface in the header
  *  file.
  *

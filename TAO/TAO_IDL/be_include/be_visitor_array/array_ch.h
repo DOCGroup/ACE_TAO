@@ -3,8 +3,6 @@
 /**
  *  @file    array_ch.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arrays in client header.
  *
  *

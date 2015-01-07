@@ -3,8 +3,6 @@
 /**
  *  @file    interface_fwd.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Interface_Fwd
  *
  *

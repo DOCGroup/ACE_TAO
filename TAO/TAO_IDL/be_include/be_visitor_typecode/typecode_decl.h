@@ -4,8 +4,6 @@
 /**
  *  @file    typecode_decl.h
  *
- *  $Id$
- *
  *  Concrete visitor for the generation of TypeCodes.
  *  This one generates the declaration.
  *

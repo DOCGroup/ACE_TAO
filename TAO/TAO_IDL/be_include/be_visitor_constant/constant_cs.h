@@ -4,8 +4,6 @@
 /**
  *  @file    constant_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the constant class generating code in the client stub.
  *
  *

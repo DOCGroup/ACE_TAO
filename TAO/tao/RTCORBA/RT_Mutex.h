@@ -4,8 +4,6 @@
 /**
  *  @file   RT_Mutex.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================

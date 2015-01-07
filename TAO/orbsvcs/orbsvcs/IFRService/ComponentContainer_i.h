@@ -5,8 +5,6 @@
 /**
  *  @file    ComponentContainer_i.h
  *
- *  $Id$
- *
  *  ComponentContainer_i servant class.
  *
  *

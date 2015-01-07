@@ -3,8 +3,6 @@
 /**
  *  @file    marshal_ss.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arguments. This generates the
  *  code to pass the arguments to the call to the marshaler/demarshaler
  *

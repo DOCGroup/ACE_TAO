@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_ci.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuetype node.
  *  This one provides code generation for valuetypes in the client inline.
  *

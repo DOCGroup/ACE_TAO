@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_init_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes factory in the client header
  *  (see IDL to C++ mapping). Based on ptc/00-01-02.
  *

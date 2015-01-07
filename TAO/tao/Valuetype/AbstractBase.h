@@ -4,8 +4,6 @@
 /**
  *  @file     AbstractBase.h
  *
- *  $Id$
- *
  *  @author  Jeff Parsons  <parsons@cs.wust.edu>
  */
 //=============================================================================

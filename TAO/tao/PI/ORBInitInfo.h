@@ -4,8 +4,6 @@
 /**
  *  @file   ORBInitInfo.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 // ===================================================================

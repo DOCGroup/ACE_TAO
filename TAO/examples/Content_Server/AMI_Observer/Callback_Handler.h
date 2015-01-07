@@ -4,8 +4,6 @@
 /**
  *  @file     Callback_Handler.h
  *
- *  $Id$
- *
  *   Header file for the Web_Server::AMI_CallbackHandler
  *   implementation.
  *

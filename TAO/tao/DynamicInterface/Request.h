@@ -4,8 +4,6 @@
 /**
  *  @file    Request.h
  *
- *  $Id$
- *
  *  Header file for CORBA's Dynamic Invocation Interface "Request"
  *  type.
  *

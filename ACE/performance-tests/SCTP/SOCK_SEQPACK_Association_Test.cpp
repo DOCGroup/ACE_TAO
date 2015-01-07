@@ -3,8 +3,6 @@
 /**
  *  @file    SOCK_SEQPACK_Association_Test.cpp
  *
- *  $Id$
- *
  *
  * Tests the methods get_local_addrs and get_remote_addrs of class
  * ACE_SOCK_SEQPACK_Association.

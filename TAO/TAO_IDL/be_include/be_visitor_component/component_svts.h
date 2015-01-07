@@ -3,8 +3,6 @@
 /**
  *  @file    component_svts.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Component node.
  *  This provides for code generation in the templated servant source
  *

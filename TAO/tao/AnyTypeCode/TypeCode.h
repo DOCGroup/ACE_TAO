@@ -4,8 +4,6 @@
 /**
  *  @file    TypeCode.h
  *
- *  $Id$
- *
  *  Header file the @c CORBA::TypeCode class.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

@@ -3,8 +3,6 @@
 /**
  *  @file    TP_Reactor_Test.cpp
  *
- *  $Id$
- *
  *  This program illustrates how the <ACE_TP_Reactor> can be used to
  *  implement an application that does various  operations.
  *  usage: TP_Reactor_Test

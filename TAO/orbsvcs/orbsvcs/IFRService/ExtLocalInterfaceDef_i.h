@@ -5,8 +5,6 @@
 /**
  *  @file    ExtLocalInterfaceDef_i.h
  *
- *  $Id$
- *
  *  ExtLocalInterfaceDef_i servant class.
  *
  *

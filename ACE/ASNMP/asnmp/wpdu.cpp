@@ -3,8 +3,6 @@
 /**
  *  @file    wpdu.cpp
  *
- *  $Id$
- *
  *  Adapter class. Converts between raw wire format and Pdu objects
  *  that can be stuffed out a I/O port or reconstructed
  *

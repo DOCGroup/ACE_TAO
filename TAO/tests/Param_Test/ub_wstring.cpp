@@ -3,8 +3,6 @@
 /**
  *  @file    ub_wstring.cpp
  *
- *  $Id$
- *
  *  tests unbounded wide strings
  *
  *

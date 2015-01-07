@@ -4,8 +4,6 @@
 /**
  *  @file    Synch_Reply_Dispatcher.h
  *
- *  $Id$
- *
  *  Dispatch the reply appropriately.
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>

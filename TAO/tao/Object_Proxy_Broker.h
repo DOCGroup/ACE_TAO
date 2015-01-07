@@ -4,8 +4,6 @@
 /**
  *  @file    Object_Proxy_Broker.h
  *
- *  $Id$
- *
  *  This files contains the abstract class for the CORBA Object
  *  proxy brokers.
  *

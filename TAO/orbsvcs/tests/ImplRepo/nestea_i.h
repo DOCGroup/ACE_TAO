@@ -4,8 +4,6 @@
 /**
  *  @file    nestea_i.h
  *
- *  $Id$
- *
  *  This class is an implementation of the Nestea Bookshelf interface.
  *
  *

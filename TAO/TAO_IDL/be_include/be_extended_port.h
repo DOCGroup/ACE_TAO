@@ -4,8 +4,6 @@
 /**
  *  @file    be_extended_port.h
  *
- *  $Id$
- *
  *  Extension of class AST_Extended_Port for C++ code generation.
  *
  *

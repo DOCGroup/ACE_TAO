@@ -3,8 +3,6 @@
 /**
  *  @file    Priority_Task_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test to illustrate the priority mechanism of
  *    ACE Tasks.  The test requires no options, but the -d option
  *    enables LM_DEBUG output.

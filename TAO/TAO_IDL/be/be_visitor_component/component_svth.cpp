@@ -3,8 +3,6 @@
 /**
  *  @file    component_svth.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Components in the servant header.
  *
  *

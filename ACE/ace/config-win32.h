@@ -3,8 +3,6 @@
 /**
  *  @file   config-win32.h
  *
- *  $Id$
- *
  *  @brief  Microsoft Windows configuration file.
  *
  *  This file is the ACE configuration file for all of Microsoft Windows

@@ -3,8 +3,6 @@
 /**
  *  @file    component_fwd_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Component Forward node.
  *  This one provides code generation for component forward node.
  *

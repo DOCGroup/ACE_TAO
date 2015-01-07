@@ -3,8 +3,6 @@
 /**
  *  @file    be_enum.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Enum that provides additional means for C++
  *  mapping.
  *

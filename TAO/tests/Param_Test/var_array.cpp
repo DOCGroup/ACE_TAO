@@ -3,8 +3,6 @@
 /**
  *  @file    var_array.cpp
  *
- *  $Id$
- *
  *  tests fixed size arrays
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    root.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Root
  *
  *

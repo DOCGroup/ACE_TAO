@@ -4,8 +4,6 @@
 /**
  *  @file   RT_Endpoint_Utils.h
  *
- *  $Id$
- *
  *  Commonly used utility methods used by RT_Endpoint_Selectors.
  *
  *  @author Angelo Corsaro <corsaro@cs.wustl.edu>

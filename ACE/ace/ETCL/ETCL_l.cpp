@@ -451,8 +451,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 /**
  *  @file   ETCL_l.cpp
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu> based on previous work by Seth Widoff <sbw1@cs.wustl.edu>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file    be_constant.h
  *
- *  $Id$
- *
  *  Extension of class AST_Constant that provides additional means for C++
  *  mapping.
  *

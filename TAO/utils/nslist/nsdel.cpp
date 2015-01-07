@@ -3,8 +3,6 @@
 /**
  *  @file    nsdel.cpp
  *
- *  $Id$
- *
  *  Naming Service del utility
  *
  *

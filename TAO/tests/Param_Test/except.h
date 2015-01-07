@@ -3,8 +3,6 @@
 /**
  *  @file   except.h
  *
- *  $Id$
- *
  * Tests system and user exceptions
  *
  *

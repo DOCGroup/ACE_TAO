@@ -5,8 +5,6 @@
 /**
  *  @file     enttraps.h
  *
- *  $Id$
- *
  * constants for Enterprise Traps
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    be_union_branch.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_UnionBranch that provides additional means for C++
  *  mapping.
  *

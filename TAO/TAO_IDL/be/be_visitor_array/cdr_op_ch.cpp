@@ -3,8 +3,6 @@
 /**
  *  @file    cdr_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor for code generation of Arrays for the Cdr operators in the client
  *  header.
  *

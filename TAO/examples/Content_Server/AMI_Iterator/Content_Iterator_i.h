@@ -5,8 +5,6 @@
 /**
  *  @file     Content_Iterator_i.h
  *
- *  $Id$
- *
  *   Header file for the Web_Server::Content_Iterator implementation.
  *
  *

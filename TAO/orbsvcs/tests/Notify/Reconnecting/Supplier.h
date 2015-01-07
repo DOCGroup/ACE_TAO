@@ -3,8 +3,6 @@
 /**
  *  @file   Supplier.h
  *
- *  $Id$
- *
  * Test Supplier reconnect to existing channel/admin/proxy Notification Service
  *
  *

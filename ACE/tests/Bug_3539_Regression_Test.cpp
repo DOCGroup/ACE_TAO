@@ -3,8 +3,6 @@
 /**
  *  @file    Bug_3539_Regression_Test.cpp
  *
- *  $Id$
- *
  *  This test is similar to TSS_Test but it's a bit simpler and it uses
  *  ACE_TSS in a main() thread. It uses TSS_Test_Errno.h.
  *

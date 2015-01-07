@@ -3,8 +3,6 @@
 /**
  *  @file    root_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the client stubs file.
  *
  *

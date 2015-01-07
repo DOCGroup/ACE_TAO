@@ -3,8 +3,6 @@
 /**
  *  @file    LifeCycle_Service_i.cpp
  *
- *  $Id$
- *
  *  The implementation of a LifeCycle Service GenericFactory.
  *
  *

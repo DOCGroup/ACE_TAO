@@ -4,8 +4,6 @@
 /**
  *  @file     GIOP_Message_Locate_Header.h
  *
- *  $Id$
- *
  *   Some assorted GIOP structure mappings
  *
  *

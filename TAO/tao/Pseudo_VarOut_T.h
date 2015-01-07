@@ -4,8 +4,6 @@
 /**
  *  @file    Pseudo_VarOut_T.h
  *
- *  $Id$
- *
  * @note This header should be included after all types to be passed
  * as template parameters to the TAO_Pseudo_{Var,Out}_T template
  * classes have been declared.  If the types in question are defined

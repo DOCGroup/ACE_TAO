@@ -4,8 +4,6 @@
 /**
  *  @file    ServerRequestInterceptor_Adapter_Factory.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

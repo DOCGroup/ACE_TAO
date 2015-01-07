@@ -4,8 +4,6 @@
 /**
  *  @file    Profile_Transport_Resolver.h
  *
- *  $Id$
- *
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */

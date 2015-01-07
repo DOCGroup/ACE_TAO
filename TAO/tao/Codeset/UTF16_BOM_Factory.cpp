@@ -4,8 +4,6 @@
 /**
  *  @file    UTF16_BOM_Factory.cpp
  *
- *  $Id$
- *
  *  Loader for an instance of the UTF16_BOM_Translator.
  *
  *

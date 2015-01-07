@@ -4,8 +4,6 @@
 /**
  *  @file     FT_ClientORBInitializer.h
  *
- *  $Id$
- *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

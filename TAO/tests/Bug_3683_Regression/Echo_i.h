@@ -4,8 +4,6 @@
 /**
  *  @file    Echo_i.h
  *
- *  $Id$
- *
  *  This class implements the Echo IDL interface.
  *
  *

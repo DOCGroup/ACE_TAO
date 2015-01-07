@@ -3,8 +3,6 @@
 /**
  *  @file    be_visitor_dds_ts_idl.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for DDS type support IDL files.
  *
  *

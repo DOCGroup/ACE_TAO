@@ -4,8 +4,6 @@
 /**
  *  @file    Malloc_T.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and
  *          Irfan Pyarali <irfan@cs.wustl.edu>
  */

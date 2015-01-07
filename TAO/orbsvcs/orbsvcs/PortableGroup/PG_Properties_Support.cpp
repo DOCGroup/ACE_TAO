@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Properties_Support.cpp
  *
- *  $Id$
- *
  *  This file implements classes to help manage PortableGroup::Properties
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>

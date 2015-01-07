@@ -3,8 +3,6 @@
 /**
  *  @file    DLList_Test.cpp
  *
- *  $Id$
- *
  *    This test illustrates the use of <ACE_DLList>.
  *
  *

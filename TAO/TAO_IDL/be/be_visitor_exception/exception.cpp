@@ -3,8 +3,6 @@
 /**
  *  @file    exception.cpp
  *
- *  $Id$
- *
  *  Generic visitor generating code for Exceptions.
  *
  *

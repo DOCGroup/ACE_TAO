@@ -3,8 +3,6 @@
 /**
  *  @file    be_predefined_type.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_PredefinedType that provides additional means for C++
  *  mapping.
  *

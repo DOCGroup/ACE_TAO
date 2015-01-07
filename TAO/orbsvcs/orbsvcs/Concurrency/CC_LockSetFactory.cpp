@@ -2,8 +2,6 @@
 /**
  *  @file   CC_LockSetFactory.cpp
  *
- *  $Id$
- *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
 //=============================================================================

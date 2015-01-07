@@ -3,8 +3,6 @@
 /**
  *  @file    union.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Union
  *
  *

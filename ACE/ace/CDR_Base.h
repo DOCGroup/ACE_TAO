@@ -4,8 +4,6 @@
 /**
  *  @file   CDR_Base.h
  *
- *  $Id$
- *
  * ACE Common Data Representation (CDR) basic types.
  *
  * The current implementation assumes that the host has 1-byte,

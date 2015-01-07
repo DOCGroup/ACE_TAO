@@ -4,8 +4,6 @@
 /**
  *  @file    Concurrency_Utils.h
  *
- *  $Id$
- *
  *    This class implements a Concurrency Server wrapper class which
  *    holds a number of lock sets.  The server must run in the
  *    thread per request concurrency model in order to let the

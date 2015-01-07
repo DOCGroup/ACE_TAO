@@ -4,8 +4,6 @@
 /**
  *  @file    COIOP_Connector.h
  *
- *  $Id$
- *
  *  COIOP specific connector processing
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>

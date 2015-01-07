@@ -3,8 +3,6 @@
 /**
  *  @file    be_root.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Root that provides additional means for C++
  *  mapping.
  *

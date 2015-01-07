@@ -4,8 +4,6 @@
 /**
  *  @file    Naming_Context.h
  *
- *  $Id$
- *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Prashant Jain <pjain@uci.edu>

@@ -4,8 +4,6 @@
 /**
  *  @file    cdr_op_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for valuetypes.
  *  This one provides code generation for the CDR operators.
  *

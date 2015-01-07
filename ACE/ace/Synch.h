@@ -4,8 +4,6 @@
 /**
  *  @file    Synch.h
  *
- *  $Id$
- *
  *   Wrapper Facades for various synchronization mechanisms.
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>

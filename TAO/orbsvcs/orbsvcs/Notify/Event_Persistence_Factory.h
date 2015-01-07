@@ -4,8 +4,6 @@
 /**
  *  @file    Event_Persistence_Factory.h
  *
- *  $Id$
- *
  *  A factory class that creates a Routing_Slip_Persistence_Manager.
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>

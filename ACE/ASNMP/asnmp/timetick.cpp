@@ -3,8 +3,6 @@
 /**
  *  @file     timetick.cpp
  *
- *  $Id$
- *
  * Class implentation for SMI Timeticks class.
  *
  *

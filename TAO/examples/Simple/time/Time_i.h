@@ -4,8 +4,6 @@
 /**
  *  @file    Time_i.h
  *
- *  $Id$
- *
  *  This class implements the Time IDL interface.
  *
  *

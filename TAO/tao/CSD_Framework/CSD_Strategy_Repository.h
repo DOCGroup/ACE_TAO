@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_Strategy_Repository.h
  *
- *  $Id$
- *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
 //=============================================================================

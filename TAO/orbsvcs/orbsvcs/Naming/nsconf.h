@@ -2,8 +2,6 @@
 /**
  *  @file     nsconf.h
  *
- *  $Id$
- *
  *  Name service configuration file.
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Server_i.h
  *
- *  $Id$
- *
  *  This class implements the Event_Types IDL interface.
  *
  *

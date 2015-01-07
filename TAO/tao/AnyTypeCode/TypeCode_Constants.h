@@ -4,8 +4,6 @@
 /**
  *  @file   TypeCode_Constants.h
  *
- *  $Id$
- *
  *  Declare the @c TypeCode constants available to the ORB and user
  *  applications.
  *

@@ -2,8 +2,6 @@
 /**
  *  @file EventChannel_Command.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

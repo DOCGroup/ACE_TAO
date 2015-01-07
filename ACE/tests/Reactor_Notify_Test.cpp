@@ -3,8 +3,6 @@
 /**
  *  @file      Reactor_Notify_Test.cpp
  *
- *  $Id$
- *
  *    This is a test that illustrates how the <ACE_Reactor>'s
  *    <notify> method works under various <max_notify_iterations>
  *    settings.  It also tests that the <disable_notify_pipe> option

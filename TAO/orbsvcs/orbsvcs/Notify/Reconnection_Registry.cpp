@@ -3,8 +3,6 @@
 /**
  *  @file Reconnection_Registry.cpp
  *
- *  $Id$
- *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 #include "orbsvcs/Log_Macros.h"

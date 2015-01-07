@@ -4,8 +4,6 @@
 /**
  *  @file    QtReactor_Test.cpp
  *
- *  $Id$
- *
  *  Simple test of QtReactor. Test is intended to verify if QtReactor
  *  correctly cooperates with Qt event loop in typical application. Test
  *  creates a number of timers which send datagrams. These datagrams are

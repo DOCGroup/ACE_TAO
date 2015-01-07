@@ -3,8 +3,6 @@
 /**
  *  @file    ub_str_seq.cpp
  *
- *  $Id$
- *
  *  tests unbounded string sequences
  *
  *

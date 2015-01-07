@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    test_trace.cpp
  *
- *  $Id$
- *
  *  This example illustrates how to use the ACE tracing feature and
  *  the ACE_TRACE macro.  It also shows the use of the ACE_Task_Base
  *  class running as an "active object".

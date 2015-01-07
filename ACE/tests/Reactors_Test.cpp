@@ -3,8 +3,6 @@
 /**
  *  @file    Reactors_Test.cpp
  *
- *  $Id$
- *
  *    This is a test that performs a torture test of multiple
  *    <ACE_Reactors> and <ACE_Tasks> in the same process.
  *

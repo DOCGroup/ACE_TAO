@@ -4,8 +4,6 @@
 /**
  *  @file   Smart_Proxies.h
  *
- *  $Id$
- *
  * This file contains a base class for the generated smart proxy classes
  * It's purpose is to hold the pointer to the real proxy
  *

@@ -4,8 +4,6 @@
 /**
  *  @file   SupplierAdmin_i.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *
  * This has the implementation of the

@@ -4,8 +4,6 @@
 /**
  *  @file    Default_Servant_Dispatcher.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth (fhunleth@cs.wustl.edu)
  */
 //=============================================================================

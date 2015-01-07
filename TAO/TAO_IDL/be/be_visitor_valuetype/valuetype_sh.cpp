@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_sh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for value types in the server header
  *
  *

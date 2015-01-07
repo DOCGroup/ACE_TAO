@@ -3,8 +3,6 @@
 /**
  *  @file    cdr_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for CDR operators for forward declared
  *  interfaces. This uses compiled marshaling.
  *

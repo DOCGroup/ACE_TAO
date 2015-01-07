@@ -3,8 +3,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Server that receives requests.  The server can be asked to
  *  forward new requests to another server.
  *

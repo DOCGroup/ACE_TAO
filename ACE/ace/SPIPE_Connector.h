@@ -4,8 +4,6 @@
 /**
  *  @file    SPIPE_Connector.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt <schmidt@cs.wustl.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */

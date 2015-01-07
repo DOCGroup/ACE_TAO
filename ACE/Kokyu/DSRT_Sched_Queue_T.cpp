@@ -2,8 +2,6 @@
 /**
  *  @file  DSRT_Sched_Queue_T.cpp
  *
- *  $Id$
- *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
  *
  */

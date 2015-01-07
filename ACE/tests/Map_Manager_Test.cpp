@@ -3,8 +3,6 @@
 /**
  *  @file    Map_Manager_Test.cpp
  *
- *  $Id$
- *
  *   This is a simple test of the <ACE_Map_Manager> and
  *   <ACE_Hash_Map_Manager> that illustrates how to use the forward
  *   and reverse iterators.

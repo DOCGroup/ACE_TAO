@@ -4,8 +4,6 @@
 /**
  *  @file   PICurrent_Guard.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 // ===================================================================

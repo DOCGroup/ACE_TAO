@@ -3,8 +3,6 @@
 /**
  *  @file    cdr_op_ch.cpp
  *
- *  $Id$
- *
  *  Concrete visitor for valueboxes.
  *  This one provides code generation for the CDR operators.
  *

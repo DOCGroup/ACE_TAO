@@ -4,8 +4,6 @@
 /**
  *  @file    Process.h
  *
- *  $Id$
- *
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  */
 //=============================================================================

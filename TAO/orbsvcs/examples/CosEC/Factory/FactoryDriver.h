@@ -5,8 +5,6 @@
 /**
  *  @file    FactoryDriver.h
  *
- *  $Id$
- *
  *  This class implements the Factory driver.
  *
  *

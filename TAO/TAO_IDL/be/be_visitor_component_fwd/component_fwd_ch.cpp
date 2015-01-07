@@ -3,8 +3,6 @@
 /**
  *  @file    component_fwd_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Component_Fwd node in the client header.
  *
  *

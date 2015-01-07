@@ -4,8 +4,6 @@
 /**
  *  @file    Timer_Queue.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

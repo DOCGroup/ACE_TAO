@@ -4,8 +4,6 @@
 /**
  *  @file    Server_Logging_Handler_T.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt and Per Andersson
  */
 //=============================================================================

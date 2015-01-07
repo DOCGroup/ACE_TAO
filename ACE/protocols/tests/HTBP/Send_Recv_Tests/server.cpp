@@ -3,8 +3,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  * receive methods, over HTBP.  The test forks two processes or spawns
  * two threads (depending upon the platform) and then executes client
  * and server allowing them to connect and exchange data in ways

@@ -4,8 +4,6 @@
 /**
  *  @file   LogNotification.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::LogNotification interface.
  *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>

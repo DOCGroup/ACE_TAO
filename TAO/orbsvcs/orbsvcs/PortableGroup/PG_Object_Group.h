@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Object_Group.h
  *
- *  $Id$
- *
  *  Manage all information related to an object group.
  *  @@ Note: the above description is optimistic.  The hope is to eventually
  *  @@ consolidate all information related to an object group into this object.

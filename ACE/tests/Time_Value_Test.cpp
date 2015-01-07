@@ -3,8 +3,6 @@
 /**
  *  @file    Time_Value_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test of ACE_Time_Value.  No command line arguments
  *    are needed to run the test.
  *

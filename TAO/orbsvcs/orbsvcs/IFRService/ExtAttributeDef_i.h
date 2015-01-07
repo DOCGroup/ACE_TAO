@@ -5,8 +5,6 @@
 /**
  *  @file    ExtAttributeDef_i.h
  *
- *  $Id$
- *
  *  ExtAttributeDef_i servant class.
  *
  *

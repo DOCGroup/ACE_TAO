@@ -3,8 +3,6 @@
 /**
  *  @file    arglist.cpp
  *
- *  $Id$
- *
  *  Visitor that generates the parameters in an Operation signature
  *
  *

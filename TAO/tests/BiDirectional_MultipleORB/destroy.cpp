@@ -3,8 +3,6 @@
 /**
  *  @file     destroy.cpp
  *
- *  $Id$
- *
  *   Modified ORB destruction test.
  *
  *

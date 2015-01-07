@@ -2,8 +2,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  The Server for the Quoter Factory
  *
  *

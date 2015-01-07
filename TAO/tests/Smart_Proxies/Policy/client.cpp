@@ -3,8 +3,6 @@
 /**
  *  @file     client.cpp
  *
- *  $Id$
- *
  *   This is the client program that tests TAO's Smart Proxy extension.
  *
  *

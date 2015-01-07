@@ -4,8 +4,6 @@
 /**
  *  @file   RT_Protocols_Hooks.h
  *
- *  $Id$
- *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
 // ===================================================================

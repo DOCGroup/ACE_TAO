@@ -5,8 +5,6 @@
 /**
  *  @file    AbstractInterfaceDef_i.h
  *
- *  $Id$
- *
  *  AbstractInterfaceDef servant class.
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file   PolicyFactory_Registry.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  *  @author Johnny Willemsen <jwillemsen@remedy.nl>
  */

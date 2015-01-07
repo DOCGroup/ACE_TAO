@@ -3,8 +3,6 @@
 /**
  *  @file    be_visitor_attr_init.h
  *
- *  $Id$
- *
  *  Encapsulation of rules for generating attribute initializatin
  *
  *  @author Johnny Willemsen

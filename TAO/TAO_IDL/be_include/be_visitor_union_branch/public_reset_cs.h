@@ -4,8 +4,6 @@
 /**
  *  @file    public_reset_cs.h
  *
- *  $Id$
- *
  *   Visitor for the Union class.
  *   This one generates code for the reset method of the union class
  *   for the union members in the client stubs.

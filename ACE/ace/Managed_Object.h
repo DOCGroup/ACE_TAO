@@ -4,8 +4,6 @@
 /**
  *  @file    Managed_Object.h
  *
- *  $Id$
- *
  *  @author David L. Levine <levine@cs.wustl.edu>
  */
 //=============================================================================

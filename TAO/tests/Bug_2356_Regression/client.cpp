@@ -3,8 +3,6 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *  A very simple client which uses the AMI callback model.
  *
  *

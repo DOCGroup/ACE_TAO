@@ -3,8 +3,6 @@
 /**
  *  @file    root.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the Root node. This is a generic visitor.
  *
  *

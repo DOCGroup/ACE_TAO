@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_fwd_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for ValueTypeFwd node in the client header.
  *
  *

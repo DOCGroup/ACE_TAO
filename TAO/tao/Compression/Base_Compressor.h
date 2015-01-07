@@ -4,8 +4,6 @@
 /**
  *  @file   Base_Compressor.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================

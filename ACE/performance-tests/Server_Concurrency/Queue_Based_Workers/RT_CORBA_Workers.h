@@ -3,8 +3,6 @@
 /**
  *  @file    RT_CORBA_Workers.h
  *
- *  $Id$
- *
  *   The Workes test modified to suit RTCORBA tests. The  original
  *   Workers has too many things that doesnt get what we are looking
  *   for (read it as just confusing enough). Hence a new test.

@@ -3,8 +3,6 @@
 /**
  *  @file    executor_ex_idl.h
  *
- *  $Id$
- *
  *  Provides code generation for components in the CIAO executor IDL.
  *
  *

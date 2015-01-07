@@ -3,8 +3,6 @@
 /**
  *  @file    DynUnion_i.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file   Flag_Manip.h
  *
- *  $Id$
- *
  *  This class includes the functions used for the Flag Manipulation.
  *
  *  @author Priyanka Gontla <pgontla@doc.ece.uci.edu>

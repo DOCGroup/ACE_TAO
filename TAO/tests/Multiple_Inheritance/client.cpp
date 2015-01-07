@@ -2,8 +2,6 @@
 /**
  *  @file     client.cpp
  *
- *  $Id$
- *
  *    A client program for the Multiple Inheritance module
  *
  *

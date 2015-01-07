@@ -4,8 +4,6 @@
 /**
  *  @file   Cleanup_Func_Registry.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 // ===================================================================

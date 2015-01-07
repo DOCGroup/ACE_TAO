@@ -2,8 +2,6 @@
 /**
  *  @file   Hash_Naming_Context.cpp
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file    SystemException.h
  *
- *  $Id$
- *
  *  CORBA::SystemException class header.
  *
  *  @author DOC Group at Vanderbilt U, Wash U, and UCI

@@ -4,8 +4,6 @@
 /**
  *  @file Time_Policy.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@atdesk.com>
  *  @author Martin Corino <mcorino@remedy.nl>
  */

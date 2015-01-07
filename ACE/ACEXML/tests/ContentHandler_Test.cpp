@@ -2,8 +2,6 @@
 /**
  *  @file    ContentHandler_Test.cpp
  *
- *  $Id$
- *
  *  @author Steve Huston  <shuston@riverace.com>
  */
 //=============================================================================

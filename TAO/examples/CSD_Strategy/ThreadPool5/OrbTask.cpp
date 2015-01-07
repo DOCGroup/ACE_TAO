@@ -4,8 +4,6 @@
 /**
  *  @file    OrbTask.cpp
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

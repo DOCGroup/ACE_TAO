@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynstruct.h
  *
- *  $Id$
- *
  *  Header file for class to test DynStruct.
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>

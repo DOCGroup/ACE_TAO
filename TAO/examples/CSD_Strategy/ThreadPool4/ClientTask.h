@@ -4,8 +4,6 @@
 /**
  *  @file    ClientTask.h
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

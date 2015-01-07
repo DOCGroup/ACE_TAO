@@ -4,8 +4,6 @@
 /**
  *  @file   Network_Priority_Mapping.h
  *
- *  $Id$
- *
  *  Class that declares the Network Priority Mapping
  *  that can be overriden to provide different mappings
  *

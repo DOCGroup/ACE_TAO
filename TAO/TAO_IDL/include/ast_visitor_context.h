@@ -4,8 +4,6 @@
 /**
  *  @file    ast_visitor_context.h
  *
- *  $Id$
- *
  *  This class serves to provide the necessary context information to the
  *  visitor as it generates code. This may include the scope inside which the
  *  code is generated, the output file that is being used, and others. This

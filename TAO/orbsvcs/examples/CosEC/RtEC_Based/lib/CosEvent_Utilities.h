@@ -4,8 +4,6 @@
 /**
  *  @file     CosEvent_Utilities.h
  *
- *  $Id$
- *
  *  A few utility classes to make it easier to write EC applications.
  *
  *

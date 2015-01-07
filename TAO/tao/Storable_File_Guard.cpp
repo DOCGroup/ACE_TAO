@@ -2,8 +2,6 @@
 /**
  *  @file   Storable_File_Guard.cpp
  *
- *  $Id$
- *
  *  @author Rich Seibel (seibelr@ociweb.com)
  *  @author Byron Harris (harrisb@ociweb.com)
  */

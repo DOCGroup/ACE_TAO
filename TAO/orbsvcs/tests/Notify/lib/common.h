@@ -3,8 +3,6 @@
 /**
  *  @file   common.h
  *
- *  $Id$
- *
  * A couple of useful functions
  *
  *

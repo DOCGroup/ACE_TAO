@@ -5,8 +5,6 @@
 /**
  *  @file    IRObject_i.h
  *
- *  $Id$
- *
  *  IRObject servant class.
  *
  *

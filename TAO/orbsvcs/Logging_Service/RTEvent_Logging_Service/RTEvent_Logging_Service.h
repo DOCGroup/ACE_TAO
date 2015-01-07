@@ -4,8 +4,6 @@
 /**
  *  @file   RTEvent_Logging_Service.h
  *
- *  $Id$
- *
  *  Front End of the Telecom Log Service
  *  RTEvent_Logging_Service
  *

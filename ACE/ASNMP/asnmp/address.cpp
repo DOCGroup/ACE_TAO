@@ -3,8 +3,6 @@
 /**
  *  @file     address.cpp
  *
- *  $Id$
- *
  *  The Vb class is an encapsulation of the snmp variable binding.
  * This module contains the class definition for the variable binding (VB)
  * class. The VB class is an encapsulation of a SNMP VB. A VB object is

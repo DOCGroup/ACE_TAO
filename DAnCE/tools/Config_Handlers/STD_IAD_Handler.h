@@ -2,8 +2,6 @@
 /**
  *  @file  STD_IAD_Handler.h
  *
- *  $Id$
- *
  *  @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
 //================================================

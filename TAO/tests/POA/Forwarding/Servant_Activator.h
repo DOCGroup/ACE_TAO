@@ -4,8 +4,6 @@
 /**
  *  @file     Servant_Activator.h
  *
- *  $Id$
- *
  *   Defines a ServantActivator class, used with a POA having a
  *   RETAIN policy
  *

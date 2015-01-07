@@ -4,8 +4,6 @@
 /**
  *  @file    DIOP_Acceptor.h
  *
- *  $Id$
- *
  *  DIOP specific acceptor processing
  *
  *  @author  Michael Kircher

@@ -3,8 +3,6 @@
 /**
  *  @file     RootPOA.cpp
  *
- *  $Id$
- *
  *   This program gets the name of the Root POA and prints it out on
  *   the standard output.
  *

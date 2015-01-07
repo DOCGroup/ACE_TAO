@@ -3,8 +3,6 @@
 /**
  *  @file    FT_NamingManager.idl
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant Naming Service.
  *
  *  @author Kevin Stanley <stanleyk@ociweb.com>

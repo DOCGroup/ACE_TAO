@@ -2,8 +2,6 @@
 /**
  *  @file    be_module.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Module that provides additional means for C++
  *  mapping of a module
  *

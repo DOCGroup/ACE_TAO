@@ -5,8 +5,6 @@
 /**
  *  @file    PrimitiveDef_i.h
  *
- *  $Id$
- *
  *  PrimitiveDef servant class.
  *
  *

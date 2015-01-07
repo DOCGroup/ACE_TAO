@@ -1,8 +1,6 @@
 /**
  *  @file MC_Notify_Service.h
  *
- *  $Id$
- *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
 

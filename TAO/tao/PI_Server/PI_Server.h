@@ -4,8 +4,6 @@
 /**
  *  @file   PI_Server.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================

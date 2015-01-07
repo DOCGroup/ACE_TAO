@@ -4,8 +4,6 @@
 /**
  *  @file    ServerObject_i.h
  *
- *  $Id$
- *
  *  @author  Darrell Brunsch
  *  @author  Irfan Pyarali
  */

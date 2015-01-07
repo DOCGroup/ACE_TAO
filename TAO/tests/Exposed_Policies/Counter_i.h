@@ -3,8 +3,6 @@
 /**
  *  @file    Counter_i.h
  *
- *  $Id$
- *
  *   This class implements the Counter IDL interface.
  *
  *

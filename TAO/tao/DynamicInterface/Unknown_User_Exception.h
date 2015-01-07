@@ -4,8 +4,6 @@
 /**
  *  @file   Unknown_User_Exception.h
  *
- *  $Id$
- *
  *  Defines the way an exception is reported by a DII request.
  *
  *

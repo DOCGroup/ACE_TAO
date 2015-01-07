@@ -4,8 +4,6 @@
 /**
  *  @file    Any_SArg_Traits.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  *  @author Ossama Othman
  */

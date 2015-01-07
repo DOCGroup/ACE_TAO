@@ -4,8 +4,6 @@
 /**
  *  @file     Push_Iterator_Handler.h
  *
- *  $Id$
- *
  *   Header file for the AMI_Iterator_FactoryHandler implementation.
  *
  *

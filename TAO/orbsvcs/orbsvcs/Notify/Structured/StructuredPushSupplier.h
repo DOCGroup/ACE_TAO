@@ -2,8 +2,6 @@
 /**
  *  @file StructuredPushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

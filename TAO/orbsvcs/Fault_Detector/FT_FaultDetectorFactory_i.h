@@ -3,8 +3,6 @@
 /**
  *  @file    FT_FaultDetectorFactory_i.h
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  It declares the implementation of FaultDetectorFactory which
  *  creates and manages FaultDetectors as an agent for

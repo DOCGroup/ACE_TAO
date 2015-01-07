@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuetype node.
  *  This one provides the generic visitor for valuetypes from which others
  *  will inherit.

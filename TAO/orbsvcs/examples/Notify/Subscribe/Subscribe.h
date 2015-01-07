@@ -3,8 +3,6 @@
 /**
  *  @file   Subscribe.h
  *
- *  $Id$
- *
  * Class to demo structured event subscription.
  *
  *

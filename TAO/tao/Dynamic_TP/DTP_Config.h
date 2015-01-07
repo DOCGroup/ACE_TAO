@@ -4,8 +4,6 @@
 /**
  *  @file
  *
- *  $Id$
- *
  *   Header file for Loading DynamicTP Configurations.
  *
  *

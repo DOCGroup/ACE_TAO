@@ -3,8 +3,6 @@
 /**
  *  @file    be_valuetype.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Interface and be_interface that provides
  *  additional means for C++ mapping of an valuetype.
  *

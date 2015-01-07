@@ -4,8 +4,6 @@
 /**
  *  @file   LzoCompressor.h
  *
- *  $Id$
- *
  *  See http://www.oberhumer.com/ for the lzo interface itself
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>

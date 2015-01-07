@@ -2,8 +2,6 @@
 /**
  *  @file    nsgroup.cpp
  *
- *  $Id$
- *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
 //==========================================================================

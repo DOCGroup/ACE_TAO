@@ -3,8 +3,6 @@
 /**
  *  @file    driver.cpp
  *
- *  $Id$
- *
  *  Implementation file for the driver program.
  *
  *

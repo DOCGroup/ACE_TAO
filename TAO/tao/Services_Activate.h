@@ -4,8 +4,6 @@
 /**
  *  @file    Services_Activate.h
  *
- *  $Id$
- *
  * This is a generic interface that would be used to activate
  * the services that are loaded through the svc.conf file
  *

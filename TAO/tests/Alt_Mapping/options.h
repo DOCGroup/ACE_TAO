@@ -3,8 +3,6 @@
 /**
  *  @file    options.h
  *
- *  $Id$
- *
  *  Options for the Param_Test application
  *
  *

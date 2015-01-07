@@ -3,8 +3,6 @@
 /**
  *  @file    structure_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Structure in the inline file.
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file Constraint_Visitors.h
  *
- *  $Id$
- *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
 //=============================================================================

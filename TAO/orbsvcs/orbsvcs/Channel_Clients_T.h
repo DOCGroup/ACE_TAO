@@ -5,8 +5,6 @@
 /**
  *  @file    Channel_Clients_T.h
  *
- *  $Id$
- *
  *  @author Tim Harrison (harrison@cs.wustl.edu) and Douglas Schmidt (schmidt@cs.wustl.edu)
  *
  *  These classes allow applications to be consumer, suppliers, and

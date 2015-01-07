@@ -3,8 +3,6 @@
 /**
  *  @file Reactive_Task.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_structure.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Structure class
  *
  *

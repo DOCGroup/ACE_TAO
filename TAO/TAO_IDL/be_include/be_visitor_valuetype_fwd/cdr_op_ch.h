@@ -4,8 +4,6 @@
 /**
  *  @file    cdr_op_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the valuetype_fwd class
  *  This one provides code generation for the CDR operators
  *  (actually just their declarations) for the valuetype forward

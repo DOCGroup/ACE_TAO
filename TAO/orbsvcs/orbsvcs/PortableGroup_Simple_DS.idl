@@ -4,8 +4,6 @@
 /**
  *  @file    PortableGroup_Simple_DS.idl
  *
- *  $Id$
- *
  *  The aim of this file is to provide a seperation between the actual
  *  PortableGroup interface and some of the data structures defined in
  *  this module. This would be apparent if you look at

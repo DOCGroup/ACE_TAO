@@ -3,8 +3,6 @@
 /**
  *  @file    ctor_assign.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the special CTOR and assignment operator for
  *  Exceptions.
  *

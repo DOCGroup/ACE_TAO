@@ -3,8 +3,6 @@
 /**
  *  @file    interface_fwd_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface Forward node.
  *  This one provides code generation for interface forward node.
  *

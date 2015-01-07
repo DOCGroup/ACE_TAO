@@ -2,8 +2,6 @@
 /**
  *  @file   Default_Dispatcher_Impl.h
  *
- *  $Id$
- *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu),

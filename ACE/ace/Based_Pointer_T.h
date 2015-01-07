@@ -4,8 +4,6 @@
 /**
  *  @file    Based_Pointer_T.h
  *
- *  $Id$
- *
  *  @author Dietrich Quehl <Dietrich.Quehl@med.siemens.de>
  *  @author Douglas C. Schmidt <schmidt@.cs.wustl.edu>
  */

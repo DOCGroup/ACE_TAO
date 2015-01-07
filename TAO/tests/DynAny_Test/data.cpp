@@ -2,8 +2,6 @@
 /**
  *  @file    data.cpp
  *
- *  $Id$
- *
  *  Implementation file for the class containing test constants.
  *
  *

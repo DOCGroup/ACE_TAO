@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Location_Equal_To.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

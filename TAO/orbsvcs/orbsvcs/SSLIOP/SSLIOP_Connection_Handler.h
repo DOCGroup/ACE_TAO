@@ -4,8 +4,6 @@
 /**
  *  @file    SSLIOP_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
  */

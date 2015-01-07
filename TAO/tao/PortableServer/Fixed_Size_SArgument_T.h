@@ -4,8 +4,6 @@
 /**
  *  @file    Fixed_Size_SArgument_T.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  *  @author Ossama Othman

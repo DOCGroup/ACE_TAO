@@ -3,8 +3,6 @@
 /**
  *  @file    Manual_Event_Test.cpp
  *
- *  $Id$
- *
  *  This test verifies the functionality of the <ACE_Manual_Event>
  *  implementation.
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Enum_Interfaces_Test.cpp
  *
- *  $Id$
- *
  *   This is a simple test of <ACE::get_ip_interfaces>.  This call
  *   retrieves the IP addresses assigned to the host by
  *   interrogating the kernel.  Network applications typically

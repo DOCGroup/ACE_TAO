@@ -3,8 +3,6 @@
 /**
  *  @file    field_cdr_ch.h
  *
- *  $Id$
- *
  *  Visitor generating code for Field in the client header file.
  *
  *

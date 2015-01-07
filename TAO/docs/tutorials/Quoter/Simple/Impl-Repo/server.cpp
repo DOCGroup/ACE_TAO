@@ -3,8 +3,6 @@
 /**
  *  @file     server.cpp
  *
- *  $Id$
- *
  *   In this example,
  *      - Example showing the working of implementation repository.
  *

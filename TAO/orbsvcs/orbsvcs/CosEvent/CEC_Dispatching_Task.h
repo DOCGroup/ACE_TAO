@@ -4,8 +4,6 @@
 /**
  *  @file   CEC_Dispatching_Task.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

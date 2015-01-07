@@ -4,8 +4,6 @@
 /**
  *  @file   EventLogConsumer.h
  *
- *  $Id$
- *
  *  The EventLogConsumer connects to the EventLog and logs the events
  *  that are pushed to the EventLog.
  *

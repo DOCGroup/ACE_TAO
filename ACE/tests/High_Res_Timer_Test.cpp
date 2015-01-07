@@ -2,8 +2,6 @@
 /**
  *  @file    High_Res_Timer_Test.cpp
  *
- *  $Id$
- *
  *  Simple test of ACE_High_Res_Timer.
  *
  *  @author David L. Levine <levine@cs.wustl.edu>

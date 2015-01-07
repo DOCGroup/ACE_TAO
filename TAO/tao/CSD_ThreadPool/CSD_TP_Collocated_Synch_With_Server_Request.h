@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_TP_Collocated_Synch_With_Server_Request.h
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

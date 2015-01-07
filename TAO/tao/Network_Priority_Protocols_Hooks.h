@@ -4,8 +4,6 @@
 /**
  *  @file   Network_Priority_Protocols_Hooks.h
  *
- *  $Id$
- *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Johnny Willemsen <jwillemsen@remedy.nl>
  */

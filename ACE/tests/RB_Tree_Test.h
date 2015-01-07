@@ -4,8 +4,6 @@
 /**
  *  @file    RB_Tree_Test.h
  *
- *  $Id$
- *
  *  Header file for a test to verify and illustrate the use of the
  *  ACE_RB_Tree ACE_RB_Tree_Iterator, and
  *  ACE_RB_Tree_Reverse_Iterator classes.

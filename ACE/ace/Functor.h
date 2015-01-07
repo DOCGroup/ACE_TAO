@@ -4,8 +4,6 @@
 /**
  *  @file    Functor.h
  *
- *  $Id$
- *
  *   Non-templatized classes and class template specializations for
  *   implementing function objects that are used in  various places
  *   in ACE.  There are currently two major categories of function

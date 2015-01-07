@@ -3,8 +3,6 @@
 /**
  *  @file    small_union.cpp
  *
- *  $Id$
- *
  *  tests Small_Unions
  *
  *

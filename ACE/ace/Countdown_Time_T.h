@@ -4,8 +4,6 @@
 /**
  *  @file    Countdown_Time_T.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

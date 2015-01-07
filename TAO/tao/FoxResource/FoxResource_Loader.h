@@ -4,8 +4,6 @@
 /**
  *  @file   FoxResource_Loader.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */

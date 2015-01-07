@@ -5,8 +5,6 @@
 /**
  *  @file    RecursDef_i.h
  *
- *  $Id$
- *
  *  StructDef & UnionDef support class.
  *
  *

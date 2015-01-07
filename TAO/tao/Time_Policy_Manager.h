@@ -4,8 +4,6 @@
 /**
  *  @file   Time_Policy_Manager.h
  *
- *  $Id$
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================

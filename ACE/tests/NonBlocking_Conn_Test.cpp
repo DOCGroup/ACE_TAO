@@ -3,8 +3,6 @@
 /**
  *  @file    NonBlocking_Conn_Test.cpp
  *
- *  $Id$
- *
  *  This test checks for the proper working of the following:
  *  - blocking connections
  *  - blocking connections with timeouts

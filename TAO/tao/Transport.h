@@ -4,8 +4,6 @@
 /**
  *  @file Transport.h
  *
- *  $Id$
- *
  *  Define the interface for the Transport component in TAO's
  *  pluggable protocol framework.
  *

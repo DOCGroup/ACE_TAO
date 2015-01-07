@@ -4,8 +4,6 @@
 /**
  *  @file    ProvidesDef_i.h
  *
- *  $Id$
- *
  *  ProvidesDef servant class.
  *
  *

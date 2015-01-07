@@ -4,8 +4,6 @@
 /**
  *  @file    Network_Adapters_Test.h
  *
- *  $Id$
- *
  *  Definitions for Network_Adapters_Test.cpp.
  *
  *

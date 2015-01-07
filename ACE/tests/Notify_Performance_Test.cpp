@@ -3,8 +3,6 @@
 /**
  *  @file    Notify_Performance_Test.cpp
  *
- *  $Id$
- *
  *  This test is used to time the notification mechanisms of the
  *  ACE_Reactors. Both the WFMO_Reactor and Select_Reactor can be
  *  tested. The notify() mechanism can also be tested with or

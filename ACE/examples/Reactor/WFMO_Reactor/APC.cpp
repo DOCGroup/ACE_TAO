@@ -3,8 +3,6 @@
 /**
  *  @file    APC.cpp
  *
- *  $Id$
- *
  *
  *  Tests the WFMO_Reactor's ability to handle regular APC
  *  notifications.

@@ -5,8 +5,6 @@
 /**
  *  @file    Container_i.h
  *
- *  $Id$
- *
  *  Container servant class.
  *
  *

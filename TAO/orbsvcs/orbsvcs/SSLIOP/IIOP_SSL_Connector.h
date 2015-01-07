@@ -4,8 +4,6 @@
 /**
  *  @file    IIOP_SSL_Connector.h
  *
- *  $Id$
- *
  *  IIOP specific connector processing -- SSL aware version
  *
  *  @author Ossama Othman <ossama@uci.edu>

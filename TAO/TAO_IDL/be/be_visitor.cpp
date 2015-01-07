@@ -3,8 +3,6 @@
 /**
  *  @file    be_visitor.cpp
  *
- *  $Id$
- *
  *  Abstract class for back end visitors.
  *
  * = NOTES

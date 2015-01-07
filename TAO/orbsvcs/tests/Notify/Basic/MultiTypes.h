@@ -3,8 +3,6 @@
 /**
  *  @file   MultiTypes.h
  *
- *  $Id$
- *
  * Test connect-disconnect methods of Notify.
  *
  *

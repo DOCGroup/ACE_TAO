@@ -3,8 +3,6 @@
 /**
  *  @file    SOCK_Test.cpp
  *
- *  $Id$
- *
  *   This is a test of the <ACE_SOCK_Acceptor> and
  *   <ACE_SOCK_Connector> classes. The test forks two processes or
  *   spawns two threads (depending upon the platform) and then

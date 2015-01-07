@@ -4,8 +4,6 @@
 /**
  *  @file    valuetype.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuetype class
  *
  *

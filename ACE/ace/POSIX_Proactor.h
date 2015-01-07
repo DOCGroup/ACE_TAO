@@ -4,8 +4,6 @@
 /**
  *  @file    POSIX_Proactor.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>

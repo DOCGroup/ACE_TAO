@@ -3,8 +3,6 @@
 /**
  *  @file    structure.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Structure
  *
  *

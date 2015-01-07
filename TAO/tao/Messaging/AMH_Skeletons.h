@@ -4,8 +4,6 @@
 /**
  *  @file    AMH_Skeletons.h
  *
- *  $Id$
- *
  *  @author  Marcel Smit <msmit@remedy.nl>
  *
  *  @brief Upcall command exection classes for static AMH skeleton methods

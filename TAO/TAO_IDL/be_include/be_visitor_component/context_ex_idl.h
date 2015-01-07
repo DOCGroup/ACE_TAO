@@ -3,8 +3,6 @@
 /**
  *  @file    context_ex_idl.h
  *
- *  $Id$
- *
  *  Provides code generation for the context class
  *  in the CIAO executor IDL.
  *

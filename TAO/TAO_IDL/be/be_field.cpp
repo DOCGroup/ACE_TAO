@@ -3,8 +3,6 @@
 /**
  *  @file    be_field.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Field that provides additional means for C++
  *  mapping.
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Dump.h
  *
- *  $Id$
- *
  *
  * A prototype mechanism that allow all ACE objects to be registered
  * with a central in-memory "database" that can dump the state of all

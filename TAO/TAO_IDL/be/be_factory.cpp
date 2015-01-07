@@ -3,8 +3,6 @@
 /**
  *  @file    be_factory.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Factory that provides additional means for C++
  *  mapping.
  *

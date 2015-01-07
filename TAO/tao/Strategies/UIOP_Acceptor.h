@@ -4,8 +4,6 @@
 /**
  *  @file    UIOP_Acceptor.h
  *
- *  $Id$
- *
  *  Unix Domain Socket (UIOP) specific acceptor processing
  *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>

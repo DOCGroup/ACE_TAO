@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynsequence.cpp
  *
- *  $Id$
- *
  *  Implementation of the simple DynSequence test
  *
  *

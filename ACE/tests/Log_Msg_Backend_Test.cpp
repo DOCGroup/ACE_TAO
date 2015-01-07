@@ -3,8 +3,6 @@
 /**
  *  @file    Log_Msg_Backend_Test.cpp
  *
- *  $Id$
- *
  *   This program tests the ACE_Log_Msg class's use of a custom backend,
  *   including its initialization and reset as well as logging information
  *   through the backend.

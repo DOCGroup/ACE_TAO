@@ -2,8 +2,6 @@
 /**
  *  @file    direct_proxy_impl_ss.h
  *
- *  $Id$
- *
  *  Visitor that takes care of generation the implementation
  *  for the direct proxy implementation.
  *

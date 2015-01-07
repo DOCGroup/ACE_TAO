@@ -3,8 +3,6 @@
 /**
  *  @file Method_Request_Lookup.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 #ifndef TAO_Notify_LOOKUP_METHOD_REQUEST_H

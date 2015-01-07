@@ -4,8 +4,6 @@
 /**
  *  @file     GIOP_Message_Version.h
  *
- *  $Id$
- *
  *   GIOP Version utility class definition
  *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>

@@ -4,8 +4,6 @@
 /**
  *  \file    Event_Persistence_Factory.h
  *
- *  $Id$
- *
  *  The standard implementation of Event_Persistence_Factory.
  *
  *  \author Jonathan Pollack <pollack_j@ociweb.com>

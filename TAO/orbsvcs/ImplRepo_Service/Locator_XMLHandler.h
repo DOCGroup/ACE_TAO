@@ -3,8 +3,6 @@
 /**
  *  @file   Locator_XMLHandler.h
  *
- *  $Id$
- *
  *  @author Justin Michel <michel_j@ociweb.com>
  */
 //=============================================================================

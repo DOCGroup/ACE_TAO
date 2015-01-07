@@ -3,8 +3,6 @@
 /**
  *  @file    Receiver_i.cpp
  *
- *  $Id$
- *
  *  Implements the Receiver_i class, which is used by the chat client.
  *
  *

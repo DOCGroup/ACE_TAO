@@ -4,8 +4,6 @@
 /**
  *  @file Async_IOR_Table_Impl.h
  *
- *  $Id$
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

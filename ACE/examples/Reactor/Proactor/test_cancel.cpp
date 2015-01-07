@@ -3,8 +3,6 @@
 /**
  *  @file    test_cancel.cpp
  *
- *  $Id$
- *
  *  This program tests cancelling an Asynchronous Operation in the
  *  Proactor framework.
  *

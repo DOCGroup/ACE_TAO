@@ -2,8 +2,6 @@
 /**
  *  @file    timeout_client.cpp
  *
- *  $Id$
- *
  *  Tests for proper handling of timeouts with AMI
  *
  *

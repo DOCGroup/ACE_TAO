@@ -4,8 +4,6 @@
 /**
  *  @file  Timer_Handler.h
  *
- *  $Id$
- *
  *  @desc  Fires servant upcall after a specified period of delay
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>

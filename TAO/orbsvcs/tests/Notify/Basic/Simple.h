@@ -3,8 +3,6 @@
 /**
  *  @file   Simple.h
  *
- *  $Id$
- *
  * Simple test any supplier to any consumer.
  *
  *

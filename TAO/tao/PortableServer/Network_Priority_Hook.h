@@ -4,8 +4,6 @@
 /**
  *  @file    Network_Priority_Hook.h
  *
- *  $Id$
- *
  *  Provides default network priority hook for use by the POA
  *
  *  @author  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>

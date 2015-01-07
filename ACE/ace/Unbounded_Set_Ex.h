@@ -4,8 +4,6 @@
 /**
  *  @file Unbounded_Set_Ex.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

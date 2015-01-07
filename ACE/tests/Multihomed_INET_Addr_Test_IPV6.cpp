@@ -2,8 +2,6 @@
 /**
  *  @file    Multihomed_INET_Addr_Test_IPV6.cpp
  *
- *  $Id$
- *
  *   Performs several tests on the Multihomed_ACE_INET_Addr class.
  *   It creates several IPv6 addresses and checks that the
  *   address formed by the class is valid.

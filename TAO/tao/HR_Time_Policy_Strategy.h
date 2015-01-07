@@ -4,8 +4,6 @@
 /**
  *  @file   HR_Time_Policy_Strategy.h
  *
- *  $Id$
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================

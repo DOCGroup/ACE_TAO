@@ -2,8 +2,6 @@
 /**
  *  @file    Consumer_Input_Handler.cpp
  *
- *  $Id$
- *
  *  Implementation of the Consumer_Input_Handler class.
  *
  *

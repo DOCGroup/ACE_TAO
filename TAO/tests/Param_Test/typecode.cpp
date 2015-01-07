@@ -3,8 +3,6 @@
 /**
  *  @file    typecode.cpp
  *
- *  $Id$
- *
  *  tests typecodes
  *
  *

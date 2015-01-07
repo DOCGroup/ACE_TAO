@@ -3,8 +3,6 @@
 /**
  *  @file    Timeprobe_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test of ACE Timeprobes.
  *
  *

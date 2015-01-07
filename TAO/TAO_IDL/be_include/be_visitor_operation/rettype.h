@@ -3,8 +3,6 @@
 /**
  *  @file    rettype.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations. This generates the return
  *  type of the operation
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    TAO_TIO.h
  *
- *  $Id$
- *
  *  This class implements the CosTime::TIO IDL interface.
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Notifier_i.h
  *
- *  $Id$
- *
  *  Defines the implementation header for the Supplier interface.
  *
  *

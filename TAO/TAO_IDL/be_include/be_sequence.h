@@ -5,8 +5,6 @@
 /**
  *  @file    be_sequence.h
  *
- *  $Id$
- *
  *  Extension of class AST_Sequence that provides additional means for C++
  *  mapping.
  *

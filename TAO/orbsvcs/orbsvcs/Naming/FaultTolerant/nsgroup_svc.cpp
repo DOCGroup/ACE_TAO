@@ -2,8 +2,6 @@
 /**
  *  @file nsgroup_svc.cpp
  *
- *  $Id$
- *
  *  This file implements nsgroup utility operations
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>

@@ -4,8 +4,6 @@
 /**
  *  @file   Fault_Detector_T.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    Address_Test.cpp
  *
- *  $Id$
- *
  *  Test all the member functions of the Address family:
  *  GenAddress, MacAddress, IpxAddress, IpAddress, UdpAddress
  *  all which derive from abstract base class Address.

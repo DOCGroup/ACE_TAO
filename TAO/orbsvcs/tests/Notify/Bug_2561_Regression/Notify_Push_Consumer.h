@@ -3,8 +3,6 @@
 /**
  *  @file   Notify_Push_Consumer.h
  *
- *  $Id$
- *
  * A sequence push consumer implementation.
  *
  *

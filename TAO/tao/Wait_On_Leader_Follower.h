@@ -4,8 +4,6 @@
 /**
  *  @file    Wait_On_Leader_Follower.h
  *
- *  $Id$
- *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================

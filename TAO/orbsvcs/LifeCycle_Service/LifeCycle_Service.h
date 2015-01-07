@@ -3,8 +3,6 @@
 /**
  *  @file    LifeCycle_Service.h
  *
- *  $Id$
- *
  *  A creation service for objects using the CosLifeCycle GenericFactory.
  *
  *

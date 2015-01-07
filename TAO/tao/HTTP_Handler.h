@@ -5,8 +5,6 @@
 /**
  *  @file    HTTP_Handler.h
  *
- *  $Id$
- *
  *   HTTP_Handler is a base class for HTTP_Reader and
  *   HTTP_Writer which are created in response to calls to
  *   read/write, as appropriate

@@ -3,8 +3,6 @@
 /**
  *  @file     Servant_Locator.cpp
  *
- *  $Id$
- *
  *   Implementation of MyFooServantLocator class , used with a POA
  *   having a NON_RETAIN policy.
  *

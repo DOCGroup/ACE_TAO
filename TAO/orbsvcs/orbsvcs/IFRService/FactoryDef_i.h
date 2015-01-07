@@ -5,8 +5,6 @@
 /**
  *  @file    FactoryDef_i.h
  *
- *  $Id$
- *
  *  FactoryDef servant class.
  *
  *

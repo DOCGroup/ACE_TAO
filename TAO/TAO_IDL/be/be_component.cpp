@@ -3,8 +3,6 @@
 /**
  *  @file    be_component.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Component that provides additional means for C++
  *  mapping of an interface.
  *

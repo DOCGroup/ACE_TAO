@@ -3,8 +3,6 @@
 /**
  *  @file    argument_marshal.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations. This is a visitor for
  *  passing arguments to the CDR operators in a compiled marshaling
  *  stub/skeleton

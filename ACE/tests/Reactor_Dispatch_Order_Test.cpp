@@ -3,8 +3,6 @@
 /**
  *  @file    Reactor_Dispatch_Order_Test.cpp
  *
- *  $Id$
- *
  *  This is a simple test that checks the order of dispatching of
  *  ACE Reactors.  Order should be: timeout, output, and then input.
  *

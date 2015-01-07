@@ -3,8 +3,6 @@
 /**
  *  @file    test_ostream.cpp
  *
- *  $Id$
- *
  *   This program tests the Log_Msg abstraction wrt writing to
  *   stderr and to a file.
  *

@@ -5,8 +5,6 @@
 /**
  *  @file    ExceptionDef_i.h
  *
- *  $Id$
- *
  *  ExceptionDef servant class.
  *
  *

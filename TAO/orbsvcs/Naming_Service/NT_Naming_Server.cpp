@@ -4,8 +4,6 @@
 /**
  *  @file    NT_Naming_Server.cpp
  *
- *  $Id$
- *
  *  Driver program that runs the TAO Naming Service as a Windows NT
  *  Service.
  *

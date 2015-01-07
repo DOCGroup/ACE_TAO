@@ -3,8 +3,6 @@
 /**
  *  @file    timeout_client.h
  *
- *  $Id$
- *
  *  Tests timeouts with AMI.
  *
  *

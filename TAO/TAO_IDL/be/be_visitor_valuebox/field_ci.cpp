@@ -3,8 +3,6 @@
 /**
  *  @file    field_ci.cpp
  *
- *  $Id$
- *
  *   Visitor for the Valuebox class.
  *   This one generates code for accessor and modifier functions of
  *  for valuebox struct members.

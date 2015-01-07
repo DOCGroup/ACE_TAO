@@ -4,8 +4,6 @@
 /**
  *  @file    marshal_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for valuetypes.
  *  This one provides code generation for marshalling.
  *

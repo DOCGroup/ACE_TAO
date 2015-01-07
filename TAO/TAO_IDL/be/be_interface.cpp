@@ -3,8 +3,6 @@
 /**
  *  @file    be_interface.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Interface that provides additional means for C++
  *  mapping of an interface.
  *

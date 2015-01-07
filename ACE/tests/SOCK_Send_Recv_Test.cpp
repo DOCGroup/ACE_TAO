@@ -3,8 +3,6 @@
 /**
  *  @file    SOCK_Send_Recv_Test.cpp
  *
- *  $Id$
- *
  *   This is a test of the <ACE_SOCK>'s various send and receive
  *   methods.  The test forks two processes or spawns two threads
  *   (depending upon the platform) and then executes client and

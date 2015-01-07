@@ -3,8 +3,6 @@
 /**
  *  @file    objref.h
  *
- *  $Id$
- *
  *   Tests object references
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file   QtResource_Loader.h
  *
- *  $Id$
- *
  *  @author Marek Brudka <mbrudka@aster.pl>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */

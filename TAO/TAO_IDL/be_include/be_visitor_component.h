@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_component.h
  *
- *  $Id$
- *
  *  Concrete visitors for the Component class
  *
  *

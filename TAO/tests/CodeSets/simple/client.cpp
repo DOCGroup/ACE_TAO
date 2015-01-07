@@ -4,8 +4,6 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  * A simple client to demonstrate the use of codeset translation
  *
  *

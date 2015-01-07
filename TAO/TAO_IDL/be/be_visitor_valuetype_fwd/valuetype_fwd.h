@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_fwd.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Valuetype_Fwd
  *
  *

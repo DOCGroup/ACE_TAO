@@ -4,8 +4,6 @@
 /**
  *  @file    enum_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for Enums generating code in the client stubs.
  *
  *

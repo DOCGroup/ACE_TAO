@@ -4,8 +4,6 @@
 /**
  *  @file    module_sh.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Module class
  *  This provides code generation for the module in the server header.
  *

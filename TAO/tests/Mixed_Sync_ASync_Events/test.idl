@@ -2,8 +2,6 @@
 /**
  *  @file    test.idl
  *
- *  $Id$
- *
  *  IDL description of the Test interface
  *
  *  @author Martin Corino <mcorino@remedy.nl>

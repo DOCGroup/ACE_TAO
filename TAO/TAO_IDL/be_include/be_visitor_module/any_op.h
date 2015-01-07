@@ -4,8 +4,6 @@
 /**
  *  @file    any_op.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Module class
  *  This one provides visitors to generate the Any operators for elements in
  *  the Module's scope.

@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynstruct.cpp
  *
- *  $Id$
- *
  *  Implementation of the DynStruct basic test
  *
  *

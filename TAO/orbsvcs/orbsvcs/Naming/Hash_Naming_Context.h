@@ -4,8 +4,6 @@
 /**
  *  @file   Hash_Naming_Context.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

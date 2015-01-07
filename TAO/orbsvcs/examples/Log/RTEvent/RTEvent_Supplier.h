@@ -4,8 +4,6 @@
 /**
  *  @file   RTEvent_Supplier.h
  *
- *  $Id$
- *
  *  An example of using the RTEvent_Logging_Service.
  *
  *

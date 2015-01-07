@@ -2,8 +2,6 @@
 /**
  *  @file  CPD_Handler.h
  *
- *  $Id$
- *
  *  @author Ming Xiong <mxiong@dre.vanderbilt.edu>
  */
 //================================================

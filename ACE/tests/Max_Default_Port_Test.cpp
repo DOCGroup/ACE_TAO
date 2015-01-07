@@ -2,8 +2,6 @@
 /**
  *  @file    Max_Default_Port_Test.cpp
  *
- *  $Id$
- *
  *  This is a test for ACE_MAX_DEFAULT_PORT value. The test tests the
  *  highest value of the port number at which an event handler can be
  *  registered and a Connector can be connected to.

@@ -3,8 +3,6 @@
 /**
  *  @file   Server_i.h
  *
- *  $Id$
- *
  *  The class is the driver for the INS test server.
  *
  *

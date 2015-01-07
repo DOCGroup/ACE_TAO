@@ -3,8 +3,6 @@
 /**
  *  @file    ub_struct_seq.cpp
  *
- *  $Id$
- *
  *  tests unbounded struct sequences
  *
  *

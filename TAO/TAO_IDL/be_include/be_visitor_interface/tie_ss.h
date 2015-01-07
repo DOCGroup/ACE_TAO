@@ -3,8 +3,6 @@
 /**
  *  @file    tie_ss.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This one provides the code generation for TIE classes
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Facet_Servant_Base_T.h
  *
- *  $Id$
- *
  *  This file contains the declaration of a mixin base class for
  *  the generated interface servant class.
  *

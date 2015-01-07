@@ -3,8 +3,6 @@
 /**
  *  @file    context_ex_idl.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the contect class
  *  in the CIAO executor IDL.
  *

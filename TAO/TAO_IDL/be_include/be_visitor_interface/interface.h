@@ -3,8 +3,6 @@
 /**
  *  @file    interface.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This one provides the generic visitor for interfaces from which others
  *  will inherit.

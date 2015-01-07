@@ -4,8 +4,6 @@
 /**
  *  @file    DomainApplicationManager_Impl.h
  *
- *  $Id$
- *
  * @brief  Implementation of POA_Deployment::DomainApplicationManager
  *
  * @author Erwin Gottlieb <eg@prismtech.com>

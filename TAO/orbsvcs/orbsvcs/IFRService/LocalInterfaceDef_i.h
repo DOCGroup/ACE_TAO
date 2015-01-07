@@ -5,8 +5,6 @@
 /**
  *  @file    LocalInterfaceDef_i.h
  *
- *  $Id$
- *
  *  LocalInterfaceDef servant class.
  *
  *

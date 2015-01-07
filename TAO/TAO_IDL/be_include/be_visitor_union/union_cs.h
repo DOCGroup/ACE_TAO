@@ -4,8 +4,6 @@
 /**
  *  @file    union_cs.h
  *
- *  $Id$
- *
  *   Visitor for the Union class.
  *   This one generates code in the client stubs.
  *

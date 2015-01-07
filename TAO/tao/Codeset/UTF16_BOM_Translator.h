@@ -4,8 +4,6 @@
 /**
  *  @file  UTF16_BOM_Translator.h
  *
- *  $Id$
- *
  *
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>

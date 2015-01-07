@@ -4,8 +4,6 @@
 /**
  *  @file FTRT_ClientORB_Interceptor.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

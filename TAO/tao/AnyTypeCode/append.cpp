@@ -2,8 +2,6 @@
 /**
  *  @file     append.cpp
  *
- *  $Id$
- *
  *   Appends a CDR stream to another CDR stream. Due to the
  *   stringent alignment requirements, it is not possible to simply
  *   append or memcpy. Instead we go thru the same CDR encoding rules

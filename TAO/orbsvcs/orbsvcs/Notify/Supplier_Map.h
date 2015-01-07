@@ -3,8 +3,6 @@
 /**
  *  @file Supplier_Map.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

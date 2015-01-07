@@ -3,8 +3,6 @@
 /**
  *  @file    array.cpp
  *
- *  $Id$
- *
  *  Generic visitor for code generation for Arrays
  *
  *

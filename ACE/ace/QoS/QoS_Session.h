@@ -4,8 +4,6 @@
 /**
  *  @file    QoS_Session.h
  *
- *  $Id$
- *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
 //=============================================================================

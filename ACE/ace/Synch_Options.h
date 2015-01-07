@@ -4,8 +4,6 @@
 /**
  *  @file   Synch_Options.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@uci.edu>
  */
 //==========================================================================

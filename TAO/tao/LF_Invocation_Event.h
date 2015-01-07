@@ -4,8 +4,6 @@
 /**
  *  @file LF_Invocation_Event.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================

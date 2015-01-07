@@ -2,8 +2,6 @@
 /**
  *  @file    test_i.cpp
  *
- *  $Id$
- *
  *  Implementation of the Test interface.
  *
  */

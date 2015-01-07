@@ -3,8 +3,6 @@
 /**
  *  @file    be_exception.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Exception that provides additional means for C++
  *  mapping of an interface.
  *

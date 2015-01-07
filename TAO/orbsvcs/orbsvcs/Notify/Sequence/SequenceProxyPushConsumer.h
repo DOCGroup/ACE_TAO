@@ -2,8 +2,6 @@
 /**
  *  @file SequenceProxyPushConsumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

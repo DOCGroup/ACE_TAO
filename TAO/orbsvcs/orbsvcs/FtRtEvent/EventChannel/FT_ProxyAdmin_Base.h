@@ -4,8 +4,6 @@
 /**
  *  @file   FT_ProxyAdmin_Base.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

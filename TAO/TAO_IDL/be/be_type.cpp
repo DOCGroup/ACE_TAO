@@ -3,8 +3,6 @@
 /**
  *  @file    be_type.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Type that provides additional means for C++
  *  mapping.
  *

@@ -4,8 +4,6 @@
 /**
  *  @file   Reactor_Notification_Strategy.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt
  */
 //=============================================================================

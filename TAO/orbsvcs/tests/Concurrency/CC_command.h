@@ -3,8 +3,6 @@
 /**
  *  @file    CC_command.h
  *
- *  $Id$
- *
  *    This file implements the command possible to execute on the
  *    concurrency service's lock set interface. The file also contains
  *    an implementation of a command list used by the command parser to

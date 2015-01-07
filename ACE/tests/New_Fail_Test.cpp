@@ -3,8 +3,6 @@
 /**
  *  @file    New_Fail_Test.cpp
  *
- *  $Id$
- *
  *  Checks to be sure that a failed ACE_NEW[_RETURN | _NORETURN] doesn't end
  *  up throwing an exception up to the caller.
  *

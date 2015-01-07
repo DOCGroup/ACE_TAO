@@ -4,8 +4,6 @@
 /**
  *  @file PortableGroup_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================

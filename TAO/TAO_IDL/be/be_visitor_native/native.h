@@ -3,8 +3,6 @@
 /**
  *  @file    native.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for native
  *
  *

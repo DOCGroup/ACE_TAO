@@ -3,8 +3,6 @@
 /**
  *  @file    be_null_return_emitter.cpp
  *
- *  $Id$
- *
  *  Emits 'return x;' for all CORBA types and ACE-supported
  *  platforms.
  *

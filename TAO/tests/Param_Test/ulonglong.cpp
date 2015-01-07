@@ -3,8 +3,6 @@
 /**
  *  @file    ulonglong.cpp
  *
- *  $Id$
- *
  *  tests 64 bit longs
  *
  *

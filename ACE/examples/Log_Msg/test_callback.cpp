@@ -3,8 +3,6 @@
 /**
  *  @file    test_callback.cpp
  *
- *  $Id$
- *
  *   This program tests the <ACE_Log_Msg> class wrt writing to user
  *   defined callback objects.  In particular, it tests to make sure
  *   that nested callbacks don't deadlock.

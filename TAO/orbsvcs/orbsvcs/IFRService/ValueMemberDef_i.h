@@ -5,8 +5,6 @@
 /**
  *  @file    ValueMemberDef_i.h
  *
- *  $Id$
- *
  *  ValueMemberDef servant class.
  *
  *

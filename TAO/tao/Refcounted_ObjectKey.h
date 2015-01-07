@@ -4,8 +4,6 @@
 /**
  *  @file Refcounted_ObjectKey.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

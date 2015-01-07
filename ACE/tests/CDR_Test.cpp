@@ -3,8 +3,6 @@
 /**
  *  @file    CDR_Test.cpp
  *
- *  $Id$
- *
  *  Checks the functionality of the ACE CDR streams.
  *
  *

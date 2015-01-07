@@ -4,8 +4,6 @@
 /**
  *  @file RTCORBA.h
  *
- *  $Id$
- *
  *   Takes care of the RT ORB loading on static build.
  *
  *

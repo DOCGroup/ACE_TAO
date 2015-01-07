@@ -5,8 +5,6 @@
 /**
  *  @file    PICurrent_Loader.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

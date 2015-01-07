@@ -4,8 +4,6 @@
 /**
  *  @file    Array_VarOut_T.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  *  @author Johnny Willemsen
  */

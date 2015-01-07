@@ -4,8 +4,6 @@
 /**
  *  @file    sink_i.h
  *
- *  $Id$
- *
  *  This class implements the ThreeTier IDL interface.
  *  It acts as the "end of the line" for tick and tock
  *  requests.

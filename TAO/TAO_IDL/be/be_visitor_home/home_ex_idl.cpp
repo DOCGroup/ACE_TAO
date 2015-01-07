@@ -3,8 +3,6 @@
 /**
  *  @file    home_ex_idl.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Homes in the CIAO executor IDL.
  *
  *

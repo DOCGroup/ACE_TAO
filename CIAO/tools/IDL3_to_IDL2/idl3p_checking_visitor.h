@@ -4,8 +4,6 @@
 /**
  *  @file    idl3p_checking_visitor.h
  *
- *  $Id$
- *
  *  Header file for visitor that checks modules for the
  *  presence of declarations other than non-code-generating
  *  IDL3+ constructs. Prevents the generation of illegal

@@ -4,8 +4,6 @@
 /**
  *  @file corba.h
  *
- *  $Id$
- *
  *  @note This header is for backwards compatibility only. It pulls
  *        in a lot of files increasing compilation time and footprint
  *        size. Include the necessary individual headers instead.

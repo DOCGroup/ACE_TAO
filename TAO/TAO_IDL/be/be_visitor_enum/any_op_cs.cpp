@@ -3,8 +3,6 @@
 /**
  *  @file    any_op_cs.cpp
  *
- *  $Id$
- *
  *  Visitors for generation of code for Enum for the Any operators
  *
  *

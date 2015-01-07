@@ -4,8 +4,6 @@
 /**
  *  @file   FT_Persistent_Naming_Context.h
  *
- *  $Id$
- *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================

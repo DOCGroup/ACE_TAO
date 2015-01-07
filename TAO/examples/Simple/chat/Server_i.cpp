@@ -3,8 +3,6 @@
 /**
  *  @file    Server_i.cpp
  *
- *  $Id$
- *
  *  Implementation of the Chat Server_i class.
  *
  *

@@ -4,8 +4,6 @@
 /**
  *  @file RPS_Monitor.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

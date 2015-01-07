@@ -4,8 +4,6 @@
 /**
  *  @file BiDir_ORBInitializer.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================

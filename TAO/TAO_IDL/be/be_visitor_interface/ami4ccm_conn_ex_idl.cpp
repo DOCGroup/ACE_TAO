@@ -3,8 +3,6 @@
 /**
  *  @file    ami4ccm_conn_ex_idl.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for AMI4CCM Interfaces in the executor IDL
  *
  *

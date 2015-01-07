@@ -3,8 +3,6 @@
 /**
  *  @file    Event_Sup.h
  *
- *  $Id$
- *
  * Event Supplier for the simulation
  *
  *

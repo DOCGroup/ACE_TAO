@@ -4,8 +4,6 @@
 /**
  *  @file   RTEventLog_i.h
  *
- *  $Id$
- *
  *  Implementation of the RTEventLogAdmin::NotifyLog interface.
  *
  *

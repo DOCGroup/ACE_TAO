@@ -5,8 +5,6 @@
 /**
  *  @file   Linear_Priority_Mapping.h
  *
- *  $Id$
- *
  * Declares the Linear_Priority_Mapping interface, as defined in the
  * RT-CORBA spec.
  *

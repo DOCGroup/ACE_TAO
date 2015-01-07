@@ -4,8 +4,6 @@
 /**
  *  @file    component.h
  *
- *  $Id$
- *
  *  Concrete visitor for components
  *  This one provides the generic visitor for the be_component node.
  *

@@ -2,8 +2,6 @@
 /**
  *  @file   Kokyu_dsrt.h
  *
- *  $Id$
- *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
  *
  */

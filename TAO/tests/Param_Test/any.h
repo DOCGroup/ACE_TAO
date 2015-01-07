@@ -3,8 +3,6 @@
 /**
  *  @file    any.h
  *
- *  $Id$
- *
  *   Tests Anys
  *
  *

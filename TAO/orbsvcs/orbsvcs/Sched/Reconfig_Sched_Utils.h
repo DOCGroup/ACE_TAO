@@ -5,8 +5,6 @@
 /**
  *  @file    Reconfig_Sched_Utils.h
  *
- *  $Id$
- *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file   Connector_Impl.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================

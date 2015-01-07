@@ -3,8 +3,6 @@
 /**
  *  @file    bpr_thread.cpp
  *
- *  $Id$
- *
  *  Exercises drivers for a bounded packet relay, based on threaded timer queues.
  *
  *

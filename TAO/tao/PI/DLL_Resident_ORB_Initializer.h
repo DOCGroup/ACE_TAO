@@ -4,8 +4,6 @@
 /**
  *  @file DLL_Resident_ORB_Initializer.h
  *
- *  $Id$
- *
  *  @author Dale Wilson <wilsond@ociweb.com>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    MM_Shared_Memory_Test.cpp
  *
- *  $Id$
- *
  *   This is a simple test of <ACE_Shared_Memory_MM>.  The test
  *   forks two processes or spawns two threads (depending upon the
  *   platform) and then executes child and parent allowing them to

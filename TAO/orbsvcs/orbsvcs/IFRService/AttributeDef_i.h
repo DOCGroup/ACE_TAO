@@ -5,8 +5,6 @@
 /**
  *  @file    AttributeDef_i.h
  *
- *  $Id$
- *
  *  AttributeDef servant class.
  *
  *

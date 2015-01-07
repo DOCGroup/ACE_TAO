@@ -3,8 +3,6 @@
 /**
  *  @file   tcp_test.cpp
  *
- *  $Id$
- *
  * Measures TCP round-trip performance.
  *
  *

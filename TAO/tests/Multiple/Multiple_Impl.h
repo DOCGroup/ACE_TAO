@@ -2,8 +2,6 @@
 /**
  *  @file    Multiple_Impl.h
  *
- *  $Id$
- *
  *   This file contains the servant implementation used to test the
  *   new collocation collocation scheme.
  *

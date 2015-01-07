@@ -3,8 +3,6 @@
 /**
  *  @file    be_argument.h
  *
- *  $Id$
- *
  *  Extension of class AST_Argument that provides additional means for C++
  *  mapping.
  *

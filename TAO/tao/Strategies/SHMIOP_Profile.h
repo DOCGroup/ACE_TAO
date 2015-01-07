@@ -4,8 +4,6 @@
 /**
  *  @file     SHMIOP_Profile.h
  *
- *  $Id$
- *
  *   SHMIOP profile specific processing
  *
  *  @author  Nanbor Wang <nanbor@cs.wustl.edu>

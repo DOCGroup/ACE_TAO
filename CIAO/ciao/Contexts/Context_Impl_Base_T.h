@@ -4,8 +4,6 @@
 /**
  *  @file    Context_Impl_Base_T.h
  *
- *  $Id$
- *
  *  This file contains the non-template declaration of a base class for
  *  the template mixin for the generated context class.
  *

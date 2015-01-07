@@ -3,8 +3,6 @@
 /**
  *  @file    Dynamic_Test.cpp
  *
- *  $Id$
- *
  *  This tests the ACE_Dynamic class
  *
  *

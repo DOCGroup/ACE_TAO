@@ -3,8 +3,6 @@
 /**
  *  @file    context_switch_time.cpp
  *
- *  $Id$
- *
  * Program that calculates context switch time between threads.
  * The Suspend-Resume test is based on the Task Context Switching
  * measurement approach described in:

@@ -3,8 +3,6 @@
 /**
  *  @file    Unload_libACE.cpp
  *
- *  $Id$
- *
  *    This is a simple test of library unloading that uses
  *    an application which has _not_ been linked with libACE
  *    but uses dlopen() to dynamically load libACE

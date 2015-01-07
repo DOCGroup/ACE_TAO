@@ -4,8 +4,6 @@
 /**
  *  @file    Consumer_Signal_Handler.h
  *
- *  $Id$
- *
  *  Definition of the Consumer_Signal_Handler class.
  *
  *

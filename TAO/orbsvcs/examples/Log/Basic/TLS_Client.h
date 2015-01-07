@@ -4,8 +4,6 @@
 /**
  *  @file   TLS_Client.h
  *
- *  $Id$
- *
  *  An example of using the Basic_Logging_Service
  *
  *

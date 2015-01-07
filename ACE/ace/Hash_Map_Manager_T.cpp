@@ -3,8 +3,6 @@
 /**
  *  @file    Hash_Map_Manager_T.cpp
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cse.wustl.edu>
  */
 //=============================================================================

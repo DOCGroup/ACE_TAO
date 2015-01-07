@@ -3,8 +3,6 @@
 /**
  *  @file    SV_Shared_Memory_Test.cpp
  *
- *  $Id$
- *
  *   This is a simple test of <ACE_SV_Shared_Memory> and
  *   <ACE_Malloc> using the <ACE_Shared_Memory_Pool>.  The test
  *   forks two processes and then executes client and server

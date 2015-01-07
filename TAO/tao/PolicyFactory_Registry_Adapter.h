@@ -4,8 +4,6 @@
 /**
  *  @file   PolicyFactory_Registry_Adapter.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================

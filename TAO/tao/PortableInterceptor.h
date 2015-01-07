@@ -4,8 +4,6 @@
 /**
  *  @file    PortableInterceptor.h
  *
- *  $Id$
- *
  *   A series of TAO_INTERCEPTOR* macros are defined in this file.
  *   These macros allows us to disable/enable support of interceptors
  *   easily.

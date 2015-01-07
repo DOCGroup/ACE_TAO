@@ -3,8 +3,6 @@
 /**
  *  @file Job_i.h
  *
- *  $Id$
- *
  *  This file defines the servant for the Job.idl interface
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>

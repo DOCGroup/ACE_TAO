@@ -2,8 +2,6 @@
 /**
  *  @file    Timeouts.cpp
  *
- *  $Id$
- *
  *
  *  This example application shows how to write Reactor event
  *  loops that handle events for some fixed amount of time.

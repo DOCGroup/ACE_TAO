@@ -4,8 +4,6 @@
 /**
  *  @file    cdr_op_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for valueboxes.
  *  This one provides code generation for the CDR operators.
  *

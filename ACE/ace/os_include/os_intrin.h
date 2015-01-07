@@ -6,8 +6,6 @@
  *
  *  Intrinsic methods
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

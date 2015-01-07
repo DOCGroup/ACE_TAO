@@ -4,8 +4,6 @@
 /**
  * @file Configuration_Import_Export.h
  *
- *  $Id$
- *
  * @author Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
  *         Chris Hafey <chris@stentorsoft.com>
  *

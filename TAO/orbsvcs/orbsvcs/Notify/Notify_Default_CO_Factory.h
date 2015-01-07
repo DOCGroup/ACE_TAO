@@ -3,8 +3,6 @@
 /**
  *  @file   Notify_Default_CO_Factory.h
  *
- *  $Id$
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */

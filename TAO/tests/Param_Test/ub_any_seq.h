@@ -3,8 +3,6 @@
 /**
  *  @file    ub_any_seq.h
  *
- *  $Id$
- *
  *   Tests unbounded Any sequences
  *
  *

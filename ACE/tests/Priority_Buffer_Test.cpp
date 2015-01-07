@@ -3,8 +3,6 @@
 /**
  *  @file    Priority_Buffer_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test to illustrate the priority mechanism of
  *    <ACE_Message_Queue>s. The producer uses an <ACE_Message_Queue>
  *    to enqueue a bunch of messages with different priorities which

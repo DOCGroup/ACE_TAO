@@ -3,8 +3,6 @@
 /**
  *  @file    objref_struct.h
  *
- *  $Id$
- *
  *   Tests variable sized structures
  *
  *

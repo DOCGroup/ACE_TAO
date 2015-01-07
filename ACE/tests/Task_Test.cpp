@@ -3,8 +3,6 @@
 /**
  *  @file    Task_Test.cpp
  *
- *  $Id$
- *
  *    This test program illustrates how the ACE barrier
  *    synchronization mechanisms work in conjunction with the
  *    <ACE_Task> and the <ACE_Thread_Manager>.  This also illustrates

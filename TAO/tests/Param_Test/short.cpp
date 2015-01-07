@@ -3,8 +3,6 @@
 /**
  *  @file    short.cpp
  *
- *  $Id$
- *
  *  tests shorts
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    interface_ih.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interfaces in the implementation header
  *
  *

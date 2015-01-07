@@ -3,8 +3,6 @@
 /**
  *  @file    ami_handler_reply_stub_operation_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the stubs file.
  *
  *

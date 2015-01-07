@@ -4,8 +4,6 @@
 /**
  *  @file   Constraint_Interpreter.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

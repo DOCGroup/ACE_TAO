@@ -4,8 +4,6 @@
 /**
  *  @file   AV_Core.h
  *
- *  $Id$
- *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================

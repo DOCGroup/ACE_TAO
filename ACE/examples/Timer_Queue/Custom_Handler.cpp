@@ -2,8 +2,6 @@
 /**
  *  @file    Custom_Handler.cpp
  *
- *  $Id$
- *
  *  This is a custom event handler to be used with the thread timer queue
  *  adapter, and its appropriate upcall.
  *

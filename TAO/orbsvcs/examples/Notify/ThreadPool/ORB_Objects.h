@@ -2,8 +2,6 @@
 /**
  *  @file ORB_Objects.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

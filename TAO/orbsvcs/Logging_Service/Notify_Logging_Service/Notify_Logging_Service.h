@@ -4,8 +4,6 @@
 /**
  *  @file   Notify_Logging_Service.h
  *
- *  $Id$
- *
  *  Front End of the Telecom Log Service
  *  Notify_Logging_Service
  *

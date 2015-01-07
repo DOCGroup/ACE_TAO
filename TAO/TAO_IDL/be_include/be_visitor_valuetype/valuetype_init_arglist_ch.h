@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_init_arglist_ch.h
  *
- *  $Id$
- *
  *  Visitor for generating code for OBV factory. This generates the
  *  operation signature.
  *

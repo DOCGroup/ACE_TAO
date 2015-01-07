@@ -1,8 +1,6 @@
 /**
  *  @file   be_visitor_xplicit_pre_proc.cpp
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

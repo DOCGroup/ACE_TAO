@@ -3,8 +3,6 @@
 /**
  *  @file    be_typedef.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Typedef that provides additional means for C++
  *  mapping.
  *

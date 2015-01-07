@@ -2,8 +2,6 @@
 /**
  *  @file   Locator_NT_Service.cpp
  *
- *  $Id$
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  *  @author John Tucker <jtucker@infoglide.com>

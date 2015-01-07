@@ -2,8 +2,6 @@
 /**
  *  @file    Supplier_i.cpp
  *
- *  $Id$
- *
  *  Implementation of the Supplier class.
  *
  *

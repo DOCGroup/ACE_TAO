@@ -3,8 +3,6 @@
 /**
  *  @file    FT_Creator.cpp
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  Main wrapped around TAO_Object_Group_Creator
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    buffer_type.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the internal buffer type of the Sequence node
  *
  *

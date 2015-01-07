@@ -2,8 +2,6 @@
 /**
  *  @file Event_Map_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

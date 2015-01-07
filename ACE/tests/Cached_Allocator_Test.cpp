@@ -3,8 +3,6 @@
 /**
  *  @file    Cached_Allocator_Test.cpp
  *
- *  $Id$
- *
  *  Simple test of ACE_Dynamic_Cached_Allocator and ACE_Cached_Allocator.
  *
  *

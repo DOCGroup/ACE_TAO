@@ -2,8 +2,6 @@
 /**
  *  @file    Exceptions.cpp
  *
- *  $Id$
- *
  *
  *  This test application tests the state of WFMO_Reactor when
  *  exceptions occurs when executing user callbacks.

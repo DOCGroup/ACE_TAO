@@ -3,8 +3,6 @@
 /**
  *  @file     test_aiosig_ace.cpp
  *
- *  $Id$
- *
  *  This program helps you to test the <aio_*> calls on a
  *  platform.
  *  Before running this test, make sure the platform can

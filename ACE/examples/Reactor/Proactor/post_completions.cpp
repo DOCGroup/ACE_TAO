@@ -2,8 +2,6 @@
 /**
  *  @file     post_completions.cpp
  *
- *  $Id$
- *
  *  This program demonstrates how to post fake completions to The
  *  Proactor. It also shows the how to specify the particular
  *  real-time signals to post completions. The Real-time signal

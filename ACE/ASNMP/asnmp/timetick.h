@@ -5,8 +5,6 @@
 /**
  *  @file     timetick.h
  *
- *  $Id$
- *
  * Class definition for SMI Timeticks class.
  *
  *

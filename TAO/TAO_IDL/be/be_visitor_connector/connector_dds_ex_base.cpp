@@ -3,8 +3,6 @@
 /**
  *  @file    connector_dds_ex_base.cpp
  *
- *  $Id$
- *
  *  Base class for visitors generating code for DDS Connectors in
  *  the exec impl.
  *

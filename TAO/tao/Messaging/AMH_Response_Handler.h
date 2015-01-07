@@ -4,8 +4,6 @@
 /**
  *  @file   AMH_Response_Handler.h
  *
- *  $Id$
- *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
  */
 // =========================================================================

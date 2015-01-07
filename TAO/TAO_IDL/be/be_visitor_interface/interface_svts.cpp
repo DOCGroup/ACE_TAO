@@ -3,8 +3,6 @@
 /**
  *  @file    interface_svts.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interfaces in the
  *  CIAO template servant source file.
  *

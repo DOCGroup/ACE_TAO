@@ -3,8 +3,6 @@
 /**
  *  @file    string_value.idl
  *
- *  $Id$
- *
  *  This file contains depends on the TAO supplied StringValue type. Generated
  *  code based on such IDL failed to compile since the IDL compiler inserted a
  *  #include of a non-existent StringValueA.h.

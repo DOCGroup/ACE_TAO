@@ -3,8 +3,6 @@
 /**
  *  @file    test_multiple_loops.cpp
  *
- *  $Id$
- *
  *
  *  This example application shows how to write programs that
  *  combine the Proactor and Reactor event loops. This is possible

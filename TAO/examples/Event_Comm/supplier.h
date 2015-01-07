@@ -4,8 +4,6 @@
 /**
  *  @file    supplier.h
  *
- *  $Id$
- *
  *  This class implements  driver for the Publish/Subscribe example
  *
  *

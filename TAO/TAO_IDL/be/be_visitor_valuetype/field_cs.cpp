@@ -3,8 +3,6 @@
 /**
  *  @file    field_cs.cpp
  *
- *  $Id$
- *
  *   Visitor for the Valuetype class.
  *   This one generates code for accessor and modifier functions of
  *   valuetype state members (in the stub file).

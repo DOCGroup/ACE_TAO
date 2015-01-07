@@ -4,8 +4,6 @@
 /**
  *  @file    IORManipulation.h
  *
- *  $Id$
- *
  *  This class implements IOR interface to the ORB
  *
  *

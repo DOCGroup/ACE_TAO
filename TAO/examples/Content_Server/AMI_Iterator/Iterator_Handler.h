@@ -4,8 +4,6 @@
 /**
  *  @file     Iterator_Handler.h
  *
- *  $Id$
- *
  *   Header file for the Web_Server::AMI_Content_IteratorHandler
  *   implementation.
  *

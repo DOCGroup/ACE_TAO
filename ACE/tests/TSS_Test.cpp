@@ -3,8 +3,6 @@
 /**
  *  @file    TSS_Test.cpp
  *
- *  $Id$
- *
  *   This program tests thread specific storage of data. The ACE_TSS
  *   wrapper transparently ensures that the objects of this class
  *   will be placed in thread-specific storage. All calls on

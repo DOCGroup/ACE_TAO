@@ -3,8 +3,6 @@
 /**
  *  @file   Consumer.h
  *
- *  $Id$
- *
  * Test Consumer reconnect to existing channel/admin/proxy Notification Service
  *
  *

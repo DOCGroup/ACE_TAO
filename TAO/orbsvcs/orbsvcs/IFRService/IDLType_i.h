@@ -4,8 +4,6 @@
 /**
  *  @file    IDLType_i.h
  *
- *  $Id$
- *
  *  IDLType servant class.
  *
  *

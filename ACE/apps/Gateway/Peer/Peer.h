@@ -4,8 +4,6 @@
 /**
  *  @file    Peer.h
  *
- *  $Id$
- *
  *  These classes process Supplier/Consumer events sent from the
  *  gateway (gatewayd) to its various peers (peerd).  The general
  *  collaboration works as follows:

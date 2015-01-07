@@ -4,8 +4,6 @@
 /**
  *  @file   Codecs.h
  *
- *  $Id$
- *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  *
  *  Codecs is a generic wrapper for various encoding and decoding

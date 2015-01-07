@@ -3,8 +3,6 @@
 /**
  *  @file    Reverse_Lock_Test.cpp
  *
- *  $Id$
- *
  *  This is a simple test to illustrate the functionality of
  *  ACE_Reverse_Lock. The test acquires and releases mutexes. No
  *  command line arguments are needed to run the test.

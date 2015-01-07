@@ -4,8 +4,6 @@
 /**
  *  @file    Servant_Base.h
  *
- *  $Id$
- *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================

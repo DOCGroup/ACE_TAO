@@ -3,8 +3,6 @@
 /**
  *  @file    client.h
  *
- *  $Id$
- *
  *  Test for multithreaded client using one global ORB (and Reactor)
  *
  *

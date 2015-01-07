@@ -4,8 +4,6 @@
 /**
  *  @file     UIOP_Profile.h
  *
- *  $Id$
- *
  *   Unix Domain Socket (UIOP) profile specific processing
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes in the client inline file
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file   Filter.h
  *
- *  $Id$
- *
  * Filter test any supplier to any consumer.
  *
  *

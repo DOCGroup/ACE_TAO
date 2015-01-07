@@ -3,8 +3,6 @@
 /**
  *  @file    preempt.cpp
  *
- *  $Id$
- *
  *    This is a simple test to illustrate OS thread preemption.  One
  *    ore more high priority threads periodically (every half
  *    second, by default) reads the clock.  They use select () to

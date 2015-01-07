@@ -2,8 +2,6 @@
 /**
  *  @file ConsumerAdmin.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  *
  *

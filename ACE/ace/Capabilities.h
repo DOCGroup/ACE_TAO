@@ -4,8 +4,6 @@
 /**
  *  @file    Capabilities.h
  *
- *  $Id$
- *
  *  @author Arturo Montes <mitosys@colomsat.net.co>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file   RTEventLogConsumer.h
  *
- *  $Id$
- *
  *  The RTEventLogConsumer connects to the RTEventLog and logs the events
  *  that are pushed to the RTEventLog.
  *

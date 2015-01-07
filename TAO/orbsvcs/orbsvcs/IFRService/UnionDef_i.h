@@ -5,8 +5,6 @@
 /**
  *  @file    UnionDef_i.h
  *
- *  $Id$
- *
  *  UnionDef servant class.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    Svc_Handler_Test.cpp
  *
- *  $Id$
- *
  *  This tests illustrates the "buffering" strategy of the
  *  <ACE_Buffered_Svc_Handler>.  This test also illustrates how the
  *  <ACE_FILE_IO> classes work.

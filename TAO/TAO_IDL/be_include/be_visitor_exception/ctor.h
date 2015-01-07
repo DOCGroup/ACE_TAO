@@ -4,8 +4,6 @@
 /**
  *  @file    ctor.h
  *
- *  $Id$
- *
  *  Visitor for Exceptions.
  *  For code generation for the special constructor for exceptions
  *

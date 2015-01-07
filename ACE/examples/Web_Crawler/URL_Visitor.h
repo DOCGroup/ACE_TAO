@@ -4,8 +4,6 @@
 /**
  *  @file    URL_Visitor.h
  *
- *  $Id$
- *
  *  @author Douglas C.Schmidt <schmidt@cs.wustl.edu> Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

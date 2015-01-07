@@ -2,8 +2,6 @@
 /**
  *  @file    Suspended_Removals.cpp
  *
- *  $Id$
- *
  *
  *  Tests the Reactor's ability to handle removal of suspended
  *  handles.

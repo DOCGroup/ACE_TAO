@@ -4,8 +4,6 @@
 /**
  *  @file    post.h
  *
- *  $Id$
- *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  *
  *  This file restores the original alignment rules.

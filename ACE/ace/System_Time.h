@@ -4,8 +4,6 @@
 /**
  *  @file    System_Time.h
  *
- *  $Id$
- *
  *  @author Prashant Jain
  *  @author Tim H. Harrison
  *  @author Douglas C. Schmidt

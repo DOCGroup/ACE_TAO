@@ -4,8 +4,6 @@
 /**
  *  @file Incoming_Message_Queue.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file   EC_TPC_ProxyConsumer.h
  *
- *  $Id$
- *
  *  @author Chris Cleeland <cleeland at ociweb.com >
  *
  */

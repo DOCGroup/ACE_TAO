@@ -3,8 +3,6 @@
 /**
  *  @file    ub_wstring.h
  *
- *  $Id$
- *
  *   Tests unbounded wide string
  *
  *

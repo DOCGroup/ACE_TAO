@@ -4,8 +4,6 @@
 /**
  *  @file    Asynch_Connector.h
  *
- *  $Id$
- *
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
 //=============================================================================

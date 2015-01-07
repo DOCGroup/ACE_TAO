@@ -3,8 +3,6 @@
 /**
  *  @file    rettype_return_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for returning the return type variable.
  *
  *

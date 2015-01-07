@@ -4,8 +4,6 @@
 /**
  *  @file    Reverse_Lock_T.h
  *
- *  $Id$
- *
  *   Moved from Synch.h.
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>

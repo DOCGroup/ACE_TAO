@@ -4,8 +4,6 @@
 /**
  *  @file LF_CH_Event.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

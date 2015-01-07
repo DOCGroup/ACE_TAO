@@ -3,8 +3,6 @@
 /**
  *  @file    Simple_Message_Block_Test.cpp
  *
- *  $Id$
- *
  *    This test program is a torture test that illustrates how
  *    ACE_Message_Block reference counting works, how and when locks
  *    are used, how memory is managed, and how continuation chains

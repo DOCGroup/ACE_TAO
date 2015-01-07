@@ -2,8 +2,6 @@
 /**
  *  @file   Codeset_Registry.cpp
  *
- *  $Id$
- *
  *  emulated codset regstry functions
  *
  *

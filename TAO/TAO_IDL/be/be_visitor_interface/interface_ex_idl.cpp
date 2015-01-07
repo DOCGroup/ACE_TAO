@@ -3,8 +3,6 @@
 /**
  *  @file    interface_ex_idl.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interfaces in the
  *  CIAO executor IDL file.
  *

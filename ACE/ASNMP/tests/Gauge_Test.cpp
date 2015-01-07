@@ -3,8 +3,6 @@
 /**
  *  @file    Gauge_Test.cpp
  *
- *  $Id$
- *
  *  Test all the member functions of the Guage class. An Object
  *  representing an ASN.1 Counter SMI GUAGE SYNTAX.
  *

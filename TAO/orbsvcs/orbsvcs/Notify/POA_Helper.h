@@ -3,8 +3,6 @@
 /**
  *  @file POA_Helper.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

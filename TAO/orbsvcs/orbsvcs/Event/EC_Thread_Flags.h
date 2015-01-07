@@ -2,8 +2,6 @@
 /**
  *  @file   EC_Thread_Flags.h
  *
- *  $Id$
- *
  *  @author Chris Cleeland <cleeland@ociweb.com>
  *
  *  Encapsulate flags that can be used for creating threads.

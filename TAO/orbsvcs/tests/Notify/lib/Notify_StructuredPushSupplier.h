@@ -3,8 +3,6 @@
 /**
  *  @file   Notify_StructuredPushSupplier.h
  *
- *  $Id$
- *
  * This class is to be used by clients of the Notification Service
  * to implement Structured Push Suppliers.
  *

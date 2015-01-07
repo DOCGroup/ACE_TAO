@@ -3,8 +3,6 @@
 /**
  *  @file    allocator.cpp
  *
- *  $Id$
- *
  * Compares the performance of a TSS allocator, with no locks, to
  * the global allocator (with locks) even in the abscence of
  * contention.

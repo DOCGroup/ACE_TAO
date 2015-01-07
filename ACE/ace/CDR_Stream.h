@@ -4,8 +4,6 @@
 /**
  *  @file   CDR_Stream.h
  *
- *  $Id$
- *
  * ACE Common Data Representation (CDR) marshaling and demarshaling
  * classes.
  *

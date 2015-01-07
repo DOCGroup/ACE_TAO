@@ -3,8 +3,6 @@
 /**
  *  @file    test.idl
  *
- *  $Id$
- *
  *  The basis for this file is the IDL file in TAO/tests/Param_Test
  *  but modified slightly for testing the performance of Any
  *  insertion and extraction operators. Not every IDL type in this

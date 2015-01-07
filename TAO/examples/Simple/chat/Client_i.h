@@ -4,8 +4,6 @@
 /**
  *  @file    Client_i.h
  *
- *  $Id$
- *
  *  Definition of the Chat Client class, Client_i.
  *
  *

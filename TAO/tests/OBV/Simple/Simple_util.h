@@ -2,8 +2,6 @@
 /**
  *  @file    Simple_util.h
  *
- *  $Id$
- *
  *  The classe define the templates for the client and server.
  *
  *

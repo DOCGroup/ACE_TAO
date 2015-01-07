@@ -4,8 +4,6 @@
 /**
  *  @file   GIOP_Message_Generator_Parser.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================

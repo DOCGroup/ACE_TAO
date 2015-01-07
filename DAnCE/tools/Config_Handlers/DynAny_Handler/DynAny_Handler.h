@@ -2,8 +2,6 @@
 /**
  *  @file  DynAny_Handler.h
  *
- *  $Id$
- *
  *  @author Will Otte <wotte@dre.vanderbilt.edu>
  */
 //================================================================

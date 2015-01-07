@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynenum.cpp
  *
- *  $Id$
- *
  *  Implementation of the simple DynEnum test
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>

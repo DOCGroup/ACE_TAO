@@ -3,8 +3,6 @@
 /**
  *  @file    Message_Block_Large_Copy_Test.cpp
  *
- *  $Id$
- *
  *  This test program tests large Message Block duplication and cloning.
  *
  *

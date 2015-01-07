@@ -4,8 +4,6 @@
 /**
  *  @file    String_TypeCode.h
  *
- *  $Id$
- *
  *  Header file for @c CORBA::tk_string or @c CORBA::tk_wstring
  *  @c CORBA::TypeCodes.
  *

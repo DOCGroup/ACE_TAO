@@ -4,8 +4,6 @@
 /**
  *  @file    Random_File.h
  *
- *  $Id$
- *
  *  This class implements a a random-access file containing
  *  fixed-size blocks.
  *

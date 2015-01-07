@@ -4,8 +4,6 @@
 /**
  *  @file    buffer_type.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Sequence class
  *  This one provides code generation for the buffer type of the Sequence
  *  node.

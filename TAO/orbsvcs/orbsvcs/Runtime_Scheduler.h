@@ -4,8 +4,6 @@
 /**
  *  @file    Runtime_Scheduler.h
  *
- *  $Id$
- *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
 //=============================================================================

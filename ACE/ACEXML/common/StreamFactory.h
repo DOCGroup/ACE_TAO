@@ -1,8 +1,6 @@
 /**
  *  @file StreamFactory.h
  *
- *  $Id$
- *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
 

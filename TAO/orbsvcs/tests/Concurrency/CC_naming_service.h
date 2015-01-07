@@ -3,8 +3,6 @@
 /**
  *  @file    CC_naming_service.h
  *
- *  $Id$
- *
  *    This class implements the naming services necessary to test the
  *    concurrency service.
  *

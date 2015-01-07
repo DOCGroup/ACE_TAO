@@ -4,8 +4,6 @@
 /**
  *  @file    cdr_op_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Union class
  *  This one provides code generation for the CDR operators for the union
  *  in the client header.

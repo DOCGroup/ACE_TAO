@@ -4,8 +4,6 @@
 /**
  *  @file    Naming_Server.h
  *
- *  $Id$
- *
  *    Implement wrappers useful to Naming Service servers.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    Gadget.cpp
  *
- *  $Id$
- *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
 //=============================================================================

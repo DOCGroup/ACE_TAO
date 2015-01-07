@@ -4,8 +4,6 @@
 /**
  *  @file    be_visitor_valuetype_fwd.h
  *
- *  $Id$
- *
  *  Concrete visitor for the valuetype_fwd class
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    Load_Balancer.idl
  *
- *  $Id$
- *
  *  Interfaces for a simple CORBA Load Balancing service, which can
  *  be used in conjunction with the Naming Service or alone to
  *  improve distributed load balancing.  See README file for a short

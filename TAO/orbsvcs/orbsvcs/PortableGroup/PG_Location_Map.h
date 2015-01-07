@@ -4,8 +4,6 @@
 /**
  *  @file     PG_Location_Map.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=======================================================================

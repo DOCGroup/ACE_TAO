@@ -4,8 +4,6 @@
 /**
  *  @file    Wchar_IBM1047_ISO8859_Translator.cpp
  *
- *  $Id$
- *
  *  Defines the arrays required to convert between ISO8859 (aka
  *  Latin/1) and IBM1047 (aka EBCDIC).
  *

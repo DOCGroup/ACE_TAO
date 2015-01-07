@@ -3,8 +3,6 @@
 /**
  *  @file     IIOPEndpointValue_i.h
  *
- *  $Id$
- *
  *  Implementation of the IIOP-Specific endpoint policy value
  *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>

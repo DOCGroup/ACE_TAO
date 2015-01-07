@@ -3,8 +3,6 @@
 /**
  *  @file    Hash_Multi_Map_Manager_T.cpp
  *
- *  $Id$
- *
  *  @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
 //=============================================================================

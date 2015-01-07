@@ -3,8 +3,6 @@
 /**
  *  @file     target.cpp
  *
- *  $Id$
- *
  * Target class defines target SNMP agents.
  *
  *

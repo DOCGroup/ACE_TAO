@@ -3,8 +3,6 @@
 /**
  *  @file    operation_exs.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations in
  *  CIAO executor implementations
  *

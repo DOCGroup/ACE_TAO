@@ -4,8 +4,6 @@
 /**
  *  @file    Manager.h
  *
- *  $Id$
- *
  *  A manager class that merger IORS and designates primary
  *
  *

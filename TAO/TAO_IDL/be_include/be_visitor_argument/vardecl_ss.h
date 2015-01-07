@@ -3,8 +3,6 @@
 /**
  *  @file    vardecl_ss.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arguments. This generates the
  *  variable declartion for the argument in the server-sde skeleton
  *

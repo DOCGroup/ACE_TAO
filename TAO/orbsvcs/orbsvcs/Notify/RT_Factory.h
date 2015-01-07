@@ -3,8 +3,6 @@
 /**
  *  @file RT_Factory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

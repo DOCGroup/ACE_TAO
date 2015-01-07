@@ -3,8 +3,6 @@
 /**
  *  @file   config-win32-msvc-7.h
  *
- *  $Id$
- *
  *  @brief  Microsoft Visual C++ 7.0 configuration file.
  *
  *  This file is the ACE configuration file for Microsoft Visual C++ version 7.

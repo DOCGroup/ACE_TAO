@@ -4,8 +4,6 @@
 /**
  *  @file    Debug_DTD_Manager.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

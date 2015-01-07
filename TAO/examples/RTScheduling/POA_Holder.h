@@ -5,8 +5,6 @@
 /**
  *  @file POA_Holder.h
  *
- *  $Id$
- *
  *  A helper to hold options for creating a POA.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>

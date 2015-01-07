@@ -6,8 +6,6 @@
  *
  *  OpenSSL @c SSL data structure specializations and typedefs.
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

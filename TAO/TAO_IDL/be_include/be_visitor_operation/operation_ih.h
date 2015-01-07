@@ -3,8 +3,6 @@
 /**
  *  @file    operation_ih.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations in implementation header
  *
  *

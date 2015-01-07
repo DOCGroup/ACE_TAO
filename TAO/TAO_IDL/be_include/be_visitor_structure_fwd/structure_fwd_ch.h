@@ -3,8 +3,6 @@
 /**
  *  @file    structure_fwd_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the be_structure_fwd node.
  *
  *

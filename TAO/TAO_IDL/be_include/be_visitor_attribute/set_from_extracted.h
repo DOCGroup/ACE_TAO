@@ -3,8 +3,6 @@
 /**
  *  @file    set_from_extracted.h
  *
- *  $Id$
- *
  *  Encapsulation the variations in setting read/write
  *  attributes from values extracted from an Any
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Dynamic_Service.h
  *
- *  $Id$
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */

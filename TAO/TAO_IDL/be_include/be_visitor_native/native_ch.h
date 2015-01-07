@@ -4,8 +4,6 @@
 /**
  *  @file    native_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for Native generating code in the client header.
  *
  *

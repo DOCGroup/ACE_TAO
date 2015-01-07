@@ -4,8 +4,6 @@
 /**
  *  @file    Timer_List_T.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

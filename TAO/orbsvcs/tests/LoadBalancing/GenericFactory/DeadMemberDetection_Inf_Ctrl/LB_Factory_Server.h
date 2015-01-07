@@ -4,8 +4,6 @@
 /**
  *  @file   LB_Factory_Server.h
  *
- *  $Id$
- *
  *  @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */

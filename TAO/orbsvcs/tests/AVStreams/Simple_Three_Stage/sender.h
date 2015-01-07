@@ -4,8 +4,6 @@
 /**
  *  @file    sender.h
  *
- *  $Id$
- *
  *  This application reads data from a file and sends it to s
  *  receiver.
  *

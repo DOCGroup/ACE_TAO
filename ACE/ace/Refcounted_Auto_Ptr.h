@@ -4,8 +4,6 @@
 /**
  *  @file    Refcounted_Auto_Ptr.h
  *
- *  $Id$
- *
  *  @author John Tucker <JTucker@infoglide.com>
  */
 //=============================================================================

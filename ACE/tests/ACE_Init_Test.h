@@ -4,8 +4,6 @@
 /**
  *  @file    ACE_Init_Test.h
  *
- *  $Id$
- *
  * Main header file for the ACE_INIT_TEST application.
  *
  *

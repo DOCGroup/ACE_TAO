@@ -5,8 +5,6 @@
 /**
  *  @file    AliasDef_i.h
  *
- *  $Id$
- *
  *  AliasDef servant class.
  *
  *

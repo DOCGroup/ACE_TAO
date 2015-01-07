@@ -5,8 +5,6 @@
 /**
  *  @file    gauge.h
  *
- *  $Id$
- *
  *  Class definition for SMI Gauge32 class.
  *  This class currently does not behave as defined by the abstract model
  *  in RFC 1155 section 3.2.3.4 (ie the value doesn't latch on the max value)

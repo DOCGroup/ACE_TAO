@@ -3,8 +3,6 @@
 /**
  *  @file    component_ami_rh_ex_base.h
  *
- *  $Id$
- *
  *  Base class visitor for the AMI4CCM reply handler
  *  implementation concrete visitors.
  *

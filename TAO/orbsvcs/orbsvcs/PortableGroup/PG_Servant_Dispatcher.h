@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Servant_Dispatcher.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

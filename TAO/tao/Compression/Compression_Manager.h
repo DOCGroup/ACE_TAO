@@ -4,8 +4,6 @@
 /**
  *  @file   Compression_Manager.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================

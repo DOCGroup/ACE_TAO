@@ -4,8 +4,6 @@
 /**
  *  @file   ProxySupplierStateWorker.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

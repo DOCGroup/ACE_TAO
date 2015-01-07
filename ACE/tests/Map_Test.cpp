@@ -3,8 +3,6 @@
 /**
  *  @file    Map_Test.cpp
  *
- *  $Id$
- *
  *   This is a simple test of the <ACE_Map> and illustrates how to
  *   use the forward and reverse iterators.
  *

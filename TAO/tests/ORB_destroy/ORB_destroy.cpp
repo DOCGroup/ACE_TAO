@@ -3,8 +3,6 @@
 /**
  *  @file     ORB_destroy.cpp
  *
- *  $Id$
- *
  *   Simple ORB destruction test.
  *
  *

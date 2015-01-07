@@ -3,8 +3,6 @@
 /**
  *  @file    ub_objref_seq.h
  *
- *  $Id$
- *
  *   Tests unbounded sequences of object references
  *
  *

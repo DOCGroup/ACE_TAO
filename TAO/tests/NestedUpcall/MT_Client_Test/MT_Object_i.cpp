@@ -3,8 +3,6 @@
 /**
  *  @file    MT_Object_i.cpp
  *
- *  $Id$
- *
  *  This class implements the Object A  of the
  *  Nested Upcalls - MT Client test.
  *

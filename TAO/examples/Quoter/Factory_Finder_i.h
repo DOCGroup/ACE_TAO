@@ -3,8 +3,6 @@
 /**
  *  @file    Factory_Finder_i.h
  *
- *  $Id$
- *
  *  Factory Finder Implementation for the Quoter example
  *
  *

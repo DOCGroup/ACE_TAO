@@ -4,8 +4,6 @@
 /**
  *  @file     default_ports.h
  *
- *  $Id$
- *
  *  Port reservation details for all the services.
  *
  *  @author  Copyright 1995 by Sun Microsystems, Inc.

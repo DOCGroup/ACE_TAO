@@ -4,8 +4,6 @@
 /**
  *  @file    Timer_Wheel.h
  *
- *  $Id$
- *
  *  @author Darrell Brunsch (brunsch@cs.wustl.edu)
  */
 //=============================================================================

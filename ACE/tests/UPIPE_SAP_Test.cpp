@@ -3,8 +3,6 @@
 /**
  *  @file    UPIPE_SAP_Test.cpp
  *
- *  $Id$
- *
  *    This is a test that uses <ACE_UPIPE_SAP> and <ACE_Thread> for
  *    intra-process communication.
  *

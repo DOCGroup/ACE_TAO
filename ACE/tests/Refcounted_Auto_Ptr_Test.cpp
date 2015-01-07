@@ -2,8 +2,6 @@
 /**
  *  @file    Refcounted_Auto_Ptr_Test.cpp
  *
- *  $Id$
- *
  *  This example tests the <ACE_Refcounted_Auto_Ptr> and illustrates
  *  how they may be dispersed between multiple threads using an
  *  implementation of the Active Object pattern, which is available

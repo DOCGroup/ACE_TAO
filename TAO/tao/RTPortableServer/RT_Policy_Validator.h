@@ -4,8 +4,6 @@
 /**
  *  @file    RT_Policy_Validator.h
  *
- *  $Id$
- *
  *  This file contains the declaration for the RTCORBA policy validator.
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>

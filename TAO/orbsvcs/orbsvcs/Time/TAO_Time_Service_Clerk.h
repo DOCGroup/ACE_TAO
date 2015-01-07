@@ -4,8 +4,6 @@
 /**
  *  @file    TAO_Time_Service_Clerk.h
  *
- *  $Id$
- *
  *  This class implements the CosTime::TimeService IDL interface.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    nested_struct.h
  *
- *  $Id$
- *
  *   Tests nested structures
  *
  *

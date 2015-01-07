@@ -4,8 +4,6 @@
 /**
  *  @file    Value_TypeCode_Static.h
  *
- *  $Id$
- *
  *  Header file for static @c tk_value and @c tk_event
  *  @c CORBA::TypeCodes.
  *

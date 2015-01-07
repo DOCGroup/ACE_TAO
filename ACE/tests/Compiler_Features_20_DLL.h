@@ -3,8 +3,6 @@
 /**
  *  @file    Compiler_Features_20_DLL.h
  *
- *  $Id$
- *
  *  Test DLL export with default constructor
  */
 //=============================================================================

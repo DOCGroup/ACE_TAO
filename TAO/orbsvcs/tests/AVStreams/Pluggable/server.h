@@ -3,8 +3,6 @@
 /**
  *  @file    server.h
  *
- *  $Id$
- *
  *  Ftp server to receive data
  *
  *

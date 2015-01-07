@@ -3,8 +3,6 @@
 /**
  *  @file    Logging_Sup.cpp
  *
- *  $Id$
- *
  * Event Supplier for visualizing scheduling behavior, using arrival
  * and dispatch data logged by an event channel dispatch command object
  *

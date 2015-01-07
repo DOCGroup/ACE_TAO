@@ -4,8 +4,6 @@
 /**
  *  @file    RT_ORB_Loader.h
  *
- *  $Id$
- *
  *   Header file for Loading RT_ORB.
  *
  *

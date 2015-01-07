@@ -3,8 +3,6 @@
 /**
  *  @file    Hash_Multi_Map_Manager_Test.cpp
  *
- *  $Id$
- *
  *    This test illustrates the use of <ACE_Hash_Multi_Map_Manager> to
  *    maintain a hash table using strings.
  *

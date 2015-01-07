@@ -5,8 +5,6 @@
 /**
  *  @file    SequenceDef_i.h
  *
- *  $Id$
- *
  *  SequenceDef servant class.
  *
  *

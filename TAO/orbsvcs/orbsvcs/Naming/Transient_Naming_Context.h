@@ -4,8 +4,6 @@
 /**
  *  @file   Transient_Naming_Context.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    Pipe_Test.cpp
  *
- *  $Id$
- *
  *  Tests the construction of multiple pipes in a process.
  *
  *

@@ -3,8 +3,6 @@
 /**
  *  @file    executor_private_exh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for private facet members
  *  in the exec impl header.
  *

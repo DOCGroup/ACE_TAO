@@ -3,8 +3,6 @@
 /**
  *  @file   Notify_SequencePushSupplier.h
  *
- *  $Id$
- *
  * This class is to be used by clients of the Notification Service
  * to implement Sequence Push Suppliers.
  *

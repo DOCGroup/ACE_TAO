@@ -3,8 +3,6 @@
 /**
  *  @file    future1.cpp
  *
- *  $Id$
- *
  *  This example tests the ACE Future.
  *
  *

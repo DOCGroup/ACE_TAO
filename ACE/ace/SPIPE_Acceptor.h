@@ -4,8 +4,6 @@
 /**
  *  @file    SPIPE_Acceptor.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */

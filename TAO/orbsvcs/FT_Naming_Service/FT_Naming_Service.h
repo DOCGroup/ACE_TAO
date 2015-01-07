@@ -4,8 +4,6 @@
 /**
  *  @file    FT_Naming_Service.h
  *
- *  $Id$
- *
  *    This class provides an override for the Naming_Service class factory
  *    method: create_naming_server ()
  *

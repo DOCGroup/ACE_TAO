@@ -6,8 +6,6 @@
  *
  *  Byteswap methods
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

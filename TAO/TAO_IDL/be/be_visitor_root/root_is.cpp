@@ -2,8 +2,6 @@
 /**
  *  @file    root_is.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the Root in the implementation skeletons file
  *
  *

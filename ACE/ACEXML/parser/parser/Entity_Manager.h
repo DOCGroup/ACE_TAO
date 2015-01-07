@@ -4,8 +4,6 @@
 /**
  *  @file    Entity_Manager.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */

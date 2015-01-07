@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_obv_ci.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuetype node.
  *  This one provides code generation for valuetype OBV_ class
  *  in the (client) header.

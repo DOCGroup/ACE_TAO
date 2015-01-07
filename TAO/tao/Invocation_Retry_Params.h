@@ -3,8 +3,6 @@
 /**
  *  @file   Invocation_Retry_Params.h
  *
- *  $Id$
- *
  *  @author Byron Harris (harrisb@ociweb.com)
  */
 //=============================================================================

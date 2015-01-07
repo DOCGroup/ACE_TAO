@@ -4,8 +4,6 @@
 /**
  *  @file    Caching_Utility_T.h
  *
- *  $Id$
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

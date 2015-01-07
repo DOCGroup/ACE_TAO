@@ -4,8 +4,6 @@
 /**
  *  @file    Default_Acceptor_Filter.h
  *
- *  $Id$
- *
  *  Default strategy for populating mprofile
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>

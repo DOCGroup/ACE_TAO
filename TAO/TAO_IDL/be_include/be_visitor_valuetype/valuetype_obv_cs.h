@@ -3,8 +3,6 @@
 /**
  *  @file    valuetype_obv_cs.h
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes
  *  OBV_ class implementation
  *  (see C++ mapping OMG 20.17)

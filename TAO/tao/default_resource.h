@@ -4,8 +4,6 @@
 /**
  *  @file   default_resource.h
  *
- *  $Id$
- *
  *  @author Chris Cleeland
  *  @author Carlos O'Ryan
  */

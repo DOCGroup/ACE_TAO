@@ -4,8 +4,6 @@
 /**
  *  @file    be_identifier_helper.h
  *
- *  $Id$
- *
  *  Utilities associated with UTL_Identifier.
  *
  *

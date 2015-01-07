@@ -4,8 +4,6 @@
 /**
  *  @file    WUCS4_UTF16.cpp
  *
- *  $Id$
- *
  *  Defines the arrays required to convert between UCS-4 a 4 byte wide char
  *  codeset, and UCS-16, aka unicode, a 2-byte codeset.
  *

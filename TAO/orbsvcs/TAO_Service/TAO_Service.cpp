@@ -3,8 +3,6 @@
 /**
  *  @file   TAO_Service.cpp
  *
- *  $Id$
- *
  * This directory contains an example that illustrates how the ACE
  * Service Configurator can dynamically configure an ORB and its
  * servants from a svc.conf file.

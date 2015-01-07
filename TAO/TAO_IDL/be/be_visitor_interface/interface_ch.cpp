@@ -3,8 +3,6 @@
 /**
  *  @file    interface_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interfaces in the client header
  *
  *

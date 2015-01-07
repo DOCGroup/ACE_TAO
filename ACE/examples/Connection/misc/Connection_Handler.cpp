@@ -3,8 +3,6 @@
 /**
  *  @file    Connection_Handler.cpp
  *
- *  $Id$
- *
  *    This test illustrates how to use the Acceptor role of the
  *    Acceptor-Connector pattern to create multiple threads, each
  *    running its own Reactor.  You can connect to this via telnet and

@@ -4,8 +4,6 @@
 /**
  *  @file   BasicLogFactory_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::BasicLogFactory interface.
  *
  *

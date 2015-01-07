@@ -4,8 +4,6 @@
 /**
  *  @file   DiffServ_Protocols_Hooks.h
  *
- *  $Id$
- *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Johnny Willemsen <jwillemsen@remedy.nl>
  */

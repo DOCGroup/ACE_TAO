@@ -4,8 +4,6 @@
 /**
  *  @file    obv_module.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Module class
  *  This provides code generation for the module in the header
  *  for the OBV_ namespace
