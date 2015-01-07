@@ -1,6 +1,4 @@
 // -*- c++ -*-
-// $Id$
-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # undef ACE_INLINE
 # define ACE_INLINE

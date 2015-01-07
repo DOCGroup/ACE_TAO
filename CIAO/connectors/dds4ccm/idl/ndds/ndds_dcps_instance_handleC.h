@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef _TAO_IDL_DDS_RTF2_DCPSC_H_XX
 #define _TAO_IDL_DDS_RTF2_DCPSC_H_XX
 

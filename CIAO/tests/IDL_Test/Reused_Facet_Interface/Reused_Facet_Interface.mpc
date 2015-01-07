@@ -1,4 +1,3 @@
-// $Id$
 //
 
 project(Reused_Facet_Interface_idl_gen) : componentidldefaults {

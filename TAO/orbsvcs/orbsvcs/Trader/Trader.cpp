@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Offer_Iterators_T.h"
 #include "ace/Thread_Mutex.h"

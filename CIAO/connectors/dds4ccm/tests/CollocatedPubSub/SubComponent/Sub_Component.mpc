@@ -1,5 +1,3 @@
-// $Id$
-
 project(SubComponent_idl_gen) : componentidldefaults, dds4ccm {
   after += Collocated_Connector_idl_gen DDS_Starter_idl_gen
   custom_only = 1

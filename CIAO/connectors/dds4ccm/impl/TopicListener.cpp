@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/TopicListener.h"
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/DDSCallbackStatusHandler.h"

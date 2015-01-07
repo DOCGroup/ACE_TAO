@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef TERA_SS_SERVICE_HANDLER_H
 #define TERA_SS_SERVICE_HANDLER_H
 

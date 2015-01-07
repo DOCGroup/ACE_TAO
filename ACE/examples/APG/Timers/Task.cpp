@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_sys_time.h"
 
 // Listing 1 code/ch20

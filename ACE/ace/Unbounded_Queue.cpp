@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_UNBOUNDED_QUEUE_CPP
 #define ACE_UNBOUNDED_QUEUE_CPP
 

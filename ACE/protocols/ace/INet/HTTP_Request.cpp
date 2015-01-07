@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/String_Base.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/INet/HTTP_Request.h"

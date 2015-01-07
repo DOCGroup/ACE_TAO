@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PI_Server/ServerRequestInfo.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "IDL3_to_XMI_visitor.h"
 #include "identifier_helper.h"
 

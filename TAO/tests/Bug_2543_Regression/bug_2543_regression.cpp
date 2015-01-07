@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestC.h"
 #include "tao/CodecFactory/CodecFactory.h"
 

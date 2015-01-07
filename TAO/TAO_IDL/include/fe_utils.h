@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef FE_UTILS_H
 #define FE_UTILS_H
 

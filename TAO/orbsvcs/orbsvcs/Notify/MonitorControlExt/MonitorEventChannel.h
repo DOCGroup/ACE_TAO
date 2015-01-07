@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef MONITOREVENTCHANNEL_H
 #define MONITOREVENTCHANNEL_H
 

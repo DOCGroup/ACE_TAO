@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ConsumerAdmin_i.h"
 #include "ace/Auto_Ptr.h"
 

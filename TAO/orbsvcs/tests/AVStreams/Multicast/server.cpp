@@ -1,5 +1,3 @@
-// $Id$
-
 #include "server.h"
 
 int done = 0;

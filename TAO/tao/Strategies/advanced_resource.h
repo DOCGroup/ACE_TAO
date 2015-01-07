@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef TAO_ADVANCED_RESOURCE_H
 #define TAO_ADVANCED_RESOURCE_H
 #include /**/ "ace/pre.h"

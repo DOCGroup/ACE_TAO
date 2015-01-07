@@ -1,5 +1,3 @@
-// $Id$
-
 // Pagefile_Memory_Pool.cpp
 #include "ace/Pagefile_Memory_Pool.h"
 

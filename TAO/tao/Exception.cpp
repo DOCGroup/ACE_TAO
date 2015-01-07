@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Exception.h"
 #include "tao/SystemException.h"
 #include "tao/Environment.h"

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /**
  * @author Marijke Hengstmengel (mhengstmengel@remedy.nl)
  */

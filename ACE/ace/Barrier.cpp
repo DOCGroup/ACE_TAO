@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Barrier.h"
 
 #if defined (ACE_HAS_THREADS)

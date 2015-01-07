@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(websvcs): ace_output, acelib {
   sharedname    = websvcs
   dynamicflags += ACE_WEBSVCS_BUILD_DLL

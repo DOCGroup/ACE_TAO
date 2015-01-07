@@ -1,5 +1,3 @@
-// $Id$
-
 #include "server_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"

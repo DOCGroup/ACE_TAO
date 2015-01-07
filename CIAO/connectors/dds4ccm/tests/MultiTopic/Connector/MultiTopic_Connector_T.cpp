@@ -1,5 +1,3 @@
-// $Id$
-
 #include "connectors/dds4ccm/impl/DDS_TopicBase_Connector_T.h"
 
 template <typename CCM_TYPE, typename DDS_TYPE, bool FIXED, typename SEQ_TYPE>

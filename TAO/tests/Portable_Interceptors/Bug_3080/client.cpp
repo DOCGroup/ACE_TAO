@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Multihomed_INET_Addr.h"
 #include "ace/SOCK_SEQPACK_Association.h"
 #include "ace/SOCK_SEQPACK_Acceptor.h"

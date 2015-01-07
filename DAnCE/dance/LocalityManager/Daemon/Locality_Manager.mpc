@@ -1,5 +1,3 @@
-// $Id$
-
 project (DAnCE_LocalityManager_Impl) : dance_lib, dance_output, naming, \
         dance_skel, dance_logger, dance_deployment_scheduler, dance_deployment_scheduler, \
         install, dance_locality_handler {

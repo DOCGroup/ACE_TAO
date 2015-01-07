@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef TAO_IFR_MACROS_H
 #define TAO_IFR_MACROS_H
 

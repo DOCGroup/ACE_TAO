@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Svcconf_Handler.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"

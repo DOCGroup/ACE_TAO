@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/LifespanStrategyTransientFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/PortableServer/LifespanStrategyTransient.h"

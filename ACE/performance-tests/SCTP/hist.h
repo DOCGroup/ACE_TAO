@@ -1,5 +1,3 @@
-// $Id$
-
 #include <stdio.h>
 
 #define HIST_VERSION  "1.3"

@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file SSLSock_IOStream.h
  *

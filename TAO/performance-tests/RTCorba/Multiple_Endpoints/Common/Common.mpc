@@ -1,4 +1,3 @@
-// $Id$
 project(RTCORBA_Common): taolib_with_idl, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   sharedname   = RTCORBA_Common
   requires    += rt_corba

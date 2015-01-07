@@ -1,5 +1,3 @@
-// $Id$
-
 #include <orb.idl>
 
 local interface foo {

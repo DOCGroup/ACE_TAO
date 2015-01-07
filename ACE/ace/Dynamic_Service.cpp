@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_DYNAMIC_SERVICE_CPP
 #define ACE_DYNAMIC_SERVICE_CPP
 

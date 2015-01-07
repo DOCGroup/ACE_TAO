@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p Quoter_Base Quoter_Client"
 
 project(AMI_Quoter_Client_idl_gen) : componentidldefaults {

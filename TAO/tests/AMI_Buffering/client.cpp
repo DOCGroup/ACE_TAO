@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Reply_Handler.h"
 #include "Client_Task.h"
 #include "tao/Messaging/Messaging.h"

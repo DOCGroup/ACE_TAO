@@ -1,4 +1,3 @@
-// $Id$
 project(*Performance_IDL): loadbalancing, strategies {
   IDL_Files {
     Test.idl

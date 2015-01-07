@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Ossama Othman <ossama@uci.edu>
 
 #include "Push_Iterator_Factory_i.h"

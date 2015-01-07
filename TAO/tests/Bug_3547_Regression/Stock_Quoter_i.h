@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef Stock_Quoter_i_h
 #define Stock_Quoter_i_h
 

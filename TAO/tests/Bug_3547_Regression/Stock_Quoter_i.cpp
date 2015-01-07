@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Stock_Quoter_i.h"
 #include "ace/Log_Msg.h"
 

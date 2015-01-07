@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/corba.h"
 #include "ace/ARGV.h"
 #include "ace/Dynamic_Service.h"

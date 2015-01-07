@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "URL_Visitor_Factory.h"
 #include "Web_Crawler.h"

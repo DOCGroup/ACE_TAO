@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/DEV_IO.h"
 #include "ace/Log_Category.h"
 

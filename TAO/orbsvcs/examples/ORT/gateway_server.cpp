@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Object_Factory_i.h"
 #include "Gateway_i.h"
 

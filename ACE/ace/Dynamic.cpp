@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Dynamic.h"
 #include "ace/Singleton.h"
 #include "ace/TSS_T.h"

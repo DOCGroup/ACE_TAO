@@ -1,5 +1,3 @@
-// $Id$
-
 #include "DLL_Test_Parent.h"
 #include "ace/Log_Msg.h"
 

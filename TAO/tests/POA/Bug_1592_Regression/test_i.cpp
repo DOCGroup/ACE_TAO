@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 
 extern CORBA::Boolean receive_request_called;

@@ -1,4 +1,3 @@
-// $Id$
 #include "testS.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"

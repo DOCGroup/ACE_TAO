@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Home_Servant_Impl_Base.h"
 
 namespace CIAO

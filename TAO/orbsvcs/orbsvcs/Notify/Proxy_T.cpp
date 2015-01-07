@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Proxy_T.h"
 
 #ifndef TAO_Notify_PROXY_T_CPP

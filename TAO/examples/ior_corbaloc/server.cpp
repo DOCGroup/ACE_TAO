@@ -1,4 +1,3 @@
-// $Id$
 // server.cpp
 
 #include "status_i.h"

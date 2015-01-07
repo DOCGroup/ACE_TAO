@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename LISTENER>

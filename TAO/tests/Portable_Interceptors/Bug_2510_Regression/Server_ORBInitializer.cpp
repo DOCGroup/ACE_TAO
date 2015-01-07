@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Server_ORBInitializer.h"
 extern PortableInterceptor::SlotId slotId;
 

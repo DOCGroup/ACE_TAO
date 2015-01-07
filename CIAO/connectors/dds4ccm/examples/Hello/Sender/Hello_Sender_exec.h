@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_HELLO_SENDER_EXEC_YPB9XX_H_
 #define CIAO_HELLO_SENDER_EXEC_YPB9XX_H_
 

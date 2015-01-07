@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/DiffServPolicy/DiffServ_Service_Context_Handler.h"
 
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"

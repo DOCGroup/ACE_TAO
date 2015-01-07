@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*IDL): taoidldefaults, anytypecode {
   IDL_Files {
     Message.idl

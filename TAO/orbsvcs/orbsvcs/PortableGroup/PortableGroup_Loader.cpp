@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/PortableGroup_Loader.h"
 #include "orbsvcs/PortableGroup/PG_Object_Adapter_Factory.h"
 #include "orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h"

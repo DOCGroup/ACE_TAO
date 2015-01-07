@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_TIMER_QUEUE_T_CPP
 #define ACE_TIMER_QUEUE_T_CPP
 

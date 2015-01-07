@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef DDS_MULTITOPIC_SENDER_IDL
 #define DDS_MULTITOPIC_SENDER_IDL
 

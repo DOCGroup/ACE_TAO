@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_TRADER_TEST_UTILS_H
 #define TAO_TRADER_TEST_UTILS_H
 

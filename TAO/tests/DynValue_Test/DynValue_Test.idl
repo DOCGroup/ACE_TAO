@@ -1,5 +1,3 @@
-// $Id$
-
 module DynValue_Test
 {
   abstract valuetype avt

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_param_holder.h"
 #include "ast_visitor.h"
 

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*cancel) : aceexe, avoids_ace_for_tao {
   exename = test_cancel
   Source_Files {

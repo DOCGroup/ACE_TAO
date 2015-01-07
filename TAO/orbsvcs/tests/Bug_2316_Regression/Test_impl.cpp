@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test_impl.h"
 
 void Server_impl::shutdown ()

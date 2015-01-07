@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Base.h"
 #include "ace/Monitor_Control_Action.h"

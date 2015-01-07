@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // ------------------------------
 #ifndef DANCE_ARTIFACT_INSTALLATION_EXPORT_H

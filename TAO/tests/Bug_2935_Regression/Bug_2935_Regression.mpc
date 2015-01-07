@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*IDL): taoidldefaults {
   IDL_Files {
     ThreeTier.idl

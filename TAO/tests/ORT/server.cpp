@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ORT_test_i.h"
 #include "ServerORBInitializer.h"
 

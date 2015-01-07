@@ -1,5 +1,3 @@
-// $Id$
-
 #include "STD_PC_Intf.h"
 #include "Utils/XML_Helper.h"
 #include "Deployment.hpp"

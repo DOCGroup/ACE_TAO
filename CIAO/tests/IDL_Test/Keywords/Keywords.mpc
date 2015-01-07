@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Keyword_Clash_idl_gen) : componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=KEYWORD_CLASH_STUB_Export \

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Notify_Default_CO_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

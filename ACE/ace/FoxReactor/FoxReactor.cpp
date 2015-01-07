@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/FoxReactor/FoxReactor.h"
 
 FXDEFMAP(ACE_FoxReactor) ACE_FoxReactorMap[]={

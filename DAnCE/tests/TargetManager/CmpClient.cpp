@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file CmpClient.cpp
  *

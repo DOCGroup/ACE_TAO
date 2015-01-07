@@ -1,5 +1,4 @@
 // -*- MPC -*-
-// $Id$
 project : taoserver {
   exename = test
   Source_Files {

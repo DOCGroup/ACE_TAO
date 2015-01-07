@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Alarm) : aceexe {
   exename = Alarm
   Source_Files {

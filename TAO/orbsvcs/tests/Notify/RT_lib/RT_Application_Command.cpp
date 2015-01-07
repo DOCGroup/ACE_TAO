@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_Application_Command.h"
 
 

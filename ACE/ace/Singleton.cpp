@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_SINGLETON_CPP
 #define ACE_SINGLETON_CPP
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __MAPVIEW_H
 #define __MAPVIEW_H
 

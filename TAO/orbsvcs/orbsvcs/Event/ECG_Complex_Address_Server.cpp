@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_Complex_Address_Server.h"
 #include "ace/SString.h"

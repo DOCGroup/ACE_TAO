@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Thread_Manager.h"

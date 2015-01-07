@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Test for MULTIPLE_TEMPLATES
 
 #include "MultipleTemp_Receiver_exec.h"

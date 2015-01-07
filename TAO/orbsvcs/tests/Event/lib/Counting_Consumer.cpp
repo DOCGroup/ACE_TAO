@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Counting_Consumer.h"
 
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/Portable_Group_Map.h"
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"

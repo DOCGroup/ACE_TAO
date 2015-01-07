@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ZIOP/ZIOP_ORBInitializer.h"
 #include "tao/ZIOP/ZIOP_Policy_Validator.h"
 #include "tao/ZIOP/ZIOP.h"

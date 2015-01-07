@@ -1,5 +1,3 @@
-// $Id$
-
 #include "JAWS/Parse_Headers.h"
 #include "HTTPU/http_base.h"
 #include "HTTPU/http_headers.h"

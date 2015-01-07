@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Wait_On_Read.h"
 #include "tao/Transport.h"
 #include "tao/Resume_Handle.h"

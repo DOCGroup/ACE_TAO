@@ -1,4 +1,3 @@
-// $Id$
 // BindNewContext.cpp : implementation file
 
 #include "stdafx.h"

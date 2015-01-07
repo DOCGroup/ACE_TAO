@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/AnyTypeCode/Empty_Param_TypeCode.h"
 
 #ifndef __ACE_INLINE__

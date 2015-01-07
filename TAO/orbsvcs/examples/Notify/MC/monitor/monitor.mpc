@@ -1,4 +1,3 @@
-// $Id$
 project (mc_monitor_example): notification_mc {
   exename = monitor
 }

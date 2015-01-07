@@ -1,5 +1,3 @@
-// $Id$
-
 union MultiLabelUnion switch (long) {
   case 0:
   case 1:

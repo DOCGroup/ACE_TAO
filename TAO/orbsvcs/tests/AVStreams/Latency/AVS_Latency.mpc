@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*ping): avstreamsexe, strategies {
   exename  = ping
 

@@ -1,5 +1,3 @@
-// $Id$
-
 interface Test
 {
   // Return the number of the server

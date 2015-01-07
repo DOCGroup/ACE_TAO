@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Container_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Logger/Logger_Service.h"

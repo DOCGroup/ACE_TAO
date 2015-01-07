@@ -1,5 +1,3 @@
-// $Id$
-
 #include "brokenC.h"
 #include "ace/Get_Opt.h"
 

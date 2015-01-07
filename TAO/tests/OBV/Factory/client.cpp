@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FactoryC.h"
 #include "FactoryC_impl.h"
 #include "ace/Get_Opt.h"

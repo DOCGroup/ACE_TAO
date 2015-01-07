@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/default_client.h"
 #include "tao/Wait_On_Read.h"
 #include "tao/Wait_On_Reactor.h"

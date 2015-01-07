@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Shapes_Control_comp_exec.h"
 #include "tao/ORB_Core.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FaCE.h"
 
 #ifdef NO_ACE

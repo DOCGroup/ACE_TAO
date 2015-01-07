@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CALLBACKI_H_
 #define CALLBACKI_H_
 

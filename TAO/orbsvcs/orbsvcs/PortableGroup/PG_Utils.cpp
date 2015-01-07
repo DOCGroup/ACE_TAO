@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/PG_Utils.h"
 
 #include "tao/MProfile.h"

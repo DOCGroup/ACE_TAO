@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 

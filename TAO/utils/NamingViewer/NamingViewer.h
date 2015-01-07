@@ -1,4 +1,3 @@
-// $Id$
 // NamingViewer.h : main header file for the NAMINGVIEWER application
 //
 

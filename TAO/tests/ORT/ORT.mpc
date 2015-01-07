@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Test_ORT_IDL): taoidldefaults {
   IDL_Files {
     ORT_test.idl

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_CONFIG_KFREEBSD_H
 #define ACE_CONFIG_KFREEBSDH
 #include "ace/config-g++-common.h"

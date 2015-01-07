@@ -1,5 +1,3 @@
-// $Id$
-
 // This test program illustrates the performance of ACE_GUARD
 
 #include "ace/Log_Msg.h"

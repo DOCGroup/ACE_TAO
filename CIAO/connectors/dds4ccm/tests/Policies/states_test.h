@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef STATES_TEST_H_
 #define STATES_TEST_H_
 

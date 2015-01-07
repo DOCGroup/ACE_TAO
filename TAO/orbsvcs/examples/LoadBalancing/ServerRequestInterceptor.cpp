@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ServerRequestInterceptor.h"
 
 ServerRequestInterceptor::ServerRequestInterceptor (void)

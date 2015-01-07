@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #include "identifier_helper.h"
 #include "utl_identifier.h"
 #include "utl_string.h"

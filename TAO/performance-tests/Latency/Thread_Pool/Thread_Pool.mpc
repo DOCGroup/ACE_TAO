@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*latency_idl): taoidldefaults, strategies {
   IDL_Files {
     Test.idl

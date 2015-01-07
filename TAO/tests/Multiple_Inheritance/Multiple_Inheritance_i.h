@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Multiple_InheritanceS.h"
 
 class Multiple_Inheritance_i : public POA_D

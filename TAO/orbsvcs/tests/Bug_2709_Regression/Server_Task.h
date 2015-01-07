@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Task.h"
 #include "ace/Manual_Event.h"
 #include "tao/ORB.h"

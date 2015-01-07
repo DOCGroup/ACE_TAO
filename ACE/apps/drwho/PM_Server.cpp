@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "Rwho_DB_Manager.h"
 #include "PM_Server.h"

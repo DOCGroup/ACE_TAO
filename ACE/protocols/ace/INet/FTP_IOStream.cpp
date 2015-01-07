@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/FTP_IOStream.h"
 #include "ace/INet/IOS_util.h"
 

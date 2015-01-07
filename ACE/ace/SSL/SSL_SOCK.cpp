@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SSL_SOCK.h"
 
 #if !defined (__ACE_INLINE__)

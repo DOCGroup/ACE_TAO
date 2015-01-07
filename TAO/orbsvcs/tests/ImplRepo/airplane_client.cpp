@@ -1,5 +1,3 @@
-// $Id$
-
 #include "airplane_client_i.h"
 
 #include "ace/Log_Msg.h"

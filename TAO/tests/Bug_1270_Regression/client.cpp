@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Echo.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"

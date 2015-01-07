@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/AnyTypeCode/TypeCode.h"
 
 #if !defined (__ACE_INLINE__)

@@ -1,5 +1,3 @@
-// $Id$
-
 // Test out the group management mechanisms provided by the
 // ACE_Thread_Manager, including the group signal handling, group
 // suspension and resumption, and cooperative thread cancellation

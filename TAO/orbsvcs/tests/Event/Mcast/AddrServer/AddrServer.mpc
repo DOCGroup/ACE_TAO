@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Server): rteventexe, rtevent_serv {
   exename   = server
 

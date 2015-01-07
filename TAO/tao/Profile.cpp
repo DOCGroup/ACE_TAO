@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Profile.h"
 #include "tao/Messaging_PolicyValueC.h"
 #include "tao/Stub.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "QuitCmd.h"
 #include "RootPanel.h"
 

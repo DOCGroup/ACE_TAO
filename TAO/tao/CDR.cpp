@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CDR.h"
 #include "tao/Timeprobe.h"
 #include "tao/ORB_Core.h"

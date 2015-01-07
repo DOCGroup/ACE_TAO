@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Offer_Importer.h"
 
 TAO_Offer_Importer::TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,

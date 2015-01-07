@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef AST_MIRROR_PORT_H
 #define AST_MIRROR_PORT_H
 

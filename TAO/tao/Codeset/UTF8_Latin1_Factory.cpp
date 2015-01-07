@@ -1,4 +1,3 @@
-// $Id$
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"

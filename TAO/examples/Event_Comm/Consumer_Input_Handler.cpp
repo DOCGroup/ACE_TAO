@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Consumer_Input_Handler.h"
 #include "Consumer_Handler.h"
 

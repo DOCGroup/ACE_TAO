@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Gateway_ObjRef_Factory.h"
 
 Gateway_ObjRef_Factory::

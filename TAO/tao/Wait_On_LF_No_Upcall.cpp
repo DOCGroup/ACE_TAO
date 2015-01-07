@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Wait_On_LF_No_Upcall.h"
 #include "tao/Nested_Upcall_Guard.h"
 #include "tao/Leader_Follower.h"

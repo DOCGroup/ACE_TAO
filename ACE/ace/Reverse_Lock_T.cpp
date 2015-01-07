@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_REVERSE_LOCK_T_CPP
 #define ACE_REVERSE_LOCK_T_CPP
 

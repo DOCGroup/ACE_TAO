@@ -1,5 +1,3 @@
-// $Id$
-
 project(DAnCE_IDL) : dancelib_with_idl, dance_output, valuetype, gen_ostream, \
       dance_deployment_stub, install {
   custom_only = 1

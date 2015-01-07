@@ -1,5 +1,3 @@
-// $Id$
-
 // Test Bug 2577
 
 struct DateTime_T

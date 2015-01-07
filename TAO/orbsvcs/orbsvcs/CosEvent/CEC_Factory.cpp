@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/CosEvent/CEC_Factory.h"
 #include "ace/Dynamic_Service.h"
 

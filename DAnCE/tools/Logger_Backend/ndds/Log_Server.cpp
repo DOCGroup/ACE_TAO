@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Log_Server.cpp
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

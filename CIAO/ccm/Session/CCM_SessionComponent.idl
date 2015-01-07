@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (CCM_SESSIONCOMPONENT_IDL)
 #define CCM_SESSIONCOMPONENT_IDL
 

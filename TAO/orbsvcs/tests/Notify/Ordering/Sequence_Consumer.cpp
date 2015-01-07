@@ -1,4 +1,3 @@
-// $Id$
 #include "Notify_Sequence_Push_Consumer.h"
 #include "goC.h"
 

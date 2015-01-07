@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORBInitializer_Registry.h"
 #include "StockFactory.h"
 #include "ORBInitializer.h"

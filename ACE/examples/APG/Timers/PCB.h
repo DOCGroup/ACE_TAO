@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #if !defined(PCB_H)
 #define PCB_H
 

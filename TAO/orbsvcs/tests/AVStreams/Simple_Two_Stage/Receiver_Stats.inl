@@ -1,5 +1,3 @@
-// $Id$
-
 ACE_INLINE
 Receiver_Stats::Receiver_Stats (void)
   : samples_count_ (0)

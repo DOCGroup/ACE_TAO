@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "testC.h"
 #include "Client_ORBInitializer.h"
 

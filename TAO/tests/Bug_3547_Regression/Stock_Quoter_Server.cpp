@@ -1,5 +1,3 @@
-// $Id$
-
 // Stock Quoter includes
 #include "Stock_Quoter_i.h"
 

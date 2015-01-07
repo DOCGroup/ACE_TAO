@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_EC_LIFETIME_UTILS_T_CPP
 #define TAO_EC_LIFETIME_UTILS_T_CPP
 

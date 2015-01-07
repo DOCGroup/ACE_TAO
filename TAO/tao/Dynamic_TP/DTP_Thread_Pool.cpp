@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Dynamic_TP/DTP_Thread_Pool.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0

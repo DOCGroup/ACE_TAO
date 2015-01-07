@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_MAP_MANAGER_CPP
 #define ACE_MAP_MANAGER_CPP
 

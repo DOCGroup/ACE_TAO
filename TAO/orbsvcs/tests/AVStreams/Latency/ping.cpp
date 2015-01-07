@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ping.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/ORB.h"

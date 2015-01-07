@@ -1,5 +1,3 @@
-// $Id$
-
 #include "connection.h"
 
 #ifndef _D_URL

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/Policy_ManagerC.h"

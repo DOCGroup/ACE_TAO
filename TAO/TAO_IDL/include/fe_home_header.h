@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef FE_HOME_HEADER_H
 #define FE_HOME_HEADER_H
 

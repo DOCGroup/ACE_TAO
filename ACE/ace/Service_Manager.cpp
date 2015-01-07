@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Service_Manager.h"
 
 #include "ace/Get_Opt.h"

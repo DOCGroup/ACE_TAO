@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_UB_STRING_SARGUMENT_T_CPP
 #define TAO_UB_STRING_SARGUMENT_T_CPP
 

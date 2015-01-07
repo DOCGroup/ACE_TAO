@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file HTTPS_URL.h
  *

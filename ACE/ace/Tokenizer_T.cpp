@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_TOKENIZER_T_CPP
 #define ACE_TOKENIZER_T_CPP
 

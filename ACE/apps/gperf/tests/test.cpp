@@ -1,5 +1,3 @@
-// $Id$
-
 // Tests the generated perfect hash function.
 
 // The -v option prints diagnostics as to whether a word is in the set

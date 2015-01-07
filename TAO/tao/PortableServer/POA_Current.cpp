@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // -- PortableServer Include --
 #include "tao/PortableServer/POA_Current.h"
 #include "tao/PortableServer/POA_Current_Impl.h"

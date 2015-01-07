@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/String_Alloc.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"

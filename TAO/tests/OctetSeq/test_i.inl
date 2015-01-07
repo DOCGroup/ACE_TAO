@@ -1,5 +1,3 @@
-// $Id$
-
 ACE_INLINE
 Database_i::Database_i (CORBA::ORB_ptr orb,
                         Test::Index max_range)

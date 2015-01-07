@@ -1,6 +1,4 @@
 // Log_Msg_MFC.h : main header file for the LOG_MSG_MFC application
-// $Id$
-
 #if !defined(AFX_LOG_MSG_MFC_H__03FA2C60_71EA_44F9_AC4C_2F19168B4755__INCLUDED_)
 #define AFX_LOG_MSG_MFC_H__03FA2C60_71EA_44F9_AC4C_2F19168B4755__INCLUDED_
 

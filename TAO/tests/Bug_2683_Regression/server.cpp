@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/OS_NS_strings.h"

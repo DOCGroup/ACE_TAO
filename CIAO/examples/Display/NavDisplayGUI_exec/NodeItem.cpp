@@ -1,5 +1,3 @@
-// $Id$
-
 #include "NodeItem.h"
 #include <QtGui/qbrush.h>
 

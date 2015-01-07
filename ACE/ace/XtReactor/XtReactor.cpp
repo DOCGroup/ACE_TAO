@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/XtReactor/XtReactor.h"
 
 #include "ace/SOCK_Acceptor.h"

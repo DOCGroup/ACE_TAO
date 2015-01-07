@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include /**/ "NT_Notify_Service.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)

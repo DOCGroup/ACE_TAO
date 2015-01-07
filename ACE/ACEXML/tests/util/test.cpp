@@ -1,4 +1,3 @@
-// $Id$
 // A simple test for performance of the ACEXML_escape_string() function
 
 #include "ACEXML/common/XML_Util.h"

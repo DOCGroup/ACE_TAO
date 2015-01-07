@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Handle connections from local UNIX domain sockets.
 
 #ifndef _HANDLE_L_STREAM_H

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "WaitSet.h"
 #include "dds4ccm/impl/ndds/Condition.h"
 #include "dds4ccm/impl/ndds/QueryCondition.h"

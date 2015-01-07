@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // This configuration file is for use with the PharLap Realtime ETS Kernel.
 // It has been tested with PharLap TNT Embedded ToolSuite version 9.1.
 

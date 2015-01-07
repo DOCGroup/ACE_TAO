@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SV_Message_Queue.h"
 #include "ace/Log_Category.h"
 

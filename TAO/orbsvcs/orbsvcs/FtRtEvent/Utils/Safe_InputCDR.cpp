@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/Utils/Safe_InputCDR.h"
 
 #if !defined(__ACE_INLINE__)

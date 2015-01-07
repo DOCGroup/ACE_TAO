@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Session.h"
 #include "Implicit_Deactivator.h"
 

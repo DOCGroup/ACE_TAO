@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Synch.h"
 #include "ace/Task.h"
 #include "masterS.h"

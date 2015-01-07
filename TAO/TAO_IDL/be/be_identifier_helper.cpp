@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #include "be_identifier_helper.h"
 #include "be_type.h"
 

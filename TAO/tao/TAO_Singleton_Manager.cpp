@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/TAO_Singleton_Manager.h"
 
 #include "ace/Guard_T.h"

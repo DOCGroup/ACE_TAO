@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"
 #include "tao/Valuetype/AbstractBase.h"
 #include "tao/Valuetype/ValueBase.h"

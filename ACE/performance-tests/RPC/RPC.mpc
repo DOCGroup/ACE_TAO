@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*client) : aceexe, rpc {
   source_files {
     client.cpp

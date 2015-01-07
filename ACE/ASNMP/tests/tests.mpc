@@ -1,5 +1,3 @@
-// $Id$
-
 project (asnmp_tests_Oid_Test) : aceexe {
   exename = Oid_Test
   after += asnmp_lib

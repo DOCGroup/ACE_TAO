@@ -1,5 +1,3 @@
-// $Id$
-
 project(CCM_svnt_idl) : install, ciaolib_with_idl, valuetype {
   idlflags   += -Wb,export_include=CCM_Svnt_Export.h
   idlflags   += -Wb,export_macro=CCM_SVNT_Export

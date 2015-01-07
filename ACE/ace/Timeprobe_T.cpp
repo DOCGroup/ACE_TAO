@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_TIMEPROBE_T_CPP
 #define ACE_TIMEPROBE_T_CPP
 

@@ -1,5 +1,3 @@
-// $Id$
-
 // Purpose: This program uses ACE_FIFO wrappers to perform
 // interprocess communication between a parent process and a child
 // process.  The parents reads from an input file and writes it into

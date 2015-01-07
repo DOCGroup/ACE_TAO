@@ -1,5 +1,3 @@
-// $Id$
-
 #include "deadline_qos_test.h"
 
 #include "duration.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Argument.h"
 #include "ace/OS_Memory.h"
 

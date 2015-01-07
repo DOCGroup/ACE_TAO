@@ -1,4 +1,3 @@
-// $Id$
 #include "DomainDataManager.h"
 #include "dance/Deployment/Deployment_NodeManagerC.h"
 

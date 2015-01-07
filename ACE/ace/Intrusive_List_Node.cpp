@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_INTRUSIVE_LIST_NODE_CPP
 #define ACE_INTRUSIVE_LIST_NODE_CPP
 

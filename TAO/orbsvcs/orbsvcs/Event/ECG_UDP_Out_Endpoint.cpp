@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"

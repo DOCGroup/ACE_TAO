@@ -1,5 +1,3 @@
-// $Id$
-
 interface MonitorTestInterface
 {
   enum Which { NotifyService, Supplier, Consumer };

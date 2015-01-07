@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined DERIVED_CONNECTOR_T
 #define DERIVED_CONNECTOR_T
 

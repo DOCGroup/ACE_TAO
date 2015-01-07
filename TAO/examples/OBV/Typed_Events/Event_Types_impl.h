@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #if !defined (EVENT_TYPES_IMPL_H)
 #define EVENT_TYPES_IMPL_H
 

@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/OS_NS_stdio.h"
 #include <orbsvcs/CosNamingC.h>
 #include <orbsvcs/Naming/Naming_Loader.h>

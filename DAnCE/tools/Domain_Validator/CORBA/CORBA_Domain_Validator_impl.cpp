@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "CORBA_Domain_Validator_impl.h"
 
 #include "tao/ORB_Core.h"

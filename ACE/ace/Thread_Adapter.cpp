@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Thread_Adapter.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Thread_Exit.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Service_Config.h"
 #include "orbsvcs/Notify/CosNotify_Service.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"

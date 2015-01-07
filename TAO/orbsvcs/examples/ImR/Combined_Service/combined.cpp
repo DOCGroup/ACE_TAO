@@ -1,4 +1,3 @@
-// $Id$
 // This is a simple example, showing how you can load an
 // ImR Locator and/or Activator as ACE Service Objects
 // using the ACE Service Configurator framework.

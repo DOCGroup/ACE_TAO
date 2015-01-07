@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(TestCompressor) : taolib, compression, taoidldefaults {
   sharedname   = TAO_TestCompressor
   dynamicflags += TAO_TESTCOMPRESSOR_BUILD_DLL

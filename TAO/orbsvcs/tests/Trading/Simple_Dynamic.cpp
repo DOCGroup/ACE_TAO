@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_SIMPLE_DYNAMIC_C
 #define TAO_SIMPLE_DYNAMIC_C
 

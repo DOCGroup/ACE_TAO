@@ -1,5 +1,3 @@
-// $Id$
-
 #include "nestea_server_i.h"
 
 

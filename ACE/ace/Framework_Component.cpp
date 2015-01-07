@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Framework_Component.h"
 
 #if !defined (__ACE_INLINE__)

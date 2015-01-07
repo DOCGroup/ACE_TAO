@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MCastC.h"
 #include "MCastS.h"
 #include "server_i.h"

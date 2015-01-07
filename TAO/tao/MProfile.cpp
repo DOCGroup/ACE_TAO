@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 #include "tao/PolicyC.h"

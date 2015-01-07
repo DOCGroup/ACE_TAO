@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// $Id$
 //
 
 #ifndef LOG_WALKER_PEER_PROCESS_H

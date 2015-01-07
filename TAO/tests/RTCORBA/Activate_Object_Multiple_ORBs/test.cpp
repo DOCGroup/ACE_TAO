@@ -1,5 +1,3 @@
-// $Id$
-
 // *******************************************************************
 //
 // This test links in RTCORBA and RTPortableServer and creates two

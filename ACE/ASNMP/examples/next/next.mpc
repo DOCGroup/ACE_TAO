@@ -1,5 +1,3 @@
-// $Id$
-
 project (asnmp_example_next) : aceexe {
   exename = next
   after += asnmp_lib

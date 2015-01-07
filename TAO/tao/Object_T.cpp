@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_OBJECT_T_CPP
 #define TAO_OBJECT_T_CPP
 

@@ -1,5 +1,3 @@
-// $Id$
-
 // MessengerServer.cpp
 // This version uses the Implementation Repository.
 

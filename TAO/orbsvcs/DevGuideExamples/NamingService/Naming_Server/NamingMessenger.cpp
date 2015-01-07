@@ -1,5 +1,3 @@
-// $Id$
-
 #include "NamingTask.h"
 #include "MessengerTask.h"
 

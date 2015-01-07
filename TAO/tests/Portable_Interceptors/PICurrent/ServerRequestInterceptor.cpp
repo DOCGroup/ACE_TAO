@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ServerRequestInterceptor.h"
 #include "tao/CORBA_String.h"
 #include "ace/Log_Msg.h"

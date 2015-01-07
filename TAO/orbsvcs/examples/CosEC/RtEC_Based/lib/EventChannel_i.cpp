@@ -1,4 +1,3 @@
-// $Id$
 #include "EventChannel_i.h"
 #include "ace/Auto_Ptr.h"
 

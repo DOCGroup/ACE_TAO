@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CIAO_CONTEXT_IMPL_BASE_T_C
 #define CIAO_CONTEXT_IMPL_BASE_T_C
 

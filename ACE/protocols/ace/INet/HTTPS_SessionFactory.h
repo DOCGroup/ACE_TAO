@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file HTTPS_SessionFactory.h
  *

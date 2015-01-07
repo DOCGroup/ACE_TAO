@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ObjectReferenceFactory.h"
 #include "tao/debug.h"
 

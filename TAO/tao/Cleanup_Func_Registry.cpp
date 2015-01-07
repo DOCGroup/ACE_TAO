@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Cleanup_Func_Registry.h"
 
 #if !defined (__ACE_INLINE__)

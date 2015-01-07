@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Supplier_i.h"
 
 // This function runs the Callback Quoter Supplier daemon.

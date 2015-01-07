@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/DynamicAny/DynSequence_i.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/DynamicAny/DynAnyUtils_T.h"

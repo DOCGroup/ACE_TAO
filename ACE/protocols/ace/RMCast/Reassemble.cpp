@@ -1,6 +1,4 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// $Id$
-
 #include "Reassemble.h"
 #include "ace/OS_NS_stdlib.h"
 

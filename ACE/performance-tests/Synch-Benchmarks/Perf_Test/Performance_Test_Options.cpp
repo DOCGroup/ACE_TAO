@@ -1,5 +1,3 @@
-// $Id$
-
 #define  ACE_BUILD_SVC_DLL
 #include "Performance_Test_Options.h"
 #include "ace/OS_NS_strings.h"

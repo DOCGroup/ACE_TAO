@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicInterface/Server_Request.h"

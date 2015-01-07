@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Daemon_Utilities.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/ACE.h"

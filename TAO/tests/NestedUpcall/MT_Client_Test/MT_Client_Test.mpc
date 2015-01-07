@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Nested_Upcall_Idl): taoidldefaults {
   IDL_Files {
     MT_Client_Test.idl

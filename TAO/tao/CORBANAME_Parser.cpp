@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/CORBANAME_Parser.h"
 
 #if (TAO_HAS_CORBANAME_PARSER == 1)

@@ -1,4 +1,3 @@
-// $Id$
 #include "Notify_SequencePushSupplier.h"
 #include "goS.h"
 #include "Notify_Test_Client.h"

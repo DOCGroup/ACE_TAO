@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_CACHE_HASH_T_H
 #define JAWS_CACHE_HASH_T_H
 

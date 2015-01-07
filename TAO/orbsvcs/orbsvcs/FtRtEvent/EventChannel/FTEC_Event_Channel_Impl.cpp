@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Factory.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h"

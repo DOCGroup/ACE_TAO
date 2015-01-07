@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef GATEWAY_EC_H
 #define GATEWAY_EC_H
 

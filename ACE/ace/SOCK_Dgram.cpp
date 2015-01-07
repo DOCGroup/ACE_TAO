@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SOCK_Dgram.h"
 
 #include "ace/Log_Category.h"

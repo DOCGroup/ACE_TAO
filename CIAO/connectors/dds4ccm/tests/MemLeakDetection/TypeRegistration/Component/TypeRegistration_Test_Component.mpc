@@ -1,5 +1,3 @@
-// $Id$
-
 project(TypeRegistration_Component_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += TypeRegistration_Connector_idl_gen

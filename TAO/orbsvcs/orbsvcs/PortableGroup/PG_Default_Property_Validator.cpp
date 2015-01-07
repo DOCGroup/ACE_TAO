@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/PG_Default_Property_Validator.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 

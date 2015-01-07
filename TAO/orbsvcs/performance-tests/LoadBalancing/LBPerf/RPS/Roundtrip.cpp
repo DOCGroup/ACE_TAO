@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Roundtrip.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/ACE.h"

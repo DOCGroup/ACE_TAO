@@ -1,5 +1,3 @@
-// $Id$
-
 #include "worker.h"
 
 Worker::Worker (CORBA::ORB_ptr orb)

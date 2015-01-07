@@ -1,5 +1,3 @@
-// $Id$
-
 #include "be_visitor_attr_return.h"
 
 #include "be_visitor_context.h"

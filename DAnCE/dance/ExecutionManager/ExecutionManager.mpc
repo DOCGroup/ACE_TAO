@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Execution_Manager_Exec) : install, dance_exe, naming, \
                                   dance_domainapplicationmanager, \
                                   dance_executionmanager_skel, \

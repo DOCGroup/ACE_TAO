@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Consumer.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "ace/Get_Opt.h"

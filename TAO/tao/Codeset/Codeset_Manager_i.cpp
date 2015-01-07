@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/TAO_Server_Request.h"
 #include "tao/operation_details.h"
 #include "tao/Transport.h"

@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef TAO_NOTIFY_DELIVERY_REQUEST_H
 #define TAO_NOTIFY_DELIVERY_REQUEST_H
 #include /**/ "ace/pre.h"

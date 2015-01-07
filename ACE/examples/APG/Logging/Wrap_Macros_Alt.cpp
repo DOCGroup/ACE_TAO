@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Log_Msg_Alt.h"
 
 void foo (void);

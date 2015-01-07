@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Profile_Timer.h"
 
 #if !defined (__ACE_INLINE__)

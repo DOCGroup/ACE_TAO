@@ -1,6 +1,4 @@
 //  -*- MPC -*-
-// $Id$
-
 project(INet) : acelib, ace_output, install {
   sharedname   = ACE_INet
   dynamicflags += ACE_INET_BUILD_DLL

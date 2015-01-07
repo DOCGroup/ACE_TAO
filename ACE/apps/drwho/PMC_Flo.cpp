@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "BS_Client.h"
 #include "PMC_Flo.h"

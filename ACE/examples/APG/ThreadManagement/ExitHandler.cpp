@@ -1,5 +1,3 @@
-// $Id$
-
 // Listing 1 code/ch13
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"

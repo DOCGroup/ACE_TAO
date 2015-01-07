@@ -1,5 +1,3 @@
-// $Id$
-
 #include "be_publishes.h"
 #include "be_eventtype.h"
 #include "be_visitor.h"

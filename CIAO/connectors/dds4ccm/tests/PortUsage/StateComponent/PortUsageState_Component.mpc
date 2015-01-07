@@ -1,5 +1,3 @@
-// $Id$
-
 project(PortUsageState_Component_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += PortUsageState_Connector_idl_gen

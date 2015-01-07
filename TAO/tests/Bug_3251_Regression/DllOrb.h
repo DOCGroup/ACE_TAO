@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef bug_3251_DllORB_h
 #define bug_3251_DllORB_h
 

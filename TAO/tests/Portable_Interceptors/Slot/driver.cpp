@@ -1,6 +1,4 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// $Id$
-
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 #include "tao/ORBInitializer_Registry.h"

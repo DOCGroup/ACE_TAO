@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0

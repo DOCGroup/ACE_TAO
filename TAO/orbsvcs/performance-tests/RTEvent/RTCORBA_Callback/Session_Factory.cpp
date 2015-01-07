@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Session_Factory.h"
 #include "Session.h"
 #include "Servant_var.h"

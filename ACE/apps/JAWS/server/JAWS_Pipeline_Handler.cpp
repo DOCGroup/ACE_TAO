@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef JAWS_PIPELINE_HANDLER_CPP
 #define JAWS_PIPELINE_HANDLER_CPP
 

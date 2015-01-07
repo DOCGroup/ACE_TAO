@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Writer_Sender_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/Guard_T.h"

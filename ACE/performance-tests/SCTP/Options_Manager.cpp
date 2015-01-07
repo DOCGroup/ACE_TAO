@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/os_include/netinet/os_in.h"
 #include "ace/os_include/sys/os_types.h"

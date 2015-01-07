@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Session.h"
 #include "HostProcess.h"
 #include "PeerProcess.h"

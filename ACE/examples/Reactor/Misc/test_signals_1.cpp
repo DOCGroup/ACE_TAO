@@ -1,5 +1,3 @@
-// $Id$
-
 // This simple program illustrates the difference between handling
 // signals via the Reactor (which doesn't cause the event loop to
 // terminate) and signals that aren't handled via the Reactor (which

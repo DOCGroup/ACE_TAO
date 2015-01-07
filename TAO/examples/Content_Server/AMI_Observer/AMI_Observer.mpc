@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*IDL): taoidldefaults, ami {
   IDL_Files {
     Push_Web_Server.idl

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Read_Buffer.h"
 
 #include "ace/config-all.h"

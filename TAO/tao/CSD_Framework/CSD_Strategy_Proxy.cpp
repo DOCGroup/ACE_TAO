@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/CSD_Framework/CSD_Strategy_Proxy.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/debug.h"

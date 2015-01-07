@@ -1,4 +1,3 @@
-// $Id$
 #include "Callback_i.h"
 
 Callback_i::Callback_i()

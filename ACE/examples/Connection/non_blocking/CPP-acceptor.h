@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef CPP_ACCEPTOR_H
 #define CPP_ACCEPTOR_H
 

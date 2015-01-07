@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Wait_Strategy.h"
 
 //@@ WAIT_STRATEGY_SPL_COPY_HOOK_START

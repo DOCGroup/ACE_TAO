@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Default_Factory.h"
 #include "orbsvcs/Notify/EventChannelFactory.h"
 #include "orbsvcs/Notify/EventChannel.h"

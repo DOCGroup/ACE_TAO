@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Http_Installation_Handler.h
  *

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "CE_ARGV.h"
 
 CE_ARGV::CE_ARGV(wchar_t* cmdLine)

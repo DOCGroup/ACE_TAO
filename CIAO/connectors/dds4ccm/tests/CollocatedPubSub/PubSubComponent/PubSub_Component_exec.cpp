@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "PubSub_Component_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"

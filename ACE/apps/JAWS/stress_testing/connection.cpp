@@ -1,5 +1,3 @@
-// $Id$
-
 #include "connection.h"
 
 // Make the connection to the WEB server

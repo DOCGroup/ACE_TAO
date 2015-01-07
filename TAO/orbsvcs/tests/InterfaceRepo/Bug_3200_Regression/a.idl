@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __A_IDL__
 #define __A_IDL__
 module wtk {

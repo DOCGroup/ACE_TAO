@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 //
 // The following configuration file is designed to work for win32 and win64
 // platforms using gcc/g++ with mingw64 (http://http://mingw-w64.sourceforge.net/).

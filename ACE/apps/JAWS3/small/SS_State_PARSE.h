@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef TERA_SS_STATE_PARSE_H
 #define TERA_SS_STATE_PARSE_H
 

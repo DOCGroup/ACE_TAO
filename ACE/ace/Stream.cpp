@@ -1,6 +1,4 @@
 // Stream.cpp
-// $Id$
-
 #ifndef ACE_STREAM_CPP
 #define ACE_STREAM_CPP
 

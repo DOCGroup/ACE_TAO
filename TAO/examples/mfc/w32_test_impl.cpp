@@ -1,7 +1,5 @@
 #include "StdAfx.h"
 
-// $Id$
-
 #include "w32_test_impl.h"
 
 W32_Test_Impl::~W32_Test_Impl (void)

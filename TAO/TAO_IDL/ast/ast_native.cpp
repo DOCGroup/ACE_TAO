@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_native.h"
 #include "ast_visitor.h"
 

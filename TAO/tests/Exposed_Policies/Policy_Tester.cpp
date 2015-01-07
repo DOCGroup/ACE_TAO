@@ -1,5 +1,3 @@
-// $Id$
-
 // -- App. Specific Include --
 #include "Policy_Tester.h"
 #include "RT_Properties.h"

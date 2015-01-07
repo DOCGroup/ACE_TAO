@@ -1,5 +1,3 @@
-// $Id$
-
 #include /* */  "ace/SOCK_Netlink.h"
 
 #ifdef ACE_HAS_NETLINK

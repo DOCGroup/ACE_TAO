@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping.h"

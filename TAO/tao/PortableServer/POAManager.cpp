@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/POAManager.h"
 #include "tao/PortableServer/POAManagerFactory.h"
 #include "tao/PortableServer/Root_POA.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file DAnCE_Artifact_Installation_Handler.h
  *

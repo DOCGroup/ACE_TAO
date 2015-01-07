@@ -1,5 +1,3 @@
-// $Id$
-
 #include "LzoCompressor.h"
 #include <lzo1x.h>
 #include <lzoutil.h>

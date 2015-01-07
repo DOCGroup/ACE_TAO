@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ACEXML/parser/parser/Parser.h"
 
 #if !defined (__ACEXML_INLINE__)

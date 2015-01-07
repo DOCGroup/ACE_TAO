@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SHS_Interceptor.h"
 #include "dance/Deployment/Deployment_StartErrorC.h"
 #include "dance/DAnCE_PropertiesC.h"

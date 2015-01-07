@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ContentFilterSetting.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/Utils.h"

@@ -1,4 +1,3 @@
-// $Id$
 #ifndef TAO_OBJREF_VAROUT_T_CPP
 #define TAO_OBJREF_VAROUT_T_CPP
 

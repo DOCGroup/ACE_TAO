@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestC.h"
 #include "Client_Task.h"
 #include "orbsvcs/FaultTolerance/FT_ClientService_Activate.h"

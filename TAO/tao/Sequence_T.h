@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Unbounded_Octet_Sequence_T.h"
 #include "tao/Unbounded_Value_Sequence_T.h"
 #include "tao/Unbounded_Basic_String_Sequence_T.h"

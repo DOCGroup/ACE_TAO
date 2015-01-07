@@ -1,4 +1,3 @@
-// $Id$
 #include "ClientTask.h"
 #include "ClientEngine.h"
 #include "AppShutdown.h"

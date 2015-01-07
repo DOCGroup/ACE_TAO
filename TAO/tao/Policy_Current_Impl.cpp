@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Policy_Current_Impl.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)

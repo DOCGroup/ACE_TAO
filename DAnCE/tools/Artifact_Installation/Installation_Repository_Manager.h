@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Installation_Repository_Manager.h
  *

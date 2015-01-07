@@ -1,5 +1,3 @@
-// $Id$
-
 #include "simple_test_i.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 # include "Grid_Client_i.h"
 
 // The client program for the application.

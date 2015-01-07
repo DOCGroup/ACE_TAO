@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 #include "tao/Object_KeyC.h"

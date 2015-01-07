@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FOO_Client_ORBInitializer.h"
 #include "FOO_ClientRequestInterceptor.h"
 

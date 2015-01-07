@@ -1,4 +1,3 @@
-// $Id$
 #include "middle_i.h"
 
 const ACE_TCHAR * ior_output_file = 0;

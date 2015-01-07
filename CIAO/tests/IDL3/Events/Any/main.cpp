@@ -1,5 +1,3 @@
-// $Id$
-
 #include "EventAnyC.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/Get_Opt.h"

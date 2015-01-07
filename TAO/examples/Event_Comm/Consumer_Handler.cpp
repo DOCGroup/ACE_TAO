@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Consumer_Handler.h"
 #include "tao/ORB_Core.h"
 

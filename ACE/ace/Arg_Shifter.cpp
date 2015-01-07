@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_ARG_SHIFTER_T_CPP
 #define ACE_ARG_SHIFTER_T_CPP
 

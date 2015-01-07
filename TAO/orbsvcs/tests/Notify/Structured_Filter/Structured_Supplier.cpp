@@ -1,5 +1,3 @@
-// $Id$
-
 // A Standard simple supplier.
 // All filtering is done on the consumer side.
 

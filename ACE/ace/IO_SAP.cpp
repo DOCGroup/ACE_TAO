@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/IO_SAP.h"
 
 #include "ace/Log_Category.h"

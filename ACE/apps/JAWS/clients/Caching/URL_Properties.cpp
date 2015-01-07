@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (ACE_URL_PROPERTIES_C)
 #define ACE_URL_PROPERTIES_C
 

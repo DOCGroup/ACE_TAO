@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p Basic CodeGen"
 //
 // NOTE: This MPC file has been hand edited so the executor files

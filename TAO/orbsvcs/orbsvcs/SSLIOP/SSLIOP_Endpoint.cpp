@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
 
 #include "tao/IIOP_Endpoint.h"

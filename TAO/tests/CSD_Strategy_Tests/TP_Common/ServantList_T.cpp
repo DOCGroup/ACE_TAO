@@ -1,4 +1,3 @@
-// $Id$
 #include "ServantList_T.h"
 #include "AppHelper.h"
 #include "TestAppExceptionC.h"

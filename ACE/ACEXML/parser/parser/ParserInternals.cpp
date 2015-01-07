@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ACEXML/parser/parser/ParserInternals.h"
 
 

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(airplane_idl) : taoidldefaults {
   IDL_Files {
     Airplane.idl

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Stock_i.h"
 #include <orbsvcs/Event_Utilities.h>
 

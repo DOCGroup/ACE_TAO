@@ -1,5 +1,3 @@
-// $Id$
-
 project(AMI_AsynchT_idl_gen) : componentidldefaults, ami, ami4ccm_stub {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=ASYNCHT_STUB_Export \

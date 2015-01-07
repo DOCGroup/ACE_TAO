@@ -1,5 +1,3 @@
-// $Id$
-
 // This test program illustrates the performance difference between
 // three versions of wrappers for thread mutexes.  These three
 // versions exercise various combinations of the following classes:

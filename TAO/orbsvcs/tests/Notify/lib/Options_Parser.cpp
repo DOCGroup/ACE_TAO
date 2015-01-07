@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/FIFO_Recv.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_fcntl.h"

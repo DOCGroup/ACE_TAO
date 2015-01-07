@@ -1,5 +1,3 @@
-// $Id$
-
 // This is a Win32-only test for verifying that the ACE dll
 // initializes itself without having a nonstatic object manager
 // present by way of a console app's main function.  It's a MFC dialog

@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 /* Option manager for ustreams */
 
 #include "ace/Get_Opt.h"

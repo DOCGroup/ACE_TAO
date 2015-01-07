@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h"

@@ -24,4 +24,8 @@ BEGIN{undef $/;} s/\/\/\n\/\/ \$Id\$\n\/\/\n//smg;
 BEGIN{undef $/;} s/\/\/\n\/\/ \$Id\$\n\n//smg;
 # Replace a two line c-style id tag with nothing
 BEGIN{undef $/;} s/\/\/\n\/\/ \$Id\$\n//smg;
+# Replace a one line c-style id tag with an empty line below that with nothing
+BEGIN{undef $/;} s/\/\/ \$Id\$\n\n//smg;
+# Replace a one line c-style id tag with nothing
+BEGIN{undef $/;} s/\/\/ \$Id\$\n//smg;
 

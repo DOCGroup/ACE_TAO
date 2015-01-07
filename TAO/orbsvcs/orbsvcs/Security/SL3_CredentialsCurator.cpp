@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Security/SL3_CredentialsCurator.h"
 #include "orbsvcs/Security/SL3_CredentialsAcquirerFactory.h"
 

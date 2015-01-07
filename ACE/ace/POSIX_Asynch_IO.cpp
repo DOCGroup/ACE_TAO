@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/POSIX_Asynch_IO.h"
 
 #if defined (ACE_HAS_AIO_CALLS)

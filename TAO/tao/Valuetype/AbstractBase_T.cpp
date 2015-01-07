@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_ABSTRACT_BASE_T_CPP
 #define TAO_ABSTRACT_BASE_T_CPP
 

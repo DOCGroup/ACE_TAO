@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Monitor_Control/BSD_Network_Interface_Monitor.h"
 
 #if defined (__NetBSD__) || defined (__OpenBSD__)

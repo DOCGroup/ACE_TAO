@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_CORBA_Leader_Follower.h"
 
 

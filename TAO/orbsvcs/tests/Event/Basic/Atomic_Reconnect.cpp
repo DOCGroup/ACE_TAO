@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Atomic_Reconnect.h"
 #include "Counting_Supplier.h"
 

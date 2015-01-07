@@ -1,5 +1,3 @@
-// $Id$
-
 // Regression test Bug 2234
 //
 // The bug actually manifested itself in class AnInterceptor::receive_request()

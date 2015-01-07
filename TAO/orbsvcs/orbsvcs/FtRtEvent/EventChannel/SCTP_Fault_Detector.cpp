@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/EventChannel/SCTP_Fault_Detector.h"
 
 #if (TAO_HAS_SCIOP == 1)

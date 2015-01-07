@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/corba.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Thread.h"

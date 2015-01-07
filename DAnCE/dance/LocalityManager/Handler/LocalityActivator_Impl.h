@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file LocalityActivator_Impl.h
  * @author William R. Otte

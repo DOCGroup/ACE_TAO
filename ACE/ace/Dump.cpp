@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Dump.h"
 #include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"

@@ -1,4 +1,3 @@
-// $Id$
 #ifndef DNC_DUMP_T_C
 #define DNC_DUMP_T_C
 

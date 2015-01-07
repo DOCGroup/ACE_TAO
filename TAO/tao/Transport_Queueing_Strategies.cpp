@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Transport_Queueing_Strategies.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"

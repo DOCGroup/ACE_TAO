@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Hello.h"
 #include "tao/Dynamic_TP/DTP_POA_Strategy.h"
 #include "tao/Dynamic_TP/DTP_POA_Loader.h"

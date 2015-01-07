@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h"
 
 #if !defined (__ACE_INLINE__)

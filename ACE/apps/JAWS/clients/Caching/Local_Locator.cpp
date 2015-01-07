@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (ACE_LOCAL_LOCATOR_C)
 #define ACE_LOCAL_LOCATOR_C
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/ProvidesDef_i.h"
 #include "tao/IFR_Client/IFR_ComponentsS.h"

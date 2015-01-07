@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef _EVENTSUPPLIER_I_H_
 #define _EVENTSUPPLIER_I_H_
 

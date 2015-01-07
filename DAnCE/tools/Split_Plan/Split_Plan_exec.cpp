@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Dynamic_Service.h"
 #include "ace/Get_Opt.h"
 #include "ace/Auto_Ptr.h"

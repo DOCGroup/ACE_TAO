@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "orbsvcs/Security/SL3_SecurityCurrent_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

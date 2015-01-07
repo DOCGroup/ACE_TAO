@@ -1,4 +1,3 @@
-// $Id$
 #ifndef NOTIFY_PUSH_SUPPLIER_H
 #define NOTIFY_PUSH_SUPPLIER_H
 

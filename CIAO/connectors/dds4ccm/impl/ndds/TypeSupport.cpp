@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/TypeSupport.h"
 
 namespace CIAO

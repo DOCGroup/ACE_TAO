@@ -1,5 +1,3 @@
-// $Id$
-
 project(IDL_Test_Base_Component_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += IDL_Test_Connector_idl_gen

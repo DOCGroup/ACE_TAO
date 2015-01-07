@@ -1,5 +1,3 @@
-// $Id$
-
 // Test out the cooperative thread cancellation mechanisms provided by
 // the ACE_Thread_Manager.
 

@@ -1,5 +1,3 @@
-// $Id$
-
 # include "Time_Date_Client_i.h"
 
 // The client program for the application.

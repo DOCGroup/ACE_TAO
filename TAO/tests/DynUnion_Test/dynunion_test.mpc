@@ -1,5 +1,3 @@
-// $Id$
-
 project(*IDL): dynamicany {
   IDL_Files {
     dynany.idl

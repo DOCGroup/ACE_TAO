@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dw_qos_test.h"
 
 #include "dur_qos_test.h"

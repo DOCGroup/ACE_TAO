@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminS.h"

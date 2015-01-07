@@ -1,5 +1,3 @@
-// $Id$
-
 #define ACE_BUILD_SVC_DLL
 
 #include "Connection_Handler_Connector.h"

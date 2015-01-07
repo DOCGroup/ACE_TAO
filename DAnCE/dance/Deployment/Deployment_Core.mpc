@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Deployment_IDL) : install, dancelib_with_idl, dance_output, valuetype, gen_ostream, ami, amh {
   custom_only = 1
   idlflags     += -Wb,stub_export_macro=DEPLOYMENT_STUB_Export \

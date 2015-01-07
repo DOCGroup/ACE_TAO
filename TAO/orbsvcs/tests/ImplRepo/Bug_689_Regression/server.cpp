@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/ImR_Client/ImR_Client.h"

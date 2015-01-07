@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INET_Addr.h"
 #include "ace/Truncate.h"
 #include "tao/IIOP_Connection_Handler.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 // Must include this header file and link to TAO_IFR_Client.lib

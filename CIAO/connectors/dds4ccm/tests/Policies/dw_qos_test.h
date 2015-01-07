@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef DATAWRITER_QOS_TEST_H_
 #define DATAWRITER_QOS_TEST_H_
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TruncatableC.h"
 #include "ExtraC.h"
 #include "ace/Get_Opt.h"

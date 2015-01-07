@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*idl): taoidldefaults, avoids_corba_e_micro {
   idlflags -= -St
   IDL_Files {

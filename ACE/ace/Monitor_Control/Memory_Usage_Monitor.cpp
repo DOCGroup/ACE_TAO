@@ -1,5 +1,3 @@
-// $Id$
-
 #if defined (ACE_HAS_KSTAT)
 #include <sys/sysinfo.h>
 #endif

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/LF_Event_Binder.h"
 
 #if !defined (__ACE_INLINE__)

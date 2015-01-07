@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/CSD_Framework/CSD_Framework_Loader.h"
 #include "tao/CSD_Framework/CSD_Object_Adapter_Factory.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"

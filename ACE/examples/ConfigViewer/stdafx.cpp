@@ -1,3 +1,2 @@
-// $Id$
 #include "stdafx.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/ProxySupplier.h"
 
 #if ! defined (__ACE_INLINE__)

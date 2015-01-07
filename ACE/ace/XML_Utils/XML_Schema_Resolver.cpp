@@ -1,4 +1,3 @@
-// $Id$
 #include "XML_Schema_Resolver.h"
 
 #include <xercesc/util/PlatformUtils.hpp>

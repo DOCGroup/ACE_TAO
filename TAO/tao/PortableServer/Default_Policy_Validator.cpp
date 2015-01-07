@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/Default_Policy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"

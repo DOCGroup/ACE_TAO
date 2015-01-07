@@ -1,5 +1,3 @@
-// $Id$
-
 project (DAnCE_SHS_CORBA_Transport) : install, dance_lib, dance_output, dance_logger, \
         dance_shs_daemon, naming, dance_deployment_scheduler {
   

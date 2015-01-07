@@ -1,5 +1,3 @@
-// $Id$
-
 project(LocalObject*idl): taoidldefaults {
   IDL_Files {
     Messenger.idl

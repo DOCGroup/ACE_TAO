@@ -1,5 +1,3 @@
-// $Id$
-
 #define  ACE_BUILD_SVC_DLL
 #include "ace/SV_Semaphore_Simple.h"
 #include "Performance_Test_Options.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RLECompressor.h"
 #include "ace/OS_NS_string.h"
 

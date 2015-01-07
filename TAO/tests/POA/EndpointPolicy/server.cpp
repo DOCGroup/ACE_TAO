@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Hello.h"
 #include "tao/PolicyC.h"
 #include "tao/EndpointPolicy/EndpointPolicy.h"

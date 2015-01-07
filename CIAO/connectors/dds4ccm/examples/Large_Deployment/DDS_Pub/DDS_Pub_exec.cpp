@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "DDS_Pub_exec.h"
 
 namespace CIAO_DDS_Pub_Impl

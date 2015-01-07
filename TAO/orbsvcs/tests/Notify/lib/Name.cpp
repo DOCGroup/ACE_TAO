@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Name.h"
 
 

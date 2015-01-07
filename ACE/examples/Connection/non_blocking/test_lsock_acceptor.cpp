@@ -1,5 +1,3 @@
-// $Id$
-
 // ACE_LSOCK Server.
 
 #include "ace/LSOCK_Acceptor.h"

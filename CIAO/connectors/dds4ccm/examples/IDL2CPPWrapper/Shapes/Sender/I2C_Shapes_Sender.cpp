@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Common/I2C_Shapes_Common.h"
 #include "connectors/dds4ccm/impl/ndds/DataWriter_T.h"
 

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Shapes_Receiver_comp_exec.h"
 
 namespace CIAO_Shapes_Receiver_comp_Impl

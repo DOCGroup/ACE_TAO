@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Grid_i.h"
 
 // Default constructor.

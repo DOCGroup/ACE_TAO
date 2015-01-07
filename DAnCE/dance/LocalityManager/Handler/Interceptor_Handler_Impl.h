@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file Interceptor_Handler_Impl.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

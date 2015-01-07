@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/LoadBalancing/LB_LoadAlertInfo.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 

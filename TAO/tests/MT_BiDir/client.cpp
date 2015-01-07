@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "Receiver_i.h"
 #include "SenderC.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Dispatcher_Impl.h"
 
 #if ! defined (__ACE_INLINE__)

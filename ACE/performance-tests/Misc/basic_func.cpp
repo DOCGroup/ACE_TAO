@@ -1,5 +1,3 @@
-// $Id$
-
 #include "basic_func.h"
 
 int A, BB, C, D, E, F;

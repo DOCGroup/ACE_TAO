@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Client_Peer.h"
 #include "Clock_Ticks.h"
 #include "tao/Messaging/Messaging.h"

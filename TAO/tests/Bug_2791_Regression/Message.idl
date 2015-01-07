@@ -1,5 +1,3 @@
-// $Id$
-
 valuetype Message
 {
   private string user_;

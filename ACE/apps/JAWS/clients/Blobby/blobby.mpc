@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(blobby) : aceexe {
   exename = blobby
   Source_Files {

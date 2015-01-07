@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Observer.h"
 #include "Consumer.h"
 #include "Supplier.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 project (Shapes_ShapeType_msg_stub) : taoidldefaults, dds4ccm_ts_default, Shapes {
   idlflags += -SS -Sci \
               -Wb,stub_export_macro=SHAPES_MSG_STUB_Export \

@@ -1,5 +1,3 @@
-// $Id$
-
 module CallMe
   {
     enum Colors { Red, Green, Blue };

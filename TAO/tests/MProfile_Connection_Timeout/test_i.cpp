@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "test_i.h"
 
 // part of the famous caesium 133 atom transition for a

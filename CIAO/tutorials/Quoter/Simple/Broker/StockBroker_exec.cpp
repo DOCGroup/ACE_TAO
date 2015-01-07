@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "StockBroker_exec.h"
 
 namespace CIAO_Stock_StockBroker_Impl

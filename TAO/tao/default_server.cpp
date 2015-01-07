@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/default_server.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"

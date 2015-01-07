@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Locator_Request_Reply.h"
 
 int ACE_TMAIN (int , ACE_TCHAR *[])

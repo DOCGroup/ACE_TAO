@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p Hello_Base Hello_Sender"
 
 project(SyncPortCon_Base_Hello_Sender_idl_gen) : componentidldefaults {

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : aceexe {
   avoids += ace_for_tao
   exename = tcp_test

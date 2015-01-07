@@ -1,5 +1,3 @@
-// $Id$
-
 ACE_INLINE size_t
 Baseline_Test_Base::iteration (void)
 {

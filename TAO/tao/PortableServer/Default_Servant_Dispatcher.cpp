@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/Default_Servant_Dispatcher.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Network_Priority_Hook.h"

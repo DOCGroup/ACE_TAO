@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // File: Sig_List.h
 
 // Author: Phil Mesnier

@@ -1,5 +1,3 @@
-// $Id$
-
 // Test the ability of the Reactor/Signal_Handler to register multiple
 // handler per-signal.
 

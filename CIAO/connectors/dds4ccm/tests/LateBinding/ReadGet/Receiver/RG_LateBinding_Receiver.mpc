@@ -1,5 +1,3 @@
-// $Id$
-
 project (RG_LateBindingReceiver_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += RG_LateBindingConnector_idl_gen

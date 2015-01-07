@@ -1,4 +1,3 @@
-// $Id$
 #include "CIAO_Handler_Common.h"
 
 #include "dance/Deployment/Deployment_PlanErrorC.h"

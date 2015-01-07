@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h"
 #include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"

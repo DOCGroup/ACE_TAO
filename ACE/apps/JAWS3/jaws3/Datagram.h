@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_DATAGRAM_H
 #define JAWS_DATAGRAM_H
 

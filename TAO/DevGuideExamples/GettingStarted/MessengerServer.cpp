@@ -1,5 +1,3 @@
-// $Id$
-
 #include "started_pch.h"
 
 #include "Messenger_i.h"

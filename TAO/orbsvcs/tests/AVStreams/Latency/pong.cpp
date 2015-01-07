@@ -1,5 +1,3 @@
-// $Id$
-
 #include "pong.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "tao/PortableServer/PortableServer.h"

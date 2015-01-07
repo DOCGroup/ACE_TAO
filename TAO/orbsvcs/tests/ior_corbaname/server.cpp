@@ -1,5 +1,3 @@
-// $Id$
-
 #include "status_i.h"
 #include "orbsvcs/CosNamingC.h"
 

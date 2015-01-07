@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Local_Tokens.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)

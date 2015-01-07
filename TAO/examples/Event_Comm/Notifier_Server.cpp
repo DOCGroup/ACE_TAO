@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Notifier_Server.h"
 #include "Event_CommC.h"
 #include "tao/debug.h"

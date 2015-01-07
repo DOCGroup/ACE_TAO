@@ -1,5 +1,3 @@
-// $Id$
-
 project(reader_starter_rt_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after +=

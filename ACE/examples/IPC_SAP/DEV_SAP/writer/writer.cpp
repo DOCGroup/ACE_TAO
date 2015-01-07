@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/DEV_Connector.h"
 #include "ace/TTY_IO.h"
 #include "ace/OS_NS_unistd.h"

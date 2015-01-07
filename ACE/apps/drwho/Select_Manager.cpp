@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Select_Manager.h"
 
 

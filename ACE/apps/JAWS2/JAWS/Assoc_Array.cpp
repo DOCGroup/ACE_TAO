@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef JAWS_ASSOC_ARRAY_CPP
 #define JAWS_ASSOC_ARRAY_CPP
 

@@ -1,5 +1,3 @@
-// $Id$
-
 // This version of Simple_Util doesn't need to link against orbsvcs
 // On the other hand it has no naming service.
 

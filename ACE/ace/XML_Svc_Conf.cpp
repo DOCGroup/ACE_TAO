@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/XML_Svc_Conf.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)

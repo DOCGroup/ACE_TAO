@@ -1,5 +1,3 @@
-// $Id$
-
 #include "client_interceptors.h"
 
 #include "tao/AnyTypeCode/DynamicC.h"

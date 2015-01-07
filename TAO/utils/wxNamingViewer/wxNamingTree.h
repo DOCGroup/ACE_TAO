@@ -1,4 +1,3 @@
-// $Id$
 // wxNamingTree.h
 
 #ifndef i_wxNamingTree_h

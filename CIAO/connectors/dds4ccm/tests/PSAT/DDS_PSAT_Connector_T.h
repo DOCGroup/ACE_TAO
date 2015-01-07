@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef DDS_PSAT_CONNECTOR_T
 #define DDS_PSAT_CONNECTOR_T
 

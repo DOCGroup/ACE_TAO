@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Roundtrip.h"
 #include "Worker_Thread.h"
 #include "ace/Get_Opt.h"

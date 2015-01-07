@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/EventTypeSeq.h"
 #include "orbsvcs/Notify/Topology_Saver.h"

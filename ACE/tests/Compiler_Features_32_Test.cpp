@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * This program checks if the compiler doesn't have a certain bug
  * that we encountered when testing C++11 features.

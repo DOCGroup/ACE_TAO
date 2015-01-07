@@ -1,5 +1,3 @@
-// $Id$
-
 #include "GIOP_Buffer.h"
 #include "ace/OS_NS_string.h"
 

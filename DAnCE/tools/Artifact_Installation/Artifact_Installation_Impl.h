@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Artifact_Installation_Impl.h
  *

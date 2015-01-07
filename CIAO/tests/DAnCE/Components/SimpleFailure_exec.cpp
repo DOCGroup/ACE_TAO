@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SimpleFailure_exec.h"
 #include "ace/Log_Msg.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "wr_lifecycle_qos_test.h"
 
 WriterDataLifecyclePolicyTest::WriterDataLifecyclePolicyTest ()

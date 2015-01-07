@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_RECEIVER_EXEC_0HSO8P_H_
 #define CIAO_RECEIVER_EXEC_0HSO8P_H_
 

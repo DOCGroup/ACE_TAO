@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h"
 #include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 project (DAnCE_LocalityManager_ExplicitExec) : \
         dance_locality_manager, dance_logger {
   exename = explicit_exec

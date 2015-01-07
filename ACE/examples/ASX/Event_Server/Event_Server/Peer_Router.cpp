@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (_PEER_ROUTER_C)
 #define _PEER_ROUTER_C
 

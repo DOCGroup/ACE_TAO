@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "WUCS4_UTF16_Factory.h"
 
 ACE_STATIC_SVC_DEFINE (WUCS4_UTF16_Factory,

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Trace.h"
 
 // Listing 1 code/ch03

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
 

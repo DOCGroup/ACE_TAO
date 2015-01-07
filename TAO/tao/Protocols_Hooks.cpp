@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Protocols_Hooks.h"
 #include "ace/Dynamic_Service.h"
 

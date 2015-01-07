@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"
 #include "ace/Sample_History.h"

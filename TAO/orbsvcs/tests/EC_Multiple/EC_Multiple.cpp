@@ -1,5 +1,3 @@
-// $Id$
-
 #include "EC_Multiple.h"
 
 #include "Scheduler_Runtime1.h"

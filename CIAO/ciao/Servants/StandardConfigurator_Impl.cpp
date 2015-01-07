@@ -1,5 +1,3 @@
-// $Id$
-
 #include "StandardConfigurator_Impl.h"
 #include "Servant_Impl_Base.h"
 

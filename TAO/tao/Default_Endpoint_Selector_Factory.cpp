@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Default_Endpoint_Selector_Factory.h"
 #include "tao/Invocation_Endpoint_Selectors.h"
 

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ServerRequest_Interceptor.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/IOPC.h"

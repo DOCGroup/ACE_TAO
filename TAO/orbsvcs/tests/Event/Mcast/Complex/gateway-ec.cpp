@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Gateway_EC.h"
 
 int

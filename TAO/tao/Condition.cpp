@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_CONDITION_CPP
 #define TAO_CONDITION_CPP
 #include "tao/Condition.h"

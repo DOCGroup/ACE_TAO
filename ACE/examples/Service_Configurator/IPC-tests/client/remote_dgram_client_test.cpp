@@ -1,5 +1,3 @@
-// $Id$
-
 // Tests out the Internet domain IPC-SAP dgram abstraction.
 
 #include "ace/OS_main.h"

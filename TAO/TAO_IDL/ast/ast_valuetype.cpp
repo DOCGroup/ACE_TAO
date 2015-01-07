@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #include "ast_valuetype.h"
 #include "ast_typedef.h"
 #include "ast_factory.h"

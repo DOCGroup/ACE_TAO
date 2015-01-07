@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/TransportCurrent/Transport_Current.h"
 #include "tao/SystemException.h"
 

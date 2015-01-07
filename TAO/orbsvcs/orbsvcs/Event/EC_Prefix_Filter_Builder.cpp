@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/Event/EC_Prefix_Filter_Builder.h"
 #include "orbsvcs/Event/EC_Type_Filter.h"

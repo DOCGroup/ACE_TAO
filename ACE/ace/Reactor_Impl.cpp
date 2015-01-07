@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Reactor_Impl.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,3 @@
-// $Id$
 project (Launch_Failure_Interceptors) : dance_skel, dance_lib, dance_logger {
    dynamicflags += SELECTIVE_ERROR_BUILD_DLL
    libout = ../lib

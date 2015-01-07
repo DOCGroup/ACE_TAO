@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Sub_Component_exec.h"
 
 namespace CIAO_CoPubSub_Sub_comp_Impl

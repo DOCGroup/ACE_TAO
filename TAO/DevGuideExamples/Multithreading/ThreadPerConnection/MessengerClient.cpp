@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MessengerC.h"
 #include "ace/Get_Opt.h"
 #include <iostream>

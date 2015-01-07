@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_LOCAL_NAME_SPACE_T_CPP
 #define ACE_LOCAL_NAME_SPACE_T_CPP
 

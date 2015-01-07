@@ -1,5 +1,3 @@
-// $Id$
-
 #include "AddNavUnitCmd.h"
 #include "RootPanel.h"
 #include "NavUnit.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Smart_Proxy_Impl.h"
 
 #include "ace/OS_NS_string.h"

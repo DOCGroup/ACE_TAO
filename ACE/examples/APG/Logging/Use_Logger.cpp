@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Log_Msg.h"
 
 int ACE_TMAIN (int, ACE_TCHAR *argv[])

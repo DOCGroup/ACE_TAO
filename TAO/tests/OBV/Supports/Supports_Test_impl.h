@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_SUPPORTS_TEST_IMPL_H
 #define TAO_SUPPORTS_TEST_IMPL_H
 

@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Sub_UUID_Generator.h
  *

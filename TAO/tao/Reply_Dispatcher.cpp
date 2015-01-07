@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Reply_Dispatcher.h"
 
 #if !defined (__ACE_INLINE__)

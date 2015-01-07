@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "orbsvcs/Log_Macros.h"
 

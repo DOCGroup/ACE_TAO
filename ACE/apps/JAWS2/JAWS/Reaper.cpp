@@ -1,5 +1,3 @@
-// $Id$
-
 #include "JAWS/Reaper.h"
 #include "JAWS/Concurrency.h"
 #include "JAWS/IO_Acceptor.h"

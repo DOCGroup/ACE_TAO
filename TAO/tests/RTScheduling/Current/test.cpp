@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Thread_Task.h"
 #include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"

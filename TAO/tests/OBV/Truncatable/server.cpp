@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TruncatableS_impl.h"
 #include "TruncatableC.h"
 #include "ace/Get_Opt.h"

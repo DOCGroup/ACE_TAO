@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_FUNCTOR_T_CPP
 #define ACE_FUNCTOR_T_CPP
 

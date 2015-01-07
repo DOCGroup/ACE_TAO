@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Sched_Params.h"
 #include "Globals.h"
 #include "Cubit_Task.h"

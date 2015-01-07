@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_TEST_AND_SET_CPP
 #define ACE_TEST_AND_SET_CPP
 

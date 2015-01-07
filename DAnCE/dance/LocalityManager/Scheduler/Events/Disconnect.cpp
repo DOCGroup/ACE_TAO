@@ -1,4 +1,3 @@
-// $Id$
 #include "Disconnect.h"
 
 #include "tao/AnyTypeCode/ExceptionA.h"

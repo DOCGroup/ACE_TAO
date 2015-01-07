@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file Locality_Manager_Task.h
  * @author William R. Otte

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file Locality_Manager_Impl.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

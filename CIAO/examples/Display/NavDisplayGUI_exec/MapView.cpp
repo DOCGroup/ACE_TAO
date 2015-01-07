@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MapView.h"
 #include <stdlib.h>
 #include "worldmap1.xpm"

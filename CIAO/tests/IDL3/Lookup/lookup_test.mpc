@@ -1,5 +1,3 @@
-// $Id$
-
 project(LookupTest_stub): ccm_stub {
   sharedname = LookupTest_stub
 

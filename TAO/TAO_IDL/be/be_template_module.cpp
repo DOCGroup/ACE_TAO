@@ -1,5 +1,3 @@
-// $Id$
-
 #include "be_template_module.h"
 #include "be_visitor.h"
 

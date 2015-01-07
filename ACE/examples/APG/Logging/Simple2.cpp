@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Log_Msg.h"
 
 void foo(void);

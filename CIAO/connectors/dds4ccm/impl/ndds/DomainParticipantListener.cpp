@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/DomainParticipantListener.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "dds4ccm/impl/ndds/TypeSupport.h"

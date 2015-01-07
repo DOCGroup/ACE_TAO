@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Consumer.h"
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Service_Constants.h"

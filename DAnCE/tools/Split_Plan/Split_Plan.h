@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Split_Plan.h
  *

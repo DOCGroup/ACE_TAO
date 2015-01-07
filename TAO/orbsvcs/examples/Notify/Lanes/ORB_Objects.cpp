@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ORB_Objects.h"
 
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORBInitializer_Registry_Adapter.h"
 #include "tao/PortableInterceptorC.h"

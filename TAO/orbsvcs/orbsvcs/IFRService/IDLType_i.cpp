@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/IFRService/IDLType_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_OFFER_DATABASE_CPP
 #define TAO_OFFER_DATABASE_CPP
 

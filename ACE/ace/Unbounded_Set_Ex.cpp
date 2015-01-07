@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_UNBOUNDED_SET_EX_CPP
 #define ACE_UNBOUNDED_SET_EX_CPP
 

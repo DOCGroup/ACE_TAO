@@ -1,5 +1,3 @@
-// $Id$
-
 // Simple driver program for the server.  This driver dynamically
 // links in all the services in the <svc.conf> file.
 

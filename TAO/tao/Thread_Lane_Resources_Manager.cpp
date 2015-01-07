@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "tao/ORB_Core.h"
 #include "tao/LF_Strategy.h"

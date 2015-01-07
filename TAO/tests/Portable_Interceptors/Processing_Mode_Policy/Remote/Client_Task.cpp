@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Client_Task.h"
 #include "testC.h"
 #include "client_interceptor.h"

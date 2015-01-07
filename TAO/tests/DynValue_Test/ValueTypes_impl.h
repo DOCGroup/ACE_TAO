@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef INCLUDE_VALUETYPE_IMPL_H
 #define INCLUDE_VALUETYPE_IMPL_H
 

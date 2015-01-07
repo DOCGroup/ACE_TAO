@@ -1,5 +1,3 @@
-// $Id$
-
 // Utility to traverse and simplify verbose log files.
 //
 // The goal is to take a collection of log files and extract details

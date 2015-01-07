@@ -1,4 +1,3 @@
-// $Id$
 #ifndef ACTIVATOR_INFO_H
 #define ACTIVATOR_INFO_H
 

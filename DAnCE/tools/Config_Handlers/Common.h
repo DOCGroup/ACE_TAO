@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file Common.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>

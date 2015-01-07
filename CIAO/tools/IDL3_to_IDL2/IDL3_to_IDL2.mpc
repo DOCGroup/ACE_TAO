@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(TAO_IDL3_TO_IDL2_BE) : acelib, install_lib, ciao_output, tao_idl_fe {
   sharedname   = TAO_IDL3_TO_IDL2_BE
   dynamicflags += TAO_IDL3_TO_IDL2_BE_BUILD_DLL

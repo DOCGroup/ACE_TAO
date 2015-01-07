@@ -1,4 +1,3 @@
-// $Id$
 // wxViewIORDialog.h
 
 #ifndef i_wxViewIORDialog_h

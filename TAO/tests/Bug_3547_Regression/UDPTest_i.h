@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef UDPTest_i_h
 #define UDPTest_i_h
 

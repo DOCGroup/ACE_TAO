@@ -1,4 +1,3 @@
-// $Id$
 #ifndef APPHELPER_H
 #define APPHELPER_H
 

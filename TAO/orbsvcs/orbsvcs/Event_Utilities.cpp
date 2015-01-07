@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_stdio.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/DIOP_Connection_Handler.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)

@@ -1,5 +1,3 @@
-// $Id$
-
 project(CoherentUpdate_Test_Receiver_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += CoherentUpdate_Connector_idl_gen

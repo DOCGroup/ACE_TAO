@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_HTTPS_SESSION_CPP
 #define ACE_HTTPS_SESSION_CPP
 

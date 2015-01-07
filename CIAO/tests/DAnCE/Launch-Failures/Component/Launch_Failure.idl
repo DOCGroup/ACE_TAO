@@ -1,5 +1,3 @@
-// $Id$
-
 #include <Components.idl>
 
 interface Remote_Interface

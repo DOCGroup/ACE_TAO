@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_POA_Command.h"
 
 

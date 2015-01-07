@@ -1,4 +1,3 @@
-// $Id$
 #include "Foo_C_cust_op3.h"
 #include "Foo_C_i.h"
 #include "CancelledExceptionC.h"

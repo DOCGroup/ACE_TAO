@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ACEXML/common/NamespaceSupport.h"
 #include "ace/OS_main.h"
 

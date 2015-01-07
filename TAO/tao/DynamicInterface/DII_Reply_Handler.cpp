@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Request.h"
 #include "ExceptionList.h"
 #include "DII_Invocation.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Auto_Ptr.h"
 #include "tools/Config_Handlers/DnC_Dump.h"
 #include "tools/Config_Handlers/XML_File_Intf.h"

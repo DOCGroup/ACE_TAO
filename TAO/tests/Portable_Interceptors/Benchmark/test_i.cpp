@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 #include "marker.h"
 #include "ace/OS_NS_string.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Plugin_Conf.h"
 #include "ace/Read_Buffer.h"
 #include "ace/Tokenizer_T.h"

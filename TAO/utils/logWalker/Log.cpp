@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Log.h"
 #include "Invocation.h"
 #include "PeerProcess.h"

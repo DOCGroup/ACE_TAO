@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -n Basic"
 
 project(Reused_Facet_Interface_Basic_idl_gen) : ciaoidldefaults, anytypecode {

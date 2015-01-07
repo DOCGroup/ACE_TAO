@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "PushSupplier.h"

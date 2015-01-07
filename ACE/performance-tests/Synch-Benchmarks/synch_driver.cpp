@@ -1,5 +1,3 @@
-// $Id$
-
 // Driver program that measures the performance of synchronization
 // mechanisms provided by ACE and the underlying OS.
 

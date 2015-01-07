@@ -1,5 +1,3 @@
-// $Id$
-
 #include "UDPTest_i.h"
 #include <ace/Log_Msg.h>
 

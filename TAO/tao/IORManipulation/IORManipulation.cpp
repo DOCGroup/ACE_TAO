@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/IORManipulation/IORManipulation.h"
 
 #include "tao/MProfile.h"

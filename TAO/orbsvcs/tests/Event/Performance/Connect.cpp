@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Connect.h"
 #include "Consumer.h"
 #include "Supplier.h"

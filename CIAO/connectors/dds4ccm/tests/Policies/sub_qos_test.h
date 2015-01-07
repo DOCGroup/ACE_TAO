@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef SUBSCRIBER_QOS_TEST_H_
 #define SUBSCRIBER_QOS_TEST_H_
 

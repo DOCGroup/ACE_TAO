@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 # include "tao/Cache_Entries_T.h"
 
 #if !defined (__ACE_INLINE__)

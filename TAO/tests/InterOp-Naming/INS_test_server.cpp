@@ -1,4 +1,3 @@
-// $Id$
 #include "Server_i.h"
 #include "INS_i.h"
 

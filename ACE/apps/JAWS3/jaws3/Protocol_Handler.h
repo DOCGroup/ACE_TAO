@@ -1,4 +1,3 @@
-// $Id$
 #ifndef JAWS_PROTOCOL_HANDLER_H
 #define JAWS_PROTOCOL_HANDLER_H
 

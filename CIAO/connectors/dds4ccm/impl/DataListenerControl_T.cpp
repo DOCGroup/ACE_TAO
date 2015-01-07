@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 template <typename BASE_TYPE>
 CCM_DDS_DataListenerControl_T<BASE_TYPE>::CCM_DDS_DataListenerControl_T (void) :
   mode_ (::CCM_DDS::NOT_ENABLED),

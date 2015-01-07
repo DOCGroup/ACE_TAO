@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/POA_Guard.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/ORB_Constants.h"

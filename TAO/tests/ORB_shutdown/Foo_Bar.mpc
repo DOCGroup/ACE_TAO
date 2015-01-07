@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(ORB Shutdown Server): taoserver {
   Source_Files {
     Foo_Bar.cpp

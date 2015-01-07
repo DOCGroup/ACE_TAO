@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 
 #if ! defined (__ACE_INLINE__)

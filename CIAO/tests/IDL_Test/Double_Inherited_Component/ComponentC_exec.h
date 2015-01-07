@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef INHERITED_COMPONENTS_EXEC_H_
 #define INHERITED_COMPONENTS_EXEC_H_
 

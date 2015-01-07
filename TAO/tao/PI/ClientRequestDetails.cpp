@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PI/ClientRequestDetails.h"
 #include "tao/SystemException.h"
 

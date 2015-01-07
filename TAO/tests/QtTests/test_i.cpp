@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 
 LCD_Display_imp::LCD_Display_imp (CORBA::ORB_ptr orb)

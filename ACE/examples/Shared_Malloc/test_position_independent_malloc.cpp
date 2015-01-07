@@ -1,5 +1,3 @@
-// $Id$
-
 // Test the capability of the "position-independent" <ACE_Malloc> to
 // handle a single malloc that can be rooted at different base
 // addresses each time it's used.  The actual backing store used by

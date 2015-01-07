@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Thread_Hook.h"
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"

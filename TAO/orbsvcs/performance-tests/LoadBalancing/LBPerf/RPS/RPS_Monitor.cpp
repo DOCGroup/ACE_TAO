@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RPS_Monitor.h"
 #include "ServerRequestInterceptor.h"
 #include "ace/UUID.h"

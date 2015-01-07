@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CIAO_SERVANT_IMPL_UTILS_T_C
 #define CIAO_SERVANT_IMPL_UTILS_T_C
 

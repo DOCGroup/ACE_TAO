@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(ace_svcconf_gen) {
   requires += ace_svcconf_gen
   verbatim(gnuace, local) {

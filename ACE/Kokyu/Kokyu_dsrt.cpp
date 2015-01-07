@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Kokyu_dsrt.h"
 
 #include "ace/Dynamic_Service.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 project(CFT_ReadGet_Test_Receiver_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += CFT_ReadGet_Test_Connector_idl_gen

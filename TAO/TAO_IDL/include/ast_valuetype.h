@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #ifndef _AST_INTERFACE_AST_VALUETYPE_HH
 #define _AST_INTERFACE_AST_VALUETYPE_HH
 

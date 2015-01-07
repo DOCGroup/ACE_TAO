@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Malloc_Allocator.h"
 #include "ace/Object_Manager.h"
 

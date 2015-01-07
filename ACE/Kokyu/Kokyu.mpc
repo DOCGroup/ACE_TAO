@@ -1,6 +1,4 @@
 //  -*- MPC -*- now wouldn't this be cool...
-// $Id$
-
 project(Kokyu) : acelib, ace_output, install {
   sharedname  = Kokyu
   dynamicflags += KOKYU_BUILD_DLL

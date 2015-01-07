@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Log_Macros.h"

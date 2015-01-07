@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Basic_Impl.h"
 #include "tao/AnyTypeCode/Any_Impl_T.h"

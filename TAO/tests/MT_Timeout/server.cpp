@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Sleep_Service.h"
 #include "Server_Task.h"
 #include "ace/Get_Opt.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 // Test the event server.
 
 #include "ace/OS_main.h"

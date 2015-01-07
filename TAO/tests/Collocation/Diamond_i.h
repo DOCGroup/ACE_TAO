@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (TAO_DIAMOND_I_H)
 #define TAO_DIAMOND_I_H
 

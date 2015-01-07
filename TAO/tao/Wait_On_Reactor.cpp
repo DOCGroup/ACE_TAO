@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Wait_On_Reactor.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"

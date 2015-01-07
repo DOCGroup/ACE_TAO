@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_VTopics_Base -l ../lib -o ../lib -c controller -u DDS Sender"
 
 project(DDS_VTopics_Sender_idl_gen) : componentidldefaults, dds4ccm {

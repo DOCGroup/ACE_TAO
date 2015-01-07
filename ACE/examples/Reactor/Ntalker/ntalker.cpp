@@ -1,5 +1,3 @@
-// $Id$
-
 // Listens to multicast address.  After first message received, will
 // listen for 5 more seconds.  Prints Mbits/sec received from client.
 

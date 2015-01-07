@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Logging_Service_i.h"
 #include "tao/debug.h"
 

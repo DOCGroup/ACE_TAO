@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/Strategies_ORBInitializer.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"

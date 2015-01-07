@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Kokyu.h"
 
 #include "Default_Dispatcher_Impl.h"

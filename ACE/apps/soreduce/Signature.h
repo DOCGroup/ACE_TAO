@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // File: Signature.h
 
 // Author: Phil Mesnier

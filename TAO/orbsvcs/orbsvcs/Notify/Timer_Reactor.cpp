@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Timer_Reactor.h"
 #include "orbsvcs/Notify/Properties.h"
 #include "tao/ORB_Core.h"

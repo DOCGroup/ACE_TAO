@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/params.h"
 #include "tao/orbconf.h"
 #include "tao/Version.h"

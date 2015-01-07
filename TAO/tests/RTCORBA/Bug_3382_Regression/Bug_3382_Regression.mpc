@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Server): rt_server {
   Source_Files {
     server.cpp

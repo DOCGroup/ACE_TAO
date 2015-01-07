@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/DynamicInterface/Request.h"
 #include "TestC.h"
 #include "tao/ORB.h"

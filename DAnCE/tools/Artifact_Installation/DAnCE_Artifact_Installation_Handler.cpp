@@ -1,5 +1,3 @@
-// $Id$
-
 #include "DAnCE_Artifact_Installation_Handler.h"
 
 #if !defined (__ACE_INLINE__)

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Handle_L_FIFO.h"
 
 

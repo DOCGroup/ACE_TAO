@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Direct_Supplier.h"
 
 #if ! defined (__ACE_INLINE__)

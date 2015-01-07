@@ -1,5 +1,3 @@
-// $Id$
-
 // The next include is TAO specific.
 #include "orbsvcs/FT_CORBA_ORB.idl"
 

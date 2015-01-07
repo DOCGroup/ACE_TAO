@@ -1,5 +1,3 @@
-// $Id$
-
 project(*oneways idl RT): taoidldefaults {
   IDL_Files {
     test.idl

@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Service_Config.h"
 #include "tao/Strategies/advanced_resource.h"
 

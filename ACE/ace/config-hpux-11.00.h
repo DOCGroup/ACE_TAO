@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // The following configuration file is designed to work for HP
 // platforms running HP-UX 11.00 using aC++ or gcc (2.95 and up).
 

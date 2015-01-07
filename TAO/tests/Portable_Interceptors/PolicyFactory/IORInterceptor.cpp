@@ -1,5 +1,3 @@
-// $Id$
-
 #include "IORInterceptor.h"
 #include "testC.h"
 

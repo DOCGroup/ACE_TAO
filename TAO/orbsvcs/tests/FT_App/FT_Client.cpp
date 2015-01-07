@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FT_TestReplicaC.h"
 #include <ace/Vector_T.h>
 #include <ace/SString.h>

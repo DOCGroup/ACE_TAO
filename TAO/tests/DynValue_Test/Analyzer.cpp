@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Analyzer.h"
 #include "tao/DynamicAny/DynCommon.h"
 

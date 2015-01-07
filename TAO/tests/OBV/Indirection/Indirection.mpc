@@ -1,5 +1,3 @@
-// $Id$
-
 project(*IDL): taoidldefaults, valuetype {
   IDL_Files {
     Messenger.idl

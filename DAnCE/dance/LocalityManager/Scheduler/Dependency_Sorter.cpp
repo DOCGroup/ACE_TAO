@@ -1,4 +1,3 @@
-// $Id$
 #include "Dependency_Sorter.h"
 
 #include <algorithm>

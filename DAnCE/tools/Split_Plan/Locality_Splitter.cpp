@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Locality_Splitter.h"
 #include "dance/Logger/Log_Macros.h"
 #include "dance/DAnCE_PropertiesC.h"

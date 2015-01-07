@@ -1,5 +1,3 @@
-// $Id$
-
 // ACE_SPIPE Server.
 
 #include "SPIPE-acceptor.h"

@@ -1,4 +1,3 @@
-// $Id$
 project (DAnCE_Convert_Plan) : install, dance_lib, dance_output, \
         dance_deployment_stub, dance_config_handlers {
 

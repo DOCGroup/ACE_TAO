@@ -1,5 +1,3 @@
-// $Id$
-
 /*
  * Hook to copy all include and forward declarations.
  */

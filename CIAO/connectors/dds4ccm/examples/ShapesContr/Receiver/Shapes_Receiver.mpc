@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -l ../lib -o ../lib -u DDS -b dds4ccm_base Receiver"
 
 project(ShapesContr_Receiver_idl_gen) : componentidldefaults, dds4ccm {

@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 /* Class hierarchy for the File I/O tests. */
 
 #include "ace/Profile_Timer.h"

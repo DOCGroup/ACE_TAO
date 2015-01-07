@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "orbsvcs/Naming/Persistent_Naming_Context.h"

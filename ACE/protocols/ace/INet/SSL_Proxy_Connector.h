@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file SSL_Proxy_Connector.h
  *

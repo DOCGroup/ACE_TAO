@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_Profile.h"
 #include "orbsvcs/SSLIOP/ssl_endpointsC.h"
 #include "tao/CDR.h"

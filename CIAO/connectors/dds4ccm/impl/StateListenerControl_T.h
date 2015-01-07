@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef STATELISTENERCONTROL_T_H_
 #define STATELISTENERCONTROL_T_H_
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/TAO_Singleton.h"
 #include "orbsvcs/Notify/RT_Properties.h"
 

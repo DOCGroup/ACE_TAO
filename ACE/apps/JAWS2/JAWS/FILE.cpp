@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Guard_T.h"
 
 #include "JAWS/FILE.h"

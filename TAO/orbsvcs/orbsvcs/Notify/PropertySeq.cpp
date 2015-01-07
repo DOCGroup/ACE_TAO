@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/PropertySeq.h"
 
 #if ! defined (__ACE_INLINE__)

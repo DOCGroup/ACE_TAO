@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Utils/ORB_Manager.h"
 #include "Offer_Importer.h"
 

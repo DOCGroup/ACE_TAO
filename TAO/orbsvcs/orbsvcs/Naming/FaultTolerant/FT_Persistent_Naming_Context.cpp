@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"

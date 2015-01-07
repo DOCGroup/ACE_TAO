@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 /**
  * @file be_sunsoft.h
  *

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Monitor_Control_Types.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)

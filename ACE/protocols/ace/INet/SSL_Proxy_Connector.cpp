@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/SSL_Proxy_Connector.h"
 #include "ace/INet/INet_Log.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "common.h"
 #include "ace/OS_main.h"
 

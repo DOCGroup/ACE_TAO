@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef BE_EXCEPTION_H
 #define BE_EXCEPTION_H
 

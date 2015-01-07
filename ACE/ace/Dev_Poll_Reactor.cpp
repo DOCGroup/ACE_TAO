@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_errno.h"
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Signal.h"

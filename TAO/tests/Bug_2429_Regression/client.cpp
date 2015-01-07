@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "tao/Messaging/Messaging.h"
 #include "ChildS.h"

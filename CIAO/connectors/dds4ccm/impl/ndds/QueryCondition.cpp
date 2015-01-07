@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/QueryCondition.h"
 #include "dds4ccm/impl/ndds/convertors/StringSeq.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"

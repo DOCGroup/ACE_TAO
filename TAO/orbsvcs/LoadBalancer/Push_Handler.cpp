@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Push_Handler.h"
 #include "tao/debug.h"
 

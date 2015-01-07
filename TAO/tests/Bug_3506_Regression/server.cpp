@@ -1,5 +1,3 @@
-// $Id$
-
 #include "IF_EXE_M_R_StructsS.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"

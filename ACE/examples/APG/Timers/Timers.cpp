@@ -1,5 +1,3 @@
-// $Id$
-
 // Listing 1 code/ch20
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_Heap.h"

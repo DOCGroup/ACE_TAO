@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "orbsvcs/CosNamingC.h"

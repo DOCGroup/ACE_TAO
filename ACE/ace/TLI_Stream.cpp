@@ -1,5 +1,3 @@
-// $Id$
-
 /* Defines the member functions for the base class of the ACE_TLI_Stream
    abstraction. */
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
 #include "tao/DynamicInterface/Request.h"
 #include "tao/debug.h"

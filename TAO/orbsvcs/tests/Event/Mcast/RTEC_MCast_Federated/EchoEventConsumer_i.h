@@ -1,5 +1,3 @@
-// $Id$
-
 // EchoEventConsumer_i.h
 // Implements a PushConsumer.
 

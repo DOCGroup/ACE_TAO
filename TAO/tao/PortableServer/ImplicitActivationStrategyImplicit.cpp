@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
 
 #if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)

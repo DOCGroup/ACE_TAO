@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Codecs.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_Memory.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_unistd.h"
 
 #if defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)

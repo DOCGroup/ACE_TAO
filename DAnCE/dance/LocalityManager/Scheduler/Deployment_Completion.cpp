@@ -1,4 +1,3 @@
-// $Id$
 #include "Deployment_Completion.h"
 
 #include "dance/Logger/Log_Macros.h"

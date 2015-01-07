@@ -1,5 +1,3 @@
-// $Id$
-
 // This short program copies stdin to stdout via the use of an ASX
 // Message_Queue.  It illustrates an implementation of the classic
 // "bounded buffer" program.

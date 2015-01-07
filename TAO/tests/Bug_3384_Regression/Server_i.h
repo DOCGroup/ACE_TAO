@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestS.h"
 
 class Server : public POA_Test::Server

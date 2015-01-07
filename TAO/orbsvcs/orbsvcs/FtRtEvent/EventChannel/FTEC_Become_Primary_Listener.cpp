@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

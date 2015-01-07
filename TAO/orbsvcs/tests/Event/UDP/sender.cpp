@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Supplier.h"
 #include "AddrServer.h"
 #include "orbsvcs/Event_Service_Constants.h"

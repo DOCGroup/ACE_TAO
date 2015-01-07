@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*starter) : aceexe, avoids_ace_for_tao {
   exename = starter
 

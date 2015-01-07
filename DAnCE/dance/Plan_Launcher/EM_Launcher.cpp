@@ -1,5 +1,3 @@
-// $Id$
-
 #include "EM_Launcher.h"
 
 namespace DAnCE

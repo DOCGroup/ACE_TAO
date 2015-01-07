@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifdef ACE_HAS_NETLINK
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

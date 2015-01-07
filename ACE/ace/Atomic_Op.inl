@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #if defined (ACE_HAS_INTRINSIC_INTERLOCKED)
 # include "ace/os_include/os_intrin.h"
 # pragma intrinsic (_InterlockedExchange, _InterlockedExchangeAdd, _InterlockedIncrement, _InterlockedDecrement)

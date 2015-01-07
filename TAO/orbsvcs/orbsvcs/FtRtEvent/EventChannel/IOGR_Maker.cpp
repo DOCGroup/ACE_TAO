@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
 #include "tao/MProfile.h"

@@ -1,4 +1,3 @@
-// $Id$
 project(NT_Base_idl_gen) : componentidldefaults, anytypecode {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=NONTOPIC_BASE_STUB_Export \

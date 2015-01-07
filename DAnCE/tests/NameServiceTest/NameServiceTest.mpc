@@ -1,5 +1,3 @@
-// $Id$
-
 project(*idl): danceidldefaults {
   IDL_Files {
     Dummy.idl

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Shapes_Sender_comp_exec.h"
 
 namespace CIAO_Shapes_Sender_comp_Impl

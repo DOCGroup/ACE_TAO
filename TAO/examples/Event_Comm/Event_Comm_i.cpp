@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Event_Comm_i.h"
 #include "ace/OS_NS_regex.h"
 

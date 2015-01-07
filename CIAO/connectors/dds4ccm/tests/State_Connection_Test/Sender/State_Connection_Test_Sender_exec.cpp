@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "State_Connection_Test_Sender_exec.h"
 #include "ace/Guard_T.h"
 #include "ace/Log_Msg.h"

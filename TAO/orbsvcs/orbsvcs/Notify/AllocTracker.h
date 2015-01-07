@@ -1,4 +1,3 @@
-// $Id$
 #ifndef ALLOC_TRACKER_H
 #define ALLOC_TRACKER_H
 #include /**/"ace/pre.h"

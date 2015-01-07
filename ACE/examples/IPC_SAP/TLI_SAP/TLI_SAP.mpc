@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*ATM_client) : aceexe {
   exename = ATM-client
   Source_Files {

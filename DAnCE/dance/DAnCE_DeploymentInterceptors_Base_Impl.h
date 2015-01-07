@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file DAnCE_DeploymentInterceptors_Base_Impl.h
  *

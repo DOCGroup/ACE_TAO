@@ -1,4 +1,3 @@
-// $Id$
 #include "Load_Balancer_i.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Hash_Map_Manager_T.h"

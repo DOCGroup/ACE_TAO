@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Global_Macros.h"
 #include "ace/Task.h"

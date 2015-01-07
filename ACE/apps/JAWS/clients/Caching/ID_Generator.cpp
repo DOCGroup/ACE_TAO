@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (ACE_ID_GENERATOR_C)
 #define ACE_ID_GENERATOR_C
 

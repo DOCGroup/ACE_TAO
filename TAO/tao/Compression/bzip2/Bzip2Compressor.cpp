@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Bzip2Compressor.h"
 #include "bzlib.h"
 

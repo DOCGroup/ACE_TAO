@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*IORTable_Locator_idl): taoidldefaults {
   idlflags += -Sp
   IDL_Files {

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/LoadBalancing/LB_IORInterceptor.h"
 #include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
 #include "orbsvcs/LoadBalancing/LB_LoadAlert.h"

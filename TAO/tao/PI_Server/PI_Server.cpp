@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/PI_Server/PI_Server_Loader.h"
 #include "tao/PI_Server/ServerRequestInterceptor_Factory_Impl.h"

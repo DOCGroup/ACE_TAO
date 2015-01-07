@@ -1,4 +1,3 @@
-// $Id$
 #ifndef TESTAPPMAIN_H
 #define TESTAPPMAIN_H
 

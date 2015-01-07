@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "FOO_IORInterceptor_ORBInitializer.h"
 #include "FOO_IORInterceptor.h"
 

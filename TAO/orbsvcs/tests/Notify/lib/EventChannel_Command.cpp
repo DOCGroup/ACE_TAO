@@ -1,5 +1,3 @@
-// $Id$
-
 #include "EventChannel_Command.h"
 #include "ace/Log_Msg.h"
 

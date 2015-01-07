@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Filter.h"
 
 int

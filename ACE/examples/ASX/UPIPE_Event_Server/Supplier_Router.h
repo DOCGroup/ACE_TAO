@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // The interface between a supplier and an Event Service ACE_Stream.
 
 #ifndef _SUPPLIER_ROUTER_H

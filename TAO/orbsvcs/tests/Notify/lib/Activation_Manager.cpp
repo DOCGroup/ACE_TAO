@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Activation_Manager.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"

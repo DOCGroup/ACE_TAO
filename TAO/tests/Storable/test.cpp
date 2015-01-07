@@ -1,5 +1,3 @@
-// $Id$
-
 // Assumed to be one of two processes that
 // writes/reads from persistent store.
 // Each process writes one group of attributes

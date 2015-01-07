@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CURRENT_IMPL_H
 #define CURRENT_IMPL_H
 

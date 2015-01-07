@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Manager.h"
 #include "ace/Task.h"

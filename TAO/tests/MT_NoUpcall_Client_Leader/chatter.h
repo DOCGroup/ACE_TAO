@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined( CHATTER_H)
 #define CHATTER_H
 

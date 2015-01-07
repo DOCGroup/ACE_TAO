@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef _XERCESSTRING_H
 #define _XERCESSTRING_H
 

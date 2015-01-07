@@ -1,4 +1,3 @@
-// $Id$
 project (CIAO_Deployment_Handlers) : install, dance_stub, ciao_base, ciao_lib, \
         ciao_output, ciao_session_container, \
         ciao_logger, dance_logger, dance_deployment_scheduler {

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Parser_Registry.h"
 #include "tao/IOR_Parser.h"
 #include "tao/ORB_Core.h"

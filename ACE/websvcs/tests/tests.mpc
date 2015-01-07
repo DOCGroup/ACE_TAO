@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Websvcs Test) : aceexe {
   exename = Test_Url_Addr
   libs    += websvcs

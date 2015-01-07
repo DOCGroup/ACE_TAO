@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "Basic.h"
 #include "CosEvent_Utilities.h"
 

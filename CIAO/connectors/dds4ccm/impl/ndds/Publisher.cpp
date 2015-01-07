@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/Publisher.h"
 #include "dds4ccm/impl/ndds/PublisherListener.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"

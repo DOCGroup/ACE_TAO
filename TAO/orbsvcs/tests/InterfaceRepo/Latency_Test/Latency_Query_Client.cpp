@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Latency_Query_Client.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"

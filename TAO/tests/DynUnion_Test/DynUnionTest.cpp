@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dynanyC.h"
 #include "tao/DynamicAny/DynamicAny.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"

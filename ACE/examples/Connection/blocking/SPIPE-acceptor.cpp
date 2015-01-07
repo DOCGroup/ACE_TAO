@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (SPIPE_ACCEPTOR_C)
 #define SPIPE_ACCEPTOR_C
 

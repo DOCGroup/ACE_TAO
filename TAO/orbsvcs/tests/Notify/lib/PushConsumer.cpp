@@ -1,5 +1,3 @@
-// $Id$
-
 #include "PushConsumer.h"
 
 #if ! defined (__ACE_INLINE__)

@@ -1,6 +1,4 @@
 // Event_Handler.cpp
-// $Id$
-
 #include "ace/Event_Handler.h"
 #include "ace/OS_Errno.h"
 #include "ace/Reactor.h"

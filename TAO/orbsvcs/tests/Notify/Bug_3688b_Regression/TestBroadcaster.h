@@ -1,4 +1,3 @@
-// $Id$
 #ifndef testBroadcaster_h
 #define testBroadcaster_h
 

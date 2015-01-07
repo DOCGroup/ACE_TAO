@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Utils/Implicit_Deactivator.h"
 #include "tao/PortableServer/Servant_Base.h"
 

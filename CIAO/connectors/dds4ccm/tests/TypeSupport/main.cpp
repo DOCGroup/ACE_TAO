@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_main.h"
 #include "ace/Log_Msg.h"
 #include "ace/Env_Value_T.h"

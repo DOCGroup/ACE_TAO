@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)

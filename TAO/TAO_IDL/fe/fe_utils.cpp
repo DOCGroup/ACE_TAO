@@ -1,5 +1,3 @@
-// $Id$
-
 #include "fe_utils.h"
 #include "fe_private.h"
 #include "fe_extern.h"

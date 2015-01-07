@@ -1,5 +1,3 @@
-// $Id$
-
 project (DDS4CCM_idl_gen) : install, dds4ccm, componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=DDS4CCM_STUB_Export \

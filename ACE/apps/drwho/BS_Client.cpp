@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "File_Manager.h"
 #include "BS_Client.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/orbconf.h"
 
 #include "tao/RTCORBA/Network_Priority_Mapping.h"

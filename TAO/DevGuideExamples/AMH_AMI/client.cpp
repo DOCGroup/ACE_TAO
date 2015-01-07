@@ -1,5 +1,3 @@
-// $Id$
-
 #include "amh_ami_pch.h"
 #include "ace/Get_Opt.h"
 #include "middleC.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/ValueMemberDef_i.h"
 #include "orbsvcs/IFRService/IDLType_i.h"

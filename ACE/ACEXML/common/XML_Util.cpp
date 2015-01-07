@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ACEXML/common/XML_Util.h"
 
 static const ACEXML_Char ESCAPED_AMP[] = ACE_TEXT("&amp;");

@@ -1,5 +1,3 @@
-// $Id$
-
 // Test the capability of <ACE_Malloc> to handle multiple mallocs
 // rooted at different base addresses.
 

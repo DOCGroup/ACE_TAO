@@ -1,6 +1,4 @@
 // ACE_HTBP_Filter.cpp
-// $Id$
-
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 #include "HTBP_Session.h"

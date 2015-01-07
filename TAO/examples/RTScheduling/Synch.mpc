@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(RTSchedSynch): portableserver {
   idlflags += -St \
               -Wb,export_macro=SYNCH_Export \

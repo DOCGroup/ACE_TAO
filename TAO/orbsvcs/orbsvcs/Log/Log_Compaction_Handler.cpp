@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log/Log_Compaction_Handler.h"
 #include "orbsvcs/Log/Log_i.h"
 #include "ace/Reactor.h"

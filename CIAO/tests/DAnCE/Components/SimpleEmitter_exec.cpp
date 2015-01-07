@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SimpleEmitter_exec.h"
 #include "ace/Log_Msg.h"
 

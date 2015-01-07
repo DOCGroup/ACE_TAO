@@ -1,5 +1,3 @@
-// $Id$
-
 #include "LoggerC.h"
 #include "Logging_Test_i.h"
 #include "orbsvcs/CosNamingC.h"

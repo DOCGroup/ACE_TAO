@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 //Test Multiple templates connector
 #include "MultipleTemp_Sender_exec.h"
 #include "ace/Guard_T.h"

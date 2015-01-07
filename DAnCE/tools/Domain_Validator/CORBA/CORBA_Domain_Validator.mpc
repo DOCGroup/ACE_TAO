@@ -1,4 +1,3 @@
-// $Id$
 project(DAnCE_CORBA_Domain_Validator) : dance_config_handlers, dance_deployment_stub, \
                                       dance_stub, dance_lib, dance_output, install, \
                                                                  taolib {

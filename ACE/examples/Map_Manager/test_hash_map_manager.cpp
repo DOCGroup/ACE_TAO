@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_main.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/ACE.h"

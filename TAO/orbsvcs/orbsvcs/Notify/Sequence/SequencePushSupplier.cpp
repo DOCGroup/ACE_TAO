@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Sequence/SequencePushSupplier.h"
 #include "orbsvcs/Notify/Properties.h"
 

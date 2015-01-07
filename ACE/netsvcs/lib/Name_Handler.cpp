@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Containers.h"
 #include "ace/Get_Opt.h"
 #include "ace/Singleton.h"

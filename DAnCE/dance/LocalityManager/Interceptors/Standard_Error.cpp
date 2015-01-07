@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Standard_Error.h"
 #include "dance/Deployment/Deployment_StartErrorC.h"
 #include "dance/DAnCE_PropertiesC.h"

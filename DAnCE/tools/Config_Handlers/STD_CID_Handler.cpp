@@ -1,4 +1,3 @@
-// $Id$
 #include "STD_CID_Handler.h"
 #include "STD_CPD_Handler.h"
 #include "STD_IAD_Handler.h"

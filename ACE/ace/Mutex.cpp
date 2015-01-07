@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Mutex.h"
 
 #if !defined (__ACE_INLINE__)

@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #ifndef TAO_IDL_AST_FINDER_H
 #define TAO_IDL_AST_FINDER_H
 

@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file Dependency_Sorter.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Roundtrip.h"
 #include "Server_Task.h"
 #include "ace/Get_Opt.h"

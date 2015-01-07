@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/RT_Factory.h"
 #include "orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h"
 

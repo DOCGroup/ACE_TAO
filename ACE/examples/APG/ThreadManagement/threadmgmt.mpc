@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Async Cancel) : aceexe {
   exename = Async_Cancel
   Source_Files {

@@ -1,6 +1,4 @@
 
-// $Id$
-
 /**
  * @file repository_manager_admin.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>?

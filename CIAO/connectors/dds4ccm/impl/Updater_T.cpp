@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/Utils.h"
 #include "dds4ccm/impl/Coherent_Changes_Guard.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"

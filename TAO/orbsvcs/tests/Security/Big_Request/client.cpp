@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TX_ObjectC.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"

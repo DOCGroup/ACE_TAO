@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Monitor_Control/Solaris_Network_Interface_Monitor.h"
 
 #if defined (ACE_HAS_KSTAT)

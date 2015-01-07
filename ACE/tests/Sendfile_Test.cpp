@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  *  @file Sendfile_Test.cpp
  *

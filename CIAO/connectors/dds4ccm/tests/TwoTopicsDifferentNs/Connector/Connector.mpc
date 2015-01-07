@@ -1,5 +1,3 @@
-// $Id$
-
 project(DDS_TTDN_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   after += DDS4CCM_idl_gen DDS_Hello_Namespace_Base_stub
   custom_only = 1

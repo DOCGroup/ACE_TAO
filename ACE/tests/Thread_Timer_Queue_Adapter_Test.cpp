@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  *  @file    Thread_Timer_Queue_Adapter_Test.cpp
  *

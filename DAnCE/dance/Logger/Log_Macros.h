@@ -1,8 +1,7 @@
 /**
  * @file Log_Macros.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * // $Id$
- * Macros used for logging in DAnCE
+ *  * Macros used for logging in DAnCE
  */
 
 

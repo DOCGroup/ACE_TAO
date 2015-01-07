@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FaultTolerance/FT_ClientPolicyFactory.h"
 #include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"

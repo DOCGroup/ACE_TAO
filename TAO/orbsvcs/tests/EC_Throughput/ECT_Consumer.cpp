@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ECT_Consumer.h"
 
 #include "orbsvcs/Event_Utilities.h"

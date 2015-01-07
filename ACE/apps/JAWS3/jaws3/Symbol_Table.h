@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_SYMBOL_TABLE_H
 #define JAWS_SYMBOL_TABLE_H
 

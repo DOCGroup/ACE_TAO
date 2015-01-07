@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*idl): taoidldefaults {
   idl_files {
     Test.idl

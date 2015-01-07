@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testS.h"
 #include "ace/Task.h"
 #include "tao/PortableServer/Object_Adapter.h"

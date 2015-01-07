@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef PersistentPoa_h
 #define PersistentPoa_h
 

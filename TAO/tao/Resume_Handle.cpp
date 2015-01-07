@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Resume_Handle.h"
 #include "tao/ORB_Core.h"
 #include "debug.h"

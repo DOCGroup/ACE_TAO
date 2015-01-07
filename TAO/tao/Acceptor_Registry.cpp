@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Acceptor_Registry.h"
 #include "tao/Profile.h"
 #include "tao/Transport_Acceptor.h"

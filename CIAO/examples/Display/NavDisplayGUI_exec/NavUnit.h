@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __NAVUNIT_H
 #define __NAVUNIT_H
 

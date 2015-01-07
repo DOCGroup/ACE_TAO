@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef HTTPU_HTTP_PARSE_H
 #define HTTPU_HTTP_PARSE_H
 

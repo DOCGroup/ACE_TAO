@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -c CIF_TestDriver CIF_Component"
 
 project(CIF_Component_idl_gen) : componentidldefaults   {

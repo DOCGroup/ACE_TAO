@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Object_Factory_i.h"
 #include "tao/PortableServer/Root_POA.h"
 

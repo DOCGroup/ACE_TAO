@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Factory.h"

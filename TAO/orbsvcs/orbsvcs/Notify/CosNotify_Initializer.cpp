@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/CosNotify_Initializer.h"
 #include "orbsvcs/Notify/CosNotify_Service.h"
 

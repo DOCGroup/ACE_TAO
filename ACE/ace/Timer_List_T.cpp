@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_TIMER_LIST_T_C
 #define ACE_TIMER_LIST_T_C
 

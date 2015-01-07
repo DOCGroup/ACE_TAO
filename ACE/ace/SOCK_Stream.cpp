@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SOCK_Stream.h"
 
 #if !defined (__ACE_INLINE__)

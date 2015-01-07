@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ConfigValue.h"
 
 namespace CIAO

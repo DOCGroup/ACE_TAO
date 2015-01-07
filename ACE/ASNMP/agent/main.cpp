@@ -1,5 +1,3 @@
-// $Id$
-
 // This server daemon processes SNMP Version 1 get, get-next, and set
 // commands. over the MIB II "System" group only.
 

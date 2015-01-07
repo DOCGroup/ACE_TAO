@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Client_init.h"
 #include <ccm/CCM_CookieC.h>
 

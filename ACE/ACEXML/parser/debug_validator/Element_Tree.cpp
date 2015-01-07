@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ACEXML/parser/debug_validator/Element_Tree.h"
 
 #if !defined (__ACEXML_INLINE__)

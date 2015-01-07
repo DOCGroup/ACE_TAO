@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Cookies.h
  *

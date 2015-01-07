@@ -1,4 +1,3 @@
-// $Id$
 #ifndef ORB_RUNNER_H
 #define ORB_RUNNER_H
 

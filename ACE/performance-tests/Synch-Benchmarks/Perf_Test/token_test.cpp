@@ -1,5 +1,3 @@
-// $Id$
-
 #define  ACE_BUILD_SVC_DLL
 #include "ace/Token.h"
 #include "Performance_Test_Options.h"

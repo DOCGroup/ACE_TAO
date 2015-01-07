@@ -1,5 +1,3 @@
-// $Id$
-
 project (XSC_DynAny_Handler) : install, xerces, dynamicany, typecodefactory, dance_deployment_stub, \
   dance_config_handlers_base, dance_lib, dance, ifr_client {
   after += XSC_XML_Handlers

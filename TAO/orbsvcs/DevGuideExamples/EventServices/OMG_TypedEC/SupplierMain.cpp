@@ -1,5 +1,3 @@
-// $Id$
-
 // Main program for a TypedPushSupplier of Messenger objects.
 
 #include "orbsvcs/CosTypedEventCommC.h"

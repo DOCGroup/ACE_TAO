@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/UserException.h"
 
 #include "ace/SString.h"

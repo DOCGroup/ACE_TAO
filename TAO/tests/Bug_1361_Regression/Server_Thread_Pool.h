@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Task_T.h"
 #include "ace/Service_Config.h"
 

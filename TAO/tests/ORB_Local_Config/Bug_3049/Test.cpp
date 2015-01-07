@@ -1,4 +1,3 @@
-// $Id$
 // @author Phil Mesnier <mesnier_p@ociweb.com>
 
 // This test scenario is documented in bugzilla bug 3049. This test

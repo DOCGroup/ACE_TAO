@@ -1,5 +1,3 @@
-// $Id$
-
 #include "CCM_DataReader.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 

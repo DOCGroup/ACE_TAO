@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Endpoint.h"
 #include "tao/ORB_Core.h"
 

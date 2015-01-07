@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/Filecache.h"

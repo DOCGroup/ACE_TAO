@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -n Minimum_Base"
 
 project(Minimum_Base_idl_gen) : ciaoidldefaults, anytypecode, ccm {

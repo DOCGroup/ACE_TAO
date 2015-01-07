@@ -1,4 +1,3 @@
-// $Id$
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "Package_Handlers/CPD_Handler.h"
 #include "Package_Handlers/CID_Handler.h"

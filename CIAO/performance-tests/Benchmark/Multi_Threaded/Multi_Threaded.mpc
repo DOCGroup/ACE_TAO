@@ -1,5 +1,3 @@
-// $Id$
-
 project (Multi_Threaded_client) : ccm_stub, strategies {
   exename = client
   after += Benchmark_RoundTripClient_stub

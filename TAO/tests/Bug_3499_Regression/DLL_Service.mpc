@@ -1,5 +1,3 @@
-// $Id$
-
 project (Bug_3499_Regression) : aceexe {
   exename = Bug_3499_Regression
   Source_Files {

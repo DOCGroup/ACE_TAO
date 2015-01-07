@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef EC_WRAPPER_H
 #define EC_WRAPPER_H
 

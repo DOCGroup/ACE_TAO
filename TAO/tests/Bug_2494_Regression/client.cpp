@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_string.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_TYPECODE_CASE_ENUM_T_CPP
 #define TAO_TYPECODE_CASE_ENUM_T_CPP
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Trader/Constraint_Nodes.h"
 #include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "orbsvcs/Trader/Constraint_Tokens.h"

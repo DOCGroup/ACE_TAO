@@ -1,5 +1,3 @@
-// $Id$
-
 interface test
 {
   void start_test (in long session_id,

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Dirent_Selector.h"
 
 #if !defined (__ACE_INLINE__)

@@ -1,5 +1,3 @@
-// $Id$
-
 project(*IDL): taoidldefaults, anytypecode {
   IDL_Files {
     gendir = .

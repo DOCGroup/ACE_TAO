@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MDD_Handler.h"
 #include "Basic_Deployment_Data.hpp"
 #include "dance/Deployment/Deployment_DataC.h"

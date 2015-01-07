@@ -1,5 +1,3 @@
-// $Id$
-
 module Database
 {
   typedef unsigned long Flags;

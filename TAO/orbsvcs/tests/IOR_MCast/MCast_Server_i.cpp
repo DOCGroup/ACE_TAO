@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MCast_Server_i.h"
 
 MCast_Server_i::MCast_Server_i (void)

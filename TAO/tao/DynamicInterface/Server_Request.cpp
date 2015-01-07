@@ -1,5 +1,3 @@
-// $Id$
-
 // Implementation of the Dynamic Server Skeleton Interface.
 
 #include "tao/DynamicInterface/Server_Request.h"

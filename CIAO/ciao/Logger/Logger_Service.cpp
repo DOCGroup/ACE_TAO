@@ -1,4 +1,3 @@
-// $Id$
 #include "Logger_Service.h"
 #include "Log_Macros.h"
 #include "ace/Get_Opt.h"

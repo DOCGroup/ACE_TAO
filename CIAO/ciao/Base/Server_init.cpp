@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Server_init.h"
 
 #include "ciao/Base/Client_init.h"

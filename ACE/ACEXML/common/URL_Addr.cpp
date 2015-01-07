@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ACEXML/common/URL_Addr.h"
 
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Common/CIF_Common.h"
 #include "Component/CIF_ComponentC.h"
 

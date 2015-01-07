@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef FTRTEC_SERVICE_ACTIVATE_H
 #define FTRTEC_SERVICE_ACTIVATE_H
 

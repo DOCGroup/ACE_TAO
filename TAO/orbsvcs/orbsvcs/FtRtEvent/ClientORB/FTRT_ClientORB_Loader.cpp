@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
 
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h"

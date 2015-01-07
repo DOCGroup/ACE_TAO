@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Functor_String.h"
 
 #if !defined (__ACE_INLINE__)

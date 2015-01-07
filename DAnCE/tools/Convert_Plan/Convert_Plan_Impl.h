@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Convert_Plan_Impl.h
  *

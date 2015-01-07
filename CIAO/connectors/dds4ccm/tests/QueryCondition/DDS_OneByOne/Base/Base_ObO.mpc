@@ -1,5 +1,3 @@
-// $Id$
-
 project(Base_obo_stub) : ndds_ts_defaults, nddslib {
   sharedname = Base_obo_stub
   dynamicflags += NDDS_USER_DLL_EXPORT

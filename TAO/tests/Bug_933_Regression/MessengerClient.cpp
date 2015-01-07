@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MessengerC.h"
 #include "tao/CodecFactory/CodecFactory.h"
 #include "ace/Get_Opt.h"

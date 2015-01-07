@@ -1,4 +1,3 @@
-// $Id$
 #include "Hello_i.h"
 #include "HelloC.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_BASIC_SARGUMENT_T_CPP
 #define TAO_BASIC_SARGUMENT_T_CPP
 

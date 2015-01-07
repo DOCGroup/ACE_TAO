@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_Notify_PROPERTY_T_CPP
 #define TAO_Notify_PROPERTY_T_CPP
 

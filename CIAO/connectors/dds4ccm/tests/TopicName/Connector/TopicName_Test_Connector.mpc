@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p TopicName_Test_Base -l .. -o ../lib -u DDS TopicName_Test_Connector"
 
 project(TopicName_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {

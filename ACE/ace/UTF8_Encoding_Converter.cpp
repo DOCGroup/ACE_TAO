@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/UTF8_Encoding_Converter.h"
 
 #if defined (ACE_USES_WCHAR)

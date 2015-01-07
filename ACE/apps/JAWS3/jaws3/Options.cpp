@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_stdlib.h"
 
 #ifndef JAWS_BUILD_DLL

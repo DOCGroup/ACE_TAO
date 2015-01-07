@@ -1,5 +1,3 @@
-// $Id$
-
 #include "AnyS_impl.h"
 
 Test_impl::Test_impl (CORBA::ORB_ptr orb)

@@ -1,4 +1,3 @@
-// $Id$
 #include "TestS.h"
 #include "tao/Stub.h"
 #include "ace/OS_NS_string.h"

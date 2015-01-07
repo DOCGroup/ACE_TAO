@@ -1,5 +1,3 @@
-// $Id$
-
 #include "airplane_i.h"
 
 #include "tao/debug.h"

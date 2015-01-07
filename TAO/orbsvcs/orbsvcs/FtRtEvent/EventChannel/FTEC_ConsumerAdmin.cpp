@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"

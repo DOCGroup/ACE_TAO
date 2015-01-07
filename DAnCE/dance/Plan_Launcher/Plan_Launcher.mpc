@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(DAnCE_Plan_Launcher_Impl) : install_lib, dance_lib, dance_logger, dance_convert_plan, \
                             dance_executionmanager_stub, \
                             dance_domainapplication_stub, \

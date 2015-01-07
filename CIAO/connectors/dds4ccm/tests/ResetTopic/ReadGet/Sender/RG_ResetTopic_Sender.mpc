@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p RG_ResetTopicBase -l ../lib -o ../lib -c controller -u DDS Sender"
 
 project (RG_ResetTopicSender_idl_gen) : componentidldefaults, dds4ccm {

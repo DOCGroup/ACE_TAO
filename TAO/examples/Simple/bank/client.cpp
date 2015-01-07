@@ -1,5 +1,3 @@
-// $Id$
-
 # include "Bank_Client_i.h"
 
 // The client program for the application.

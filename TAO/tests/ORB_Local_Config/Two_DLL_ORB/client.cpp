@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test_i.h"
 #include "ORB_DLL.h"
 

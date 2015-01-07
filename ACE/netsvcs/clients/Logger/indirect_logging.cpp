@@ -1,5 +1,3 @@
-// $Id$
-
 // This is a simple test that sends logging records to the Client
 // Logging Daemon running on the localhost.  This daemon then forwards
 // them to the Server Logging Daemon.  If there is no Server Logging

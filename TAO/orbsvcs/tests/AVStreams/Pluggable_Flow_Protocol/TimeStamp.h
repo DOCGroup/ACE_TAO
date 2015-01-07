@@ -10,8 +10,6 @@
 #include "ace/Service_Config.h"
 
 
-// $Id$
-
 class TAO_TS_Export TimeStamp_Protocol_Object : public TAO_AV_Protocol_Object
 {
  public:

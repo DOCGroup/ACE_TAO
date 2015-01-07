@@ -1,5 +1,3 @@
-// $Id$
-
 module hello {
     interface GoodDay {
         short number ();

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SLevel1_Test_i.h"
 
 const ACE_TCHAR *ior_output_file = 0;

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_SELECT_REACTOR_T_CPP
 #define ACE_SELECT_REACTOR_T_CPP
 

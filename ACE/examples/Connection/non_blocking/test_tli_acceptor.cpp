@@ -1,5 +1,3 @@
-// $Id$
-
 // ACE_TLI Server.
 
 #include "ace/TLI_Acceptor.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 project (CIAO_NDDS_lem_gen) : install, ndds_idltocpp, ciaoidldefaults {
   custom_only = 1
   after += CIAO_NDDS_idl_gen

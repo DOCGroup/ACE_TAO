@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/ORT_Adapter_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

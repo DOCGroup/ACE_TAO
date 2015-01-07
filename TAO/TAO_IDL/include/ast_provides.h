@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef AST_PROVIDES_H
 #define AST_PROVIDES_H
 

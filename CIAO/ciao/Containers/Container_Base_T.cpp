@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CIAO_CONTAINERBASE_IMPL_T_C
 #define CIAO_CONTAINERBASE_IMPL_T_C
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Refcounted_ObjectKey.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

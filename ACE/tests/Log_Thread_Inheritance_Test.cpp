@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_config.h"
 #include "ace/Log_Msg.h"
 #include "ace/Task.h"

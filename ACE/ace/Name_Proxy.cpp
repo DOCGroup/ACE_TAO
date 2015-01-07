@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Name_Proxy.h"
 #include "ace/Log_Category.h"
 #include "ace/os_include/arpa/os_inet.h"

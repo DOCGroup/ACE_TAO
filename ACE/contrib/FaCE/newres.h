@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __NEWRES_H__
 #define __NEWRES_H__
 

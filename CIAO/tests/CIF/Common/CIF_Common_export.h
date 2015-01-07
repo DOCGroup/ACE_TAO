@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIF_COMMON_EXPORT_H
 #define CIF_COMMON_EXPORT_H
 

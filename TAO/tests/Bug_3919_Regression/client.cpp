@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test2C.h"
 #include "tao/IFR_Client/IFR_BaseC.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"

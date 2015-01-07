@@ -1,5 +1,3 @@
-// $Id$
-
 #include "global.h"
 #include "Options.h"
 #include "HT_Client.h"

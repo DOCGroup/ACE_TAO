@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(JAWS3) : ace_output, acelib {
     sharedname = JAWS3
     dynamicflags += JAWS_BUILD_DLL

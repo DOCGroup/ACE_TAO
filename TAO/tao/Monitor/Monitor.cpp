@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Monitor/Monitor.h"
 #include "tao/Monitor/Monitor_Impl.h"
 

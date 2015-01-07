@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p WL_ResetTopicBase -l .. -o ../lib -u DDS WL_ResetTopic_Connector"
 
 project (WL_ResetTopicConnector_idl_gen) : connectoridldefaults, dds4ccm {

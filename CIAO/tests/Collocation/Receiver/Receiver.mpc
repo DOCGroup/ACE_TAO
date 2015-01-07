@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p Base -c IDL2Client -e -I .. -l ../lib -o ../lib Receiver"
 
 project(CollBase_Receiver_idl_gen) : componentidldefaults {

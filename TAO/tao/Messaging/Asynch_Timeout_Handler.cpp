@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Messaging/Asynch_Timeout_Handler.h"
 
 #include "tao/Messaging/Asynch_Reply_Dispatcher.h"

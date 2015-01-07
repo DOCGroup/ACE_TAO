@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_component.h"
 #include "ast_attribute.h"
 #include "ast_provides.h"

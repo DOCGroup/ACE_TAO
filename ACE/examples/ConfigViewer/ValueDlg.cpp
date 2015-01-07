@@ -1,4 +1,3 @@
-// $Id$
 #include "stdafx.h"
 #include "ValueDlg.h"
 

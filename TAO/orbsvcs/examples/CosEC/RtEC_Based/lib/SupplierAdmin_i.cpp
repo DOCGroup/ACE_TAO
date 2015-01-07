@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SupplierAdmin_i.h"
 #include "ace/Auto_Ptr.h"
 

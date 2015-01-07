@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_UDP_Admin.h"
 #include "ace/INET_Addr.h"
 

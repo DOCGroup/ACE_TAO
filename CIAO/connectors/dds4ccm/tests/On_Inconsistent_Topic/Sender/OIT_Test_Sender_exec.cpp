@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "OIT_Test_Sender_exec.h"
 
 #include "ace/Log_Msg.h"

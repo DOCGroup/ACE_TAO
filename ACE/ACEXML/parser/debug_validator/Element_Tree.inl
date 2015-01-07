@@ -1,5 +1,3 @@
-// $Id$
-
 ACEXML_INLINE
 ACEXML_Element_Tree_Node::ACEXML_Element_Tree_Node ()
   : next_ (0)

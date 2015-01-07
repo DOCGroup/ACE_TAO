@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Proactor.h"
 
 #include "JAWS/Waiter.h"

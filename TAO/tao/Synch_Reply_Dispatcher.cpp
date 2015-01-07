@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Synch_Reply_Dispatcher.h"
 #include "tao/ORB_Core.h"
 #include "tao/Pluggable_Messaging_Utils.h"

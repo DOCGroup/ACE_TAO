@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // Option manager for performance tests.
 
 #ifndef _PERFORMANCE_TEST_OPTIONS_H

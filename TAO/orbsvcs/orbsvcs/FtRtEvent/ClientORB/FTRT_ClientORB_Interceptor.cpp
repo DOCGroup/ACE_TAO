@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Stub.h"

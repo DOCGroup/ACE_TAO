@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testS.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("server.ior");

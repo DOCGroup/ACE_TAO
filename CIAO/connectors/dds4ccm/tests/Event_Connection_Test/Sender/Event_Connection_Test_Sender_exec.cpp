@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Event_Connection_Test_Sender_exec.h"
 
 namespace CIAO_Event_Connection_Test_Sender_Impl

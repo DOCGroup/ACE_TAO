@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p SimpleCommon SimpleNilFacetProvider"
 
 project(SimpleCommon_SNFP_idl_gen) : componentidldefaults {

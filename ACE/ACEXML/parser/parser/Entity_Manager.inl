@@ -1,5 +1,3 @@
-// $Id$
-
 ACEXML_INLINE int
 ACEXML_Entity_Manager::add_entity (const ACEXML_Char *ref,
                                    const ACEXML_Char *v)

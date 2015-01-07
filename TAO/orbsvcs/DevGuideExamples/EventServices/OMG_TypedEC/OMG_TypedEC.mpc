@@ -1,5 +1,3 @@
-// $Id$
-
 project(*Supplier): namingexe, event_skel {
   exename   = Supplier
   includes += ../common

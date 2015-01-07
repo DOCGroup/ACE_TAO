@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Roundtrip.h"
 #include "ORBInitializer.h"
 #include "RPS_Monitor.h"

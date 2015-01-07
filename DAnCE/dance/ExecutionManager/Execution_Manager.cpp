@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB.h"
 #include "tao/Object.h"

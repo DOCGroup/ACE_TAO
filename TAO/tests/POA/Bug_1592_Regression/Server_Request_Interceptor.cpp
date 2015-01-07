@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Server_Request_Interceptor.h"
 
 CORBA::Boolean receive_request_service_contexts_called = 0;

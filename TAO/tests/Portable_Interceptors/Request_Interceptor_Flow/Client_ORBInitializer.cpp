@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Client_ORBInitializer.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"

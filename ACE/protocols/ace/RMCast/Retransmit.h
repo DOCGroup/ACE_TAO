@@ -1,6 +1,4 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// $Id$
-
 #ifndef ACE_RMCAST_RETRANSMIT_H
 #define ACE_RMCAST_RETRANSMIT_H
 

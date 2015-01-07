@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/config-all.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"

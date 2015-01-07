@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_REFCOUNTABLE_T_CPP
 #define ACE_REFCOUNTABLE_T_CPP
 

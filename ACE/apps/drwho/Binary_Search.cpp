@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "Binary_Search.h"
 #include "ace/Log_Msg.h"

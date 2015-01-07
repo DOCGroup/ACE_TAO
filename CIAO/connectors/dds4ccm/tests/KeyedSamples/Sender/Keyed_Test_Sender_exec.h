@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_KEYED_TEST_SENDER_EXEC_LVAFIH_H_
 #define CIAO_KEYED_TEST_SENDER_EXEC_LVAFIH_H_
 

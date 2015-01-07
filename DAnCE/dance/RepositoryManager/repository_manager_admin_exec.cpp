@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file repository_manager_admin_exec.cpp
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

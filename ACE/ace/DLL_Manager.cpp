@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/DLL_Manager.h"
 
 #include "ace/Log_Category.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/HR_Time_Policy_Strategy.h"
 
 #include "ace/Timer_Heap_T.h"

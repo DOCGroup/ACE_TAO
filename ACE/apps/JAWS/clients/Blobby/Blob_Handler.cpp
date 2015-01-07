@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Blob_Handler.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"

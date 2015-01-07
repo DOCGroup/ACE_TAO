@@ -1,5 +1,3 @@
-// $Id$
-
 #include "JAWS/Cache_Object.h"
 
 #include "ace/Malloc_Base.h"

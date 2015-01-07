@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Cubit_Server.h"
 #include "tao/TAO_Internal.h"
 #include "tao/debug.h"

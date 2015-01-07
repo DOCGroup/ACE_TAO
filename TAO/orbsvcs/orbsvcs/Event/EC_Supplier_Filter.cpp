@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Supplier_Filter.h"
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Event/EC_QOS_Info.h"

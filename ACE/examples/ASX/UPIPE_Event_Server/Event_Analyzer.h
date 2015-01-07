@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // Signal router.
 
 #ifndef _EVENT_ANALYZER_H

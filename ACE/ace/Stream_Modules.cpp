@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_STREAM_MODULES_CPP
 #define ACE_STREAM_MODULES_CPP
 

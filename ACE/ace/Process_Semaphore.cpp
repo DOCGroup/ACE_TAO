@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Process_Semaphore.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_Memory.h"

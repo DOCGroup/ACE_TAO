@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/LifespanPolicy.h"
 #include "tao/PortableServer/PortableServer.h"
 

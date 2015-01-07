@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Server_Request_Interceptor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/Log_Msg.h"

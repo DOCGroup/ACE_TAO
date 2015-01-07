@@ -1,4 +1,3 @@
-// $Id$
 #include "testC.h"
 class  MyTestValuetypeFactory : public TestValuetype_init {
 public:

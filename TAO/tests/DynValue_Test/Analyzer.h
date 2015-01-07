@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef INCLUDE_ANALYZER_H
 #define INCLUDE_ANALYZER_H
 

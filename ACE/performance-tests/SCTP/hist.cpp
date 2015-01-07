@@ -1,5 +1,3 @@
-// $Id$
-
 /* Replacement for CSIM histogram created by Alex Carobus 7/20/98
    #include <std/disclaimer.h>
    */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Name_Utilities.h"
 
 #include "ace/Auto_Ptr.h"

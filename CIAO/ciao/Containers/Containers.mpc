@@ -1,5 +1,3 @@
-// $Id$
-
 project(CIAO_Container_Base_idl) : install, taoidldefaults {
   custom_only = 1
 

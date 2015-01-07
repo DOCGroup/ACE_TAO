@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p CoherentWrite_Test_Base -l .. -o ../lib -u DDS CoherentWrite_Test_Connector"
 
 project(CoherentWrite_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {

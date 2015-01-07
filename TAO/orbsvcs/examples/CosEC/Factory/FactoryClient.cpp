@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "CosEventChannelFactoryC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Log_Msg.h"

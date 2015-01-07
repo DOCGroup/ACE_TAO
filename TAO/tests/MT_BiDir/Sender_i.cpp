@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Sender_i.h"
 #include "ace/Manual_Event.h"
 

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // ------------------------------
 #ifndef DANCE_SHS_CORBA_TRANSPORT_EXPORT_H

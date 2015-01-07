@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_UTILS_RIR_NARROW_CPP
 #define TAO_UTILS_RIR_NARROW_CPP
 

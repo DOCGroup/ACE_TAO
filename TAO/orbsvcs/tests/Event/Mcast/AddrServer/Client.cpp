@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INET_Addr.h"
 #include "orbsvcs/RtecUDPAdminC.h"
 #include "orbsvcs/RtecEventCommC.h"

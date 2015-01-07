@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Stopwatch_display.h"
 #include "ace/OS_NS_stdio.h"
 

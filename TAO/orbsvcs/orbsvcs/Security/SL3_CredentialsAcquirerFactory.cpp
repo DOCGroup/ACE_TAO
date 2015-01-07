@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Security/SL3_CredentialsAcquirerFactory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

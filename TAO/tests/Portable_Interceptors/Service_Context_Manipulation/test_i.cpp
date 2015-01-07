@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 
 Visual_i::Visual_i (CORBA::ORB_ptr orb)

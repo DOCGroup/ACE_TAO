@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicInterface/DII_CORBA_methods.h"
 #include "TestC.h"

@@ -1,6 +1,5 @@
 
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl TAO_IDL3_TO_IDL2_BE
 // ------------------------------

@@ -1,4 +1,3 @@
-// $Id$
 #include "FooS.h"
 #include "tao/LocalObject.h"
 #include "tao/Version.h"

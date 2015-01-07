@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Test whether Connector 1,2 and 3 are sharing the same DomainParticipant.
 // Connector 4 should have a different DomainParticipant.
 // Also test whether Connector 1 and 2 share the same topic.

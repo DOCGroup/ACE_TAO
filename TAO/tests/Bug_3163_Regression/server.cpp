@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "testS.h"

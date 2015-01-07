@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (_CONSUMER_MAP_C)
 #define _CONSUMER_MAP_C
 

@@ -1,6 +1,4 @@
 
-// $Id$
-
 struct TimeOfDay {
     short   hour;       // 0 - 23
     short   minute;     // 0 - 59

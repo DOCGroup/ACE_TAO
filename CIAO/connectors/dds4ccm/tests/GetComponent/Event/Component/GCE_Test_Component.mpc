@@ -1,5 +1,3 @@
-// $Id$
-
 project(GCE_Test_Component_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += GCE_Test_Connector_idl_gen

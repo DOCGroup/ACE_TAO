@@ -1,4 +1,3 @@
-// $Id$
 // wxBindDialog.h
 
 #ifndef i_wxBindDialog_h

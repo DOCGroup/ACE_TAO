@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ECM_Data.h"
 #include "tao/CDR.h"
 

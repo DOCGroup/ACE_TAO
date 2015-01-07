@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log/Log_Flush_Handler.h"
 #include "orbsvcs/Log/Log_i.h"
 

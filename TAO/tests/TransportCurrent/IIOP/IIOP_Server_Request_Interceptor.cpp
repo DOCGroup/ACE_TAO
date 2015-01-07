@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Constants.h"
 #include "tao/TransportCurrent/TC_IIOPC.h"

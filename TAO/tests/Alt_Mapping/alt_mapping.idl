@@ -1,5 +1,3 @@
-// $Id$
-
 interface Alt_Mapping
 {
   string test_unbounded_string (in string s1,

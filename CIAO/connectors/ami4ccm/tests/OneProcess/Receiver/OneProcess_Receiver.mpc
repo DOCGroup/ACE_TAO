@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p OneProcess_Base OneProcess_Receiver"
 
 project(AMI_OneProcess_Base_Receiver_idl_gen) : componentidldefaults {

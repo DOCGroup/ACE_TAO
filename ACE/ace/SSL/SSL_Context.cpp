@@ -1,4 +1,3 @@
-// $Id$
 #include "SSL_Context.h"
 
 #include "sslconf.h"

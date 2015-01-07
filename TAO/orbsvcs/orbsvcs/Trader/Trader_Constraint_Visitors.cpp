@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Trader/Trader_Constraint_Visitors.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

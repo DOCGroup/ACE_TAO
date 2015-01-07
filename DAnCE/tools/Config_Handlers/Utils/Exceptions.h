@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file Exceptions.h
  * @author William Otte <wotte@dre.vanderbilt.edu>

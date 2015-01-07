@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HTBP_Environment.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

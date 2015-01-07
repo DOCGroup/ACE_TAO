@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.h"
 #include "tao/EndpointPolicy/Endpoint_Acceptor_Filter.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"

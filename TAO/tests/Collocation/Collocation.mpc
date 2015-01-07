@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*idl): taoidldefaults {
   idlflags    += -Wb,skel_export_macro=Diamond_Export \
                  -Wb,stub_export_macro=MY_Stub_Export \

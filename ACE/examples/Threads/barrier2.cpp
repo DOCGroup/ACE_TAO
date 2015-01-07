@@ -1,5 +1,3 @@
-// $Id$
-
 // This test program illustrates how the ACE task workers/barrier
 // synchronization mechanisms work in conjunction with the ACE_Task
 // and the ACE_Thread_Manager.  The manual flag not set simulates user

@@ -1,5 +1,3 @@
-// $Id$
-
 module orange {
     module apple {
         valuetype Foo;

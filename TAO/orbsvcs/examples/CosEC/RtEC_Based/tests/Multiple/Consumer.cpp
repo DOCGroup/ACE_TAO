@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "Consumer.h"
 #include "ace/Get_Opt.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "PolicyFactory.h"
 #include "Policy.h"
 

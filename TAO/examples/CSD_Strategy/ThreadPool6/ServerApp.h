@@ -1,4 +1,3 @@
-// $Id$
 #ifndef SERVERAPP_H
 #define SERVERAPP_H
 

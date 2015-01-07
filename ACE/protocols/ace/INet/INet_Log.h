@@ -1,8 +1,7 @@
 /**
  * @file INet_Log.h
  * @author Martin Corino <mcorino@remedy.nl>
- * // $Id$
- * Macros used for logging in INet
+ *  * Macros used for logging in INet
  */
 
 

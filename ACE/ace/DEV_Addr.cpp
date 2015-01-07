@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/DEV_Addr.h"
 #if !defined (__ACE_INLINE__)
 #include "ace/DEV_Addr.inl"

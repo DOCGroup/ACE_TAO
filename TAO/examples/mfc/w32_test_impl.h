@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef w32_test_impl_h
 #define w32_test_impl_h
 

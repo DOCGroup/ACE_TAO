@@ -1,4 +1,3 @@
-// $Id$
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Object_Adapter_Factory.h"

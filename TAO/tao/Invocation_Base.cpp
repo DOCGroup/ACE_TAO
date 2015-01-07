@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Invocation_Base.h"
 #include "tao/Stub.h"
 #include "tao/operation_details.h"

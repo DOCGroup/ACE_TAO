@@ -1,5 +1,3 @@
-// $Id$
-
 #include "bug_689_regressionC.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_TSS_T_CPP
 #define ACE_TSS_T_CPP
 

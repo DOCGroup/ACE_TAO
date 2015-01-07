@@ -1,5 +1,3 @@
-// $Id$
-
 // This program performa a simple scheduler configuration run,
 // and dumps the results of one scheduling into a C++ header file.
 

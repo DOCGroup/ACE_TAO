@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_template_module_inst.h"
 #include "ast_template_module.h"
 #include "ast_visitor.h"

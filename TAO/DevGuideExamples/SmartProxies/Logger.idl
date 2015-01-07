@@ -1,5 +1,3 @@
-// $Id$
-
 // Logger.idl
 
 interface Logger

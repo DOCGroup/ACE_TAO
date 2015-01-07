@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/ace_wchar.h"
 
 #define FIRST_ORB_NAME "first_orb"

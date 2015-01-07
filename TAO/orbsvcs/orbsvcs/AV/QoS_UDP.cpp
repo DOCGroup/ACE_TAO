@@ -1,5 +1,3 @@
-// $Id$
-
 
 #include "orbsvcs/AV/QoS_UDP.h"
 

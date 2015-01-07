@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Test) : orbsvcsexe, portablegroup, portableserver {
   exename = uipmc_test
 

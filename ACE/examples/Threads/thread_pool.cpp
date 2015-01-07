@@ -1,5 +1,3 @@
-// $Id$
-
 // This test program illustrates how the <ACE_Task> synchronization
 // mechanisms work in conjunction with the <ACE_Thread_Manager>.  If
 // the <manual> flag is set input comes from stdin until the user

@@ -1,6 +1,4 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// $Id$
-
 #include "Gate.h"
 #include "ace/Truncate.h"
 

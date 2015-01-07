@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Consumer) : orbsvcsexe, notification, notification_skel, naming {
   exename = consumer
   Source_Files {

@@ -1,5 +1,3 @@
-// $Id$
-
 #define ACE_BUILD_SVC_DLL
 
 #include "ace/OS_NS_string.h"

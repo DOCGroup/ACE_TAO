@@ -1,5 +1,3 @@
-// $Id$
-
 // Oh ho, oh ho, what are we gonna do?
 union CityBlue
   switch (unsigned long long)

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
 #include "orbsvcs/Event/EC_Dispatching.h"
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"

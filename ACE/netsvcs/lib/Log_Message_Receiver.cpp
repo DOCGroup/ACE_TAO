@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (LOG_MESSAGE_RECEIVER_CPP)
 #define LOG_MESSAGE_RECEIVER_CPP
 

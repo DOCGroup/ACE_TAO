@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_TPC_Dispatching_Task.h"
 
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/DynamicInterface/Request.h"  /* Must come first for G++
                                               3.4 or better */
 

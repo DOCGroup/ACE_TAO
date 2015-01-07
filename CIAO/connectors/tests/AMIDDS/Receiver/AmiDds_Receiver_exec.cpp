@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Test for combination of AMI4CCM and DDS4CCM
 #include "AmiDds_Receiver_exec.h"
 #include "ace/Log_Msg.h"

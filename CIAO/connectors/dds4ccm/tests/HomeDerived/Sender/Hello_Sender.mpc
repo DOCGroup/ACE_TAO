@@ -1,5 +1,3 @@
-// $Id$
-
 project(Home_Hello_Sender_idl_gen) : componentidldefaults, dds4ccm {
   avoids += ace_for_tao
   after  += Home_Hello_Connector_idl_gen Home_Hello_Connector2_idl_gen

@@ -1,5 +1,3 @@
-// $Id$
-
 project(*lib): orbsvcslib, notify_serv {
   sharedname = NotifyPlugTop
   dynamicflags += PLUGTOP_BUILD_DLL

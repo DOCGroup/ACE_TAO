@@ -1,5 +1,3 @@
-// $Id$
-
 // Test the ACE_Get_Opt class.
 
 #include "ace/OS_main.h"

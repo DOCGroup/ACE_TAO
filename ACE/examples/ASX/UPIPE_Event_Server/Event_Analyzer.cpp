@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 #include "Event_Analyzer.h"

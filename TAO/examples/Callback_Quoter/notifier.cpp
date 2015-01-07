@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Notifier_Input_Handler.h"
 
 // This is the main driver program for the Callback Quoter Notifier.

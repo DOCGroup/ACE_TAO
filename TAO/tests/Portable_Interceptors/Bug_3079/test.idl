@@ -1,6 +1,4 @@
 // -*- IDL -*-
-// $Id$
-
 #include "tao/PI_Server/PI_Server_include.pidl"
 
 module RedirectionTest

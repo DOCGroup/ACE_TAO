@@ -1,5 +1,3 @@
-// $Id$
-
 // AST_UnionFwd nodes denote forward declarations of IDL union.
 // AST_UnionFwd nodes have a field containing the full declaration
 // of the union, which is initialized when that declaration is

@@ -1,4 +1,3 @@
-// $Id$
 #include "Smart_Proxy_Impl.h"
 
 Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)

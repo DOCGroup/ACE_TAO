@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/SSL_PasswordCallback.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

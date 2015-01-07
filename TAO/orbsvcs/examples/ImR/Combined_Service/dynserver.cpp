@@ -1,4 +1,3 @@
-// $Id$
 #include "dynserver.h"
 
 #include "tao/IORTable/IORTable.h"

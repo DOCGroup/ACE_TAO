@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testImpl.h"
 
 static const CORBA::ULong maxd = 15;

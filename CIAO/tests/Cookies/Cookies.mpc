@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*idl): taoidldefaults {
   idlflags += -Sp
   idlflags += -I $(CIAO_ROOT)

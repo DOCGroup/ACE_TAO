@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Shared_Memory.h"
 
 

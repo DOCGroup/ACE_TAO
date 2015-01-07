@@ -1,7 +1,5 @@
 // The following configuration file is designed to work for GNU/Hurd
 // platforms using GNU C++.
-// $Id$
-
 #ifndef ACE_CONFIG_HURD_H
 #define ACE_CONFIG_HURD_H
 #include /**/ "ace/pre.h"

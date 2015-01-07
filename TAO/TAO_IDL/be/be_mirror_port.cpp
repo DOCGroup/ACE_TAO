@@ -1,5 +1,3 @@
-// $Id$
-
 #include "be_mirror_port.h"
 #include "be_visitor.h"
 

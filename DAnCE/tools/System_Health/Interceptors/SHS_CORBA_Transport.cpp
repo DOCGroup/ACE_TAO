@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SHS_CORBA_Transport.h"
 #include "orbsvcs/CosNamingC.h"
 #include "dance/DAnCE_PropertiesC.h"

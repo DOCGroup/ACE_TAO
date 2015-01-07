@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef IMR_LOCATOR_I_H
 #define IMR_LOCATOR_I_H
 #include /**/ "ace/pre.h"

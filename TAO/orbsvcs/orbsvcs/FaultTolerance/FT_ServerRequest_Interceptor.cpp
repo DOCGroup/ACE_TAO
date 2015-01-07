@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FaultTolerance/FT_ServerRequest_Interceptor.h"
 #include "tao/IOPC.h"
 #include "tao/ORB_Constants.h"

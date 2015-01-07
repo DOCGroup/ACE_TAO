@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Strategies/UIOP_Factory.h"
 
 #if TAO_HAS_UIOP == 1

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef BE_EMITS_H
 #define BE_EMITS_H
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/SSLIOP/IIOP_SSL_Connector.h"
 

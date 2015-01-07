@@ -1,5 +1,3 @@
-// $Id$
-
 // HTTP_Config.cpp
 
 #include "ace/OS_NS_stdlib.h"

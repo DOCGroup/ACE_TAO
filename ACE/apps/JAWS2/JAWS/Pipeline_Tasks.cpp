@@ -1,5 +1,3 @@
-// $Id$
-
 #include "JAWS/Jaws_IO.h"
 #include "JAWS/Pipeline_Tasks.h"
 #include "JAWS/Pipeline_Handler_T.h"

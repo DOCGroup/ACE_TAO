@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef PLAN_LAUNCHER_BASE_IMPL_CPP
 #define PLAN_LAUNCHER_BASE_IMPL_CPP
 

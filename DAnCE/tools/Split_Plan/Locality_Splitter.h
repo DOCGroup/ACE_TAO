@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Locality_Splitter.h
  *

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Property_Boolean.h"
 
 #if ! defined (__ACE_INLINE__)

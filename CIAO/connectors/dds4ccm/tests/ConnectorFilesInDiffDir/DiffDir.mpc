@@ -1,5 +1,3 @@
-// $Id$
-
 project (DiffDir_stub) : taoidldefaults, \
                          dds4ccm_ts_default, DiffDir {
   sharedname = DiffDir_stub

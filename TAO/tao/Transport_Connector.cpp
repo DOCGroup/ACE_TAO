@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Transport_Connector.h"
 #include "tao/Transport.h"
 #include "tao/ORB_Core.h"

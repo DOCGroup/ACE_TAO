@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/TkReactor/TkReactor.h"
 
 #include "ace/SOCK_Acceptor.h"

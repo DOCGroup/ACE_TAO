@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (ACE_HANDLE_THR_STREAM_C)
 #define ACE_HANDLE_THR_STREAM_C
 

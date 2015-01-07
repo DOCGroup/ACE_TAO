@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_AUTO_INCDEC_T_CPP
 #define ACE_AUTO_INCDEC_T_CPP
 

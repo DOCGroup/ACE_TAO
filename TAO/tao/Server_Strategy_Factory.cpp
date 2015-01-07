@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/orbconf.h"
 

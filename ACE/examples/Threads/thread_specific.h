@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_THREAD_SPECIFIC_H
 
 #include "ace/Guard_T.h"

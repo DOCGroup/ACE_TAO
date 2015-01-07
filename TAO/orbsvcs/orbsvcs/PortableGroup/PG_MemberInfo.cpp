@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/PG_MemberInfo.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 

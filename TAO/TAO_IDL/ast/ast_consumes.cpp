@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_consumes.h"
 #include "ast_visitor.h"
 

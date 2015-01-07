@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Flag_Manip.h"
 
 #if defined (ACE_LACKS_FCNTL)

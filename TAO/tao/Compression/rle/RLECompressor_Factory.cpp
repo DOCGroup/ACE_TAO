@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Compression/rle/RLECompressor_Factory.h"
 #include "tao/Compression/rle/RLECompressor.h"
 

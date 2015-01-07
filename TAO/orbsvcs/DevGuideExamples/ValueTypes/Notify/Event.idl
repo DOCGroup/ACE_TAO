@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/LongSeq.pidl"
 
 valuetype MyEvent

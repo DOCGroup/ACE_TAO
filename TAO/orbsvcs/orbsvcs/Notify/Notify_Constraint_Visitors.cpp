@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 
 #include "ace/ETCL/ETCL_y.h"

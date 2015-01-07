@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef NAMING_CONTEXT_H
 #define NAMING_CONTEXT_H
 

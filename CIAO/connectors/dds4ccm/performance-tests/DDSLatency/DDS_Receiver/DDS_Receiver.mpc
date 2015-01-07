@@ -1,5 +1,3 @@
-// $Id$
-
 project(*latency_receiver_plain) : ndds_idltocpp, acelib, taolib, typecode {
   after += DDS_Latency_Base_plain_stub
   exename = DDS_receiver

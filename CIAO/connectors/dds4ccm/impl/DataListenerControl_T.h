@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef DATALISTENERCONTROL_T_H_
 #define DATALISTENERCONTROL_T_H_
 

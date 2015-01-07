@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testS.h"
 
 class client_i : public POA_client

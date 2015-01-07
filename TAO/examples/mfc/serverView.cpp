@@ -1,5 +1,3 @@
-// $Id$
-
 // serverView.cpp : implementation of the CServerView class
 
 #include "stdafx.h"

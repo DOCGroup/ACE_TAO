@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/ATM_Acceptor.h"
 
 

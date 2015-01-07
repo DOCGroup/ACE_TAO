@@ -1,5 +1,3 @@
-// $Id$
-
 module DynAnyTest {
 
     enum EventKind {ALARM_EVENT, LOG_EVENT};

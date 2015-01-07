@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Object.h"
 #include "tao/Stub.h"
 #include "tao/Adapter_Registry.h"

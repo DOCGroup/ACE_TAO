@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef COMPONENTLINPASSAGE_EXEC_H_
 #define COMPONENTLINPASSAGE_EXEC_H_
 

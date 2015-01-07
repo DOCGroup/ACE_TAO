@@ -1,5 +1,3 @@
-// $Id$
-
 // Note: This class controls the behaviour of consumers connected to both
 // the Typed and Un-typed Event Channels.  A check must be made in the code
 // to ensure the correct EC is referenced.

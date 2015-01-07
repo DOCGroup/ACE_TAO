@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "HT_Server.h"
 #include "PMS_All.h"

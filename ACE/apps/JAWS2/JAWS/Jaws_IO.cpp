@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Filecache.h"

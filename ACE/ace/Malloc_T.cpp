@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_MALLOC_T_CPP
 #define ACE_MALLOC_T_CPP
 

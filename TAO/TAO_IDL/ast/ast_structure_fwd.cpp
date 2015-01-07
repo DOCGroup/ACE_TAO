@@ -1,5 +1,3 @@
-// $Id$
-
 // AST_StructureFwd nodes denote forward declarations of IDL structs.
 // AST_StructureFwd nodes have a field containing the full declaration
 // of the struct, which is initialized when that declaration is

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef I2C_SHAPES_COMMON_H_
 #define I2C_SHAPES_COMMON_H_
 

@@ -1,5 +1,3 @@
-// $Id$
-
 /*
  * Test TAO_EC_Thread_Flags encapsulation.
  */

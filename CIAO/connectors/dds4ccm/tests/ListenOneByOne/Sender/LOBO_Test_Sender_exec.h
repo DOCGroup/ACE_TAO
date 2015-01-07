@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_LOBO_TEST_SENDER_EXEC_QGSN5C_H_
 #define CIAO_LOBO_TEST_SENDER_EXEC_QGSN5C_H_
 

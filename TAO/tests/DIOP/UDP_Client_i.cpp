@@ -1,5 +1,3 @@
-// $Id$
-
 #include "UDP_Client_i.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"

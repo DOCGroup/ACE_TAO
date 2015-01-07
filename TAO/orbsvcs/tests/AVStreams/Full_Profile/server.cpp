@@ -1,5 +1,3 @@
-// $Id$
-
 #include "server.h"
 
 FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)

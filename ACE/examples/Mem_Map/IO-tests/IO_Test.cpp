@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined(_WIN32)
 
 #include "ace/OS_NS_string.h"

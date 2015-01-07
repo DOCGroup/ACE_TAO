@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Reactive_Task.h"
 
 #if ! defined (__ACE_INLINE__)

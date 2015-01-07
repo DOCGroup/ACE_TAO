@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Log_Backend.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

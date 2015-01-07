@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestEventConsumer_i.h"
 
 #include "orbsvcs/CosEventCommC.h"

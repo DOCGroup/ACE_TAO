@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Any/ProxyPushSupplier.h"
 #include "tao/debug.h"

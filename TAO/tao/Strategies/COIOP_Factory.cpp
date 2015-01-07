@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/COIOP_Factory.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*loc dgram) : aceexe, avoids_ace_for_tao {
   exename = local_dgram_test
   Source_Files {

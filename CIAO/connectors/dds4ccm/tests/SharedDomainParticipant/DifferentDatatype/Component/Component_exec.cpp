@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Component_exec.h"
 #include "ace/Log_Msg.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/EventChannel.h"
 
 #include "orbsvcs/Notify/Container_T.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Wait_On_Leader_Follower.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"

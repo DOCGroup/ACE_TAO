@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_main.h"
 #include "ace/FILE_Addr.h"
 #include "ace/FILE_Connector.h"

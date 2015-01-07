@@ -1,6 +1,4 @@
 // Fill_ACE_QoS.cpp
-// $Id$
-
 #include "Fill_ACE_QoS.h"
 
 

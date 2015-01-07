@@ -1,4 +1,3 @@
-// $Id$
 project (RoundTrip_server) : strategies, ciao_executor {
   exename = server
   after += Benchmark_skel

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // File: SO_Group.h
 
 // Author: Phil Mesnier

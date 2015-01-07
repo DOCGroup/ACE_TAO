@@ -1,5 +1,3 @@
-// $Id$
-
 #include "client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"

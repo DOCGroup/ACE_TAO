@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CIAO_SESSION_CONTEXT_IMPL_T_C
 #define CIAO_SESSION_CONTEXT_IMPL_T_C
 

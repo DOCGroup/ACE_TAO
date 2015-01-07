@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_TASK_EX_T_CPP
 #define ACE_TASK_EX_T_CPP
 

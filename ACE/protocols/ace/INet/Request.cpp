@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/Request.h"
 
 

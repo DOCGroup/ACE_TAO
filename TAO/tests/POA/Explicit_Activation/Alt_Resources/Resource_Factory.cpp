@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Resource_Factory.h"
 #include "ace/WFMO_Reactor.h"
 

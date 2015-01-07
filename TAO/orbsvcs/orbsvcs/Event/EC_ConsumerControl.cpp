@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_ConsumerControl.h"
 
 

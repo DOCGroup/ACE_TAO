@@ -1,4 +1,3 @@
-// $Id$
 #include "tao/Invocation_Utils.h"
 
 ACE_INLINE

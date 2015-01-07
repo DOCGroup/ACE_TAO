@@ -1,7 +1,5 @@
 
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file Homed_Component_Handler.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

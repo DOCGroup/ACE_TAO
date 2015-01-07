@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_VECTOR_T_CPP
 #define ACE_VECTOR_T_CPP
 

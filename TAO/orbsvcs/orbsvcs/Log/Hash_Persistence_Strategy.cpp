@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log/Hash_Persistence_Strategy.h"
 #include "orbsvcs/Log/Hash_LogStore.h"
 

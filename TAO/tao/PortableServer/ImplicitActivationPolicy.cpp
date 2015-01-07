@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/ImplicitActivationPolicy.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/CORBA_macros.h"

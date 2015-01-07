@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Notify_Constraint_Interpreter.h"
 #include "orbsvcs/Notify/Notify_Constraint_Visitors.h"

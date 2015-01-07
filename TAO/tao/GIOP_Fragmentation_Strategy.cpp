@@ -1,5 +1,3 @@
-// $Id$
-
 
 #include "tao/GIOP_Fragmentation_Strategy.h"
 

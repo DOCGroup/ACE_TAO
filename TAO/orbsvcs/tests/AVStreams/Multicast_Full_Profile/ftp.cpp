@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ftp.h"
 #include "tao/debug.h"
 

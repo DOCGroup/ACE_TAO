@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/ORB.h"
 #include "tao/Object.h"
 

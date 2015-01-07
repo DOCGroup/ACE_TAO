@@ -1,5 +1,3 @@
-// $Id$
-
 #include "EventSequenceSupplier_i.h"
 #include "tao/PortableServer/PS_CurrentC.h"
 

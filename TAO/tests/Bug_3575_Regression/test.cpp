@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/StringSeqC.h"
 
 int

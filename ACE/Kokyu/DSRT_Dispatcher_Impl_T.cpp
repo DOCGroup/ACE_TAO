@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef DSRT_DISPATCHER_IMPL_T_CPP
 #define DSRT_DISPATCHER_IMPL_T_CPP
 

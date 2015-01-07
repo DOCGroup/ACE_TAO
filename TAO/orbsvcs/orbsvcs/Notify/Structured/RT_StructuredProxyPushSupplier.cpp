@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h"
 #include "tao/debug.h"
 

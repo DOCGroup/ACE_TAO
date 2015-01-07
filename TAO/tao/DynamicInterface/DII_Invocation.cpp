@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/DynamicC.h"
 

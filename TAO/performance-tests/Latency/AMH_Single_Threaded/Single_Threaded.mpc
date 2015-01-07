@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*AMH_latency_idl): taoidldefaults, amh {
   IDL_Files {
     Test.idl

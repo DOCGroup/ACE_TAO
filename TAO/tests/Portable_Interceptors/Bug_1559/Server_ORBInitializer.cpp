@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Server_ORBInitializer.h"
 
 Server_ORBInitializer::Server_ORBInitializer (void)

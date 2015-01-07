@@ -1,5 +1,3 @@
-// $Id$
-
 ACE_INLINE
 Callback_i::Callback_i (int expected_samples)
   : history_ (expected_samples)

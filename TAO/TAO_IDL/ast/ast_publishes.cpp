@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_publishes.h"
 #include "ast_visitor.h"
 

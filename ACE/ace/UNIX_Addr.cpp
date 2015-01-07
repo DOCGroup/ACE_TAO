@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/UNIX_Addr.h"
 
 

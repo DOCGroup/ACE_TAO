@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Auto_Ptr.h"
 
 #include "Kokyu.h"

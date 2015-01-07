@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p ExceptionT_Base ExceptionT_Receiver"
 
 project(AMI_ExceptionT_Base_Receiver_idl_gen) : componentidldefaults {

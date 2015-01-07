@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_BUFFER_ALLOCATOR_T_CPP
 #define TAO_BUFFER_ALLOCATOR_T_CPP
 

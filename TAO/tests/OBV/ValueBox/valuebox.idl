@@ -1,5 +1,3 @@
-// $Id$
-
 #include "vb_basic.idl"
 #include "vb_struct.idl"
 #include "vb_union.idl"

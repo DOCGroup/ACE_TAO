@@ -1,5 +1,3 @@
-// $Id$
-
 valuetype BaseNode;
 
 // This TreeController is probably a silly idea.

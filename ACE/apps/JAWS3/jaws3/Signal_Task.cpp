@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Thread.h"

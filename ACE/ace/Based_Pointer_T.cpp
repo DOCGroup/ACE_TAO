@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_BASED_POINTER_T_CPP
 #define ACE_BASED_POINTER_T_CPP
 

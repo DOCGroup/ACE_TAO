@@ -1,4 +1,3 @@
-// $Id$
 //
 // Defines the entry point for the LabVIEW RT test controller DLL application.
 // This DLL is loaded at system boot by LabVIEW RT. The controller waits for

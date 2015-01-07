@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_ESF_COPY_ON_READ_CPP
 #define TAO_ESF_COPY_ON_READ_CPP
 

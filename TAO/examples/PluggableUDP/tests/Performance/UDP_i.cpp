@@ -1,5 +1,3 @@
-// $Id$
-
 #include "UDP_i.h"
 
 

@@ -1,4 +1,3 @@
-// $Id$
 #include "Factories_Define.h"
 
 

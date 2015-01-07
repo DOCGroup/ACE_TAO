@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef JAWS_HASH_BUCKET_T_CPP
 #define JAWS_HASH_BUCKET_T_CPP
 

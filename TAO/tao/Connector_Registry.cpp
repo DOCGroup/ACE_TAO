@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Connector_Registry.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"

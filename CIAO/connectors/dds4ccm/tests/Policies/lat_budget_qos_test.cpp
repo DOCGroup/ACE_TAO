@@ -1,5 +1,3 @@
-// $Id$
-
 #include "lat_budget_qos_test.h"
 
 #include "duration.h"

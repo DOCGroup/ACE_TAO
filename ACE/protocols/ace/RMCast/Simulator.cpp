@@ -1,6 +1,4 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// $Id$
-
 #include "ace/OS_NS_time.h"
 #include "Simulator.h"
 

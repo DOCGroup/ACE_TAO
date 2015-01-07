@@ -1,5 +1,3 @@
-// $Id$
-
 #include "be_sunsoft.h"
 #include "identifier_helper.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (SPIPE_CONNECTOR_C)
 
 #define SPIPE_CONNECTOR_C

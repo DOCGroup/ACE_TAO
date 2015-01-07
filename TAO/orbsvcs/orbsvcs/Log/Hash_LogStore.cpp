@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log/Hash_LogStore.h"
 #include "orbsvcs/Log/Hash_LogRecordStore.h"
 #include "orbsvcs/Log/LogMgr_i.h"

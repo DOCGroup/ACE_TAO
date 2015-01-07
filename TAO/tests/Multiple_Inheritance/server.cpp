@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "Multiple_Inheritance_i.h"
 #include "tao/Utils/ORB_Manager.h"

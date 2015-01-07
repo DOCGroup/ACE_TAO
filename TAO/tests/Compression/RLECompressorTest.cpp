@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Log_Msg.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Compression/rle/RLECompressor.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 project(Shapes_Receiver_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += Shapes_ShapeType_conn_idl_gen

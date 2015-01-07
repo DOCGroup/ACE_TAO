@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
 #include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h"

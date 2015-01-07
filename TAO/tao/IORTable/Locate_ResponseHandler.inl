@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr

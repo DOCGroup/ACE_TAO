@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Sched_Filter.h"
 #include "orbsvcs/Event/EC_QOS_Info.h"
 #include "orbsvcs/Log_Macros.h"

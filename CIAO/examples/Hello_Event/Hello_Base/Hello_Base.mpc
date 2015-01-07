@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -e -n -l../lib -o../lib Hello_Base"
 
 project(Hello_Base_idl_gen) : componentidldefaults, avoids_ccm_noevent {

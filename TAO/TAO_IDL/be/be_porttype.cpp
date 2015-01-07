@@ -1,5 +1,3 @@
-// $Id$
-
 #include "be_porttype.h"
 #include "be_visitor.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "NodeManager_Impl.h"
 #include "ace/iosfwd.h"
 #include "dance/Logger/Log_Macros.h"

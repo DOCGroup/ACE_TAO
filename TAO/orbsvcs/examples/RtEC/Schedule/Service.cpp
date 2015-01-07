@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Sched/Reconfig_Scheduler.h"
 #include "orbsvcs/Runtime_Scheduler.h"
 #include "orbsvcs/Event_Service_Constants.h"

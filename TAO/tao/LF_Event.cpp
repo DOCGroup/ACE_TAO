@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/LF_Event.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"

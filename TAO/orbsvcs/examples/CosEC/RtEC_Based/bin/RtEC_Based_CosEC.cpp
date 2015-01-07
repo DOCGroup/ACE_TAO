@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RtEC_Based_CosEC.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Get_Opt.h"

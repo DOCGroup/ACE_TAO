@@ -1,4 +1,3 @@
-// $Id$
 #include "ServerApp.h"
 #include "TestInf/AppHelper.h"
 #include "TestInf/OrbRunner.h"

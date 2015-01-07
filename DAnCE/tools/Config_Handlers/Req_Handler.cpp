@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Req_Handler.h"
 #include "Property_Handler.h"
 #include "dance/Deployment/Deployment_BaseC.h"

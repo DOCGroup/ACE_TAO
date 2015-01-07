@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/streams.h"
 
 #include "test_i.h"

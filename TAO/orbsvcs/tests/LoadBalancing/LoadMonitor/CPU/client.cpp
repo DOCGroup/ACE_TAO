@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 #include "ace/Get_Opt.h"

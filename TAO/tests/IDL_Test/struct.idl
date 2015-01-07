@@ -1,4 +1,3 @@
-// $Id$
 // Double forward declared struct test, created by Martin Corino <mcorino@remedy.nl>
 
 module Test

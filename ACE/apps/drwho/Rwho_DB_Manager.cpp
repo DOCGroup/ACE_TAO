@@ -1,4 +1,3 @@
-// $Id$
 #include "global.h"
 #include "Options.h"
 #include "Rwho_DB_Manager.h"

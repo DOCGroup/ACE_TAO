@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file HeaderBase.h
  *

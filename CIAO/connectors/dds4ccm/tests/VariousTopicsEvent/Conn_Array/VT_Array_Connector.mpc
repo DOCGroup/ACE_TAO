@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_VTopic_Base -l .. -o ../lib -u DDS VT_Array_Connector"
 
 project(DDS_VT_ARRAY_Connector_idl_gen) : connectoridldefaults, dds4ccm {

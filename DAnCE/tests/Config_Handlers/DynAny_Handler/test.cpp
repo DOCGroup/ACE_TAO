@@ -1,5 +1,3 @@
-// $Id$
-
 #include <iostream>
 
 #include "Deployment.hpp"

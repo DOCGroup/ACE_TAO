@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log/Hash_Iterator_i.h"
 #include "orbsvcs/Log/Log_Constraint_Interpreter.h"
 #include "orbsvcs/Log/Log_Constraint_Visitors.h"

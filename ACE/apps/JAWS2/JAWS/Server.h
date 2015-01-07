@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_SERVER_H
 #define JAWS_SERVER_H
 

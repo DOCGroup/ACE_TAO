@@ -1,5 +1,3 @@
-// $Id$
-
 module Test
 {
     struct MyNonVarStruct {

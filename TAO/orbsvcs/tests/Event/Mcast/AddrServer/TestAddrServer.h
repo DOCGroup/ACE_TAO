@@ -1,5 +1,3 @@
-// $Id$
-
 // TestAddrServer.h
 
 #ifndef TEST_ADDR_SERVER_H

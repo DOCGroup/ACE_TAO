@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Valuetype/ValueFactory.h"
 #include "ace/Guard_T.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 // Perform an extensive test of all the ACE_Reactor's event handler
 // dispatching mechanisms.  These mechanisms illustrate how I/O,
 // timeout, and signal events, as well as ACE_Message_Queues, can all

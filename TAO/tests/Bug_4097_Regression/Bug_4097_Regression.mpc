@@ -1,5 +1,3 @@
-// $Id$
-
 project(*IDL): taoserver, messaging, gen_ostream {
   custom_only=1
   IDL_Files {

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project (minizip) : install, zlib, vc_warnings {
   sharedname = minizip
   libout = $(ACE_ROOT)/lib

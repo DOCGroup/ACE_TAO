@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Naming_Context.h"
 #include "ace/Remote_Name_Space.h"

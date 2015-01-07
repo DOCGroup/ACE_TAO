@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/FlReactor/FlReactor.h"
 
 #include /**/ <FL/Fl.H>

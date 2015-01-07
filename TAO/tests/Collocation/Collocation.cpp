@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Collocation_Tester.h"
 #include "tao/Strategies/advanced_resource.h"
 

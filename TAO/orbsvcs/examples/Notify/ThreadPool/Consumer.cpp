@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Consumer.h"
 
 #include "tao/debug.h"

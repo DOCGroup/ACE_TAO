@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Cubit_Client.h"
 #include "RTI_IO.h"
 

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(INet_SSL) : acelib, ace_output, install, inet, ssl {
   sharedname   = ACE_INet_SSL
   dynamicflags += ACE_INET_SSL_BUILD_DLL

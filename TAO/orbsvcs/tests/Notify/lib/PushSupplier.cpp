@@ -1,5 +1,3 @@
-// $Id$
-
 #include "PushSupplier.h"
 
 #if ! defined (__ACE_INLINE__)

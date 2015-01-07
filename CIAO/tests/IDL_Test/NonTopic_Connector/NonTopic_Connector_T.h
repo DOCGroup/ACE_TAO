@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef NT_CONNECTOR_T
 #define NT_CONNECTOR_T
 

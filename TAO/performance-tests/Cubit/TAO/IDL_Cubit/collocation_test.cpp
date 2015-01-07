@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Cubit_Client.h"
 #include "Cubit_Server.h"
 

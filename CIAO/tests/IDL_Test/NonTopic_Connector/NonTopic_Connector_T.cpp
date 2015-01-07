@@ -1,5 +1,3 @@
-// $Id$
-
 // connector template for Typed_NonTopic_Test_1
 template <typename CCM_TYPE,
           typename T, bool FIXED_T,

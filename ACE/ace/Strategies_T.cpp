@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_STRATEGIES_T_CPP
 #define ACE_STRATEGIES_T_CPP
 

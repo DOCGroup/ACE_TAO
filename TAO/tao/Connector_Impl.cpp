@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_CONNECTOR_IMPL_CPP
 #define TAO_CONNECTOR_IMPL_CPP
 

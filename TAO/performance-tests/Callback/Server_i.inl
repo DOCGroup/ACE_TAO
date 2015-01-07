@@ -1,5 +1,3 @@
-// $Id$
-
 ACE_INLINE
 Server_i::Server_i (void)
   : done_ (0)

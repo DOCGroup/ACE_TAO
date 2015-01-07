@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #ifndef _AST_UNION_FWD_AST_UNION_FWD_HH
 #define _AST_UNION_FWD_AST_UNION_FWD_HH
 

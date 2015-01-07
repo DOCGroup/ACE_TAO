@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ClientRequestInterceptor2.h"
 #include "tao/CORBA_String.h"
 #include "ace/Log_Msg.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_FTP_SESSION_CPP
 #define ACE_FTP_SESSION_CPP
 

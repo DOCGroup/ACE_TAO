@@ -1,4 +1,3 @@
-// $Id$
 #include "tao/FlResource/FlResource_Loader.h"
 #include "testC.h"
 #include "ace/Get_Opt.h"

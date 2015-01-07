@@ -1,5 +1,3 @@
-// $Id$
-
 #include <orb.idl>
 
 module TAO_Trader_Test

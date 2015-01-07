@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CodecFactory/CodecFactory.h"
 #include "structC.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 // The following code illustrates how the ACE_Dumpable mechanisms are
 // integrated into ACE components like the SOCK_Acceptor and
 // SOCK_Stream.

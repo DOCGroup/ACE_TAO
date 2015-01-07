@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "tao_imr_i.h"
 
 int

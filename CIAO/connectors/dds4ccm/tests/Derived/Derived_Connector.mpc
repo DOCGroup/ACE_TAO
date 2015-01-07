@@ -1,5 +1,3 @@
-// $Id$
-
 project(Derived_Connector_idl_gen) : connectoridldefaults, dds4ccm {
   custom_only = 1
   after += Derived_stub

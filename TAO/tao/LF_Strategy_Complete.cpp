@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/LF_Strategy_Complete.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"

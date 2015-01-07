@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/MEM_SAP.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)

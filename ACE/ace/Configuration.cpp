@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Configuration.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"

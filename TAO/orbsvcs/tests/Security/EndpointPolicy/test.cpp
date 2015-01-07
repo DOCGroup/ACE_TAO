@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/POAC.h"
 #include "tao/PortableServer/POAManagerFactoryC.h"
 #include "tao/EndpointPolicy/EndpointPolicy.h"

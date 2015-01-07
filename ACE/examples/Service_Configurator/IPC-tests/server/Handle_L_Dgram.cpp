@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Handle_L_Dgram.h"
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)

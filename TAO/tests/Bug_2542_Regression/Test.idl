@@ -1,5 +1,3 @@
-// $Id$
-
 valuetype LongValue long;
 
 valuetype Value

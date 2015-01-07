@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file RateGen_exec.h
  *

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "NavDisplay_exec.h"
 
 /// Default constructor.

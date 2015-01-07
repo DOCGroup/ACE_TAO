@@ -1,5 +1,3 @@
-// $Id$
-
 // The main test driver for the dynamically configured server.
 
 #include "ace/OS_NS_unistd.h"

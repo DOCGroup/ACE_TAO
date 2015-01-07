@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Gadget) : aceexe {
   exename = gadget
   Source_Files {

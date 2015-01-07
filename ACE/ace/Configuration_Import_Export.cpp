@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Configuration_Import_Export.h"
 #include "ace/OS_Errno.h"
 #include "ace/OS_NS_stdio.h"

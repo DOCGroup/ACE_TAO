@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Atomic Op) : aceexe {
   exename = Atomic_Op
   Source_Files {

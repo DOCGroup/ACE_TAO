@@ -1,5 +1,3 @@
-// $Id$
-
 #include "DLL_TAO_Service.h"
 
 ACE_DLL_SERVICE_IMPL (ACE_DLL_TAO_Service, _make_ACE_DLL_TAO_Service)

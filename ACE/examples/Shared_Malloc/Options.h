@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef _OPTIONS
 #define _OPTIONS
 

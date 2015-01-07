@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef CPP_CONNECTOR_H
 #define CPP_CONNECTOR_H
 

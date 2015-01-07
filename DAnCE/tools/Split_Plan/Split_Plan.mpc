@@ -1,5 +1,3 @@
-// $Id$
-
 project (DAnCE_Split_Plan_Impl) : dance_lib, dance_stub, dance_deployment_stub, dance_output, dance_logger, install {
   dynamicflags += DANCE_SPLIT_PLAN_BUILD_DLL
   includes += $(DANCE_ROOT)/tools

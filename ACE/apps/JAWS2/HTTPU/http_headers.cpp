@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/RB_Tree.h"
 #include "HTTPU/http_headers.h"
 

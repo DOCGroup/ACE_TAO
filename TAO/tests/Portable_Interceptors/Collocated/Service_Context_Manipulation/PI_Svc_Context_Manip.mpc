@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Collocated): taoserver, pi, pi_server, interceptors {
   exename = collocated
   Source_Files {

@@ -1,5 +1,3 @@
-// $Id$
-
 // Exercise more tests for the <ACE_Task>s.  This also shows off some
 // Interesting uses of the <ACE_Log_Msg>'s ability to print to
 // ostreams.  BTW, make sure that you set the out_stream in *every*

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Server_Task.h"
 #include "Client_Task.h"
 

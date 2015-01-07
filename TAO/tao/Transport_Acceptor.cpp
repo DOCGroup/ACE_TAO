@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Transport_Acceptor.h"
 #include "ace/Reactor.h"
 #include "tao/debug.h"

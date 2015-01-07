@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Callback.h"
 #include "Implicit_Deactivator.h"
 #include "ace/OS_NS_time.h"

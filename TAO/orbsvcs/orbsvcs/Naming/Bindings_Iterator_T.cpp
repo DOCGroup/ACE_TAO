@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_BINDINGS_ITERATOR_T_CPP
 #define TAO_BINDINGS_ITERATOR_T_CPP
 

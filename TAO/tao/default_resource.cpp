@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/default_resource.h"
 
 #include "tao/debug.h"

@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #ifndef _AST_VALUEBOX_AST_VALUEBOX_HH
 #define _AST_VALUEBOX_AST_VALUEBOX_HH
 

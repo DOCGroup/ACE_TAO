@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 
 #ifndef ACE_CONFIG_WIN32_COMMON_H
 #define ACE_CONFIG_WIN32_COMMON_H

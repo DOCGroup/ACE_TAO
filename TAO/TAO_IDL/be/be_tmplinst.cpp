@@ -1,5 +1,3 @@
-// $Id$
-
 #include "be_visitor_typecode/typecode_defn.h"
 #include "ast_interface.h"
 #include "ace/Singleton.h"

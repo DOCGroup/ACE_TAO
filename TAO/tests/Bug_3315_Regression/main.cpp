@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB.h"
 #include "ace/Log_Msg.h"
 #include "ace/Thread.h"

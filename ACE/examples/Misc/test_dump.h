@@ -1,5 +1,3 @@
-// $Id$
-
 // Define the classes used with templates in test_dump.cpp
 
 #ifndef __TEST_DUMP_H

@@ -15,8 +15,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-// $Id$
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Codeset_Registry.inl"
 #endif /* __ACE_INLINE__ */

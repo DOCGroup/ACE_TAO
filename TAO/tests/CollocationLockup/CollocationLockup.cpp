@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * CollocationLockup.cpp
  * This is regression test against bug #2130.

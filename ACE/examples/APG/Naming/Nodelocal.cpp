@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Naming_Context.h"
 #include "Temperature_Monitor.h"
 #include "Temperature_Monitor_Options.h"

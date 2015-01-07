@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Ping_Socket.h"
 
 #if defined (ACE_HAS_ICMP_SUPPORT) && (ACE_HAS_ICMP_SUPPORT == 1)

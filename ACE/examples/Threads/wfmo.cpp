@@ -1,5 +1,3 @@
-// $Id$
-
 // This test program illustrates that the Win32
 // <WaitForMultipleObjects> function can be called in multiple
 // threads, all of which wait on the same set of HANDLEs.  Note that

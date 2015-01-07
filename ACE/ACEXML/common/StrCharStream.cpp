@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/common/Encoding.h"
 #include "ace/ACE.h"

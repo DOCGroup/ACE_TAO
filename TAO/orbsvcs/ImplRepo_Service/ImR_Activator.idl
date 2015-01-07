@@ -1,7 +1,5 @@
 // -*- IDL -*-
 
-// $Id$
-
 #include "ImplRepo.idl"
 
 module ImplementationRepository

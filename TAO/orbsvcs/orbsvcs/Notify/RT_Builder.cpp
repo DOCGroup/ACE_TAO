@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/RT_Builder.h"
 
 #include "ace/Auto_Ptr.h"

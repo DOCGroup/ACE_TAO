@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Executor_Destructor_Interceptor.h"
 #include "Exec_Dest_Status.h"
 

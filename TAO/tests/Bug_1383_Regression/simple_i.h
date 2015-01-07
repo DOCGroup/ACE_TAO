@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef SIMPLE_I_H
 #define SIMPLE_I_H
 

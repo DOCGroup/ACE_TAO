@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Null_Factory.h"
 #include "orbsvcs/Event/EC_Reactive_Dispatching.h"
 #include "orbsvcs/Event/EC_Filter_Builder.h"

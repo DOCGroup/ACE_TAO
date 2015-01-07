@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "ImR_Locator_i.h"
 #include "Locator_NT_Service.h"

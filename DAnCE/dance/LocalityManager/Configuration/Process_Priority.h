@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file Process_Priority.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

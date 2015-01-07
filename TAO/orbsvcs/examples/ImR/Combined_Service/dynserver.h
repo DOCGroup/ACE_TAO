@@ -1,4 +1,3 @@
-// $Id$
 #ifndef DYNSERVER_H
 #define DYNSERVER_H
 

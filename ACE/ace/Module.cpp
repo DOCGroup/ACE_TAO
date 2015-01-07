@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_MODULE_CPP
 #define ACE_MODULE_CPP
 

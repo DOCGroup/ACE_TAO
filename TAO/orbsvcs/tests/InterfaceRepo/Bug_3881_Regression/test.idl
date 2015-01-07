@@ -1,5 +1,3 @@
-// $Id$
-
 #pragma prefix "omg.org"
 
 module CORBA

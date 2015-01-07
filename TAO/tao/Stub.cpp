@@ -1,5 +1,3 @@
-// $Id$
-
 // Portions Copyright 1995 by Sun Microsystems Inc.
 // Portions Copyright 1997-2002 by Washington University
 // All Rights Reserved

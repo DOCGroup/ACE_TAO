@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef DATAREADER_QOS_TEST_H_
 #define DATAREADER_QOS_TEST_H_
 

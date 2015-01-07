@@ -1,5 +1,3 @@
-// $Id$
-
 // server.cpp
 // This version uses the Implementation Repository.
 

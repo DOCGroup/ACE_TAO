@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Test for OFFERED_DEADLINE_MISSED status : Writer failed to write data within
 // the deadline time period set in the profile.
 

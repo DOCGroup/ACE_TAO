@@ -1,4 +1,3 @@
-// $Id$
 #include "Server_Info.h"
 
 Server_Info::Server_Info (void)

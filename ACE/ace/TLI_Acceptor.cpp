@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/TLI_Acceptor.h"
 #include "ace/Log_Category.h"
 #include "ace/ACE.h"

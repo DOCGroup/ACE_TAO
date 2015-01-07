@@ -1,5 +1,3 @@
-// $Id$
-
 // This tests the features of the <ACE_MEM_Connector> and
 // <ACE_MEM_Stream> classes.  In addition, it can be used to test the
 // oneway and twoway latency and throughput at the socket-level.  This

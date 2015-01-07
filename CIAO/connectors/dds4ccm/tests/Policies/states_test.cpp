@@ -1,5 +1,3 @@
-// $Id$
-
 #include "states_test.h"
 
 StatesTest::StatesTest()

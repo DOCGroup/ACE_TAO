@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dest_order_qos_test.h"
 
 DestinationOrderPolicyTest::DestinationOrderPolicyTest ()

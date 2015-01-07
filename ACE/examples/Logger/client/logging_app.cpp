@@ -1,5 +1,3 @@
-// $Id$
-
 // This program sends logging records directly to the server, rather
 // than going through the client logging daemon.
 

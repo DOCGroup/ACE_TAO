@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 // Enable DIRECT Collocation, disable Thru_Poa
 
 project(Collocated_Best_Direct): taoserver {

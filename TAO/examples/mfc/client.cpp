@@ -1,5 +1,3 @@
-// $Id$
-
 #include "w32_testS.h"
 #include "ace/streams.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 // This program reads in messages from stdin and sends them to a
 // Log_Wrapper.
 

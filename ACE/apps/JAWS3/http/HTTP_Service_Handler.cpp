@@ -1,5 +1,3 @@
-// $Id$
-
 #define ACE_BUILD_SVC_DLL
 
 #include "ace/Get_Opt.h"

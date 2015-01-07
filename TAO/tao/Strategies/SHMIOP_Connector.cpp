@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/SHMIOP_Connector.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)

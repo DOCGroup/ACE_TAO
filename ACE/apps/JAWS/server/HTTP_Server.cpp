@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_BUILD_SVC_DLL
 #define ACE_BUILD_SVC_DLL
 #endif /* ACE_BUILD_SVC_DLL */

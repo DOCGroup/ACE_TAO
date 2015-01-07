@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file CORBA_Domain_Validator_impl.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

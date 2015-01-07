@@ -1,5 +1,3 @@
-// $Id$
-
 //
 
 #include "ace/WIN32_Proactor.h"

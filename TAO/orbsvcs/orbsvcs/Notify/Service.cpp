@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Service.h"
 #include "ace/Dynamic_Service.h"
 

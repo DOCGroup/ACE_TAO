@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CIAO_FACET_INTERFACE_BASE_T_C
 #define CIAO_FACET_INTERFACE_BASE_T_C
 

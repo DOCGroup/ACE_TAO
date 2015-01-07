@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Subscribe.h"
 
 int

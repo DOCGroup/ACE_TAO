@@ -1,5 +1,3 @@
-// $Id$
-
 // by James Hu
 // Borrowed from HTTP_Headers.*, which appears to be irrelevent now anyway.
 

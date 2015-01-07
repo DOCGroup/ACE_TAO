@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Worker.h"
 #include <QtGui/qapplication.h>
 #include <QtGui/qmotifstyle.h>

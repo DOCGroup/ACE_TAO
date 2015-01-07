@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/LSOCK_Connector.h"
 #include "ace/Log_Msg.h"
 

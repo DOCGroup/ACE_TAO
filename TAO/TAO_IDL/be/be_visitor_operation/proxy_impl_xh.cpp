@@ -1,5 +1,3 @@
-// $Id$
-
 #include "operation.h"
 
 be_visitor_operation_proxy_impl_xh::be_visitor_operation_proxy_impl_xh (

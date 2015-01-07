@@ -1,4 +1,3 @@
-// $Id$
 // Compliant with OMG 06-04-01 Section 9.3.4.2
 
 #if !defined (CCM_ENTITYCOMPONENT_IDL)

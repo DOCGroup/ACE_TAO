@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log/NotifyLog_i.h"
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/LogNotification.h"

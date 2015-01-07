@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 
 Stopwatch_imp::Stopwatch_imp (CORBA::ORB_ptr orb, Timer_imp *timer)

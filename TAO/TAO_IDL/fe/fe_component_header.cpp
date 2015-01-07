@@ -1,5 +1,3 @@
-// $Id$
-
 #include "fe_component_header.h"
 
 #include "fe_extern.h"

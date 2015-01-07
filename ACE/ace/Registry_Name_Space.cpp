@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Registry_Name_Space.h"
 
 

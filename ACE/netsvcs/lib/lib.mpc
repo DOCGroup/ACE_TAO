@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(netsvcs): ace_output, acelib {
   avoids       += ace_for_tao
   sharedname    = netsvcs

@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // log_wrapper.h
 
 #include "ace/Profile_Timer.h"

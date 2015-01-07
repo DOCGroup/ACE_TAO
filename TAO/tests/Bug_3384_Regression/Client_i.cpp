@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Client_i.h"
 
 Client::~Client () {}

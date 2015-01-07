@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HTBP_Addr.h"
 #include "ace/OS_NS_string.h"
 

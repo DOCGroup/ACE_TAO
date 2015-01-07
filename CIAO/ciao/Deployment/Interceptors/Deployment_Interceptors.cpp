@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Deployment_Interceptors.h"
 #include "tao/ORB_Core.h"
 #include "Name_Utilities.h"

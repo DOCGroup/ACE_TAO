@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/DomainParticipantFactory.h"
 #include "dds4ccm/impl/ndds/DomainParticipant.h"
 #include "dds4ccm/impl/ndds/DomainParticipantListener.h"

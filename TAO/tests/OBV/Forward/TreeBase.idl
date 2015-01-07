@@ -1,5 +1,3 @@
-// $Id$
-
 // Forward declaration to make recursive construct.
 valuetype BaseNode;
 

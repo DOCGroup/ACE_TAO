@@ -1,5 +1,3 @@
-// $Id$
-
 #include "INS_i.h"
 
 // Constructor

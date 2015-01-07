@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Handle_Timeout.h"
 
 #if defined (SunOS4)

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Sender_i.h"
 
 Sender_i::Sender_i (CORBA::ORB_ptr orb,

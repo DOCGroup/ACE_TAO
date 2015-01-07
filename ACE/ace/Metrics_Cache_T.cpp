@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_METRICS_CACHE_CPP
 #define ACE_METRICS_CACHE_CPP
 

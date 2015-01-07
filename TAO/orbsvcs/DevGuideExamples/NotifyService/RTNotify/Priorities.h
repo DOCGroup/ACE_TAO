@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef _PRIORITIES_H_
 #define _PRIORITIES_H_
 

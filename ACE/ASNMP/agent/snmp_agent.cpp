@@ -1,5 +1,3 @@
-// $Id$
-
 // This server daemon processes SNMPv1 requests over MIB II System group
 
 #include "snmp_agent.h"

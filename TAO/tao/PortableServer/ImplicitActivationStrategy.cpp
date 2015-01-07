@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/ImplicitActivationStrategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

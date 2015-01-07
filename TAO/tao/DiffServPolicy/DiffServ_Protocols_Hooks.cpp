@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/DiffServPolicy/DiffServ_Protocols_Hooks.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"

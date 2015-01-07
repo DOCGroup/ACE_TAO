@@ -1,4 +1,3 @@
-// $Id$
 #include "stdafx.h"
 #include "ValueListCtrl.h"
 #include "MainFrame.h"

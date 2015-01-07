@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SSL_Initializer.h"
 #include "SSL_Context.h"
 

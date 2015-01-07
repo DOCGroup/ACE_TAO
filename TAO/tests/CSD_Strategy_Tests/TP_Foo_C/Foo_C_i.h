@@ -1,4 +1,3 @@
-// $Id$
 #ifndef FOO_C_I_H
 #define FOO_C_I_H
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "LocalityActivator_Impl.h"
 #include "ace/Log_Msg.h"
 #include "ace/UUID.h"

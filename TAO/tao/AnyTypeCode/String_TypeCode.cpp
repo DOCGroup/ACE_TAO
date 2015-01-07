@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_STRING_TYPECODE_CPP
 #define TAO_STRING_TYPECODE_CPP
 

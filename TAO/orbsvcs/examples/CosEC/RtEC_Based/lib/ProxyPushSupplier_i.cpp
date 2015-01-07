@@ -1,4 +1,3 @@
-// $Id$
 //
 #include "orbsvcs/RtecEventChannelAdminC.h"
 #include "orbsvcs/CosEventChannelAdminC.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ZIOP/ZIOP_PolicyFactory.h"
 #include "tao/ZIOP/ZIOP.h"
 #include "tao/ZIOP/ZIOP_Policy_i.h"

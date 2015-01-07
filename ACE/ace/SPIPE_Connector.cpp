@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SPIPE_Connector.h"
 #include "ace/Handle_Ops.h"
 #include "ace/Log_Category.h"

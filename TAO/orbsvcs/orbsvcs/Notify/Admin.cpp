@@ -1,4 +1,3 @@
-// $Id$
 #include "orbsvcs/Notify/Admin.h"
 #include "orbsvcs/Notify/Validate_Worker_T.h"
 

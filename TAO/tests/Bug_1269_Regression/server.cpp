@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Echo_Caller.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"

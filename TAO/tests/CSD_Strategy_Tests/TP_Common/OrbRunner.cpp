@@ -1,4 +1,3 @@
-// $Id$
 #include "OrbRunner.h"
 #include "OrbTask.h"
 #include "TestAppExceptionC.h"

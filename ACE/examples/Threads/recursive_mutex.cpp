@@ -1,5 +1,3 @@
-// $Id$
-
 // This test program verifies the functionality of the ACE_OS
 // implementation of recursive mutexes on Win32 and Posix pthreads.
 

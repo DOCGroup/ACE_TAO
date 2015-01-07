@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __ROOTPANEL_H
 #define __ROOTPANEL_H
 

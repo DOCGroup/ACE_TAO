@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HTTPU/parse_http_request.h"
 
 Parse_HTTP_Request::Parse_HTTP_Request (const char *request)

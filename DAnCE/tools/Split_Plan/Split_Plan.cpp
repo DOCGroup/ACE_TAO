@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef DANCE_SPLIT_PLAN_CPP
 #define DANCE_SPLIT_PLAN_CPP
 

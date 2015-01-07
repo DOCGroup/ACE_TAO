@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Locator_XMLHandler.h"
 #include "XML_Backing_Store.h"
 #include "utils.h"

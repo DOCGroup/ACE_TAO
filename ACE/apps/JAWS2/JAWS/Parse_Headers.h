@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_PARSE_HEADERS_H
 #define JAWS_PARSE_HEADERS_H
 

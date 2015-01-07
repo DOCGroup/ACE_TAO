@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/HTTPS_SessionFactory.h"
 
 #include "ace/INet/INet_Log.h"

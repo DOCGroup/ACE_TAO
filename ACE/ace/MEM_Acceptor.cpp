@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/MEM_Acceptor.h"
 #include "ace/Lib_Find.h"
 

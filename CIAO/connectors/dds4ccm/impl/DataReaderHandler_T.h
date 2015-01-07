@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  *

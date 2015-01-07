@@ -1,4 +1,3 @@
-// $Id$
 #include "Messenger_i.h"
 
 CORBA::Boolean

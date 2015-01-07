@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef MESSENGER_I_H
 #define MESSENGER_I_H
 

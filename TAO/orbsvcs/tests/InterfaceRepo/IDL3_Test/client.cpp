@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "idl3_client.h"
 
 int

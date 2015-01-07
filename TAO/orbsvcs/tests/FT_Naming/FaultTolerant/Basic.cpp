@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Basic.h"
 
 Basic::Basic (CORBA::Object_ptr object_group,

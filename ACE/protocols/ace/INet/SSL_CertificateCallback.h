@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file SSL_CertificateCallback.h
  *

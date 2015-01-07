@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef AST_EXTENDED_PORT_H
 #define AST_EXTENDED_PORT_H
 

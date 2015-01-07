@@ -1,6 +1,4 @@
 //* -*- C++ -*- */
-// $Id$
-
 // The following configuration file is designed to work for VxWorks
 // Based on ACE_VXWORKS it will select the correct config file
 

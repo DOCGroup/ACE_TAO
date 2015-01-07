@@ -1,4 +1,3 @@
-// $Id$
 // wxAddNameServerDlg.h
 
 #ifndef i_wxAddNameServerDlg_h

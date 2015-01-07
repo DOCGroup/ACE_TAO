@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (CCM_HOMEEXECUTORBASE_IDL)
 #define CCM_HOMEEXECUTORBASE_IDL
 

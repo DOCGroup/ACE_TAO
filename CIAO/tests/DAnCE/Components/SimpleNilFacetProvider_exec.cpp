@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SimpleNilFacetProvider_exec.h"
 #include "ace/Log_Msg.h"
 

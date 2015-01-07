@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_PUBSUB_COMPONENT_EXEC_VCU9KR_H_
 #define CIAO_PUBSUB_COMPONENT_EXEC_VCU9KR_H_
 

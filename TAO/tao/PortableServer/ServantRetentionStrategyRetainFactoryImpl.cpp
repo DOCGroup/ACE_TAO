@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.h"
 #include "tao/PortableServer/ServantRetentionStrategy.h"
 #include "tao/PortableServer/ServantRetentionStrategyRetain.h"

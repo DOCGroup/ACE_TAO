@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/advanced_resource.h"
 
 // Stock Quoter Stub

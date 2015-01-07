@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Node_Locator.h"
 #include "ace/Read_Buffer.h"
 #include "dance/Logger/Log_Macros.h"

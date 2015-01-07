@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // The following configuration file is designed to work for Interix
 // platforms using GNU g++ (Interix == Microsoft's Services for Unix)
 

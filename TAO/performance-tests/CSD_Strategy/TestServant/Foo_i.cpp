@@ -1,4 +1,3 @@
-// $Id$
 #include "Foo_i.h"
 #include "TestInf/AppShutdown.h"
 #include "ace/Time_Value.h"

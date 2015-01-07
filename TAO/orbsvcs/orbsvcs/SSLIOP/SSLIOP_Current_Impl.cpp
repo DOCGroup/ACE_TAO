@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.h"
 
 #if !defined (__ACE_INLINE__)

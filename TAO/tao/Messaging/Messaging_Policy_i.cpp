@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"

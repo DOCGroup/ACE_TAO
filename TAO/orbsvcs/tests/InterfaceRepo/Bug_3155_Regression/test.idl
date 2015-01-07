@@ -1,5 +1,3 @@
-// $Id$
-
 module C1
 {
   valuetype EB  // NOT abstract

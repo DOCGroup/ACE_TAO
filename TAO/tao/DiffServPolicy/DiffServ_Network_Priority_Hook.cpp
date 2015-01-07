@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POA_Policy_Set.h"

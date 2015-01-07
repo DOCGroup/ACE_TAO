@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RootPanel.h"
 #include <QtGui/qmenubar.h>
 #include <QtGui/qapplication.h>

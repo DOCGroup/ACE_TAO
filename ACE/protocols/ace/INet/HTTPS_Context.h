@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file HTTPS_Context.h
  *

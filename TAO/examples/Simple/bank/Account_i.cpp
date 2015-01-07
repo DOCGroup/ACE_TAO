@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Account_i.h"
 
 // Constructor

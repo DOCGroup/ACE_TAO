@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_STOCKBROKER_EXEC_H_
 #define CIAO_STOCKBROKER_EXEC_H_
 

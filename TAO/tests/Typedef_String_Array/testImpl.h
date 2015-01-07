@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testS.h"
 
 class TestImpl: public POA_SimpleStrings

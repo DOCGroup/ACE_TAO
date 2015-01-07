@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_Notify_EVENT_MAP_T_CPP
 #define TAO_Notify_EVENT_MAP_T_CPP
 

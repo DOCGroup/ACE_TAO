@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_stdlib.h"
 
 #include "ace/Default_Constants.h"

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*auto_event) : aceexe {
   exename = auto_event
   Source_Files {

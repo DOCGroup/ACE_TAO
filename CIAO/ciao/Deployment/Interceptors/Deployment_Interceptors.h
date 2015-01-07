@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Deployment_Interceptors.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

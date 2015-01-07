@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Reactor.h"
 
 #if !defined (ACE_LACKS_ACE_SVCCONF)

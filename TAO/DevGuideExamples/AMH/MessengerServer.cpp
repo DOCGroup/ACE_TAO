@@ -1,5 +1,3 @@
-// $Id$
-
 #include "amh_pch.h"
 
 #include "ace/Get_Opt.h"

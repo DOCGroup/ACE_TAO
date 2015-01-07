@@ -1,5 +1,3 @@
-// $Id$
-
 project(TTSCConnector_idl_gen) : connectoridldefaults, anytypecode {
   custom_only = 1
   //don' generate CIAO connector implementation code in this example!

@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "ace/OS_NS_string.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

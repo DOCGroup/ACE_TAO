@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p UCC_Test_Base -l .. -o ../lib -u DDS UCC_Test_Connector"
 
 project(UCC_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {

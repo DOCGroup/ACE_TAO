@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file Plugin_Conf.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

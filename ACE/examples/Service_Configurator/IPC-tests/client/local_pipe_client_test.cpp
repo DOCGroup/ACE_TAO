@@ -1,5 +1,3 @@
-// $Id$
-
 // Another test of UNIX domain IPC-SAP abstraction.  This one opens 2
 // pipes and then ships certain ends over to the server to act as a
 // filter!

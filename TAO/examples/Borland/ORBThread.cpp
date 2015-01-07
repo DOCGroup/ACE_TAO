@@ -1,4 +1,3 @@
-// $Id$
 //---------------------------------------------------------------------------
 // To be able to handle CORBA requests an application usually calls orb->run().
 // To integrate this into VCL applications we will run the orb in a separate

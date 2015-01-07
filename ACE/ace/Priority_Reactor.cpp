@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Priority_Reactor.h"
 #include "ace/Malloc_T.h"
 

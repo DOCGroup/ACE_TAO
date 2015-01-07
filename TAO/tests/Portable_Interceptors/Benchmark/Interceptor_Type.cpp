@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Interceptor_Type.h"
 #include "ace/OS_NS_string.h"
 

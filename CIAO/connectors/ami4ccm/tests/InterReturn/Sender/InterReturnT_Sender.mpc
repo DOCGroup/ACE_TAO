@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p InterReturnT_Base InterReturnT_Sender"
 
 project(AMI_InterReturnT_Base_Sender_idl_gen) : componentidldefaults {

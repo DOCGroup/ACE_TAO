@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "DNM_Sender_exec.h"
 #include "Base/DNM_BaseC.h"
 

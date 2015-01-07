@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Session_Factory.h"
 
 #include "RT_Class.h"

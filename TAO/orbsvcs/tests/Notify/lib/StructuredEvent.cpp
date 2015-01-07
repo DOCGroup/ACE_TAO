@@ -1,5 +1,3 @@
-// $Id$
-
 #include "StructuredEvent.h"
 
 

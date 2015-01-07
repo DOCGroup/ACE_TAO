@@ -1,6 +1,4 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// $Id$
-
 #ifndef CRASH_POINT_H
 #define CRASH_POINT_H
 

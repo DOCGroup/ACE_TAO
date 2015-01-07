@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/UPIPE_Stream.h"
 
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"
 #include "ace/Service_Config.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestCompressor_Factory.h"
 #include "TestCompressor.h"
 

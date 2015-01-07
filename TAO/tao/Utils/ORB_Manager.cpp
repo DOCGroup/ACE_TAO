@@ -1,5 +1,3 @@
-// $Id$
-
 // = AUTHOR
 //    Sumedh Mungee <sumedh@cs.wustl.edu>
 

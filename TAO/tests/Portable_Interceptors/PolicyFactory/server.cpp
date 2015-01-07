@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Server_ORBInitializer.h"
 #include "tao/ORBInitializer_Registry.h"
 #include "testC.h"

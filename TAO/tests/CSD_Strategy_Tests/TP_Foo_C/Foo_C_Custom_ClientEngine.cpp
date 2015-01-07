@@ -1,4 +1,3 @@
-// $Id$
 #include "Foo_C_Custom_ClientEngine.h"
 #include "CustomExceptionC.h"
 #include "ace/Log_Msg.h"

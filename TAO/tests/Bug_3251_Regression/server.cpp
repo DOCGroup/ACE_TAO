@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/ARGV.h"
 #include "ace/Reactor.h"
 #include "ace/Signal.h"

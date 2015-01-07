@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Proactor.h"
 #include "ace/Filecache.h"
 #include "ace/OS_NS_unistd.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/config-all.h"
 
 #if defined (ACE_VXWORKS) && !defined (__RTP__)

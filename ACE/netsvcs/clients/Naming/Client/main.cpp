@@ -1,5 +1,3 @@
-// $Id$
-
 // Test the client-side of the ACE Name Server...
 
 #include "ace/Service_Config.h"

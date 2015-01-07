@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Iterative_Logging_Server) : aceexe, avoids_ace_for_tao {
   avoids += uses_wchar
   exename = iterative_logging_server

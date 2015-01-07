@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_RB_TREE_CPP
 #define ACE_RB_TREE_CPP
 

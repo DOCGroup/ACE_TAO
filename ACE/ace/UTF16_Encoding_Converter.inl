@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // ======================================================================
 //
 // The actual conversion methods are covered by the copyright information

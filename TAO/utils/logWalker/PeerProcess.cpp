@@ -1,5 +1,3 @@
-// $Id$
-
 #include "PeerProcess.h"
 #include "PeerObject.h"
 #include "ace/OS_NS_stdio.h"

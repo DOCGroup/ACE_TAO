@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_ARRAY_VAROUT_T_CPP
 #define TAO_ARRAY_VAROUT_T_CPP
 

@@ -1,7 +1,5 @@
 /* -*- C++ -*- */
 
-// $Id$
-
 #include "URL_Locator.h"
 
 ACE_INLINE

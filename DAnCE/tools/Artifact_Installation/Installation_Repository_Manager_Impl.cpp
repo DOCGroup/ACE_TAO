@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Installation_Repository_Manager_Impl.h"
 #include "dance/Logger/Log_Macros.h"
 #include "ace/Service_Config.h"

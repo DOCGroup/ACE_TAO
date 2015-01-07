@@ -1,5 +1,3 @@
-// $Id$
-
 // Copyright 1994-1995 by Sun Microsystems Inc.
 // All Rights Reserved
 // ORB: Principal identifier pseudo-objref

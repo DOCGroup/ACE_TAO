@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Time_Utilities.h"
 
 #if !defined (__ACE_INLINE__)

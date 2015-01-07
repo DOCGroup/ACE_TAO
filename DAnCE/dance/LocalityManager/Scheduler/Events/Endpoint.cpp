@@ -1,4 +1,3 @@
-// $Id$
 #include "Endpoint.h"
 
 #include "tao/AnyTypeCode/ExceptionA.h"

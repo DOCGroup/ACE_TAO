@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_ENV_VALUE_T_CPP
 #define ACE_ENV_VALUE_T_CPP
 

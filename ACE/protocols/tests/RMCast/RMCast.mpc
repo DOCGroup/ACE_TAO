@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Sender) : aceexe, rmcast {
   exename = sender
   Source_Files {

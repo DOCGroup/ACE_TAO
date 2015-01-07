@@ -1,5 +1,3 @@
-// $Id$
-
 project(AMI_AmiDds_Base_Receiver_idl_gen) : componentidldefaults, dds4ccm  {
   custom_only = 1
   after += AMI_AmiDds_Base_idl_gen DDS_AMIDDS_Connector_idl_gen

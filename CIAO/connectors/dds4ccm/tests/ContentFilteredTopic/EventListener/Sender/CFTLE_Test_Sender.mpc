@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_CFTLE_Test_Base -l ../lib -o ../lib -c controller -u DDS Sender"
 
 project(DDS_CFTLE_Test_Sender_idl_gen) : componentidldefaults, dds4ccm {

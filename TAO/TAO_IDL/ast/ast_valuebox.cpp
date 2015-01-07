@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_valuebox.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"

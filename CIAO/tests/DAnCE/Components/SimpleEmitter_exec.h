@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CIAO_SIMPLEEMITTER_EXEC_H
 #define CIAO_SIMPLEEMITTER_EXEC_H
 

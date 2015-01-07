@@ -1,5 +1,3 @@
-// $Id$
-
 #include "common.h"
 
 namespace CosNotifyCommImpl{

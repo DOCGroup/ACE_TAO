@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tp_qos_test.h"
 
 #include "tp_data_qos_test.h"

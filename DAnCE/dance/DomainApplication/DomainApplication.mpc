@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project: install, dance_lib, dance_output, dance_domainapplication_skel, \
     dance_nodeapplicationmanager_stub, \
     dance_nodeapplicationmanager_skel, \

@@ -37,7 +37,6 @@ get_gmt (void)
   return tod;
 }
 
-// $Id$
 // Changelog for Henning and Vinoski's chapter 18 example
 // ______________________________________________________
 

@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #ifndef AST_TEMPLATE_MODULE_REF_H
 #define AST_TEMPLATE_MODULE_REF_H
 

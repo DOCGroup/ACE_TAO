@@ -1,5 +1,3 @@
-// $Id$
-
 #include "client_interceptor.h"
 #include "HelloC.h"
 #include "ace/Log_Msg.h"

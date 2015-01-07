@@ -1,5 +1,3 @@
-// $Id$
-
 #include "InheritedOp_i.h"
 #include "ace/Get_Opt.h"
 

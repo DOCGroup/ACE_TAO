@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // The following configuration file is designed to work for OpenVMS 7.3-2
 
 #ifndef ACE_CONFIG_H

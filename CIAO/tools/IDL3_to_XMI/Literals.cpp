@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Literals.h"
 
 namespace DAnCE

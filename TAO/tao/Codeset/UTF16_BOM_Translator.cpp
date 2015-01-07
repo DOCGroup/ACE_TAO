@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // ============================================================================
 //    Manages the transformation between native and transmitted UTF-16. It is
 //    Required because transmitted UTF-16 may carry a byte order marker (BOM)

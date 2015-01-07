@@ -1,5 +1,3 @@
-// $Id$
-
 #include "lifespan_qos_test.h"
 
 #include "duration.h"

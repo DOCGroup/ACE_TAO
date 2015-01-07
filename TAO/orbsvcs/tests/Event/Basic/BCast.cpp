@@ -1,5 +1,3 @@
-// $Id$
-
 #include "BCast.h"
 #include "Consumer.h"
 #include "Supplier.h"

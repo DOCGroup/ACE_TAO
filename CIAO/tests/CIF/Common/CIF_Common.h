@@ -1,4 +1,3 @@
-// $Id$
 #ifndef CIF_COMMON_H_
 #define CIF_COMMON_H_
 

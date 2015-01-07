@@ -1,5 +1,3 @@
-// $Id$
-
 #include "pub_qos_test.h"
 #include "group_data_qos_test.h"
 #include "entity_factory_qos_test.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "jaws3/IO.h"
 
 #include "SS_State_ERROR.h"

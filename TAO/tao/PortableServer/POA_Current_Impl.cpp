@@ -1,5 +1,3 @@
-// $Id$
-
 // -- PortableServer Include --
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/POA_Current_Impl.h"

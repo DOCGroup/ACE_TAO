@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #include "basic_visitor.h"
 #include "identifier_helper.h"
 #include "be_sunsoft.h"

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ace/Obstack.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

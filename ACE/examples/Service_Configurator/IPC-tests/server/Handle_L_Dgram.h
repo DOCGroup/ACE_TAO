@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Handles UNIX datagram messages from local host.
 
 #ifndef _HANDLE_L_DGRAM_H

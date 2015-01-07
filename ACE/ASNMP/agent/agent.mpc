@@ -1,5 +1,3 @@
-// $Id$
-
 project (asnmp_agent) : aceexe {
   exename = agent
   after += asnmp_lib

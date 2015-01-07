@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ping_i.h"
 
 #if !defined(__ACE_INLINE__)

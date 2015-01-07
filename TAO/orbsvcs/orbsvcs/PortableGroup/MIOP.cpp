@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/MIOP.h"
 #include "orbsvcs/PortableGroup/UIPMC_Factory.h"
 #include "ace/Service_Config.h"

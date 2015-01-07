@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/LF_Connect_Strategy.h"
 #include "tao/Nested_Upcall_Guard.h"
 #include "tao/LF_Multi_Event.h"

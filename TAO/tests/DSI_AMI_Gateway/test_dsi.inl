@@ -1,5 +1,3 @@
-// $Id$
-
 ACE_INLINE
 DSI_Simple_Server::DSI_Simple_Server (
     CORBA::ORB_ptr orb,

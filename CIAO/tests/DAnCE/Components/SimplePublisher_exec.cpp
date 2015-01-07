@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SimplePublisher_exec.h"
 #include "ace/Log_Msg.h"
 

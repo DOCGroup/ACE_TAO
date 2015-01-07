@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "dds4ccm/impl/DataReaderStateListener_T.h"
 #include "dds4ccm/impl/StateListenerControl_T.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"

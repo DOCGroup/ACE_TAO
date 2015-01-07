@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Scheduling_Service.h"
 
 #include "ace/Get_Opt.h"

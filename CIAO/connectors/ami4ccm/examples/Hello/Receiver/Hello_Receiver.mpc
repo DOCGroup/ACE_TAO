@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p Hello_Base Hello_Receiver"
 
 project(AMI_Hello_Base_Hello_Receiver_idl_gen) : componentidldefaults {

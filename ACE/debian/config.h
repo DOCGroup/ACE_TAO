@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_CONFIG_H_INCLUDED
 #define ACE_CONFIG_H_INCLUDED
 #ifdef __FreeBSD_kernel__

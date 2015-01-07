@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Messenger_i.h"
 
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb)

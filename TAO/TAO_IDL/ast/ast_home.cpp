@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_home.h"
 #include "ast_component.h"
 #include "ast_valuetype.h"

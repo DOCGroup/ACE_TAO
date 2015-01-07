@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ImR_Client/ImR_Client.h"
 
 #include "ace/Vector_T.h"

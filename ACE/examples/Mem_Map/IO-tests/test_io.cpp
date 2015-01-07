@@ -1,5 +1,3 @@
-// $Id$
-
 // Test program for different methods of copying files.
 
 #include "ace/OS_NS_stdio.h"

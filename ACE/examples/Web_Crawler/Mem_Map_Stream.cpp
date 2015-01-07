@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/FILE_Addr.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Truncate.h"

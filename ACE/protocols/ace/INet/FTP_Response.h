@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file FTP_Response.h
  *

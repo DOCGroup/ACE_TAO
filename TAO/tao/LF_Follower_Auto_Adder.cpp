@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/LF_Follower_Auto_Adder.h"
 
 #if !defined (__ACE_INLINE__)

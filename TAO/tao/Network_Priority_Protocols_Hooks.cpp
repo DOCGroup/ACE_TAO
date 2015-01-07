@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Network_Priority_Protocols_Hooks.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,3 @@
-// $Id$
-
 project(*latency_sender_plain) : nddslib, acelib, taolib, typecode {
   after += DDS_Latency_Base_plain_stub
   exename = DDS_Sender

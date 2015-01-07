@@ -1,5 +1,3 @@
-// $Id$
-
 #include "jaws3/IO.h"
 #include "jaws3/Event_Completer.h"
 

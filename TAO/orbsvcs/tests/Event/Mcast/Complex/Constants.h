@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event_Service_Constants.h"
 
 #define A_EVENT_TYPE ACE_ES_EVENT_UNDEFINED+1

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HTTPU/http_request.h"
 #include "HTTPU/parse_http_request.h"
 

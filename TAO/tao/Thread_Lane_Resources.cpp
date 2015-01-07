@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/LF_Follower.h"

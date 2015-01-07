@@ -1,5 +1,3 @@
-// $Id$
-
 project(CIAO_Base_IDL) : install, ciaoidldefaults, anytypecode {
   idlflags     += -Wb,stub_export_macro=CIAO_BASE_STUB_Export \
                   -Wb,stub_export_include=CIAO_Base_stub_export.h \

@@ -1,5 +1,3 @@
-// $Id$
-
 // Listing 1 code/ch12
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 // Extends ACE_INET_Addr with support for multi-homed addresses.
 
 #include "ace/Multihomed_INET_Addr.h"

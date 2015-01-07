@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestC.h"
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Transport.h"

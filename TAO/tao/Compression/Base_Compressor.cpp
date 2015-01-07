@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Compression/Base_Compressor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

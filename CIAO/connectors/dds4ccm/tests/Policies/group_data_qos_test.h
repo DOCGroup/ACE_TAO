@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef GROUP_DATA_QOS_TEST_H_
 #define GROUP_DATA_QOS_TEST_H_
 

@@ -1,4 +1,3 @@
-// $Id$
 //
 // Config file for AIX 5.1 and higher.
 

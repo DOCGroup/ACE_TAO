@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 /* Handle connections from local UNIX ACE_SPIPE */
 /* Read from a well known ACE_SPIPE and write to stdout. */
 

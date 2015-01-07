@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 template <typename CCM_TYPE, typename TYPED_DDS_READER, typename VALUE_TYPE, typename SEQ_VALUE_TYPE, bool FIXED>

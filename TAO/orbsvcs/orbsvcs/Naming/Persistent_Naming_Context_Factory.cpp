@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Persistent_Naming_Context.h"
 

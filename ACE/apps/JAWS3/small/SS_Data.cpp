@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SS_Data.h"
 #include "SS_Service_Handler.h"
 

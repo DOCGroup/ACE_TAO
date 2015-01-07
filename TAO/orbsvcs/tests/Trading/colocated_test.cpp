@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "tao/Utils/ORB_Manager.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/ID_Factory.h"
 
 #if ! defined (__ACE_INLINE__)

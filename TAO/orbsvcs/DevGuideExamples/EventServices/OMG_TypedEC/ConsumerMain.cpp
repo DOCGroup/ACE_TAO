@@ -1,5 +1,3 @@
-// $Id$
-
 // ConsumerMain.cpp
 // Main program for a TypedPushConsumer of Messenger objects.
 

@@ -32,7 +32,6 @@
  * SUCH DAMAGE.
  */
 
-// $Id$
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/AV/ntp-time.h"

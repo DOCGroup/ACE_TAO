@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Bit_Vector.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

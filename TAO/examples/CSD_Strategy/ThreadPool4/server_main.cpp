@@ -1,4 +1,3 @@
-// $Id$
 #include "ServerApp.h"
 #include "ace/Log_Msg.h"
 #include "tao/Exception.h"

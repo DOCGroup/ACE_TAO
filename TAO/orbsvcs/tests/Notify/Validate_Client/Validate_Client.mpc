@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*proxy_dummy): taoserver {
   exename=proxy_dummy
   Source_Files {
