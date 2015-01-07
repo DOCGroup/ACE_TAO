@@ -2,8 +2,6 @@
 /**
 *  @file   be_visitor_template_export.cpp
 *
-*  
-*
 *  This visitor generates template instantiations with export macro
 *
 *  @author Jeff Parsons <j.parsons@vanderbilt.edu>

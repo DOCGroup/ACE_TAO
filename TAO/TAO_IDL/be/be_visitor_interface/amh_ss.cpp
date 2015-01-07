@@ -2,8 +2,6 @@
 /**
 *  @file   amh_ss.cpp
 *
-*  
-*
 *  Specialized interface visitor for AMH.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

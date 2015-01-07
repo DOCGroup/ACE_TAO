@@ -2,8 +2,6 @@
 /**
 *  @file   Forwarder.cpp
 *
-*  
-*
 *  @brief  Definition of ImR_DSI_Forwarder
 *
 *  @author Phil Mesnier <mesnier_p@ociweb.com>

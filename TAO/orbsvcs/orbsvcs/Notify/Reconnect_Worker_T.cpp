@@ -2,8 +2,6 @@
 /**
 *  @file    Reconnect_Worker_T.cpp
 *
-*  
-*
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
 //=============================================================================

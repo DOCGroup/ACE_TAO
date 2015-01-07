@@ -2,8 +2,6 @@
 /**
 *  @file   INS_Locator.cpp
 *
-*  
-*
 *  @brief  Implementation of the ImR's INS Locator class
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

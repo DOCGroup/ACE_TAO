@@ -2,8 +2,6 @@
 /**
 *  @file   amh_ss.cpp
 *
-*  
-*
 *  Creates code for AMH operations.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

@@ -2,8 +2,6 @@
 /**
 *  @file   be_visitor_arg_traits.cpp
 *
-*  
-*
 *  This visitor generates template specializations for argument traits classes.
 *
 *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
