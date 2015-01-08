@@ -277,9 +277,6 @@ sub check_for_id_string ()
                 if (/\$Id:\$/) {
                     print_error ("$file:$.: Incorrect \$Id:\$ found (remove colon)");
                 }
-                if (/\$Id$/) {
-                    print_error ("$file:$.: Incorrect \$Id: found (remove colon, added \$)");
-                }
                 if (/\$Id\$/) {
                     $found = 1;
                 }
