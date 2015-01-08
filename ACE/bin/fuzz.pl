@@ -121,7 +121,7 @@ sub store_file ($)
     if ($name =~ /\.(c|cc|cpp|cxx|tpp)$/i) {
         push @files_cpp, ($name);
     }
-    elsif ($name =~ /\.(inl|i|ipp)$/i) {
+    elsif ($name =~ /\.(inl|i)$/i) {
         push @files_inl, ($name);
     }
     elsif ($name =~ /\.(h|hh|hpp|hxx)$/i) {
@@ -280,7 +280,7 @@ sub check_for_id_string ()
                 if (/\$Id$/) {
                     print_error ("$file:$.: Incorrect \$Id: found (remove colon, added \$)");
                 }
-                if (/\$Id\:/ or /\$Id\$/) {
+                if (/\$Id\$/) {
                     $found = 1;
                 }
             }
