@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * SimpleNamingService.cpp
  * This is part of the regression test against bug #2130.

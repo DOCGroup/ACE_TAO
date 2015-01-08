@@ -4,8 +4,6 @@
 /**
  *  @file   NotifyLog_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsNotifyLogAdmin::NotifyLog interface.
  *  File also conatins TAO_Notify_LogConsumer which is used
  *  to write events to the Log.

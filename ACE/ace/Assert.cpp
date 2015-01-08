@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Assert.h"
 #include "ace/Log_Category.h"
 

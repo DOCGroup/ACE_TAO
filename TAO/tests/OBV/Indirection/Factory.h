@@ -1,4 +1,3 @@
-// $Id$
 #include "tao/Valuetype/ValueFactory.h"
 #include "tao/ORB.h"
 #include "MessengerC.h"

@@ -1,4 +1,4 @@
-$Id$
+
 
 Porting applications to the refactored DAnCE:
 

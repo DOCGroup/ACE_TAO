@@ -4,10 +4,7 @@
 /**
  *  @file   RTEventLog_i.h
  *
- *  $Id$
- *
  *  Implementation of the RTEventLogAdmin::NotifyLog interface.
- *
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */

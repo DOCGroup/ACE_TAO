@@ -3,12 +3,8 @@
 /**
  *  @file    valuetype_init.h
  *
- *  $Id$
- *
  *  Coomon visitor for the Valuetype node.
  *  This one provides code generation for valuetype factory construct.
- *
- *
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */

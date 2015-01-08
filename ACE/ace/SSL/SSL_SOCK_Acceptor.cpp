@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 
 #include "SSL_SOCK_Acceptor.h"
 

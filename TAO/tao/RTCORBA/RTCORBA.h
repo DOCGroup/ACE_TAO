@@ -1,15 +1,10 @@
 // -*- C++ -*-
 
-// $Id$
-
 //=============================================================================
 /**
  *  @file RTCORBA.h
  *
- *  $Id$
- *
  *   Takes care of the RT ORB loading on static build.
- *
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>

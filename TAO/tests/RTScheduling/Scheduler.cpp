@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Scheduler.h"
 #include "tao/ORB.h"
 #include "ace/Atomic_Op.h"

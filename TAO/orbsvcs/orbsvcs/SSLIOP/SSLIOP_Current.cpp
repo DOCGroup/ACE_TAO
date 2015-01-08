@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_Current.h"
 #include "tao/debug.h"
 

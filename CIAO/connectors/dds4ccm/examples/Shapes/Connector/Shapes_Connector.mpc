@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_Shapes_Base -l .. -o ../lib -u DDS Shapes_Connector"
 
 project(DDS_Shapes_Connector_idl_gen) : connectoridldefaults, dds4ccm {

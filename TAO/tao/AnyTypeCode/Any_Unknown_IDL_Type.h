@@ -4,8 +4,6 @@
 /**
  *  @file    Any_Unknown_IDL_Type.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan
  *  @author Jeff Parsons
  */

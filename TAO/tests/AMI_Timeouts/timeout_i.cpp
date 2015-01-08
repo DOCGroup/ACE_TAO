@@ -3,10 +3,7 @@
 /**
  *  @file    timeout_i.cpp
  *
- *  $Id$
- *
  *  Implements the timeout CORBA Object and its reply handler.
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */

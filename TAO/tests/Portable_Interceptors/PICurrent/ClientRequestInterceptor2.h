@@ -4,8 +4,6 @@
 /**
  * @file ClientRequestInterceptor2.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

@@ -1,4 +1,3 @@
-// $Id$
 // Reused from: $TAO_ROOT/orbsvcs/examples/RtEC/MCast
 
 #include "Consumer.h"

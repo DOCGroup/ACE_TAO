@@ -4,8 +4,6 @@
 /**
  * @file Test.idl
  *
- * $Id$
- *
  * "test" IDL interface for the Uninitialized "out" param for sequence<string>
  * can cause server to core test.
  *

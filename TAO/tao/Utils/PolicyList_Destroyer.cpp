@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Utils/PolicyList_Destroyer.h"
 
 #if !defined (__ACE_INLINE__)

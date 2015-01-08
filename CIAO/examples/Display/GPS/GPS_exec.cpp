@@ -1,5 +1,3 @@
-// $Id$
-
 #include "GPS_exec.h"
 
 #include "ace/OS_NS_time.h"

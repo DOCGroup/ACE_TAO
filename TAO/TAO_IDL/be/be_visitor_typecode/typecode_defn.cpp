@@ -3,10 +3,7 @@
 /**
  *  @file    typecode_defn.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for TypeCode definitions for types.
- *
  *
  *  @author Aniruddha Gokhale
  */

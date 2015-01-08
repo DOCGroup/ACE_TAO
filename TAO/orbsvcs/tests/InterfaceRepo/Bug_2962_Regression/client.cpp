@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 // The run_test.pl perl script will check for the expected output.
 
 #include "ace/config.h"

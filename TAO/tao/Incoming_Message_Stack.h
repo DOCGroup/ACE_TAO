@@ -4,8 +4,6 @@
 /**
  *  @file Incoming_Message_Stack.h
  *
- *  $Id$
- *
  *  @author Frank Rehberger <frehberg@prismtech.com>
  */
 //=============================================================================

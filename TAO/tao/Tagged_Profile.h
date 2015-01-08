@@ -4,8 +4,6 @@
 /**
  *  @file   Tagged_Profile.h
  *
- *  $Id$
- *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

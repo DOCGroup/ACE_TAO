@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/PolicyFactory_Registry_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

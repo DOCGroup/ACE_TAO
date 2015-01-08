@@ -2,11 +2,7 @@
 /**
  *  @file Factory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_FACTORY_H
@@ -69,7 +65,6 @@ typedef TAO_ESF_Proxy_Collection<TAO_Notify_Proxy> TAO_Notify_Proxy_Collection;
  * @class TAO_Notify_Factory
  *
  * @brief Factory interface for creating Notify Objects.
- *
  */
 class /*TAO_Notify_Serv_Export*/ TAO_Notify_Factory : public ACE_Service_Object
 {

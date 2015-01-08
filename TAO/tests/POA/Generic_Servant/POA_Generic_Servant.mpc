@@ -1,4 +1,3 @@
-// $Id$
 project(POA_Generic_Servant_Lib): taolib_with_idl, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   sharedname = Generic_Servant
   dynamicflags += GENERIC_SERVANT_BUILD_DLL

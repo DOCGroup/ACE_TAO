@@ -3,10 +3,7 @@
 /**
  *  @file    field_cdr_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Field in the client header file.
- *
  *
  *  @author Jeff Parsons
  */

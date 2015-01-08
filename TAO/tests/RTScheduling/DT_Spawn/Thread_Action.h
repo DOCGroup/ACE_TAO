@@ -1,4 +1,3 @@
-//$Id$
 #ifndef Thread_Action_H
 #define Thread_Action_H
 

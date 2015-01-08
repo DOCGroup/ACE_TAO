@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 namespace Kokyu
 {
 template <class DSRT_Scheduler_Traits>

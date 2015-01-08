@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // File: SO_Group.cpp
 
 #include "ace/OS_NS_string.h"

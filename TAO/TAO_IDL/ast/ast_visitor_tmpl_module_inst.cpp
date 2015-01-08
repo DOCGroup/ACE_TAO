@@ -1,8 +1,6 @@
 /**
  *  @file   ast_visitor_tmpl_module_inst.cpp
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  */
 //=============================================================================

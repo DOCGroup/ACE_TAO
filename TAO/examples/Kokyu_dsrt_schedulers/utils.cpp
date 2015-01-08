@@ -1,5 +1,3 @@
-//$Id$
-
 #include "utils.h"
 #include "Kokyu/Kokyu.h"
 #include "ace/Lock_Adapter_T.h"

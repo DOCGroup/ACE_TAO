@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Thread_Task.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"

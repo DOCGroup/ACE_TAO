@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "status_i.h"
 

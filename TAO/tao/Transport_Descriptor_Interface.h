@@ -4,8 +4,6 @@
 /**
  *  @file   Transport_Descriptor_Interface.h
  *
- *  $Id$
- *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================

@@ -6,8 +6,6 @@
  *
  * Header file for the Executor implementation.
  *
- * $Id$
- *
  * @author Diego Sevilla <dsevilla@um.es>
  * @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
  */

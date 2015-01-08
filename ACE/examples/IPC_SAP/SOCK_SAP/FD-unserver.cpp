@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/LSOCK_Acceptor.h"
 #include "ace/LSOCK_Stream.h"
 #include "ace/UNIX_Addr.h"

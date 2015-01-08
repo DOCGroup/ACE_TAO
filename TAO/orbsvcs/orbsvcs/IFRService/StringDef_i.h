@@ -5,10 +5,7 @@
 /**
  *  @file    StringDef_i.h
  *
- *  $Id$
- *
  *  StringDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

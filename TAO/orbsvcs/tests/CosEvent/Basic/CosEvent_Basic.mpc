@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Disconnect): basiceventtestexe {
   exename   = Disconnect
   Source_Files {

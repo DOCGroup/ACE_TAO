@@ -2,8 +2,6 @@
 
 /**
  * @file Compression.pidl
- *
- * $Id$
  */
 
 #ifndef _COMPRESSION_PIDL_

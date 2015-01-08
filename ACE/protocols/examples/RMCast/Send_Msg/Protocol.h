@@ -1,7 +1,5 @@
 // file      : Protocol.h
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
-
 #ifndef PROTOCOL_H
 #define PROTOCOL_H
 

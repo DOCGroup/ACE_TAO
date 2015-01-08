@@ -4,12 +4,9 @@
 /**
  *  @file    sequence_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Sequence class
  *  This one provides code generation for the Sequence node in the client
  *  stubs.
- *
  *
  *  @author Aniruddha Gokhale
  */

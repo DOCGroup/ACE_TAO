@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "test_i.h"
 #include "ace/OS_NS_string.h"
 

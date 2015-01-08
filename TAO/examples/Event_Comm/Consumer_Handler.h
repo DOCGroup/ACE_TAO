@@ -4,11 +4,8 @@
 /**
  *  @file    Consumer_Handler.h
  *
- *  $Id$
- *
  *  Subclass of Corba_Handler that sets up the Consumer handler
  *  for use with the ACE ACE_Reactor.
- *
  *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
  */

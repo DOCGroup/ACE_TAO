@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_SSLIOP_OPENSSL_ST_T_CPP
 #define TAO_SSLIOP_OPENSSL_ST_T_CPP
 

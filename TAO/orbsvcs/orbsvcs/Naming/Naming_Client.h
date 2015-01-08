@@ -4,10 +4,7 @@
 /**
  *  @file    Naming_Client.h
  *
- *  $Id$
- *
  *    Implement wrappers useful to Naming Service clients.
- *
  *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu)
  *  @author Matt Braun <mjb2@cs.wustl.edu>

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Periodic_Supplier_Command.h"
 #include "LookupManager.h"
 #include "Name.h"

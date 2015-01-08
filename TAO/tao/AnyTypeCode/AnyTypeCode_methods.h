@@ -4,8 +4,6 @@
 /**
  *  @file    AnyTypeCode_methods.h
  *
- *  $Id$
- *
  *  Declarations of NamedValue and NVlist methods in the CORBA namespace.
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef SHAREDINTF_I_H_
 #define SHAREDINTF_I_H_
 

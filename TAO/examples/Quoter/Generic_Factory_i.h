@@ -3,10 +3,7 @@
 /**
  *  @file    Generic_Factory_i.h
  *
- *  $Id$
- *
  *  A LifeCycle Service Generic Factory for the Quoter example.
- *
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */

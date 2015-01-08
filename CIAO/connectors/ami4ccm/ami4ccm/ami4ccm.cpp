@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ami4ccm/ami4ccm.h"
 #include "tao/debug.h"
 

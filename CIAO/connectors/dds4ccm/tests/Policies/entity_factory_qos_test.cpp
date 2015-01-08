@@ -1,5 +1,3 @@
-// $Id$
-
 #include "entity_factory_qos_test.h"
 
 EntityFactoryPolicyTest::EntityFactoryPolicyTest ()

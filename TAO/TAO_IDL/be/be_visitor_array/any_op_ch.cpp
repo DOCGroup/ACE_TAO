@@ -3,11 +3,8 @@
 /**
  *  @file    any_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor for code generation of Arrays for the Any operators in the client
  *  header.
- *
  *
  *  @author Aniruddha Gokhale
  */

@@ -6,10 +6,7 @@
 /**
  *  @file    Catior_i.h
  *
- *  $Id$
- *
  *  Reads stringified IORs and outputs the encoded information.
- *
  *
  *  @author   Jeff Hopper <jrhopper@cts.com>   SCIOP and Tagged component modifications by:   Jason Cohen
  *  @author Lockheed Martin ATL <jcohen@atl.lmco.com>   Split into a separate library by:   Chad Elliott <elliott_c@ociweb.com>

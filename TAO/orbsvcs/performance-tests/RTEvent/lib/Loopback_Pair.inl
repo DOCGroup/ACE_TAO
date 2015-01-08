@@ -1,8 +1,6 @@
 /**
  * @file Loopback_Pair.inl
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

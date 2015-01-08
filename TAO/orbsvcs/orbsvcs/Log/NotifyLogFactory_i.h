@@ -4,10 +4,7 @@
 /**
  *  @file   NotifyLogFactory_i.h
  *
- *  $Id$
- *
  *  Implements the Factory for NotifyLog Objects.
- *
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */

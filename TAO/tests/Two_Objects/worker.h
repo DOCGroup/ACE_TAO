@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 
 #ifndef TAO_TWO_OBJECTS_WORKER_H
 #define TAO_TWO_OBJECTS_WORKER_H

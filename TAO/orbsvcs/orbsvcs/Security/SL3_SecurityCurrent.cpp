@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Security/SL3_SecurityCurrent.h"
 
 #if !defined (__ACE_INLINE__)

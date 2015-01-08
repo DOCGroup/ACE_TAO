@@ -1,4 +1,4 @@
-$Id$
+
 
 Agent is a simple application which sends and receives discovery messages
 via multicast-based federation of Notification Service. To run the example

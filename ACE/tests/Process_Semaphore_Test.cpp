@@ -3,10 +3,7 @@
 /**
  *  @file    Process_Semaphore_Test.cpp
  *
- *  $Id$
- *
  *  Tests an ACE Semaphore shared between multiple child processes.
- *
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */

@@ -4,8 +4,6 @@
 /**
  *  @file   Dynamic_Bitset.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -19,9 +17,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- *
- */
 class Dynamic_Bitset
 {
   typedef unsigned block;

@@ -3,8 +3,6 @@
 /**
  *  @file    Process_Strategy_Test.cpp
  *
- *  $Id$
- *
  *   This is a test of the <ACE_Strategy_Acceptor> and
  *   <ACE_File_Lock> classes.  The <ACE_Strategy_Acceptor> uses
  *   either the <ACE_Process_Strategy> (which forks a
@@ -26,7 +24,6 @@
  *
  *   # Run the server in multi-processes
  *   % Process_Strategy_Test -c PROCESS
- *
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Kevin Boyle <kboyle@sanwafp.com>
  */

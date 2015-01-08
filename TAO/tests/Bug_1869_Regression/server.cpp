@@ -1,5 +1,3 @@
-// $Id$
-
 #include "AMIS.h"
 #include "tao/IORTable/IORTable.h"
 

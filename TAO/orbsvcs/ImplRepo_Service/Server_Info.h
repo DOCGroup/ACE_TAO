@@ -2,10 +2,7 @@
 /**
  *  @file    Server_Info.h
  *
- *  $Id$
- *
  *  This class implements the Server_Info for the Implementation Repository.
- *
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Priyanka Gontla <gontla_p@ociweb.com>

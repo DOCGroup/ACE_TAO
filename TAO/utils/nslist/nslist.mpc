@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(nsadd): namingexe, install {
   install = $(ACE_ROOT)/bin
   exename = tao_nsadd

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_finder.h"
 #include "ast_visitor.h"
 

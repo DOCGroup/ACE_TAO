@@ -4,8 +4,6 @@
 /**
  *  @file   Connector_Impl.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
@@ -40,7 +38,6 @@ class TAO_ORB_Core;
  * objects instead of having to duplicate code. This class can be used
  * to set any required properties on the connection handlers at
  * creation time.
- *
  */
 
 template <class SVC_HANDLER>
@@ -71,7 +68,6 @@ private:
  *
  * Activates the Svc_Handler, and then if the correct wait strategy is
  * in use registers the handler with the reactor.
- *
  */
 
 template <class SVC_HANDLER>

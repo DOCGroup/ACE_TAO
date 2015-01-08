@@ -3,11 +3,8 @@
 /**
  *  @file    IOStream_Test.cpp
  *
- *  $Id$
- *
  *  This is a simple test of the IOStream class that illustrates
  *  how to use iostream operations on almost arbitrary I/O classes.
- *
  *
  *  @author James CE Johnson <jcej@lads.com>
  */

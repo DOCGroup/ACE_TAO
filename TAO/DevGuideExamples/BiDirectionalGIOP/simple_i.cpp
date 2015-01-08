@@ -1,5 +1,3 @@
-// $Id$
-
 #include "bidir_giop_pch.h"
 
 #include "simple_i.h"

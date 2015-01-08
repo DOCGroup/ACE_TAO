@@ -6,7 +6,6 @@ eval '(exit $?0)' && eval 'exec perl -w -S $0 ${1+"$@"}'
 #      Author: Chad Elliott
 #        Date: 7/17/2007
 # Description: A script to generate the Notify Service Monitor modules
-#         $Id$
 # ******************************************************************
 
 # ******************************************************************

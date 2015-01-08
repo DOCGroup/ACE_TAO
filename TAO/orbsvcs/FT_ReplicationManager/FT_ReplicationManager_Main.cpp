@@ -3,8 +3,6 @@
 /**
  *  @file    FT_ReplicationManager_Main.cpp
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  This file provides the main routine for a process that
  *  implements the FT_ReplicationManager interface.

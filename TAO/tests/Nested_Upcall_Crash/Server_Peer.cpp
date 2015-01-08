@@ -1,10 +1,7 @@
 /**
  * @file Server_Peer.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Server_Peer.h"
 #include "tao/debug.h"

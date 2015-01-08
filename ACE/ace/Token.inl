@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/config-macros.h"
 
 #if defined (ACE_HAS_THREADS)

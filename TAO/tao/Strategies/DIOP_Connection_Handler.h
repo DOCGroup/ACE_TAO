@@ -4,8 +4,6 @@
 /**
  *  @file   DIOP_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author  Michael Kircher
  */
 // ===================================================================

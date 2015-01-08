@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PI/PI_includeC.h"
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"

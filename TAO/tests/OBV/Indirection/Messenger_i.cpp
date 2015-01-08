@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Messenger_i.h"
 
 #include "tao/AnyTypeCode/TypeCode.h"

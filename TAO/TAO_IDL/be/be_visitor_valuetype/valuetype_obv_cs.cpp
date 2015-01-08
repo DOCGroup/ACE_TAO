@@ -2,12 +2,9 @@
 /**
  *  @file    valuetype_obv_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes
  *  OBV_ class implementation
  *  (see C++ mapping OMG 20.17)
- *
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  *  @author derived from interface_ch.cpp from Aniruddha Gokhale

@@ -1,5 +1,3 @@
-// $Id$
-
 // The following test was written by Hamutal Yanay & Ari Erev's
 // (Ari_Erev@comverse.com).
 //

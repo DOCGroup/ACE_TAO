@@ -1,10 +1,7 @@
 /**
  * @file Peer_Base.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
- *
  */
 
 #ifndef TAO_RTEC_PERF_PEER_BASE_H
@@ -24,7 +21,6 @@ class RTServer_Setup;
  *
  * @brief Implement the shared portions of Federated_Test::Peer
  *        servants
- *
  */
 class TAO_RTEC_Perf_Export Peer_Base
  : public virtual POA_Federated_Test::Peer

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef DDS_MT_CONNECTOR_T_H_
 #define DDS_MT_CONNECTOR_T_H_
 

@@ -2,8 +2,6 @@
  * @file Deployment_Completion.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * $Id$
- *
  * Future observer that signals when the scheduler has completed.
  */
 

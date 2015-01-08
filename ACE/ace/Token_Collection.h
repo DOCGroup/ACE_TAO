@@ -4,8 +4,6 @@
 /**
  *  @file    Token_Collection.h
  *
- *  $Id$
- *
  *  The ACE_Token class offers methods for acquiring, renewing,
  *  and releasing a synchronization token on a per-token basis.  The
  *  ACE_Token_Collection offers an interface for performing
@@ -13,7 +11,6 @@
  *  within the collection.
  *
  *  The atomic group operations are not yet implemented.
- *
  *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
@@ -56,7 +53,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @bug Although ACE_Token_Collection inherits from ACE_Token_Proxy, it
  * can not be including in a collection.  This is because <clone>
  * returns zero for now.
- *
  */
 class ACE_Export ACE_Token_Collection : public ACE_Token_Proxy
 {

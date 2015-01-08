@@ -4,8 +4,6 @@
 /**
  * @file Metrics_Cache_T.h
  *
- * $Id$
- *
  * @author Chris Gill <cdgill@cse.wustl.edu>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    preempt.cpp
  *
- *  $Id$
- *
  *    This is a simple test to illustrate OS thread preemption.  One
  *    ore more high priority threads periodically (every half
  *    second, by default) reads the clock.  They use select () to
@@ -21,7 +19,6 @@
  *    There is a -y option for the low priority thread to periodically
  *    yield.  It shouldn't be necessary to use that option, if preemption
  *    is supported.  It's a handy option for testing.
- *
  *
  *  @author David L. Levine
  */

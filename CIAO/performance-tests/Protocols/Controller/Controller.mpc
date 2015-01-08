@@ -1,5 +1,3 @@
-// $Id$
-
 project (Protocols_Controller) : ccm_stub, rtcorba {
   after += Protocols_Sender_stub \
            Protocols_Receiver_stub

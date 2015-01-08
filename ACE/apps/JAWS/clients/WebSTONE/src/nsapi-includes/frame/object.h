@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
  *
@@ -25,7 +23,6 @@
  * This module requires the pblock module from the base library.
  *
  * Rob McCool
- *
  */
 
 

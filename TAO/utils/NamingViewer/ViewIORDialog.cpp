@@ -1,5 +1,3 @@
-// $Id$
-
 #include "stdafx.h"
 #include "NamingViewer.h"
 #include "ViewIORDialog.h"

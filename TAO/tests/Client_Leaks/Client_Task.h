@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CLIENT_LEAKS_CLIENT_TASK_H
 #define CLIENT_LEAKS_CLIENT_TASK_H

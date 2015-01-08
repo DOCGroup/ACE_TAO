@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Event_Handler.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

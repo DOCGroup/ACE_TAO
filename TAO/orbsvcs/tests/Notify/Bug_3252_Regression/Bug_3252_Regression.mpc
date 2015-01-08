@@ -1,5 +1,3 @@
-// $Id$
-
 project(*server): notification_serv, taoexe, threads {
   exename = server
   libs += Bug_3252

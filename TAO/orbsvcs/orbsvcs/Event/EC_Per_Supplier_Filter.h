@@ -2,8 +2,6 @@
 /**
  *  @file   EC_Per_Supplier_Filter.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
@@ -88,7 +86,6 @@ private:
  * @class TAO_EC_Per_Supplier_Filter_Builder
  *
  * @brief Create Per_Supplier_Filter objects
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Per_Supplier_Filter_Builder : public TAO_EC_Supplier_Filter_Builder
 {

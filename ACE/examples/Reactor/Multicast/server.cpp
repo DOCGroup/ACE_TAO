@@ -1,5 +1,3 @@
-// $Id$
-
 // server.cpp (written by Tim Harrison)
 
 // Listens to multicast address for client log messages.  Prints

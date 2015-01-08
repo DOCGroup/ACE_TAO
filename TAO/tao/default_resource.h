@@ -4,8 +4,6 @@
 /**
  *  @file   default_resource.h
  *
- *  $Id$
- *
  *  @author Chris Cleeland
  *  @author Carlos O'Ryan
  */
@@ -53,7 +51,6 @@ class TAO_RSF_Timer_Queue_Ptr;
  *
  * Perhaps, the best would be to place the responsibility for codeset
  * manager's configuration with the the codeset manager factory?
- *
  */
 class TAO_Export TAO_Codeset_Parameters
 {

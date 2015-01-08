@@ -3,10 +3,7 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Implementation of the server running the UDP object.
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */

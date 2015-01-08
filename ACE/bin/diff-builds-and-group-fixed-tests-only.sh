@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id$
 
 if test -z $1; then newdate=`date -u +%Y_%m_%d`; else newdate=$1; fi
 if test -z $2; then prefix=`date -u +%Y%m%d%a`; else prefix=$2; fi

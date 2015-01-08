@@ -1,5 +1,3 @@
-// $Id$
-
 #include "partition_qos_test.h"
 
 PartitionPolicyTest::PartitionPolicyTest ()

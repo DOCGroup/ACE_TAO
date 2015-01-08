@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Blocked_Connect_Strategy.h"
 #include "tao/Connection_Handler.h"
 

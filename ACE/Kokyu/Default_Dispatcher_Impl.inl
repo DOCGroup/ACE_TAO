@@ -1,5 +1,3 @@
-// $Id$
-
 namespace Kokyu
 {
 ACE_INLINE

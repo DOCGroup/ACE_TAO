@@ -2,11 +2,7 @@
 /**
  *  @file Supplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SUPPLIER_H
@@ -24,7 +20,6 @@
  * @class TAO_Notify_Lanes_Supplier
  *
  * @brief Implement a Structured Supplier.
- *
  */
 class TAO_Notify_Lanes_Supplier
   : public POA_CosNotifyComm::StructuredPushSupplier

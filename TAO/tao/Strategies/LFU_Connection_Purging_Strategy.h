@@ -4,8 +4,6 @@
 /**
  *  @file   LFU_Connection_Purging_Strategy.h
  *
- *  $Id$
- *
  *  @author Chad Elliott (elliott_c@ociweb.com)
  */
 // ================================================================

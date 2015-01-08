@@ -1,5 +1,3 @@
-// $Id$
-
 #include "status_i.h"
 
 corbaloc_Status_i::corbaloc_Status_i ()

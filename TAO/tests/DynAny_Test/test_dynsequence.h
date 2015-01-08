@@ -2,10 +2,7 @@
 /**
  *  @file    test_dynsequence.h
  *
- *  $Id$
- *
  *  Header file for class to test DynSequence.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

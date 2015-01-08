@@ -3,10 +3,7 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Implementation of the server.
- *
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */

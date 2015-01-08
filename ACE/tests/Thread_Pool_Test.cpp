@@ -3,8 +3,6 @@
 /**
  *  @file    Thread_Pool_Test.cpp
  *
- *  $Id$
- *
  *   This test program illustrates how the <ACE_Task>
  *   synchronization mechanisms work in conjunction with the
  *   <ACE_Thread_Manager>.  If the <manual> flag is set input comes
@@ -12,7 +10,6 @@
  *   input is generated automatically.  All worker threads shutdown
  *   when (1) they receive a message block of length 0 or (2) the
  *   queue is deactivated.
- *
  *
  *  @author Karlheinz Dorn <Karlheinz.Dorn@med.siemens.de>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>

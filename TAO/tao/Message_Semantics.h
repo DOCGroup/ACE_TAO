@@ -4,8 +4,6 @@
 /**
  *  @file Message_Semantics.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

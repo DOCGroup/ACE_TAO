@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/DynamicInterface/ExceptionList.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/SystemException.h"

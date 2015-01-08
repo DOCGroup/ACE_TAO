@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_OFFER_ITERATORS_T_CPP
 #define TAO_OFFER_ITERATORS_T_CPP
 

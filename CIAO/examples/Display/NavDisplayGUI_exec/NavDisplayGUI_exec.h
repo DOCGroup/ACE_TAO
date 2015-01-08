@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file NavDisplayGUI_exec.h
  *

@@ -3,11 +3,8 @@
 /**
  *  @file    Initiator_i.cpp
  *
- *  $Id$
- *
  *  This class implements the Object A  of the
  *  Nested Upcalls - Triangle test.
- *
  *
  *  @author Michael Kircher
  */

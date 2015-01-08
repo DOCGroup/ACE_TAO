@@ -3,10 +3,7 @@
 /**
  *  @file    enum_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Enums in the client stubs
- *
  *
  *  @author Aniruddha Gokhale
  */

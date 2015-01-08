@@ -3,11 +3,8 @@
 /**
  *  @file    growth.cpp
  *
- *  $Id$
- *
  * Helps in measuring how the growth strategy affects the
  * performance of CDR streams.
- *
  *
  *  @author Carlos O'Ryan
  */

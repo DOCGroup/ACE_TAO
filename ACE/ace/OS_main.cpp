@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_main.h"
 
 #if !defined (ACE_DOESNT_DEFINE_MAIN)

@@ -3,8 +3,6 @@
 /**
  *  @file   Stopwatch_display.h
  *
- *  $Id$
- *
  *  @author Balachandran  Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file    Thread.h
  *
- *  $Id$
- *
  *  @author Douglas Schmidt <schmidt@cs.wustl.edu>
  */
 //==========================================================================

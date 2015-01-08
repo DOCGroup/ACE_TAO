@@ -1,5 +1,3 @@
-// $Id$
-
 project(nsgroup): orbsvcsexe, ftnaming, naming, install, svc_utils {
   install = $(ACE_ROOT)/bin
   exename = tao_nsgroup

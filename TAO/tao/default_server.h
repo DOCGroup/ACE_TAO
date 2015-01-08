@@ -4,8 +4,6 @@
 /**
  *  @file     default_server.h
  *
- *  $Id$
- *
  *  @author  Chris Cleeland
  */
 //=============================================================================
@@ -33,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief This is the default strategy factory for CORBA servers.  It
  * allows developers to choose strategies via argument flags.
  * This design gives substantial freedom for experimentation.
- *
  */
 class TAO_Export TAO_Default_Server_Strategy_Factory
   : public TAO_Server_Strategy_Factory

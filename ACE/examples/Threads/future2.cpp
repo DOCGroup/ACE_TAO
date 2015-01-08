@@ -3,10 +3,7 @@
 /**
  *  @file    future2.cpp
  *
- *  $Id$
- *
  *  This example tests the ACE Future.
- *
  *
  *  @author Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt <schmidt@cs.wustl.edu>                   and "Method_Request_work".                 - make the methods "work_i" and "name_i" private                  the tests so they are more modular.
  */

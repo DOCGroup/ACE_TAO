@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #if !defined (_NOTIFIER_IDL)
 #define _NOTTIFIER_IDL
 

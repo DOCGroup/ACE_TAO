@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/TSS_Resources.h"
 #include "tao/GUIResource_Factory.h"
 #include "tao/TAO_Singleton.h"

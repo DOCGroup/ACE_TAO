@@ -1,8 +1,6 @@
 /**
  * @file Consumer.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

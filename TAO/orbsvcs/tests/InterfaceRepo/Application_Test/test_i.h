@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "testS.h"
 
 // Must include this header file and link to TAO_IFR_Client.lib

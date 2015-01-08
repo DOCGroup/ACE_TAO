@@ -4,14 +4,11 @@
 /**
  *  @file    airplane_i.h
  *
- *  $Id$
- *
  *  This class implements a simple CORBA server which returns a random
  *  paper airplane from the book "Oddballs, Wing-Flappers, & Spinners:
  *  Great Paper Airplanes" by John Bringhurst.  ISBN: 0-07-067910-X (pbk.)
  *  An excellent book to have!  I personally recommend getting it just
  *  for the wing-flappers.
- *
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */

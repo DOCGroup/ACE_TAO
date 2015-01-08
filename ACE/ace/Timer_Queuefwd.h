@@ -4,8 +4,6 @@
 /**
  *  @file    Timer_Queuefwd.h
  *
- *  $Id$
- *
  *  Forward declarations and typedefs of ACE_Timer_Queue class.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

@@ -4,8 +4,6 @@
 /**
  *  @file   SSLIOP_Transport.h
  *
- *  $Id$
- *
  *  SSLIOP Transport specific processing.
  *
  *  @author Carlos O'Ryan <coryan@ece.uci.edu>

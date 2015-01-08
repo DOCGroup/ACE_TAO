@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Time_Service_Server) : orbsvcsexe, install, time_serv, naming, utils, avoids_corba_e_micro {
   exename  = tao_costime_server
   Source_Files {

@@ -4,10 +4,7 @@
 /**
  *  @file    UDP_i.h
  *
- *  $Id$
- *
  *  This class implements the server functionality of the UDP test.
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
@@ -25,7 +22,6 @@
  * @class UDP_i:
  *
  * @brief UDP Object Implementation
- *
  */
 class UDP_i: public POA_UDP
 {

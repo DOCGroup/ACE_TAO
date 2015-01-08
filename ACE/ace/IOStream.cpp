@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_IOSTREAM_CPP
 #define ACE_IOSTREAM_CPP
 

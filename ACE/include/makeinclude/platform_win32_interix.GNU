@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 # platform_win32_interix.GNU
 

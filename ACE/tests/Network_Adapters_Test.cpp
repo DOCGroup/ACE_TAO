@@ -2,10 +2,7 @@
 /**
  *  @file    Network_Adapters_Test.cpp
  *
- *  $Id$
- *
  *  Tests the ICMP-echo support in ACE.
- *
  *
  *  @author Robert S. Iakobashvili <coroberti@gmail.com> <coroberti@walla.co.il> Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com>
  */

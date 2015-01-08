@@ -1,4 +1,4 @@
-$Id$
+
 
 This code illustrates how to write a single set of source code (for a
 client and server) and then parameterize in the desired IPC mechanism.

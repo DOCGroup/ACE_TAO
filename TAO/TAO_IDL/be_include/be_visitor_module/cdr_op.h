@@ -4,12 +4,9 @@
 /**
  *  @file    cdr_op.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Module class
  *  This one provides visitors to generate the CDR operators for elements in
  *  the Module's scope.
- *
  *
  *  @author Aniruddha Gokhale
  */

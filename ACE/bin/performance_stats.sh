@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id$
-#
 
 if [ $# -lt 1 ]; then
   echo "Usage: $0 <DEST>"

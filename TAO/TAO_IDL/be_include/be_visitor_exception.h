@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_exception.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Exception class
- *
  *
  *  @author Aniruddha Gokhale
  */

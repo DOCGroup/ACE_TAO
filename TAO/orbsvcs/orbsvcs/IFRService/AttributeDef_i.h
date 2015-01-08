@@ -5,10 +5,7 @@
 /**
  *  @file    AttributeDef_i.h
  *
- *  $Id$
- *
  *  AttributeDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

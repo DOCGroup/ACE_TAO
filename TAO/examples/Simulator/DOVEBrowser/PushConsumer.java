@@ -1,7 +1,5 @@
-// $Id$
 //
 // ============================================================================
-//
 //
 // = FILENAME
 //    PushConsumer.java
@@ -12,7 +10,6 @@
 // = DESCRIPTION
 //    This is a Push Consumer which takes the data field of the
 //    event and updates with it a Data Handler.
-//
 //
 // ============================================================================
 

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 // Reused from: $TAO_ROOT/orbsvcs/examples/RtEC/MCast
 
 #ifndef ADDRSERVER_H

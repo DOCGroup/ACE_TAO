@@ -4,8 +4,6 @@
 /*
  *  @file Codeset_Manager.h
  *
- *  $Id$
- *
  *  Interface for the TAO CodeSet Manager.
  *
  *  @author  Mahesh Vedantam <mahesh@ociweb.com>
@@ -57,7 +55,6 @@ class TAO_Codeset_Descriptor_Base;
  * determining the transmission codesets based an the local and remote codeset
  * information. The transmission codesets are communicated via a service
  * context attached to the first request sent on the new connection.
- *
  */
 class TAO_Export TAO_Codeset_Manager
 {

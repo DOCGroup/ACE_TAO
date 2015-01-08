@@ -3,12 +3,8 @@
 /**
  *  @file    Task_Ex_Test.cpp
  *
- *  $Id$
- *
  *  This test program illustrates the ACE_Task_Ex class which has the ACE_Message_Queue_Ex
  *  that has the capability to hold user-defined messages instead of ACE_Message_Block
- *
- *
  *
  *  @author Kobi Cohen-Arazi <kobi-co@barak-online.net>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Foo_Bar.h"
 #include "ace/Time_Value.h"
 #include "ace/Get_Opt.h"

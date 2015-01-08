@@ -3,10 +3,7 @@
 /**
  *  @file    component_ex_idl.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Components in the CIAO executor IDL.
- *
  *
  *  @author Jeff Parsons
  */

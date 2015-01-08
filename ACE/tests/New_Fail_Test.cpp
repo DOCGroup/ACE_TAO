@@ -3,8 +3,6 @@
 /**
  *  @file    New_Fail_Test.cpp
  *
- *  $Id$
- *
  *  Checks to be sure that a failed ACE_NEW[_RETURN | _NORETURN] doesn't end
  *  up throwing an exception up to the caller.
  *
@@ -13,7 +11,6 @@
  *    2. Are built with exceptions disabled.
  *  In these cases, the test puts a message in the log noting that a failed
  *  new will throw an exception, and trust that the user accepts that risk.
- *
  *
  *  @author Steve Huston <shuston@riverace.com>
  */

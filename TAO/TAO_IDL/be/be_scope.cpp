@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "be_scope.h"
 #include "be_valuetype.h"
 #include "be_eventtype.h"

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/POAManagerFactory.h"
 #include "tao/PortableServer/POAManager.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef SERVERINITIALIZER_H
 #define SERVERINITIALIZER_H
 

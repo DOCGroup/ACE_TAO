@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/corba.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/Messaging/Messaging.h"

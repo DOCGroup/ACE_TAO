@@ -3,11 +3,8 @@
 /**
  *  @file    root_exh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the CIAO
  *  exec impl header
- *
  *
  *  @author Jeff Parsons
  */

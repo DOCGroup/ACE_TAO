@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (CPP_CONNECTOR_C)
 #define CPP_CONNECTOR_C
 

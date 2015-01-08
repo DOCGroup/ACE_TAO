@@ -4,8 +4,6 @@
 /**
  *  @file   Service_Context_Handler_Registry.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================

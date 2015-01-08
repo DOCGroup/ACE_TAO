@@ -1,4 +1,3 @@
-//$Id$
 #include "TestServer.h"
 
 #include <ace/streams.h>

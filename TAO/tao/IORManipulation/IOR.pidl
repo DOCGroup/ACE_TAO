@@ -1,8 +1,6 @@
 /**
  * @file IOR.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the TAO_IOP namespace.
  */
 

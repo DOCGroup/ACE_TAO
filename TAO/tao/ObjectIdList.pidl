@@ -1,8 +1,6 @@
 /**
  * @file ObjectIdList.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the CORBA::ORB::ObjectIdList related
  * types.
  */

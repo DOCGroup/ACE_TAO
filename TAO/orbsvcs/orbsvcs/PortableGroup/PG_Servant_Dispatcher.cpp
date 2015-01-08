@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/GOA.h"
 #include "orbsvcs/PortableGroup/PG_Servant_Dispatcher.h"
 

@@ -1,7 +1,5 @@
 #!/pkg/gnu/bin//perl5
 #
-#$Id$
-#
 
 push(@INC, "$wd/bin");
 require('WebStone-common.pl');

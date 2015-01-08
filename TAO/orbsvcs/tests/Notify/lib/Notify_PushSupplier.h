@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_NOTIFY_PUSHSUPPLIER_H
 #define TAO_NOTIFY_PUSHSUPPLIER_H
 #include /**/ "ace/pre.h"

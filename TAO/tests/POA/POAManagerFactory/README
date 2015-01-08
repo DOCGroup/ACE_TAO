@@ -1,6 +1,4 @@
 /**
-  $Id$
-
   @page POAManagerFactory Test README
 
   This test validates the POAManagerFactory implementation. The PMF is

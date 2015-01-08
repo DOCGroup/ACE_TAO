@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef ACE_TIMER_QUEUE_ITERATOR_H
 #define ACE_TIMER_QUEUE_ITERATOR_H
 
@@ -19,7 +17,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_Timer_Node_Dispatch_Info_T
  *
  * @brief Maintains generated dispatch information for Timer nodes.
- *
  */
 template <class TYPE>
 class ACE_Timer_Node_Dispatch_Info_T

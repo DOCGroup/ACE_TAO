@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "AMI_Buffering_Admin.h"
 
 AMI_Buffering_Admin::AMI_Buffering_Admin (CORBA::ORB_ptr orb)

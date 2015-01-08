@@ -3,9 +3,6 @@
 /**
  *  @file    Talker.cpp
  *
- *  $Id$
- *
- *
  *  This test application tests a wide range of events that can be
  *  demultiplexed using various ACE utilities.  Events used include
  *  ^C events, reading from STDIN, vanilla Win32 events, thread
@@ -115,13 +112,11 @@
  *  to end the event loop and returns.  This will cause the
  *  application to exit.
  *
- *
  *  To run example, start an instance of the test with an optional
  *  local port argument (as the acceptor). Start the other instance
  *  with -h <hostname> and -p <server port>. Type in either the
  *  client or server windows and your message should show up in the
  *  other window.  Control C to exit.
- *
  *
  *  @author Tim Harrison Irfan Pyarali
  */

@@ -4,8 +4,6 @@
 /**
  *  @file    Direct_Collocation_Upcall_Wrapper.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen
  */
 //=============================================================================

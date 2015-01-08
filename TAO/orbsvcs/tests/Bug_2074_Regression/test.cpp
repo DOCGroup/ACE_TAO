@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/corba.h"
 #include "ORB_Task.h"
 

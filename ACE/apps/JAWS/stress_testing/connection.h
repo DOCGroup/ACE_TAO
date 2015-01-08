@@ -1,5 +1,3 @@
-// $Id$
-
 #include "global.h"
 
 #ifndef _D_connection

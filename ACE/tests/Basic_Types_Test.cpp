@@ -2,10 +2,7 @@
 /**
  *  @file    Basic_Types_Test.cpp
  *
- *  $Id$
- *
  *  Checks the #defines in ace/Basic_Types.h, and a few other basics.
- *
  *
  *  @author David L. Levine <levine@cs.wustl.edu>
  */

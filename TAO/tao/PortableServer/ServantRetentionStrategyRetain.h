@@ -4,8 +4,6 @@
 /**
  *  @file ServantRetentionStrategyRetain.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

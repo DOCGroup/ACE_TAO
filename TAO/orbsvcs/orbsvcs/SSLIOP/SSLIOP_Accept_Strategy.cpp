@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

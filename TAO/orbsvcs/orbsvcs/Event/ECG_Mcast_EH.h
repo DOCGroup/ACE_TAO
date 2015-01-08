@@ -3,15 +3,12 @@
 /**
  * @file ECG_Mcast_EH.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  * @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
  * @author Marina Spivak <marina@atdesk.com>
  * @author Don Hinton <dhinton@ieee.org>
  *
  * http://doc.ece.uci.edu/~coryan/EC/index.html
- *
  */
 #ifndef TAO_ECG_MCAST_EH_H
 #define TAO_ECG_MCAST_EH_H

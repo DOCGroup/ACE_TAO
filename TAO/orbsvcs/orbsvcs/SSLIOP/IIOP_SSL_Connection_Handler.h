@@ -4,8 +4,6 @@
 /**
  *  @file   IIOP_SSL_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

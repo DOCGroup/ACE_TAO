@@ -4,12 +4,9 @@
 /**
  *  @file    root_exs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Root class
  *  This one provides code generation for elements of the Root node in the
  *  CIAO exec impl source.
- *
  *
  *  @author Jeff Parsons
  */

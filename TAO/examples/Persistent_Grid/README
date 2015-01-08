@@ -1,4 +1,4 @@
-$Id$
+
 
 This example shows how to store the state of CORBA servants in
 persistent memory.  The example is a variation of the Grid example in

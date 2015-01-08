@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_ESF_PEER_WORKERS_CPP
 #define TAO_ESF_PEER_WORKERS_CPP
 

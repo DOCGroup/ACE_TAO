@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_typecode.h
  *
- *  $Id$
- *
  *  Concrete visitor to generate code for TypeCodes
- *
  *
  *  @author Aniruddha Gokhale
  */

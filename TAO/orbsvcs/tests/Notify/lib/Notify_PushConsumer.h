@@ -2,8 +2,6 @@
 /**
  *  @file   Notify_PushConsumer.h
  *
- *  $Id$
- *
  * This is a utility class is to be used by clients of the Notification
  * Service to implement the servant for CosNotifyComm::PushConsumer
  *
@@ -14,7 +12,6 @@
  * 4. To connect, call <connect>, this will activate the object in the POA.
  *     You must provide a ConsumerAdmin to <connect>.
  * 5. To disconnect, call <disconnect> this will also deactivate the object.
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */

@@ -9,8 +9,6 @@
  *  $ACE_ROOT/examples/Reactor/Proactor can be used to test the
  *  features further.
  *
- *  $Id$
- *
  *  @author Programming for the Real World. Bill O. GallMeister.  Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================

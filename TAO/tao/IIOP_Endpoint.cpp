@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /*
  * Add all include files within the following
  * two markers.

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dance/Deployment/Deployment_RepositoryManager.idl"
 
 module CIAO

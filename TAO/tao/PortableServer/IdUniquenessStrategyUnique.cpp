@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/IdUniquenessStrategyUnique.h"
 #include "tao/PortableServer/Root_POA.h"
 

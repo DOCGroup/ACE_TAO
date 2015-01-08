@@ -1,8 +1,5 @@
 /**
  * @file compare_histo.cpp
- *
- * $Id$
- *
  */
 
 #include <utility>

@@ -3,8 +3,6 @@
 /**
  *  @file   Adapter_Activator.cpp
  *
- *  $Id$
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================

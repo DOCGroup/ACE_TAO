@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef LATENCY_BUDGET_QOS_TEST_H_
 #define LATENCY_BUDGET_QOS_TEST_H_
 

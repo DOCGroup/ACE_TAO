@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//$Id$
-
 #ifndef BASEVALUEIMPL_H
 #define BASEVALUEIMPL_H
 

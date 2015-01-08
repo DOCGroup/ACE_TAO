@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef MESSENGERTASK_H
 #define MESSENGERTASK_H
 

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // ------------------------------
 #ifndef DANCE_SHS_INTERCEPTORS_EXPORT_H

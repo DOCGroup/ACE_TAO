@@ -4,8 +4,6 @@
 /**
  *  @file    Atomic_Op_GCC_T.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl
  */
 //=============================================================================

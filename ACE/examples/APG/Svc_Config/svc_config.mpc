@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*HA Status) : acelib, avoids_ace_for_tao {
   sharedname   = HA_Status
   dynamicflags += HASTATUS_BUILD_DLL

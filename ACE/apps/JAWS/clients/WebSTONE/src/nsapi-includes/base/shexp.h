@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
  *
@@ -15,7 +13,6 @@
 
 /*
  * shexp.h: Defines and prototypes for shell exp. match routines
- *
  *
  * This routine will match a string with a shell expression. The expressions
  * accepted are based loosely on the expressions accepted by zsh.
@@ -36,7 +33,6 @@
  * The public interface to these routines is documented below.
  *
  * Rob McCool
- *
  */
 
 #ifndef SHEXP_H

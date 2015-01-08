@@ -1,5 +1,3 @@
-// $Id$
-
 #include "../Common/testC.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Get_Opt.h"

@@ -3,10 +3,7 @@
 /**
  *  @file    driver.cpp
  *
- *  $Id$
- *
  *  Driver program
- *
  *
  *  @author   Aniruddha Gokhale
  */

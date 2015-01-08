@@ -1,5 +1,3 @@
-// $Id$
-
 #include "PL_Handler.h"
 #include "IDD_Handler.h"
 #include "Basic_Deployment_Data.hpp"

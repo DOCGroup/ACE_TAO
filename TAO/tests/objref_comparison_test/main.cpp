@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Functor.h"
 #include "ace/Task.h"
 #include "fooS.h"

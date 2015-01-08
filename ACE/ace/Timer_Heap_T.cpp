@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_TIMER_HEAP_T_CPP
 #define ACE_TIMER_HEAP_T_CPP
 

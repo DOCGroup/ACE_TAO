@@ -1,9 +1,6 @@
 // @file wxSelectNSDialog.cpp
 //
 // @author Charlie Frasch  <cfrasch@atdesk.com>
-//
-// $Id$
-
 #include "pch.h"
 #include "wxSelectNSDialog.h"
 

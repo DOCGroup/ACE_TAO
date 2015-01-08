@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PI_Server/PortableServer_ORBInitializer.h"
 #include "tao/PI_Server/PortableServer_PolicyFactory.h"
 #include "tao/debug.h"

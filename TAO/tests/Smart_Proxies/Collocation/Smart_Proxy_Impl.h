@@ -1,4 +1,3 @@
-// $Id$
 //
 #ifndef SMART_PROXY_IMPL_H
 #define SMART_PROXY_IMPL_H

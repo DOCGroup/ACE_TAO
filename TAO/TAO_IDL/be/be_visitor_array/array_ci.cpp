@@ -3,10 +3,7 @@
 /**
  *  @file    array_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Arrays in the client inline.
- *
  *
  *  @author Aniruddha Gokhale
  */

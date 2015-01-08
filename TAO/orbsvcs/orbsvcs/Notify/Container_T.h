@@ -2,11 +2,7 @@
 /**
  *  @file Container_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_CONTAINER_T_H
@@ -29,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief A template class that manages a collection.
  * TYPE = type of collection
- *
  */
 template <class TYPE>
 class TAO_Notify_Serv_Export TAO_Notify_Container_T

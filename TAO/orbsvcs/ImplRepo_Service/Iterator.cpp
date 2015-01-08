@@ -2,8 +2,6 @@
 /**
  *  @file   Iterator.cpp
  *
- *  $Id$
- *
  *  @brief  This file declares ImR's iterator.
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

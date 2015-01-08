@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "Stock_Factory_i.h"
 #include "ace/streams.h"

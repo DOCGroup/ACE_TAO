@@ -1,4 +1,3 @@
-// $Id$
 #ifdef __GNUG__
     #pragma implementation "minimal.cpp"
     #pragma interface "minimal.cpp"

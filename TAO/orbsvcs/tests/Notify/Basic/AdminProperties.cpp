@@ -1,5 +1,3 @@
-// $Id$
-
 #include "AdminProperties.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"

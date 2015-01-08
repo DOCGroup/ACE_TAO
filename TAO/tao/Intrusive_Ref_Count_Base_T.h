@@ -4,8 +4,6 @@
 /**
  *  @file    Intrusive_Ref_Count_Base_T.h
  *
- *  $Id$
- *
  *  @authors Tim Bradley  <bradley_t@ociweb.com>
  */
 //=============================================================================
@@ -34,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *        to an X object.  In this case, X is a sub-class of this class,
  *        TAO_Intrusive_Ref_Count_Base<ACE_LOCK>.  The ACE_LOCK type is
  *        used to protect the atomic reference count data member.
- *
  */
 template <class ACE_LOCK>
 class TAO_Intrusive_Ref_Count_Base

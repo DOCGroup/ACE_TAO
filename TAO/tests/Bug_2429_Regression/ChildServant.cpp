@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ChildServant.h"
 
 ChildServant::ChildServant(CORBA::ORB_ptr orb)

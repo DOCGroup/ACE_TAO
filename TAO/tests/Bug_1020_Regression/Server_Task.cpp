@@ -1,10 +1,7 @@
 /**
  * @file Server_Task.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Server_Task.h"
 

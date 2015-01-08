@@ -3,11 +3,7 @@
 /**
  *  @file    notifier.h
  *
- *  $Id$
- *
  *  This class implements notifier  driver for the Publish/Subscribe example
- *
- *
  */
 //=============================================================================
 

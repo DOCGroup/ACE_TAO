@@ -4,8 +4,6 @@
 /**
  *  @file    BasicTypeTraits.cpp
  *
- *  $Id$
- *
  *  Assign values to specialization members in BasicTypeTraits.h.
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>

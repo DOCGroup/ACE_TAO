@@ -3,10 +3,7 @@
 /**
  *  @file   EC_TPC_ProxyConsumer.h
  *
- *  $Id$
- *
  *  @author Chris Cleeland <cleeland at ociweb.com >
- *
  */
 
 #ifndef TAO_EC_TPC_PROXYCONSUMER_H
@@ -26,7 +23,6 @@ class TAO_EC_TPC_Dispatching;
 
 /**
  * @class TAO_EC_TPC_ProxyPushConsumer
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_TPC_ProxyPushConsumer :
   public TAO_EC_Default_ProxyPushConsumer

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/TSS_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Dynamic.h"

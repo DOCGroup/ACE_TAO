@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SOCK_SEQPACK_Connector.h"
 
 #include "ace/INET_Addr.h"

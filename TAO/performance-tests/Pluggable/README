@@ -1,4 +1,4 @@
-$Id$
+
 
 The tests in this directory time the latency contributed by
 various parts of the ORB, but mostly the emphasis is on the

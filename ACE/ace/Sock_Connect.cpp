@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Sock_Connect.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Category.h"

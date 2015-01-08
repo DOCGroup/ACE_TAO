@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Receiver_i.h"
 #include "Client_Task.h"
 #include "Server_Task.h"

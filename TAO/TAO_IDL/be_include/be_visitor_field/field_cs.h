@@ -3,11 +3,8 @@
 /**
  *  @file    field_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the base "BE_Field" node
  *  This generates code for structure members in the client stubs.
- *
  *
  *  @author Aniruddha Gokhale
  */

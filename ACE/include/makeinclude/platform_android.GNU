@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 # This file should allow ACE to be built for Android 2.3.1 (API Level 9)
 # or greater, by cross compiling on Linux.

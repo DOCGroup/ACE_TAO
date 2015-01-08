@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Hello.h"
 #include "ace/ACE.h"
 

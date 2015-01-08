@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log/LogMgr_i.h"
 #include "orbsvcs/Log/LogActivator.h"
 #include "ace/Dynamic_Service.h"

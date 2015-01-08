@@ -4,10 +4,7 @@
 /**
  *  @file   Policy_Current.h
  *
- *  $Id$
- *
  * An implementation for the CORBA::PolicyCurrent interface.
- *
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */

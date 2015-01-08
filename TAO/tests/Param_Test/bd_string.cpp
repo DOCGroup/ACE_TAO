@@ -3,10 +3,7 @@
 /**
  *  @file    bd_string.cpp
  *
- *  $Id$
- *
  *  tests bounded strings
- *
  *
  *  @author   Carlos O'Ryan
  */

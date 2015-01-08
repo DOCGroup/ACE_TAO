@@ -4,8 +4,6 @@
 /**
  * @file Event_Service.h
  *
- * $Id$
- *
  * The TAO event service implementation.
  */
 #ifndef EC_EVENT_SERVICE_H

@@ -3,8 +3,6 @@
 /**
  *  @file    Persistent_Entries.cpp
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

@@ -3,10 +3,7 @@
 /**
  *  @file    timeout_i.h
  *
- *  $Id$
- *
  *  Implements the CORBA object.
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Message_Block.h"
 #include "HTTP_Request.h"
 #include "HTTP_Helpers.h"

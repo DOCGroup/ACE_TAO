@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_sys_time.h"
 #include "PushConsumer.h"
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"

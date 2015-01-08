@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains the ACE network service implementations and
 sample driver programs for dynamically configuring them into client

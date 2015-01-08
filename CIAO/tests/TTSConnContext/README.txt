@@ -1,4 +1,4 @@
-$Id$
+
 
 This test uses a TimeTrigger-Service-Connector.
 The connector self registrates the service-reference with the install_service_component_reference method.

@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef ACE_TRANSCEIVER_H
 #define ACE_TRANSCEIVER_H
 

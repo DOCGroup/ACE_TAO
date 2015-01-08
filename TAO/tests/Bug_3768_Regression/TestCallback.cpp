@@ -1,6 +1,3 @@
-//
-// $Id: TestCallback.cpp
-//
 #include "TestCallback.h"
 #include "ace/OS_NS_unistd.h"
 

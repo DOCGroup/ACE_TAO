@@ -4,12 +4,9 @@
 /**
  *  @file    root_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Root class
  *  This one provides code generation for elements of the Root node in the
  *  client header.
- *
  *
  *  @author Aniruddha Gokhale
  */

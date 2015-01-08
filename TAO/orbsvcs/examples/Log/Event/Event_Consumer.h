@@ -4,11 +4,8 @@
 /**
  *  @file   Event_Consumer.h
  *
- *  $Id$
- *
  *  An example of using the Event_Logging_Service.
  *  The Event_Consumer consumes log-generated events.
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */

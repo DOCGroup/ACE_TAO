@@ -1,6 +1,4 @@
 /*
-** $Id$
-**
 ** This is the Thread-per-connection logging server example from Chapter 7.
 **
 ** Copyright 2002 Addison Wesley. All Rights Reserved.

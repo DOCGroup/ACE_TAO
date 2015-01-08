@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Constants.h"
 
 #include "orbsvcs/Event_Utilities.h"

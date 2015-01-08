@@ -4,12 +4,9 @@
 /**
  *  @file    ior_corbaname_client_i.h
  *
- *  $Id$
- *
  *  This class implements a simple client which sends a corbaname:
  *  style url to the server and gets a response from the
  *  server to indicate that the server has received the request.
- *
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
@@ -26,7 +23,6 @@
  * @class IOR_corbaname_Client_i
  *
  * @brief NContextExt Client Implementation
- *
  */
 class IOR_corbaname_Client_i
 {

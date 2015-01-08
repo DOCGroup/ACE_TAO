@@ -4,8 +4,6 @@
 /**
  *  @file AMH_DSI_Response_Handler.h
  *
- *  $Id$
- *
  *  @brief Handle the Response appropriately.
  */
 //=====================================================================
@@ -37,7 +35,6 @@ typedef TAO_AMH_DSI_Response_Handler *TAO_AMH_DSI_Response_Handler_ptr;
  * @brief The T_var class for response handler
  *
  * As any other pseudo object, this class has a T_var class too.
- *
  */
 class TAO_DynamicInterface_Export TAO_AMH_DSI_Response_Handler_var
 {
@@ -76,7 +73,6 @@ typedef TAO_AMH_DSI_Exception_Holder *TAO_AMH_DSI_Exception_Holder_ptr;
  * @brief The T_var class for exception holder
  *
  * As any other pseudo object, this class has a T_var class too.
- *
  */
 class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder_var
 {
@@ -114,7 +110,6 @@ private:
  * @class TAO_AMH_DSI_Exception_Holder_out
  *
  * @brief The T_out class for exception holder
- *
  */
 class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder_out
 {
@@ -140,7 +135,6 @@ private:
  * @class TAO_AMH_DSI_Exception_Holder
  *
  * @brief This is the class for holding exception.
- *
  */
 class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder
   : public virtual CORBA::DefaultValueRefCountBase,
@@ -205,7 +199,6 @@ protected:
  *
  * As this is built on the CORBA object model, there are separate classes
  * representing the interface and the implementation.
- *
  */
 class TAO_DynamicInterface_Export TAO_AMH_DSI_Response_Handler
   : public virtual TAO_AMH_Response_Handler

@@ -3,8 +3,6 @@
 /**
  *  @file Method_Request_Event.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -31,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Method_Request_Event
  *
  * @brief A base class for all Method Requests that are associated with events.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event
 {
@@ -72,7 +69,6 @@ protected:
  * @class TAO_Notify_Method_Request_Event_Queueable
  *
  * @brief A method request for storing events.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event_Queueable
   : public TAO_Notify_Method_Request_Queueable

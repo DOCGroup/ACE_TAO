@@ -4,8 +4,6 @@
 /**
  *  @file Unbounded_Set_Ex.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
@@ -209,7 +207,6 @@ private:
  *       -# Copy constructor
  *       -# operator=
  *       -# operator== const
- *
  */
 template <class T, class C>
 class ACE_Unbounded_Set_Ex

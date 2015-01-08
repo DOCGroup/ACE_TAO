@@ -1,5 +1,3 @@
-// $Id$
-
 project(*Supplier): namingexe, event_serv {
   exename   = EchoEventSupplier
   includes += ../common

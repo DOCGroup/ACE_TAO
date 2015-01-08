@@ -1,4 +1,3 @@
-// $Id$
 #include "interface_3_i.h"
 
 interface_3_i::interface_3_i (CORBA::ORB_ptr orb)

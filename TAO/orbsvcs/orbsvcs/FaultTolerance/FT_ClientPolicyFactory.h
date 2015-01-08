@@ -4,8 +4,6 @@
 /**
  *  @file     FT_ClientPolicyFactory.h
  *
- *  $Id$
- *
  *  @author  Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

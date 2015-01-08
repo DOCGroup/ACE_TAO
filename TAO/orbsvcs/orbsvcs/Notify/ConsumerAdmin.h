@@ -2,11 +2,7 @@
 /**
  *  @file ConsumerAdmin.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_CONSUMERADMIN_H
@@ -37,7 +33,6 @@ class TAO_Notify_ProxySupplier;
  * @class TAO_Notify_ConsumerAdmin
  *
  * @brief Implementation of CosNotifyChannelAdmin::ConsumerAdmin
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ConsumerAdmin :
                              public virtual POA_NotifyExt::ConsumerAdmin,

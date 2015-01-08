@@ -1,4 +1,4 @@
-$Id$
+
 
 Before compiling the example in The Borland C++ Builder IDE
 you must generate the client and server stubs using build_idl.bat.

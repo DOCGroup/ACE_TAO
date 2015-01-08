@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_CFTLS_TEST_SENDER_EXEC_NYP61D_H_
 #define CIAO_CFTLS_TEST_SENDER_EXEC_NYP61D_H_
 

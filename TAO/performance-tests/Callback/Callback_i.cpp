@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Callback_i.h"
 
 #if !defined(__ACE_INLINE__)

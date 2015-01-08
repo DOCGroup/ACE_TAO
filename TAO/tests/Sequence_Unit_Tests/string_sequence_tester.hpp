@@ -5,8 +5,6 @@
  *
  * @brief Helper class to implement tests for *_string_sequence
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "tao/String_Traits_T.h"

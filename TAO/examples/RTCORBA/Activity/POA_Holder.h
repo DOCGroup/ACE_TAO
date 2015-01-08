@@ -3,8 +3,6 @@
 /**
  *  @file POA_Holder.h
  *
- *  $Id$
- *
  *  A helper to hold options for creating a POA.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -23,7 +21,6 @@
  * @class POA_Holder
  *
  * @brief An options holder for parameters to creating a poa.
- *
  */
 class activity_Export POA_Holder
 {

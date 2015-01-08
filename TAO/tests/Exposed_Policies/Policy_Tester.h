@@ -2,8 +2,6 @@
 /**
  *  @file    Policy_Tester.h
  *
- *  $Id$
- *
  *   This class verifies that the policy are correctly embedded
  *   in the IOR.
  *

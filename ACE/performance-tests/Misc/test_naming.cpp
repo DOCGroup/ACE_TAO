@@ -3,11 +3,8 @@
 /**
  *  @file    test_naming.cpp
  *
- *  $Id$
- *
  *    This is an example to do performance testing of the Naming Service
  *    using both the normal Memory Pool as well as the light Memory Pool.
- *
  *
  *  @author Prashant Jain
  */

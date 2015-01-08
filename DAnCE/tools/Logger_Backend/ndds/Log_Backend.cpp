@@ -1,4 +1,3 @@
-// $Id$
 #include "Log_Backend.h"
 
 #include "ace/Env_Value_T.h"

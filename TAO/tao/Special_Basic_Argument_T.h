@@ -4,8 +4,6 @@
 /**
  *  @file    Special_Basic_Argument_T.h
  *
- *  $Id$
- *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
 //=============================================================================

@@ -3,10 +3,7 @@
 /**
  *  @file    operation_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the stubs file.
- *
  *
  *  @author Aniruddha Gokhale & Angelo Corsaro
  */

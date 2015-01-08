@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_valuetype_fwd.h
  *
- *  $Id$
- *
  *  Concrete visitor for the valuetype_fwd class
- *
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale (be_visitor_interface_fwd.h)
  */

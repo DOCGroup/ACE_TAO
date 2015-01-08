@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_home.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Home class
- *
  *
  *  @author Jeff Parsons
  */

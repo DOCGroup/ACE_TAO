@@ -1,7 +1,5 @@
 // file      : RolyPoly/ReplicaController.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef REPLICA_CONTROLLER_H
 #define REPLICA_CONTROLLER_H
 
@@ -16,7 +14,6 @@
 
 // State management
 //
-//
 
 PortableInterceptor::SlotId
 state_slot_id ();
@@ -25,7 +22,6 @@ void
 state_slot_id (PortableInterceptor::SlotId slot_id);
 
 // ReplicaController
-//
 //
 
 class ReplicaController

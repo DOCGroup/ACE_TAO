@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB_Core.h"
 #include "tao/SystemException.h"
 #include "tao/PolicyC.h"

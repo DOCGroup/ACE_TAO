@@ -1,4 +1,3 @@
-// $Id$
 #include "ClientApp.h"
 #include "TestInf/AppHelper.h"
 #include "TestInf/TestAppExceptionC.h"

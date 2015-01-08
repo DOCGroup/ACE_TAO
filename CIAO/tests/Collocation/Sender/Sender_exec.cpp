@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Sender_exec.h"
 
 namespace CIAO_Sender_Impl

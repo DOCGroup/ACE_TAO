@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SLevel1_TestC.h"
 
 

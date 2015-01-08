@@ -3,10 +3,7 @@
 /**
  *  @file    rettype.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for return type of the Operation node
- *
  *
  *  @author Aniruddha Gokhale
  */

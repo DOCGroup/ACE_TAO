@@ -1,5 +1,3 @@
-// $Id$
-
 #include "server_i.h"
 
 server_i::server_i (CORBA::ORB_ptr orb)

@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (CCM_HOMEREGISTRATION_IDL)
 #define CCM_HOMEREGISTRATION_IDL
 

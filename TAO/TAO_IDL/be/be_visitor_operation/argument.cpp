@@ -3,10 +3,7 @@
 /**
  *  @file    argument.cpp
  *
- *  $Id$
- *
  *  Visitor that calls the visitor for arguments.
- *
  *
  *  @author Aniruddha Gokhale
  */

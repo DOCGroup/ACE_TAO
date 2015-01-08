@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_TP_Servant_State_Map.h
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file Load_Protocol_Factory_T.h
  *
- *  $Id$
- *
  *  Function templates to load a protocol factory.
  *
  *  @author  Johnny Willemsen

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Handle_L_SPIPE.h"
 
 #if !defined (__ACE_INLINE__)

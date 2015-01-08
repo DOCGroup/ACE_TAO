@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Reactor_Notification_Strategy.h"
 #include "ace/Reactor.h"
 

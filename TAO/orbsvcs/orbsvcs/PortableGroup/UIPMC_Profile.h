@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Profile.h
  *
- *  $Id$
- *
  *  UIPMC profile specific processing
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>

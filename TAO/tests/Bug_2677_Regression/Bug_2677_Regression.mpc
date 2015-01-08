@@ -1,5 +1,3 @@
-// $Id$
-
 project(*server): taoserver {
   Source_Files {
     server.cpp

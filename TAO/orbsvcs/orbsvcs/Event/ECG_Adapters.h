@@ -3,15 +3,12 @@
 /**
  * @file ECG_Adapters.h
  *
- * $Id$
- *
  * @author Marina Spivak <marina@atdesk.com>
  *
  * Define interfaces ECG Receivers and Mcast and UDP handlers can use
  * to communicate with each other.
  * Use of these interfaces eliminates the coupling of specific
  * Receivers on specific handlers, and vice versa.
- *
  */
 #ifndef TAO_ECG_ADAPTERS_H
 #define TAO_ECG_ADAPTERS_H

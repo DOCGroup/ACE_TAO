@@ -5,8 +5,6 @@
 /**
  * @file RepositoryManager_Impl.h
  *
- * $Id$
- *
  * Description:
  *  This file is the main implementation file for the RepositoryManager
  *  in CIAO. We have used a number of techniques in order to increase

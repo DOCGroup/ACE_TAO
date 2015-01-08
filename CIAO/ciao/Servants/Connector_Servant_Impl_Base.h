@@ -4,8 +4,6 @@
 /**
  *  @file    Connector_Servant_Impl_Base.h
  *
- *  $Id$
- *
  *  This file contains the non-template declaration of a base class for
  *  the template mixin for the generated connector servant class.
  *

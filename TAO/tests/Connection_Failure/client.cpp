@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testC.h"
 #include "tao/SystemException.h"
 

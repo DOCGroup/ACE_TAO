@@ -3,10 +3,7 @@
 /**
  *  @file    ub_objref_seq.cpp
  *
- *  $Id$
- *
  *  tests unbounded objref sequences
- *
  *
  *  @author   Aniruddha Gokhale
  */

@@ -3,8 +3,6 @@
 /**
  * @file Compression_include.pidl
  *
- * $Id$
- *
  * @brief Include file for use in applications that need Compression.pidl.
  */
 

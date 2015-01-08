@@ -1,4 +1,3 @@
-// $Id$
 // SelectNSDialog.cpp : implementation file
 //
 

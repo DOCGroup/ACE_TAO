@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Stock_Database.h
  * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>

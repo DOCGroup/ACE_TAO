@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef HTTPU_HTTP_STATUS_HPP
 #define HTTPU_HTTP_STATUS_HPP
 

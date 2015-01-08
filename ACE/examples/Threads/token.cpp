@@ -1,5 +1,3 @@
-// $Id$
-
 // Test out the ACE Token class.
 
 #include "ace/OS_main.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    UTF16_UCS2_Translator.h
  *
- *  $Id$
- *
  *  @author Iliyan Jeliazkov <jeliazkov_i@ociweb.com>
  *  @author Byron Harris <harrisb@ociweb.com>
  */

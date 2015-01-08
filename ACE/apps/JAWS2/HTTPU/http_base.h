@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef HTTPU_HTTP_BASE_H
 #define HTTPU_HTTP_BASE_H
 

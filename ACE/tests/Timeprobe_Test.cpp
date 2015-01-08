@@ -3,10 +3,7 @@
 /**
  *  @file    Timeprobe_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test of ACE Timeprobes.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

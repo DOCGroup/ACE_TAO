@@ -4,8 +4,6 @@
 /**
  *  @file    RT_Servant_Dispatcher.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth (fhunleth@cs.wustl.edu)
  */
 //=============================================================================
@@ -36,7 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_RT_Servant_Dispatcher
  *
  * @brief Concrete instantiation of the Servant_Dispatcher strategy.
- *
  */
 class TAO_RTPortableServer_Export TAO_RT_Servant_Dispatcher
   : public TAO_Servant_Dispatcher

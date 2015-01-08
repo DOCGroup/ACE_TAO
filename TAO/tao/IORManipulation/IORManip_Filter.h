@@ -3,8 +3,6 @@
 /**
  *  @file    IORManip_Filter.h
  *
- *  $Id$
- *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
 //=============================================================================

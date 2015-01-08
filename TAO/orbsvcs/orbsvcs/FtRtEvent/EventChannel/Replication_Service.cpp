@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "orbsvcs/FtRtEvent/EventChannel/AMI_Replication_Strategy.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h"

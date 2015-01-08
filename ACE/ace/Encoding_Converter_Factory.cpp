@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Encoding_Converter_Factory.h"
 
 #if defined (ACE_USES_WCHAR)

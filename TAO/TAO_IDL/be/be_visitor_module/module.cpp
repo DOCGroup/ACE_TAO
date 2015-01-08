@@ -3,10 +3,7 @@
 /**
  *  @file    module.cpp
  *
- *  $Id$
- *
  *  Generic visitor generating code for Module
- *
  *
  *  @author Aniruddha Gokhale
  */

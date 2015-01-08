@@ -4,15 +4,12 @@
 /**
  *  @file   FlReactor_Test.cpp
  *
- *  $Id$
- *
  * A simple test that ilustrates the integration of the fast-light
  * toolkit (http://fltk.easysw.org/) with ACE, it uses FL to create
  * an OpenGL window and display a polygon, it uses ACE to open an
  * acceptor. Every time there is a connection the number of polygons
  * is increased, a little widget can be used to change the number of
  * polygons too.
- *
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */

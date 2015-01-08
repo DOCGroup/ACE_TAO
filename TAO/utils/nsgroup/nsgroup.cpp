@@ -2,8 +2,6 @@
 /**
  *  @file    nsgroup.cpp
  *
- *  $Id$
- *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
 //==========================================================================
@@ -64,8 +62,6 @@ show_help(int argc, ACE_TCHAR *argv[])
  * @class nsgroup
  *
  * @brief Encapsulate the NS group command line operations in a class.
- *
- *
  */
 
 class  NSGROUP

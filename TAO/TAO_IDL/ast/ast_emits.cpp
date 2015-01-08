@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_emits.h"
 #include "ast_visitor.h"
 

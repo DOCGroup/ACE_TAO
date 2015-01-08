@@ -3,8 +3,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  @author Andy Gokhale
  *  @author Sumedh Mungee
  *  @author Sergio Flores-Gaitan

@@ -4,8 +4,6 @@
 /**
  *  @file   LogMgr_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::LogMgr interface.
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>

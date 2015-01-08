@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FT_EventService.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Thread_Manager.h"

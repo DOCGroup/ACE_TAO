@@ -3,10 +3,7 @@
 /**
  *  @file    Factory_Finder.h
  *
- *  $Id$
- *
  *  Server for the Quoter Factory Finder
- *
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */

@@ -4,7 +4,7 @@
 /**
  * @file Functors.h
  * @author William Otte <wotte@dre.vanderbilt.edu>
- * $Id$
+ *
  * Functors useful in the config handlers
  */
 #include <iterator>

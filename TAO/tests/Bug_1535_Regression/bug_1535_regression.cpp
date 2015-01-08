@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test.h"
 #include "tao/Utils/ORB_Destroyer.h"
 #include "tao/Utils/RIR_Narrow.h"

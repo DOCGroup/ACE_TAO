@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id$
 
 SYSTEM=`uname -s`
 IPCS="ipcs"

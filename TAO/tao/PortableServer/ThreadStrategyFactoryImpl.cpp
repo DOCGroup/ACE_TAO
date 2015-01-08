@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/ThreadStrategyFactoryImpl.h"
 #include "tao/PortableServer/ThreadStrategy.h"
 #include "ace/Dynamic_Service.h"

@@ -3,8 +3,6 @@
 /**
  *  @file RT_Builder.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -26,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_RT_Builder
  *
  * @brief Builder for RT specific classes.
- *
  */
 class TAO_RT_Notify_Export TAO_Notify_RT_Builder : public TAO_Notify_Builder
 {

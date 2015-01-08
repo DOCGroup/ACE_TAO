@@ -3,8 +3,6 @@
 /**
  *  @file   ESF_Proxy_Admin.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  *  http://doc.ece.uci.edu/~coryan/EC/index.html
@@ -59,7 +57,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * PROXY::_ptr_type
  * PROXY::activate (void) throw ();
  * @endverbatim
- *
  */
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE>
 class TAO_ESF_Proxy_Admin

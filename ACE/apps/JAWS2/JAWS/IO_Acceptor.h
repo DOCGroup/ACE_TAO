@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_IO_ACCEPTOR_H
 #define JAWS_IO_ACCEPTOR_H
 

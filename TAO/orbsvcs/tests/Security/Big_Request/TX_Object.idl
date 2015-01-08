@@ -4,8 +4,6 @@
 /**
  * @file TX_Object.idl
  *
- * $Id$
- *
  * IDL for the SSLIOP Big_Request test.
  *
  * @author Andrew Finnell

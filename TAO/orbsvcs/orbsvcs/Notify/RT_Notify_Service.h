@@ -3,8 +3,6 @@
 /**
  *  @file RT_Notify_Service.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -26,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_RT_Notify_Service
  *
  * @brief Implemetation of the TAO_Notify_Service interface for RT Notification.
- *
  */
 class TAO_RT_Notify_Export TAO_RT_Notify_Service : public TAO_CosNotify_Service
 {

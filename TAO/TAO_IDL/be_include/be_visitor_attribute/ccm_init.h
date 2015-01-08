@@ -3,11 +3,8 @@
 /**
  *  @file    ccm_init.h
  *
- *  $Id$
- *
  *  Visitor generating a block of code to initialize
  *  each of a component or home's read/write attributes
- *
  *
  *  @author Jeff Parsons
  */

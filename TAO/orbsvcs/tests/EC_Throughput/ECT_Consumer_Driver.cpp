@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ECT_Consumer_Driver.h"
 
 #include "orbsvcs/CosNamingC.h"

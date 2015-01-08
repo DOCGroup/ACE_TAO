@@ -4,8 +4,6 @@
 /**
  *  @file    ETCL_Constraint.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Jeff Parsons (j.parsons@vanderbilt.edu)
  */

@@ -3,15 +3,12 @@
 /**
  *  @file    allocator.cpp
  *
- *  $Id$
- *
  * Compares the performance of a TSS allocator, with no locks, to
  * the global allocator (with locks) even in the abscence of
  * contention.
  * The idea behind this test is to measure the predictability of
  * each allocator, specially under the light of potential
  * fragmentation in the main allocator.
- *
  *
  *  @author Carlos O'Ryan
  */

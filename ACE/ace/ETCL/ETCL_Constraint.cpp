@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ace/ACE.h"
 
 #include "ace/ETCL/ETCL_Constraint.h"

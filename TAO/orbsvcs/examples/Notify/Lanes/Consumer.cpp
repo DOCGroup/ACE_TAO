@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Consumer.h"
 
 TAO_Notify_Lanes_Consumer::TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& orb_objects)

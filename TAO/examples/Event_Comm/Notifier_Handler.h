@@ -4,8 +4,6 @@
 /**
  *  @file    Notifier_Handler.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file   FILE_Parser.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(DAnCE_NodeApplication): install, dance_lib, \
                           dance_nodeapplication_skel, dance_deployment_scheduler, \
                           dance_logger, iortable, naming, dance_locality_handler, \

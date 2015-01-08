@@ -4,8 +4,6 @@
 /**
  *  @file    Message_Queue_Vx.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

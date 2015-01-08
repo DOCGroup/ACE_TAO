@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HelloS.h"
 
 class Hello_impl :

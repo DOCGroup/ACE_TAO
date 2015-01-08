@@ -2,8 +2,6 @@
 /**
  *  @file   Stack_Trace.cpp
  *
- *  $Id$
- *
  *  @brief  Encapsulate string representation of stack trace.
  *
  *  Some platform-specific areas of this code have been adapted from
@@ -22,7 +20,6 @@
  *
  *  If you add support for a new platform, please add a bullet to the
  *  above list with durable references to the origins of your code.
- *
  */
 //=============================================================================
 

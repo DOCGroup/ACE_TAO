@@ -1,4 +1,3 @@
-// $Id$
 #ifndef BUG_680_REGRESSION_I_H
 #define BUG_680_REGRESSION_I_H
 

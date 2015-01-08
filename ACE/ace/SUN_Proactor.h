@@ -4,8 +4,6 @@
 /**
  *  @file    SUN_Proactor.h
  *
- *  $Id$
- *
  *  @author Alexander Libman <alibman@baltimore.com>
  */
 //=============================================================================

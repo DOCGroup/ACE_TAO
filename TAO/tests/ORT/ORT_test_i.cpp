@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ORT_test_i.h"
 
 ORT_test_i::ORT_test_i (CORBA::ORB_ptr orb)

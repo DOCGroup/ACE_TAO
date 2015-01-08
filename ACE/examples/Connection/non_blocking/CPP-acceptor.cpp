@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (CPP_ACCEPTOR_C)
 
 #define CPP_ACCEPTOR_C

@@ -1,4 +1,3 @@
-// $Id$
 #include "Server_Worker.h"
 
 Server_Worker::Server_Worker (CORBA::ORB_ptr orb)

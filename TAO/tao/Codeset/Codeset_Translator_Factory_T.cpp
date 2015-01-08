@@ -3,10 +3,7 @@
 /**
  *  @file    Codeset_Translator_Factory_T.cpp
  *
- *  $Id$
- *
  *  The template for creating a particular instance of a codeset translator
- *
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */

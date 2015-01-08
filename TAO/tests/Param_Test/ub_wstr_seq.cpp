@@ -3,10 +3,7 @@
 /**
  *  @file    ub_wstr_seq.cpp
  *
- *  $Id$
- *
  *  tests unbounded wide string sequences
- *
  *
  *  @author   Jeff Parsons
  */

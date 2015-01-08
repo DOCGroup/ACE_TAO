@@ -4,8 +4,6 @@
 /**
  *  @file    CosPropertyService_i.h
  *
- *  $Id$
- *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================

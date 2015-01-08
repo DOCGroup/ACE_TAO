@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_ACCEPTOR_CPP
 #define ACE_ACCEPTOR_CPP
 

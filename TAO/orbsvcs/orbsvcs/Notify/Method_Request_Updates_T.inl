@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Peer.h"
 

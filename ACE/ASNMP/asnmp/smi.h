@@ -5,8 +5,6 @@
 /**
  *  @file    smi.h
  *
- *  $Id$
- *
  * Address class definition. Encapsulates various network
  * addresses into easy to use, safe and portable classes.
  */

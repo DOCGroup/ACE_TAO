@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/StrategyFactory.h"
 #include "ace/Dynamic_Service.h"
 

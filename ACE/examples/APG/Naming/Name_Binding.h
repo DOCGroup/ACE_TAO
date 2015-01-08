@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef NAME_BINDING_H
 #define NAME_BINDING_H
 

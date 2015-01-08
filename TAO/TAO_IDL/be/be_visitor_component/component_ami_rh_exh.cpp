@@ -3,10 +3,7 @@
 /**
  *  @file    component_ami_rh_exh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for AMI4CCM reply handler impl headers.
- *
  *
  *  @author Jeff Parsons
  */

@@ -3,10 +3,7 @@
 /**
  *  @file    operation_sh.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations in server header
- *
  *
  *  @author Aniruddha Gokhale
  */

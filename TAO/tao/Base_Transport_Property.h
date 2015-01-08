@@ -1,12 +1,7 @@
 // -*- C++ -*-
-//
-// $Id$
-
 // ===================================================================
 /**
  *  @file  Base_Transport_Property.h
- *
- *  $Id$
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Connection_Handler_Connector.h"
 #include "ace/os_include/os_netdb.h"
 

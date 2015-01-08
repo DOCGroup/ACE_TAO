@@ -1,5 +1,3 @@
-// $Id$
-
 // Force CORBA::release(CORBA::Request...) prototype to be parsed
 // before TAO_Pseudo_{Var,Out}_T templates.  All required
 // non-dependent names must be parsed prior to the template in

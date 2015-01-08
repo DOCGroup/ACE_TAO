@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file DAnCE_Utility.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

@@ -3,8 +3,6 @@
 /**
  *  @file    Object_Manager_Flipping_Test.cpp
  *
- *  $Id$
- *
 
  *  Tests the basic function of the ACE_Service_Config in scenarios
  *  where the ACE_Object_Manager is being
@@ -12,7 +10,6 @@
  *  (which can occur with loading DLLs).  More specifically we test
  *  that the OM correctly controlls the lifecycle of the default SC
  *  instance, which is pointed to by a TSS pointer.
- *
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */

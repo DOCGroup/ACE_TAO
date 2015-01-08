@@ -1,5 +1,3 @@
-// $Id$
-
 
 #include "PeerObject.h"
 #include "Invocation.h"

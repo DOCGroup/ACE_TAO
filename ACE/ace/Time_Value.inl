@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

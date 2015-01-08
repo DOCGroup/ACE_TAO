@@ -4,11 +4,8 @@
 /**
  *  @file    exception_ch.h
  *
- *  $Id$
- *
  *  Visitor for Exceptions.
  *  For code generation in client header
- *
  *
  *  @author Aniruddha Gokhale
  */

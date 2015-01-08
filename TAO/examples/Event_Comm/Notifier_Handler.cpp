@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Notifier_Handler.h"
 #include "tao/ORB_Core.h"
 

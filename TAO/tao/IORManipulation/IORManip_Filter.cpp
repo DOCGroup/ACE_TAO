@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/IORManipulation/IORManip_Filter.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/MProfile.h"

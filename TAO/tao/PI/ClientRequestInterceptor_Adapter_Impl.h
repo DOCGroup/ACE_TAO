@@ -4,8 +4,6 @@
 /**
  *  @file    ClientRequestInterceptor_Adapter_Impl.h
  *
- *  $Id$
- *
  *   This file an adapter class to simplify the support of
  *   interceptors.
  *

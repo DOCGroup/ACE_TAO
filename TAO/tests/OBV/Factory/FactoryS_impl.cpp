@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FactoryC_impl.h"
 #include "FactoryS_impl.h"
 

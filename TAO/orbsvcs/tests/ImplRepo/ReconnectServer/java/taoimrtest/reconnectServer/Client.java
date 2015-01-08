@@ -1,5 +1,3 @@
-// $Id$
-
 package taoimrtest.reconnectserver;
 
 import org.omg.CORBA.*;

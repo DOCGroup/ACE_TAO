@@ -1,4 +1,3 @@
-// $Id$
 #ifndef DEPLOYMENT_EVENT_INL
 #define DEPLOYMENT_EVENT_INL
 

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "StockDistributor_exec.h"
 #include "ace/Reactor.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Notifier_Server.h"
 #include "notifier.h"
 

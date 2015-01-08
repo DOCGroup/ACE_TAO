@@ -3,10 +3,7 @@
 /**
  *  @file    nested_struct.cpp
  *
- *  $Id$
- *
  *  tests nested structs
- *
  *
  *  @author   Aniruddha Gokhale
  */

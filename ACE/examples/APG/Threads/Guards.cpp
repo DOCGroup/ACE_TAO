@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
 

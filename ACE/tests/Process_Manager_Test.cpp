@@ -3,8 +3,6 @@
 /**
  *  @file    Process_Manager_Test.cpp
  *
- *  $Id$
- *
  *    This program tests the various methods provided by
  *    <ACE_Process_Manager>.  It illustrates both the explicit <wait>
  *    functions and the Reactor-style auto-reaping.  There's an
@@ -14,7 +12,6 @@
  *    The child processes spawned are simply this program itself, with
  *    an integer argument specifying how long to "process" (actually,
  *    the child just sleeps for the specified length of time).
- *
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Dave Madden <dhm@mersenne.com>
  */

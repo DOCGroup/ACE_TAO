@@ -5,8 +5,6 @@
  *
  * @brief Implement unbounded sequences for object references.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "Unbounded_Reference_Allocation_Traits_T.h"

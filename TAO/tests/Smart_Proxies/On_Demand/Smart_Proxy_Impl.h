@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testC.h"
 
 class Smart_Test_Proxy : public virtual TAO_Test_Smart_Proxy_Base

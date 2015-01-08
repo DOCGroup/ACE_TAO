@@ -4,8 +4,6 @@
 /**
  *  @file    Time_Request_Reply.h
  *
- *  $Id$
- *
  *  Define the format used to exchange messages between the
  *  ACE time server and clerks.
  *

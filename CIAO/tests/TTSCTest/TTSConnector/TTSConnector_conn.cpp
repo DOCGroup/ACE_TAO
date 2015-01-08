@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB_Core.h"
 #include "TTSConnector_conn.h"
 #include "ace/OS_NS_unistd.h"

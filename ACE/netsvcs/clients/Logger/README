@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains two sample logging applications that implement
 and test the ACE distributed logging service.

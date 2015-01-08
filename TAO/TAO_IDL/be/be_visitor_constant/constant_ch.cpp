@@ -3,10 +3,7 @@
 /**
  *  @file    constant_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the Constant node in the client header.
- *
  *
  *  @author Aniruddha Gokhale
  */

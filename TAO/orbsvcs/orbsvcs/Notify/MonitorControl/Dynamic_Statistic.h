@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef DYNAMIC_STATISTIC_H
 #define DYNAMIC_STATISTIC_H
 

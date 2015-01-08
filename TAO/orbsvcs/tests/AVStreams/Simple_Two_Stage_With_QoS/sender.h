@@ -4,11 +4,8 @@
 /**
  *  @file    sender.h
  *
- *  $Id$
- *
  *  This application reads data from a file and sends it to s
  *  receiver through an RSVP enabled stream.
- *
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */

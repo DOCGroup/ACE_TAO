@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Custom_Network_Priority_Mapping.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"

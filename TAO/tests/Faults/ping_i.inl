@@ -1,5 +1,3 @@
-// $Id$
-
 ACE_INLINE
 PingObject_i::PingObject_i (CORBA::ORB_ptr orb,
                             PortableServer::POA_ptr poa)

@@ -3,8 +3,6 @@
 /**
  *  @file    FT_FaultDetectorFactory_i.h
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  It declares the implementation of FaultDetectorFactory which
  *  creates and manages FaultDetectors as an agent for
@@ -76,7 +74,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  It then closes the ACE_Thread_Manager to ensure that all
  *  detector threads have departed before the factory itself is
  *  deleted.
- *
  */
 
 namespace TAO

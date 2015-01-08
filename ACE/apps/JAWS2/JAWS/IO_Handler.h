@@ -4,8 +4,6 @@
 /**
  *  @file    IO_Handler.h
  *
- *  $Id$
- *
  *  @author James Hu
  */
 //=============================================================================
@@ -43,7 +41,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  *
  * @brief This class defines the abstract interface for an I/O handler
  * class in the context of Web-likes servers
- *
  */
 class JAWS_Export JAWS_Abstract_IO_Handler
 {

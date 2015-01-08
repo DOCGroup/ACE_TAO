@@ -3,10 +3,7 @@
 /**
  * @file Clock_Ticks.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 
 namespace Clock_Ticks

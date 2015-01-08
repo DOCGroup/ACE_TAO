@@ -1,5 +1,3 @@
-// $Id$
-
 project(*idl): taoidldefaults {
   idlflags += -GC
   IDL_Files {

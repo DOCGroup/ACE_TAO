@@ -4,8 +4,6 @@
 /**
  *  @file    Client_Logging_Handler.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt <schmidt@.cs.wustl.edu>
  */
 //=============================================================================

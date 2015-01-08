@@ -4,7 +4,7 @@
 # Description   : Front end for the Notify Service Monitor
 # Author        : Chad Elliott
 # Create Date   : 7/17/2007
-#            $Id$
+#            
 # ************************************************************
 
 # ************************************************************

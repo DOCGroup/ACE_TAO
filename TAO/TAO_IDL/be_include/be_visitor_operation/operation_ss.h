@@ -4,10 +4,7 @@
 /**
  *  @file    operation_ss.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations in server skeletons
- *
  *
  *  @author Aniruddha Gokhale
  */

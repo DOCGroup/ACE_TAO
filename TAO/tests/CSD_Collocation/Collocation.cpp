@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Collocation_Tester.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/CSD_Framework/CSD_ORBInitializer.h"

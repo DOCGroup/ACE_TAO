@@ -3,11 +3,8 @@
 /**
  *  @file    cdr_op_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the base "BE_Union_Branch" node
  *  This generates code for structure members in the client header.
- *
  *
  *  @author Aniruddha Gokhale
  */

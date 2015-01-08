@@ -1,5 +1,3 @@
-// $Id$
-
 // Consumer_i.h
 // Implements a TypedPushConsumer.
 

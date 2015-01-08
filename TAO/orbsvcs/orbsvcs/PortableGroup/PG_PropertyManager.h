@@ -4,8 +4,6 @@
 /**
  * @file PG_PropertyManager.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

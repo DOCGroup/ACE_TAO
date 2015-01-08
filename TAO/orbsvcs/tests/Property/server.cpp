@@ -3,10 +3,7 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Test server for the CosPropertyService
- *
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */

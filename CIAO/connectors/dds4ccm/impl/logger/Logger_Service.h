@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef DDS4CCM_LOGGER_SERVICE_H_
 #define DDS4CCM_LOGGER_SERVICE_H_
 

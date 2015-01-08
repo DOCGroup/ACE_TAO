@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_IOS_SOCK_IOSTREAM_CPP
 #define ACE_IOS_SOCK_IOSTREAM_CPP
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP == 0)
 
 #include "ace/OS_main.h"

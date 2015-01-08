@@ -4,8 +4,6 @@
 /**
  *  @file    Server_Logging_Handler.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt and Per Andersson <Per.Andersson@hfera.ericsson.se>
  */
 //=============================================================================

@@ -2,8 +2,6 @@
 /**
  *  @file   EC_Filter_Builder.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and

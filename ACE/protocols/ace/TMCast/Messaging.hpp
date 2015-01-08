@@ -1,4 +1,3 @@
-// $Id$
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
 #ifndef TMCAST_MESSAGING_HPP

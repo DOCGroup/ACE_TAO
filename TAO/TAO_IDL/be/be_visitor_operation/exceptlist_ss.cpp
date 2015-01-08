@@ -3,11 +3,8 @@
 /**
  *  @file    exceptlist_ss.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for the list of exceptions that an operation
  *  raises (skeleton/server side).
- *
  *
  *  @author Ossama Othman
  */

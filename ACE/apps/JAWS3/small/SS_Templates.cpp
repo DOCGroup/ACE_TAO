@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Singleton.h"
 

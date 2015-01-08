@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_CALLBACK_I_H
 #define TAO_CALLBACK_I_H
 

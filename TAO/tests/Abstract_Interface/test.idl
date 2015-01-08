@@ -1,5 +1,3 @@
-// $Id$
-
 exception BadInput
 {
   string message;

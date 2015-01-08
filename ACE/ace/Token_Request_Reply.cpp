@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Token_Request_Reply.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)

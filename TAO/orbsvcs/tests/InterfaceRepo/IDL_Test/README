@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory runs the IFR compiler on the various IDL compiler
 stress tests found in $TAO_ROOT/tests/IDL_Test.  It will automatically

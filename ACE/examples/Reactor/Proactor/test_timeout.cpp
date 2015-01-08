@@ -3,20 +3,15 @@
 /**
  *  @file    test_timeout.cpp
  *
- *  $Id: test_timeout.cpp
- *
- *
  *  This example application shows how to write event loops that
  *  handle events for some fixed amount of time. Note that any
  *  thread in the Proactor thread pool can call back the handler. On
  *  POSIX4 systems, this test works only with POSIX_SIG_Proactor,
  *  which can work with multiple threads.
  *
- *
  *  @author Irfan Pyarali and Alexander Babu Arulanthu
  */
 //=============================================================================
-
 
 #include "ace/Proactor.h"
 #include "ace/Task.h"
@@ -24,8 +19,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
-
-
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting

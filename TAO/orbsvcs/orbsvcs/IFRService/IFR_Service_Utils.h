@@ -5,10 +5,7 @@
 /**
  *  @file    IFR_Service_Utils.h
  *
- *  $Id$
- *
  *    Implement wrappers useful to IFR Service clients and servers.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu> Jaiganesh Balasubramanian <jai@doc.ece.uci.edu> Priyanka Gontla <pgontla@doc.ece.uci.edu>
  */

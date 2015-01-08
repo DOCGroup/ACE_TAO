@@ -3,11 +3,8 @@
 /**
  *  @file    smart_proxy_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This provides code generation for smart proxy classes in the client stub.
- *
  *
  *  @author Kirthika Parameswaran
  */

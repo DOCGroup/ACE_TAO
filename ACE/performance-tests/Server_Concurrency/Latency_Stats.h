@@ -1,5 +1,3 @@
-// $Id$
-
 class Latency_Stats
 {
 public:

@@ -3,8 +3,6 @@
 /**
  *  @file    Fault_Detector_i.cpp
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  This file implements the Fault_Detector_i class as declared in Fault_Detector_i.h.
  *

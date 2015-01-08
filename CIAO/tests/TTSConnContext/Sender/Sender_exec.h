@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_SENDER_EXEC_H_
 #define CIAO_SENDER_EXEC_H_
 

@@ -1,9 +1,6 @@
 
 /**
  * @file Kokyu_qos.idl
- *
- * $Id$
- *
  */
 
 #ifndef _KOKYU_DSRT_QOS_PIDL_

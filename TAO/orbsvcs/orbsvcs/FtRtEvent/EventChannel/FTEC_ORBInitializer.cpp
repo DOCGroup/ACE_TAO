@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_ORBInitializer.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h"
 #include "orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h"

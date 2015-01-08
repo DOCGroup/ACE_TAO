@@ -1,5 +1,3 @@
-// $Id$
-
 project (asnmp_example_set) : aceexe {
   exename = set
   after += asnmp_lib

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Service_Types.h"
 
 #if !defined (__ACE_INLINE__)

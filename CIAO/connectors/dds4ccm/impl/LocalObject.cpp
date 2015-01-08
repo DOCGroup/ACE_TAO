@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/LocalObject.h"
 
 namespace CIAO

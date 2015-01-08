@@ -1,6 +1,6 @@
 /**
 
-$Id$
+
 
 @page Muxed_GIOP_Versions Test README File
       This is stress test to make sure that TAO doesnt share the GIOP

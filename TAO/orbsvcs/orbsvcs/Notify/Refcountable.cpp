@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Refcountable.h"
 #include "tao/debug.h"
 #include "orbsvcs/Log_Macros.h"

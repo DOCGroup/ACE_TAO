@@ -2,8 +2,6 @@
 /**
  *  @file   amh_rh_ss.h
  *
- *  $Id$
- *
  *  Specialized visitor for AMH-ResponseHandler that generates code for the
  *  RH in the skeleton source file
  *

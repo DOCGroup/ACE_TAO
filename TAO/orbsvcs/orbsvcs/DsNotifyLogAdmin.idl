@@ -3,8 +3,6 @@
 /**
  *  @file    DsNotifyLogAdmin.idl
  *
- *  $Id$
- *
  *  This module defines the NotifyLog and
  *  NotifyLogFactory interfaces.
  *

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include <ace/SString.h>
 #include <ace/ARGV.h>
 

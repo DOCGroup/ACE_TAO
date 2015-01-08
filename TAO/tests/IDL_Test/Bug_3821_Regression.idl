@@ -1,5 +1,3 @@
-// $Id$
-
 module test {
   enum Enumeration {
     Enum1,

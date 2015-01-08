@@ -2,8 +2,6 @@
 /**
  *  @file  ESD_Handler.h
  *
- *  $Id$
- *
  *  @author Gan Deng <dengg@dre.vanderbilt.edu>
  */
 //================================================================

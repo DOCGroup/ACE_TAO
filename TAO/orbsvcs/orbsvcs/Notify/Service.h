@@ -3,8 +3,6 @@
 /**
  *  @file Service.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -49,7 +47,6 @@ namespace CORBA
  *
  * @brief Abstract ACE_Service_Object interface that is a
  * factory for creating a Notify EventChannelFactory.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Service : public ACE_Service_Object
 {

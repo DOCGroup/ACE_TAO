@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #include "tao/Strategies/DIOP_Acceptor.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)

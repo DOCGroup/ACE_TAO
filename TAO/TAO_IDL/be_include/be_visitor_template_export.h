@@ -4,14 +4,11 @@
 /**
  *  @file    be_visitor_template_export.h
  *
- *  $Id$
- *
  *  This visitor generates an explicit export of a sequence's
  *  template base class. It is conditionally launched by a
  *  command line option and is motivated by a bug in Visual
  *  Studio C++ (.NET 2002, .NET 2003, and Express 2005), documented in
  *  http://support.microsoft.com/default.aspx?scid=kb;en-us;309801
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

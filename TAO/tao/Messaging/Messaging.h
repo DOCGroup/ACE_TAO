@@ -4,8 +4,6 @@
 /**
  *  @file Messaging.h
  *
- *  $Id$
- *
  *  Include all the required headers to use CORBA Messaging easily.
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>

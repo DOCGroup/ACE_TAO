@@ -1,5 +1,3 @@
-//$Id$
-
 #include "RT_Properties.h"
 
 #include "tao/ORB_Constants.h"

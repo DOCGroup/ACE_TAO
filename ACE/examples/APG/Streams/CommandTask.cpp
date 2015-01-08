@@ -1,5 +1,3 @@
-// $Id$
-
 #include "CommandTask.h"
 
 // Listing 01 code/ch18

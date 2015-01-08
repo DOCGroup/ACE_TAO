@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project {
   libout = ../lib
 }

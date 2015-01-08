@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 # support for Mac OS X 10.2 (jaguar), 10.3 (panther)
 # Note: /sw/lib & /sw/include are inserted for the convience of Fink

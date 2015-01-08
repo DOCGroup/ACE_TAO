@@ -4,8 +4,6 @@
 /**
  *  @file    Adapter_Factory.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */
 //=============================================================================

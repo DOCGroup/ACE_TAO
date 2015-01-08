@@ -1,5 +1,3 @@
-// $Id$
-
 #include "XML_Helper.h"
 #include "ace/Log_Msg.h"
 

@@ -3,11 +3,8 @@
 /**
  *  @file    arglist.cpp
  *
- *  $Id$
- *
  *  Visitor generating the parameter list of operations
  *  in the Valuetype class.
- *
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
  */

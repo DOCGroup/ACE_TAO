@@ -3,11 +3,8 @@
 /**
  *  @file    home_ex_idl.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Home node.
  *  Provides code generation for homes in the CIAO executor IDL
- *
  *
  *  @author Jeff Parsons
  */

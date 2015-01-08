@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // ------------------------------
 #ifndef DEPLOYMENT_SCHEDULER_EXPORT_H

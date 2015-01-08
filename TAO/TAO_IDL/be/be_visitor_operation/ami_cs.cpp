@@ -3,10 +3,7 @@
 /**
  *  @file    ami_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the stubs file.
- *
  *
  *  @author Aniruddha Gokhale
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu> Michael Kircher

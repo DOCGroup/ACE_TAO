@@ -1,5 +1,3 @@
-// $Id$
-
 Regression test for multi-threaded server concurrent MIOP message processing.
 
 (MIOP messages were being serialised by using a single server worker thread from any pool set-up, this test checks that multiple threads can concurrently process MIOP messages that are received.)

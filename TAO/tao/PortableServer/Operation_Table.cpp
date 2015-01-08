@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/Operation_Table.h"
 #include "tao/ORB.h"
 

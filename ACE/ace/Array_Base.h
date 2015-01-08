@@ -4,8 +4,6 @@
 /**
  *  @file Array_Base.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

@@ -1,4 +1,3 @@
-// $Id$
 // Reused from: $TAO_ROOT/orbsvcs/examples/RtEC/MCast
 
 #ifndef SUPPLIER_H

@@ -4,8 +4,6 @@
 /**
  *  @file    URL_Status.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
@@ -22,7 +20,6 @@
 
 /**
  * @class URL_Status
- *
  */
 class URL_Status
 {

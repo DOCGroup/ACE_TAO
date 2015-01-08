@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Valuetype/ValueFactory_Map.h"
 #include "tao/Valuetype/ValueFactory.h"
 #include "tao/CORBA_String.h"

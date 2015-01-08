@@ -1,5 +1,3 @@
-// $Id$
-
 typedef union {
   CC_Command *command;
   CosConcurrencyControl::lock_mode lock_mode;

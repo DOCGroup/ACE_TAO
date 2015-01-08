@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (ACE_LOCATOR_REQUEST_REPLY_C)
 #define ACE_LOCATOR_REQUEST_REPLY_C
 

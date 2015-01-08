@@ -1,8 +1,6 @@
 /**
  * @file EC_Proxy_Disconnector.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 

@@ -4,8 +4,6 @@
 /**
 *  @file Locator_Repository.h
 *
-*  $Id$
-*
 *  This class implements the Repository for the Implementation Repository.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

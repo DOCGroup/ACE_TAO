@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0

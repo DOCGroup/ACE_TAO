@@ -1,5 +1,3 @@
-// $Id$
-
 #include "client_i.h"
 
 client_i::client_i (int quiet,

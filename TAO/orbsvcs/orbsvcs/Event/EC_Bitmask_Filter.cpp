@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Bitmask_Filter.h"
 
 

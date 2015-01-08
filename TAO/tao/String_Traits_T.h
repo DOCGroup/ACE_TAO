@@ -5,8 +5,6 @@
  *
  * @brief Implement the element manipulation traits for string types.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

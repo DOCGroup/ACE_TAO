@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "tao/corba.h"
 
 // Attempts to resolve the NameService.

@@ -4,8 +4,6 @@
 /**
  * @file  Storable_Factory.cpp
  *
- * $Id$
- *
  * @author Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================

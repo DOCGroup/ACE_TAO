@@ -3,10 +3,7 @@
 /**
  *  @file    any.cpp
  *
- *  $Id$
- *
  *  tests Anys
- *
  *
  *  @author   Aniruddha Gokhale
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __DETAILVIEW_H
 #define __DETAILVIEW_H
 

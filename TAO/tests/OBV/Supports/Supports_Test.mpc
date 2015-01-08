@@ -1,5 +1,3 @@
-// $Id$
-
 project(*Server): taoserver, valuetype, strategies {
   // This is just a dummy_label to prevent the test from being compiled
   // in MPC builds

@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains a CORBA example illustrating a simple client and
 a server. The idl is similar to jacorb demo/value test. The test is used to

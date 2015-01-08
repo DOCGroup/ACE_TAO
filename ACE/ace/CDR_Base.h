@@ -4,8 +4,6 @@
 /**
  *  @file   CDR_Base.h
  *
- *  $Id$
- *
  * ACE Common Data Representation (CDR) basic types.
  *
  * The current implementation assumes that the host has 1-byte,
@@ -13,7 +11,6 @@
  * precision and double precision IEEE floats.
  * Those assumptions are pretty good these days, with Crays being
  * the only known exception.
- *
  *
  *  @author TAO version by
  *  @author Aniruddha Gokhale <gokhale@cs.wustl.edu>

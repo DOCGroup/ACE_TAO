@@ -3,8 +3,6 @@
 /**
  *  @file Method_Request_Lookup.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 #ifndef TAO_Notify_LOOKUP_METHOD_REQUEST_H
@@ -35,7 +33,6 @@ class TAO_Notify_Event;
  * @class TAO_Notify_Method_Request_Lookup
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup
   : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
@@ -80,7 +77,6 @@ protected:
  * @class TAO_Notify_Method_Request_Lookup_Queueable
  *
  * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_Queueable
   : public TAO_Notify_Method_Request_Lookup
@@ -114,7 +110,6 @@ private:
  * @class TAO_Notify_Method_Request_Lookup_No_Copy
  *
  * @brief Lookup command object looks up the event type of the given event in the consumer map and send the event to each proxysupplier.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_No_Copy
   : public TAO_Notify_Method_Request_Lookup

@@ -5,8 +5,6 @@
  *
  * @brief Implement unbounded sequences for bounded strings and wide-strings.
  *
- * $Id$
- *
  * @author Vladimir Zykov
  */
 #include "tao/Unbounded_Basic_String_Sequence_T.h"

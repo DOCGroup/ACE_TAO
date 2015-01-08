@@ -4,8 +4,6 @@
 /**
  *  @file   Optimized_Connection_Endpoint_Selector.h
  *
- *  $Id$
- *
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
  *

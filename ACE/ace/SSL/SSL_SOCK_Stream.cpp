@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Handle_Set.h"
 #include "ace/Log_Category.h"
 #include "ace/Countdown_Time.h"

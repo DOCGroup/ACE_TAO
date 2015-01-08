@@ -1,7 +1,6 @@
 // -*- IDL -*-
 
 /**
- * $Id$
  */
 
 #ifndef TAO_IMRCLIENT_SERVEROBJECT_PIDL

@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef PRESENTATION_QOS_TEST_H_
 #define PRESENTATION_QOS_TEST_H_
 

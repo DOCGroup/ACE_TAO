@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/Upcall_Wrapper.h"
 #include "tao/PortableServer/Upcall_Command.h"
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"

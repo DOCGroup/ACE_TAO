@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Dynamic_TP/DTP_Config.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Service_Config.h"

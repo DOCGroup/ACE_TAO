@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_SVC_HANDLER_CPP
 #define ACE_SVC_HANDLER_CPP
 

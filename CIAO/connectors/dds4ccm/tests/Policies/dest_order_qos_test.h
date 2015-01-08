@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef DEST_ORDER_QOS_TEST_H_
 #define DEST_ORDER_QOS_TEST_H_
 

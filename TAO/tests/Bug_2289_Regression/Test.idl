@@ -1,5 +1,3 @@
-// $Id$
-
 typedef string MyString;
 
 interface MyInterface

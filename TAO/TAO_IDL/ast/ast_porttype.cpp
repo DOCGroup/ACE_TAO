@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_porttype.h"
 #include "ast_provides.h"
 #include "ast_uses.h"

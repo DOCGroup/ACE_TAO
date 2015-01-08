@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_HTTP_STATES_H
 #define JAWS_HTTP_STATES_H
 

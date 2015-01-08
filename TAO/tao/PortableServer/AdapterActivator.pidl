@@ -1,10 +1,7 @@
 /**
  * @file AdapterActivator.pidl
  *
- * $Id$
- *
  * @brief PIDL source for the PortableServer module.
- *
  */
 
 #ifndef _PORTABLESERVER_ADAPTER_ACTIVATOR_IDL_

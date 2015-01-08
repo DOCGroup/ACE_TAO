@@ -1,5 +1,3 @@
-// $Id$
-
 interface sig
 {
   // Tell the server to start

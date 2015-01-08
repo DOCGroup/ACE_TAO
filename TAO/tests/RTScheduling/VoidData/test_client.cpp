@@ -1,4 +1,3 @@
-//$Id$
 #include "tao/RTScheduling/RTScheduler.h"
 #include "testC.h"
 #include "test.h"

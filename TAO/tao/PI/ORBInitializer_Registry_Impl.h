@@ -4,8 +4,6 @@
 /**
  *  @file   ORBInitializer_Registry_Impl.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================

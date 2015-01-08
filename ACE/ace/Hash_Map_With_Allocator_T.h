@@ -4,8 +4,6 @@
 /**
  *  @file   Hash_Map_With_Allocator_T.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

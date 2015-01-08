@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SimpleLocalProvider_exec.h"
 #include "ace/Log_Msg.h"
 

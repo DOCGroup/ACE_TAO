@@ -4,8 +4,6 @@
 /**
  * @file PG_Object_Group_Manipulator.cpp
  *
- * $Id$
- *
  * @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================

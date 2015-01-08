@@ -1,4 +1,3 @@
-// $Id$
 #include "Install.h"
 
 #include "tao/AnyTypeCode/ExceptionA.h"

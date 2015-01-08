@@ -3,10 +3,7 @@
 /**
  *  @file    bd_struct_seq.h
  *
- *  $Id$
- *
  *   Tests bounded struct sequence
- *
  *
  *  @author   Aniruddha Gokhale
  */

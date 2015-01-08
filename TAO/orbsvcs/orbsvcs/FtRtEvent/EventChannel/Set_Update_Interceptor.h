@@ -4,8 +4,6 @@
 /**
  *  @file   Set_Update_Interceptor.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -34,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Interceptors for adding service context to set_update() and
  *        oneway_set_update() methods.
- *
  */
 class TAO_Set_Update_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,

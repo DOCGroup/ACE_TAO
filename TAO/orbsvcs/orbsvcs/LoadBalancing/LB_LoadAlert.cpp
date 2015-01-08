@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 
 #if !defined (__ACE_INLINE__)

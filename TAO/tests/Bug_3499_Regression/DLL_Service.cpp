@@ -1,5 +1,3 @@
-// $Id$
-
 #include "DLL_Service.h"
 
 ACE_DLL_Service::ACE_DLL_Service (void)

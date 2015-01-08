@@ -4,8 +4,6 @@
 /**
  *  @file    ARGV.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt <schmidt@cs.wustl.edu>
  *  @author Everett Anderson <eea1@cs.wustl.edu>
  */

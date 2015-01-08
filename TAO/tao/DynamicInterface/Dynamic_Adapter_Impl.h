@@ -5,10 +5,7 @@
 /**
  *  @file    Dynamic_Adapter_Impl.h
  *
- *  $Id$
- *
  *  Header file for class TAO_Dynamic_Adapter_Impl.
- *
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */

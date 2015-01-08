@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_Class.h"
 #include "ORB_Holder.h"
 #include "RIR_Narrow.h"

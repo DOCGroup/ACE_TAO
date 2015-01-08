@@ -4,8 +4,6 @@
 /**
  *  @file Thread_Per_Connection_Handler.h
  *
- *  $Id$
- *
  *  Definition of a connection handler for the thread-per-connection
  *  strategy.
  *
@@ -39,7 +37,6 @@ class TAO_ORB_Core;
  * This object acts as an active object, encapsulating the protocol
  * specific handler which the active thread uses to process incoming
  * messages.
- *
  */
 class TAO_Export TAO_Thread_Per_Connection_Handler : public ACE_Task_Base
 {

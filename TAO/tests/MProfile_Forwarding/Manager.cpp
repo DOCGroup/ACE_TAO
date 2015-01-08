@@ -1,4 +1,3 @@
-//$Id$
 #include "Manager.h"
 
 #include "tao/IORManipulation/IORManip_Loader.h"

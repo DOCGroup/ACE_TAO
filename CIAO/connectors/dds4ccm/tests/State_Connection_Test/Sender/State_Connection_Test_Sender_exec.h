@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef STATE_CONNECTION_SENDER_EXEC_H_
 #define STATE_CONNECTION_SENDER_EXEC_H_
 

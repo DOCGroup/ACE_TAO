@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Accessor to the number of bytes in the buffer.

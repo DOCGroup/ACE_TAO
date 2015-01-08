@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Middle_Impl.h"
 
 #include "tao/Utils/PolicyList_Destroyer.h"

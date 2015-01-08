@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Driver.h"
 #include "Consumer.h"
 #include "Supplier.h"

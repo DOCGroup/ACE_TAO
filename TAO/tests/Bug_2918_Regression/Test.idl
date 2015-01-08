@@ -1,5 +1,3 @@
-// $Id$
-
 module Test
 {
   typedef long FooType;

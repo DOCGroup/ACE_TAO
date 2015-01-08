@@ -1,5 +1,3 @@
-// $Id$
-
 #include "stats.h"
 
 Stats::Stats(int size) {

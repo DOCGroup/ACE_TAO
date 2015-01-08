@@ -3,8 +3,6 @@
 /**
  *  @file Refcountable_Guard_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -28,7 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Increments the reference count in the constructor, the count is decremented in the destructor.
  *        See Refcountable.h for further notes on usage.
- *
  */
 template <class T>
 class TAO_Notify_Refcountable_Guard_T

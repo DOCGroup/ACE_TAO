@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Peer.h"
 #include "ace/Get_Opt.h"
 #include "ace/Thread_Manager.h"

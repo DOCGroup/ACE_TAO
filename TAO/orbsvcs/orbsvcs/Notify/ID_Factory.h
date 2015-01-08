@@ -2,11 +2,7 @@
 /**
  *  @file ID_Factory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ID_FACTORY_H
@@ -30,7 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_ID_Factory
  *
  * @brief A simple factory for generating ID's for objects created by Notify.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ID_Factory
 {

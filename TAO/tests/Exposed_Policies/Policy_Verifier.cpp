@@ -1,4 +1,3 @@
-// $Id$
 #include "Policy_Verifier.h"
 #include "ace/OS_NS_string.h"
 

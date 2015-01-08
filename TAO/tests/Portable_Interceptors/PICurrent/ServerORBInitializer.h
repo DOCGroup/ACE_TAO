@@ -4,8 +4,6 @@
 /**
  * @file   ServerORBInitializer.h
  *
- * $Id$
- *
  * Implementation header for the PICurrentTest server-side ORB
  * initializer.
  *

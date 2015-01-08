@@ -3,11 +3,8 @@
 /**
  *  @file    executor_ami_exs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for executors in the AMI connector
  *  impl source.
- *
  *
  *  @author Jeff Parsons
  */

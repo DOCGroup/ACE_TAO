@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Throughput.h"
 
 #include "ace/Arg_Shifter.h"

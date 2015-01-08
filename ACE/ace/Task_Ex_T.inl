@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE, class TIME_POLICY> ACE_INLINE void

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Synch_Queued_Message.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

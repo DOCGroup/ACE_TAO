@@ -4,8 +4,6 @@
 /**
  *  @file     RT_PolicyFactory.h
  *
- *  $Id$
- *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
  */

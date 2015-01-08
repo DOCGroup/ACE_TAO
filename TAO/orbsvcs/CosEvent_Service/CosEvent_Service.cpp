@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Daemon_Utilities.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"

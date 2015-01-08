@@ -3,8 +3,6 @@
 /**
  * @file CEC_Event_Loader.h
  *
- * $Id$
- *
  * Define a class to dynamically load the COS Event Service.
  *
  * @author Priyanka Gontla <pgontla@ece.uci.edu>

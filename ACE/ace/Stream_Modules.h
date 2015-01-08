@@ -4,8 +4,6 @@
 /**
  *  @file    Stream_Modules.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

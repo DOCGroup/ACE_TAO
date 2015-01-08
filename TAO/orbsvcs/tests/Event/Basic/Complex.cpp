@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Counting_Consumer.h"
 #include "Counting_Supplier.h"
 #include "orbsvcs/Time_Utilities.h"

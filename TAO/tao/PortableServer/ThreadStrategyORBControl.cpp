@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/ThreadStrategyORBControl.h"
 #include "ace/Log_Msg.h"
 

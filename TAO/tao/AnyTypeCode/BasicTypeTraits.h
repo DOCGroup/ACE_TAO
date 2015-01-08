@@ -4,8 +4,6 @@
 /**
  *  @file    BasicTypeTraits.h
  *
- *  $Id$
- *
  *  Specializations of template traits in BasicTypeTraits_T.h.
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>

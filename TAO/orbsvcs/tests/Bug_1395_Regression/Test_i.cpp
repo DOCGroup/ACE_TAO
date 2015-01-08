@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test_i.h"
 
 // In case this is a static build we have to force

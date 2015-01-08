@@ -4,10 +4,7 @@
 /**
  *  @file    be_util.h
  *
- *  $Id$
- *
  *  Static helper methods used by multiple visitors.
- *
  *
  *  @author Jeff Parsons
  */

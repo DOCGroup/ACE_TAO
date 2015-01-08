@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef _ConfigurationViewer_ValueDlg_H
 #define _ConfigurationViewer_ValueDlg_H
 

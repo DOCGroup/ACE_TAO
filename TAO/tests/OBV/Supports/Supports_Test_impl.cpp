@@ -1,4 +1,3 @@
-// $Id$
 // FUZZ: disable check_for_streams_include
 
 #include "Supports_Test_impl.h"

@@ -2,8 +2,6 @@
 /**
  *  @file    Identity_Client.cpp
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

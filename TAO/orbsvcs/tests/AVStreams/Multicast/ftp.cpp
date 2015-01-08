@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ftp.h"
 
 FTP_Client_Callback::FTP_Client_Callback (void)

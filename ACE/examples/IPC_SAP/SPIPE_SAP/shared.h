@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "ace/config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

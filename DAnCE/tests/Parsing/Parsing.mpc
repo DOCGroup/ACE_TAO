@@ -1,5 +1,3 @@
-// $Id$
-
 project(Parsing_Test) : dance, xerces, dance_config_handlers, dance_logger, dance_domainapplication_stub, dance_executionmanager_stub {
   exename   = Parsing
 

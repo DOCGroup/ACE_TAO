@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Event.h"
 
 #if !defined (__ACE_INLINE__)

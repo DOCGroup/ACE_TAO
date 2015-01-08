@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RoundTrip_exec.h"
 
 //-- ACE Scheduling Params

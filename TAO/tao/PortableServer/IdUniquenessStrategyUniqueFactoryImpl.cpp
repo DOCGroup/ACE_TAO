@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.h"
 #include "tao/PortableServer/IdUniquenessStrategyUnique.h"
 #include "ace/Dynamic_Service.h"

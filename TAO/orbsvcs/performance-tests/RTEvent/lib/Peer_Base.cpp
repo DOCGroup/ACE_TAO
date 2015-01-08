@@ -1,8 +1,6 @@
 /**
  * @file Peer_Base.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

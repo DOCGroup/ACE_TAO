@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Diamond_i.h"
 
 Top_i::Top_i ()

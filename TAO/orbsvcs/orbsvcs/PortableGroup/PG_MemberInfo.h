@@ -4,8 +4,6 @@
 /**
  *  @file    PG_MemberInfo.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=======================================================================

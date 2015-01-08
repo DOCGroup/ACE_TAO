@@ -4,8 +4,6 @@
 /**
  *  @file    Principal.h
  *
- *  $Id$
- *
  *  The CORBA::Principal pseudo-object implementation.
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.

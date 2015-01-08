@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p Display_Base -u Display -c controller RateGen"
 
 project(Display_RateGen_idl_gen) : componentidldefaults, avoids_ccm_noevent {

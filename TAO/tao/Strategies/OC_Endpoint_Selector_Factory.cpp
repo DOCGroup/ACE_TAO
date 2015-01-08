@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/OC_Endpoint_Selector_Factory.h"
 #include "tao/Strategies/Optimized_Connection_Endpoint_Selector.h"
 #include "tao/Strategies/Strategies_ORBInitializer.h"

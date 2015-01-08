@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Handle_Broadcast.h"
 
 #if defined (SunOS4)

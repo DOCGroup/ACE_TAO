@@ -1,5 +1,3 @@
-// $Id$
-
 // IPC_SAP/poll server, which illustrates how to integrate the ACE
 // socket wrappers with the SVR4 <poll> system call to create a
 // single-threaded concurrent server.  This server program can be

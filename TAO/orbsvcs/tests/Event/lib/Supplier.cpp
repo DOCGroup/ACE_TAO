@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Supplier.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Utilities.h"

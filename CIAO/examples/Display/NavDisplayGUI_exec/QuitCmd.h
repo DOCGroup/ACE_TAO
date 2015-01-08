@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __QUITCMD_H
 #define __QUITCMD_H
 

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "dds4ccm/impl/logger/Log_Macros.h"
 
 #if (CIAO_DDS4CCM_OPENDDS==1)

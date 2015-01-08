@@ -3,8 +3,6 @@
 /**
  *  @file    SOCK_Send_Recv_Test.cpp
  *
- *  $Id$
- *
  *   This is a test of the <ACE_SOCK>'s various send and receive
  *   methods.  The test forks two processes or spawns two threads
  *   (depending upon the platform) and then executes client and
@@ -14,7 +12,6 @@
  *   Right now, it primarily tests the iov-like send and recv
  *   functions, but others should be added to completely cover the
  *   possible scenarios.
- *
  *
  *  @author Steve Huston <shuston@riverace.com>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 project(*Supplier): notifytest {
   exename = Supplier
   Source_Files {

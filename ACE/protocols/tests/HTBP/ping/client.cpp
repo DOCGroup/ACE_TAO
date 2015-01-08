@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * client for a basic connection establishment test using HTBP
  */
 

@@ -3,10 +3,7 @@
 /**
  *  @file    operation_sh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the server header
- *
  *
  *  @author Aniruddha Gokhale
  */

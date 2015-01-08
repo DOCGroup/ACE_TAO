@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Token_Collection.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)

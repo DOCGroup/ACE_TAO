@@ -4,13 +4,10 @@
 /**
  *  @file    ast_visitor_reifying.h
  *
- *  $Id$
- *
  *  This visitor visits an AST_Param_Holder, finds the corresponding
  *  template argument, looks up or creates the type, and stores
  *  it for retrieval and use in the template module
  *  instantiation visitor
- *
  *
  *  @author Jeff Parsons
  */

@@ -3,8 +3,6 @@
 /**
  *  @file    FT_ReplicaFactory_i.h
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant CORBA.
  *  It declares the implementation of ReplicaFactory which
  *  creates and manages replicas as an agent for

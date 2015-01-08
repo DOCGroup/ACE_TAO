@@ -3,11 +3,8 @@
 /**
  *  @file    ami4ccm_conn_ex_idl.h
  *
- *  $Id$
- *
  *  Concrete visitor for the AMI4CCM Interface node.
  *  This one provides code generation for interfaces in the executor IDL.
- *
  *
  *  @author Jeff Parsons
  */

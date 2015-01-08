@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Session_Container.h"
 
 #include "ciao/Servants/Servant_Impl_Base.h"

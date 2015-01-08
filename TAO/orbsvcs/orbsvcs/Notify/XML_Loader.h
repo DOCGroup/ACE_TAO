@@ -4,8 +4,6 @@
 /**
  *  @file    XML_Loader.h
  *
- *  $Id$
- *
  *  A topology saver class that outputs XML.
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>

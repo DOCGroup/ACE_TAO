@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/IFR_Client/IFR_ComponentsC.h"
 #include "ace/Get_Opt.h"
 #include "tao/ORB.h"

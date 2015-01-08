@@ -1,4 +1,3 @@
-//$Id$
 #include "source_i.h"
 
 Source_i::Source_i (ThreeTier_ptr target)

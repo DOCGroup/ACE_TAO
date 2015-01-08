@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Gateway_EC.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "orbsvcs/Event/ECG_Mcast_Gateway.h"

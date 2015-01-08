@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/UIPMC_Profile.h"
 #include "orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h"
 #include "orbsvcs/PortableGroup/PortableGroup_Loader.h"

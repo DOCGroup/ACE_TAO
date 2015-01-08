@@ -1,4 +1,3 @@
-// $Id$
 project(*idl): taoidldefaults {
   IDL_Files {
     StateTransfer.idl

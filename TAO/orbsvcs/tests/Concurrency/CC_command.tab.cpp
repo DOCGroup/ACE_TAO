@@ -1,5 +1,3 @@
-// $Id$
-
 /*  A Bison parser, made from CC_command.y
     by GNU Bison version 1.28  */
 

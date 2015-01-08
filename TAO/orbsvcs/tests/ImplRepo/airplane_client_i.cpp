@@ -1,5 +1,3 @@
-// $Id$
-
 #include "airplane_client_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"

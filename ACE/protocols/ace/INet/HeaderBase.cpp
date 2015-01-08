@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/HeaderBase.h"
 #include "ace/OS_NS_stdlib.h"
 

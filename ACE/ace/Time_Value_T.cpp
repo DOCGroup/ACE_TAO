@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_TIME_VALUE_T_CPP
 #define ACE_TIME_VALUE_T_CPP
 

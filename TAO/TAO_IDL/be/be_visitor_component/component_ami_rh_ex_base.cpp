@@ -3,11 +3,8 @@
 /**
  *  @file    component_ami_rh_ex_base.cpp
  *
- *  $Id$
- *
  *  Base class visitor generating code for AMI4CCM reply handler impl\
  *  visitors.
- *
  *
  *  @author Jeff Parsons
  */

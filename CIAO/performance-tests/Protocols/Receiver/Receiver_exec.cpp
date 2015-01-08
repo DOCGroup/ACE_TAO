@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Receiver_exec.h"
 #include "ace/Stats.h"
 #include "ace/Throughput_Stats.h"

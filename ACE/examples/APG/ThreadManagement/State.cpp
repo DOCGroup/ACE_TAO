@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Task.h"
 
 class HA_CommandHandler : public ACE_Task_Base

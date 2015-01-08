@@ -5,10 +5,7 @@
 /**
  *  @file    ValueMemberDef_i.h
  *
- *  $Id$
- *
  *  ValueMemberDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

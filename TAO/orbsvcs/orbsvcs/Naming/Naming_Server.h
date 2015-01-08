@@ -4,10 +4,7 @@
 /**
  *  @file    Naming_Server.h
  *
- *  $Id$
- *
  *    Implement wrappers useful to Naming Service servers.
- *
  *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu)
  *  @author Matt Braun <mjb2@cs.wustl.edu>

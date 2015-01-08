@@ -3,11 +3,8 @@
 /**
  *  @file    be_factory.h
  *
- *  $Id$
- *
  *  Extension of class AST_Factory that provides additional means for C++
  *  mapping.
- *
  *
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Boris Kolpackov <bosk@ipmce.ru>

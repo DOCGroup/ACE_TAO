@@ -4,10 +4,7 @@
 /**
  *  @file     Callback_i.h
  *
- *  $Id$
- *
  *   Header file for the Web_Server::Callback implementation.
- *
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */

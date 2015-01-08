@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (SYNCHLIB_BUILD_DLL)
 #define  SYNCHLIB_BUILD_DLL
 #endif /* SYNCHLIB_BUILD_DLL */

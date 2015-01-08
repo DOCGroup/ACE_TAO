@@ -1,5 +1,3 @@
-//$Id$
-
 #if !defined (TAO_DEMUX_TEST_I_H)
 #define TAO_DEMUX_TEST_I_H
 

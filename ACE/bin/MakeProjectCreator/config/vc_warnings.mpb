@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 // This file contains a number of optional features that disable VC
 // warnings regarding various items that VC turned into warnings that were
 // not present in earlier versions. Some people may consider these superfluous

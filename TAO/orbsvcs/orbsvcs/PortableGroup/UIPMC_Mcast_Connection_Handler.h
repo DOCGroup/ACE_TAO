@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Mcast_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author Vadym Ridosh <vridosh@prismtech.com>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file    Asynch_Reply_Dispatcher.h
  *
- *  $Id$
- *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/System_Time.h"
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Malloc_T.h"

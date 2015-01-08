@@ -1,8 +1,6 @@
 /**
  * @file RTClient_Setup.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -25,7 +23,6 @@ class RT_Class;
  * @class RTClient_Setup
  *
  * @brief Simplify the initialization of performance tests.
- *
  */
 class TAO_RTEC_Perf_Export RTClient_Setup
 {

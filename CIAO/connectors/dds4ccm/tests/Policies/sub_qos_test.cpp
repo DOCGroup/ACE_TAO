@@ -1,5 +1,3 @@
-// $Id$
-
 #include "sub_qos_test.h"
 
 #include "group_data_qos_test.h"

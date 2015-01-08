@@ -1,5 +1,3 @@
-// $Id$
-
 // File: Sig_List.cpp
 
 // Author: Phil Mesnier

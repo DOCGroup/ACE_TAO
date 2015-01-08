@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Signature.h"
 
 Signature::Signature (const ACE_CString &name)

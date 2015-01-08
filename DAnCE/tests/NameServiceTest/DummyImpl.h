@@ -1,4 +1,3 @@
-// $Id$
 #ifndef DUMMYIMPL_H_
 #define DUMMYIMPL_H_
 

@@ -3,10 +3,7 @@
 /**
  *  @file    ami_test_i.cpp
  *
- *  $Id$
- *
  *  Implementation of the AMI Test interface.
- *
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>

@@ -4,8 +4,6 @@
 /**
  *  @file    Task_Ex_T.h
  *
- *  $Id$
- *
  *  @author Kobi Cohen-Arazi <kobi-co@barak-online.net>
  */
 //=============================================================================

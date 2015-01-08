@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <!-- Converted from ./tests/Param_Test/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--  $Id$ -->
+ <!--   -->
  <!--  -->
  <!--  Please read $TAO_ROOT/docs/Options.html for details. -->
  <!--  -->

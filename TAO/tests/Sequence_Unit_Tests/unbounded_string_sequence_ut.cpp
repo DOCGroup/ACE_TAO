@@ -3,8 +3,6 @@
  *
  * @brief Unit test for unbounded string sequences.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "testing_string_traits.hpp"

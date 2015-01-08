@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_CONTAINERS_T_CPP
 #define ACE_CONTAINERS_T_CPP
 

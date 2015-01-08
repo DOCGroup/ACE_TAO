@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/UUID.h"
 #include "IDD_Handler.h"
 #include "IRDD_Handler.h"

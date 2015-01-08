@@ -1,4 +1,3 @@
-// $Id$
 //
 #include "ResourceCommitmentManager.h"
 #include "DomainDataManager.h"

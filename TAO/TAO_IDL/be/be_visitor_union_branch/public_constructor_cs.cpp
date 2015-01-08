@@ -3,10 +3,7 @@
 /**
  *  @file    public_constructor_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Union Branch for the constructor operator
- *
  *
  *  @author Johnny Willemsen
  */

@@ -3,11 +3,8 @@
 /**
  *  @file    any_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operators for a valuebox in the client
  *  header.
- *
  *
  *  @author Gary Maxey
  */

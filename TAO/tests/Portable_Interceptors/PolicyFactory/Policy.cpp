@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Policy.h"
 
 #include "tao/SystemException.h"

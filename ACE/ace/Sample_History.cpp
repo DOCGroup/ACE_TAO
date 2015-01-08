@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Sample_History.h"
 
 #if !defined (__ACE_INLINE__)

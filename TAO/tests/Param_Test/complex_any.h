@@ -3,10 +3,7 @@
 /**
  *  @file     complex_any.h
  *
- *  $Id$
- *
  *   Tests complex Anys
- *
  *
  *  @author  Aniruddha Gokhale
  *  @author Jeff Parsons

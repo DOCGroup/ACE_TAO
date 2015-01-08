@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef STRING_SEQ_H_
 #define STRING_SEQ_H_
 

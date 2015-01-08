@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Gateway_i.h"
 
 #include "tao/AnyTypeCode/Any.h"

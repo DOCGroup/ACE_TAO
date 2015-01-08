@@ -2,10 +2,7 @@
 /**
  *  @file    Max_Default_Port_Test.h
  *
- *  $Id$
- *
  *   This is a test to verify ACE_MAX_DEFAULT_PORT is correct.
- *
  *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */

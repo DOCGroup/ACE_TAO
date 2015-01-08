@@ -4,12 +4,9 @@
 /**
  *  @file    Ptest.h
  *
- *  $Id$
- *
  *  This code tests the persistence of the IFR by inserting
  *  IR objects into the repository with one function, and querying the
  *  repository with another, with a repository shutdown in between.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

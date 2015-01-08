@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 //Test combination of ami4ccm and dds4ccm
 #include "AmiDds_Sender_exec.h"
 #include "ace/Guard_T.h"

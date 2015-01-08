@@ -4,9 +4,6 @@
 /**
  *  @file    NamespaceSupport.h
  *
- *  $Id$
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

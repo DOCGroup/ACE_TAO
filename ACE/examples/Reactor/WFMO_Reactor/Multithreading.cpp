@@ -2,16 +2,12 @@
 /**
  *  @file    Multithreading.cpp
  *
- *  $Id$
- *
- *
  *  This application tests multiple threads simultaneously calling
  *  Reactor::handle_events(). It also shows how different threads
  *  can update the state of Reactor by registering and removing
  *  Event_Handlers.
  *
  *  Note that this test will only work with WFMO_Reactor
- *
  *
  *  @author Irfan Pyarali
  */

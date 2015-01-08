@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Shared_Memory_SV.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"

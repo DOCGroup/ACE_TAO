@@ -2,8 +2,6 @@
  * @file Utils.h
  * @author Marcel Smit (msmit@remedy.nl)
  *
- * $Id$
- *
  * Misc utility classes for NDDS.
  */
 

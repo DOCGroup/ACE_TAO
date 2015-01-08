@@ -4,7 +4,6 @@ package FileLocatorFactory;
 # Description   : Create FileLocator objects.
 # Author        : Chad Elliott
 # Create Date   : 11/29/2005
-# $Id$
 # ************************************************************
 
 # ************************************************************

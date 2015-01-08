@@ -4,10 +4,7 @@
 /**
  *  @file    HTIOP_Connector.h
  *
- *  $Id$
- *
  *  HTIOP specific connector processing
- *
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */

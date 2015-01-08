@@ -2,8 +2,6 @@
 /**
  *  @file    Aio_Platform_Test_C.cpp
  *
- *  $Id$
- *
  *  Testing the platform for POSIX Asynchronous I/O. This is the C
  *  version of the  $ACE_ROOT/tests/Aio_Platform_Test.cpp. Useful
  *  to send bug reports.

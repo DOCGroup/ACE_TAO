@@ -1,10 +1,7 @@
 /**
  * @file Echo_Caller.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Echo_Caller.h"
 #include "tao/ORB_Core.h"

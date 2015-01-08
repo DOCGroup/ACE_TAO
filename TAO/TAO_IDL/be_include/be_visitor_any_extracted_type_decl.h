@@ -3,11 +3,8 @@
 /**
  *  @file    be_visitor_any_extracted_type_decl.h
  *
- *  $Id$
- *
  *  Encapsulation of rules for declaring variables
  *  for Any extraction
- *
  *
  *  @author Jeff Parsons
  */

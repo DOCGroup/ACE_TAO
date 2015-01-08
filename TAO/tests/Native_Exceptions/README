@@ -1,4 +1,4 @@
-$Id$
+
 
 Simple test to show (and verify) that TAO can generate code
 for platforms with native exception support, including passing the

@@ -3,11 +3,8 @@
 /**
  *  @file    Factory_Finder.cpp
  *
- *  $Id$
- *
  *  A Factory Finder for the Quoter example. This example conforms
  *  to the CosLifeCycle Factory Finder notion.
- *
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */

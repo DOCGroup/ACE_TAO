@@ -3,10 +3,7 @@
 /**
  *  @file    operation_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation node in the client header.
- *
  *
  *  @author Aniruddha Gokhale
  */

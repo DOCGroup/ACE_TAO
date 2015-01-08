@@ -4,8 +4,6 @@
 /**
  *  @file    ZIOP_Policy_Validator.h
  *
- *  $Id$
- *
  *  This file contains the declaration for the ZIOP policy validator
  *  interface.
  *
@@ -35,7 +33,6 @@ class TAO_ORB_Core;
  * @class TAO_ZIOPPolicy_Validator
  *
  * @brief Policy Validator for ZIOP policies
- *
  */
 class TAO_ZIOP_Export TAO_ZIOPPolicy_Validator : public TAO_Policy_Validator
 {

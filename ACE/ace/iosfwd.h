@@ -4,8 +4,6 @@
 /**
  *  @file    iosfwd.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali
  *
  *  This file contains the portability ugliness for the Standard C++

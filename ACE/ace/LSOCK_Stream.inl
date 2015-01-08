@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Sets both the file descriptors... Overrides handle from the base

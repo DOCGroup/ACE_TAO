@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_TYPED_SV_MESSAGE_CPP
 #define ACE_TYPED_SV_MESSAGE_CPP
 

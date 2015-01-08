@@ -4,10 +4,7 @@
 /**
  *  @file    be_identifier_helper.h
  *
- *  $Id$
- *
  *  Utilities associated with UTL_Identifier.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

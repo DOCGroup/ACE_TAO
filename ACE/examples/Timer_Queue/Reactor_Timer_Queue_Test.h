@@ -5,11 +5,8 @@
 /**
  *  @file    Reactor_Timer_Queue_Test.h
  *
- *  $Id$
- *
  *  This code is an implementation of a test driver for a reactor based
  *  timer queue.
- *
  *
  *  @author Nanbor Wang <nw1@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */

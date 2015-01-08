@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/HTTP_Header.h"
 #include "ace/OS_NS_stdlib.h"
 #include <string>

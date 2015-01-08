@@ -4,10 +4,7 @@
 /**
  *  @file    ast_visitor.h
  *
- *  $Id$
- *
  *  The abstract AST visitor base class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

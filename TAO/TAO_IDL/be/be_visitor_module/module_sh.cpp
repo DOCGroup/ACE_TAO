@@ -3,10 +3,7 @@
 /**
  *  @file    module_sh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Module in the server header
- *
  *
  *  @author Aniruddha Gokhale
  */

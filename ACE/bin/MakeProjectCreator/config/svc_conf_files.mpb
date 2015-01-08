@@ -1,4 +1,3 @@
-// $Id$
 project {
   Define_Custom(Svc_Conf) {
     inputext = .conf, .conf.xml

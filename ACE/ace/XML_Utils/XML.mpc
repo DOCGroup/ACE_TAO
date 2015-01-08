@@ -1,5 +1,3 @@
-// $Id$
-
 project (ACE_XML_Utils) : install, acelib, xerces, ace_output {
   sharedname   += ACE_XML_Utils
   dynamicflags += XML_UTILS_BUILD_DLL

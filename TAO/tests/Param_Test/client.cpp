@@ -3,11 +3,8 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *  This file contains the implementation of the client-side of the
  *  Param_Test application.
- *
  *
  *  @author   Aniruddha Gokhale
  */

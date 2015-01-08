@@ -4,8 +4,6 @@
 /**
  *  @file Incoming_Message_Queue.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================
@@ -48,7 +46,6 @@ class TAO_Transport;
  *   thread that reads and fills the rest of the message
  * - the thread that actually processes the message can be totally
  *   different.
- *
  */
 class TAO_Export TAO_Incoming_Message_Queue
 {

@@ -3,12 +3,9 @@
 /**
  *  @file    Priority_Reactor_Test.h
  *
- *  $Id$
- *
  *  This class gets its own header file to work around AIX C++
  *  compiler "features" related to template instantiation...  It is
  *  only used by Priority_Reactor_Test.cpp.
- *
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */

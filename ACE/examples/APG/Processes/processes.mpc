@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Process Manager Death) : aceexe, avoids_ace_for_tao {
   exename = Process_Manager_Death
   Source_Files {

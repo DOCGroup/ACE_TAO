@@ -3,11 +3,8 @@
 /**
  *  @file    component_svth.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Component node.
  *  This provides for code generation in the templated servant header
- *
  *
  *  @author Marcel Smit
  */

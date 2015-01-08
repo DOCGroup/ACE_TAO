@@ -3,10 +3,7 @@
 /**
  *  @file    be_visitor_scope.h
  *
- *  $Id$
- *
  *  Concrete visitor for the base "BE_Scope" node
- *
  *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */

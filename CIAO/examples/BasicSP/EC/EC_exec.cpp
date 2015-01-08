@@ -1,5 +1,3 @@
-// $Id$
-
 #include "EC_exec.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"

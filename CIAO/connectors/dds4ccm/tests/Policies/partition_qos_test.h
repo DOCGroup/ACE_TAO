@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef PARTITION_QOS_TEST_H_
 #define PARTITION_QOS_TEST_H_
 

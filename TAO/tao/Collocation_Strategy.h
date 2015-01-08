@@ -4,8 +4,6 @@
 /**
  *  @file    Collocation_Strategy.h
  *
- *  $Id$
- *
  *  @author  DOC Group - Wash U and UCI
  */
 //=============================================================================

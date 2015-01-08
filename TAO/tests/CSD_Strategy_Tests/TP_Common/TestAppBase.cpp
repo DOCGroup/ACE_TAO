@@ -1,4 +1,3 @@
-// $Id$
 #include "TestAppBase.h"
 
 TestAppBase::TestAppBase(const char* name)

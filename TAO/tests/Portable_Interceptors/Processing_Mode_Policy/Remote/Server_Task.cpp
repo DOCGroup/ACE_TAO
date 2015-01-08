@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Server_Task.h"
 #include "test_i.h"
 #include "server_interceptor.h"

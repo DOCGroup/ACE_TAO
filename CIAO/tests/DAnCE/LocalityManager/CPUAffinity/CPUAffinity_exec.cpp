@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "CPUAffinity_exec.h"
 #include "ace/Log_Msg.h"
 #include "ace/os_include/os_sched.h"

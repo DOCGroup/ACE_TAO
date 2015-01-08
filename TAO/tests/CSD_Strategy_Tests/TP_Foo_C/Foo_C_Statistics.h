@@ -1,4 +1,3 @@
-// $Id$
 #ifndef STATISTICS_C_H
 #define STATISTICS_C_H
 

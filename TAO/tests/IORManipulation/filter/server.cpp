@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestS.h"
 #include "tao/IORManipulation/IORManip_IIOP_Filter.h"
 #include "tao/Stub.h"

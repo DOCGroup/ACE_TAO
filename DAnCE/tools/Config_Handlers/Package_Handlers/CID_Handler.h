@@ -1,8 +1,6 @@
 /**
  *  @file  CID_Handler.h
  *
- *  $Id$
- *
  *  @author William Otte <wotte@dre.vanderbilt.edu
  */
 

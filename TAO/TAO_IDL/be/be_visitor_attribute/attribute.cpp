@@ -3,10 +3,7 @@
 /**
  *  @file    attribute.cpp
  *
- *  $Id$
- *
  *  Visitor for generation of code for Attribute
- *
  *
  *  @author Aniruddha Gokhale
  */

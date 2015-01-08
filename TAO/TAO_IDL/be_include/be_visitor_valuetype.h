@@ -4,11 +4,7 @@
 /**
  *  @file    be_visitor_valuetype.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuetype class
- *
- *
  */
 //=============================================================================
 

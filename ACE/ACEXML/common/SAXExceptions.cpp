@@ -1,4 +1,4 @@
-// -*- C++ -*- $Id$
+// -*- C++ -*-
 
 #include "ACEXML/common/SAXExceptions.h"
 #include "ace/Log_Msg.h"

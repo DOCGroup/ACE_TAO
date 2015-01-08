@@ -4,8 +4,6 @@
 /**
  * @file ORB_DLL.h
  *
- * $Id$
- *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
 //=============================================================================
@@ -74,7 +72,6 @@ private:
  *
  * @brief The Service_Config_ORB_DLL that is instantiated when the
  *        client-side test module/library is dynamically loaded.
- *
  */
 class Service_Config_ORB_DLL_Export Service_Config_ORB_DLL
   : public ACE_Task_Base

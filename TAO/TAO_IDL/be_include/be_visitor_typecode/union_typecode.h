@@ -4,8 +4,6 @@
 /**
  *  @file  union_typecode.h
  *
- *  $Id$
- *
  *  Union TypeCode generation visitor.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>

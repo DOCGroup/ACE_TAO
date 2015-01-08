@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "tao/Invocation_Retry_Params.h"
 #include "tao/Invocation_Utils.h"
 

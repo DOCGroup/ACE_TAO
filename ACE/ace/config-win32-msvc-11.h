@@ -3,8 +3,6 @@
 /**
  *  @file   config-win32-msvc-11.h
  *
- *  $Id$
- *
  *  @brief  Microsoft Visual C++ 11.0 configuration file.
  *
  *  This file is the ACE configuration file for Microsoft Visual C++ version 11.

@@ -1,4 +1,3 @@
-// $Id$
 //---------------------------------------------------------------------------
 #ifndef ChatClientWndH
 #define ChatClientWndH

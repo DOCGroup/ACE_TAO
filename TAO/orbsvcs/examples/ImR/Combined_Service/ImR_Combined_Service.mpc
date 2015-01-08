@@ -1,4 +1,3 @@
-// $Id$
 project(*IDL): taoidldefaults {
   idl_files {
     service_config.idl

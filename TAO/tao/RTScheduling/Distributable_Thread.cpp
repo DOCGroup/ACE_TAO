@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/RTScheduling/Distributable_Thread.h"
 #include "tao/ORB_Constants.h"
 

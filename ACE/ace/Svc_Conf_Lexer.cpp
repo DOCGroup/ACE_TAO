@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Svc_Conf_Lexer.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)

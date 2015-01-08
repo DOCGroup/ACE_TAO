@@ -2,11 +2,7 @@
 /**
  *  @file StructuredProxyPushConsumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_STRUCTUREDPROXYPUSHCONSUMER_H
@@ -35,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_StructuredProxyPushConsumer
  *
  * @brief CosNotifyChannelAdmin::StructuredProxyPushConsumer implementation.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_StructuredProxyPushConsumer
   : public virtual TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::StructuredProxyPushConsumer>

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/IORInterceptor/IORInterceptor_Adapter_Impl.h"
 #include "tao/IORInterceptor/IORInterceptor_Adapter_Factory_Impl.h"
 

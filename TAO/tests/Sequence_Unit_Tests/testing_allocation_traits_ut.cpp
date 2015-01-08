@@ -3,8 +3,6 @@
  *
  * @brief Unit test for the testing_allocation_traits.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "testing_allocation_traits.hpp"

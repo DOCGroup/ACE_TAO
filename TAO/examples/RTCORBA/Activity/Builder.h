@@ -3,8 +3,6 @@
 /**
  *  @file Builder.h
  *
- *  $Id$
- *
  *  The builder creates Tasks, Jobs, POAs.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -34,7 +32,6 @@ typedef Job_i** JOB_LIST;
  * @class Builder
  *
  * @brief A service object that creates Tasks, Jobs, POAs.
- *
  */
 class activity_Export Builder : public ACE_Service_Object
 {

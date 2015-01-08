@@ -3,10 +3,7 @@
 /**
  *  @file    UUID_Test.cpp
  *
- *  $Id$
- *
  *  Test the ACE UUID class which generates unique id's
- *
  *
  *  @author Andrew T. Finnel <andrew@activesol.net> and Yamuna Krishnmaurthy <yamuna@oomworks.com>
  */

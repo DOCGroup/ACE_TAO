@@ -3,11 +3,8 @@
 /**
  *  @file    be_finder.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Finder that provides additional means for C++
  *  mapping.
- *
  *
  *  @author Jeff Parsons
  */

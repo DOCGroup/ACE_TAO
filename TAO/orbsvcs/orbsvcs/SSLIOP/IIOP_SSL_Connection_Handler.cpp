@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.h"
 #include "orbsvcs/SSLIOP/IIOP_SSL_Transport.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"

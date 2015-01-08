@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "FactoryDriver.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 

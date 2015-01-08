@@ -4,8 +4,6 @@
 /**
  *  @file    Union_TypeCode.h
  *
- *  $Id$
- *
  *  Header file for a @c tk_union CORBA::TypeCode.
  *
  *  @author Ossama Othman

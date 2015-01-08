@@ -1,5 +1,3 @@
-// $Id$
-
 // This example tests the features of the <ACE_SOCK_Acceptor>,
 // <ACE_SOCK_Stream>, and <ACE_Svc_Handler> classes.  If the platform
 // supports threads it uses a thread-per-connection concurrency model.

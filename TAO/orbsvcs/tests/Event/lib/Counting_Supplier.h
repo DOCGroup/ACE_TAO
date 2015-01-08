@@ -3,8 +3,6 @@
 /**
  *  @file   Counting_Supplier.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

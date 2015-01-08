@@ -1,5 +1,3 @@
-// $Id$
-
 // AddrServerMain.cpp
 // Main program for a common Address server instance to be shared by all
 // event channels

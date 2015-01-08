@@ -3,10 +3,7 @@
 /**
  *  @file    ub_short_seq.cpp
  *
- *  $Id$
- *
  *  tests unbounded short sequences
- *
  *
  *  @author   Aniruddha Gokhale
  */

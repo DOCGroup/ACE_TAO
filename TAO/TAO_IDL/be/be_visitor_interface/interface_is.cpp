@@ -3,10 +3,7 @@
 /**
  *  @file    interface_is.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interfaces in the implementation skeletons file.
- *
  *
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */

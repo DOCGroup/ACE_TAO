@@ -1,4 +1,3 @@
-//$Id$
 #ifndef FP_TASK_H
 #define FP_TASK_H
 

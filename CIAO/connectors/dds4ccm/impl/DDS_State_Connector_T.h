@@ -1,8 +1,6 @@
 /**
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  *
- * $Id$
- *
  * DDS State Connector implementation
  */
 #ifndef DDS_STATE_CONNECTOR_T_H_

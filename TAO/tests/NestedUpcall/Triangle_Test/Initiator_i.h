@@ -3,11 +3,8 @@
 /**
  *  @file    Initiator_i.h
  *
- *  $Id$
- *
  *  This class implements the Initiator of the
  *  Nested Upcalls - Triangle test.
- *
  *
  *  @author Michael Kircher
  */

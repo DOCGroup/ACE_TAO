@@ -4,8 +4,6 @@
 /**
  *  @file    VarOut_T.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  */
 //=============================================================================
@@ -30,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Parametrized implementation of _var base class for structs,
  * unions and exceptions.
- *
  */
 template<typename T>
 class TAO_Var_Base_T
@@ -65,7 +62,6 @@ protected:
  *
  * @brief Parametrized implementation of _var class for structs, unions,
  * and exceptions with members of fixed size.
- *
  */
 template<typename T>
 class TAO_Fixed_Var_T : public TAO_Var_Base_T<T>
@@ -101,7 +97,6 @@ public:
  *
  * @brief Parametrized implementation of _var class for structs, unions,
  * and exceptions with members of variable size.
- *
  */
 template<typename T>
 class TAO_Var_Var_T : public TAO_Var_Base_T<T>
@@ -131,7 +126,6 @@ public:
  *
  * @brief Parametrized implementation of _out class for structs, unions
  * and exceptions..
- *
  */
 template<typename T>
 class TAO_Out_T

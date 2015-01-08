@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef TAO_AV_FLOWS_T_CPP
 #define TAO_AV_FLOWS_T_CPP
 

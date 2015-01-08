@@ -4,8 +4,6 @@
 /**
  *  @file    Completion_Counter_Base.h
  *
- *  $Id$
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================

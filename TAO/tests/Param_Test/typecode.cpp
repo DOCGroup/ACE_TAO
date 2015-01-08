@@ -3,10 +3,7 @@
 /**
  *  @file    typecode.cpp
  *
- *  $Id$
- *
  *  tests typecodes
- *
  *
  *  @author   Aniruddha Gokhale
  */

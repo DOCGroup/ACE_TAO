@@ -3,10 +3,7 @@
 /**
  *  @file    connector_dds_ex_base.h
  *
- *  $Id$
- *
  *  Base class visitor for the DDS Connector node.
- *
  *
  *  @author Jeff Parsons
  */

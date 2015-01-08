@@ -1,8 +1,6 @@
 /**
  * @file RTCORBA_include.pidl
  *
- * $Id$
- *
  * @brief Include file for use in applications that need RTCORBA.pidl.
  *
  * This file just includes RTCORBA.pidl. The *C.h file generated from

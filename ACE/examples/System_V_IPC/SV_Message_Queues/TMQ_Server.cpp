@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Signal.h"
 #include "ace/Typed_SV_Message_Queue.h"
 

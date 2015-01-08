@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef TAO_INTERCEPTORS_H
 #define TAO_INTERCEPTORS_H
 #include /**/ "ace/pre.h"

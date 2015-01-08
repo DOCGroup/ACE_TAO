@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"

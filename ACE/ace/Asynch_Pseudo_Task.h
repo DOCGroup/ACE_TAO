@@ -4,8 +4,6 @@
 /**
  *  @file    Asynch_Pseudo_Task.h
  *
- *  $Id$
- *
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
 //=============================================================================
@@ -36,7 +34,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class ACE_Asynch_Pseudo_Task
- *
  */
 class ACE_Export ACE_Asynch_Pseudo_Task : public ACE_Task<ACE_NULL_SYNCH>
 {

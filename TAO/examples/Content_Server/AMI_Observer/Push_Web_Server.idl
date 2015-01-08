@@ -1,5 +1,3 @@
-// $Id$
-
 module Web_Server
 // = TITLE
 //   IDL schema definition for Web server interface.

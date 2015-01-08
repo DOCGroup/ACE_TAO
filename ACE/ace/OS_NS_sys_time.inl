@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/os_include/sys/os_time.h"
 #include "ace/os_include/os_errno.h"
 

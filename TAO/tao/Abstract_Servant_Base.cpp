@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Abstract_Servant_Base.h"
 
 #if !defined(__ACE_INLINE__)

@@ -4,8 +4,6 @@
 /**
  *  @file    Transport_Mux_Strategy.h
  *
- *  $Id$
- *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================
@@ -35,7 +33,6 @@ class TAO_Pluggable_Reply_Params;
  * @brief Strategy to determine whether the connection should be
  * multiplexed for multiple requests or it is exclusive for a
  * single request at a time.
- *
  */
 class TAO_Export TAO_Transport_Mux_Strategy
 {

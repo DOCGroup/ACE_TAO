@@ -4,8 +4,6 @@
 /**
  *  @file   FT_ClientPolicy_i.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

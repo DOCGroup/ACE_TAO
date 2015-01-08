@@ -3,10 +3,7 @@
 /**
  *  @file   common.h
  *
- *  $Id$
- *
  * A couple of useful functions
- *
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */

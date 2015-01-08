@@ -4,8 +4,6 @@
 /**
  *  @file rtcorba_typedefs.h
  *
- *  $Id$
- *
  *  TAO specific typedef's moved away from the generated code.
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 
 project(supplier) : orbsvcsexe, notification, notification_skel, naming {
   Source_Files {

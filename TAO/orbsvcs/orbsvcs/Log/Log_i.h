@@ -4,8 +4,6 @@
 /**
  *  @file   Log_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::Log interface.
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>

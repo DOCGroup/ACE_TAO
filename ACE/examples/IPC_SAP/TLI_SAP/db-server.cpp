@@ -1,5 +1,3 @@
-// $Id$
-
 // Simple multi-threaded database server example.
 
 #include "ace/OS_NS_stdio.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Truncate.h"
 #include "Options.h"
 #include "Iterators.h"

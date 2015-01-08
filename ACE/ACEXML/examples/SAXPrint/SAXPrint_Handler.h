@@ -1,10 +1,6 @@
-// $Id$
-
 //=============================================================================
 /**
  *  @file    SAXPrint_Handler.h
- *
- *  $Id$
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */

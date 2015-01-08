@@ -1,5 +1,3 @@
-//$Id$
-
 project(LzoCompressor) : taolib, tao_output, install, compression, taoidldefaults, lzo1 {
   requires += lzo1
   sharedname   = TAO_LzoCompressor

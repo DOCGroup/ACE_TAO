@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "State_Connection_Test_Receiver_exec.h"
 #include "ace/Log_Msg.h"
 

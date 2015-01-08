@@ -2,8 +2,6 @@
 /**
  *  @file   Dispatcher_Task.h
  *
- *  $Id$
- *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu),
@@ -55,7 +53,6 @@ private:
  *
  * @brief Implement the dispatching queues for FIFO and Priority
  * dispatching.
- *
  */
 class Dispatcher_Task : public ACE_Task<ACE_SYNCH>
 {

@@ -1,5 +1,3 @@
-// $Id$
-
 // This is a queue class for use by multiple threads, with at least one
 // thread enqueueing objects and another dequeueing them.  The dequeue_*
 // methods block the thread if there are no more objects in the queue,

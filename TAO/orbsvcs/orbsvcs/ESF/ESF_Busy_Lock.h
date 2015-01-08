@@ -2,8 +2,6 @@
 /**
  *  @file   ESF_Busy_Lock.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  *  http://doc.ece.uci.edu/~coryan/EC/index.html

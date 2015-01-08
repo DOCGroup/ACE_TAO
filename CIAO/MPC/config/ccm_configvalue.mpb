@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : ccm_stub {
   after += CCM_ConfigValue_Factory
   libs += CCM_ConfigValue_Factory

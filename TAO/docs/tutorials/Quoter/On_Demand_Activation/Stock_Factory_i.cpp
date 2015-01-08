@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Stock_Factory_i.h"
 
 Quoter_Stock_Factory_i::Quoter_Stock_Factory_i ()

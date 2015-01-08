@@ -4,8 +4,6 @@
 /**
  *  @file   config-lite.h
  *
- *  $Id$
- *
  *  @author (Originally in OS.h)Doug Schmidt <schmidt@cs.wustl.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...

@@ -3,10 +3,7 @@
 /**
  *  @file    ub_any_seq.cpp
  *
- *  $Id$
- *
  *  tests unbounded Any sequences
- *
  *
  *  @author   Aniruddha Gokhale
  */

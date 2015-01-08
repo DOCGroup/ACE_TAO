@@ -4,11 +4,7 @@
 /**
  *  @file   Event_Supplier.h
  *
- *  $Id$
- *
  *  An example of using the Event_Logging_Service.
- *
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */

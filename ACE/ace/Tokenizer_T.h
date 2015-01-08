@@ -4,8 +4,6 @@
 /**
  *  @file    Tokenizer_T.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */

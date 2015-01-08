@@ -3,10 +3,7 @@
 /**
  *  @file    concrete_classes.h
  *
- *  $Id$
- *
  *  All the concrete class header files needed by the servant locator.
- *
  *
  *  @author Jeff Parsons
  */

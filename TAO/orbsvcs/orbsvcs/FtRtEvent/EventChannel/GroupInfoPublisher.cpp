@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
 #include "../Utils/resolve_init.h"

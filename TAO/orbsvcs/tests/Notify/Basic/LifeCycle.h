@@ -3,10 +3,7 @@
 /**
  *  @file   LifeCycle.h
  *
- *  $Id$
- *
  * Test to check it ec and admin objects are destroyed.
- *
  *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */

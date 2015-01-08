@@ -2,8 +2,6 @@
 /*
  * @file AsyncListManager.h
  *
- * $Id$
- *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 
@@ -82,8 +80,6 @@ class AsyncListManager
 typedef TAO_Intrusive_Ref_Count_Handle<AsyncListManager> AsyncListManager_ptr;
 
 //----------------------------------------------------------------------------
-/*
- */
 
 class ListLiveListener : public LiveListener
 {

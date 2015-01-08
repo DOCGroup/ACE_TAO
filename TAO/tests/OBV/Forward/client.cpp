@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TreeBaseC.h"
 #include "TreeControllerC.h"
 #include "TreeNodeC.h"

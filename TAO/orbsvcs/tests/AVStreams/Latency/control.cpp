@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"
 #include "tao/PortableServer/PortableServer.h"

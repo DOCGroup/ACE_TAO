@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/ECG_Simple_Mcast_EH.h"
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Reactor.h"

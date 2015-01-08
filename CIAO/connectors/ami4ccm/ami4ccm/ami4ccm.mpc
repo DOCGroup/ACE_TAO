@@ -1,5 +1,3 @@
-// $Id$
-
 project(AMI4CCM_idl_gen) : install, componentidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=AMI4CCM_STUB_Export \

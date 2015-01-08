@@ -4,8 +4,6 @@
 /**
  *  @file   Protocol_Factory.h
  *
- *  $Id$
- *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  */
 //=============================================================================

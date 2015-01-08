@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Argv_Type_Converter.h"
 
 #if !defined (__ACE_INLINE__)

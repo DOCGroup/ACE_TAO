@@ -5,8 +5,6 @@
 /**
  *  @file    RM_Helper.h
  *
- *  $Id$
- *
  *  This class aggregates a number of helper functions used by the
  *  CIAO RepositoryManager
  *

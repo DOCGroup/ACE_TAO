@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy_Factory.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
 #include "tao/CSD_ThreadPool/CSD_ThreadPool.h"

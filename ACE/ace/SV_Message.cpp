@@ -1,6 +1,4 @@
 // SV_Message.cpp
-// $Id$
-
 #include "ace/SV_Message.h"
 
 #if !defined (__ACE_INLINE__)

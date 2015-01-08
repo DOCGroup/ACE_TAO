@@ -4,8 +4,6 @@
 /**
  *  @file    Operation_Table_Dynamic_Hash.h
  *
- *  $Id$
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

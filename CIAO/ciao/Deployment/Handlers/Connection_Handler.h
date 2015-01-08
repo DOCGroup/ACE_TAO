@@ -1,7 +1,6 @@
 /**
  * @file Connection_Handler.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * $Id$
  *
  * Common connection handling logic for components.
  */

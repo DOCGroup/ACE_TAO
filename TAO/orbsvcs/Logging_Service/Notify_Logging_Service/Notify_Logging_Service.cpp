@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "Notify_Logging_Service.h"
 #include "ace/Get_Opt.h"

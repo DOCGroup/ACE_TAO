@@ -1,5 +1,3 @@
-// $Id$
-
 project(*driver): orbsvcsexe, pi_server, interceptors {
   exename = driver
   Source_Files {

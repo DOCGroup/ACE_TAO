@@ -4,8 +4,6 @@
 /**
  *  @file    DiffServ_Network_Priority_Hook.h
  *
- *  $Id$
- *
  *  @author  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *           Johnny Willemsen <jwillemsen@remedy.nl>
  */

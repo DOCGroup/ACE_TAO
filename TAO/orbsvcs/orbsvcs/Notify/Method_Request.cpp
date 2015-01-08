@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Method_Request.h"
 
 #include "orbsvcs/Time_Utilities.h"

@@ -2,8 +2,6 @@
  * @file LM_Launcher.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * $Id$
- *
  * Plan Launcher bridge for the Locality Manager.
  */
 

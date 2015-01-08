@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef _SUPPLIER_ROUTER_H
 #define _SUPPLIER_ROUTER_H
 

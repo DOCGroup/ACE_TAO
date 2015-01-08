@@ -1,5 +1,3 @@
-// $Id$
-
 #include "interceptors.h"
 #include "tao/PI/ClientRequestInfoC.h"
 #include "tao/PI_Server/ServerRequestInfoC.h"

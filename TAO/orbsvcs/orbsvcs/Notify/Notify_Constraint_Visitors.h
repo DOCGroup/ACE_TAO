@@ -4,8 +4,6 @@
 /**
  *  @file   Notify_Constraint_Visitors.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

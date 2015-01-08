@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/DataWriterListener.h"
 #include "dds4ccm/impl/ndds/convertors/PublicationMatchedStatus.h"
 #include "dds4ccm/impl/ndds/convertors/LivelinessLostStatus.h"

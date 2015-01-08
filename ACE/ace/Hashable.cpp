@@ -1,5 +1,3 @@
-//$Id$
-
 #include "ace/Hashable.h"
 
 #if !defined (__ACE_INLINE__)

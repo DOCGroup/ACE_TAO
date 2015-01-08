@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p OIT_Test_Base -l .. -o ../lib -u DDS OIT_Sender_Connector"
 
 project(OIT_Sender_Connector_idl_gen) : connectoridldefaults, dds4ccm {

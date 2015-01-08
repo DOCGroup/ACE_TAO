@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/HTTP_BasicAuthentication.h"
 #include "ace/Codecs.h"
 #include "ace/Auto_Ptr.h"

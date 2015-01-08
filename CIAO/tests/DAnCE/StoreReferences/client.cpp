@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/CosNamingC.h"
 
 int ACE_TMAIN(int argc, ACE_TCHAR *argv[])

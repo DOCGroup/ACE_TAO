@@ -3,8 +3,6 @@
 /**
  *  @file Activity.h
  *
- *  $Id$
- *
  *  An activity is a process that contains Tasks.
  *  Each Task is composed of certain units of Jobs.
  *  A Job can perform work that is local/remote.
@@ -37,7 +35,6 @@ class Builder;
  *
  * @brief Driver class that maintains the orb and collections of objects for
  * generating activity in this process.
- *
  */
 class activity_Export Activity
 {

@@ -4,8 +4,6 @@
 /**
  *  @file   ATLAS.idl
  *
- *  $Id$
- *
  *  IDL for Authorization Token Layer Acquisition Service (ATLAS).
  *
  *  @author Object Management Group

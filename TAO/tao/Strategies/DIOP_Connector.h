@@ -4,8 +4,6 @@
 /**
  *  @file    DIOP_Connector.h
  *
- *  $Id$
- *
  *  DIOP specific connector processing
  *
  *  @author  Michael Kircher

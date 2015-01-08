@@ -1,4 +1,4 @@
-$Id$
+
 
 Performance tests for the performance of the DIOP
 implementation using oneways in a roundtrip manor.

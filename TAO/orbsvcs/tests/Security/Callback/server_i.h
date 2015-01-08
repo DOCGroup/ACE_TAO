@@ -4,8 +4,6 @@
 /**
  * @file server_i.h
  *
- * $Id$
- *
  * Header for the SSLIOP Callback test server implementation.
  *
  * @author Robert Martin <martin_r@ociweb.com>

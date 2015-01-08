@@ -1,5 +1,3 @@
-// $Id$
-
 project(*Supplier): namingexe, rteventexe,  {
   exename   = EchoEventSupplier
   includes += ../common

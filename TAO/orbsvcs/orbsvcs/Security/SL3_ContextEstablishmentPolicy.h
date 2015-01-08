@@ -4,8 +4,6 @@
 /**
  * @file SL3_ContextEstablishmentPolicy.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

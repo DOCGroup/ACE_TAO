@@ -4,8 +4,6 @@
 /**
  *  @file    GOA.h
  *
- *  $Id$
- *
  *  Header file for Group Object Adapter
  *
  *  @author  Several

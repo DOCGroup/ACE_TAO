@@ -3,11 +3,8 @@
 /**
  *  @file    valuetype_sh.h
  *
- *  $Id$
- *
  *  Concrete visitor for the valuetype node.
  *  This provides for code generation in the server header
- *
  *
  *  @author Jeff Parsons
  */

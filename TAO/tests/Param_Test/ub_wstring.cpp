@@ -3,10 +3,7 @@
 /**
  *  @file    ub_wstring.cpp
  *
- *  $Id$
- *
  *  tests unbounded wide strings
- *
  *
  *  @author   Jeff Parsons <parsons@cs.wustl.edu>
  */

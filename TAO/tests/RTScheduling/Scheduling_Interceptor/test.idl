@@ -1,4 +1,3 @@
-//$Id$
 interface test
 {
   oneway void one_way (in string message);

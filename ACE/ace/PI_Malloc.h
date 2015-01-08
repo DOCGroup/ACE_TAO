@@ -4,8 +4,6 @@
 /**
  *  @file   PI_Malloc.h
  *
- *  $Id$
- *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  *  @author Based on code that existed in other ACE files.
  */

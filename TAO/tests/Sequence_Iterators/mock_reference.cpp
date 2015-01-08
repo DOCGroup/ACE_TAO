@@ -1,8 +1,6 @@
 /**
  * @file
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 #include "mock_reference.hpp"

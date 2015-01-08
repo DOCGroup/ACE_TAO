@@ -1,5 +1,3 @@
-// $Id$
-
 #include "DomainApplicationManager_Impl.h"
 #include "dance/Deployment/Deployment_ConnectionC.h"
 #include "dance/Logger/Log_Macros.h"

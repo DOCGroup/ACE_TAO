@@ -1,5 +1,4 @@
 #! /bin/sh
-# $Id$
 #
 # Spawns CPP-inserver-fancy and CPP-inclient executables on a single host.
 

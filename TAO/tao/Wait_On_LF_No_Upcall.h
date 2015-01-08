@@ -4,8 +4,6 @@
 /**
  *  @file    Wait_On_LF_No_Upcall.h
  *
- *  $Id$
- *
  *  @author  Chris Cleeland <cleeland@ociweb.com>
  */
 //=============================================================================

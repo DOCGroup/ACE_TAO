@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef MT_BIDIR_SERVER_TASK_H
 #define MT_BIDIR_SERVER_TASK_H
 

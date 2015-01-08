@@ -3,8 +3,6 @@
 /**
  * @file ETCL_Constraint_Visitor.cpp
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

@@ -2,8 +2,6 @@
 /**
  *  @file   amh_rh_sh.h
  *
- *  $Id$
- *
  *  Specialized visitor for AMH ResponseHandler (RH) that generates
  *  code for the RH interface in the skeleton header
  *

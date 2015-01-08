@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "McastHello.h"
 
 McastHello::McastHello (CORBA::ORB_ptr orb,

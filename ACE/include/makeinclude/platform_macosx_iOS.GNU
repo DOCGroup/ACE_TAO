@@ -1,4 +1,3 @@
-# $Id$
 
 static_libs_only=1
 

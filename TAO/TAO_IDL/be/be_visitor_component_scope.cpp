@@ -3,10 +3,7 @@
 /**
  *  @file    be_visitor_component_scope.cpp
  *
- *  $Id$
- *
  *  Abstract visitor providing ancestor scope visitation.
- *
  *
  *  @author Jeff Parsons
  */

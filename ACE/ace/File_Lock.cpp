@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/File_Lock.h"
 #include "ace/Log_Category.h"
 

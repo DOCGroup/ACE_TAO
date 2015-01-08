@@ -4,8 +4,6 @@
 /**
  *  @file    ParserContext.h
  *
- *  $Id$
- *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
 //=============================================================================

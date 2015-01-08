@@ -3,8 +3,6 @@
  *
  * @brief test for STL iterator behaviour of CORBA unbounded string sequence
  *
- * $Id$
- *
  * @author Friedhelm Wolf (fwolf@dre.vanderbilt.edu)
  */
 

@@ -2,10 +2,7 @@
 /**
  *  @file    test_dynarray.h
  *
- *  $Id$
- *
  *  Header file for class to test DynArray.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

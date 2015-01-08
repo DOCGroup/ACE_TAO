@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #include "idl3_to_idl2_visitor.h"
 #include "idl3p_checking_visitor.h"
 #include "identifier_helper.h"

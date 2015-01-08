@@ -3,10 +3,7 @@
 /**
  *  @file    native_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Native in the client header
- *
  *
  *  @author Johnny Willemsen
  */

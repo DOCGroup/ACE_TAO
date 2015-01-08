@@ -4,8 +4,6 @@
 /**
  *  @file     HTIOP_Endpoint.h
  *
- *  $Id$
- *
  *   HTIOP implementation of PP Framework Endpoint interface.
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>

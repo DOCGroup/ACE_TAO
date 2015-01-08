@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Activate) : aceexe {
   exename = Activate
   Source_Files {

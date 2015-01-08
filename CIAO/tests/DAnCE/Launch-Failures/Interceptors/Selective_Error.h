@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file Selective_Error.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

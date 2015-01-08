@@ -3,8 +3,6 @@
 /**
  *  @file    SSL_Context.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@ece.uci.edu>
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */

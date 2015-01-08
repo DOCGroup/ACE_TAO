@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Process.h"
 #include "ace/OS_NS_unistd.h"
 

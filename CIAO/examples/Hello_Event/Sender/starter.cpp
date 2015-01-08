@@ -1,4 +1,4 @@
-//$Id$:
+//:
 
 #include "SenderC.h"
 #include "ace/Get_Opt.h"

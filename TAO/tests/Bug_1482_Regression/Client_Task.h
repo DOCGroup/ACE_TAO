@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef LONGUPCALLS_CLIENT_TASK_H
 #define LONGUPCALLS_CLIENT_TASK_H

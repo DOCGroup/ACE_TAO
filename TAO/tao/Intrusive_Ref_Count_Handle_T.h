@@ -4,8 +4,6 @@
 /**
  *  @file    Intrusive_Ref_Count_Handle_T.h
  *
- *  $Id$
- *
  *  @authors Tim Bradley  <bradley_t@ociweb.com>
  */
 //=============================================================================

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "LatencyTest.h"
 
 #include "ace/Sched_Params.h"

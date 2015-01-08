@@ -1,5 +1,3 @@
-// $Id$
-
 
 // Implementation of Named Value List and NamedValue classes
 

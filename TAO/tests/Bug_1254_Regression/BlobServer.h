@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef BLOBSERVER_H
 #define BLOBSERVER_H

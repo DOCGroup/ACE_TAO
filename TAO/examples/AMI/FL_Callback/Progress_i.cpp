@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Progress_i.h"
 
 #include <FL/Fl_Slider.H>

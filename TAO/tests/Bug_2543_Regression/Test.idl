@@ -1,5 +1,3 @@
-// $Id$
-
 valuetype Base
 {
       public long l;

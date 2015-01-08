@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/Min_Max.h"
 #include "ace/OS_NS_stropts.h"
 #include "ace/Truncate.h"

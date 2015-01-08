@@ -3,8 +3,6 @@
 /**
  *  @file   Sender_i.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  **/
 // ===================================================================

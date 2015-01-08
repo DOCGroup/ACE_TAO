@@ -3,11 +3,8 @@
 /**
  *  @file   Events.h
  *
- *  $Id$
- *
  * Test to check if events are received by all 3 types of consumers.
  * This is intended to be a simple test without any filters with default subscription (all events).
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */

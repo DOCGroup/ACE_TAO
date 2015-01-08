@@ -1,6 +1,4 @@
 // QoS_Session_Impl.cpp
-// $Id$
-
 #define SENDER_PORT 10001
 
 #include "ace/Log_Msg.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    ZIOP_Stub_Factory.h
  *
- *  $Id$
- *
  *   Defines the a factory interface for creating Stubs.
  *   This class creates the ZIOP stub, that is used in
  *   the ZIOP library

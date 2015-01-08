@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "CoherentUpdate_Test_Receiver_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_unistd.h"

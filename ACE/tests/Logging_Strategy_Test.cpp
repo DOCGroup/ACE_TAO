@@ -3,8 +3,6 @@
 /**
  *  @file    Logging_Strategy_Test.cpp
  *
- *  $Id$
- *
  *   This program tests the <ACE_Logging_Strategy> class in various
  *   ways and also illustrates many of the features of the
  *   <ACE_Log_Msg>.  The test works as follows:
@@ -22,7 +20,6 @@
  *   is not a must though, and you may activate the logging strategy
  *   as described in the non-DLL section below under DLL
  *   environments as well.
- *
  *
  *  @author Orlando Ribeiro <oribeiro@inescporto.pt>
  */

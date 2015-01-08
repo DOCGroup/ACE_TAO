@@ -1,4 +1,4 @@
-/* -*- C++ -*- $Id$ */
+/* -*- C++ -*-  */
 
 #include "ace/Get_Opt.h"
 

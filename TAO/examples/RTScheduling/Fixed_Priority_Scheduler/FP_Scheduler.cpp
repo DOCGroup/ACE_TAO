@@ -1,5 +1,3 @@
-//$Id$
-
 #include "FP_Scheduler.h"
 #include "ace/Atomic_Op.h"
 #include "tao/RTScheduling/Request_Interceptor.h"

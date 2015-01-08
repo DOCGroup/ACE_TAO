@@ -3,10 +3,7 @@
 /**
  *  @file    component_svs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Components in the servant source.
- *
  *
  *  @author Jeff Parsons
  */

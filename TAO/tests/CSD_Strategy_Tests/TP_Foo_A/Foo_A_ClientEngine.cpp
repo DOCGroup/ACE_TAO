@@ -1,4 +1,3 @@
-// $Id$
 #include "Foo_A_ClientEngine.h"
 #include "Foo_A_Statistics.h"
 #include "TestAppExceptionC.h"

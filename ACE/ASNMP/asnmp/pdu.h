@@ -5,11 +5,8 @@
 /**
  *  @file     pdu.h
  *
- *  $Id$
- *
  * Pdu class definition. Encapsulation of an SMI Protocol
  * Data Unit (PDU) aka Packet in C++.
- *
  *
  *  @author Peter E Mellquist  original code Michael MacFaden  mrm@cisco.com  ACE port
  *  @author add iterator class for pdus

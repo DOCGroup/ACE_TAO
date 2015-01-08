@@ -3,10 +3,7 @@
 /**
  *  @file    driver.h
  *
- *  $Id$
- *
  *  Header file for the driver program. The driver is a singleton.
- *
  *
  *  @author Aniruddha Gokhale
  */

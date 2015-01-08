@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_IDL_UTL_SCOPE_T_CPP
 #define TAO_IDL_UTL_SCOPE_T_CPP
 

@@ -1,5 +1,3 @@
-// $Id$
-
 // File: soreduce.cpp
 
 // Author: Phil Mesnier

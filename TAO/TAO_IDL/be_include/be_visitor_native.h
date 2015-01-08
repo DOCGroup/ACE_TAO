@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_native.h
  *
- *  $Id$
- *
  *  Concrete visitor for the native class
- *
  *
  *  @author Johnny Willemsen
  */

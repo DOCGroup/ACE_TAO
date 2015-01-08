@@ -1,5 +1,4 @@
 // -*- MPC -*-
-// $Id$
 project (*Client) : taoserver {
   exename = client
   Source_Files {

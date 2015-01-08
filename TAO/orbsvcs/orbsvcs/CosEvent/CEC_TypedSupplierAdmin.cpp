@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h"
 
 #include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"

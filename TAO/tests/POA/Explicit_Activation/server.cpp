@@ -3,10 +3,7 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Explicit creation of servants.
- *
  *
  *  @author Irfan Pyarali
  */

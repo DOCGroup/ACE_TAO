@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef _SERVANT_LOCATOR_H_
 #define _SERVANT_LOCATOR_H_
 

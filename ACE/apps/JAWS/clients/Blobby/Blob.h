@@ -4,11 +4,8 @@
 /**
  *  @file    Blob.h
  *
- *  $Id$
- *
  *   This is the ACE_Blob class, which is the API for doing file
  *   uploads/downloads.
- *
  *
  *  @author Prashant Jain and Sumedh Mungee
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "DetailView.h"
 #include <QtGui/qlayout.h>
 #include <QtGui/qlabel.h>

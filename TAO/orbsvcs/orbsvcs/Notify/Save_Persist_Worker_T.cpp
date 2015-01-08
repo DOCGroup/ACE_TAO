@@ -2,8 +2,6 @@
 /**
 *  @file    Save_Persist_Worker_T.cpp
 *
-*  $Id$
-*
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
 //=============================================================================

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Connect_Strategy.h"
 #include "tao/Transport.h"
 #include "tao/Connection_Handler.h"

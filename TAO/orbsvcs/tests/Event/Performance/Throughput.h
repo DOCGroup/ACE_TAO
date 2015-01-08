@@ -3,8 +3,6 @@
 /**
  *  @file   Throughput.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -23,7 +21,6 @@
  * @class EC_Throughput
  *
  * @brief Test the EC throughput
- *
  */
 class EC_Throughput : public EC_Driver
 {

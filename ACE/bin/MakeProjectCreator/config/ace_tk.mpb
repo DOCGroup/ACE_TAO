@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project {
   requires += tk
   // Depends on configuration from include/makeinclude/platform_*.GNU

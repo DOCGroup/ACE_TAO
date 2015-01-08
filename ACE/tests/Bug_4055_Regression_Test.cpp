@@ -2,8 +2,6 @@
 /**
  *  @file    Bug_4055_Regression_Test.cpp
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  (jwillemsen@remedy.nl)
  */
 //=============================================================================

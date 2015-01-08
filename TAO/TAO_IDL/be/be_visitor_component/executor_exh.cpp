@@ -3,10 +3,7 @@
 /**
  *  @file    executor_exh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code in the exec impl header.
- *
  *
  *  @author Jeff Parsons
  */

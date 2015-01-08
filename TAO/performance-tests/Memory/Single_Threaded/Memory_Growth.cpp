@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Memory_Growth.h"
 
 Memory_Growth::Memory_Growth (CORBA::ORB_ptr orb)

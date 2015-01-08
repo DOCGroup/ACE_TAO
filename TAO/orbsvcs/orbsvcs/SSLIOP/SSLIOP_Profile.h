@@ -4,8 +4,6 @@
 /**
  *  @file SSLIOP_Profile.h
  *
- *  $Id$
- *
  *  SSLIOP profile specific processing
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>

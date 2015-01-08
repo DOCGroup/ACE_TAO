@@ -2,8 +2,6 @@
 /**
  *  @file ECG_CDR_Message_Receiver.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Marina Spivak (marina@atdesk.com)
  */

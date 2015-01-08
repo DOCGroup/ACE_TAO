@@ -3,8 +3,6 @@
 /**
  * @file Policy_Forward.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source to forward declare some critical
  * Policy-related types.
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Multicast_Manager.h"
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"

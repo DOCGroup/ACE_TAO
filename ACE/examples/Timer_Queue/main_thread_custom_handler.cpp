@@ -2,13 +2,10 @@
 /**
  *  @file    main_thread_custom_handler.cpp
  *
- *  $Id$
- *
  *    Implements a threaded timer queue.
  *    This code exercises the Timer_Queue_Test_Driver class using
  *    threads.
  *    It also uses custom event handlers for timer events.
- *
  *
  *  @author Douglas Schmidt      <schmidt@cs.wustl.edu> && Sergio Flores-Gaitan <sergio@cs.wustl.edu>  && Alon Diamant         <diamant.alon@gmail.com>
  */

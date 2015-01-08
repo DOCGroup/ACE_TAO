@@ -4,11 +4,8 @@
 /**
  *  @file    Identity_Server.h
  *
- *  $Id$
- *
  *  Driver for identity server, which is used to test/demonstrate
  *  the functionality of the Load Balancing service.
- *
  *
  *  @author Marina Spivak <marina@cs.wustl.edu> with modifications by Bala Natarajan <bala@cs.wustl.edu>
  */

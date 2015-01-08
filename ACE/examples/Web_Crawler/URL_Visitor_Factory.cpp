@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "URL_Visitor_Factory.h"
 
 URL_Visitor_Factory::~URL_Visitor_Factory (void)

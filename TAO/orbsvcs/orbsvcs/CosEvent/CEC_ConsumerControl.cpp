@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

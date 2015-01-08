@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Connector.h
  *
- *  $Id$
- *
  *  MIOP specific connector processing.
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>

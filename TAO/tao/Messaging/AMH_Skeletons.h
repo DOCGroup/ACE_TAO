@@ -4,8 +4,6 @@
 /**
  *  @file    AMH_Skeletons.h
  *
- *  $Id$
- *
  *  @author  Marcel Smit <msmit@remedy.nl>
  *
  *  @brief Upcall command exection classes for static AMH skeleton methods
@@ -21,7 +19,6 @@
  * these methods do contain an invocation to tao_send_reply.
  * Since we don't want to bother the regular core with AMH stuff,
  * we put these methods and classes here.
- *
  */
 //=============================================================================
 
@@ -50,8 +47,6 @@ class TAO_ServantBase;
  * @class _is_a_amh_Upcall_Command
  *
  * @brief Execution class for _is_a_skel.
- *
- *
  */
 class _is_a_amh_Upcall_Command
   : public TAO::Upcall_Command
@@ -78,8 +73,6 @@ private:
  * @class _non_existent_amh_Upcall_Command
  *
  * @brief Execution class for _non_existent_skel.
- *
- *
  */
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 class _non_existent_amh_Upcall_Command
@@ -108,8 +101,6 @@ private:
  * @class _get_component_amh_Upcall_Command
  *
  * @brief Execution class for _component_skel.
- *
- *
  */
 class _get_component_amh_Upcall_Command
   : public TAO::Upcall_Command
@@ -138,8 +129,6 @@ private:
  * @class _repository_id_amh_Upcall_Command
  *
  * @brief Execution class for _repository_id_skel
- *
- *
  */
 class _repository_id_amh_Upcall_Command
   : public TAO::Upcall_Command

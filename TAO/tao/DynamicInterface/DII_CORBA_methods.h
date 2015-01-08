@@ -4,8 +4,6 @@
 /**
  *  @file    DII_CORBA_methods.h
  *
- *  $Id$
- *
  *  Declarations of DII methods in the CORBA namespace.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

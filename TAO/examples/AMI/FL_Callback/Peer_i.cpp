@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Peer_i.h"
 #include "ace/OS_NS_unistd.h"
 

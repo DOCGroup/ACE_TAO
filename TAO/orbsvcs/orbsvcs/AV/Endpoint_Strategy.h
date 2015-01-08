@@ -4,8 +4,6 @@
 /**
  *  @file   Endpoint_Strategy.h
  *
- *  $Id$
- *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  */
 //=============================================================================

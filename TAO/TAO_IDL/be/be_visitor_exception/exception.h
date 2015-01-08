@@ -3,10 +3,7 @@
 /**
  *  @file    exception.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Exception
- *
  *
  *  @author Aniruddha Gokhale
  */

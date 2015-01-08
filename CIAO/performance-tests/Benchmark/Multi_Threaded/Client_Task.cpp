@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Client_Task.h"
 
 Client_Task::Client_Task (Benchmark::RoundTripClient_ptr roundtrip)

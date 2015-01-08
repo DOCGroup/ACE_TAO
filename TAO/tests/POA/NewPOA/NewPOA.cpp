@@ -3,8 +3,6 @@
 /**
  *  @file    NewPOA.cpp
  *
- *  $Id$
- *
  *  This program demonstrates creation of new POAs, as children of the root POA or the
  *  existing POA.
  *  There are three new POA created in this example.
@@ -13,7 +11,6 @@
  *           /-->first_poa-->first_poa/second_poa
  *  RootPOA--
  *           \-->third_poa
- *
  *
  *  @author Irfan Pyarali
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 project(*idl): taoidldefaults {
   idlflags += -Wb,pch_include=bidir_giop_pch.h
   IDL_Files {

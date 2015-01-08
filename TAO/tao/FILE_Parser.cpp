@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/FILE_Parser.h"
 
 #if (TAO_HAS_FILE_PARSER == 1)

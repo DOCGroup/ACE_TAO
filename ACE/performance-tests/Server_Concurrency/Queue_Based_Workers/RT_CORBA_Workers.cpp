@@ -1,4 +1,3 @@
-// $Id$
 #include "RT_CORBA_Workers.h"
 
 #if defined (ACE_HAS_THREADS)

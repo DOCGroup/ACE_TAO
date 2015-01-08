@@ -4,8 +4,6 @@
 /**
  *  @file    TypeCode_Value_Field.h
  *
- *  $Id$
- *
  *  Header file for @c TAO::TypeCode::Value_Field type.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

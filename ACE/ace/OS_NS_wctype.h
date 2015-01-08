@@ -4,8 +4,6 @@
 /**
  *  @file   OS_NS_wctype.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

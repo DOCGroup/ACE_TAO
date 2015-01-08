@@ -1,4 +1,3 @@
-// $Id$
 #include "ClientApp.h"
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"

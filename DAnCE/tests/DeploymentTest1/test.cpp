@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Auto_Ptr.h"
 #include "dance/Deployment/Deployment_DeploymentPlanC.h"
 #include "dance/Deployment/Deployment_ExecutionManagerC.h"

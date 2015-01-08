@@ -3,10 +3,7 @@
 /**
  *  @file    be_visitor_attr_assign.h
  *
- *  $Id$
- *
  *  Encapsulation of rules for component attribute assignment.
- *
  *
  *  @author Jeff Parsons
  */

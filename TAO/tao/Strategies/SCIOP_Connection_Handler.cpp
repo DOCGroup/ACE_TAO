@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/SCIOP_Connection_Handler.h"
 
 #if TAO_HAS_SCIOP == 1

@@ -1,5 +1,3 @@
-// $Id$
-
 // -- App. Specific Include --
 #include "CounterC.h"
 // #include "util.h"

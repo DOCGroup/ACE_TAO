@@ -2,7 +2,7 @@
 
 @page Forwarding Test README File
 
-$Id$
+
 
 	This is a minimal test for location forwarding.  It verifies
 that the client ORB can process LOCATION_FORWARD replies correctly.

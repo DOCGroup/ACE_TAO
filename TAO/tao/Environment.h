@@ -4,8 +4,6 @@
 /**
  *  @file   Environment.h
  *
- *  $Id$
- *
  * Declare the CORBA::Environment class.  Note that this header file
  * only requires a few forward declarations of CORBA classes, this
  * is *very* important because even the ORB needs to know about it;

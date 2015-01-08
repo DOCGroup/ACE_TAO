@@ -3,8 +3,6 @@
 /**
  *  @file    test_aiocb_ace.cpp
  *
- *  $Id$
- *
  *  This program helps you to test the <aio_*> calls on a
  *  platform.
  *
@@ -22,7 +20,6 @@
  * = COMPILE and RUN
  *  % make
  *  % ./test_aiocb_ace
- *
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */

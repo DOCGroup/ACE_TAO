@@ -1,5 +1,3 @@
-// $Id$
-
 #include "subscriber_impl.h"
 #include "publisherC.h"
 #include "ace/Get_Opt.h"

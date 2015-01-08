@@ -4,10 +4,7 @@
 /**
  *  @file ZIOP.h
  *
- *  $Id$
- *
  *  Dynamic loader object for the ZIOP library
- *
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */

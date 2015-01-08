@@ -4,8 +4,6 @@
 /**
  *  @file   amh_ss.h
  *
- *  $Id$
- *
  *  Specialized interface visitor for AMH
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

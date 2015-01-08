@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/Event_Utilities.h"

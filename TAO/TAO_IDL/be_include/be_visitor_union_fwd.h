@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_union_fwd.h
  *
- *  $Id$
- *
  *  Concrete visitor for the be_union_fwd class
- *
  *
  *  @author Jeff Parsons
  */

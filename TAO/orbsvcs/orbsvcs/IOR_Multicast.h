@@ -5,11 +5,8 @@
 /**
  *  @file    IOR_Multicast.h
  *
- *  $Id$
- *
  *  Defines a class that listens to a multicast address for client requests
  *  for ior of a bootstrappable service.
- *
  *
  *  @author   Sergio Flores-Gaitan
  */

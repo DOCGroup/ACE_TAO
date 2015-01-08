@@ -1,11 +1,7 @@
 // -*- IDL -*-
-// $Id$
-
 // ===================================================================
 /**
  *  @file   test.idl
- *
- *  $Id$
  *
  *  Simple IDL file to test portable interceptor support.
  *

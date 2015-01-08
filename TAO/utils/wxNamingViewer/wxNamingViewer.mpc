@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project: namingexe, portableserver, wxwindows {
   exename = wxNamingViewer
 }

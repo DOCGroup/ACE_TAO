@@ -1,5 +1,3 @@
-// $Id$
-
 // Simple file transfer example
 
 #include "ace/OS_NS_stdio.h"

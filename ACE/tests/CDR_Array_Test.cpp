@@ -3,15 +3,12 @@
 /**
  *  @file    CDR_Array_Test.cpp
  *
- *  $Id$
- *
  *  Checks ACE_OutputCDR::write_XX_array.
  *  Checks ACE_InputCDR::read_XX_array.
  *  Checks operator<< and operator>> for CDR Streams in
  *  each of the basic CDR types.
  *  Gives a measure of the speed of the ACE CDR streams wrt those
  *  operations.
- *
  *
  *  @author Cristian Ferretti <cristian_ferretti@yahoo.com>
  */

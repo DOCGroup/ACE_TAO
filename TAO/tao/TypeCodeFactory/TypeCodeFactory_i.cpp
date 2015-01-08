@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
 
 #include "tao/AnyTypeCode/Marshal.h"

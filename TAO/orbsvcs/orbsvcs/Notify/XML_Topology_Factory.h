@@ -4,8 +4,6 @@
 /**
  *  @file    XML_Topology_Factory.h
  *
- *  $Id$
- *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
 //=============================================================================

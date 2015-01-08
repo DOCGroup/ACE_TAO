@@ -1,4 +1,3 @@
-// $Id$
 #include "../Simple_util.h"
 #include "Grid_i.h"
 

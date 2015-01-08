@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ProcessColocation_exec.h"
 #include "ace/Log_Msg.h"
 #include "ace/Singleton.h"

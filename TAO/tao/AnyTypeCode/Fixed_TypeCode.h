@@ -4,8 +4,6 @@
 /**
  *  @file    Fixed_TypeCode.h
  *
- *  $Id$
- *
  *  Header file for @c CORBA::tk_fixed @c CORBA::TypeCodes.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

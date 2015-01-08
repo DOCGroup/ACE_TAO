@@ -4,10 +4,7 @@
 /**
  *  @file BiDirGIOP.h
  *
- *  $Id$
- *
  *  Dynamic loader object for BiDir GIOP
- *
  *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */

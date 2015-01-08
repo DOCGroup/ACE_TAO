@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project (DDS4CCM_lem_gen) : install, dds4ccm, ciaoidldefaults {
   custom_only = 1
   after += DDS4CCM_idl_gen

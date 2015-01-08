@@ -1,5 +1,3 @@
-// $Id$
-
 // To use the export macros with a DLL, a file will need to be
 // created (see ACE_wrapper/bin/generate_export_file.pl) and
 // included.  This file defines Test_Export (and the

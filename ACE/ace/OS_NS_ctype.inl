@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #if defined (ACE_LACKS_ISCTYPE)
 #include "ace/OS_NS_errno.h"
 #endif

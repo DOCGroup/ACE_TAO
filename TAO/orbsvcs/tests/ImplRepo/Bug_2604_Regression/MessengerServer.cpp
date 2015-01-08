@@ -1,4 +1,3 @@
-// $Id$
 #include "Messenger_i.h"
 
 #include "tao/ImR_Client/ImR_Client.h"

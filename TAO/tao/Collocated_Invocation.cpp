@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Collocated_Invocation.h"
 #include "tao/ORB_Core.h"
 #include "tao/Request_Dispatcher.h"

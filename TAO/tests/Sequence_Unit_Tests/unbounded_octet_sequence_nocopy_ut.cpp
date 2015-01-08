@@ -4,8 +4,6 @@
  * @brief Unit test for unbounded sequences of octet types using the TAO
  * specific no copy specialization
  *
- * $Id$
- *
  * @author Johnny Willemsen
  */
 #include "testing_allocation_traits.hpp"

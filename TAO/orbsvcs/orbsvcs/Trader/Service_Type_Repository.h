@@ -4,8 +4,6 @@
 /**
  *  @file   Service_Type_Repository.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */

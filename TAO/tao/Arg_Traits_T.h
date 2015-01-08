@@ -4,8 +4,6 @@
 /**
  *  @file    Arg_Traits_T.h
  *
- *  $Id$
- *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
 //=============================================================================

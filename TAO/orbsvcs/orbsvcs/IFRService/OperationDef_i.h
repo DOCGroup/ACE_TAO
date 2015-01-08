@@ -5,10 +5,7 @@
 /**
  *  @file    OperationDef_i.h
  *
- *  $Id$
- *
  *  OperationDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

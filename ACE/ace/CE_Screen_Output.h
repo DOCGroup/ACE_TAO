@@ -4,8 +4,6 @@
 /**
  *  @file    CE_Screen_Output.h
  *
- *  $Id$
- *
  *  @author Si Mong Park  <spark@ociweb.com>
  */
 //=============================================================================

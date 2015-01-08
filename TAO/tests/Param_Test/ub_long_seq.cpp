@@ -3,10 +3,7 @@
 /**
  *  @file    ub_long_seq.cpp
  *
- *  $Id$
- *
  *  tests unbounded long sequences
- *
  *
  *  @author   Aniruddha Gokhale
  */

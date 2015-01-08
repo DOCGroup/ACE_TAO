@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FT_Naming_Service.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
 #include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"

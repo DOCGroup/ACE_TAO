@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Foo_exec.h"
 
 // Helper methods.

@@ -4,8 +4,6 @@
 /**
  *  @file   Dynamic_Bitset.inl
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

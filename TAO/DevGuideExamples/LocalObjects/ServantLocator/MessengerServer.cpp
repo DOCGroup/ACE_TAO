@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MessengerLocator_i.h"
 #include "MessengerC.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 // We need this to get the status of ACE_NTRACE...
 #include "ace/config-all.h"
 

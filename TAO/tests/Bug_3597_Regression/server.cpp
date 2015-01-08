@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/corba.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Backend.h"

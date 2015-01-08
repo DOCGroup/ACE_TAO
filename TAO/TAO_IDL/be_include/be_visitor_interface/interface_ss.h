@@ -5,11 +5,8 @@
 /**
  *  @file    interface_ss.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This provides for code generation in the server skeleton
- *
  *
  *  @author Aniruddha Gokhale
  */

@@ -1,4 +1,4 @@
-$Id$
+
 
 The service is registered with the naming service with the name
 "RTEventLogFactory" .

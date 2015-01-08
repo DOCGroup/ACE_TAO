@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
 
 #include "ace/OS_Memory.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 // This server daemon collects, formats, and displays logging
 // information forwarded from client daemons running on other hosts in
 // the network.

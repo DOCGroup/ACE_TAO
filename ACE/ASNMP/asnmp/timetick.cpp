@@ -3,10 +3,7 @@
 /**
  *  @file     timetick.cpp
  *
- *  $Id$
- *
  * Class implentation for SMI Timeticks class.
- *
  *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */

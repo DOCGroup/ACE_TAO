@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/POSIX_CB_Proactor.h"
 
 #if defined (ACE_HAS_AIO_CALLS) && !defined (ACE_HAS_BROKEN_SIGEVENT_STRUCT)

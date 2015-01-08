@@ -2,8 +2,6 @@
 /**
  * @file    Array_Map_Test.cpp
  *
- * $Id$
- *
  * Regression test for ACE_Array_Map.
  *
  * @author Ossama Othman

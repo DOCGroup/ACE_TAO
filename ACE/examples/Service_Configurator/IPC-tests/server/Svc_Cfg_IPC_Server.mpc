@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Lib) : acelib, avoids_ace_for_tao {
   sharedname = IPC_Tests_Server
   dynamicflags += ACE_BUILD_SVC_DLL

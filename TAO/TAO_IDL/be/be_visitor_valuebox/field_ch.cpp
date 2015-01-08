@@ -3,8 +3,6 @@
 /**
  *  @file    field_ch.cpp
  *
- *  $Id$
- *
  *   Visitor for the structure fields in valuebox class.
  *   This one generates code for access to strucuture members
  *   in the client header.
@@ -13,7 +11,6 @@
  *   generate the same method signatures as that visitor but cannot
  *   use it directly because a valuebox is not a scope and because
  *   the structure is visited prior to visiting the valuebox.
- *
  *
  *  @author Gary Maxey
  */

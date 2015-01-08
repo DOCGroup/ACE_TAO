@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Worker_Task.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

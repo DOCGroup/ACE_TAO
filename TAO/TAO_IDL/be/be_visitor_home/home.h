@@ -3,10 +3,7 @@
 /**
  *  @file    home.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for a component home.
- *
  *
  *  @author Jeff Parsons
  */

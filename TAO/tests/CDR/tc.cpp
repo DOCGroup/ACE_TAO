@@ -3,11 +3,8 @@
 /**
  *  @file    tc.cpp
  *
- *  $Id$
- *
  * Verify that the basic typecodes are able to interpret their CDR
  * buffers.
- *
  *
  *  @author Carlos O'Ryan
  */

@@ -3,12 +3,9 @@
 /**
  *  @file    context_svth.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Component node.
  *  This provides for code generation for the Context
  *  class declaration
- *
  *
  *  @author Jeff Parsons
  */

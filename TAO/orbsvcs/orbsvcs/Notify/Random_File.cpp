@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Random_File.h"
 
 #include "orbsvcs/Log_Macros.h"

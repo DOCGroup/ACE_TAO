@@ -1,4 +1,4 @@
-$Id$
+
 
 The follow steps is how you import IDL input PICML for the Shapes
 example so that the IDL generator works properly.

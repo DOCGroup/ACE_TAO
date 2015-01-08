@@ -4,8 +4,6 @@
 /**
  *  @file    AMI_Arguments_Converter_Impl.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

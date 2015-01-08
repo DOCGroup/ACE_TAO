@@ -1,5 +1,3 @@
-// $Id$
-
 #include "simple_i.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"

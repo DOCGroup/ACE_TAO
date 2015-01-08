@@ -1,4 +1,3 @@
-// $Id$
 #include "ClientApp.h"
 #include "Callback_i.h"
 #include "ClientTask.h"

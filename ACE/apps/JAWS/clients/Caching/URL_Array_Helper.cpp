@@ -1,5 +1,3 @@
-// $Id$
-
 // URL_Array_Helper.cpp
 
 #ifndef ACE_URL_ARRAY_HELPER_C

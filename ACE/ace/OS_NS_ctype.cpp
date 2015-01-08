@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ace/OS_NS_ctype.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)

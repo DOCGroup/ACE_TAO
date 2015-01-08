@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 //FUZZ: disable check_for_math_include/
 #include <math.h>

@@ -4,10 +4,7 @@
 /**
  *  @file    NT_Notify_Service.h
  *
- *  $Id$
- *
  *  Run the TAO Notify Service as a Windows NT Service.
- *
  *
  *  @author John Tucker <jtucker@infoglide.com>
  *  @author Mike Vitalo <mvitalo@infoglide.com>

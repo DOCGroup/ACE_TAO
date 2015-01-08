@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Request_Interceptor.h"
 
 Request_Interceptor::Request_Interceptor (const char *name)

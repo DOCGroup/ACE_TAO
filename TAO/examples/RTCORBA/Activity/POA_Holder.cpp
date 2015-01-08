@@ -1,4 +1,3 @@
-//$Id$
 #include "POA_Holder.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"

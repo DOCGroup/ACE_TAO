@@ -1,5 +1,3 @@
-// $Id$
-
 // Print a file in reverse by using the ACE memory mapped file
 // wrapper.  It is SO easy to do compared with alternatives!
 

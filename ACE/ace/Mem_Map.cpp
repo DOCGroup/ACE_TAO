@@ -1,5 +1,3 @@
-// $Id$
-
 // Defines the member functions for the memory mapping facility.
 
 #include "ace/Mem_Map.h"

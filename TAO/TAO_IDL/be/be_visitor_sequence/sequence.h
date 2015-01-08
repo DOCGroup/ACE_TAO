@@ -3,10 +3,7 @@
 /**
  *  @file    sequence.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Sequence
- *
  *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */

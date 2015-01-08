@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TIMESTAMP_MONITOR_H
 #define TIMESTAMP_MONITOR_H
 

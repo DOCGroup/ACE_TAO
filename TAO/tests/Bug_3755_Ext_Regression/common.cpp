@@ -1,5 +1,3 @@
-// $Id$
-
 #include "common.h"
 #include "tao/ORB.h"
 #include "ace/Get_Opt.h"

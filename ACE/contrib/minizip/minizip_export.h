@@ -1,6 +1,5 @@
 
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 
 #ifndef MINIZIP_EXPORT_H

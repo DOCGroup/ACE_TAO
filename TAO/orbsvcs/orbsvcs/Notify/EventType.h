@@ -2,8 +2,6 @@
 /**
  *  @file EventType.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -31,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This type is used to compare different event types.
  * It is used by the Event Manager as a key to find subscription lists.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_Notify::Topology_Savable
 {

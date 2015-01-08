@@ -4,8 +4,6 @@
 /**
  *  @file   Policy.h
  *
- *  $Id$
- *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
 //=============================================================================

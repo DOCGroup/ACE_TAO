@@ -1,5 +1,3 @@
-// $Id$
-
 // ACE_LSOCK Client.
 
 #include "ace/LSOCK_Connector.h"

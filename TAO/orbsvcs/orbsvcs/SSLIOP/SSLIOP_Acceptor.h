@@ -4,10 +4,7 @@
 /**
  *  @file    SSLIOP_Acceptor.h
  *
- *  $Id$
- *
  *  IIOP/SSL specific acceptor processing
- *
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>

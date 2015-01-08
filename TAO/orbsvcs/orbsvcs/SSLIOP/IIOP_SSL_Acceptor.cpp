@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/IIOP_SSL_Acceptor.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

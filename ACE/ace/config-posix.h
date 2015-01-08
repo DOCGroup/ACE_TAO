@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef ACE_CONFIG_POSIX_H
 #define ACE_CONFIG_POSIX_H
 

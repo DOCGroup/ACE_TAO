@@ -2,8 +2,6 @@
 /**
  * @brief Unit test for the TAO_Queued_Message class
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 // ============================================================================

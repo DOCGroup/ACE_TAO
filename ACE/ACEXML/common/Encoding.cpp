@@ -1,4 +1,4 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
 
 #include "ACEXML/common/Encoding.h"
 #include "ace/OS_NS_string.h"

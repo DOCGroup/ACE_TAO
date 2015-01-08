@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 namespace CIAO
 {
   ACE_INLINE

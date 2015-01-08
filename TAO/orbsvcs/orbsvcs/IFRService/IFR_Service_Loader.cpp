@@ -1,5 +1,3 @@
-// $Id$
-
 // ================================================================
 // DESCRIPTION
 //   This class allows for dynamically loading

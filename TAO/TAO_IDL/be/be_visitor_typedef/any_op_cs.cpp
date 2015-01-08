@@ -3,10 +3,7 @@
 /**
  *  @file    any_op_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operators in the client stubs
- *
  *
  *  @author Aniruddha Gokhale
  */

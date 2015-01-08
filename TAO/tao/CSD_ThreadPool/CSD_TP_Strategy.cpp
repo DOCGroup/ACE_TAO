@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Remote_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.h"

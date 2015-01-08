@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Shared_Object.h"
 #include "ace/Global_Macros.h"
 #include "ace/config-all.h"

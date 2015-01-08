@@ -4,8 +4,6 @@
 /**
  *  @file    MFC_Log.h
  *
- *  $Id$
- *
  *  @author Craig Rodrigues <crodrigu@bbn.com>
  *  @author Chris Hafey <chafey@stentor.com>
  *  @author Don Hinton <dhinton@ieee.org>

@@ -4,8 +4,6 @@
 /**
  *  @file    RT_POA.h
  *
- *  $Id$
- *
  *  RT_POA
  *
  *  @author  Irfan Pyarali

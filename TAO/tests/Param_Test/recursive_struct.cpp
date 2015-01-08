@@ -3,10 +3,7 @@
 /**
  *  @file    recursive_struct.cpp
  *
- *  $Id$
- *
  *  test structure that contains a sequence of itself
- *
  *
  *  @author Aniruddha Gokhale
  *  @author Jeff Parsons

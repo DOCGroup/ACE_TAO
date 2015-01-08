@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "tao/PortableServer/Servant_Upcall.h"
 
 

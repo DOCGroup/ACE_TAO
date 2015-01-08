@@ -4,8 +4,6 @@
 /**
  *  @file   SSLIOP_OpenSSL_st_T.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

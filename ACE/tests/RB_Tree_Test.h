@@ -4,13 +4,10 @@
 /**
  *  @file    RB_Tree_Test.h
  *
- *  $Id$
- *
  *  Header file for a test to verify and illustrate the use of the
  *  ACE_RB_Tree ACE_RB_Tree_Iterator, and
  *  ACE_RB_Tree_Reverse_Iterator classes.
  *  iterator over each.
- *
  *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  */
@@ -22,7 +19,6 @@
  *
  * @brief Implements a templatized test class for the RB_Tree ADT and its
  * iterators.
- *
  */
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_RB_Tree_Test

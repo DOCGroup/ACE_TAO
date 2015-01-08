@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef LONGDOUBLETEST_H
 #define LONGDOUBLETEST_H

@@ -5,10 +5,7 @@
 /**
  *  @file    FixedDef_i.h
  *
- *  $Id$
- *
  *  FixedDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

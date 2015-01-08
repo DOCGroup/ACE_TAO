@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Connector_Servant_Impl_Base.h"
 #include "StandardConfigurator_Impl.h"
 #include "ciao/Logger/Log_Macros.h"

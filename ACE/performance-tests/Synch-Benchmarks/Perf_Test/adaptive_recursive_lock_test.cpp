@@ -1,5 +1,3 @@
-// $Id$
-
 #define  ACE_BUILD_SVC_DLL
 #include "ace/Log_Msg.h"
 #include "Adaptive_Lock_Performance_Test_Base.h"

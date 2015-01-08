@@ -3,8 +3,6 @@
 /**
  *  @file    LifeCycleService.idl
  *
- *  $Id$
- *
  *  A generic creation service named lifecycle service using
  *  the GenericFactory interface of the LifeCycle Service specification.
  *

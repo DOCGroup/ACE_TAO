@@ -3,10 +3,7 @@
 /**
  *  @file    root_ex_idl.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the CIAO executor IDL
- *
  *
  *  @author Jeff Parsons
  */

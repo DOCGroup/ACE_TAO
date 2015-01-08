@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Test_i.h"
 
 Hello::Hello (CORBA::ORB_ptr orb)

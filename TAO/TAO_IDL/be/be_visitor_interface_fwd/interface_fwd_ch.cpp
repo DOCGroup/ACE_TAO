@@ -3,10 +3,7 @@
 /**
  *  @file    interface_fwd_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interface_Fwd node in the client header.
- *
  *
  *  @author Aniruddha Gokhale
  */

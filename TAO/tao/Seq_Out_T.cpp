@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_SEQ_OUT_T_CPP
 #define TAO_SEQ_OUT_T_CPP
 

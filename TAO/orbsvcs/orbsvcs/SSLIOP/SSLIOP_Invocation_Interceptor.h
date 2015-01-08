@@ -4,8 +4,6 @@
 /**
  *  @file   SSLIOP_Invocation_Interceptor.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================

@@ -4,8 +4,6 @@
 /**
  * @file   FT_Naming_Replication_Manager.h
  *
- * $Id$
- *
  * @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================

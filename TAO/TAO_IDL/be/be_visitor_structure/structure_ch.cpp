@@ -3,10 +3,7 @@
 /**
  *  @file    structure_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Structure in the client header.
- *
  *
  *  @author Aniruddha Gokhale
  */

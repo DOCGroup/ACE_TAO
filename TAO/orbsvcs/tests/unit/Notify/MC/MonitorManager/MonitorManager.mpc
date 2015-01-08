@@ -1,4 +1,3 @@
-// $Id$
 project(*server): aceexe {
   exename = MonitorManager
   Source_Files {

@@ -4,8 +4,6 @@
 /**
  *  @file   Policy_Set.h
  *
- *  $Id$
- *
  *  A Policy Container that provides O(1) time access for policy that
  *  support caching (see orbconf.h).
  *

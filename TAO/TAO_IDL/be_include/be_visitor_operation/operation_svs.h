@@ -3,11 +3,8 @@
 /**
  *  @file    operation_svs.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations in
  *  CIAO servant implementations
- *
  *
  *  @author Jeff Parsons
  */

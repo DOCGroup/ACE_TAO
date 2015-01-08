@@ -1,7 +1,5 @@
 #!/bin/sh
-# $Id$
 
-# $Id$
 
 max_len=24
 pushd /proc/sys/net/ipv4 &> /dev/null

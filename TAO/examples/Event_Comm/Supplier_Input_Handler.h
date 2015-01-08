@@ -4,10 +4,7 @@
 /**
  *  @file    Supplier_Input_Handler.h
  *
- *  $Id$
- *
  *  Handle input from the keyboard.
- *
  *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
  */

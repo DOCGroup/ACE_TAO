@@ -4,8 +4,6 @@
 /**
  *  @file    Event_Service_Constants.h
  *
- *  $Id$
- *
  *  Keep constants required by both Event Service implementation and
  *  the Scheduling Service implementation.
  *

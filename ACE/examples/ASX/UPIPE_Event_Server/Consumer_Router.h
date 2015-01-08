@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // The interface between one or more consumers and an Event Server
 // ACE_Stream.
 

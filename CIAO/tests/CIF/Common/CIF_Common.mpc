@@ -1,5 +1,3 @@
-// $Id$
-
 project (CIF_Common) : ccm_configvalue, ciao_logger, naming, ciao_base {
   dynamicflags += CIF_COMMON_BUILD_DLL
   sharedname = CIF_Common

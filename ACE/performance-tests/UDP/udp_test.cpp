@@ -3,10 +3,7 @@
 /**
  *  @file    udp_test.cpp
  *
- *  $Id$
- *
  *  Measures UDP round-trip performance.
- *
  *
  *  @author Fred Kuhns and David L. Levine
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Notify_Test_Client.h"
 #define NOTIFY_FACTORY_NAME "NotifyEventChannelFactory"
 #define NAMING_SERVICE_NAME "NameService"

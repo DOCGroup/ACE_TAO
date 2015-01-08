@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestS.h"
 
 #include "tao/Strategies/advanced_resource.h"

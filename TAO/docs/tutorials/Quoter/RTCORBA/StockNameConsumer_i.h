@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file StockNameConsumer_i.h
  *

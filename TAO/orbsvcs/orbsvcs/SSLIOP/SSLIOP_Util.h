@@ -4,8 +4,6 @@
 /**
  *  @file    SSLIOP_Util.h
  *
- *  $Id$
- *
  *  Utility class used by the SSLIOP pluggable protocol.
  *
  *  @author  Ossama Othman <ossama@uci.edu>

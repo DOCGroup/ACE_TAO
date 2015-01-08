@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Containers.h"
 #include "ace/Malloc_T.h"
 #include "ace/Synch.h" // Needed for the lock.

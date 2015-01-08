@@ -1,5 +1,3 @@
-// $Id$
-
 // Test program for the INET ACE_TLI-SAPs...
 
 #include "ace/OS_main.h"

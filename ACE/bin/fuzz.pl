@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
 #   Fuzz is a script whose purpose is to check through ACE/TAO/CIAO files for
 #   easy to spot (by a perl script, at least) problems.
 
@@ -259,9 +258,7 @@ sub check_for_inline_in_cpp ()
     }
 }
 
-# This test checks to make sure files have the $Id string in them.
-# Commit_check should find these when checking in files, but this can
-# be used locally or to check for files
+# This test checks to make sure we have no files with $Id string in them.
 sub check_for_id_string ()
 {
     return if is_suppressed ();
@@ -283,13 +280,13 @@ sub check_for_id_string ()
                 if (/\$Id$/) {
                     print_error ("$file:$.: Incorrect \$Id: found (remove colon, added \$)");
                 }
-                if (/\$Id\:/ or /\$Id\$/) {
+                if (/\$Id\$/) {
                     $found = 1;
                 }
             }
             close (FILE);
-            if ($found == 0) {
-                print_error ("$file:1: No \$Id\$ string found.");
+            if ($found == 1) {
+                print_error ("$file:1: \$Id\$ string found, not used anymore.");
             }
         }
         else {

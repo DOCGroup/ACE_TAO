@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Transport_Descriptor_Interface.h"
 
 #if !defined (__ACE_INLINE__)

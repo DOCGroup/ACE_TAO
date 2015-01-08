@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test_i.h"
 
 #include "ace/High_Res_Timer.h"

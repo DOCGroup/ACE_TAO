@@ -1,5 +1,3 @@
-// $Id$
-
 // This program tests out how the various objects can be loaded
 // dynamically and method calls made on them.
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_LOCK_SOCK_ACCEPTOR_CPP
 #define ACE_LOCK_SOCK_ACCEPTOR_CPP
 

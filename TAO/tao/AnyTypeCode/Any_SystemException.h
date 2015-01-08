@@ -4,8 +4,6 @@
 /**
  *  @file    Any_SystemException.h
  *
- *  $Id$
- *
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
 //=============================================================================

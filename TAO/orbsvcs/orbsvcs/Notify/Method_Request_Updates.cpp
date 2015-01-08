@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Method_Request_Updates.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Proxy.h"

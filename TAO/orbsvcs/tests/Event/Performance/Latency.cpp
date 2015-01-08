@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Latency.h"
 #include "orbsvcs/Event_Service_Constants.h"
 

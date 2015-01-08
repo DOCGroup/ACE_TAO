@@ -4,8 +4,6 @@
 /**
  *  @file     GIOP_Message_State.h
  *
- *  $Id$
- *
  *   GIOP utility definitions
  *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>

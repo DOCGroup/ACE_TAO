@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/Global_Macros.h"
 #include "ace/os_include/arpa/os_inet.h"
 #include "ace/Time_Value.h"

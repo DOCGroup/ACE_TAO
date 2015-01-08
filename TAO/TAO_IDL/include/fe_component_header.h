@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef FE_COMPONENT_HEADER_H
 #define FE_COMPONENT_HEADER_H
 

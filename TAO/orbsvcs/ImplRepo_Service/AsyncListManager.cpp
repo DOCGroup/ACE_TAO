@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "AsyncListManager.h"
 #include "Iterator.h"
 #include "Locator_Repository.h"

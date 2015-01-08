@@ -2,8 +2,6 @@
 /**
  *  @file Periodic_Supplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -30,7 +28,6 @@ class TAO_Notify_Tests_Task_Callback;
  * @class TAO_Notify_Tests_Periodic_Supplier
  *
  * @brief A Periodic Supplier.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Supplier : public TAO_Notify_Tests_StructuredPushSupplier, public ACE_Task <ACE_SYNCH>
 {

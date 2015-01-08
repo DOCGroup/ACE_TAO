@@ -1,4 +1,3 @@
-// $Id$
 //
 // = FILENAME
 //     PersianVisComp.java

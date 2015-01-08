@@ -4,8 +4,6 @@
 /**
  *  @file    Transport_Queueing_Strategies.h
  *
- *  $Id$
- *
  *  Queueing strategies for the ORB Messaging layer.
  *
  *  @author  Irfan Pyarali

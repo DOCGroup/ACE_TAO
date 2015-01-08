@@ -3,11 +3,8 @@
 /**
  *  @file    connector_dds_exh.h
  *
- *  $Id$
- *
  *  Concrete visitor for the DDS Connector node.
  *  This provides for code generation in the exec impl header
- *
  *
  *  @author Jeff Parsons
  */

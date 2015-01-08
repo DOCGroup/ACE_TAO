@@ -1,9 +1,6 @@
 /**
  * @file Connect.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
- * $Id$
- *
  */
 
 #ifndef EVENT_CONNECT_H

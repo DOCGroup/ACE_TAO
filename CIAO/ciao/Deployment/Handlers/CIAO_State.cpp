@@ -1,5 +1,3 @@
-// $Id$
-
 #include "CIAO_State.h"
 #include "ciao/Logger/Log_Macros.h"
 

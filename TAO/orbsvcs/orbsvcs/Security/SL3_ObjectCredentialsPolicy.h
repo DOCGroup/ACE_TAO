@@ -4,8 +4,6 @@
 /**
  * @file SL3_ObjectCredentialsPolicy.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

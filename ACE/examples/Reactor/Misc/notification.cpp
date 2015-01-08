@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_unistd.h"
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"

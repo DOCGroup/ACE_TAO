@@ -3,10 +3,7 @@
 /**
  * @file Current_Impl.cpp
  *
- * $Id$
- *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
- *
  */
 
 #include "tao/Transport.h"

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "dds4ccm/impl/DataReaderStateListener_T.h"
 #include "dds4ccm/impl/Updater_T.h"
 #include "dds4ccm/impl/Reader_T.h"

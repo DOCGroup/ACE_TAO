@@ -3,12 +3,8 @@
 /**
  *  @file    get.cpp
  *
- *  $Id$
- *
  *  Sample application demonstrating synchronous Snmp::get API
  *  to access an SNMP Version 1 agent.
- *
- *
  */
 //=============================================================================
 

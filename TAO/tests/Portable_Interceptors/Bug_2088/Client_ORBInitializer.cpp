@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Client_ORBInitializer.h"
 
 Client_ORBInitializer::Client_ORBInitializer (void) :

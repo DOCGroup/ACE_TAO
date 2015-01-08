@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynany.cpp
  *
- *  $Id$
- *
  *  Implementation of the basic test for simple DynAnys
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>

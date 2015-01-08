@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(CIAO_Logger): install, ciao_lib, taolib, acelib {
   sharedname   = CIAO_Logger
   dynamicflags += CIAO_LOGGER_BUILD_DLL

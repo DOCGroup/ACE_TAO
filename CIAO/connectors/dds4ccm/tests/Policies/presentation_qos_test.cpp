@@ -1,5 +1,3 @@
-// $Id$
-
 #include "presentation_qos_test.h"
 
 PresentationPolicyTest::PresentationPolicyTest ()

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Server_Request_Interceptor.h"
 
 /// Prototype

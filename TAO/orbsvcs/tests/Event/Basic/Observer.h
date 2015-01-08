@@ -3,8 +3,6 @@
 /**
  *  @file   Observer.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -69,7 +67,6 @@ private:
  * @class EC_Observer
  *
  * @brief Test the EC observers
- *
  */
 class EC_Observer : public EC_Driver
 {

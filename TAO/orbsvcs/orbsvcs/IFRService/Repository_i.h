@@ -5,10 +5,7 @@
 /**
  *  @file    Repository_i.h
  *
- *  $Id$
- *
  *  Repository servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

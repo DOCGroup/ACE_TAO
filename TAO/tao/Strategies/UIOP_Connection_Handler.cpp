@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/UIOP_Connection_Handler.h"
 
 #if TAO_HAS_UIOP == 1

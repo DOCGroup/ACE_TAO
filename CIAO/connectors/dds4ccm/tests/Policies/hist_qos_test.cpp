@@ -1,5 +1,3 @@
-// $Id$
-
 #include "hist_qos_test.h"
 
 HistoryPolicyTest::HistoryPolicyTest ()

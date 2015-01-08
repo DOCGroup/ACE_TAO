@@ -3,8 +3,6 @@
 /**
  *  @file Task_Stats.h
  *
- *  $Id$
- *
  *  Utility Stats class that maintains the readings.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -24,7 +22,6 @@
  * @class Base_Time
  *
  * @brief maintains readings recorded by tasks.
- *
  */
 class activity_Export Base_Time
 {
@@ -39,7 +36,6 @@ typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
  * @class Task_Stats
  *
  * @brief maintains readings recorded by tasks.
- *
  */
 class activity_Export Task_Stats
 {

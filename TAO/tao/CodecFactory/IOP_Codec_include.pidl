@@ -3,8 +3,6 @@
 /**
  * @file IOP_Codec_include.pidl
  *
- * $Id$
- *
  * @brief Include file for use in applications that need IOP_Codec.pidl.
  */
 

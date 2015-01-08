@@ -5,8 +5,6 @@
  *
  * @brief Implement bounded sequences for bounded strings and wide-strings.
  *
- * $Id$
- *
  * @author Vladimir Zykov
  */
 #include "tao/Bounded_Basic_String_Sequence_T.h"

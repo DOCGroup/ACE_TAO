@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_VAR_ARRAY_SARGUMENT_T_CPP
 #define TAO_VAR_ARRAY_SARGUMENT_T_CPP
 

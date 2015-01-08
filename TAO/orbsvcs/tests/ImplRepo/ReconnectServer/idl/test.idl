@@ -1,4 +1,3 @@
-// $Id$
 module taoimrtest
 {
   module reconnectserver

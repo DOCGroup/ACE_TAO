@@ -1,8 +1,6 @@
 /**
  * @file Task_Activator.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -20,7 +18,6 @@
  * @class Task_Activator
  *
  * @brief Simplify the activation and destruction of tasks
- *
  */
 template<class Task>
 class Task_Activator : private ACE_Copy_Disabled

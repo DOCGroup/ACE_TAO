@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef PUBLISHER_QOS_TEST_H_
 #define PUBLISHER_QOS_TEST_H_
 

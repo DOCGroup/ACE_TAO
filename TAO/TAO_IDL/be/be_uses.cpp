@@ -1,5 +1,3 @@
-// $Id$
-
 #include "be_uses.h"
 #include "be_interface.h"
 #include "be_visitor.h"

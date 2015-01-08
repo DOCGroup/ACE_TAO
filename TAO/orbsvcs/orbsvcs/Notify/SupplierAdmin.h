@@ -3,8 +3,6 @@
 /**
  *  @file SupplierAdmin.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -35,7 +33,6 @@ class TAO_Notify_ProxyConsumer;
  * @class TAO_Notify_SupplierAdmin
  *
  * @brief Implementation of CosNotifyChannelAdmin::SupplierAdmin
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_SupplierAdmin
   : public virtual POA_NotifyExt::SupplierAdmin,

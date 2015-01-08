@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/AuthenticationBase.h"
 
 #if !defined (__ACE_INLINE__)

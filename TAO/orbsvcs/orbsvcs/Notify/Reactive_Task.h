@@ -3,8 +3,6 @@
 /**
  *  @file Reactive_Task.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -30,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief A reactive worker task. Simply executes the command in the
  *        caller's context.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Reactive_Task
   : public TAO_Notify_Worker_Task

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // File: Obj_Module.cpp
 
 // Author: Phil Mesnier

@@ -4,8 +4,6 @@
 /**
  *  @file   FTEC_SupplierAdmin.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================
@@ -36,8 +34,6 @@ namespace FtRtecEventChannelAdmin {
  * @class TAO_FTEC_SupplierAdmin
  *
  * @brief Implement the RtecEventChannelAdmin::SupplierAdmin interface.
- *
- *
  */
 class TAO_FTEC_SupplierAdmin
   : public TAO_EC_SupplierAdmin

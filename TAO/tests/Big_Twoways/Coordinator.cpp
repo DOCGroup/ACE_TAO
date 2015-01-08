@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Coordinator.h"
 
 Coordinator::Coordinator (CORBA::ULong peer_count)

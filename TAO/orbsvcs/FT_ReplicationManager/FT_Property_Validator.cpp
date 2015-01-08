@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FT_Property_Validator.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"

@@ -4,11 +4,8 @@
 /**
  *  @file    Today.h
  *
- *  $Id$
- *
  *  This class denotes the Today magazine which is derived from
  *  Magazine.
- *
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */

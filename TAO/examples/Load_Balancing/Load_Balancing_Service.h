@@ -4,10 +4,7 @@
 /**
  *  @file    Load_Balancing_Service.h
  *
- *  $Id$
- *
  *  Driver for Load Balancing service.
- *
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */

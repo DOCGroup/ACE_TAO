@@ -4,8 +4,6 @@
 /**
  *  @file     Servant_Activator.h
  *
- *  $Id$
- *
  *   Defines a <ServantActivator> class, which activates a servant by
  *   obtaining it and associates it with an object on-demand.
  *

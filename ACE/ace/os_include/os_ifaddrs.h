@@ -6,8 +6,6 @@
  *
  *  os_ifaddrs.h include
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

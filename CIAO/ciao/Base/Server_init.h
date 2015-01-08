@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Server_init.h
  *

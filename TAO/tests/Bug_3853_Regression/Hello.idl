@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 module Demo
 {
   interface HelloWorld

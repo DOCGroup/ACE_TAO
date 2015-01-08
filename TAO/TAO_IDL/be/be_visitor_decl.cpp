@@ -3,11 +3,8 @@
 /**
  *  @file    be_visitor_decl.cpp
  *
- *  $Id$
- *
  *  Visitor for the base be_decl node. This serves to maintain the current
  *  state (context) of code generation for the derived visitor.
- *
  *
  *  @author Aniruddha Gokhale
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Connection_Purging_Strategy.h"
 
 #if !defined (__ACE_INLINE__)

@@ -4,8 +4,6 @@
 /**
  *  @file    DII_Arguments_Converter_Impl.h
  *
- *  $Id$
- *
  *  @author  Yan Dai <dai_y@ociweb.com>
  */
 //=============================================================================

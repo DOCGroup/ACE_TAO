@@ -3,11 +3,8 @@
 /**
  *  @file    wpdu.cpp
  *
- *  $Id$
- *
  *  Adapter class. Converts between raw wire format and Pdu objects
  *  that can be stuffed out a I/O port or reconstructed
- *
  *
  *  @author Michael R. MacFaden rework the class api and impl using ACEPeter E Mellquist  implementation/code from snmp++ snmpmsg class
  */

@@ -1,4 +1,4 @@
-$Id$
+
 
 This test demonstrates that a client attempting to contact a stopped MANUAL server will
 not lock up the ImR. The test starts primary and backup Locators, then registers and

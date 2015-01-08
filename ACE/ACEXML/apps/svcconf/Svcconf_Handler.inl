@@ -1,4 +1,4 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
 
 ACE_INLINE
 ACE_Parsed_Info::ACE_Parsed_Info ()

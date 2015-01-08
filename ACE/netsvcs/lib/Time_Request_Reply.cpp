@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Basic_Types.h"
 #include "ace/CDR_Base.h"
 #include "ace/Log_Msg.h"

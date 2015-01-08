@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (ACE_SERVER_LOGGING_HANDLER_C)
 #define ACE_SERVER_LOGGING_HANDLER_C
 

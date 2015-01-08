@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : taolib, compression, bzip2 {
   requires += bzip2
   after   += Bzip2Compressor

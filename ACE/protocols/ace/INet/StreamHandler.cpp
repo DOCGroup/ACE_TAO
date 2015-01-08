@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_IOS_STREAM_HANDLER_CPP
 #define ACE_IOS_STREAM_HANDLER_CPP
 

@@ -1,8 +1,6 @@
 /**
  *  @file   be_visitor_amh_pre_proc.cpp
  *
- *  $Id$
- *
  *  This visitor creates for AMH implied IDL constructs the appropriate AST
  *  (Abstract Syntax Tree) node, sets the corresponding interface or operation
  *  strategy on it and enteres the nodes into the AST.

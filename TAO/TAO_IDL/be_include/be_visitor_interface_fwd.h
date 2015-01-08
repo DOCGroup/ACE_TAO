@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_interface_fwd.h
  *
- *  $Id$
- *
  *  Concrete visitor for the interface_fwd class
- *
  *
  *  @author Aniruddha Gokhale
  */

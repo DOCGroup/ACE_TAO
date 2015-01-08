@@ -1,4 +1,3 @@
-# $Id$
 
 {
    <Suppress all the leaks in cc1plus>

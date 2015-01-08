@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_Mcast_EH.h"
 #include "orbsvcs/Event/ECG_UDP_Receiver.h"

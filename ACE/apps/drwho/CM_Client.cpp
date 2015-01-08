@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "Multicast_Manager.h"
 #include "CM_Client.h"

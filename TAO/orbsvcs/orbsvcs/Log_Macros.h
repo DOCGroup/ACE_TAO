@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_ORBSVCS_LOG_MACROS_H
 #define TAO_ORBSVCS_LOG_MACROS_H
 #include /**/ "ace/pre.h"

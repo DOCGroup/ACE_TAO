@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/HTIOP/HTIOP_Factory.h"
 #include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
 #include "orbsvcs/HTIOP/HTIOP_Connector.h"

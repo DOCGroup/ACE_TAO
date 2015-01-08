@@ -1,12 +1,7 @@
 // -*- C++ -*-
-//
-// $Id$
-
 //=============================================================================
 /**
  * @file Gateway_i.h
- *
- * $Id$
  *
  * Implementation header used for forwarding the requests from the
  * gateway to the server and reply to the client

@@ -4,8 +4,6 @@
 /**
  *  @file    Consumer_Input_Handler.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
  */
 //=============================================================================

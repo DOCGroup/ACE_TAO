@@ -4,10 +4,7 @@
 /**
  *  @file    enum_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for Enums generating code in the client header.
- *
  *
  *  @author Aniruddha Gokhale
  */

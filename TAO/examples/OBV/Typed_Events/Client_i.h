@@ -4,12 +4,9 @@
 /**
  *  @file    Client_i.h
  *
- *  $Id$
- *
  *  This class is a template for a CORBA client.
  *  run () sends some valuetypes to a server and
  *  gets back a list of valuetypes.
- *
  *
  *  @author Torsten Kuepperbased on the echo examplefrom code from Balachandran Natarajan <bala@cs.wustl.edu>
  */

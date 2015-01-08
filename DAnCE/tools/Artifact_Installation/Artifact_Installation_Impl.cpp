@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Artifact_Installation_Impl.h"
 #include "dance/Logger/Log_Macros.h"
 

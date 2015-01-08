@@ -1,5 +1,4 @@
 /*
- * $Id$
  */
 
 typedef sequence<char> Char_Seq;

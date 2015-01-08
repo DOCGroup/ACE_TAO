@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_TRADER_INTERFACES_CPP
 #define TAO_TRADER_INTERFACES_CPP
 

@@ -1,4 +1,4 @@
-$Id$
+
 
 This test uses newly implemented -Se feature of tao_idl. Using this feature
 user can prohibit custom endings (e.g. -hs or -hc) for TAO specific include fils.

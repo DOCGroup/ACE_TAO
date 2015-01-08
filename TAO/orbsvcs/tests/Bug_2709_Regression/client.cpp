@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestC.h"
 #include "TestImpl.h"
 #include "Client_Task.h"

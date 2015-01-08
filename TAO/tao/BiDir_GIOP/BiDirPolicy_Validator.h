@@ -4,8 +4,6 @@
 /**
  *  @file    BiDirPolicy_Validator.h
  *
- *  $Id$
- *
  *  This file contains the declaration for the BiDir policy validator
  *  interface.
  *
@@ -34,7 +32,6 @@ class TAO_ORB_Core;
  * @class TAO_BiDirPolicy_Validator
  *
  * @brief Policy Validator for BiDir GIOP class
- *
  */
 class TAO_BIDIRGIOP_Export TAO_BiDirPolicy_Validator : public TAO_Policy_Validator
 {

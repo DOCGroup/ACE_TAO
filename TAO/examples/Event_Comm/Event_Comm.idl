@@ -4,8 +4,6 @@
 /**
  *  @file    Event_Comm.idl
  *
- *  $Id$
- *
  *  The CORBA IDL module for distributed event notification.
  *
  *

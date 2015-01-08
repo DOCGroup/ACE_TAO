@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 

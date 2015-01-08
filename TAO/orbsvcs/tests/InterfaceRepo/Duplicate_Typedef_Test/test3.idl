@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __TEST3_IDL__
 #define __TEST3_IDL__
 module test {

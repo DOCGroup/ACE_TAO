@@ -2,8 +2,6 @@
 /**
  *  @file    test_dynunion.cpp
  *
- *  $Id$
- *
  *  Implementation of the simple DynUnion test
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>

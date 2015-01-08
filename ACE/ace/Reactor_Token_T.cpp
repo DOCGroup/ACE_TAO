@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Log_Category.h"
 #include "ace/Reactor_Token_T.h"
 

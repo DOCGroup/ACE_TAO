@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Process.h"
 #include "ace/Get_Opt.h"
 

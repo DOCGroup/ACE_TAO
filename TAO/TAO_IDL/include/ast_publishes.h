@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef AST_PUBLISHES_H
 #define AST_PUBLISHES_H
 

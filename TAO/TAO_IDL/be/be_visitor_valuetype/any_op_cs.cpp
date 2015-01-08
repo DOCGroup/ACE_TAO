@@ -2,11 +2,8 @@
 /**
  *  @file    any_op_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operators for valuetypes in the stubs
  *  file.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> Boris Kolpackov <bosk@ipmce.ru>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * This file contains idl definition for data structures used to
  * encapsulate data in TAO_TAG_ENDPOINTS tagged component.  This

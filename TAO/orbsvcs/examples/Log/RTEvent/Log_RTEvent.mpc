@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Consumer) : orbsvcsexe, rtevent_skel, naming, rteventlogadmin {
   exename = RTEvent_Consumer
   source_files {

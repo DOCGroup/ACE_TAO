@@ -2,8 +2,6 @@
 /**
 *  @file   amh_rh_ss.h
 *
-*  $Id$
-*
 *  Creates code for AMH-RH operations.
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file Client_init.h
  *

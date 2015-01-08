@@ -1,6 +1,4 @@
 // QoS_Manager.cpp
-// $Id$
-
 #include "QoS_Manager.h"
 #include "ace/Log_Category.h"
 

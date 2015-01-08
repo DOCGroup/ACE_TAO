@@ -1,5 +1,3 @@
-// $Id$
-
 #include "EC_Wrapper.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/Auto_Ptr.h"

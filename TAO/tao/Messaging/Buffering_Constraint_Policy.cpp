@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Messaging/Buffering_Constraint_Policy.h"
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)

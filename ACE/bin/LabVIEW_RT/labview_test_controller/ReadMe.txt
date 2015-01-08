@@ -1,4 +1,4 @@
-$Id$
+
 
 ========================================================================
     DYNAMIC LINK LIBRARY : labview_test_controller Project Overview

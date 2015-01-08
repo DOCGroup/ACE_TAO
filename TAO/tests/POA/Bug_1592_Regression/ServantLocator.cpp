@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ServantLocator.h"
 #include "test_i.h"
 

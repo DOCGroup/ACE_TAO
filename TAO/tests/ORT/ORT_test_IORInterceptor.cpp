@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ORT_test_IORInterceptor.h"
 #include "ObjectReferenceFactory.h"
 

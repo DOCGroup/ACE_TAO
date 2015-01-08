@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 
 #ifndef __ACE_INLINE__

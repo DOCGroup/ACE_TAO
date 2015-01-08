@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_ESF_BUSY_LOCK_CPP
 #define TAO_ESF_BUSY_LOCK_CPP
 

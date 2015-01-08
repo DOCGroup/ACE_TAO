@@ -1,8 +1,6 @@
 /**
  * @file RTCORBA.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the RTCORBA module.
  *
  * The RTCORBA module specified in CORBA v2.4.2 Chapter 24 (February,

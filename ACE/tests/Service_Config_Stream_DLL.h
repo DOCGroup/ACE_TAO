@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef SERVICE_CONFIG_STREAM_DLL_H
 #define SERVICE_CONFIG_STREAM_DLL_H
 

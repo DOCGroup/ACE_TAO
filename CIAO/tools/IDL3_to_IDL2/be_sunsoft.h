@@ -4,10 +4,7 @@
 /**
  *  @file    be_sunsoft.h
  *
- *  $Id$
- *
  *  SunSoft specific backend output generation
- *
  *
  *  @author Aniruddha Gokhale
  */

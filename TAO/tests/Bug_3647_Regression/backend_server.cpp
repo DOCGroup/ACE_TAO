@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Backend_Impl.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "ace/Get_Opt.h"

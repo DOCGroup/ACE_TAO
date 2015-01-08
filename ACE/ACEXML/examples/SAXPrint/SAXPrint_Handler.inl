@@ -1,4 +1,4 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
 
 ACEXML_INLINE void
 ACEXML_SAXPrint_Handler::inc_indent (void)

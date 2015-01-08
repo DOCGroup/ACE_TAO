@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Name_Request_Reply.h"
 #include "ace/Basic_Types.h"
 #include "ace/CDR_Base.h"

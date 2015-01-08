@@ -4,8 +4,6 @@
 /**
  *  @file    Hash_Cache_Map_Manager_T.h
  *
- *  $Id$
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

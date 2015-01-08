@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"

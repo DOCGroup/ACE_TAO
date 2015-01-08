@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "Server_Task.h"
 #include "Sender.h"

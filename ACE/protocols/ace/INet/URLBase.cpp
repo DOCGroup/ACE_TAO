@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/URLBase.h"
 #include "ace/INet/IOS_util.h"
 

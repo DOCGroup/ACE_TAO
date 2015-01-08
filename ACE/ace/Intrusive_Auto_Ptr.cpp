@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_INTRUSIVE_AUTO_PTR_CPP
 #define ACE_INTRUSIVE_AUTO_PTR_CPP
 

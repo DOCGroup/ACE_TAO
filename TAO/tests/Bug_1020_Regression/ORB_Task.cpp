@@ -1,10 +1,7 @@
 /**
  * @file ORB_Task.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "ORB_Task.h"
 #include "tao/Environment.h"

@@ -3,10 +3,7 @@
 /**
  *  @file    client.h
  *
- *  $Id$
- *
  *  Header file for the Param_Test client application.
- *
  *
  *  @author Aniruddha Gokhale
  */

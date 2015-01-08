@@ -1,5 +1,3 @@
-// $Id$
-
 #include "EC_Mcast.h"
 
 #include "orbsvcs/Event_Utilities.h"

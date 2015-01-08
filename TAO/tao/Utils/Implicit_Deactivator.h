@@ -4,8 +4,6 @@
 /**
  * @file Implicit_Deactivator.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 //=============================================================================

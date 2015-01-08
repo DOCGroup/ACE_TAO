@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h"
 
 #include "tao/Profile_Transport_Resolver.h"

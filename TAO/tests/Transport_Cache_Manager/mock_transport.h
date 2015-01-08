@@ -1,5 +1,3 @@
-// $Id$
-
 class mock_transport
 {
 public:

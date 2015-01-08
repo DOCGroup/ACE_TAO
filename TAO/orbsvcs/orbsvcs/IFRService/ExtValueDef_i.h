@@ -5,10 +5,7 @@
 /**
  *  @file    ExtValueDef_i.h
  *
- *  $Id$
- *
  *  ExtValueDef_i servant class.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

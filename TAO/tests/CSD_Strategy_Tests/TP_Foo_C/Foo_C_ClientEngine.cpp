@@ -1,4 +1,3 @@
-// $Id$
 #include "Foo_C_ClientEngine.h"
 #include "AppHelper.h"
 #include "ace/Log_Msg.h"

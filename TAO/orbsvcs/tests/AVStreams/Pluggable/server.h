@@ -3,10 +3,7 @@
 /**
  *  @file    server.h
  *
- *  $Id$
- *
  *  Ftp server to receive data
- *
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */

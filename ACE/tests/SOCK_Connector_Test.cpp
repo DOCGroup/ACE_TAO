@@ -3,11 +3,8 @@
 /**
  *  @file    SOCK_Connector_Test.cpp
  *
- *  $Id$
- *
  *   This is a test of ACE_SOCK_Connector, focusing on failure cases more
  *   than on success cases.
- *
  *
  *  @author Steve Huston <shuston@riverace.com>
  */

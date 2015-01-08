@@ -4,12 +4,9 @@
 /**
  *  @file    cdr_op_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Sequence class
  *  This one provides code generation for the CDR operators for the sequence
  *  in the client header.
- *
  *
  *  @author Aniruddha Gokhale
  */

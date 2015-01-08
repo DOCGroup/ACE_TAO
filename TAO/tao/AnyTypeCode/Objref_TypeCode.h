@@ -4,8 +4,6 @@
 /**
  *  @file    Objref_TypeCode.h
  *
- *  $Id$
- *
  *  Header file for
  *    @c tk_abstract_interface,
  *    @c tk_component,

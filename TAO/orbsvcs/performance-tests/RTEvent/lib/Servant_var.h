@@ -1,8 +1,6 @@
 /**
  * @file Servant_var.h
  *
- * $Id$
- *
  * @author Jody Hagins <jody@atdesk.com>
  * @author Carlos O'Ryan <coryan@uci.edu>
  */

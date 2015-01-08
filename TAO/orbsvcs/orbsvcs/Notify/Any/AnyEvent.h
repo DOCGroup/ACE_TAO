@@ -2,11 +2,7 @@
 /**
  *  @file AnyEvent.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ANYEVENT_H
@@ -34,7 +30,6 @@ class TAO_Notify_AnyEvent;
  * @class TAO_Notify_AnyEvent
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_AnyEvent_No_Copy : public TAO_Notify_Event
 {
@@ -98,7 +93,6 @@ protected:
  * @class TAO_Notify_AnyEvent
  *
  * @brief AnyEvent implementation.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_AnyEvent : public TAO_Notify_AnyEvent_No_Copy
 {

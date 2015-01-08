@@ -3,10 +3,7 @@
 /**
  *  @file    root_sth.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the server template header
- *
  *
  *  @author Jeff Parsons
  */

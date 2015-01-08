@@ -4,8 +4,6 @@
 /**
  *  @file     Client_Strategy_Factory.h
  *
- *  $Id$
- *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /*
  *  @file Codeset_Manager_i.h
  *
- *  $Id$
- *
  *  Interface for the TAO CodeSet Manager.
  *
  *  @author  Phil Mesnier
@@ -55,7 +53,6 @@ class TAO_Codeset_Descriptor;
  * determining the transmission codesets based an the local and remote codeset
  * information. The transmission codesets are communicated via a service
  * context attached to the first request sent on the new connection.
- *
  */
 
 class TAO_Codeset_Export TAO_Codeset_Manager_i :

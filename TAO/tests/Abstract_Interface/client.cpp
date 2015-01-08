@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "testC.h"
 #include "ace/Get_Opt.h"
 

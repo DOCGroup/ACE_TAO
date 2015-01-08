@@ -3,11 +3,8 @@
 /**
  *  @file    any_op_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This one provides code generation for the Any operators
- *
  *
  *  @author Aniruddha Gokhale
  */

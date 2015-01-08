@@ -2,11 +2,7 @@
 /**
  *  @file RT_POA_Command.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_RT_POA_COMMAND_H
@@ -29,7 +25,6 @@
  * @class TAO_Notify_Tests_RT_POA_Command
  *
  * @brief Command for managing RTCORBA POAs.
- *
  */
 class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_POA_Command : public TAO_Notify_Tests_Command
 {

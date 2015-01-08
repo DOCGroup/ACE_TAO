@@ -4,8 +4,6 @@
 /**
  *  @file   CEC_Defaults.h
  *
- *  $Id$
- *
  * In this file we set the compile time defaults for the event
  * channel.
  *

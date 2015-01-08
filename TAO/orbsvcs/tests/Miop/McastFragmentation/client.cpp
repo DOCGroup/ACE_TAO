@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "ace/Task.h"
 #include "ace/Atomic_Op_T.h"

@@ -1,8 +1,6 @@
 /**
  * @file Bug_2820_Regression_Test.cpp
  *
- * $Id$
- *
  * Verify that the event handler reference counting works correctly
  * when the reactor is destroyed.
  *
@@ -13,7 +11,6 @@
  * This test reproduces the problem and serves as a regression for it.
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 
 #include "test_config.h"
@@ -25,7 +22,6 @@
  * @class Simple_Handler
  *
  * @brief A simple event handler for the test
- *
  */
 class Simple_Handler : public ACE_Event_Handler
 {

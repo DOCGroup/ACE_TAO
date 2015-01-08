@@ -3,11 +3,8 @@
 /**
  *  @file    cdr_op_cs.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Sequences in client stubs. This one
  *  generates the CDR operators.
- *
  *
  *  @author Aniruddha Gokhale
  */

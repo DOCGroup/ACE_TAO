@@ -2,8 +2,6 @@
 /**
  *  @file   Factory_Trader.h
  *
- *  $Id$
- *
  * Factory Trader for the Generic Factory.
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)

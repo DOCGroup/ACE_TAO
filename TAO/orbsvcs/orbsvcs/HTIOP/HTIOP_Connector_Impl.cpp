@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef HTIOP_CONNECTOR_IMPL_CPP
 #define HTIOP_CONNECTOR_IMPL_CPP
 

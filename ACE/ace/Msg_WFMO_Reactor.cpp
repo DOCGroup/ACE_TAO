@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Msg_WFMO_Reactor.h"
 
 

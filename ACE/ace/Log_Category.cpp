@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Log_Msg.h"
 #include "ace/Log_Category.h"
 #include "ace/Atomic_Op.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB_Constants.h"
 #include "tao/debug.h"
 #include "tao/RTCORBA/RTCORBA.h"

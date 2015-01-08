@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // This configuration file is designed to work with the MacOS X operating system.
 
 #ifndef ACE_CONFIG_MACOSX_H

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 
 //Test different topic types, with DDS_EVENT connectors,  look for 'PUBLICATION_MATCHED_STATUS
 #include "VTopic_Sender_exec.h"

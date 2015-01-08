@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Server_IORInterceptor.h"
 #include "Gateway_ObjRef_Factory.h"
 

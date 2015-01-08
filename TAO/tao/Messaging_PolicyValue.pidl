@@ -1,8 +1,6 @@
 // -*- IDL -*-
 /**
  *  @file Messaging_PolicyValue.pidl
- *
- *  $Id$
  */
 
 #ifndef TAO_MESSAGING_POLICYVALUE_PIDL

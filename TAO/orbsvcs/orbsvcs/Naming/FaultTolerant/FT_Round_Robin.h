@@ -4,8 +4,6 @@
 /**
  *  @file FT_Round_Robin.h
  *
- *  $Id$
- *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================

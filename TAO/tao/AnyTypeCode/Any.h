@@ -4,8 +4,6 @@
 /**
  *  @file    Any.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan
  *  @author Jeff Parsons
  */

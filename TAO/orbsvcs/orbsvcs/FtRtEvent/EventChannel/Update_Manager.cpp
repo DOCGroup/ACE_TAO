@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
 #include "ace/Guard_T.h"
 

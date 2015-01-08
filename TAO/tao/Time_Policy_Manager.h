@@ -4,8 +4,6 @@
 /**
  *  @file   Time_Policy_Manager.h
  *
- *  $Id$
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================
@@ -38,7 +36,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class Time_Policy_Manager
  *
  * @brief Manager service for time policy strategy services.
- *
  */
 class TAO_Export TAO_Time_Policy_Manager
   : public ACE_Service_Object

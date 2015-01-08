@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains the driver program that links the various
 services together, either statically or dynamically, to form complete

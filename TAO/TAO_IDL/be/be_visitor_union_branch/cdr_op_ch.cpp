@@ -2,10 +2,7 @@
 /**
  *  @file    cdr_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating CDR operator declarator for union_branch in the client header
- *
  *
  *  @author Aniruddha Gokhale
  */

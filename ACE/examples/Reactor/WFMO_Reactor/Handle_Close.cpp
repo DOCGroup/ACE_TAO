@@ -2,14 +2,10 @@
 /**
  *  @file    Handle_Close.cpp
  *
- *  $Id$
- *
- *
  *  This application tests whether handle_close gets called and if
  *  the correct masks are passed along.  The handler should get
  *  handle_close called for all three masks (READ, WRITE, and
  *  EXCEPT).
- *
  *
  *  @author Irfan Pyarali
  */

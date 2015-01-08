@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "Shared_Backing_Store.h"
 #include "Server_Info.h"

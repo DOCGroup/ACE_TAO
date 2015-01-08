@@ -1,4 +1,2 @@
-// $Id$
-
 project : taoserver, threads {
 }

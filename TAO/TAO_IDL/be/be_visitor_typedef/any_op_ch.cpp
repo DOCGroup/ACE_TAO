@@ -3,10 +3,7 @@
 /**
  *  @file    any_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operators of a Typedef node
- *
  *
  *  @author Aniruddha Gokhale
  */

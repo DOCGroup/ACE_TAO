@@ -1,5 +1,3 @@
-// $Id$
-
 // Just implements a nice little Nestea server
 interface Nestea_Bookshelf
 {

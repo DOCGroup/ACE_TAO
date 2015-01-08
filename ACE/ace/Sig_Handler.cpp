@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Sig_Handler.h"
 #include "ace/Sig_Adapter.h"
 #include "ace/Signal.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    Valuetype_Adapter_Factory.h
  *
- *  $Id$
- *
  *  @author  Kees van Marle <kvmarle@remedy.nl>
  */
 //=============================================================================

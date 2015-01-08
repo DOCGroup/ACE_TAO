@@ -1,4 +1,3 @@
-// $Id$
 #include "NodeApplication_Impl.h"
 
 #include "ace/OS_Memory.h"

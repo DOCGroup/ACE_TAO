@@ -2,11 +2,7 @@
 /**
  *  @file CosNotify_Initializer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_COSNOTIFY_INITIALIZER_H
@@ -27,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_CosNotify_Initializer
  *
  * @brief  Helper to load the Cos Notification service into the service conf. for static links.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_CosNotify_Initializer
 {

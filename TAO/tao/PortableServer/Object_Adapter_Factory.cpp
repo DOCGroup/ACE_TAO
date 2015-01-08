@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/Object_Adapter_Factory.h"
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB_Core.h"

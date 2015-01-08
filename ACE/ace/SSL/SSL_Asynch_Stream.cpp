@@ -1,4 +1,3 @@
-// $Id$
 #include "SSL_Asynch_Stream.h"
 
 // This only works on platforms with Asynchronous IO support.

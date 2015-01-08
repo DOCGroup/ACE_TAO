@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_DDSWriterEntityBase -l .. -o ../lib -u DDS Writer_Connector"
 
 project(DDS_DDSWriterEntityConnector_idl_gen) : connectoridldefaults, dds4ccm {

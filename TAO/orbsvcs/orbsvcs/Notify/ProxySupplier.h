@@ -3,8 +3,6 @@
 /**
  *  @file ProxySupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -33,7 +31,6 @@ class TAO_Notify_Method_Request_Dispatch_No_Copy;
  * @class TAO_Notify_ProxySupplier
  *
  * @brief Base class for all the ProxySuppliers.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier : public virtual TAO_Notify_Proxy
 {

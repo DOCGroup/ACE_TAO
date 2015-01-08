@@ -1,7 +1,6 @@
 /**
  * @file Deployment_Event.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- * $Id$
  */
 
 #ifndef DEPLOYMENT_EVENT_H

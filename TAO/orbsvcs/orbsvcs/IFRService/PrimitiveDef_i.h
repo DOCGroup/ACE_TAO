@@ -5,10 +5,7 @@
 /**
  *  @file    PrimitiveDef_i.h
  *
- *  $Id$
- *
  *  PrimitiveDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

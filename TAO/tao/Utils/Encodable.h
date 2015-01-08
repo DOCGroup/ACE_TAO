@@ -4,8 +4,6 @@
 /**
  *  @file    Encodable.h
  *
- *  $Id$
- *
  *   Defines the interface for classes that wish to be
  *   encodable/decodable into/from a CDR representation.
  *

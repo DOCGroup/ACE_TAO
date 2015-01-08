@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Request_Dispatcher.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"

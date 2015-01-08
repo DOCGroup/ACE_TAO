@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // The interface between one or more peers and a stream.  A peer
 // typically runs remotely on another machine.
 

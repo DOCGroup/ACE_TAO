@@ -1,8 +1,5 @@
-// $Id$
 /**
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
- *
- * $Id$
  *
  * Eventhandler on orb thread, handling the
  * received data from DDS.

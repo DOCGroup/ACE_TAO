@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
 

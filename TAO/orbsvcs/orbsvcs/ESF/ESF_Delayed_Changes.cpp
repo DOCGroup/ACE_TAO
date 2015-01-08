@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_ESF_DELAYED_CHANGES_CPP
 #define TAO_ESF_DELAYED_CHANGES_CPP
 

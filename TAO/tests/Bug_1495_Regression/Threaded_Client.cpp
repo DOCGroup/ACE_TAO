@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * @file Threaded_Client.cpp
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  *
@@ -11,10 +9,8 @@
  *         a get_thread_id request that is forwarded by a remote server to
  *         the server in thread (1).
  *
- *
  * The test passes if the thread id of the thread that services the get_thread_id
  * request is the same as the thread that makes the request.
- *
  */
 
 #include "Server_Task.h"

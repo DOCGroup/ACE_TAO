@@ -3,10 +3,7 @@
 /**
  *  @file   Notify_Sequence_Push_Consumer.h
  *
- *  $Id$
- *
  * A sequence push consumer implementation.
- *
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Best_Effort.h"
 #include "dance/Deployment/Deployment_StartErrorC.h"
 #include "dance/DAnCE_PropertiesC.h"

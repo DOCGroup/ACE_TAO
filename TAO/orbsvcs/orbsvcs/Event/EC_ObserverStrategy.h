@@ -3,8 +3,6 @@
 /**
  *  @file   EC_ObserverStrategy.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Johnny Willemsen (jwillemsen@remedy.nl)
  *  @author Kees van Marle (kvmarle@remedy.nl)

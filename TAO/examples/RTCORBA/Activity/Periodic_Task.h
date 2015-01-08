@@ -3,8 +3,6 @@
 /**
  *  @file Periodic_Task.h
  *
- *  $Id$
- *
  *  Base class for Periodic Tasks
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -31,7 +29,6 @@ class Task_Stats;
  * @class Periodic_Task
  *
  * @brief Periodic_Task executes jobs.
- *
  */
 class activity_Export Periodic_Task : public ACE_Task <ACE_SYNCH>
 {

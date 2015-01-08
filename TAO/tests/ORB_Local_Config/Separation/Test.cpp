@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CORBANAME_Parser.h"
 #include "tao/CORBALOC_Parser.h"
 #include "tao/IIOP_Factory.h"

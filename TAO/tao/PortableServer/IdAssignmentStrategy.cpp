@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/IdAssignmentStrategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

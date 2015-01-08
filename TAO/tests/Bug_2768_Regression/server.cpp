@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "tao/IORTable/IORTable.h"
 #include "Messenger_i.h"

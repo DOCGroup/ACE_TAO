@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Inversion.h"
 #include "Consumer.h"
 #include "Supplier.h"

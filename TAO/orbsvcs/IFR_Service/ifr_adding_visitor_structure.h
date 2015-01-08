@@ -4,10 +4,7 @@
 /**
  *  @file    ifr_adding_visitor_structure.h
  *
- *  $Id$
- *
  *  Header file for class ifr_adding_visitor_structure.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

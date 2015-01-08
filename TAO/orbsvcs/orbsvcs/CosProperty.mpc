@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(CosProperty_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_Property_Export -Wb,stub_export_include=orbsvcs/Property/property_export.h -Wb,skel_export_macro=TAO_Property_Skel_Export -Wb,skel_export_include=orbsvcs/Property/property_skel_export.h

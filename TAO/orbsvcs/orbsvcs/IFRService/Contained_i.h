@@ -5,10 +5,7 @@
 /**
  *  @file    Contained_i.h
  *
- *  $Id$
- *
  *  Contained servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

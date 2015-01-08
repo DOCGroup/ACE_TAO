@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ServerORBInitializer.h"
 #include "ServerRequestInterceptor.h"
 #include "ORT_test_IORInterceptor.h"

@@ -1,8 +1,5 @@
 /**
  * @file Loopback.h
- *
- * $Id$
- *
  */
 
 #ifndef TAO_RTEC_PERF_LOOPBACK_H
@@ -19,7 +16,6 @@
  * @class Loopback
  *
  * @brief Implement the Control::Loopback interface
- *
  */
 class TAO_RTEC_Perf_Export Loopback
  : public virtual POA_Federated_Test::Loopback

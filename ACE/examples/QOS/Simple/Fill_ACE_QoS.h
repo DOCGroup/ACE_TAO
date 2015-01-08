@@ -4,8 +4,6 @@
 /**
  *  @file    Fill_ACE_QoS.h
  *
- *  $Id$
- *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
 //=============================================================================

@@ -4,10 +4,7 @@
 /**
  *  @file     varbase.h
  *
- *  $Id$
- *
  *   Contains a base class for the object _var classes.
- *
  *
  *  @author  Jeff Parsons.
  */

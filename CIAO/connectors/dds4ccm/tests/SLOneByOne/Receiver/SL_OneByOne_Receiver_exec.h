@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_SL_ONEBYONE_RECEIVER_EXEC_TKIVXN_H_
 #define CIAO_SL_ONEBYONE_RECEIVER_EXEC_TKIVXN_H_
 

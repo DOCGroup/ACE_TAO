@@ -1,5 +1,3 @@
-// $Id$
-
 workspace {
    BasicSP.mpc
    BMClosedED/BMClosedED.mpc

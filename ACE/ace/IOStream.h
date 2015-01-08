@@ -4,8 +4,6 @@
 /**
  *  @file    IOStream.h
  *
- *  $Id$
- *
  *  @author James CE Johnson <jcej@lads.com>
  *  @author Jim Crossley <jim@lads.com>
  */

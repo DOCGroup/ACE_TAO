@@ -3,8 +3,6 @@
 /**
  * @file PolicyFactory.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the PolicyFactory
  *
  *  tao_idl

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/config-all.h"
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 

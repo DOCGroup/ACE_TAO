@@ -2,8 +2,6 @@
 /**
  *  Implementation of the Supplier_Time_Handler class.
  *
- *  $Id$
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================

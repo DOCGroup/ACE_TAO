@@ -1,5 +1,3 @@
-// $Id$
-
 project(*receiver_plain) : nddslib, acelib, taolib, typecode {
   after += DDS_Throughput_Base_stub_plain
   exename = DDS_receiver

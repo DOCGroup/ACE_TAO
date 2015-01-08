@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "AsyncAccessManager.h"
 #include "ImR_Locator_i.h"
 #include "Locator_Repository.h"

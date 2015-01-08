@@ -4,8 +4,6 @@
 /**
  *  @file    SV_Message_Queue.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@uci.edu>
  */
 //===========================================================================

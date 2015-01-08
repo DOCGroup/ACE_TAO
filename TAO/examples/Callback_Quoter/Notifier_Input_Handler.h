@@ -3,10 +3,7 @@
 /**
  *  @file    Notifier_Input_Handler.h
  *
- *  $Id$
- *
  *  Definition of the Callback_Quoter Notifier_Input_Handler class.
- *
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */

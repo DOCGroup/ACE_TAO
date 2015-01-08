@@ -3,8 +3,6 @@
 /**
  *  @file ProxyConsumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -34,7 +32,6 @@ class TAO_Notify_Supplier;
  * @class TAO_Notify_ProxyConsumer
  *
  * @brief Base class for all types of ProxyConsumer implementations.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer
   : public virtual TAO_Notify_Proxy

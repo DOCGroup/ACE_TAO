@@ -2,10 +2,7 @@
 /**
  *  @file    nslist.cpp
  *
- *  $Id$
- *
  *  Naming Service listing utility
- *
  *
  *  @author  Thomas Lockhart, NASA/JPL <Thomas.Lockhart@jpl.nasa.gov>
  *  @date 1999-06-03

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/DLL_Parser.h"
 
 # if (TAO_HAS_DDL_PARSER == 1)

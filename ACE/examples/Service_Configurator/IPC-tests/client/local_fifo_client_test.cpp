@@ -1,5 +1,3 @@
-// $Id$
-
 // Send a file through ACE_FIFO communication channel by
 // breaking it (the file) into pieces.
 

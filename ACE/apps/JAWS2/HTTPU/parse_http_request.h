@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef HTTPU_PARSE_HTTP_REQUEST_H
 #define HTTPU_PARSE_HTTP_REQUEST_H
 

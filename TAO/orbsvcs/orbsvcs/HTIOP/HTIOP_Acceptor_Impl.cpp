@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef HTIOP_ACCEPTOR_IMPL_CPP
 #define HTIOP_ACCEPTOR_IMPL_CPP
 

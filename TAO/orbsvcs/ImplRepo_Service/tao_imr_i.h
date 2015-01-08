@@ -4,10 +4,7 @@
 /**
  *  @file    tao_imr_i.h
  *
- *  $Id$
- *
  *  This class implements the Implementation Repository helper application.
- *
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */

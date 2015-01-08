@@ -4,8 +4,6 @@
 /**
  *  @file  ORB_Constants.h
  *
- *  $Id$
- *
  *  Constants needed by various files.
  *
  *  @author  Jeff Parsons

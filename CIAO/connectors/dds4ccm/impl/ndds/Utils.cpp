@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/Utils.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "ace/Tokenizer_T.h"

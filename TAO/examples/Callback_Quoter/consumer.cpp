@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Consumer_Handler.h"
 
 // This function runs the Callback Quoter Consumer application.

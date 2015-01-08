@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef LATENCYTEST_H
 #define LATENCYTEST_H

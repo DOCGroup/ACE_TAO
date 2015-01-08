@@ -1,5 +1,3 @@
-// $Id$
-
 #include "params_dup.h"
 
 #include <openssl/asn1.h>

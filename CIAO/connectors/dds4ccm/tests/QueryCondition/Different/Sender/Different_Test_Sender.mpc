@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p Different_Test_Base -l ../lib -o ../lib -c controller -u DDS Sender"
 
 project(QC_Different_Test_Sender_idl_gen) : componentidldefaults, dds4ccm {

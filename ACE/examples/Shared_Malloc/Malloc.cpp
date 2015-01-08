@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "Malloc.h"
 #include "ace/MMAP_Memory_Pool.h"

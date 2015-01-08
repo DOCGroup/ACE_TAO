@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    Parser_Registry.h
  *
- *  $Id$
- *
  *  @author  Priyanka Gontla <pgontla@uci.edu>
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/ATM_Params.h"
 
 #if defined (ACE_HAS_ATM)

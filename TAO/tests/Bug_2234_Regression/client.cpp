@@ -1,5 +1,3 @@
-// $Id$
-
 // Regression test Bug 2234
 //
 // The bug manifests itself in the server.

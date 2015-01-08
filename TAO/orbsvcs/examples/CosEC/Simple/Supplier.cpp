@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Supplier.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "ace/OS_NS_unistd.h"

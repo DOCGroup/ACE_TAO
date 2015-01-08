@@ -4,10 +4,7 @@
 /**
  *  @file    be_decl.h
  *
- *  $Id$
- *
  *  Extension of the AST_Decl class.
- *
  *
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale

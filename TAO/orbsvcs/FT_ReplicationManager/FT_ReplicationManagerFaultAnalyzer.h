@@ -3,8 +3,6 @@
 /**
  *  @file    FT_ReplicationManagerFaultAnalyzer.h
  *
- *  $Id$
- *
  *  This file is part of TAO's implementation of Fault Tolerant CORBA.
  *  This is the Replication Manager's implementation of a fault analyzer.
  *

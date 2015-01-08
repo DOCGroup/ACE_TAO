@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file SHS_Transport.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

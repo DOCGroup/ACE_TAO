@@ -3,10 +3,7 @@
 /**
  *  @file    be_visitor_decl.h
  *
- *  $Id$
- *
  *  Concrete visitor for the base "BE_Decl" node
- *
  *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */

@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Parse_Node.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)

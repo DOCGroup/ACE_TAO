@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Map_Manager.h"
 #include "ace/Based_Pointer_Repository.h"
 #include "ace/Guard_T.h"

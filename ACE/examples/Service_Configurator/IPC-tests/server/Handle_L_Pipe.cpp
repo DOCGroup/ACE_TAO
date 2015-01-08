@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Handle_L_Pipe.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_unistd.h"

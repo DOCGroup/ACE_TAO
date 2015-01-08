@@ -1,4 +1,3 @@
-// $Id$
 #include "Notify_StructuredPushSupplier.h"
 #include "goS.h"
 

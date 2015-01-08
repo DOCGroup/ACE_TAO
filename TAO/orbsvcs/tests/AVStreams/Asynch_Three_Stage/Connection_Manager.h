@@ -3,12 +3,9 @@
 /**
  *  @file    Connection_Manager.h
  *
- *  $Id$
- *
  *  This is a helper class that allows the senders bind to multiple
  *  receivers and receivers to bind to senders. It also lets the
  *  senders and receivers disconnect streams.
- *
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */

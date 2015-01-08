@@ -4,8 +4,6 @@
 /**
  *  @file     ftconf.h
  *
- *  $Id$
- *
  *  Build configuration file.
  *
  *  @author  Copyright 1995 by Sun Microsystems, Inc.

@@ -4,7 +4,7 @@
 /**
  * @file client_i.h
  *
- * $Id$ *
+ *  *
  * Header for the SSLIOP Callback test client callback implementation.
  *
  * @author Robert Martin <martin_r@ociweb.com>

@@ -1,12 +1,7 @@
 // -*- C++ -*-
-//
-// $Id$
-
 //=============================================================================
 /**
  *  @file    DynValueBox_i.h
- *
- *  $Id$
  *
  *  @author  simon dot massey at prismtech dot com
  */

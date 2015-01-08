@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file FTP_ClientRequestHandler.h
  *

@@ -3,11 +3,8 @@
 /**
  *  @file    cdr_op_ci.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arrays in client stubs. This one
  *  generates the CDR operators.
- *
  *
  *  @author Aniruddha Gokhale
  */

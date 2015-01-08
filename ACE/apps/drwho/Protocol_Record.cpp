@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "Protocol_Record.h"
 #include "ace/Log_Msg.h"

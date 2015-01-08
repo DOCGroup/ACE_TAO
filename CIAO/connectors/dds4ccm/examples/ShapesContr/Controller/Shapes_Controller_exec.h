@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_SHAPES_CONTROLLER_EXEC_ETSDUL_H_
 #define CIAO_SHAPES_CONTROLLER_EXEC_ETSDUL_H_
 

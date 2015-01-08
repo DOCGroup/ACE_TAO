@@ -1,5 +1,3 @@
-// $Id$
-
 valuetype Event
 {
   void do_print ();

@@ -4,10 +4,7 @@
 /**
  *  @file    UTF16_UCS2_Factory.cpp
  *
- *  $Id$
- *
  *  A tempate instantiation of the codeset translator factory from TAO.
- *
  *
  *  @author   Byron Harris <harrisb@ociweb.com>
  */

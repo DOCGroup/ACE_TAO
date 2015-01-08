@@ -2,8 +2,6 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *  client side main program
  *
  *  @author Aniruddha Gokhale

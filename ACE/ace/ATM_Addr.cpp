@@ -1,5 +1,3 @@
-// $Id$
-
 // Defines the Internet domain address family address format.
 
 #include "ace/ATM_Addr.h"

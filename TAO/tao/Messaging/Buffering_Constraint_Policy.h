@@ -4,8 +4,6 @@
 /**
  *  @file   Buffering_Constraint_Policy.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  */
 //=============================================================================

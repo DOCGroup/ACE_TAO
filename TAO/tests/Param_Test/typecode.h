@@ -3,10 +3,7 @@
 /**
  *  @file    typecode.h
  *
- *  $Id$
- *
  *   Tests typecodes
- *
  *
  *  @author   Aniruddha Gokhale
  */

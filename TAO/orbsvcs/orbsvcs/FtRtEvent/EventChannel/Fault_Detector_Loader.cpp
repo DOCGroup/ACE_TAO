@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_Loader.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.h"

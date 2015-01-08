@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/IdAssignmentStrategyFactoryImpl.h"
 #include "tao/PortableServer/IdAssignmentStrategy.h"
 #include "ace/Dynamic_Service.h"

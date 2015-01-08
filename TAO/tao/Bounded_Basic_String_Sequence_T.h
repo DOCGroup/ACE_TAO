@@ -5,8 +5,6 @@
  *
  * @brief Implement bounded sequences for strings and wide-strings.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "tao/Bounded_Reference_Allocation_Traits_T.h"

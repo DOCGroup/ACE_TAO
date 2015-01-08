@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "LMBM_Test_Sender_exec.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"

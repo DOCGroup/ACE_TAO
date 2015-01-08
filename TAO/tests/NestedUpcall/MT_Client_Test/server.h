@@ -3,11 +3,8 @@
 /**
  *  @file    server.h
  *
- *  $Id$
- *
  *    This class implements a simple server for the
  *    Nested Upcalls - MT Client test
- *
  *
  *  @author Michael Kircher
  */

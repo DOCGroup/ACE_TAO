@@ -2,8 +2,6 @@
 /**
  *  @file ETCL_Filter.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -74,7 +72,6 @@ private:
  * @class TAO_ETCL_Filter
  *
  * @brief Implementation of CosNotifyFilter::Filter servant.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ETCL_Filter
   : public POA_CosNotifyFilter::Filter,

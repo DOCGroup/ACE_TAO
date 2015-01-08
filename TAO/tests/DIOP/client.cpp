@@ -3,10 +3,7 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *  This is the client for the UDP test.
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */

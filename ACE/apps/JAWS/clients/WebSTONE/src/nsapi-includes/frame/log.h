@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
  *

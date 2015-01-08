@@ -4,8 +4,6 @@
 /**
  *  @file    Dynamic_Service_Dependency.h
  *
- *  $Id$
- *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
 //=============================================================================

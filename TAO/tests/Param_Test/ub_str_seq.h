@@ -3,10 +3,7 @@
 /**
  *  @file    ub_str_seq.h
  *
- *  $Id$
- *
  *   Tests sequences of strings
- *
  *
  *  @author   Aniruddha Gokhale
  */

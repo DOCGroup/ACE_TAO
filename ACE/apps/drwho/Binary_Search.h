@@ -4,10 +4,7 @@
 /**
  *  @file    Binary_Search.h
  *
- *  $Id$
- *
  *  Defines a binary search abstraction for friend records.
- *
  *
  *  @author Douglas C. Schmidt
  */

@@ -4,8 +4,6 @@
 /**
  *  @file    Any_Basic_Impl.h
  *
- *  $Id$
- *
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
 //=============================================================================

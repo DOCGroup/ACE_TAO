@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(HTTPU) : ace_output, acelib {
     sharedname = HTTPU
     dynamicflags += HTTPU_BUILD_DLL

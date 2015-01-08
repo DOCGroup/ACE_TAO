@@ -1,5 +1,3 @@
-// $Id$
-
 #include "AMH_DSI_Response_Handler.h"
 #include "Request.h"
 #include "ExceptionList.h"

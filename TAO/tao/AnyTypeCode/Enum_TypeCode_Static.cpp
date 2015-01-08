@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/AnyTypeCode/Enum_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Traits.h"
 #include "tao/ORB_Core.h"

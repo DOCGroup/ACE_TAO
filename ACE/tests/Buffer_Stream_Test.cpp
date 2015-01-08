@@ -3,15 +3,12 @@
 /**
  *  @file    Buffer_Stream_Test.cpp
  *
- *  $Id$
- *
  *   This program illustrates an implementation of the classic
  *   "bounded buffer" program using an ASX STREAM containing two
  *   Modules.  Each ACE_Module contains two Tasks.  Each ACE_Task
  *   contains a ACE_Message_Queue and a pointer to a
  *   ACE_Thread_Manager.  Note how the use of these reusable
  *   components reduces the reliance on global variables.
- *
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
  */

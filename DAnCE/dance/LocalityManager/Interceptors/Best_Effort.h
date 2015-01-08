@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file Best_Effort.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

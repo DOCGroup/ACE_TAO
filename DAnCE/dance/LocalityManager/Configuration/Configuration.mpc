@@ -1,4 +1,3 @@
-// $Id$
 project (DAnCE_LM_Config_Plugins) : install, dance_deployment_stub, dance_stub, dance_lib, dance_output {
   dynamicflags += PROCESS_NAME_BUILD_DLL CPU_AFFINITY_BUILD_DLL PROCESS_PRIORITY_BUILD_DLL
 

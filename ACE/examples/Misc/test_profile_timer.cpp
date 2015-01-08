@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_main.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Log_Msg.h"

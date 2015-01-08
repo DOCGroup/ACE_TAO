@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/IFRService/concrete_classes.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"

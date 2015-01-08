@@ -1,5 +1,3 @@
-// $Id$
-
 // Exercise more tests for the ACE Tasks.  This test can spawn off
 // zillions of tasks and then wait for them using both polling and the
 // ACE Thread Manager.

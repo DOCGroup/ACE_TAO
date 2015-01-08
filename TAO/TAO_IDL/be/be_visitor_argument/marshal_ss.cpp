@@ -3,11 +3,8 @@
 /**
  *  @file    marshal_ss.cpp
  *
- *  $Id$
- *
  *  Visitor that generates code that passes the argument variable to the
  *  marshal operations.
- *
  *
  *  @author Aniruddha Gokhale
  */

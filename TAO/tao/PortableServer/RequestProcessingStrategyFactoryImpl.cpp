@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/RequestProcessingStrategyFactoryImpl.h"
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
 #include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"

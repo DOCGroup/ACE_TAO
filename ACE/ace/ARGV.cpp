@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_ARGV_CPP
 #define ACE_ARGV_CPP
 

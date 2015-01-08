@@ -4,10 +4,7 @@
 /**
  *  @file    cdr_op_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for Enums generating code for the CDR operators
- *
  *
  *  @author Aniruddha Gokhale
  */

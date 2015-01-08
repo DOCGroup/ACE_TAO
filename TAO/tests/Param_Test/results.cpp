@@ -3,10 +3,7 @@
 /**
  *  @file    results.cpp
  *
- *  $Id$
- *
  *  Printing the results
- *
  *
  *  @author Aniruddha Gokhale
  */

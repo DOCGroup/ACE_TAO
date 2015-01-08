@@ -2,11 +2,7 @@
 /**
  *  @file Command_Factory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_COMMAND_FACTORY_H
@@ -25,7 +21,6 @@ class TAO_Notify_Tests_Command;
  * @class TAO_Notify_Tests_Command_Factory
  *
  * @brief Base class for Factory to create command objects.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Factory
 {

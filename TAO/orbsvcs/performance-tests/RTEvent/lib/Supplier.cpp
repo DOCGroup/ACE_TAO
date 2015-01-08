@@ -1,8 +1,6 @@
 /**
  * @file Supplier.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

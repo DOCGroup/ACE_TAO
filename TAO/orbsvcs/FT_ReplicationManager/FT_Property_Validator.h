@@ -4,8 +4,6 @@
 /**
  * @file FT_Property_Validator.h
  *
- * $Id$
- *
  * @author Curt Hibbs <hibbs_c@ociweb.com>
  */
 //=============================================================================

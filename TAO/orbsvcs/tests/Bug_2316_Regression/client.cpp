@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test_impl.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"

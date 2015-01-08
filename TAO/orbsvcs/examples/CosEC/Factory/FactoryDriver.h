@@ -5,10 +5,7 @@
 /**
  *  @file    FactoryDriver.h
  *
- *  $Id$
- *
  *  This class implements the Factory driver.
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */

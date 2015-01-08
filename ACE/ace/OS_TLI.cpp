@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_TLI.h"
 
 

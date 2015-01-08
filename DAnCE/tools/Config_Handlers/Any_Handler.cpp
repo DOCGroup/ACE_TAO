@@ -1,5 +1,3 @@
-// $Id$
-
 #include /**/ "ace/pre.h"
 
 #include "Any_Handler.h"

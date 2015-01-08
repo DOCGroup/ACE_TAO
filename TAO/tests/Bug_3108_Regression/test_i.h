@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TEST_I_HH
 #define TEST_I_HH
 #include "testS.h"

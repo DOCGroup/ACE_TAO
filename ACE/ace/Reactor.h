@@ -4,8 +4,6 @@
 /**
  *  @file    Reactor.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */

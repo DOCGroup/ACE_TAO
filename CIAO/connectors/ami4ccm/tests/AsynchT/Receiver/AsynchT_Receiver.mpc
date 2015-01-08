@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p AsynchT_Base AsynchT_Receiver"
 
 project(AMI_AsynchT_Base_Receiver_idl_gen) : componentidldefaults {

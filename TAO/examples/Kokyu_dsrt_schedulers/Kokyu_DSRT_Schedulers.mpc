@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Kokyu_DSRT_Schedulers) : orbsvcslib, kokyu, rtscheduling, rtcorba, codecfactory {
   sharedname  = Kokyu_DSRT_Schedulers
   dynamicflags += KOKYU_DSRT_SCHEDULERS_BUILD_DLL

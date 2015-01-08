@@ -3,11 +3,8 @@
 /**
  *  @file    invoke_cs.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arguments for passing the arguments
  *  to the CDR << and >> operators
- *
  *
  *  @author Aniruddha Gokhale
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/CosTypedEventChannelAdminC.h"
 #include "CountryC.h"

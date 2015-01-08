@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef LOG_MSG_ALT_H
 #define LOG_MSG_ALT_H
 

@@ -4,8 +4,6 @@
 /**
  *  @file    Event_Forwarding_Discriminator.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt
  */
 //=============================================================================

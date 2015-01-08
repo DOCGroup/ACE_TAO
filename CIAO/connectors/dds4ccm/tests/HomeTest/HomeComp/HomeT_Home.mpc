@@ -1,5 +1,3 @@
-// $Id$
-
 project(HomeT_HomeC_idl_gen): componentidldefaults, dds4ccm {
   custom_only = 1
   after = HomeT_Base_stub HomeT_Connector_idl_gen

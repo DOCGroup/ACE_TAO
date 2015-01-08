@@ -4,8 +4,6 @@
 /**
  *  @file    DTP_POA_Strategy.h
  *
- *  $Id$
- *
  *  @author  Marc Neeley <neeleym@ociweb.com>
  */
 //=============================================================================
@@ -55,7 +53,6 @@ namespace TAO
  * @class TAO_DTP_POA_Strategy
  *
  * @brief
- *
  */
 class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   public TAO::CSD::Strategy_Base

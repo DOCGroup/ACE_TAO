@@ -1,10 +1,6 @@
-// $Id$
-
 // ============================================================================
 /**
  *  @file Proactor_File_Test.cpp
- *
- *  $Id$
  *
  *  This program illustrates how the ACE_Proactor can be used to
  *  implement an application that does asynchronous file IO

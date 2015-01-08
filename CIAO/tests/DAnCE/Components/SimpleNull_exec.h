@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CIAO_SIMPLENULL_EXEC_H
 #define CIAO_SIMPLENULL_EXEC_H
 

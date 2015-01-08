@@ -4,11 +4,8 @@
 /**
  *  @file    Event_Comm_i.h
  *
- *  $Id$
- *
  *  Class interface for the implementation of the distributed
  *  event notification mechanism.
- *
  *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore <pradeep@cs.wustl.edu>
  */

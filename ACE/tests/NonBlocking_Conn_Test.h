@@ -3,15 +3,12 @@
 /**
  *  @file    NonBlocking_Conn_Test.h
  *
- *  $Id$
- *
  *  This test checks for the proper working of the following:
  *  - blocking connections
  *  - blocking connections with timeouts
  *  - non-blocking connections
  *  - non-blocking connections without waiting for completions
  *  - non-blocking connections with timeouts
- *
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */

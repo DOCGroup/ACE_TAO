@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Routing_Slip_Queue.h"
 
 #include "tao/debug.h"

@@ -4,10 +4,7 @@
 /**
  *  @file    be_codegen.h
  *
- *  $Id$
- *
  * The Code generator class
- *
  *
  *  @author Aniruddha Gokhale
  */

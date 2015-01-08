@@ -4,8 +4,6 @@
 /**
  *  @file DII_Reply_Handler.h
  *
- *  $Id$
- *
  *  @brief Handler of DII twoway asynch replies type.
  */
 // =============================================================
@@ -35,7 +33,6 @@ typedef TAO_DII_Reply_Handler* TAO_DII_Reply_Handler_ptr;
  * @brief The T_var class for reply handler
  *
  * As any other pseudo object, this class has a T_var class too.
- *
  */
 class TAO_DynamicInterface_Export TAO_DII_Reply_Handler_var
 {

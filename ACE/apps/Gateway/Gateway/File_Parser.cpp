@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef FILE_PARSER_C
 #define FILE_PARSER_C
 

@@ -5,8 +5,6 @@
 /**
  *  @file    Locate_ResponseHandler.h
  *
- *  $Id$
- *
  *  @author Phil Mesnier <mesnier_p@ociweb>
  */
 //=============================================================================
@@ -46,7 +44,6 @@ typedef TAO_AMH_Locate_ResponseHandler *TAO_AMH_Locate_ResponseHandler_ptr;
  * @brief The T_var class for response handler
  *
  * As any other pseudo object, this class has a T_var class too.
- *
  */
 class TAO_Async_IORTable_Export TAO_AMH_Locate_ResponseHandler_var
 {
@@ -96,7 +93,6 @@ private:
  *
  * As this is built on the CORBA object model, there are separate classes
  * representing the interface and the implementation.
- *
  */
 class TAO_Async_IORTable_Export TAO_AMH_Locate_ResponseHandler
   : public virtual TAO_AMH_Response_Handler

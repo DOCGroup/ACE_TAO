@@ -3,10 +3,7 @@
 /**
  *  @file    executor_exs.h
  *
- *  $Id$
- *
  *  This provides code generation in the exec impl source.
- *
  *
  *  @author Jeff Parsons
  */

@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p Threading Component1"
 
 project(Threading_Component1_idl_gen) : componentidldefaults   {

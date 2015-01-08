@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"

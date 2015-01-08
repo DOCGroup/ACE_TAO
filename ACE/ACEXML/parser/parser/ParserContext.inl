@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include <algorithm>
 
 ACEXML_INLINE

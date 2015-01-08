@@ -3,10 +3,7 @@
 /**
  *  @file    field_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Field in the client inline file
- *
  *
  *  @author Aniruddha Gokhale
  */

@@ -4,8 +4,6 @@
 /**
  *  @file    Topology_Loader.h
  *
- *  $Id$
- *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
 //=============================================================================
@@ -42,7 +40,6 @@ class Topology_Object;
  * \brief An interface for an object that loads Persistent Topology Information.
  *
  * A persistent store must provide an implemention this interface.
- *
  */
 class TAO_Notify_Serv_Export Topology_Loader
 {

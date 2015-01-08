@@ -3,8 +3,6 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  * receive methods, over HTBP.  The test forks two processes or spawns
  * two threads (depending upon the platform) and then executes client
  * and server allowing them to connect and exchange data in ways
@@ -13,7 +11,6 @@
  *   Right now, it primarily tests the iov-like send and recv
  *   functions, but others should be added to completely cover the
  *   possible scenarios.
- *
  *
  *  @author Steve Huston <shuston@riverace.com>
  */

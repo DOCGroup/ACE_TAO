@@ -3,10 +3,7 @@
 /**
  *  @file    valuetype.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes. This is a generic visitor.
- *
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on interface.cpp from Aniruddha Gokhale
  */

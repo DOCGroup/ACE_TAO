@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Properties_Encoder.inl
  *
- *  $Id$
- *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 //=============================================================================

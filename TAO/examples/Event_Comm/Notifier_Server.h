@@ -4,8 +4,6 @@
 /**
  *  @file    Notifier_Server.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

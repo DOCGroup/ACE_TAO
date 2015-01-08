@@ -4,10 +4,7 @@
 /**
  *  @file    UIOP_Connector.h
  *
- *  $Id$
- *
  *  UIOP specific connector processing
- *
  *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
@@ -44,7 +41,6 @@ class TAO_Endpoint;
  * @class TAO_UIOP_Connector
  *
  * @brief UIOP-specific Connector bridge for pluggable protocols.
- *
  */
 class TAO_Strategies_Export TAO_UIOP_Connector : public TAO_Connector
 {

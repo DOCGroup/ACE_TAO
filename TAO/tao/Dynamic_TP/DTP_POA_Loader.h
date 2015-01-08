@@ -4,10 +4,7 @@
 /**
  *  @file    DTP_POA_Loader.h
  *
- *  $Id$
- *
  *   Header file for Loading DynamicTP.
- *
  *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */

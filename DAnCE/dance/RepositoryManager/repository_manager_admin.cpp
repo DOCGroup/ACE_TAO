@@ -1,4 +1,3 @@
-// $Id$
 #include "repository_manager_admin.h"
 #include "dance/Logger/Log_Macros.h"
 #include "RepositoryManagerDaemonC.h"

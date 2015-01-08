@@ -4,8 +4,6 @@
 /**
  *  @file    Exclusive_TMS.h
  *
- *  $Id$
- *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================

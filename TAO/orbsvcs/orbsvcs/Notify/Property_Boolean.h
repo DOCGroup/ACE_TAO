@@ -3,8 +3,6 @@
 /**
  *  @file Property_Boolean.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -29,7 +27,6 @@ class TAO_Notify_PropertySeq;
  * @class TAO_Notify_Property_Boolean
  *
  * @brief Boolean Property.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Property_Boolean
 {

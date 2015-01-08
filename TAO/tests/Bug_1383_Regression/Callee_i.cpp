@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Callee_i.h"
 
 void Callee_i::callback (const char * message)

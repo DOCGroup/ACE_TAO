@@ -3,8 +3,6 @@
 /**
  *  @file Job_i.h
  *
- *  $Id$
- *
  *  This file defines the servant for the Job.idl interface
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -26,7 +24,6 @@ class DT_Creator;
  * @class Job_i
  *
  * @brief Implements a Job that performs some cpu bound work.
- *
  */
 class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 {

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_CHANNEL_CLIENTS_T_CPP
 #define ACE_CHANNEL_CLIENTS_T_CPP
 

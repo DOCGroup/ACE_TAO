@@ -1,8 +1,6 @@
 /**
  * @file PriorityBand_Setup.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -22,7 +20,6 @@ class RTCORBA_Setup;
  * @class PriorityBand_Setup
  *
  * @brief Simplify the initialization of performance tests.
- *
  */
 class TAO_RTEC_Perf_Export PriorityBand_Setup
 {

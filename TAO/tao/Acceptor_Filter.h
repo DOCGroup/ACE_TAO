@@ -4,8 +4,6 @@
 /**
  *  @file    Acceptor_Filter.h
  *
- *  $Id$
- *
  *  @author Marina Spivak (marina@cs.wustl.edu)
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */

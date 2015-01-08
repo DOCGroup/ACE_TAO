@@ -1,4 +1,3 @@
-// $Id$
 //
 // = FILENAME
 //    NavWeapDataHandler.java

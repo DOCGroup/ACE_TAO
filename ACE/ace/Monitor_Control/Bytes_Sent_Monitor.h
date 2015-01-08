@@ -4,8 +4,6 @@
 /**
  * @file Bytes_Sent_Monitor.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

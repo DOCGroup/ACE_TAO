@@ -2,8 +2,6 @@
 /**
  *  @file   Locator_NT_Service.cpp
  *
- *  $Id$
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  *  @author John Tucker <jtucker@infoglide.com>
@@ -48,8 +46,6 @@ Locator_NT_Service::handle_control (DWORD control_code)
 }
 
 
-/**
- */
 int
 Locator_NT_Service::handle_exception (ACE_HANDLE)
 {

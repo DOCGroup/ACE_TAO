@@ -1,6 +1,4 @@
 /*
-** $Id$
-**
 ** Copyright 2001 Addison Wesley. All Rights Reserved.
 */
 

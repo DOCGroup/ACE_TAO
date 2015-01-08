@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Messaging/Messaging_Queueing_Strategies.h"
 #include "tao/Messaging/Buffering_Constraint_Policy.h"
 #include "tao/Stub.h"

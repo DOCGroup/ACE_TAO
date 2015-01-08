@@ -4,8 +4,6 @@
 /**
  *  @file    Assert.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

@@ -1,4 +1,4 @@
-$Id$
+
 /**
 
 @page wince ACE on Windows CE status

@@ -1,8 +1,6 @@
 /**
  * @file Implicit_Deactivator.inl
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

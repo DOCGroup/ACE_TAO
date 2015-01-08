@@ -3,10 +3,7 @@
 /**
  *  @file    bd_array_seq.h
  *
- *  $Id$
- *
  *   Tests bounded array sequence
- *
  *
  *  @author   Jeff Parsons <parsons@cs.wustl.edu>
  */

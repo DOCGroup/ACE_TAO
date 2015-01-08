@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/POA_Cached_Policies.h"
 #include "tao/PortableServer/POA_Policy_Set.h"
 #include "tao/PortableServer/IdAssignmentPolicyC.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/AV/SCTP_SEQ.h"
 
 #if defined (ACE_HAS_SCTP)

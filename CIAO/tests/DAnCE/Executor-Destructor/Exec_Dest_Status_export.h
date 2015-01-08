@@ -1,6 +1,5 @@
 
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // ------------------------------
 #ifndef EXEC_DEST_STATUS_EXPORT_H

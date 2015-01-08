@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_FW_Server_Request_Wrapper.h
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

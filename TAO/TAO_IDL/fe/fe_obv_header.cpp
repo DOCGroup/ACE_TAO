@@ -1,5 +1,3 @@
-// $Id$
-
 #include "fe_obv_header.h"
 
 #include "utl_err.h"

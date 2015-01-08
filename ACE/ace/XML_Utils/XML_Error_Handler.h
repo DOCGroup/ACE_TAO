@@ -2,8 +2,6 @@
 /**
  *  @file  XML_Error_Handler.h
  *
- *  $Id$
- *
  *  @brief Error handler for Xerces
  *
  *  @author Bala Natarajan <bala@dre.vanderbilt.edu>

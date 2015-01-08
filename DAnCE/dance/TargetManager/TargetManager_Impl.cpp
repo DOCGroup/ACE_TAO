@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "TargetManager_Impl.h"
 #include "DomainDataManager.h"
 

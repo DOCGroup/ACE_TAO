@@ -1,5 +1,3 @@
-// $Id$
-
 project(*idl): taoidldefaults, amh {
   idlflags += -Wb,pch_include=amh_pch.h
   IDL_Files {

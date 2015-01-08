@@ -1,11 +1,8 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  *
- * $Id$
- *
  * Common dataReader class for the Getter, Reader,
  * and, Listen port
- *
  */
 #ifndef DATAREADER_T_H_
 #define DATAREADER_T_H_

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Crashed_Callback.h"
 
 #include "tao/Messaging/Messaging.h"

@@ -1,6 +1,5 @@
 
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // ------------------------------
 #ifndef CORBA_DOMAIN_VALIDATOR_EXPORT_H

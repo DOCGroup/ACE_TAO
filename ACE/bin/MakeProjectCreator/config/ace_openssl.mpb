@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : openssl {
   // For gnuace we want to use built-in macros instead of
   // the values provided by the openssl base project.

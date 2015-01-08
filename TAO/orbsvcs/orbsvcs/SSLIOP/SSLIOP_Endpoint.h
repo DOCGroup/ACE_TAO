@@ -4,8 +4,6 @@
 /**
  *  @file     SSLIOP_Endpoint.h
  *
- *  $Id$
- *
  *  SSLIOP implementation of PP Framework Endpoint interface.
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>

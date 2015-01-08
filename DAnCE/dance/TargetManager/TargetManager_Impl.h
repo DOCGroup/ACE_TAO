@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 
 #ifndef TARGETMANAGERDAEMONI_H_
 #define TARGETMANAGERDAEMONI_H_

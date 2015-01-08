@@ -4,8 +4,6 @@
 /**
  * @file Timer_Helper.h
  *
- * $Id$
- *
  * This class is registered with the Reactor and extends from the
  * event handler.It is a friend of the TAO_Time_Service_Clerk and
  * helps to update the clerk's notion of globally synchronized

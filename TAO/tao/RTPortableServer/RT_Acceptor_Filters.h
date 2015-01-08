@@ -4,8 +4,6 @@
 /**
  *  @file    RT_Acceptor_Filters.h
  *
- *  $Id$
- *
  *  RTCORBA strategies for populating mprofile.
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>

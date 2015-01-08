@@ -3,8 +3,6 @@
 /**
  *  @file   ECG_Mcast_Gateway.h
  *
- *  $Id$
- *
  *  @author Marina Spivak (marina@atdesk.com)
  */
 
@@ -114,13 +112,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  NOTE: Certain device drivers block the process if the physical
  *        link fails.
  *
- *
  * 2) Create an instance of TAO_ECG_Mcast_Gateway in your code, on the stack or
  *    dynamically, and use init () method to configure it.  No
  *    configuration files involved.  See service config options above for the
  *    description of configurable options, and init() method below for how
  *    to specify them.
- *
  *
  * Default configuration values (for either use case) can be found in
  * ECG_Defaults.h

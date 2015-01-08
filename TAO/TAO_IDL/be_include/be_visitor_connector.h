@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_connector.h
  *
- *  $Id$
- *
  *  Concrete visitors for the Connector
- *
  *
  *  @author Jeff Parsons
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 project(Single_Service_Common_idl_gen) : taoidldefaults {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=SINGLE_SERVICE_COMMON_STUB_Export \

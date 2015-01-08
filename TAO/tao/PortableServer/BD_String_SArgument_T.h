@@ -4,8 +4,6 @@
 /**
  *  @file    BD_String_SArgument_T.h
  *
- *  $Id$
- *
  *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
 //=============================================================================

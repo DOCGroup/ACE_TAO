@@ -1,6 +1,4 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// cvs-id    : $Id$
-
 #include "tao/LocalObject.h"
 #include "tao/ORBInitializer_Registry.h"
 
@@ -46,11 +44,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 
 //
-//
 PortableInterceptor::SlotId slot_id;
 
 
-//
 //
 class StateTransferImpl: public virtual POA_StateTransfer
 {
@@ -92,7 +88,6 @@ private:
 };
 
 
-//
 //
 class ReplicaController: public virtual ServerRequestInterceptor,
                          public virtual ::CORBA::LocalObject
@@ -151,7 +146,6 @@ public:
 };
 
 
-//
 //
 class ORB_Initializer : public virtual ORBInitializer,
                         public virtual ::CORBA::LocalObject

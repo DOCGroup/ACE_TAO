@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Control.h"
 #include "Counting_Supplier.h"
 

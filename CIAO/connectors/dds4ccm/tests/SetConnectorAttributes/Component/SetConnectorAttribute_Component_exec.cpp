@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "SetConnectorAttribute_Component_exec.h"
 #include "Connector/SetConnectorAttribute_Connector_conn.h"
 

@@ -5,10 +5,7 @@
 /**
  *  @file    ConstantDef_i.h
  *
- *  $Id$
- *
  *  ConstantDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

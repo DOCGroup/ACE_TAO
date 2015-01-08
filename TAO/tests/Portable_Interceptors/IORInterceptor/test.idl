@@ -4,8 +4,6 @@
 /**
  * @file test.idl
  *
- * $Id$
- *
  * "test" IDL interface for the IORInterceptor test.
  *
  * @author Ossama Othman <ossama@uci.edu>

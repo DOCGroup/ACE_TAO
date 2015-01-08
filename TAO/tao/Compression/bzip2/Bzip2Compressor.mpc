@@ -1,5 +1,3 @@
-//$Id$
-
 project(Bzip2Compressor) : taolib, tao_output, install, compression, taoidldefaults, ace_bzip2 {
   requires += bzip2
   sharedname   = TAO_Bzip2Compressor

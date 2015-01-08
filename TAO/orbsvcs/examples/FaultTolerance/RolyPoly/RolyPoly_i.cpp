@@ -1,7 +1,5 @@
 // file      : RolyPoly/RolyPoly_i.cpp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #include "RolyPoly_i.h"
 #include "StateUpdate.h"
 #include "tao/AnyTypeCode/Any.h"

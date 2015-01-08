@@ -1,8 +1,6 @@
 /**
  *  @file MC_Default_Factory.h
  *
- *  $Id$
- *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
 
@@ -29,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_MC_Default_Factory
  *
  * @brief Implemetation of the TAO_Default_Factory interface for Monitoring
- *
  */
 class TAO_Notify_MC_Ext_Export TAO_MC_Default_Factory:
                                  public TAO_Notify_Default_Factory

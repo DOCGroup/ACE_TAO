@@ -1,7 +1,5 @@
 #!/usr/bin/perl -w
 #
-# $Id$
-#
 
 foreach $t (@ARGV) {
   print "plot '", $t, "_delta.32.histo.dat'\n";

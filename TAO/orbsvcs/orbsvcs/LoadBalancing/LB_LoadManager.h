@@ -4,8 +4,6 @@
 /**
  * @file   LB_LoadManager.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

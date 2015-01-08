@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/PortableServer_include.pidl"
 #include "tao/CodecFactory/IOP_Codec_include.pidl"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl"

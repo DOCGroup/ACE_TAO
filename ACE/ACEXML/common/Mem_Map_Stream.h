@@ -2,11 +2,8 @@
 
 /** @file   Mem_Map_Stream.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
- *
  */
 
 #ifndef _ACEXML_MEM_MAP_STREAM_H

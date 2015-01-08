@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Date_Time.h"
 #include "ace/streams.h"
 

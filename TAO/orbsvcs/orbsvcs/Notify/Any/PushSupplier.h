@@ -2,11 +2,7 @@
 /**
  *  @file PushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PUSHSUPPLIER_H
@@ -31,7 +27,6 @@ class TAO_Notify_ProxyConsumer;
  * @class TAO_Notify_StructuredPushSupplier
  *
  * @brief Wrapper for the PushSupplier that connect to the EventChannel.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_PushSupplier : public TAO_Notify_Supplier
 {

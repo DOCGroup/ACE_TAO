@@ -1,9 +1,6 @@
 // @file wxNamingTree.cpp
 //
 // @author Charlie Frasch  <cfrasch@atdesk.com>
-//
-// $Id$
-
 #include "pch.h"
 #include "wxNamingTree.h"
 

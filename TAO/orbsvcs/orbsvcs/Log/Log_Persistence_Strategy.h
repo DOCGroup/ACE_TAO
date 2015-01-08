@@ -4,8 +4,6 @@
 /**
  *  @file   Log_Persistence_Strategy.h
  *
- *  $Id$
- *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
@@ -41,7 +39,6 @@ namespace CORBA
  * @class TAO_Log_Persistence_Strategy
  *
  * @brief Base Strategy for Log / Log Record Storage
- *
  */
 class TAO_Log_Serv_Export TAO_Log_Persistence_Strategy
   : public ACE_Service_Object

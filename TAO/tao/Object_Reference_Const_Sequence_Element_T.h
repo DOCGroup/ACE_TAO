@@ -6,8 +6,6 @@
  * @brief Implement the type returned by const operator[] in object_reference
  * sequences.
  *
- * $Id$
- *
  * @author Johnny Willemsen
  */
 #include "tao/Basic_Types.h"

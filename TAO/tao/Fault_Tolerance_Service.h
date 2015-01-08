@@ -4,12 +4,9 @@
 /**
  *  @file    Fault_Tolerance_Service.h
  *
- *  $Id$
- *
  *  A collection of the ORB and ORB core related properties that are
  *  specific to FT service. The TAO_ORB_Core holds an instance of this
  *  class.
- *
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */

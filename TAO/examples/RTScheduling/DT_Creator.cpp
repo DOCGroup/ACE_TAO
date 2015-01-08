@@ -1,5 +1,3 @@
-//$Id$
-
 #include "DT_Creator.h"
 #include "Thread_Task.h"
 #include "Task_Stats.h"

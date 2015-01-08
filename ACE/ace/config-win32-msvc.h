@@ -2,8 +2,6 @@
 /**
  *  @file   config-win32-msvc.h
  *
- *  $Id$
- *
  *  @brief  Microsoft Visual C++ configuration file.
  *
  *  This file is the ACE configuration file for Microsoft Visual C++

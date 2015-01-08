@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined (BASE_OPTIMIZER_CPP)
 #define BASE_OPTIMIZER_CPP
 

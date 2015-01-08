@@ -3,11 +3,8 @@
 /**
  *  @file    home_svh.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Home node.
  *  This provides for code generation in the servant header
- *
  *
  *  @author Jeff Parsons
  */

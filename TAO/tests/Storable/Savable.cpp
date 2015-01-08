@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Savable.h"
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"

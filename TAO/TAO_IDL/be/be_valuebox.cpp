@@ -3,11 +3,8 @@
 /**
  *  @file    be_valuebox.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Valuebox that provides additional means for C++
  *  mapping.
- *
  *
  *  @author Gary Maxey
  */

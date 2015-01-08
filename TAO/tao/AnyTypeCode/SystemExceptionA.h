@@ -4,8 +4,6 @@
 /**
  *  @file    SystemExceptionA.h
  *
- *  $Id$
- *
  *  SystemException Any operator and typecode decls.
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>

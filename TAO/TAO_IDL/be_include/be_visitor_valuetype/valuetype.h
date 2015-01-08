@@ -3,12 +3,9 @@
 /**
  *  @file    valuetype.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuetype node.
  *  This one provides the generic visitor for valuetypes from which others
  *  will inherit.
- *
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on interface.h from Aniruddha Gokhale
  */

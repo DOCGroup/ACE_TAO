@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Loader.h"
 #include "Test_i.h"
 

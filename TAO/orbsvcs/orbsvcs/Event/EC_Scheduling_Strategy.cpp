@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Scheduling_Strategy.h"
 #include "orbsvcs/Event/EC_QOS_Info.h"
 

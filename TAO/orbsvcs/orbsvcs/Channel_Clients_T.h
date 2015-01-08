@@ -5,16 +5,12 @@
 /**
  *  @file    Channel_Clients_T.h
  *
- *  $Id$
- *
  *  @author Tim Harrison (harrison@cs.wustl.edu) and Douglas Schmidt (schmidt@cs.wustl.edu)
  *
  *  These classes allow applications to be consumer, suppliers, and
  *  consumer suppliers, as well as being active objects.  This is
  *  accomplished with adapters to prevent the use of multiple
  *  inheritance (which is this root of all evil.)
- *
- *
  */
 //=============================================================================
 

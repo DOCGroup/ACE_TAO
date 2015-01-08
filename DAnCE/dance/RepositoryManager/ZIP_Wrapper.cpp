@@ -3,12 +3,9 @@
 /**
  *  @file     ZIP_Wrapper.cpp
  *
- *  $Id$
- *
  *  Purpose: implementing the ZIP_Wrapper class
  *
  *  @author   Stoyan Paunov, Vipul Singh
- *
  */
 //===============================================================================
 

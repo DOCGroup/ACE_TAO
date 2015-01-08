@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Periodic_Consumer.h"
 
 #include "ace/Arg_Shifter.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SV_Semaphore_Simple.h"
 #include "ace/Log_Category.h"
 #include "ace/ACE.h"

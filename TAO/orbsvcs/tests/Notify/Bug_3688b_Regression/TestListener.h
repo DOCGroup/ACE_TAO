@@ -1,4 +1,3 @@
-// $Id$
 #ifndef testListener_h
 #define testListener_h
 

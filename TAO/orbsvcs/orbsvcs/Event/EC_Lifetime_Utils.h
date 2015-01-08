@@ -3,8 +3,6 @@
 /**
  *  @file EC_Lifetime_Utils.h
  *
- *  $Id$
- *
  *  @author Jody Hagins (jody@atdesk.com)
  *  @author Marina Spivak (marina@atdesk.com)
  *

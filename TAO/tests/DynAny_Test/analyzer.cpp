@@ -4,8 +4,6 @@
 /**
  *  @file    analyzer.cpp
  *
- *  $Id$
- *
  *  This file contains a DynAny analyzer that dumps the contents of a DynAny
  *  to the logging.
  *

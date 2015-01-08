@@ -2,11 +2,7 @@
 /**
  *  @file Event_Map_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_EVENT_MAP_T_H
@@ -32,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Event_Map_T
  *
  * @brief Template class for storing the collection of Proxys.
- *
  */
 template <class PROXY, class ACE_LOCK>
 class TAO_Notify_Event_Map_T

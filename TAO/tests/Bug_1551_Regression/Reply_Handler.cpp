@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Reply_Handler.h"
 
 Reply_Handler::Reply_Handler (

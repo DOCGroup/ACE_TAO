@@ -1,6 +1,4 @@
 // QoS_Session_Factory.cpp
-// $Id$
-
 #include "QoS_Session_Factory.h"
 #include "QoS_Session_Impl.h"
 #include "ace/Log_Category.h"

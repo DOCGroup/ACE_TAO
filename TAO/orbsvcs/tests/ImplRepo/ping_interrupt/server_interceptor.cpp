@@ -1,5 +1,3 @@
-// $Id$
-
 #include "server_interceptor.h"
 #include "tao/OctetSeqC.h"
 

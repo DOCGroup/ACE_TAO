@@ -4,8 +4,6 @@
 /**
  *  @file     ORB_Table.h
  *
- *  $Id$
- *
  *  @author Ossama Othman
  *  @author Carlos O'Ryan
  */

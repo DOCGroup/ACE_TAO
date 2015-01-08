@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HTTP_10.h"
 
 #include "JAWS/JAWS.h"

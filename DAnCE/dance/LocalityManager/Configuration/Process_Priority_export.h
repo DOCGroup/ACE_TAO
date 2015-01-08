@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // ------------------------------
 #ifndef PROCESS_PRIORITY_EXPORT_H

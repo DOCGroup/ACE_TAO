@@ -1,5 +1,3 @@
-// $Id$
-
 #include "LookupManager.h"
 #include "ace/OS_NS_string.h"
 

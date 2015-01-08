@@ -4,8 +4,6 @@
 /**
  *  @file    DLL_Manager.h
  *
- *  $Id$
- *
  *  @author Don Hinton <dhinton@ieee.org>
  */
 //=============================================================================
@@ -52,7 +50,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * Most of this class came from the original ACE_DLL class.  ACE_DLL
  * is now just an interface that passed all it's calls either directly
  * or via ACE_DLL_Manager to this class for execution.
- *
  */
 class ACE_Export ACE_DLL_Handle
 {
@@ -217,7 +214,6 @@ class ACE_Framework_Repository;
  *
  *  ACE_DLL_UNLOAD_POLICY_DEFAULT - Default policy allows dlls to control
  *  their own destinies, but will unload those that don't make a choice eagerly.
- *
  */
 class ACE_Export ACE_DLL_Manager
 {

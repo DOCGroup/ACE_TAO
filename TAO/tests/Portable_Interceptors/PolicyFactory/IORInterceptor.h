@@ -4,8 +4,6 @@
 /**
  * @file IORInterceptor.h
  *
- * $Id$
- *
  * Implementation header for the IOR test interceptor.
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>

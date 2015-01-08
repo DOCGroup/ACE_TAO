@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/IFRService/RecursDef_i.h"
 
 

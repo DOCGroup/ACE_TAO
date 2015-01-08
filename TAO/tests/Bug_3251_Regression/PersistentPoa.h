@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef bug_3251_PersistentPoa_h
 #define bug_3251_PersistentPoa_h
 

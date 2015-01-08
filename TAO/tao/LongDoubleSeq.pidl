@@ -1,6 +1,4 @@
 // -*- IDL -*-
-// $Id$
-
 #ifndef TAO_CORBA_LONG_DOUBLE_SEQ_IDL
 #define TAO_CORBA_LONG_DOUBLE_SEQ_IDL
 

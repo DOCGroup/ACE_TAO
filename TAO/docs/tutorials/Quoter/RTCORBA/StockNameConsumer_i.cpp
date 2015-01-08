@@ -1,5 +1,3 @@
-// $Id$
-
 // local headers
 #include "StockNameConsumer_i.h"
 #include "Broker_i.h"

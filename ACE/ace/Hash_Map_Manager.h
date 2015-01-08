@@ -4,8 +4,6 @@
 /**
  *  @file    Hash_Map_Manager.h
  *
- *  $Id$
- *
  *  Backward compatibility header.
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>

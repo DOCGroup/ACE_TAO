@@ -5,8 +5,6 @@
 /**
  *  @file   HTTP_Parser.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

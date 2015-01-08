@@ -4,8 +4,6 @@
 /**
  *  @file   PI.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================
@@ -27,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_PI_Init
- *
  */
 class TAO_PI_Export TAO_PI_Init
 {

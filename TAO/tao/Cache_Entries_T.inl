@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 

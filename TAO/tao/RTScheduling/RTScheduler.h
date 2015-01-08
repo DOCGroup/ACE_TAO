@@ -1,15 +1,10 @@
 // -*- C++ -*-
 
-// $Id$
-
 //=============================================================================
 /**
  *  @file RTScheduler.h
  *
- *  $Id$
- *
  *   Takes care of the RT Scheduler loading on static build.
- *
  *
  *  @author  Yamuna Krishnamurthy <yamuna@oomworks.com>
  */

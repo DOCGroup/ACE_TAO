@@ -3,10 +3,7 @@
 /**
  *  @file   Identity_i.h
  *
- *  $Id$
- *
  *  Implements the interface in Identity.idl.
- *
  *
  *  @author Marina Spivak <marina@cs.wustl.edu> with modifications by Bala Natarajan <bala@cs.wustl.edu>
  */

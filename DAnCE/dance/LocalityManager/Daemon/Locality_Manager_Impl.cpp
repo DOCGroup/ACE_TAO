@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Locality_Manager_Impl.h"
 #include "dance/Logger/Log_Macros.h"
 

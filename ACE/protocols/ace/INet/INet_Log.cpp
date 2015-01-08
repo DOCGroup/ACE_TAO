@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/INet_Log.h"
 #include "ace/Env_Value_T.h"
 #include "ace/SString.h"

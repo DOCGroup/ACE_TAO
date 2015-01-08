@@ -4,8 +4,6 @@
 /**
  *  @file    DTP_Thread_Lane_Resources_Manager.h
  *
- *  $Id$
- *
  *  @author  Irfan Pyarali
  */
 // ===================================================================

@@ -4,8 +4,6 @@
 /**
 *  @file Shared_Backing_Store.h
 *
-*  $Id$
-*
 *  This class defines an implementation of the backing store as multiple XML files
 *  shared between multiple Locators.
 *

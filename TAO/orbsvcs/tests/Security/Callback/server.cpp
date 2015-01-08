@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Log_Msg.h"
 #include "server_i.h"
 #include "ace/OS_NS_stdio.h"

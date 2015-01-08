@@ -4,8 +4,6 @@
 /**
  *  @file ZIOP_PolicyFactory.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen <jwillemsen@remedy.nl>
  */
 // ===================================================================

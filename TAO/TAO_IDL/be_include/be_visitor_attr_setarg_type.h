@@ -3,10 +3,7 @@
 /**
  *  @file    be_visitor_attr_setarg_type.h
  *
- *  $Id$
- *
  *  Encapsulation of rules for component attribute set arg.
- *
  *
  *  @author Jeff Parsons
  */

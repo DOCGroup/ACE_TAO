@@ -4,8 +4,6 @@
 /**
  *  @file   Locator_Options.h
  *
- *  $Id$
- *
  *  @brief  Definition of the Options class for the Implementation Repository.
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CLIENT_TASK_H
 #define CLIENT_TASK_H

@@ -6,8 +6,6 @@
  *
  *  pstat functions
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

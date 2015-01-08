@@ -4,8 +4,6 @@
 /**
  * @file Server_ORBInitializer.h
  *
- * $Id$
- *
  * Implementation header for the IOR test interceptor ORB
  * initializer.
  *

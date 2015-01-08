@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/WFMO_Reactor.h"
 #include "ace/Log_Msg.h"
 

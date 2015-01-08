@@ -3,12 +3,9 @@
 /**
  *  @file    Message_Block_Test.cpp
  *
- *  $Id$
- *
  *    This test program is a torture test that illustrates how
  *    <ACE_Message_Block> reference counting works in multi-threaded
  *    code.
- *
  *
  *  @author Doug Schmidt <schmidt@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
  */

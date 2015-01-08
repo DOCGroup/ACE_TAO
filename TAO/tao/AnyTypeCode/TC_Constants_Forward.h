@@ -4,8 +4,6 @@
 /**
  * @file TC_Constants_Forward.h
  *
- * $Id$
- *
  * Backward compatibility header.
  *
  * @deprecated Use TypeCode_Constants.h instead.

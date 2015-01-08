@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Request.h"
 

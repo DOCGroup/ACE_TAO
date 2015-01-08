@@ -3,10 +3,7 @@
 /**
  *  @file    ub_array_seq.h
  *
- *  $Id$
- *
  *   Tests unbounded array sequence
- *
  *
  *  @author   Jeff Parsons <parsons@cs.wustl.edu>
  */

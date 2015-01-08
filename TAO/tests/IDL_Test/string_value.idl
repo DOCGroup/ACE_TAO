@@ -3,8 +3,6 @@
 /**
  *  @file    string_value.idl
  *
- *  $Id$
- *
  *  This file contains depends on the TAO supplied StringValue type. Generated
  *  code based on such IDL failed to compile since the IDL compiler inserted a
  *  #include of a non-existent StringValueA.h.
@@ -14,7 +12,6 @@
  *  is in the tao/AnyTypeCode directory. This cannot work because it sets up a
  *  circular dependency between libTAO_AnyTypeCode and libTAO_ValueType. It
  *  also requires an additional -I$TAO_ROOT/tao which is non traditional.
- *
  */
 
 //=============================================================================

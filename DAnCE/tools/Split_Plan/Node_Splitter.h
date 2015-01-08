@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Node_Splitter.h
  *

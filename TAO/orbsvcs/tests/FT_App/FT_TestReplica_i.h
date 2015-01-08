@@ -3,8 +3,6 @@
 /**
  *  @file    FT_TestReplica_i.h
  *
- *  $Id$
- *
  *  This file declares an implementation of CORBA interface TestReplica.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>

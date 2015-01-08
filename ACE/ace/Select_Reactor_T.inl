@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/Reactor.h"
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"

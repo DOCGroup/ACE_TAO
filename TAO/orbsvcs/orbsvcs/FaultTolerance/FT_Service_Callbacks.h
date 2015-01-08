@@ -4,8 +4,6 @@
 /**
  * @file FT_Service_Callbacks.h
  *
- * $Id$
- *
  * A concrete FT service callback implementation
  *
  * @author Balachandran Natarajan <bala@cs.wustl.edu>

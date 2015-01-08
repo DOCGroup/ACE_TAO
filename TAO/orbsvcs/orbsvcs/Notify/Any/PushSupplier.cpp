@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Any/PushSupplier.h"
 #include "orbsvcs/Notify/Properties.h"
 

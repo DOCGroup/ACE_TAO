@@ -3,11 +3,8 @@
 /**
  *  @file    be_valuetype_fwd.cpp
  *
- *  $Id$
- *
  *  Extension of class be_interface_fwd that provides additional
  *  means for C++ mapping of an valuetype.
- *
  *
  *  @author Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>

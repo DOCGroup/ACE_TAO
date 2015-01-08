@@ -4,11 +4,8 @@
 /**
  *  @file    marshal_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for valuetypes.
  *  This one provides code generation for marshalling.
- *
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */

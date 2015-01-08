@@ -1,4 +1,3 @@
-//$Id$
 #include "Big_Reply_i.h"
 
 Big_Reply_i::Big_Reply_i (CORBA::ORB_ptr orb,

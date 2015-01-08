@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef MT_BIDIR_CLIENT_TASK_H
 #define MT_BIDIR_CLIENT_TASK_H

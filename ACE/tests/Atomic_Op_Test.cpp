@@ -3,13 +3,10 @@
 /**
  *  @file    Atomic_Op_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test of the Atomic Operations Class in ACE.
  *    On platforms like Win32, ACE uses template specialization to
  *    use native implementations provided by the OS to accelarate
  *    these operations.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

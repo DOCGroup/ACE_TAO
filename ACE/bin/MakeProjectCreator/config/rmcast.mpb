@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : acelib, threads {
   avoids   += ace_for_tao
   after    += RMCast

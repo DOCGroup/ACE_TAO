@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Reconnect): rteventtestexe {
   exename = Reconnect
   Source_Files {

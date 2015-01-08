@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ior_mcast_client_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"

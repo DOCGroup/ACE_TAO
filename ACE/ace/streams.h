@@ -4,8 +4,6 @@
 /**
  *  @file    streams.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali
  *
  *  This file contains the portability ugliness for the Standard C++
@@ -13,8 +11,6 @@
  *  will need to be updated.
  *
  *  This files deals with the streams includes.
- *
- *
  */
 //=============================================================================
 

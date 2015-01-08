@@ -4,8 +4,6 @@
 /**
  *  @file    Service_Gestalt.h
  *
- *  $Id$
- *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
 //====================================================================
@@ -65,7 +63,6 @@ class ACE_Svc_Conf_Param;
  * may or may not be bounded by the lifetime of the gestalt, that owns
  * it. This feature is important for the derived classes and the
  * Service Config in particular.
- *
  */
 class ACE_Export ACE_Service_Gestalt : private ACE_Copy_Disabled
 {

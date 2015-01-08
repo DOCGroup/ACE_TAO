@@ -4,8 +4,6 @@
 /**
  *  @file    Timer_Queue_Adapters.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and
  *          Carlos O'Ryan <coryan@uci.edu>
  */
@@ -117,7 +115,6 @@ private:
  * @note This is a case where template parameters will be useful, but
  * (IMHO) the effort and portability problems discourage their
  * use.
- *
  */
 template <class TQ, class TYPE = ACE_Event_Handler*>
 class ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/ReadCondition.h"
 #include "dds4ccm/impl/logger/Log_Macros.h"
 #include "ndds/ndds_cpp.h"

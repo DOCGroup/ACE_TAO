@@ -4,8 +4,6 @@
 /**
  *  @file ObjectKey_Table.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

@@ -3,11 +3,8 @@
 /**
  *  @file     Servant_Locator.cpp
  *
- *  $Id$
- *
  *   Implementation of ServantLocator class, used with a POA
  *   having a NON_RETAIN policy.
- *
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */

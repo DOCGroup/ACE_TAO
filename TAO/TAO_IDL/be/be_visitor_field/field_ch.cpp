@@ -3,10 +3,7 @@
 /**
  *  @file    field_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Field node in the client header
- *
  *
  *  @author Aniruddha Gokhale
  */

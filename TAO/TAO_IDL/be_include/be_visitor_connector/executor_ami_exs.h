@@ -3,11 +3,8 @@
 /**
  *  @file    executor_ami_exs.h
  *
- *  $Id$
- *
  *  This provides code generation for executors in the AMI connector
  *  impl source
- *
  *
  *  @author Jeff Parsons
  */

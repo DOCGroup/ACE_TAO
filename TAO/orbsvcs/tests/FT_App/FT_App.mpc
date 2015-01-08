@@ -1,5 +1,3 @@
-// $Id$
-
 project(*idl): taoidldefaults, orbsvcslib {
   IDL_Files {
     FT_TestReplica.idl

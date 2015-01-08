@@ -4,7 +4,7 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * @author Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
 
- * $Id$
+ *
  * Contains common IDL definitions in the Publish/Subscribe Real-time CORBA
  * Stock Quoter Service.
  */

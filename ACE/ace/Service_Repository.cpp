@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Service_Repository.h"
 
 #if !defined (__ACE_INLINE__)

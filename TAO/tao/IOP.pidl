@@ -2,8 +2,6 @@
 /**
  * @file IOP.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the IOP module.
  */
 

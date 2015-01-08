@@ -1,5 +1,3 @@
-// $Id$
-
 #if !defined( WORKER_H)
 #define WORKER_H
 

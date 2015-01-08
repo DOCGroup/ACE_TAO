@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p Thread_Base -u Thread -c starter Sender"
 
 project(Thread_Sender_idl_gen) : componentidldefaults {

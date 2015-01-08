@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Synch_i.h"
 
 Synch_i::Synch_i (void)

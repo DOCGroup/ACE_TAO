@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 feature(dds4ccm_opendds) : dds4ccm, dcps_ts_defaults, dcps_rtps {
   Define_Custom(DDSGenerator) : TypeSupport {
     commandflags += -DCIAO_DDS4CCM_OPENDDS=1 -UDDS4CCM_NEEDS_SEQUENCES_DEFINED

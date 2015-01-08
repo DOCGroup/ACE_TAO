@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "CSL_DeadlineTest_Receiver_exec.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"

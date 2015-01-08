@@ -2,8 +2,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Server-side driver program
  *
  *  @author Aniruddha Gokhale

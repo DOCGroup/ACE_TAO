@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // Option manager for Event Server.
 
 #ifndef DEVICE_OPTIONS_H

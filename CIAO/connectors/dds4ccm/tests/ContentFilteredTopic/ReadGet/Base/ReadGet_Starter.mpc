@@ -1,5 +1,3 @@
-// $Id$
-
 project(CFT_ReadGet_Starter_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   idlflags += -Wb,stub_export_macro=READER_STARTER_STUB_Export \

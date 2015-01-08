@@ -4,10 +4,7 @@
 /**
  *  @file   Asynch_Timeout_Handler.h
  *
- *  $Id$
- *
  *  Timeout Handler for AMI timeouts
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */

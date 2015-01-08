@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HTBP_ID_Requestor.h"
 #include "HTBP_Environment.h"
 

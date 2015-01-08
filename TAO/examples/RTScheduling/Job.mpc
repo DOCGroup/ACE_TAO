@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Job): portableserver {
   idlflags += -St \
               -Wb,export_macro=JOB_Export \

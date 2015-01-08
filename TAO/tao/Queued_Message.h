@@ -4,8 +4,6 @@
 /**
  *  @file Queued_Message.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -70,7 +68,6 @@ class TAO_ORB_Core;
  *       memory, to avoid the data copy in this path.  What happens
  *       if the there is no queueing?  Can we check that before
  *       allocating the memory?
- *
  */
 class TAO_Export TAO_Queued_Message : public TAO_LF_Invocation_Event
 {

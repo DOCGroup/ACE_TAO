@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Notify_Consumer.h"
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"

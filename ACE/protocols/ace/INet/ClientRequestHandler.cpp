@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/ClientRequestHandler.h"
 #include "ace/Functor_String.h"
 

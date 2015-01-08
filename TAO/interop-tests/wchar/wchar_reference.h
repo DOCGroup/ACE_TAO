@@ -4,12 +4,9 @@
 /**
  *  @file    wchar_reference.h
  *
- *  $Id$
- *
  *  C++ reference data for testing interoperability with wchars. This is
  *  linked into both clients and servers so that both sides have common
  *  values for testing what is received or sent.
- *
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */

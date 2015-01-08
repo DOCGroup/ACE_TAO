@@ -1,4 +1,3 @@
-# $Id$
 #
 # This file should allow to build ACE for Windows CE with GCC tools.
 #

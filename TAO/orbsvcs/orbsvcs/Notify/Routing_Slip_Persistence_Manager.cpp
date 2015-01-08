@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
 #include "orbsvcs/Notify/Standard_Event_Persistence.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "EventChannelFactory_i.h"
 #include "ace/Process.h"

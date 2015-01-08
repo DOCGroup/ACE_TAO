@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/String_Base.h"
 #include <orbsvcs/CosNamingC.h>
 #include "dance/Logger/Log_Macros.h"

@@ -3,11 +3,8 @@
 /**
  *  @file    component_ex_idl.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Component node.
  *  Provides code generation for components in the CIAO executor IDL
- *
  *
  *  @author Jeff Parsons
  */

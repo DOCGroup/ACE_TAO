@@ -3,10 +3,7 @@
 /**
  *  @file    module.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Module
- *
  *
  *  @author Aniruddha Gokhale
  */

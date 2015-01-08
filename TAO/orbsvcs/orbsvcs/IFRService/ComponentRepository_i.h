@@ -5,10 +5,7 @@
 /**
  *  @file    ComponentRepository_i.h
  *
- *  $Id$
- *
  *  ComponentRepository servant class.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbiltl.edu>
  */

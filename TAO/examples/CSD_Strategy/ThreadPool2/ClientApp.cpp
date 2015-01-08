@@ -1,4 +1,3 @@
-// $Id$
 #include "ClientApp.h"
 #include "FooC.h"
 #include "ace/Get_Opt.h"

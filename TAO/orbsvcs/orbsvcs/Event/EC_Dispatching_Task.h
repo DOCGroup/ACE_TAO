@@ -3,8 +3,6 @@
 /**
  *  @file   EC_Dispatching_Task.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
@@ -94,7 +92,6 @@ protected:
  *
  * @brief Implement the dispatching queues for FIFO and Priority
  * dispatching.
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Dispatching_Task : public ACE_Task<ACE_SYNCH>
 {

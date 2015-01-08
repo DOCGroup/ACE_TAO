@@ -7,8 +7,6 @@
  * This file collects the type definitions for data types
  * used in ACE XML parser.
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Policy_Manager.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)

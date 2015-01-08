@@ -4,8 +4,6 @@
 /**
  *  @file LF_Invocation_Event.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -34,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * interest include whether a message has arrived, or timedout waiting
  * for a message or if the connection is closed waiting for a
  * message. Details of the states are documented within the class.
- *
  */
 class TAO_Export TAO_LF_Invocation_Event: public TAO_LF_Event
 {

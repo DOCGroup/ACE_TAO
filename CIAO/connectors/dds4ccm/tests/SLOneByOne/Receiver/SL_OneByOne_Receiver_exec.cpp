@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "SL_OneByOne_Receiver_exec.h"
 #include "dds4ccm/impl/dds4ccm_conf.h"
 

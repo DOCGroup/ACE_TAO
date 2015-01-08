@@ -3,10 +3,7 @@
 /**
  *  @file    be_global.cpp
  *
- *  $Id$
- *
  *  Stores global data specific to the compiler back end.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

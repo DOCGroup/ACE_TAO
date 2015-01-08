@@ -2,11 +2,7 @@
 /**
  *  @file ETCL_FilterFactory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_ETCL_FILTERFACTORY_H
@@ -39,7 +35,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_ETCL_FilterFactory
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ETCL_FilterFactory :
   public virtual POA_CosNotifyFilterExt::FilterFactory,

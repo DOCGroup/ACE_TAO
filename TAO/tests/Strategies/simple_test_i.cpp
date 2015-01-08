@@ -1,5 +1,3 @@
-// $Id$
-
 #include "simple_test_i.h"
 #include "tao/debug.h"
 

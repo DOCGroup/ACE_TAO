@@ -1,8 +1,6 @@
 /**
  * @file RT_Class.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -20,7 +18,6 @@
  * @class RT_Class
  *
  * @brief Simplify the initialization of performance tests.
- *
  */
 class TAO_RTEC_Perf_Export RT_Class
 {

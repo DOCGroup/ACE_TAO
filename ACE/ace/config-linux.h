@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 // The following configuration file is designed to work for Linux
 // platforms using GNU C++.
 

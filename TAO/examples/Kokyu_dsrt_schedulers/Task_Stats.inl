@@ -1,5 +1,3 @@
-//$Id$
-
 #include "ace/Log_Msg.h"
 
 ACE_INLINE int

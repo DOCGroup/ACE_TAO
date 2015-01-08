@@ -3,10 +3,7 @@
 /**
  *  @file    public_assign_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Union Branch for the assignment operator
- *
  *
  *  @author Aniruddha Gokhale
  */

@@ -4,8 +4,6 @@
 /**
  *  @file    QtReactor.h
  *
- *  $Id$
- *
  *  @author Hamish Friedlander <ullexco@wave.co.nz>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Service_Config.h"
 #include "orbsvcs/Naming/Naming_Loader.h"
 

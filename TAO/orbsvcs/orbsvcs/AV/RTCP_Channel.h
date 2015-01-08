@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef RTCP_CHANNEL_INCLUDE
 #define RTCP_CHANNEL_INCLUDE
 

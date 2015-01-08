@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*C_inclient) : aceexe {
   exename = C-inclient
   Source_Files {

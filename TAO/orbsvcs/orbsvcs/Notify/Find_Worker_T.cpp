@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_Notify_FIND_WORKER_T_CPP
 #define TAO_Notify_FIND_WORKER_T_CPP
 

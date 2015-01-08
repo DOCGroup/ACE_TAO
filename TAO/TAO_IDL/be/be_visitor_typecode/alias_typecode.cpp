@@ -4,8 +4,6 @@
 /**
  *  @file  alias_typecode.cpp
  *
- *  $Id$
- *
  *  Alias (typedef) TypeCode generation visitor.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>

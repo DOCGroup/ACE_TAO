@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Monitor_Control/FreeBSD_Network_Interface_Monitor.h"
 
 #if defined (__FreeBSD__) || defined (__Lynx__)

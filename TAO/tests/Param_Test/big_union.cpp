@@ -3,10 +3,7 @@
 /**
  *  @file    big_union.cpp
  *
- *  $Id$
- *
  *  tests Big_Unions
- *
  *
  *  @author   Aniruddha Gokhale
  */

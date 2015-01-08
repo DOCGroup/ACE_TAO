@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-// $Id$
 //
 
 #ifndef LOG_WALKER_LOG_H

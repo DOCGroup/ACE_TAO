@@ -1,10 +1,7 @@
-// $Id$
 /* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file    FT_TestReplica_i.cpp
- *
- *  $Id$
  *
  *  Implements CORBA interface TestReplica.
  *

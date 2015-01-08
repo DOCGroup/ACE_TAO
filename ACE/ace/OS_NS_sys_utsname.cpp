@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"

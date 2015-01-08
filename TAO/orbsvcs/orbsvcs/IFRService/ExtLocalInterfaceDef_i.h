@@ -5,10 +5,7 @@
 /**
  *  @file    ExtLocalInterfaceDef_i.h
  *
- *  $Id$
- *
  *  ExtLocalInterfaceDef_i servant class.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

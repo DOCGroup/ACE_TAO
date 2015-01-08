@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef INTERCEPTORS_H
 #define INTERCEPTORS_H
 

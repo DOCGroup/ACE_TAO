@@ -4,8 +4,6 @@
 /**
  * @file Codeset.cpp
  *
- * $Id$
- *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 // =================================================================

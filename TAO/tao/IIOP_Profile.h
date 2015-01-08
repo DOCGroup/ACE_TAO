@@ -4,8 +4,6 @@
 /**
  *  @file     IIOP_Profile.h
  *
- *  $Id$
- *
  *  IIOP profile specific processing.
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>

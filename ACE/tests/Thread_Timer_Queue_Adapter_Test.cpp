@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  *  @file    Thread_Timer_Queue_Adapter_Test.cpp
  *
@@ -7,7 +5,6 @@
  *
  * This test verifies the functionality of the ACE_Timer_Queue_Thread_Adapter.
  * It also shows the usage of custom event handlers.
- *
  */
 //=============================================================================
 

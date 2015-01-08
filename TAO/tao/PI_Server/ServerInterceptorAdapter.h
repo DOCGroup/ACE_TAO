@@ -4,8 +4,6 @@
 /**
  *  @file    ServerInterceptorAdapter.h
  *
- *  $Id$
- *
  *   This file contains a helper class to simplify the support of
  *   interceptors in TAO_IDL generated skeletons.
  *

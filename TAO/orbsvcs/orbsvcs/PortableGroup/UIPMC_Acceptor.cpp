@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/UIPMC_Profile.h"
 #include "orbsvcs/PortableGroup/UIPMC_Acceptor.h"

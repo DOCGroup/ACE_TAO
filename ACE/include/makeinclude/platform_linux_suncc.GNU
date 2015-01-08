@@ -1,4 +1,3 @@
-# $Id$
 
 # This file should allow ACE to be built on Linux, using the Sun compiler.
 # The Sun compiler on linux is still in the Alpha stage, so no guarantees

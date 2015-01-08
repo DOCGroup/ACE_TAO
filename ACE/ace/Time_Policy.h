@@ -4,8 +4,6 @@
 /**
  *  @file Time_Policy.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@atdesk.com>
  *  @author Martin Corino <mcorino@remedy.nl>
  */
@@ -44,7 +42,6 @@ public:
  * @class ACE_HR_Time_Policy
  *
  * @brief Implement a time policy based on the ACE Highres timer.
- *
  */
 class ACE_Export ACE_HR_Time_Policy
 {
@@ -133,7 +130,6 @@ private:
  *
  * @brief Abstract base class for dynamically loaded and/or shared
  *        time policies.
- *
  */
 class ACE_Export ACE_Dynamic_Time_Policy_Base
 {

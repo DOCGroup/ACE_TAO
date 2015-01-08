@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Server_i.h"
 
 Server::~Server () {}

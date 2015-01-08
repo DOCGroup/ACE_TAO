@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(TAO_IDL_GEN) {
   requires += tao_idl_fe_gen
   verbatim(gnuace, local) {

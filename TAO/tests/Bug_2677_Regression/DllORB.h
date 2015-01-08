@@ -1,4 +1,3 @@
-// $Id$
 #ifndef DLLORB_H
 #define DLLORB_H
 

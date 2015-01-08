@@ -4,8 +4,6 @@
 /**
  *  @file    XtMotifReactor_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test that illustrates the possibility to integrate
  *    ACE to the X Main Loop. This program uses ACE_XtReactor class to
  *    schedule three additional event sources:
@@ -16,7 +14,6 @@
  *    5. Events from the TCP/IP channel using ACE_Acceptor
  *    No command line arguments are needed to run the test.
  *    The program needs Motif or lestiff to be compiled and run.
- *
  *
  *  @author Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
  */

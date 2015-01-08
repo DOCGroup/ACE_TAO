@@ -2,11 +2,7 @@
 /**
  *  @file SequencePushConsumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_SEQUENCEPUSHCONSUMER_H
@@ -56,7 +52,6 @@ typedef TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_SequencePushConsumer_Traits
  * @class TAO_Notify_Tests_SequencePushConsumer
  *
  * @brief SequencePushConsumer Implementation.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushConsumer : public TAO_Notify_Tests_SequencePushConsumer_Base
 {

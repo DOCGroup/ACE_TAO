@@ -1,5 +1,3 @@
-// $Id$
-
 #include "NsShutdown.h"
 
 NsShutdown::NsShutdown (CORBA::ORB_ptr orb)

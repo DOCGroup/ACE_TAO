@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FaultTolerance/FT_Service_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_Service_Callbacks.h"
 #include "orbsvcs/FaultTolerance/FT_ORBInitializer.h"

@@ -1,4 +1,4 @@
-$Id$
+
 
 This is a unit test for setting DiffServ Codepoint both in the
 requests sent and the replies received. It also illustrates how a

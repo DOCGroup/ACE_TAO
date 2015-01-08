@@ -1,5 +1,3 @@
-// $Id$
-
 #include "sum_server_i.h"
 
 sum_server_i::sum_server_i ()

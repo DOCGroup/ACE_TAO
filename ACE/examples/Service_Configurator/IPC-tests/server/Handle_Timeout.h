@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 /* Handles timeouts. */
 
 #ifndef _HANDLE_TIMEOUT_H

@@ -1,10 +1,7 @@
 /**
  * @file Echo_Callback.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Echo_Callback.h"
 

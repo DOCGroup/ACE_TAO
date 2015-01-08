@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_mirror_port.h"
 #include "ast_porttype.h"
 #include "ast_visitor.h"

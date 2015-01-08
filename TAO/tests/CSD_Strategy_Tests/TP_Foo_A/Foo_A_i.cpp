@@ -1,4 +1,3 @@
-// $Id$
 #include "Foo_A_i.h"
 #include "AppShutdown.h"
 

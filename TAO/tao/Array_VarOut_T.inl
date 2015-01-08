@@ -1,7 +1,5 @@
 // -*- C++ -*-
 //
-//$Id$
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T, typename T_slice, typename TAG>

@@ -4,8 +4,6 @@
 /**
  *  @file    Service_Config_Test.cpp
  *
- *  $Id$
- *
  *  This is a simple test to make sure the ACE Service Configurator
  *  framework is working correctly.
  *

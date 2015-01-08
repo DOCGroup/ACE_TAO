@@ -1,6 +1,4 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
-// $Id$
-
 #include "Protocol.h"
 
 namespace ACE_RMCast

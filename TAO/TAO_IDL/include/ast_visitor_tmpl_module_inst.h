@@ -4,13 +4,10 @@
 /**
  *  @file    ast_visitor_tmpl_module_inst.h
  *
- *  $Id$
- *
  *  This visitor creates nodes resulting
  *  from the instantiation of a template module, or from a
  *  reference to one inside another, and adds these nodes
  *  to the AST.
- *
  *
  *  @author Jeff Parsons
  */

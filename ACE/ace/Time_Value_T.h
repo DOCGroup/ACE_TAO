@@ -4,8 +4,6 @@
 /**
  *  @file    Time_Value_T.h
  *
- *  $Id$
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================

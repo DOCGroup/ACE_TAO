@@ -1,5 +1,3 @@
-// $Id$
-
 #include "NavDisplayGUI_exec.h"
 #include <QtGui/qapplication.h>
 #include <QtGui/qevent.h>

@@ -4,10 +4,7 @@
 /**
  *  @file    Manager.h
  *
- *  $Id$
- *
  *  A manager class that merger IORS and designates primary
- *
  *
  *  @author  Bala Natarajan <bala@cs.wustl.edu>
  */

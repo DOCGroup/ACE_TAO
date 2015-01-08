@@ -4,8 +4,6 @@
 /**
  *  @file    TAO_Singleton_Manager.h
  *
- *  $Id$
- *
  *   Header file for the TAO-specific Singleton Manager.  Based
  *   entirely on ace/Object_Manager.{h,inl,cpp}.
  *

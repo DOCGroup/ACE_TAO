@@ -4,8 +4,6 @@
 /**
  *  @file    Default_Collocation_Resolver.h
  *
- *  $Id$
- *
  *  @author  Irfan Pyarali
  */
 // ===================================================================

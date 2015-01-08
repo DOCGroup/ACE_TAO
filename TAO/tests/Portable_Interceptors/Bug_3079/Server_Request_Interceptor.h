@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef SERVER_REQUEST_INTERCEPTOR_H
 #define SERVER_REQUEST_INTERCEPTOR_H
 

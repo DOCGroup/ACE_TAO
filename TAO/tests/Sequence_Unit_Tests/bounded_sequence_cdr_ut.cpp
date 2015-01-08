@@ -3,8 +3,6 @@
  *
  * @brief Unit test for bounded sequences of object references.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "testing_object_reference_traits.hpp"

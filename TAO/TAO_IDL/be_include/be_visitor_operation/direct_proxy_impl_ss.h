@@ -2,11 +2,8 @@
 /**
  *  @file    direct_proxy_impl_ss.h
  *
- *  $Id$
- *
  *  Visitor that generates the code for the operation
  *  in the Direct Proxy Implementation.
- *
  *
  *  @author Angelo Corsaro
  */

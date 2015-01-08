@@ -1,5 +1,3 @@
-// $Id$
-
 
 #include "Receiver_exec.h"
 #include "ace/OS_NS_unistd.h"

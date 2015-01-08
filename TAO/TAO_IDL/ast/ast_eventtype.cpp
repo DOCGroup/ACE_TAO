@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #include "ast_eventtype.h"
 #include "ast_visitor.h"
 #include "utl_identifier.h"

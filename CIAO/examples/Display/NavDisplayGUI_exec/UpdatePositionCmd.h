@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __UPDATEPOSITIONCM_H
 #define __UPDATEPOSITIONCM_H
 

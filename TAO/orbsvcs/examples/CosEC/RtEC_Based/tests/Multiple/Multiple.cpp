@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Multiple.h"
 
 Multiple::Multiple (void)

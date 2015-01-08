@@ -3,10 +3,7 @@
 /**
  *  @file    home_exh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for homes in the exec impl header.
- *
  *
  *  @author Jeff Parsons
  */

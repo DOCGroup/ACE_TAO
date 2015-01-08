@@ -1,4 +1,3 @@
-// $Id$
 #include "bug_689_regression_i.h"
 
 bug_689_regression_i::bug_689_regression_i (CORBA::ORB_ptr orb)

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_HTBP_MACROS_H
 #define ACE_HTBP_MACROS_H
 

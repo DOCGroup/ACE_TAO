@@ -3,8 +3,6 @@
 /**
  *  @file   Storable_Naming_Context.h
  *
- *  $Id$
- *
  *  @author Bruce Trask <trask_b@ociweb.com>
  */
 //=============================================================================
@@ -440,7 +438,6 @@ protected:
  * @class File_Open_Lock_and_Check
  *
  * @brief File guard specific for storable naming contexts.
- *
  */
 class TAO_Naming_Serv_Export File_Open_Lock_and_Check :
 public TAO::Storable_File_Guard

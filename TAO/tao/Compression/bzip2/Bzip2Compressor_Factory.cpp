@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
 #include "tao/Compression/bzip2/Bzip2Compressor.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef STOCK_DATABASE_TPP
 #define STOCK_DATABASE_TPP
 // local headers

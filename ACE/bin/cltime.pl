@@ -1,4 +1,3 @@
-# $Id$
 use strict;
 
 my($name)  = shift;

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TEMPERATURE_MONITOR_H
 #define TEMPERATURE_MONITOR_H
 

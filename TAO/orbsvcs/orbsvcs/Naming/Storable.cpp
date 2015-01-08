@@ -2,8 +2,6 @@
 /**
  *  @file   Storable.cpp
  *
- *  $Id$
- *
  *  @author Bruce Trask <trask_b@ociweb.com> Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */
 //=============================================================================

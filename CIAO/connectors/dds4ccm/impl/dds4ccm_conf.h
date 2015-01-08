@@ -2,8 +2,6 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  *
- * $Id$
- *
  * Configuration file for DDS4CCM.
  */
 

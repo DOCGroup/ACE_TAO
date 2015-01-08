@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/ECG_CDR_Message_Sender.h"
 #include "tao/CDR.h"

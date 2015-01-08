@@ -4,8 +4,6 @@
 /**
  * @file  Storable_FlatFileStream.cpp
  *
- * $Id$
- *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Byron Harris <harrisb@ociweb.com>
  */

@@ -1,5 +1,3 @@
-//$Id$
-
 ////////////////////////////////////////////////////////////////////////
 // This files tests the Client exposed policies:
 //     - PriorityModelPolicy
@@ -8,7 +6,6 @@
 //
 // This policies are embedded in the object reference, by writem
 // them into the IOR.
-//
 //
 // -- App. Specific Include --
 #include "Policy_Tester.h"

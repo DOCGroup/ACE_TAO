@@ -4,8 +4,6 @@
 /**
  *  @file    SUpcall_commands.h
  *
- *  $Id$
- *
  *  @author  Marcel Smit <msmit@remedy.nl>
  *
  * @brief Upcall command exection classes for static skeleton methods
@@ -17,7 +15,6 @@
  * - _component_skel
  * - _repository_id_skel
  * - _interface_skel
- *
  */
 //=============================================================================
 
@@ -41,8 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class _is_a_thru_poa_Upcall_Command
  *
  * @brief Execution class for _is_a_skel.
- *
- *
  */
 class _is_a_thru_poa_Upcall_Command
   : public TAO::Upcall_Command
@@ -69,8 +64,6 @@ private:
  * @class _is_a_Upcall_Command
  *
  * @brief Execution class for _is_a_skel when through POA option is used.
- *
- *
  */
 class _is_a_Upcall_Command
   : public TAO::Upcall_Command
@@ -96,8 +89,6 @@ private:
  * @class _non_existent_thru_poa_Upcall_Command
  *
  * @brief Execution class for _non_existent_skel.
- *
- *
  */
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 class _non_existent_thru_poa_Upcall_Command
@@ -125,8 +116,6 @@ private:
  * @class _non_existent_Upcall_Command
  *
  * @brief Execution class for _non_existent_skel when through POA option is used.
- *
- *
  */
 class _non_existent_Upcall_Command
   : public TAO::Upcall_Command
@@ -153,8 +142,6 @@ private:
  * @class _get_component_thru_poa_Upcall_Command
  *
  * @brief Execution class for _component_skel.
- *
- *
  */
 class _get_component_thru_poa_Upcall_Command
   : public TAO::Upcall_Command
@@ -182,8 +169,6 @@ private:
  * @class _get_component_Upcall_Command
  *
  * @brief Execution class for _get_component when through POA option is used.
- *
- *
  */
 class _get_component_Upcall_Command
   : public TAO::Upcall_Command
@@ -209,8 +194,6 @@ private:
  * @class _repository_id_thru_poa_Upcall_Command
  *
  * @brief Execution class for _repository_id_skel
- *
- *
  */
 class _repository_id_thru_poa_Upcall_Command
   : public TAO::Upcall_Command
@@ -238,8 +221,6 @@ private:
  * @class _repository_id_Upcall_Command
  *
  * @brief Execution class for _repository_id when through POA option is used.
- *
- *
  */
 class _repository_id_Upcall_Command
   : public TAO::Upcall_Command

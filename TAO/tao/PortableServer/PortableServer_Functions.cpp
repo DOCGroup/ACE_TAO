@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/PortableServer_Functions.h"
 #include "ace/OS_NS_string.h"
 

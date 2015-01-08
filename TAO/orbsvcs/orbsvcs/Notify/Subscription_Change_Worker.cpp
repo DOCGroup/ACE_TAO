@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Subscription_Change_Worker.h"
 
 #include "orbsvcs/Notify/Proxy.h"

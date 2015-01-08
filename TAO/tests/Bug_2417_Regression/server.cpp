@@ -1,5 +1,3 @@
-// $Id$
-
 #include "publisher_impl.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"

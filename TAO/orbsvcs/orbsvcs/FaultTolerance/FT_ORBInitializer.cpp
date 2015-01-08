@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "orbsvcs/FaultTolerance/FT_ORBInitializer.h"
 #include "orbsvcs/FaultTolerance/FT_PolicyFactory.h"
 #include "orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h"

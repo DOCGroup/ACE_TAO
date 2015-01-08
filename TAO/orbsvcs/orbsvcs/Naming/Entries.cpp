@@ -3,8 +3,6 @@
 /**
  *  @file    Entries.cpp
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  *  @file    Time_Policy_T.h
  *
- *  $Id$
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================
@@ -30,7 +28,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Template class implementing a dynamic time policy based on
  *        another time policy
- *
  */
 template <typename TIME_POLICY>
 class ACE_Time_Policy_T : public ACE_Dynamic_Time_Policy_Base

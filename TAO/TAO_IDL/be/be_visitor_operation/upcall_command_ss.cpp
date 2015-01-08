@@ -3,11 +3,8 @@
 /**
  *  @file    upcall_command_ss.cpp
  *
- *  $Id$
- *
  *  Visitor that generates operation-specific TAO::Upcall_Command
  *  objects in skeletons.
- *
  *
  *  @author Ossama Othman
  */

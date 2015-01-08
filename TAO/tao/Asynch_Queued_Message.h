@@ -4,8 +4,6 @@
 /**
  *  @file Asynch_Queued_Message.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -34,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Specialize TAO_Queued_Message for asynch requests,
  *        i.e. oneways sent with SYNC_NONE policy.
- *
  */
 class TAO_Export TAO_Asynch_Queued_Message : public TAO_Queued_Message
 {

@@ -3,8 +3,6 @@
 #define _LIBRARY_H_
 
 // -*- C++ -*-
-// $Id$
-
 // File: Library.h
 
 // Author: Phil Mesnier

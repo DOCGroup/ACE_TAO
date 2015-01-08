@@ -1,5 +1,3 @@
-//$Id$
-
 #include "duration.h"
 
 Duration::Duration ()

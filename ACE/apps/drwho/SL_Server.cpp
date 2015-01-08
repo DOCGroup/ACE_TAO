@@ -1,5 +1,3 @@
-// $Id$
-
 #include "global.h"
 #include "SL_Server.h"
 #include "ace/OS_NS_string.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    POAManager.h
  *
- *  $Id$
- *
  *   POAManager
  *
  *  @author  Irfan Pyarali

@@ -4,8 +4,6 @@
 /**
  *  @file Queued_Data.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

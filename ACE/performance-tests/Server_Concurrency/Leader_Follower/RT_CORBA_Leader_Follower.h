@@ -2,8 +2,6 @@
 /**
  *  @file    RT_CORBA_Leader_Follower.h
  *
- *  $Id$
- *
  *   The leader follower test modified to suit RTCORBA tests. The
  *   original  leader follower test has too many things that doesnt
  *   get what we are looking for (read it as just confusing enough)
@@ -38,8 +36,6 @@ enum DEBUGGING_RANGE
  *
  * @brief This class provides all the synchrnoisers used in this
  *  test.
- *
- *
  */
 
 /// Forward declaration..
@@ -75,11 +71,9 @@ private:
  * @brief This class provide the interface and an implementation to
  *  simulate how the LF pattern in the ORB would behave.
  *
- *
  *  Basically all threads ready to do an upcall would wait on a token
  *  or lock. The thread that gets the token before it gets ready to do
  *  the upcall would wake up a thread waiting on the token.
- *
  */
 
 class Leader_Follower_Task : public ACE_Task_Base

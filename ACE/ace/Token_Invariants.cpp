@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Token_Invariants.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)

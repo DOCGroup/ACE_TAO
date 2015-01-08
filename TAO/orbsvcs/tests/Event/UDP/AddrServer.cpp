@@ -1,5 +1,3 @@
-// $Id$
-
 #include "AddrServer.h"
 #include "tao/SystemException.h"
 

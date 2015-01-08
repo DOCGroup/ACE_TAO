@@ -4,8 +4,6 @@
 /**
  *  @file    Event_Channel.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

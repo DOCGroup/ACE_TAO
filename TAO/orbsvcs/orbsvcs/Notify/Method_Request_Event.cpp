@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Method_Request_Event.h"
 #include "orbsvcs/Notify/Delivery_Request.h"
 

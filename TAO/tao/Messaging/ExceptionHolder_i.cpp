@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Messaging/ExceptionHolder_i.h"
 
 #include "tao/Messaging/Messaging.h"

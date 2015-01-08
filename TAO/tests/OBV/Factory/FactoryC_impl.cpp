@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FactoryC_impl.h"
 
 OBV_FactoryTest::Value2*

@@ -1,5 +1,3 @@
-// $Id$
-
 # include "Persistent_Client.h"
 
 // The "persistent client" program for the application.

@@ -1,6 +1,4 @@
 //  -*- MPC -*-
-// $Id$
-
 project(bin) : aceexe, script {
   exename = envinfo
   Source_Files {

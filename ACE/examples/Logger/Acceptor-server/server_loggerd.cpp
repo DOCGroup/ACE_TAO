@@ -1,4 +1,3 @@
-// $Id$
 // server_loggerd.cpp,v 4.29 2003/12/30 23:18:59 shuston Exp
 
 // This server daemon collects, formats, and displays logging

@@ -3,11 +3,8 @@
 /**
  *  @file    any_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operators for a valuetype in the client
  *  header.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> Boris Kolpackov <bosk@ipmce.ru>
  */

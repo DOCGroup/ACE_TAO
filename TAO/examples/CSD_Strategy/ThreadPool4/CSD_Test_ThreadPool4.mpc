@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Server): csd_threadpool, messaging, taoserver, pi, avoids_corba_e_micro {
   exename = server_main
 

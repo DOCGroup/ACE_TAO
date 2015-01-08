@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains a CORBA example illustrating a simple client and
 a server with a Interface Messenger. The Messenger Interface has

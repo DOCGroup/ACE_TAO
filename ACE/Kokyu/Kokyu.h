@@ -2,8 +2,6 @@
 /**
  *  @file   Kokyu.h
  *
- *  $Id$
- *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison Chris Gill,

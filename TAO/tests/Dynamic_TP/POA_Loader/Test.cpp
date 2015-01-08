@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Dynamic_TP/DTP_POA_Strategy.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 

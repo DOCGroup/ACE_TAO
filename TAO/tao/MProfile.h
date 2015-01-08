@@ -4,8 +4,6 @@
 /**
  *  @file     MProfile.h
  *
- *  $Id$
- *
  *   Keep track of profile lists
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>

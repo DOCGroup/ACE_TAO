@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef STOREREFERENCES_EXEC_H_
 #define STOREREFERENCES_EXEC_H_
 

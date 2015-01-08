@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef MUXING_RECEIVER_H
 #define MUXING_RECEIVER_H

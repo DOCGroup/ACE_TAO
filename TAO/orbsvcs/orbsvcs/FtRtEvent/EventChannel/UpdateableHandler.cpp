@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/FtRtEvent/EventChannel/UpdateableHandler.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"

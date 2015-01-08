@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Trace.h"
 
 // Turn off tracing for the duration of this file.

@@ -1,8 +1,6 @@
 /**
  * @file Bug_1890_Regression_Test.cpp
  *
- * $Id$
- *
  * Reproduces the problems reported in bug 1890
  *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1890
  *
@@ -63,7 +61,6 @@ private:
  * writes data through all of its handlers.  On iteration @c initial_iteration
  * it triggers bug 1890 by removing all the handlers from the reactor, and
  * then re-adding one handler.
- *
  */
 class Timer : public ACE_Event_Handler
 {

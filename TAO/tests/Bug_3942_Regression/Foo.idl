@@ -1,5 +1,3 @@
-// $Id$
-
 #ifdef LOCAL
 local
 #endif

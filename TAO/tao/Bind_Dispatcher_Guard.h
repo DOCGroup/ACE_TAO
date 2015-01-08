@@ -4,8 +4,6 @@
 /**
  *  @file     Bind_Dispatcher_Guard.h
  *
- *  $Id$
- *
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  *  @author  Chad Elliott <elliott_c@ociweb.com>
  */

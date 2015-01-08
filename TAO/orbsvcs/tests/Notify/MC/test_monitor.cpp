@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "ace/Monitor_Point_Registry.h"
 

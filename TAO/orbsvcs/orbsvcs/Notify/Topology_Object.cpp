@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Topology_Object.h"
 
 #if ! defined (__ACE_INLINE__)

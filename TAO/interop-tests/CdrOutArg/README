@@ -1,4 +1,3 @@
-# $Id$
 
 This test validates that TAO does not add unneeded CDR alignment bytes as pad when the
 only arguments to an operation are out args. The interceptors are necessary to add some

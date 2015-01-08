@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_RTCORBA_Dispatching.h"
 #include "orbsvcs/Event/EC_RTCORBA_Factory.h"
 

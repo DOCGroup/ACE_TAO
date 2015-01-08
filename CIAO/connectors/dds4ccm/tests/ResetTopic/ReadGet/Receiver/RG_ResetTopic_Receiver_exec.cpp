@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "RG_ResetTopic_Receiver_exec.h"
 #include "RG_ResetTopic_Receiver_impl.h"
 

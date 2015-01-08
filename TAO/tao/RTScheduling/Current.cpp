@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/RTScheduling/Current.h"
 #include "tao/RTScheduling/Distributable_Thread.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"

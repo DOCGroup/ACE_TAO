@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Security/CSI_Utils.h"
 #include "orbsvcs/CSIC.h"
 #include "tao/CDR.h"

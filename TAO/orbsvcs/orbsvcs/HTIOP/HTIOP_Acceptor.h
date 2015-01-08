@@ -4,10 +4,7 @@
 /**
  *  @file    HTIOP_Acceptor.h
  *
- *  $Id$
- *
  *  HTIOP specific acceptor processing
- *
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */

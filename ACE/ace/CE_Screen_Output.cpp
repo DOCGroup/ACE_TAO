@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/CE_Screen_Output.h"
 #if defined (ACE_HAS_WINCE)
 

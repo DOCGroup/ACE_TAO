@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_VECTOR_SARGUMENT_T_CPP
 #define TAO_VECTOR_SARGUMENT_T_CPP
 

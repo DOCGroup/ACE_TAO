@@ -1,5 +1,3 @@
-// $Id$
-
 #include "interceptors.h"
 #include "tao/OctetSeqC.h"
 #include "ace/Log_Msg.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    Connector.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

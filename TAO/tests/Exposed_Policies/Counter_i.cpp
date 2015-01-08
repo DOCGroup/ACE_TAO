@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Counter_i.h"
 
 // Dtor-Ctor Implementation.

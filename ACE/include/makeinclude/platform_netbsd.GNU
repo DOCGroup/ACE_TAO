@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 # platform_netbsd.GNU
 

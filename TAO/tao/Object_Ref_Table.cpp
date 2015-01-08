@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Object_Ref_Table.h"
 #include "tao/ORB.h"
 #include "tao/debug.h"

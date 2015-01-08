@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/LSOCK_Connector.h"
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 

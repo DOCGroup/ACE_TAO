@@ -3,13 +3,10 @@
 /**
  *  @file    be_visitor.cpp
  *
- *  $Id$
- *
  *  Abstract class for back end visitors.
  *
  * = NOTES
  *  This is not a pure abstract class
- *
  *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */

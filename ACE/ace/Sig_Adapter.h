@@ -4,8 +4,6 @@
 /**
  *  @file    Sig_Adapter.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

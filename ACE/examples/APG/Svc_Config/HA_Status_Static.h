@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * Home Automation Status server. Sample code from The ACE Programmer's Guide,
  * copyright 2003 Addison-Wesley. All Rights Reserved.
  */

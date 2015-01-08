@@ -1,6 +1,4 @@
 //--*C++*--
-// $Id$
-
 #include "ExecutionManager_Impl.h"
 
 #include "Config_Handlers/DnC_Dump.h"

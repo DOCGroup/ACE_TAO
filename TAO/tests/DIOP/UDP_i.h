@@ -4,12 +4,9 @@
 /**
  *  @file    UDP_i.h
  *
- *  $Id$
- *
  *  This class implements the server functionality of the UDP test.
  *  We support only single threaded servers, as we have a null mutex
  *  for locking our state.
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */

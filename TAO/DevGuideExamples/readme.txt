@@ -1,4 +1,4 @@
-$Id$
+
 
 "These examples were developed by and are included in this
 distribution with the permission of Object Computing, Inc. (OCI)

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Drwho_Node.h"
 
 Drwho_Node::Drwho_Node (const char *h_name, Drwho_Node *n)

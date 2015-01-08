@@ -3,8 +3,6 @@
 /**
  *  @file    Missing_Svc_Conf_Test.cpp
  *
- *  $Id$
- *
  *  A test to ensure that service_config::open() returns -1 if it is
  *  fully defaulted, but no default svc.conf file exists. The first
  *  test verifies that open returns -1 with errno ENOENT. A second
@@ -16,7 +14,6 @@
  *  this test relies on that. It is assumed that this will stay
  *  true, since adding a default svc.conf file in this directory my
  *  impact other tests.
- *
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */

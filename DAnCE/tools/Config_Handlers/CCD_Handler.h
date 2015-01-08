@@ -2,8 +2,6 @@
 /**
 *  @file  CCD_Handler.h
 *
-*  $Id$
-*
 *  @author Jules White <jules@dre.vanderbilt.edu>
 */
 //================================================

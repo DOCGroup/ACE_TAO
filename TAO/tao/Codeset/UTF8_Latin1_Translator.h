@@ -4,10 +4,6 @@
 /**
  *  @file    UTF8_Latin1_Translator.h
  *
- *  $Id$
- *
- *
- *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================

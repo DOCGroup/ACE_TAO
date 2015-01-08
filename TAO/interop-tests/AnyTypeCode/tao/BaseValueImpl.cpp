@@ -1,5 +1,3 @@
-//$Id$
-
 #include "BaseValueImpl.h"
 
 Demo_BaseValueImpl::Demo_BaseValueImpl()

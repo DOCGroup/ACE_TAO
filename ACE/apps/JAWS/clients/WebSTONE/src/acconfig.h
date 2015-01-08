@@ -1,4 +1,3 @@
-/* $Id$ */
 /* Special definitions for autoheader
         Copyright (C) 1995 Silicon Graphics, Inc.
 */

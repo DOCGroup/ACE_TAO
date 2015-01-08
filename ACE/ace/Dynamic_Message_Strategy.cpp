@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Dynamic_Message_Strategy.h"
 
 #if !defined (__ACE_INLINE__)

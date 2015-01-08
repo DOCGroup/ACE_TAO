@@ -1,5 +1,3 @@
-// $Id$
-
 #include "NamingTask.h"
 #include "tao/Version.h"
 #include "orbsvcs/Naming/Naming_Server.h"

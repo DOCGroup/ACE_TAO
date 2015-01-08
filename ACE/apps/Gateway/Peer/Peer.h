@@ -4,8 +4,6 @@
 /**
  *  @file    Peer.h
  *
- *  $Id$
- *
  *  These classes process Supplier/Consumer events sent from the
  *  gateway (gatewayd) to its various peers (peerd).  The general
  *  collaboration works as follows:
@@ -35,7 +33,6 @@
  *  simultaneously is straightforward, however.  In addition,
  *  multiple peerd processes can already work together to play these
  *  different roles.
- *
  *
  *  @author Douglas C. Schmidt
  */

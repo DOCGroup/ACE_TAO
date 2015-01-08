@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Log_Msg.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"

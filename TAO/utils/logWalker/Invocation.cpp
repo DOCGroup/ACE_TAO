@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Invocation.h"
 #include "GIOP_Buffer.h"
 #include "PeerProcess.h"

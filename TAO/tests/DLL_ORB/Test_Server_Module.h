@@ -4,8 +4,6 @@
 /**
  * @file Test_Server_Module.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

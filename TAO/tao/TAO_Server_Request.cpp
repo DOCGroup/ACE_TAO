@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/Timeprobe.h"

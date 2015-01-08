@@ -4,8 +4,6 @@
 /**
  *  @file    Transport_Cache_Manager.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

@@ -3,8 +3,6 @@
 /**
  *  @file    test.idl
  *
- *  $Id$
- *
  *  IDL description of the TypeCode alignment Test interface for valuetypes
  *
  *

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Plugin_Manager.h"
 #include "dance/Logger/Log_Macros.h"
 #include "dance/Deployment/Deployment_PlanErrorC.h"

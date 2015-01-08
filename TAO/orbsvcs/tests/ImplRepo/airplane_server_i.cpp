@@ -1,5 +1,3 @@
-// $Id$
-
 #include "airplane_server_i.h"
 
 #include "tao/IORTable/IORTable.h"

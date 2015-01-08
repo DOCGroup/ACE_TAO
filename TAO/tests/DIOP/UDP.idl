@@ -1,7 +1,5 @@
 /* -*- C++ -*- */
 // UDP.idl
-// $Id$
-
 interface UDP
 {
   // = TITLE

@@ -1,4 +1,3 @@
-// $Id$
 #ifndef TAO_Notify_Tests_Consumer_T_CPP
 #define TAO_Notify_Tests_Consumer_T_CPP
 

@@ -2,8 +2,6 @@
 /**
  * @file CodecFactory.cpp
  *
- * $Id$
- *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // =================================================================

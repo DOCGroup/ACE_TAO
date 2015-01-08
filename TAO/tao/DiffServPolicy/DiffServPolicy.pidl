@@ -4,8 +4,6 @@
 /**
  *  @file DiffServPolicy.pidl
  *
- *  $Id$
- *
  *  This file contains TAO-specific idl interfaces for adding
  *  network priority or DiffServ support (not part of CORBA
  *  2.6).

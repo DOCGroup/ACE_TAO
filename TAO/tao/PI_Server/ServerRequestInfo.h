@@ -4,8 +4,6 @@
 /**
  * @file ServerRequestInfo.h
  *
- * $Id$
- *
  * This is the implementation of the
  * @c PortableInterceptor::ServerRequestInfo interface.
  *

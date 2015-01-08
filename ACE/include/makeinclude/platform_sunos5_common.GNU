@@ -1,6 +1,5 @@
 # -*- Makefile -*-
 
-# $Id$
 
 # SunOS 5.x common settings
 

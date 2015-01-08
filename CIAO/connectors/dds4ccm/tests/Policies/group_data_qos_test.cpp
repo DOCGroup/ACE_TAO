@@ -1,5 +1,3 @@
-// $Id$
-
 #include "group_data_qos_test.h"
 
 #include "octet_seq.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 // local headers
 #include "Distributor_i.h"
 #include "Stock_PriorityMapping.h"

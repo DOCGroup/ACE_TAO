@@ -4,8 +4,6 @@
 /**
  *  @file Transport.h
  *
- *  $Id$
- *
  *  Define the interface for the Transport component in TAO's
  *  pluggable protocol framework.
  *
@@ -315,11 +313,9 @@ namespace TAO
  * careful usages of the terms "blocking in the Reactor" as opposed to
  * "return back to the Reactor".
  *
- *
  * <B>See Also:</B>
  *
  * http://htmlpreview.github.com/?https://github.com/DOCGroup/ATCD/blob/master/TAO/docs/pluggable_protocols/index.html
- *
  */
 class TAO_Export TAO_Transport
 {

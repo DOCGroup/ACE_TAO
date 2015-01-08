@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_dsi.h"
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB_Constants.h"
 #include "cubit_i.h"
 #include "Task_Client.h"

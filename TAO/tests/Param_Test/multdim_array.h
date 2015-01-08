@@ -3,10 +3,7 @@
 /**
  *  @file    multdim_array.h
  *
- *  $Id$
- *
  *   Tests multi dimensional array
- *
  *
  *  @author Bala
  */

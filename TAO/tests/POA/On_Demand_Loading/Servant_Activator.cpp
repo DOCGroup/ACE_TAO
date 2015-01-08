@@ -3,11 +3,8 @@
 /**
  *  @file     Servant_Activator.cpp
  *
- *  $Id$
- *
  *   Implementation of <ServantActivator_i>, which is used by a POA
  *   with a RETAIN policy.
- *
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */

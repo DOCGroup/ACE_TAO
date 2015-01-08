@@ -4,8 +4,6 @@
  * @brief Smoke test (basically just compile) the unbounded sequences
  * for primitive and other self-managed types.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "tao/Unbounded_Value_Sequence_T.h"

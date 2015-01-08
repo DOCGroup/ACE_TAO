@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Database_i.h"
 
 #include "tao/DynamicInterface/Server_Request.h"

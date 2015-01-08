@@ -4,13 +4,10 @@
 /**
  *  @file    Wchar_IBM1047_ISO8859_Factory.cpp
  *
- *  $Id$
- *
  *  A tempate instantiation of the codeset translator factory from TAO. This
  *  one loads a modified version of ACE's IBM1047 (EBCDIC) to ISO8859 (ASCII)
  *  translator. In this case, wchars and wstrings are translated rather than
  *  strings and chars.
- *
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */

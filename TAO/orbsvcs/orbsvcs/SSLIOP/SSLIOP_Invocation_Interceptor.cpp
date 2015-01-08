@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Current.h"

@@ -2,11 +2,7 @@
 /**
  *  @file Property.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_PROPERTY_H

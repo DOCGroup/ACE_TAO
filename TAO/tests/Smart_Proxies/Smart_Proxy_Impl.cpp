@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Smart_Proxy_Impl.h"
 
 ACE_CString Smart_Test_Proxy::fake_ior_ ("This_is_my_fake_ior");

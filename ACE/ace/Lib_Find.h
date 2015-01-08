@@ -6,8 +6,6 @@
  *
  *  All the static function calls needed to search and open shared
  *  libraries.
- *
- *  $Id$
  */
 //=============================================================================
 

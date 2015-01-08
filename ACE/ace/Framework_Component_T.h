@@ -4,8 +4,6 @@
 /**
  *  @file    Framework_Component_T.h
  *
- *  $Id$
- *
  *  @author Don Hinton <dhinton@ieee.org>
  */
 //=============================================================================

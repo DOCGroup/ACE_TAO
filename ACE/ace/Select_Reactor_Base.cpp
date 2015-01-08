@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Select_Reactor_Base.h"
 #include "ace/Reactor.h"
 #include "ace/Thread.h"

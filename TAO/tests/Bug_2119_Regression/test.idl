@@ -1,5 +1,3 @@
-// $Id$
-
 valuetype MyValueType;
 typedef sequence<MyValueType> MyValueType_Seq;
 

@@ -3,10 +3,7 @@
 /**
  *  @file    nsdel.cpp
  *
- *  $Id$
- *
  *  Naming Service del utility
- *
  *
  *  @author  Carlos O'Ryan <coryan@uci.edu>  enhanced Jan 15
  *  @author 2001 Paul Caffrey <denginere@hotmail.com>  redone   Jun 21

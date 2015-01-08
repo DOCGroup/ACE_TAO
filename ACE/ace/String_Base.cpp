@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_STRING_BASE_CPP
 #define ACE_STRING_BASE_CPP
 

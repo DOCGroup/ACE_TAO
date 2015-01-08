@@ -1,5 +1,3 @@
-// $Id$
-
 #include "JAWS/Policy.h"
 #include "JAWS/Concurrency.h"
 #include "JAWS/IO_Handler.h"

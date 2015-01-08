@@ -3,11 +3,8 @@
 /**
  *  @file    process.cpp
  *
- *  $Id$
- *
  *  This example tests the <ACE_Process>.  For more info, check the
  *  README file in this directory.
- *
  *
  *  @author Tim Harrison <harrison@cs.wustl.edu>.
  */

@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef COMMAND_STREAM_H
 #define COMMAND_STREAM_H
 

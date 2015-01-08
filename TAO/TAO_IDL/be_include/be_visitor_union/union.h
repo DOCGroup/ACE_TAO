@@ -4,11 +4,8 @@
 /**
  *  @file    union.h
  *
- *  $Id$
- *
  *   Visitor for the Union class.
  *   This one is a generic visitor.
- *
  *
  *  @author Aniruddha Gokhale
  */

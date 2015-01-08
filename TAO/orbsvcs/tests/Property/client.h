@@ -4,10 +4,7 @@
 /**
  *  @file    client.h
  *
- *  $Id$
- *
  *  Test client for the Property Service.
- *
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */

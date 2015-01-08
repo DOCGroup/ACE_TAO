@@ -5,12 +5,9 @@
 /**
  *  @file    any_op_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Typedef class
  *  This provides the code generation for the Any operators of the Typedef
  *  class in the client stubs.
- *
  *
  *  @author Aniruddha Gokhale
  */

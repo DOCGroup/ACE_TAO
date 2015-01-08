@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(SigAction) : aceexe {
   exename = SigAction
   Source_Files {

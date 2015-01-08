@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : acelib {
   sharedname = Perf_Test
   avoids   += ace_for_tao

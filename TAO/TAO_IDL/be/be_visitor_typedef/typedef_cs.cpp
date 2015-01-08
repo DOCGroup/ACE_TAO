@@ -3,10 +3,7 @@
 /**
  *  @file    typedef_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Typedef in the client stubs
- *
  *
  *  @author Aniruddha Gokhale
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/LoadBalancing/LB_Pull_Handler.h"
 #include "orbsvcs/LoadBalancing/LB_LoadManager.h"
 

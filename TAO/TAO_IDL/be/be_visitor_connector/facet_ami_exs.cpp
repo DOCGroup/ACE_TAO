@@ -2,11 +2,8 @@
 /**
  *  @file    facet_ami_exs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for facets in the AMI connector
  *  impl source.
- *
  *
  *  @author Jeff Parsons
  */

@@ -4,8 +4,6 @@
 /**
  *  @file     Pluggable_Messaging_Utils.h
  *
- *  $Id$
- *
  *   Utility classes for the TAO pluggable messaging framework.
  *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
@@ -96,7 +94,6 @@ private:
  * @class TAO_Pluggable_Reply_Params
  *
  * @brief TAO_Pluggable_Connector_Params
- *
  */
 class TAO_Export TAO_Pluggable_Reply_Params
   : public TAO_Pluggable_Reply_Params_Base

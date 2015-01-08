@@ -1,4 +1,3 @@
-// $Id$
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "Comp_Intf_Descr_Handler.h"
 #include "ace/XML_Utils/XML_Typedefs.h"

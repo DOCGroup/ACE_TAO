@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CIAO_SIMPLEFAILURE_EXEC_H
 #define CIAO_SIMPLEFAILURE_EXEC_H
 

@@ -23,8 +23,6 @@
  * not supported, the pointer passed to the function is returned
  * instead.
  *
- * $Id$
- *
  * @internal The functions and types in this header are meant for
  *           internal use.  They may change at any point between
  *           releases.

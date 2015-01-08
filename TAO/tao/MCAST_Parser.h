@@ -4,8 +4,6 @@
 /**
  *  @file   MCAST_Parser.h
  *
- *  $Id$
- *
  *  @author Priyanka Gontla (gontla_p@ociweb.com)
  */
 //=============================================================================

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "receiver.h"
 #include "ace/Get_Opt.h"
 #include "ace/High_Res_Timer.h"

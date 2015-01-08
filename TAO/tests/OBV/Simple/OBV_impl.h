@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #if !defined (OBV_IMPL_H)
 #define OBV_IMPL_H
 

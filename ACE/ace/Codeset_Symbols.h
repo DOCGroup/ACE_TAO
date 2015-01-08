@@ -4,8 +4,6 @@
 /**
  *  @file   Codeset_Symbols.h
  *
- *  $Id$
- *
  * Symbolic names for codeset ids.
  *
  *  @author Dale Wilson (wilson_d@ociweb.com)

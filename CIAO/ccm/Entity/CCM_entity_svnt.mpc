@@ -1,5 +1,3 @@
-// $Id$
-
 project(CCM_entity_svnt_idl) : install, ciaolib_with_idl, valuetype {
   requires += dummy_label
   idlflags   += -Wb,export_include=CCM_Entity_Svnt_Export.h \

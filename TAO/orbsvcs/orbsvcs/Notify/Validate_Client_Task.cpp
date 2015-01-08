@@ -1,4 +1,4 @@
-/* -*- C++ -*- $Id$ */
+/* -*- C++ -*-  */
 
 #include "orbsvcs/Log_Macros.h"
 #include "Validate_Client_Task.h"

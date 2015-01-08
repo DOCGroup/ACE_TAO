@@ -4,8 +4,6 @@
 /**
  *  @file    Object.h
  *
- *  $Id$
- *
  *   A "Object" is an entity that can be the target of an invocation
  *   using an ORB.  All CORBA objects provide this functionality.
  *   See the CORBA 3.x specification for details.

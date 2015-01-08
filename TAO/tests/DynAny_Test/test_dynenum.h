@@ -2,10 +2,7 @@
 /**
  *  @file    test_dynenum.h
  *
- *  $Id$
- *
  *  Header file for class to test DynEnum.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

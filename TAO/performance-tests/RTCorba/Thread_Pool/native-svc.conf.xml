@@ -2,7 +2,7 @@
 <!-- Converted from native-svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
  <!--  -->
- <!--  $Id$ -->
+ <!--   -->
  <!--  -->
  <!--  For testing of RT threads (with native priority) -->
  <static id="RT_ORB_Loader" params="-ORBSchedPolicy SCHED_FIFO -ORBScopePolicy SYSTEM"/>

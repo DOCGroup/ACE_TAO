@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/HTTPS_Context.h"
 
 #if !defined (__ACE_INLINE__)

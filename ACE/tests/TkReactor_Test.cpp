@@ -3,8 +3,6 @@
 /**
  *  @file    TkReactor_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test that illustrates the possibility to integrate
  *    ACE to the Tk Main Loop. This program uses ACE_TkReactor class to
  *    schedule three additional event sources:
@@ -14,7 +12,6 @@
  *    4. Events from ACE timer (registed with ACE_TkReactor::schedule_timer)
  *    5. Events from the TCP/IP channel using ACE_Acceptor
  *    No command line arguments are needed to run the test.
- *
  *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RootPanel.h"
 #include "UpdatePositionCmd.h"
 #include <QtGui/qlcdnumber.h>

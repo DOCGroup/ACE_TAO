@@ -3,11 +3,8 @@
 /**
  *  @file    Integer_Test.cpp
  *
- *  $Id$
- *
  *  Test all the member functions of the Integer class. An Object
  *  representing an ASN.1 Integer64 SMI 32 bit Integer SYNTAX.
- *
  *
  *  @author Michael R. MacFaden <mrm@cisco.com>
  */

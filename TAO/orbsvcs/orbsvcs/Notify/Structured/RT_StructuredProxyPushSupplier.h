@@ -2,11 +2,7 @@
 /**
  *  @file RT_StructuredProxyPushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_RT_STRUCTUREDPROXYPUSHSUPPLIER_H
@@ -27,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_RT_StructuredProxyPushSupplier
  *
  * @brief
- *
  */
 class TAO_RT_Notify_Export TAO_Notify_RT_StructuredProxyPushSupplier :
   public virtual TAO_Notify_StructuredProxyPushSupplier

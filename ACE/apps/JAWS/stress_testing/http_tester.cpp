@@ -1,5 +1,3 @@
-// $Id$
-
 #include "client.h"
 
 int Client_Parameters::tcp_nodelay;

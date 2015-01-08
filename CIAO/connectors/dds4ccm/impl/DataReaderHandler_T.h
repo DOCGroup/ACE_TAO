@@ -1,8 +1,5 @@
-// $Id$
 /**
  * @author Marcel Smit (msmit@remedy.nl)
- *
- * $Id$
  *
  * Eventhandler on orb thread, handling the
  * received data from DDS.

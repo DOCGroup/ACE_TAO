@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Service) : orbsvcsexe, event, event_serv, naming {
 
   exename = Service

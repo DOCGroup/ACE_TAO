@@ -4,8 +4,6 @@
 /**
  * @file PolicyFactory.h
  *
- * $Id$
- *
  * Implementation header for the test policy factory.
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>

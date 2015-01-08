@@ -4,8 +4,6 @@
 /**
  *  @file    Malloc_Base.h
  *
- *  $Id$
- *
  *  @author Doug Schmidt and Irfan Pyarali
  */
 //=============================================================================

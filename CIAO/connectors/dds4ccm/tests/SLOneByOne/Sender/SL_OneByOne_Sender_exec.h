@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_SL_ONEBYONE_SENDER_EXEC_FHYBU2_H_
 #define CIAO_SL_ONEBYONE_SENDER_EXEC_FHYBU2_H_
 

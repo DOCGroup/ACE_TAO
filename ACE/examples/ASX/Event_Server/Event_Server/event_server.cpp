@@ -1,5 +1,3 @@
-// $Id$
-
 // Main driver program for the event server example.
 
 #include "ace/OS_main.h"

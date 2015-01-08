@@ -4,8 +4,6 @@
 /**
  *  @file   corbafwd.h
  *
- *  $Id$
- *
  * Forward declare the basic types used in the ORB
  * implementation. Regular users of the ORB should only include
  * tao/corba.h (generally through the stub/skeleton headers), but the

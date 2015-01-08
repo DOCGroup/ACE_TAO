@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Filecache.h"
 #include "ace/Object_Manager.h"
 #include "ace/Log_Category.h"

@@ -3,8 +3,6 @@
 /**
  *  @file   EC_Gateway.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
@@ -40,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * transform them back into a push() call.
  * This is an abstract class to represent all the different
  * strategies for EC distribution.
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Gateway
   : public POA_RtecEventChannelAdmin::Observer

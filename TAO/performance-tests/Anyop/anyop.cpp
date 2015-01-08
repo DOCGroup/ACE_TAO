@@ -3,11 +3,8 @@
 /**
  *  @file   anyop.cpp
  *
- *  $Id$
- *
  * Modified from anyop.cpp in Param_Test to benchmark Any insertion and
  * extraction operators for various IDL types.
- *
  *
  *  @author Carlos O'Ryan Jeff Parsons
  */

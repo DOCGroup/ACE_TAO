@@ -4,8 +4,6 @@
 /**
  *  @file    HTBP_Channel.h
  *
- *  $Id$
- *
  *  @author Phil Mesnier, Priyanka Gontla
  */
 //=============================================================================

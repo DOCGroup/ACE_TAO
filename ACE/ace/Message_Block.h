@@ -4,8 +4,6 @@
 /**
  *  @file    Message_Block.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //==========================================================================

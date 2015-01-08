@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tools/Config_Handlers/DnC_Dump.h"
 #include "tools/Config_Handlers/XML_File_Intf.h"
 #include "dance/Logger/Log_Macros.h"

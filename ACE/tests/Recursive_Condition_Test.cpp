@@ -3,12 +3,9 @@
 /**
  *  @file    Recursive_Condition_Test.cpp
  *
- *  $Id$
- *
  *    This test program validates the functionality of the
  *    ACE_Condition<ACE_Recursive_Thread_Mutex> template
  *    specialization.
- *
  *
  *  @author Stephen Howard <stephen.e.howard@lmco.com> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_PRAGMAT_RECEIVER_EXEC_H_
 #define CIAO_PRAGMAT_RECEIVER_EXEC_H_
 

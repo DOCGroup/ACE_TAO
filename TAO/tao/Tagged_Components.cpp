@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Tagged_Components.h"
 #include "tao/CDR.h"
 

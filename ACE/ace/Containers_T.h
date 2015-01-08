@@ -4,8 +4,6 @@
 /**
  *  @file    Containers_T.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================
@@ -72,7 +70,6 @@ class ACE_Allocator;
  *       -# Default constructor
  *       -# Copy constructor
  *       -# operator=
- *
  */
 template <class T>
 class ACE_Bounded_Stack
@@ -203,7 +200,6 @@ private:
  *       -# Default constructor
  *       -# Copy constructor
  *       -# operator=
- *
  */
 template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Stack
@@ -368,7 +364,6 @@ private:
  *       -# Default constructor
  *       -# Copy constructor
  *       -# operator=
- *
  */
 template <class T>
 class ACE_Unbounded_Stack
@@ -817,7 +812,6 @@ public:
  *       -# Default constructor
  *       -# Copy constructor
  *       -# operator=
- *
  */
 template <class T>
 class ACE_Double_Linked_List
@@ -1396,7 +1390,6 @@ public:
  *       -# Copy constructor
  *       -# operator=
  *       -# operator==
- *
  */
 template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set
@@ -1589,7 +1582,6 @@ private:
  *       -# Copy constructor
  *       -# operator=
  *       -# operator==
- *
  */
 template <class T>
 class ACE_Bounded_Set
@@ -1786,7 +1778,6 @@ private:
  * does not impose any restriction on how that ordering operator is
  * implemented.  The set is implemented as a linked list.
  *
- *
  * <b> Requirements and Performance Characteristics</b>
  *   - Internal Structure
  *       Double linked list
@@ -1810,8 +1801,6 @@ private:
  *       -# operator=
  *       -# operator==
  *       -# operator<
- *
- *
  */
 template <class T>
 class ACE_Ordered_MultiSet

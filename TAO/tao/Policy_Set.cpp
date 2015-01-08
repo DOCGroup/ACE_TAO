@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Policy_Set.h"
 #include "tao/SystemException.h"
 #include "tao/debug.h"

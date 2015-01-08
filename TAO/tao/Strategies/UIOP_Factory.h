@@ -4,8 +4,6 @@
 /**
  *  @file   UIOP_Factory.h
  *
- *  $Id$
- *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>Ossama Othman <othman@cs.wustl.edu>
  */
 //=============================================================================

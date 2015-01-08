@@ -1,5 +1,3 @@
-// $Id$
-
 module SeqTest {
   typedef sequence<long> LongSeq;
 

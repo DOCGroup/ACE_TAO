@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "CommandlinePassage_exec.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Core.h"

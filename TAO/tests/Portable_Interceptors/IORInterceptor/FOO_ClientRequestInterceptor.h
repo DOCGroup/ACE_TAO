@@ -4,8 +4,6 @@
 /**
  * @file FOO_ClientRequestInterceptor.h
  *
- * $Id$
- *
  * Implementation header for the "FOO" client request test
  * interceptor.
  *

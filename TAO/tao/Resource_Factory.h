@@ -4,8 +4,6 @@
 /**
  *  @file   Resource_Factory.h
  *
- *  $Id$
- *
  *  @author Chris Cleeland
  *  @author Carlos O'Ryan
  */

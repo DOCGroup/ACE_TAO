@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl IC_Bar"
 
 project(IC_Bar_idl_gen) : componentidldefaults {

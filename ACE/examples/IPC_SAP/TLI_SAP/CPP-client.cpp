@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"

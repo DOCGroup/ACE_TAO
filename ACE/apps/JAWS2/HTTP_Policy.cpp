@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HTTP_Policy.h"
 
 

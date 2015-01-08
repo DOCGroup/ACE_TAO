@@ -4,8 +4,6 @@
 /**
  *  @file    Endpoint_Acceptor_Filter_Factory.h
  *
- *  $Id$
- *
  *  The factory of the TAO_Endpoint_Acceptor_Filter objects.
  *
  *  @author  Yan Dai <dai_y@ociweb.com>

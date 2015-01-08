@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/WFMO_Reactor.h"
 
 #if defined (ACE_WIN32)

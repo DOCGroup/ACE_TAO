@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Dynamic_Service_Base.h"
 #include "ace/ACE.h"
 #include "ace/Service_Config.h"

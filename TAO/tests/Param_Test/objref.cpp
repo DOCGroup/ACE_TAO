@@ -3,10 +3,7 @@
 /**
  *  @file    objref.cpp
  *
- *  $Id$
- *
  *  tests object references
- *
  *
  *  @author   Aniruddha Gokhale
  */

@@ -1,4 +1,3 @@
-// $Id$
 #ifndef IMR_RECONNECTSERVER_H
 #define IMR_RECONNECTSERVER_H
 

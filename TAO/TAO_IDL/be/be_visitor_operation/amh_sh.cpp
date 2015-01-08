@@ -3,11 +3,8 @@
 /**
  *  @file    amh_sh.cpp
  *
- *  $Id$
- *
  *  Visitor generating AMH skeleton code for Operation node in the
  *  skeleton header.
- *
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
  */

@@ -3,10 +3,7 @@
 /**
  *  @file    operation_is.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the implementation skeleton
- *
  *
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */

@@ -4,11 +4,8 @@
 /**
  *  @file    be_helper.h
  *
- *  $Id$
- *
  *  Defines the abstract class for outputting the C++ mapping. This is a
  *  helper class to the singleton TAO_CodeGen class
- *
  *
  *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
  */

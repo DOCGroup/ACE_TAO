@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Reactive_Timeout_Generator.h"
 #include "ace/Reactor.h"
 

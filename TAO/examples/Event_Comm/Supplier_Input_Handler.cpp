@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Event_Comm_i.h"
 #include "Notifier_Handler.h"
 #include "Supplier_Input_Handler.h"

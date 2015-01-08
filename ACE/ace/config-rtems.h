@@ -1,6 +1,4 @@
 /* -*- C -*- */
-// $Id$
-
 /* The following configuration file is designed to work for RTEMS
    platforms using GNU C.
 */

@@ -4,8 +4,6 @@
 /**
  *  @file    Mem_Map_Stream.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

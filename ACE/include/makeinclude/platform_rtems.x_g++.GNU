@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 # RTEMS 4.6.6 and later with GNU g++.
 

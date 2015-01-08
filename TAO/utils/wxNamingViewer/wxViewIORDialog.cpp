@@ -1,9 +1,6 @@
 // @file wxViewIORDialog.cpp
 //
 // @author Charlie Frasch  <cfrasch@atdesk.com>
-//
-// $Id$
-
 #include "pch.h"
 #include "wxViewIORDialog.h"
 

@@ -3,10 +3,7 @@
 /**
  *  @file     server.cpp
  *
- *  $Id$
- *
  *   Server application to test the Servant Activator and Servant Locator.
- *
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */

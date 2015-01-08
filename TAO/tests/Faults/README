@@ -1,4 +1,4 @@
-$Id$
+
 
 A little test to check the the ORB can handle server and
 client crashes.  It is a bit tricky to run so better check the

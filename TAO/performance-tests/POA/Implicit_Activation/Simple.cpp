@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Simple.h"
 
 Simple::Simple (void)

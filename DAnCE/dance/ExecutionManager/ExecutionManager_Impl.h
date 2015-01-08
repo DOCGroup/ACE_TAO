@@ -4,8 +4,6 @@
 /**
  *  @file    ExecutionManager_Impl.h
  *
- *  $Id$
- *
  * @brief  Implementation of Deployment::ExecutionManager and POA_DAnCE::ExecutionManagerDaemon
  *
  * @author Erwin Gottlieb <eg@prismtech.com>

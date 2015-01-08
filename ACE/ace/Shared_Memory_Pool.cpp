@@ -1,5 +1,3 @@
-// $Id$
-
 // Shared_Memory_Pool.cpp
 #include "ace/Shared_Memory_Pool.h"
 #include "ace/OS_NS_sys_shm.h"

@@ -3,10 +3,7 @@
 /**
  *  @file    test_wrapper.h
  *
- *  $Id$
- *
  *  Header file for the DynAny basic test manager
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

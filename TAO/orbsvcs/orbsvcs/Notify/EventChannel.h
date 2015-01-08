@@ -2,11 +2,7 @@
 /**
  *  @file EventChannel.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_EVENTCHANNEL_H
@@ -45,7 +41,6 @@ template <class TYPE> class TAO_Notify_Container_T;
  * @class TAO_Notify_EventChannel
  *
  * @brief Implementation of CosNotifyChannelAdmin::EventChannel
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventChannel
   : public virtual POA_CosNotifyChannelAdmin::EventChannel,

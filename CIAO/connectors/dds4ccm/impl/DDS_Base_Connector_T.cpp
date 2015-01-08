@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ace/Env_Value_T.h"
 #include "tao/ORB_Core.h"
 #include "dds4ccm/impl/Utils.h"

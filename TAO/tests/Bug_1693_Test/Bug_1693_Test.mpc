@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Client): taoclient, codecfactory {
   Source_Files {
     testC.cpp

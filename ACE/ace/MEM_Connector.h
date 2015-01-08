@@ -4,8 +4,6 @@
 /**
  *  @file    MEM_Connector.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

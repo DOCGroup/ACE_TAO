@@ -3,8 +3,6 @@
 /**
  *  @file    Barrier_Test.cpp
  *
- *  $Id$
- *
  *   This program illustrates how the ACE barrier synchronization
  *   mechanisms work.
  *

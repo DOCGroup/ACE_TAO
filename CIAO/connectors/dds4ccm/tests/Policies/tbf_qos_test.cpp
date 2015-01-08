@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tbf_qos_test.h"
 #include "duration.h"
 

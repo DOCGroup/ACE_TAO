@@ -3,8 +3,6 @@
 /**
  *  @file Worker_Task.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -36,7 +34,6 @@ class TAO_Notify_Buffering_Strategy;
  *
  * Memory Management : The Worker Task should be allocated on the heap and
  * the <shutdown> method should be called to release memory.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Worker_Task : public TAO_Notify_Refcountable
 {

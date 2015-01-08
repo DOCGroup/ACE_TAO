@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "ace/Get_Opt.h"

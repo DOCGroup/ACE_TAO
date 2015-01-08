@@ -3,10 +3,7 @@
 /**
  *  @file    fixed_array.cpp
  *
- *  $Id$
- *
  *  tests fixed size arrays
- *
  *
  *  @author   Aniruddha Gokhale
  */

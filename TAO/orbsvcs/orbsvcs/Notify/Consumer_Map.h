@@ -2,11 +2,7 @@
 /**
  *  @file Consumer_Map.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_CONSUMER_MAP_H
@@ -30,7 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Consumer_Map
  *
  * @brief The Event Map for Consumers.
- *
  */
 typedef TAO_Notify_Event_Map_T<TAO_Notify_ProxySupplier,
                                TAO_SYNCH_RW_MUTEX>

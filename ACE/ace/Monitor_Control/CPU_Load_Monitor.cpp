@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Monitor_Control/CPU_Load_Monitor.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)

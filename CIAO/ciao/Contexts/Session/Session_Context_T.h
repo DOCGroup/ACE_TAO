@@ -4,8 +4,6 @@
 /**
  *  @file    Session_Context_T.h
  *
- *  $Id$
- *
  *  This file contains the declaration of a mixin base class for
  *  the generated context class.
  *

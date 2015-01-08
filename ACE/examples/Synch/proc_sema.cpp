@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_main.h"
 #include "ace/Process_Semaphore.h"
 #include "ace/Get_Opt.h"

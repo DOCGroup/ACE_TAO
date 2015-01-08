@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Sub_UUID_Generator.h"
 #include <sstream>
 

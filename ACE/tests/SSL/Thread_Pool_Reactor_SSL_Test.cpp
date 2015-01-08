@@ -3,8 +3,6 @@
 /**
  *  @file    Thread_Pool_Reactor_SSL_Test.cpp
  *
- *  $Id$
- *
  *    This program is a torture test of threaded SSL usage. It
  *    is based on the tests/Thread_Pool_Reactor_Test and adds
  *    SSL stuff submitted by Robert Handl <robert.handl@ehpt.com>.
@@ -29,7 +27,6 @@
  *        <client conn attempt#>: ACE_MAX_ITERATIONS
  *        <client req# per conn>: ACE_MAX_THREADS
  *        <delay>:                50 usec
- *
  *
  *  @author   Irfan Pyarali <irfan@cs.wustl.edu> and   Nanbor Wang <nanbor@cs.wustl.edu>
  */

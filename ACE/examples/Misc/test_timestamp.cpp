@@ -1,5 +1,3 @@
-// $Id$
-
 // Test the ACE::timestamp method.
 
 #include "ace/OS_main.h"

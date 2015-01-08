@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // The following configuration file is designed to work for FreeBSD
 
 #ifndef ACE_CONFIG_H

@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 # debug = 1
 # optimize = 1

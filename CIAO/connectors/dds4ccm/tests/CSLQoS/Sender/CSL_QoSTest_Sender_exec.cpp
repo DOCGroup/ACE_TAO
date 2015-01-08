@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // Test for ConnectorStatusListener: on_offered_incompatible_qos
 
 #include "CSL_QoSTest_Sender_exec.h"

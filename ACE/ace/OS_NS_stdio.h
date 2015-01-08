@@ -4,8 +4,6 @@
 /**
  *  @file   OS_NS_stdio.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
@@ -49,7 +47,6 @@
  * as macros on some platforms. This way macro definitions will
  * be usable later as there is no way to save the macro definition
  * using the pre-processor.
- *
  */
 inline void ace_clearerr_helper (FILE *stream)
 {

@@ -3,10 +3,7 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  In this example,
- *
  *
  *  @author Irfan Pyarali
  */

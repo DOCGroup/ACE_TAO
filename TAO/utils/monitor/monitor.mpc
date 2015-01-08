@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(monitor_client): taoexe, tao_monitor, strategies {
   Source_Files {
     monitor_client.cpp

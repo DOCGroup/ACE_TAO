@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/UIOP_Endpoint.h"
 #include "tao/Strategies/UIOP_Connection_Handler.h"
 #include "tao/ORB_Constants.h"

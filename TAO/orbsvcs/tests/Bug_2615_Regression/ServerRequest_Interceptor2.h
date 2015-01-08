@@ -1,9 +1,6 @@
 // -*- C++ -*-
 
 //=============================================================================
-/**
- * $Id$
- */
 //=============================================================================
 
 #ifndef TAO249_SERVER_REQUEST_INTERCEPTOR2_H
@@ -20,9 +17,6 @@
 #include "tao/PI/PI.h"
 #include "tao/PI_Server/PI_Server.h"
 
-/**
-* $Id$
-*/
 class ServerRequest_Interceptor2
 : public virtual PortableInterceptor::ServerRequestInterceptor,
   public virtual ::CORBA::LocalObject

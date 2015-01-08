@@ -4,8 +4,6 @@
 /**
  *  @file    Log_Msg_UNIX_Syslog.h
  *
- *  $Id$
- *
  *  @author Jerry D. De Master <jdemaster@rite-solutions.com>
  */
 //=============================================================================

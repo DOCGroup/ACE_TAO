@@ -1,5 +1,3 @@
-// $Id$
-
 // Tests out the UNIX domain IPC-SAP abstraction.
 
 #include "ace/OS_main.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    Value_CORBA_methods.h
  *
- *  $Id$
- *
  *  Declarations of common ValueType methods in the CORBA namespace.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 
 #include "ace/SString.h"
 

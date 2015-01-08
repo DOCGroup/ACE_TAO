@@ -1,5 +1,3 @@
-// $Id$
-
 #include "PTimerDispatcher.h"
 
 void PTimer_Dispatcher::wait_for_event (void)

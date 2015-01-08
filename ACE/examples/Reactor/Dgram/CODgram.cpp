@@ -1,5 +1,3 @@
-// $Id$
-
 // Exercise the <ACE_SOCK_CODgram> wrapper along with the
 // <ACE_Reactor>.  This test simply ping-pongs datagrams back and
 // forth between the peer1 and peer2 processes.  This test can

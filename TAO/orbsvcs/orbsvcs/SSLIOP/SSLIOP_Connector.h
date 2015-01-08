@@ -4,8 +4,6 @@
 /**
  *  @file     SSLIOP_Connector.h
  *
- *  $Id$
- *
  *  SSLIOP specific connector processing
  *
  *  @author Carlos O'Ryan

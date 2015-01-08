@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/default_resource.h"
 #include "Alt_Resource_Factory.h"
 

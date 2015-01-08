@@ -2,8 +2,6 @@
 /**
  *  @file   EC_Sched_Factory.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
@@ -30,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_EC_Sched_Factory
  *
  * @brief Extend the default factory to support scheduling
- *
  */
 class TAO_RTSchedEvent_Export TAO_EC_Sched_Factory : public TAO_EC_Default_Factory
 {

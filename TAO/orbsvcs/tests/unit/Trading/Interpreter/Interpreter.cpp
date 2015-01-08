@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Trader/Interpreter.h"
 #include "orbsvcs/Trader/Constraint_Visitors.h"
 #include "ace/OS_NS_string.h"

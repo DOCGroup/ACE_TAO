@@ -2,10 +2,7 @@
 /**
  * @file Echo.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef TAO_TESTS_BUG1270_ECHO_H
 #define TAO_TESTS_BUG1270_ECHO_H

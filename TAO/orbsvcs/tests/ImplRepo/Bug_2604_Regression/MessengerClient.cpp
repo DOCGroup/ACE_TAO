@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MessengerC.h"
 
 #include "ace/Log_Msg.h"

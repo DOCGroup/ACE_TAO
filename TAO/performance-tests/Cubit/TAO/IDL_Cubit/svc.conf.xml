@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <!-- Converted from ./performance-tests/Cubit/TAO/IDL_Cubit/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--  $Id$ -->
+ <!--   -->
  <!--  -->
  <!--  Please see $TAO_ROOT/docs/Options.html for details on these options. -->
  <!--  -->

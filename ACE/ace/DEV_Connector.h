@@ -4,8 +4,6 @@
 /**
  *  @file    DEV_Connector.h
  *
- *  $Id$
- *
  *  @author Gerhard Lenzer and Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

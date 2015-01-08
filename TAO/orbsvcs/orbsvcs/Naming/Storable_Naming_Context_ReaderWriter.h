@@ -4,8 +4,6 @@
 /**
  * @file  Storable_Naming_Context_ReaderWriter.h
  *
- * $Id$
- *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Byron Harris <harrisb@ociweb.com>
  */

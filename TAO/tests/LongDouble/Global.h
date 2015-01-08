@@ -1,4 +1,3 @@
-// $Id$
 #ifndef TAO_TEST_GLOBAL_H
 #define TAO_TEST_GLOBAL_H
 

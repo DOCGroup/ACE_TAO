@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MessengerC.h"
 #include "tao/TimeBaseC.h"
 #include "tao/Messaging/Messaging.h"

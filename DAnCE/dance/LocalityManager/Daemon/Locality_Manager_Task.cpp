@@ -1,7 +1,6 @@
 /**
  * @file Locality_Manager_Task.cpp
  * @author William R. Otte
- * $Id$
  *
  * Implementation and main for LocalityManager.
  */

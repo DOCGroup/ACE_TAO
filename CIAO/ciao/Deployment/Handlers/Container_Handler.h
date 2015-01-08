@@ -1,7 +1,5 @@
 
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file Container_Handler.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

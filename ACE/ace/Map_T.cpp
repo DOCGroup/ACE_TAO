@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_MAP_T_CPP
 #define ACE_MAP_T_CPP
 

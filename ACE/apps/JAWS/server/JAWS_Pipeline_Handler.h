@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_PIPELINE_HANDLER_H
 #define JAWS_PIPELINE_HANDLER_H
 

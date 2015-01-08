@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_ESF_REFCOUNT_GUARD_CPP
 #define TAO_ESF_REFCOUNT_GUARD_CPP
 

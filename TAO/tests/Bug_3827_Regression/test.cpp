@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MessageC.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"

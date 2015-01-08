@@ -1,5 +1,3 @@
-// $Id$
-
 // This program exercises a run-time scheduler,
 // using the config run generated C++ header file.
 

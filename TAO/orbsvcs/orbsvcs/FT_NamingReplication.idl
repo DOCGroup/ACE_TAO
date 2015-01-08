@@ -3,8 +3,6 @@
 /**
  *  @file    FT_NamingReplication.idl
  *
- *  $Id$
- *
  *  This file is part of Fault Tolerant Naming Service in support of
  *  replication between redundant servers.
  *

@@ -1,5 +1,3 @@
-// $Id$
-
 // Process_Manager.cpp
 #include "ace/Process_Manager.h"
 

@@ -3,10 +3,7 @@
 /**
  *  @file    typedef_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Typedefs in the client inline file.
- *
  *
  *  @author Aniruddha Gokhale
  */

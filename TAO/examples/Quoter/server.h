@@ -4,11 +4,8 @@
 /**
  *  @file    server.h
  *
- *  $Id$
- *
  *  Implements the Quoter_Server class which handles the initialization of
  *  the quoter implementations.
- *
  *
  *  @author Darrell Brunsch (brunsch@cs.wustl.edu)
  */

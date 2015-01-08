@@ -5,8 +5,6 @@
 /**
  *  @file test_config.h
  *
- *  $Id$
- *
  *   This file factors out common macros and other utilities used by the
  *   ACE automated regression tests.
  *

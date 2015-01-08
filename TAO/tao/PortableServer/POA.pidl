@@ -1,8 +1,6 @@
 /**
  * @file POA.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the PortableServer module.
  */
 

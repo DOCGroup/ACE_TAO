@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Periodic_Task.h"
 
 #include "ace/High_Res_Timer.h"

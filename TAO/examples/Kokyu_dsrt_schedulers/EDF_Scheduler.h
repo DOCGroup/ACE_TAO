@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef EDF_SCHEDULER_H
 #define EDF_SCHEDULER_H
 

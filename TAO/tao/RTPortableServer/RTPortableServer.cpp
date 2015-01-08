@@ -2,8 +2,6 @@
 /**
  *  @file    RTPortableServer.cpp
  *
- *  $Id$
- *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================

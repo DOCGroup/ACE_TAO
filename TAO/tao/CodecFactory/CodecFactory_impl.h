@@ -4,8 +4,6 @@
 /**
  * @file CodecFactory_impl.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

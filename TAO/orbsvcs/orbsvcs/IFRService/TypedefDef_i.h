@@ -5,10 +5,7 @@
 /**
  *  @file    TypedefDef_i.h
  *
- *  $Id$
- *
  *  TypedefDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

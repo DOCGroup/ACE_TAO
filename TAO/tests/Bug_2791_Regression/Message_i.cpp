@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Message_i.h"
 
 MessageImpl::MessageImpl ()

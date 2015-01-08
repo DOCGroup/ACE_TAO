@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/OS_NS_strings.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

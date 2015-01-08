@@ -1,8 +1,6 @@
-// $Id$
 /**
  * @file Dependency_Sorter.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
  */
 #ifndef DEP_SORTER_H
 #define DEP_SORTER_H

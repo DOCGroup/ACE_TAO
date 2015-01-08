@@ -2,11 +2,7 @@
 /**
  *  @file EventTypeSeq.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_EVENTTYPESEQ_H
@@ -28,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_EventTypeSeq
  *
  * @brief Allows operations using the CosNotification::EventTypeSeq type.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventTypeSeq
   : public ACE_Unbounded_Set <TAO_Notify_EventType>

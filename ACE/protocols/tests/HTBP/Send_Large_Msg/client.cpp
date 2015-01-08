@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Addr.h"

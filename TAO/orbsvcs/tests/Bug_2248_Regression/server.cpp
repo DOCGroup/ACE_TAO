@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Server_ORBInitializer.h"
 #include "Server_Request_Interceptor.h"
 #include "test_i.h"

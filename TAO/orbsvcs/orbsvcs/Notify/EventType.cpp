@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/EventType.h"
 
 #include "ace/ACE.h"

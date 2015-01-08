@@ -1,5 +1,3 @@
-// $Id$
-
 #include "simple_testC.h"
 #include "tao/ORB_Core.h"
 #include "tao/IORTable/IORTable.h"

@@ -4,8 +4,6 @@
  * @brief Unit test for unbounded sequences of value types (integers,
  *        structures, etc.)
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "testing_allocation_traits.hpp"

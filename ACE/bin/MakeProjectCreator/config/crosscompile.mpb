@@ -1,7 +1,5 @@
 
 // -*- MPC -*-
-// $Id$
-
 project {
   avoids += cross_compile
 

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : messaging, naming, portablegroup, pi, pi_server, iorinterceptor {
   libs      += TAO_CosLoadBalancing
   after     += CosLoadBalancing

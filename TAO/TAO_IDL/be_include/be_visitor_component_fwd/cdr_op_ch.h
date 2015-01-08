@@ -4,12 +4,9 @@
 /**
  *  @file    cdr_op_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the ComponentFwd class
  *  This one provides code generation for the CDR operators for the forward
  *  declared component in the client header, if the node is not later defined
- *
  *
  *  @author Jeff Parsons
  */

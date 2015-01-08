@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/config-all.h"
 
 #include "ace/Service_Object.h"

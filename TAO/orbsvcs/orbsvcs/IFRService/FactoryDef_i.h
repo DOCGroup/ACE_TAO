@@ -5,10 +5,7 @@
 /**
  *  @file    FactoryDef_i.h
  *
- *  $Id$
- *
  *  FactoryDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

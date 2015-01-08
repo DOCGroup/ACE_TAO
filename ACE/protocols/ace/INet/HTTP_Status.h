@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file HTTP_Status.h
  *

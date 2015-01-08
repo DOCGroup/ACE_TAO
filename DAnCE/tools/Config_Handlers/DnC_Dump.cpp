@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Log_Msg.h"
 #include "tao/SystemException.h"
 #include "dance/Deployment/Deployment_DataC.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "JAWS/Pipeline.h"
 
 

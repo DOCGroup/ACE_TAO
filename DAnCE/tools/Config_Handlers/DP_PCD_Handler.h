@@ -2,8 +2,6 @@
 /**
  *  @file  DP_PCD_Handler.h
  *
- *  $Id$
- *
  *  Handler for Deployment::PlanConnectionHandler
  *
  *  @author Jules White <jules@dre.vanderbilt.edu>

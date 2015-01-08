@@ -4,8 +4,6 @@
 /**
  *  @file    NodeManager_Impl.h
  *
- *  $Id$
- *
  * @brief  Implementation of POA_Deployment::NodeManager
  *
  * @author Erwin Gottlieb <eg@prismtech.com>

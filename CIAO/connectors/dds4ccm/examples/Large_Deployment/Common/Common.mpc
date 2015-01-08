@@ -1,5 +1,3 @@
-// $Id$
-
 project (Large_Deployment_stub) : taoidldefaults, dds4ccm_ts_default {
   sharedname = Large_Deployment_stub
   dynamicflags += LARGE_DEPLOYMENT_COMMON_STUB_BUILD_DLL

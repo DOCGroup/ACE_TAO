@@ -4,8 +4,6 @@
 /**
  *  @file ami4ccm.h
  *
- *  $Id$
- *
  *  Include all the required headers to use CCM AMI easily.
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>

@@ -3,10 +3,7 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  Entry point for the chat server.
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */

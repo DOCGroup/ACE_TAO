@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Muxed_TMS.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/debug.h"

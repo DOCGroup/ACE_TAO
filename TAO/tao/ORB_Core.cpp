@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/ORB_Table.h"

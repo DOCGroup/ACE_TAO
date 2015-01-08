@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "Echo_Server_ORBInitializer.h"
 #include "server_interceptor.h"
 #include "tao/PI/ORBInitInfo.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_string.h"
 #include "URL.h"
 #include "HTTP_URL.h"

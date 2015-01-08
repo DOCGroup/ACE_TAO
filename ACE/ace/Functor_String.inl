@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/ACE.h"
 #include "ace/String_Base.h"
 

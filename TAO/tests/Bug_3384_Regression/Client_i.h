@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestS.h"
 
 class Client : public POA_Test::Client

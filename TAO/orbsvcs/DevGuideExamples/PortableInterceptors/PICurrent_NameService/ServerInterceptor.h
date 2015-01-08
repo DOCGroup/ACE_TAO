@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef SERVERINTERCEPTOR_H
 #define SERVERINTERCEPTOR_H
 

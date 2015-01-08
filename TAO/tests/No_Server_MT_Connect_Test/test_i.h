@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_NO_SERVER_MT_CLIENT_TEST_I_H
 #define TAO_NO_SERVER_MT_CLIENT_TEST_I_H
 

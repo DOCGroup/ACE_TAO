@@ -4,8 +4,6 @@
 /**
  * @file CSI_Utils.h
  *
- * $Id$
- *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

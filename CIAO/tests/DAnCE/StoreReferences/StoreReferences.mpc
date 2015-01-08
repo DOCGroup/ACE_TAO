@@ -1,5 +1,3 @@
-// $Id$
-
 project(StoreReferences_idl_gen) : componentidldefaults {
   after +=
   custom_only = 1

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Hello.h"
 #include "Server_ORBInitializer.h"
 #include "ace/Get_Opt.h"

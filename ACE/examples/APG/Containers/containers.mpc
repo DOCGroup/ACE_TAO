@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(DLList) : aceexe, avoids_ace_for_tao {
   exename = DLList
   Source_Files {

@@ -3,10 +3,7 @@
 /**
  *  @file    component_svts.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Components in the templated servant source.
- *
  *
  *  @author Marcel Smit
  */

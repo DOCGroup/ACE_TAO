@@ -1,4 +1,3 @@
-// $Id$
 #include "Deployment_Event.h"
 
 #if !defined (__ACE_INLINE__)

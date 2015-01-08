@@ -3,8 +3,6 @@
 /**
  *  @file DLL_Resident_ORB_Initializer.cpp
  *
- *  $Id$
- *
  *  @author Dale Wilson <wilsond@ociweb.com>
  */
 //=============================================================================

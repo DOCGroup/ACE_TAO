@@ -5,10 +5,7 @@
 /**
  *  @file    ExtAbstractInterfaceDef_i.h
  *
- *  $Id$
- *
  *  ExtAbstractInterfaceDef_i servant class.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

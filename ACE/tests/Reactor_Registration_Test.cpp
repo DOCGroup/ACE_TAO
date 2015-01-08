@@ -3,10 +3,7 @@
 /**
  *  @file    Reactor_Registration_Test.cpp
  *
- *  $Id$
- *
  *  This is a test of registering handlers with the Reactor.
- *
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */

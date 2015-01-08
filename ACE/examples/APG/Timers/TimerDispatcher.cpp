@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TimerDispatcher.h"
 // Listing 1 code/ch20
 void Timer_Dispatcher::wait_for_event (void)

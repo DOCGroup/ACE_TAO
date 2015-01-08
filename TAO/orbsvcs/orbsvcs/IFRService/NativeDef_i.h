@@ -5,10 +5,7 @@
 /**
  *  @file    NativeDef_i.h
  *
- *  $Id$
- *
  *  NativeDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

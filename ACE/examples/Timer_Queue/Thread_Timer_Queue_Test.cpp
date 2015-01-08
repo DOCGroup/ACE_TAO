@@ -3,11 +3,8 @@
 /**
  *  @file    Thread_Timer_Queue_Test.cpp
  *
- *  $Id$
- *
  *    This test exercises the <ACE_Thread_Timer_Queue_Adapter>
  *    using an <ACE_Timer_Heap>.
- *
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */

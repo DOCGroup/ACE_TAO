@@ -2,10 +2,7 @@
 /**
  *  @file    union_branch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the base "BE_Union_Branch" node
- *
  *
  *  @author Aniruddha Gokhale
  */

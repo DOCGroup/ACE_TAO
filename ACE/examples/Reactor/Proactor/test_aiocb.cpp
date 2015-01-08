@@ -3,15 +3,12 @@
 /**
  *  @file    test_aiocb.cpp
  *
- *  $Id$
- *
  *  Checkout $ACE_ROOT/examples/Reactor/Proactor/test_aiocb_ace.cpp,
  *  which is the ACE'ified version of this program.
  *
  * = COMPILE and RUN
  *  % CC -g -o test_aiocb -lrt test_aiocb.cpp
  *  % ./test_aiocb
- *
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */

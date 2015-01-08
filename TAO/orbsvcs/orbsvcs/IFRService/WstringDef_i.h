@@ -5,10 +5,7 @@
 /**
  *  @file    WstringDef_i.h
  *
- *  $Id$
- *
  *  WstringDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

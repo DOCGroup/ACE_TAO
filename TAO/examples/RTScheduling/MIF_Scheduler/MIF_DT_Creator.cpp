@@ -1,5 +1,3 @@
-//$Id$
-
 #include "MIF_DT_Creator.h"
 #include "test.h"
 #include "MIF_Task.h"

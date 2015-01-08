@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/DEV_Connector.h"
 
 #include "ace/Handle_Ops.h"

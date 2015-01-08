@@ -4,8 +4,6 @@
 /**
  *  @file   Security_Current_Impl.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================

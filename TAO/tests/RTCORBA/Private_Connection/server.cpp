@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testS.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTPortableServer/RTPortableServer.h"

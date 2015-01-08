@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_unistd.h"
 #include "TestImpl.h"
 #include "Server_Task.h"

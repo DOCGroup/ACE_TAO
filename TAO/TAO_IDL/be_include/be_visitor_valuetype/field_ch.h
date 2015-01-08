@@ -4,11 +4,8 @@
 /**
  *  @file    field_ch.h
  *
- *  $Id$
- *
  *  Visitor generating code for valuetype fields in the valuetype class
  *  (header).
- *
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_visitor_union_branch/public_ch.h
  */

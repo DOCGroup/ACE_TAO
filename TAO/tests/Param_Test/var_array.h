@@ -3,10 +3,7 @@
 /**
  *  @file    var_array.h
  *
- *  $Id$
- *
  *   Tests arrays whose base types are of variable size
- *
  *
  *  @author   Aniruddha Gokhale
  */

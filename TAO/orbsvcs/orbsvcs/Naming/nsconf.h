@@ -2,10 +2,7 @@
 /**
  *  @file     nsconf.h
  *
- *  $Id$
- *
  *  Name service configuration file.
- *
  *
  *  @author  Chris Cleeland
  *  @author  Douglas C. Schmidt

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Default_Thread_Lane_Resources_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Exception.h"

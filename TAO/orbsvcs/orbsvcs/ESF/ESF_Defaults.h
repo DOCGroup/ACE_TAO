@@ -2,10 +2,7 @@
 /**
  *  @file   ESF_Defaults.h
  *
- *  $Id$
- *
  * In this file we set the compile time defaults for the framework.
- *
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *

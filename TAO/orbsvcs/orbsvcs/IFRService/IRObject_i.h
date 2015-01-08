@@ -5,10 +5,7 @@
 /**
  *  @file    IRObject_i.h
  *
- *  $Id$
- *
  *  IRObject servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

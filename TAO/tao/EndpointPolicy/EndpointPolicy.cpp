@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/EndpointPolicy/EndpointPolicy.h"
 #include "tao/EndpointPolicy/EndpointPolicy_ORBInitializer.h"
 #include "tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.h"

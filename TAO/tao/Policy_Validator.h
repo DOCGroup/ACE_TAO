@@ -4,8 +4,6 @@
 /**
  *  @file    Policy_Validator.h
  *
- *  $Id$
- *
  *  This file contains the declaration for the POA policy validator
  *  interface.
  *

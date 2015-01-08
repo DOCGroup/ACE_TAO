@@ -4,8 +4,6 @@
 /**
  *  @file    Objref_VarOut_T.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  */
 //=============================================================================
@@ -44,7 +42,6 @@ namespace TAO
  *
  * @brief Parameterized implementation of @c _var class for object
  *       references.
- *
  */
 template <typename T>
 class TAO_Objref_Var_T : private TAO_Base_var
@@ -92,7 +89,6 @@ private:
  * @class TAO_Objref_Out_T
  *
  * @brief Parametrized implementation of _out class for object references.
- *
  */
 template <typename T>
 class TAO_Objref_Out_T

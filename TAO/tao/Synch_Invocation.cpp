@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Synch_Invocation.h"
 #include "tao/Invocation_Retry_State.h"
 #include "tao/Profile_Transport_Resolver.h"

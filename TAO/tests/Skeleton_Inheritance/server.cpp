@@ -1,5 +1,3 @@
-// $Id$
-
 #include "interface_3_i.h"
 
 #include "ace/Get_Opt.h"

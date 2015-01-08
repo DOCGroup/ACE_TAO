@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef _ORB_TASK_
 #define _ORB_TASK_
 

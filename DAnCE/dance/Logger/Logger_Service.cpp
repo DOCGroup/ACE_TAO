@@ -1,4 +1,3 @@
-// $Id$
 #include "Logger_Service.h"
 #include "ace/Get_Opt.h"
 #include "ace/Env_Value_T.h"

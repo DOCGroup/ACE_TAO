@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Worker_Thread.h"
 
 Worker_Thread::Worker_Thread (CORBA::ORB_ptr orb)

@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p InterOutArgsT_Base InterOutArgsT_Receiver"
 
 project(AMI_OutArgsT_Base_Receiver_idl_gen) : componentidldefaults {

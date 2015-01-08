@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Timeout_Filter.h"
 #include "orbsvcs/Event/EC_Timeout_Generator.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dll.h"
 #include <ace/streams.h>
 

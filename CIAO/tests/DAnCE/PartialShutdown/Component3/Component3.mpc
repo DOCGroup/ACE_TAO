@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p PartialShutdown Component3"
 
 project(PartialShutdown_Component3_idl_gen) : componentidldefaults   {

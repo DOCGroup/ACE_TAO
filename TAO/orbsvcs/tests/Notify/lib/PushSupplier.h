@@ -2,11 +2,7 @@
 /**
  *  @file PushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_PUSHSUPPLIER_H
@@ -56,7 +52,6 @@ typedef TAO_Notify_Tests_Supplier_T<TAO_Notify_Tests_PushSupplier_Traits> TAO_No
  * @class TAO_Notify_Tests_PushSupplier
  *
  * @brief PushSupplier Implementation.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_PushSupplier : public TAO_Notify_Tests_PushSupplier_Base
 {

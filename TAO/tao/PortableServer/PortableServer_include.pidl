@@ -1,8 +1,6 @@
 /**
  * @file PortableServer_include.pidl
  *
- * $Id$
- *
  * @brief Include file for use in applications that need PortableServer.pidl.
  */
 

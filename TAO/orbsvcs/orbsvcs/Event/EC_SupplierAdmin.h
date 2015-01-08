@@ -3,8 +3,6 @@
 /**
  *  @file   EC_SupplierAdmin.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
@@ -37,7 +35,6 @@ class TAO_EC_ProxyPushSupplier;
  * @class TAO_EC_SupplierAdmin
  *
  * @brief Implement the RtecEventChannelAdmin::SupplierAdmin interface.
- *
  *
  * <H2>Memory Management</H2>
  * It does not assume ownership of the TAO_EC_Event_Channel_Base object

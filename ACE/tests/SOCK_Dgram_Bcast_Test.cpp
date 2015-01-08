@@ -2,8 +2,6 @@
 /**
  *  @file    SOCK_Dgram_Bcast_Test.cpp
  *
- *  $Id$
- *
  *   This simple broadcast test is intended to check if ACE is capable
  *   of sending and receiving broadcasts. In single host environment most
  *   errors related to invalid broadcast initialization will not manifest
@@ -12,7 +10,6 @@
  *   hosts in single LAN.
  *   Tests that a call to open with an any address binds to the any address
  *   for the protocol passed in.
- *
  *
  *  @author Marek Brudka (mbrudka@elka.pw.edu.pl)
  */

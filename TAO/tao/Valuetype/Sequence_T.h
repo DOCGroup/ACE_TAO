@@ -1,4 +1,3 @@
-// $Id$
 //
 
 #include "tao/Valuetype/Bounded_Valuetype_Sequence_T.h"

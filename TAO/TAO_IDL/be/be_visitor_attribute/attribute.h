@@ -3,10 +3,7 @@
 /**
  *  @file    attribute.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Attribute
- *
  *
  *  @author Aniruddha Gokhale
  */

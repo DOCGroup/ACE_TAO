@@ -1,8 +1,6 @@
 /**
  * @file Auto_Disconnect.inl
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 #include "ace/CORBA_macros.h"

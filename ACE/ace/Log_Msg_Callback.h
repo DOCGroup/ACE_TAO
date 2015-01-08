@@ -4,8 +4,6 @@
 /**
  *  @file    Log_Msg_Callback.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

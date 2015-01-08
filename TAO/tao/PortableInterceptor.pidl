@@ -3,8 +3,6 @@
 /**
  * @file PortableInterceptor.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the PortableInterceptor
  * components in the ORB.
  *

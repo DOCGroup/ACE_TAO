@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/IOPA.h"

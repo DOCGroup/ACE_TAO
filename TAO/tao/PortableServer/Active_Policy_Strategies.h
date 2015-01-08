@@ -4,8 +4,6 @@
 /**
  *  @file Active_Policy_Strategies.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

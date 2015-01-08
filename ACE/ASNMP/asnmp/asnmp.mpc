@@ -1,5 +1,3 @@
-// $Id$
-
 project (asnmp_lib) : ace_output, acelib {
   sharedname   = asnmp
   dynamicflags += ASNMP_BUILD_DLL

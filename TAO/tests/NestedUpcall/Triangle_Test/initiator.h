@@ -3,11 +3,8 @@
 /**
  *  @file    initiator.h
  *
- *  $Id$
- *
  *    This class implements a simple server for the
  *    Nested Upcalls - Triangle test
- *
  *
  *  @author Michael Kircher
  */

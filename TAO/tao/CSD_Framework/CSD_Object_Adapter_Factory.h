@@ -4,8 +4,6 @@
 /**
  *  @file CSD_Object_Adapter_Factory.h
  *
- *  $Id$
- *
  *  @author Yan Dai (dai_y@ociweb.com)
  */
 //=============================================================================

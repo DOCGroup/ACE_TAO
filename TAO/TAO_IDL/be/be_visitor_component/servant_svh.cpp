@@ -3,11 +3,8 @@
 /**
  *  @file    servant_svh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for a servant class in the
  *  servant header.
- *
  *
  *  @author Jeff Parsons
  */

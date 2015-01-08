@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Task.h"
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
 

@@ -1,4 +1,3 @@
-//$Id$
 project(*idl) : tao_versioning_idl_defaults, install {
   custom_only = 1
   idlflags += -SS -Sorb -Sci -GA \

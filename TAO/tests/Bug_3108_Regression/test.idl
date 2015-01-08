@@ -1,5 +1,3 @@
-// $Id$
-
 interface test
 {
   long test_method();

@@ -1,5 +1,3 @@
-// $Id$
-
 // TestAddrServer.cpp
 
 #include "TestAddrServer.h"

@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef _HANDLE_THR_STREAM_H
 #define _HANDLE_THR_STREAM_H
 

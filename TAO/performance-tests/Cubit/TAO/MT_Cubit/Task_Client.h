@@ -4,8 +4,6 @@
 /**
  *  @file    Task_Client.h
  *
- *  $Id$
- *
  *  @author Andy Gokhale
  *  @author Sumedh Mungee
  *  @author Sergio Flores-Gaitan

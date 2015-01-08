@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "testS.h"
 #include "tao/PortableServer/Root_POA.h"

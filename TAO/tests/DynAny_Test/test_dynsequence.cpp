@@ -2,10 +2,7 @@
 /**
  *  @file    test_dynsequence.cpp
  *
- *  $Id$
- *
  *  Implementation of the simple DynSequence test
- *
  *
  *  @author Jeff Parsons <jp4@cs.wustl.edu>
  */

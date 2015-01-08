@@ -4,8 +4,6 @@
 /**
  *  @file    Event_Base.h
  *
- *  $Id$
- *
  *   Moved from Synch.h.
  *
  *  @author Martin Corino <mcorino@remedy.nl>

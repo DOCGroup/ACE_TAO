@@ -2,11 +2,7 @@
 /**
  *  @file Find_Worker_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_FIND_WORKER_T_H
@@ -30,7 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Find_Worker_T
  *
  * @brief Helper to locate a TYPE given its ID.
- *
  */
 template <class TYPE, class INTERFACE, class INTERFACE_PTR, class EXCEPTION>
 class TAO_Notify_Serv_Export TAO_Notify_Find_Worker_T : public TAO_ESF_Worker<TYPE>

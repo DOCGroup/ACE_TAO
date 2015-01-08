@@ -4,8 +4,6 @@
 /**
  *  @file    Request_Dispatcher.h
  *
- *  $Id$
- *
  *  A class that strategizes the request dispatching procedure.
  *
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
@@ -43,7 +41,6 @@ namespace CORBA
  * @class TAO_Request_Dispatcher
  *
  * @brief A class that strategizes the request dispatching procedure.
- *
  */
 class TAO_Export TAO_Request_Dispatcher
 {

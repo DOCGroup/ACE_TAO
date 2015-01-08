@@ -3,8 +3,6 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  This example is very similar to the Explicit_Activation example
  *  except that the POAs are deleted once the object references have
  *  been created. After this, an adapter activator is install in the
@@ -12,7 +10,6 @@
  *
  *  Similar to the Explicit_Activation, the client for this example
  *  is Generic_Servant.
- *
  *
  *  @author Irfan Pyarali
  */

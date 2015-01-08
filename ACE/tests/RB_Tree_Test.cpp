@@ -3,8 +3,6 @@
 /**
  *  @file    RB_Tree_Test.cpp
  *
- *  $Id$
- *
  *  This is a test to verify and illustrate the use of the
  *  <ACE_RB_Tree ACE_RB_Tree_Iterator> and
  *  <ACE_RB_Tree_Reverse_Iterator> classes.  Two different key and
@@ -16,7 +14,6 @@
  *  parameter permutations over int and const char * is constructed
  *  and filled in, and the resulting order is checked via an
  *  iterator over each.
- *
  *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  */

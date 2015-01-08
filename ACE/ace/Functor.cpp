@@ -3,12 +3,9 @@
 /**
  *  @file    Functor.cpp
  *
- *  $Id$
- *
  *  Non-inlinable method definitions for non-templatized classes
  *  and template specializations implementing the GOF Command Pattern,
  *  and STL-style functors.
- *
  *
  *  @author Chris Gill           <cdgill@cs.wustl.edu>
  *

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "be_connector.h"
 #include "be_visitor.h"
 #include "ast_module.h"

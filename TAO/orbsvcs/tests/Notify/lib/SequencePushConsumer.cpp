@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SequencePushConsumer.h"
 
 #if ! defined (__ACE_INLINE__)

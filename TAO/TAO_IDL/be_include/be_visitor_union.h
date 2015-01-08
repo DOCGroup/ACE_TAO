@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_union.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Union class
- *
  *
  *  @author Aniruddha Gokhale
  */

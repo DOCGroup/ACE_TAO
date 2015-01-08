@@ -4,8 +4,6 @@
 /**
  * @file CPU_Load_Monitor.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

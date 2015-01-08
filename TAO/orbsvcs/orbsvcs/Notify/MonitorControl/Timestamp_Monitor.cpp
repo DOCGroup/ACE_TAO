@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/orbsvcs/Notify/MonitorControl/Timestamp_Monitor.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)

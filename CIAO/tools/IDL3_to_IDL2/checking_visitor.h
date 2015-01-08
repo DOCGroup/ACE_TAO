@@ -4,10 +4,7 @@
 /**
  *  @file    checking_visitor.h
  *
- *  $Id$
- *
  *  Visitor that checks input IDL3 in a separate pass.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

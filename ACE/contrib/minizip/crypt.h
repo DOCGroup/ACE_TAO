@@ -1,6 +1,6 @@
 /* crypt.h -- base code for crypt/uncrypt ZIPfile
 
-$Id$
+
 
 Version 1.01e, February 12th, 2005
 

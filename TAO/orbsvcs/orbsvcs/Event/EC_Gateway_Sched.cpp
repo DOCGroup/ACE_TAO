@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
 #include "orbsvcs/Time_Utilities.h"
 

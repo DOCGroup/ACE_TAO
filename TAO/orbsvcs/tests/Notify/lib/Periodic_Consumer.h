@@ -2,8 +2,6 @@
 /**
  *  @file Periodic_Consumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -31,7 +29,6 @@ class TAO_Notify_Tests_Task_Callback;
  * @class TAO_Notify_Tests_Periodic_Consumer
  *
  * @brief Receives Structured events periodically.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Consumer : public TAO_Notify_Tests_StructuredPushConsumer
 {

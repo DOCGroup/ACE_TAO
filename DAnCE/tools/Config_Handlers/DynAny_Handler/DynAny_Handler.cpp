@@ -1,5 +1,3 @@
-// $Id$
-
 #include /**/ "ace/pre.h"
 
 #include "dance/Logger/Log_Macros.h"

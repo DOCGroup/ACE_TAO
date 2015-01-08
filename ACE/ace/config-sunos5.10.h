@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // The following configuration file is designed to work for SunOS 5.10
 // (Solaris 10) platforms using the SunC++ 5.x (Sun Studio 8-10), or g++
 // compilers.

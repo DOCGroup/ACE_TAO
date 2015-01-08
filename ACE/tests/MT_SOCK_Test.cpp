@@ -4,8 +4,6 @@
 /**
  *  @file    MT_SOCK_Test.cpp
  *
- *  $Id$
- *
  *   This is a multi-threaded torture test of the
  *   <ACE_SOCK_Acceptor> and <ACE_SOCK_Connector> classes. The test
  *   forks 30 processes or spawns 30 threads (depending upon the
@@ -13,7 +11,6 @@
  *   connect and exchange data.  Note that most of the connections
  *   will fail since we're overrunning the size of the listen queue
  *   for the acceptor-mode socket.
- *
  *
  *  @author Doug Schmidt <schmidt@cs.wustl.edu>
  */

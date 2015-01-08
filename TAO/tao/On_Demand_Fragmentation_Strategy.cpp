@@ -1,5 +1,3 @@
-// $Id$
-
 
 #include "tao/On_Demand_Fragmentation_Strategy.h"
 

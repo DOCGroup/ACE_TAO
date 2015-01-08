@@ -4,10 +4,7 @@
 /**
  *  @file    INS_i.h
  *
- *  $Id$
- *
  *  This class implements the INS interface.
- *
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FaultTolerance/FT_ServerService_Activate.h"
 #include "orbsvcs/FaultTolerance/FT_ServerORBInitializer.h"
 #include "tao/ORB_Core.h"

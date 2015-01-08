@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef BE_CONNECTOR_H
 #define BE_CONNECTOR_H
 

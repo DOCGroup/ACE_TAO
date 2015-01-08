@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Smart_Proxy_Impl.h"
 
 Smart_Test_Factory::Smart_Test_Factory (int one_shot_factory)

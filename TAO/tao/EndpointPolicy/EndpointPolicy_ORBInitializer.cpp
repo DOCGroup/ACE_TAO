@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/EndpointPolicy/EndpointPolicy_ORBInitializer.h"
 
 #include "tao/EndpointPolicy/EndpointPolicyC.h"

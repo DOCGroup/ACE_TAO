@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 

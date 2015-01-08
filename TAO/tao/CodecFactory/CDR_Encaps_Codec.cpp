@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/CodecFactory/CDR_Encaps_Codec.h"
 
 #include "tao/CDR.h"

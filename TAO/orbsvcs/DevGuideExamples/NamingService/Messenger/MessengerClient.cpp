@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MessengerC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_unistd.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef EXPLOIT_PUBLISHER_IMPL_H
 #define EXPLOIT_PUBLISHER_IMPL_H
 

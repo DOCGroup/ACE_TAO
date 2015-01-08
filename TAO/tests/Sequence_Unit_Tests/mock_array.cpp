@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "mock_array.hpp"

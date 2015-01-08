@@ -1,4 +1,3 @@
-// $Id$
 #include "tao/ZIOP/ZIOP_Stub_Factory.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0

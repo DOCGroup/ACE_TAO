@@ -4,8 +4,6 @@
 /**
  *  @file    cubit_i.h
  *
- *  $Id$
- *
  *  @author Andy Gokhale
  *  @author Sumedh Mungee
  *  @author Sergio Flores-Gaitan and Nagarajan Surendran.

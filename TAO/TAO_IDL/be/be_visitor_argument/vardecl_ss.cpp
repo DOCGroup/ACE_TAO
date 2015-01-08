@@ -3,11 +3,8 @@
 /**
  *  @file    vardecl_ss.cpp
  *
- *  $Id$
- *
  *  Visitor that generates the variable declaration in the skeleton
  *  corresponding to the Argument node
- *
  *
  *  @author Aniruddha Gokhale
  */

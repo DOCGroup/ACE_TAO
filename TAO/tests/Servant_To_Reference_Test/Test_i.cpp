@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Test_i.h"
 
 One_Impl::One_Impl (CORBA::ORB_ptr orb)

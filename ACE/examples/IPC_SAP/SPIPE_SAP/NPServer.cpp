@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/Log_Msg.h"

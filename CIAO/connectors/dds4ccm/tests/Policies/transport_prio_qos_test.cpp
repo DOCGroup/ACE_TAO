@@ -1,5 +1,3 @@
-// $Id$
-
 #include "transport_prio_qos_test.h"
 
 TransportPriorityPolicyTest::TransportPriorityPolicyTest ()

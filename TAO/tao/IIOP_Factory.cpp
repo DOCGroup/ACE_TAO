@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/IIOP_Factory.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)

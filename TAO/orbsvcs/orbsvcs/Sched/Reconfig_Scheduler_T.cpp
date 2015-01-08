@@ -2,8 +2,6 @@
 /**
  *  @file    Reconfig_Scheduler_T.cpp
  *
- *  $Id$
- *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
 //=============================================================================

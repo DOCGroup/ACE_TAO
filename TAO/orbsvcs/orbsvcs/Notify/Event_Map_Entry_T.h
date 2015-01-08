@@ -2,11 +2,7 @@
 /**
  *  @file Event_Map_Entry_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_EVENT_MAP_ENTRY_T_H
@@ -35,7 +31,6 @@ template <class PROXY> class TAO_ESF_Proxy_Collection;
  * @class TAO_Notify_Event_Map_Entry_T
  *
  * @brief The entry stored in the event map.
- *
  */
 template <class PROXY>
 class TAO_Notify_Event_Map_Entry_T : private ACE_Copy_Disabled

@@ -1,8 +1,6 @@
 /**
  * @file EC_Channel_Destroyer.cpp
  *
- * $Id$
- *
  * @author Marina Spivak <marina@atdesk.com>
  */
 

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ace/Log_Msg.h"
 
 #include "Server_Request_Interceptor.h"

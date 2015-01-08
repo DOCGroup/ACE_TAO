@@ -1,4 +1,3 @@
-//$Id$
 #include "ace/Get_Opt.h"
 #include "Hello.h"
 #include "tao/Strategies/advanced_resource.h"

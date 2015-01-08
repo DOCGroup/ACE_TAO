@@ -3,11 +3,8 @@
 /**
  *  @file    facet_svts.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for a facet servant class in the
  *  servant source.
- *
  *
  *  @author Jeff Parsons
  */

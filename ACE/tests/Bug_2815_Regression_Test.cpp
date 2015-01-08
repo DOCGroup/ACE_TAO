@@ -1,8 +1,6 @@
 /**
  * @file Bug_2815_Regression_Test.cpp
  *
- * $Id$
- *
  * Verify that the notification queue can be used with large numbers
  * of event handlers.
  *
@@ -22,7 +20,6 @@
  * removing handlers while having a very long notification queue.
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 
 #include "test_config.h"
@@ -37,7 +34,6 @@ class One_Shot_Handler;
  *
  * @brief Main driver for the test, generates notification events and
  * verifies they are received correctly.
- *
  */
 class Driver
 {
@@ -166,7 +162,6 @@ private:
  * remove themselves from the reactor when the first notification
  * is delivered.  This causes a lot of activity in the notification
  * queue.
- *
  */
 class One_Shot_Handler : public ACE_Event_Handler
 {

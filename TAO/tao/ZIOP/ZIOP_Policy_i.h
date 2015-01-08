@@ -4,8 +4,6 @@
 /**
  *  @file ZIOP_Policy_i.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen - jwillemsen@remedy.nl
  */
 // ===================================================================

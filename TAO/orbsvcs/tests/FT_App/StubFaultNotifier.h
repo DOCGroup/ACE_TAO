@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
 #ifndef STUBFAULTNOTIFIER_H_
 #define STUBFAULTNOTIFIER_H_
 

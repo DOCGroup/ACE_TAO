@@ -4,8 +4,6 @@
 /**
  *  @file    Session_Container.h
  *
- *  $Id$
- *
  *  Header file for CIAO's container implementations
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>

@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/target_specification.h"
 
 #if !defined (__ACE_INLINE__)

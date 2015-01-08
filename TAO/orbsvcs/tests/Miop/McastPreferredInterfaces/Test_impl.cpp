@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test_impl.h"
 
 

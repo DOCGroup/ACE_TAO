@@ -4,8 +4,6 @@
 /**
  *  @file    Foo_C_Custom_Proxy.h
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

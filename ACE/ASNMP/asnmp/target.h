@@ -6,8 +6,6 @@
 /**
  *  @file    target.h
  *
- *  $Id$
- *
  *  @brief
  *
  *  @author Peter E Mellquist Michael R. MacFaden (ported to ACE)

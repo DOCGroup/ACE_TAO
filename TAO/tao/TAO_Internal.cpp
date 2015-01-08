@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/TAO_Internal.h"
 #include "tao/TAO_Singleton.h"
 #include "tao/default_server.h"

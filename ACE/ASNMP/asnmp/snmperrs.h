@@ -5,11 +5,7 @@
 /**
  *  @file    snmperrs.h
  *
- *  $Id$
- *
  * Definition of error macros and error strings
- *
- *
  */
 //=============================================================================
 

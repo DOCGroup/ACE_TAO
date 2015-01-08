@@ -1,5 +1,3 @@
-// $Id$
-
 // This example tests the features of the <ACE_SSL_SOCK_Acceptor>,
 // <ACE_SSL_SOCK_Stream>, and <ACE_Svc_Handler> classes.
 

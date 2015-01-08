@@ -53,8 +53,6 @@
 /**
  *  @file   ETCL_y.cpp
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu> based on previous work by Seth Widoff <sbw1@cs.wustl.edu>
  */
 //=============================================================================

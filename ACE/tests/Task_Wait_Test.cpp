@@ -2,8 +2,6 @@
 /**
  *  @file    Task_Wait_Test.cpp
  *
- *  $Id$
- *
  *    This program tests the ACE_Thread_Manager::wait() from a called-back
  *    ACE_Task::close() on thread exit.
  *

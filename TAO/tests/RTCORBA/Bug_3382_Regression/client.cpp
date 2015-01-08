@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testC.h"
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"

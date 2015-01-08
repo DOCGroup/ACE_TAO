@@ -5,8 +5,6 @@
 /**
  *  @file    URL_Addr.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

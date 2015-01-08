@@ -1,4 +1,4 @@
-$Id$
+
 
 This example implements and tests runs a simple logging service using
 TAO.  You can either run the client and server as seperate processes

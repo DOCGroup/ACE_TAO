@@ -1,4 +1,3 @@
-# $Id$
 
 # This file should allow ACE to be built on Linux, using the
 # Portland Group PGI compilers

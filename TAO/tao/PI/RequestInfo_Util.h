@@ -4,8 +4,6 @@
 /**
  *  @file   RequestInfo_Util.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================

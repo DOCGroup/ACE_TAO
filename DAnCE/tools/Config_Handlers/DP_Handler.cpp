@@ -1,5 +1,3 @@
-// $Id$
-
 #include "DP_Handler.h"
 #include "ace/UUID.h"
 #include "dance/Deployment/Deployment_DataC.h"

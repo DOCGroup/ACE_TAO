@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef ACE_ATOMIC_OP_SPARC_H
 #define ACE_ATOMIC_OP_SPARC_H
 

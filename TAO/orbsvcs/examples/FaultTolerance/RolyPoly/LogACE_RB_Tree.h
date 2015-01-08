@@ -1,7 +1,5 @@
 // file      : RolyPoly/LogACE_RB_Tree.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef LOG_ACE_RB_TREE_H
 #define LOG_ACE_RB_TREE_H
 

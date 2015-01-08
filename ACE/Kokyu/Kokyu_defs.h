@@ -2,10 +2,7 @@
 /**
  *  @file   Kokyu_defs.h
  *
- *  $Id$
- *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
- *
  */
 
 #ifndef KOKYU_DEFS_H

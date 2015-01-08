@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Collocation_Tester.h"
 #include "ace/OS_NS_string.h"
 

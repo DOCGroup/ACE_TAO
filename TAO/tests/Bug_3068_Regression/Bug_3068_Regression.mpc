@@ -1,5 +1,3 @@
-// $Id$
-
 project(*Server): taoserver, messaging, bidir_giop, threads {
   Source_Files {
     test_i.cpp

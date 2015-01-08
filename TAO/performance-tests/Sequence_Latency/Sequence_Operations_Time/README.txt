@@ -1,4 +1,4 @@
-$Id$
+
 
 This test is used to validate the peformance of sequence copying.
 

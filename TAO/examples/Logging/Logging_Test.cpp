@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Logging_Test_i.h"
 
 // This function runs the Logging service test.

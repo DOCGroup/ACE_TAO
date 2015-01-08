@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "BlobServer.h"
 
 BlobServerImpl::BlobServerImpl (CORBA::ORB_ptr orb)

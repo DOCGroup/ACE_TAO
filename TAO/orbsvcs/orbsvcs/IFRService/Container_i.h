@@ -5,10 +5,7 @@
 /**
  *  @file    Container_i.h
  *
- *  $Id$
- *
  *  Container servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

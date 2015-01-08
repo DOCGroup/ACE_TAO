@@ -3,10 +3,7 @@
 /**
  *  @file   ECG_ConsumerEC_Control.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen (jwillemsen@remedy.nl)
- *
  */
 
 #ifndef TAO_ECG_ConsumerEC_Control_H

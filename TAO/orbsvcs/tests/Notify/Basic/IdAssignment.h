@@ -3,10 +3,7 @@
 /**
  *  @file   IdAssignment.h
  *
- *  $Id$
- *
  * Test to check if ec, admin  are assigned id's correctly.
- *
  *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com> and Pradeep Gore <pradeep@cs.wustl.edu>
  */

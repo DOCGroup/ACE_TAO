@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Time_Policy_Manager.h"
 #include "tao/ORB_Time_Policy.h"
 #include "tao/debug.h"

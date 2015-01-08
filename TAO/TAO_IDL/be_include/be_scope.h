@@ -4,8 +4,6 @@
 /**
  *  @file    be_scope.h
  *
- *  $Id$
- *
  *  Extension of the UTL_Scope CFE class
  *
  *  @author Copyright 1994-1995 by Sun Microsystems Int.

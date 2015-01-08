@@ -5,10 +5,7 @@
 /**
  *  @file    SequenceDef_i.h
  *
- *  $Id$
- *
  *  SequenceDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 // ===================================================================
 /**
  *  @file   SHMIOP_Acceptor.h
@@ -37,7 +36,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_SHMIOP_Acceptor
  *
  * @brief The SHMIOP-specific bridge class for the concrete acceptor.
- *
  */
 class TAO_Strategies_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
 {

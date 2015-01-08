@@ -4,11 +4,8 @@
 /**
  *  @file    Server_Request.h
  *
- *  $Id$
- *
  *  Header file for CORBA's Dynamic Server Skeleton Interface's
  *  "Server Request" type.
- *
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Chris Cleeland.  Modifications by Aniruddha Gokhale based on CORBAv2.2 Feb 98

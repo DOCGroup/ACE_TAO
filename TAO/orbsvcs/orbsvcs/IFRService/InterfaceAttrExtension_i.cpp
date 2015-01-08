@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/IFRService/InterfaceAttrExtension_i.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/InterfaceDef_i.h"

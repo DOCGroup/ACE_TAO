@@ -3,10 +3,7 @@
 /**
  *  @file    operation_exs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the CIAO executor file.
- *
  *
  *  @author Jeff Parsons
  */

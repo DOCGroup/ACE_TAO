@@ -1,5 +1,3 @@
-// $Id$
-
 #include "CRDD_Handler.h"
 #include "Any_Handler.h"
 #include "Basic_Deployment_Data.hpp"

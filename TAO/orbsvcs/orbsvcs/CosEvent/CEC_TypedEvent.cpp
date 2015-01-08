@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "orbsvcs/CosEvent/CEC_TypedEvent.h"
 
 #if ! defined (__ACE_INLINE__)

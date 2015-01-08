@@ -4,8 +4,6 @@
 /**
  *  @file    Naming_Service.h
  *
- *  $Id$
- *
  *    This class implements the functionality of a Naming_Service in
  *    a stand-alone process.
  *

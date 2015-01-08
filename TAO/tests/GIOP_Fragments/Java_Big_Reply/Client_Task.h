@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef JAVA_BIG_REPLY_CLIENT_TASK_H
 #define JAVA_BIG_REPLY_CLIENT_TASK_H

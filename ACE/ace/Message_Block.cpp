@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Message_Block.h"
 
 #if !defined (__ACE_INLINE__)

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_IFR_SERVICE_UTILS_T_CPP
 #define TAO_IFR_SERVICE_UTILS_T_CPP
 

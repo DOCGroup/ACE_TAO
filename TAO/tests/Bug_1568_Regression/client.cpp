@@ -1,10 +1,7 @@
 /**
  * @file client.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "TestC.h"
 

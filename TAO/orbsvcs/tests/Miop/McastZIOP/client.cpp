@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "tao/Object_T.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TLS_Client.h"
 #include "ace/OS_main.h"
 

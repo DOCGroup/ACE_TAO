@@ -2,10 +2,7 @@
 /**
  *  @file    field.h
  *
- *  $Id$
- *
  *  Concrete visitor for the base "BE_Field" node
- *
  *
  *  @author Aniruddha Gokhale
  */

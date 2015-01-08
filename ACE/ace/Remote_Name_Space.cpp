@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Remote_Name_Space.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Category.h"

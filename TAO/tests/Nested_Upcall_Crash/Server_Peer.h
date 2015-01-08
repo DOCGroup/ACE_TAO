@@ -1,10 +1,7 @@
 /**
  * @file Server_Peer.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef Server_Peer__h_
 #define Server_Peer__h_

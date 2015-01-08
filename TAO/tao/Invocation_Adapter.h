@@ -4,8 +4,6 @@
 /**
  *  @file    Invocation_Adapter.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

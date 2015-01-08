@@ -1,7 +1,5 @@
-/* $Id$ */
 /*
  * Send 10K file; send random bits.
- *
  */
 
 //FUZZ: disable check_for_improper_main_declaration

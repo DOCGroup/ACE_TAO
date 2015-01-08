@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_And_Filter.h"
 
 

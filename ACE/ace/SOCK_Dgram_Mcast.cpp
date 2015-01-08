@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SOCK_Dgram_Mcast.h"
 
 #include "ace/OS_Memory.h"

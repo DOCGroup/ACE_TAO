@@ -3,11 +3,8 @@
 /**
  *  @file    PP_Test_Server.h
  *
- *  $Id$
- *
  *    This class implements simple oneway and twoway no-op requests
  *    to time latency and overhead of the pluggable protocol functionality.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

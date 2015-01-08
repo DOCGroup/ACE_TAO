@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef SP_CONNECTOR_H
 #define SP_CONNECTOR_H
 

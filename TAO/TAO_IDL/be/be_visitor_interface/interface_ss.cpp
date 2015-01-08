@@ -3,10 +3,7 @@
 /**
  *  @file    interface_ss.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interfaces in the server skeletons file.
- *
  *
  *  @author Aniruddha Gokhale
  */

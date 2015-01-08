@@ -4,8 +4,6 @@
 /**
  *  @file   IIOP_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author Originally by Chris Cleeland as IIOP_Connect.h
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */

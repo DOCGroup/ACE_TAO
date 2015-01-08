@@ -2,8 +2,6 @@
 /**
  *  @file    PG_Properties_Encoder.cpp
  *
- *  $Id$
- *
  *  This file implements classes to help manage the Properties
  *  defined in the Portable Object Group.
  *

@@ -4,8 +4,6 @@
 /**
  *  @file    Remote_Tokens.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */

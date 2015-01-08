@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef LONGUPCALLS_AMI_MANAGER_H
 #define LONGUPCALLS_AMI_MANAGER_H
 

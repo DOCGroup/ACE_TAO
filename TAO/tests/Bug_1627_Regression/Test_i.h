@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 // -*- C++ -*-
 
 #if !defined BUG_1330_REGRESSION_TEST_I_H

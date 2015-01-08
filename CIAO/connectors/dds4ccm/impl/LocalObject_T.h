@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef DDS4CCM_LOCALOBJECT_T_H_
 #define DDS4CCM_LOCALOBJECT_T_H_
 

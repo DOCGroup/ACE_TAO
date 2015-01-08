@@ -1,5 +1,3 @@
-// $Id$
-
 #include "liveliness_qos_test.h"
 
 #include "duration.h"

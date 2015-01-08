@@ -4,8 +4,6 @@
 /**
  * @file SL2_SecurityManager.h
  *
- * $Id$
- *
  * @author Chris Cleeland <cleeland@ociweb.com>
  */
 //=============================================================================

@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef bogus_h
 #define bogus_h

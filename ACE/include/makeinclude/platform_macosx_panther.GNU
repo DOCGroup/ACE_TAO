@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 
 # platform_macosx.GNU
 # support for Mac OS X 10.3 (Panther)

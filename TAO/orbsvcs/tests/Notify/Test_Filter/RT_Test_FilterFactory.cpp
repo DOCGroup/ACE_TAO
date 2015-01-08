@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_Test_FilterFactory.h"
 
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef APG_CALLBACK_H
 #define APG_CALLBACK_H
 

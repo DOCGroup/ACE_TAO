@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CDR.h"
 
 #include "tao/AnyTypeCode/Indirected_Type_TypeCode.h"

@@ -4,10 +4,7 @@
 /**
  *  @file    Consumer_Signal_Handler.h
  *
- *  $Id$
- *
  *  Definition of the Consumer_Signal_Handler class.
- *
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */

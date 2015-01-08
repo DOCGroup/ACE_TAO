@@ -1,5 +1,3 @@
-// $Id$
-
 #include "NamingTask.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 #include "ace/OS_NS_unistd.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    Exception_Data.h
  *
- *  $Id$
- *
  *  @author  balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

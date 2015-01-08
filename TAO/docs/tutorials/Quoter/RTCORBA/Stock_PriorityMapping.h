@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Stock_PriorityMapping.h
  * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>

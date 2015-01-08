@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef ACE_SUNCC_COMMON_H
 #define ACE_SUNCC_COMMON_H
 #include /**/ "ace/pre.h"

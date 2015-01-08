@@ -4,8 +4,6 @@
 /**
  * @file PortableServer_PolicyFactory.h
  *
- * $Id$
- *
  * @author Irfan Pyarali <irfan@oomworks.com>
  */
 //=============================================================================

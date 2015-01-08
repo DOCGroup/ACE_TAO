@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Test_i.h"
 
 BoundSequences::BoundSequences (CORBA::ORB_ptr orb)

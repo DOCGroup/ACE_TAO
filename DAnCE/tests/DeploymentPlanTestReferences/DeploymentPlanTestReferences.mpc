@@ -1,4 +1,3 @@
-// $Id$
 project : dance, taolib, xerces, dance_config_handlers, dance_logger {
   exename   = DeploymentPlanTestReferences
 

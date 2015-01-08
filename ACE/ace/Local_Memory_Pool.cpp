@@ -1,5 +1,3 @@
-// $Id$
-
 // Local_Memory_Pool.cpp
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Auto_Ptr.h"

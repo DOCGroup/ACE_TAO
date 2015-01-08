@@ -1,5 +1,4 @@
 # -*- Makefile -*-
-# $Id$
 # VxWorks 6.3
 
 #### Notes:

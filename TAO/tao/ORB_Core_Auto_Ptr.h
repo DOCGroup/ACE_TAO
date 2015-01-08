@@ -4,8 +4,6 @@
 /**
  *  @file   ORB_Core_Auto_Ptr.h
  *
- *  $Id$
- *
  *  @author DOC Center - Washington University at St. Louis
  *  @author DOC Laboratory - University of California at Irvine
  */

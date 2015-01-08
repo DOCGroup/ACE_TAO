@@ -1,4 +1,3 @@
-# $Id$
 
 This test demonstrates the fix for Bugzilla 4118. This test depends on
 existing services and utilities, therefore the is no need for a makefile.

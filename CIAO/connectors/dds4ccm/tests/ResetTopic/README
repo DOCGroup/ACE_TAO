@@ -1,5 +1,3 @@
-// $Id$
-
 In the early days of the DDS4CCM specification a topic name was not changable.
 When it was set (doesn't matter if it was a late binded topic), the user was not
 allowed to change it, otherwise a NonChangeable exception was thrown.

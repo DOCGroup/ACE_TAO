@@ -3,10 +3,7 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *  The Chat client program entry point.
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */

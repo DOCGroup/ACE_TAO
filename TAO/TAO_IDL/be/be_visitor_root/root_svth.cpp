@@ -3,10 +3,7 @@
 /**
  *  @file    root_svth.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the CIAO template servant header
- *
  *
  *  @author Marcel Smit
  */

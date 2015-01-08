@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "IFR_Service.h"
 #include "orbsvcs/IFRService/ComponentRepository_i.h"
 #include "orbsvcs/IFRService/Options.h"

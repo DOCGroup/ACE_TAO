@@ -3,10 +3,7 @@
 /**
  *  @file    public_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Union_branch in the public part.
- *
  *
  *  @author Aniruddha Gokhale
  */

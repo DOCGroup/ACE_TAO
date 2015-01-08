@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PI/PI_ORBInitializer.h"
 
 #if TAO_HAS_INTERCEPTORS == 1

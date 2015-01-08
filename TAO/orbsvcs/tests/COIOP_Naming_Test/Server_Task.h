@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef COLLOCATED_SERVER_TASK_H
 #define COLLOCATED_SERVER_TASK_H
 

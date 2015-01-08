@@ -1,5 +1,3 @@
-//$Id$
-
 #include "octet_seq.h"
 
 OctetSequence::OctetSequence ()

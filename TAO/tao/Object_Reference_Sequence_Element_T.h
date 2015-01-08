@@ -6,8 +6,6 @@
  * @brief Implement the type returned by operator[] in object_reference
  * sequences.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "tao/Basic_Types.h"

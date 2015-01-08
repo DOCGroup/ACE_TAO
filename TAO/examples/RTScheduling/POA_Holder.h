@@ -1,11 +1,7 @@
-//$Id$
-
 /* -*- C++ -*- */
 //=============================================================================
 /**
  *  @file POA_Holder.h
- *
- *  $Id$
  *
  *  A helper to hold options for creating a POA.
  *
@@ -27,7 +23,6 @@
  * @class POA_Holder
  *
  * @brief An options holder for parameters to creating a poa.
- *
  */
 class RTSCHEDTESTLIB_Export POA_Holder
 {

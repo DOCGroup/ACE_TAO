@@ -4,8 +4,6 @@
 /**
  *  @file    DII_Arguments.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

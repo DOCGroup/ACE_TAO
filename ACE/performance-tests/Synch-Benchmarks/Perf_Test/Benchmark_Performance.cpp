@@ -1,5 +1,3 @@
-// $Id$
-
 #define  ACE_BUILD_SVC_DLL
 #include "Benchmark_Performance.h"
 #include "ace/Basic_Types.h"

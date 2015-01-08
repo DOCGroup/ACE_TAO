@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Peer.h"
 
 #if ! defined (__ACE_INLINE__)

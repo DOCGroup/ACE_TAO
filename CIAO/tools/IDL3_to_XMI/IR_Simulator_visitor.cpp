@@ -1,5 +1,3 @@
-// $Id$
-
 #include "IR_Simulator_visitor.h"
 
 #include "be_sunsoft.h"

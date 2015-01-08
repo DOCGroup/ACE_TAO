@@ -1,5 +1,3 @@
-// $Id$
-
 #include "global.h"
 
 #define CONTENT_ENCODING_HEADER "Content-encoding: "

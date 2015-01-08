@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/ICMP_Socket.h"
 
 #if defined (ACE_HAS_ICMP_SUPPORT) && (ACE_HAS_ICMP_SUPPORT == 1)

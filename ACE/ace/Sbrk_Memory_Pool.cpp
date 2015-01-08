@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_unistd.h"
 #include "ace/Sbrk_Memory_Pool.h"
 #include "ace/Log_Category.h"

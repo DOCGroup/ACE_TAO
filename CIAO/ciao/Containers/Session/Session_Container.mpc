@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(CIAO_Session_Container_idl) : install, ciaoidldefaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_include=Session_Container_stub_export.h \

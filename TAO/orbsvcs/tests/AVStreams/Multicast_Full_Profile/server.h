@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"

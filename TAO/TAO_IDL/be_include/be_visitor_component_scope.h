@@ -3,11 +3,8 @@
 /**
  *  @file    be_visitor_component_scope.h
  *
- *  $Id$
- *
  *  Base class for visitors that need to visit the scope of a
  *  component and its ancestors, if any.
- *
  *
  *  @author Jeff Parsons
  */

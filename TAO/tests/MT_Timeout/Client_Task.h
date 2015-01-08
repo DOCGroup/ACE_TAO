@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef MT_TIMEOUT_CLIENT_TASK_H
 #define MT_TIMEOUT_CLIENT_TASK_H

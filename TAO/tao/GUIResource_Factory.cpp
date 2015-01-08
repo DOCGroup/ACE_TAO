@@ -1,4 +1,3 @@
-//$Id$
 #include "tao/GUIResource_Factory.h"
 #include "ace/Reactor.h"
 #include "tao/debug.h"

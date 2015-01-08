@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Sched_Params.h"
 #include "ace/Get_Opt.h"
 

@@ -3,10 +3,7 @@
 /**
  *  @file    any_op_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operator for the Sequence node
- *
  *
  *  @author Aniruddha Gokhale
  */

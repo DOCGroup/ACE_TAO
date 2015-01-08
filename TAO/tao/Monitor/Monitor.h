@@ -4,8 +4,6 @@
 /**
  *  @file   Monitor.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================
@@ -31,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Monitor_Init
- *
  */
 class TAO_Monitor_Export TAO_Monitor_Init : public TAO_Object_Loader
 {

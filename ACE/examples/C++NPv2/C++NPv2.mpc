@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 // The specific section for gnuace is here to avoid problems
 // with parallel builds.  Since the libraries in question share source
 // files, we need to ensure that one of them is built before all others.

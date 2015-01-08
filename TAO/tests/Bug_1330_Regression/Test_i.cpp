@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Test_i.h"
 
 Test_i::Test_i(CORBA::ORB_ptr orb)

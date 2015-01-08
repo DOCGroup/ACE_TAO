@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Kokyu_Scheduling.h"
 #include "orbsvcs/Event/EC_QOS_Info.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h"

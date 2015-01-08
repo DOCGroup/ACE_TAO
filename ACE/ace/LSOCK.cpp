@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/LSOCK.h"
 
 

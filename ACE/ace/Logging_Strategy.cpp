@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Logging_Strategy.h"
 #include "ace/Service_Config.h"
 #include "ace/ACE.h"

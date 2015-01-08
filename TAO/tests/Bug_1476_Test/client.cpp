@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HelloC.h"
 
 #include "tao/Messaging/Messaging.h"

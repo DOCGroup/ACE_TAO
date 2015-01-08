@@ -1,7 +1,5 @@
 /**
  * @file test.cpp
- *
- * $Id$
  */
 
 #include "TestC.h"

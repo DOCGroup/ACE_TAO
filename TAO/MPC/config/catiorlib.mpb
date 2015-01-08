@@ -1,5 +1,3 @@
-// $Id$
-
 project: rtportableserver, messaging, ziop {
   after += catior_lib
   libs  += TAO_Catior_i

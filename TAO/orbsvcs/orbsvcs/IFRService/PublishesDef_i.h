@@ -4,10 +4,7 @@
 /**
  *  @file    PublishesDef_i.h
  *
- *  $Id$
- *
  *  PublishesDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

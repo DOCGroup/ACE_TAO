@@ -4,7 +4,6 @@ package GNUIDLDependencyWriter;
 # Description   : Generates GNU IDL Makefile dependencies.
 # Author        : Chip Jones
 # Create Date   : 11/01/2011
-# $Id$
 # ************************************************************
 
 # ************************************************************

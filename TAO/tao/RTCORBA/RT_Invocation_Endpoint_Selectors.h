@@ -4,11 +4,8 @@
 /**
  *  @file   RT_Invocation_Endpoint_Selectors.h
  *
- *  $Id$
- *
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
- *
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */

@@ -4,11 +4,8 @@
 /**
  *  @file    exceptlist_ss.h
  *
- *  $Id$
- *
  *  Generates the array of user exception TypeCodes used by the
  *  skeletons.
- *
  *
  *  @author Ossama Othman
  */

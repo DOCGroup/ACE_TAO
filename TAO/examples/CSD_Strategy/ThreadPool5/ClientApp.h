@@ -1,4 +1,3 @@
-// $Id$
 #ifndef CLIENTAPP_H
 #define CLIENTAPP_H
 

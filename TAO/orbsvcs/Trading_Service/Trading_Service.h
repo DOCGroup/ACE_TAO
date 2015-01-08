@@ -4,8 +4,6 @@
 /**
  *  @file    Trading_Service.h
  *
- *  $Id$
- *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
 //=============================================================================

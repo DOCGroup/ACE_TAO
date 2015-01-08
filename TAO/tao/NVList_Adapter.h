@@ -4,8 +4,6 @@
 /**
  *  @file    NVList_Adapter.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

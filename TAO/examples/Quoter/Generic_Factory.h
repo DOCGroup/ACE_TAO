@@ -3,10 +3,7 @@
 /**
  *  @file    Generic_Factory.h
  *
- *  $Id$
- *
  *  A generic factory, customized for the use with the Quoter example.
- *
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */

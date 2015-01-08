@@ -3,11 +3,8 @@
 /**
  *  @file     Nested_Non_Servant_Upcalls.cpp
  *
- *  $Id$
- *
  *   This program tests that nested non-servant upcalls are handled
  *   correctly.
- *
  *
  *  @author  Irfan Pyarali
  */

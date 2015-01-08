@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(DAnCE_Properties_IDL) : install, dancelib_with_idl, dance_output {
   custom_only = 1
 

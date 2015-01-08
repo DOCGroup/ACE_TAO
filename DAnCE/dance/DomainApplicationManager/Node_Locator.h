@@ -4,8 +4,6 @@
 /**
  *  @file    Node_Locator.h
  *
- *  $Id$
- *
  * @brief  Locates NodeManager instances.
  *
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

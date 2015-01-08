@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef MESSAGE_INFO_H
 #define MESSAGE_INFO_H
 

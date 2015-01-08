@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_TTCONNECTOR_EXEC_H_
 #define CIAO_TTCONNECTOR_EXEC_H_
 

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//$Id$
-
 #ifndef NESTEDVALUE_H
 #define NESTEDVALUE_H
 

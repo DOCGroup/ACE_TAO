@@ -7,8 +7,6 @@
  * This file provides utility functions to determine the encoding of a file
  * or a byte stream automatically.
  *
- *  $Id$
- *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
 //=============================================================================

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch.h" // needed for the lock
 #include "ace/Functor.h"

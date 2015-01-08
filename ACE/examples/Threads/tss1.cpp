@@ -3,15 +3,12 @@
 /**
  *  @file    tss1.cpp
  *
- *  $Id$
- *
  *   This program tests thread specific storage of data. The ACE_TSS
  *   wrapper transparently ensures that the objects of this class
  *   will be placed in thread-specific storage. All calls on
  *   ACE_TSS::operator->() are delegated to the appropriate method
  *   in the Errno class.  Note that each thread of control has its
  *   own unique TSS object.
- *
  *
  *  @author Detlef Becker <Detlef.Becker@med.siemens.de>
  */

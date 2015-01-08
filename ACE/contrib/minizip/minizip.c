@@ -4,7 +4,7 @@
 
    Copyright (C) 1998-2005 Gilles Vollant
 
-   $Id$
+
 */
 
 #include <stdio.h>

@@ -3,9 +3,6 @@
 //=============================================================================
 /**
  * @file Server_Request_Interceptor.h
- *
- * $Id$
- *
  */
 //=============================================================================
 
@@ -30,8 +27,6 @@
  * @class Server_Request_Interceptor
  *
  * @brief Simple concrete server request interceptor.
- *
- *
  */
 class Server_Request_Interceptor
   : public virtual Simple_ServerRequestInterceptor,

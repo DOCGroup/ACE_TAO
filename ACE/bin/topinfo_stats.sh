@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id$
-#
 
 
 if [ $# -lt 2 ]; then

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Admin_Client.h"
 
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"

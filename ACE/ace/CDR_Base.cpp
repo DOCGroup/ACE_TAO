@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/CDR_Base.h"
 
 #if !defined (__ACE_INLINE__)

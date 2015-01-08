@@ -4,8 +4,6 @@
 /**
  * @file Foo_i.h
  *
- * $Id$
- *
  * Implementation header for the Bug_1107_Regression test.
  *
  * @author Ossama Othman <ossama@uci.edu>

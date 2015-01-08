@@ -3,8 +3,6 @@
 /**
  *  @file RT_Factory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -26,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_RT_Factory
  *
  * @brief The Factory for the RT aware Notify classes.
- *
  */
 class TAO_RT_Notify_Export TAO_Notify_RT_Factory : public TAO_Notify_Default_Factory
 {

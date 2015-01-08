@@ -1,7 +1,5 @@
 // -*- C++ -*-
 
-// $Id$
-
 /*
  * Copyright (c) 1995 Regents of the University of California.
  * All rights reserved.

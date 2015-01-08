@@ -1,4 +1,3 @@
-// $Id$
 #include "testS.h"
 
 class con_i : public virtual POA_con

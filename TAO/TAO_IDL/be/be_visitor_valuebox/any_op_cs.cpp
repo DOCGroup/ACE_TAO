@@ -3,11 +3,8 @@
 /**
  *  @file    any_op_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operators for valueboxes in the stubs
  *  file.
- *
  *
  *  @author Gary Maxey
  */

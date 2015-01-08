@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #ifndef _AST_COMPONENT_AST_COMPONENT_HH
 #define _AST_COMPONENT_AST_COMPONENT_HH
 

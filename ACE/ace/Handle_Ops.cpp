@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Handle_Ops.h"
 
 #include "ace/OS_NS_errno.h"

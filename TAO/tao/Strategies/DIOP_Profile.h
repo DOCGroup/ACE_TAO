@@ -4,10 +4,7 @@
 /**
  *  @file     DIOP_Profile.h
  *
- *  $Id$
- *
  *   DIOP profile specific processing
- *
  *
  *  @author  Michael Kircher
  */

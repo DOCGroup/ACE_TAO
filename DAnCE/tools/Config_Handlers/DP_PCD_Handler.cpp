@@ -1,5 +1,3 @@
-// $Id$
-
 #include "DP_PCD_Handler.h"
 #include "CEPE_Handler.h"
 #include "PSPE_Handler.h"

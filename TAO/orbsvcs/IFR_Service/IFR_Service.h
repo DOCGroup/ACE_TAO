@@ -3,8 +3,6 @@
 /**
  *  @file    IFR_Service.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

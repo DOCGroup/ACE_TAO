@@ -4,8 +4,6 @@
 /**
  *  @file    Seq_Var_T.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  */
 //=============================================================================
@@ -29,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Seq_Var_Base_T
  *
  * @brief Parametrized implementation of _var base class for sequences
- *
  */
 template <typename T>
 class TAO_Seq_Var_Base_T
@@ -103,7 +100,6 @@ public:
  *
  * @brief Parametrized implementation of _var class for sequences
  * whose element is of variable size..
- *
  */
 template <typename T>
 class TAO_VarSeq_Var_T : public TAO_Seq_Var_Base_T<T>

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-//$Id$
-
 #ifndef BASEVALUEFACTORY_H
 #define BASEVALUEFACTORY_H
 

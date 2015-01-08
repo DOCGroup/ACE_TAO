@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY, class ACE_LOCK> ACE_INLINE  TAO_Notify_Event_Map_Entry_T<PROXY>*

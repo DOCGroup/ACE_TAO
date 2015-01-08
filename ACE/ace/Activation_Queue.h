@@ -4,8 +4,6 @@
 /**
  *  @file    Activation_Queue.h
  *
- *  $Id$
- *
  *  @author Andres Kruse <Andres.Kruse@cern.ch>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */

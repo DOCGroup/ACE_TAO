@@ -1,4 +1,3 @@
-/* $Id$ */
 /* this is a public domain version of getopt */
 /* FTP Site: ftp.uu.net/pub/OS/unix/bsd-sources/lib/librpc/etc/getopt.c */
 

@@ -1,4 +1,3 @@
-// $Id$
 #include "Foo_i.h"
 #include "OrbShutdownTask.h"
 

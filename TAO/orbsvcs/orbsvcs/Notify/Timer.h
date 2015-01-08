@@ -3,8 +3,6 @@
 /**
  *  @file Timer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -32,7 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Timer
  *
  * @brief Interface for scheduling timers.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Timer : public TAO_Notify_Refcountable
 {

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Resource_Factory.h"
 #include "tao/Protocol_Factory.h"
 #include "tao/orbconf.h"

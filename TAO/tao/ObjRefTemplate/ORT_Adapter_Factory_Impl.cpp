@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h"
 #include "tao/ObjRefTemplate/ORT_Adapter_Impl.h"
 #include "tao/PortableServer/Root_POA.h"

@@ -4,8 +4,6 @@
 /**
  *  @file ThreadStrategySingle.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

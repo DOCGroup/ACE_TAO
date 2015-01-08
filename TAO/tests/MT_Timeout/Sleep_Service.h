@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef SLEEP_SERVICE_H
 #define SLEEP_SERVICE_H

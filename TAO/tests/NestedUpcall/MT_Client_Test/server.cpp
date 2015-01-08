@@ -3,11 +3,8 @@
 /**
  *  @file    server.cpp
  *
- *  $Id$
- *
  *  This class implements a simple server for the
  *  Nested Upcalls - MT_Client test.
- *
  *
  *  @author Michael Kircher
  */

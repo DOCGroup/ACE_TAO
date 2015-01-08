@@ -1,9 +1,6 @@
-// $Id$
-
 /**
  * @file Exec_Dest_Status.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
- *
  */
 
 #ifndef EXEC_STATUS_H_

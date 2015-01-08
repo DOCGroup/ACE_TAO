@@ -3,8 +3,6 @@
 /**
  *  @file    Message_Queue_Notifications_Test.cpp
  *
- *  $Id$
- *
  *    There are two tests that test 2 different notification
  *    mechanisms in Message Queue.
  *
@@ -24,7 +22,6 @@
  *
  *    The second test also makes sure the high/low water mark
  *    signaling mechanism works flawlessly.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
  */

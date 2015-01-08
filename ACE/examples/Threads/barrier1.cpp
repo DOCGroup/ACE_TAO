@@ -1,5 +1,3 @@
-// $Id$
-
 // This test program illustrates how the ACE barrier synchronization
 // mechanisms work.
 

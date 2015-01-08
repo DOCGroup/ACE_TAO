@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"

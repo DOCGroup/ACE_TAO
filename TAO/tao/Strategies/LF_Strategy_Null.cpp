@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/LF_Strategy_Null.h"
 
 #if !defined (__ACE_INLINE__)

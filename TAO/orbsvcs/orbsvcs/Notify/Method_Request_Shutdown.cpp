@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Method_Request_Shutdown.h"
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 

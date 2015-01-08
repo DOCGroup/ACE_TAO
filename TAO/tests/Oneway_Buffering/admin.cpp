@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Oneway_Buffering_Admin.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"

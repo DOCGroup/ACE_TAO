@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Message_Block.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"

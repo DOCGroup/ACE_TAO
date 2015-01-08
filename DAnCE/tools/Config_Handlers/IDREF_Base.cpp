@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef IDREF_BASE_CPP
 #define IDREF_BASE_CPP
 

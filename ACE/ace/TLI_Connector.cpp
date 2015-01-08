@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/TLI_Connector.h"
 
 

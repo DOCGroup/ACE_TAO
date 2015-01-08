@@ -1,5 +1,3 @@
-// $Id$
-
 // Client.mpc,v 1.6 2005/02/18 09:07:06 jwillemsen Exp
 
 project(TMClient): dance_deployment_stub, dance_targetmanager_stub, dance_config_handlers {

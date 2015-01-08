@@ -1,5 +1,3 @@
-// $Id$
-
 #include "CE_Screen_Output.h"
 #include <string.h>
 

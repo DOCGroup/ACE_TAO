@@ -2,11 +2,7 @@
 /**
  *  @file PushConsumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_PUSHCONSUMER_H
@@ -56,7 +52,6 @@ typedef TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_PushConsumer_Traits> TAO_No
  * @class TAO_Notify_Tests_PushConsumer
  *
  * @brief PushConsumer implementation.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_PushConsumer : public TAO_Notify_Tests_PushConsumer_Base
 {

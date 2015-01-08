@@ -1,5 +1,3 @@
-//$Id$
-
 #include "../lib/Notify_Test_Client.h"
 #include "orbsvcs/NotifyExtC.h"
 #include "ace/OS_main.h"

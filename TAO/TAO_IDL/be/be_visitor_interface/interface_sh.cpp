@@ -3,10 +3,7 @@
 /**
  *  @file    interface_sh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interfaces in the server header
- *
  *
  *  @author Aniruddha Gokhale
  */

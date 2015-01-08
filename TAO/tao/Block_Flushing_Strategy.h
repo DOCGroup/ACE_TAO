@@ -4,8 +4,6 @@
 /**
  *  @file Block_Flushing_Strategy.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================

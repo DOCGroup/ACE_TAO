@@ -3,15 +3,12 @@
 /**
  *  @file     address.cpp
  *
- *  $Id$
- *
  *  The Vb class is an encapsulation of the snmp variable binding.
  * This module contains the class definition for the variable binding (VB)
  * class. The VB class is an encapsulation of a SNMP VB. A VB object is
  * composed of one SNMP++ Oid and one SMI value. The Vb class utilizes Oid
  * objects and thus requires the Oid class. To use this class,
  * set oid, value then call valid() to be sure object was constructed correctly.
- *
  *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
@@ -1317,7 +1314,6 @@ SnmpSyntax *IpxAddress::clone() const
 //   Second string length must be 12
 //   Each char must take on value 0-F
 //
-//
 // Input formats recognized
 //
 //  XXXXXXXX.XXXXXXXXXXXX
@@ -1881,7 +1877,6 @@ SnmpSyntax& MacAddress::operator=( SnmpSyntax &val)
 //   XXXXXXXXXXXX
 //   Total length must be 17
 //   Each char must take on value 0-F
-//
 //
 int MacAddress::parse_address( const char *inaddr)
 {

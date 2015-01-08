@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_ESF_PROXY_RB_TREE_CPP
 #define TAO_ESF_PROXY_RB_TREE_CPP
 

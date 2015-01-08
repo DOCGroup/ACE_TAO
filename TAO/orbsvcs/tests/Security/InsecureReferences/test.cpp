@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/POAC.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_strings.h"

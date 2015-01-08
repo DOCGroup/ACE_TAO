@@ -3,11 +3,8 @@
 /**
  *  @file    CC_test_utils.h
  *
- *  $Id$
- *
  *    This class provides a namespace for utility functions for the
  *    concurrency service test.
- *
  *
  *  @author   Torben Worm <tworm@cs.wustl.edu>
  */

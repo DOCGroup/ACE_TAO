@@ -4,8 +4,6 @@
 /**
  *  @file   HTIOP_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
 // ===================================================================

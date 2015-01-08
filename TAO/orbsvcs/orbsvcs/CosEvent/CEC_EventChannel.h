@@ -4,14 +4,10 @@
 /**
  *  @file   CEC_EventChannel.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * A new implementation of the COS Event Channel.
  * This version does not rely on the RTEC in its implementation.
- *
- *
  */
 //=============================================================================
 

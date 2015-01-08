@@ -2,8 +2,6 @@
 /**
  *  @file EC_RTCORBA_Dispatching.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
@@ -32,7 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_EC_RTCORBA_Dispatching
  *
  * @brief RTCORBA-based dispatching strategy
- *
  */
 class TAO_RTCORBAEvent_Export TAO_EC_RTCORBA_Dispatching : public TAO_EC_Dispatching
 {

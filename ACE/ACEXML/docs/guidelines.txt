@@ -1,4 +1,4 @@
-// -*- HTML-Helper -*- $Id$
+// -*- HTML-Helper -*-
 
 /**
 @page acexml_guides ACEXML Programming Guidelines

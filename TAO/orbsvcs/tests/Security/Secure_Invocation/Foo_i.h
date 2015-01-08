@@ -4,8 +4,6 @@
 /**
  * @file Foo_i.h
  *
- * $Id$
- *
  * Implementation header for the Secure_Invocation test.
  *
  * @author Ossama Othman <ossama@uci.edu>

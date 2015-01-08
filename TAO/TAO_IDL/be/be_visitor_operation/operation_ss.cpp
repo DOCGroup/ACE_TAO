@@ -3,10 +3,7 @@
 /**
  *  @file    operation_ss.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the server skeleton
- *
  *
  *  @author Aniruddha Gokhale
  */

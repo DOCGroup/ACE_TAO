@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Activation_Queue.h"
 
 #if !defined (__ACE_INLINE__)

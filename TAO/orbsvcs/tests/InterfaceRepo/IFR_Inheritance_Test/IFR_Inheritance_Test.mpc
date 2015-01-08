@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project: taoserver, ifr_client {
   exename  = IFR_Inheritance_Test
 

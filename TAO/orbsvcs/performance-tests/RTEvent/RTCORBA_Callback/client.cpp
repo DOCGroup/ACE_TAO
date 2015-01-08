@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Callback.h"
 
 #include "RT_Class.h"

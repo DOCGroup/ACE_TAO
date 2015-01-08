@@ -1,7 +1,5 @@
 /* -*- C++ -*- */
 
-// $Id$
-
 #ifndef ACE_CONNECTION_HANDLER_H
 #define ACE_CONNECTION_HANDLER_H
 

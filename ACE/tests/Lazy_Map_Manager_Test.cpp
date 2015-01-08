@@ -3,12 +3,9 @@
 /**
  *  @file    Lazy_Map_Manager_Test.cpp
  *
- *  $Id$
- *
  *   This is a simple test of the <ACE_Map_Manager> and
  *   <ACE_Active_Map_Manager> that illustrates how lazy map managers
  *   allow the deletion of entries while iterating over the map.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

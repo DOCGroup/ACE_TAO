@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef HTTP_POLICY_H
 #define HTTP_POLICY_H
 

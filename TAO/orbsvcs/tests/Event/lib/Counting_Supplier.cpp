@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Counting_Supplier.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "ace/OS_NS_unistd.h"

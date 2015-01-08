@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Test_Saver.h"
 
 #include <ace/streams.h>

@@ -4,8 +4,6 @@
 /**
  *  @file    Debug_Element_Builder.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

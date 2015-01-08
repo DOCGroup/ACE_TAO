@@ -3,11 +3,8 @@
 /**
  *  @file    transaction.cpp
  *
- *  $Id$
- *
  *  implements blocking SNMPv1 API using a simple state machine
  * transactions over UDP/IP networks
- *
  *
  *  @author Michael R MacFaden  mrm@cisco.com - remove v2c
  *  @author async

@@ -3,10 +3,7 @@
 /**
  *  @file    valuetype_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Valuetypes in the client stubs file.
- *
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
  */

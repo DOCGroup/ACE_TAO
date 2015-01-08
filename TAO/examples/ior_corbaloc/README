@@ -1,4 +1,4 @@
-$Id$
+
 
 This is test to exercise the corbaloc: and corbaname: style URL.
 The simple way to test is to run the run_test.pl.

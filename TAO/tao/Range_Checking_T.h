@@ -6,8 +6,6 @@
  * @brief Details can be found in the documentation for
  * TAO::details::generic_sequence
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 
@@ -95,8 +93,6 @@ namespace details
  * ..
  * };
  * </PRE>
- *
- *
  *
  * @todo There is no control on a per-sequence type basis, only on a
  *       per-underlying type basis, for example, the following two IDL

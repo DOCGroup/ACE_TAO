@@ -1,8 +1,6 @@
 /**
  * @file Loopback_Pair.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

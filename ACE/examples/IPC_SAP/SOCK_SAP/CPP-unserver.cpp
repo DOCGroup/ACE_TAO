@@ -1,5 +1,3 @@
-// $Id$
-
 // This example tests the features of the ACE_LSOCK_Acceptor and
 // ACE_LSOCK_Stream classes.  If the platform supports threads it uses
 // a thread-per-request concurrency model.

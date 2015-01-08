@@ -4,8 +4,6 @@
 /**
  *  @file   Svc_Handler.h
  *
- *  $Id$
- *
  *  @author Douglas Schmidt <schmidt@uci.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

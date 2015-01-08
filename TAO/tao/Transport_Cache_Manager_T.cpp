@@ -1,4 +1,3 @@
-//$Id$
 #include "tao/Transport_Cache_Manager_T.h"
 #include "tao/debug.h"
 #include "tao/Connection_Purging_Strategy.h"

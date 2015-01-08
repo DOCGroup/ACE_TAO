@@ -6,8 +6,6 @@
  *
  *  definitions for the typeinfo file
  *
- *  $Id$
- *
  *  @author Don Hinton Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

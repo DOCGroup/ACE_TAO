@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Supports_Test_impl.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "ace/Get_Opt.h"

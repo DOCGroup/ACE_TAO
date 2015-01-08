@@ -4,8 +4,6 @@
 /**
  *  @file   Policy_Manager.h
  *
- *  $Id$
- *
  * An implementation for the CORBA::PolicyManager interface.
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)

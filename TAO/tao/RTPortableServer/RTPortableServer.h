@@ -4,8 +4,6 @@
 /**
  *  @file    RTPortableServer.h
  *
- *  $Id$
- *
  *  @author  Frank Hunleth  <fhuntleth@cs.wustl.edu>
  */
 //=============================================================================

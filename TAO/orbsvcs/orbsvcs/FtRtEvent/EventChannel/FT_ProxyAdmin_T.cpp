@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "tao/PortableServer/POAC.h"

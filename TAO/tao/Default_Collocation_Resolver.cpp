@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Default_Collocation_Resolver.h"
 #include "tao/Object.h"
 #include "ace/Log_Msg.h"

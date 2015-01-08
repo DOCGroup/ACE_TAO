@@ -4,11 +4,8 @@
 /**
  *  @file    source_i.h
  *
- *  $Id$
- *
  *  This class implements the source for a three tier system
  *  Adapted from TAO/examples/Simple/time
- *
  *
  *  @author Dale Wilson <wilsond@ociweb.com>
  */

@@ -3,8 +3,6 @@
 /**
  *  @file   Test_i.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan
  */
 //=============================================================================
@@ -20,7 +18,6 @@
  * @class Test_i
  *
  * @brief Implement the Test interface
- *
  */
 class OLT_Export Test_i : public POA_Test
 {

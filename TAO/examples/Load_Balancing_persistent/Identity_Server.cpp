@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Identity_Server.h"
 #include "Identity_i.h"
 #include "tao/debug.h"

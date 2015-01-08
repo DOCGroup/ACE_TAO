@@ -3,8 +3,6 @@
 /**
  *  @file Method_Request_Dispatch.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -34,7 +32,6 @@ class TAO_Notify_Method_Request_Dispatch_Queueable;
  * @class TAO_Notify_Method_Request_Dispatch
  *
  * @brief
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch
   : public TAO_Notify_Method_Request_Event
@@ -91,7 +88,6 @@ protected:
  * @class TAO_Notify_Method_Request_Dispatch_Queueable
  *
  * @brief Dispatchs an event to a proxy supplier.
- *
  */
 
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_Queueable
@@ -132,7 +128,6 @@ private:
  * @class TAO_Notify_Method_Request_Dispatch_No_Copy
  *
  * @brief Dispatchs an event to a proxy supplier.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy
     : public TAO_Notify_Method_Request_Dispatch

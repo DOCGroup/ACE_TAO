@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Receiver.h"
 
 Receiver::Receiver (CORBA::ORB_ptr orb)

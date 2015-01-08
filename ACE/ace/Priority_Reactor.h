@@ -4,8 +4,6 @@
 /**
  *  @file    Priority_Reactor.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Policy_Validator.h"
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"

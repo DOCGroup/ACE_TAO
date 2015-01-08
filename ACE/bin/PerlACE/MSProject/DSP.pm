@@ -1,4 +1,3 @@
-# $Id$
 
 package PerlACE::MSProject::DSP;
 

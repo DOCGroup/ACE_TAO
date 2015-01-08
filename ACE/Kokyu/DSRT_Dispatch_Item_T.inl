@@ -2,10 +2,7 @@
 /**
  *  @file  DSRT_Dispatch_Item_T.inl
  *
- *  $Id$
- *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
- *
  */
 
 namespace Kokyu

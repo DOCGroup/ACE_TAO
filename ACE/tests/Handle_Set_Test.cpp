@@ -3,12 +3,9 @@
 /**
  *  @file    Handle_Set_Test.cpp
  *
- *  $Id$
- *
  *    This test illustrates the use of ACE_Handle_Set to maintain a
  *    set of handles. No command line arguments are needed to run
  *    the test.
- *
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */

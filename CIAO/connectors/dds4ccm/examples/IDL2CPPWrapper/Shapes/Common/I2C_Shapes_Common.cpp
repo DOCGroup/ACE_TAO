@@ -1,5 +1,3 @@
-// $Id$
-
 #include "I2C_Shapes_Common.h"
 
 #include "ace/Env_Value_T.h"

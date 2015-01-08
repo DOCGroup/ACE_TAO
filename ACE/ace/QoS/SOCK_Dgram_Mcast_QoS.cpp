@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SOCK_Dgram_Mcast_QoS.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_sys_socket.h"

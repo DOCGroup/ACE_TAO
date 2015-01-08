@@ -5,8 +5,6 @@
 /**
  *  @file    Scheduler_Factory.h
  *
- *  $Id$
- *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
 //=============================================================================

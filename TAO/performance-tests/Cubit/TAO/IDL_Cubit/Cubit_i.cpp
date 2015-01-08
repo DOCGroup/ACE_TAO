@@ -3,8 +3,6 @@
 /**
  *  @file    Cubit_i.cpp
  *
- *  $Id$
- *
  *  @author Andy Gokhale
  *  @author Sumedh Mungee and Sergio Flores-Gaitan
  */

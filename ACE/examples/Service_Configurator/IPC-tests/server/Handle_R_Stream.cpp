@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Handle_R_Stream.h"
 
 #if defined (SunOS4)

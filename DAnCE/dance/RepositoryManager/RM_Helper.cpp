@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RM_Helper.h"
 #include "ace/Auto_Ptr.h"            //for Auto_Ptr
 #include "ace/OS_NS_fcntl.h"         //for open

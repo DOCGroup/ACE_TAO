@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_root.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Root class
- *
  *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */

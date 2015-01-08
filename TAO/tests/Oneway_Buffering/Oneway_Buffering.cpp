@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Oneway_Buffering.h"
 
 Oneway_Buffering::Oneway_Buffering (CORBA::ORB_ptr orb,

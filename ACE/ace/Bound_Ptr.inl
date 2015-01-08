@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 // Bound_Ptr.i
 
 #include "ace/Guard_T.h"

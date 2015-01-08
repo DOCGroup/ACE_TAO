@@ -4,8 +4,6 @@
 /**
  *  @file    LOCK_SOCK_Acceptor.h
  *
- *  $Id$
- *
  *  @author James Hu and Irfan Pyarali
  */
 //=============================================================================

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/RTCORBA/RT_Endpoint_Utils.h"
 #include "tao/Profile_Transport_Resolver.h"
 

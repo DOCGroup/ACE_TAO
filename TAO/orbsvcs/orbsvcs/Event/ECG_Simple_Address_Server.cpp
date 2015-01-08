@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/ECG_Simple_Address_Server.h"
 
 #if !defined(__ACE_INLINE__)

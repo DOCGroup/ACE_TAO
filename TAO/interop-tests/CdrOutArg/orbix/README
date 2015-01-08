@@ -1,4 +1,4 @@
-$Id$
+
 
 This is the Orbix companion for the CDR OUT Arg test. In order to build, you must
 have Orbix 6.3 installed on your system. Local editing of the supplied makefiles

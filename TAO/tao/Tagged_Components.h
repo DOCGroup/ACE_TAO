@@ -4,8 +4,6 @@
 /**
  *  @file   Tagged_Components.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

@@ -4,10 +4,7 @@
 /**
  *  @file    Account_i.h
  *
- *  $Id$
- *
  *  This class implements the Bank IDL interface.
- *
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */

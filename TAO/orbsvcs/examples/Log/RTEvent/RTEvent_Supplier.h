@@ -4,11 +4,7 @@
 /**
  *  @file   RTEvent_Supplier.h
  *
- *  $Id$
- *
  *  An example of using the RTEvent_Logging_Service.
- *
- *
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */

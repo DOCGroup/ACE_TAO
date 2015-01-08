@@ -3,10 +3,7 @@
 /**
  *  @file    be_visitor_attr_return.h
  *
- *  $Id$
- *
  *  Encapsulation of rules for component attribute accessor.
- *
  *
  *  @author Jeff Parsons
  */

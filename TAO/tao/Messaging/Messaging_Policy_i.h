@@ -4,8 +4,6 @@
 /**
  *  @file   Messaging_Policy_i.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

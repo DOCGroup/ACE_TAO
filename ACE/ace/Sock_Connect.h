@@ -4,8 +4,6 @@
 /**
  *  @file   Sock_Connect.h
  *
- *  $Id$
- *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  *  @author Based on code that existed formerly in ACE.h.
  */

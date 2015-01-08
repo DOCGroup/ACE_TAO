@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef CALLBACK_SERVICE_H
 #define CALLBACK_SERVICE_H

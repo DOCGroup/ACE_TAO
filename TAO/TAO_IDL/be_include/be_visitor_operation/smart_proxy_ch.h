@@ -3,11 +3,8 @@
 /**
  *  @file    smart_proxy_ch.h
  *
- *  $Id$
- *
  *  Visitor for generating code for IDL operations for the smart proxy case
  *  inside of the client stubs header
- *
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */

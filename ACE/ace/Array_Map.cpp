@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_ARRAY_MAP_CPP
 #define ACE_ARRAY_MAP_CPP
 

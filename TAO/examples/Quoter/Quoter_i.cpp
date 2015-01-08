@@ -3,8 +3,6 @@
 /**
  *  @file    Quoter_i.cpp
  *
- *  $Id$
- *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
 //=============================================================================

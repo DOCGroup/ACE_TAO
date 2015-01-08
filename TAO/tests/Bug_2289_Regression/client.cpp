@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "TestS.h"
 #include "MyInterfaceImpl.h"
 #include "ace/Get_Opt.h"

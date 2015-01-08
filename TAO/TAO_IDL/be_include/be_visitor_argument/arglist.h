@@ -3,11 +3,8 @@
 /**
  *  @file    arglist.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arguments as parameter lists in the
  *  operation signature
- *
  *
  *  @author Aniruddha Gokhale
  */

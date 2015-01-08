@@ -1,10 +1,7 @@
 /**
  * @file Table_Adapter.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
- *
  */
 
 #include "tao/IORTable/Table_Adapter.h"

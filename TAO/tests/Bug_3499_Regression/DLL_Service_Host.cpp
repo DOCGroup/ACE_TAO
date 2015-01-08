@@ -1,5 +1,3 @@
-// $Id$
-
 #include "DLL_Service.h"
 #include "ace/DLL.h"
 #include "ace/Service_Gestalt.h"

@@ -1,4 +1,4 @@
-$Id$
+
 
 The following test illustrates the SOCK Mcast multicast wrappers in
 conjunction with the Reactor.  This test was written by Tim Harrison

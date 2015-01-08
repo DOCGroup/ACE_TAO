@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Properties_Support.h
  *
- *  $Id$
- *
  *  This file declares classes to help manage the PortableGroup::Properties
  *  It serves roughly the same purpose as PG_PropertiesManager, but takes a
  *  different approach that suits the needs of FT CORBA.

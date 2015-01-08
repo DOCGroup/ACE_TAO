@@ -4,10 +4,7 @@
 /**
  *  @file    attribute.h
  *
- *  $Id$
- *
  *  Visitor for the Attribute class.
- *
  *
  *  @author Aniruddha Gokhale
  */

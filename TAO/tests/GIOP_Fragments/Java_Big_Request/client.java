@@ -1,5 +1,3 @@
-// $Id$
-
 // If this server is compiled and run with the JDK ORB, it will
 // fragment the GIOP Messages sent when more_data() is called.
 

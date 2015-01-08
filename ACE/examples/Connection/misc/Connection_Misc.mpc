@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project (*Handler) : aceexe {
   exename = handler
   Source_Files {

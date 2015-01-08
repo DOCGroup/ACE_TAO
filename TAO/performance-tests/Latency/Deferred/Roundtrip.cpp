@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Roundtrip.h"
 
 Roundtrip::Roundtrip (CORBA::ORB_ptr orb)

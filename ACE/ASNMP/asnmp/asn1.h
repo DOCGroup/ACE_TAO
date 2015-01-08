@@ -5,13 +5,10 @@
 /**
  *  @file    asn1.h
  *
- *  $Id$
- *
  * Abstract Syntax Notation One, ASN.1
  * As defined in ISO/IS 8824 and ISO/IS 8825
  * This implements a subset of the above International Standards that
  * is sufficient to implement SNMP.
- *
  *
  *  @author Steve Waldbusser/CMU ?
  */

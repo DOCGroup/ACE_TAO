@@ -5,10 +5,7 @@
 /**
  *  @file    ComponentContainer_i.h
  *
- *  $Id$
- *
  *  ComponentContainer_i servant class.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

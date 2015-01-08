@@ -3,8 +3,6 @@
 /**
  *  @file   Loader.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan
  */
 //=============================================================================
@@ -20,7 +18,6 @@
  * @class Loader
  *
  * @brief Implement the Test interface
- *
  */
 class OLT_Export Loader : public TAO_Object_Loader
 {

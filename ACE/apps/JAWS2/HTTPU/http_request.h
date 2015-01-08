@@ -1,5 +1,3 @@
-// $Id$
-
 // There are two kinds of HTTP Requests in a proxy.
 // One is the kind you have to read in from the HTTP client.
 // The other is the kind you issue to the server.

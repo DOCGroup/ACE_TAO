@@ -1,6 +1,3 @@
-//
-// $Id: TestServer.cpp
-//
 #include "TestServer.h"
 
 void

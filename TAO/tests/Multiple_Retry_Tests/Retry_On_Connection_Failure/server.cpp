@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Hello.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/Get_Opt.h"

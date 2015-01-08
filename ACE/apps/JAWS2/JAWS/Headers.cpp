@@ -1,5 +1,3 @@
-/* $Id$ */
-
 #include "JAWS/Headers.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_strings.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "AccountManager_i.h"
 #include "Account_i.h"
 #include "tao/debug.h"

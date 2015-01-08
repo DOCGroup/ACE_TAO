@@ -3,12 +3,9 @@
 /**
  *  @file    interface_svts.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This provides for code generation in the CIAO
  *  servant sourc e
- *
  *
  *  @author Marcel Smit
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "PP_Test_Client.h"
 #include "tao/Timeprobe.h"
 

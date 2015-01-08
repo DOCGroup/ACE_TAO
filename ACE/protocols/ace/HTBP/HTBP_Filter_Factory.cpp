@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HTBP_Filter_Factory.h"
 #include "HTBP_Inside_Squid_Filter.h"
 #include "HTBP_Outside_Squid_Filter.h"

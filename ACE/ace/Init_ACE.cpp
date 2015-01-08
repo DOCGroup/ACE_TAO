@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Init_ACE.h"
 
 #include "ace/Object_Manager.h"

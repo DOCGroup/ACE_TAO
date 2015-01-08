@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Oneway_Receiver.h"
 #include "Crash_Task.h"
 #include "ace/Get_Opt.h"

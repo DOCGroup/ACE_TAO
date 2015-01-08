@@ -3,10 +3,7 @@
 /**
  *  @file   ECG_Complex_Address_Server.h
  *
- *  $Id$
- *
  *  @author Marina Spivak (marina@atdesk.com)
- *
  */
 
 #ifndef TAO_ECG_COMPLEX_ADDRESS_SERVER_H
@@ -44,7 +41,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * i.e., the one that will be returned for event sources that weren't
  * explicitly specified in the initialization string.  Example:
  * "*@230.100.0.2:2300 45@230.100.123.43:2300"
- *
  */
 class TAO_RTEvent_Serv_Export TAO_ECG_Complex_Address_Server :
   public virtual POA_RtecUDPAdmin::AddrServer

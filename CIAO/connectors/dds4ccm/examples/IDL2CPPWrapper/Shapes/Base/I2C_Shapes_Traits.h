@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef I2C_SHAPES_TRAITS_H_
 #define I2C_SHAPES_TRAITS_H_
 

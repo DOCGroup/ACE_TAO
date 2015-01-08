@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Echo_i.h"
 
 // Constructor.

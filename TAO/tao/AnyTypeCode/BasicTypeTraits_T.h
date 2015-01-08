@@ -4,8 +4,6 @@
 /**
  *  @file    BasicTypeTraits_T.h
  *
- *  $Id$
- *
  *  Template traits useful for programming with predefined types.
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>

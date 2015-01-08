@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_CONNECTOR_CPP
 #define ACE_CONNECTOR_CPP
 

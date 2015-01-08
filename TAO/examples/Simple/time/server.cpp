@@ -1,4 +1,3 @@
-// $Id$
 #include "../Simple_util.h"
 #include "Time_i.h"
 

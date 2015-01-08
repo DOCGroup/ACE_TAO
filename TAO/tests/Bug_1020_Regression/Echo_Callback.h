@@ -3,10 +3,7 @@
 /**
  * @file Echo_Callback.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "TestS.h"
 

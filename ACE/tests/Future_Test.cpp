@@ -3,8 +3,6 @@
 /**
  *  @file    Future_Test.cpp
  *
- *  $Id$
- *
  *  This example tests the ACE Future and illustrates an
  *  implementation of the Active Object pattern, which is described in
  *  the POSA2 book <www.dre.vanderbilt.edu/~schmidt/POSA/> and in a

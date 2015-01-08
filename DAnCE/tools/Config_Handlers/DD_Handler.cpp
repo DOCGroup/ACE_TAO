@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/XML_Utils/XML_Typedefs.h"
 #include "SatisfierProperty_Handler.h"
 #include "DD_Handler.h"

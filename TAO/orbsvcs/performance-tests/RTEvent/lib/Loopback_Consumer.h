@@ -1,8 +1,5 @@
 /**
  * @file Loopback_Consumer.h
- *
- * $Id$
- *
  */
 
 #ifndef TAO_PERF_RTEC_LOOPBACK_CONSUMER_H
@@ -20,7 +17,6 @@
  * @class Loopback_Consumer
  *
  * @brief Implement a simple consumer to keep track of the latency
- *
  */
 class TAO_RTEC_Perf_Export Loopback_Consumer
   : public virtual POA_RtecEventComm::PushConsumer

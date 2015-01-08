@@ -1,5 +1,3 @@
-// $Id$
-
 // Perform a torture test of multiple ACE_Reactors and ACE_Tasks in
 // the same process...  Thanks to Detlef Becker for contributing this.
 

@@ -4,10 +4,7 @@
 /**
  *  @file    middle_i.h
  *
- *  $Id$
- *
  *  This class implements the Time IDL interface.
- *
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */

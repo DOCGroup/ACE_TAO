@@ -4,8 +4,6 @@
 /**
  *  @file    Message_Block_T.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Carlos O'Ryan <coryan@atdesk.com>
  */

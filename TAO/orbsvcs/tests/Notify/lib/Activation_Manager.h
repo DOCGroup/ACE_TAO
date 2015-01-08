@@ -2,11 +2,7 @@
 /**
  *  @file Activation_Manager.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_ACTIVATION_MANAGER_H
@@ -35,7 +31,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Tests_Activation_Manager
  *
  * @brief Class to handle Suppliers and Consumers.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Activation_Manager : public TAO_Notify_Tests_Task_Callback
                                                        , public POA_Notify_Test::Activation_Manager

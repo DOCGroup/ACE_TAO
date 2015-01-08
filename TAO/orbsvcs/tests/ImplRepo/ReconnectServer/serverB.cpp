@@ -1,4 +1,3 @@
-// $Id$
 #include "test_i.h"
 #include "ORB_Task.h"
 #include "tao/ImR_Client/ImR_Client.h"

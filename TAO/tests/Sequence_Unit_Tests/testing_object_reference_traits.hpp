@@ -6,8 +6,6 @@
  * @brief Specialize the object reference traits so they can be used
  *        in testing.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

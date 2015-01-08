@@ -1,4 +1,4 @@
-/* -*- C++ -*- $Id$ */
+/* -*- C++ -*-  */
 
 #include "orbsvcs/Notify/FilterAdmin.h"
 

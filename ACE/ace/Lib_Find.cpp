@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Lib_Find.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_string.h"

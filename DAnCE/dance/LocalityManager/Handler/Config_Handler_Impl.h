@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file Config_Handler_Impl.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

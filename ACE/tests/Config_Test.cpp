@@ -3,11 +3,8 @@
 /**
  *  @file    Config_Test.cpp
  *
- *  $Id$
- *
  *    This is a test that makes sure various classes in
  *    <ACE_Configuration> work correctly.
- *
  *
  *  @author Michael Searles <msearles@base16.com>
  *  @author Chris Hafey <chafey@stentor.com>

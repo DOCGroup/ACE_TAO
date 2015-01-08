@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Hello.h"
 #include "ace/Task.h"
 

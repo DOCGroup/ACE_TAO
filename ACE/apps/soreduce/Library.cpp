@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // File: Library.cpp
 
 // Author: Phil Mesnier

@@ -3,10 +3,7 @@
 /**
  *  @file    sequence_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Sequences in the client stubs file
- *
  *
  *  @author Aniruddha Gokhale
  */

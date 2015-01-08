@@ -1,5 +1,3 @@
-// $Id$
-
 #include "common.h"
 #include "tao/PortableServer/PortableServer.h"
 

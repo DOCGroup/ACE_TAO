@@ -4,10 +4,7 @@
 /**
  *  @file    IIOP_Connector.h
  *
- *  $Id$
- *
  *  IIOP specific connector processing
- *
  *
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>

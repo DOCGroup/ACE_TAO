@@ -4,8 +4,6 @@
 /**
  *  @file    Endpoint_Acceptor_Filter.h
  *
- *  $Id$
- *
  *  Subclass of TAO_Default_Acceptor_Filter that populates mprofile and filters
  *  mprofile with the endpoint policy in TAO_POA_Manager.
  *

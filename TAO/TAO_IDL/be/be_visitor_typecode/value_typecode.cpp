@@ -4,8 +4,6 @@
 /**
  *  @file  value_typecode.cpp
  *
- *  $Id$
- *
  *  Structure TypeCode generation visitor.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>

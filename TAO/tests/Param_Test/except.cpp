@@ -3,10 +3,7 @@
 /**
  *  @file   except.cpp
  *
- *  $Id$
- *
  * tests exception
- *
  *
  *  @author Carlos O'Ryan
  */

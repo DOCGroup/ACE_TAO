@@ -3,12 +3,9 @@
 /**
  *  @file    argument_invoke.cpp
  *
- *  $Id$
- *
  *  Visitor to pass arguments to the CDR operators. This one helps in
  *  generating the && and the , at the right place. This one is for the
  *  client stub side.
- *
  *
  *  @author Aniruddha Gokhale
  */

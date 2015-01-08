@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Cookie.h"
 #include "ciao/Valuetype_Factories/Cookies.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "LogManager.h"
 
 // Listing 1 code/ch03

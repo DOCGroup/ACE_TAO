@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_MESSAGE_QUEUE_T_CPP
 #define ACE_MESSAGE_QUEUE_T_CPP
 

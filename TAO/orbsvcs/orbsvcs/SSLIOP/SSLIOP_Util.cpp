@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_Util.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
 #include "orbsvcs/SSLIOP/SSLIOP_Current.h"

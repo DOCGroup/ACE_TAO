@@ -4,8 +4,6 @@
 /**
  *  @file    SV_Shared_Memory.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //==========================================================================

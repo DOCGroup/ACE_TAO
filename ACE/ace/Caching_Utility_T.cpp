@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_CACHING_UTILITY_T_CPP
 #define ACE_CACHING_UTILITY_T_CPP
 

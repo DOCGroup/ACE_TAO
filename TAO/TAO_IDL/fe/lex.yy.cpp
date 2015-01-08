@@ -929,7 +929,7 @@ int tao_yy_flex_debug = 0;
 
 char tao_yytext[TAO_YYLMAX];
 char *tao_yytext_ptr;
-/*  $Id$
+/*
 
 COPYRIGHT
 
@@ -2350,7 +2350,6 @@ static int tao_yy_get_next_buffer (void)
 
 /** Switch to a different input buffer.
  * @param new_buffer The new input buffer.
- *
  */
     void tao_yy_switch_to_buffer  (TAO_YY_BUFFER_STATE  new_buffer )
 {
@@ -2423,7 +2422,6 @@ static void tao_yy_load_buffer_state  (void)
 
 /** Destroy the buffer.
  * @param b a buffer created with tao_yy_create_buffer()
- *
  */
     void tao_yy_delete_buffer (TAO_YY_BUFFER_STATE  b )
 {
@@ -2470,7 +2468,6 @@ static void tao_yy_load_buffer_state  (void)
 
 /** Discard all buffered characters. On the next scan, TAO_YY_INPUT will be called.
  * @param b the buffer state to be flushed, usually @c TAO_YY_CURRENT_BUFFER.
- *
  */
     void tao_yy_flush_buffer (TAO_YY_BUFFER_STATE  b )
 {
@@ -2499,7 +2496,6 @@ static void tao_yy_load_buffer_state  (void)
  *  the current state. This function will allocate the stack
  *  if necessary.
  *  @param new_buffer The new state.
- *
  */
 void tao_yypush_buffer_state (TAO_YY_BUFFER_STATE new_buffer )
 {
@@ -2529,7 +2525,6 @@ void tao_yypush_buffer_state (TAO_YY_BUFFER_STATE new_buffer )
 
 /** Removes and deletes the top of the stack, if present.
  *  The next element becomes the new top.
- *
  */
 void tao_yypop_buffer_state (void)
 {
@@ -2709,7 +2704,6 @@ static void tao_yy_fatal_error (tao_yyconst char* msg )
 /* Accessor  methods (get/set functions) to struct members. */
 
 /** Get the current line number.
- *
  */
 int tao_yyget_lineno  (void)
 {
@@ -2718,7 +2712,6 @@ int tao_yyget_lineno  (void)
 }
 
 /** Get the input stream.
- *
  */
 FILE *tao_yyget_in  (void)
 {
@@ -2726,7 +2719,6 @@ FILE *tao_yyget_in  (void)
 }
 
 /** Get the output stream.
- *
  */
 FILE *tao_yyget_out  (void)
 {
@@ -2734,7 +2726,6 @@ FILE *tao_yyget_out  (void)
 }
 
 /** Get the length of the current token.
- *
  */
 int tao_yyget_leng  (void)
 {
@@ -2742,7 +2733,6 @@ int tao_yyget_leng  (void)
 }
 
 /** Get the current token.
- *
  */
 
 char *tao_yyget_text  (void)
@@ -2752,7 +2742,6 @@ char *tao_yyget_text  (void)
 
 /** Set the current line number.
  * @param line_number
- *
  */
 void tao_yyset_lineno (int  line_number )
 {

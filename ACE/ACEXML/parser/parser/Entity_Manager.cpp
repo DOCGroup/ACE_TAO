@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ACEXML/parser/parser/Entity_Manager.h"
 
 #if !defined (__ACEXML_INLINE__)

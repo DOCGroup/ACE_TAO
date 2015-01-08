@@ -1,4 +1,4 @@
-$Id$
+
 
 Normally, a typecode is created at compile time by the
 IDL compiler for each declaration in an IDL file, or at

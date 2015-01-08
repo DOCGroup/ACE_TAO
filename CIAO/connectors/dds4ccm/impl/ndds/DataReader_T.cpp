@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/DataReaderListener.h"
 #include "dds4ccm/impl/ndds/StatusCondition.h"
 #include "dds4ccm/impl/ndds/ReadCondition.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    URL_Visitor_Factory.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

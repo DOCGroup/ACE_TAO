@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * Streams Listing 01
  *
  * An answering machine based on a one-way ACE_Stream

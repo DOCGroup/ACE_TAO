@@ -2,10 +2,7 @@
 /**
  *  @file    Process_Mutex_Test.cpp
  *
- *  $Id$
- *
  *  Tests an <ACE_Process_Mutex> shared between multiple child processes.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

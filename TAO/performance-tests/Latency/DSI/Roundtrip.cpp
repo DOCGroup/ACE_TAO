@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Roundtrip.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/NVList.h"

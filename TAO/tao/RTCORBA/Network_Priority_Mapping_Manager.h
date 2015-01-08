@@ -4,8 +4,6 @@
 /**
  *  @file   Network_Priority_Mapping_Manager.h
  *
- *  $Id$
- *
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
 //=============================================================================

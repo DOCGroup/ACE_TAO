@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/SystemException.h"
 #include "tao/ORB_Constants.h"
 #include "tao/CORBA_String.h"

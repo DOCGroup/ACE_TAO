@@ -4,8 +4,6 @@
 /**
  *  @file    Empty_Param_TypeCode.h
  *
- *  $Id$
- *
  *  Header file for @c CORBA::TypeCodes with empty parameter lists.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

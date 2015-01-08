@@ -4,11 +4,8 @@
 /**
  *  @file    be_component.h
  *
- *  $Id$
- *
  *  Extension of class AST_Component that provides additional means for C++
  *  mapping of an interface.
- *
  *
  *  @author Jeff Parsons
  */

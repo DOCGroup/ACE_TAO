@@ -3,10 +3,7 @@
 /**
  *  @file    objref_struct.cpp
  *
- *  $Id$
- *
  *  test structures containing object references.
- *
  *
  *  @author   Aniruddha Gokhale
  */

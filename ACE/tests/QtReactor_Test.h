@@ -1,5 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
 #ifndef QTREACTOR_TEST_H
 #define QTREACTOR_TEST_H
 

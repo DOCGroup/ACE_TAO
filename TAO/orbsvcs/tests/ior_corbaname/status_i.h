@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef STATUS_I_H
 #define STATUS_I_H

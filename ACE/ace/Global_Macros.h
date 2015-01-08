@@ -4,8 +4,6 @@
 /**
  *  @file   Global_Macros.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
@@ -668,7 +666,6 @@ static ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS;
  *        service.
  * @param SERVICE_CLASS must match the name of the class that
  *        implements the service.
- *
  */
 # define ACE_FACTORY_DECLARE(CLS,SERVICE_CLASS) \
 extern "C" CLS##_Export ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * \
@@ -801,7 +798,6 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
  *
  * The ACE services defined in netsvcs use this helper macros for
  * simplicity.
- *
  */
 //@{
 # define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)

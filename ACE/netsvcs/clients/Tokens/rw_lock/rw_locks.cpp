@@ -3,11 +3,8 @@
 /**
  *  @file    rw_locks.cpp
  *
- *  $Id$
- *
  *  test_rw_locks shows how to use ACE_Local_RLock, ACE_Local_WLock,
  *  ACE_Remote_RLock, and ACE_Remote_WLock.
- *
  *
  *  @author Tim Harrison
  */

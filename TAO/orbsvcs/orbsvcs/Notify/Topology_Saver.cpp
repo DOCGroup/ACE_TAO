@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Topology_Saver.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

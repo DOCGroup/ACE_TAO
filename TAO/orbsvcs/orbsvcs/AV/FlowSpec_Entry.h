@@ -4,10 +4,7 @@
 /**
  *  @file    FlowSpec_Entry.h
  *
- *  $Id$
- *
  *  @author  Nagarajan Surendran <naga@cs.wustl.edu>
- *
  */
 // ============================================================================
 

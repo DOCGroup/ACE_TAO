@@ -1,4 +1,4 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
 
 #include "ACEXML/common/CharStream.h"
 

@@ -3,8 +3,6 @@
 /**
  *  @file    Thread_Pool_Reactor_Resume_Test.cpp
  *
- *  $Id$
- *
  *    This program is an additional torture test of thread pool
  *    reactors.  This test  is based on Thread_Pool_Reactor_Test.cpp
  *    in $ACE_ROOT/tests. This test differs from the other one
@@ -24,7 +22,6 @@
  *        <client conn attempt#>: ACE_MAX_ITERATIONS
  *        <client req# per conn>: ACE_MAX_THREADS
  *        <delay>:                50 usec
- *
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */

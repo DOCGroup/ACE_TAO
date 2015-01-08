@@ -1,5 +1,3 @@
-// $Id$
-
 #include "bogus_i.h"
 
 bogus::bogus()

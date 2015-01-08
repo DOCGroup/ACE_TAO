@@ -4,8 +4,6 @@
 /**
  *  @file    Any_Array_Impl_T.h
  *
- *  $Id$
- *
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
 //=============================================================================

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "JAWS/Server.h"
 #include "HTTP_10.h"
 

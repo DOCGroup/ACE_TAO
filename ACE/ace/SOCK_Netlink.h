@@ -1,9 +1,6 @@
-// $Id$
 //=============================================================================
 /**
  *  @file    SOCK_Netlink.h
- *
- *  $Id$
  *
  *  @author Robert Iakobashvilli <coroberti@gmail.com>
  *  @author Raz Ben Yehuda <raziebe@013.net.il>
@@ -39,7 +36,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * and user to kernel.
  * This code was created so one could use ACE reactor
  * as a gateway to a linux kernel.
- *
  */
 class ACE_Export ACE_SOCK_Netlink : public ACE_SOCK {
 public:

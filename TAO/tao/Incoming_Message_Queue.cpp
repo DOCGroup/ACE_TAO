@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Incoming_Message_Queue.h"
 #include "tao/Queued_Data.h"
 #include "tao/debug.h"

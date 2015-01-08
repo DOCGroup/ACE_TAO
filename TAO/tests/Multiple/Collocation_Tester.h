@@ -2,11 +2,8 @@
 /**
  *  @file    Collocation_Tester.h
  *
- *  $Id$
- *
  *   This file contains the class that tests the TAO's collocation
  *   mechanism.
- *
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "CIF_Common.h"
 #include "ciao/Base/Client_init.h"
 #include "ace/Get_Opt.h"

@@ -3,10 +3,7 @@
 /**
  *  @file    bd_short_seq.h
  *
- *  $Id$
- *
  *   Tests bounded short sequence
- *
  *
  *  @author   Aniruddha Gokhale
  */

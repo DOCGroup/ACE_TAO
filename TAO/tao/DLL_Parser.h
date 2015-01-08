@@ -4,8 +4,6 @@
 /**
  *  @file   DLL_Parser.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -75,7 +73,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * In this case the Event_Service implementation will be dynamically
  * loaded without any modifications to the application code.
- *
  */
 class TAO_DLL_Parser : public TAO_IOR_Parser
 {

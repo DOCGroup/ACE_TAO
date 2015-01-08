@@ -3,11 +3,8 @@
 /**
  *  @file    be_home.cpp
  *
- *  $Id$
- *
  *  Extension of class AST_Home that provides additional means for C++
  *  mapping of a component home.
- *
  *
  *  @author Jeff Parsons
  */

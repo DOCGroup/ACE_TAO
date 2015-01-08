@@ -3,8 +3,6 @@
 /**
  * @file DynamicAny.pidl
  *
- * $Id$
- *
  * @brief IDL source for the DynamicAny module.
  *
  * It was obtained from the OMG website as part of the full CORBA IDL,
@@ -14,7 +12,6 @@
  *
  * We couldn't find a copyright notice in the document, but it is safe
  * to assume that it is Copyright (C) 2004, OMG.
- *
  */
 
 #ifndef _DYNAMIC_ANY_IDL_

@@ -1,12 +1,7 @@
 // -*- C++ -*-
-//
-// $Id$
-
 //=============================================================================
 /**
  *  @file    DynValue_i.h
- *
- *  $Id$
  *
  *  @author simon dot massey at prismtech dot com
  */

@@ -1,4 +1,4 @@
-$Id$
+
 
 Test whether Querycondition are NOT shared between two extended ports.
 

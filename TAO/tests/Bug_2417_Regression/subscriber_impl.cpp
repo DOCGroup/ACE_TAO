@@ -1,5 +1,3 @@
-// $Id$
-
 #include "subscriber_impl.h"
 #include "ace/OS_NS_stdio.h"
 

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Strategies/Optimized_Connection_Endpoint_Selector.h"
 
 #include "tao/debug.h"

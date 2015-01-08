@@ -1,6 +1,4 @@
 // Test of raw copy performance when using different sequence allocations
-// $Id$
-
 #include "sequenceC.h"
 #include "ace/Time_Value.h"
 #include "ace/High_Res_Timer.h"

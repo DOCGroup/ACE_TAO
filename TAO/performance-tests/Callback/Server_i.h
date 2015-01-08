@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_SERVER_I_H
 #define TAO_SERVER_I_H
 

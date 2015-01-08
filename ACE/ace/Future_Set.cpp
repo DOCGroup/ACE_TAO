@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_FUTURE_SET_CPP
 #define ACE_FUTURE_SET_CPP
 

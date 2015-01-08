@@ -1,5 +1,3 @@
-// $Id$
-
 #include "util.h"
 
 URL::URL(char *input_buf) {

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Object_Proxy_Broker.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

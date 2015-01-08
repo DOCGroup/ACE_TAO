@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(Gateway) : acelib, ace_output {
   sharedname = Gateway
   Source_Files {

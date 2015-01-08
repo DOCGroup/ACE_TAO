@@ -3,8 +3,6 @@
 /**
  *  @file    childbirth_time.cpp
  *
- *  $Id$
- *
  * This program is used to measure various child-creation mechanisms
  * on various platforms.  By default, the program measure the time
  * to 'fork' a new process using ACE_Process.spawn ().  Other tests
@@ -50,7 +48,6 @@
  *
  * = CREATION DATE
  *    June 29, 1997
- *
  *
  *  @author   Nanbor Wang
  */

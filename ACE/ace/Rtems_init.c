@@ -1,6 +1,3 @@
-/*
- *  $Id$
- */
 
 #if defined (ACE_HAS_RTEMS)
 

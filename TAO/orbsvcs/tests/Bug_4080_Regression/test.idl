@@ -1,5 +1,3 @@
-// $Id$
-
 module Test {
     interface UIPMC_Object {
         oneway void process ();

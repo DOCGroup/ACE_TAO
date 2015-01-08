@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id$
 
 gnuplot <<_EOF_ >/dev/null 2>&1
   set xdata time

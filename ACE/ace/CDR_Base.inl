@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #if defined (ACE_HAS_INTRINSIC_BYTESWAP)
 // Take advantage of MSVC++ byte swapping compiler intrinsics (found
 // in <stdlib.h>).
@@ -39,7 +36,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // * default
 //   (none of the above)
 //   => shift/masks using 32bit words.
-//
 //
 // Some things you could find useful to know if you intend to mess
 // with this optimizations for swaps:

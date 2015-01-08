@@ -4,11 +4,8 @@
  * @file Client_Task.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>'
  *
- * $Id$
- *
  * Defines the Client_Task class which acts as the process colocated client
  * thread for the Bug1492_Regression test.
- *
  */
 
 

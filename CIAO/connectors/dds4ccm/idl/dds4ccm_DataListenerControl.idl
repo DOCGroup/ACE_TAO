@@ -1,8 +1,5 @@
-// $Id$
-
 /**
  * @file dds4ccm_DataListenerControl.idl
- *
  */
 
 #ifndef DDS4CCM_LISTENERCONTROL_IDL3

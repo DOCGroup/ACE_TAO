@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __ADDNAVUNITCMD_H
 #define __ADDNAVUNITCMD_H
 

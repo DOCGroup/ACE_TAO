@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CDR.h"
 
 #ifndef __ACE_INLINE__

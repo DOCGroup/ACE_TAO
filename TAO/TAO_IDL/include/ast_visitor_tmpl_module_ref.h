@@ -4,11 +4,8 @@
 /**
  *  @file    ast_visitor_tmpl_module_ref.h
  *
- *  $Id$
- *
  *  This visitor creates nodes resulting from the reference
  *  to one inside another, and adds these nodes to the AST.
- *
  *
  *  @author Jeff Parsons
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "Big_Reply_i.h"
 #include "ace/OS_NS_stdio.h"

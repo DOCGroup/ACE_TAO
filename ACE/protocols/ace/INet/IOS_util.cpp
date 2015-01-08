@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/INet/IOS_util.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

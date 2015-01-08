@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef MONITORMANAGER_H
 #define MONITORMANAGER_H
 

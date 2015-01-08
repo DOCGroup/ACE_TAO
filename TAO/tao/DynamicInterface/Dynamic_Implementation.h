@@ -4,10 +4,7 @@
 /**
  *  @file    Dynamic_Implementation.h
  *
- *  $Id$
- *
  *  Header file for class TAO_DynamicImplementation.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

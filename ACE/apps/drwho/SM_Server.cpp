@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "PMS_All.h"
 #include "PMS_Flo.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 module ORT
 {
   interface sum_server

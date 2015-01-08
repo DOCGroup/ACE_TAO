@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Global.h"
 
 long double

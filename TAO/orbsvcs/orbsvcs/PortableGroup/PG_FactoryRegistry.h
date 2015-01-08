@@ -4,8 +4,6 @@
 /**
  *  @file    PG_FactoryRegistry.h
  *
- *  $Id$
- *
  *  This file declares the implementation of PortableGroup::FactoryRegistry.
  *  Eventually this should be folded into the Fault Tolerance ReplicationManager
  *

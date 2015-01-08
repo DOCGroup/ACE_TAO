@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Service_Type_Exporter.h"
 
 TAO_Service_Type_Exporter::

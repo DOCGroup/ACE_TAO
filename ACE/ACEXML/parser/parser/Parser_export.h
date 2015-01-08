@@ -4,8 +4,6 @@
 /**
  *  @file    Parser_export.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

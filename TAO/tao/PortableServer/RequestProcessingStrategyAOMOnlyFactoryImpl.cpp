@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.h"
 #include "tao/PortableServer/RequestProcessingStrategy.h"
 #include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"

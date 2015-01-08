@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef DAnCE_Utility_CPP
 #define DAnCE_Utility_CPP
 

@@ -3,12 +3,9 @@
 /**
  *  @file    Signal_Test.cpp
  *
- *  $Id$
- *
  *    This program tests the signal handling capabilities of ACE on
  *    various OS platforms that support sending signals between
  *    processes.
- *
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */

@@ -3,8 +3,6 @@
 /**
  *  @file    Widget_Part_Factory.h
  *
- *  $Id$
- *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
 //=============================================================================

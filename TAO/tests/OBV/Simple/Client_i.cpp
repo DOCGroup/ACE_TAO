@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Client_i.h"
 #include "OBV_impl.h"
 

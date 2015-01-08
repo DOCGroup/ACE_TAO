@@ -1,5 +1,3 @@
-// $Id$
-
 project(tao_*idl): taoidldefaults {
   custom_only = 1
 }

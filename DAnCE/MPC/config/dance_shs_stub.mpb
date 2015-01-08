@@ -1,4 +1,3 @@
-// $Id$
 project : dance_deployment_stub {
   after += DAnCE_System_Health_stub
   libs += DAnCE_System_Health_stub

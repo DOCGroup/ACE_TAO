@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 // This configuration file is designed to be included by another,
 // specific configuration file.  It provides config information common
 // to all g++ platforms, including egcs.

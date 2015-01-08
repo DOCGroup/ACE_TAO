@@ -1,4 +1,4 @@
-/* -*- C++ -*- $Id$ */
+/* -*- C++ -*-  */
 
 #ifndef MESSENGERSHUTDOWNTIMER_H_
 #define MESSENGERSHUTDOWNTIMER_H_

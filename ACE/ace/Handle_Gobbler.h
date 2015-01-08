@@ -4,8 +4,6 @@
 /**
  *  @file    Handle_Gobbler.h
  *
- *  $Id$
- *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

@@ -3,8 +3,6 @@
 /**
  *  @file    Unbounded_Set_Test.cpp
  *
- *  $Id$
- *
  *    This test illustrates the use of ACE_Unbounded_Set.
  *    No command line arguments are needed to run the test.
  *

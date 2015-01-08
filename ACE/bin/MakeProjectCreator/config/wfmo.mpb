@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 feature(wfmo) {
   requires += wfmo
 }

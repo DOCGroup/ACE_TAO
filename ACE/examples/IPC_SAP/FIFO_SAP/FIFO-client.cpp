@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/FIFO_Send.h"
 #include "ace/Log_Msg.h"
 #include "ace/Truncate.h"

@@ -4,8 +4,6 @@
 /**
  *  @file   Custom_Time_Policy_Strategy.h
  *
- *  $Id$
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================
@@ -28,7 +26,6 @@
 
 /**
  * @class Custom_Time_Policy_Strategy
- *
  */
 class TPTEST_Export Custom_Time_Policy_Strategy
   : public TAO_Time_Policy_Strategy

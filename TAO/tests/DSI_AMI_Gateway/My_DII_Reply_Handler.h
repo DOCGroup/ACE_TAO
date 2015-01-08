@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/Messaging/MessagingS.h"
 #include "tao/DynamicInterface/DII_Reply_Handler.h"
 #include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"

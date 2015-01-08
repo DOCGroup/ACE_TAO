@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Notify_Supplier.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "ace/OS_main.h"

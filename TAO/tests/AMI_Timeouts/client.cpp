@@ -3,10 +3,7 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *  A client, which uses the AMI callback model and timeouts.
- *
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */

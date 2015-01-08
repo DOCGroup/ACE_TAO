@@ -5,8 +5,6 @@
  *
  * @brief Implement unbounded sequences for strings and wide-strings.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "tao/Unbounded_Reference_Allocation_Traits_T.h"

@@ -5,10 +5,7 @@
 /**
  *  @file    EventPortDef_i.h
  *
- *  $Id$
- *
  *  EventPortDef_i servant class.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

@@ -4,8 +4,6 @@
 /**
  *  @file BiDir_Policy_i.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================

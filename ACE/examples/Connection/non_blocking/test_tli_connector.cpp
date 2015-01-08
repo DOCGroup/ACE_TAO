@@ -1,5 +1,3 @@
-// $Id$
-
 // ACE_TLI Client.
 
 #include "ace/TLI_Connector.h"

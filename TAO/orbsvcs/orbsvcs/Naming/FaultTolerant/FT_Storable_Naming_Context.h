@@ -4,8 +4,6 @@
 /**
  *  @file   FT_Storable_Naming_Context.h
  *
- *  $Id$
- *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================
@@ -29,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief This class specializes the TAO_Storable_Naming_Context
  * 'ConcreteImplementor' in the Bridge pattern architecture of the
  * CosNaming::NamingContext implementation.
- *
  */
 class TAO_FtNaming_Export TAO_FT_Storable_Naming_Context :
       public TAO_Storable_Naming_Context

@@ -1,5 +1,3 @@
-// $Id$
-
 // EchoEventSupplier_i.h
 // Implements a PushSupplier.
 

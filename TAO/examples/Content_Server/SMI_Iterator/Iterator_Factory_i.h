@@ -5,10 +5,7 @@
 /**
  *  @file     Iterator_Factory_i.h
  *
- *  $Id$
- *
  *   Header file for the Web_Server::Iterator_Factory implementation.
- *
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */

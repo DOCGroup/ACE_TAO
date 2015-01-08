@@ -3,12 +3,9 @@
 /**
  *  @file    Address_Test.cpp
  *
- *  $Id$
- *
  *  Test all the member functions of the Address family:
  *  GenAddress, MacAddress, IpxAddress, IpAddress, UdpAddress
  *  all which derive from abstract base class Address.
- *
  *
  *  @author Michael R. MacFaden <mrm@cisco.com>
  */
@@ -42,8 +39,6 @@ DAMAGES.
 #include "test_config.h"
 
 // test the GenAddress interface
-/*
- */
 static void TestGenAddr()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) GenAddress: Tests: var(expected) [actual]\n"));
@@ -282,7 +277,6 @@ Ipx Address semantics:  Total length must be 21
 //   First string length must be 8
 //   Second string length must be 12
 //   Each char must take on value 0-F
-//
 //
 // Input formats recognized
 //

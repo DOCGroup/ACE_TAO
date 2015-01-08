@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // ------------------------------
 #ifndef CPU_AFFINITY_EXPORT_H

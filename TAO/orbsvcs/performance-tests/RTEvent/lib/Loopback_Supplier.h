@@ -1,8 +1,6 @@
 /**
  * @file Loopback_Supplier.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -21,7 +19,6 @@
  * @class Loopback_Supplier
  *
  * @brief Implement a simple supplier to keep track of the latency
- *
  */
 class TAO_RTEC_Perf_Export Loopback_Supplier
   : public virtual POA_RtecEventComm::PushSupplier

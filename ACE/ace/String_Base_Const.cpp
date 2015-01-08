@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/String_Base_Const.h"
 #include "ace/Numeric_Limits.h"
 

@@ -3,8 +3,6 @@
 /**
  *  @file   INS_Locator.h
  *
- *  $Id$
- *
  *  @brief  This class implements the ImR's INS Locator class
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

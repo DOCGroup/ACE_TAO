@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #include "checking_visitor.h"
 #include "identifier_helper.h"
 #include "be_extern.h"

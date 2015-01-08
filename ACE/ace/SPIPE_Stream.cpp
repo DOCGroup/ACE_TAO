@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SPIPE_Stream.h"
 #include "ace/OS_Memory.h"
 

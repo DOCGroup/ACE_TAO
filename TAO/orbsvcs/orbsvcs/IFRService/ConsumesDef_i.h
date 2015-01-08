@@ -5,10 +5,7 @@
 /**
  *  @file    ConsumesDef_i.h
  *
- *  $Id$
- *
  *  ConsumesDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

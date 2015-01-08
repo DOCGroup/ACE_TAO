@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Log_Msg.h"
 #include "CB.h"
 #include "TimerDispatcher.h"

@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_SCABase -l .. -o ../lib -u DDS SetConnectorAttribute_Connector"
 
 project(DDS_SCAConnector_idl_gen) : connectoridldefaults, dds4ccm {

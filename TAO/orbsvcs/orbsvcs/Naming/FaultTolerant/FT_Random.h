@@ -4,8 +4,6 @@
 /**
  *  @file FT_Random.h
  *
- *  $Id$
- *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================

@@ -4,8 +4,6 @@
 /**
  * @file ObjectReferenceTemplate_i.h
  *
- * $Id$
- *
  * This is the implementation of the
  * PortableInterceptor::ObjectReferenceTemplate ValueType.
  *

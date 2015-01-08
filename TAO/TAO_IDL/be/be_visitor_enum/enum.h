@@ -3,8 +3,6 @@
 /**
  *  @file    enum.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Enum
  *
  *  @author Aniruddha Gokhale

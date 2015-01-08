@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Ping_Service.h"
 
 Ping_Service::Ping_Service (CORBA::ORB_ptr orb)

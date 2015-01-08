@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // TAO_IDL - Generated from
 // be/be_codegen.cpp:1344
 

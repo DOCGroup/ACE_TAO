@@ -2,11 +2,7 @@
 /**
  *  @file Consumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_CONSUMER_H
@@ -24,7 +20,6 @@
  * @class TAO_Notify_Lanes_Consumer
  *
  * @brief Consumer
- *
  */
 
 class TAO_Notify_Lanes_Consumer

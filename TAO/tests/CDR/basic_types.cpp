@@ -3,11 +3,8 @@
 /**
  *  @file    basic_types.cpp
  *
- *  $Id$
- *
  * Test the basic funcionality of a CDR stream by encoding some
  * basic types and then decoding them again.
- *
  *
  *  @author Carlos O'Ryan
  */

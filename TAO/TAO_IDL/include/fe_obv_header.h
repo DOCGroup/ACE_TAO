@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef FE_OBV_HEADER_H
 #define FE_OBV_HEADER_H
 

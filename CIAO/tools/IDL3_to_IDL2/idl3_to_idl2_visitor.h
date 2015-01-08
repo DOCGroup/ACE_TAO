@@ -4,10 +4,7 @@
 /**
  *  @file    idl3_to_idl2_visitor.h
  *
- *  $Id$
- *
  *  Generates equivalent IDL2 from IDL3.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

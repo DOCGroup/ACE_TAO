@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p DDS_LOBO_Test_Base -l .. -o ../lib -u DDS LOBO_Test_Connector"
 
 project(DDS_LOBO_Test_Connector_idl_gen) : connectoridldefaults, dds4ccm {

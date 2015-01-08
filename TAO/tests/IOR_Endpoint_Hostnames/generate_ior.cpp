@@ -1,9 +1,6 @@
 //
 // This initializes an ORB, a POA, an Object within that POA, and
 // obtains and prints an IOR for that Object.
-//
-// $Id$
-
 #include "tao/corba.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Get_Opt.h"

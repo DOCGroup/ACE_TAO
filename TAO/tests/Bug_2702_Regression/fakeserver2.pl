@@ -1,6 +1,5 @@
 #!/usr/bin/perl
 
-# $Id$
 
 use Socket;
 use IO::Socket;

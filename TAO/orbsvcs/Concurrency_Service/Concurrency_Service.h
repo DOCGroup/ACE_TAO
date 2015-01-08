@@ -3,11 +3,8 @@
 /**
  *  @file    Concurrency_Service.h
  *
- *  $Id$
- *
  *    This class implements a subset of the functionality of the
  *    CORBA Concurrency Service.
- *
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */

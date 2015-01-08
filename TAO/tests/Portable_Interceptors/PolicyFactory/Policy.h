@@ -4,8 +4,6 @@
 /**
  * @file Policy.h
  *
- * $Id$
- *
  * Implementation header for the test Policy.
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>

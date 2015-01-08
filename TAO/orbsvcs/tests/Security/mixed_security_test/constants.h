@@ -4,8 +4,6 @@
 /**
  * @file constants.h
  *
- * $Id$
- *
  * Set of constants shared between client and server
  *
  * @author Chris Cleeland <cleeland@ociweb.com>

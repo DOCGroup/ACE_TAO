@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.h"
 #include "orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h"

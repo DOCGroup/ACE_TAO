@@ -3,8 +3,6 @@
  *
  * @brief Defines the TAO::Transport::IIOP::Current interface
  *
- * $Id$
- *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
 

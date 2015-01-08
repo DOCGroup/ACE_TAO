@@ -4,8 +4,6 @@
 /**
  * @file    LB_ServerRequestInterceptor.h
  *
- * $Id$
- *
  * @author  Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

@@ -3,11 +3,8 @@
 /**
  *  @file    any_op_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Any operators for Interface in the stubs
  *  file.
- *
  *
  *  @author Aniruddha Gokhale
  */

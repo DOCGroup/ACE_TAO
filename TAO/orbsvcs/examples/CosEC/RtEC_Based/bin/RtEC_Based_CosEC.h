@@ -3,13 +3,9 @@
 /**
  *  @file   RtEC_Based_CosEC.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *
  * The COS Event Channel service.
- *
- *
  */
 //=============================================================================
 

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "GCS_Test_Component_exec.h"
 
 namespace CIAO_GCS_Test_GetComponentStateTestComponent_Impl

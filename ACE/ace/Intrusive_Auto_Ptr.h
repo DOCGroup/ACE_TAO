@@ -4,8 +4,6 @@
 /**
  *  @file    Intrusive_Auto_Ptr.h
  *
- *  $Id$
- *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  *
  *  @note Modeled on http://www.boost.org/boost/intrusive_ptr.hpp

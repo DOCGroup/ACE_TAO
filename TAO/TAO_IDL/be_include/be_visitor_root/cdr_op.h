@@ -4,12 +4,9 @@
 /**
  *  @file    cdr_op.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Root class
  *  This one provides code generation for the CDR operators for elements of
  *  the Root scope.
- *
  *
  *  @author Aniruddha Gokhale
  */

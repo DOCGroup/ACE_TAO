@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef ROUNDTRIP_H
 #define ROUNDTRIP_H

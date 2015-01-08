@@ -4,8 +4,6 @@
 /**
  *  @file    SHMIOP_Connector.h
  *
- *  $Id$
- *
  *  SHMIOP specific connector processing
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>

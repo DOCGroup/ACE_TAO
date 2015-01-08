@@ -2,11 +2,8 @@
 /**
  *  @file    servant_svs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for a servant class in the
  *  servant source file.
- *
  *
  *  @author Jeff Parsons
  */

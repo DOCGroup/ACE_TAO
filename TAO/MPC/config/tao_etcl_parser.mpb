@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : tao_etcl {
   after += TAO_ETCL_Parser
   libs += TAO_ETCL_Parser

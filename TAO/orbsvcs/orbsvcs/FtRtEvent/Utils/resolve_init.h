@@ -3,8 +3,6 @@
 /**
  *  @file   resolve_init.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

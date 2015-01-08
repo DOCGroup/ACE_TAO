@@ -5,10 +5,7 @@
 /**
  *  @file    ModuleDef_i.h
  *
- *  $Id$
- *
  *  ModuleDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

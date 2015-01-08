@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/HTTP_Handler.h"
 
 #if (TAO_HAS_HTTP_PARSER == 1)

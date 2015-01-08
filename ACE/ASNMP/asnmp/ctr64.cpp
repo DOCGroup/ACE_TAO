@@ -3,10 +3,7 @@
 /**
  *  @file     ctr64.cpp
  *
- *  $Id$
- *
  *  Implementation for Counter64 ( 64 bit counter class).
- *
  *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Homed_Component_Handler.h"
 #include "ccm/CCM_KeylessCCMHomeC.h"
 #include "ciao/Logger/Log_Macros.h"

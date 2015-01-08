@@ -1,5 +1,3 @@
-// $Id$
-
 // The following test exercises the Eric C. Newton's <ecn@clark.net>
 // XtReactor implementation.
 

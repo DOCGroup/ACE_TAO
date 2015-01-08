@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Echo_Handler.h"
 #include "Client_ORBInitializer.h"
 #include "Client_Interceptor.h"

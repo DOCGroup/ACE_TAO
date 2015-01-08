@@ -3,8 +3,6 @@
 /**
  *  @file    Thread_Pool_Reactor_Test.cpp
  *
- *  $Id$
- *
  *    This program is a torture test of thread pool reactors.  It
  *    starts by spawning several server threads waiting to handle
  *    events.  Several other client threads are spawned right after
@@ -27,7 +25,6 @@
  *        <client conn attempt#>: ACE_MAX_ITERATIONS
  *        <client req# per conn>: ACE_MAX_THREADS
  *        <delay>:                50 usec
- *
  *
  *  @author   Irfan Pyarali <irfan@cs.wustl.edu> and   Nanbor Wang <nanbor@cs.wustl.edu>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 // This program tests out all the various ACE_Malloc combinations and
 // the ACE_Allocator_Adapter.
 

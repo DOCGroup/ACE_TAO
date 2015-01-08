@@ -3,14 +3,11 @@
 /**
  *  @file    Bug_2653_Regression_Test.cpp
  *
- *  $Id$
- *
  *  This bug occurs when schedule_wakeup is called for a handle that does
  *  not already have an event handler registered. This can happen quite
  *  legitimately in multithreaded applications where one thread schedules
  *  the wakeup while another thread is handling the closure of the
  *  connection and unregistering.
- *
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */

@@ -1,10 +1,7 @@
 /**
  * @file Client_Peer.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Client_Peer.h"
 #include "Clock_Ticks.h"

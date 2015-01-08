@@ -5,10 +5,7 @@
 /**
  *  @file    ArrayDef_i.h
  *
- *  $Id$
- *
  *  ArrayDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

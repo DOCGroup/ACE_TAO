@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file CPU_Affinity.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

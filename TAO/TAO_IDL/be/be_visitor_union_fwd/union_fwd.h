@@ -3,10 +3,7 @@
 /**
  *  @file    union_fwd.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for be_union_fwd
- *
  *
  *  @author Jeff Parsons
  */

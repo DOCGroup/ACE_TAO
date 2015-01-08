@@ -1,5 +1,3 @@
-// $Id$
-
 // client.C
 
 #include "Log_Wrapper.h"

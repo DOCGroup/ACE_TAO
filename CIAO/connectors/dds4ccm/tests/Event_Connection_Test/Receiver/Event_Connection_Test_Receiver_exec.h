@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef EVENT_CONNECTION_RECEIVER_EXEC_H_
 #define EVENT_CONNECTION_RECEIVER_EXEC_H_
 

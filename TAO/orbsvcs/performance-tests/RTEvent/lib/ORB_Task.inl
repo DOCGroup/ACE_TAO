@@ -1,8 +1,6 @@
 /**
  * @file ORB_Task.inl
  *
-` * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

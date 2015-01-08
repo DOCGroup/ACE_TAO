@@ -11,8 +11,6 @@
  * @brief Simple test class.
  *
  * This class implements the "test" interface used in this test.
- *
- * $Id$
  */
 class test_i : public virtual POA_RedirectionTest::test
 {

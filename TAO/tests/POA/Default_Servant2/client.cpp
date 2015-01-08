@@ -3,10 +3,7 @@
 /**
  *  @file     client.cpp
  *
- *  $Id$
- *
  *    A client program for the File IDL module
- *
  *
  *  @author  Irfan Pyarali
  */

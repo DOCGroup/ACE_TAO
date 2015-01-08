@@ -1,5 +1,3 @@
-// $Id$
-
 interface foo
 {
   oneway void destroy ();

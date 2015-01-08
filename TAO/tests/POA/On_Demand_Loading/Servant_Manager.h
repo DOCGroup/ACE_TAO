@@ -4,10 +4,7 @@
 /**
  *  @file     Servant_Manager.h
  *
- *  $Id$
- *
  *   Helper class for <ServantActivator_i> and <ServantLoactor_i>.
- *
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */

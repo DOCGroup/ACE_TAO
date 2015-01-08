@@ -3,10 +3,7 @@
 /**
  *  @file    argument.cpp
  *
- *  $Id$
- *
  *  generic visitor for Argument node
- *
  *
  *  @author Aniruddha Gokhale
  */

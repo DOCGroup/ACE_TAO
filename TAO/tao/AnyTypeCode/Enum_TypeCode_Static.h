@@ -4,8 +4,6 @@
 /**
  *  @file    Enum_TypeCode_Static.h
  *
- *  $Id$
- *
  *  Header file for a static @c tk_enum CORBA::TypeCode.
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef BUG_2247_REGRESSION_MANAGER_H
 #define BUG_2247_REGRESSION_MANAGER_H
 

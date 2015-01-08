@@ -4,8 +4,6 @@
 /**
  * @file Notify_EventChannelFactory_i.h
  *
- * $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================
@@ -28,7 +26,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_EventChannelFactory_i
  *
  * @brief Class maintained for Backward compatibility.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory_i
 {

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "tao/ORB_Core.h"
 #include "ace/Env_Value_T.h"

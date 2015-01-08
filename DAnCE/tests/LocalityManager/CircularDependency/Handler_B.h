@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 /**
  * @file Handler_B.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

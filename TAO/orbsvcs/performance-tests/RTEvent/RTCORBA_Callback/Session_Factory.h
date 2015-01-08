@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef SESSION_FACTORY_H
 #define SESSION_FACTORY_H

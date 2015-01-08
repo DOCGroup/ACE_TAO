@@ -4,8 +4,6 @@
 /**
  *  @file   Persistent_Entries.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

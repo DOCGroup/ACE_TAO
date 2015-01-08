@@ -2,11 +2,7 @@
 /**
  *  @file Supplier_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_SUPPLIER_T_H
@@ -39,7 +35,6 @@ class TAO_Notify_Tests_SupplierAdmin_Ext_Traits
  * @class TAO_Notify_Tests_Supplier_T
  *
  * @brief Base template to implement Suppliers.
- *
  */
 template <class Supplier_Traits>
 class TAO_Notify_Tests_Supplier_T : public TAO_Notify_Tests_Peer_T <Supplier_Traits>

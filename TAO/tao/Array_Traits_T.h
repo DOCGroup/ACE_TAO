@@ -6,8 +6,6 @@
  * @brief Implement the element manipulation traits for types with
  * array-like semantics.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 

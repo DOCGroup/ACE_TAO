@@ -3,11 +3,8 @@
 /**
  *  @file     File_i.cpp
  *
- *  $Id$
- *
  *    Implementation of the File IDL module and the interfaces
  *    Descriptor and System in it.
- *
  *
  *  @author  Irfan Pyarali
  */

@@ -3,10 +3,7 @@
 /**
  *  @file    Codecs_Test.cpp
  *
- *  $Id$
- *
  *  Checks the functionality of the ACE Codecs class.
- *
  *
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */

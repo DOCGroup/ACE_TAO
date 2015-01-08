@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Compression/Compression.h"
 #include "tao/Compression/Compression_Manager.h"
 #include "tao/debug.h"

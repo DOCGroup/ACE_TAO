@@ -1,5 +1,3 @@
-// $Id$
-
 #include "CommandModule.h"
 
 // Listing 01 code/ch18

@@ -1,4 +1,3 @@
-// $Id$
 // wxNamingViewerFrame.h
 
 #ifndef i_wxNamingViewerFrame_h

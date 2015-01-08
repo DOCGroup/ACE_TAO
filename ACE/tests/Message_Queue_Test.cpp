@@ -3,8 +3,6 @@
 /**
  *  @file    Message_Queue_Test.cpp
  *
- *  $Id$
- *
  *    This is:
  *    0) a test that ensures key ACE_Message_Queue features are
  *       working properly, including timeouts and priorities

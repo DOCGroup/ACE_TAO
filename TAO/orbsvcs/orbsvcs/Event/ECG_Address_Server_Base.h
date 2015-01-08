@@ -2,10 +2,7 @@
 /**
  *  @file   ECG_Address_Server_Base.h
  *
- *  $Id$
- *
  *  @author Marina Spivak (marina@atdesk.com)
- *
  */
 
 #ifndef TAO_ECG_ADDRESS_SERVER_BASE_H

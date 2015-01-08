@@ -4,10 +4,7 @@
 /**
  *  @file   EventLogFactory_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsEventLogAdmin::EventLogFactory interface.
- *
  *
  *  @author Rob Ruff <rruff@scires.com>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>

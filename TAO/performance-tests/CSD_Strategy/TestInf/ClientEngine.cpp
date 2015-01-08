@@ -1,4 +1,3 @@
-// $Id$
 #include "ClientEngine.h"
 
 

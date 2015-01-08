@@ -3,10 +3,7 @@
 /**
  *  @file    CDR_Test.cpp
  *
- *  $Id$
- *
  *  Checks the functionality of the ACE CDR streams.
- *
  *
  *  @author Istvan Buki <istvan.buki@euronet.be> and Jeff Parsons <parsons@cs.wustl.edu> and Carlos O'Ryan <coryan@cs.wustl.edu>
  */

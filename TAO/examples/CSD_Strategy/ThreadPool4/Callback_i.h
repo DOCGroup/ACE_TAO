@@ -1,4 +1,3 @@
-// $Id$
 #ifndef CALLBACK_I_H
 #define CALLBACK_I_H
 

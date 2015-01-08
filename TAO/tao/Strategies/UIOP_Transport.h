@@ -4,8 +4,6 @@
 /**
  *  @file   UIOP_Transport.h
  *
- *  $Id$
- *
  *  @author Originally by Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@ece.uci.edu>
  *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
@@ -45,7 +43,6 @@ typedef ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>
  *
  * @brief Specialization of the base TAO_Transport class to handle the
  *  UIOP protocol.
- *
  */
 
 class TAO_Strategies_Export TAO_UIOP_Transport : public TAO_Transport

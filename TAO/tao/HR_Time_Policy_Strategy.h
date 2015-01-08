@@ -4,8 +4,6 @@
 /**
  *  @file   HR_Time_Policy_Strategy.h
  *
- *  $Id$
- *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
 //=============================================================================
@@ -36,7 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_HR_Time_Policy_Strategy
  *
  * @brief Time policy strategy providing Highres time.
- *
  */
 class TAO_Export TAO_HR_Time_Policy_Strategy
   : public TAO_Time_Policy_Strategy

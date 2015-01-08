@@ -3,8 +3,6 @@
 /**
  * @file Condition_Recursive_Thread_Mutex.cpp
  *
- * $Id$
- *
  * Originally in Synch.cpp
  *
  * @author Douglas C. Schmidt <schmidt@cs.wustl.edu>

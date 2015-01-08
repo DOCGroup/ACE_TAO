@@ -3,8 +3,6 @@
 /**
  *  @file    operation_details.h
  *
- *  $Id$
- *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
 //=============================================================================

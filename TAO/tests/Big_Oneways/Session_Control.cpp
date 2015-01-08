@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Session_Control.h"
 
 Session_Control::Session_Control (CORBA::ULong session_count)

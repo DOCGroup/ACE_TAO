@@ -1,5 +1,3 @@
-// $Id$
-
 ACE_INLINE int
 EC_Driver::verbose (void) const
 {

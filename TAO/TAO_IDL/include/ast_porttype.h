@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #ifndef AST_PORTTYPE_H
 #define AST_PORTTYPE_H
 

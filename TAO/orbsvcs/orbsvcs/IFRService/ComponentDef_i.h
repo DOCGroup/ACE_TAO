@@ -5,10 +5,7 @@
 /**
  *  @file    ComponentDef_i.h
  *
- *  $Id$
- *
  *  ComponentDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_SUPPORTS_TEST_IMPL_H
 #define TAO_SUPPORTS_TEST_IMPL_H
 
@@ -8,8 +6,6 @@
 
 /**
  * \class node_impl
- *
- *
  */
 class node_impl :
   public virtual OBV_Supports_Test::Node,

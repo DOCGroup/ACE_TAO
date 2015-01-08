@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 /// Measure roundtrip delay
 interface LatencyTest

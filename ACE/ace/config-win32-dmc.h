@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // The following configuration file contains defines for Digital Mars compilers.
 
 #ifndef ACE_CONFIG_WIN32_DMC_H

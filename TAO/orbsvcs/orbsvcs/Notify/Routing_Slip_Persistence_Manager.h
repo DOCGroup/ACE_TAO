@@ -4,8 +4,6 @@
 /**
  *  @file    Routing_Slip_Persistence_Manager.h
  *
- *  $Id$
- *
  *  A Routing_Slip_Persistence manager controls the actual allocation of
  *  blocks through a Persistent_Storage_Allocator and can persist an
  *  event and its routing slip.

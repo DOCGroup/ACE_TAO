@@ -3,10 +3,7 @@
 /**
  *  @file    operation_svs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the CIAO servants file.
- *
  *
  *  @author Jeff Parsons
  */

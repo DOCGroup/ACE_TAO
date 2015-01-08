@@ -1,4 +1,3 @@
-// $Id$
 #include "FooServantList.h"
 #include "Foo_i.h"
 #include "Callback_i.h"

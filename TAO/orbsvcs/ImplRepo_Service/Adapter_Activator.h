@@ -3,8 +3,6 @@
 /**
  *  @file   Adapter_Activator.h
  *
- *  $Id$
- *
  *  @brief  This class implements ImR's Adapter Activator.
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

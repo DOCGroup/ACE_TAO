@@ -4,8 +4,6 @@
 /**
  *  @file   GIOP_Message_Generator_Parser_11.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
@@ -30,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  *  This just derives from v1.0 class. It uses most of the methods in
  *  the 1.0 class.
- *
  */
 class TAO_GIOP_Message_Generator_Parser_11
   : public TAO_GIOP_Message_Generator_Parser_10

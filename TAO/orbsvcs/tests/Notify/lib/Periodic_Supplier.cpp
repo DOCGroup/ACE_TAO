@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Periodic_Supplier.h"
 
 #include "ace/Arg_Shifter.h"

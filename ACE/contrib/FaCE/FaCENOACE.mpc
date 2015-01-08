@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project: vc_warnings {
   exename   = FaCENOACE
   requires += wince

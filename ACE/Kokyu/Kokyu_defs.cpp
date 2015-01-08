@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Kokyu_defs.h"
 
 #if ! defined (__ACE_INLINE__)

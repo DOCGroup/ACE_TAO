@@ -3,10 +3,7 @@
 /**
  *  @file   Notify_Push_Consumer.h
  *
- *  $Id$
- *
  * A structured push consumer implementation.
- *
  *
  *  @author Chip Jones <jones_c@ociweb.com>
  */

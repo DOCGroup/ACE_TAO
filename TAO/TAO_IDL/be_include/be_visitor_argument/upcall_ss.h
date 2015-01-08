@@ -3,11 +3,8 @@
 /**
  *  @file    upcall_ss.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arguments. This generates the
  *  passing of arguments to the upcall.
- *
  *
  *  @author Aniruddha Gokhale
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "subscriber.idl"
 
 interface Publisher

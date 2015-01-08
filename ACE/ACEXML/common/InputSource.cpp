@@ -1,4 +1,4 @@
-// -*- C++ -*- $Id$
+// -*- C++ -*-
 
 #include "ACEXML/common/InputSource.h"
 #include "ACEXML/common/StreamFactory.h"

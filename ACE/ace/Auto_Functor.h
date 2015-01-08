@@ -3,8 +3,6 @@
 /**
  * @file Auto_Functor.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 //=============================================================================
@@ -52,7 +50,6 @@ struct Auto_Functor_Ref
  * Functor(Functor const &) throw();<BR>
  * Functor & operator=(Functor const &) throw();<BR>
  * void operator()(X * p) throw();<BR>
- *
  */
 template<typename X, typename Functor>
 class Auto_Functor

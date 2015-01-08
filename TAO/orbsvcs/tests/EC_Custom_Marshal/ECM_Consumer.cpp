@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ECM_Consumer.h"
 #include "ECM_Data.h"
 

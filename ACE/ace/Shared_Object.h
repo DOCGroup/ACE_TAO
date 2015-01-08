@@ -4,8 +4,6 @@
 /**
  *  @file    Shared_Object.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //==========================================================================

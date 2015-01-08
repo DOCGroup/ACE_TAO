@@ -4,8 +4,6 @@
 /**
  *  @file    GIOP_Fragmentation_Strategy.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

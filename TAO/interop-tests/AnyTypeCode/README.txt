@@ -1,4 +1,4 @@
-$Id$
+
 
 This test demonstrates the interoperation of JacORB and TAO with respect to
 the use of indirection in the type codes marshaled with Anys. These are

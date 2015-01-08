@@ -4,8 +4,6 @@
 /**
  *  @file   FTEC_Event_Channel.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

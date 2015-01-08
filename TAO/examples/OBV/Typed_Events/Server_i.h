@@ -4,10 +4,7 @@
 /**
  *  @file    Server_i.h
  *
- *  $Id$
- *
  *  This class implements the Event_Types IDL interface.
- *
  *
  *  @author Torsten Kuepper derived from the Echo example TAO/example/Simple/echo of Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */

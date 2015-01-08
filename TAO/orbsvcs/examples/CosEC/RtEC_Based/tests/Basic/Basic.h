@@ -4,13 +4,9 @@
 /**
  *  @file   Basic.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *
  * This is a simple test class for the standard Cos Event Channel.
- *
- *
  */
 //=============================================================================
 

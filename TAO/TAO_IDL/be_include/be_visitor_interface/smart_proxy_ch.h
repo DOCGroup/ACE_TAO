@@ -3,12 +3,9 @@
 /**
  *  @file    smart_proxy_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This provides code generation for smart proxy classes for an
  *  interface in the client header.
- *
  *
  *  @author Kirthika Parameswaran
  */

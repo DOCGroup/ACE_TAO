@@ -4,8 +4,6 @@
 /**
  *  @file   SL2_EstablishTrustPolicy.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 // ===================================================================

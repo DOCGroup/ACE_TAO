@@ -1,4 +1,3 @@
-// $Id$
 #include "ServerApp.h"
 #include "FooServantList.h"
 #include "FooC.h"

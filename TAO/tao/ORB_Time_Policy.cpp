@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ORB_Time_Policy.h"
 
 #if !defined (__ACE_INLINE__)

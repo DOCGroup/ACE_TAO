@@ -4,8 +4,6 @@
 /**
  *  @file    global.h
  *
- *  $Id$
- *
  *  Here are all the declarations that are needed throughout the program.
  *
  *  @author Douglas C. Schmidt

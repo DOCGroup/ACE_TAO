@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Object_Manager.h"
 #if !defined (ACE_LACKS_ACE_TOKEN)
 # include "ace/Token_Manager.h"

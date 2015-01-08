@@ -4,8 +4,6 @@
 /**
  *  @file    Event_Utilities.h
  *
- *  $Id$
- *
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */
 //=============================================================================

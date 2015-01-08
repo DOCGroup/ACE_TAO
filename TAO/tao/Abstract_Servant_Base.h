@@ -4,8 +4,6 @@
 /**
  *  @file    Abstract_Servant_Base.h
  *
- *  $Id$
- *
  *  This files contains the TAO_Abstract_ServantBase, which is used
  *  as a way to decouple the PortableServer from the TAO Core,
  *  and make it possible to keep the reference to the servant in

@@ -4,8 +4,6 @@
 /**
  *  @file   QoS_UDP.h
  *
- *  $Id$
- *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
 //=============================================================================

@@ -4,11 +4,8 @@
 /**
  *  @file    valuebox_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuebox node.
  *  This provides code generation for valueboxes in the client stubs.
- *
  *
  *  @author Gary Maxey
  */

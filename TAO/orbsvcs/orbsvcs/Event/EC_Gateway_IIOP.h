@@ -3,8 +3,6 @@
 /**
  *  @file   EC_Gateway_IIOP.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Johnny Willemsen  (jwillemsen@remedy.nl)
  *

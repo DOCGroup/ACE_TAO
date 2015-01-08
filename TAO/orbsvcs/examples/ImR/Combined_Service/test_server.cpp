@@ -1,4 +1,3 @@
-// $Id$
 // This is a simple test of an ImR using the corba interfaces
 // It uses multicast to find the ImplRepoService
 

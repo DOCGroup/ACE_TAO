@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Log_Msg.h"
 #include "Upcall.h"

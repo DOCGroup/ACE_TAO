@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Get_Opt.h"
 #include "TS_Clerk_Handler.h"
 #include "ace/Lib_Find.h"

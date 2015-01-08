@@ -6,8 +6,6 @@
  * @brief Implement the element manipulation traits for object
  *        reference types.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "Object_Reference_Traits_Base_T.h"

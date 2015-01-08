@@ -4,8 +4,6 @@
 /**
  *  @file Synch_Queued_Message.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -42,7 +40,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * one SYNC_NONE messages the buffer is immediately copied into a
  * newly allocated buffer, and must be deallocated.  Other types of
  * requests use the memory allocated by the sending thread.
- *
  */
 class TAO_Export TAO_Synch_Queued_Message : public TAO_Queued_Message
 {

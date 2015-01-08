@@ -3,10 +3,7 @@
 /**
  *  @file    invoke_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating the code that passes arguments to the CDR operators
- *
  *
  *  @author Aniruddha Gokhale
  */

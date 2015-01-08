@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef MIF_SCHEDULER_H
 #define MIF_SCHEDULER_H
 

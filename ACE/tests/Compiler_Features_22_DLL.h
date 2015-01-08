@@ -3,8 +3,6 @@
 /**
  *  @file    Compiler_Features_22_DLL.h
  *
- *  $Id$
- *
  *  Test DLL export with a template method specialization
  */
 //=============================================================================

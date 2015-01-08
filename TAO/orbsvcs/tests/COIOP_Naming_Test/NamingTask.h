@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef NAMINGTASK_H
 #define NAMINGTASK_H
 

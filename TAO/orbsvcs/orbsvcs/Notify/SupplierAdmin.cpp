@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/SupplierAdmin.h"
 #include "orbsvcs/Notify/Builder.h"

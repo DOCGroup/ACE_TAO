@@ -1,4 +1,4 @@
-$Id$
+
 
 This utility is intended to assist in the analysis of large debug output
 files generated with -ORBDebuglevel 10. The utility summarizes thread,

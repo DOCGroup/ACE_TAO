@@ -5,8 +5,6 @@
  *
  * @brief Implement the element manipulation traits for valuetype types.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "Valuetype_Traits_Base_T.h"

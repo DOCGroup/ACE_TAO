@@ -1,7 +1,5 @@
 // -*- C++ -*-
 
-// $Id$
-
 #ifndef TAO_POA_MACROS_H
 #define TAO_POA_MACROS_H
 

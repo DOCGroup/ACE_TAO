@@ -2,8 +2,6 @@
 
 /**
  *  @file   Visibility.pidl
- *
- * $Id$
  */
 
 #ifndef TAO_VISIBILITY_PIDL

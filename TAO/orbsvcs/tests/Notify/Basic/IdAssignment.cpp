@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Arg_Shifter.h"
 #include "ace/Get_Opt.h"
 #include "tao/debug.h"

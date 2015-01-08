@@ -1,8 +1,5 @@
 /**
  * @file Test.idl
- *
- * $Id$
- *
  */
 
 union FirstUnion switch (boolean) {

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SimpleMultipleUser_exec.h"
 #include "ace/Log_Msg.h"
 #include "ciao/Logger/Log_Macros.h"

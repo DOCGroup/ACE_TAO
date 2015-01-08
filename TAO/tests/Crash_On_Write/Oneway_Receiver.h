@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef ONEWAY_RECEIVER_H
 #define ONEWAY_RECEIVER_H

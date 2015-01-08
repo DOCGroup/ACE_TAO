@@ -3,10 +3,7 @@
 /**
  *  @file     client.cpp
  *
- *  $Id$
- *
  *   This is a client that uses buffered oneways.
- *
  *
  *  @author  Irfan Pyarali
  */

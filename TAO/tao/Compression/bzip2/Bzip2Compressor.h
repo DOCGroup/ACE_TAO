@@ -4,8 +4,6 @@
 /**
  *  @file   Bzip2Compressor.h
  *
- *  $Id$
- *
  *  See http://www.zlib.net/manual.html for the zlib interface itself
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>

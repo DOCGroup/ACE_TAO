@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(cinset): gperf_test {
   exename = cout
 

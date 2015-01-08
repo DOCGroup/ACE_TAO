@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/corba.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Notify/Properties.h"

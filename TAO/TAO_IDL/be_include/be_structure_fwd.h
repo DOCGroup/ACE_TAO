@@ -4,11 +4,8 @@
 /**
  *  @file    be_structure_fwd.h
  *
- *  $Id$
- *
  *  Extension of class AST_StructureFwd that provides additional
  *  means for C++ mapping of a struct.
- *
  *
  *  @author Jeff Parsons
  */

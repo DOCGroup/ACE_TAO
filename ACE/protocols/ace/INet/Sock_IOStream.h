@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Sock_IOStream.h
  *

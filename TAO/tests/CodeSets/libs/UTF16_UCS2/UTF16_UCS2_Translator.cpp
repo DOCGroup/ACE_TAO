@@ -4,8 +4,6 @@
 /**
  *  @file    UTF16_UCS2_Translator.cpp
  *
- *  $Id$
- *
  *  Defines the arrays required to convert between UCS-2, a 2 byte wide char
  *  codeset, and UCS-16, aka unicode, a 2-byte codeset. As a bit-pattern
  *  these two should be identical, with the exception that UCS-2 cannot
@@ -20,7 +18,6 @@
  *    "-ORBWCharCodesetTranslator UTF16_UCS2_Factory"
  *
  *  This code used UTF16_BOM_Translator as a starting point.
- *
  *
  *  @author Iliyan Jeliazkov <jeliazkov_i@ociweb.com> Byron Harris <harrisb@ociweb.com>
  */

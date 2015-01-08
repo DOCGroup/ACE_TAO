@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Properties_Encoder.h
  *
- *  $Id$
- *
  *  This file declares a class to help manage PortableGroup::Properties
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>

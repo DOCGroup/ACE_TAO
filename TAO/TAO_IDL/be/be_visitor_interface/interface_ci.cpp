@@ -3,10 +3,7 @@
 /**
  *  @file    interface_ci.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Interfaces in the client inline file
- *
  *
  *  @author Aniruddha Gokhale
  */

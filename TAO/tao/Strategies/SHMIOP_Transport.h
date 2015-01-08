@@ -4,8 +4,6 @@
 /**
  *  @file   SHMIOP_Transport.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
@@ -47,7 +45,6 @@ typedef ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>
  *
  * @brief Specialization of the base TAO_Transport class to handle the
  *  SHMIOP protocol.
- *
  */
 
 class TAO_Strategies_Export TAO_SHMIOP_Transport : public TAO_Transport

@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Connection_Manager.h"
 
 Connection_Manager::Connection_Manager (void)

@@ -1,8 +1,5 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
- *
- * $Id$
- *
  */
 
 #ifndef PARTICIPANTBUILTINTOPICDATA_H_

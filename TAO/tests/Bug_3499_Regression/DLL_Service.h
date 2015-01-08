@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef _DLL_SERVICE_H_
 #define _DLL_SERVICE_H_
 

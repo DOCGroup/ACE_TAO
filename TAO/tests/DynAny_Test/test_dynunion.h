@@ -2,10 +2,7 @@
 /**
  *  @file    test_dynunion.h
  *
- *  $Id$
- *
  *  Header file for class to test DynUnion.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

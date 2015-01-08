@@ -4,8 +4,6 @@
 /**
  *  @file    XML_Svc_Conf.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================
@@ -40,8 +38,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This DLL should include an operation as follow:
  *
  *   extern "C" ACE_XML_Svc_Conf_Parser * _ACEXML_create_XML_Svc_Conf_Object (void);
- *
- *
  */
 
 class ACE_Export ACE_XML_Svc_Conf

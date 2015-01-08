@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef SHUTDOWN_HELPER_H
 #define SHUTDOWN_HELPER_H

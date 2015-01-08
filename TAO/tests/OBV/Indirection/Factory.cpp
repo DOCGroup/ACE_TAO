@@ -1,4 +1,3 @@
-// $Id$
 #include "Factory.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 

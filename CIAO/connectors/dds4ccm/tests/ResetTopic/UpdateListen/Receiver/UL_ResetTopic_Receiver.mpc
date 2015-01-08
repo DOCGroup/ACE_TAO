@@ -1,5 +1,3 @@
-// $Id$
-
 project (UL_ResetTopicReceiver_idl_gen) : componentidldefaults, dds4ccm {
   custom_only = 1
   after += UL_ResetTopicConnector_idl_gen

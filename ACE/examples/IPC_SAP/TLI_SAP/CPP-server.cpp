@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/TLI_Acceptor.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdlib.h"

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(UDP Broadcast) : aceexe, avoids_ace_for_tao {
   exename = UDP_Broadcast
   Source_Files {

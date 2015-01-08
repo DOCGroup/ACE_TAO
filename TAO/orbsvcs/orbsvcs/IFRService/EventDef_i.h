@@ -5,10 +5,7 @@
 /**
  *  @file    EventDef_i.h
  *
- *  $Id$
- *
  *  EventDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

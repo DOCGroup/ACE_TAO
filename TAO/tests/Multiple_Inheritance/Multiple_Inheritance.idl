@@ -1,5 +1,3 @@
-// $Id$
-
 interface A
 {
   string method1 ();

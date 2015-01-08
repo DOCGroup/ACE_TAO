@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirerFactory.h"
 #include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h"
 

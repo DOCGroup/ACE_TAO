@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Component_Handler.h"
 #include "ciao/Logger/Log_Macros.h"
 #include "ciao/Base/CIAO_PropertiesC.h"

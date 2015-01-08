@@ -4,8 +4,6 @@
 /**
  *  @file   SCTP_SEQ.h
  *
- *  $Id$
- *
  *  @author Yamuna Krishnamurthy <yamuna@oomworks.com>
  */
 //=============================================================================

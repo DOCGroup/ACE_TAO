@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef LIVELINESS_QOS_TEST_H_
 #define LIVELINESS_QOS_TEST_H_
 

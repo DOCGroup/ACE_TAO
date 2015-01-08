@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Messenger_i.h"
 #include "MessengerS.h"
 #include "ServerInitializer.h"

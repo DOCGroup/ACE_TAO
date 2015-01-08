@@ -1,5 +1,3 @@
-// $Id$
-
 ACE_INLINE bool
 ACE_Name_Options::use_registry (void) const
 {

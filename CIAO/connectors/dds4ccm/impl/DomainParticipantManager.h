@@ -1,9 +1,6 @@
 /**
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * @author Johnny Willemsen (jwillemsen@remedy.nl)
- *
- * $Id$
- *
  */
 
 #ifndef DOMAINPARTICIPANTMANAGER_H_

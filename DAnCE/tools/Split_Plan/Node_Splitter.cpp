@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Node_Splitter.h"
 #include "dance/Logger/Log_Macros.h"
 

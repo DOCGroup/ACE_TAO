@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains files that implement a server for the TAO
 Notification Service.  In addition, it contains files that run the TAO

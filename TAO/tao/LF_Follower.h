@@ -4,8 +4,6 @@
 /**
  *  @file LF_Follower.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -40,7 +38,6 @@ class TAO_Leader_Follower;
  *
  * @todo Currently this class offers little abstraction, the follower
  * loop should be implemented by this class.
- *
  */
 class TAO_Export TAO_LF_Follower
   : public ACE_Intrusive_List_Node<TAO_LF_Follower>

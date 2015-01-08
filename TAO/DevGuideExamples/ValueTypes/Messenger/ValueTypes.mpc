@@ -1,5 +1,3 @@
-// $Id$
-
 project(*DevGuideIDL): taoidldefaults, valuetype {
   idlflags += -Wb,pch_include=_pch.h
   IDL_Files {

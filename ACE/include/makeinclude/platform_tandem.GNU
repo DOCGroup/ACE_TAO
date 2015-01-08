@@ -1,4 +1,3 @@
-# $Id$
 
 # NonStop-UX NCC 3.20
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "Search_Struct.h"
 #include "ace/Log_Msg.h"

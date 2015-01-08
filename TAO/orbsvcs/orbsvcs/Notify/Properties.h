@@ -3,8 +3,6 @@
 /**
  *  @file Properties.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -36,7 +34,6 @@ class TAO_Notify_Builder;
  * @class TAO_Notify_Properties
  *
  * @brief Global properties that strategize Notify's run-time behaviour.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Properties
 {

@@ -4,8 +4,6 @@
 /**
  *  @file    Thread_Pool.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali
  *  @author Johnny Willemsen
  */

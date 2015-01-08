@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Command.h"
 
 #include "tao/Exception.h"

@@ -5,7 +5,6 @@ package PerlACE::TestTarget_WinCE;
 # Description : Creates a PerlACE::WinCE
 # Author      : Johnny Willemsen
 # Create Date : 29/20/2008
-# $Id$
 # ******************************************************************
 
 # ******************************************************************

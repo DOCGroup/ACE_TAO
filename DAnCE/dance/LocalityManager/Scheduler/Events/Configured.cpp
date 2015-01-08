@@ -1,4 +1,3 @@
-// $Id$
 #include "Configured.h"
 
 #include "tao/AnyTypeCode/ExceptionA.h"

@@ -1,7 +1,5 @@
 // file      : Gate.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef GATE_H
 #define GATE_H
 

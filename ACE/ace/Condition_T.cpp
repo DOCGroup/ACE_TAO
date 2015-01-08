@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_CONDITION_T_CPP
 #define ACE_CONDITION_T_CPP
 

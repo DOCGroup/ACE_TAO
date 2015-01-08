@@ -1,5 +1,4 @@
 // -*- C++ -*-
-// $Id$
 // FUZZ: disable check_for_ace_log_categories
 
 /**

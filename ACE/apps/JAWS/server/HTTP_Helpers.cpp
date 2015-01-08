@@ -1,5 +1,3 @@
-// $Id$
-
 // HTTP_Helpers.cpp -- Helper utilities for both server and client
 
 #include "HTTP_Helpers.h"

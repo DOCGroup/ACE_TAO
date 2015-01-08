@@ -3,12 +3,8 @@
 /**
  *  @file    Window_Messages.cpp
  *
- *  $Id$
- *
- *
  *  Tests the Msg_WFMO_Reactor's ability to handle regular events
  *  and window messages.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

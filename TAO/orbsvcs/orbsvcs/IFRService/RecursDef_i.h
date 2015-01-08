@@ -5,10 +5,7 @@
 /**
  *  @file    RecursDef_i.h
  *
- *  $Id$
- *
  *  StructDef & UnionDef support class.
- *
  *
  *  @author Simon Massey <sma@prismtech.com>
  */

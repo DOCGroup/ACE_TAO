@@ -1,8 +1,6 @@
 /**
  * @file InvalidName.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled IDL source for the CORBA::InvalidName
  * exception.
  *
@@ -27,7 +25,6 @@
  * automatically generated, but it is better to automatically generate
  * the exception, otherwise they are always out of date when compared
  * to the rest of ACE+TAO.
- *
  */
 #ifndef TAO_CORBA_INVALIDNAME_PIDL
 #define TAO_CORBA_INVALIDNAME_PIDL

@@ -4,8 +4,6 @@
 /**
  *  @file   Request_Context_Repository.h
  *
- *  $Id$
- *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
 //=============================================================================

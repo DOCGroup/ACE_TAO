@@ -4,8 +4,6 @@
 /**
  *  @file    POSIX_Asynch_IO.h
  *
- *  $Id$
- *
  *  The implementation classes for POSIX implementation of Asynch
  *  Operations are defined here in this file.
  *
@@ -279,7 +277,6 @@ protected:
  *
  * This class implements <ACE_Asynch_Read_Stream> for all POSIX
  * based implementation of Proactor.
- *
  */
 class ACE_Export ACE_POSIX_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
                                                 public ACE_POSIX_Asynch_Operation
@@ -306,7 +303,6 @@ public:
  *
  * @brief This class provides concrete implementation for
  *     <ACE_Asynch_Write_Stream::Result> on POSIX platforms.
- *
  *
  *     This class has all the information necessary for the
  *     @c handler to uniquiely identify the completion of the
@@ -542,7 +538,6 @@ protected:
  *     <ACE_Asynch_Write_File> for POSIX platforms where the
  *     completion strategy for Proactor is based on AIOCB (AIO
  *     Control Blocks).
- *
  */
 class ACE_Export ACE_POSIX_Asynch_Write_File : public virtual ACE_Asynch_Write_File_Impl,
                                                public ACE_POSIX_Asynch_Write_Stream
@@ -586,7 +581,6 @@ private:
  *
  * @brief This is that class which will be passed back to the
  *     handler when the asynchronous accept completes.
- *
  *
  *     This class has all the information necessary for the
  *     handler to uniquiely identify the completion of the
@@ -801,7 +795,6 @@ protected:
 
 /**
  * @class ACE_POSIX_Asynch_Connect
- *
  */
 class ACE_Export ACE_POSIX_Asynch_Connect :
   public virtual ACE_Asynch_Connect_Impl,
@@ -1044,7 +1037,6 @@ public:
  *     will be passed back to the <handler> when the asynchronous
  *     reads completes through the <ACE_Handler::handle_read_stream>
  *     callback.
- *
  */
 class ACE_Export ACE_POSIX_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dgram_Impl,
                                                public ACE_POSIX_Asynch_Operation

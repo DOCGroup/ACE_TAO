@@ -2,8 +2,6 @@
 /**
  *  @file    test.idl
  *
- *  $Id$
- *
  *  A simple test of nested upcalls.
  *
  *

@@ -4,10 +4,7 @@
 /**
  *  @file    valuebox.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuebox class
- *
  *
  *  @author Gary Maxey
  */

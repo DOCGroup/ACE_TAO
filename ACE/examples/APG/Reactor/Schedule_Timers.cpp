@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * Scheduling timers with the Reactor
  */
 

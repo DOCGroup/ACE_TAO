@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Domain_Application_Impl.h"
 #include "dance/Logger/Log_Macros.h"
 #include <sstream>

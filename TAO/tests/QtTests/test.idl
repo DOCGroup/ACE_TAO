@@ -1,5 +1,3 @@
-// $Id$
-
 interface LCD_Display
 {
   void send_val (in long val);

@@ -1,5 +1,3 @@
-// $Id$
-
 // Ensure that the PI library is linked in when building statically
 #include "tao/PI/PI.h"
 #include "TestC.h"

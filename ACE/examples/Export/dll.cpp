@@ -1,4 +1,3 @@
-// $Id$
 #include "dll.h"
 
 int test_variable = 0;

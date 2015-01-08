@@ -3,8 +3,6 @@
 /**
  *  @file   ESF_Copy_On_Read.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  *  http://doc.ece.uci.edu/~coryan/EC/index.html
@@ -29,7 +27,6 @@ template<class Target> class TAO_ESF_Worker;
  * @class TAO_ESF_Copy_On_Read
  *
  * @brief Implement the Copy_On_Read protocol
- *
  *
  * The class is parametric on the kind of collection and locking
  * mechanism used.

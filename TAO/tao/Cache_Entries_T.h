@@ -4,9 +4,6 @@
 /**
  *  @file   Cache_Entries_T.h
  *
- *  $Id$
- *
- *
  *  @author Bala Natarajan  <bala@cs.wustl.edu>
  */
 //=============================================================================

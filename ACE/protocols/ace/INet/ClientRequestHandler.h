@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file ClientRequestHandler.h
  *

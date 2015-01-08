@@ -1,5 +1,3 @@
-// $Id$
-
 #include "connectors/dds4ccm/impl/DDS_Base_Connector_T.h"
 #include "ace/Reactor.h"
 

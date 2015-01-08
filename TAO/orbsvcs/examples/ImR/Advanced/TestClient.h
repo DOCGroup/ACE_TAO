@@ -1,4 +1,3 @@
-//$Id$
 #include "tao/ORB.h"
 
 #include "ace/Task.h"

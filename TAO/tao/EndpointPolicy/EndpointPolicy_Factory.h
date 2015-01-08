@@ -4,8 +4,6 @@
 /**
  * @file EndpointPolicy_Factory.h
  *
- * $Id$
- *
  * @author  Yan Dai <dai_y@ociweb.com>
  */
 //=============================================================================

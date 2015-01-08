@@ -4,8 +4,6 @@
 /**
  *  @file     DIOP_Endpoint.h
  *
- *  $Id$
- *
  *   DIOP implementation of PP Framework Endpoint interface.
  *
  *  @author  Michael Kircher

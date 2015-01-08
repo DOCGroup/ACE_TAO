@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SOCK_Connector.h"
 #include "ace/IOStream.h"
 #include "ace/Log_Msg.h"

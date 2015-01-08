@@ -1,5 +1,3 @@
-// $Id$
-
 project(DAnCE_NDDS_Logger) : ndds_cck_ts_defaults, nddslib, taolib_with_idl, dance_output, install {
 
   dynamicflags += DANCE_NDDS_LOG_BUILD_DLL DAnCE_NDDS_Log_Stub_BUILD_DLL

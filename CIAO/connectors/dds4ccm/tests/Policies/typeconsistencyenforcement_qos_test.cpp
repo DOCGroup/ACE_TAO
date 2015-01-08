@@ -1,5 +1,3 @@
-// $Id$
-
 #include "typeconsistencyenforcement_qos_test.h"
 
 #if defined (RTI_DDS_VERSION_MAJOR) && (RTI_DDS_VERSION_MAJOR >= 5)

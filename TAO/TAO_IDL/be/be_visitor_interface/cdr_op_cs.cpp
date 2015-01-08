@@ -3,10 +3,7 @@
 /**
  *  @file    cdr_op_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for CDR operators for interfaces
- *
  *
  *  @author Aniruddha Gokhale
  */

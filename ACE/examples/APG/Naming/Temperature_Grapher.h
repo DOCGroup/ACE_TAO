@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TEMPERATURE_GRAPHER_H
 #define TEMPERATURE_GRAPHER_H
 

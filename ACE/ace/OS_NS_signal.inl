@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
 

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "test_i.h"
 #include "ace/Auto_Ptr.h"
 

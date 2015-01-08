@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Smart_Proxy_Impl.h"
 #include "ace/Service_Object.h"
 #include "ace/svc_export.h"

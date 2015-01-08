@@ -3,8 +3,6 @@
 /**
  *  @file   EC_Lifetime_Utils_T.h
  *
- *  $Id$
- *
  *  @author Jody Hagins (jody@atdesk.com)
  *  @author Marina Spivak (marina@atdesk.com)
  *
@@ -50,7 +48,6 @@ void activate (T & obj_ref,
  * Has void execute (void); method which
  * can throw ONLY CORBA exceptions.
  * Has default and copy constructors.
- *
  */
 template <class T>
 class TAO_EC_Auto_Command

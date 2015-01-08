@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_CONFIG_FILE_H
 #define JAWS_CONFIG_FILE_H
 

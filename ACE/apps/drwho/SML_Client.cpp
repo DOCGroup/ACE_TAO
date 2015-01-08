@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "SML_Client.h"
 

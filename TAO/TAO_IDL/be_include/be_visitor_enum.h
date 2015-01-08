@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_enum.h
  *
- *  $Id$
- *
  *  Concrete visitor for the enum class
- *
  *
  *  @author Aniruddha Gokhale
  */

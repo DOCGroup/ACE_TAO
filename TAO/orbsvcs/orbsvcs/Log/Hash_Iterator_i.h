@@ -4,8 +4,6 @@
 /**
  *  @file   Hash_Iterator_i.h
  *
- *  $Id$
- *
  *  Implementation of the DsLogAdmin::Iterator interface.
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>

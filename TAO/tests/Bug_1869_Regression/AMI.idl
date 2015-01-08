@@ -1,5 +1,3 @@
-// $Id$
-
 module AMI_test {
   interface adder {
     long add(in long a, in long b);

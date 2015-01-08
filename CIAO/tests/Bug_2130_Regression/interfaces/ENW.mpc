@@ -1,5 +1,3 @@
-//$Id$
-
 project(ENW_stub): ccm_stub, avoids_ccm_noevent {
   sharedname = ENW_stub
   idlflags -= -GT

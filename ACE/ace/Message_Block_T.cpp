@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_MESSAGE_BLOCK_T_CPP
 #define ACE_MESSAGE_BLOCK_T_CPP
 

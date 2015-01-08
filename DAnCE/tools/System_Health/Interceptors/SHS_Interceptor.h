@@ -1,4 +1,3 @@
-// $Id$
 /**
  * @file SHS_Interceptor.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>

@@ -1,5 +1,3 @@
-// $Id$
-
 // MMAP_Memory_Pool.cpp
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/OS_NS_sys_mman.h"

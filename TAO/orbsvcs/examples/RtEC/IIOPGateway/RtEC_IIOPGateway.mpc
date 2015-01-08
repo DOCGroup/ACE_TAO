@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Consumer): messaging, rteventexe, naming {
   exename = Consumer
   Source_Files {

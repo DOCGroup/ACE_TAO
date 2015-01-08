@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Block_Flushing_Strategy.h"
 #include "tao/Transport.h"
 #include "tao/Queued_Message.h"

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/Valuetype/AbstractBase.h"
 

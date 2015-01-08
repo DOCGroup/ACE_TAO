@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Foo_B_i.h"
 #include "AppShutdown.h"
 #include "TestAppExceptionC.h"

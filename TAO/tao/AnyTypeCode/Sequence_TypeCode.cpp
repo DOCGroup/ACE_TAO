@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_SEQUENCE_TYPECODE_CPP
 #define TAO_SEQUENCE_TYPECODE_CPP
 

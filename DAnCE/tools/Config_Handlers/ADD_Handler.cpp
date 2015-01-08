@@ -1,4 +1,3 @@
-// $Id$
 #include "ADD_Handler.h"
 #include "cdp.hpp"
 #include "dance/Deployment/Deployment_DataC.h"

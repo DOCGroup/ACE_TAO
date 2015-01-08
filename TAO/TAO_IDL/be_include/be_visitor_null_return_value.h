@@ -3,10 +3,7 @@
 /**
  *  @file    be_visitor_null_return_value.h
  *
- *  $Id$
- *
  *  Encapsulation of rules for generating null return values
- *
  *
  *  @author Jeff Parsons
  */

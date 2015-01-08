@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef OCTET_SEQ_H_
 #define OCTET_SEQ_H_
 

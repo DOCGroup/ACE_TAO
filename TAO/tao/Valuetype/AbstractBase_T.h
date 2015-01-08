@@ -4,8 +4,6 @@
 /**
  *  @file     AbstractBase_T.h
  *
- *  $Id$
- *
  *  @author  Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

@@ -3,7 +3,6 @@
 //=============================================================================
 /**
  *  @file   Resource_Factory.h
- *  $Id$
  *
  *  @author Yamuna Krishnamurthy
  */
@@ -31,8 +30,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *        The AV Streams resource factory loads the
  *        pluggable transport and flow protocol factories
  *        in the corresponding factory sets.
- *
- *
  */
 class TAO_AV_Export TAO_AV_Resource_Factory
 : public ACE_Service_Object

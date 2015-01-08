@@ -1,5 +1,3 @@
-// $Id$
-
 project (*lib): taolib, portableserver, threads, avoids_corba_e_micro, avoids_corba_e_compact, avoids_minimum_corba {
   sharedname = bug3646b
   dynamicflags += BUG3646b_BUILD_DLL

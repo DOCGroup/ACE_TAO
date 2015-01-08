@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Consumer) : event_skel, orbsvcsexe, portableserver, naming {
   exename = Consumer
 

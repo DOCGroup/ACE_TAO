@@ -2,8 +2,6 @@
 /**
  *  @file nsgroup_svc.h
  *
- *  $Id$
- *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
 //==========================================================================
@@ -20,8 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class NS_group_svc
  *
  * @brief Encapsulate the NS group operations in a class.
- *
- *
  */
 class  TAO_FtNaming_Intf_Export NS_group_svc
 {

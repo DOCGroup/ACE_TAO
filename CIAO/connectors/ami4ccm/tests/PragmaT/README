@@ -1,5 +1,3 @@
-// $Id$
-
 This test is used to test the use of the new pragma's.
 
 Instead of '#PRAGMA ciao ami4ccm interface' , '#PRAGMA ciao ami4ccm receptacle' and

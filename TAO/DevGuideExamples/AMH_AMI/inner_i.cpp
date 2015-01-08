@@ -1,4 +1,4 @@
-/* -*- C++ -*- $Id$ */
+/* -*- C++ -*-  */
 #include "amh_ami_pch.h"
 
 #include "inner_i.h"

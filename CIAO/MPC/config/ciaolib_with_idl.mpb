@@ -1,5 +1,3 @@
 // -*- MPC -*-
-// $Id$
-
 project : ciao_lib, ciaoidldefaults {
 }

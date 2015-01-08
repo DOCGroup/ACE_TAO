@@ -3,11 +3,8 @@
 /**
  *  @file    CC_naming_service.cpp
  *
- *  $Id$
- *
  *    This class implements the naming services necessary to test the
  *    concurrency service
- *
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */

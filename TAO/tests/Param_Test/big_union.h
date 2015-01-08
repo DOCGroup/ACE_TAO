@@ -3,10 +3,7 @@
 /**
  *  @file    big_union.h
  *
- *  $Id$
- *
  *   Tests Anys
- *
  *
  *  @author   Aniruddha Gokhale
  */

@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef MIF_DT_CREATOR_H
 #define MIF_DT_CREATOR_H
 

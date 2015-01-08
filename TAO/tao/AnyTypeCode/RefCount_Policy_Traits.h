@@ -4,8 +4,6 @@
 /**
  *  @file    RefCount_Policy_Traits.h
  *
- *  $Id$
- *
  *  Header file for TAO's reference count policy (unrelated to CORBA
  *  policies) traits.
  *

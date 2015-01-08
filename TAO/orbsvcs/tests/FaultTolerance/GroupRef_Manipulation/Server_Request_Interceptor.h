@@ -4,8 +4,6 @@
 /**
  * @file Server_Request_Interceptor.h
  *
- * $Id$
- *
  * Implementation header for the server request interceptor for the
  * IOGR manipulation  test
  *
@@ -34,8 +32,6 @@
  * @class Server_Request_Interceptor
  *
  * @brief Simple concrete server request interceptor.
- *
- *
  */
 class Server_Request_Interceptor
   : public virtual ForwardRequestTest::ServerRequestInterceptor,

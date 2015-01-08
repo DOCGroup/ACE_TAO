@@ -1,10 +1,7 @@
 /**
  * @file Clock_Ticks.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #include "Clock_Ticks.h"
 

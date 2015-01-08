@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/OS_NS_stdio.h"
 
 // Listing 1 code/ch17

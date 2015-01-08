@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @@ This is just a temporary file.  Since TAO does not have
  *    CosPersistentState at all, we use this file to define

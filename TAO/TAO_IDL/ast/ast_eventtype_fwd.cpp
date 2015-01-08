@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_eventtype_fwd.h"
 #include "ast_interface.h"
 #include "ast_visitor.h"

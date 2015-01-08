@@ -1,4 +1,4 @@
-$Id$
+
 
 Admin_Client is a class containing several functions which test
 the methods in various IFR object classes. Since automatic

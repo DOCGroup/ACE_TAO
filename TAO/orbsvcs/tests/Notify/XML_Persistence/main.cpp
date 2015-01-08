@@ -1,6 +1,3 @@
-/**
- *  $Id$
- */
 
 #include "orbsvcs/CosNotificationC.h"
 #include "orbsvcs/NotifyExtC.h"

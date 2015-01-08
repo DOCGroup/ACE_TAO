@@ -4,8 +4,6 @@
 /**
  *  @file    HTBP_Notifier.cpp
  *
- *  $Id$
- *
  *  @author Phil Mesnier, Priyanka Gontla
  */
 //=============================================================================

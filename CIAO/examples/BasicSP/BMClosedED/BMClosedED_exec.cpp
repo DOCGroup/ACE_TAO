@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 #include "BMClosedED_exec.h"

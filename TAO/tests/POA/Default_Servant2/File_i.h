@@ -3,11 +3,8 @@
 /**
  *  @file     File_i.h
  *
- *  $Id$
- *
  *    Defines the implementation classes for the File IDL
  *   module
- *
  *
  *  @author  Irfan Pyarali
  */

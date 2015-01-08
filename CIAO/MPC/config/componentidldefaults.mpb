@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : ciaoidldefaults, anytypecode {
   idlflags += -Gsv -Glem -Gxhst -Gxhsk -Gxhsv -Gxhex
 }

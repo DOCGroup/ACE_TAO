@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project (DAnCE_Artifact_Installation_IDL) : install, danceidldefaults {
   custom_only = 1
   IDL_Files {

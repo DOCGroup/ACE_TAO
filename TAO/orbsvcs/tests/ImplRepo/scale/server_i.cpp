@@ -1,5 +1,3 @@
-// $Id$
-
 #include "server_i.h"
 
 #include "tao/IORTable/IORTable.h"

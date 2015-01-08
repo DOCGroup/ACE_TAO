@@ -3,10 +3,7 @@
 /**
  *  @file    field_cdr_cs.h
  *
- *  $Id$
- *
  *  Visitor generating code for Field in the client stubs file.
- *
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_visitor_field/cdr_op_cs.h
  */

@@ -3,14 +3,11 @@
 /**
  *  @file    cdr_op_cs.h
  *
- *  $Id$
- *
  *  The array's own CDR operators are generated in the .i file, but if the
  *  array contains an anonymous sequence, those CDR operators will not
  *  get generated on their own, and, since the sequence may contain a
  *  recursive type, they must also be generated in the .cpp file. That is
  *  the sole purpose of this visitor type.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

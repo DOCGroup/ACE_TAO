@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 
 int Simple_Server_count=0;

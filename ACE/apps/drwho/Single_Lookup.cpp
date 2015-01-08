@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Options.h"
 #include "Single_Lookup.h"
 #include "ace/ACE.h"

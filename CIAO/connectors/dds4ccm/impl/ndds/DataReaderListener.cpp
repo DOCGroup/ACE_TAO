@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/DataReaderListener.h"
 #include "dds4ccm/impl/ndds/convertors/SampleLostStatus.h"
 #include "dds4ccm/impl/ndds/convertors/SubscriptionMatchedStatus.h"

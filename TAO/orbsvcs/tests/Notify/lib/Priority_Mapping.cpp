@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Priority_Mapping.h"
 
 

@@ -5,10 +5,7 @@
 /**
  *  @file    UsesDef_i.h
  *
- *  $Id$
- *
  *  UsesDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

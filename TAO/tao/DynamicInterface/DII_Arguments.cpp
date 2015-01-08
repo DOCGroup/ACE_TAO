@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/DynamicInterface/DII_Arguments.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Impl.h"

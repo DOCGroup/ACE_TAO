@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class COLLECTION, class ITERATOR> ACE_INLINE

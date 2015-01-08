@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "dance/Logger/Log_Macros.h"

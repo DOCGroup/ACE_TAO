@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_ATOMIC_OP_T_CPP
 #define ACE_ATOMIC_OP_T_CPP
 

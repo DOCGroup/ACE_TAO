@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 // Include ACE.h only if it hasn't already been included, e.g., if
 // ACE_TEMPLATES_REQUIRE_SOURCE, ACE.h won't have been pulled in by
 // String_Base.cpp.

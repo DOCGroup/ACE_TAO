@@ -1,5 +1,3 @@
-// $Id$
-
 #include "DynStruct_Handler.h"
 #include "DynAny_Handler.h"
 #include "dance/Logger/Log_Macros.h"

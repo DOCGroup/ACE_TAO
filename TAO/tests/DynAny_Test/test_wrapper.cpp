@@ -2,10 +2,7 @@
 /**
  *  @file    test_wrapper.cpp
  *
- *  $Id$
- *
  *  This file contains the implementation of the DynAny basic test manager
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

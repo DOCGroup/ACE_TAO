@@ -5,10 +5,7 @@
 /**
  *  @file    ExceptionDef_i.h
  *
- *  $Id$
- *
  *  ExceptionDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

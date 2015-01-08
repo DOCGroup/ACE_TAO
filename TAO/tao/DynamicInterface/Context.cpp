@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/DynamicInterface/Context.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CORBA_String.h"

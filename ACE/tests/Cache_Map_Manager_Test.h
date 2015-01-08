@@ -4,11 +4,8 @@
 /**
  *  @file    Cache_Map_Manager_Test.h
  *
- *  $Id$
- *
  *  Define class needed for generating templates. IBM C++ requires this to
  *  be in its own file for auto template instantiation.
- *
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */

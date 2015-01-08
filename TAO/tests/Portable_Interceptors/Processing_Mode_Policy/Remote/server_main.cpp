@@ -1,4 +1,3 @@
-//$Id$
 #include "Server_Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"

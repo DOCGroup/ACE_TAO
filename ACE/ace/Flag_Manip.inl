@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/OS_NS_fcntl.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

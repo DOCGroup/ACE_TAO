@@ -1,4 +1,4 @@
-$Id$
+
 
 A simple test for the DSI/DII gateway support. TAO can
 optimize some demarshaling/marshaling and data copying in the

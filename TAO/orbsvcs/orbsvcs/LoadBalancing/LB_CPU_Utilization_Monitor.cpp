@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/LoadBalancing/LB_CPU_Utilization_Monitor.h"
 #include "tao/ORB_Constants.h"

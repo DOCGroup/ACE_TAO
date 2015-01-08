@@ -4,9 +4,6 @@
 /**
  *  @file    Remote_Invocation.h
  *
- *  $Id$
- *
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

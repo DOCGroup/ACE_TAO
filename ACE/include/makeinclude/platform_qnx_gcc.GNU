@@ -1,4 +1,3 @@
-# $Id$
 #
 # QNX/RTP hosted, using GCC
 

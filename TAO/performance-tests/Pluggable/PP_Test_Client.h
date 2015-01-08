@@ -3,11 +3,8 @@
 /**
  *  @file    PP_Test_Client.h
  *
- *  $Id$
- *
  *    This class implements some basic no-op twoway and oneway requests
  *    to time the latency of the pluggable protocol implementation.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

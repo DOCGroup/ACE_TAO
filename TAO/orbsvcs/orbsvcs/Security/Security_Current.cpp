@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "orbsvcs/Security/Security_Current.h"
 #include "tao/debug.h"
 

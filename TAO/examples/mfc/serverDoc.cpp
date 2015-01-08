@@ -1,5 +1,3 @@
-// $Id$
-
 // serverDoc.cpp : implementation of the CServerDoc class
 
 #include "stdafx.h"

@@ -3,10 +3,7 @@
 /**
  *  @file    recursive_struct.h
  *
- *  $Id$
- *
  *  Tests a structure that contains a sequence of itself
- *
  *
  *  @author Aniruddha Gokhale
  *  @author Jeff Parsons

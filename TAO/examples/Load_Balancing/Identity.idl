@@ -3,8 +3,6 @@
 /**
  *  @file    Identity.idl
  *
- *  $Id$
- *
  *  Interface for a toy CORBA service useful for
  *  testing/demonstrating functionality of the Load
  *  Balancing service defined in Load_Balancer.idl.

@@ -4,11 +4,8 @@
 /**
  *  @file    airplane_client_i.h
  *
- *  $Id$
- *
  *  This class implements a simple CORBA client which returns a random
  *  paper airplane from the paper airplane server.
- *
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */

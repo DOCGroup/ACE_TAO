@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ast_visitor.h"
 #include "ace/config-all.h"
 

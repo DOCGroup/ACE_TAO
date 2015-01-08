@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_OBSTACK_T_CPP
 #define ACE_OBSTACK_T_CPP
 

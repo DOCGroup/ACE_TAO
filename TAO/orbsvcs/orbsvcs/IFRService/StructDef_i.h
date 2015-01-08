@@ -5,10 +5,7 @@
 /**
  *  @file    StructDef_i.h
  *
- *  $Id$
- *
  *  StructDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

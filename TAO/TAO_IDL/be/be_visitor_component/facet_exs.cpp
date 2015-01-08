@@ -3,10 +3,7 @@
 /**
  *  @file    facet_exs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for facets in the exec impl source.
- *
  *
  *  @author Jeff Parsons
  */

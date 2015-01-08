@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(CosTrading_IDL) : orbsvcslib, orbsvcs_output, install, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_Trading_Export -Wb,stub_export_include=orbsvcs/Trader/trading_export.h -Wb,skel_export_macro=TAO_Trading_Skel_Export -Wb,skel_export_include=orbsvcs/Trader/trading_skel_export.h

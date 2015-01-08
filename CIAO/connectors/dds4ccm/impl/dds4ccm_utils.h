@@ -2,8 +2,6 @@
  * @file dds4ccm_utils.h
  * @author Johnny Willemsen  (jwillemsen@remedy.nl)
  *
- * $Id$
- *
  * Misc utility classes for DDS4CCM.
  */
 

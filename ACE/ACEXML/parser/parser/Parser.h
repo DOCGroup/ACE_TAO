@@ -4,8 +4,6 @@
 /**
  *  @file    Parser.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
@@ -40,7 +38,6 @@
  * @class ACEXML_Parser Parser.h "ACEXML/parser/parser/Parser.h"
  *
  * @brief A SAX based parser.
- *
  */
 class ACEXML_PARSER_Export ACEXML_Parser : public ACEXML_XMLReader
 {

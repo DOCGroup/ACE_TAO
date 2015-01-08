@@ -3,7 +3,6 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_strings.h"
 
-// $Id$
 //TimeStamp Protocol Object
 
 TimeStamp_Protocol_Object::TimeStamp_Protocol_Object (TAO_AV_Callback *callback,

@@ -2,10 +2,7 @@
 /**
  *  @file    test_dynany.h
  *
- *  $Id$
- *
  *  Header file for class to test the simple dynany.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

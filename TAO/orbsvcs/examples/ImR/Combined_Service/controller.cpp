@@ -1,4 +1,3 @@
-// $Id$
 // This is a simple test of an ImR using the corba interfaces
 
 #include "service_configC.h"

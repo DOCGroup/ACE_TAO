@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * @file DynStruct_Handler.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>
  */

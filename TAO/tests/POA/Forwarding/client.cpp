@@ -3,12 +3,8 @@
 /**
  *  @file     client.cpp
  *
- *  $Id$
- *
- *
  *   This is a simple test client implementation.  Also looks out
  *   for forwarding exceptions
- *
  *
  *  @author  Irfan Pyarali
  */

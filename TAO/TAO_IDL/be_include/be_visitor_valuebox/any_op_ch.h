@@ -3,11 +3,8 @@
 /**
  *  @file    any_op_ch.h
  *
- *  $Id$
- *
  *  Concrete visitor for the valuebox node.
  *  This one provides code generation for the Any operators
- *
  *
  *  @author Gary Maxey
  */

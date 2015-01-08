@@ -4,8 +4,6 @@
 /**
  *  @file    WFMO_Reactor.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Doug Schmidt <schmidt@cs.wustl.edu>

@@ -4,8 +4,6 @@
 /**
  *  @file   CDR_Stream.h
  *
- *  $Id$
- *
  * ACE Common Data Representation (CDR) marshaling and demarshaling
  * classes.
  *
@@ -27,7 +25,6 @@
  *  CDR stream ignores alignment when marshaling data. Use this option
  *  only when ACE_DISABLE_SWAP_ON_READ can be enabled. This option requires
  *  ACE CDR engine to do both marshaling and demarshaling.
- *
  *
  *  @author TAO version by Aniruddha Gokhale <gokhale@cs.wustl.edu>
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>

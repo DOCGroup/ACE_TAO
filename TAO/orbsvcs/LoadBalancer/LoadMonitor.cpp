@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "Push_Handler.h"
 #include "Monitor_Signal_Handler.h"

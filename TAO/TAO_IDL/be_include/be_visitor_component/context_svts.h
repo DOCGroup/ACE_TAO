@@ -3,12 +3,9 @@
 /**
  *  @file    context_svts.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Component node.
  *  This provides for code generation for the Context
  *  class definition
- *
  *
  *  @author Jeff Parsons
  */

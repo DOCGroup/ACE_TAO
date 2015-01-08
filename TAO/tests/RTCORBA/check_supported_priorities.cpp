@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Sched_Params.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"

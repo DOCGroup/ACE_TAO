@@ -4,8 +4,6 @@
 /**
  *  @file FT_Invocation_Endpoint_Selectors.h
  *
- *  $Id$
- *
  * Strategies for selecting profile/endpoint from an IOR for making an
  * invocation.
  *
@@ -41,7 +39,6 @@ class TAO_Profile;
  * We inherit from the Default endpoint selector, as this would give
  * us a chance to use the default endpoint selector options if
  * needed.
- *
  */
 
 class TAO_FT_ClientORB_Export TAO_FT_Invocation_Endpoint_Selector :

@@ -1,8 +1,6 @@
 /**
  * @file ORB_Task.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
@@ -21,7 +19,6 @@
  * @class ORB_Task
  *
  * @brief Implement a simple ACE_Task to send the events
- *
  */
 class TAO_RTEC_Perf_Export ORB_Task : public ACE_Task_Base
 {

@@ -4,8 +4,6 @@
 /**
  *  @file    Sequence_TypeCode_Static.h
  *
- *  $Id$
- *
  *  Header file for static @c tk_sequence and @c tk_array
  *  @c CORBA::TypeCodes.
  *

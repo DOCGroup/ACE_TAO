@@ -4,8 +4,6 @@
 /**
  * @file FT_ServerService_Activate.h
  *
- * $Id$
- *
  * A concrete implementation of a service callback
  *
  * @author Bala Natarajan <bala@cs.wustl.edu>
@@ -35,7 +33,6 @@ class TAO_Service_Callbacks;
  *
  * @brief A class to dynamically load the FT callback implementations in
  * to the ORB.
- *
  */
 class TAO_FT_ServerORB_Export TAO_FT_ServerService_Activate
 : public ACE_Service_Object

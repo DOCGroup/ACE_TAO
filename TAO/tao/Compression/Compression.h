@@ -4,8 +4,6 @@
 /**
  *  @file Compression.h
  *
- *  $Id$
- *
  *  Dynamic loader object for Compression
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>

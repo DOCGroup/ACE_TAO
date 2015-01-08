@@ -1,5 +1,3 @@
-// $Id$
-
 /* Simple program that illustrates many features of the ACE_Reactor:
 
    1. I/O event demultiplexing

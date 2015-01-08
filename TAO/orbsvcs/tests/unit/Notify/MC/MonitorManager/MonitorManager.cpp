@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Service_Types.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"

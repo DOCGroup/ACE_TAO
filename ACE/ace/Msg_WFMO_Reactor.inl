@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-//
 
 #include "orb_initializer.h"
 #include "server_interceptor.h"

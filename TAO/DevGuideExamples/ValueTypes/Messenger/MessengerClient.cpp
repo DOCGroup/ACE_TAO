@@ -1,5 +1,3 @@
-// $Id$
-
 #include "_pch.h"
 #include "Message_i.h"
 #include <iostream>

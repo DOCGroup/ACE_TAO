@@ -1,4 +1,3 @@
-// $Id$
 #include "RG_LateBinding_Receiver_impl.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"

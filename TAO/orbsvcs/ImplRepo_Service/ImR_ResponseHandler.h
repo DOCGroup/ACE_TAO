@@ -2,9 +2,6 @@
 //=============================================================================
 /**
  *  @file   ImR_ResponseHandler.h
- *
- *  $Id$
- *
  */
 //=============================================================================
 
@@ -24,7 +21,6 @@
  *
  * @brief interface serving as the basis for different strategies of activating
  * servers on demand
- *
  */
 
 class ImR_ResponseHandler

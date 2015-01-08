@@ -4,8 +4,6 @@
 /**
  * @file Solaris_Network_Interface_Monitor.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

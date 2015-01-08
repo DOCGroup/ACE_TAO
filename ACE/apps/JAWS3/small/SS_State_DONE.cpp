@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SS_State_DONE.h"
 #include "SS_Data.h"
 

@@ -3,10 +3,7 @@
 /**
  *  @file    be_util.cpp
  *
- *  $Id$
- *
  *  Static helper methods used by multiple visitors.
- *
  *
  *  @author Jeff Parsons
  */

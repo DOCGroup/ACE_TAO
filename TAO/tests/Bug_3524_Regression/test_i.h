@@ -1,4 +1,3 @@
-// $Id: test_i.h,v 1.1 2003/08/27 22:43:35 vz Exp
 // -*- C++ -*-
 
 #ifndef TAO_TEST_I_H

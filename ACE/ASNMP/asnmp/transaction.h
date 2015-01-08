@@ -5,8 +5,6 @@
 /**
  *  @file    transaction.h
  *
- *  $Id$
- *
  *  @brief
  *
  *  @author Michael R. MacFaden port to ACE / use Reactor pattern

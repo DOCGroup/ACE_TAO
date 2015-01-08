@@ -3,10 +3,7 @@
 /**
  *  @file    nested_struct.h
  *
- *  $Id$
- *
  *   Tests nested structures
- *
  *
  *  @author   Aniruddha Gokhale
  */

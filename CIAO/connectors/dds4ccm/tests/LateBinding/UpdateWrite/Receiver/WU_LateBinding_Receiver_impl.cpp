@@ -1,4 +1,3 @@
-// $Id$
 #include "WU_LateBinding_Receiver_impl.h"
 
 WU_LateBinding_Receiver_impl::WU_LateBinding_Receiver_impl ()

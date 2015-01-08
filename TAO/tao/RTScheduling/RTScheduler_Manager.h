@@ -4,8 +4,6 @@
 /**
  *  @file   RTScheduler_Manager.h
  *
- *  $Id$
- *
  *  @author Yamuna Krishnmaurthy <yamuna@oomworks.com>
  */
 //=============================================================================

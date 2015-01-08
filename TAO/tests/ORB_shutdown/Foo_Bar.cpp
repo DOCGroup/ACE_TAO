@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Foo_Bar.h"
 
 Foo_Bar::Foo_Bar (CORBA::ORB_ptr orb)

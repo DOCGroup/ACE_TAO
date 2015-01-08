@@ -1,5 +1,3 @@
-// $Id$
-
 #include "XML_Typedefs.h"
 
 namespace XML

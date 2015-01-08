@@ -4,10 +4,7 @@
 /**
  *  @file    IDLType_i.h
  *
- *  $Id$
- *
  *  IDLType servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

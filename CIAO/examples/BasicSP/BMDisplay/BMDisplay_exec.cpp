@@ -1,5 +1,3 @@
-// $Id$
-
 #include "BMDisplay_exec.h"
 
 /// Default constructor.

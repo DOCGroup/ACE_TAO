@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef BE_PROVIDES_H
 #define BE_PROVIDES_H
 

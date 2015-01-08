@@ -4,8 +4,6 @@
 /**
  *  @file    Special_Basic_Arguments.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */

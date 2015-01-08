@@ -1,7 +1,4 @@
 // -*- MPC -*-
-//
-// $Id$
-
 project(*Server): aceexe, htbp {
   exename = server
 

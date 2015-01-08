@@ -1,4 +1,4 @@
-$Id$
+
 
 This directory contains an application that tests all the parameter
 passing conventions in CORBA for a number of OMG IDL data types.

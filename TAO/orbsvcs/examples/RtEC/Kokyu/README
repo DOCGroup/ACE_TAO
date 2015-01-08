@@ -1,4 +1,4 @@
-$Id$
+
 
 Shows how to use the scheduling service in conjunction with
 the real-time event channel. The test also uses the Kokyu

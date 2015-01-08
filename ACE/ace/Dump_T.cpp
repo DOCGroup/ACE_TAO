@@ -1,7 +1,4 @@
 // Dump_T.cpp
-//
-// $Id$
-
 #ifndef ACE_DUMP_T_CPP
 #define ACE_DUMP_T_CPP
 

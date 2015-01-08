@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Typed_SV_Message_Queue.h"
 
 // FUZZ: disable check_for_streams_include

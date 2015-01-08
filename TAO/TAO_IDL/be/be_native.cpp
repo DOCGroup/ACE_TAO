@@ -3,10 +3,7 @@
 /**
  *  @file    be_native.cpp
  *
- *  $Id$
- *
  *  The native IDL type
- *
  *
  *  @author Aniruddha Gokhale
  */

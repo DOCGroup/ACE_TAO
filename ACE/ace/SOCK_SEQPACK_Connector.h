@@ -4,13 +4,10 @@
 /**
  *  @file    SOCK_SEQPACK_Connector.h
  *
- *  $Id$
- *
  *  @author  Patrick J. Lardieri <plardier@atl.lmco.com>
  *  @author  Gaurav Naik, Lockheed Martin ATL
  *  @author  based on SOCK_STREAM_Connector
  *            by Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
- *
  */
 //=============================================================================
 

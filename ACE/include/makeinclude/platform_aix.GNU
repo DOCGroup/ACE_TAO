@@ -1,4 +1,3 @@
-# $Id$
 
 # AIX 5.x using the IBM C Set++ compiler.
 #

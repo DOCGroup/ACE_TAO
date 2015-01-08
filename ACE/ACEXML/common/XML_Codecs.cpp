@@ -1,4 +1,4 @@
-// -*- C++ -*-  $Id$
+// -*- C++ -*-
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"

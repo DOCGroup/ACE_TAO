@@ -4,8 +4,6 @@
 /**
  * @file    Current_Test_Impl.h
  *
- * $Id$
- *
  * Implementation header for the "test" IDL interface for the
  * TAO::TransportCurrent test.
  *

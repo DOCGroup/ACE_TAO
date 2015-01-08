@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Server_Task.h"
 #include "TreeBaseS.h"
 #include "TreeControllerS.h"

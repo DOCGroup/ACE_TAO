@@ -2,8 +2,6 @@
 /**
  *  @file  Bug_4189_Regression_Test.cpp
  *
- *  $Id$
- *
  * This test shows the reuse address issue on broadcast sockets.
  * Start two process instances of this test on the same host within x sec.
  * For broadcast sockets it should be possible to open the same port more than

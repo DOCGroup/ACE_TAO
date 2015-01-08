@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Bug_4097_RegressionS.h"
 
 #include "tao/corba.h"

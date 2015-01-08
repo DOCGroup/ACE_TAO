@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #ifndef _AST_HOME_AST_HOME_HH
 #define _AST_HOME_AST_HOME_HH
 

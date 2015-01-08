@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ownership_qos_test.h"
 
 OwnershipPolicyTest::OwnershipPolicyTest ()

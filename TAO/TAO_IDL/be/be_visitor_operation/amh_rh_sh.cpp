@@ -2,11 +2,8 @@
 /**
  *  @file    amh_rh_sh.cpp
  *
- *  $Id$
- *
  *  Visitor generating AMH-RH skeleton code for Operation node in the
  *  skeleton header.
- *
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
  */

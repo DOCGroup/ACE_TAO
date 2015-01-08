@@ -1,4 +1,3 @@
-// $Id$
 #include "Notify_Push_Supplier.h"
 
 void

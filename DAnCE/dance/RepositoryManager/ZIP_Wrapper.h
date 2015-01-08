@@ -5,15 +5,11 @@
 /**
  *  @file     ZIP_Wrapper.h
  *
- *  $Id$
- *
  *  Purpose:  to provide a wrapper around minizip for easy handling of
  *            ZIP archives. This wrapper can be used as an auxiliary
  *            class that allows a program to become ZIP-aware
  *
  *  @author   Stoyan Paunov, Vipul Singh
- *
- *
  */
 //=======================================================================
 

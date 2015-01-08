@@ -3,8 +3,6 @@
 /**
  *  @file   Control.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================
@@ -23,7 +21,6 @@
  * @class Consumer
  *
  * @brief Simple consumer object
- *
  */
 class Consumer : public EC_Counting_Consumer
 {

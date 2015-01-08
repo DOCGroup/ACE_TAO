@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Server_i.h"
 #include "Event_Types_impl.h"
 #include "tao/ORB_Core.h"

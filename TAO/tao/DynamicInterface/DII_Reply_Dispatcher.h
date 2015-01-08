@@ -4,8 +4,6 @@
 /**
  *  @file    DII_Reply_Dispatcher.h
  *
- *  $Id$
- *
  *  @brief Dispatch the reply appropriately.
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>

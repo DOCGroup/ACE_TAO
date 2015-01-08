@@ -2,10 +2,7 @@
 /**
  *  @file  DSRT_Sched_Queue_T.h
  *
- *  $Id$
- *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
- *
  */
 
 #ifndef DSRT_SCHED_QUEUE_T_H

@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_REACTIVE_IO_H
 #define JAWS_REACTIVE_IO_H
 

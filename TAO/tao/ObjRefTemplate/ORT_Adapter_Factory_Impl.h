@@ -4,8 +4,6 @@
 /**
  *  @file    ORT_Adapter_Factory_Impl.h
  *
- *  $Id$
- *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================

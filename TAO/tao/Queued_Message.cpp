@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Queued_Message.h"
 
 #if !defined (__ACE_INLINE__)

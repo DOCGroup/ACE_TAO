@@ -3,10 +3,7 @@
 /**
  *  @file     client.cpp
  *
- *  $Id$
- *
  *   See README.
- *
  *
  *  @author  Irfan Pyarali
  */

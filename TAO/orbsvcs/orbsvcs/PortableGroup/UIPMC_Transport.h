@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Transport.h
  *
- *  $Id$
- *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
 //=============================================================================

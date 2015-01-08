@@ -4,8 +4,6 @@
 /**
  *  @file    Reactor_Timer_Interface.h
  *
- *  $Id$
- *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
 //=============================================================================

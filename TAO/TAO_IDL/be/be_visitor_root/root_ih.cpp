@@ -3,10 +3,7 @@
 /**
  *  @file    root_ih.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the server implementation header
- *
  *
  *  @author Yamuna  Krishnamurthy (yamuna@cs.wustl.edu)
  */

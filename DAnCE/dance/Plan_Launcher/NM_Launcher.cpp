@@ -1,5 +1,3 @@
-// $Id$
-
 #include "NM_Launcher.h"
 
 namespace DAnCE

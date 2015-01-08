@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Peer.h"
 #include "Session.h"
 

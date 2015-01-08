@@ -4,8 +4,6 @@
 /**
  *  @file    Token.h
  *
- *  $Id$
- *
  *  @author Original author
  *  @author Karl-Heinz Dorn (kdorn@erlh.siemens.de)
  *  @author Ported to ACE by

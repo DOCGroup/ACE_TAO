@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Adapter_Impl.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_i.h"

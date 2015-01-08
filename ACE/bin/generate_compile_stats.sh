@@ -1,7 +1,5 @@
 #! /bin/sh
 #
-# $Id$
-#
 # This script generate metrics html pages for either compile times or
 # footprint.
 #

@@ -1,7 +1,5 @@
 // file      : RolyPoly/LogStdMap.h
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
-// cvs-id    : $Id$
-
 #ifndef LOG_STD_MAP_H
 #define LOG_STD_MAP_H
 

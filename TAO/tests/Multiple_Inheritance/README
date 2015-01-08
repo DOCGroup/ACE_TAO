@@ -1,4 +1,4 @@
-$Id$
+
 
 This module is used as a test for IDL interfaces that inherit from
 multiple interfaces.  The "diamond of death" inheritance hierarchy is

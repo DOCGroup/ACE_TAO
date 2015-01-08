@@ -1,14 +1,10 @@
-
 //=============================================================================
 /**
  *  @file     POAManagerFactory.cpp
  *
- *  $Id$
- *
  *   This program tests Root_POA::the_POAManagerFactory and
  *   the POAManagerFactory interfaces such as create_POAManager(),
  *   list () and find ().
- *
  *
  *  @author  Yan Dai
  */

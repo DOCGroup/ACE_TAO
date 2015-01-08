@@ -2,8 +2,6 @@
 /**
  *  @file    Max_Default_Port_Test.cpp
  *
- *  $Id$
- *
  *  This is a test for ACE_MAX_DEFAULT_PORT value. The test tests the
  *  highest value of the port number at which an event handler can be
  *  registered and a Connector can be connected to.
@@ -15,8 +13,6 @@
  *  In this test, the event handler is started at the port value
  *  USHRT_MAX and decremented for 'ports_to_test' port values and tested
  *  if the highest port number used agrees with ACE_MAX_DEFAULT_PORT value.
- *
- *
  *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */

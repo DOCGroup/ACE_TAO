@@ -2,7 +2,7 @@
 <!-- Converted from svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
  <!--  -->
- <!--  $Id$ -->
+ <!--   -->
  <!--  -->
  <!--  No options required for regular testing -->
  <!--  For real-time testing, uncomment the following line: -->

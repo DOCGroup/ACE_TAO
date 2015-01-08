@@ -4,8 +4,6 @@
 /**
  * @file Encoding_Converter.h
  *
- * $Id$
- *
  * This class is the base class for all encoding converters that convert
  * to and from UTF-8.
  *

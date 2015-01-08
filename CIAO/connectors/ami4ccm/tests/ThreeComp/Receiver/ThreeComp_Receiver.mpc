@@ -1,4 +1,3 @@
-// $Id$
 // This file is generated with "generate_component_mpc.pl -p ThreeComp_Base ThreeComp_Receiver"
 
 project(AMI_ThreeComp_Base_Receiver_idl_gen) : componentidldefaults {

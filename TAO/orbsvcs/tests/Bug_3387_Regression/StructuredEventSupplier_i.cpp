@@ -1,4 +1,3 @@
-// $Id$
 #include "StructuredEventSupplier_i.h"
 #include "tao/PortableServer/PS_CurrentC.h"
 

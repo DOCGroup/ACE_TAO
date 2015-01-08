@@ -4,8 +4,6 @@
 /**
  *  @file    SSLIOP_Accept_Strategy.h
  *
- *  $Id$
- *
  *  IIOP/SSL specific accept strategy
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>

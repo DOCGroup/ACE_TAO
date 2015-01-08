@@ -1,5 +1,3 @@
-// $Id$
-
 #include "LoggerC.h"
 #include "Logger_i.h"
 #include "tao/debug.h"

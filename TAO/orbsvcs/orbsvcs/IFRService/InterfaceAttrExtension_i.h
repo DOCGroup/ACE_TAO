@@ -4,10 +4,7 @@
 /**
  *  @file    InterfaceAttrExtension_i.h
  *
- *  $Id$
- *
  *  InterfaceAttrExtension_i servant class.
- *
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */

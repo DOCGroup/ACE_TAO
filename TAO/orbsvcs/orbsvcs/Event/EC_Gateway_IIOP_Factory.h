@@ -3,10 +3,7 @@
 /**
  *  @file   EC_Gateway_IIOP_Factory.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  (jwillemsen@remedy.nl)
- *
  */
 
 #ifndef TAO_EC_GATEWAY_IIOP_FACTORY_H

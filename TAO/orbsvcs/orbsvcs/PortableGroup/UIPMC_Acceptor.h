@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Acceptor.h
  *
- *  $Id$
- *
  *  MIOP specific acceptor processing
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>

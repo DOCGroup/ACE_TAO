@@ -3,12 +3,9 @@
 /**
  *  @file    INET_Addr_Test.cpp
  *
- *  $Id$
- *
  *   Performs several tests on the ACE_INET_Addr class.  It creates several
  *   IPv4 and IPv6 addresses and checks that the address formed by the
  *   class is valid.
- *
  *
  *  @author John Aughey (jha@aughey.com)
  */

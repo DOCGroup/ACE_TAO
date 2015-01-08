@@ -4,8 +4,6 @@
 /**
  *  @file    Push_Handler.h
  *
- *  $Id$
- *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
 //=======================================================================

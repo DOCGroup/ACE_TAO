@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef OWNERSHIP_QOS_TEST_H_
 #define OWNERSHIP_QOS_TEST_H_
 

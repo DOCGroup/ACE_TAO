@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 feature (nmake_avoid_Wp64) {
   specific(nmake) {
     addcompile -= /Wp64

@@ -1,7 +1,4 @@
 // -*- MPC -*-
-//
-// $Id$
-
 
 project(LoadManager): namingexe, portableserver, install, iortable, iormanip, loadbalancing, svc_utils {
   exename  = tao_loadmanager

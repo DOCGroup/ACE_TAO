@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/LFU_Connection_Purging_Strategy.h"
 #include "tao/Transport.h"
 

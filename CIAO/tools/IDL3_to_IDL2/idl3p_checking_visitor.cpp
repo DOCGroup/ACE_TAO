@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #include "idl3p_checking_visitor.h"
 
 #include "ast_module.h"

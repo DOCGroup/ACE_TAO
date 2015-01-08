@@ -1,5 +1,3 @@
-// $Id$
-
 // ACE+TAO headers
 #include "ace/Reactor.h"
 #include "tao/RTPortableServer/RTPortableServer.h"

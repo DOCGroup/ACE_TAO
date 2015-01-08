@@ -4,8 +4,6 @@
 /**
  *  @file    SOCK_Dgram_Mcast.h
  *
- *  $Id$
- *
  *  @author Irfan Pyrali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>

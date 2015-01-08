@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Simple.h"
 #include "ace/OS_NS_unistd.h"
 

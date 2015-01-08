@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Leader_Follower_Flushing_Strategy.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"

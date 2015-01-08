@@ -4,8 +4,6 @@
 /**
  * @file Client_Request_Interceptor.h
  *
- * $Id$
- *
  * Implementation header for the client request interceptor for the
  * request interceptor flow test.
  *
@@ -38,7 +36,6 @@
  *
  * @brief Client request interceptor that exercises
  * PortableInterceptor::ForwardRequest support.
- *
  */
 class Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,

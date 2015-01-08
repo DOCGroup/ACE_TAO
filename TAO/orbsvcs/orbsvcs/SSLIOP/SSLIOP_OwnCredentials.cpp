@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

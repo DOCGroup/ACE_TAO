@@ -1,5 +1,3 @@
-// $Id$
-
 project(BMDisplay_idl_gen): componentidldefaults,anytypecode, avoids_ccm_noevent {
   custom_only = 1
   idlflags += -I.. \

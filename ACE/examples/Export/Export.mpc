@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*Lib) : acelib {
   sharedname    = Export_Lib
   dynamicflags += TEST_BUILD_DLL

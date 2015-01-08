@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef COLLOCATED_TEST_CLIENT_TASK_H
 #define COLLOCATED_TEST_CLIENT_TASK_H

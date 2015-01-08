@@ -2,11 +2,7 @@
 /**
  *  @file Method_Request_Updates_T.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_METHOD_REQUEST_UPDATES_T_H
@@ -34,7 +30,6 @@ namespace CORBA
  * @class TAO_Notify_Method_Request_Updates_T
  *
  * @brief
- *
  */
 template <class SEQ, class PROXY, class SEQ_PARAM, class PROXY_PARAM>
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates_T

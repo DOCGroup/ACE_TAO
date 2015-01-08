@@ -4,8 +4,6 @@
 /**
  *  @file    Upcall_Wrapper.h
  *
- *  $Id$
- *
  *  @author Ossama Othman
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan

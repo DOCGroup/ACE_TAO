@@ -1,5 +1,3 @@
-// $Id$
-
 project(*i2c_shapes_rec) : dds4ccm_logger, ndds_idltocpp_impl {
   exename = I2C_Shapes_Receiver
   after += I2C_Shapes_Base_Stub I2C_ShapeType_stub I2C_Shapes_Common

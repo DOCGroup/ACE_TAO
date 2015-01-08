@@ -4,12 +4,9 @@
 /**
  *  @file    root_svh.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Root class
  *  This one provides code generation for elements of the Root node in the
  *  CIAO servant header.
- *
  *
  *  @author Jeff Parsons
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Echo_Caller.h"
 #include "Server_Task.h"
 

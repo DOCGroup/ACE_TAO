@@ -4,8 +4,6 @@
 /**
  *  @file   UIOP_Connection_Handler.h
  *
- *  $Id$
- *
  *  @author Originally by Ossama Othman <ossama@ece.uci.edu> as
  *   UIOP_Connect.h
  *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>

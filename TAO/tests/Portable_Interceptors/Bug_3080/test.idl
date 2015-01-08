@@ -1,6 +1,4 @@
 // -*- IDL -*-
-// $Id$
-
 module RedirectionTest
 {
   interface test

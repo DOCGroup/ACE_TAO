@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "TestC.h"
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/Utils/PolicyList_Destroyer.h"

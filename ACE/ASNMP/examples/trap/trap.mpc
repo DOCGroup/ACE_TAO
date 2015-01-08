@@ -1,5 +1,3 @@
-// $Id$
-
 project (asnmp_example_trap) : aceexe {
   exename = trap
   after += asnmp_lib

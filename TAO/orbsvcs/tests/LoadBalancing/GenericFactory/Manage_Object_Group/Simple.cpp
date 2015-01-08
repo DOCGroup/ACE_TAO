@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Simple.h"
 #include "LB_server.h"
 

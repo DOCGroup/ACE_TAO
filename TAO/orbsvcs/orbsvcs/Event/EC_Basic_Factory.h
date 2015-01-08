@@ -3,8 +3,6 @@
 /**
  *  @file   EC_Basic_Factory.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *
  * Based on previous work by Tim Harrison (harrison@cs.wustl.edu) and
@@ -37,7 +35,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * prioritized and all the filtering is done at the consumer level.
  * A fixed POA is used for servant activation.
  * This object creates a single instance of the Supplier
- *
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
 {

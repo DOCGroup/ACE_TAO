@@ -3,11 +3,8 @@
 /**
  *  @file    executor_private_exh.h
  *
- *  $Id$
- *
  *  This provides code generation for private members
  *  in the exec impl header,
- *
  *
  *  @author Jeff Parsons
  */

@@ -4,8 +4,6 @@
 /**
  *  @file   IIOP_SSL_Transport.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@uci.edu>
  */
 //=============================================================================

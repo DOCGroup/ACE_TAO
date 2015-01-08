@@ -1,4 +1,3 @@
-# $Id$
 CROSS-COMPILE = 1
 
 debug ?= 1

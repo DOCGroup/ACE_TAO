@@ -3,15 +3,12 @@
 /**
  *  @file      Reactor_Notify_Test.cpp
  *
- *  $Id$
- *
  *    This is a test that illustrates how the <ACE_Reactor>'s
  *    <notify> method works under various <max_notify_iterations>
  *    settings.  It also tests that the <disable_notify_pipe> option
  *    works correctly.  Moreover, if the $ACE_ROOT/ace/config.h file
  *    has the ACE_HAS_REACTOR_NOTIFICATION_QUEUE option enabled this
  *    test will also exercise this feature.
- *
  *
  *  @author   Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */

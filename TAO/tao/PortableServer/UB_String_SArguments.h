@@ -4,8 +4,6 @@
 /**
  *  @file    UB_String_SArguments.h
  *
- *  $Id$
- *
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */

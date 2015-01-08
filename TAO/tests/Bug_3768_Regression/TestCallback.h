@@ -1,7 +1,3 @@
-//
-// $Id: TestCallback.h
-//
-
 #ifndef TESTCALLBACK_H
 #define TESTCALLBACK_H
 #include /**/ "ace/pre.h"

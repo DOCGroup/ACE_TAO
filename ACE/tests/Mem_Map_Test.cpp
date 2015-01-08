@@ -3,13 +3,10 @@
 /**
  *  @file    Mem_Map_Test.cpp
  *
- *  $Id$
- *
  *    This test illustrates the use of ACE_Mem_Map to reverse a
  *    file. The test first creates a dummy file for testing, then
  *    reverses the file and then reverses it again to get back the
  *    original file.
- *
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */

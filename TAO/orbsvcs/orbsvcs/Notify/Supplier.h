@@ -3,8 +3,6 @@
 /**
  *  @file Supplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -30,7 +28,6 @@ class TAO_Notify_ProxyConsumer;
  * @class TAO_Notify_Supplier
  *
  * @brief Base Wrappers for Suppliers that connect to the EventChannel.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Supplier : public TAO_Notify_Peer
 {

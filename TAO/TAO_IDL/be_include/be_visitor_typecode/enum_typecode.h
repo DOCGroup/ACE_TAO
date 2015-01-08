@@ -4,8 +4,6 @@
 /**
  *  @file  enum_typecode.h
  *
- *  $Id$
- *
  *  Enumeration TypeCode generation visitor.
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>

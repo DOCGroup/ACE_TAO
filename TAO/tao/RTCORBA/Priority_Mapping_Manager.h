@@ -4,8 +4,6 @@
 /**
  *  @file   Priority_Mapping_Manager.h
  *
- *  $Id$
- *
  *  @author Marina Spivak (marina@cs.wustl.edu)
  */
 //=============================================================================

@@ -3,10 +3,7 @@
 /**
  *  @file    connector_dds_exh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for DDS Connectors in the exec impl header.
- *
  *
  *  @author Jeff Parsons
  */

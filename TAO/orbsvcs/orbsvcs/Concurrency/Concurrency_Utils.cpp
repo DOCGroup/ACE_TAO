@@ -2,8 +2,6 @@
 /**
  *  @file    Concurrency_Utils.cpp
  *
- *  $Id$
- *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
 //=============================================================================

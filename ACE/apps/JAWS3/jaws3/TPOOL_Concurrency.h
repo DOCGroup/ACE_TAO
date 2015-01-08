@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 #ifndef JAWS_TPOOL_CONCURRENCY_H
 #define JAWS_TPOOL_CONCURRENCY_H
 

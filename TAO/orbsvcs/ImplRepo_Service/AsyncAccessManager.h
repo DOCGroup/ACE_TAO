@@ -2,8 +2,6 @@
 /*
  * @file AsyncAccessManager.h
  *
- * $Id$
- *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 
@@ -105,7 +103,6 @@ typedef TAO_Intrusive_Ref_Count_Handle<AsyncAccessManager> AsyncAccessManager_pt
  * @class ActivatorReceiver
  *
  * @brief callback for handling asynch server startup requests
- *
  */
 
 class ActivatorReceiver :
@@ -132,8 +129,6 @@ private:
 
 
 //----------------------------------------------------------------------------
-/*
- */
 
 class AccessLiveListener : public LiveListener
 {

@@ -1,4 +1,3 @@
-// $Id$
 #include "Foo_C_Custom_Proxy.h"
 #include "Foo_C_cust_op1.h"
 #include "Foo_C_cust_op2.h"

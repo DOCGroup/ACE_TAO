@@ -3,10 +3,7 @@
 /**
  *  @file    recursive_union.h
  *
- *  $Id$
- *
  *  Tests a union that contains a sequence of itself
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

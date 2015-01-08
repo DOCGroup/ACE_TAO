@@ -4,8 +4,6 @@
 /**
  *  @file    Random_File.h
  *
- *  $Id$
- *
  *  This class implements a a random-access file containing
  *  fixed-size blocks.
  *
@@ -39,7 +37,6 @@ namespace TAO_Notify
  *
  * Derived from ACE_FILE, this class provides access to a
  * file of fixed-size blocks.
- *
  */
 class TAO_Notify_Serv_Export Random_File : public ACE_FILE
 {

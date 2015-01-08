@@ -1,8 +1,6 @@
 /**
  * @file Echo.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
 #ifndef Echo__h_

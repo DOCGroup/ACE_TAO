@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Time_Policy.h"
 
 #if !defined(__ACE_INLINE__)

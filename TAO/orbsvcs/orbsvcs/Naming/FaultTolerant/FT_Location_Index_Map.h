@@ -4,8 +4,6 @@
 /**
  *  @file    FT_Location_Index_Map.h
  *
- *  $Id$
- *
  *  @author  Kevin Stanley <stanleyk@ociweb.com>
  */
 //=======================================================================

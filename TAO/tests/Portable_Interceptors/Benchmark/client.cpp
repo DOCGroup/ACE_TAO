@@ -1,5 +1,3 @@
-// $Id$
-
 #include "testC.h"
 #include "marker.h"
 #include "Client_ORBInitializer.h"

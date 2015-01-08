@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/IORInterceptor/IORInfo.h"
 #include "tao/PortableServer/Root_POA.h"
 

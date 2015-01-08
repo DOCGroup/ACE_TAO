@@ -3,11 +3,8 @@
 /**
  *  @file    valuetype_init.cpp
  *
- *  $Id$
- *
  *  Coomon visitor for valuetypes factory construct
  *  (see IDL to C++ mapping). Based on ptc/00-01-02.
- *
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */

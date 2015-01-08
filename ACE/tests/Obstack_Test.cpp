@@ -2,10 +2,7 @@
 /**
  *  @file    Obstack_Test.cpp
  *
- *  $Id$
- *
  *  Checks the functionality of ACE_Obstack<T>
- *
  *
  *  @author Steve Huston  <shuston@riverace.com>
  */

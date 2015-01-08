@@ -4,8 +4,6 @@
 /**
  * @file CORBA_macros.h
  *
- * $Id$
- *
  *   Writing code that is portable between platforms with or without
  *   native C++ exceptions is hard.  The following macros offer some
  *   help on this task, mostly oriented to making the ORB code and the

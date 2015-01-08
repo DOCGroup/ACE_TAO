@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "Crash_Task.h"
 #include "ace/OS_NS_unistd.h"

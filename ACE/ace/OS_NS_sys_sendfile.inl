@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #if defined ACE_HAS_SENDFILE && ACE_HAS_SENDFILE == 1
 # include <sys/sendfile.h>
 #endif  /* ACE_HAS_SENDFILE==1 */

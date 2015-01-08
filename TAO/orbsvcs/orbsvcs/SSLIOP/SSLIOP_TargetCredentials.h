@@ -4,8 +4,6 @@
 /**
  *  @file   SSLIOP_TargetCredentials.h
  *
- *  $Id$
- *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
 //=============================================================================

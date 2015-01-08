@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_FIXED_SIZE_ARGUMENT_T_CPP
 #define TAO_FIXED_SIZE_ARGUMENT_T_CPP
 

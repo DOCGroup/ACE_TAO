@@ -2,8 +2,6 @@
 
 /**
  *  @file   Pollable.pidl
- *
- *  $Id$
  */
 
 #ifndef TAO_POLLABLE_PIDL

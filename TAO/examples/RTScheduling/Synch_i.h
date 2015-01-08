@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef SYNCH_I_H
 #define SYNCH_I_H
 

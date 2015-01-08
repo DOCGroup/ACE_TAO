@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/RTScheduling/RTScheduler_Initializer.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #if (TAO_HAS_SYNC_SCOPE_POLICY == 1)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

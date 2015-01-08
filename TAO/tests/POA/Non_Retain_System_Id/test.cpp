@@ -3,8 +3,6 @@
 /**
  *  @file     test.cpp
  *
- *  $Id$
- *
  *   This program verifies that a POA using the NON_RETAIN policy creates
  *   unique system IDs, also that objects created with a USER id policy is
  *   not given a bo

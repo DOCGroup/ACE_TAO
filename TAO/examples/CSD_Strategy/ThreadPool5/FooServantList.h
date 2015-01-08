@@ -1,4 +1,3 @@
-// $Id$
 #ifndef FOOSERVANTLIST_H
 #define FOOSERVANTLIST_H
 

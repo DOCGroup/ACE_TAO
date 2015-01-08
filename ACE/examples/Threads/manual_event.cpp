@@ -1,5 +1,3 @@
-// $Id$
-
 // The test shows the use of an ACE_Manual_Event to create a
 // Pseudo_Barrier. Multiple threads are created which do the
 // following:

@@ -4,8 +4,6 @@
 /**
  *  @file    CSD_TP_Synch_Helper.h
  *
- *  $Id$
- *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================

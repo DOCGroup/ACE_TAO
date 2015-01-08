@@ -3,10 +3,7 @@
 /**
  *  @file    ub_struct_seq.h
  *
- *  $Id$
- *
  *   Tests unbounded struct sequence
- *
  *
  *  @author   Aniruddha Gokhale
  */

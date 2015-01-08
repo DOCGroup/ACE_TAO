@@ -3,10 +3,7 @@
 /**
  *  @file    multdim_array.cpp
  *
- *  $Id$
- *
  *  tests multidimensional fixed size arrays
- *
  *
  *  @author   Bala
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file String_IOStream.h
  *

@@ -4,8 +4,6 @@
 /**
  *  @file     objectid.h
  *
- *  $Id$
- *
  *  ObjectIds redefined for TAO and recognized by CORBA
  *
  *  @author  Chris Cleeland

@@ -3,10 +3,7 @@
 /**
  *  @file    tests.h
  *
- *  $Id$
- *
  *  All the test objects header files included here
- *
  *
  *  @author   Aniruddha Gokhale
  */

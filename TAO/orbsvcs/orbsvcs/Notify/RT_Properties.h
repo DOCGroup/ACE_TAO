@@ -3,8 +3,6 @@
 /**
  *  @file RT_Properties.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -26,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_RT_Properties
  *
  * @brief RT specifc global properties are stored here.
- *
  */
 class TAO_RT_Notify_Export TAO_Notify_RT_Properties
 {

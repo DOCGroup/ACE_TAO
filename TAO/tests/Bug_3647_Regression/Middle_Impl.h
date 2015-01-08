@@ -1,8 +1,5 @@
 #ifndef Bug_3647_Regression_Middle_Impl_h
 #define Bug_3647_Regression_Middle_Impl_h
-//
-// $Id$
-//
 
 #include "TestS.h"
 
@@ -13,7 +10,6 @@ namespace Bug_3647_Regression
  * @class Middle
  *
  * Implement the Bug_3647_Regression::Middle interface
- *
  */
 class Middle_Impl : public POA_Bug_3647_Regression::Middle
 {

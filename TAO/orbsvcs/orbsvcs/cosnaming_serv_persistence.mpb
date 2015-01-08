@@ -1,7 +1,4 @@
 // -*- MPC -*-
-//
-// $Id$
-
 feature(!corba_e_micro) {
   Source_Files(ORBSVCS_COMPONENTS) {
     Naming {

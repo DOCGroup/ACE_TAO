@@ -1,4 +1,3 @@
-# $Id$
 
 There's two bits to this test. First is a very simple client that checks the linear and continous priority mappings and also some basic spec compliance for the RT Current object. If it fails there's most definitely a rabbit off.
 

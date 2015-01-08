@@ -3,8 +3,6 @@
 /**
  *  @file Timer_Reactor.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 

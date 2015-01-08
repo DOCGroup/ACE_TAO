@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/PortableGroup/UIPMC_Wait_Never.h"
 #include "tao/ORB_Core.h"
 #include "tao/Transport.h"

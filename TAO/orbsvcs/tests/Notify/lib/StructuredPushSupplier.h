@@ -2,11 +2,7 @@
 /**
  *  @file StructuredPushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_STRUCTUREDPUSHSUPPLIER_H
@@ -56,7 +52,6 @@ typedef TAO_Notify_Tests_Supplier_T<TAO_Notify_Tests_StructuredPushSupplier_Trai
  * @class TAO_Notify_Tests_StructuredPushSupplier
  *
  * @brief StructuredPushSupplier Implementation.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier_Base
 {

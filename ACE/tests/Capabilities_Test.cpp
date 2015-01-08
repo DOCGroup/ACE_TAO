@@ -3,11 +3,8 @@
 /**
  *  @file    Capabilities_Test.cpp
  *
- *  $Id$
- *
  *    This is a test that makes sure the <ACE_Capabililties> class
  *    works correctly.
- *
  *
  *  @author Arturo Montes <mitosys@colomsat.net.co>
  */

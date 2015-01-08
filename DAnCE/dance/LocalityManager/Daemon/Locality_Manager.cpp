@@ -1,7 +1,6 @@
 /**
  * @file Locality_Manager.cpp
  * @author William R. Otte
- * $Id$
  *
  * Implementation and main for the DAnCE LocalityManager
  */

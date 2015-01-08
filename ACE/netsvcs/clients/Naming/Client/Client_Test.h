@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/Event_Handler.h"
 #include "ace/Naming_Context.h"
 

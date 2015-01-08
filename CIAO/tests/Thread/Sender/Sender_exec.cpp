@@ -1,5 +1,3 @@
-// $Id$
-
 
 #include "Sender_exec.h"
 #include "ace/OS_NS_time.h"

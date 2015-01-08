@@ -1,4 +1,3 @@
-// $Id$
 #include "StatisticsHelper.h"
 
 // swap function for integers

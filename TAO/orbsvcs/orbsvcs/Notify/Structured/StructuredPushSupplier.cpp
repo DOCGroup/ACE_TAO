@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Structured/StructuredPushSupplier.h"
 #include "orbsvcs/Notify/Properties.h"
 

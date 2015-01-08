@@ -1,5 +1,3 @@
-// $Id$
-
 project (*IDL): taoidl3toxmidefaults {
   IDL3TOXMI_Files {
     c_ok.idl

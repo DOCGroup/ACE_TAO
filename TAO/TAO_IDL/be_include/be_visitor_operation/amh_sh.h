@@ -2,8 +2,6 @@
 /**
 *  @file   amh_sh.h
 *
-*  $Id$
-*
 *  Creates code for AMH operations.
 *
 *  @author Mayur Deshpande <mayur@ics.uci.edu>

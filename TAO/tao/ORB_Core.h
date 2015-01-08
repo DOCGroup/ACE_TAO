@@ -4,8 +4,6 @@
 /**
  *  @file   ORB_Core.h
  *
- *  $Id$
- *
  *  @author DOC Center - Washington University at St. Louis
  *  @author DOC Laboratory - University of California at Irvine
  */

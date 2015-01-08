@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ENTITY_FACTORY_QOS_TEST_H_
 #define ENTITY_FACTORY_QOS_TEST_H_
 

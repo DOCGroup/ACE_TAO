@@ -1,5 +1,3 @@
-// $Id$
-
 #ifdef USE_ZZIP
 
 #include "ACEXML/common/ZipCharStream.h"

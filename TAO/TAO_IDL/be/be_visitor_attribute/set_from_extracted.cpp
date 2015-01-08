@@ -3,11 +3,8 @@
 /**
  *  @file    set_from_extracted.cpp
  *
- *  $Id$
- *
  *  Visitor for generation of arguments to attribute mutators
  *  that were first extracted from an Any
- *
  *
  *  @author Jeff Parsons
  */

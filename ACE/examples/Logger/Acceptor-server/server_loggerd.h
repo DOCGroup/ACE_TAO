@@ -1,5 +1,3 @@
-// $Id$
-
 // Define classes used with templates in server_loggerd.h.
 
 #ifndef __SERVER_LOGGERD_H

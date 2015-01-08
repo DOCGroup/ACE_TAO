@@ -4,8 +4,6 @@
  * @brief test for STL iterator behaviour of CORBA unbounded object reference
  *        sequence
  *
- * $Id$
- *
  * @author Friedhelm Wolf (fwolf@dre.vanderbilt.edu)
  */
 

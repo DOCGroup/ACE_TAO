@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project (DAnCE_NodeApplicationManager) : install, dance_lib, naming, \
         dance_nodeapplicationmanager_skel,dynamicinterface, \
         dance_nodeapplication, dance_stub, avoids_ace_for_tao {

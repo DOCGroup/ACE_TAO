@@ -1,5 +1,3 @@
-// $Id$
-
 #include "HTTPU/http_response.h"
 
 void

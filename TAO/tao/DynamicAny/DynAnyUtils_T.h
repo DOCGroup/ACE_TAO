@@ -4,8 +4,6 @@
 /**
  *  @file    DynAnyUtils_T.h
  *
- *  $Id$
- *
  *  Declaration of templatized common code used in Dynamic Any
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>

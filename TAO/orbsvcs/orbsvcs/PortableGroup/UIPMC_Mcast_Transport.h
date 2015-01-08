@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Mcast_Transport.h
  *
- *  $Id$
- *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
 //=============================================================================

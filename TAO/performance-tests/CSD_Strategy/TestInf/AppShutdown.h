@@ -1,4 +1,3 @@
-// $Id$
 #ifndef APP_SHUTDOWN_H
 #define APP_SHUTDOWN_H
 

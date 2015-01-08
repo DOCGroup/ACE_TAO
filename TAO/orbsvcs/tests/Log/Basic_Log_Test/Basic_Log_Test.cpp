@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Basic_Log_Test.h"
 
 #include "tao/debug.h"

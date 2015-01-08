@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/ACE.h"
 
 #include "ace/Basic_Types.h"

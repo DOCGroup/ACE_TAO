@@ -3,11 +3,8 @@
 /**
  *  @file    interface_sh.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This provides for code generation in the server header
- *
  *
  *  @author Aniruddha Gokhale
  */

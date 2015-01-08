@@ -1,5 +1,3 @@
-// $Id$
-
 #include "TruncatableS_impl.h"
 #include "ace/OS_NS_stdio.h"
 

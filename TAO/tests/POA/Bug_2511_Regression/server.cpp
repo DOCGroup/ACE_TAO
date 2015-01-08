@@ -3,11 +3,8 @@
 /**
  *  @file     server.cpp
  *
- *  $Id$
- *
  *   This program tests that multiple calls to the Servant Locator
  *   can take place simultaneously.
- *
  *
  *  @author  Irfan Pyarali
  */

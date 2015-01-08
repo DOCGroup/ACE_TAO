@@ -4,8 +4,6 @@
 /**
  *  @file    TypeCodeFactory_Adapter_Impl.h
  *
- *  $Id$
- *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================

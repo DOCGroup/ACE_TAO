@@ -4,8 +4,6 @@
 /**
  *  @file    Scheduler_Utilities.h
  *
- *  $Id$
- *
  *  @author  Chris Gill <cdgill@cs.wustl.edu>
  */
 //=============================================================================

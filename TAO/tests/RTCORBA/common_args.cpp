@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Read_Buffer.h"
 #include "ace/Array_Base.h"
 #include "ace/OS_NS_stdio.h"

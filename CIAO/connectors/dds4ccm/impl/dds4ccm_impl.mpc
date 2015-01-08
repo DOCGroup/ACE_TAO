@@ -1,5 +1,3 @@
-// $Id$
-
 project(CIAO_DDS4CCM_DDS_Impl) : install, dds4ccm_skel, dds4ccm_lem_stub, taolib, \
                                  ciao_output, ccm_stub, dds4ccm_logger, dds4ccm_base {
 

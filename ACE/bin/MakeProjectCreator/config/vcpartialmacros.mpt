@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 // ACE specific macros for nmake, vc6, and vc7
 
 MFC Release {

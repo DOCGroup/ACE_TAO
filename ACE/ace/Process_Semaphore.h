@@ -4,8 +4,6 @@
 /**
  *  @file    Process_Semaphore.h
  *
- *  $Id$
- *
  *   Wrapper for Dijkstra style general semaphores that work
  *   across processes.
  *

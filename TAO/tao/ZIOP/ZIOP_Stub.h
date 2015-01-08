@@ -4,8 +4,6 @@
 /**
  *  @file    ZIOP_Stub.h
  *
- *  $Id$
- *
  *  This file contains the declaration for the ZIOP Stub.
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>

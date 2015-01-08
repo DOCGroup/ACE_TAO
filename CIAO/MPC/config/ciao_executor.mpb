@@ -1,5 +1,3 @@
 // -*- MPC -*-
-// $Id$
-
 project : ccm_svnt, ciao_container_base_stub {
 }

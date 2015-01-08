@@ -1,5 +1,3 @@
-// $Id$
-
 #include "test_i.h"
 
 test_i::

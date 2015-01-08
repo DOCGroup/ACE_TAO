@@ -1,4 +1,3 @@
-// $Id$
 #include "Activator_Info.h"
 
 Activator_Info::Activator_Info (void)

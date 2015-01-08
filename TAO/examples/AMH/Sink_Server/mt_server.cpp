@@ -1,5 +1,3 @@
-// $Id$
-
 #include "MT_AMH_Server.h"
 #include "AMH_Servant.h"
 

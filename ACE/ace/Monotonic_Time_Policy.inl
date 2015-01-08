@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/High_Res_Timer.h"
 

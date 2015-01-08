@@ -4,8 +4,6 @@
 /**
  *  @file    FT_Naming_Service.h
  *
- *  $Id$
- *
  *    This class provides an override for the Naming_Service class factory
  *    method: create_naming_server ()
  *
@@ -26,7 +24,6 @@
  *
  * @brief Defines a class that encapsulates the implementation of the
  * Fault Tolerant Naming Service.
- *
  */
 class TAO_FT_Naming_Service
 {

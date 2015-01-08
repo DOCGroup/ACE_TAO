@@ -1,5 +1,3 @@
-// $Id$
-
 // The following is required to be able to access
 // ace_svc_desc_TAO_*_Parser, below
 #include "tao/CORBALOC_Parser.h"

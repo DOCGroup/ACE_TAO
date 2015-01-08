@@ -4,8 +4,6 @@
 /**
  *  @file    TAO_ETCL_Constraint.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Jeff Parsons (parsons@cs.wustl.edu)
  */

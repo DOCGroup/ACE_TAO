@@ -4,8 +4,6 @@
 /**
  *  @file   LzoCompressor_Factory.h
  *
- *  $Id$
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 // ===================================================================

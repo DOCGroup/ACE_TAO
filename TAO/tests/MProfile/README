@@ -1,4 +1,4 @@
-$Id$
+
 
 This program tests fundamentals of TAO's ORB fault tolerance by
 merging multiple profiles in a single object reference.

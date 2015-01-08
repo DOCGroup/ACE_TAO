@@ -1,5 +1,3 @@
-//$Id$
-
 #include "test.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "tao/ORB_Core.h"

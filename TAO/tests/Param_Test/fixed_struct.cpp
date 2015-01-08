@@ -3,10 +3,7 @@
 /**
  *  @file    fixed_struct.cpp
  *
- *  $Id$
- *
  *  tests fixed sized structs
- *
  *
  *  @author   Aniruddha Gokhale
  */

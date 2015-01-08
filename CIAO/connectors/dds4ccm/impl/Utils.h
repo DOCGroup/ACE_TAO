@@ -2,8 +2,6 @@
  * @file Utils.h
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  *
- * $Id$
- *
  * Misc utility classes for DDS4CCM.
  */
 

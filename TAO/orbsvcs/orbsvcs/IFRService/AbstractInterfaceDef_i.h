@@ -5,10 +5,7 @@
 /**
  *  @file    AbstractInterfaceDef_i.h
  *
- *  $Id$
- *
  *  AbstractInterfaceDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

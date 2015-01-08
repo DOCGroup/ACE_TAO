@@ -4,11 +4,8 @@
 /**
  *  @file    ExceptionList.h
  *
- *  $Id$
- *
  *  This file defines the ExceptionList datatype used in
  *  dynamic invocations.
- *
  *
  *  @author  Copyright 1994-1995 by Sun Microsystems Inc.
  */

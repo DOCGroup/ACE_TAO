@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_SUB_COMPONENT_EXEC_SXAYYT_H_
 #define CIAO_SUB_COMPONENT_EXEC_SXAYYT_H_
 

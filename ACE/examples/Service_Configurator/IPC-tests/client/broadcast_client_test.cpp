@@ -1,5 +1,3 @@
-// $Id$
-
 // Tests out the broadcast service of the
 // Internet domain IPC-SAP dgram abstraction.
 

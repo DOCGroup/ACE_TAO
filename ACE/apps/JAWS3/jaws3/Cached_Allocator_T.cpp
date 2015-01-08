@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef JAWS_CACHED_ALLOCATOR_T_CPP
 #define JAWS_CACHED_ALLOCATOR_T_CPP
 

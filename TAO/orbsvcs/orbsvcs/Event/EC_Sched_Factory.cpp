@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_Sched_Factory.h"
 #include "orbsvcs/Event/EC_Priority_Dispatching.h"

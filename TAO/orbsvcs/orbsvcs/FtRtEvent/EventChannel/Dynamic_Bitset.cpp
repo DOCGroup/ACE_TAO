@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
 #include <assert.h>
 #include <algorithm>

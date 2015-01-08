@@ -4,8 +4,6 @@
 /**
  *  @file Flushing_Strategy.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -48,7 +46,6 @@ class TAO_Queued_Message;
  * This strategy controls how does the ORB schedule and cancel
  * reactive I/O, if there is no reactive I/O the strategy is just a
  * no-op.
- *
  */
 class TAO_Flushing_Strategy
 {

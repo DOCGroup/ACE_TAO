@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef BUG_2248_REGRESSION_TEST_I_H
 #define BUG_2248_REGRESSION_TEST_I_H
 

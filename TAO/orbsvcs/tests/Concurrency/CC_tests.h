@@ -3,11 +3,8 @@
 /**
  *  @file    CC_tests.h
  *
- *  $Id$
- *
  *    This class implements a number of test objects to test the
  *    concurrency service.
- *
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */

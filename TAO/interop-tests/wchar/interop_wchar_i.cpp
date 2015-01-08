@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "interop_wchar_i.h"
 
 // Implementation skeleton constructor

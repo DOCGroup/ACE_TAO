@@ -4,8 +4,6 @@
 /**
  *  @file    Acceptor_Filter_Factory.h
  *
- *  $Id$
- *
  *  Provides default acceptor filters for use by the POA.
  *
  *  @author  Yan Dai <dai_y@ociweb.com>

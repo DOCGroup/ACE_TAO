@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SenderEC.h"
 #include "Sender_exec_export.h"
 #include "tao/LocalObject.h"

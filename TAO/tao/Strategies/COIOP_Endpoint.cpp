@@ -1,6 +1,4 @@
 // This may look like C, but it's really -*- C++ -*-
-// $Id$
-
 #include "tao/Strategies/COIOP_Endpoint.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)

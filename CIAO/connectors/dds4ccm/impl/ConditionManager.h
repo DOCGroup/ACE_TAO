@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CONDITIONMANAGER_H_
 #define CONDITIONMANAGER_H_
 

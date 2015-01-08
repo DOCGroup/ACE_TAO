@@ -2,10 +2,7 @@
 /**
  *  @file  DSRT_Dispatch_Item_T.h
  *
- *  $Id$
- *
  *  @author Venkita Subramonian (venkita@cs.wustl.edu)
- *
  */
 
 #ifndef DSRT_DISPATCH_ITEM_H

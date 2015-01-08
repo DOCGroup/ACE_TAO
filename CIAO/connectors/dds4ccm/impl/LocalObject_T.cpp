@@ -1,5 +1,3 @@
-// $Id$
-
 namespace CIAO
 {
   namespace DDS4CCM

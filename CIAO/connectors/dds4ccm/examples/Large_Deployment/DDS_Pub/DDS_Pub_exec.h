@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_DDS_PUB_EXEC_MKL1YH_H_
 #define CIAO_DDS_PUB_EXEC_MKL1YH_H_
 

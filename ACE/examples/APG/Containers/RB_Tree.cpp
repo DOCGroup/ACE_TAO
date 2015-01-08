@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/RB_Tree.h"
 #include "ace/Log_Msg.h"
 #include "ace/Synch.h"

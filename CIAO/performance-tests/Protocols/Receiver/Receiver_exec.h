@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ReceiverEC.h"
 #include "Receiver_exec_export.h"
 #include "tao/LocalObject.h"

@@ -1,8 +1,6 @@
 /**
  * @file Copy_Disabled.cpp
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

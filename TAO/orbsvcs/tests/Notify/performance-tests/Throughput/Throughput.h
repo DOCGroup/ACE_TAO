@@ -3,8 +3,6 @@
 /**
  *  @file   Throughput.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================

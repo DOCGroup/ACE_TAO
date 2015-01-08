@@ -1,4 +1,3 @@
-// $Id$
 // wxAutoDialog.h
 
 #ifndef i_wxAutoDialog_h

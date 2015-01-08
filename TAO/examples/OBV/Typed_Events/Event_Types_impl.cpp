@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Event_Types_impl.h"
 #include "ace/OS_NS_sys_time.h"
 

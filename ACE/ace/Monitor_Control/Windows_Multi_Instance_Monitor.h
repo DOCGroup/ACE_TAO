@@ -4,8 +4,6 @@
 /**
  * @file Windows_Multi_Instance_Monitor.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

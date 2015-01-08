@@ -3,11 +3,8 @@
 /**
  *  @file    private_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Union branch for the private part of the
  *  class.
- *
  *
  *  @author Aniruddha Gokhale
  */

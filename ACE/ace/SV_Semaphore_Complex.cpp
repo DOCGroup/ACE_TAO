@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SV_Semaphore_Complex.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_Thread.h"

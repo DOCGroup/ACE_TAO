@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #include "QuoterC.h"
 #include <orbsvcs/CosNamingC.h>

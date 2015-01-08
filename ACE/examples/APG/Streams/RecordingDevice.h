@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef RECORDING_DEVICE_H
 #define RECORDING_DEVICE_H
 

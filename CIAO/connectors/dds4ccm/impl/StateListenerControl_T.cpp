@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 template <typename BASE_TYPE>
 CCM_DDS_StateListenerControl_T<BASE_TYPE>::CCM_DDS_StateListenerControl_T (void)
     : is_filter_interpreted_ (false)

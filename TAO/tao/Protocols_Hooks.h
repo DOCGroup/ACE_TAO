@@ -4,8 +4,6 @@
 /**
  *  @file   Protocols_Hooks.h
  *
- *  $Id$
- *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
 // ===================================================================

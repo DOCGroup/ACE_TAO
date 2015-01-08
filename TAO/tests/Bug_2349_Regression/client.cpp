@@ -1,5 +1,3 @@
-// $Id$
-
 #include "fooC.h"
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"

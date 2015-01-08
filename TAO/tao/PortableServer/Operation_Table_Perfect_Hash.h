@@ -4,8 +4,6 @@
 /**
  *  @file    Operation_Table_Perfect_Hash.h
  *
- *  $Id$
- *
  *  @author Aniruddha Gokhale
  */
 //=============================================================================

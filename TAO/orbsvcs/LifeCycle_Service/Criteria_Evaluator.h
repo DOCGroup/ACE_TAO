@@ -3,10 +3,7 @@
 /**
  *  @file    Criteria_Evaluator.h
  *
- *  $Id$
- *
  *  An Evaluator for the CosLifeCycle Criteria
- *
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
@@ -22,7 +19,6 @@
 
 /**
  * @class Criteria_Evaluator//
- *
  */
 class Criteria_Evaluator// : public LifeCycleService::Criteria_Evaluator
 {

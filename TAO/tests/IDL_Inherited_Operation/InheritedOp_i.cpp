@@ -1,5 +1,3 @@
-// $Id$
-
 #include "InheritedOp_i.h"
 
 Derived_i::Derived_i (CORBA::ORB_ptr orb)

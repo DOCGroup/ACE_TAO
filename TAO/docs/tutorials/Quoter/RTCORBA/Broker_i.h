@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * @file Broker_i.h
  * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>

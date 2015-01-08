@@ -1,5 +1,3 @@
-//$Id$
-
 #include "utils.h"
 #include "ImplRepoC.h"
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "rd_lifecycle_qos_test.h"
 
 #include "duration.h"

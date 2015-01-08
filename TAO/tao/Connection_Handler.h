@@ -4,8 +4,6 @@
 /**
  *  @file   Connection_Handler.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan  <bala@cs.wustl.edu>
  */
 //=============================================================================

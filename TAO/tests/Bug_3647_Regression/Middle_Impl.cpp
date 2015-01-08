@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Middle_Impl.h"
 
 Bug_3647_Regression::Middle_Impl::

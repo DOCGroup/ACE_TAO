@@ -1,8 +1,6 @@
 /**
  * @file ORB_Holder.inl
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 

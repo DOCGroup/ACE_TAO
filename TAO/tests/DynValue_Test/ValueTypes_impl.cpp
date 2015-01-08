@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ValueTypes_impl.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 

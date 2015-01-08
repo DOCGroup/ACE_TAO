@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef _TEST_IMPL_H_
 #define _TEST_IMPL_H_

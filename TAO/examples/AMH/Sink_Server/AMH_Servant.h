@@ -4,10 +4,7 @@
 /**
  *  @file  AMH_Servant.h
  *
- *  $Id$
- *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
- *
  */
 // =========================================================================
 

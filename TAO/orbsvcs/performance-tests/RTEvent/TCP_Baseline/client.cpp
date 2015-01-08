@@ -1,5 +1,3 @@
-// $Id$
-
 #include "RT_Class.h"
 #include "Client_Options.h"
 

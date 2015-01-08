@@ -4,8 +4,6 @@
 /**
  *  @file     UIPMC_Transport_Recv_Packet.h
  *
- *  $Id$
- *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
 //=============================================================================

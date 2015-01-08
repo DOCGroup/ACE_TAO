@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ROUNDTRIP_HANDLER_H
 #define ROUNDTRIP_HANDLER_H
 #include /**/ "ace/pre.h"

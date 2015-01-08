@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(RTEventLogAdmin_IDL) : orbsvcslib, orbsvcs_output, install, dslogadmin, rtevent, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -Wb,stub_export_macro=TAO_RTEventLog_Export -Wb,stub_export_include=orbsvcs/Log/rteventlog_export.h -Wb,skel_export_macro=TAO_RTEventLog_Skel_Export -Wb,skel_export_include=orbsvcs/Log/rteventlog_skel_export.h

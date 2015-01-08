@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/Root_POA.h"

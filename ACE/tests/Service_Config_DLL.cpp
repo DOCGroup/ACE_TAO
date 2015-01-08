@@ -3,8 +3,6 @@
 /**
  *  @file    Service_Config_DLL.cpp
  *
- *  $Id$
- *
  *  This file is related to, and used with, Service_Config_Test. It's
  *  used when testing the reentrance/thread-safety of the
  *  Service Configurator, in addition to testing the Service

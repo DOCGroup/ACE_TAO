@@ -1,4 +1,3 @@
-// $Id$
 #include "orbsvcs/Notify/MonitorControl/Control_Registry.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

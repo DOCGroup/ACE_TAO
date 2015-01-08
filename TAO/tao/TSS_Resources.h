@@ -4,8 +4,6 @@
 /**
  *  @file   TSS_Resources.h
  *
- *  $Id$
- *
  *  @author DOC Group - ISIS at Vanderbilt University
  *  @author DOC Center - Washington University at St. Louis
  *  @author DOC Laboratory - University of California at Irvine

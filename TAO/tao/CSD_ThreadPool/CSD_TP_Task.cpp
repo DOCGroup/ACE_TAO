@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/CSD_ThreadPool/CSD_TP_Task.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h"

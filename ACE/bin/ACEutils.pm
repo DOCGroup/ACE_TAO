@@ -1,4 +1,3 @@
-# $Id$
 
 require Process;
 $EXEPREFIX = ".".$DIR_SEPARATOR;

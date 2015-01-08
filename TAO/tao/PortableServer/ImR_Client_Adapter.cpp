@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PortableServer/ImR_Client_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

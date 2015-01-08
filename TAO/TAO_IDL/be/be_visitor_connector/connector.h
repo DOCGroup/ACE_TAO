@@ -3,10 +3,7 @@
 /**
  *  @file    connector.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Connector.
- *
  *
  *  @author Jeff Parsons
  */

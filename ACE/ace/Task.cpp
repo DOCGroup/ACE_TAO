@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Task.h"
 #include "ace/Module.h"
 

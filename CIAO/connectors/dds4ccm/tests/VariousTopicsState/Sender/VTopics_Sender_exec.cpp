@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 
 //Test different topic types, with DDS_STATE connector, look for 'PUBLICATION_MATCHED_STATUS
 #include "VTopics_Sender_exec.h"

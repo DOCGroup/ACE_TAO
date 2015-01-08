@@ -1,5 +1,3 @@
-// $Id$
-
 //
 // This file contains extra valuetypes which are unknown by the test
 // server. We should be able to pass these values and have the server

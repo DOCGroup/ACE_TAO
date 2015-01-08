@@ -1,10 +1,7 @@
 /**
  * @file Server_i.h
  *
- * $Id$
- *
  * @author Carlos O'Ryan <coryan@atdesk.com>
- *
  */
 #ifndef BUG_1020_REGRESSION_SERVER_I_H
 #define BUG_1020_REGRESSION_SERVER_I_H

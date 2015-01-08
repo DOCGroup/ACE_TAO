@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/CORBALOC_Parser.h"
 
 #if (TAO_HAS_CORBALOC_PARSER == 1)

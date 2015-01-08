@@ -3,10 +3,7 @@
 /**
  *  @file    root_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the client header
- *
  *
  *  @author Aniruddha Gokhale
  */

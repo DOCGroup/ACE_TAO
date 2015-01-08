@@ -422,8 +422,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 /**
  *  @file    Constraint_l.cpp
  *
- *  $Id$
- *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
 //=============================================================================

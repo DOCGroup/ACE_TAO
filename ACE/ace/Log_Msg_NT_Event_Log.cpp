@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/config-all.h"
 
 #if defined (ACE_HAS_LOG_MSG_NT_EVENT_LOG)

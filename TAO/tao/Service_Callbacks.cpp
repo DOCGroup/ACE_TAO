@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Service_Callbacks.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"

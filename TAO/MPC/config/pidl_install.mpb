@@ -1,4 +1,3 @@
-// $Id$
 project {
   Define_Custom(PidlInstallWithoutBuilding) {
     automatic = 0

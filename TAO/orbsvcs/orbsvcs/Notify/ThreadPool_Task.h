@@ -3,8 +3,6 @@
 /**
  *  @file ThreadPool_Task.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
  */
 
@@ -36,7 +34,6 @@ class TAO_Notify_Buffering_Strategy;
  * @class TAO_Notify_ThreadPool_Task
  *
  * @brief Implements a Thread Pool Worker Task.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_ThreadPool_Task
   : public TAO_Notify_Worker_Task

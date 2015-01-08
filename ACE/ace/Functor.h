@@ -4,8 +4,6 @@
 /**
  *  @file    Functor.h
  *
- *  $Id$
- *
  *   Non-templatized classes and class template specializations for
  *   implementing function objects that are used in  various places
  *   in ACE.  There are currently two major categories of function
@@ -15,7 +13,6 @@
  *   invoked via an operator() () method.
  *  Non-templatized classes for implementing the GoF Command Pattern,
  *  also known as functors or function objects.
- *
  *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  *  @author Based on Command Pattern implementations originally done by
@@ -253,8 +250,7 @@ public:
 };
 
 /**
- * @brief Function object for hashing a void *
- */
+ * @brief Function object for hashing a void */
 template<>
 class ACE_Export ACE_Hash<void *>
 {

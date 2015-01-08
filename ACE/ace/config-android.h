@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 // The following configuration file is designed to work for Android
 // platforms using GNU C++.
 

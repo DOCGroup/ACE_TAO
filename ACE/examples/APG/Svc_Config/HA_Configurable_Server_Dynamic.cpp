@@ -1,5 +1,3 @@
-// $Id$
-
 // Listing 1 code/ch19
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"

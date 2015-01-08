@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Roundtrip_Handler.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"

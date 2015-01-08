@@ -4,10 +4,7 @@
 /**
  *  @file    be_visitor_interface.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface class
- *
  *
  *  @author Carlos O'Ryan and Aniruddha Gokhale
  */

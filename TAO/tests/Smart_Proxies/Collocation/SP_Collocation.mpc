@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*idl): taoidldefaults, smart_proxies {
   idlflags     += -Wb,stub_export_macro=MY_Stub_Export -Wb,stub_export_include=stub_export.h -Wb,skel_export_macro=Diamond_Export -Wb,skel_export_include=diamond_export.h -Gd
 

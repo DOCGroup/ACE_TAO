@@ -1,4 +1,3 @@
-//$Id$
 #include "TimeModuleS.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"

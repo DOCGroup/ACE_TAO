@@ -4,8 +4,6 @@
 /**
  *  @file    Sig_Handler.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

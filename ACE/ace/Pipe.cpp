@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Pipe.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"

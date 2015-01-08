@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Stock_Factory_Locator_i.h"
 #include "Stock_Factory_i.h"
 

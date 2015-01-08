@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CONTROL_REGISTRY_H
 #define CONTROL_REGISTRY_H
 

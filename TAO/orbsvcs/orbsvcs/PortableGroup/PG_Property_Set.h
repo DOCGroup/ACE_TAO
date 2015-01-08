@@ -4,8 +4,6 @@
 /**
  *  @file    PG_Property_Set.h
  *
- *  $Id$
- *
  *  This file declares classes to help manage the Properties
  *  defined in the Portable Object Group.
  *

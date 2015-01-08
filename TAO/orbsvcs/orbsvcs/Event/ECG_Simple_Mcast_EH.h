@@ -3,10 +3,7 @@
 /**
  * @file ECG_Simple_Mcast_EH.h
  *
- * $Id$
- *
  * @author Marina Spivak <marina@atdesk.com>
- *
  */
 #ifndef TAO_ECG_SIMPLE_MCAST_EH_H
 #define TAO_ECG_SIMPLE_MCAST_EH_H

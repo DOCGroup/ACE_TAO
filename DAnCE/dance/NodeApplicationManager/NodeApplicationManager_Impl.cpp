@@ -1,5 +1,3 @@
-// $Id$
-
 
 #include "ace/iosfwd.h"
 #include "dance/Logger/Log_Macros.h"

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef TEST_I_H
 #define TEST_I_H
 

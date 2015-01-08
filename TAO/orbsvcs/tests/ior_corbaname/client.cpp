@@ -3,11 +3,8 @@
 /**
  *  @file    client.cpp
  *
- *  $Id$
- *
  *   This implements a simple CORBA client for the
  *   corbaname: style IOR parser
- *
  *
  *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
  */

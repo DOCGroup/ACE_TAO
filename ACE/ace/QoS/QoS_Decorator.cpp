@@ -1,6 +1,4 @@
 // QoS_Decorator.cpp
-// $Id$
-
 #include "QoS_Decorator.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

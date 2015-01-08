@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dur_service_qos_test.h"
 
 DurabilityServicePolicyTest::DurabilityServicePolicyTest ()

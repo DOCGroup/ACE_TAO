@@ -3,8 +3,6 @@
 /**
  *  @file    Quoter.idl
  *
- *  $Id$
- *
  *  Quoter example that illustrate the use of the global POA and
  *  the CosLifeCycle service.
  *

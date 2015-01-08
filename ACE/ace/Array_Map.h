@@ -4,8 +4,6 @@
 /**
  * @file    Array_Map.h
  *
- * $Id$
- *
  * Light weight array-based map with fast iteration but linear
  * (i.e. O(n)) search times.  STL-style interface is exposed.
  *

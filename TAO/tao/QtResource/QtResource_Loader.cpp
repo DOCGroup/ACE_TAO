@@ -1,5 +1,3 @@
-//$Id$
-
 #include "tao/QtResource/QtResource_Loader.h"
 #include "tao/ORB_Core.h"
 #include "tao/QtResource/QtResource_Factory.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Strategies/SCIOP_Factory.h"
 #include "tao/Strategies/SCIOP_Acceptor.h"
 #include "tao/Strategies/SCIOP_Connector.h"

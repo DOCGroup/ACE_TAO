@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Supports_Test_impl.h"
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");

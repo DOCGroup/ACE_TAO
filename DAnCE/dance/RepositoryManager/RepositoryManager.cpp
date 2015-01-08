@@ -5,8 +5,6 @@
 /**
  * @file RepositoryManager.cpp
  *
- * $Id$
- *
  * Description:
  *  Main driver program for the CIAO RepositoryManager
  *  Please run as follows:

@@ -1,5 +1,3 @@
-// $Id$
-
 // Test the persistence capabilities of <ACE_Malloc> when configured
 // for mmap-based shared memory management.
 

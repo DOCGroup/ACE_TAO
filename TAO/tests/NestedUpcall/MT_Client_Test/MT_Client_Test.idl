@@ -2,8 +2,6 @@
 /**
  *  @file    MT_Client_Test.idl
  *
- *  $Id$
- *
  *  An example of how nested upcalls work/fail?
  *
  *  @author Michael Kircher

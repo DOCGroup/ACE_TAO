@@ -1,4 +1,3 @@
-// $Id$
 #include "Foo_B_SimpleClientEngine.h"
 #include "Callback_i.h"
 #include "Foo_B_Statistics.h"

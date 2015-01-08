@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Messaging/Messaging_Loader.h"
 #include "tao/Messaging/Messaging_ORBInitializer.h"
 #include "tao/Messaging/AMI_Arguments_Converter_Impl.h"

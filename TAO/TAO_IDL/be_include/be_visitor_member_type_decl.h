@@ -3,10 +3,7 @@
 /**
  *  @file    be_visitor_member_type_decl.h
  *
- *  $Id$
- *
  *  Encapsulation of rules for declaring C++ class members
- *
  *
  *  @author Jeff Parsons
  */

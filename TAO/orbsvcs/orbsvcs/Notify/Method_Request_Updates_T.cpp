@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_Notify_Method_Request_Updates_T_CPP
 #define TAO_Notify_Method_Request_Updates_T_CPP
 

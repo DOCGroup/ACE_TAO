@@ -4,8 +4,6 @@
 /**
  *  @file LF_Event.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
@@ -45,7 +43,6 @@ class TAO_Leader_Follower;
  * class to signal the events, that would allow us to remove the
  * Leader/Followers logic from the ORB.  However, that requires other
  * major changes and it somewhat complicates the design.
- *
  */
 class TAO_Export TAO_LF_Event
 {

@@ -5,10 +5,7 @@
 /**
  *  @file    EmitsDef_i.h
  *
- *  $Id$
- *
  *  EmitsDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/MonitorControl/NotificationServiceMCC.h"
 
 int

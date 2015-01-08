@@ -1,5 +1,3 @@
-// $Id$
-
 #include "BMDevice_exec.h"
 
 #define DISPLACEMENT 256

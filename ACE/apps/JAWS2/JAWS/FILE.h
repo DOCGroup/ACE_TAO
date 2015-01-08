@@ -1,5 +1,3 @@
-// $Id$
-
 /* -*- c++ -*- */
 
 #ifndef JAWS_FILE_H

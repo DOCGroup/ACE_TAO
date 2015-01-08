@@ -3,10 +3,7 @@
 /**
  *  @file    objref.h
  *
- *  $Id$
- *
  *   Tests object references
- *
  *
  *  @author   Aniruddha Gokhale
  */

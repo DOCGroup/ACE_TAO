@@ -3,10 +3,7 @@
 /**
  *  @file    smart_proxy_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Operation in the stubs file.
- *
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */

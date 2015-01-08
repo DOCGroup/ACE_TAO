@@ -4,8 +4,6 @@
 /**
  *  @file    Pseudo_VarOut_T.h
  *
- *  $Id$
- *
  * @note This header should be included after all types to be passed
  * as template parameters to the TAO_Pseudo_{Var,Out}_T template
  * classes have been declared.  If the types in question are defined
@@ -24,7 +22,6 @@
  *       parsed last.
  *
  *         -Ossama
- *
  *
  * @author Jeff Parsons
  */
@@ -51,7 +48,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * TypeCode, Object, AbstractBase, NamedValue, NVList,
  * Principal, Request, Context, ORB, LocalObject,
  * and Environment.
- *
  */
 template <typename T>
 class TAO_Pseudo_Var_T : private TAO_Base_var
@@ -100,7 +96,6 @@ private:
  * TypeCode, Object, AbstractBase, NamedValue, NVList,
  * Principal, Request, Context, ORB, LocalObject,
  * and Environment.
- *
  */
 template <typename T>
 class TAO_Pseudo_Out_T

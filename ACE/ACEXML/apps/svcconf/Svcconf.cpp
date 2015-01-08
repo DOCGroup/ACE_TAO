@@ -1,5 +1,3 @@
-// $Id$
-
 
 #include "Svcconf.h"
 #include "ACEXML/common/FileCharStream.h"

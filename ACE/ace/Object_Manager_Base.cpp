@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Object_Manager_Base.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"

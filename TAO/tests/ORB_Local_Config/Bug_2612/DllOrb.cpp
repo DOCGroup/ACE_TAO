@@ -1,8 +1,6 @@
 /*
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  * @author Lothar Werzinger <lothar@tradescape.biz>
- *
- * $Id$
  */
 
 #include "ace/Arg_Shifter.h"

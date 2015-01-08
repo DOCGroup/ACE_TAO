@@ -3,8 +3,6 @@
 /**
  *  @file   Forwarder.h
  *
- *  $Id$
- *
  *  @brief  This class implements ImR's forwarding ServantLocator
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>

@@ -4,8 +4,6 @@
 /**
  *  @file   Notify_Default_Collection_Factory.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
 //=============================================================================
@@ -29,8 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_Notify_Default_Collection_Factory
  *
  * @brief Maintained for backward compatibility.
- *
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Default_Collection_Factory
 {

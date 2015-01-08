@@ -1,4 +1,3 @@
-// $Id$
 // author    : Boris Kolpackov <boris@kolpackov.net>
 
 #ifndef ACE_RMCAST_LINK_H

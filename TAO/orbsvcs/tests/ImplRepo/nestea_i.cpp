@@ -1,5 +1,3 @@
-// $Id$
-
 #include "nestea_i.h"
 #include "tao/debug.h"
 #include "ace/ACE.h"

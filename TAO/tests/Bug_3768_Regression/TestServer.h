@@ -1,7 +1,3 @@
-//
-// $Id: TestServer.h
-//
-
 #ifndef TESTSERVER_H
 #define TESTSERVER_H
 #include /**/ "ace/pre.h"

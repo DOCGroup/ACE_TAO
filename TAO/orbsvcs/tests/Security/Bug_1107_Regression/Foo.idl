@@ -4,8 +4,6 @@
 /**
  * @file Foo.idl
  *
- * $Id$
- *
  * IDL for the Bug_1107_Regression test.
  *
  * @author Ossama Othman <ossama@uci.edu>

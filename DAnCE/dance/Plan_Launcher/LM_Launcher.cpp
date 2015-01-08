@@ -1,5 +1,3 @@
-// $Id$
-
 #include "LM_Launcher.h"
 
 namespace DAnCE

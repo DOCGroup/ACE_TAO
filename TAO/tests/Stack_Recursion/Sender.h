@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef STACK_RECURSION_SENDER_H
 #define STACK_RECURSION_SENDER_H

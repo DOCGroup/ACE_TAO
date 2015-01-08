@@ -3,8 +3,6 @@
 /**
  *  @file   Naming_Context_Interface.cpp
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

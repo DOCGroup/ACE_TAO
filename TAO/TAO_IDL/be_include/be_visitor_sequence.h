@@ -1,7 +1,4 @@
 /* -*- c++ -*- */
-//
-// $Id$
-//
 
 #ifndef TAO_BE_VISITOR_SEQUENCE_H
 #define TAO_BE_VISITOR_SEQUENCE_H

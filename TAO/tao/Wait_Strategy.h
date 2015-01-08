@@ -4,8 +4,6 @@
 /**
  *  @file    Wait_Strategy.h
  *
- *  $Id$
- *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
 //=============================================================================
@@ -39,7 +37,6 @@ class TAO_Synch_Reply_Dispatcher;
  * @class TAO_Wait_Strategy
  *
  * @brief Strategy for waiting for the reply.
- *
  */
 class TAO_Export TAO_Wait_Strategy
 {

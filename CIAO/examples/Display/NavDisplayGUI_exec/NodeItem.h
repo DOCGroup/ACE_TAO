@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef __NODEITEM_H
 #define __NODEITEM_H
 

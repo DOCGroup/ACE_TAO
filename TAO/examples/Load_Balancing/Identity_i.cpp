@@ -3,10 +3,7 @@
 /**
  *  @file   Identity_i.cpp
  *
- *  $Id$
- *
  *  Implements the interface in Identity.idl.
- *
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */

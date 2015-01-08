@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_COMPONENT_EXEC_H_
 #define CIAO_COMPONENT_EXEC_H_
 

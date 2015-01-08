@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Malloc_T.h"
 #include "ace/OS_Memory.h"
 #include "ace/SString.h"

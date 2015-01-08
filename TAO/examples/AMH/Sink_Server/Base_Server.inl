@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Base_Server.h"
 
 ACE_INLINE CORBA::ORB_ptr

@@ -4,8 +4,6 @@
 /**
  *  @file    Token_Manager.h
  *
- *  $Id$
- *
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */
 //=============================================================================

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_LMBM_TEST_SENDER_EXEC_HRZ3NN_H_
 #define CIAO_LMBM_TEST_SENDER_EXEC_HRZ3NN_H_
 

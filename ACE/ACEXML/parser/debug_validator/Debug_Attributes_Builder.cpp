@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ACEXML/common/SAXExceptions.h"
 #include "ACEXML/parser/debug_validator/Debug_Attributes_Builder.h"
 

@@ -1,8 +1,6 @@
 #ifndef CHILDSERVANT_H
 #define CHILDSERVANT_H
 
-// $Id$
-
 #include "ChildS.h"
 
 class ChildServant

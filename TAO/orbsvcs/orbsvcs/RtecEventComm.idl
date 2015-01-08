@@ -3,8 +3,6 @@
  *
  * @brief Define the RtecEventComm module
  *
- * $Id$
- *
  * TAO's Real-time Event Service is described in:
  *
  * http://doc.ece.uci.edu/~coryan/EC/

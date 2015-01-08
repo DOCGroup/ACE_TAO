@@ -1,5 +1,3 @@
-//$Id$
-
 #include "orbsvcs/FtRtEvent/Utils/UUID.h"
 
 #if !defined(__ACE_INLINE__)

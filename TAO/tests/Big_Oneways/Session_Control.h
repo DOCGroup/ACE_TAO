@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef BIG_ONEWAYS_SESSION_CONTROL_H
 #define BIG_ONEWAYS_SESSION_CONTROL_H

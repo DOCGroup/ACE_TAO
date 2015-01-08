@@ -4,8 +4,6 @@
 /**
  *  @file    Vector_T.h
  *
- *  $Id$
- *
  *  @author Craig L. Ching <cching@mqsoftware.com>
  *  @author Gonzalo Diethelm <gonzalo.diethelm@aditiva.com>
  */

@@ -1,7 +1,6 @@
 #!/bin/sh
 #
 # This script regenerates changes on the Doxygen templates.
-# $Id$
 #
 set -e
 export QUILT_PATCHES=debian/patches

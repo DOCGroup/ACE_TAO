@@ -4,8 +4,6 @@
 /**
  *  @file    Thread_Lane_Resources.h
  *
- *  $Id$
- *
  *  @author  Irfan Pyarali
  */
 // ===================================================================

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_NODE_CPP
 #define ACE_NODE_CPP
 

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Coordinator.h"
 #include "Session_Control.h"
 #include "ace/Get_Opt.h"

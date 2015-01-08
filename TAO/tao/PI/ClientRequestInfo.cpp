@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PI/ClientRequestInfo.h"
 
 #if TAO_HAS_INTERCEPTORS == 1

@@ -3,11 +3,8 @@
 /**
  *  @file    interface_cs.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Interface node.
  *  This one provides code generation for interfaces in the client stubs.
- *
  *
  *  @author Aniruddha Gokhale
  */

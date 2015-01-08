@@ -1,5 +1,3 @@
-// $Id$
-
 #include "URL_Addr.h"
 
 #if !defined (__ACE_INLINE__)

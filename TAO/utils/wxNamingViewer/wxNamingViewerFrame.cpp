@@ -1,9 +1,6 @@
 // @file wxNamingViewerFrame.cpp
 //
 // @author Charlie Frasch  <cfrasch@atdesk.com>
-//
-// $Id$
-
 #include "pch.h"
 #include "wxNamingViewerFrame.h"
 

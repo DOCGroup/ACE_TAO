@@ -3,10 +3,7 @@
 /**
  *  @file    array.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for Arrays.
- *
  *
  *  @author Aniruddha Gokhale
  */

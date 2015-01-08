@@ -1,5 +1,3 @@
-// $Id$
-
 // server.h : main header file for the SERVER application
 //
 

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #ifndef ROUNDTRIP_H
 #define ROUNDTRIP_H
 #include /**/ "ace/pre.h"

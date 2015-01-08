@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef COMMAND_MODULE_H
 #define COMMAND_MODULE_H
 

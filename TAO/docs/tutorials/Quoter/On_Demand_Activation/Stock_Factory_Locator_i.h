@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 
 #ifndef STOCK_FACTORY_LOCATOR_I_H
 #define STOCK_FACTORY_LOCATOR_I_H

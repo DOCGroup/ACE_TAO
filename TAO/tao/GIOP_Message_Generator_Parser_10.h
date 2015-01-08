@@ -4,8 +4,6 @@
 /**
  *  @file   GIOP_Message_Generator_Parser_10.h
  *
- *  $Id$
- *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
 // ===================================================================
@@ -27,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_GIOP_Message_Generator_Parser_10
  *
  * @brief Implementation for GIOP v1.0
- *
  */
 
 class TAO_GIOP_Message_Generator_Parser_10:

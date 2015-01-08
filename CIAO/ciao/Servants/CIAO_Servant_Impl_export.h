@@ -1,6 +1,5 @@
 
 // -*- C++ -*-
-// $Id$
 // Definition for Win32 Export directives.
 // ------------------------------
 #ifndef CIAO_SERVANT_IMPL_EXPORT_H

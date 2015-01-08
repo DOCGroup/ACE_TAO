@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PI/PolicyFactory_Registry.h"
 #include "tao/PI/PolicyFactoryC.h"
 #include "tao/ORB_Constants.h"

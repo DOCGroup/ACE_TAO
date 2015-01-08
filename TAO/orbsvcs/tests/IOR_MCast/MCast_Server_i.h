@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef MCAST_SERVER_I_H
 #define MCAST_SERVER_I_H
 

@@ -3,10 +3,7 @@
 /**
  *  @file    results.h
  *
- *  $Id$
- *
  *  Printing the results
- *
  *
  *  @author Aniruddha Gokhale
  */

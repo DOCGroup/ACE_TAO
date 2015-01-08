@@ -4,8 +4,6 @@
 /**
  *  @file   Naming_Context_Interface.h
  *
- *  $Id$
- *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================

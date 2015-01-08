@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Receiver_Factory.h"
 #include "Receiver.h"
 

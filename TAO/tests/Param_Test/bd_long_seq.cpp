@@ -3,10 +3,7 @@
 /**
  *  @file    bd_long_seq.cpp
  *
- *  $Id$
- *
  *  tests bounded long sequences
- *
  *
  *  @author   Aniruddha Gokhale
  */

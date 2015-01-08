@@ -1,5 +1,3 @@
-// $Id$
-
 #include "NamingTask.h"
 #include "Hello.h"
 #include "NsShutdown.h"

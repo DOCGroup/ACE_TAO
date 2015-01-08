@@ -1,5 +1,3 @@
-// $Id$
-
 #include "dds4ccm/impl/ndds/DataReader.h"
 
 namespace CIAO

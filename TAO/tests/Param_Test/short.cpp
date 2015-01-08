@@ -3,10 +3,7 @@
 /**
  *  @file    short.cpp
  *
- *  $Id$
- *
  *  tests shorts
- *
  *
  *  @author   Aniruddha Gokhale
  */

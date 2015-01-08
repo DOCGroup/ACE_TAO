@@ -3,10 +3,7 @@
 /**
  *  @file    bd_wstr_seq.cpp
  *
- *  $Id$
- *
  *  tests bounded wide string sequences
- *
  *
  *  @author   Jeff Parsons
  */

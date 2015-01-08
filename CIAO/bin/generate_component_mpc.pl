@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
       if 0;
 
-# $Id$
 # Create a MPC file content for a single component implementation.
 
 use Getopt::Std;
@@ -286,8 +285,7 @@ else {
 
 }
 
-$mpc_template = '// $Id$
-// This file is generated with "'."generate_component_mpc.pl $flags".'"
+$mpc_template = '// This file is generated with "'."generate_component_mpc.pl $flags".'"
 
 project('."$unique_prefix"."$com_name".'_idl_gen) : componentidldefaults' . "$base_projs" . '{
   custom_only = 1'."

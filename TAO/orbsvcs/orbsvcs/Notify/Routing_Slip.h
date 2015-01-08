@@ -3,8 +3,6 @@
 /**
  *  @file Routing_Slip.h
  *
- *  $Id$
- *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 

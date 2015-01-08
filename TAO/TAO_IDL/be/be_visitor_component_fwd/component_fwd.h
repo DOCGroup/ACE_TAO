@@ -3,10 +3,7 @@
 /**
  *  @file    component_fwd.h
  *
- *  $Id$
- *
  *  Visitors for generation of code for forward declared Component
- *
  *
  *  @author Jeff Parsons
  */

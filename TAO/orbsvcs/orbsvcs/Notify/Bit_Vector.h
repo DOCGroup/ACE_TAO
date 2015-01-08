@@ -4,8 +4,6 @@
 /**
  *  @file    Bit_Vector.h
  *
- *  $Id$
- *
  *  This is a basic bit vector class.
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>

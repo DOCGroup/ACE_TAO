@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  * This program checks if the compiler / platform supports constexpr
  */

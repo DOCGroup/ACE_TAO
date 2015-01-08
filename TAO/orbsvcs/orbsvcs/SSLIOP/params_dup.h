@@ -1,5 +1,3 @@
-/* $Id$ */
-
 #ifndef TAO_SSLIOP_PARAMS_DUP_H
 #define TAO_SSLIOP_PARAMS_DUP_H
 

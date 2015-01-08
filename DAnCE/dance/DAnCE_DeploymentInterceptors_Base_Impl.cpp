@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "DAnCE_DeploymentInterceptors_Base_Impl.h"
 
 namespace DAnCE

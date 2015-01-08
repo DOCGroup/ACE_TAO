@@ -1,8 +1,5 @@
-// $Id$
-
 /**
  * @file dds4ccm_ConnectorStatusListener.idl
- *
  */
 
 #ifndef DDS4CCM_CONNECTORSTATUSLISTNER_IDL3

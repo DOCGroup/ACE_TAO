@@ -23,8 +23,6 @@ These notices must be retained in any copies of any part of this
 documentation and/or software.
  */
 
-/* $Id$ */
-
 #include "orbsvcs/AV/global.h"
 #include "orbsvcs/AV/md5.h"
 

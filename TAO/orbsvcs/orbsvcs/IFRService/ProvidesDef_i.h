@@ -4,10 +4,7 @@
 /**
  *  @file    ProvidesDef_i.h
  *
- *  $Id$
- *
  *  ProvidesDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

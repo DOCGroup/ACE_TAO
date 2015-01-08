@@ -4,13 +4,10 @@
 /**
  *  @file    be_visitor_ccm_pre_proc.h
  *
- *  $Id$
- *
  *  This visitor creates for components the appropriate AST
  *  (Abstract Syntax Tree) nodes, corresponding to provides, uses,
  *  emits, publishes and consumes declarations,
  *  and adds the nodes to the AST.
- *
  *
  *  @author Jeff Parsons
  */

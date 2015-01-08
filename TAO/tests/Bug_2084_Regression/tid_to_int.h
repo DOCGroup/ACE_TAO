@@ -3,8 +3,6 @@
 /**
  * @file tid_to_int.h
  *
- * $Id$
- *
  * Convert an ACE_thread_t to an integer in a way that doesn't rely
  * heavily on platform-specific configuration.
  *

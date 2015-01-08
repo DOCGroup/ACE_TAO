@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Notify_Structured_Push_Consumer.h"
 #include "goC.h"
 #include "Notify_Test_Client.h"

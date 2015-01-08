@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project (gperf_docs) : man {
   Man_Files {
     ace_gperf.1

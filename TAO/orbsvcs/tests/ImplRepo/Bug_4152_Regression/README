@@ -1,4 +1,4 @@
-$Id$
+
 
 This test verifies the fix for bug 4152 by starting the IMR Activator with a
 parameter to induce a delay between the time when a child server dies and when

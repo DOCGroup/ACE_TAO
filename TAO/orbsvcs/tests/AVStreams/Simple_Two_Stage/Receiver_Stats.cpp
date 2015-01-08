@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Receiver_Stats.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"

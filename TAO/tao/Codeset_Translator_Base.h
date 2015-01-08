@@ -4,8 +4,6 @@
 /**
  *  @file   Codeset_Translator_Base.h
  *
- *  $Id$
- *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
 // ===================================================================

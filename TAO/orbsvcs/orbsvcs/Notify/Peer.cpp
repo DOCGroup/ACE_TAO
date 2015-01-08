@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Notify/Peer.h"
 #include "orbsvcs/Notify/Proxy.h"
 #include "tao/debug.h"

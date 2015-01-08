@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 

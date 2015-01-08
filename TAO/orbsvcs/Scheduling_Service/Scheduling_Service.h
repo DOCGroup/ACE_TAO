@@ -2,11 +2,8 @@
 /**
  *  @file    Scheduling_Service.h
  *
- *  $Id$
- *
  *    This class implements the functionality of a Scheduling Service in
  *    a stand-alone process.
- *
  *
  *  @author   Chris Gill (cdgill@cs.wustl.edu) Based on the original
  *  Scheduling Service program by David Levine (levine@cs.wustl.edu) and

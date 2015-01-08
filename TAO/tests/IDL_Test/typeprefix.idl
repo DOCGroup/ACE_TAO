@@ -1,5 +1,3 @@
-// $Id$
-
 // Test a construct with typeprefix which failed when TAO_IDL was build
 // with Intel C++ or Sun C++
 

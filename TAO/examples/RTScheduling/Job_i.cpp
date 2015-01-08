@@ -1,5 +1,3 @@
-//$Id$
-
 #include "Job_i.h"
 #include "DT_Creator.h"
 #include "Task_Stats.h"

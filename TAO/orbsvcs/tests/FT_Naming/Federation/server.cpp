@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Hello.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Get_Opt.h"

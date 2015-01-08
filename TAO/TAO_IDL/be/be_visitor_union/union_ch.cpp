@@ -3,10 +3,7 @@
 /**
  *  @file    union_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Unions in the client header
- *
  *
  *  @author Aniruddha Gokhale
  */

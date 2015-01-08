@@ -4,8 +4,6 @@
 /**
  *  @file    Typed_SV_Message_Queue.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  */
 //=============================================================================

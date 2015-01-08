@@ -3,8 +3,6 @@
 /**
  *  @file    ami_test_i.cpp
  *
- *  $Id$
- *
  *  Implementation of the AMI Test interface.
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>

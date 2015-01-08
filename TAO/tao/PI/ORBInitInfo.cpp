@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"

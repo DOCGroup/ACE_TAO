@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : xerces {
   // Set the idl3_to_xmi compiler and flags as template values
   specific {

@@ -3,11 +3,8 @@
 /**
  *  @file    executor_exs_attr_init.h
  *
- *  $Id$
- *
  *  This provides code generation in the exec impl source for
  *  the attribute members' initialization in the constructor.
- *
  *
  *  @author Jeff Parsons
  */

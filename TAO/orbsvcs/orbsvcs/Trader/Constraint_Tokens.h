@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef CONSTRAINT_TOKEN_H
 #define CONSTRAINT_TOKEN_H
 #include /**/ "ace/pre.h"

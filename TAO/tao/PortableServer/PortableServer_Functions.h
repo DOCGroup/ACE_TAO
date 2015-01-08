@@ -4,8 +4,6 @@
 /**
  *  @file    PortableServer_Functions.h
  *
- *  $Id$
- *
  *  PortableServer helper functions
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>

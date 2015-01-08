@@ -4,8 +4,6 @@
 /**
  *  @file get_arg.h
  *
- *  $Id$
- *
  *  Thru-POA/skeleton argument selection function templates.
  *  @par
  *  These function templates are used to choose between arguments

@@ -2,11 +2,7 @@
 /**
  *  @file StructuredPushConsumer.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_STRUCTUREDPUSHCONSUMER_H
@@ -56,7 +52,6 @@ typedef TAO_Notify_Tests_Consumer_T<TAO_Notify_Tests_StructuredPushConsumer_Trai
  * @class TAO_Notify_Tests_StructuredPushConsumer
  *
  * @brief StructuredPushConsumer Implementation.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer_Base
 {

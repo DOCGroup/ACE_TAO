@@ -4,8 +4,6 @@
 /**
  *  @file    Atomic_Op_T.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@uci.edu>
  */
 //=============================================================================

@@ -2,11 +2,7 @@
 /**
  *  @file Buffering_Strategy.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_BUFFERING_STRATEGY_H
@@ -40,7 +36,6 @@ typedef ACE_Message_Queue<ACE_NULL_SYNCH> TAO_Notify_Message_Queue;
  * @class TAO_Notify_Buffering_Strategy
  *
  * @brief Base Strategy to enqueue and dequeue items from a Message Queue.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_Buffering_Strategy
 {

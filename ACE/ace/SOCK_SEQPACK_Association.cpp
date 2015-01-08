@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SOCK_SEQPACK_Association.h"
 
 #include "ace/Auto_Ptr.h"

@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-
 #include "Messenger_i.h"
 
 #include <ace/streams.h>

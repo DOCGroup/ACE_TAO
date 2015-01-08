@@ -1,5 +1,3 @@
-// $Id$
-
 #include "FOO_ClientRequestInterceptor.h"
 #include "testC.h"
 

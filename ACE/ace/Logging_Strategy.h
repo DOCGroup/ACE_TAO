@@ -4,8 +4,6 @@
 /**
  *  @file    Logging_Strategy.h
  *
- *  $Id$
- *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author Orlando Ribeiro <oribeiro@inescporto.pt>
  */

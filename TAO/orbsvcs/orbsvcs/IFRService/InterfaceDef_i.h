@@ -5,10 +5,7 @@
 /**
  *  @file    InterfaceDef_i.h
  *
- *  $Id$
- *
  *  InterfaceDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

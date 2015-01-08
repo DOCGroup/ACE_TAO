@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Arg_Shifter.h"
 #include "tao/PortableServer/POAManager.h"
 #include "tao/PortableServer/PortableServer.h"

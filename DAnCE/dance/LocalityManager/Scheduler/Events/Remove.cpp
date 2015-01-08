@@ -1,4 +1,3 @@
-// $Id$
 #include "Remove.h"
 
 #include "tao/AnyTypeCode/ExceptionA.h"

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #ifndef CIAO_WRITER_SENDER_EXEC_AJ8QK5_H_
 #define CIAO_WRITER_SENDER_EXEC_AJ8QK5_H_
 

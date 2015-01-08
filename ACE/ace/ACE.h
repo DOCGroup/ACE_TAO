@@ -4,8 +4,6 @@
 /**
  * @file    ACE.h
  *
- * $Id$
- *
  * This file contains value added ACE functions that extend the
  * behavior of the UNIX and Win32 OS calls.
  *

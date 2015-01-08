@@ -4,11 +4,8 @@
 /**
  *  @file    CC_LockSetFactory.h
  *
- *  $Id$
- *
  *    This class implements the lock set factory interface from the
  *    concurrency service.
- *
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */

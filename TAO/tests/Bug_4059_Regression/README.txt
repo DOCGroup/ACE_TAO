@@ -1,4 +1,4 @@
-$Id$
+
 
 This test illustrates the problem that using the RT client protocol policy breaks the handling of location forwarding.
 

@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project : aceexe, ace_mfc {
   avoids += wince
   exename = Log_Msg_MFC

@@ -3,10 +3,7 @@
 /**
  *  @file    any_op_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Enums for the Any operators
- *
  *
  *  @author Aniruddha Gokhale
  */

@@ -3,10 +3,7 @@
 /**
  *  @file    Pipe_Test.cpp
  *
- *  $Id$
- *
  *  Tests the construction of multiple pipes in a process.
- *
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

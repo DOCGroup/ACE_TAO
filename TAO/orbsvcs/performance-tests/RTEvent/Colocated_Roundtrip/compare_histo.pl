@@ -1,7 +1,5 @@
 #!/usr/bin/perl -w
 #
-# $Id$
-#
 
 use English;
 

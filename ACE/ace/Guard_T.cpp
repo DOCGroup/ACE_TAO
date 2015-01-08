@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_GUARD_T_CPP
 #define ACE_GUARD_T_CPP
 

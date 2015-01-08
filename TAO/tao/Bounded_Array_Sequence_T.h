@@ -5,8 +5,6 @@
  *
  * @brief Implement unbounded sequences for arrays.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "tao/Bounded_Array_Allocation_Traits_T.h"

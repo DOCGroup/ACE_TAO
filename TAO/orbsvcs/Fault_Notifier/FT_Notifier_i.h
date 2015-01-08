@@ -1,11 +1,7 @@
 // -*- C++ -*-
-//
-// $Id$
 //=============================================================================
 /**
  *  @file    FT_Notifier_i.h
- *
- *  $Id$
  *
  *  This file is part of Fault Tolerant CORBA.
  *  This file declares the Fault_Notifier_i class.

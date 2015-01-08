@@ -1,7 +1,4 @@
 // -*- C++ -*-
-//
-// $Id$
-//
 
 #include "Test_Protocols_Hooks.h"
 #include "TestC.h"

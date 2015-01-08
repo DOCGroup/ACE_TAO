@@ -4,10 +4,7 @@
 /**
  *  @file    valuetype.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Valuetype class
- *
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */

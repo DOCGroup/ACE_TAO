@@ -1,4 +1,3 @@
-// $Id$
 #include "TestInf/TestAppMain.h"
 #include "ClientApp.h"
 

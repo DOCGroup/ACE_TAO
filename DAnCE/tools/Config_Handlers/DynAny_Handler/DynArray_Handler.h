@@ -1,6 +1,4 @@
 /**
- * $Id$
- *
  * @file DynArray_Handler.h
  * @author Johnny Willemsen <jwillemsen@remedy.nl>
  */

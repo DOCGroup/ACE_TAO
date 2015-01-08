@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SimpleAttribute_exec.h"
 #include "ace/Log_Msg.h"
 

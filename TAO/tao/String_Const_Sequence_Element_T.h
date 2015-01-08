@@ -6,8 +6,6 @@
  * @brief Implement the type returned by const operator[] in string
  * sequences.
  *
- * $Id$
- *
  * @author Carlos O'Ryan and Johnny Willemsen
  */
 

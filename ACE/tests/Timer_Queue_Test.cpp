@@ -3,15 +3,12 @@
 /**
  *  @file    Timer_Queue_Test.cpp
  *
- *  $Id$
- *
  *    This is a simple test of <ACE_Timer_Queue> and four of its
  *    subclasses (<ACE_Timer_List>, <ACE_Timer_Heap>,
  *    <ACE_Timer_Wheel>, and <ACE_Timer_Hash>).  The test sets up a
  *    bunch of timers and then adds them to a timer queue. The
  *    functionality of the timer queue is then tested. No command
  *    line arguments are needed to run the test.
- *
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Policy.pidl"
 #include "tao/IOP.pidl"
 #include "tao/Compression/Compression_include.pidl"

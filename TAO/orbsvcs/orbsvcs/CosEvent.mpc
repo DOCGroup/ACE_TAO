@@ -1,5 +1,3 @@
-// $Id$
-
 project (CosEvent_IDL) : orbsvcslib, orbsvcs_output, install, avoids_minimum_corba, ec_typed_events_idl, tao_versioning_idl_defaults {
   custom_only = 1
   idlflags   += -GT -Wb,stub_export_macro=TAO_Event_Export -Wb,stub_export_include=orbsvcs/CosEvent/event_export.h -Wb,skel_export_macro=TAO_Event_Skel_Export -Wb,skel_export_include=orbsvcs/CosEvent/event_skel_export.h

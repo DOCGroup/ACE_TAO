@@ -3,11 +3,8 @@
 /**
  *  @file   RedGreen_Test.h
  *
- *  $Id$
- *
  * Performance test to show improvement in Notify performance by picking the
  * correcting configuration.
- *
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */

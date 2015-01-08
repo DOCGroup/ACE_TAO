@@ -4,8 +4,6 @@
 /**
  *  @file   default_environment.h
  *
- *  $Id$
- *
  * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

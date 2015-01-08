@@ -4,11 +4,8 @@
 /**
  *  @file     Servant_Locator.h
  *
- *  $Id$
- *
  *   Defines a ServantLocator class, used with a POA having a
  *   NON_RETAIN policy
- *
  *
  *  @author  Irfan Pyarali
  */

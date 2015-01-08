@@ -3,8 +3,6 @@
 /**
  * @file Current.pidl
  *
- * $Id$
- *
  * This file is used to generate CurrentC.*
  */
 

@@ -4,8 +4,6 @@
 /**
  * @file TX_Object_i.h
  *
- * $Id$
- *
  * Header for the SSLIOP Big_Request test server implementation.
  *
  * @author Andrew Finnell

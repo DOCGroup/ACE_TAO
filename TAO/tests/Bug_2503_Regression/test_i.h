@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef test_i_h
 #define test_i_h
 

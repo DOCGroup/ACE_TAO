@@ -2,8 +2,6 @@
  * @author William R. Otte <wotte@dre.vanderbilt.edu>
  * @author Johnny Willemsen (jwillemsen@remedy.nl)
  *
- * $Id$
- *
  * Wrapper facade for NDDS.
  */
 #ifndef READER_T_H_

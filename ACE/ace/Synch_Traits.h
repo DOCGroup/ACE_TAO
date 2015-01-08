@@ -4,8 +4,6 @@
 /**
  *  @file    Synch_Traits.h
  *
- *  $Id$
- *
  *   Moved from Synch.h.
  *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>

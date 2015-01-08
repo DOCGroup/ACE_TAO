@@ -3,8 +3,6 @@
 /**
  * @file ServerRequestInfo.pidl
  *
- * $Id$
- *
  * @brief Pre-compiled RequestInfo
  */
 

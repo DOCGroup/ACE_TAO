@@ -5,10 +5,7 @@
 /**
  *  @file    ValueBoxDef_i.h
  *
- *  $Id$
- *
  *  ValueBoxDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

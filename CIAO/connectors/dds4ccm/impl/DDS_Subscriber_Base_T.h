@@ -1,8 +1,6 @@
 /**
  * @author Marcel Smit (msmit@remedy.nl)
  *
- * $Id$
- *
  * Base class for all ports, containing a reader
  */
 #ifndef DDS_SUBSCRIBER_BASE_T_H_

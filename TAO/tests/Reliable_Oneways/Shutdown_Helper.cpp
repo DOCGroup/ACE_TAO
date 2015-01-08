@@ -1,6 +1,3 @@
-//
-// $Id$
-//
 #include "Shutdown_Helper.h"
 
 Shutdown_Helper::Shutdown_Helper (CORBA::ORB_ptr orb)

@@ -1,6 +1,4 @@
 /* -*- c++ -*- */
-// $Id$
-
 /**
  * @file be_helper.h
  * @author Aniruddha Gokhale

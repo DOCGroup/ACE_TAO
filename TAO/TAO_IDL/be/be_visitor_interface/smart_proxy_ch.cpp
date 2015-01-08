@@ -2,11 +2,8 @@
 /**
  *  @file    smart_proxy_ch.cpp
  *
- *  $Id$
- *
  *  This provides code generation for smart proxy classes for an
  *  interface in the client header.
- *
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */

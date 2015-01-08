@@ -1,4 +1,3 @@
-// $Id$
 #include "Passivate.h"
 
 #include "tao/AnyTypeCode/ExceptionA.h"

@@ -5,10 +5,7 @@
 /**
  *  @file    EnumDef_i.h
  *
- *  $Id$
- *
  *  EnumDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

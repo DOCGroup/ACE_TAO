@@ -1,4 +1,3 @@
-# $Id$
 
 # This file is for use with AIX 5.x and up, using either of the IBM
 # compilers (Visual Age C++ 6 or newer XL C++ compiler).

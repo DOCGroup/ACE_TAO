@@ -4,8 +4,6 @@
 /**
  *  @file  UUID.h
  *
- *  $Id$
- *
  *  @author Andrew T. Finnel <andrew@activesol.net>
  *  @author Yamuna Krishnmaurthy <yamuna@oomworks.com>
  */

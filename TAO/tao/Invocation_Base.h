@@ -4,9 +4,6 @@
 /**
  *  @file    Invocation_Base.h
  *
- *  $Id$
- *
- *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================

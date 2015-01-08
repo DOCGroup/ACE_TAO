@@ -1,7 +1,5 @@
 // -*- C++ -*-
 
-// $Id$
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class EXT_ID, class INT_ID> ACE_INLINE int

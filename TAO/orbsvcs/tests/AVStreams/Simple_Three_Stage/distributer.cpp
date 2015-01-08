@@ -1,5 +1,3 @@
-// $Id$
-
 #include "distributer.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/AV/Protocol_Factory.h"

@@ -1,4 +1,3 @@
-// $Id$
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
 #include "ace/OS_NS_string.h"

@@ -1,4 +1,4 @@
-/* -*- C++ -*- $Id$ */
+/* -*- C++ -*-  */
 
 #include "MessengerC.h"
 #include <iostream>

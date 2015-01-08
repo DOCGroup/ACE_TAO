@@ -1,4 +1,3 @@
-# $Id$
 
 ifeq ($(buildbits),32)
   FLAGS_C_CC += -m32

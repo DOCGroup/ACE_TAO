@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_FIXED_TYPECODE_CPP
 #define TAO_FIXED_TYPECODE_CPP
 

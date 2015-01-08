@@ -3,12 +3,8 @@
 /**
  *  @file     server.cpp
  *
- *  $Id$
- *
- *
  *   In this example, a new POA (childPOA) is created and its
  *   policy is set so that it object references are persistent.
- *
  *
  *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
  */

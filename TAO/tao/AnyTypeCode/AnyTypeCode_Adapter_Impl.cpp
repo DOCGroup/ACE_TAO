@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"
 #include "tao/AnyTypeCode/SystemExceptionA.h"
 #include "tao/AnyTypeCode/WrongTransactionA.h"

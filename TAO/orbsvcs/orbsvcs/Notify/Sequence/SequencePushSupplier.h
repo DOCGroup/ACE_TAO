@@ -2,11 +2,7 @@
 /**
  *  @file SequencePushSupplier.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_SEQUENCEPUSHSUPPLIER_H
@@ -30,7 +26,6 @@ class TAO_Notify_ProxyConsumer;
  * @class TAO_Notify_SequencePushSupplier
  *
  * @brief Wrapper for the SequencePushSupplier that connect to the EventChannel.
- *
  */
 class TAO_Notify_Serv_Export TAO_Notify_SequencePushSupplier : public TAO_Notify_Supplier
 {

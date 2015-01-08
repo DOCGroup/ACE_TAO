@@ -3,11 +3,8 @@
 /**
  *  @file    component_svh.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Component node.
  *  This provides for code generation in the servant header
- *
  *
  *  @author Jeff Parsons
  */

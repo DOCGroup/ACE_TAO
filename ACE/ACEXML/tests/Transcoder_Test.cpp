@@ -1,4 +1,4 @@
-// -*- C++ -*- $Id$
+// -*- C++ -*-
 
 #include "ACEXML/common/Transcode.h"
 #include "ace/Log_Msg.h"

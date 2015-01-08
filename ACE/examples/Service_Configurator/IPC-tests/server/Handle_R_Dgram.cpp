@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Handle_R_Dgram.h"
 
 #if defined (SunOS4)

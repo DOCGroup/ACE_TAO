@@ -1,6 +1,4 @@
 /*
- * $Id$
- *
  * Copyright (c) 1994, 1995.  Netscape Communications Corporation.  All
  * rights reserved.
  *
@@ -15,7 +13,6 @@
 
 /*
  * pblock.h: Header for Parameter Block handling functions
- *
  *
  * A parameter block is a set of name=value pairs which are generally used
  * as parameters, but can be anything. They are kept in a hash table for
@@ -32,7 +29,6 @@
  * first character of name.
  *
  * Rob McCool
- *
  */
 
 #ifndef PBLOCK_H

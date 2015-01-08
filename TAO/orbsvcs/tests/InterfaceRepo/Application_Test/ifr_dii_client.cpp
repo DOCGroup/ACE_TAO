@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "ifr_dii_client.h"
 #include "ace/Get_Opt.h"
 

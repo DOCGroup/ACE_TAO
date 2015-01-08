@@ -1,5 +1,3 @@
-// $Id$
-
 /**
  *  @file Administrator_Client_IDL3.cpp
  *

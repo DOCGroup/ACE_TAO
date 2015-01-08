@@ -1,5 +1,3 @@
-// $Id$
-
 #include "resource_limits_qos_test.h"
 
 ResourceLimitsPolicyTest::ResourceLimitsPolicyTest ()

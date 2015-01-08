@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "tao/Messaging/Connection_Timeout_Policy_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"

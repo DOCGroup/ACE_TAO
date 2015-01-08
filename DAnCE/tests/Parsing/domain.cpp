@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Auto_Ptr.h"
 #include "dance/Deployment/Deployment_TargetDataC.h"
 #include "dance/Logger/Log_Macros.h"

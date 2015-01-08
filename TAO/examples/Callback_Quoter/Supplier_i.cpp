@@ -2,10 +2,7 @@
 /**
  *  @file    Supplier_i.cpp
  *
- *  $Id$
- *
  *  Implementation of the Supplier class.
- *
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */

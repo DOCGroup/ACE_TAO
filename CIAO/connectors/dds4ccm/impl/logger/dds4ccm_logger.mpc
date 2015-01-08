@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(DDS4CCM_Logger): install, ciao_lib, taolib, acelib {
   sharedname   = DDS4CCM_Logger
   dynamicflags += DDS4CCM_LOGGER_BUILD_DLL

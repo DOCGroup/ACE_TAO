@@ -4,8 +4,6 @@
 /**
  *  @file    TAO_Internal.h
  *
- *  $Id$
- *
  *  Structures and methods completely internal to TAO.
  *
  *  @author Chris Cleeland

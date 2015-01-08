@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef TAO_INTERPRETER_UTILS_CPP
 #define TAO_INTERPRETER_UTILS_CPP
 

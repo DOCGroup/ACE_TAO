@@ -4,8 +4,6 @@
 /**
  *  @file    Receiver_QoS_Event_Handler.h
  *
- *  $Id$
- *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
 //=============================================================================

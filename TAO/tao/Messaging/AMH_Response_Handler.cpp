@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Messaging/AMH_Response_Handler.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Transport.h"

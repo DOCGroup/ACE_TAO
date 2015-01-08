@@ -1,5 +1,3 @@
-// $Id$
-
 #include "AMH_Servant.h"
 #include "Base_Server.h"
 

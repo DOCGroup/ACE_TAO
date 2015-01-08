@@ -2,11 +2,7 @@
 /**
  *  @file StructuredEvent.h
  *
- *  $Id$
- *
  *  @author Pradeep Gore <pradeep@oomworks.com>
- *
- *
  */
 
 #ifndef TAO_Notify_Tests_STRUCTUREDEVENT_H
@@ -25,7 +21,6 @@
  * @class TAO_Notify_Tests_StructuredEvent
  *
  * @brief Helper class to populate a CosNotification::StructuredEvent.
- *
  */
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredEvent
 {

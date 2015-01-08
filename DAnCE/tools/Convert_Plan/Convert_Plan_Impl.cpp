@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Convert_Plan_Impl.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/CDR.h"

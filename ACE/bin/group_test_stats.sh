@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id$
 
 if test -e tmp; then unlink tmp; fi
 if test -e tmp2; then unlink tmp2; fi

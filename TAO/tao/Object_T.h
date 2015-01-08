@@ -4,8 +4,6 @@
 /**
  *  @file    Object_T.h
  *
- *  $Id$
- *
  *   Templatized utilities common to all IDL interfaces.
  *
  *  @author  Jeff Parsons <j.parsons@vanderbilt.edu>

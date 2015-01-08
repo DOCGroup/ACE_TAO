@@ -4,12 +4,9 @@
 /**
  *  @file    root_ex_idl.h
  *
- *  $Id$
- *
  *  Concrete visitor for the Root class
  *  This one provides code generation for elements of the Root node in the
  *  CIAO executor IDL.
- *
  *
  *  @author Jeff Parsons
  */

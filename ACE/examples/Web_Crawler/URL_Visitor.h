@@ -4,8 +4,6 @@
 /**
  *  @file    URL_Visitor.h
  *
- *  $Id$
- *
  *  @author Douglas C.Schmidt <schmidt@cs.wustl.edu> Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================
@@ -36,7 +34,6 @@ class URL_Validation_Visitor;
  * @class URL_Processing_Strategy
  *
  * @brief Abstract base class for the URL processing strategy.
- *
  */
 class URL_Processing_Strategy
 {
@@ -66,7 +63,6 @@ protected:
  * @class HTTP_Header_Processing_Strategy
  *
  * @brief Defines the HTTP header processing strategy.
- *
  */
 class HTTP_Header_Processing_Strategy : public URL_Processing_Strategy
 {
@@ -129,7 +125,6 @@ public:
  * @class URL_Visitation_Strategy_Factory
  *
  * @brief Abstract Factory for the URL visitation strategy.
- *
  */
 class URL_Visitation_Strategy_Factory
 {
@@ -164,7 +159,6 @@ protected:
  * @class URL_Download_Visitation_Strategy_Factory
  *
  * @brief Concrete Factory for the URL validation visitation strategy.
- *
  */
 class URL_Download_Visitation_Strategy_Factory : public URL_Visitation_Strategy_Factory
 {
@@ -193,7 +187,6 @@ public:
  * @class URL_Validation_Visitation_Strategy_Factory
  *
  * @brief Concrete Factory for the URL validation visitation strategy.
- *
  */
 class URL_Validation_Visitation_Strategy_Factory : public URL_Visitation_Strategy_Factory
 {

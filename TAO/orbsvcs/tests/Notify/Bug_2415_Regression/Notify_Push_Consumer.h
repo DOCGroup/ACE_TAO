@@ -3,10 +3,7 @@
 /**
  *  @file   Notify_Push_Consumer.h
  *
- *  $Id$
- *
  * A push consumer implementation.
- *
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */

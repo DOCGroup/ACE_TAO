@@ -3,10 +3,7 @@
 /**
  *  @file     test_i.cpp
  *
- *  $Id$
- *
  *   This is a simple test servant implementation
- *
  *
  *  @author  Irfan Pyarali
  */

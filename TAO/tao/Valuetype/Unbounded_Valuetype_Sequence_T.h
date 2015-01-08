@@ -5,8 +5,6 @@
  *
  * @brief Implement unbounded sequences for value types.
  *
- * $Id$
- *
  * @author Carlos O'Ryan
  */
 #include "Unbounded_Valuetype_Allocation_Traits_T.h"

@@ -5,10 +5,7 @@
 /**
  *  @file    LocalInterfaceDef_i.h
  *
- *  $Id$
- *
  *  LocalInterfaceDef servant class.
- *
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */

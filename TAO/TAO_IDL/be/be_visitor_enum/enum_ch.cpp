@@ -3,10 +3,7 @@
 /**
  *  @file    enum_ch.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Enums in the client header
- *
  *
  *  @author Aniruddha Gokhale
  */

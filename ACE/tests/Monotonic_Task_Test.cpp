@@ -3,8 +3,6 @@
 /**
  *  @file    Monotonic_Task_Test.cpp
  *
- *  $Id$
- *
  *    This is a test that verifies the time policy features of the
  *    ACE_Task template.
  *    A template instantiation based on the ACE_Monotonic_Time_Policy

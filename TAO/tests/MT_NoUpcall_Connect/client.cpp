@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SharedIntfC.h"
 #include "SharedIntfS.h"
 

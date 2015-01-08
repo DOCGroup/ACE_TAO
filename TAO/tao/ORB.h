@@ -4,8 +4,6 @@
 /**
  *  @file    ORB.h
  *
- *  $Id$
- *
  *  Header file for CORBA's ORB type.
  *
  *  @author DOC Center - Washington University at St. Louis

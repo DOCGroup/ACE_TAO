@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id$
-#
 
 for s in 0 25 50 75 100; do
   for w in 1 2 3 4 5 6; do

@@ -1,5 +1,3 @@
-// $Id$
-
 #ifndef ACE_HTTP_STREAM_POLICY_CPP
 #define ACE_HTTP_STREAM_POLICY_CPP
 

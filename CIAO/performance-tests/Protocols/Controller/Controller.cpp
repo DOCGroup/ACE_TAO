@@ -1,5 +1,3 @@
-// $Id$
-
 #include "SenderC.h"
 #include "ReceiverC.h"
 #include "tao/ORB_Constants.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    Default_Stub_Factory.h
  *
- *  $Id$
- *
  *   Defines the a factory interface for creating Stubs.
  *   This class creates the default stub, that is used in
  *   plain CORBA.

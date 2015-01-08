@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ECT_Throughput.h"
 
 #include "orbsvcs/Event_Utilities.h"

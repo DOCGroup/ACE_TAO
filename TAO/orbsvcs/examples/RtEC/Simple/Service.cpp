@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Get_Opt.h"

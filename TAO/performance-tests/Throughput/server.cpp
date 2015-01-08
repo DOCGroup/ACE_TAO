@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Receiver_Factory.h"
 #include "ace/Get_Opt.h"
 #include "tao/Strategies/advanced_resource.h"

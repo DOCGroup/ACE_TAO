@@ -2,8 +2,6 @@
 /**
 *  @file   amh_sh.cpp
 *
-*  $Id$
-*
 *  Specialized interface visitor for AMH generates code that is
 *  specific to AMH interfaces.
 *

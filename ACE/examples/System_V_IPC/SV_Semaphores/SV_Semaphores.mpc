@@ -1,6 +1,4 @@
 // -*- MPC -*-
-// $Id$
-
 project(*1) : aceexe, avoids_ace_for_tao {
   exename = sem1
   Source_Files {

@@ -3,10 +3,7 @@
 /**
  *  @file    discriminant_cs.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for discriminant of the union
- *
  *
  *  @author Aniruddha Gokhale
  */

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/SPIPE_Addr.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"

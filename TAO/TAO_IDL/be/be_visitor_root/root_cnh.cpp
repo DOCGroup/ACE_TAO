@@ -3,11 +3,8 @@
 /**
  *  @file    root_cnh.cpp
  *
- *  $Id$
- *
  *  Visitor generating code for Root in the CIAO
  *  connector impl header
- *
  *
  *  @author Jeff Parsons
  */

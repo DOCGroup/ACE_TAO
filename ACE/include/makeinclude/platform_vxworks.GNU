@@ -1,4 +1,3 @@
-# $Id$
 # VxWorks main platform file. This requires that you have set the WIND_PLATFORM
 # environment variable
 

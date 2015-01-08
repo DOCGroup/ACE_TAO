@@ -1,5 +1,3 @@
-// $Id$
-
 #include "Filter_Command.h"
 #include "ace/Log_Msg.h"
 

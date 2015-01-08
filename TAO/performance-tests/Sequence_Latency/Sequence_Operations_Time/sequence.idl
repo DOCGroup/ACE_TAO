@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/StringSeq.pidl"
 
 struct Str_Sequences

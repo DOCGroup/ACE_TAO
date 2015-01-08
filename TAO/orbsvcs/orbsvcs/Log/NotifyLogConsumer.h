@@ -4,8 +4,6 @@
 /**
  *  @file   NotifyLogConsumer.h
  *
- *  $Id$
- *
  *  The NotifyLogConsumer connects to the NotifyLog and logs the events
  *  that are pushed to the NotifyLog.
  *

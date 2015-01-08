@@ -1,5 +1,3 @@
-// $Id$
-
 #include "global_extern.h"
 #include "be_extern.h"
 #include "../../tao/Version.h"

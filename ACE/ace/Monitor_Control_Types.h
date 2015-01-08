@@ -4,8 +4,6 @@
 /**
  * @file Monitor_Control_Types.h
  *
- * $Id$
- *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
 //=============================================================================

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Log_Msg_Backend.h"
 
 

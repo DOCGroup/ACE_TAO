@@ -3,8 +3,6 @@
 /**
  *  @file   CEC_ConsumerAdmin.h
  *
- *  $Id$
- *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
 //=============================================================================

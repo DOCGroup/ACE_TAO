@@ -5,8 +5,6 @@
  *
  * @brief CDR (de)marshaling for std::vector
  *
- * $Id$
- *
  * @author Jeff Parsons
  */
 

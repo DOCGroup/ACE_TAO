@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate_i.h"
 #include "tao/PortableServer/Root_POA.h"
 

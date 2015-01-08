@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef __HASH_MAP_HASH_H_
 #define __HASH_MAP_HASH_H_
 

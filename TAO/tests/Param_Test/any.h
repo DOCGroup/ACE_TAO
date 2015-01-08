@@ -3,10 +3,7 @@
 /**
  *  @file    any.h
  *
- *  $Id$
- *
  *   Tests Anys
- *
  *
  *  @author   Aniruddha Gokhale
  */

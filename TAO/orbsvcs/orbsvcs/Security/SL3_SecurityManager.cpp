@@ -1,5 +1,3 @@
-// $Id$
-
 #include "orbsvcs/Security/SL3_SecurityManager.h"
 #include "orbsvcs/Security/SL3_ContextEstablishmentPolicy.h"
 #include "orbsvcs/Security/SL3_ObjectCredentialsPolicy.h"

@@ -1,5 +1,3 @@
-// $Id$
-
 #include "tao/Transport.h"
 
 #include "tao/LF_Follower.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    Malloc_T.h
  *
- *  $Id$
- *
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and
  *          Irfan Pyarali <irfan@cs.wustl.edu>
  */
@@ -673,7 +671,6 @@ private:
  * specialization to create a version that matches the lock strategy's ctor
  * signature.  See ACE_Process_Semaphore and ACE_Thread_Semaphore for
  * examples.
- *
  */
 /*****************************************************************************/
 

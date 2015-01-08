@@ -3,8 +3,6 @@
 /**
  *  @file Topology_Factory.h
  *
- *  $Id$
- *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
 

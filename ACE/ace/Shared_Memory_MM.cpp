@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/Shared_Memory_MM.h"
 
 #if !defined (__ACE_INLINE__)

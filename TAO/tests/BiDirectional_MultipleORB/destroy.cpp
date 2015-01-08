@@ -3,10 +3,7 @@
 /**
  *  @file     destroy.cpp
  *
- *  $Id$
- *
  *   Modified ORB destruction test.
- *
  *
  *  @author  Andrew Schnable <Andrew.Schnable@veritas.com>  Iliyan Jeliazkov <jeliazkov_i@ociweb.com>
  */

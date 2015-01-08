@@ -4,8 +4,6 @@
 /**
  *  @file    Element_Def_Builder.h
  *
- *  $Id$
- *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

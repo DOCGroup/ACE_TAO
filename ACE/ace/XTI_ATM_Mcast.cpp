@@ -1,5 +1,3 @@
-// $Id$
-
 #include "ace/XTI_ATM_Mcast.h"
 
 

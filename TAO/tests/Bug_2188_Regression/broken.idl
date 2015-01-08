@@ -1,8 +1,5 @@
 //
 // broken.idl -- Test IDL for array type CCA regressions
-//
-// $Id$
-//
 
 enum enum1
 {

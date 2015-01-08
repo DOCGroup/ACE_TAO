@@ -1,5 +1,3 @@
-//$Id$
-
 #ifndef DEADLINE_QOS_TEST_H_
 #define DEADLINE_QOS_TEST_H_
 

@@ -1,4 +1,3 @@
-// $Id$
 #include "ace/Method_Request.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-// $Id$
-
 #include "Server_Request_Interceptor.h"
 #include "testC.h"
 #include "tao/AnyTypeCode/AnyTypeCode_Adapter_Impl.h"

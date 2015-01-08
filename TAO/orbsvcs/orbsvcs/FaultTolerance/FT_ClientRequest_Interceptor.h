@@ -4,8 +4,6 @@
 /**
  *  @file     FT_ClientRequest_Interceptor.h
  *
- *  $Id$
- *
  *  @author  Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
 //=============================================================================
