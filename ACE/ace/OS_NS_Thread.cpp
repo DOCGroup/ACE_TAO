@@ -2609,6 +2609,7 @@ ACE_OS::event_init (ACE_event_t *event,
           event->name_ = ACE_OS::strdup (name_p);
           if (event->name_ == 0)
             {
+              ACE_OS::munmap (evtdata, sizeof (ACE_eventdata_t));
               ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name_p));
               return -1;
             }
