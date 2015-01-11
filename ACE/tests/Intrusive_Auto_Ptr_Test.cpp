@@ -93,6 +93,22 @@ int run_main (int, ACE_TCHAR *[])
 
   ACE_TEST_ASSERT (One::was_released());
 
+  // Test assignment.
+  theone = new One(0);
+  {
+    ACE_TEST_ASSERT (theone->has_refs (0));
+    ACE_TEST_ASSERT (!One::was_released ());
+
+    ACE_Intrusive_Auto_Ptr<One> ip2(theone);
+
+    ACE_TEST_ASSERT (theone->has_refs (1));
+    ACE_TEST_ASSERT (!One::was_released ());
+
+    ACE_Intrusive_Auto_Ptr<One> ip3;
+    ip2 = ip3;
+    ACE_TEST_ASSERT (One::was_released ());
+  }
+
   ACE_END_TEST;
   return 0;
 }
