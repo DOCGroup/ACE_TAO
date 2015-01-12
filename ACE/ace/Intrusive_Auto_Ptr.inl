@@ -80,7 +80,7 @@ ACE_Intrusive_Auto_Ptr<X>::operator = (const ACE_Intrusive_Auto_Ptr<X> &rhs)
   // assign a zero
   if (rhs.rep_  == 0)
     {
-      X::intrusive_remove_ref (rhs.rep_);
+      X::intrusive_remove_ref (this->rep_);
       this->rep_ = 0;
       return;
     }
