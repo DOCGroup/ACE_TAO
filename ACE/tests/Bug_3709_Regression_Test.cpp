@@ -12,17 +12,22 @@
 
 using namespace std;
 
+// MSVC_71_OR_OLDER
 #if defined(_MSC_VER) && _MSC_VER < 1400
-#define MSVC_71_OR_OLDER
+#define BROKEN_TEMPLATE_TEMPLATE
 #endif
 
 // clang version 2.9 crashes when trying to compile the test
 // http://llvm.org/bugs/show_bug.cgi?id=9643
 #ifdef __clang__
-#define MSVC_71_OR_OLDER
+#define BROKEN_TEMPLATE_TEMPLATE
 #endif
 
-#ifndef MSVC_71_OR_OLDER
+#ifdef __SUNPRO_CC
+#define BROKEN_TEMPLATE_TEMPLATE
+#endif
+
+#ifndef BROKEN_TEMPLATE_TEMPLATE
 template<template<typename U, typename = std::allocator<U> > class container, typename DT>
 container<DT> initializer(const DT &d)
 {
@@ -37,7 +42,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_3709_Regression_Test"));
 
-#ifndef MSVC_71_OR_OLDER
+#ifndef BROKEN_TEMPLATE_TEMPLATE
   vector<int> v = initializer<vector>(5);
   v.clear ();
 #endif
