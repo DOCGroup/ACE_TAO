@@ -600,7 +600,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
                   {
-                    if (lvalues[i] != rvalues[i])
+                    if (ACE::is_inequal (lvalues[i], rvalues[i]))
                       {
                         return 0;
                       }
@@ -621,7 +621,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 
                 for (CORBA::ULong i = 0; i < lvalues->length(); ++i)
                   {
-                    if (lvalues[i] != rvalues[i])
+                    if (ACE::is_inequal (lvalues[i], rvalues[i]))
                       {
                         return 0;
                       }
