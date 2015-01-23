@@ -859,6 +859,14 @@ ImR_Locator_i::kill_server
     }
 
   Activator_Info_Ptr ainfo = this->get_activator (si->activator);
+  if (ainfo.null ())
+    {
+       CORBA::Exception *ex =
+        new ImplementationRepository::CannotComplete ("no activator");
+      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+      _tao_rh->kill_server_excep (&h);
+      return;
+   }
   ImplementationRepository::ActivatorExt_var actext =
     ImplementationRepository::ActivatorExt::_narrow (ainfo->activator.in());
   if (CORBA::is_nil (actext.in()))
