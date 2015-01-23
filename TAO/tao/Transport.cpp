@@ -381,8 +381,18 @@ TAO_Transport::register_handler (void)
                     *this->handler_lock_,
                     false);
 
-  if (r == this->event_handler_i ()->reactor ())
+  if (r == this->event_handler_i ()->reactor () &&
+      (this->wait_strategy ()->non_blocking () ||
+       !this->orb_core ()->client_factory ()->use_cleanup_options ()))
     {
+      if (TAO_debug_level > 6)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("TAO (%P|%t) - Transport[%d]::register_handler - ")
+                         ACE_TEXT ("already registered with reactor\n"),
+                         this->id ()));
+        }
+
       return 0;
     }
 

@@ -61,7 +61,8 @@ TAO_Wait_On_Read::finished_request ()
     {
       // ORB finished request handling so if the transport was registered for
       // an AMI call, deregister it now
-      if (this->is_registered_)
+      if (!this->transport_->orb_core ()->client_factory ()->use_cleanup_options () &&
+          this->is_registered_)
       {
         this->transport_->remove_handler ();
       }
