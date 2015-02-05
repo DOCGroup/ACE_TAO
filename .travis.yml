@@ -3,8 +3,8 @@ compiler:
   - gcc
 env:
   global:
-  - ACE_ROOT=$TRAVIS_BUILD_DIR/$TRAVIS_REPO_SLUG/ACE
-  - TAO_ROOT=$TRAVIS_BUILD_DIR/$TRAVIS_REPO_SLUG/TAO
+  - ACE_ROOT=$TRAVIS_BUILD_DIR/ACE
+  - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
   - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
   - PATH=$ACE_ROOT/lib:$PATH
 before_install:
@@ -12,7 +12,7 @@ before_install:
 
 before_script:
   - export
-  - echo -e "#include \"ace/config-linux.h" >> $ACE_ROOT/ace/config.h
+  - echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h
   - echo -e "include include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
 
 script:
