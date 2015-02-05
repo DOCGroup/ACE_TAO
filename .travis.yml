@@ -18,6 +18,6 @@ before_script:
   - echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
 
 script:
-  - perl $ACE_ROOT/bin/mwc.pl -type gnuace -exclude TAO -exclude CIAO -exclude DAnCE
-  - make
+  - perl $ACE_ROOT/bin/mwc.pl -type gnuace -workers 2
+  - make -j 2
 
