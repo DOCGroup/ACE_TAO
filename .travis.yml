@@ -11,6 +11,7 @@ before_install:
   - git clone git://github.com/DOCGroup/MPC.git
 
 before_script:
+  - export
   - echo -e "#include \"ace/config-linux.h" >> $ACE_ROOT/ace/config.h
   - echo -e "include include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
 
