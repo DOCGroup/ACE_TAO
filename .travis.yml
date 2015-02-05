@@ -1,6 +1,7 @@
 language: cpp
 compiler:
   - gcc
+  - clang
 env:
   global:
   - ACE_ROOT=$TRAVIS_BUILD_DIR/ACE
@@ -15,7 +16,8 @@ before_install:
 before_script:
   - export
   - echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h
-  - echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
+  - if [ "$CXX" == "g++" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
+  - if [ "$CXX" == "clang++" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
 
 script:
   - perl $ACE_ROOT/bin/mwc.pl -type gnuace -workers 2
