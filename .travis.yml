@@ -20,6 +20,6 @@ before_script:
   - if [ "$CXX" == "clang++" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
 
 script:
-  - perl $ACE_ROOT/bin/mwc.pl -type gnuace -workers 2 CIAO/CIAO_TAO_DAnCE.mwc
-  - make -j 2 -C CIAO
+  - perl $ACE_ROOT/bin/mwc.pl -type gnuace -workers 2 TAO/TAO_ACE.mwc
+  - make -j 2 -C TAO
 
