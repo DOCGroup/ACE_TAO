@@ -3,16 +3,16 @@ compiler:
   - gcc
 env:
   global:
-  - ACE_ROOT=$TRAVIS_BUILD_DIR/ATCD/ACE
-  - TAO_ROOT=$TRAVIS_BUILD_DIR/ATCD/TAO
+  - ACE_ROOT=$TRAVIS_BUILD_DIR/$TRAVIS_REPO_SLUG/ACE
+  - TAO_ROOT=$TRAVIS_BUILD_DIR/$TRAVIS_REPO_SLUG/TAO
   - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
   - PATH=$ACE_ROOT/lib:$PATH
 before_install:
   - git clone git://github.com/DOCGroup/MPC.git
 
 before_script:
-  - echo -e "#include \"ace/config-linux.h" >> ACE/ace/config.h
-  - echo -e "include include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> ACE/include/makeinclude/platform_macros.GNU
+  - echo -e "#include \"ace/config-linux.h" >> $ACE_ROOT/ace/config.h
+  - echo -e "include include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
 
 script:
   - perl $ACE_ROOT/bin/mwc.pl -type gnuace
