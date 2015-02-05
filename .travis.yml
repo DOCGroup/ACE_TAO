@@ -15,9 +15,9 @@ before_install:
 before_script:
   - export
   - echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h
-  - echo -e "include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
+  - echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
 
 script:
-  - perl $ACE_ROOT/bin/mwc.pl -type gnuace -exclude ATCD/TAO -exclude ATCD/CIAO -exclude ATCD/DAnCE
+  - perl $ACE_ROOT/bin/mwc.pl -type gnuace -exclude TAO -exclude CIAO -exclude DAnCE
   - make
 
