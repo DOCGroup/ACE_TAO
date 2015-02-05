@@ -9,7 +9,7 @@ env:
   - CIAO_ROOT=$TRAVIS_BUILD_DIR/CIAO
   - DANCE_ROOT=$TRAVIS_BUILD_DIR/DAnCE
   - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
-  - PATH=$ACE_ROOT/lib:$PATH
+  - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
 before_install:
   - git clone git://github.com/DOCGroup/MPC.git
 
