@@ -1,0 +1,26 @@
+language: cpp
+compiler:
+  - gcc
+  - clang
+env:
+  global:
+  - ACE_ROOT=$TRAVIS_BUILD_DIR/ACE
+  - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
+  - CIAO_ROOT=$TRAVIS_BUILD_DIR/CIAO
+  - DANCE_ROOT=$TRAVIS_BUILD_DIR/DAnCE
+  - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
+  - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
+before_install:
+  - git clone git://github.com/DOCGroup/MPC.git
+
+before_script:
+  - export
+  - echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h
+  - echo -e "workspace {\n\$(TAO_ROOT)/TAO_ACE.mwc\n\$(CIAO_ROOT)/CIAO_TAO_DAnCE.mwc\n}\n" >> $TRAVIS_BUILD_DIR/travis.mwc
+  - if [ "$CXX" == "g++" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
+  - if [ "$CXX" == "clang++" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
+
+script:
+  - perl $ACE_ROOT/bin/mwc.pl -type gnuace -workers 2 travis.mwc
+  - make -j 2
+
