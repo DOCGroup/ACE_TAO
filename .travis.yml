@@ -11,12 +11,16 @@ env:
   - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
   - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
 before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -y libssl-dev libxerces-c-dev
   - git clone git://github.com/DOCGroup/MPC.git
 
 before_script:
   - export
   - echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h
   - echo -e "workspace {\n\$(TAO_ROOT)/TAO_ACE.mwc\n\$(CIAO_ROOT)/CIAO_TAO_DAnCE.mwc\n}\n" >> $TRAVIS_BUILD_DIR/travis.mwc
+  - echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
+  - echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features
   - if [ "$CXX" == "g++" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
   - if [ "$CXX" == "clang++" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
 
