@@ -20,7 +20,6 @@ ImR_Adapter::ImR_Adapter (void)
 void
 ImR_Adapter::init (TAO_ServantBase * servant)
 {
-  ORBSVCS_DEBUG ((LM_DEBUG, "ImR_Adapter::init with default servant\n"));
   default_servant_ = servant;
 }
 
@@ -83,4 +82,3 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
   // Finally, now everything is fine
   return 1;
 }
-

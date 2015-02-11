@@ -958,46 +958,39 @@ TAO_Log_i::scheduled (void)
   ACE_Time_Value tv = ACE_OS::gettimeofday ();
   ORBSVCS_Time::Time_Value_to_TimeT (current_time, tv);
 
-  if (current_time >= interval.start
-      && (current_time <= interval.stop || interval.stop == 0))
+  if (current_time >= interval.start &&
+      (current_time <= interval.stop || interval.stop == 0))
     {
-      if (weekly_intervals_.length () > 0)
-        {
-          // Work out when sunday is in nanoseconds.
-          time_t clock = tv.sec ();
-          struct tm *sunday = ACE_OS::localtime (&clock);
-
-          sunday->tm_sec = 0;
-          sunday->tm_min = 0;
-          sunday->tm_hour = 0;
-          sunday->tm_mday -= sunday->tm_wday;
-
-          tv.sec (ACE_OS::mktime (sunday));
-          tv.usec (0);
-
-          TimeBase::TimeT nano_sunday =
-            (CORBA::ULongLong) tv.sec () * 10000000;
-
-          for (CORBA::ULong i = 0; i < weekly_intervals_.length (); ++i)
-            {
-              if (current_time >= (weekly_intervals_[i].start + nano_sunday)
-                  && current_time <= (weekly_intervals_[i].stop + nano_sunday))
-                {
-                  return true;
-                }
-            }
-
-          return false;
-        }
-      else
+      if (weekly_intervals_.length () == 0)
         {
           return true;
         }
+
+      // Work out when sunday is in nanoseconds.
+      time_t clock = tv.sec ();
+      struct tm *sunday = ACE_OS::localtime (&clock);
+
+      sunday->tm_sec = 0;
+      sunday->tm_min = 0;
+      sunday->tm_hour = 0;
+      sunday->tm_mday -= sunday->tm_wday;
+
+      tv.sec (ACE_OS::mktime (sunday));
+      tv.usec (0);
+
+      TimeBase::TimeT nano_sunday =
+        (CORBA::ULongLong) tv.sec () * 10000000;
+
+      for (CORBA::ULong i = 0; i < weekly_intervals_.length (); ++i)
+        {
+          if (current_time >= (weekly_intervals_[i].start + nano_sunday)
+              && current_time <= (weekly_intervals_[i].stop + nano_sunday))
+            {
+              return true;
+            }
+        }
     }
-  else
-    {
-      return false;
-    }
+  return false;
 }
 
 void

@@ -2,7 +2,7 @@
 #include "Locator_Repository.h"
 #include "UpdateableServerInfo.h"
 
-UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
+UpdateableServerInfo::UpdateableServerInfo (const Repository_Ptr& repo,
                                             const ACE_CString& name,
                                             int pid)
 : repo_(repo),
@@ -11,7 +11,7 @@ UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
 {
 }
 
-UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
+UpdateableServerInfo::UpdateableServerInfo (const Repository_Ptr& repo,
                                             const Server_Info_Ptr& si,
                                             bool reset_start_count)
 : repo_(repo),
@@ -20,7 +20,7 @@ UpdateableServerInfo::UpdateableServerInfo (Locator_Repository* repo,
 {
   if (reset_start_count)
     {
-      needs_update_ = repo_ != 0;
+      needs_update_ = repo_.get() != 0;
       si_->active_info ()->start_count_ = 0;
     }
 }
@@ -82,7 +82,7 @@ UpdateableServerInfo::operator* () const
 const Server_Info_Ptr&
 UpdateableServerInfo::edit ()
 {
-  needs_update_ = repo_ != 0;
+  needs_update_ = repo_.get() != 0;
   return si_;
 }
 

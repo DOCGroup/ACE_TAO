@@ -1043,6 +1043,7 @@ Shared_Backing_Store::load_server (Server_Info *info,
   bool was_started = si->is_running ();
 
   *si.get () = *info;
+  delete info;
 
   if (!server_started)
     {
@@ -1057,7 +1058,7 @@ Shared_Backing_Store::load_server (Server_Info *info,
   this->create_server (server_started, si);
   if (was_started && !is_started)
     {
-      this->opts_.pinger ()->remove_server (info->key_name_.c_str ());
+      this->opts_.pinger ()->remove_server (si->key_name_.c_str ());
     }
   if (!was_started && is_started)
     {
@@ -1065,7 +1066,7 @@ Shared_Backing_Store::load_server (Server_Info *info,
         this->loc_impl_->set_timeout_policy (si->server.in (),
                                              ACE_Time_Value (1,0));
       si->server = ImplementationRepository::ServerObject::_narrow (obj.in ());
-      this->opts_.pinger ()->add_server (info->key_name_.c_str (),
+      this->opts_.pinger ()->add_server (si->key_name_.c_str (),
                                          this->opts_.ping_external (),
                                          si->server.in ());
     }
