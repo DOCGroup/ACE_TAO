@@ -1356,9 +1356,8 @@ DRV_pre_proc (const char *myfile)
 
       if (cpp_options.set_handles (ACE_INVALID_HANDLE, fd) == -1)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "%s: cannot set stdout for child process: %p\n",
-                      ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ())));
+          ACE_ERROR ((LM_ERROR, "%C: cannot set stdout for child process: %p\n",
+                      idl_global->prog_name ()));
 
           throw Bailout ();
         }
