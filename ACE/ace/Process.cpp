@@ -1141,32 +1141,47 @@ ACE_Process_Options::set_handles (ACE_HANDLE std_in,
   if (std_err == ACE_INVALID_HANDLE)
     std_err = ACE_STDERR;
 
-  if (!::DuplicateHandle (::GetCurrentProcess (),
-                          std_in,
-                          ::GetCurrentProcess (),
-                          &this->startup_info_.hStdInput,
-                          0,
-                          TRUE,
-                          DUPLICATE_SAME_ACCESS))
-    return -1;
+  // STD handles may have value 0 (not ACE_INVALID_HANDLE) if there is no such
+  // handle in the process.  This was observed to occur for stdin in console
+  // processes that were launched from services.  In this case we need to make
+  // sure not to return -1 from setting std_in so that we can process std_out
+  // and std_err.
 
-  if (!::DuplicateHandle (::GetCurrentProcess (),
-                          std_out,
-                          ::GetCurrentProcess (),
-                          &this->startup_info_.hStdOutput,
-                          0,
-                          TRUE,
-                          DUPLICATE_SAME_ACCESS))
-    return -1;
+  if (std_in)
+    {
+      if (!::DuplicateHandle (::GetCurrentProcess (),
+                              std_in,
+                              ::GetCurrentProcess (),
+                              &this->startup_info_.hStdInput,
+                              0,
+                              TRUE,
+                              DUPLICATE_SAME_ACCESS))
+        return -1;
+    }
 
-  if (!::DuplicateHandle (::GetCurrentProcess (),
-                          std_err,
-                          ::GetCurrentProcess (),
-                          &this->startup_info_.hStdError,
-                          0,
-                          TRUE,
-                          DUPLICATE_SAME_ACCESS))
-    return -1;
+  if (std_out)
+    {
+      if (!::DuplicateHandle (::GetCurrentProcess (),
+                              std_out,
+                              ::GetCurrentProcess (),
+                              &this->startup_info_.hStdOutput,
+                              0,
+                              TRUE,
+                              DUPLICATE_SAME_ACCESS))
+        return -1;
+    }
+
+  if (std_err)
+    {
+      if (!::DuplicateHandle (::GetCurrentProcess (),
+                              std_err,
+                              ::GetCurrentProcess (),
+                              &this->startup_info_.hStdError,
+                              0,
+                              TRUE,
+                              DUPLICATE_SAME_ACCESS))
+        return -1;
+    }
 #else /* ACE_WIN32 */
   this->stdin_ = ACE_OS::dup (std_in);
   this->stdout_ = ACE_OS::dup (std_out);
