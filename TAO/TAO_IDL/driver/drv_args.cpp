@@ -118,9 +118,9 @@ void
 DRV_usage (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%s: usage: %s [flag | file]*\n"),
-              ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
-              ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ())));
+              ACE_TEXT ("%C: usage: %C [flag | file]*\n"),
+              idl_global->prog_name (),
+              idl_global->prog_name ()));
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Legal flags:\n")));

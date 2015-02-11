@@ -99,9 +99,9 @@ void
 DRV_version (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "%s\n"
+              "%C\n"
               "TAO_IDL_FE, version %s (Based on Sun IDL FE, version %s)\n",
-              ACE_TEXT_CHAR_TO_TCHAR (idl_global->prog_name ()),
+              idl_global->prog_name (),
               ACE_TEXT (TAO_VERSION),
               ACE_TEXT (SUN_IDL_FE_VERSION)));
 
