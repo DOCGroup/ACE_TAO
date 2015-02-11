@@ -14,6 +14,7 @@
 #include "ImR_LocatorC.h"
 
 class Locator_Repository;
+typedef ACE_Strong_Bound_Ptr<Locator_Repository, ACE_Null_Mutex> Repository_Ptr;
 
 /**
 * @class UpdateableServerInfo
@@ -29,7 +30,7 @@ public:
   /// @param repo the repo to report updates to
   /// @param name the name of the server to retrieve
   /// @param pid an optional process id to further discriminate the server
-  UpdateableServerInfo(Locator_Repository* repo,
+  UpdateableServerInfo(const Repository_Ptr& repo,
                        const ACE_CString& name,
                        int pid = 0);
 
@@ -37,7 +38,7 @@ public:
   /// @param repo the repo to report updates to
   /// @param si an already retrieved Server_Info_Ptr
   /// @param reset_start_count controls the reset of the start count value
-  UpdateableServerInfo(Locator_Repository* repo,
+  UpdateableServerInfo(const Repository_Ptr& repo,
                        const Server_Info_Ptr& si,
                        bool reset_start_count = false);
 
@@ -75,7 +76,7 @@ private:
   const UpdateableServerInfo& operator=(const UpdateableServerInfo& );
 
   /// the repo
-  Locator_Repository* repo_;
+  Repository_Ptr repo_;
 
   /// the retrieved, passed, or non-stored server info
   Server_Info_Ptr si_;

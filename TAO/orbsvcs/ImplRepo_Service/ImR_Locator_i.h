@@ -11,7 +11,7 @@
 #include "LiveCheck.h"
 #include "ImR_ResponseHandler.h"
 #include "Locator_Options.h"
-#include "Server_Info.h"
+#include "UpdateableServerInfo.h"
 #include "ace/Auto_Ptr.h"
 #include "AsyncAccessManager.h"
 #include "tao/IORTable/IORTable.h"
@@ -27,8 +27,6 @@ class ACE_Reactor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 class INS_Locator;
-class Locator_Repository;
-class UpdateableServerInfo;
 
 /// Gets a request from a client and depending on the POA name,
 /// requests an activator to take care of activating the
@@ -218,7 +216,7 @@ private:
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var imr_poa_;
 
-  auto_ptr<Locator_Repository> repository_;
+  Repository_Ptr repository_;
 
   Options *opts_;
 };
