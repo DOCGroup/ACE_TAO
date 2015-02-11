@@ -15,6 +15,14 @@ kill (pid_t pid, int signum)
   ACE_UNUSED_ARG (pid);
   ACE_UNUSED_ARG (signum);
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_VXWORKS)
+  /*
+   * The VxWorks kill interface is not really POSIX
+   * since they use a task id in place of a pid type.
+   * This only becomes an issue when using the 64bit compiler
+   * as the TASK_ID is no longer defined as an int.
+   */
+  ACE_OSCALL_RETURN (::kill ((TASK_ID)pid, signum), int, -1);
 #else
   ACE_OSCALL_RETURN (::kill (pid, signum), int, -1);
 #endif /* ACE_LACKS_KILL */
