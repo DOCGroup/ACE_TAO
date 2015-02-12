@@ -3,12 +3,12 @@ compiler:
   - gcc
 env:
   matrix:
-    - CORBAEMICRO=1
-    - CORBAECOMPACT=1
+    - CORBAEMICRO=1 ACEFORTAO=0
+    - CORBAECOMPACT=1 ACEFORTAO=0
     - ACEFORTAO=1
-    - CCMLW=1
-    - CCMNOEVENT=1
-    - ACETESTS=1
+    - CCMLW=1 ACEFORTAO=0
+    - CCMNOEVENT=1 ACEFORTAO=0
+    - ACETESTS=1 ACEFORTAO=0
   global:
     - ACE_ROOT=$TRAVIS_BUILD_DIR/ACE
     - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
@@ -24,7 +24,8 @@ before_install:
 before_script:
   - export
   - echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h
-  - echo -e "workspace {\n\$(TAO_ROOT)/TAO_ACE.mwc\n\$(CIAO_ROOT)/CIAO_TAO_DAnCE.mwc\n\$(TAO_ROOT)/tests/Hello\n" >> $TRAVIS_BUILD_DIR/travis.mwc
+  - echo -e "workspace {\n\$(TAO_ROOT)/TAO_ACE.mwc\n\$(TAO_ROOT)/tests/Hello\n" >> $TRAVIS_BUILD_DIR/travis.mwc
+  - if [ "$ACEFORTAO" == "0" ]; then echo -e "CIAO_TAO_DAnCE.mwc\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
   - if [ "$ACETESTS" == "1" ]; then echo -e "\$(ACE_ROOT)/tests\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
   - echo -e "}\n" >> $TRAVIS_BUILD_DIR/travis.mwc
   - if [ "$CORBAEMICRO" == "1" ]; then echo -e "corba_e_micro=1" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
