@@ -5135,7 +5135,7 @@ spa (FUNCPTR entry, ...)
   static _Vx_usr_arg_t const ACE_MAX_ARGS = 10;
   static char *argv[ACE_MAX_ARGS] = { 0 };
   va_list pvar;
-  unsigned int argc;
+  _Vx_usr_arg_t argc;
 
   // Hardcode a program name because the real one isn't available
   // through the VxWorks shell.
