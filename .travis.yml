@@ -3,12 +3,12 @@ compiler:
   - gcc
 env:
   matrix:
-    - CORBAE_MICRO="1"
-    - CORBAE_COMPACT="1"
-    - ACEFORTAO="1"
-    - CCMLW="1"
-    - CCMNOEVENT="1"
-    - ACETESTS="1"
+    - CORBAEMICRO=1
+    - CORBAECOMPACT=1
+    - ACEFORTAO=1
+    - CCMLW=1
+    - CCMNOEVENT=1
+    - ACETESTS=1
   global:
     - ACE_ROOT=$TRAVIS_BUILD_DIR/ACE
     - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
