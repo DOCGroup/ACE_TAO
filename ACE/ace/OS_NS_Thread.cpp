@@ -5132,7 +5132,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 int
 spa (FUNCPTR entry, ...)
 {
-  static _Vx_usr_arg_t const ACE_MAX_ARGS = 10;
+  // The called entrypoint can get the function name plus the normal 10
+  // optional arguments.
+  static _Vx_usr_arg_t const ACE_MAX_ARGS = 1 + 10;
   static char *argv[ACE_MAX_ARGS] = { 0 };
   va_list pvar;
   _Vx_usr_arg_t argc;
