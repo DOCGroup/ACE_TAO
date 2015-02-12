@@ -1,8 +1,10 @@
 language: cpp
 compiler:
   - gcc
-  - clang
 env:
+  - CORBAE_MICRO="1"
+  - CORBAE_COMPACT="1"
+  - ACEFORTAO="1"
   global:
   - ACE_ROOT=$TRAVIS_BUILD_DIR/ACE
   - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
@@ -19,6 +21,12 @@ before_script:
   - export
   - echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h
   - echo -e "workspace {\n\$(TAO_ROOT)/TAO_ACE.mwc\n\$(CIAO_ROOT)/CIAO_TAO_DAnCE.mwc\n\$(TAO_ROOT)/tests/Hello\n}\n" >> $TRAVIS_BUILD_DIR/travis.mwc
+  - if [ "$CORBAEMICRO" == "1" ]; then echo -e "corba_e_micro=1" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
+  - if [ "$CORBAEMICRO" == "1" ]; then echo -e "corba_e_micro=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
+  - if [ "$CORBAECOMPACT" == "1" ]; then echo -e "corba_e_compact=1" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
+  - if [ "$CORBAECOMPACT" == "1" ]; then echo -e "corba_e_compact=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
+  - if [ "$ACEFORTAO" == "1" ]; then echo -e "ace_for_tao=1" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
+  - if [ "$ACEFORTAO" == "1" ]; then echo -e "ace_for_tao=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
   - echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features
   - echo -e "TAO/tests/Hello/run_test.pl" >> $TAO_ROOT/bin/travis-ci.lst
