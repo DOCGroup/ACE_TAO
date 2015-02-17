@@ -20,8 +20,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # include "ace/os_include/os_time.h"
-// TODO move this.
+
+#if __cplusplus >= 201103L
 #include <chrono>
+#endif
 
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
@@ -80,9 +82,11 @@ public:
   /// Construct the ACE_Time_Value object from a timespec_t.
   explicit ACE_Time_Value (const timespec_t &t);
 
+#if __cplusplus >= 201103L
   /// Construct the ACE_Time_Value object from a chrono duration.
   template< class Rep, class Period >
   explicit ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration);
+#endif /* __cplusplus => 201103L */
 
   /// Destructor
   virtual ~ACE_Time_Value ();

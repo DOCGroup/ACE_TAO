@@ -964,6 +964,7 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #endif /* ACE_WIN32 */
 }
 
+#if __cplusplus >= 201103L
 template< class Rep, class Period >
 ACE_INLINE int
 ACE_OS::sleep (const std::chrono::duration<Rep, Period>& duration)
@@ -971,7 +972,7 @@ ACE_OS::sleep (const std::chrono::duration<Rep, Period>& duration)
   ACE_OS_TRACE ("ACE_OS::sleep");
   return ACE_OS::sleep (ACE_Time_Value (duration));
 }
-
+#endif /* __cplusplus >= 201103L */
 
 ACE_INLINE void
 ACE_OS::swab (const void *src,
