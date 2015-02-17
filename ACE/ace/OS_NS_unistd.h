@@ -295,11 +295,11 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int sleep (const ACE_Time_Value &tv);
 
-#if __cplusplus >= 201103L
+#if ACE_HAS_CPP11
   template< class Rep, class Period >
   ACE_NAMESPACE_INLINE_FUNCTION
   int sleep (const std::chrono::duration<Rep, Period>& duration);
-#endif /* __cplusplus >= 201103L */
+#endif /* ACE_HAS_CPP11 */
 
   // used by ARGV::string_to_argv
   extern ACE_Export

@@ -96,7 +96,7 @@ ACE_Time_Value::ACE_Time_Value (void)
   this->set (0, 0);
 }
 
-#if __cplusplus >= 201103L
+#if ACE_HAS_CPP11
 template< class Rep, class Period >
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration)
@@ -109,7 +109,7 @@ ACE_Time_Value::ACE_Time_Value (const std::chrono::duration<Rep, Period>& durati
       duration % std::chrono::seconds (1))};
   this->set (s.count (), usec.count ());
 }
-#endif /* __cplusplus => 201103L */
+#endif /* ACE_HAS_CPP11 */
 
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (time_t sec, suseconds_t usec)
