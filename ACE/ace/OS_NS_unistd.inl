@@ -964,7 +964,7 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #endif /* ACE_WIN32 */
 }
 
-#if ACE_HAS_CPP11
+#if defined (ACE_HAS_CPP11)
 template< class Rep, class Period >
 ACE_INLINE int
 ACE_OS::sleep (const std::chrono::duration<Rep, Period>& duration)

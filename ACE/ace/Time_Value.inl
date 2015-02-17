@@ -96,7 +96,7 @@ ACE_Time_Value::ACE_Time_Value (void)
   this->set (0, 0);
 }
 
-#if ACE_HAS_CPP11
+#if defined (ACE_HAS_CPP11)
 template< class Rep, class Period >
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration)

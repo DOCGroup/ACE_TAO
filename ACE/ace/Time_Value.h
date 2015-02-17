@@ -21,7 +21,7 @@
 
 # include "ace/os_include/os_time.h"
 
-#if ACE_HAS_CPP11
+#if defined (ACE_HAS_CPP11)
 #include <chrono>
 #endif /* ACE_HAS_CPP11 */
 
@@ -82,7 +82,7 @@ public:
   /// Construct the ACE_Time_Value object from a timespec_t.
   explicit ACE_Time_Value (const timespec_t &t);
 
-#if ACE_HAS_CPP11
+#if defined (ACE_HAS_CPP11)
   /// Construct the ACE_Time_Value object from a chrono duration.
   template< class Rep, class Period >
   explicit ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration);
