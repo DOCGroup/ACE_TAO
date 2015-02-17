@@ -295,6 +295,10 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int sleep (const ACE_Time_Value &tv);
 
+  template< class Rep, class Period >
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int sleep (const std::chrono::duration<Rep, Period>& duration);
+
   // used by ARGV::string_to_argv
   extern ACE_Export
   int string_to_argv (ACE_TCHAR *buf,

@@ -96,6 +96,19 @@ ACE_Time_Value::ACE_Time_Value (void)
   this->set (0, 0);
 }
 
+template< class Rep, class Period >
+ACE_INLINE
+ACE_Time_Value::ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration)
+{
+  std::chrono::seconds const s {
+    std::chrono::duration_cast<std::chrono::seconds> (duration)};
+
+  std::chrono::microseconds const usec {
+    std::chrono::duration_cast<std::chrono::microseconds>(
+      duration % std::chrono::seconds (1))};
+  this->set (s.count (), usec.count ());
+}
+
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (time_t sec, suseconds_t usec)
 {
