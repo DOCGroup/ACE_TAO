@@ -544,6 +544,13 @@ project(CDR Test) : acetest {
   }
 }
 
+project(Chrono Test) : acetest {
+  exename = Chrono_Test
+  Source_Files {
+    Chrono_Test.cpp
+  }
+}
+
 project(Collection Test) : acetest {
   exename = Collection_Test
   Source_Files {

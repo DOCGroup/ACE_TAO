@@ -420,6 +420,25 @@ extern ACE_Export ostream &operator<<( ostream &o, const ACE_Time_Value &v );
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+#if defined (ACE_HAS_CPP11)
+
+// Additional chrono streaming operators.
+
+namespace std
+{
+  namespace chrono
+  {
+    nanoseconds& operator <<(nanoseconds &ns, ACE_Time_Value const &tv);
+    microseconds& operator <<(microseconds &us, ACE_Time_Value const &tv);
+    milliseconds& operator <<(milliseconds &ms, ACE_Time_Value const &tv);
+    seconds& operator <<(seconds &s, ACE_Time_Value const &tv);
+    minutes& operator <<(minutes &m, ACE_Time_Value const &tv);
+    hours& operator <<(hours &h, ACE_Time_Value const &tv);
+  }
+}
+
+#endif /* ACE_HAS_CPP11 */
+
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
