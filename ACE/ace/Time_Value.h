@@ -21,6 +21,10 @@
 
 # include "ace/os_include/os_time.h"
 
+#if defined (ACE_HAS_CPP11)
+#include <chrono>
+#endif /* ACE_HAS_CPP11 */
+
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
 #define ACE_ONE_SECOND_IN_MSECS 1000L
@@ -77,6 +81,12 @@ public:
 
   /// Construct the ACE_Time_Value object from a timespec_t.
   explicit ACE_Time_Value (const timespec_t &t);
+
+#if defined (ACE_HAS_CPP11)
+  /// Construct the ACE_Time_Value object from a chrono duration.
+  template< class Rep, class Period >
+  explicit ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration);
+#endif /* ACE_HAS_CPP11 */
 
   /// Destructor
   virtual ~ACE_Time_Value ();
@@ -409,6 +419,25 @@ extern ACE_Export ostream &operator<<( ostream &o, const ACE_Time_Value &v );
 #endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (ACE_HAS_CPP11)
+
+// Additional chrono streaming operators.
+
+namespace std
+{
+  namespace chrono
+  {
+    nanoseconds& operator <<(nanoseconds &ns, ACE_Time_Value const &tv);
+    microseconds& operator <<(microseconds &us, ACE_Time_Value const &tv);
+    milliseconds& operator <<(milliseconds &ms, ACE_Time_Value const &tv);
+    seconds& operator <<(seconds &s, ACE_Time_Value const &tv);
+    minutes& operator <<(minutes &m, ACE_Time_Value const &tv);
+    hours& operator <<(hours &h, ACE_Time_Value const &tv);
+  }
+}
+
+#endif /* ACE_HAS_CPP11 */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"

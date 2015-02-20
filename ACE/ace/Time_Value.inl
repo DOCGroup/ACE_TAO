@@ -96,6 +96,21 @@ ACE_Time_Value::ACE_Time_Value (void)
   this->set (0, 0);
 }
 
+#if defined (ACE_HAS_CPP11)
+template< class Rep, class Period >
+ACE_INLINE
+ACE_Time_Value::ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration)
+{
+  std::chrono::seconds const s {
+    std::chrono::duration_cast<std::chrono::seconds> (duration)};
+
+  std::chrono::microseconds const usec {
+    std::chrono::duration_cast<std::chrono::microseconds>(
+      duration % std::chrono::seconds (1))};
+  this->set (s.count (), usec.count ());
+}
+#endif /* ACE_HAS_CPP11 */
+
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (time_t sec, suseconds_t usec)
 {
@@ -393,3 +408,63 @@ operator - (const ACE_Time_Value &tv1,
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (ACE_HAS_CPP11)
+
+// Additional chrono streaming operators.
+
+namespace std
+{
+  namespace chrono
+  {
+    ACE_INLINE nanoseconds&
+    operator <<(nanoseconds &ns, ACE_Time_Value const &tv)
+    {
+      ns = duration_cast<nanoseconds>(seconds{tv.sec ()}) +
+        duration_cast<nanoseconds>(microseconds{tv.usec()});
+      return ns;
+    }
+
+    ACE_INLINE microseconds&
+    operator <<(microseconds &us, ACE_Time_Value const &tv)
+    {
+      us= duration_cast<microseconds>(seconds{tv.sec ()}) +
+        microseconds{tv.usec()};
+      return us;
+    }
+
+    ACE_INLINE milliseconds&
+    operator <<(milliseconds &ms, ACE_Time_Value const &tv)
+    {
+      ms = duration_cast<milliseconds>(seconds{tv.sec ()}) +
+        duration_cast<milliseconds>(microseconds{tv.usec()});
+      return ms;
+    }
+
+    ACE_INLINE seconds&
+    operator <<(seconds &s, ACE_Time_Value const &tv)
+    {
+      s = seconds{tv.sec ()} +
+        duration_cast<seconds>(microseconds{tv.usec()});
+      return s;
+    }
+
+    ACE_INLINE minutes&
+    operator <<(minutes &m, ACE_Time_Value const &tv)
+    {
+      m = duration_cast<minutes>(seconds{tv.sec ()}) +
+        duration_cast<minutes>(microseconds{tv.usec()});
+      return m;
+    }
+
+    ACE_INLINE hours&
+    operator <<(hours &h, ACE_Time_Value const &tv)
+    {
+      h = duration_cast<hours>(seconds{tv.sec ()}) +
+        duration_cast<hours>(microseconds{tv.usec()});
+      return h;
+    }
+  }
+}
+
+#endif /* ACE_HAS_CPP11 */
