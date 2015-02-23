@@ -96,21 +96,6 @@ ACE_Time_Value::ACE_Time_Value (void)
   this->set (0, 0);
 }
 
-#if defined (ACE_HAS_CPP11)
-template< class Rep, class Period >
-ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration)
-{
-  std::chrono::seconds const s {
-    std::chrono::duration_cast<std::chrono::seconds> (duration)};
-
-  std::chrono::microseconds const usec {
-    std::chrono::duration_cast<std::chrono::microseconds>(
-      duration % std::chrono::seconds (1))};
-  this->set (s.count (), usec.count ());
-}
-#endif /* ACE_HAS_CPP11 */
-
 ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (time_t sec, suseconds_t usec)
 {
@@ -146,6 +131,16 @@ ACE_Time_Value::msec (void) const
   time_t secs = this->tv_.tv_sec * 1000 + this->tv_.tv_usec / 1000;
   return ACE_Utils::truncate_cast<unsigned long> (secs);
 }
+
+#if defined (ACE_HAS_CPP11)
+ACE_INLINE std::chrono::milliseconds
+ACE_Time_Value::get_chrono_msec (void) const
+{
+  return std::chrono::milliseconds (
+    std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::seconds (this->sec ()))+
+    std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::microseconds (this->usec ())));
+}
+#endif
 
 ACE_INLINE ACE_UINT64
 ACE_Time_Value::get_msec () const
@@ -461,6 +456,104 @@ namespace std
     operator <<(hours &h, ACE_Time_Value const &tv)
     {
       h = duration_cast<hours>(seconds{tv.sec ()}) +
+        duration_cast<hours>(microseconds{tv.usec()});
+      return h;
+    }
+
+
+    ACE_INLINE nanoseconds&
+    operator +=(nanoseconds &ns, ACE_Time_Value const &tv)
+    {
+      ns += duration_cast<nanoseconds>(seconds{tv.sec ()}) +
+        duration_cast<nanoseconds>(microseconds{tv.usec()});
+      return ns;
+    }
+
+    ACE_INLINE microseconds&
+    operator +=(microseconds &us, ACE_Time_Value const &tv)
+    {
+      us += duration_cast<microseconds>(seconds{tv.sec ()}) +
+        microseconds{tv.usec()};
+      return us;
+    }
+
+    ACE_INLINE milliseconds&
+    operator +=(milliseconds &ms, ACE_Time_Value const &tv)
+    {
+      ms += duration_cast<milliseconds>(seconds{tv.sec ()}) +
+        duration_cast<milliseconds>(microseconds{tv.usec()});
+      return ms;
+    }
+
+    ACE_INLINE seconds&
+    operator +=(seconds &s, ACE_Time_Value const &tv)
+    {
+      s += seconds{tv.sec ()} +
+        duration_cast<seconds>(microseconds{tv.usec()});
+      return s;
+    }
+
+    ACE_INLINE minutes&
+    operator +=(minutes &m, ACE_Time_Value const &tv)
+    {
+      m += duration_cast<minutes>(seconds{tv.sec ()}) +
+        duration_cast<minutes>(microseconds{tv.usec()});
+      return m;
+    }
+
+    ACE_INLINE hours&
+    operator +=(hours &h, ACE_Time_Value const &tv)
+    {
+      h += duration_cast<hours>(seconds{tv.sec ()}) +
+        duration_cast<hours>(microseconds{tv.usec()});
+      return h;
+    }
+
+
+    ACE_INLINE nanoseconds&
+    operator -=(nanoseconds &ns, ACE_Time_Value const &tv)
+    {
+      ns -= duration_cast<nanoseconds>(seconds{tv.sec ()}) +
+        duration_cast<nanoseconds>(microseconds{tv.usec()});
+      return ns;
+    }
+
+    ACE_INLINE microseconds&
+    operator -=(microseconds &us, ACE_Time_Value const &tv)
+    {
+      us -= duration_cast<microseconds>(seconds{tv.sec ()}) +
+        microseconds{tv.usec()};
+      return us;
+    }
+
+    ACE_INLINE milliseconds&
+    operator -=(milliseconds &ms, ACE_Time_Value const &tv)
+    {
+      ms -= duration_cast<milliseconds>(seconds{tv.sec ()}) +
+        duration_cast<milliseconds>(microseconds{tv.usec()});
+      return ms;
+    }
+
+    ACE_INLINE seconds&
+    operator -=(seconds &s, ACE_Time_Value const &tv)
+    {
+      s -= seconds{tv.sec ()} +
+        duration_cast<seconds>(microseconds{tv.usec()});
+      return s;
+    }
+
+    ACE_INLINE minutes&
+    operator -=(minutes &m, ACE_Time_Value const &tv)
+    {
+      m -= duration_cast<minutes>(seconds{tv.sec ()}) +
+        duration_cast<minutes>(microseconds{tv.usec()});
+      return m;
+    }
+
+    ACE_INLINE hours&
+    operator -=(hours &h, ACE_Time_Value const &tv)
+    {
+      h -= duration_cast<hours>(seconds{tv.sec ()}) +
         duration_cast<hours>(microseconds{tv.usec()});
       return h;
     }

@@ -85,7 +85,10 @@ public:
 #if defined (ACE_HAS_CPP11)
   /// Construct the ACE_Time_Value object from a chrono duration.
   template< class Rep, class Period >
-  explicit ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration);
+  explicit ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration)
+  {
+    this->set (duration);
+  }
 #endif /* ACE_HAS_CPP11 */
 
   /// Destructor
@@ -110,9 +113,24 @@ public:
   void set (const timespec_t &t);
 
 # if defined (ACE_WIN32)
-  ///  Initializes the ACE_Time_Value object from a Win32 FILETIME.
+  /// Initializes the ACE_Time_Value object from a Win32 FILETIME.
   void set (const FILETIME &ft);
 # endif /* ACE_WIN32 */
+
+#if defined (ACE_HAS_CPP11)
+  /// Initializes the ACE_Time_Value object from a std::duration.
+  template< class Rep, class Period >
+  void set (const std::chrono::duration<Rep, Period>& duration)
+  {
+    std::chrono::seconds const s {
+      std::chrono::duration_cast<std::chrono::seconds> (duration)};
+
+    std::chrono::microseconds const usec {
+      std::chrono::duration_cast<std::chrono::microseconds>(
+        duration % std::chrono::seconds (1))};
+    this->set (s.count (), usec.count ());
+  }
+#endif /* ACE_HAS_CPP11 */
 
   /// Converts from ACE_Time_Value format into milliseconds format.
   /**
@@ -126,6 +144,20 @@ public:
    *       component in an ACE_Time_Value.
    */
   unsigned long msec (void) const;
+
+
+#if defined (ACE_HAS_CPP11)
+  /// Converts from ACE_Time_Value format into std::chrono::milliseconds format.
+  /**
+   * @return Sum of second field (in milliseconds) and microsecond field
+   *         (in milliseconds).
+   *
+   * @note The semantics of this method differs from the sec() and
+   *       usec() methods.  There is no analogous "millisecond"
+   *       component in an ACE_Time_Value.
+   */
+  std::chrono::milliseconds get_chrono_msec (void) const;
+#endif /* ACE_HAS_CPP11 */
 
   /// Converts from ACE_Time_Value format into milliseconds format.
   /**
@@ -242,10 +274,10 @@ public:
   /// Add @a tv to this.
   ACE_Time_Value &operator += (time_t tv);
 
-  /// Assign @ tv to this
+  /// Assign @a tv to this
   ACE_Time_Value &operator = (const ACE_Time_Value &tv);
 
-  /// Assign @ tv to this
+  /// Assign @a tv to this
   ACE_Time_Value &operator = (time_t tv);
 
   /// Subtract @a tv to this.
@@ -253,6 +285,39 @@ public:
 
   /// Subtract @a tv to this.
   ACE_Time_Value &operator -= (time_t tv);
+
+#if defined (ACE_HAS_CPP11)
+  /// Add @a std::duration to this.
+  template< class Rep, class Period >
+  ACE_Time_Value &operator += (const std::chrono::duration<Rep, Period>& duration)
+  {
+    const ACE_Time_Value tv (duration);
+    this->sec (this->sec () + tv.sec ());
+    this->usec (this->usec () + tv.usec ());
+    this->normalize ();
+    return *this;
+  }
+
+  /// Assign @a std::duration to this
+  template< class Rep, class Period >
+  ACE_Time_Value &operator = (const std::chrono::duration<Rep, Period>& duration)
+  {
+    this->set (duration);
+    return *this;
+  }
+
+  /// Subtract @a std::duration to this.
+  template< class Rep, class Period >
+  ACE_Time_Value &operator -= (const std::chrono::duration<Rep, Period>& duration)
+  {
+    const ACE_Time_Value tv (duration);
+    this->sec (this->sec () - tv.sec ());
+    this->usec (this->usec () - tv.usec ());
+    this->normalize ();
+    return *this;
+  }
+#endif /* ACE_HAS_CPP11 */
+
 
   /**
     \brief Multiply the time value by the @a d factor.
@@ -422,18 +487,59 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_CPP11)
 
-// Additional chrono streaming operators.
+// Additional chrono operators.
 
 namespace std
 {
   namespace chrono
   {
+    /**
+    * @name Streaming ACE_Time_Value to chrono
+    *
+    * Streaming an ACE_Time_Value into one of the chrono types (nanoseconds,
+    * microseconds, milliseconds, seconds, minutes, or hours).
+    *
+    */
+    //@{
     nanoseconds& operator <<(nanoseconds &ns, ACE_Time_Value const &tv);
     microseconds& operator <<(microseconds &us, ACE_Time_Value const &tv);
     milliseconds& operator <<(milliseconds &ms, ACE_Time_Value const &tv);
     seconds& operator <<(seconds &s, ACE_Time_Value const &tv);
     minutes& operator <<(minutes &m, ACE_Time_Value const &tv);
     hours& operator <<(hours &h, ACE_Time_Value const &tv);
+    //@}
+
+    /**
+    * @name Adding ACE_Time_Value to chrono
+    *
+    * Adding an ACE_Time_Value to one of the chrono types (nanoseconds,
+    * microseconds, milliseconds, seconds, minutes, or hours).
+    *
+    */
+    //@{
+    nanoseconds& operator +=(nanoseconds &ns, ACE_Time_Value const &tv);
+    microseconds& operator +=(microseconds &us, ACE_Time_Value const &tv);
+    milliseconds& operator +=(milliseconds &ms, ACE_Time_Value const &tv);
+    seconds& operator +=(seconds &s, ACE_Time_Value const &tv);
+    minutes& operator +=(minutes &m, ACE_Time_Value const &tv);
+    hours& operator +=(hours &h, ACE_Time_Value const &tv);
+    //@}
+
+    /**
+    * @name Substracting ACE_Time_Value from chrono
+    *
+    * Substracting an ACE_Time_Value from one of the chrono types (nanoseconds,
+    * microseconds, milliseconds, seconds, minutes, or hours).
+    *
+    */
+    //@{
+    nanoseconds& operator -=(nanoseconds &ns, ACE_Time_Value const &tv);
+    microseconds& operator -=(microseconds &us, ACE_Time_Value const &tv);
+    milliseconds& operator -=(milliseconds &ms, ACE_Time_Value const &tv);
+    seconds& operator -=(seconds &s, ACE_Time_Value const &tv);
+    minutes& operator -=(minutes &m, ACE_Time_Value const &tv);
+    hours& operator -=(hours &h, ACE_Time_Value const &tv);
+    //@}
   }
 }
 
