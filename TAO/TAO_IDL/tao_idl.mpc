@@ -1,7 +1,6 @@
 // -*- MPC -*-cr
 project(TAO_IDL_EXE) : aceexe, install, tao_output, tao_idl_fe {
   exename      = tao_idl
-  libs        += TAO_IDL_BE
   exeout       = $(ACE_ROOT)/bin
   after       += TAO_IDL_BE gperf
   includes    += $(TAO_ROOT)
@@ -13,6 +12,13 @@ project(TAO_IDL_EXE) : aceexe, install, tao_output, tao_idl_fe {
     // vc6 or vc71).  This is due to the use of addresses of static objecs
     // within the code.
     optimize =
+  }
+
+  specific(prop:static) {
+    after += TAO_IDL_BE_VIS_V
+    libs  += TAO_IDL_BE TAO_IDL_BE_VIS_V TAO_IDL_BE_VIS_A TAO_IDL_BE_VIS_O TAO_IDL_BE_VIS_C TAO_IDL_BE_VIS_E TAO_IDL_BE_VIS_I TAO_IDL_BE_VIS_S TAO_IDL_BE_VIS_U TAO_IDL_BE_VIS_C TAO_IDL_BE_VIS_A TAO_IDL_BE_VIS_E TAO_IDL_BE_VIS_V TAO_IDL_BE_VIS_S TAO_IDL_BE_VIS_O TAO_IDL_BE
+  } else {
+    libs += TAO_IDL_BE
   }
 
   verbatim(gnuace, local) {
@@ -47,4 +53,3 @@ project(TAO_IDL_EXE) : aceexe, install, tao_output, tao_idl_fe {
     include/drv_extern.h
   }
 }
-
