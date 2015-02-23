@@ -793,6 +793,8 @@ ifneq ($(install_rpath),0)
 UNAME := $(shell uname)
 ifeq ($(UNAME), HP-UX)
 LDFLAGS += -Wl,+s,+b,$(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
+else ifeq ($(UNAME), Darwin)
+LDFLAGS += -Wl,-rpath $(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
 else
 LDFLAGS += -Wl,-R$(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
 endif
