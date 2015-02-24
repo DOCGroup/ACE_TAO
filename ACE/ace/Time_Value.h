@@ -145,20 +145,6 @@ public:
    */
   unsigned long msec (void) const;
 
-
-#if defined (ACE_HAS_CPP11)
-  /// Converts from ACE_Time_Value format into std::chrono::milliseconds format.
-  /**
-   * @return Sum of second field (in milliseconds) and microsecond field
-   *         (in milliseconds).
-   *
-   * @note The semantics of this method differs from the sec() and
-   *       usec() methods.  There is no analogous "millisecond"
-   *       component in an ACE_Time_Value.
-   */
-  std::chrono::milliseconds get_chrono_msec (void) const;
-#endif /* ACE_HAS_CPP11 */
-
   /// Converts from ACE_Time_Value format into milliseconds format.
   /**
    * @return Sum of second field (in milliseconds) and microsecond field

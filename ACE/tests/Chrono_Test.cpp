@@ -68,7 +68,7 @@ test_assignments ()
     ++errors;
   }
 
-  std::chrono::milliseconds ms_test = tv.get_chrono_msec ();
+  std::chrono::milliseconds ms_test (tv.msec ());
   if (ms_test.count () != 10)
   {
     ACE_ERROR ((LM_ERROR,
@@ -381,7 +381,7 @@ test_ace_time_value_operators ()
   ACE_Time_Value tv;
   tv = msec;
   tv += std::chrono::milliseconds (300);
-  if (tv.sec () != 2 || tv.usec () != 303000)
+  if (tv.sec () != 2 || tv.usec () != 303*std::kilo::num)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after adding a duration ")
@@ -458,7 +458,7 @@ test_chrono_operators ()
   }
 
   std::chrono::seconds sec (1);
-  ACE_Time_Value const tv_sec (1, 1000000);
+  ACE_Time_Value const tv_sec (1, std::mega::num);
   sec += tv_sec;
   if (sec.count () != 3)
   {
@@ -531,7 +531,7 @@ test_chrono_operators ()
 
   std::chrono::nanoseconds nsec (4000);
   nsec += tv_usec;
-  if (nsec.count () != 3004000)
+  if (nsec.count () != 3004*std::kilo::num)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after adding an ACE_Time_Value ")
@@ -556,19 +556,12 @@ test_chrono_operators ()
 }
 
 int
-test_ace_time_value ()
+test_chrono ()
 {
   int errors = test_assignments ();
   errors += test_streamers ();
   errors += test_ace_time_value_operators ();
   errors += test_chrono_operators ();
-  return errors;
-}
-
-int
-test_chrono ()
-{
-  int errors = test_ace_time_value ();
   return errors;
 }
 

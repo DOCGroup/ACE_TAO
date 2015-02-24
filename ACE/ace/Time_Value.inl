@@ -132,16 +132,6 @@ ACE_Time_Value::msec (void) const
   return ACE_Utils::truncate_cast<unsigned long> (secs);
 }
 
-#if defined (ACE_HAS_CPP11)
-ACE_INLINE std::chrono::milliseconds
-ACE_Time_Value::get_chrono_msec (void) const
-{
-  return std::chrono::milliseconds (
-    std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::seconds (this->sec ()))+
-    std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::microseconds (this->usec ())));
-}
-#endif
-
 ACE_INLINE ACE_UINT64
 ACE_Time_Value::get_msec () const
 {
