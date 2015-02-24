@@ -5,7 +5,7 @@
  *
  *  @brief  Microsoft Visual C++ 14.0 configuration file.
  *
- *  This file is the ACE configuration file for Microsoft Visual C++ version 14.
+ *  This file is the ACE configuration file for Microsoft Visual C++ version 2015.
  *
  *  @note Do not include this file directly, include config-win32.h instead.
  */
@@ -29,11 +29,14 @@
 #define ACE_HAS_POSIX_TIME 1
 #define ACE_LACKS_TIMESPEC_T 1
 
-// According to MS the Visual Studio 2014 C-runtime has a
+// According to MS the Visual Studio 2015 C-runtime has a
 // C99 compliant vsnprintf/vsnwprintf, this is a change compared to
 // previous versions
 #define ACE_HAS_C99_VSNPRINTF
 #define ACE_HAS_C99_VSNWPRINTF
+
+// Visual Studio 2015 has 3 parameter wcstok
+#define ACE_HAS_3_PARAM_WCSTOK
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_14_H */
