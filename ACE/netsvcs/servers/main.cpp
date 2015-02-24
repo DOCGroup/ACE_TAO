@@ -137,11 +137,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           sig_set.sig_add (SIGQUIT);
           if (ACE_Reactor::instance ()->register_handler (sig_set,
                                                           &sa) == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("register signals")));
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("%p\n"),
+                                ACE_TEXT ("register signals")),
+                                1);
+            }
           else
-            ACE_Reactor::instance ()->run_reactor_event_loop ();
+            {
+              ACE_Reactor::instance ()->run_reactor_event_loop ();
+
+              // Back from running the reactor we have to remove our signal handler
+              ACE_Reactor::instance ()->remove_handler (sig_set);
+            }
 
           // Destructors of ACE_Service_Object_Ptr's automagically
           // call fini().
@@ -161,11 +169,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Register ourselves to receive signals so we can shut down
       // gracefully.
       if (ACE_Reactor::instance ()->register_handler (sig_set, &sa) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("register signals2")));
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("register signals2")),
+                            1);
+        }
       else
-        ACE_Reactor::instance ()->run_reactor_event_loop ();
+        {
+          ACE_Reactor::instance ()->run_reactor_event_loop ();
+
+          // Back from running the reactor we have to remove our signal handler
+          ACE_Reactor::instance ()->remove_handler (sig_set);
+        }
     }
 
   return 0;
