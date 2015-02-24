@@ -23,8 +23,8 @@
 int
 test_assignments ()
 {
-  int errors = 0;
-  ACE_Time_Value tv (std::chrono::nanoseconds (100));
+  int errors {};
+  ACE_Time_Value tv { std::chrono::nanoseconds {100} };
   if (tv.sec () != 0 || tv.usec () != 0)
   {
     ACE_ERROR ((LM_ERROR,
@@ -35,7 +35,7 @@ test_assignments ()
     ++errors;
   }
 
-  tv = ACE_Time_Value (std::chrono::nanoseconds (10005));
+  tv = ACE_Time_Value { std::chrono::nanoseconds {10005} };
   if (tv.sec () != 0 || tv.usec () != 10)
   {
     ACE_ERROR ((LM_ERROR,
@@ -46,7 +46,7 @@ test_assignments ()
     ++errors;
   }
 
-  tv = ACE_Time_Value (std::chrono::microseconds (1));
+  tv = ACE_Time_Value { std::chrono::microseconds {1} };
   if (tv.sec () != 0 || tv.usec () != 1)
   {
     ACE_ERROR ((LM_ERROR,
@@ -57,7 +57,7 @@ test_assignments ()
     ++errors;
   }
 
-  tv = ACE_Time_Value (std::chrono::microseconds (10005));
+  tv = ACE_Time_Value { std::chrono::microseconds {10005} };
   if (tv.sec () != 0 || tv.usec () != 10005)
   {
     ACE_ERROR ((LM_ERROR,
@@ -68,7 +68,7 @@ test_assignments ()
     ++errors;
   }
 
-  std::chrono::milliseconds ms_test (tv.msec ());
+  std::chrono::milliseconds ms_test { tv.msec () };
   if (ms_test.count () != 10)
   {
     ACE_ERROR ((LM_ERROR,
@@ -78,7 +78,7 @@ test_assignments ()
     ++errors;
   }
 
-  tv = ACE_Time_Value (std::chrono::milliseconds (1));
+  tv = ACE_Time_Value { std::chrono::milliseconds {1} };
   if (tv.sec () != 0 || tv.usec () != 1000)
   {
     ACE_ERROR ((LM_ERROR,
@@ -89,7 +89,7 @@ test_assignments ()
     ++errors;
   }
 
-  tv = ACE_Time_Value (std::chrono::milliseconds (10005));
+  tv = ACE_Time_Value { std::chrono::milliseconds {10005} };
   if (tv.sec () != 10 || tv.usec () != 5000)
   {
     ACE_ERROR ((LM_ERROR,
@@ -100,7 +100,7 @@ test_assignments ()
     ++errors;
   }
 
-  tv = ACE_Time_Value (std::chrono::seconds (1));
+  tv = ACE_Time_Value { std::chrono::seconds {1} };
   if (tv.sec () != 1 || tv.usec () != 0)
   {
     ACE_ERROR ((LM_ERROR,
@@ -111,7 +111,7 @@ test_assignments ()
     ++errors;
   }
 
-  tv = ACE_Time_Value (std::chrono::seconds (10005));
+  tv = ACE_Time_Value { std::chrono::seconds {10005} };
   if (tv.sec () != 10005 || tv.usec () != 0)
   {
     ACE_ERROR ((LM_ERROR,
@@ -122,7 +122,7 @@ test_assignments ()
     ++errors;
   }
 
-  tv = ACE_Time_Value (std::chrono::hours (1));
+  tv = ACE_Time_Value { std::chrono::hours {1} };
   if (tv.sec () != 3600 || tv.usec () != 0)
   {
     ACE_ERROR ((LM_ERROR,
@@ -133,7 +133,7 @@ test_assignments ()
     ++errors;
   }
 
-  tv = ACE_Time_Value (std::chrono::hours (10005));
+  tv = ACE_Time_Value { std::chrono::hours {10005} };
   if (tv.sec () != 3600*10005 || tv.usec () != 0)
   {
     ACE_ERROR ((LM_ERROR,
@@ -146,23 +146,23 @@ test_assignments ()
 
   // Two times half a day, 3 hours, 24 minutes, 54 seconds, 238 milliseconds,
   // 754 microseconds and 342 nanoseconds.
-  std::chrono::duration<double, std::ratio<(24*3600)>> half_day (0.5);
+  std::chrono::duration<double, std::ratio<(24*3600)>> half_day {0.5};
   std::chrono::microseconds const usec {
     2 * (
     std::chrono::duration_cast<std::chrono::microseconds> (
       half_day +
-      std::chrono::hours (3) + std::chrono::minutes (24) +
-      std::chrono::seconds (54) + std::chrono::milliseconds (238) +
-      std::chrono::microseconds (754) + std::chrono::nanoseconds (342)))
+      std::chrono::hours {3} + std::chrono::minutes {24} +
+      std::chrono::seconds {54} + std::chrono::milliseconds {238} +
+      std::chrono::microseconds {754} + std::chrono::nanoseconds {342}))
   };
 
 
-  tv = ACE_Time_Value (usec);
+  tv = ACE_Time_Value {usec};
 
-  //                     half a day  3 hours   24 minutes 54 seconds
-  time_t expected_sec = ((12*3600) + (3*3600) + (24*60) + 54 )*2;
-  //                           238 milli    usec  342 nano
-  suseconds_t expected_usec = ((238*1000) + 754 + 0) *2;
+  //                       half a day  3 hours   24 minutes 54 seconds
+  time_t expected_sec = { ((12*3600) + (3*3600) + (24*60) + 54 ) * 2 };
+  //                              238 milli    usec  342 nano
+  suseconds_t expected_usec = { ((238*1000) + 754 + 0) * 2 };
 
   if (tv.sec () != expected_sec || tv.usec () != expected_usec)
   {
@@ -176,8 +176,8 @@ test_assignments ()
     ++errors;
   }
 
-  tv.set (std::chrono::milliseconds (1120));
-  if (tv.sec () != 1 || tv.usec () != 120000)
+  tv.set (std::chrono::milliseconds {1120});
+  if (tv.sec () != 1 || tv.usec () != 120 * std::kilo::num)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after converting ")
@@ -193,26 +193,26 @@ test_assignments ()
 int
 test_streamers ()
 {
-  int errors = 0;
+  int errors {};
 
   // Three days, 13 hours, 54 seconds, 25 milliseconds and 132 microseconds
   constexpr int nr_hours { (3*24) + 13 };
 
-  std::chrono::hours day_test_h (nr_hours);
-  std::chrono::seconds day_test_s (54);
-  std::chrono::milliseconds day_test_ms (25);
-  std::chrono::microseconds day_test_us (132);
+  std::chrono::hours day_test_h {nr_hours};
+  std::chrono::seconds day_test_s {54};
+  std::chrono::milliseconds day_test_ms {25};
+  std::chrono::microseconds day_test_us {132};
 
-  std::chrono::seconds day_test_ts = day_test_h+day_test_s;
-  std::chrono::microseconds day_test_tus = day_test_ms+day_test_us;
-  ACE_Time_Value const test_day (
-    ACE_Time_Value (day_test_ts.count (), day_test_tus.count ()));
+  std::chrono::seconds day_test_ts { day_test_h+day_test_s };
+  std::chrono::microseconds day_test_tus { day_test_ms+day_test_us };
+  ACE_Time_Value const test_day {
+    ACE_Time_Value { day_test_ts.count (), day_test_tus.count () }};
 
-  constexpr int expected_min  { nr_hours * 60 };
+  constexpr int expected_min  {nr_hours * 60};
   constexpr int64_t expected_sec  { expected_min * 60 + 54 };
-  constexpr int64_t expected_msec { (expected_sec * 1000) + 25 };
-  constexpr int64_t expected_usec { (expected_msec * 1000) + 132 };
-  constexpr int64_t expected_nsec { (expected_usec * 1000) };
+  constexpr int64_t expected_msec { (expected_sec * std::kilo::num) + 25 };
+  constexpr int64_t expected_usec { (expected_msec * std::kilo::num) + 132 };
+  constexpr int64_t expected_nsec { (expected_usec * std::kilo::num) };
 
   std::chrono::hours h;
   h << test_day;
@@ -288,7 +288,7 @@ test_streamers ()
 
 
 
-  ACE_Time_Value const test_sec (12, 132);
+  ACE_Time_Value const test_sec {12, 132};
   // Seconds
   s << test_sec;
   if (s.count () != 12)
@@ -301,7 +301,7 @@ test_streamers ()
     ++errors;
   }
 
-  ACE_Time_Value const test_sec2 (ACE_Time_Value (12, 6000000));
+  ACE_Time_Value const test_sec2 { ACE_Time_Value {12, 6 * std::mega::num} };
   std::chrono::seconds s2;
   s2 << test_sec2;
   if (s2.count () != 18)
@@ -316,7 +316,7 @@ test_streamers ()
 
   // Milliseconds
   ms << test_sec;
-  if (ms.count () != 12*std::kilo::num)
+  if (ms.count () != 12 * std::kilo::num)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
@@ -328,7 +328,7 @@ test_streamers ()
 
   std::chrono::milliseconds ms2;
   ms2 << test_sec2;
-  if (ms2.count () != 18*std::kilo::num)
+  if (ms2.count () != 18 * std::kilo::num)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
@@ -340,7 +340,7 @@ test_streamers ()
 
   // Microseconds
   us << test_sec;
-  if (us.count () != (12*std::mega::num) + 132)
+  if (us.count () != (12 * std::mega::num) + 132)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
@@ -352,7 +352,7 @@ test_streamers ()
 
   std::chrono::microseconds us2;
   us2 << test_sec2;
-  if (us2.count () != 18*std::mega::num)
+  if (us2.count () != 18 * std::mega::num)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
@@ -368,20 +368,20 @@ test_streamers ()
 int
 test_ace_time_value_operators ()
 {
-  int errors = 0;
+  int errors {};
 
-  std::chrono::seconds const sec (2);
-  std::chrono::microseconds const usec (3000);
+  std::chrono::seconds const sec {2};
+  std::chrono::microseconds const usec {3000};
 
-  std::chrono::milliseconds const msec (
-    std::chrono::duration_cast<std::chrono::milliseconds>(sec)+
-    std::chrono::duration_cast<std::chrono::milliseconds>(usec));
+  std::chrono::milliseconds const msec {
+    std::chrono::duration_cast<std::chrono::milliseconds>(sec) +
+    std::chrono::duration_cast<std::chrono::milliseconds>(usec) };
 
 
   ACE_Time_Value tv;
   tv = msec;
-  tv += std::chrono::milliseconds (300);
-  if (tv.sec () != 2 || tv.usec () != 303*std::kilo::num)
+  tv += std::chrono::milliseconds {300};
+  if (tv.sec () != 2 || tv.usec () != 303 * std::kilo::num)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after adding a duration ")
@@ -390,7 +390,7 @@ test_ace_time_value_operators ()
                 tv.sec (), tv.usec ()));
     ++errors;
   }
-  tv -= std::chrono::microseconds (400);
+  tv -= std::chrono::microseconds {400};
   if (tv.sec () != 2 || tv.usec () != 302600)
   {
     ACE_ERROR ((LM_ERROR,
@@ -406,10 +406,10 @@ test_ace_time_value_operators ()
 int
 test_chrono_operators ()
 {
-  int errors = 0;
+  int errors {};
 
-  std::chrono::hours hr (1);
-  ACE_Time_Value const tv_hr (3645, 0);
+  std::chrono::hours hr {1};
+  ACE_Time_Value const tv_hr {3645, 0};
   hr += tv_hr;
   if (hr.count () != 2)
   {
@@ -433,8 +433,8 @@ test_chrono_operators ()
   }
 
 
-  std::chrono::minutes mn (1);
-  ACE_Time_Value const tv_min (75, 0);
+  std::chrono::minutes mn {1};
+  ACE_Time_Value const tv_min {75, 0};
   mn += tv_min;
   if (mn.count () != 2)
   {
@@ -457,8 +457,8 @@ test_chrono_operators ()
     ++errors;
   }
 
-  std::chrono::seconds sec (1);
-  ACE_Time_Value const tv_sec (1, std::mega::num);
+  std::chrono::seconds sec {1};
+  ACE_Time_Value const tv_sec {1, std::mega::num};
   sec += tv_sec;
   if (sec.count () != 3)
   {
@@ -481,8 +481,8 @@ test_chrono_operators ()
     ++errors;
   }
 
-  std::chrono::milliseconds msec (400);
-  ACE_Time_Value const tv_msec (1, 3000);
+  std::chrono::milliseconds msec {400};
+  ACE_Time_Value const tv_msec {1, 3000};
   msec += tv_msec;
   if (msec.count () != 1403)
   {
@@ -505,8 +505,8 @@ test_chrono_operators ()
     ++errors;
   }
 
-  std::chrono::microseconds usec (400);
-  ACE_Time_Value const tv_usec (0, 3000);
+  std::chrono::microseconds usec {400};
+  ACE_Time_Value const tv_usec {0, 3000};
   usec += tv_usec;
   if (usec.count () != 3400)
   {
@@ -529,9 +529,9 @@ test_chrono_operators ()
     ++errors;
   }
 
-  std::chrono::nanoseconds nsec (4000);
+  std::chrono::nanoseconds nsec {4000};
   nsec += tv_usec;
-  if (nsec.count () != 3004*std::kilo::num)
+  if (nsec.count () != 3004 * std::kilo::num)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after adding an ACE_Time_Value ")
