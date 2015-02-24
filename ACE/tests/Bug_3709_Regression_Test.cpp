@@ -27,6 +27,11 @@ using namespace std;
 #define BROKEN_TEMPLATE_TEMPLATE
 #endif
 
+// HP aC++ 03.x fails this
+#if defined(__HP_aCC) && (__HP_aCC < 40000)
+#define BROKEN_TEMPLATE_TEMPLATE
+#endif
+
 #ifndef BROKEN_TEMPLATE_TEMPLATE
 template<template<typename U, typename = std::allocator<U> > class container, typename DT>
 container<DT> initializer(const DT &d)
