@@ -371,7 +371,7 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
   ACE_OS_TRACE ("ACE_OS::gmtime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
   ACE_OSCALL_RETURN (::gmtime_r (t, res), struct tm *, 0);
-#elif defined (ACE_HAS_TR24731_2005_CRT) && !defined (ACE_WIN32_VC14)
+#elif defined (ACE_HAS_TR24731_2005_CRT)
   struct tm *tm_p = res;
   ACE_SECURECRTCALL (gmtime_s (res, t), struct tm *, 0, tm_p);
   return tm_p;
