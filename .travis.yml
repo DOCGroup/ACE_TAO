@@ -58,4 +58,4 @@ script:
   - perl $ACE_ROOT/bin/auto_run_tests.pl -l $TAO_ROOT/bin/travis-ci.lst
 
 after_success:
-  - if [ "COVERAGE" == "1" ]; then coveralls --exclude lib --exclude tests --gcov-options '\-lp'; fi
+  - if [ "$COVERAGE" == "1" ]; then coveralls --exclude lib --exclude tests --gcov-options '\-lp'; fi
