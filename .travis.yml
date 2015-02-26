@@ -21,7 +21,7 @@ env:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libssl-dev libxerces-c-dev
-  - sudo pip install cpp-coveralls
+  - if [ "COVERAGE" == "1" ]; then sudo pip install cpp-coveralls; fi
   - git clone git://github.com/DOCGroup/MPC.git
 branches:
   only:
