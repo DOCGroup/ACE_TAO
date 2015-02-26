@@ -4438,7 +4438,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                          (int) flags,
                          stacksize,
                          thread_args->entry_point (),
-                         (_Vx_usr_arg_t) thread_args,
+                         (ACE_VX_USR_ARG_T) thread_args,
                          0, 0, 0, 0, 0, 0, 0, 0, 0);
 #   if 0 /* Don't support setting of stack, because it doesn't seem to work. */
     }
@@ -5134,10 +5134,10 @@ spa (FUNCPTR entry, ...)
 {
   // The called entrypoint can get the function name plus the normal 10
   // optional arguments.
-  static _Vx_usr_arg_t const ACE_MAX_ARGS = 1 + 10;
+  static ACE_VX_USR_ARG_T const ACE_MAX_ARGS = 1 + 10;
   static char *argv[ACE_MAX_ARGS] = { 0 };
   va_list pvar;
-  _Vx_usr_arg_t argc;
+  ACE_VX_USR_ARG_T argc;
 
   // Hardcode a program name because the real one isn't available
   // through the VxWorks shell.
@@ -5174,7 +5174,7 @@ spa (FUNCPTR entry, ...)
     {
       // fill unused argv slots with 0 to get rid of leftovers
       // from previous invocations
-      for (_Vx_usr_arg_t i = argc; i < ACE_MAX_ARGS; ++i)
+      for (ACE_VX_USR_ARG_T i = argc; i < ACE_MAX_ARGS; ++i)
         argv[i] = 0;
     }
 
@@ -5186,7 +5186,7 @@ spa (FUNCPTR entry, ...)
                                    ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
                                    entry,      // entry point
                                    argc,       // first argument to main ()
-                                   (_Vx_usr_arg_t) argv, // second argument to main ()
+                                   (ACE_VX_USR_ARG_T) argv, // second argument to main ()
                                    0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
@@ -5197,7 +5197,7 @@ spa (FUNCPTR entry, ...)
 
 // A helper function for the extended spa functions
 static void
-add_to_argv (_Vx_usr_arg_t& argc, char** argv, int max_args, char* string)
+add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
 {
   char indouble   = 0;
   size_t previous = 0;
@@ -5273,10 +5273,10 @@ int
 spae (FUNCPTR entry, ...)
 {
   static int const WINDSH_ARGS = 10;
-  static _Vx_usr_arg_t const ACE_MAX_ARGS = 128;
+  static ACE_VX_USR_ARG_T const ACE_MAX_ARGS = 128;
   static char* argv[ACE_MAX_ARGS]  = { const_cast<char*> ("ace_main"), 0 };
   va_list pvar;
-  _Vx_usr_arg_t argc = 1;
+  ACE_VX_USR_ARG_T argc = 1;
 
   // Peel off arguments to spa () and put into argv.  va_arg () isn't
   // necessarily supposed to return 0 when done, though since the
@@ -5304,7 +5304,7 @@ spae (FUNCPTR entry, ...)
                                    ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
                                    entry,      // entry point
                                    argc,       // first argument to main ()
-                                   (_Vx_usr_arg_t) argv, // second argument to main ()
+                                   (ACE_VX_USR_ARG_T) argv, // second argument to main ()
                                    0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
@@ -5327,10 +5327,10 @@ int
 spaef (FUNCPTR entry, ...)
 {
   static int const WINDSH_ARGS = 10;
-  static _Vx_usr_arg_t const ACE_MAX_ARGS    = 128;
+  static ACE_VX_USR_ARG_T const ACE_MAX_ARGS    = 128;
   static char* argv[ACE_MAX_ARGS]  = { const_cast<char*> ("ace_main"), 0 };
   va_list pvar;
-  _Vx_usr_arg_t argc = 1;
+  ACE_VX_USR_ARG_T argc = 1;
 
   // Peel off arguments to spa () and put into argv.  va_arg () isn't
   // necessarily supposed to return 0 when done, though since the
@@ -5379,9 +5379,9 @@ _vx_call_entry(FUNCPTR entry, int argc, char* argv[])
 int
 vx_execae (FUNCPTR entry, char* arg, int prio, int opt, size_t stacksz, ...)
 {
-  static _Vx_usr_arg_t const ACE_MAX_ARGS = 128;
+  static ACE_VX_USR_ARG_T const ACE_MAX_ARGS = 128;
   static char* argv[ACE_MAX_ARGS]  = { const_cast<char*> ("ace_main"), 0 };
-  _Vx_usr_arg_t argc = 1;
+  ACE_VX_USR_ARG_T argc = 1;
 
   // Peel off arguments to run_main () and put into argv.
   if (arg)
@@ -5391,7 +5391,7 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, size_t stacksz, ...)
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (_Vx_usr_arg_t i = argc; i < ACE_MAX_ARGS; ++i)
+  for (ACE_VX_USR_ARG_T i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
   // The hard-coded options are what ::sp () uses, except for the
@@ -5401,9 +5401,9 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, size_t stacksz, ...)
                                    opt==0 ? VX_FP_TASK : opt, // task options
                                    stacksz==0 ? ACE_NEEDS_HUGE_THREAD_STACKSIZE : stacksz, // stack size
                                    (FUNCPTR)_vx_call_entry,   // entrypoint caller
-                                   (_Vx_usr_arg_t)entry,      // entry point
+                                   (ACE_VX_USR_ARG_T)entry,   // entry point
                                    argc,                      // first argument to main ()
-                                   (_Vx_usr_arg_t) argv,      // second argument to main ()
+                                   (ACE_VX_USR_ARG_T) argv,   // second argument to main ()
                                    0, 0, 0, 0, 0, 0, 0);
 
   if (ret == TASK_ID_ERROR)

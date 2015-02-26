@@ -125,7 +125,7 @@ static void
 ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
                                   INSTR *func,
                                   int nargs,
-                                  _Vx_usr_arg_t *args)
+                                  ACE_VX_USR_ARG_T *args)
 {
   if (ACE_Stack_Trace_stateptr == 0)
     return;
@@ -253,17 +253,6 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
           const char *fnName = "(no symbols)";
 
           static const int N_ARGS = 12;
-#if (ACE_VXWORKS < 0x690)
-# define ACE_VX_USR_ARG_T int
-# define ACE_VX_ARG_FORMAT "%x"
-#else
-# define ACE_VX_USR_ARG_T _Vx_usr_arg_t
-# ifdef _WRS_CONFIG_LP64
-#  define ACE_VX_ARG_FORMAT "%lx"
-# else
-#  define ACE_VX_ARG_FORMAT "%x"
-# endif
-#endif
           ACE_VX_USR_ARG_T buf[N_ARGS];
           ACE_VX_USR_ARG_T *pArgs = 0;
           int numArgs =
