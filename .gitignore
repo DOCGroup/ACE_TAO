@@ -1,0 +1,13 @@
+# Ignore Windows, Visual Studio solution/project files and build artifacts.
+*.sln
+*.vcxproj*
+*.tlog
+*.log
+*.obj
+*.ilk
+*.exe
+*.dll
+*.lib
+*.exp
+*.[ip]db
+
