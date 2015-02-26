@@ -10,7 +10,6 @@ env:
     - CCMLW=1 ACEFORTAO=0
     - CCMNOEVENT=1 ACEFORTAO=0
     - ACETESTS=1 ACEFORTAO=0
-    - COVERAGE=1
   global:
     - ACE_ROOT=$TRAVIS_BUILD_DIR/ACE
     - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
@@ -21,7 +20,6 @@ env:
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libssl-dev libxerces-c-dev
-  - if [ "$COVERAGE" == "1" ]; then sudo pip install cpp-coveralls; fi
   - git clone git://github.com/DOCGroup/MPC.git
 branches:
   only:
@@ -41,13 +39,11 @@ before_script:
   - if [ "$ACEFORTAO" == "1" ]; then echo -e "ace_for_tao=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$CCMLW" == "1" ]; then echo -e "ccm_lw=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$CCMNOEVENT" == "1" ]; then echo -e "ccm_noevent=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
-  - if [ "$COVERAGE" == "1" ]; then echo -e "gcov=1" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
   - echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
   - echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features
   - echo -e "TAO/tests/Hello/run_test.pl" >> $TAO_ROOT/bin/travis-ci.lst
   - if [ "$CXX" == "g++" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
   - if [ "$CXX" == "clang++" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
-  - if [ "$COVERAGE" == "1" ]; then echo -e "VDIR=\nVSHDIR=\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
   - cat $TRAVIS_BUILD_DIR/travis.mwc
   - cat $ACE_ROOT/bin/MakeProjectCreator/config/default.features
   - cat $ACE_ROOT/ace/config.h
@@ -58,6 +54,3 @@ script:
   - make -j 2
   - perl $ACE_ROOT/bin/auto_run_tests.pl -l $TAO_ROOT/bin/travis-ci.lst
 
-after_success:
-  - if [ "$COVERAGE" == "1" ]; then coveralls --exclude lib --exclude tests --gcov-options '\-lp' >coverall_1.txt 2>coverall_2.txt; fi
-  - if [ "$COVERAGE" == "1" ]; then cat coverall_2.txt; fi
