@@ -15,3 +15,8 @@ Snap-CI status
 ================
 
 master: [![Build Status](https://snap-ci.com/DOCGroup/ATCD/branch/master/build_image)](https://snap-ci.com/DOCGroup/ATCD/branch/master)
+
+Coverity Scan status
+====================
+
+master: [![Coverity Scan Build Status](https://scan.coverity.com/projects/1/badge.svg)](https://scan.coverity.com/projects/1)
