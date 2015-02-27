@@ -4472,7 +4472,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     }
 #   endif /* 0 */
 
-  if (tid == TASK_ID_ERROR)
+  if (tid == ACE_VX_TASK_ID_ERROR)
     return -1;
   else
     {
@@ -5180,14 +5180,14 @@ spa (FUNCPTR entry, ...)
 
   // The hard-coded options are what ::sp () uses, except for the
   // larger stack size (instead of ::sp ()'s 20000).
-  TASK_ID const ret = ::taskSpawn (argv[0],    // task name
-                                   100,        // task priority
-                                   VX_FP_TASK, // task options
-                                   ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
-                                   entry,      // entry point
-                                   argc,       // first argument to main ()
-                                   (ACE_VX_USR_ARG_T) argv, // second argument to main ()
-                                   0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_VX_TASK_ID const ret = ::taskSpawn (argv[0],    // task name
+                                          100,        // task priority
+                                          VX_FP_TASK, // task options
+                                          ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
+                                          entry,      // entry point
+                                          argc,       // first argument to main ()
+                                          (ACE_VX_USR_ARG_T) argv, // second argument to main ()
+                                          0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
   // ::taskSpawn () returns the taskID on success: return 0 instead if
@@ -5298,14 +5298,14 @@ spae (FUNCPTR entry, ...)
 
   // The hard-coded options are what ::sp () uses, except for the
   // larger stack size (instead of ::sp ()'s 20000).
-  TASK_ID const ret = ::taskSpawn (argv[0],    // task name
-                                   100,        // task priority
-                                   VX_FP_TASK, // task options
-                                   ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
-                                   entry,      // entry point
-                                   argc,       // first argument to main ()
-                                   (ACE_VX_USR_ARG_T) argv, // second argument to main ()
-                                   0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_VX_TASK_ID const ret = ::taskSpawn (argv[0],    // task name
+                                          100,        // task priority
+                                          VX_FP_TASK, // task options
+                                          ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
+                                          entry,      // entry point
+                                          argc,       // first argument to main ()
+                                          (ACE_VX_USR_ARG_T) argv, // second argument to main ()
+                                          0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
   // ::taskSpawn () returns the taskID on success: return 0 instead if
@@ -5396,17 +5396,17 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, size_t stacksz, ...)
 
   // The hard-coded options are what ::sp () uses, except for the
   // larger stack size (instead of ::sp ()'s 20000).
-  TASK_ID const ret = ::taskSpawn (argv[0],    // task name
-                                   prio==0 ? 100 : prio,      // task priority
-                                   opt==0 ? VX_FP_TASK : opt, // task options
-                                   stacksz==0 ? ACE_NEEDS_HUGE_THREAD_STACKSIZE : stacksz, // stack size
-                                   (FUNCPTR)_vx_call_entry,   // entrypoint caller
-                                   (ACE_VX_USR_ARG_T)entry,   // entry point
-                                   argc,                      // first argument to main ()
-                                   (ACE_VX_USR_ARG_T) argv,   // second argument to main ()
-                                   0, 0, 0, 0, 0, 0, 0);
+  ACE_VX_TASK_ID const ret = ::taskSpawn (argv[0],              // task name
+                                          prio==0 ? 100 : prio, // task priority
+                                          opt==0 ? VX_FP_TASK : opt, // task options
+                                          stacksz==0 ? ACE_NEEDS_HUGE_THREAD_STACKSIZE : stacksz, // stack size
+                                          (FUNCPTR)_vx_call_entry,   // entrypoint caller
+                                          (ACE_VX_USR_ARG_T)entry,   // entry point
+                                          argc,                      // first argument to main ()
+                                          (ACE_VX_USR_ARG_T) argv,   // second argument to main ()
+                                          0, 0, 0, 0, 0, 0, 0);
 
-  if (ret == TASK_ID_ERROR)
+  if (ret == ACE_VX_TASK_ID_ERROR)
     return 255;
 
   while( ret > 0 && ::taskIdVerify (ret) != ERROR )

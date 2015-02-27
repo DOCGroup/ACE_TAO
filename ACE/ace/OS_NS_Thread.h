@@ -229,8 +229,8 @@ typedef struct
   char *name_;
 } ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
-typedef TASK_ID ACE_thread_t;
-typedef TASK_ID ACE_hthread_t;
+typedef ACE_VX_TASK_ID ACE_thread_t;
+typedef ACE_VX_TASK_ID ACE_hthread_t;
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
 // use u_int, so the ACE TSS emulation is compatible with them.)

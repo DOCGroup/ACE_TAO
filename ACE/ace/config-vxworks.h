@@ -56,15 +56,19 @@
 
 // Adapt to system argument changes added at VxWorks 6.9 and 64-bit.
 #if (ACE_VXWORKS < 0x690)
-typedef int ACE_VX_USR_ARG_T;
+  typedef int ACE_VX_USR_ARG_T;
+  typedef int ACE_VX_TASK_ID
 # define ACE_VX_ARG_FORMAT "%x"
+# define ACE_VX_TASK_ID_ERROR ERROR
 #else
-typedef _Vx_usr_arg_t ACE_VX_USR_ARG_T;
+  typedef _Vx_usr_arg_t ACE_VX_USR_ARG_T;
+  typedef TASK_ID ACE_VX_TASK_ID
 # ifdef _WRS_CONFIG_LP64
 #  define ACE_VX_ARG_FORMAT "%lx"
 # else
 #  define ACE_VX_ARG_FORMAT "%x"
 # endif
+# define ACE_VX_TASK_ID_ERROR TASK_ID_ERROR
 #endif
 
 #include /**/ "ace/post.h"
