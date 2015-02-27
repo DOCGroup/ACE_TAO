@@ -34,7 +34,7 @@ http://www.iconarchive.com/show/fugue-icons-by-yusuke-kamiyamane.html
 
 # ATCD #
 
-ATCD is a [freely licensed](https://raw.githubusercontent.com/DOCGroup/ATCD/master/ACE/COPYING) C++ implementation of the OMG's [CORBA](http://www.omg.org) standard. The main home page is [here](www.dre.vanderbilt.edu/~schmidt/). Mailing lists are available [here](http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html) and the Bugzilla for issues is [here](http://bugzilla.dre.vanderbilt.edu/).
+ATCD is a [freely licensed](https://raw.githubusercontent.com/DOCGroup/ATCD/master/ACE/COPYING) C++ suite. [ACE](http://www.dre.vanderbilt.edu/~schmidt/ACE.html) is a C++ framework for implementing distributed and networked applications, [TAO](http://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++ implementation of the OMG's [CORBA](http://www.omg.org/spec/CORBA/) standard, [CIAO](http://www.dre.vanderbilt.edu/~schmidt/CIAO.html) is a C++ implementation of the OMG's [LwCCM](http://www.omg.org/spec/CORBA/) standard, and DAnCE is a C++ implementation of the OMG's [Deployment and Configuration](http://www.omg.org/spec/DEPL/) standard. The main home page is [here](www.dre.vanderbilt.edu/~schmidt/). Mailing lists are available [here](http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html) and the Bugzilla for issues is [here](http://bugzilla.dre.vanderbilt.edu/).
 
 ## Contributing Via GitHub ##
 
