@@ -34,7 +34,7 @@ http://www.iconarchive.com/show/fugue-icons-by-yusuke-kamiyamane.html
 
 # ATCD #
 
-ATCD is a [freely licensed](https://raw.githubusercontent.com/DOCGroup/ATCD/master/ACE/COPYING) C++ suite. [ACE](http://www.dre.vanderbilt.edu/~schmidt/ACE.html) is a C++ framework for implementing distributed and networked applications, [TAO](http://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++ implementation of the OMG's [CORBA](http://www.omg.org/spec/CORBA/) standard, [CIAO](http://www.dre.vanderbilt.edu/~schmidt/CIAO.html) is a C++ implementation of the OMG's [LwCCM](http://www.omg.org/spec/CORBA/) standard, and DAnCE is a C++ implementation of the OMG's [Deployment and Configuration](http://www.omg.org/spec/DEPL/) standard. The main home page is [here](www.dre.vanderbilt.edu/~schmidt/). Mailing lists are available [here](http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html) and the Bugzilla for issues is [here](http://bugzilla.dre.vanderbilt.edu/).
+ATCD is a [freely licensed](https://raw.githubusercontent.com/DOCGroup/ATCD/master/ACE/COPYING) C++ suite. [ACE](http://www.dre.vanderbilt.edu/~schmidt/ACE.html) is a C++ framework for implementing distributed and networked applications, [TAO](http://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++ implementation of the OMG's [CORBA](http://www.omg.org/spec/CORBA/) standard, [CIAO](http://www.dre.vanderbilt.edu/~schmidt/CIAO.html) is a C++ implementation of the OMG's [LwCCM](http://www.omg.org/spec/CORBA/) standard, and DAnCE is a C++ implementation of the OMG's [Deployment and Configuration](http://www.omg.org/spec/DEPL/) standard. The main home page is [here](http://www.dre.vanderbilt.edu/~schmidt/). Mailing lists are available [here](http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html) and the Bugzilla for issues is [here](http://bugzilla.dre.vanderbilt.edu/).
 
 ## Contributing Via GitHub ##
 
@@ -48,7 +48,7 @@ This document assumes some working knowledge of git. We recommend Scott Chacon's
 
 ## Repositories
 
-ATCD uses [http://github.com/DOCGroup/ATCD](http://github.com/DOCGroup/ATCD) as its canonical repository, and this repository contains the stable code on master (currently ATCD 3.x).
+ATCD uses [http://github.com/DOCGroup/ATCD](http://github.com/DOCGroup/ATCD) as its canonical repository, and this repository contains the stable code on master.
 
 Typically, only _Project Admins_ would be able to push to this repo while all else may clone or fork this repo.
 
@@ -170,7 +170,7 @@ For example, developer A using his personal ATCD fork creates a topic branch T a
 This example assumes that developer A and B have added each others ATCD forked repositories with the *git add remote* command. For example, developer B would add developer A's personal ATCD fork repository with the command
 
 ```
-    git remote add devA https://github.com/developerA/infinispan.git
+    git remote add devA https://github.com/developerA/ATCD.git
 ```
 
 1. Developer A starts implementing feature BZ-244 and works on a local topic branch `bz244`
@@ -276,16 +276,16 @@ Some of the biggest features of git are speed and efficiency of branching, and a
 
 Most topic branches will only affect the a single release branch, so a topic branch should be created based off master. It may be that fixes apply to multiple branches. In this case, the following workflow should apply:
 
-* Create topic branch off maintenance branch e.g. 2.3.x. For example:
-```git checkout -b <topic>_2.3.x 2.3.x```
+* Create topic branch off maintenance branch e.g. 6.3.1. For example:
+```git checkout -b <topic>_ACE+TAO+CIAO-6_3_1 ACE+TAO+CIAO-6_3_1```
 * Create topic branch off master. For example:
 ```git checkout -b <topic>_master master```
 * Do your work on `<topic>_master`, test and commit your fixes
-* Switch to `<topic>_2.3.x`. For example:
-```git checkout <topic>_2.3.x```
-* Cherry-pick your commit on `<topic>_master` onto `<topic>_2.3.x`. For example:
+* Switch to `<topic>_ACE+TAO+CIAO-6_3_1`. For example:
+```git checkout <topic>_ACE+TAO+CIAO-6_3_1```
+* Cherry-pick your commit on `<topic>_master` onto `<topic>_ACE+TAO+CIAO-6_3_1`. For example:
 ```git cherry-pick <commit_id>```
-* Test `<topic>_2.3.x` for correctness, modify as necessary
+* Test `<topic>_ACE+TAO+CIAO-6_3_1` for correctness, modify as necessary
 * Issue pull requests for both topic branches
 
 ### Comments
@@ -329,8 +329,8 @@ will often do the trick. You could then pull the specific branches you would nee
 ```
 $ git checkout master
 $ git pull origin master
-$ git checkout 2.3.x
-$ git pull origin 2.3.x
+$ git checkout ACE+TAO+CIAO-6_3_1
+$ git pull origin ACE+TAO+CIAO-6_3_1
 ```
 
 
@@ -345,8 +345,8 @@ $ git rebase master
 and/or
 
 ```
-$ git checkout topic_2.3.x
-$ git rebase 2.3.x
+$ git checkout topic_ACE+TAO+CIAO-6_3_1
+$ git rebase ACE+TAO+CIAO-6_3_1
 ```
 
 ### If you have forked upstream
@@ -365,9 +365,9 @@ $ git fetch upstream --tags
 $ git checkout master
 $ git pull upstream master
 $ git push origin master
-$ git checkout 2.3.x
-$ git pull upstream 2.3.x
-$ git push origin 2.3.x
+$ git checkout ACE+TAO+CIAO-6_3_1
+$ git pull upstream ACE+TAO+CIAO-6_3_1
+$ git push origin ACE+TAO+CIAO-6_3_1
 ```
 
 A script can do this for you - have a look at [sync_with_upstream](https://github.com/maniksurtani/githelpers/blob/master/contributors/sync_with_upstream).
@@ -384,8 +384,8 @@ $ git rebase master
 and/or
 
 ```
-$ git checkout topic_2.3.x
-$ git rebase 2.3.x
+$ git checkout topic_ACE+TAO+CIAO-6_3_1
+$ git rebase ACE+TAO+CIAO-6_3_1
 ```
 
 The sync_with_upstream script can do this for you if your topic branch naming conventions match the script.
