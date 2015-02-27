@@ -36,6 +36,10 @@ struct unbounded_reference_allocation_traits
 
   inline static value_type * allocbuf(CORBA::ULong maximum)
   {
+    if (maximum == ACE_UINT32_MAX)
+      {
+        return 0;
+      }
     value_type * buffer = new value_type[maximum + 1];
     reinterpret_cast<value_type**>(buffer)[0] = buffer + maximum + 1;
 
@@ -47,6 +51,10 @@ struct unbounded_reference_allocation_traits
 
   inline static value_type * allocbuf_noinit(CORBA::ULong maximum)
   {
+    if (maximum == ACE_UINT32_MAX)
+      {
+        return 0;
+      }
     value_type * buffer = new value_type[maximum + 1];
     reinterpret_cast<value_type**>(buffer)[0] = buffer + maximum + 1;
 
