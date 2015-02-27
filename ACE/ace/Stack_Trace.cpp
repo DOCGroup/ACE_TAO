@@ -157,7 +157,7 @@ ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
     {
       if (i != 0)
         len += ACE_OS::sprintf (&buf[len], ", ");
-      len += ACE_OS::sprintf(&buf [len], "%#lx", (long)args [i]);
+      len += ACE_OS::sprintf(&buf[len], "0x" ACE_VX_ARG_FORMAT, args[i]);
     }
 
   len += ACE_OS::sprintf(&buf[len], ")\n");
