@@ -16,7 +16,7 @@ ACE_SSL_SOCK_Stream::set_handle (ACE_HANDLE fd)
     {
 #if defined (__MINGW64__)
 # pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-fpermissive"
+# pragma GCC diagnostic warning "-fpermissive"
 #endif /* __MINGW64__ */
       (void) ::SSL_set_fd (this->ssl_, (int) fd);
 #if defined (__MINGW64__)

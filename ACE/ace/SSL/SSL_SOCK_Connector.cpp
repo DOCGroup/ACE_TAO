@@ -152,7 +152,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           // Block indefinitely if timeout pointer is zero.
 #if defined (__MINGW64__)
 # pragma GCC diagnostic push
-# pragma GCC diagnostic ignored "-fpermissive"
+# pragma GCC diagnostic warning "-fpermissive"
 #endif /* __MINGW64__ */
           status = ACE::select (int (handle) + 1,
                                 &rd_handle,
