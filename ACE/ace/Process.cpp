@@ -1380,42 +1380,12 @@ ACE_Process_Options::command_line_argv (void)
 int
 ACE_Process_Options::pass_handle (ACE_HANDLE h)
 {
-# if defined (ACE_WIN32)
-#  if defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WINCE)
   ACE_NOTSUP_RETURN (-1);
-#  else
-
-  // This is oriented towards socket handles... may need some adjustment
-  // for non-sockets.
-  // This is all based on an MSDN article:
-  // http://support.microsoft.com/support/kb/articles/Q150/5/23.asp
-  // If on Win95/98, the handle needs to be duplicated for the to-be-spawned
-  // process. On WinNT, they get inherited by the child process automatically.
-  // If the handle is duplicated, remember the duplicate so it can be
-  // closed later. Can't be closed now, or the child won't get it.
-  ACE_TEXT_OSVERSIONINFO osvi;
-  ZeroMemory (&osvi, sizeof (osvi));
-  osvi.dwOSVersionInfoSize = sizeof (ACE_TEXT_OSVERSIONINFO);
-  // If this is Win95/98 or we can't tell, duplicate the handle.
-  if (!ACE_TEXT_GetVersionEx (&osvi) || osvi.dwPlatformId != VER_PLATFORM_WIN32_NT)
-    {
-      HANDLE dup_handle;
-      if (!DuplicateHandle (GetCurrentProcess (),
-                            static_cast<HANDLE> (h),
-                            GetCurrentProcess (),
-                            &dup_handle,
-                            0,
-                            TRUE,   // Inheritable
-                            DUPLICATE_SAME_ACCESS))
-        return -1;
-      dup_handles_.set_bit (static_cast<ACE_HANDLE> (dup_handle));
-    }
-#  endif /* ACE_HAS_WINCE */
-#endif /* ACE_WIN32 */
-
+#else
   this->handles_passed_.set_bit (h);
-
   return 0;
+#endif /* ACE_HAS_WINCE */
 }
 
 // Get a copy of the handles the ACE_Process_Options duplicated
