@@ -72,7 +72,7 @@ Test_DynAny::run_test (void)
         DynamicAny::DynAny_var fa1 =
           dynany_factory->create_dyn_any (in1);
 
-        if (fa1->equal(fa1))
+        if (fa1->equal(fa1.in ()))
           {
             ACE_DEBUG ((LM_DEBUG,
                         "++ OK ++\n"));
@@ -138,7 +138,7 @@ Test_DynAny::run_test (void)
         DynamicAny::DynAny_var fa1 =
           dynany_factory->create_dyn_any (in1);
 
-        if (fa1->equal(fa1))
+        if (fa1->equal(fa1.in ()))
           {
             ACE_DEBUG ((LM_DEBUG,
                         "++ OK ++\n"));
@@ -347,7 +347,7 @@ Test_DynAny::run_test (void)
         dynany_factory->create_dyn_any (in4);
 
       // is equal to self
-      good = fa4->equal(fa4);
+      good = fa4->equal(fa4.in ());
 
       CORBA::ShortSeq ss5;
       ss5.length(1);
@@ -358,7 +358,7 @@ Test_DynAny::run_test (void)
         dynany_factory->create_dyn_any (in5);
 
       // is not equal for different lengths
-      good = good && !fa4->equal(fa5);
+      good = good && !fa4->equal(fa5.in ());
 
       CORBA::ShortSeq ss6(data.m_shortseq1);
       ss6[0]++;
@@ -369,7 +369,7 @@ Test_DynAny::run_test (void)
         dynany_factory->create_dyn_any (in6);
 
       // is not equal for different values
-      good = good && !fa4->equal(fa6);
+      good = good && !fa4->equal(fa6.in ());
 
 
       CORBA::Any in7;
@@ -379,7 +379,7 @@ Test_DynAny::run_test (void)
 
 
       // is equal to identical sequence, not self
-      good = good && fa4->equal(fa7);
+      good = good && fa4->equal(fa7.in ());
 
 
       if (good)
