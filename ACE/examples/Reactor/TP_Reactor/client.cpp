@@ -51,8 +51,8 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
                          ACE_TEXT ("%N:%l: Failed to allocate ")
                          ACE_TEXT ("data buffer.\n")), -1);
 
-    // put someData in an auto_ptr so it gets deleted automatically
-    auto_ptr<char> pSomeData(someData);
+    // put someData in a kind of auto_ptr so it gets deleted automatically
+    ACE_Auto_Array_Ptr<char> pSomeData(someData);
 
     // parse the <count> argument if available
     if ((argc == 3) && (((count = ACE_OS::strtol(argv[2], 0, 10)) < 1) ||
