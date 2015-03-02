@@ -1,6 +1,14 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.3.1 and ACE-6.3.2
 ====================================================
 
+. Added support for std::chrono to ACE_Time_Value. It's
+  now possible to construct an ACE_Time_Value with a
+  std::duration. Also streaming, adding and substracting
+  an ACE_Time_Value to and from a std::duration is
+  supported. Please see tests/Chrono_Test.cpp for more
+  details.
+
+
 USER VISIBLE CHANGES BETWEEN ACE-6.3.0 and ACE-6.3.1
 ====================================================
 

@@ -70,6 +70,7 @@ Bug_4189_Regression_Test: !ST
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Test
+Chrono_Test
 Cache_Map_Manager_Test
 Cached_Accept_Conn_Test: !ACE_FOR_TAO !LabVIEW_RT
 Cached_Allocator_Test: !ACE_FOR_TAO
