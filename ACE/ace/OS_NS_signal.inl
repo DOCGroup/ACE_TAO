@@ -22,7 +22,7 @@ kill (pid_t pid, int signum)
    * This only becomes an issue when using the 64bit compiler
    * as the TASK_ID is no longer defined as an int.
    */
-  ACE_OSCALL_RETURN (::kill ((TASK_ID)pid, signum), int, -1);
+  ACE_OSCALL_RETURN (::kill ((ACE_VX_TASK_ID)pid, signum), int, -1);
 #else
   ACE_OSCALL_RETURN (::kill (pid, signum), int, -1);
 #endif /* ACE_LACKS_KILL */
