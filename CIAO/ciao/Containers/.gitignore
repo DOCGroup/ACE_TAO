@@ -1,3 +1,6 @@
 /CIAO_Servant_Activator_export.h
 /CIAO_Servant_Activator_stub_export.h
 /Container_Base_export.h
+/Container_BaseC.cpp
+/Container_BaseC.h
+/Container_BaseS.h
