@@ -360,7 +360,7 @@ operator>> (ACE_InputCDR &cdr,
       && (cdr >> buffer_len)) {
     ACE_TCHAR *log_msg;
     ACE_NEW_RETURN (log_msg, ACE_TCHAR[buffer_len + 1], -1);
-    auto_ptr<ACE_TCHAR> log_msg_p (log_msg);
+    ACE_Auto_Array_Ptr<ACE_TCHAR> log_msg_p (log_msg);
     log_record.type (type);
     log_record.pid (pid);
     log_record.time_stamp (ACE_Time_Value (ACE_Utils::truncate_cast<time_t> (sec),
