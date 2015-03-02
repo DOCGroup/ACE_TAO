@@ -198,7 +198,7 @@ $(VLIB): $(VLOBJS)
   ifdef ibmcxx_build
 # This is required to get AIX IBM C/C++ to instantiate and compile the needed
 # templates.
-                      if test -s ./$(TEMPINCDIR)/*.C; \
+	if test -s ./$(TEMPINCDIR)/*.C; \
 	then \
 		$(LINK.cc) $(LINK_OUTPUT_FLAG) dummy $(LDFLAGS) $(ACE_ROOT)/etc/xlc_dummy.cpp $^ $(ACE_SHLIBS) $(LIBS); \
 		$(RM) dummy; \
