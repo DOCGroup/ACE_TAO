@@ -5162,7 +5162,7 @@ spa (FUNCPTR entry, ...)
   if (argc >= ACE_MAX_ARGS && argv[ACE_MAX_ARGS - 1] != 0)
     {
       // Try to read another arg, and warn user if the limit was exceeded.
-      // 
+      //
       // Note that the VxWorks shell arguments change from int to long when
       // using a 64bit compiler. Cast the argument up so that the format
       // specifier remains correct for either build type.
