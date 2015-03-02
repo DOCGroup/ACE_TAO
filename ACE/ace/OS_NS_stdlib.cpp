@@ -283,47 +283,40 @@ ACE_OS::mktemp (ACE_TCHAR *s)
   if (s == 0)
     // check for null template string failed!
     return 0;
-  else
+
+  ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
+  if (xxxxxx == 0)
+    // the template string doesn't contain "XXXXXX"!
+    return s;
+
+  // Find an unused filename for this process.  It is assumed
+  // that the user will open the file immediately after
+  // getting this filename back (so, yes, there is a race
+  // condition if multiple threads in a process use the same
+  // template).  This appears to match the behavior of the
+  // SunOS 5.5 mktemp().
+  bool found = false;
+  for (ACE_TCHAR letter = ACE_TEXT ('a');
+       letter <= ACE_TEXT ('z');
+       ++letter)
     {
-      ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
-
-      if (xxxxxx == 0)
-        // the template string doesn't contain "XXXXXX"!
-        return s;
-      else
+      ACE_stat sb;
+      ACE_OS::sprintf (xxxxxx,
+                       ACE_TEXT ("%05d%c"),
+                       (int)ACE_OS::getpid () % 100000,
+                       letter);
+      if (ACE_OS::stat (s, &sb) < 0)
         {
-          ACE_TCHAR unique_letter = ACE_TEXT ('a');
-          ACE_stat sb;
-
-          // Find an unused filename for this process.  It is assumed
-          // that the user will open the file immediately after
-          // getting this filename back (so, yes, there is a race
-          // condition if multiple threads in a process use the same
-          // template).  This appears to match the behavior of the
-          // SunOS 5.5 mktemp().
-          ACE_OS::sprintf (xxxxxx,
-                           ACE_TEXT ("%05d%c"),
-                           ACE_OS::getpid (),
-                           unique_letter);
-          while (ACE_OS::stat (s, &sb) >= 0)
-            {
-              if (++unique_letter <= ACE_TEXT ('z'))
-                ACE_OS::sprintf (xxxxxx,
-                                 ACE_TEXT ("%05d%c"),
-                                 ACE_OS::getpid (),
-                                 unique_letter);
-              else
-                {
-                  // maximum of 26 unique files per template, per process
-                  ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%s"), ACE_TEXT (""));
-                  return s;
-                }
-            }
+          found = true;
+          break;
         }
-      return s;
     }
+  if (!found)
+    // maximum of 26 unique files per template, per process
+    ACE_OS::sprintf (xxxxxx, ACE_TEXT ("%s"), ACE_TEXT (""));
+  return s;
 }
-#endif /* ACE_LACKS_MKTEMP &7 !ACE_DISABLE_MKTEMP */
+#endif /* ACE_LACKS_MKTEMP && !ACE_DISABLE_MKTEMP */
 
 void *
 ACE_OS::realloc (void *ptr, size_t nbytes)
