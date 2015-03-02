@@ -4436,9 +4436,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
       tid = ::taskSpawn (thr_name && *thr_name ? const_cast <char*> (*thr_name) : 0,
                          priority,
                          (int) flags,
-                         (int) stacksize,
+                         stacksize,
                          thread_args->entry_point (),
-                         (int) thread_args,
+                         (ACE_VX_USR_ARG_T) thread_args,
                          0, 0, 0, 0, 0, 0, 0, 0, 0);
 #   if 0 /* Don't support setting of stack, because it doesn't seem to work. */
     }
@@ -4472,7 +4472,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
     }
 #   endif /* 0 */
 
-  if (tid == ERROR)
+  if (tid == ACE_VX_TASK_ID_ERROR)
     return -1;
   else
     {
@@ -4560,8 +4560,8 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/
 
 # elif defined (ACE_HAS_VXTHREADS)
-    ACE_thread_t tid = ACE_OS::thr_self ();
-    *((int *) status) = ::taskDelete (tid);
+    ACE_UNUSED_ARG (status);
+    ::taskDelete (ACE_OS::thr_self ());
 # endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (status);
@@ -5132,10 +5132,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 int
 spa (FUNCPTR entry, ...)
 {
-  static const unsigned int ACE_MAX_ARGS = 10;
+  // The called entrypoint can get the function name plus the normal 10
+  // optional arguments.
+  static ACE_VX_USR_ARG_T const ACE_MAX_ARGS = 1 + 10;
   static char *argv[ACE_MAX_ARGS] = { 0 };
   va_list pvar;
-  unsigned int argc;
+  ACE_VX_USR_ARG_T argc;
 
   // Hardcode a program name because the real one isn't available
   // through the VxWorks shell.
@@ -5149,7 +5151,7 @@ spa (FUNCPTR entry, ...)
   // number of arguments would have to be passed.
   va_start (pvar, entry);
 
-  for (argc = 1; argc <= ACE_MAX_ARGS; ++argc)
+  for (argc = 1; argc < ACE_MAX_ARGS; ++argc)
     {
       argv[argc] = va_arg (pvar, char *);
 
@@ -5157,41 +5159,45 @@ spa (FUNCPTR entry, ...)
         break;
     }
 
-  if (argc > ACE_MAX_ARGS  &&  argv[argc-1] != 0)
+  if (argc >= ACE_MAX_ARGS && argv[ACE_MAX_ARGS - 1] != 0)
     {
-      // try to read another arg, and warn user if the limit was exceeded
+      // Try to read another arg, and warn user if the limit was exceeded.
+      // 
+      // Note that the VxWorks shell arguments change from int to long when
+      // using a 64bit compiler. Cast the argument up so that the format
+      // specifier remains correct for either build type.
       if (va_arg (pvar, char *) != 0)
-        ACE_OS::fprintf (stderr, "spa(): number of arguments limited to %d\n",
-                         ACE_MAX_ARGS);
+        ACE_OS::fprintf (stderr, "spa(): number of arguments limited to %ld\n",
+                         (long)ACE_MAX_ARGS);
     }
   else
     {
       // fill unused argv slots with 0 to get rid of leftovers
       // from previous invocations
-      for (unsigned int i = argc; i <= ACE_MAX_ARGS; ++i)
+      for (ACE_VX_USR_ARG_T i = argc; i < ACE_MAX_ARGS; ++i)
         argv[i] = 0;
     }
 
   // The hard-coded options are what ::sp () uses, except for the
   // larger stack size (instead of ::sp ()'s 20000).
-  int const ret = ::taskSpawn (argv[0],    // task name
-                               100,        // task priority
-                               VX_FP_TASK, // task options
-                               ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
-                               entry,      // entry point
-                               argc,       // first argument to main ()
-                               (int) argv, // second argument to main ()
-                               0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_VX_TASK_ID const ret = ::taskSpawn (argv[0],    // task name
+                                          100,        // task priority
+                                          VX_FP_TASK, // task options
+                                          ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
+                                          entry,      // entry point
+                                          argc,       // first argument to main ()
+                                          (ACE_VX_USR_ARG_T) argv, // second argument to main ()
+                                          0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
   // ::taskSpawn () returns the taskID on success: return 0 instead if
   // successful
-  return ret > 0 ? 0 : ret;
+  return ret > 0 ? 0 : -1;
 }
 
 // A helper function for the extended spa functions
 static void
-add_to_argv (int& argc, char** argv, int max_args, char* string)
+add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
 {
   char indouble   = 0;
   size_t previous = 0;
@@ -5267,10 +5273,10 @@ int
 spae (FUNCPTR entry, ...)
 {
   static int const WINDSH_ARGS = 10;
-  static int const ACE_MAX_ARGS    = 128;
+  static ACE_VX_USR_ARG_T const ACE_MAX_ARGS = 128;
   static char* argv[ACE_MAX_ARGS]  = { const_cast<char*> ("ace_main"), 0 };
   va_list pvar;
-  int argc = 1;
+  ACE_VX_USR_ARG_T argc = 1;
 
   // Peel off arguments to spa () and put into argv.  va_arg () isn't
   // necessarily supposed to return 0 when done, though since the
@@ -5292,19 +5298,19 @@ spae (FUNCPTR entry, ...)
 
   // The hard-coded options are what ::sp () uses, except for the
   // larger stack size (instead of ::sp ()'s 20000).
-  int const ret = ::taskSpawn (argv[0],    // task name
-                               100,        // task priority
-                               VX_FP_TASK, // task options
-                               ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
-                               entry,      // entry point
-                               argc,       // first argument to main ()
-                               (int) argv, // second argument to main ()
-                               0, 0, 0, 0, 0, 0, 0, 0);
+  ACE_VX_TASK_ID const ret = ::taskSpawn (argv[0],    // task name
+                                          100,        // task priority
+                                          VX_FP_TASK, // task options
+                                          ACE_NEEDS_HUGE_THREAD_STACKSIZE, // stack size
+                                          entry,      // entry point
+                                          argc,       // first argument to main ()
+                                          (ACE_VX_USR_ARG_T) argv, // second argument to main ()
+                                          0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
   // ::taskSpawn () returns the taskID on success: return 0 instead if
   // successful
-  return ret > 0 ? 0 : ret;
+  return ret > 0 ? 0 : -1;
 }
 
 // This global function can be used from the VxWorks shell to pass
@@ -5321,10 +5327,10 @@ int
 spaef (FUNCPTR entry, ...)
 {
   static int const WINDSH_ARGS = 10;
-  static int const ACE_MAX_ARGS    = 128;
+  static ACE_VX_USR_ARG_T const ACE_MAX_ARGS    = 128;
   static char* argv[ACE_MAX_ARGS]  = { const_cast<char*> ("ace_main"), 0 };
   va_list pvar;
-  int argc = 1;
+  ACE_VX_USR_ARG_T argc = 1;
 
   // Peel off arguments to spa () and put into argv.  va_arg () isn't
   // necessarily supposed to return 0 when done, though since the
@@ -5371,11 +5377,11 @@ _vx_call_entry(FUNCPTR entry, int argc, char* argv[])
 }
 
 int
-vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
+vx_execae (FUNCPTR entry, char* arg, int prio, int opt, size_t stacksz, ...)
 {
-  static int const ACE_MAX_ARGS    = 128;
+  static ACE_VX_USR_ARG_T const ACE_MAX_ARGS = 128;
   static char* argv[ACE_MAX_ARGS]  = { const_cast<char*> ("ace_main"), 0 };
-  int argc = 1;
+  ACE_VX_USR_ARG_T argc = 1;
 
   // Peel off arguments to run_main () and put into argv.
   if (arg)
@@ -5385,22 +5391,22 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, int stacksz, ...)
 
   // fill unused argv slots with 0 to get rid of leftovers
   // from previous invocations
-  for (int i = argc; i < ACE_MAX_ARGS; ++i)
+  for (ACE_VX_USR_ARG_T i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
   // The hard-coded options are what ::sp () uses, except for the
   // larger stack size (instead of ::sp ()'s 20000).
-  int const ret = ::taskSpawn (argv[0],    // task name
-                               prio==0 ? 100 : prio,        // task priority
-                               opt==0 ? VX_FP_TASK : opt, // task options
-                               stacksz==0 ? ACE_NEEDS_HUGE_THREAD_STACKSIZE : stacksz, // stack size
-                               (FUNCPTR)_vx_call_entry, // entrypoint caller
-                               (int)entry,              // entry point
-                               argc,                    // first argument to main ()
-                               (int) argv,              // second argument to main ()
-                               0, 0, 0, 0, 0, 0, 0);
+  ACE_VX_TASK_ID const ret = ::taskSpawn (argv[0],              // task name
+                                          prio==0 ? 100 : prio, // task priority
+                                          opt==0 ? VX_FP_TASK : opt, // task options
+                                          stacksz==0 ? ACE_NEEDS_HUGE_THREAD_STACKSIZE : stacksz, // stack size
+                                          (FUNCPTR)_vx_call_entry,   // entrypoint caller
+                                          (ACE_VX_USR_ARG_T)entry,   // entry point
+                                          argc,                      // first argument to main ()
+                                          (ACE_VX_USR_ARG_T) argv,   // second argument to main ()
+                                          0, 0, 0, 0, 0, 0, 0);
 
-  if (ret == ERROR)
+  if (ret == ACE_VX_TASK_ID_ERROR)
     return 255;
 
   while( ret > 0 && ::taskIdVerify (ret) != ERROR )

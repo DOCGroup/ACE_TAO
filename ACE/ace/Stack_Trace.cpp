@@ -123,9 +123,9 @@ static ACE_Stack_Trace_stackstate* ACE_Stack_Trace_stateptr = 0;
 
 static void
 ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
-                                  unsigned int func,
-                                  unsigned int nargs,
-                                  unsigned int *args)
+                                  INSTR *func,
+                                  int nargs,
+                                  ACE_VX_USR_ARG_T *args)
 {
   if (ACE_Stack_Trace_stateptr == 0)
     return;
@@ -143,20 +143,21 @@ ACE_Stack_Trace_Add_Frame_To_Buf (INSTR *caller,
   // These are references so that the structure gets updated
   // in the code below.
   char*& buf = stackstate->buf;
-  unsigned int& len = stackstate->buflen;
+  size_t& len = stackstate->buflen;
 
   // At some point try using symFindByValue() to lookup func (and caller?)
   // to print out symbols rather than simply addresses.
 
   // VxWorks can pass -1 for "nargs" if there was an error
-  if (nargs == static_cast<unsigned int> (-1)) nargs = 0;
+  if (nargs == -1)
+    nargs = 0;
 
-  len += ACE_OS::sprintf (&buf[len], "%#10x: %#10x (", (int)caller, func);
-  for (unsigned int i = 0; i < nargs; ++i)
+  len += ACE_OS::sprintf (&buf[len], "%p: %p (", caller, func);
+  for (int i = 0; i < nargs; ++i)
     {
       if (i != 0)
         len += ACE_OS::sprintf (&buf[len], ", ");
-      len += ACE_OS::sprintf(&buf [len], "%#x", args [i]);
+      len += ACE_OS::sprintf(&buf[len], "0x" ACE_VX_ARG_FORMAT, args[i]);
     }
 
   len += ACE_OS::sprintf(&buf[len], ")\n");
@@ -180,7 +181,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 
   REG_SET regs;
 
-  taskRegsGet ((int)taskIdSelf(), &regs);
+  taskRegsGet (taskIdSelf(), &regs);
   // Maybe we should take a lock here to guard stateptr?
   ACE_Stack_Trace_stateptr = &state;
   trcStack (&regs, (FUNCPTR)ACE_Stack_Trace_Add_Frame_To_Buf, taskIdSelf ());
@@ -252,17 +253,6 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
           const char *fnName = "(no symbols)";
 
           static const int N_ARGS = 12;
-#if (ACE_VXWORKS < 0x690)
-# define ACE_VX_USR_ARG_T int
-# define ACE_VX_ARG_FORMAT "%x"
-#else
-# define ACE_VX_USR_ARG_T _Vx_usr_arg_t
-# ifdef _WRS_CONFIG_LP64
-#  define ACE_VX_ARG_FORMAT "%lx"
-# else
-#  define ACE_VX_ARG_FORMAT "%x"
-# endif
-#endif
           ACE_VX_USR_ARG_T buf[N_ARGS];
           ACE_VX_USR_ARG_T *pArgs = 0;
           int numArgs =

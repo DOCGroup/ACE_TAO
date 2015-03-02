@@ -160,6 +160,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #   elif defined (ACE_VXWORKS)
 #     include /**/ <sysLib.h> // for sysClkRateGet()
+#     include /**/ <types/vxTypes.h>
 #     if !defined (__RTP__)
 #       include /**/ <taskLib.h>
 #       include /**/ <taskHookLib.h>
@@ -228,8 +229,8 @@ typedef struct
   char *name_;
 } ACE_sema_t;
 #     endif /* !ACE_HAS_POSIX_SEM */
-typedef int ACE_thread_t;
-typedef int ACE_hthread_t;
+typedef ACE_VX_TASK_ID ACE_thread_t;
+typedef ACE_VX_TASK_ID ACE_hthread_t;
 // Key type: the ACE TSS emulation requires the key type be unsigned,
 // for efficiency.  (Current POSIX and Solaris TSS implementations also
 // use u_int, so the ACE TSS emulation is compatible with them.)
