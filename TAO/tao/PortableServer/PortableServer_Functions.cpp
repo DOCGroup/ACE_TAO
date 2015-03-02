@@ -9,6 +9,13 @@ namespace PortableServer
   PortableServer::ObjectId *
   string_to_ObjectId (const char *string)
   {
+    // Passing in a nil pointer is illegal so throw an exception to
+    // indicate that
+    if (string == 0)
+    {
+      throw ::CORBA::BAD_PARAM ();
+    }
+
     // Size of string
     //
     // We DO NOT include the zero terminator, as this is simply an
