@@ -2,8 +2,6 @@
 /**
  *  @file    Dev_Poll_Reactor_Echo_Test.cpp
  *
- *  $Id$
- *
  *  This test implements a simple echo server using the
  *  Dev_Poll_Reactor.  This forces the reactor to behave like a
  *  reactor would in a typical client/server application, i.e.,
