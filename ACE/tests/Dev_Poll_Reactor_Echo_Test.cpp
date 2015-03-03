@@ -491,71 +491,6 @@ disable_signal (int sigmin, int sigmax)
 
 // ----------------------------------------------------
 
-// ACE_THR_FUNC_RETURN
-// server_worker (void *p)
-// {
-//   disable_signal (SIGPIPE, SIGPIPE);
-
-//   const unsigned short port = *(static_cast<unsigned short *> (p));
-
-//   ACE_INET_Addr addr;
-
-//   if (addr.set (port, INADDR_LOOPBACK) != 0)
-//     {
-//       ACE_ERROR ((LM_ERROR,
-//                   ACE_TEXT ("(%t) %p\n"),
-//                   ACE_TEXT ("server_worker - ACE_INET_Addr::set")));
-
-//       return (void *) -1;
-//     }
-
-//   ACE_Dev_Poll_Reactor dp_reactor;
-//   dp_reactor.restart (1);     // Restart on EINTR
-//   ACE_Reactor reactor (&dp_reactor);
-
-//   TestAcceptor server;
-
-//   int flags = 0;
-//   ACE_SET_BITS (flags, ACE_NONBLOCK);  // Enable non-blocking in the
-//                                        // Svc_Handlers.
-
-//   if (server.open (addr, &reactor, flags) != 0)
-//     {
-//       ACE_ERROR ((LM_ERROR,
-//                   ACE_TEXT ("(%t) %p\n"),
-//                   ACE_TEXT ("Unable to open server service handler")));
-
-//       return (void *) -1;
-//     }
-
-//   if (reactor.run_reactor_event_loop () != 0)
-//     {
-//       ACE_ERROR ((LM_ERROR,
-//                   ACE_TEXT ("(%t) %p\n"),
-//                   ACE_TEXT ("Error when running server ")
-//                   ACE_TEXT ("reactor event loop")));
-
-//       return (void *) -1;
-//     }
-
-//   ACE_DEBUG ((LM_INFO,
-//               ACE_TEXT ("(%t) Reactor event loop finished ")
-//               ACE_TEXT ("successfully.\n")));
-
-//   return 0;
-// }
-
-// ----------------------------------------------------
-
-// struct server_arg
-// {
-//   unsigned short port;
-
-//   ACE_Condition<ACE_SYNCH_MUTEX> * cv;
-// };
-
-// ----------------------------------------------------
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -613,8 +548,8 @@ run_main (int, ACE_TCHAR *[])
                        ACE_TEXT ("reactor event loop")),
                       -1);
 
-  ACE_DEBUG((LM_DEBUG, "sent: %s\n", client_handler->sent.c_str ()));
-  ACE_DEBUG((LM_DEBUG, "received: %s\n", client_handler->received.c_str ()));
+  ACE_DEBUG((LM_DEBUG, "sent: %C\n", client_handler->sent.c_str ()));
+  ACE_DEBUG((LM_DEBUG, "received: %C\n", client_handler->received.c_str ()));
 
   ACE_TEST_ASSERT (client_handler->sent == client_handler->received);
 
