@@ -37,6 +37,7 @@
 /DLList_Test
 /Date_Time_Test
 /Dev_Poll_Reactor_Test
+/Dev_Poll_Reactor_Echo_Test
 /Dirent_Test
 /Dynamic_Priority_Test
 /Enum_Interfaces_Test
