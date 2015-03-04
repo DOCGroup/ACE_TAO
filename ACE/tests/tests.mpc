@@ -671,6 +671,13 @@ project(Dev Poll Reactor Test) : acetest {
   }
 }
 
+project(Dev Poll Reactor Echo Test) : acetest {
+  exename = Dev_Poll_Reactor_Echo_Test
+  Source_Files {
+    Dev_Poll_Reactor_Echo_Test.cpp
+  }
+}
+
 project(Dirent Test) : acetest {
 
   exename = Dirent_Test
