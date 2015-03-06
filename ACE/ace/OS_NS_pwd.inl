@@ -56,6 +56,14 @@ ACE_OS::getpwnam_r (const char *name,
     }
   *result = pwd;
   return 0;
+#elif defined (ACE_HAS_STHREADS)
+  if (::getpwnam_r (name, pwd, buffer, bufsize) != 0)
+    {
+      *result = 0;
+      return -1;
+    }
+  *result = pwd;
+  return 0;
 #else
   return ::getpwnam_r (name, pwd, buffer, bufsize, result);
 #endif /* ACE_LACKS_PWD_FUNCTIONS */

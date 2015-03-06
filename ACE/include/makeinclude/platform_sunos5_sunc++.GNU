@@ -46,6 +46,7 @@ rwtools ?= 0
 stdcpplib ?= 1
 stlport ?= 0
 threads ?= 1
+pthreads ?= 1
 versioned_so ?= 1
 tk_reactor ?= 0
 ace_with_x11 ?= 0
@@ -220,7 +221,9 @@ ifeq (C++ 5.10,$(findstring C++ 5.10,$(CC_VERSION)))
 endif
 
 LDFLAGS         += -xildoff
-CPPFLAGS        += -D_POSIX_PTHREAD_SEMANTICS
+ifeq ($(pthreads),1)
+  CPPFLAGS      += -D_POSIX_PTHREAD_SEMANTICS
+endif
 OCFLAGS         += -xO4
 PIC             = -KPIC
 AR              = CC
