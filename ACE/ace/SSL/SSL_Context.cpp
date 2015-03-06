@@ -318,6 +318,46 @@ ACE_SSL_Context::set_mode (int mode)
 }
 
 int
+ACE_SSL_Context::filter_versions (const char* versionlist)
+{
+  this->check_context ();
+
+  ACE_CString ssl_versions = versionlist;
+
+#if defined (SSL_OP_NO_SSLv2)
+  if (ssl_versions.find("SSLv2") == ACE_CString::npos)
+    {
+      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_SSLv2);
+    }
+#endif /* SSL_OP_NO_SSLv2 */
+#if defined (SSL_OP_NO_SSLv3)
+  if (ssl_versions.find("SSLv3") == ACE_CString::npos)
+    {
+      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_SSLv3);
+    }
+#endif /* SSL_OP_NO_SSLv3 */
+#if defined (SSL_OP_NO_TLSv1)
+  if (ssl_versions.find("TLSv1") == ACE_CString::npos)
+    {
+      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_TLSv1);
+    }
+#endif /* SSL_OP_NO_TLSv1 */
+#if defined (SSL_OP_NO_TLSv1_1)
+  if (ssl_versions.find("TLSv1.1") == ACE_CString::npos)
+    {
+      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_TLSv1_1);
+    }
+#endif /* SSL_OP_NO_TLSv1_1 */
+#if defined (SSL_OP_NO_TLSv1_2)
+  if (ssl_versions.find("TLSv1.2") == ACE_CString::npos)
+    {
+      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_TLSv1_2);
+    }
+#endif /* SSL_OP_NO_TLSv1_2 */
+  return 0;
+}
+
+int
 ACE_SSL_Context::load_trusted_ca (const char* ca_file,
                                   const char* ca_dir,
                                   bool use_env_defaults)

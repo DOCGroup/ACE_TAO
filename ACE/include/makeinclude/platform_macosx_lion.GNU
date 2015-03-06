@@ -1,6 +1,4 @@
 
-ssl=0
-
 INSLIB?=$(ACE_ROOT)/lib
 
 ifeq ($(buildbits),32)

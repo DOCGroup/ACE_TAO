@@ -180,6 +180,9 @@ public:
   /// Load certificate from memory rather than a file.
   int certificate (X509* cert);
 
+  /// Parse the string and filter crypto versions accordingly
+  int filter_versions (const char *filter);
+
   /**
    *  Load the location of the trusted certification authority
    *  certificates.  Note that CA certificates are stored in PEM format
