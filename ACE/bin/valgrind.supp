@@ -35,6 +35,13 @@
 }
 
 {
+   <Suppress all the conditional jumps in grep>
+   Memcheck:Cond
+   ...
+   obj:*/bin/grep
+}
+
+{
    <Suppress all the leaks in ps>
    Memcheck:Leak
    ...
