@@ -37,10 +37,10 @@ TAO_EC_Per_Supplier_Filter::bind (TAO_EC_ProxyPushConsumer* consumer)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->consumer_ != 0)
-    return;
-
-  this->consumer_ = consumer;
+  if (this->consumer_ == 0)
+    {
+      this->consumer_ = consumer;
+    }
 }
 
 void
@@ -68,34 +68,34 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->consumer_ == 0)
-    return;
-
-  const RtecEventChannelAdmin::SupplierQOS& pub =
-    this->consumer_->publications_i ();
-
-  for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
+  if (this->consumer_ != 0)
     {
-      const RtecEventComm::Event& event =
-        pub.publications[j].event;
+      const RtecEventChannelAdmin::SupplierQOS& pub =
+        this->consumer_->publications_i ();
+
+      for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
+        {
+          const RtecEventComm::Event& event =
+            pub.publications[j].event;
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
-      ORBSVCS_DEBUG ((LM_DEBUG, "Connecting consumer <%x> to <%x>, "
-                  "trying event <%d:%d>  ",
-                  supplier, this,
-                  event.header.source, event.header.type));
+          ORBSVCS_DEBUG ((LM_DEBUG, "Connecting consumer <%x> to <%x>, "
+                      "trying event <%d:%d>  ",
+                      supplier, this,
+                      event.header.source, event.header.type));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
-      if (supplier->can_match (event.header))
-        {
+          if (supplier->can_match (event.header))
+            {
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
-          ORBSVCS_DEBUG ((LM_DEBUG, "  matched\n"));
+              ORBSVCS_DEBUG ((LM_DEBUG, "  matched\n"));
 #endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
-          this->collection_->connected (supplier);
-          return;
+              this->collection_->connected (supplier);
+              return;
+            }
+#if TAO_EC_ENABLE_DEBUG_MESSAGES
+          ORBSVCS_DEBUG ((LM_DEBUG, "  not matched\n"));
+#endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
         }
-#if TAO_EC_ENABLE_DEBUG_MESSAGES
-      ORBSVCS_DEBUG ((LM_DEBUG, "  not matched\n"));
-#endif /* TAO_EC_ENABLED_DEBUG_MESSAGES */
     }
 }
 
@@ -104,28 +104,28 @@ TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->consumer_ == 0)
-    return;
-
-  const RtecEventChannelAdmin::SupplierQOS& pub =
-    this->consumer_->publications_i ();
-
-  for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
+  if (this->consumer_ != 0)
     {
-      const RtecEventComm::Event& event =
-        pub.publications[j].event;
+      const RtecEventChannelAdmin::SupplierQOS& pub =
+        this->consumer_->publications_i ();
 
-      //      ORBSVCS_DEBUG ((LM_DEBUG, "Trying %d:%d in %x\n",
-      //                  event.header.source, event.header.type,
-      //                  this));
-      if (supplier->can_match (event.header))
+      for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
         {
-          //          ORBSVCS_DEBUG ((LM_DEBUG, "  matched %x\n", supplier));
-          this->collection_->connected (supplier);
-          return;
+          const RtecEventComm::Event& event =
+            pub.publications[j].event;
+
+          //      ORBSVCS_DEBUG ((LM_DEBUG, "Trying %d:%d in %x\n",
+          //                  event.header.source, event.header.type,
+          //                  this));
+          if (supplier->can_match (event.header))
+            {
+              //          ORBSVCS_DEBUG ((LM_DEBUG, "  matched %x\n", supplier));
+              this->collection_->connected (supplier);
+              return;
+            }
         }
+      this->collection_->disconnected (supplier);
     }
-  this->collection_->disconnected (supplier);
 }
 
 void
