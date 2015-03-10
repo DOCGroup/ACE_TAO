@@ -13,8 +13,10 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Truncate.h"
 #include "ace/ACE.h"
+#include "ace/INET_Addr.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_ctype.h"
 
 #ifdef ACE_HAS_THREADS
 # include "ace/Thread_Mutex.h"
@@ -22,6 +24,7 @@
 #endif  /* ACE_HAS_THREADS */
 
 #include <openssl/x509.h>
+#include <openssl/x509v3.h>
 #include <openssl/err.h>
 #include <openssl/rand.h>
 #include <openssl/safestack.h>
@@ -322,39 +325,123 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
 {
   this->check_context ();
 
-  ACE_CString ssl_versions = versionlist;
+  ACE_CString vlist = versionlist;
+  ACE_CString seplist = " ,;";
+  ACE_CString::size_type pos = 0;
+  bool match = false;
+
+  for (; pos < vlist.length (); pos++)
+    {
+      vlist[pos] = ACE_OS::ace_tolower (vlist[pos]);
+    }
 
 #if defined (SSL_OP_NO_SSLv2)
-  if (ssl_versions.find("SSLv2") == ACE_CString::npos)
+  pos = vlist.find("sslv2");
+  match = pos != ACE_CString::npos &&
+    (pos == vlist.length () - 5 ||
+     seplist.find (vlist[pos + 5]) != ACE_CString::npos);
+  if (!match)
     {
-      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_SSLv2);
+      ::SSL_CTX_set_options (this->context_, SSL_OP_NO_SSLv2);
     }
 #endif /* SSL_OP_NO_SSLv2 */
+
 #if defined (SSL_OP_NO_SSLv3)
-  if (ssl_versions.find("SSLv3") == ACE_CString::npos)
+  pos = vlist.find("sslv3");
+  match = pos != ACE_CString::npos &&
+    (pos == vlist.length () - 5 ||
+     seplist.find (vlist[pos + 5]) != ACE_CString::npos);
+  if (!match)
     {
-      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_SSLv3);
+      ::SSL_CTX_set_options (this->context_, SSL_OP_NO_SSLv3);
     }
 #endif /* SSL_OP_NO_SSLv3 */
+
 #if defined (SSL_OP_NO_TLSv1)
-  if (ssl_versions.find("TLSv1") == ACE_CString::npos)
+  pos = vlist.find("tlsv1");
+  match = pos != ACE_CString::npos &&
+    (pos == vlist.length () - 5 ||
+     seplist.find (vlist[pos + 5]) != ACE_CString::npos);
+  if (!match)
     {
-      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_TLSv1);
+      ::SSL_CTX_set_options (this->context_, SSL_OP_NO_TLSv1);
     }
 #endif /* SSL_OP_NO_TLSv1 */
+
 #if defined (SSL_OP_NO_TLSv1_1)
-  if (ssl_versions.find("TLSv1.1") == ACE_CString::npos)
+  pos = vlist.find("tlsv1.1");
+  match = pos != ACE_CString::npos &&
+    (pos == vlist.length () - 7 ||
+     seplist.find (vlist[pos + 7]) != ACE_CString::npos);
+  if (!match)
     {
-      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_TLSv1_1);
+      ::SSL_CTX_set_options (this->context_, SSL_OP_NO_TLSv1_1);
     }
 #endif /* SSL_OP_NO_TLSv1_1 */
+
 #if defined (SSL_OP_NO_TLSv1_2)
-  if (ssl_versions.find("TLSv1.2") == ACE_CString::npos)
+  pos = vlist.find("tlsv1.2");
+  match = pos != ACE_CString::npos &&
+    (pos == vlist.length () - 7 ||
+     seplist.find (vlist[pos + 7]) != ACE_CString::npos);
+  if (!match)
     {
-      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_TLSv1_2);
+      ::SSL_CTX_set_options (this->context_, SSL_OP_NO_TLSv1_2);
     }
 #endif /* SSL_OP_NO_TLSv1_2 */
   return 0;
+}
+
+
+bool
+ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
+{
+#if defined (OPENSSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x10002001L)
+
+  this->check_context ();
+
+  int result = 0;
+  char name[MAXHOSTNAMELEN+1];
+
+  if (peerssl == 0 || host.get_host_name (name, MAXHOSTNAMELEN) == -1)
+    {
+      return false;
+    }
+
+  X509* cert = ::SSL_get_peer_certificate (peerssl);
+  if (cert == 0)
+    {
+      return false;
+    }
+
+  char *peer = 0;
+  char **peerarg = ACE::debug () ? &peer : 0;
+  int flags = X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT;
+  size_t len = ACE_OS::strlen (name);
+
+  result = ::X509_check_host (cert, name, len, flags, peerarg);
+
+  if (ACE::debug ())
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("ACE (%P|%t) SSL_Context::check_host ")
+                  ACE_TEXT ("name <%s> returns %d, peer <%s>\n"),
+                  name, result, peer));
+    }
+  if (peer != 0)
+    {
+      ::OPENSSL_free (peer);
+    }
+
+  ::X509_free (cert);
+
+  return result == 1;
+#else
+  ACE_UNUSED_ARG (host);
+  ACE_UNUSED_ARG (peerssl);
+
+  return false;
+#endif /* OPENSSL_VERSION_NUMBER */
 }
 
 int

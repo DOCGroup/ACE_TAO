@@ -29,6 +29,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class ACE_INET_Addr;
+
 class ACE_SSL_Export ACE_SSL_Data_File
 {
 public:
@@ -182,6 +184,9 @@ public:
 
   /// Parse the string and filter crypto versions accordingly
   int filter_versions (const char *filter);
+
+  /// verify the peer cert matches the host
+  bool check_host (const ACE_INET_Addr& host, SSL * peerssl);
 
   /**
    *  Load the location of the trusted certification authority
