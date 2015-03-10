@@ -407,7 +407,7 @@ ACE_INET_Addr::set (u_short port_number,
       if ((error = ::getaddrinfo (host_name, 0, &hints, &res)) == 0)
         {
           this->set_type (res->ai_family);
-	  for (curr = res; curr; curr = curr->ai_next)
+          for (curr = res; curr; curr = curr->ai_next)
             {
               union ip46 next_addr;
               if (curr->ai_family == AF_INET6)
