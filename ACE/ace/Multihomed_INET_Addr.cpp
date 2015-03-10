@@ -243,21 +243,40 @@ void
 ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
                                         size_t size) const
 {
-  // Copy primary address to the first slot of the user-supplied array
-  if (size > 0) {
-    addrs[0] = *reinterpret_cast<sockaddr_in*> (this->get_addr ());
-  }
+  if (size == 0)
+    return;
+  // Copy primary address(es) to the first slot(s) of the user-supplied array
+  ACE_INET_Addr me (*this);
+  size_t i = 0;
+  for (i = 0; i < size; ++i)
+    {
+      sockaddr_in *in4 = reinterpret_cast<sockaddr_in*> (me.get_addr ());
+      if (in4->sin_family == AF_INET)
+        {
+          addrs[i] = *in4;
+          ++i;
+        }
+      if (!me.next ())
+        break;
+    }
 
   // Copy secondary addresses to remaining slots of the user-supplied
   // array.  Secondary address [i] is copied to slot [i+1]
-
-  size_t top = size - 1 < this->secondaries_.size() ?
-    size - 1 : this->secondaries_.size();
-
-  for (size_t i = 0; i < top; ++i) {
-    addrs[i+1] =
-      *reinterpret_cast<sockaddr_in*> (this->secondaries_[i].get_addr());
-  }
+  for (size_t j = 0; j < this->secondaries_.size (); ++j)
+    {
+      ACE_INET_Addr copy (this->secondaries_[j]);
+      for (; i < size; ++i)
+        {
+          sockaddr_in *in4 = reinterpret_cast<sockaddr_in*> (copy.get_addr ());
+          if (in4->sin_family == AF_INET)
+            {
+              addrs[i] = *in4;
+              ++i;
+            }
+             if (!copy.next ())
+            break;
+        }
+    }
 }
 
 #if defined (ACE_HAS_IPV6)
@@ -265,22 +284,40 @@ void
 ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
                                         size_t size) const
 {
-  // Copy primary address to the first slot of the user-supplied array
-  if (size > 0)
+  if (size == 0)
+    return;
+  // Copy primary address(es) to the first slot(s) of the user-supplied array
+  ACE_INET_Addr me (*this);
+  size_t i = 0;
+  for (i = 0; i < size; ++i)
     {
-      addrs[0] = *reinterpret_cast<sockaddr_in6*> (this->get_addr ());
+      sockaddr_in6 *in6 = reinterpret_cast<sockaddr_in6*> (me.get_addr ());
+      if (in6->sin6_family == AF_INET6)
+        {
+          addrs[i] = *in6;
+          ++i;
+        }
+      if (!me.next ())
+        break;
     }
 
   // Copy secondary addresses to remaining slots of the user-supplied
   // array.  Secondary address [i] is copied to slot [i+1]
-  size_t top =
-    size - 1 < this->secondaries_.size() ?
-    size - 1 : this->secondaries_.size();
-
-  for (size_t i = 0; i < top; ++i)
+  for (size_t j = 0; j < this->secondaries_.size (); ++j)
     {
-      addrs[i+1] =
-        *reinterpret_cast<sockaddr_in6*> (this->secondaries_[i].get_addr());
+      ACE_INET_Addr copy (this->secondaries_[j]);
+      for (; i < size; ++i)
+        {
+          sockaddr_in6 *in6 =
+            reinterpret_cast<sockaddr_in6*> (copy.get_addr ());
+          if (in6->sin6_family == AF_INET6)
+            {
+              addrs[i] = *in6;
+              ++i;
+            }
+          if (!copy.next ())
+            break;
+        }
     }
 }
 #endif /* ACE_HAS_IPV6 */
