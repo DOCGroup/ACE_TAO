@@ -2,7 +2,7 @@
 <!-- Default QoS specification for NDDS logger. -->
 <dds>
   <qos_library name="DAnCE">
-    <qos_profile name="Logger" is_default_qos="true">
+    <qos_profile name="Logger" is_default_qos="false">
       <topic_qos name="DAnCELogging">
         <reliability>
           <kind>RELIABLE_RELIABILITY_QOS</kind>
