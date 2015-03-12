@@ -108,6 +108,20 @@ public:
 
   // These methods are useful after the object has been constructed.
 
+  /// Assignment. In a more well-ordered world, member-wise assignment would
+  /// work fine. However, because of the class design feature that all of the
+  /// acceptor/connector-type classes that can be used in the
+  /// Acceptor-Connector framework take ACE_Addr objects instead of the
+  /// addressing class matching the family in use. The mechanism used to
+  /// enable this substitution to the more-appropriate class is
+  /// ACE_sap_any_cast, which casts the ACE_Addr to the more-specific class.
+  /// In this case, casting an ACE_Addr to ACE_INET_Addr then copying it.
+  /// Since adding multiple address support to ACE_INET_Addr, that cast-copy
+  /// operation ends up, in the member-wise case, copying a bogus vector
+  /// and doing lots of random damage. Thus, this operator is used to make
+  /// life ordered in this common scenario.
+  ACE_INET_Addr & operator= (const ACE_INET_Addr &rhs);
+
   /// Initializes from another ACE_INET_Addr.
   int set (const ACE_INET_Addr &);
 

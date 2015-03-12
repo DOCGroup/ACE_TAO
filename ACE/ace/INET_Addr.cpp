@@ -159,6 +159,13 @@ ACE_INET_Addr::ACE_INET_Addr (void)
   this->reset ();
 }
 
+ACE_INET_Addr &
+ACE_INET_Addr::operator= (const ACE_INET_Addr& rhs)
+{
+  this->set (rhs);
+  return *this;
+}
+
 int
 ACE_INET_Addr::set (const ACE_INET_Addr &sa)
 {
@@ -361,8 +368,24 @@ ACE_INET_Addr::set (u_short port_number,
                                      hp->h_addr,
                                      hp->h_length);
               this->set_type (hp->h_addrtype);
-              this->set_addr (&v6, hp->h_length);
-              this->set_port_number (port_number, encode);
+              for (size_t i = 0; hp->h_addr_list[i]; ++i)
+                {
+                  union ip46 next_addr;
+                  struct sockaddr_in6 *next_addr_in6 = &next_addr.in6_;
+                  (void) ACE_OS::memset (&next_addr, 0, sizeof (next_addr));
+                  next_addr_in6->sin6_family = AF_INET6;
+                  next_addr_in6->sin6_port =
+                    encode ? ACE_NTOHS (port_number) : port_number;
+#ifdef ACE_HAS_SOCKADDR_IN6_SIN6_LEN
+                  next_addr_in6_->sin6_len = hp->h_length;
+#endif
+                  (void) ACE_OS::memcpy ((void *) &next_addr_in6->sin6_addr,
+                                         hp->h_addr_list[i],
+                                         hp->h_length);
+                  this->inet_addrs_.push_back (next_addr);
+                }
+              this->reset ();
+
               return 0;
             }
         }
@@ -969,17 +992,23 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
                               sizeof (ip6));
               return 0;
             }
-
-          // Build up a 128 bit address.  An IPv4-mapped IPv6 address
-          // is defined as 0:0:0:0:0:ffff:IPv4_address.  This is defined
-          // in RFC 1884 */
-          ACE_OS::memset (&this->inet_addr_.in6_.sin6_addr, 0, 16);
-          this->inet_addr_.in6_.sin6_addr.s6_addr[10] =
-            this->inet_addr_.in6_.sin6_addr.s6_addr[11] = 0xff;
-          ACE_OS::memcpy
-            (&this->inet_addr_.in6_.sin6_addr.s6_addr[12], &ip4, 4);
+          else
+            {
+              // Build up a 128 bit address.  An IPv4-mapped IPv6 address
+              // is defined as 0:0:0:0:0:ffff:IPv4_address.  This is defined
+              // in RFC 1884 */
+              ACE_OS::memset (&this->inet_addr_.in6_.sin6_addr, 0, 16);
+              this->inet_addr_.in6_.sin6_addr.s6_addr[10] =
+                this->inet_addr_.in6_.sin6_addr.s6_addr[11] = 0xff;
+              ACE_OS::memcpy
+                (&this->inet_addr_.in6_.sin6_addr.s6_addr[12], &ip4, 4);
+            }
         }
 #endif /* ACE_HAS_IPV6 */
+
+      this->inet_addrs_.clear ();
+      this->inet_addrs_iter_ = this->inet_addrs_.begin ();
+
       return 0;
     }   /* end if (len == 4) */
 #if defined (ACE_HAS_IPV6)
@@ -997,6 +1026,8 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
       this->inet_addr_.in6_.sin6_len = sizeof (this->inet_addr_.in6_);
 #endif
       ACE_OS::memcpy (&this->inet_addr_.in6_.sin6_addr, ip_addr, len);
+      this->inet_addrs_.clear ();
+      this->inet_addrs_iter_ = this->inet_addrs_.begin ();
 
       return 0;
     } /* end len == 16 */
