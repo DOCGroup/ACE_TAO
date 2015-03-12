@@ -1320,22 +1320,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
         if (info != 0 && info->event_handler == eh)
           {
             if (status < 0)
-              {
-                this->remove_handler_i (handle, disp_mask, grd);
-#ifdef ACE_HAS_EVENT_POLL
-                // epoll-based effectively suspends handlers around the upcall.
-                // If the handler must be resumed, check to be sure it's the
-                // same handle/handler combination still.
-                if (reactor_resumes_eh)
-                  {
-                    info = this->handler_rep_.find (handle);
-                    if (info != 0 && info->event_handler == eh)
-                      {
-                        this->resume_handler_i (handle);
-                      }
-                  }
-#endif /* ACE_HAS_EVENT_POLL */
-              }
+              this->remove_handler_i (handle, disp_mask, grd);
           }
       }
       // Scope close handles eh ref count decrement, if needed.

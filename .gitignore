@@ -1,3 +1,5 @@
+# Ignore Windows, Visual Studio solution/project files and build artifacts.
+*.sln
 *.vcxproj*
 *.tlog
 *.log
@@ -8,24 +10,4 @@
 *.lib
 *.exp
 *.[ip]db
-*.opensdf
-*.sdf
-*.sln
-*.suo
 
-.depend.*
-GNUmakefile*
-*.ior
-.obj/
-.shobj/
-lib*.a
-lib*.so*
-lib*.dylib
-*~
-
-/ACE/ace/config.h
-/ACE/bin/MakeProjectCreator/config/default.features
-/ACE/include/makeinclude/platform_macros.GNU
-/setenv.cmd
-/setenv.sh
-/build

@@ -3,7 +3,6 @@ compiler:
   - gcc
 env:
   matrix:
-    - FUZZ=1
     - CORBAEMICRO=1 ACEFORTAO=0
     - CORBAECOMPACT=1 ACEFORTAO=0
     - ACEFORTAO=1
@@ -51,7 +50,6 @@ before_script:
   - cat $ACE_ROOT/include/makeinclude/platform_macros.GNU
 
 script:
-  - if [ "$FUZZ" == "1" ]; then exec perl $ACE_ROOT/bin/fuzz.pl; fi
   - perl $ACE_ROOT/bin/mwc.pl -type gnuace -workers 2 travis.mwc
   - make -j 2
   - perl $ACE_ROOT/bin/auto_run_tests.pl -l $TAO_ROOT/bin/travis-ci.lst
