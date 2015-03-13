@@ -7,7 +7,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-ACE_INET_Addr::reset (void)
+ACE_INET_Addr::reset_i (void)
 {
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->get_type() == AF_INET)
