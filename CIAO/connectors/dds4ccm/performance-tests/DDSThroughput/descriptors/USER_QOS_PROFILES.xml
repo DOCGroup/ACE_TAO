@@ -28,7 +28,7 @@ RTI Data Distribution Service user manual.
 
              A QoS profile groups a set of related QoS.
         -->
-    <qos_profile name="ThroughputPartQoS" is_default_qos="true">
+    <qos_profile name="ThroughputPartQoS" is_default_qos="false">
       <!-- QoS used to configure the data writer created in the example code -->
       <participant_qos>
         <receiver_pool>
@@ -51,7 +51,7 @@ RTI Data Distribution Service user manual.
       </participant_qos>
       </qos_profile>
 
-    <qos_profile name="ThroughputQoS" is_default_qos="true">
+    <qos_profile name="ThroughputQoS" is_default_qos="false">
       <!-- QoS used to configure the data writer created in the example code -->
       <participant_qos>
       <receiver_pool>
@@ -105,7 +105,7 @@ RTI Data Distribution Service user manual.
       </datareader_qos>
     </qos_profile>
 
-    <qos_profile name="ThroughputCmdQoS" is_default_qos="true">
+    <qos_profile name="ThroughputCmdQoS" is_default_qos="false">
       <!-- QoS used to configure the data writer created in the example code -->
       <participant_qos>
         <receiver_pool>
