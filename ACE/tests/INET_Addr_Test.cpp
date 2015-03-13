@@ -322,6 +322,15 @@ int run_main (int, ACE_TCHAR *[])
   if (!test_multiple ())
     status = 1;
 
+  ACE_INET_Addr a1 (80, "127.0.0.1");
+  ACE_INET_Addr a2 = a1;
+  if (a1 != a2)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Address equality check failed after assignment\n")));
+      status = 1;
+    }
+
   ACE_END_TEST;
 
   return status;

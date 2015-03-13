@@ -182,7 +182,8 @@ ACE_INET_Addr::ACE_INET_Addr (void)
 ACE_INET_Addr &
 ACE_INET_Addr::operator= (const ACE_INET_Addr& rhs)
 {
-  this->set (rhs);
+  if (this != &rhs)
+    this->set (rhs);
   return *this;
 }
 
