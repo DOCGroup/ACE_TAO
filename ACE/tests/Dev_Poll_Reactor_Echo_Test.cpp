@@ -169,11 +169,11 @@ Client::handle_input (ACE_HANDLE handle)
                   ACE_TEXT ("(%t) Client::handle_input handle = %d bytes_read = %d\n"),
                   handle, bytes_read));
 
-      if (bytes_read < 0 && errno == EWOULDBLOCK)
+      if (bytes_read == -1 && errno == EWOULDBLOCK)
         {
           return 0;
         }
-      else if (bytes_read == 0)
+      else if (bytes_read <= 0)
         {
           // Closed.
           return -1;
