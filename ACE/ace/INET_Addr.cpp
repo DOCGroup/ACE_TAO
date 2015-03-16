@@ -1050,9 +1050,6 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
         }
 #endif /* ACE_HAS_IPV6 */
 
-      this->inet_addrs_.clear ();
-      this->inet_addrs_iter_ = this->inet_addrs_.begin ();
-
       return 0;
     }   /* end if (len == 4) */
 #if defined (ACE_HAS_IPV6)
@@ -1070,9 +1067,6 @@ int ACE_INET_Addr::set_address (const char *ip_addr,
       this->inet_addr_.in6_.sin6_len = sizeof (this->inet_addr_.in6_);
 #endif
       ACE_OS::memcpy (&this->inet_addr_.in6_.sin6_addr, ip_addr, len);
-      this->inet_addrs_.clear ();
-      this->inet_addrs_iter_ = this->inet_addrs_.begin ();
-
       return 0;
     } /* end len == 16 */
 #endif /* ACE_HAS_IPV6 */

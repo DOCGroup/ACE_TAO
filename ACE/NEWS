@@ -19,6 +19,14 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.1 and ACE-6.3.2
   ACE_Multihomed_INET_Addr has also been enhanced so that the get_addresses()
   methods copy all available addresses related to each name.
 
+. The ACE_Addr::set_addr (void*, int) signature was changed to
+  ACE_Addr::set_addr (const void*, int). All classes that inherit from
+  ACE_Addr also have the same change. This affects ACE_ATM_Addr, ACE_Addr,
+  ACE_INET_Addr, ACE_MEM_Addr, ACE_Netlink_Addr, ACE_SPIPE_Addr, ACE_UNIX_Addr.
+  Any user-written classes derived from ACE_Addr will also need to change to
+  match the new signature for virtual method dispatch to continue working
+  properly in all cases.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.3.0 and ACE-6.3.1
 ====================================================
 
