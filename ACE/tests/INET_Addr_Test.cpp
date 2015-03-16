@@ -20,7 +20,7 @@
 
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
-static int check_type_consistency (const ACE_INET_Addr &addr)
+int check_type_consistency (const ACE_INET_Addr &addr)
 {
   int family = -1;
 
@@ -47,52 +47,6 @@ static int check_type_consistency (const ACE_INET_Addr &addr)
       return 1;
     }
   return 0;
-}
-
-static bool test_multiple (void)
-{
-
-  bool success = true;
-
-  // Check the behavior when there are multiple addresses assigned to a name.
-  // The NTP pool should always return multiples, though always different.
-  ACE_INET_Addr ntp;
-  if (ntp.set (123, ACE_TEXT ("pool.ntp.org")) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pool.ntp.org")));
-      return false;
-    }
-  size_t count = 0;
-  ACE_TCHAR addr_string[256];
-  do
-    {
-      ++count;      // If lookup succeeded, there's at least one
-      ntp.addr_to_string (addr_string, sizeof (addr_string));
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IPv4 %B: %s\n"), count, addr_string));
-    }
-  while (ntp.next ());
-  success = count > 1;
-
-#if defined (ACE_HAS_IPV6)
-  ACE_INET_Addr ntp6;
-  if (ntp6.set (123, ACE_TEXT ("2.pool.ntp.org"), 1, AF_INET6) == -1)
-    {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("2.pool.ntp.org")));
-      return false;
-    }
-  count = 0;
-  do
-    {
-      ++count;      // If lookup succeeded, there's at least one
-      ntp6.addr_to_string (addr_string, sizeof (addr_string));
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IPv6 %B: %s\n"), count, addr_string));
-    }
-  while (ntp6.next ());
-  if (count <= 1)
-    success = false;
-#endif /* ACE_HAS_IPV6 */
-
-  return success;
 }
 
 struct Address {
@@ -316,18 +270,6 @@ int run_main (int, ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ACE_INET_Addr::string_to_addr() ")
                   ACE_TEXT ("failed to detect port number overflow\n")));
-      status = 1;
-    }
-
-  if (!test_multiple ())
-    status = 1;
-
-  ACE_INET_Addr a1 (80, "127.0.0.1");
-  ACE_INET_Addr a2 = a1;
-  if (a1 != a2)
-    {
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Address equality check failed after assignment\n")));
       status = 1;
     }
 
