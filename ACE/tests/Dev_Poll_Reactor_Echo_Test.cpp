@@ -173,7 +173,7 @@ Client::handle_input (ACE_HANDLE handle)
         {
           return 0;
         }
-      else if (bytes_read == 0)
+      else if (bytes_read <= 0)
         {
           // Closed.
           return -1;

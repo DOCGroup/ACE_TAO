@@ -8,6 +8,24 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.1 and ACE-6.3.2
   supported. Please see tests/Chrono_Test.cpp for more
   details.
 
+. Allow ACE_INET_Addr to hold all addresses associated with a hostname. The
+  set of addresses always has a "current" address which is accessed by the
+  usual "get"-type methods on the class. Two new methods are added to deal
+  with multiple addresses:
+    - bool next (void): makes the next available address the "current" one.
+      Returns false if there are no more addresses.
+    - void reset (void): resets the iteration mechanism to be able to examine
+      all of the addresses again.
+  ACE_Multihomed_INET_Addr has also been enhanced so that the get_addresses()
+  methods copy all available addresses related to each name.
+
+. The ACE_Addr::set_addr (void*, int) signature was changed to
+  ACE_Addr::set_addr (const void*, int). All classes that inherit from
+  ACE_Addr also have the same change. This affects ACE_ATM_Addr, ACE_Addr,
+  ACE_INET_Addr, ACE_MEM_Addr, ACE_Netlink_Addr, ACE_SPIPE_Addr, ACE_UNIX_Addr.
+  Any user-written classes derived from ACE_Addr will also need to change to
+  match the new signature for virtual method dispatch to continue working
+  properly in all cases.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.3.0 and ACE-6.3.1
 ====================================================

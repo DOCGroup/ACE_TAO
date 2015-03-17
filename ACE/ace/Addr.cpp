@@ -36,7 +36,7 @@ ACE_Addr::get_addr (void) const
 }
 
 void
-ACE_Addr::set_addr (void *, int)
+ACE_Addr::set_addr (const void *, int)
 {
 }
 

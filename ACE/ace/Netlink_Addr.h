@@ -81,7 +81,7 @@ public:
   /**
    * Set a pointer to the address
    */
-  virtual void set_addr (void *, int len= sizeof(sockaddr_nl) );
+  virtual void set_addr (const void *, int len= sizeof(sockaddr_nl) );
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

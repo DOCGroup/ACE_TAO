@@ -12,7 +12,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean

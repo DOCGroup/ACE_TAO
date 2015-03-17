@@ -31,7 +31,7 @@
 
          A QoS profile groups a set of related QoS.
          -->
-    <qos_profile name="UDPv4QoS" is_default_qos="true">
+    <qos_profile name="UDPv4QoS" is_default_qos="false">
       <!-- QoS used to configure the data writer created in the example code -->
       <participant_qos>
         <receiver_pool>
@@ -126,7 +126,7 @@
       </datareader_qos>
     </qos_profile>
 
-    <qos_profile name="SharedMemQos" is_default_qos="true">
+    <qos_profile name="SharedMemQos" is_default_qos="false">
       <participant_qos>
         <transport_builtin>
           <mask>DDS_TRANSPORTBUILTIN_SHMEM</mask>
