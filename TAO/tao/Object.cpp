@@ -837,7 +837,6 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
   // Transfer ownership to the CORBA::Object
   (void) safe_objdata.release ();
-  return;
 }
 
 CORBA::Boolean
