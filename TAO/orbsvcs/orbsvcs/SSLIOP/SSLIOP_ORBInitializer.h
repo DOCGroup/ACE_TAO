@@ -54,9 +54,7 @@ namespace TAO
     public:
 
       /// Constructor.
-      ORBInitializer (::Security::QOP qop,
-                      CSIIOP::AssociationOptions csiv2_target_supports,
-                      CSIIOP::AssociationOptions csiv2_target_requires);
+      ORBInitializer (::Security::QOP qop);
 
       virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
@@ -71,12 +69,6 @@ namespace TAO
 
       /// The default quality-of-protection settings in use.
       ::Security::QOP qop_;
-
-      /// Default support CSIv2 association options.
-      CSIIOP::AssociationOptions csiv2_target_supports_;
-
-      /// Default required CSIv2 association options.
-      CSIIOP::AssociationOptions csiv2_target_requires_;
     };
 
   }  // End SSLIOP namespace.

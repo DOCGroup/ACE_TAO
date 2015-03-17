@@ -94,12 +94,16 @@ namespace TAO
       ///
       static int parse_x509_file (char *arg, char *&path);
 
-      /// Create and register the SSLIOP ORB initializer.
-      int register_orb_initializer (
-        CSIIOP::AssociationOptions csiv2_target_supports,
-        CSIIOP::AssociationOptions csiv2_target_requires);
+      /// Callback for supplying a password to be used accessing a private key.
+      /// Key initialized by env var or supplied in arg list.
+      /// This callback is only used when a password is configured.
+      static int pem_passwd_cb (char *buf, int size, int , void *);
 
-    private:
+      /// The stored password
+      static ACE_CString pem_passwd_;
+
+      /// Create and register the SSLIOP ORB initializer.
+      int register_orb_initializer (void);
 
       /// Default quality-of-protection settings for the SSLIOP
       /// pluggable protocol.
@@ -113,13 +117,7 @@ namespace TAO
        */
       ACE_Time_Value timeout_;
 
-      /// The SSLIOP-specific CSIv2 transport mechanism component.
-      /**
-       * This SSLIOP-specific structure is embedded in the CSIv2 transport
-       * mechanism list of the @c CSIIOP::CompoundSecMechList IOR tagged
-       * component.
-       */
-      // CSIIOP::TLS_SEC_TRANS * csiv2_component_;
+      bool check_host_;
 
     };
   }  // End SSLIOP namespace.

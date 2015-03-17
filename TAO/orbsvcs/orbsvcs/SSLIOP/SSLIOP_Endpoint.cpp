@@ -103,41 +103,6 @@ TAO_SSLIOP_Endpoint::~TAO_SSLIOP_Endpoint (void)
     delete this->iiop_endpoint_;
 }
 
-#if 0
-static void
-dump_endpoint (const char* msg, const TAO_Endpoint *other_endpoint)
-{
-
-  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
-
-  TAO_SSLIOP_Endpoint *endpoint =
-    dynamic_cast<TAO_SSLIOP_Endpoint *> (endpt);
-
-  if (endpoint == 0)
-  {
-    ORBSVCS_DEBUG ((LM_DEBUG, "TAO (%P|%t) endpoint - %s: Unable to cast an endpoint to SSLIOP_Endpoint\n", msg));
-    return;
-  }
-
-  char hostaddr[MAXHOSTNAMELEN + 16];
-  int gothost = endpoint->addr_to_string (hostaddr, sizeof hostaddr);
-
-  ORBSVCS_DEBUG ((LM_INFO, "TAO (%P|%t) SSLIOPEndpoint %s - %@ {%s, ssl=%d, iiop=%d,"
-                " qop=%d, trst=(%d,%d), c=%@, crdh=0x%x}, h=0x%x\n",
-                msg,
-                endpoint,
-                (gothost == 0 ? hostaddr : "*UNKNOWN*"),
-                endpoint->ssl_component ().port ,
-                endpoint->iiop_endpoint ()->port (),
-                endpoint->qop() ,
-                endpoint->trust().trust_in_target ,
-                endpoint->trust().trust_in_client ,
-                endpoint->credentials() ,
-                (endpoint->credentials_set () ? endpoint->credentials()->hash () : 0) ,
-                endpoint->hash ()));
-}
-#endif /* 0 */
-
 int
 TAO_SSLIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {

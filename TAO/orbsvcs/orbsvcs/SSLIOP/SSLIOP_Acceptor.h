@@ -49,7 +49,8 @@ namespace TAO
 
       /// Constructor.
       Acceptor (::Security::QOP qop,
-                const ACE_Time_Value & timeout);
+                const ACE_Time_Value & timeout,
+                bool check_host);
 
       /// Destructor.
       ~Acceptor (void);
@@ -149,6 +150,8 @@ namespace TAO
        * handshake.
        */
       ACE_Time_Value const timeout_;
+
+      bool check_host_;
 
     };
 

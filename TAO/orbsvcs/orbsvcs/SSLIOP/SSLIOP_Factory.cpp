@@ -4,6 +4,16 @@
 #include "orbsvcs/SSLIOP/SSLIOP_Connector.h"
 #include "orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/Read_Buffer.h"
+#include "ace/Malloc_Base.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
+#if defined (ACE_WIN32)
+# include <conio.h>
+#else
+# include <termios.h>
+#endif /* ACE_WIN32 */
 
 #include "orbsvcs/Security/Security_ORBInitializer.h"  /// @todo should go away
 
@@ -31,6 +41,66 @@ static ACE_TCHAR const TAO_PATH_SEPARATOR_STRING[] =
 #endif
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+namespace
+{
+  size_t
+  secret_input (char *buf, size_t max)
+  {
+    size_t len = 0;
+    char c = '\0';
+#if defined (ACE_WIN32)
+    if (!ACE_OS::isatty (stdin->_file))
+      {
+        len = ACE_OS::fread (buf, 1, max, stdin);
+        buf[len] = 0;
+        return len;
+      }
+#else
+    struct termios old_tio, new_tio;
+
+    if (ACE_OS::isatty (ACE_STDIN))
+      {
+        ::tcgetattr (ACE_STDIN, &old_tio);
+        new_tio = old_tio;
+        new_tio.c_lflag &= (~ICANON & ~ECHO);
+        ::tcsetattr (ACE_STDIN, TCSANOW, &new_tio);
+      }
+#endif /* ACE_WIN32 */
+
+    for (len = 0; len < max; )
+      {
+#if defined (ACE_WIN32)
+        c = ::_getch ();
+#else
+        c = ::getchar ();
+#endif /* ACE_WIN32 */
+        if (c >= ' ' && c <= '~')
+          {
+            buf[len++] = c;
+            ACE_OS::printf ("%c", '*');
+          }
+        else if (len > 0 && (c == 8 || c == 127))
+          {
+            buf[--len] = 0;
+            ACE_OS::printf ("\b \b");
+          }
+        else if (c == '\n' || c == '\r' || c == '\0')
+          {
+            break;
+          }
+      }
+    buf[len] = 0;
+
+#if !defined (ACE_WIN32)
+    if (ACE_OS::isatty (ACE_STDIN))
+      {
+        /* restore the former settings */
+        ::tcsetattr (ACE_STDIN, TCSANOW, &old_tio);
+      }
+#endif /* !ACE_WIN32 */
+    return len;
+  }
+}
 
 namespace TAO
 {
@@ -41,10 +111,125 @@ namespace TAO
   }
 }
 
+ACE_CString TAO::SSLIOP::Protocol_Factory::pem_passwd_;
+const ACE_CString key_prompt("prompt:");
+const ACE_CString key_file("file:");
+const ACE_CString key_env("env:");
+
+int
+TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *the_passwd)
+{
+  const char *passwd_str = reinterpret_cast<const char *>(the_passwd);
+  int len = 0;
+  if (the_passwd != 0)
+    {
+      len = ACE_Utils::truncate_cast<size_t> (ACE_OS::strlen (passwd_str));
+    }
+  else
+    {
+      if (pem_passwd_.length() == 0)
+        {
+          return 0;
+        }
+      if (pem_passwd_.find (key_prompt) == 0)
+        {
+          size_t ofs = key_prompt.length();
+          // do prompt
+          const char *prompt = pem_passwd_.length() == ofs ?
+            "Enter password" : pem_passwd_.c_str() + ofs;
+          ACE_OS::printf ("%s: ",prompt);
+          pem_passwd_.resize (size);
+          pem_passwd_.clear ();
+          len = secret_input (buf, size);
+          ACE_OS::printf ("\n");
+          pem_passwd_ = buf;
+          return len;
+       }
+      else if (pem_passwd_.find (key_file) == 0)
+        {
+          size_t ofs = key_file.length();
+          const char *fname = pem_passwd_.c_str() + ofs;
+          // do file
+          FILE* file = ACE_OS::fopen (fname,ACE_TEXT("r"));
+
+          if (file == 0)
+            {
+              if (TAO_debug_level > 0)
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("TAO (%P|%t) SSLIOP_Factory::pem_passwd_cb ")
+                                ACE_TEXT ("cannot open file: %s\n"),
+                                fname));
+              pem_passwd_ = "";
+            }
+          else
+            {
+              ACE_Read_Buffer reader (file, true);
+              char* string = reader.read ();
+              if (string != 0)
+                {
+                  pem_passwd_ = string;
+                  reader.alloc ()->free (string);
+                }
+              else
+                {
+                  if (TAO_debug_level > 0)
+                    ORBSVCS_DEBUG ((LM_DEBUG,
+                                    ACE_TEXT ("TAO (%P|%t) SSLIOP_Factory::pem_passwd_cb ")
+                                    ACE_TEXT ("cannot read file: %s\n"),
+                                    fname));
+                  pem_passwd_ = "";
+                }
+              ACE_OS::fclose (file);
+            }
+        }
+      else if (pem_passwd_.find (key_env) == 0)
+        {
+          size_t ofs = key_env.length();
+          // do env
+          const char *env = pem_passwd_.length() == ofs ?
+            "TAO_PEM_PASSWORD" : pem_passwd_.c_str() + ofs;
+          char *pwd = ACE_OS::getenv (env);
+          if (pwd != 0)
+            {
+              pem_passwd_ = pwd;
+            }
+          else
+            {
+              if (TAO_debug_level > 0)
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                                ACE_TEXT ("TAO (%P|%t) SSLIOP_Factory::pem_passwd_cb ")
+                                ACE_TEXT ("invalid env: %s\n"),
+                                env));
+              pem_passwd_ = "";
+            }
+        }
+
+      len = ACE_Utils::truncate_cast<size_t> (pem_passwd_.length());
+      if (len >= size)
+        {
+          if (TAO_debug_level > 0)
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO (%P|%t) SSLIOP_Factory::pem_passwd_cb truncating ")
+                            ACE_TEXT ("supplied password from len %d to %d\n"),
+                            len, size - 1));
+          len = size - 1;
+          pem_passwd_ = pem_passwd_.substr(0,len);
+        }
+      passwd_str = pem_passwd_.c_str ();
+      ::SSL_CTX_set_default_passwd_cb_userdata (ACE_SSL_Context::instance ()->context(),
+                                                (void *) passwd_str);
+    }
+
+  ACE_OS::strncpy (buf, pem_passwd_.c_str(), len);
+  buf[len] = 0;
+  return len;
+}
+
 TAO::SSLIOP::Protocol_Factory::Protocol_Factory (void)
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
      qop_ (::Security::SecQOPIntegrityAndConfidentiality),
-     timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT)
+     timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT),
+     check_host_ (false)
 {
 }
 
@@ -83,7 +268,8 @@ TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
 
   ACE_NEW_RETURN (acceptor,
                   TAO::SSLIOP::Acceptor (this->qop_,
-                                         this->timeout_),
+                                         this->timeout_,
+                                         this->check_host_),
                   0);
 
   return acceptor;
@@ -108,7 +294,6 @@ TAO::SSLIOP::Protocol_Factory::parse_x509_file (char *arg, char *&path)
   return -1;
 }
 
-
 int
 TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 {
@@ -124,11 +309,6 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   int dhparams_type = -1;
 
   int prevdebug = -1;
-
-  CSIIOP::AssociationOptions csiv2_target_supports =
-    CSIIOP::Integrity | CSIIOP::Confidentiality;
-  CSIIOP::AssociationOptions csiv2_target_requires =
-    CSIIOP::Integrity | CSIIOP::Confidentiality;
 
   // Force the Singleton instance to be initialized/instantiated.
   // Some SSLIOP option combinations below will result in the
@@ -201,12 +381,6 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           // overridden by a SecurityLevel2::QOPPolicy in the object
           // reference.
           this->qop_ = ::Security::SecQOPNoProtection;
-
-          ACE_SET_BITS (csiv2_target_supports,
-                        CSIIOP::NoProtection);
-
-          ACE_CLR_BITS (csiv2_target_requires,
-                        CSIIOP::Confidentiality);
         }
 
       else if (ACE_OS::strcasecmp (argv[curarg],
@@ -245,23 +419,12 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
               else if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("SERVER")) == 0)
                 {
                   mode = SSL_VERIFY_PEER;
-
-                  ACE_SET_BITS (csiv2_target_supports,
-                                CSIIOP::EstablishTrustInTarget
-                                | CSIIOP::EstablishTrustInClient);
                 }
               else if (ACE_OS::strcasecmp (argv[curarg], ACE_TEXT("CLIENT")) == 0
                        || ACE_OS::strcasecmp (argv[curarg],
                                               ACE_TEXT("SERVER_AND_CLIENT")) == 0)
                 {
                   mode = SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT;
-
-                  ACE_SET_BITS (csiv2_target_supports,
-                                CSIIOP::EstablishTrustInTarget
-                                | CSIIOP::EstablishTrustInClient);
-
-                  ACE_SET_BITS (csiv2_target_requires,
-                                CSIIOP::EstablishTrustInClient);
                 }
 
               ssl_ctx->default_verify_mode (mode);
@@ -356,7 +519,35 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 #endif
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLVersionList")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              ssl_ctx->filter_versions (ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
+            }
+        }
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLPassword")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+              pem_passwd_ = ACE_TEXT_ALWAYS_CHAR(argv[curarg]);
+            }
+        }
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLCheckHost")) == 0)
+        {
+          this->check_host_ = true;
+        }
 
+    }
+
+  if (pem_passwd_.length() > 0)
+    {
+      ::SSL_CTX_set_default_passwd_cb (ssl_ctx->context(), pem_passwd_cb);
     }
 
   // Load some (more) entropy from the user specified sources
@@ -534,8 +725,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         }
     }
 
-  if (this->register_orb_initializer (csiv2_target_supports,
-                                      csiv2_target_requires) != 0)
+  if (this->register_orb_initializer () != 0)
     return -1;
 
   if (prevdebug != -1)
@@ -545,9 +735,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
-  CSIIOP::AssociationOptions csiv2_target_supports,
-  CSIIOP::AssociationOptions csiv2_target_requires)
+TAO::SSLIOP::Protocol_Factory::register_orb_initializer (void)
 {
   try
     {
@@ -557,62 +745,39 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
       PortableInterceptor::ORBInitializer_ptr tmp;
       ACE_NEW_THROW_EX (tmp,
                         TAO::Security::ORBInitializer,
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
-
+                        CORBA::NO_MEMORY
+                        (CORBA::SystemException::_tao_minor_code
+                         (TAO::VMCID, ENOMEM), CORBA::COMPLETED_NO));
       PortableInterceptor::ORBInitializer_var initializer = tmp;
 
-  PortableInterceptor::ORBInitializer_ptr temp_dll_initializer =
+      PortableInterceptor::ORBInitializer_ptr tmp_dll =
         PortableInterceptor::ORBInitializer::_nil ();
+      ACE_NEW_THROW_EX (tmp_dll,
+                        PortableInterceptor::DLL_Resident_ORB_Initializer
+                        (initializer.in (), ACE_TEXT ("TAO_Security")),
+                        CORBA::NO_MEMORY
+                        (CORBA::SystemException::_tao_minor_code
+                         (TAO::VMCID, ENOMEM), CORBA::COMPLETED_NO));
 
-  ACE_NEW_THROW_EX (temp_dll_initializer,
-        PortableInterceptor::DLL_Resident_ORB_Initializer(
-  initializer.in (),
-  ACE_TEXT ("TAO_Security")),
-  CORBA::NO_MEMORY (
-  CORBA::SystemException::_tao_minor_code (
-  TAO::VMCID,
-  ENOMEM),
-  CORBA::COMPLETED_NO));
-
-  PortableInterceptor::ORBInitializer_var dll_initializer
-  = temp_dll_initializer;
-
-  PortableInterceptor::register_orb_initializer (dll_initializer.in ());
-
-
+      PortableInterceptor::ORBInitializer_var dll_initializer = tmp_dll;
+      PortableInterceptor::register_orb_initializer (dll_initializer.in ());
       // Register the SSLIOP ORB initializer.
       ACE_NEW_THROW_EX (tmp,
-                        TAO::SSLIOP::ORBInitializer (this->qop_,
-                                                     csiv2_target_supports,
-                                                     csiv2_target_requires),
-                        CORBA::NO_MEMORY (
-                          CORBA::SystemException::_tao_minor_code (
-                            TAO::VMCID,
-                            ENOMEM),
-                          CORBA::COMPLETED_NO));
+                        TAO::SSLIOP::ORBInitializer (this->qop_),
+                        CORBA::NO_MEMORY
+                        (CORBA::SystemException::_tao_minor_code
+                         (TAO::VMCID, ENOMEM), CORBA::COMPLETED_NO));
 
       initializer = tmp;
-
-  temp_dll_initializer = PortableInterceptor::ORBInitializer::_nil ();
-
-  ACE_NEW_THROW_EX (temp_dll_initializer,
-        PortableInterceptor::DLL_Resident_ORB_Initializer(
-  initializer.in (),
-  ACE_TEXT ("TAO_SSLIOP")),
-  CORBA::NO_MEMORY (
-  CORBA::SystemException::_tao_minor_code (
-  TAO::VMCID,
-  ENOMEM),
-  CORBA::COMPLETED_NO));
-
-  dll_initializer = temp_dll_initializer;
-
-  PortableInterceptor::register_orb_initializer (dll_initializer.in ());
-
+      tmp_dll = PortableInterceptor::ORBInitializer::_nil ();
+      ACE_NEW_THROW_EX (tmp_dll,
+                        PortableInterceptor::DLL_Resident_ORB_Initializer
+                        (initializer.in (), ACE_TEXT ("TAO_SSLIOP")),
+                        CORBA::NO_MEMORY
+                        (CORBA::SystemException::_tao_minor_code
+                         (TAO::VMCID, ENOMEM), CORBA::COMPLETED_NO));
+      dll_initializer = tmp_dll;
+      PortableInterceptor::register_orb_initializer (dll_initializer.in ());
     }
   catch (const CORBA::Exception& ex)
     {
@@ -628,10 +793,10 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (
 TAO_Connector *
 TAO::SSLIOP::Protocol_Factory::make_connector (void)
 {
-  TAO_Connector *connector = 0;
+  TAO::SSLIOP::Connector *connector = 0;
 
   ACE_NEW_RETURN (connector,
-                  TAO::SSLIOP::Connector (this->qop_),
+                  TAO::SSLIOP::Connector (this->qop_, this->check_host_),
                   0);
   return connector;
 }

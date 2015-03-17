@@ -1,13 +1,16 @@
 #include "orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h"
+#include "orbsvcs/Log_Macros.h"
+#include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::SSLIOP::Accept_Strategy::Accept_Strategy (
-  TAO_ORB_Core * orb_core,
-  const ACE_Time_Value & timeout)
+TAO::SSLIOP::Accept_Strategy::Accept_Strategy (TAO_ORB_Core * orb_core,
+                                               const ACE_Time_Value & timeout,
+                                               bool check_host)
   : TAO_Accept_Strategy<TAO::SSLIOP::Connection_Handler,
                         ACE_SSL_SOCK_Acceptor> (orb_core),
-    timeout_ (timeout)
+  timeout_ (timeout),
+  check_host_ (check_host)
 {
 }
 
@@ -55,8 +58,24 @@ TAO::SSLIOP::Accept_Strategy::accept_svc_handler (handler_type * svc_handler)
       // #REFCOUNT# is zero at this point.
       return -1;
     }
-  else
-    return 0;
+
+  // If required, verify the host in the endpoint match the cert
+  if (this->check_host_ && !svc_handler->check_host ())
+    {
+      // Close the handler.
+      svc_handler->close ();
+
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "TAO (%P|%t) - SLIIOP_Accept_Strategy::accept, "
+                          "hostname verification failed\n"));
+        }
+
+      return -1;
+    }
+
+  return 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

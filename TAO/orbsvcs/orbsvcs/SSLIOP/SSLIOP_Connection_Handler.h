@@ -103,6 +103,10 @@ namespace TAO
         TAO::SSLIOP::Current_Impl *previous_current_impl,
         bool &setup_done);
 
+      /// Return true if the host name matches the name/domain in the peer
+      /// certificate.
+      bool check_host (void);
+
     protected:
 
       //@{
@@ -120,10 +124,6 @@ namespace TAO
       /// access to the low-level management methods).
       TAO::SSLIOP::Current_var current_;
 
-    private:
-
-      /// TCP configuration for this connection.
-      TAO_IIOP_Properties *tcp_properties_;
     };
 
     // ****************************************************************

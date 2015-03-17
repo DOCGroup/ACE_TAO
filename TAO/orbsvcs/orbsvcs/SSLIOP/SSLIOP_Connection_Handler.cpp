@@ -14,6 +14,7 @@
 #include "tao/Protocols_Hooks.h"
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
+#include "ace/SSL/SSL_Context.h"
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
@@ -25,8 +26,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
     ACE_Thread_Manager *t)
   : SVC_HANDLER (t, 0 , 0),
     TAO_Connection_Handler (0),
-    current_ (),
-    tcp_properties_ (0)
+    current_ ()
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
@@ -39,8 +39,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
 TAO::SSLIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
   : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
     TAO_Connection_Handler (orb_core),
-    current_ (),
-    tcp_properties_ (0)
+    current_ ()
 {
   this->current_ = TAO::SSLIOP::Util::current (orb_core);
 
@@ -457,6 +456,16 @@ int
 TAO::SSLIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), t);
+}
+
+bool
+TAO::SSLIOP::Connection_Handler::check_host (void)
+{
+  ACE_SSL_Context *ssl_ctx = ACE_SSL_Context::instance ();
+  ACE_INET_Addr remote_addr;
+  if (this->peer ().get_remote_addr (remote_addr) == -1)
+    return -1;
+  return ssl_ctx->check_host (remote_addr, this->peer ().ssl ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

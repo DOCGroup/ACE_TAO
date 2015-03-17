@@ -20,13 +20,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::SSLIOP::ORBInitializer::ORBInitializer (
-  ::Security::QOP qop,
-  CSIIOP::AssociationOptions csiv2_target_supports,
-  CSIIOP::AssociationOptions csiv2_target_requires)
-  : qop_ (qop),
-    csiv2_target_supports_ (csiv2_target_supports),
-    csiv2_target_requires_ (csiv2_target_requires)
+TAO::SSLIOP::ORBInitializer::ORBInitializer (::Security::QOP qop)
+  : qop_ (qop)
 {
 }
 

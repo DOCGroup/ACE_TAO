@@ -55,7 +55,7 @@ namespace TAO
     public:
 
       /// Constructor.
-      Connector (::Security::QOP qop);
+      Connector (::Security::QOP qop, bool check_host);
 
       /**
        * @name The TAO_Connector methods
@@ -134,6 +134,10 @@ namespace TAO
       /// If zero, connect to IIOP over SSL port by default.
       /// Otherwise, connect to the insecure IIOP port.
       ::Security::QOP qop_;
+
+      /// if true, do a match between the host name we connected to and what is
+      /// in the server's certificate.
+      bool check_host_;
 
       /// Our connect strategy
       CONNECT_STRATEGY connect_strategy_;

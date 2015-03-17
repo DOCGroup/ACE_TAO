@@ -163,6 +163,30 @@ function MM_nbGroup(event, grpName) { //v3.0
            the client preferences. When not set, the SSL server will always
            follow the clients preferences.</td>
     </tr>
+    <tr>
+      <td><code>-SSLCAfile</code> <em>filename</em></td>
+      <td>Provide a file containing a trusted certificate, overriding the file named by SSL_CERT_FILE environment variable.</td>
+    </tr>
+    <tr>
+      <td><code>-SSLCApath</code> <em>directory</em></td>
+      <td>Provide a directory from which all files are read for trusted certificates overriding the directory named by SSL_CERT_DIR environment variable.<</td>
+    </tr>
+    <tr>
+      <td><code>-SSLrand</code> <em>filelist</em></td>
+      <td>Provide additional entropy from the named sources. Works in conjuction with any value supplied via SSL_RAND_FILE environment variable.</td>
+    </tr>
+    <tr>
+      <td><code>-SSLVersionList</code> <em>versions</em></td>
+      <td>Unlike the cipher list option, this takes a list of SSL versions to support. List is a comma separated string containing any of SSLv2, SSLv3, TLSv1, TLSv1.1, or TLSv1.2. If <code>-SSLVersionList</code> is not supplied, SSL will support all of these versions. </td>
+    </tr>
+    <tr>
+      <td><code>-SSLPassword</code> <em>specifier</em></td>
+      <td>if the supplied <code>-SSLPrivateKey</code> is password protected, this option enables overriding the default password entry. The supplied specifier can be <code>prompt:</code><em>message</em> to prompt a user for entry, <code>file:</code><em>filename</em> reads a plain text file, <code>env:</code><em>envvarname</em>, or simply <em>thepassword</em>. Clearly using any option apart from prompt: weakens the protection. </td>
+    </tr>
+    <tr>
+      <td><code>-SSLCheckHost</code></td>
+      <td>Adds a verification of the peer address to the connection completion process. This feature requires OpenSSL 1.0.2 or newer and performs a reverse DNS lookup to find the originating hostname. If the version of ssl used does not support <code>X509_check_host()</code>, the peer address does not map to a cannonical host name, or the peer did not provide an X.509 certificate, the connection will fail. </td>
+    </tr>
 
   </table>
   <h4>Environment variables</h4>

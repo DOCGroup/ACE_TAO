@@ -22,9 +22,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::SSLIOP::Connector::Connector (::Security::QOP qop)
+TAO::SSLIOP::Connector::Connector (::Security::QOP qop, bool check_host)
   : TAO::IIOP_SSL_Connector (),
     qop_ (qop),
+    check_host_ (check_host),
     connect_strategy_ (),
     base_connector_ (0)
 {
@@ -682,6 +683,23 @@ TAO::SSLIOP::Connector::ssliop_connect (
               svc_handler->cancel_pending_connection ();
             }
 
+          // If required, verify the host in the endpoint match the cert
+          if (this->check_host_ && !svc_handler->check_host ())
+            {
+              // Close the handler.
+              svc_handler->close ();
+
+              if (TAO_debug_level > 0)
+                {
+                  ORBSVCS_ERROR ((LM_ERROR,
+                              "TAO (%P|%t) - SLIIOP_Connector::ssliop_connect, "
+                              "hostname verification failed\n"));
+                }
+
+              return 0;
+            }
+
+
           // At this point, the connection has be successfully connected.
           // #REFCOUNT# is one.
           if (TAO_debug_level > 2)
@@ -698,7 +716,7 @@ TAO::SSLIOP::Connector::ssliop_connect (
                                                                     transport);
 
           // Failure in adding to cache.
-        if (retval == -1)
+          if (retval == -1)
             {
               // Close the handler.
               svc_handler->close ();

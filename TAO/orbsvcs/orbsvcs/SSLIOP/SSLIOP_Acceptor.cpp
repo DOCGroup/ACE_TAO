@@ -16,13 +16,15 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
-                                 const ACE_Time_Value & timeout)
+                                 const ACE_Time_Value & timeout,
+                                 bool check_host)
   : TAO::IIOP_SSL_Acceptor (),
     ssl_acceptor_ (this),
     creation_strategy_ (0),
     concurrency_strategy_ (0),
     accept_strategy_ (0),
-    timeout_ (timeout)
+    timeout_ (timeout),
+    check_host_ (check_host)
 {
   // --- CSIv1 ---
 
@@ -102,7 +104,8 @@ TAO::SSLIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
 
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
-  if (priority == TAO_INVALID_PRIORITY)
+  if (priority == TAO_INVALID_PRIORITY  &&
+      this->orb_core_->orb_params ()->shared_profile () == 0)
     return this->create_new_profile (object_key,
                                      mprofile,
                                      priority);
@@ -457,7 +460,8 @@ TAO::SSLIOP::Acceptor::ssliop_open_i (TAO_ORB_Core *orb_core,
 
   ACE_NEW_RETURN (this->accept_strategy_,
                   ACCEPT_STRATEGY (this->orb_core_,
-                                   this->timeout_),
+                                   this->timeout_,
+                                   this->check_host_),
                   -1);
 
   u_short requested_port = addr.get_port_number ();
