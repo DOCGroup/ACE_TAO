@@ -115,7 +115,7 @@ ACE_MEM_Addr::get_addr (void) const
 
 // Set a pointer to the address.
 void
-ACE_MEM_Addr::set_addr (void *addr, int len)
+ACE_MEM_Addr::set_addr (const void *addr, int len)
 {
   ACE_TRACE ("ACE_MEM_Addr::set_addr");
 

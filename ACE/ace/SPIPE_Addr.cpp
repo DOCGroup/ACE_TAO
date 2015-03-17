@@ -22,14 +22,12 @@ ACE_SPIPE_Addr::dump (void) const
 
 // Set a pointer to the address.
 void
-ACE_SPIPE_Addr::set_addr (void *addr, int len)
+ACE_SPIPE_Addr::set_addr (const void *addr, int len)
 {
   ACE_TRACE ("ACE_SPIPE_Addr::set_addr");
 
   this->ACE_Addr::base_set (AF_SPIPE, len);
-  ACE_OS::memcpy ((void *) &this->SPIPE_addr_,
-                  (void *) addr,
-                  len);
+  ACE_OS::memcpy (&this->SPIPE_addr_, addr, len);
 }
 
 // Return the address.

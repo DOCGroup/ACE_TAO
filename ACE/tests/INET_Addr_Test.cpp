@@ -271,11 +271,14 @@ int run_main (int, ACE_TCHAR *[])
 
           if (0 != ACE_OS::strcmp (addr.get_host_name (), ipv6_names[i]))
             {
-              ACE_ERROR ((LM_WARNING,
-                          ACE_TEXT ("IPv6 name mismatch: %s (%s) != %s\n"),
-                          addr.get_host_name (),
-                          addr.get_host_addr (),
-                          ipv6_names[i]));
+              // Alias? Check lookup on the reverse.
+              ACE_INET_Addr alias_check (80, addr.get_host_name ());
+              if (addr != alias_check)
+                ACE_ERROR ((LM_WARNING,
+                            ACE_TEXT ("IPv6 name mismatch: %s (%s) != %s\n"),
+                            addr.get_host_name (),
+                            addr.get_host_addr (),
+                            ipv6_names[i]));
             }
         }
     }

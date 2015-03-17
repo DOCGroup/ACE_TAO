@@ -55,7 +55,7 @@ public:
   virtual void *get_addr (void) const;
 
   /// Set a pointer to the underlying network address.
-  virtual void set_addr (void *addr, int len);
+  virtual void set_addr (const void *addr, int len);
 
   /// Transform the current address into string format.
   virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;

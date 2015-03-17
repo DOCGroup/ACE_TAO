@@ -76,7 +76,7 @@ public:
   virtual void *get_addr (void) const;
 
   /// Set a pointer to the address.
-  virtual void set_addr (void *, int len);
+  virtual void set_addr (const void *, int len);
 
   /// Transform the external ACE_MEM_Addr address into string
   /// format.
