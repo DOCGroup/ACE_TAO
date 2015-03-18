@@ -423,7 +423,7 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
 
   if (ACE::debug ())
     {
-      ACE_DEBUG ((LM_DEBUG,
+      ACELIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ACE (%P|%t) SSL_Context::check_host ")
                   ACE_TEXT ("name <%s> returns %d, peer <%s>\n"),
                   name, result, peer));
