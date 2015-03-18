@@ -200,11 +200,10 @@ LIBS	    += -lxti -ldl
 
 SONAME	    =
 SOVERSION   =
-# Default OCCFLAGS builds common code for all RS/6000 architectures but
-# this can be set to optimize for your particular computer. The commented
-# out example optimizes for RS/6000 43P.
-# OCCFLAGS is not used by default.  To used it, set optimize=1
-# either in this file or on the command line.
+# Default OCCFLAGS builds turns on mid-level optimize level. Compiler defaults
+# to build machine's architecture and a reasonable tuning effort for recent
+# machine architectures. To optimize for a more specific architecture, set
+# your OCCFLAGS to the desired -qarch and/or -qtune values. For example:
 #OCCFLAGS    += -qarch=ppc -qtune=604
 
-OCCFLAGS    += -qlibansi -O2 -qarch=com
+OCCFLAGS    += -qlibansi -O2
