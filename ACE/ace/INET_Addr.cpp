@@ -489,7 +489,7 @@ ACE_INET_Addr::set (u_short port_number,
     {
       union ip46 next_addr;
       struct sockaddr_in *next_addr_in = (struct sockaddr_in *)&next_addr.in4_;
-      (void) ACE_OS::memset (&next_addr, sizeof (next_addr), 0);
+      (void) ACE_OS::memset (&next_addr, 0, sizeof (next_addr));
       next_addr_in->sin_family = AF_INET;
       next_addr_in->sin_port = encode ? ACE_NTOHS (port_number) : port_number;
       (void) ACE_OS::memcpy ((void *) &next_addr_in->sin_addr,
