@@ -17,6 +17,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_arpa_inet.h"
+#include "ace/SString.h"
 
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
@@ -48,6 +49,41 @@ static int check_type_consistency (const ACE_INET_Addr &addr)
     }
   return 0;
 }
+
+static bool test_tao_use (void)
+{
+  char host[256];
+  if (::gethostname (host, 255) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Test TAO Use fail %p\n"),
+                  ACE_TEXT ("gethostname")));
+      return false;
+    }
+
+  ACE_INET_Addr addr;
+  addr.set ((unsigned short)0, host);
+
+  ACE_CString full (host);
+  full += ":12345";
+
+  addr.set (full.c_str ());
+
+  u_short p = addr.get_port_number ();
+
+  if (p != 12345)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Test TAO Use expected port 12345 got %d\n"),
+                  p));
+      return false;
+   }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Test TAO Use passed\n")));
+  return true;
+}
+
 
 static bool test_multiple (void)
 {
@@ -321,6 +357,9 @@ int run_main (int, ACE_TCHAR *[])
                   ACE_TEXT ("failed to detect port number overflow\n")));
       status = 1;
     }
+
+  if (!test_tao_use ())
+    status = 1;
 
   if (!test_multiple ())
     status = 1;
