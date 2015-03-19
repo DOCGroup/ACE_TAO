@@ -26,6 +26,9 @@ ACE_INET_Addr::reset_i (void)
       this->inet_addr_.in6_.sin6_family = AF_INET6;
     }
 #endif  /* ACE_HAS_IPV6 */
+  this->inet_addrs_.clear ();
+  this->inet_addrs_iter_ = this->inet_addrs_.end ();
+
 }
 
 ACE_INLINE int

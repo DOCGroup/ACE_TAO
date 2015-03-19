@@ -142,6 +142,72 @@ int run_main (int, ACE_TCHAR *[])
 
   int status = 0;     // Innocent until proven guilty
 
+  // Try to set up known IP and port.
+  u_short port (80);
+  ACE_UINT32 const ia_any = INADDR_ANY;
+  ACE_INET_Addr local_addr(port, ia_any);
+  status |= check_type_consistency (local_addr);
+  if (local_addr.get_port_number () != 80)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Got port %d, expecting 80\n"),
+                  (int)(local_addr.get_port_number ())));
+      status = 1;
+    }
+  if (local_addr.get_ip_address () != ia_any)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Mismatch on local IP addr\n")));
+      status = 1;
+    }
+
+  // Assignment constructor
+  ACE_INET_Addr local_addr2 (local_addr);
+  status |= check_type_consistency (local_addr2);
+  if (local_addr2.get_port_number () != 80)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Copy got port %d, expecting 80\n"),
+                  (int)(local_addr2.get_port_number ())));
+      status = 1;
+    }
+  if (local_addr2.get_ip_address () != ia_any)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Mismatch on copy local IP addr\n")));
+      status = 1;
+    }
+  if (local_addr != local_addr2)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Copy local addr mismatch\n")));
+      status = 1;
+    }
+
+  // Try to parse out a simple address:port string. Intentionally reuse
+  // the ACE_INET_Addr to ensure resetting an address works.
+  const char *addr_ports[] =
+    {
+      "127.0.0.1:80", "www.dre.vanderbilt.edu:80", 0
+    };
+  ACE_INET_Addr addr_port;
+  for (int i = 0; addr_ports[i] != 0; ++i)
+    {
+      addr_port.set (addr_ports[i]);
+      status |= check_type_consistency (addr_port);
+      if (addr_port.get_port_number () != 80)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Got port %d from %s\n"),
+                      (int)(addr_port.get_port_number ()),
+                      addr_ports[i]));
+          status = 1;
+        }
+      ACE_INET_Addr check (addr_ports[i]);
+      if (addr_port != check)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reset on iter %d failed\n"), i));
+          status = 1;
+        }
+    }
+
   const char *ipv4_addresses[] =
     {
       "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", 0
