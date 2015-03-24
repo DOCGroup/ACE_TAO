@@ -271,6 +271,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %token <sval>   IDL_STRING_LITERAL
 %token <cval>   IDL_CHARACTER_LITERAL
 %token <dval>   IDL_FLOATING_PT_LITERAL
+%token <sval>   IDL_FIXED_PT_LITERAL
 %token          IDL_TRUETOK
 %token          IDL_FALSETOK
 
@@ -289,6 +290,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <dcval>   struct_type enum_type switch_type_spec union_type
 %type <dcval>   array_declarator op_type_spec seq_head wstring_type_spec
 %type <dcval>   param_type_spec type_dcl type_declarator actual_parameter
+%type <dcval>   fixed_type_spec
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
 %type <idlist>  home_inheritance_spec primary_key_spec module_header
@@ -2509,6 +2511,7 @@ template_type_spec
         : sequence_type_spec
         | string_type_spec
         | wstring_type_spec
+        | fixed_type_spec
         ;
 
 constructed_type_spec
@@ -2718,13 +2721,7 @@ fixed_type
         : IDL_FIXED
         {
 // fixed_type : IDL_FIXED
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("error in %C line %d\n"),
-                      idl_global->filename ()->get_string (),
-                      idl_global->lineno ()));
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Sorry, I (TAO_IDL) can't handle")
-                      ACE_TEXT (" fixed types yet\n")));
+          $$ = AST_Expression::EV_fixed;
         }
         ;
 
@@ -3774,6 +3771,13 @@ seq_head :
 //      simple_type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceTypeSeen);
           $$ = $5;
+        }
+        ;
+
+fixed_type_spec
+        : IDL_FIXED '<' positive_int_expr ',' const_expr '>'
+        {
+          //TODO
         }
         ;
 

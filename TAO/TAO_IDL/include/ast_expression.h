@@ -151,6 +151,7 @@ public:
       , EV_any                    // Used for CORBA::Any operation parameters
       , EV_object                 // Used for CORBA::Object parameters
 
+      , EV_fixed
       , EV_void                   // Expression value is void (absent).
       , EV_none                   // Expression value is missing.
     };
