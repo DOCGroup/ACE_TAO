@@ -1151,11 +1151,11 @@ static int input (void );
 #endif
 
 /* Copy whatever the last rule matched to the standard output. */
-#ifndef YY_ECHO
+#ifndef ECHO
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define YY_ECHO do { if (fwrite( tao_yytext, tao_yyleng, 1, tao_yyout )) {} } while (0)
+#define ECHO do { if (fwrite( tao_yytext, tao_yyleng, 1, tao_yyout )) {} } while (0)
 #endif
 
 /* Gets input and stuffs it into "buf".  number of characters read, or YY_NULL,
@@ -2051,7 +2051,7 @@ return ace_yytext[0];
 case 111:
 YY_RULE_SETUP
 #line 409 "fe/idl.ll"
-YY_ECHO;
+ECHO;
         YY_BREAK
 #line 2060 "<stdout>"
 case YY_STATE_EOF(INITIAL):

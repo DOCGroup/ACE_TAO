@@ -131,20 +131,20 @@
 #include "fe_utils.h"
 
 #if (defined(apollo) || defined(hpux)) && defined(__cplusplus)
-extern  "C" int yywrap();
+extern  "C" int tao_yywrap();
 #endif  // (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 
 
-void yyerror (const char *);
-int yylex (void);
-extern "C" int yywrap (void);
-extern char yytext[];
-extern int yyleng;
+void tao_yyerror (const char *);
+int tao_yylex (void);
+extern "C" int tao_yywrap (void);
+extern char tao_yytext[];
+extern int tao_yyleng;
 AST_Enum *tao_enum_constant_decl = 0;
 AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
-#define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
+#define TAO_YYDEBUG_LEXER_TEXT (tao_yytext[tao_yyleng] = '\0', tao_yytext)
 // Force the pretty debugging code to compile.
-#define YYDEBUG 1
+#define TAO_YYDEBUG 1
 
 #line 150 "fe/idl.tab.cpp" /* yacc.c:339  */
 
@@ -10358,7 +10358,7 @@ yyreturn:
  * ???
  */
 int
-yywrap (void)
+tao_yywrap (void)
 {
   return 1;
 }
@@ -10367,7 +10367,7 @@ yywrap (void)
  * Report an error situation discovered in a production
  */
 void
-yyerror (const char *msg)
+tao_yyerror (const char *msg)
 {
   ACE_ERROR ((LM_ERROR,
               "%C\n",
