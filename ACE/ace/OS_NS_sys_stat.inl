@@ -196,6 +196,7 @@ namespace ACE_OS
 #elif defined (ACE_HAS_WINCE)
     ACE_TEXT_WIN32_FIND_DATA fdata;
 
+    int rc = 0;
     HANDLE fhandle;
 
     fhandle = ::FindFirstFile (ACE_TEXT_CHAR_TO_TCHAR (file), &fdata);
@@ -207,7 +208,7 @@ namespace ACE_OS
     else if (fdata.nFileSizeHigh != 0)
       {
         errno = EINVAL;
-        return -1;
+        rc = -1;
       }
     else
       {
@@ -217,7 +218,9 @@ namespace ACE_OS
         stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
         stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
       }
-    return 0;
+
+    ::FindClose (fhandle);
+    return rc;
 #elif defined (ACE_HAS_X86_STAT_MACROS)
     // Solaris for intel uses an macro for stat(), this macro is a
     // wrapper for _xstat().
@@ -235,6 +238,7 @@ namespace ACE_OS
 #if defined (ACE_HAS_WINCE)
     WIN32_FIND_DATAW fdata;
 
+    int rc = 0;
     HANDLE fhandle;
 
     fhandle = ::FindFirstFileW (file, &fdata);
@@ -246,7 +250,7 @@ namespace ACE_OS
     else if (fdata.nFileSizeHigh != 0)
       {
         errno = EINVAL;
-        return -1;
+        rc = -1;
       }
     else
       {
@@ -256,7 +260,9 @@ namespace ACE_OS
         stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
         stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
       }
-    return 0;
+
+    ::FindClose (fhandle);
+    return rc;
 #elif defined (__BORLANDC__) \
       || defined (_MSC_VER) \
       || (defined (__MINGW32__) && !defined (__MINGW64_VERSION_MAJOR))

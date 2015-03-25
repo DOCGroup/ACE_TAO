@@ -72,7 +72,12 @@ namespace
 #if defined (ACE_WIN32)
         c = ::_getch ();
 #else
-        c = ::getchar ();
+        int ci = ::getchar ();
+        if (ci == EOF)
+          {
+            break;
+          }
+        c = (char)ci;
 #endif /* ACE_WIN32 */
         if (c >= ' ' && c <= '~')
           {
