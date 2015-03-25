@@ -85,10 +85,10 @@ USER VISIBLE CHANGES BETWEEN TAO-2.2.4 and TAO-2.2.5
   - New tao_imr link command to identify groups of POAs that share a server.
   - ImR is better able to avoid errantly starting multiple server instances.
 
-. Added support for Embarcadero C++Builder XE5 using
+. Added maintenance for Embarcadero C++Builder XE5 using
   bcc32 in debug and release mode
 
-. Added support for Embarcadero C++Builder XE6 using
+. Added maintenance for Embarcadero C++Builder XE6 using
   bcc32 in debug and release mode
 
 USER VISIBLE CHANGES BETWEEN TAO-2.2.3 and TAO-2.2.4
@@ -100,8 +100,7 @@ USER VISIBLE CHANGES BETWEEN TAO-2.2.3 and TAO-2.2.4
 
 . Improved recursive typecode handling
 
-. Ended maintenance and support for Solaris 10 with Sun
-  Studio
+. Ended maintenance for Solaris 10 with Sun Studio
 
 USER VISIBLE CHANGES BETWEEN TAO-2.2.2 and TAO-2.2.3
 ====================================================
