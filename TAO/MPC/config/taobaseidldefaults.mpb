@@ -28,7 +28,7 @@ project: build_files {
       commandflags(!-Sch) = C
     }
     optional(source_outputext) {
-      commandflags(!-Scc || !-Ssc) = .cpp, .cxx, .cc, .C
+      commandflags(!-Scc && !-Ssc) = .cpp, .cxx, .cc, .C
     }
 
     // Inline related options
