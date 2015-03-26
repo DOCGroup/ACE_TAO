@@ -1,3 +1,4 @@
+# $Id$
 #
 # Platform macros for building on AIX with g++.  This has been tested on
 # AIX 4.3 and 5 with gcc 3. Earlier versions of gcc may compile, but are
@@ -30,7 +31,7 @@ SOEXT    = so
 LDFLAGS += -Wl,-brtl
 
 ifeq (1,$(threads))
-  CFLAGS  += -pthread
+  FLAGS_C_CC += -pthread
 endif
 
 ifeq ($(shared_libs),1)
@@ -48,12 +49,12 @@ AIX_VERS := $(AIX_MAJOR_VERS)0$(AIX_MINOR_VERS)
 CC             = gcc
 CXX            = g++
 
-CFLAGS          += -DACE_AIX_VERS=$(AIX_VERS)
+FLAGS_C_CC += -DACE_AIX_VERS=$(AIX_VERS)
 ifeq ($(buildbits),32)
-  CFLAGS    += -maix32
+  FLAGS_C_CC += -maix32
 endif
 ifeq ($(buildbits),64)
-  CFLAGS    += -maix64
+  FLAGS_C_CC += -maix64
   LDFLAGS   += -maix64
   ARFLAGS   += -X64
 endif
