@@ -104,8 +104,7 @@ TAO::SSLIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
 
   // Check if multiple endpoints should be put in one profile or
   // if they should be spread across multiple profiles.
-  if (priority == TAO_INVALID_PRIORITY  &&
-      this->orb_core_->orb_params ()->shared_profile () == 0)
+  if (priority == TAO_INVALID_PRIORITY)
     return this->create_new_profile (object_key,
                                      mprofile,
                                      priority);
