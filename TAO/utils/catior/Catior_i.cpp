@@ -1181,55 +1181,55 @@ Catior_i::cat_tagged_components (TAO_InputCDR& stream)
       buffer_ += buf;
 
       if (tag == IOP::TAG_ORB_TYPE) {
-        ACE_OS::snprintf (buf, bufsize, "%d (TAG_ORB_TYPE)\n", tag);
+        ACE_OS::snprintf (buf, bufsize, " (TAG_ORB_TYPE)\n");
         buffer_ += buf;
         trace_depth_ += 2;
         cat_tag_orb_type(stream);
         trace_depth_ -= 2;
       } else if (tag == IOP::TAG_CODE_SETS) {
-        ACE_OS::snprintf (buf, bufsize, "%d (TAG_CODE_SETS)\n", tag);
+        ACE_OS::snprintf (buf, bufsize, " (TAG_CODE_SETS)\n");
         buffer_ += buf;
         trace_depth_ += 2;
         cat_codeset_info(stream);
         trace_depth_ -= 2;
       } else if (tag == IOP::TAG_ALTERNATE_IIOP_ADDRESS) {
-        ACE_OS::snprintf (buf, bufsize, "%d (TAG_ALTERNATE_IIOP_ADDRESS)\n", tag);
+        ACE_OS::snprintf (buf, bufsize, " (TAG_ALTERNATE_IIOP_ADDRESS)\n");
         buffer_ += buf;
         trace_depth_ += 2;
         cat_tag_alternate_endpoints (stream);
         trace_depth_ -= 2;
       } else if (tag == TAO_TAG_ENDPOINTS) {
-        ACE_OS::snprintf (buf, bufsize, "%d (TAO_TAG_ENDPOINTS)\n", tag);
+        ACE_OS::snprintf (buf, bufsize, " (TAO_TAG_ENDPOINTS)\n");
         buffer_ += buf;
         trace_depth_ += 2;
         cat_tao_tag_endpoints(stream);
         trace_depth_ -= 2;
       } else if (tag == IOP::TAG_POLICIES) {
-        ACE_OS::snprintf (buf, bufsize, "%d (TAG_POLICIES)\n", tag);
+        ACE_OS::snprintf (buf, bufsize, " (TAG_POLICIES)\n");
         buffer_ += buf;
         trace_depth_ += 2;
         cat_tag_policies(stream);
         trace_depth_ -= 2;
       } else if (tag == 20U /* SSLIOP::TAG_SSL_SEC_TRANS */) {
-        ACE_OS::snprintf (buf, bufsize, "%d (TAG_SSL_SEC_TRANS)\n", tag);
+        ACE_OS::snprintf (buf, bufsize, " (TAG_SSL_SEC_TRANS)\n");
         buffer_ += buf;
         trace_depth_ += 2;
         cat_tag_ssl_sec_trans(stream);
         trace_depth_ -= 2;
       }  else if (tag == 38U /* TAG_RMI_CUSTOM_MAX_STREAM_FORMAT */) {
-        ACE_OS::snprintf (buf, bufsize, "%d (TAG_RMI_CUSTOM_MAX_STREAM_FORMAT)\n", tag);
+        ACE_OS::snprintf (buf, bufsize, "(TAG_RMI_CUSTOM_MAX_STREAM_FORMAT)\n");
         buffer_ += buf;
         trace_depth_ += 2;
         cat_octet_seq ("Component Value", stream);
         trace_depth_ -= 2;
       } else if (tag == 1229081866U /* IBM_PARTNER_VERSION */) {
-        ACE_OS::snprintf (buf, bufsize, "%d (IBM_PARTNER_VERSION)\n", tag);
+        ACE_OS::snprintf (buf, bufsize, " (IBM_PARTNER_VERSION)\n");
         buffer_ += buf;
         trace_depth_ += 2;
         cat_ibm_partner_version (stream);
         trace_depth_ -= 2;
       } else {
-        ACE_OS::snprintf (buf, bufsize, "%d\n", tag);
+        ACE_OS::snprintf (buf, bufsize, " (Unrecognized tag)\n");
         buffer_ += buf;
         trace_depth_ += 2;
         cat_octet_seq ("Component Value", stream);
