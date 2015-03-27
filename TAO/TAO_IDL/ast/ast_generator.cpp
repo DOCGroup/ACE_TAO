@@ -103,6 +103,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_native.h"
 #include "ast_factory.h"
 #include "ast_finder.h"
+#include "ast_fixed.h"
 
 #include "utl_identifier.h"
 
@@ -803,6 +804,17 @@ AST_Generator::create_expr (ACE_CDR::Double d)
   return retval;
 }
 
+AST_Expression *
+AST_Generator::create_expr (const ACE_CDR::Fixed &f)
+{
+  AST_Expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  AST_Expression (f),
+                  0);
+
+  return retval;
+}
+
 AST_EnumVal *
 AST_Generator::create_enum_val (ACE_CDR::ULong v,
                                 UTL_ScopedName *n)
@@ -891,6 +903,17 @@ AST_Generator::create_wstring (AST_Expression *ms)
                               sizeof (ACE_OS::WChar)),
                   0);
 
+  return retval;
+}
+
+AST_Fixed *
+AST_Generator::create_fixed (AST_Expression *digits,
+                             AST_Expression *scale)
+{
+  Identifier id ("fixed");
+  UTL_ScopedName name (&id, 0);
+  AST_Fixed *retval = 0;
+  ACE_NEW_RETURN (retval, AST_Fixed (&name, digits, scale), 0);
   return retval;
 }
 

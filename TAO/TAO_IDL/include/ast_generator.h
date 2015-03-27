@@ -92,6 +92,7 @@ class AST_Template_Module_Inst;
 class AST_Template_Module_Ref;
 class AST_Param_Holder;
 class AST_Finder;
+class AST_Fixed;
 
 // Defines base class for node generators.
 
@@ -304,6 +305,8 @@ public:
 
   virtual AST_Expression *create_expr (ACE_CDR::Double d);
 
+  virtual AST_Expression *create_expr (const ACE_CDR::Fixed &f);
+
   // Create a node representing an enumerator.
   virtual AST_EnumVal *create_enum_val (ACE_CDR::ULong v,
                                         UTL_ScopedName *n);
@@ -327,6 +330,9 @@ public:
 
   // Create a node representing a wide string type.
   virtual AST_String *create_wstring (AST_Expression *v);
+
+  virtual AST_Fixed *create_fixed (AST_Expression *digits,
+                                   AST_Expression *scale);
 
   // Create a node representing a type renaming (typedef).
   virtual AST_Typedef *create_typedef (AST_Type *bt,

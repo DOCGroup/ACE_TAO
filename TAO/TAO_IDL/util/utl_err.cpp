@@ -296,6 +296,8 @@ exprtype_to_string (AST_Expression::ExprType t)
     return "any";
   case AST_Expression::EV_object:
     return "object";
+  case AST_Expression::EV_fixed:
+    return "fixed";
   }
   return 0;
 }

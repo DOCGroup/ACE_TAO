@@ -272,10 +272,7 @@ AST_Constant::exprtype_to_string (void)
       return "CORBA::WChar";
     case AST_Expression::EV_wstring:
       return "CORBA::WChar *const";
-    case AST_Expression::EV_enum:
-    case AST_Expression::EV_longdouble:
-    case AST_Expression::EV_any:
-    case AST_Expression::EV_object:
+    default:
       return 0;
     }
 

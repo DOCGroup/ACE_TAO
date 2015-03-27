@@ -136,7 +136,7 @@ extern int tao_yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 153 "fe/idl.ypp" /* yacc.c:1909  */
+#line 154 "fe/idl.ypp" /* yacc.c:1909  */
 
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */
@@ -163,6 +163,7 @@ union YYSTYPE
   ACE_CDR::Float                fval;           /* Float value          */
   ACE_CDR::Char                 cval;           /* Char value           */
   ACE_CDR::WChar                wcval;          /* WChar value          */
+  ACE_CDR::Fixed                fixval;         /* Fixed point value    */
   UTL_String                    *sval;          /* String value         */
   char                          *wsval;         /* WString value        */
   char                          *strval;        /* char * value         */
@@ -173,7 +174,7 @@ union YYSTYPE
   FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
   FE_Utils::T_ARGLIST           *alval;         /* List of template args */
 
-#line 177 "fe/idl.tab.hpp" /* yacc.c:1909  */
+#line 178 "fe/idl.tab.hpp" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

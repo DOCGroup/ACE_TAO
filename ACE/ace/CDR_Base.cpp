@@ -8,6 +8,12 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
+#ifdef ACE_LACKS_IOSTREAM_TOTALLY
+#include "ace/OS_NS_stdio.h"
+#else
+#include "ace/streams.h"
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (NONNATIVE_LONGDOUBLE)
@@ -771,5 +777,117 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
   return ret;
 }
 #endif /* NONNATIVE_LONGDOUBLE */
+
+ACE_CDR::Fixed ACE_CDR::Fixed::from_int (ACE_CDR::LongLong val)
+{
+  Fixed f;
+  f.value_[15] = (val < 0) ? NEGATIVE : POSITIVE;
+  bool high = true;
+  int idx = 15;
+  while (true)
+    {
+      const LongLong mod = val % 10;
+      const unsigned int digit = (mod < 0) ? -mod : mod;
+      if (high)
+        f.value_[idx--] |= (digit << 4);
+      else
+        f.value_[idx] = digit;
+      high = !high;
+      if (val > 10 || val < -10)
+        val /= 10;
+      else
+        break;
+    }
+
+  ACE_OS::memset (f.value_, UNUSED, idx);
+  return f;
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::from_int (ACE_CDR::ULongLong val)
+{
+  Fixed f;
+  f.value_[15] = POSITIVE;
+  bool high = true;
+  int idx = 15;
+  while (true)
+    {
+      const unsigned int digit = val % 10;
+      if (high)
+        f.value_[idx--] |= (digit << 4);
+      else
+        f.value_[idx] = digit;
+      high = !high;
+      if (val > 10)
+        val /= 10;
+      else
+        break;
+    }
+
+  ACE_OS::memset (f.value_, UNUSED, idx);
+  return f;
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
+{
+  const bool negative = str && *str == '-';
+  if (negative || (str && *str == '+')) ++str;
+
+  const size_t span = ACE_OS::strspn (str, ".0123456789");
+
+  Fixed f;
+  f.value_[15] = negative ? NEGATIVE : POSITIVE;
+
+  int idx = 15;
+  size_t iter = span;
+  for (bool high = true; iter; --iter, high = !high)
+    {
+      if (str[iter - 1] == '.')
+        {
+          f.scale_ = span - iter;
+          if (--iter == 0) break; // skip '.'
+        }
+
+      const unsigned int digit = str[iter - 1] - '0';
+      if (high)
+        f.value_[idx--] |= (digit << 4);
+      else
+        f.value_[idx] = digit;
+    }
+
+  ACE_OS::memset (f.value_, UNUSED, idx);
+  return f;
+}
+
+bool ACE_CDR::Fixed::operator== (const ACE_CDR::Fixed &rhs) const
+{
+  return 0 == ACE_OS::memcmp (value_, rhs.value_, sizeof value_);
+}
+
+ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs,
+                              const ACE_CDR::Fixed &rhs)
+{
+  const char *const sign =
+    ((rhs.value_[15] & 0xf) == ACE_CDR::Fixed::NEGATIVE) ? "-" : "";
+  char digits[33];
+  int idx = 0;
+  for (int i = 0; i < 16; ++i)
+    if (rhs.value_[i] != ACE_CDR::Fixed::UNUSED)
+      {
+        const ACE_CDR::Octet high = rhs.value_[i] >> 4,
+          low = rhs.value_[i] & 0xf;
+        if (idx || high) // skip leading 0
+          digits[idx++] = high;
+        if (i < 15 && (idx || low))
+          digits[idx++] = low;
+      }
+  digits[idx] = 0;
+
+#ifdef ACE_LACKS_IOSTREAM_TOTALLY
+  ACE_OS::fprintf (&lhs, "%s%s", sign, digits);
+#else
+  lhs << sign << digits;
+#endif
+  return lhs;
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

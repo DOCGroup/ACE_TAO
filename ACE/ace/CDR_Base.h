@@ -36,6 +36,7 @@
 #include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
 #include "ace/Global_Macros.h"
+#include "ace/iosfwd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -350,6 +351,41 @@ public:
          operator NativeImpl () const;
        };
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
+
+       class ACE_Export Fixed
+       {
+       public:
+         static const Octet POSITIVE = 0xc, NEGATIVE = 0xd;
+
+         static Fixed from_int (LongLong val = 0);
+         static Fixed from_int (ULongLong val);
+         static Fixed from_string (const char *str);
+
+         Octet& scale () { return scale_; }
+         Octet scale () const { return scale_; }
+
+         bool operator== (const Fixed &rhs) const;
+
+         friend ACE_Export
+         ACE_OSTREAM_TYPE &::operator<< (ACE_OSTREAM_TYPE &lhs,
+                                         const Fixed &rhs);
+
+       private:
+         static const Octet UNUSED = 0xff;
+
+         /// CDR wire format for Fixed: marshaled as an octet array with
+         /// index 0 as the most significant octet and index n the least
+         /// significant.  Each octet contains two decimal digits except for
+         /// the last octet (after least sig) which has one decimal digit in
+         /// the high nibble and the sign indicator in the low nibble.
+         /// Octets at the start of the array with the value UNUSED are not
+         /// marshalled.
+         Octet value_[16];
+
+         /// Scale is not marshaled, the receiver needs to know it
+         /// from the type information (for example, IDL).
+         Octet scale_;
+       };
 
   //@}
 

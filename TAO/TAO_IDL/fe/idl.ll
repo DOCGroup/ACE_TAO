@@ -243,9 +243,7 @@ oneway          return IDL_ONEWAY;
                 }
 
 "-"?(([0-9]+"."[0-9]*)|("."?[0-9]+))[dD] {
-                  ACE_NEW_RETURN (tao_yylval.sval,
-                                  UTL_String (ace_yytext, true),
-                                  IDL_FIXED_PT_LITERAL);
+                  tao_yylval.fixval = ACE_CDR::Fixed::from_string (ace_yytext);
                   return IDL_FIXED_PT_LITERAL;
                 }
 

@@ -1,7 +1,10 @@
 // -*- MPC -*-
 project(TAO_IDL_GEN) {
   requires += tao_idl_fe_gen
+  custom_only = 1
+
   verbatim(gnuace, local) {
+    all: fe/fe_lookup.cpp fe/idl.yy.cpp fe/idl.tab.cpp fe/idl.tab.hpp
     fe/fe_lookup.cpp: fe/keywords.dat
     "	echo '#include \"fe_private.h\"' > $@"
     "	echo '#include \"ace/OS_NS_string.h\"' >> $@"
@@ -11,7 +14,7 @@ project(TAO_IDL_GEN) {
     "	    -e 's/\\*str == \\*s && !ACE_OS::strncmp/len == static_cast<unsigned int> (ACE_OS::strlen (s)) \\&\\& *str == *s \\&\\& !ACE_OS::strncmp/g' \\"
     "	>> $@"
 
-    fe/lex.yy.cpp: fe/idl.ll
+    fe/idl.yy.cpp: fe/idl.ll
     "	@echo 'WARNING: Potentially outdated $@'"
     "	@echo '         either touch(1) the file or explicitly'"
     "	@echo '         generate it using:'"
@@ -37,7 +40,7 @@ project(TAO_IDL_GEN) {
     "	@/bin/false"
     "endif"
 
-    fe/idl.tab.cpp: fe/idl.yy
+    fe/idl.tab.cpp fe/idl.tab.hpp: fe/idl.ypp
     "	@echo 'WARNING: Potentially outdated $@'"
     "	@echo '         either touch(1) the file or explicitly'"
     "	@echo '         generate it using:'"
@@ -59,6 +62,7 @@ project(TAO_IDL_FE) : acelib, conv_lib, tao_output {
   dynamicflags += TAO_IDL_FE_BUILD_DLL
   includes    += $(TAO_ROOT)
   includes    += include fe
+  after       += TAO_IDL_GEN
 
   specific {
     // Override the template value for optimize.  Building the frontend

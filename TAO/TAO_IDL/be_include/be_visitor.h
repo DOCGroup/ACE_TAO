@@ -66,6 +66,7 @@ class be_string;
 class be_typedef;
 class be_root;
 class be_native;
+class be_fixed;
 class be_param_holder;
 
 class be_visitor_context;
@@ -137,6 +138,7 @@ public:
   virtual int visit_typedef (be_typedef *node);
   virtual int visit_root (be_root *node);
   virtual int visit_native (be_native *node);
+  virtual int visit_fixed (be_fixed *node);
 
 protected:
   // Not abstract but we want to force subclassing anyway.

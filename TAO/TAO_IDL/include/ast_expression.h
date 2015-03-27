@@ -178,6 +178,7 @@ public:
           UTL_String          *strval;  // Contains String * expr value.
           char                *wstrval; // Contains wide string expr value.
           ACE_CDR::ULong      eval;     // Contains enumeration value.
+          ACE_CDR::Fixed      fixedval; // Contains IDL fixed value.
         } u;
 
       ExprType et;
@@ -225,6 +226,8 @@ public:
   AST_Expression (char *s);
 
   AST_Expression (UTL_ScopedName *n);
+
+  AST_Expression (const ACE_CDR::Fixed &f);
 
   // Destructor.
   virtual ~AST_Expression (void);

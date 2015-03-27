@@ -87,6 +87,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_array.h"
 #include "ast_attribute.h"
 #include "ast_field.h"
+#include "ast_fixed.h"
 #include "ast_expression.h"
 #include "ast_operation.h"
 #include "ast_generator.h"
@@ -176,6 +177,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   ACE_CDR::Float                fval;           /* Float value          */
   ACE_CDR::Char                 cval;           /* Char value           */
   ACE_CDR::WChar                wcval;          /* WChar value          */
+  ACE_CDR::Fixed                fixval;         /* Fixed point value    */
   UTL_String                    *sval;          /* String value         */
   char                          *wsval;         /* WString value        */
   char                          *strval;        /* char * value         */
@@ -271,7 +273,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %token <sval>   IDL_STRING_LITERAL
 %token <cval>   IDL_CHARACTER_LITERAL
 %token <dval>   IDL_FLOATING_PT_LITERAL
-%token <sval>   IDL_FIXED_PT_LITERAL
+%token <fixval> IDL_FIXED_PT_LITERAL
 %token          IDL_TRUETOK
 %token          IDL_FALSETOK
 
@@ -2233,6 +2235,10 @@ literal
           ACE_OutputCDR::from_wchar wc ($1);
           $$ = idl_global->gen ()->create_expr (wc);
         }
+        | IDL_FIXED_PT_LITERAL
+        {
+          $$ = idl_global->gen ()->create_expr ($1);
+        }
         | IDL_FLOATING_PT_LITERAL
         {
 //      | IDL_FLOATING_PT_LITERAL
@@ -3777,7 +3783,7 @@ seq_head :
 fixed_type_spec
         : IDL_FIXED '<' positive_int_expr ',' const_expr '>'
         {
-          //TODO
+          $$ = idl_global->gen ()->create_fixed ($3, $5);
         }
         ;
 

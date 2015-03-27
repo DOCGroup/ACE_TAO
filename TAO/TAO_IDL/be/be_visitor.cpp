@@ -330,3 +330,8 @@ be_visitor::visit_native (be_native *)
   return 0;
 }
 
+int
+be_visitor::visit_fixed (be_fixed *)
+{
+  return 0;
+}
