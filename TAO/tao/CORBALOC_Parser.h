@@ -56,8 +56,7 @@ public:
 
   /// Parse the ior-string that is passed.
   virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb
-                                          );
+                                          CORBA::ORB_ptr orb);
 
 private:
 
@@ -67,18 +66,15 @@ private:
    * reference which is sent to the application.
    */
   CORBA::Object_ptr make_stub_from_mprofile (CORBA::ORB_ptr orb,
-                                             TAO_MProfile &mprofile
-                                             );
+                                             TAO_MProfile &mprofile);
 
   /// Gets the pointer to the key_string when the protocol used is RIR
   CORBA::Object_ptr parse_string_rir_helper (const char *corbaloc_name,
-                                             CORBA::ORB_ptr orb
-                                             );
+                                             CORBA::ORB_ptr orb);
 
   void make_canonical (const char *ior,
                        size_t ior_len,
-                       ACE_CString &canonical_endpoint
-                       );
+                       ACE_CString &canonical_endpoint);
 
   struct parsed_endpoint {
     parsed_endpoint ();
