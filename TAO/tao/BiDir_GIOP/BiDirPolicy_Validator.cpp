@@ -18,20 +18,17 @@ TAO_BiDirPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP);
 
-  if (CORBA::is_nil (policy.in ()))
-    return;
-
   BiDirPolicy::BidirectionalPolicy_var srp =
     BiDirPolicy::BidirectionalPolicy::_narrow (policy.in ());
 
-  if (CORBA::is_nil (srp.in ()))
-    return;
+  if (!CORBA::is_nil (srp.in ()))
+    {
+      BiDirPolicy::BidirectionalPolicyValue val = srp->value ();
 
-  BiDirPolicy::BidirectionalPolicyValue val = srp->value ();
-
-  // Set the flag in the ORB_Core
-  if (val == BiDirPolicy::BOTH)
-    orb_core_.bidir_giop_policy (true);
+      // Set the flag in the ORB_Core
+      if (val == BiDirPolicy::BOTH)
+        orb_core_.bidir_giop_policy (true);
+    }
 }
 
 void
