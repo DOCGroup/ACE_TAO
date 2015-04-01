@@ -12,7 +12,6 @@ AST_Fixed::AST_Fixed (UTL_ScopedName *name,
     pd_digits (digits),
     pd_scale (scale)
 {
-  pd_scale->evaluate (AST_Expression::EK_const); //TODO
 }
 
 AST_Fixed::~AST_Fixed ()
@@ -21,7 +20,7 @@ AST_Fixed::~AST_Fixed ()
 
 void AST_Fixed::dump (ACE_OSTREAM_TYPE &os)
 {
-  dump_i (os, "fixed <");
+  dump_i (os, "fixed<");
   pd_digits->dump (os);
   dump_i (os, ", ");
   pd_scale->dump (os);

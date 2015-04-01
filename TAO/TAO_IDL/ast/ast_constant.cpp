@@ -113,6 +113,8 @@ AST_Constant::exprtype_to_string (AST_Expression::ExprType et)
       return "Wchar*";
     case AST_Expression::EV_longdouble:
       return "LongDouble";
+    case AST_Expression::EV_fixed:
+      return "Fixed";
     default:
       break;
     }
@@ -272,6 +274,8 @@ AST_Constant::exprtype_to_string (void)
       return "CORBA::WChar";
     case AST_Expression::EV_wstring:
       return "CORBA::WChar *const";
+    case AST_Expression::EV_fixed:
+      return "Fixed";
     default:
       return 0;
     }

@@ -3783,6 +3783,7 @@ seq_head :
 fixed_type_spec
         : IDL_FIXED '<' positive_int_expr ',' const_expr '>'
         {
+          $5->evaluate (AST_Expression::EK_positive_int);
           $$ = idl_global->gen ()->create_fixed ($3, $5);
         }
         ;

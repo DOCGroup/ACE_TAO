@@ -778,10 +778,15 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
 }
 #endif /* NONNATIVE_LONGDOUBLE */
 
-ACE_CDR::Fixed ACE_CDR::Fixed::from_int (ACE_CDR::LongLong val)
+
+// ACE_CDR::Fixed
+
+ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::LongLong val)
 {
   Fixed f;
   f.value_[15] = (val < 0) ? NEGATIVE : POSITIVE;
+  f.digits_ = 0;
+  f.scale_ = 0;
   bool high = true;
   int idx = 15;
   while (true)
@@ -789,41 +794,52 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_int (ACE_CDR::LongLong val)
       const LongLong mod = val % 10;
       const unsigned int digit = (mod < 0) ? -mod : mod;
       if (high)
-        f.value_[idx--] |= (digit << 4);
+        f.value_[idx--] |= digit << 4;
       else
         f.value_[idx] = digit;
       high = !high;
+      ++f.digits_;
       if (val > 10 || val < -10)
         val /= 10;
       else
         break;
     }
 
-  ACE_OS::memset (f.value_, UNUSED, idx);
+  ACE_OS::memset (f.value_, 0, idx + !high);
   return f;
 }
 
-ACE_CDR::Fixed ACE_CDR::Fixed::from_int (ACE_CDR::ULongLong val)
+ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::ULongLong val)
 {
   Fixed f;
   f.value_[15] = POSITIVE;
+  f.digits_ = 0;
+  f.scale_ = 0;
   bool high = true;
   int idx = 15;
   while (true)
     {
       const unsigned int digit = val % 10;
       if (high)
-        f.value_[idx--] |= (digit << 4);
+        f.value_[idx--] |= digit << 4;
       else
         f.value_[idx] = digit;
       high = !high;
+      ++f.digits_;
       if (val > 10)
         val /= 10;
       else
         break;
     }
 
-  ACE_OS::memset (f.value_, UNUSED, idx);
+  ACE_OS::memset (f.value_, 0, idx + !high);
+  return f;
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
+{
+  Fixed f;
+  //TODO
   return f;
 }
 
@@ -836,10 +852,12 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
 
   Fixed f;
   f.value_[15] = negative ? NEGATIVE : POSITIVE;
+  f.digits_ = 0;
+  f.scale_ = 0;
 
   int idx = 15;
-  size_t iter = span;
-  for (bool high = true; iter; --iter, high = !high)
+  bool high = true;
+  for (size_t iter = span; iter; --iter, high = !high)
     {
       if (str[iter - 1] == '.')
         {
@@ -849,18 +867,115 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
 
       const unsigned int digit = str[iter - 1] - '0';
       if (high)
-        f.value_[idx--] |= (digit << 4);
+        f.value_[idx--] |= digit << 4;
       else
         f.value_[idx] = digit;
+      ++f.digits_;
     }
 
-  ACE_OS::memset (f.value_, UNUSED, idx);
+  ACE_OS::memset (f.value_, 0, idx + !high);
   return f;
 }
 
-bool ACE_CDR::Fixed::operator== (const ACE_CDR::Fixed &rhs) const
+ACE_CDR::Fixed::operator LongLong () const
 {
-  return 0 == ACE_OS::memcmp (value_, rhs.value_, sizeof value_);
+  //TODO
+  return 0;
+}
+
+ACE_CDR::Fixed::operator LongDouble () const
+{
+  //TODO
+  return 0;
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::round (UShort scale) const
+{
+  Fixed f;
+  //TODO
+  return f;
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::truncate (UShort scale) const
+{
+  Fixed f;
+  //TODO
+  return f;
+}
+
+bool ACE_CDR::Fixed::to_string (char *buffer, size_t buffer_size) const
+{
+  //TODO
+  return false;
+}
+
+ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
+{
+  //TODO
+  return *this;
+}
+
+ACE_CDR::Fixed &ACE_CDR::Fixed::operator-= (const Fixed &rhs)
+{
+  //TODO
+  return *this;
+}
+
+ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (const Fixed &rhs)
+{
+  //TODO
+  return *this;
+}
+
+ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
+{
+  //TODO
+  return *this;
+}
+
+ACE_CDR::Fixed &ACE_CDR::Fixed::operator++ ()
+{
+  //TODO
+  return *this;
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::operator++ (int)
+{
+  const Fixed cpy (*this);
+  ++*this;
+  return cpy;
+}
+
+ACE_CDR::Fixed &ACE_CDR::Fixed::operator-- ()
+{
+  //TODO
+  return *this;
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::operator-- (int)
+{
+  const Fixed cpy (*this);
+  --*this;
+  return cpy;
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::operator+ () const
+{
+  return *this;
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::operator- () const
+{
+  Fixed f = *this;
+  f.value_[15] = (f.value_[15] & 0xf0) | (f.signbit () ? POSITIVE : NEGATIVE);
+  return f;
+}
+
+ACE_CDR::Boolean ACE_CDR::Fixed::operator! () const
+{
+  static const Octet ZERO[] = {0, 0, 0, 0, 0, 0, 0, 0,
+                               0, 0, 0, 0, 0, 0, 0, POSITIVE};
+  return 0 == ACE_OS::memcmp (this->value_, ZERO, sizeof ZERO);
 }
 
 ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs,
@@ -868,18 +983,39 @@ ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs,
 {
   const char *const sign =
     ((rhs.value_[15] & 0xf) == ACE_CDR::Fixed::NEGATIVE) ? "-" : "";
-  char digits[33];
+  char digits[MAX_STRING_SIZE];
   int idx = 0;
-  for (int i = 0; i < 16; ++i)
-    if (rhs.value_[i] != ACE_CDR::Fixed::UNUSED)
-      {
-        const ACE_CDR::Octet high = rhs.value_[i] >> 4,
-          low = rhs.value_[i] & 0xf;
-        if (idx || high) // skip leading 0
-          digits[idx++] = high;
-        if (i < 15 && (idx || low))
-          digits[idx++] = low;
-      }
+  for (int i = 15 - (rhs.digits_ + 1) / 2; i < 16; ++i)
+    {
+      const ACE_CDR::Octet high = rhs.value_[i] >> 4,
+        low = rhs.value_[i] & 0xf;
+
+      if (rhs.scale_ == 1 + 2 * (15 - i))
+        {
+          if (!idx)
+            digits[idx++] = '0';
+
+          digits[idx++] = '.';
+        }
+
+      if (idx || high)
+        digits[idx++] = '0' + high;
+
+      if (rhs.scale_ && rhs.scale_ == 2 * (15 - i))
+        {
+          if (!idx)
+            digits[idx++] = '0';
+
+          digits[idx++] = '.';
+        }
+
+      if (i < 15 && (idx || low))
+        digits[idx++] = '0' + low;
+    }
+
+  if (!idx)
+    digits[idx++] = '0';
+
   digits[idx] = 0;
 
 #ifdef ACE_LACKS_IOSTREAM_TOTALLY
@@ -888,6 +1024,106 @@ ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs,
   lhs << sign << digits;
 #endif
   return lhs;
+}
+
+ACE_OSTREAM_TYPE &operator>> (ACE_OSTREAM_TYPE &lhs,
+                              ACE_CDR::Fixed &rhs)
+{
+  //TODO
+  return lhs;
+}
+
+ACE_CDR::Fixed operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  ACE_CDR::Fixed f = lhs;
+  lhs += rhs;
+  return f;
+}
+
+ACE_CDR::Fixed operator- (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  ACE_CDR::Fixed f = lhs;
+  lhs -= rhs;
+  return f;
+}
+
+ACE_CDR::Fixed operator* (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  ACE_CDR::Fixed f = lhs;
+  lhs *= rhs;
+  return f;
+}
+
+ACE_CDR::Fixed operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  ACE_CDR::Fixed f = lhs;
+  lhs /= rhs;
+  return f;
+}
+
+bool operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  //TODO
+  return false;
+}
+
+bool operator> (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  //TODO
+  return false;
+}
+
+bool operator>= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  //TODO
+  return false;
+}
+
+bool operator<= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  //TODO
+  return false;
+}
+
+bool operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  if (lhs.scale_ == rhs.scale_)
+    return 0 == ACE_OS::memcmp (value_, rhs.value_, sizeof value_);
+
+  if (lhs.signbit () != rhs.signbit ())
+    return false;
+
+  const Fixed &more = (lhs.scale () > rhs.scale ()) ? lhs : rhs,
+    &fewer = (lhs.scale () > rhs.scale ()) ? rhs : lhs;
+
+  const Octet scale_diff = more.scale () - fewer.scale ();
+
+  ConstIterator more_iter = more.begin (), more_end = more.end ();
+
+  for (Octet i = 0; i < scale_diff; ++i)
+    if (more_iter == more_end || *more_iter++)
+      return false; // digits in more that are missing in fewer must be 0
+
+  ConstIterator fewer_iter = fewer.begin (), fewer_end = fewer.end ();
+
+  while (more_iter != more_end && fewer_iter != fewer_end)
+    if (*more_iter++ != *fewer_iter++)
+      return false; // digits in common must match
+
+  while (more_iter != more_end)
+    if (*more_iter++)
+      return false; // extra (more significant) digits in more must be 0
+
+  while (fewer_iter != fewer_end)
+    if (*fewer_iter++)
+      return false; // extra (more significant) digits in fewer must be 0
+
+  return true;
+}
+
+bool operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  return !(lhs == rhs);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
