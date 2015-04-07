@@ -266,6 +266,21 @@ ACE_CDR::Fixed::signbit () const
   return (this->value_[15] & 0xf) == NEGATIVE;
 }
 
+ACE_INLINE ACE_CDR::Octet
+ACE_CDR::Fixed::digit (int n) const
+{
+  const Octet x = this->value_[15 - (n + 1) / 2];
+  return (n % 2) ? x & 0xf : (x >> 4);
+}
+
+ACE_INLINE void
+ACE_CDR::Fixed::digit (int n, int val)
+{
+  const int idx = 15 - (n + 1) / 2;
+  this->value_[idx] = (n % 2) ? (this->value_[idx] & 0xf0) | val
+                              : ((val << 4) | (this->value_[idx] & 0xf));
+}
+
 ACE_INLINE
 ACE_CDR::Fixed::Proxy::Proxy (bool high_nibble, Octet &element)
   : high_nibble_ (high_nibble), element_ (element) {}
@@ -277,6 +292,20 @@ ACE_CDR::Fixed::Proxy::operator= (Octet val)
     ? (val << 4) | (this->element_ & 0xf)
     : ((this->element_ & 0xf0) | val);
   return *this;
+}
+
+ACE_INLINE ACE_CDR::Fixed::Proxy &
+ACE_CDR::Fixed::Proxy::operator++ ()
+{
+  const Octet val = static_cast<Octet> (*this) + 1;
+  return *this = val;
+}
+
+ACE_INLINE ACE_CDR::Fixed::Proxy &
+ACE_CDR::Fixed::Proxy::operator-- ()
+{
+  const Octet val = static_cast<Octet>(*this) - 1;
+  return *this = val;
 }
 
 ACE_INLINE
@@ -321,6 +350,13 @@ ACE_INLINE ACE_CDR::Fixed::Proxy
 ACE_CDR::Fixed::Iterator::operator* ()
 {
   return Proxy (this->high_nibble (), this->storage (this->outer_));
+}
+
+ACE_INLINE ACE_CDR::Fixed::Iterator &
+ACE_CDR::Fixed::Iterator::operator+= (std::ptrdiff_t n)
+{
+  this->digit_ += n;
+  return *this;
 }
 
 ACE_INLINE ACE_CDR::Fixed::Iterator &
@@ -374,6 +410,13 @@ ACE_CDR::Fixed::ConstIterator::operator* ()
 {
   const Octet storage = this->storage (this->outer_);
   return this->high_nibble () ? storage >> 4 : (storage & 0xf);
+}
+
+ACE_INLINE ACE_CDR::Fixed::ConstIterator &
+ACE_CDR::Fixed::ConstIterator::operator+= (std::ptrdiff_t n)
+{
+  this->digit_ += n;
+  return *this;
 }
 
 ACE_INLINE ACE_CDR::Fixed::ConstIterator &
@@ -453,6 +496,93 @@ ACE_CDR::Fixed::cend () const
 {
   return ConstIterator (this, this->digits_);
 }
+
+ACE_INLINE ACE_CDR::Fixed
+ACE_CDR::Fixed::operator++ (int)
+{
+  const Fixed cpy (*this);
+  ++*this;
+  return cpy;
+}
+
+ACE_INLINE ACE_CDR::Fixed
+ACE_CDR::Fixed::operator-- (int)
+{
+  const Fixed cpy (*this);
+  --*this;
+  return cpy;
+}
+
+ACE_INLINE ACE_CDR::Fixed
+ACE_CDR::Fixed::operator+ () const
+{
+  return *this;
+}
+
+ACE_INLINE ACE_CDR::Fixed
+ACE_CDR::Fixed::operator- () const
+{
+  Fixed f = *this;
+  f.value_[15] = (f.value_[15] & 0xf0) | (f.signbit () ? POSITIVE : NEGATIVE);
+  return f;
+}
+
+ACE_INLINE ACE_CDR::Fixed
+operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  ACE_CDR::Fixed f = lhs;
+  f += rhs;
+  return f;
+}
+
+ACE_INLINE ACE_CDR::Fixed
+operator- (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  ACE_CDR::Fixed f = lhs;
+  f -= rhs;
+  return f;
+}
+
+ACE_INLINE ACE_CDR::Fixed
+operator* (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  ACE_CDR::Fixed f = lhs;
+  f *= rhs;
+  return f;
+}
+
+ACE_INLINE ACE_CDR::Fixed
+operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  ACE_CDR::Fixed f = lhs;
+  f /= rhs;
+  return f;
+}
+
+ACE_INLINE bool
+operator> (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  return rhs < lhs;
+}
+
+ACE_INLINE bool
+operator>= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  return !(lhs < rhs);
+}
+
+ACE_INLINE bool
+operator<= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  return !(rhs < lhs);
+}
+
+ACE_INLINE bool
+operator!= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  return !(lhs == rhs);
+}
+
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -363,11 +363,12 @@ public:
        /// it is meant for use inside a union in the IDL compiler and therefore
        /// has no constructors.  Standards-based middlware libraries such as
        /// ORBs and DDSs can wrap this class in a class of their own to provide
-       /// the exactly interface described by the mapping specification.
+       /// the exact interface described by the mapping specification.
        class ACE_Export Fixed
        {
        public:
-         static const size_t MAX_STRING_SIZE = 34; // includes -, ., terminator
+         static const size_t MAX_DIGITS = 31,
+           MAX_STRING_SIZE = 3 + MAX_DIGITS; // includes -, ., terminator
 
          static Fixed from_integer (LongLong val = 0);
          static Fixed from_integer (ULongLong val);
@@ -387,9 +388,9 @@ public:
          Fixed &operator*= (const Fixed &rhs);
          Fixed &operator/= (const Fixed &rhs);
 
-         Fixed& operator++ ();
+         Fixed &operator++ ();
          Fixed operator++ (int);
-         Fixed& operator-- ();
+         Fixed &operator-- ();
          Fixed operator-- (int);
 
          Fixed operator+ () const;
@@ -400,13 +401,17 @@ public:
          UShort fixed_scale () const;
 
          bool signbit () const;
+         Octet digit (int n) const;
+         void digit (int n, int value);
 
          friend ACE_Export
          ACE_OSTREAM_TYPE &::operator<< (ACE_OSTREAM_TYPE &lhs,
                                          const Fixed &rhs);
 
+#ifndef ACE_LACKS_IOSTREAM_TOTALLY
          friend ACE_Export
-         ACE_OSTREAM_TYPE &::operator>> (ACE_OSTREAM_TYPE &lhs, Fixed &rhs);
+         std::istream &::operator>> (std::istream &lhs, Fixed &rhs);
+#endif
 
          friend ACE_Export
          bool ::operator< (const Fixed &lhs, const Fixed &rhs);
@@ -433,6 +438,8 @@ public:
          public:
            Proxy (bool high_nibble, Octet &element);
            Proxy &operator= (Octet val);
+           Proxy &operator++ ();
+           Proxy &operator-- ();
            operator Octet () const;
          };
 
@@ -454,6 +461,7 @@ public:
          public:
            explicit Iterator (Fixed *outer, int digit = 0);
            Proxy operator* ();
+           Iterator &operator+= (std::ptrdiff_t n);
            Iterator &operator++ ();
            Iterator operator++ (int);
            Iterator &operator-- ();
@@ -471,6 +479,7 @@ public:
          public:
            explicit ConstIterator (const Fixed *outer, int digit = 0);
            Octet operator* ();
+           ConstIterator &operator+= (std::ptrdiff_t n);
            ConstIterator &operator++ ();
            ConstIterator operator++ (int);
            ConstIterator &operator-- ();
@@ -506,6 +515,9 @@ public:
          Octet scale_;
 
          static const Octet POSITIVE = 0xc, NEGATIVE = 0xd;
+
+         /// remove trailing zeros, shift down and reduce digits and scale
+         void normalize (UShort min_scale = 0);
        };
 
   //@}

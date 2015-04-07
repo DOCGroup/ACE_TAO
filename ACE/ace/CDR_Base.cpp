@@ -14,6 +14,10 @@
 #include "ace/streams.h"
 #endif
 
+#include <cmath>
+#include <cstring>
+#include <limits>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (NONNATIVE_LONGDOUBLE)
@@ -838,15 +842,108 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::ULongLong val)
 
 ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
 {
+#ifdef NONNATIVE_LONGDOUBLE
+  typedef LongDouble::NativeImpl BigFloat;
+#else
+  typedef LongDouble BigFloat;
+#endif
+
   Fixed f;
-  //TODO
+  bool negative = false;
+  if (val < 0)
+    {
+      val *= -1;
+      negative = true;
+    }
+
+  // How many digits are to the left of the decimal point?
+  const size_t digits_left = static_cast<size_t> (1 + std::log10 (val));
+  if (digits_left > MAX_DIGITS)
+    return f;
+
+  f.digits_ = MAX_DIGITS;
+  f.scale_ = 0;
+  BigFloat int_part;
+  BigFloat frac_part = std::modf (val, &int_part);
+
+  // Insert the integer part from least to most significant
+  int idx = (digits_left + 1) / 2 - 1;
+  bool high = digits_left % 2;
+  for (size_t i = 0; i < digits_left; ++i, high = !high)
+    {
+      const Octet digit = static_cast<Octet> (std::fmod (int_part, 10));
+      if (high)
+        f.value_[idx--] |= digit << 4;
+      else
+        f.value_[idx] = digit;
+      int_part /= 10;
+    }
+
+  // Insert the fractional part from most to least significant
+  idx = digits_left / 2;
+  high = digits_left % 2 == 0;
+  for (size_t i = digits_left; i < MAX_DIGITS; ++i, high = !high)
+    {
+      frac_part *= 10;
+      const Octet digit = static_cast<Octet> (frac_part);
+      frac_part -= digit;
+      if (high)
+        f.value_[idx] = digit << 4;
+      else
+        f.value_[idx++] |= digit;
+    }
+
+  if (frac_part >= 0.5)
+    ++f; // scale set after here so that ++ applies to the fractional part
+
+  f.scale_ = MAX_DIGITS - digits_left;
+  f.normalize ();
+  f.value_[15] |= negative ? NEGATIVE : POSITIVE;
   return f;
+}
+
+void ACE_CDR::Fixed::normalize (UShort min_scale)
+{
+  if (this->value_[15] & 0xf0 || !this->scale_)
+    return;
+
+  size_t bytes = 0; // number of bytes to shift down
+  while (2 * (bytes + 1) < this->scale_
+         && this->scale_ - 2 * (bytes + 1) >= min_scale
+         && !this->value_[14 - bytes])
+    ++bytes;
+
+  const bool extra_nibble = 2 * (bytes + 1) <= this->scale_
+                            && this->scale_ - 2 * (bytes + 1) >= min_scale
+                            && !(this->value_[14 - bytes] & 0xf);
+  const size_t nibbles = 1 /*[15].high*/ + bytes * 2 + extra_nibble;
+  this->digits_ -= nibbles;
+  this->scale_ -= nibbles;
+
+  if (extra_nibble)
+    {
+      this->value_[15] = (this->value_[14 - bytes] & 0xf0)
+                         | (this->value_[15] & 0xf);
+      std::memmove (this->value_ + bytes + 1, this->value_, 15 - bytes);
+      std::memset (this->value_, 0, bytes + 1);
+    }
+  else
+    {
+      this->value_[15] = (this->value_[14 - bytes] & 0xf) << 4
+                         | (this->value_[15] & 0xf);
+      for (size_t i = 14; i > bytes; --i)
+        this->value_[i] = (this->value_[i - bytes - 1] & 0xf) << 4
+                          | (this->value_[i - bytes] >> 4);
+      this->value_[bytes] = this->value_[0] >> 4;
+      std::memset (this->value_, 0, bytes);
+    }
 }
 
 ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
 {
   const bool negative = str && *str == '-';
-  if (negative || (str && *str == '+')) ++str;
+  if (negative || (str && *str == '+'))
+    ++str;
 
   const size_t span = ACE_OS::strspn (str, ".0123456789");
 
@@ -862,7 +959,8 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
       if (str[iter - 1] == '.')
         {
           f.scale_ = span - iter;
-          if (--iter == 0) break; // skip '.'
+          if (--iter == 0)
+            break; // skip '.'
         }
 
       const unsigned int digit = str[iter - 1] - '0';
@@ -879,34 +977,141 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
 
 ACE_CDR::Fixed::operator LongLong () const
 {
-  //TODO
-  return 0;
+  LongLong val = LongLong (0);
+
+  for (int i = this->digits_ - 1; i >= this->scale_; --i)
+    val = 10 * val + this->digit (i);
+
+  if (this->signbit ())
+    val *= -1;
+
+  return val;
 }
 
 ACE_CDR::Fixed::operator LongDouble () const
 {
-  //TODO
-  return 0;
+  LongDouble val = LongDouble (0);
+
+  for (int i = this->digits_ - 1; i >= this->scale_; --i)
+    val = 10 * val + this->digit (i);
+
+  for (int i = this->scale_ - 1; i >= 0; --i)
+    val += this->digit (i) * std::pow (10.0l, i - this->scale_);
+
+  if (this->signbit ())
+    val *= -1;
+
+  return val;
 }
 
 ACE_CDR::Fixed ACE_CDR::Fixed::round (UShort scale) const
 {
-  Fixed f;
-  //TODO
+  Fixed f = *this;
+  if (scale < f.scale_)
+    {
+      for (UShort i = 0; i < f.scale_ - scale; ++i)
+        f.digit (i, 0);
+      f.normalize (scale);
+      const bool negative = f.signbit ();
+      if (negative)
+        f.value_[15] = (f.value_[15] & 0xf0) | POSITIVE;
+      if (this->digit (this->scale_ - scale - 1) >= 5)
+        {
+          f.scale_ = 0;
+          ++f;
+          f.scale_ = scale;
+        }
+      if (negative && !!f)
+        f.value_[15] = (f.value_[15] & 0xf0) | NEGATIVE;
+    }
   return f;
 }
 
 ACE_CDR::Fixed ACE_CDR::Fixed::truncate (UShort scale) const
 {
-  Fixed f;
-  //TODO
+  Fixed f = *this;
+  if (scale < f.scale_)
+    {
+      for (UShort i = 0; i < f.scale_ - scale; ++i)
+        f.digit (i, 0);
+      f.normalize (scale);
+      if (f.signbit ())
+        {
+          f.value_[15] = (f.value_[15] & 0xf0) | POSITIVE;
+          if (!!f)
+            f.value_[15] = (f.value_[15] & 0xf0) | NEGATIVE;
+        }
+    }
   return f;
+}
+
+namespace {
+  struct BufferAppender
+  {
+    BufferAppender (char *buffer, size_t buffer_size)
+      : buffer_ (buffer), buffer_size_ (buffer_size), idx_ (0) {}
+
+    bool operator+= (char ch)
+    {
+      if (this->idx_ == this->buffer_size_ - 1)
+        return false;
+      this->buffer_[this->idx_++] = ch;
+      return true;
+    }
+
+    char *const buffer_;
+    const size_t buffer_size_;
+    size_t idx_;
+  };
 }
 
 bool ACE_CDR::Fixed::to_string (char *buffer, size_t buffer_size) const
 {
-  //TODO
-  return false;
+  if (!buffer || buffer_size < 2)
+    return false;
+
+  const bool negative = this->signbit ();
+  if (negative)
+    *buffer = '-';
+  BufferAppender ba (buffer + negative, buffer_size - negative);
+
+  for (int i = 15 - this->digits_ / 2; i < 16; ++i)
+    {
+      const Octet high = this->value_[i] >> 4, low = this->value_[i] & 0xf;
+
+      if ((15 - i) * 2 != this->digits_)
+        {
+          if (this->scale_ == 1 + 2 * (15 - i))
+            {
+              if (!ba.idx_ && !(ba += '0'))
+                return false;
+
+              if (!(ba += '.'))
+                return false;
+            }
+
+          if ((ba.idx_ || high) && !(ba += '0' + high))
+            return false;
+        }
+
+      if (this->scale_ && this->scale_ == 2 * (15 - i))
+        {
+          if (!ba.idx_ && !(ba += '0'))
+            return false;
+
+          if (!(ba += '.'))
+            return false;
+        }
+
+      if (i < 15 && (ba.idx_ || low) && !(ba += '0' + low))
+        return false;
+    }
+
+  if (!ba.idx_ && !(ba += '0'))
+    return false;
+
+  buffer[ba.idx_ + negative] = 0;
+  return true;
 }
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
@@ -935,40 +1140,59 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator++ ()
 {
-  //TODO
+  if (this->signbit ())
+    {
+      this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
+      if (!!--*this) // decrement and check if result is nonzero
+        this->value_[15] = (this->value_[15] & 0xf0) | NEGATIVE;
+    }
+  else
+    {
+      Iterator iter = this->begin ();
+      iter += this->scale_;
+      for (; iter != this->end (); ++iter)
+        {
+          if (*iter < 9)
+            {
+              ++*iter;
+              return *this;
+            }
+          *iter = 0;
+        }
+      if (this->digits_ < 31)
+        {
+          ++this->digits_;
+          *iter = 1;
+        }
+    }
   return *this;
-}
-
-ACE_CDR::Fixed ACE_CDR::Fixed::operator++ (int)
-{
-  const Fixed cpy (*this);
-  ++*this;
-  return cpy;
 }
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator-- ()
 {
-  //TODO
+  if (this->signbit ())
+    {
+      this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
+      ++*this;
+      this->value_[15] = (this->value_[15] & 0xf0) | NEGATIVE;
+    }
+  else
+    {
+      Fixed before = *this;
+      Iterator iter = this->begin ();
+      iter += this->scale_;
+      for (; iter != this->end (); ++iter)
+        {
+          if (*iter)
+            {
+              --*iter;
+              return *this;
+            }
+          *iter = 9;
+        }
+      *this = before - from_integer (ULongLong (1));
+    }
   return *this;
-}
-
-ACE_CDR::Fixed ACE_CDR::Fixed::operator-- (int)
-{
-  const Fixed cpy (*this);
-  --*this;
-  return cpy;
-}
-
-ACE_CDR::Fixed ACE_CDR::Fixed::operator+ () const
-{
-  return *this;
-}
-
-ACE_CDR::Fixed ACE_CDR::Fixed::operator- () const
-{
-  Fixed f = *this;
-  f.value_[15] = (f.value_[15] & 0xf0) | (f.signbit () ? POSITIVE : NEGATIVE);
-  return f;
 }
 
 ACE_CDR::Boolean ACE_CDR::Fixed::operator! () const
@@ -978,133 +1202,101 @@ ACE_CDR::Boolean ACE_CDR::Fixed::operator! () const
   return 0 == ACE_OS::memcmp (this->value_, ZERO, sizeof ZERO);
 }
 
-ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs,
-                              const ACE_CDR::Fixed &rhs)
+ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs, const ACE_CDR::Fixed &rhs)
 {
-  const char *const sign =
-    ((rhs.value_[15] & 0xf) == ACE_CDR::Fixed::NEGATIVE) ? "-" : "";
-  char digits[MAX_STRING_SIZE];
-  int idx = 0;
-  for (int i = 15 - (rhs.digits_ + 1) / 2; i < 16; ++i)
-    {
-      const ACE_CDR::Octet high = rhs.value_[i] >> 4,
-        low = rhs.value_[i] & 0xf;
-
-      if (rhs.scale_ == 1 + 2 * (15 - i))
-        {
-          if (!idx)
-            digits[idx++] = '0';
-
-          digits[idx++] = '.';
-        }
-
-      if (idx || high)
-        digits[idx++] = '0' + high;
-
-      if (rhs.scale_ && rhs.scale_ == 2 * (15 - i))
-        {
-          if (!idx)
-            digits[idx++] = '0';
-
-          digits[idx++] = '.';
-        }
-
-      if (i < 15 && (idx || low))
-        digits[idx++] = '0' + low;
-    }
-
-  if (!idx)
-    digits[idx++] = '0';
-
-  digits[idx] = 0;
+  char digits[ACE_CDR::Fixed::MAX_STRING_SIZE];
+  rhs.to_string (digits, sizeof digits);
 
 #ifdef ACE_LACKS_IOSTREAM_TOTALLY
-  ACE_OS::fprintf (&lhs, "%s%s", sign, digits);
+  ACE_OS::fputs (digits, &lhs);
 #else
-  lhs << sign << digits;
+  lhs << digits;
 #endif
   return lhs;
 }
 
-ACE_OSTREAM_TYPE &operator>> (ACE_OSTREAM_TYPE &lhs,
-                              ACE_CDR::Fixed &rhs)
+#ifndef ACE_LACKS_IOSTREAM_TOTALLY
+std::istream &operator>> (std::istream &lhs, ACE_CDR::Fixed &rhs)
 {
-  //TODO
+  double num;
+  lhs >> num;
+  rhs = ACE_CDR::Fixed::from_floating (num);
   return lhs;
 }
-
-ACE_CDR::Fixed operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
-{
-  ACE_CDR::Fixed f = lhs;
-  lhs += rhs;
-  return f;
-}
-
-ACE_CDR::Fixed operator- (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
-{
-  ACE_CDR::Fixed f = lhs;
-  lhs -= rhs;
-  return f;
-}
-
-ACE_CDR::Fixed operator* (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
-{
-  ACE_CDR::Fixed f = lhs;
-  lhs *= rhs;
-  return f;
-}
-
-ACE_CDR::Fixed operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
-{
-  ACE_CDR::Fixed f = lhs;
-  lhs /= rhs;
-  return f;
-}
+#endif
 
 bool operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 {
-  //TODO
-  return false;
-}
+  if (lhs.signbit () != rhs.signbit ())
+    return lhs.signbit ();
 
-bool operator> (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
-{
-  //TODO
-  return false;
-}
+  // signs of lhs and rhs are the same so lhs < rhs reduces to:
+  // if positive, |lhs| < |rhs|
+  // if negative, |rhs| < |lhs|
+  // 'a' will refer to the value left of < and 'b' to the value to the right
+  const ACE_CDR::Fixed &a = lhs.signbit () ? rhs : lhs,
+    &b = lhs.signbit () ? lhs : rhs;
 
-bool operator>= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
-{
-  //TODO
-  return false;
-}
+  if (a.scale_ == b.scale_)
+    return ACE_OS::memcmp (a.value_, b.value_, sizeof a.value_) < 0;
 
-bool operator<= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
-{
-  //TODO
+  const int a_int_dig = a.digits_ - a.scale_, b_int_dig = b.digits_ - b.scale_;
+
+  if (a_int_dig > b_int_dig)
+    {
+      for (int i = 1; i <= a_int_dig - b_int_dig; ++i)
+        if (a.digit (a.digits_ - i))
+          return false;
+    }
+  else if (a_int_dig < b_int_dig)
+    {
+      for (int i = 1; i <= b_int_dig - a_int_dig; ++i)
+        if (b.digit (b.digits_ - i))
+          return true;
+    }
+
+  const int common_frac = std::min (a.scale_, b.scale_),
+    common_dig = std::min (a_int_dig, b_int_dig) + common_frac,
+    a_off = a.scale_ - common_frac, // a's offset (more scale than b)
+    b_off = b.scale_ - common_frac; // b's offset (more scale than a)
+
+  for (int i = 1; i <= common_dig; ++i)
+    if (a.digit (a_off + common_dig - i) < b.digit (b_off + common_dig - i))
+      return true;
+
+  for (int i = 1; i <= a_off; ++i)
+    if (a.digit (a_off - i))
+      return false;
+
+  for (int i = 1; i <= b_off; ++i)
+    if (b.digit (b_off - i))
+      return true;
+
   return false;
 }
 
 bool operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 {
-  if (lhs.scale_ == rhs.scale_)
-    return 0 == ACE_OS::memcmp (value_, rhs.value_, sizeof value_);
-
   if (lhs.signbit () != rhs.signbit ())
     return false;
 
-  const Fixed &more = (lhs.scale () > rhs.scale ()) ? lhs : rhs,
-    &fewer = (lhs.scale () > rhs.scale ()) ? rhs : lhs;
+  if (lhs.scale_ == rhs.scale_)
+    return 0 == ACE_OS::memcmp (lhs.value_, rhs.value_, sizeof lhs.value_);
 
-  const Octet scale_diff = more.scale () - fewer.scale ();
+  const ACE_CDR::Fixed &more = (lhs.scale_ > rhs.scale_) ? lhs : rhs,
+    &fewer = (lhs.scale_ > rhs.scale_) ? rhs : lhs;
 
-  ConstIterator more_iter = more.begin (), more_end = more.end ();
+  const ACE_CDR::Octet scale_diff = more.scale_ - fewer.scale_;
 
-  for (Octet i = 0; i < scale_diff; ++i)
+  ACE_CDR::Fixed::ConstIterator more_iter = more.begin (),
+    more_end = more.end ();
+
+  for (ACE_CDR::Octet i = 0; i < scale_diff; ++i)
     if (more_iter == more_end || *more_iter++)
       return false; // digits in more that are missing in fewer must be 0
 
-  ConstIterator fewer_iter = fewer.begin (), fewer_end = fewer.end ();
+  ACE_CDR::Fixed::ConstIterator fewer_iter = fewer.begin (),
+    fewer_end = fewer.end ();
 
   while (more_iter != more_end && fewer_iter != fewer_end)
     if (*more_iter++ != *fewer_iter++)
@@ -1119,11 +1311,6 @@ bool operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
       return false; // extra (more significant) digits in fewer must be 0
 
   return true;
-}
-
-bool operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
-{
-  return !(lhs == rhs);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
