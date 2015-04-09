@@ -119,6 +119,7 @@ public:
       , EK_ulonglong
       , EK_octet
       , EK_floating_point
+      , EK_fixed_point
     };
 
   // Enum to define expression type.

@@ -438,6 +438,8 @@ public:
          public:
            Proxy (bool high_nibble, Octet &element);
            Proxy &operator= (Octet val);
+           Proxy &operator+= (int rhs);
+           Proxy &operator-= (int rhs);
            Proxy &operator++ ();
            Proxy &operator-- ();
            operator Octet () const;
@@ -518,6 +520,15 @@ public:
 
          /// remove trailing zeros, shift down and reduce digits and scale
          void normalize (UShort min_scale = 0);
+
+         /// Add up to 'digits' of additional scale by shifting left without
+         /// removing significant digits.  Returns number of digits shifted.
+         int lshift (int digits);
+
+         /// Prepare to add (or subtract) f by changing the digits and scale
+         /// of *this, returnins an iterator to the least significant
+         /// digit of f that will influence the sum (or difference).
+         ConstIterator pre_add (const Fixed &f);
        };
 
   //@}

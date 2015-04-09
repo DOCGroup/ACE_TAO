@@ -295,6 +295,20 @@ ACE_CDR::Fixed::Proxy::operator= (Octet val)
 }
 
 ACE_INLINE ACE_CDR::Fixed::Proxy &
+ACE_CDR::Fixed::Proxy::operator+= (int rhs)
+{
+  const Octet val = static_cast<Octet> (*this + rhs);
+  return *this = val;
+}
+
+ACE_INLINE ACE_CDR::Fixed::Proxy &
+ACE_CDR::Fixed::Proxy::operator-= (int rhs)
+{
+  const Octet val = static_cast<Octet> (*this - rhs);
+  return *this = val;
+}
+
+ACE_INLINE ACE_CDR::Fixed::Proxy &
 ACE_CDR::Fixed::Proxy::operator++ ()
 {
   const Octet val = static_cast<Octet> (*this) + 1;
