@@ -415,6 +415,13 @@ ACE_INET_Addr::set (u_short port_number,
       int error = 0;
       ACE_OS::memset (&hints, 0, sizeof (hints));
       hints.ai_family = AF_INET6;
+      // Note - specify the socktype here to avoid getting multiple entries
+      // returned with the same address for different socket types or
+      // protocols. If this causes a problem for some reason (an address that's
+      // available for TCP but not UDP, or vice-versa) this will need to change
+      // back to unrestricted hints and weed out the duplicate addresses by
+      // searching this->inet_addrs_ which would slow things down.
+      hints.ai_socktype = SOCK_STREAM;
       if ((error = ::getaddrinfo (host_name, 0, &hints, &res)) == 0)
         {
           this->set_type (res->ai_family);
