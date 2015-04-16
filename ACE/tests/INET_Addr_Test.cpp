@@ -99,7 +99,7 @@ static bool test_multiple (void)
       // DNS service. The real value of this test is to accurately get
       // multiples from the result.
       ACE_ERROR ((LM_WARNING, ACE_TEXT ("%p\n"), ACE_TEXT ("pool.ntp.org")));
-      return false;
+      return true;
     }
   size_t count = 0;
   ACE_TCHAR addr_string[256];
