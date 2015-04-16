@@ -109,6 +109,7 @@ short_stream (void)
   ACE_CDR::ULong ul =  65800UL;
   ACE_CDR::Float f =  1.23f;
   ACE_CDR::Double d =  123.456789;
+  ACE_CDR::Fixed fx = ACE_CDR::Fixed::from_string ("8158901571290874");
 
   // Arrays for output
   ACE_CDR::Short s_array[3] = { -1, 0, 1 };
@@ -129,6 +130,7 @@ short_stream (void)
   os << ul;
   os << f;
   os << d;
+  os << fx;
   os.write_short_array (s_array, 3);
   os.write_long_array (l_array, 3);
   os.write_float_array (f_array, 3);
@@ -146,6 +148,7 @@ short_stream (void)
   ss << ul;
   ss << f;
   ss << d;
+  ss << fx;
   ss.write_short_array (s_array, 3);
   ss.write_long_array (l_array, 3);
   ss.write_float_array (f_array, 3);
@@ -198,6 +201,7 @@ short_stream (void)
   ACE_CDR::ULong ul1 = 0UL;
   ACE_CDR::Float f1 = 0.0f;
   ACE_CDR::Double d1 = 0.0;
+  ACE_CDR::Fixed fx1 = ACE_CDR::Fixed::from_string ("0");
 
   // Arrays for input
   ACE_CDR::Short s_array1[3];
@@ -224,6 +228,7 @@ short_stream (void)
   is >> ul1;
   is >> f1;
   is >> d1;
+  is >> fx1;
   is.read_short_array (s_array1, 3);
   is.read_long_array (l_array1, 3);
   is.read_float_array (f_array1, 3);
@@ -288,6 +293,12 @@ short_stream (void)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("double transfer error")),
+                      1);
+
+  if (fx1 != fx)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("fixed transfer error")),
                       1);
 
   for (i = 0 ; i < 3; i++)

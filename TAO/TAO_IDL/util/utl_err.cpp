@@ -75,6 +75,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_interface.h"
 #include "ast_enum.h"
+#include "ast_fixed.h"
 #include "ast_union.h"
 #include "ast_union_label.h"
 
@@ -232,6 +233,8 @@ error_string (UTL_Error::ErrorCode c)
       return "no match for identifier";
     case UTL_Error::EIDL_TEMPLATE_NOT_ALIASED:
       return "ref to template module scope must be via alias";
+    case UTL_Error::EIDL_FIXED_UNSUPPORTED:
+      return "fixed data types are not supported";
   }
 
   return 0;
@@ -1458,6 +1461,14 @@ UTL_Error::not_a_type (AST_Decl *d)
 
   ACE_ERROR ((LM_ERROR,
               "\n"));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::fixed_unsupported (AST_Fixed *d)
+{
+  idl_error_header (EIDL_FIXED_UNSUPPORTED, d->line (), d->file_name ());
+  ACE_ERROR ((LM_ERROR, "\n"));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 

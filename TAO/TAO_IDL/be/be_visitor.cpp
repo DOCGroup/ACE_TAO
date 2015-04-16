@@ -14,6 +14,10 @@
 
 #include "be_visitor.h"
 
+#include "be_fixed.h"
+#include "global_extern.h"
+#include "utl_err.h"
+
 #include "ace/config-all.h"
 
 be_visitor::be_visitor (void)
@@ -331,7 +335,8 @@ be_visitor::visit_native (be_native *)
 }
 
 int
-be_visitor::visit_fixed (be_fixed *)
+be_visitor::visit_fixed (be_fixed *node)
 {
-  return 0;
+  idl_global->err ()->fixed_unsupported (node);
+  return 1;
 }

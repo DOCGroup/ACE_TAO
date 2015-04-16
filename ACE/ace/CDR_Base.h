@@ -374,6 +374,7 @@ public:
          static Fixed from_integer (ULongLong val);
          static Fixed from_floating (LongDouble val);
          static Fixed from_string (const char *str);
+         static Fixed from_octets (const Octet *array, int len);
 
          operator LongLong () const;
          operator LongDouble () const;
@@ -382,6 +383,7 @@ public:
          Fixed truncate (UShort scale) const;
 
          bool to_string (char *buffer, size_t buffer_size) const;
+         const Octet *to_octets (int &n) const;
 
          Fixed &operator+= (const Fixed &rhs);
          Fixed &operator-= (const Fixed &rhs);

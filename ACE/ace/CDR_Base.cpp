@@ -976,6 +976,20 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
   return f;
 }
 
+ACE_CDR::Fixed ACE_CDR::Fixed::from_octets (const Octet *array, int len)
+{
+  Fixed f;
+  ACE_OS::memcpy (f.value_ + 16 - len, array, len);
+  ACE_OS::memset (f.value_, 0, 16 - len);
+  f.scale_ = 0;
+
+  f.digits_ = len * 2 - 1;
+  if (len > 1 && (array[0] >> 4) == 0)
+    --f.digits_;
+
+  return f;
+}
+
 ACE_CDR::Fixed::operator LongLong () const
 {
   LongLong val (0);
@@ -1113,6 +1127,12 @@ bool ACE_CDR::Fixed::to_string (char *buffer, size_t buffer_size) const
 
   buffer[ba.idx_ + negative] = 0;
   return true;
+}
+
+const ACE_CDR::Octet *ACE_CDR::Fixed::to_octets (int &n) const
+{
+  n = (this->digits_ + 2) / 2;
+  return 16 - n + reinterpret_cast<const Octet *> (this->value_);
 }
 
 ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (const ACE_CDR::Fixed &f)
