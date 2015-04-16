@@ -367,8 +367,13 @@ public:
        class ACE_Export Fixed
        {
        public:
-         static const size_t MAX_DIGITS = 31,
-           MAX_STRING_SIZE = 3 + MAX_DIGITS; // includes -, ., terminator
+         enum
+         {
+           MAX_DIGITS = 31,
+           MAX_STRING_SIZE = 3 + MAX_DIGITS, // includes -, ., terminator
+           POSITIVE = 0xc,
+           NEGATIVE = 0xd,
+         };
 
          static Fixed from_integer (LongLong val = 0);
          static Fixed from_integer (ULongLong val);
@@ -406,32 +411,8 @@ public:
          Octet digit (int n) const;
          void digit (int n, int value);
 
-         friend ACE_Export
-         ACE_OSTREAM_TYPE &::operator<< (ACE_OSTREAM_TYPE &lhs,
-                                         const Fixed &rhs);
-
-#ifndef ACE_LACKS_IOSTREAM_TOTALLY
-         friend ACE_Export
-         std::istream &::operator>> (std::istream &lhs, Fixed &rhs);
-#endif
-
-         friend ACE_Export
-         bool ::operator< (const Fixed &lhs, const Fixed &rhs);
-
-         friend ACE_Export
-         bool ::operator> (const Fixed &lhs, const Fixed &rhs);
-
-         friend ACE_Export
-         bool ::operator>= (const Fixed &lhs, const Fixed &rhs);
-
-         friend ACE_Export
-         bool ::operator<= (const Fixed &lhs, const Fixed &rhs);
-
-         friend ACE_Export
-         bool ::operator== (const Fixed &lhs, const Fixed &rhs);
-
-         friend ACE_Export
-         bool ::operator!= (const Fixed &lhs, const Fixed &rhs);
+         bool less (const Fixed &rhs) const;
+         bool equal (const Fixed &rhs) const;
 
          class Proxy
          {
@@ -518,8 +499,6 @@ public:
          /// from the type information (for example, IDL).
          Octet scale_;
 
-         static const Octet POSITIVE = 0xc, NEGATIVE = 0xd;
-
          /// remove trailing zeros, shift down and reduce digits and scale
          void normalize (UShort min_scale = 0);
 
@@ -543,6 +522,32 @@ public:
 #   define ACE_CDR_GIOP_MINOR_VERSION 2
 #endif /* ACE_CDR_GIOP_MINOR_VERSION */
 };
+
+ACE_Export
+ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs, const ACE_CDR::Fixed &rhs);
+
+#ifndef ACE_LACKS_IOSTREAM_TOTALLY
+ACE_Export
+std::istream &operator>> (std::istream &lhs, ACE_CDR::Fixed &rhs);
+#endif
+
+ACE_Export
+bool operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+bool operator> (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+bool operator>= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+bool operator<= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+bool operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+bool operator!= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
 
 ACE_Export
 ACE_CDR::Fixed operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);

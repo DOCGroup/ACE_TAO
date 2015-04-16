@@ -22,6 +22,7 @@ lib*.a
 lib*.so*
 lib*.dylib
 *~
+ipch/
 
 /ACE/ace/config.h
 /ACE/bin/MakeProjectCreator/config/default.features

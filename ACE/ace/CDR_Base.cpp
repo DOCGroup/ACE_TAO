@@ -795,7 +795,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::LongLong val)
   int idx = 15;
   while (true)
     {
-      const LongLong mod = val % 10;
+      const int mod = static_cast<int> (val % 10);
       const unsigned int digit = (mod < 0) ? -mod : mod;
       if (high)
         f.value_[idx--] |= digit << 4;
@@ -849,6 +849,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
 #endif
 
   Fixed f;
+  f.digits_ = 0;
   bool negative = false;
   if (val < 0)
     {
@@ -867,7 +868,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
   BigFloat frac_part = std::modf (val, &int_part);
 
   // Insert the integer part from least to most significant
-  int idx = (digits_left + 1) / 2 - 1;
+  int idx = (static_cast<int> (digits_left) + 1) / 2 - 1;
   bool high = digits_left % 2;
   for (size_t i = 0; i < digits_left; ++i, high = !high)
     {
@@ -880,7 +881,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
     }
 
   // Insert the fractional part from most to least significant
-  idx = digits_left / 2;
+  idx = static_cast<int> (digits_left / 2);
   high = digits_left % 2 == 0;
   for (size_t i = digits_left; i < MAX_DIGITS; ++i, high = !high)
     {
@@ -896,7 +897,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
   if (frac_part >= 0.5)
     ++f; // scale set after here so that ++ applies to the fractional part
 
-  f.scale_ = MAX_DIGITS - digits_left;
+  f.scale_ = static_cast<Octet> (MAX_DIGITS - digits_left);
   f.normalize ();
   f.value_[15] |= negative ? NEGATIVE : POSITIVE;
   return f;
@@ -917,8 +918,8 @@ void ACE_CDR::Fixed::normalize (UShort min_scale)
                             && this->scale_ - 2 * (bytes + 1) >= min_scale
                             && !(this->value_[14 - bytes] & 0xf);
   const size_t nibbles = 1 /*[15].high*/ + bytes * 2 + extra_nibble;
-  this->digits_ -= nibbles;
-  this->scale_ -= nibbles;
+  this->digits_ -= static_cast<Octet> (nibbles);
+  this->scale_ -= static_cast<Octet> (nibbles);
 
   if (extra_nibble)
     {
@@ -958,7 +959,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
     {
       if (str[iter - 1] == '.')
         {
-          f.scale_ = span - iter;
+          f.scale_ = static_cast<Octet> (span - iter);
           if (--iter == 0)
             break; // skip '.'
         }
@@ -990,7 +991,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_octets (const Octet *array, int len)
   return f;
 }
 
-ACE_CDR::Fixed::operator LongLong () const
+ACE_CDR::Fixed::operator ACE_CDR::LongLong () const
 {
   LongLong val (0);
 
@@ -1003,12 +1004,12 @@ ACE_CDR::Fixed::operator LongLong () const
   return val;
 }
 
-ACE_CDR::Fixed::operator LongDouble () const
+ACE_CDR::Fixed::operator ACE_CDR::LongDouble () const
 {
-  LongDouble val (0);
+  LongDouble val = ACE_CDR_LONG_DOUBLE_INITIALIZER;
 
   for (int i = this->digits_ - 1; i >= this->scale_; --i)
-    val = 10 * val + this->digit (i);
+    ACE_CDR_LONG_DOUBLE_ASSIGNMENT (val, 10 * val + this->digit (i));
 
   for (int i = this->scale_ - 1; i >= 0; --i)
     val += this->digit (i) * std::pow (10.0l, i - this->scale_);
@@ -1034,7 +1035,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::round (UShort scale) const
         {
           f.scale_ = 0;
           ++f;
-          f.scale_ = scale;
+          f.scale_ =  static_cast<Octet> (scale);
         }
       if (negative && !!f)
         f.value_[15] = (f.value_[15] & 0xf0) | NEGATIVE;
@@ -1150,7 +1151,7 @@ ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (const ACE_CDR::Fixed &f)
       if (this->digits_ > MAX_DIGITS)
         {
           for (size_t i = 0; i < this->digits_ - MAX_DIGITS; ++i)
-            this->digit (i, 0);
+            this->digit (static_cast<int> (i), 0);
           this->normalize (this->scale_ - MAX_DIGITS - this->digits_);
           this->digits_ = MAX_DIGITS;
         }
@@ -1292,8 +1293,8 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (const Fixed &rhs)
 
   for (int col = 0; col < this->digits_ + rhs.digits_; ++col)
     {
-      for (int row = std::max (0, col - this->digits_ + 1);
-           row < std::min (col + 1, int (rhs.digits_)); ++row)
+      for (int row = (std::max) (0, col - this->digits_ + 1);
+           row < (std::min) (col + 1, int (rhs.digits_)); ++row)
         carry += this->digit (col - row) * rhs.digit (row);
       temp[col] = carry % 10;
       carry /= 10;
@@ -1405,13 +1406,16 @@ std::istream &operator>> (std::istream &lhs, ACE_CDR::Fixed &rhs)
 {
   double num;
   lhs >> num;
-  rhs = ACE_CDR::Fixed::from_floating (num);
+  ACE_CDR::LongDouble ld;
+  ACE_CDR_LONG_DOUBLE_ASSIGNMENT (ld, num);
+  rhs = ACE_CDR::Fixed::from_floating (ld);
   return lhs;
 }
 #endif
 
-bool operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+bool ACE_CDR::Fixed::less (const ACE_CDR::Fixed &rhs) const
 {
+  const Fixed &lhs = *this;
   if (lhs.signbit () != rhs.signbit ())
     return lhs.signbit ();
 
@@ -1440,8 +1444,8 @@ bool operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
           return true;
     }
 
-  const int common_frac = std::min (a.scale_, b.scale_),
-    common_dig = std::min (a_int_dig, b_int_dig) + common_frac,
+  const int common_frac = (std::min) (a.scale_, b.scale_),
+    common_dig = (std::min) (a_int_dig, b_int_dig) + common_frac,
     a_off = a.scale_ - common_frac, // a's offset (more scale than b)
     b_off = b.scale_ - common_frac; // b's offset (more scale than a)
 
@@ -1460,8 +1464,9 @@ bool operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
   return false;
 }
 
-bool operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+bool ACE_CDR::Fixed::equal (const ACE_CDR::Fixed &rhs) const
 {
+  const Fixed &lhs = *this;
   if (lhs.signbit () != rhs.signbit ())
     return false;
 

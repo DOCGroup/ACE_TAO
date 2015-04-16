@@ -726,7 +726,8 @@ ACE_InputCDR::read_fixed (ACE_CDR::Fixed &x)
       if (!this->read_1 (a + i))
         return false;
       const unsigned low = a[i] & 0xf;
-      if (low == 0xc || low == 0xd)
+      if (low == ACE_CDR::Fixed::POSITIVE ||
+          low == ACE_CDR::Fixed::NEGATIVE)
         {
           x = ACE_CDR::Fixed::from_octets (a, i + 1);
           return true;

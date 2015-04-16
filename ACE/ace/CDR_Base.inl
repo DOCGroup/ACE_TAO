@@ -323,7 +323,7 @@ ACE_CDR::Fixed::Proxy::operator-- ()
 }
 
 ACE_INLINE
-ACE_CDR::Fixed::Proxy::operator Octet () const
+ACE_CDR::Fixed::Proxy::operator ACE_CDR::Octet () const
 {
   return this->high_nibble_ ? this->element_ >> 4 : (this->element_ & 0xf);
 }
@@ -369,7 +369,7 @@ ACE_CDR::Fixed::Iterator::operator* ()
 ACE_INLINE ACE_CDR::Fixed::Iterator &
 ACE_CDR::Fixed::Iterator::operator+= (std::ptrdiff_t n)
 {
-  this->digit_ += n;
+  this->digit_ += static_cast<int> (n);
   return *this;
 }
 
@@ -429,7 +429,7 @@ ACE_CDR::Fixed::ConstIterator::operator* ()
 ACE_INLINE ACE_CDR::Fixed::ConstIterator &
 ACE_CDR::Fixed::ConstIterator::operator+= (std::ptrdiff_t n)
 {
-  this->digit_ += n;
+  this->digit_ += static_cast<int> (n);
   return *this;
 }
 
@@ -574,6 +574,12 @@ operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 }
 
 ACE_INLINE bool
+operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  return lhs.less (rhs);
+}
+
+ACE_INLINE bool
 operator> (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 {
   return rhs < lhs;
@@ -589,6 +595,12 @@ ACE_INLINE bool
 operator<= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 {
   return !(rhs < lhs);
+}
+
+ACE_INLINE bool
+operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+{
+  return lhs.equal (rhs);
 }
 
 ACE_INLINE bool

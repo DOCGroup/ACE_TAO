@@ -48,14 +48,17 @@ int run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("CDR_Fixed_Test"));
 
   typedef ACE_CDR::Fixed Fixed;
+  typedef ACE_CDR::LongLong LongLong;
+  typedef ACE_CDR::ULongLong ULongLong;
+  typedef ACE_CDR::LongDouble LongDouble;
 
-  const Fixed f1 = Fixed::from_integer (-1234567890l),
-    f2 = Fixed::from_integer (987654321ul),
+  const Fixed f1 = Fixed::from_integer (LongLong (-1234567890l)),
+    f2 = Fixed::from_integer (ULongLong (987654321ul)),
     f3 = Fixed::from_string ("612578912487901265.90125789");
 
-  TEST_EQUAL (ACE_CDR::LongLong (-1234567890l), ACE_CDR::LongLong (f1));
-  TEST_EQUAL (ACE_CDR::LongLong (987654321), ACE_CDR::LongLong (f2));
-  TEST_EQUAL (ACE_CDR::LongLong (612578912487901265ul), ACE_CDR::LongLong (f3));
+  TEST_EQUAL (LongLong (-1234567890l), LongLong (f1));
+  TEST_EQUAL (LongLong (987654321), LongLong (f2));
+  TEST_EQUAL (LongLong (612578912487901265ul), LongLong (f3));
 
   TEST_EQUAL (0, f1.fixed_scale ());
   TEST_EQUAL (10, f1.fixed_digits ());
@@ -94,24 +97,28 @@ int run_main (int, ACE_TCHAR *[])
   f7 = Fixed::from_string ("-0.005");
   EXPECT ("-0.01", f7.round (2));
   EXPECT ("0.00", f7.truncate (2));
+  
+  LongDouble ld1;
+  ACE_CDR_LONG_DOUBLE_ASSIGNMENT (ld1, 1234.45);
+  const Fixed f8 = Fixed::from_floating (ld1);
+  TEST_EQUAL (LongLong (1234), LongLong (f8));
 
-  const Fixed f8 = Fixed::from_floating (1234.45l);
-  TEST_EQUAL (ACE_CDR::LongLong (1234), ACE_CDR::LongLong (f8));
-  TEST_EQUAL (ACE_CDR::LongDouble (1234.45l), ACE_CDR::LongDouble (f8));
-  EXPECT ("1234.449999999999999955591079015", f8);
-
-  const Fixed f9 = Fixed::from_floating (-0.3125l);
+  LongDouble ld2;
+  ACE_CDR_LONG_DOUBLE_ASSIGNMENT (ld2, -0.3125);
+  const Fixed f9 = Fixed::from_floating (ld2);
   EXPECT ("-0.3125", f9);
 
-  const Fixed f10 = Fixed::from_floating (0.125l);
+  LongDouble ld3;
+  ACE_CDR_LONG_DOUBLE_ASSIGNMENT (ld3, 0.125);
+  const Fixed f10 = Fixed::from_floating (ld3);
   EXPECT ("0.125", f10);
 
-  Fixed f11 = Fixed::from_integer (-1l);
-  TEST_EQUAL (ACE_CDR::LongLong (-1), ACE_CDR::LongLong (f11));
+  Fixed f11 = Fixed::from_integer (LongLong (-1l));
+  TEST_EQUAL (LongLong (-1), LongLong (f11));
   TEST_EQUAL (false, !f11);
   ++f11;
   TEST_EQUAL (true, !f11);
-  TEST_EQUAL (ACE_CDR::LongLong (0), ACE_CDR::LongLong (f11));
+  TEST_EQUAL (LongLong (0), LongLong (f11));
   TEST_EQUAL (Fixed::from_integer (), f11);
   f11 += Fixed::from_string ("0.124357891");
   ++f11;
@@ -120,10 +127,10 @@ int run_main (int, ACE_TCHAR *[])
   --f11;
   TEST_EQUAL (Fixed::from_string ("-0.875642109"), f11);
 
-  TEST_EQUAL (true, Fixed::from_integer (-4l) < Fixed::from_integer (2l));
-  TEST_EQUAL (true, Fixed::from_integer (-4l) < Fixed::from_integer (-2l));
-  TEST_EQUAL (false, Fixed::from_integer (4l) < Fixed::from_integer (-2l));
-  TEST_EQUAL (false, Fixed::from_integer (4l) < Fixed::from_integer (2l));
+  TEST_EQUAL (true, Fixed::from_integer (LongLong (-4)) < Fixed::from_integer (LongLong (2)));
+  TEST_EQUAL (true, Fixed::from_integer (LongLong (-4)) < Fixed::from_integer (LongLong (-2)));
+  TEST_EQUAL (false, Fixed::from_integer (LongLong (4)) < Fixed::from_integer (LongLong (-2)));
+  TEST_EQUAL (false, Fixed::from_integer (LongLong (4)) < Fixed::from_integer (LongLong (2)));
   TEST_EQUAL (true, Fixed::from_string ("2.17") < Fixed::from_string ("3.142"));
   TEST_EQUAL (true, Fixed::from_string ("10.1") < Fixed::from_string ("100"));
 
@@ -137,10 +144,10 @@ int run_main (int, ACE_TCHAR *[])
   Fixed f13 = f12--;
   TEST_EQUAL (--f13, f12);
 
-  Fixed f14 = Fixed::from_integer (9l);
+  Fixed f14 = Fixed::from_integer (LongLong (9));
   TEST_EQUAL (1, f14.fixed_digits ());
   ++f14;
-  TEST_EQUAL (Fixed::from_integer (10l), f14);
+  TEST_EQUAL (Fixed::from_integer (LongLong (10)), f14);
 
   TEST_EQUAL (Fixed::from_string ("778.33"),
               Fixed::from_string ("12.9") + Fixed::from_string ("765.43"));
@@ -155,7 +162,7 @@ int run_main (int, ACE_TCHAR *[])
   TEST_EQUAL (f15, f14);
 
   Fixed f16 = Fixed::from_string ("123.4567890123456789012345678901");
-  f16 += Fixed::from_integer (9876l);
+  f16 += Fixed::from_integer (LongLong (9876));
   const Fixed f17 = Fixed::from_string ("9999.456789012345678901234567890");
   TEST_EQUAL (f17, f16);
 
@@ -163,22 +170,22 @@ int run_main (int, ACE_TCHAR *[])
   f18 -= Fixed::from_string ("123546789");
   EXPECT ("74307402", f18);
 
-  Fixed f19 = Fixed::from_integer (9l);
-  f19 -= Fixed::from_integer (10l);
+  Fixed f19 = Fixed::from_integer (LongLong (9));
+  f19 -= Fixed::from_integer (LongLong (10));
   EXPECT ("-1", f19);
 
-  Fixed f20 = Fixed::from_integer (99l);
-  f20 += Fixed::from_integer (99l);
+  Fixed f20 = Fixed::from_integer (LongLong (99));
+  f20 += Fixed::from_integer (LongLong (99));
   EXPECT ("198", f20); // carry extra digit
 
   Fixed f21 = Fixed::from_string ("7.532");
   f21 -= Fixed::from_string ("4.91");
   EXPECT ("2.622", f21);
 
-  Fixed f22 = Fixed::from_integer (-99l) * Fixed::from_integer (-9l);
+  Fixed f22 = Fixed::from_integer (LongLong (-99)) * Fixed::from_integer (LongLong (-9));
   EXPECT ("891", f22);
 
-  Fixed f23 = Fixed::from_integer (9l) * Fixed::from_integer (-99l);
+  Fixed f23 = Fixed::from_integer (LongLong (9)) * Fixed::from_integer (LongLong (-99));
   EXPECT ("-891", f23);
 
   Fixed f24 = Fixed::from_string ("-3.4") * Fixed::from_string ("5.67");
