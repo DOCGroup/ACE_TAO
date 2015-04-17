@@ -402,7 +402,7 @@ public:
 
          Fixed operator+ () const;
          Fixed operator- () const;
-         Boolean operator! () const;
+         bool operator! () const;
 
          UShort fixed_digits () const;
          UShort fixed_scale () const;

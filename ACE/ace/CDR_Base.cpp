@@ -1381,7 +1381,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator-- ()
   return *this;
 }
 
-ACE_CDR::Boolean ACE_CDR::Fixed::operator! () const
+bool ACE_CDR::Fixed::operator! () const
 {
   static const Octet ZERO[] = {0, 0, 0, 0, 0, 0, 0, 0,
                                0, 0, 0, 0, 0, 0, 0, POSITIVE};

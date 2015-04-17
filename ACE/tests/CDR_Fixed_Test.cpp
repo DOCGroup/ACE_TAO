@@ -97,7 +97,7 @@ int run_main (int, ACE_TCHAR *[])
   f7 = Fixed::from_string ("-0.005");
   EXPECT ("-0.01", f7.round (2));
   EXPECT ("0.00", f7.truncate (2));
-  
+
   LongDouble ld1;
   ACE_CDR_LONG_DOUBLE_ASSIGNMENT (ld1, 1234.45);
   const Fixed f8 = Fixed::from_floating (ld1);
