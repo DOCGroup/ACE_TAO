@@ -1150,7 +1150,7 @@ ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (const ACE_CDR::Fixed &f)
       this->digits_ += f.digits_ - f.scale_ - this->digits_ + this->scale_;
       if (this->digits_ > MAX_DIGITS)
         {
-          for (size_t i = 0; i < this->digits_ - MAX_DIGITS; ++i)
+          for (size_t i = 0; i < static_cast<size_t> (this->digits_ - MAX_DIGITS); ++i)
             this->digit (static_cast<int> (i), 0);
           this->normalize (this->scale_ - MAX_DIGITS - this->digits_);
           this->digits_ = MAX_DIGITS;

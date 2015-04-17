@@ -145,7 +145,7 @@ AST_Enum *tao_enum_constant_decl = 0;
 AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 #define TAO_YYDEBUG_LEXER_TEXT (tao_yytext[tao_yyleng] = '\0', tao_yytext)
 // Force the pretty debugging code to compile.
-#define TAO_YYDEBUG 1
+#define YYDEBUG 1
 
 #line 151 "fe/idl.tab.cpp" /* yacc.c:339  */
 

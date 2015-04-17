@@ -23,7 +23,7 @@ project(TAO_IDL_GEN) {
     .PHONY: lex.yy
     lex.yy:
     "ifeq ($(notdir $(LEX)), flex)"
-    "	$(LEX) -t -P tao_yy fe/idl.ll | \\"
+    "	$(LEX) -t -P tao_yy -ofe/idl.yy.cpp -d fe/idl.ll | \\"
     "	sed -e 's/ NULL/ 0/g' \\"
     "	    -e 's/	/        /g' \\"
     "	    -e 's/  *$$\/\/g' \\"
