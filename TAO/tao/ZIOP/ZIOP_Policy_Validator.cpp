@@ -15,19 +15,8 @@ TAO_ZIOPPolicy_Validator::TAO_ZIOPPolicy_Validator (TAO_ORB_Core &orb_core)
 
 
 void
-TAO_ZIOPPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
+TAO_ZIOPPolicy_Validator::validate_impl (TAO_Policy_Set & /*policies*/)
 {
-  CORBA::Policy_var policy =
-    policies.get_cached_policy (TAO_CACHED_COMPRESSION_ENABLING_POLICY);
-
-  if (policy.in () == 0)
-    return;
-
-  ZIOP::CompressionEnablingPolicy_var srp =
-    ZIOP::CompressionEnablingPolicy::_narrow (policy.in ());
-
-  if (srp.in () == 0)
-    return;
 }
 
 void

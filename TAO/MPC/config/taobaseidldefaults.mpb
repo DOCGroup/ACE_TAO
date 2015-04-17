@@ -16,7 +16,10 @@ project: build_files {
     libpath              = $(ACE_ROOT)/lib
     inputext             = .idl
     keyword idlflags     = commandflags
-    header_outputext = .h, .hpp, .hxx, .hh
+
+    optional(header_outputext) {
+      commandflags(!-Sch || !-Ssh || -GC) = .h, .hpp, .hxx, .hh
+    }
 
     optional(source_pre_extension) {
       commandflags(!-Scc) = C
@@ -45,9 +48,6 @@ project: build_files {
     }
 
     // Header related options
-    optional(header_outputext) {
-      commandflags(-SS && !-oS && !-Ssh) += S
-    }
     optional(header_pre_extension) {
       commandflags(!-oS && !-Ssh) += S
     }
