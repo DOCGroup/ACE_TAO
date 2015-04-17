@@ -397,10 +397,12 @@ L"'"\\u([0-9a-fA-F]{1,4})"'" {
                           idl_global->set_lineno (idl_global->lineno () + 1);
                         }
                     }
+                  break;
                 }
-[ \t]*          ;
+[ \t]*          break;
 {NL}            {
                   idl_global->set_lineno (idl_global->lineno () + 1);
+                  break;
                 }
 .               return ace_yytext[0];
 
