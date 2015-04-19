@@ -857,6 +857,9 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
   ACE_OS::memset ((void *) &this->startup_info_,
                   0,
                   sizeof this->startup_info_);
+  this->startup_info_.hStdInput = ACE_INVALID_HANDLE;
+  this->startup_info_.hStdOutput = ACE_INVALID_HANDLE;
+  this->startup_info_.hStdError = ACE_INVALID_HANDLE;
   this->startup_info_.cb = sizeof this->startup_info_;
 #endif /* ACE_WIN32 */
 #endif /* !ACE_HAS_WINCE */
