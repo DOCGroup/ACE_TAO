@@ -95,11 +95,6 @@ public:
    * handles.  If you want to affect a subset of the handles, make
    * sure to set the others to ACE_INVALID_HANDLE.
    *
-   * @note Any handle passed as ACE_INVALID_HANDLE will be changed to
-   * a duplicate of the current associated handle. For example, passing
-   * ACE_INVALID_HANDLE for @a std_in will cause ACE_STDIN to be
-   * duplicated and set in this object.
-   *
    * @note Windows: The implementation of set_handles() uses DuplicateHandle
    *       on Windows. DuplicateHandle cannot be used to pass a socket handle
    *       on Windows. Socket handles require an alternate mechanism to pass;
