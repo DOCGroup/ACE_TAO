@@ -11,8 +11,8 @@
 #include "ace/OS_NS_unistd.h"
 #if defined (ACE_WIN32)
 # include <conio.h>
-#else
-# include <termios.h>
+#elif defined (ACE_HAS_TERMIOS)
+# include "ace/os_include/os_termios.h"
 #endif /* ACE_WIN32 */
 
 #include "orbsvcs/Security/Security_ORBInitializer.h"  /// @todo should go away
@@ -55,7 +55,7 @@ namespace
         buf[len] = 0;
         return len;
       }
-#else
+#elif defined (ACE_HAS_TERMIOS)
     struct termios old_tio, new_tio;
 
     if (ACE_OS::isatty (ACE_STDIN))
@@ -96,7 +96,7 @@ namespace
       }
     buf[len] = 0;
 
-#if !defined (ACE_WIN32)
+#if !defined (ACE_WIN32) && defined (ACE_HAS_TERMIOS)
     if (ACE_OS::isatty (ACE_STDIN))
       {
         /* restore the former settings */
