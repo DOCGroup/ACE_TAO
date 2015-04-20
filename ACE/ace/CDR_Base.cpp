@@ -923,10 +923,10 @@ void ACE_CDR::Fixed::normalize (UShort min_scale)
 
   if (extra_nibble)
     {
-      this->value_[15] = (this->value_[14 - bytes] & 0xf0)
-                         | (this->value_[15] & 0xf);
+      const bool sign = this->signbit ();
       std::memmove (this->value_ + bytes + 1, this->value_, 15 - bytes);
       std::memset (this->value_, 0, bytes + 1);
+      this->value_[15] |= sign ? NEGATIVE : POSITIVE;
     }
   else
     {
@@ -1246,7 +1246,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator-= (const Fixed &rhs)
       return *this = -negated;
     }
 
-  Fixed before = *this;
+  const Fixed before = *this;
   ConstIterator rhs_iter = this->pre_add (rhs);
 
   Iterator lhs_iter = this->begin ();
@@ -1276,7 +1276,13 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator-= (const Fixed &rhs)
       *lhs_iter = 9;
 
   if (borrow)
-    *this = -(rhs - before);
+    return *this = -(rhs - before);
+
+  for (int i = this->digits_ - 1; i > 0; --i)
+    if (this->digit (i) == 0)
+      --this->digits_;
+    else
+      break;
 
   return *this;
 }
@@ -1315,13 +1321,144 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (const Fixed &rhs)
   for (int i = 0; i < this->digits_; ++i)
     this->digit (i, temp[i + digit_offset]);
 
+  for (int i = this->digits_ - 1; i > 0; --i)
+    if (this->digit (i) == 0)
+      --this->digits_;
+    else
+      break;
+
   return *this;
 }
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
 {
-  //TODO
+  if (!rhs)
+    return *this;
+
+  if (rhs.scale_ && rhs.scale_ <= this->scale_)
+    this->scale_ -= rhs.scale_;
+  else if (rhs.scale_)
+    this->scale_ -= this->lshift (rhs.scale_ - this->scale_);
+
+  Fixed rhs_no_scale = rhs;
+  rhs_no_scale.scale_ = 0;
+  rhs_no_scale.value_[15] = (rhs_no_scale.value_[15] & 0xf0) | POSITIVE;
+  for (int i = rhs_no_scale.digits_ - 1; i > 0; --i)
+    if (rhs_no_scale.digit (i) == 0)
+      --rhs_no_scale.digits_;
+    else
+      break;
+
+  if (!this->signbit () && rhs.signbit ())
+    this->value_[15] = (this->value_[15] & 0xf0) | NEGATIVE;
+  else if (this->signbit () && rhs.signbit ())
+    this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
+
+  static const Fixed two = from_integer (LongLong (2)),
+    three = from_integer (LongLong (3)),
+    five = from_integer (LongLong (5));
+
+  // Most sig digit of rhs must be >= 5
+  switch (rhs_no_scale.digit (rhs_no_scale.digits_ - 1))
+    {
+    case 1:
+      return *this = (*this * five) / (rhs_no_scale * five);
+    case 2:
+      return *this = (*this * three) / (rhs_no_scale * three);
+    case 3:
+    case 4:
+      return *this = (*this * two) / (rhs_no_scale * two);
+    default:
+      break;
+    }
+
+  const bool neg = this->signbit ();
+  if (neg)
+    this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
+
+  Fixed r, q = this->div_helper2 (rhs_no_scale, r);
+
+  if (!r)
+    return *this = neg ? -q : q;;
+
+  const int shift = this->lshift (MAX_DIGITS);
+  if (shift)
+    {
+      const Octet scale = r.lshift (shift);
+      r.scale_ = 0;
+      r /= rhs_no_scale;
+      r.scale_ = scale;
+      q += r;
+    }
+
+  *this = neg ? -q : q;
+  this->normalize ();
   return *this;
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::div_helper2 (const Fixed &rhs, Fixed &r) const
+{
+  if (this->digits_ < rhs.digits_)
+    r = *this;
+  else if (this->digits_ == rhs.digits_)
+    if (*this < rhs)
+      r = *this;
+    else
+      {
+        r = *this - rhs;
+        return from_integer (LongLong (1));
+      }
+  else if (this->digits_ == rhs.digits_ + 1)
+    return this->div_helper1 (rhs, r);
+  else
+    {
+      const int dig = this->digits_ - rhs.digits_ - 1;
+      Fixed top = *this, bot = *this; // split with bot having dig digits
+      for (int i = 0; i < dig; ++i)
+        top.digit (i, 0);
+      for (int i = dig; i < this->digits_; ++i)
+        bot.digit (i, 0);
+      bot.digits_ = dig;
+      top.scale_ += dig;
+      top.normalize (this->scale_);
+
+      Fixed rtop;
+      const Fixed qtop = top.div_helper1 (rhs, rtop);
+      const Fixed qbot = rtop.join (dig, bot).div_helper2 (rhs, r);
+      return qtop.join (dig, qbot);
+    }
+
+  return from_integer ();
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::div_helper1 (const Fixed &rhs, Fixed &r) const
+{
+  static const Fixed ten = from_integer (LongLong (10));
+  if (*this >= rhs * ten)
+    return ten + (*this - rhs * ten).div_helper1 (rhs, r);
+
+  int q = (this->digit (this->digits_ - 1) * 10 +
+           this->digit (this->digits_ - 2)) / rhs.digit (rhs.digits_ - 1);
+  if (q > 9)
+    q = 9;
+  Fixed t = from_integer (LongLong (q)) * rhs;
+  for (int i = 0; i < 2 && t > *this; ++i)
+    {
+      --q;
+      t -= rhs;
+    }
+
+  r = *this - t;
+  return from_integer (LongLong (q));
+}
+
+ACE_CDR::Fixed ACE_CDR::Fixed::join (int digits, const Fixed &bot) const
+{
+  Fixed res = bot;
+  res.digits_ = this->digits_ + digits;
+  for (int i = digits; i < MAX_DIGITS && i - digits < this->digits_; ++i)
+    res.digit (i, this->digit (i - digits));
+  return res;
 }
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator++ ()

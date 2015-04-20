@@ -510,6 +510,10 @@ public:
          /// of *this, returnins an iterator to the least significant
          /// digit of f that will influence the sum (or difference).
          ConstIterator pre_add (const Fixed &f);
+
+         Fixed div_helper2 (const Fixed &rhs, Fixed &r) const;
+         Fixed div_helper1 (const Fixed &rhs, Fixed &r) const;
+         Fixed join (int digits, const Fixed &bottom) const;
        };
 
   //@}

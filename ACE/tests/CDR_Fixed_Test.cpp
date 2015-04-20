@@ -73,9 +73,9 @@ int run_main (int, ACE_TCHAR *[])
   EXPECT ("987654321", f2);
   EXPECT ("612578912487901265.90125789", f3);
 
-  //  Fixed f1_scaled = f1 / Fixed::from_integer (100l);
+  Fixed f1_scaled = f1 / Fixed::from_integer (100l);
   const Fixed f4 = Fixed::from_string ("-12345678.9");
-  //TODO: division not yet implemented  TEST_EQUAL (f1_scaled, f4);
+  TEST_EQUAL (f1_scaled, f4);
 
   EXPECT ("-12345678.9", f4);
 
@@ -169,6 +169,7 @@ int run_main (int, ACE_TCHAR *[])
   Fixed f18 = Fixed::from_string ("197854191");
   f18 -= Fixed::from_string ("123546789");
   EXPECT ("74307402", f18);
+  TEST_EQUAL (8, f18.fixed_digits ());
 
   Fixed f19 = Fixed::from_integer (LongLong (9));
   f19 -= Fixed::from_integer (LongLong (10));
@@ -198,7 +199,20 @@ int run_main (int, ACE_TCHAR *[])
   //                                 1234567890123456789012345678901
   Fixed f26 = Fixed::from_string ("0.0000000000000000000000000000001")
     * Fixed::from_string ("0.1");
-  EXPECT ("0.0", f26); //TODO: not sure about this one
+  EXPECT ("0.0", f26);
+
+  Fixed f27 = Fixed::from_string ("817459124");
+  f27 /= Fixed::from_string ("0.001");
+  EXPECT ("817459124000", f27);
+  f27 /= Fixed::from_integer (LongLong (1000));
+  EXPECT ("817459124", f27);
+  f27 /= Fixed::from_integer (LongLong (-2));
+  EXPECT ("-408729562", f27);
+
+  Fixed f28 = Fixed::from_string ("200000000");
+  f28 /= Fixed::from_string ("500");
+  EXPECT ("400000", f28);
+  TEST_EQUAL (6, f28.fixed_digits ());
 
   ACE_END_TEST;
   return failed;
