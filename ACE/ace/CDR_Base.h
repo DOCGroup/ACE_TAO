@@ -354,6 +354,7 @@ public:
        };
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 
+#define ACE_HAS_CDR_FIXED
        /// Fixed-point data type: up to 31 decimal digits and a sign bit
        ///
        /// See OMG 2011-11-01 CORBA Interfaces v3.2 sections 7.10, 7.11.3.4
