@@ -113,6 +113,13 @@ ACE_SizeCDR::write_longdouble (const ACE_CDR::LongDouble &x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
+ACE_SizeCDR::write_fixed (const ACE_CDR::Fixed &x)
+{
+  return this->write_array (&x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN,
+                            (x.fixed_digits () + 2) / 2);
+}
+
+ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_string (const ACE_CDR::Char *x)
 {
   if (x != 0)
@@ -341,6 +348,13 @@ ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_SizeCDR &ss, ACE_CDR::Double x)
 {
   ss.write_double (x);
+  return (ACE_CDR::Boolean) ss.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_SizeCDR &ss, const ACE_CDR::Fixed &x)
+{
+  ss.write_fixed (x);
   return (ACE_CDR::Boolean) ss.good_bit ();
 }
 

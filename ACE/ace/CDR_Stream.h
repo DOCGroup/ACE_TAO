@@ -240,6 +240,7 @@ public:
   ACE_CDR::Boolean write_float (ACE_CDR::Float x);
   ACE_CDR::Boolean write_double (const ACE_CDR::Double &x);
   ACE_CDR::Boolean write_longdouble (const ACE_CDR::LongDouble &x);
+  ACE_CDR::Boolean write_fixed (const ACE_CDR::Fixed &x);
 
   /// For string we offer methods that accept a precomputed length.
   ACE_CDR::Boolean write_string (const ACE_CDR::Char *x);
@@ -368,6 +369,7 @@ public:
   ACE_CDR::Boolean append_float (ACE_InputCDR &);
   ACE_CDR::Boolean append_double (ACE_InputCDR &);
   ACE_CDR::Boolean append_longdouble (ACE_InputCDR &);
+  ACE_CDR::Boolean append_fixed (ACE_InputCDR &);
 
   ACE_CDR::Boolean append_wstring (ACE_InputCDR &);
   ACE_CDR::Boolean append_string (ACE_InputCDR &);
@@ -811,6 +813,7 @@ public:
   ACE_CDR::Boolean read_float (ACE_CDR::Float &x);
   ACE_CDR::Boolean read_double (ACE_CDR::Double &x);
   ACE_CDR::Boolean read_longdouble (ACE_CDR::LongDouble &x);
+  ACE_CDR::Boolean read_fixed (ACE_CDR::Fixed &x);
 
   ACE_CDR::Boolean read_string (ACE_CDR::Char *&x);
   ACE_CDR::Boolean read_string (ACE_CString &x);
@@ -868,6 +871,7 @@ public:
   ACE_CDR::Boolean skip_float (void);
   ACE_CDR::Boolean skip_double (void);
   ACE_CDR::Boolean skip_longdouble (void);
+  ACE_CDR::Boolean skip_fixed (void);
   //@}
 
   /**
@@ -1319,6 +1323,8 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Float x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Double x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
+                                               const ACE_CDR::Fixed &x);
 
 // CDR output operator from helper classes
 
@@ -1362,6 +1368,8 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Float &x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Double &x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
+                                               ACE_CDR::Fixed &x);
 
 // CDR input operator from helper classes
 

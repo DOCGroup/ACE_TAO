@@ -1,11 +1,12 @@
 // -*- MPC -*-
 project(TAO_IDL_GEN) {
   requires += tao_idl_fe_gen
+  custom_only = 1
+
   verbatim(gnuace, local) {
+    all: fe/fe_lookup.cpp fe/idl.yy.cpp fe/idl.tab.cpp fe/idl.tab.hpp
     fe/fe_lookup.cpp: fe/keywords.dat
-    "	echo '\/\/ $$I''d$$' > $@"
-    "	echo '' >> $@"
-    "	echo '#include \"fe_private.h\"' >> $@"
+    "	echo '#include \"fe_private.h\"' > $@"
     "	echo '#include \"ace/OS_NS_string.h\"' >> $@"
     "	echo '' >> $@"
     "	$(ACE_ROOT)/bin/ace_gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ | \\"
@@ -13,7 +14,7 @@ project(TAO_IDL_GEN) {
     "	    -e 's/\\*str == \\*s && !ACE_OS::strncmp/len == static_cast<unsigned int> (ACE_OS::strlen (s)) \\&\\& *str == *s \\&\\& !ACE_OS::strncmp/g' \\"
     "	>> $@"
 
-    fe/lex.yy.cpp: fe/idl.ll
+    fe/idl.yy.cpp: fe/idl.ll
     "	@echo 'WARNING: Potentially outdated $@'"
     "	@echo '         either touch(1) the file or explicitly'"
     "	@echo '         generate it using:'"
@@ -22,60 +23,35 @@ project(TAO_IDL_GEN) {
     .PHONY: lex.yy
     lex.yy:
     "ifeq ($(notdir $(LEX)), flex)"
-    "	$(LEX) -L -t fe/idl.ll | \\"
-    "	sed -e 's/yy/tao_yy/g' \\"
-    "	    -e 's/YY/TAO_YY/g' \\"
-    "	    -e 's/ NULL/ 0/g' \\"
+    "	$(LEX) -t -P tao_yy -ofe/idl.yy.cpp fe/idl.ll | \\"
+    "	sed -e 's/ NULL/ 0/g' \\"
     "	    -e 's/	/        /g' \\"
     "	    -e 's/  *$$\/\/g' \\"
-    "	    -e 's/TAO_YY_BREAK break;/TAO_YY_BREAK ACE_NOTREACHED (break;)/g' \\"
-    "	    -e 's/ECHO/TAO_YY_ECHO/' \\"
+    "	    -e 's/YY_BREAK break;/YY_BREAK ACE_NOTREACHED (break;)/g' \\"
     "	    -e 's/fread\([^\)]*\)/static_cast<int> (&)/g' \\"
-    "	    -e 's/\\$$Hea''der.*\\$$/$$I''d$$/' \\"
     "	    -e 's@#include <stdio\.h>@#include \"ace/OS_NS_stdio.h\"@' \\"
     "	    -e 's@#include <unistd\.h>@#include \"ace/os_include/os_ctype.h\"@' \\"
-    "     -e 's@c = getc@c = ACE_OS::getc@' \\"
-    "	    -e '/#include </d' \\"
-    "	> fe/lex.yy.cpp"
-    "	(cd fe; patch < lex.yy.cpp.diff)"
+    "	    -e 's@c = getc@c = ACE_OS::getc@' \\"
+    "	    -e 's@199901L@199901L || defined (__HP_aCC)@' \\"
+    "	    -e '/#include <[seu]/d' \\"
+    "	> fe/idl.yy.cpp"
     "else"
-    "	@echo 'ERROR: You must use flex 2.5.4 or higher to process this file'"
+    "	@echo 'ERROR: You must use flex 2.5.35 or higher to process this file'"
     "	@/bin/false"
     "endif"
 
-    fe/y.tab.cpp: fe/idl.yy
+    fe/idl.tab.cpp fe/idl.tab.hpp: fe/idl.ypp
     "	@echo 'WARNING: Potentially outdated $@'"
     "	@echo '         either touch(1) the file or explicitly'"
     "	@echo '         generate it using:'"
     "	@echo '    make y.tab'"
 
     .PHONY: y.tab
-    y.tab: fe/idl.yy
+    y.tab: fe/idl.ypp
     "ifeq ($(notdir $(YACC)), bison)"
-    "	$(YACC) -y -l -d fe/idl.yy"
-    "	sed -e 's/char \\*getenv/char *ace_foo/g' \\"
-    "	    -e 's/= getenv/= ACE_OS::getenv/g' \\"
-    "	    -e 's/int yynew_state,/int,/g' \\"
-    "	    -e 's/int yyold_state,/int,/g' \\"
-    "	    -e 's/int yyrule_num,/int,/g' \\"
-    "	    -e 's/\\(YYDEBUG_DISCARD_TOKEN.*int\\) yytoken_num/\\1/g' \\"
-    "	    -e 's/yynewerror:\/\/g' \\"
-    "	    -e 's/yy/tao_yy/g' \\"
-    "	    -e 's/YY/TAO_YY/g' \\"
-    "	    -e 's/	/        /g' \\"
-    "	    -e 's/  *$$\/\/g' \\"
-    "	    -e 's/y\\.tab\\.c/y.tab.cpp/g' \\"
-    "	    -e 's%\\(#pragma ident\\)%\/\/ \\1%' < y.tab.c > /tmp/$(USER).Y"
-    "	sed -e 's/yy/tao_yy/g' \\"
-    "	    -e 's/YY/TAO_YY/g' < y.tab.h > /tmp/$(USER).YH"
-    "	echo '\/\/ $$I''d$$' > fe/y.tab.cpp"
-    "	cat /tmp/$(USER).Y >> fe/y.tab.cpp"
-    "	echo '\/\/ $$I''d$$' > fe/y.tab.h"
-    "	cat /tmp/$(USER).YH >> fe/y.tab.h"
-    "	$(RM) /tmp/$(USER).Y /tmp/$(USER).YH y.tab.c y.tab.h"
-    "	(cd fe; patch < y.tab.cpp.diff)"
+    "	$(YACC) -d -p tao_yy -b fe/idl fe/idl.ypp"
     "else"
-    "	@echo 'ERROR: You must use bison 2.3 or higher to process this file'"
+    "	@echo 'ERROR: You must use bison 3 or higher to process this file'"
     "	@/bin/false"
     "endif"
   }
@@ -86,6 +62,7 @@ project(TAO_IDL_FE) : acelib, conv_lib, tao_output {
   dynamicflags += TAO_IDL_FE_BUILD_DLL
   includes    += $(TAO_ROOT)
   includes    += include fe
+  after       += TAO_IDL_GEN
 
   specific {
     // Override the template value for optimize.  Building the frontend

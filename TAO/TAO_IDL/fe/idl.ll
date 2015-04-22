@@ -1,5 +1,5 @@
 %{
-/*  $Id$
+/*
 
 COPYRIGHT
 
@@ -87,7 +87,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_home_header.h"
 #include "fe_private.h"
 #include "fe_extern.h"
-#include "y.tab.h"
+#include "idl.tab.hpp"
 
 static char *               idl_wstring_escape_reader (char *);
 static ACE_CDR::WChar       idl_wchar_escape_reader (char *);
@@ -99,7 +99,7 @@ static void                 idl_parse_line_and_file (char *);
 static void                 idl_store_pragma (char *);
 static char *               idl_get_pragma_string (char *);
 static bool                 idl_valid_version (char *);
-static AST_Decl *           idl_find_node (char *);
+static AST_Decl *           idl_find_node (const char *);
 
 #define ace_yytext yytext
 
@@ -196,7 +196,7 @@ oneway          return IDL_ONEWAY;
 \<\<            return IDL_LEFT_SHIFT;
 \>\>            return IDL_RIGHT_SHIFT;
 \:\:            {
-                  yylval.strval = ACE::strnew ("::");
+                  tao_yylval.strval = ACE::strnew ("::");
                   return IDL_SCOPE_DELIMITOR;
                 }
 
@@ -223,63 +223,71 @@ oneway          return IDL_ONEWAY;
 
   if (entry)
     {
-      yylval.strval = ACE::strnew (entry->mapping_);
+      tao_yylval.strval = ACE::strnew (entry->mapping_);
     }
   else
     {
-      yylval.strval = ACE::strnew (ace_yytext);
+      tao_yylval.strval = ACE::strnew (ace_yytext);
     }
 
   return IDENTIFIER;
 }
 
 "-"?(([0-9]+"."[0-9]*)|("."[0-9]+))([eE][+-]?[0-9]+)?[lLfF]?      {
-                  yylval.dval = idl_atof (ace_yytext);
+                  tao_yylval.dval = idl_atof (ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 "-"?[0-9]+[eE][+-]?[0-9]+[lLfF]?  {
-                  yylval.dval = idl_atof (ace_yytext);
+                  tao_yylval.dval = idl_atof (ace_yytext);
                   return IDL_FLOATING_PT_LITERAL;
                 }
 
+"-"?(([0-9]+"."[0-9]*)|("."?[0-9]+))[dD] {
+                  tao_yylval.fixval = ACE_CDR::Fixed::from_string (ace_yytext);
+                  return IDL_FIXED_PT_LITERAL;
+                }
+
 "-"[1-9][0-9]*  {
-                  yylval.ival = idl_atoi (ace_yytext, 10);
+                  tao_yylval.ival = idl_atoi (ace_yytext, 10);
                   return IDL_INTEGER_LITERAL;
                 }
 [1-9][0-9]*     {
-                  yylval.uival = idl_atoui (ace_yytext, 10);
+                  tao_yylval.uival = idl_atoui (ace_yytext, 10);
                   return IDL_UINTEGER_LITERAL;
                 }
 "-"0[xX][a-fA-F0-9]+ {
-                  yylval.ival = idl_atoi (ace_yytext, 16);
+                  tao_yylval.ival = idl_atoi (ace_yytext, 16);
                   return IDL_INTEGER_LITERAL;
                 }
 0[xX][a-fA-F0-9]+ {
-                  yylval.uival = idl_atoui (ace_yytext, 16);
+                  tao_yylval.uival = idl_atoui (ace_yytext, 16);
                   return IDL_UINTEGER_LITERAL;
                 }
 "-"0[0-7]*      {
-                  yylval.ival = idl_atoi (ace_yytext, 8);
+                  tao_yylval.ival = idl_atoi (ace_yytext, 8);
                   return IDL_INTEGER_LITERAL;
                 }
 0[0-7]*         {
-                  yylval.uival = idl_atoui (ace_yytext, 8);
+                  tao_yylval.uival = idl_atoui (ace_yytext, 8);
                   return IDL_UINTEGER_LITERAL;
                 }
 
 (\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3})*\"[ \t]*)+ {
                   /* Skip the quotes */
                   char * const tmp = ace_yytext;
-                  for(size_t i = ACE_OS::strlen (tmp); i-- != 0; ) {
-                    if (isspace(tmp[i])) {
-                      tmp[i] = '\0';
+                  for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
+                    {
+                      if (isspace(tmp[i]))
+                        {
+                          tmp[i] = '\0';
+                        }
+                      else
+                        {
+                          break;
+                        }
                     }
-                    else {
-                      break;
-                    }
-                  }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
-                  ACE_NEW_RETURN (yylval.sval,
+                  ACE_NEW_RETURN (tao_yylval.sval,
                                   UTL_String (tmp + 1, true),
                                   IDL_STRING_LITERAL);
                   return IDL_STRING_LITERAL;
@@ -287,100 +295,116 @@ oneway          return IDL_ONEWAY;
 (L\"([^\\\"]*|\\[ntvbrfax\\\?\'\"]|\\[0-7]{1,3}|\\u([0-9a-fA-F]{1,4}))*\"[ \t]*)+ {
                   /* Skip the bookends */
                   char * const tmp = ACE_OS::strdup (ace_yytext);
-                  for(size_t i = ACE_OS::strlen (tmp); i-- != 0; ) {
-                    if (isspace(tmp[i])) {
-                      tmp[i] = '\0';
+                  for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
+                    {
+                      if (isspace(tmp[i]))
+                        {
+                          tmp[i] = '\0';
+                        }
+                      else
+                        {
+                          break;
+                        }
                     }
-                    else {
-                      break;
-                    }
-                  }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
-                  yylval.wsval = idl_wstring_escape_reader(tmp + 2);
+                  tao_yylval.wsval = idl_wstring_escape_reader (tmp + 2);
                   return IDL_WSTRING_LITERAL;
                 }
 "'"."'"         {
-                  yylval.cval = ace_yytext [1];
+                  tao_yylval.cval = ace_yytext[1];
                   return IDL_CHARACTER_LITERAL;
                 }
 "'"\\([0-7]{1,3})"'" {
                   // octal character constant
-                  yylval.cval = idl_escape_reader (ace_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
 "'"\\[xX]([0-9a-fA-F]{1,2})"'" {
                   // hexadecimal character constant
-                  yylval.cval = idl_escape_reader (ace_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
 "'"\\."'"       {
-                  yylval.cval = idl_escape_reader (ace_yytext + 1);
+                  tao_yylval.cval = idl_escape_reader (ace_yytext + 1);
                   return IDL_CHARACTER_LITERAL;
                 }
 L"'"."'"        {
                   // wide character constant
-                  yylval.wcval = ace_yytext [2];
+                  tao_yylval.wcval = ace_yytext[2];
                   return IDL_WCHAR_LITERAL;
                 }
 L"'"\\u([0-9a-fA-F]{1,4})"'" {
                   // hexadecimal wide character constant
-                  yylval.wcval = idl_wchar_escape_reader(ace_yytext + 2);
+                  tao_yylval.wcval = idl_wchar_escape_reader (ace_yytext + 2);
                   return IDL_WCHAR_LITERAL;
                 }
 ^[ \t]*#[ \t]*pragma[ \t].*{NL} |
 ^\?\?=[ \t]*pragma[ \t].*{NL} {/* remember pragma */
-                  idl_global->set_lineno(idl_global->lineno() + 1);
-                  idl_store_pragma(ace_yytext);
+                  idl_global->set_lineno (idl_global->lineno () + 1);
+                  idl_store_pragma (ace_yytext);
+                  break;
                 }
 ^[ \t]*#file[ \t].*{NL} |
 ^\?\?=[ \t]*file[ \t].*{NL} {/* ignore file */
-                  idl_global->set_lineno(idl_global->lineno() + 1);
+                  idl_global->set_lineno(idl_global->lineno () + 1);
+                  break;
                 }
 ^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)*{NL} |
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""" "[0-9]*([ \t]*[0-9]*)?{NL} {
-                  idl_parse_line_and_file(ace_yytext);
+                  idl_parse_line_and_file (ace_yytext);
+                  break;
                 }
 ^[ \t]*#[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} |
 ^\?\?=[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} {
-                  idl_parse_line_and_file(ace_yytext);
+                  idl_parse_line_and_file (ace_yytext);
+                  break;
                 }
 ^[ \t]*#line[ \t]*[0-9]+[ \t]*("\""[^\"]*"\""([ \t]*[0-9]*([ \t]*[0-9]*)?)?)?{NL} |
 ^\?\?=line[ \t]*[0-9]*" ""\""[^\"]*"\""{NL} {
-                  idl_parse_line_and_file(ace_yytext);
+                  idl_parse_line_and_file (ace_yytext);
+                  break;
                 }
 ^[ \t]*#[ \t]*[0-9]*{NL} |
 ^\?\?=[ \t]*[0-9]*{NL} {
-                  idl_parse_line_and_file(ace_yytext);
+                  idl_parse_line_and_file (ace_yytext);
+                  break;
                 }
 ^[ \t]*#[ \t]*ident[ \t].*{NL} |
 ^\?\?=[ \t]*ident[ \t].*{NL} {
                   /* ignore cpp ident */
-                  idl_global->set_lineno(idl_global->lineno() + 1);
+                  idl_global->set_lineno (idl_global->lineno () + 1);
+                  break;
                 }
 \/\/.*{NL}      {
                   /* ignore comments */
-                  idl_global->set_lineno(idl_global->lineno() + 1);
+                  idl_global->set_lineno(idl_global->lineno () + 1);
+                  break;
                 }
 "/*"            {
-                  for(;;) {
-                    char const c = yyinput();
-                    if (c == '*') {
-                      char const next = yyinput();
-                      if (next == '/')
-                        break;
-                      else
-                        yyunput(c, NULL);
+                  for (;;)
+                    {
+                      char const c = yyinput ();
+                      if (c == '*')
+                        {
+                          char const next = yyinput ();
+                          if (next == '/')
+                            break;
+                          else
+                            yyunput (c, 0);
+                        }
+                      else if (c == '\n')
+                        {
+                          idl_global->set_lineno (idl_global->lineno () + 1);
+                        }
                     }
-                    else if (c == '\n') {
-                      idl_global->set_lineno(idl_global->lineno() + 1);
-                    }
-                  }
+                  break;
                 }
-[ \t]*          ;
+[ \t]*          break;
 {NL}            {
-                  idl_global->set_lineno(idl_global->lineno() + 1);
+                  idl_global->set_lineno (idl_global->lineno () + 1);
+                  break;
                 }
-.               return ace_yytext [0];
+.               return ace_yytext[0];
 
 %%
         /* subroutines */
@@ -391,8 +415,8 @@ same_file (char *path1, char *path2)
   char fullpath1 [MAXPATHLEN + 1] = {0};
   char fullpath2 [MAXPATHLEN + 1] = {0};
 
-  char * fp1 = ACE_OS::realpath(path1, fullpath1);
-  char * fp2 = ACE_OS::realpath(path2, fullpath2);
+  char *fp1 = ACE_OS::realpath (path1, fullpath1);
+  char *fp2 = ACE_OS::realpath (path2, fullpath2);
 
   return
     (fp1 == 0 || fp2 == 0)
@@ -415,7 +439,7 @@ idl_parse_line_and_file (char *buf)
     }
   else
     {
-      r++;
+      ++r;
     }
 
   // Check to see if we're running under the screwy Microsoft scheme
@@ -429,12 +453,12 @@ idl_parse_line_and_file (char *buf)
   // Find line number.
   while (isspace (*r))
     {
-      r++;
+      ++r;
     }
 
   h = r;
 
-  for (; isdigit (*r); r++)
+  for (; isdigit (*r); ++r)
     {
       continue;
     }
@@ -443,7 +467,7 @@ idl_parse_line_and_file (char *buf)
   idl_global->set_lineno ((long) idl_atoui (h, 10));
 
   // Find file name, if present.
-  for (; *r != '"'; r++)
+  for (; *r != '"'; ++r)
     {
       if (*r == '\n' || *r == '\0')
         {
@@ -453,7 +477,7 @@ idl_parse_line_and_file (char *buf)
 
   h = ++r;
 
-  for (; *r != '"'; r++)
+  for (; *r != '"'; ++r)
     {
       continue;
     }
@@ -490,7 +514,14 @@ idl_parse_line_and_file (char *buf)
       // possibly produced VMS-style paths here.
       char trans_path[MAXPATHLEN] = "";
       char *temp_h = IDL_GlobalData::translateName (h, trans_path);
-      if (temp_h) h = temp_h;
+      if (temp_h)
+        h = temp_h;
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Unable to construct full file pathname\n")));
+          throw Bailout ();
+        }
 #endif
       ACE_NEW (tmp,
                UTL_String (h, true));
@@ -504,7 +535,7 @@ idl_parse_line_and_file (char *buf)
   bool is_real_filename =
     fname->compare (idl_global->real_filename ())
     || same_file (fname->get_string(),
-                  idl_global->real_filename ()->get_string());
+                  idl_global->real_filename ()->get_string ());
 
   bool is_main_filename = false;
 
@@ -522,8 +553,8 @@ idl_parse_line_and_file (char *buf)
 #else
       is_main_filename =
         fname->compare (idl_global->main_filename ())
-        || same_file (fname->get_string(),
-                      idl_global->main_filename ()->get_string());
+        || same_file (fname->get_string (),
+                      idl_global->main_filename ()->get_string ());
 #endif
     }
 
@@ -747,7 +778,10 @@ idl_store_pragma (char *buf)
           ++tmp;
         }
 
-      AST_Decl *d = idl_find_node (tmp);
+      ACE_CString work (tmp);
+      work = work.substr (0, work.find (' '));
+
+      AST_Decl *d = idl_find_node (work.c_str ());
 
       if (d == 0)
         {
@@ -806,6 +840,13 @@ idl_store_pragma (char *buf)
       // Delete sample_type since add_dcps_data_key() doesn't take its ownership.
       delete [] sample_type;
     }
+  else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_SEQUENCE_TYPE", 23) == 0)
+    {
+      char *seq_type = idl_get_pragma_string (buf);
+      idl_global->set_dcps_sequence_type (seq_type);
+
+      delete [] seq_type;
+    }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_SUPPORT_ZERO_COPY_READ", 27) == 0)
     {
       idl_global->dcps_support_zero_copy_read (true);
@@ -828,6 +869,14 @@ idl_store_pragma (char *buf)
       idl_global->add_ciao_rti_ts_file_names (tmp);
 
       // Delete tmp since add_ciao_rti_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
+    }
+  else if (ACE_OS::strncmp (buf + 8, "coredx typesupport", 18) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_coredx_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_coredx_ts_file_names() doesn't take its ownership.
       delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 19) == 0)
@@ -858,7 +907,7 @@ idl_store_pragma (char *buf)
           delete [] tmp;
         }
     }
-  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0)||
+  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0) ||
            (ACE_OS::strncmp (buf + 8, "ami4ccm receptacle", 18) == 0))
     {
       char *tmp = idl_get_pragma_string (buf);
@@ -957,7 +1006,7 @@ idl_atoi (char *s, long b)
  * idl_atoui - Convert a string of digits into an unsigned integer according to base b
  */
 static ACE_CDR::ULongLong
-idl_atoui(char *s, long b)
+idl_atoui (char *s, long b)
 {
   ACE_CDR::ULongLong r = 0;
 
@@ -1284,7 +1333,7 @@ idl_valid_version (char *s)
 }
 
 static AST_Decl *
-idl_find_node (char *s)
+idl_find_node (const char *s)
 {
   UTL_ScopedName * node = FE_Utils::string_to_scoped_name (s);
   AST_Decl * d = 0;

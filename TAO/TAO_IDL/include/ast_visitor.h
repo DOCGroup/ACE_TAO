@@ -67,6 +67,7 @@ class AST_Typedef;
 class AST_Root;
 class AST_Native;
 class AST_Param_Holder;
+class AST_Fixed;
 
 /**
  * @class ast_visitor
@@ -136,6 +137,7 @@ public:
   virtual int visit_root (AST_Root *node) = 0;
   virtual int visit_native (AST_Native *node) = 0;
   virtual int visit_valuebox (AST_ValueBox *node) = 0;
+  virtual int visit_fixed (AST_Fixed *node);
 
 protected:
   // For abstract class.

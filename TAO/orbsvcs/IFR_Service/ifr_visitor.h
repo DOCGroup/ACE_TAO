@@ -98,6 +98,9 @@ protected:
 private:
   /// Lock.
   ACE_Lock *lock_;
+
+  // Not supported, generate an error
+  int visit_fixed (AST_Fixed *node);
 };
 
 #endif /* TAO_IFR_VISITOR_H */

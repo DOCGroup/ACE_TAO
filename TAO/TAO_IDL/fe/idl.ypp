@@ -65,7 +65,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 /*
- * idl.yy - YACC grammar for IDL 3.x
+ * idl.ypp - YACC grammar for IDL 3.x
  */
 
 /* Declarations */
@@ -87,6 +87,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_array.h"
 #include "ast_attribute.h"
 #include "ast_field.h"
+#include "ast_fixed.h"
 #include "ast_expression.h"
 #include "ast_operation.h"
 #include "ast_generator.h"
@@ -130,18 +131,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_utils.h"
 
 #if (defined(apollo) || defined(hpux)) && defined(__cplusplus)
-extern  "C" int yywrap();
+extern  "C" int tao_yywrap();
 #endif  // (defined(apollo) || defined(hpux)) && defined(__cplusplus)
 
 
-void yyerror (const char *);
-int yylex (void);
-extern "C" int yywrap (void);
-extern char yytext[];
-extern int yyleng;
+void tao_yyerror (const char *);
+int tao_yylex (void);
+extern "C" int tao_yywrap (void);
+extern char tao_yytext[];
+extern int tao_yyleng;
 AST_Enum *tao_enum_constant_decl = 0;
 AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
-#define YYDEBUG_LEXER_TEXT (yytext[yyleng] = '\0', yytext)
+#define TAO_YYDEBUG_LEXER_TEXT (tao_yytext[tao_yyleng] = '\0', tao_yytext)
 // Force the pretty debugging code to compile.
 #define YYDEBUG 1
 %}
@@ -176,6 +177,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   ACE_CDR::Float                fval;           /* Float value          */
   ACE_CDR::Char                 cval;           /* Char value           */
   ACE_CDR::WChar                wcval;          /* WChar value          */
+  ACE_CDR::Fixed                fixval;         /* Fixed point value    */
   UTL_String                    *sval;          /* String value         */
   char                          *wsval;         /* WString value        */
   char                          *strval;        /* char * value         */
@@ -271,6 +273,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %token <sval>   IDL_STRING_LITERAL
 %token <cval>   IDL_CHARACTER_LITERAL
 %token <dval>   IDL_FLOATING_PT_LITERAL
+%token <fixval> IDL_FIXED_PT_LITERAL
 %token          IDL_TRUETOK
 %token          IDL_FALSETOK
 
@@ -289,6 +292,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <dcval>   struct_type enum_type switch_type_spec union_type
 %type <dcval>   array_declarator op_type_spec seq_head wstring_type_spec
 %type <dcval>   param_type_spec type_dcl type_declarator actual_parameter
+%type <dcval>   fixed_type_spec
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
 %type <idlist>  home_inheritance_spec primary_key_spec module_header
@@ -2231,6 +2235,10 @@ literal
           ACE_OutputCDR::from_wchar wc ($1);
           $$ = idl_global->gen ()->create_expr (wc);
         }
+        | IDL_FIXED_PT_LITERAL
+        {
+          $$ = idl_global->gen ()->create_expr ($1);
+        }
         | IDL_FLOATING_PT_LITERAL
         {
 //      | IDL_FLOATING_PT_LITERAL
@@ -2279,7 +2287,6 @@ positive_int_expr :
                     }
 
                   break;
-#if !defined (ACE_LACKS_LONGLONG_T)
                 case AST_Expression::EV_ulonglong:
                   if (ev->u.ullval == 0)
                     {
@@ -2287,7 +2294,6 @@ positive_int_expr :
                     }
 
                   break;
-#endif
                 case AST_Expression::EV_octet:
                   if (ev->u.oval == 0)
                     {
@@ -2509,6 +2515,7 @@ template_type_spec
         : sequence_type_spec
         | string_type_spec
         | wstring_type_spec
+        | fixed_type_spec
         ;
 
 constructed_type_spec
@@ -2718,13 +2725,7 @@ fixed_type
         : IDL_FIXED
         {
 // fixed_type : IDL_FIXED
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("error in %C line %d\n"),
-                      idl_global->filename ()->get_string (),
-                      idl_global->lineno ()));
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Sorry, I (TAO_IDL) can't handle")
-                      ACE_TEXT (" fixed types yet\n")));
+          $$ = AST_Expression::EV_fixed;
         }
         ;
 
@@ -3014,12 +3015,8 @@ union_type
            * The top of the scopes must an empty union we added after we
            * encountered 'union <id> switch ('. Now we are ready to add a
            * correct one. Temporarily remove the top so that we setup the
-           * correct union in a right scope. But first save pragma prefix
-           * since UTL_ScopeStack::pop() removes it.
+           * correct union in a right scope.
            */
-          char *prefix = 0;
-          idl_global->pragma_prefixes ().top (prefix);
-          prefix = ACE::strnew (prefix);
           UTL_Scope *top = idl_global->scopes ().top_non_null ();
           idl_global->scopes ().pop ();
 
@@ -3063,7 +3060,6 @@ union_type
            * Restore the top.
            */
           idl_global->scopes ().push (top);
-          idl_global->pragma_prefixes ().push (prefix);
 
           $1->destroy ();
           delete $1;
@@ -3774,6 +3770,14 @@ seq_head :
 //      simple_type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceTypeSeen);
           $$ = $5;
+        }
+        ;
+
+fixed_type_spec
+        : IDL_FIXED '<' positive_int_expr ',' const_expr '>'
+        {
+          $5->evaluate (AST_Expression::EK_positive_int);
+          $$ = idl_global->gen ()->create_fixed ($3, $5);
         }
         ;
 
@@ -7062,7 +7066,7 @@ connector_export
  * ???
  */
 int
-yywrap (void)
+tao_yywrap (void)
 {
   return 1;
 }
@@ -7071,7 +7075,7 @@ yywrap (void)
  * Report an error situation discovered in a production
  */
 void
-yyerror (const char *msg)
+tao_yyerror (const char *msg)
 {
   ACE_ERROR ((LM_ERROR,
               "%C\n",
