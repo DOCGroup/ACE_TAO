@@ -1053,7 +1053,7 @@ static void                 idl_parse_line_and_file (char *);
 static void                 idl_store_pragma (char *);
 static char *               idl_get_pragma_string (char *);
 static bool                 idl_valid_version (char *);
-static AST_Decl *           idl_find_node (char *);
+static AST_Decl *           idl_find_node (const char *);
 
 #define ace_yytext tao_yytext
 
@@ -3162,7 +3162,14 @@ idl_parse_line_and_file (char *buf)
       // possibly produced VMS-style paths here.
       char trans_path[MAXPATHLEN] = "";
       char *temp_h = IDL_GlobalData::translateName (h, trans_path);
-      if (temp_h) h = temp_h;
+      if (temp_h)
+        h = temp_h;
+      else
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Unable to construct full file pathname\n")));
+          throw Bailout ();
+        }
 #endif
       ACE_NEW (tmp,
                UTL_String (h, true));
@@ -3419,7 +3426,10 @@ idl_store_pragma (char *buf)
           ++tmp;
         }
 
-      AST_Decl *d = idl_find_node (tmp);
+      ACE_CString work (tmp);
+      work = work.substr (0, work.find (' '));
+
+      AST_Decl *d = idl_find_node (work.c_str ());
 
       if (d == 0)
         {
@@ -3478,6 +3488,13 @@ idl_store_pragma (char *buf)
       // Delete sample_type since add_dcps_data_key() doesn't take its ownership.
       delete [] sample_type;
     }
+  else if (ACE_OS::strncmp (buf + 8, "DCPS_DATA_SEQUENCE_TYPE", 23) == 0)
+    {
+      char *seq_type = idl_get_pragma_string (buf);
+      idl_global->set_dcps_sequence_type (seq_type);
+
+      delete [] seq_type;
+    }
   else if (ACE_OS::strncmp (buf + 8, "DCPS_SUPPORT_ZERO_COPY_READ", 27) == 0)
     {
       idl_global->dcps_support_zero_copy_read (true);
@@ -3500,6 +3517,14 @@ idl_store_pragma (char *buf)
       idl_global->add_ciao_rti_ts_file_names (tmp);
 
       // Delete tmp since add_ciao_rti_ts_file_names() doesn't take its ownership.
+      delete [] tmp;
+    }
+  else if (ACE_OS::strncmp (buf + 8, "coredx typesupport", 18) == 0)
+    {
+      char *tmp = idl_get_pragma_string (buf);
+      idl_global->add_ciao_coredx_ts_file_names (tmp);
+
+      // Delete tmp since add_ciao_coredx_ts_file_names() doesn't take its ownership.
       delete [] tmp;
     }
   else if (ACE_OS::strncmp (buf + 8, "opendds typesupport", 19) == 0)
@@ -3530,7 +3555,7 @@ idl_store_pragma (char *buf)
           delete [] tmp;
         }
     }
-  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0)||
+  else if ((ACE_OS::strncmp (buf + 8, "ciao ami4ccm receptacle", 23) == 0) ||
            (ACE_OS::strncmp (buf + 8, "ami4ccm receptacle", 18) == 0))
     {
       char *tmp = idl_get_pragma_string (buf);
@@ -3956,7 +3981,7 @@ idl_valid_version (char *s)
 }
 
 static AST_Decl *
-idl_find_node (char *s)
+idl_find_node (const char *s)
 {
   UTL_ScopedName * node = FE_Utils::string_to_scoped_name (s);
   AST_Decl * d = 0;
