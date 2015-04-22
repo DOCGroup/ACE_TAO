@@ -152,6 +152,7 @@ be_util::prep_be_arg (char *s)
   static const char unique_include[]       = "unique_include=";
   static const char dds_impl[]             = "dds_impl=";
   static const char stripped_filename[]    = "stripped_filename=";
+  static const char no_fixed_err[]         = "no_fixed_err";
 
   char* last = 0;
 
@@ -308,6 +309,10 @@ be_util::prep_be_arg (char *s)
           char const * const val =
             arg + sizeof (dds_impl) - 1;
           be_global->dds_impl (val);
+        }
+      else if (ACE_OS::strstr (arg, no_fixed_err) == arg)
+        {
+          be_global->no_fixed_err (true);
         }
       else
         {
@@ -534,6 +539,11 @@ be_util::usage (void)
       ACE_TEXT ("a \"versioned\" namespace\n")
     ));
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
+  ACE_DEBUG ((
+      LM_DEBUG,
+      ACE_TEXT (" -Wb,no_fixed_err\t\t\tDon't generate an error when the fixed")
+      ACE_TEXT (" type is used\n")
+    ));
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -b\t\t\tUse a clonable argument type for oneway methods.\n")

@@ -155,7 +155,8 @@ BE_GlobalData::BE_GlobalData (void)
     alt_mapping_ (false),
     in_facet_servant_ (false),
     gen_arg_traits_ (true),
-    gen_anytypecode_adapter_ (false)
+    gen_anytypecode_adapter_ (false),
+    no_fixed_err_ (false)
 {
 }
 
@@ -2710,6 +2711,18 @@ void
 BE_GlobalData::gen_anytypecode_adapter (bool val)
 {
   this->gen_anytypecode_adapter_ = val;
+}
+
+bool
+BE_GlobalData::no_fixed_err () const
+{
+  return this->no_fixed_err_;
+}
+
+void
+BE_GlobalData::no_fixed_err (bool val)
+{
+  this->no_fixed_err_ = val;
 }
 
 unsigned long
