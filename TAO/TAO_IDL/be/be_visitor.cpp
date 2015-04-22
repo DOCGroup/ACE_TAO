@@ -15,6 +15,7 @@
 #include "be_visitor.h"
 
 #include "be_fixed.h"
+#include "be_extern.h"
 #include "global_extern.h"
 #include "utl_err.h"
 
@@ -337,6 +338,7 @@ be_visitor::visit_native (be_native *)
 int
 be_visitor::visit_fixed (be_fixed *node)
 {
-  idl_global->err ()->fixed_unsupported (node);
+  if (!be_global->no_fixed_err ())
+    idl_global->err ()->fixed_unsupported (node);
   return 1;
 }
