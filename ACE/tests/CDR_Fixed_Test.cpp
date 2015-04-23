@@ -73,7 +73,7 @@ int run_main (int, ACE_TCHAR *[])
   EXPECT ("987654321", f2);
   EXPECT ("612578912487901265.90125789", f3);
 
-  Fixed f1_scaled = f1 / Fixed::from_integer (100l);
+  Fixed f1_scaled = f1 / Fixed::from_integer (LongLong (100l));
   const Fixed f4 = Fixed::from_string ("-12345678.9");
   TEST_EQUAL (f1_scaled, f4);
 
