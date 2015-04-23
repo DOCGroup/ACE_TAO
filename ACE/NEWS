@@ -27,6 +27,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.1 and ACE-6.3.2
   match the new signature for virtual method dispatch to continue working
   properly in all cases.
 
+. Added the class ACE_CDR::Fixed (CDR_Base.h) for CDR's fixed-point decimal
+  data type which stores up to 31 decimal digits and a sign bit.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.3.0 and ACE-6.3.1
 ====================================================
 

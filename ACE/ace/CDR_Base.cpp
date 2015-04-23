@@ -924,7 +924,7 @@ void ACE_CDR::Fixed::normalize (UShort min_scale)
 
   if (extra_nibble)
     {
-      const bool sign = this->signbit ();
+      const bool sign = this->sign ();
       std::memmove (this->value_ + bytes + 1, this->value_, 15 - bytes);
       std::memset (this->value_, 0, bytes + 1);
       this->value_[15] |= sign ? NEGATIVE : POSITIVE;
@@ -978,12 +978,13 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
   return f;
 }
 
-ACE_CDR::Fixed ACE_CDR::Fixed::from_octets (const Octet *array, int len)
+ACE_CDR::Fixed ACE_CDR::Fixed::from_octets (const Octet *array, int len,
+  unsigned int scale)
 {
   Fixed f;
   ACE_OS::memcpy (f.value_ + 16 - len, array, len);
   ACE_OS::memset (f.value_, 0, 16 - len);
-  f.scale_ = 0;
+  f.scale_ = scale;
 
   f.digits_ = len * 2 - 1;
   if (len > 1 && (array[0] >> 4) == 0)
@@ -999,7 +1000,7 @@ ACE_CDR::Fixed::operator ACE_CDR::LongLong () const
   for (int i = this->digits_ - 1; i >= this->scale_; --i)
     val = 10 * val + this->digit (i);
 
-  if (this->signbit ())
+  if (this->sign ())
     val *= -1;
 
   return val;
@@ -1015,7 +1016,7 @@ ACE_CDR::Fixed::operator ACE_CDR::LongDouble () const
   for (int i = this->scale_ - 1; i >= 0; --i)
     val += this->digit (i) * std::pow (10.0l, i - this->scale_);
 
-  if (this->signbit ())
+  if (this->sign ())
     val *= -1;
 
   return val;
@@ -1029,7 +1030,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::round (UShort scale) const
       for (UShort i = 0; i < f.scale_ - scale; ++i)
         f.digit (i, 0);
       f.normalize (scale);
-      const bool negative = f.signbit ();
+      const bool negative = f.sign ();
       if (negative)
         f.value_[15] = (f.value_[15] & 0xf0) | POSITIVE;
       if (this->digit (this->scale_ - scale - 1) >= 5)
@@ -1052,7 +1053,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::truncate (UShort scale) const
       for (UShort i = 0; i < f.scale_ - scale; ++i)
         f.digit (i, 0);
       f.normalize (scale);
-      if (f.signbit ())
+      if (f.sign ())
         {
           f.value_[15] = (f.value_[15] & 0xf0) | POSITIVE;
           if (!!f)
@@ -1087,7 +1088,7 @@ bool ACE_CDR::Fixed::to_string (char *buffer, size_t buffer_size) const
   if (!buffer || buffer_size < 2)
     return false;
 
-  const bool negative = this->signbit ();
+  const bool negative = this->sign ();
   if (negative)
     *buffer = '-';
   BufferAppender ba (buffer + negative, buffer_size - negative);
@@ -1162,10 +1163,10 @@ ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (const ACE_CDR::Fixed &f)
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
 {
-  if (!this->signbit () && rhs.signbit ())
+  if (!this->sign () && rhs.sign ())
     return *this -= -rhs;
 
-  if (this->signbit () && !rhs.signbit ())
+  if (this->sign () && !rhs.sign ())
     {
       Fixed negated = -*this;
       negated -= rhs;
@@ -1237,10 +1238,10 @@ int ACE_CDR::Fixed::lshift (int digits)
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator-= (const Fixed &rhs)
 {
-  if (!this->signbit () && rhs.signbit ())
+  if (!this->sign () && rhs.sign ())
     return *this += -rhs;
 
-  if (this->signbit () && !rhs.signbit ())
+  if (this->sign () && !rhs.sign ())
     {
       Fixed negated = -*this;
       negated += rhs;
@@ -1290,9 +1291,9 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator-= (const Fixed &rhs)
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (const Fixed &rhs)
 {
-  if (!this->signbit () && rhs.signbit ())
+  if (!this->sign () && rhs.sign ())
     this->value_[15] = (this->value_[15] & 0xf0) | NEGATIVE;
-  else if (this->signbit () && rhs.signbit ())
+  else if (this->sign () && rhs.sign ())
     this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
 
   Octet temp[MAX_DIGITS * 2];
@@ -1350,9 +1351,9 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
     else
       break;
 
-  if (!this->signbit () && rhs.signbit ())
+  if (!this->sign () && rhs.sign ())
     this->value_[15] = (this->value_[15] & 0xf0) | NEGATIVE;
-  else if (this->signbit () && rhs.signbit ())
+  else if (this->sign () && rhs.sign ())
     this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
 
   static const Fixed two = from_integer (LongLong (2)),
@@ -1373,7 +1374,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
       break;
     }
 
-  const bool neg = this->signbit ();
+  const bool neg = this->sign ();
   if (neg)
     this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
 
@@ -1464,7 +1465,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::join (int digits, const Fixed &bot) const
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator++ ()
 {
-  if (this->signbit ())
+  if (this->sign ())
     {
       this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
       if (!!--*this) // decrement and check if result is nonzero
@@ -1494,7 +1495,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator++ ()
 
 ACE_CDR::Fixed &ACE_CDR::Fixed::operator-- ()
 {
-  if (this->signbit ())
+  if (this->sign ())
     {
       this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
       ++*this;
@@ -1554,15 +1555,15 @@ std::istream &operator>> (std::istream &lhs, ACE_CDR::Fixed &rhs)
 bool ACE_CDR::Fixed::less (const ACE_CDR::Fixed &rhs) const
 {
   const Fixed &lhs = *this;
-  if (lhs.signbit () != rhs.signbit ())
-    return lhs.signbit ();
+  if (lhs.sign () != rhs.sign ())
+    return lhs.sign ();
 
   // signs of lhs and rhs are the same so lhs < rhs reduces to:
   // if positive, |lhs| < |rhs|
   // if negative, |rhs| < |lhs|
   // 'a' will refer to the value left of < and 'b' to the value to the right
-  const ACE_CDR::Fixed &a = lhs.signbit () ? rhs : lhs,
-    &b = lhs.signbit () ? lhs : rhs;
+  const ACE_CDR::Fixed &a = lhs.sign () ? rhs : lhs,
+    &b = lhs.sign () ? lhs : rhs;
 
   if (a.scale_ == b.scale_)
     return ACE_OS::memcmp (a.value_, b.value_, sizeof a.value_) < 0;
@@ -1605,7 +1606,7 @@ bool ACE_CDR::Fixed::less (const ACE_CDR::Fixed &rhs) const
 bool ACE_CDR::Fixed::equal (const ACE_CDR::Fixed &rhs) const
 {
   const Fixed &lhs = *this;
-  if (lhs.signbit () != rhs.signbit ())
+  if (lhs.sign () != rhs.sign ())
     return false;
 
   if (lhs.scale_ == rhs.scale_)

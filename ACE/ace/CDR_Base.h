@@ -380,7 +380,8 @@ public:
          static Fixed from_integer (ULongLong val);
          static Fixed from_floating (LongDouble val);
          static Fixed from_string (const char *str);
-         static Fixed from_octets (const Octet *array, int len);
+         static Fixed from_octets (const Octet *array, int len,
+                                   unsigned int scale = 0);
 
          operator LongLong () const;
          operator LongDouble () const;
@@ -408,7 +409,7 @@ public:
          UShort fixed_digits () const;
          UShort fixed_scale () const;
 
-         bool signbit () const;
+         bool sign () const;
          Octet digit (int n) const;
          void digit (int n, int value);
 

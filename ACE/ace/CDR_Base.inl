@@ -261,7 +261,7 @@ ACE_CDR::Fixed::fixed_scale () const
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::signbit () const
+ACE_CDR::Fixed::sign () const
 {
   return (this->value_[15] & 0xf) == NEGATIVE;
 }
@@ -537,7 +537,7 @@ ACE_INLINE ACE_CDR::Fixed
 ACE_CDR::Fixed::operator- () const
 {
   Fixed f = *this;
-  f.value_[15] = (f.value_[15] & 0xf0) | (f.signbit () ? POSITIVE : NEGATIVE);
+  f.value_[15] = (f.value_[15] & 0xf0) | (f.sign () ? POSITIVE : NEGATIVE);
   return f;
 }
 
