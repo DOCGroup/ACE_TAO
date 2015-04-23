@@ -408,7 +408,7 @@ public:
          UShort fixed_digits () const;
          UShort fixed_scale () const;
 
-         bool signbit () const;
+         bool sign () const;
          Octet digit (int n) const;
          void digit (int n, int value);
 
