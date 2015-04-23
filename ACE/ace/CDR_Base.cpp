@@ -978,12 +978,13 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
   return f;
 }
 
-ACE_CDR::Fixed ACE_CDR::Fixed::from_octets (const Octet *array, int len)
+ACE_CDR::Fixed ACE_CDR::Fixed::from_octets (const Octet *array, int len,
+  unsigned int scale)
 {
   Fixed f;
   ACE_OS::memcpy (f.value_ + 16 - len, array, len);
   ACE_OS::memset (f.value_, 0, 16 - len);
-  f.scale_ = 0;
+  f.scale_ = scale;
 
   f.digits_ = len * 2 - 1;
   if (len > 1 && (array[0] >> 4) == 0)
