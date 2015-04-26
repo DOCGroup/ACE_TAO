@@ -541,6 +541,16 @@ ACE_CDR::Fixed::operator- () const
   return f;
 }
 
+ACE_INLINE void
+ACE_CDR::Fixed::ltrim ()
+{
+  for (int i = this->digits_ - 1; i >= this->scale_ && i > 0; --i)
+    if (this->digit (i) == 0)
+      --this->digits_;
+    else
+      break;
+}
+
 ACE_INLINE ACE_CDR::Fixed
 operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 {

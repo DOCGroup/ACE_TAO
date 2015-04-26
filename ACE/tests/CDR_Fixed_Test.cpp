@@ -58,7 +58,7 @@ int run_main (int, ACE_TCHAR *[])
 
   TEST_EQUAL (LongLong (-1234567890l), LongLong (f1));
   TEST_EQUAL (LongLong (987654321), LongLong (f2));
-  TEST_EQUAL (LongLong (612578912487901265ul), LongLong (f3));
+  TEST_EQUAL (LongLong (612578912487901265ull), LongLong (f3));
 
   TEST_EQUAL (0, f1.fixed_scale ());
   TEST_EQUAL (10, f1.fixed_digits ());
@@ -73,7 +73,7 @@ int run_main (int, ACE_TCHAR *[])
   EXPECT ("987654321", f2);
   EXPECT ("612578912487901265.90125789", f3);
 
-  Fixed f1_scaled = f1 / Fixed::from_integer (LongLong (100l));
+  Fixed f1_scaled = f1 / Fixed::from_integer (LongLong (100));
   const Fixed f4 = Fixed::from_string ("-12345678.9");
   TEST_EQUAL (f1_scaled, f4);
 
@@ -112,6 +112,10 @@ int run_main (int, ACE_TCHAR *[])
   ACE_CDR_LONG_DOUBLE_ASSIGNMENT (ld3, 0.125);
   const Fixed f10 = Fixed::from_floating (ld3);
   EXPECT ("0.125", f10);
+
+  LongDouble ldzero = ACE_CDR_LONG_DOUBLE_INITIALIZER;
+  const Fixed fzero = Fixed::from_floating (ldzero);
+  EXPECT ("0", fzero);
 
   Fixed f11 = Fixed::from_integer (LongLong (-1l));
   TEST_EQUAL (LongLong (-1), LongLong (f11));
@@ -198,8 +202,8 @@ int run_main (int, ACE_TCHAR *[])
 
   //                                 1234567890123456789012345678901
   Fixed f26 = Fixed::from_string ("0.0000000000000000000000000000001")
-    * Fixed::from_string ("0.1");
-  EXPECT ("0.0", f26);
+            * Fixed::from_string ("0.1");
+  EXPECT (                        "0.0000000000000000000000000000000", f26);
 
   Fixed f27 = Fixed::from_string ("817459124");
   f27 /= Fixed::from_string ("0.001");
@@ -213,6 +217,9 @@ int run_main (int, ACE_TCHAR *[])
   f28 /= Fixed::from_string ("500");
   EXPECT ("400000", f28);
   TEST_EQUAL (6, f28.fixed_digits ());
+
+  Fixed f29 = Fixed::from_integer (LongLong (1)) / Fixed::from_integer (LongLong (-3));
+  EXPECT ("-0.333333333333333333333333333333", f29); //TODO: one more 3
 
   ACE_END_TEST;
   return failed;

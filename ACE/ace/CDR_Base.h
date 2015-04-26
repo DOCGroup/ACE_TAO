@@ -371,9 +371,9 @@ public:
          enum
          {
            MAX_DIGITS = 31,
-           MAX_STRING_SIZE = 3 + MAX_DIGITS, // includes -, ., terminator
+           MAX_STRING_SIZE = 4 + MAX_DIGITS, // includes -, 0, ., terminator
            POSITIVE = 0xc,
-           NEGATIVE = 0xd,
+           NEGATIVE = 0xd
          };
 
          static Fixed from_integer (LongLong val = 0);
@@ -516,6 +516,7 @@ public:
          Fixed div_helper2 (const Fixed &rhs, Fixed &r) const;
          Fixed div_helper1 (const Fixed &rhs, Fixed &r) const;
          Fixed join (int digits, const Fixed &bottom) const;
+         void ltrim ();
        };
 
   //@}
