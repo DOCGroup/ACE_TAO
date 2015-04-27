@@ -843,7 +843,9 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::ULongLong val)
 
 ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
 {
-#ifdef NONNATIVE_LONGDOUBLE
+#ifdef ACE_OPENVMS
+  typedef double BigFloat;
+#elif defined NONNATIVE_LONGDOUBLE
   typedef LongDouble::NativeImpl BigFloat;
 #else
   typedef LongDouble BigFloat;
