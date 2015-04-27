@@ -107,6 +107,10 @@ static AST_Decl *           idl_find_node (const char *);
 #include "mcpp_yyinput.h"
 #endif /*USE_MCPP_BUFFER_LEXING*/
 
+#if defined __ANDROID__ && defined ECHO
+#undef ECHO
+#endif
+
 %}
 
 /* SO we don't choke on files that use \r\n */
