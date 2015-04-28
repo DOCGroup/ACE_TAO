@@ -116,6 +116,9 @@ int run_main (int, ACE_TCHAR *[])
   LongDouble ldzero = ACE_CDR_LONG_DOUBLE_INITIALIZER;
   const Fixed fzero = Fixed::from_floating (ldzero);
   EXPECT ("0", fzero);
+  ACE_CDR_LONG_DOUBLE_ASSIGNMENT(ldzero, 0);
+  const Fixed fzero2 = Fixed::from_floating(ldzero);
+  EXPECT("0", fzero2);
 
   Fixed f11 = Fixed::from_integer (LongLong (-1l));
   TEST_EQUAL (LongLong (-1), LongLong (f11));
