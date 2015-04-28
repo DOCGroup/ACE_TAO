@@ -7,8 +7,11 @@
 #pragma DCPS_DATA_TYPE "ShapeType"
 #pragma DCPS_DATA_KEY "ShapeType color"
 
+
+typedef string<128> color_type;
+
 struct ShapeType {
-  string color; //@key
+  color_type color; //@key
   long x;
   long y;
   long shapesize;
