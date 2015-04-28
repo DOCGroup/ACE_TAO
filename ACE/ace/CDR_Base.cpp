@@ -642,7 +642,7 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
         {
           exponent = 0x7fff;
         }
-      else
+      else if (exponent) // exponent 0 stays 0 in 128-bit
         {
           exponent = (exponent - max_eleven_bit) + max_fifteen_bit;
         }
@@ -735,7 +735,7 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
         {
           exponent = 0x7ff;
         }
-      else
+      else if (exponent) // exponent 0 stays 0 in 64-bit
         {
           exponent = (exponent - max_fifteen_bit) + max_eleven_bit;
         }
@@ -874,7 +874,8 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
   // Insert the integer part from least to most significant
   int idx = (static_cast<int> (digits_left) + 1) / 2 - 1;
   bool high = digits_left % 2;
-  f.value_[idx] = 0;
+  if (idx >= 0)
+    f.value_[idx] = 0;
   for (size_t i = 0; i < digits_left; ++i, high = !high)
     {
       const Octet digit = static_cast<Octet> (std::fmod (int_part, 10));
