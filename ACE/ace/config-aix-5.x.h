@@ -192,6 +192,8 @@
 
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
+#define ACE_HAS_SIOCGIFCONF
+
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SIGINFO_T

@@ -69,6 +69,7 @@ Bug_4055_Regression_Test: !ST
 Bug_4189_Regression_Test: !ST
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
+CDR_Fixed_Test: !ACE_FOR_TAO
 CDR_Test
 Chrono_Test
 Cache_Map_Manager_Test

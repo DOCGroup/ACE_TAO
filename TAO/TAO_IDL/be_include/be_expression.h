@@ -54,6 +54,8 @@ public:
 
   be_expression (ACE_CDR::Double d);
 
+  be_expression (const ACE_CDR::Fixed &f);
+
   // Visiting.
   virtual int accept (be_visitor *visitor);
 };

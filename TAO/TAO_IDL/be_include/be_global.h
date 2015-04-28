@@ -912,6 +912,9 @@ public:
   bool gen_anytypecode_adapter (void) const;
   void gen_anytypecode_adapter (bool val);
 
+  bool no_fixed_err () const;
+  void no_fixed_err (bool val);
+
   unsigned long tab_size (void) const;
   void tab_size (unsigned long val);
 
@@ -1304,6 +1307,9 @@ private:
   /// Generating arg traits in the ORB for the basic type
   /// sequences requires the AnyTypeCode_Adapter class.
   bool gen_anytypecode_adapter_;
+
+  /// Don't generate an error for usage of the fixed data type
+  bool no_fixed_err_;
 };
 
 #endif /* _BE_GLOBAL_H */

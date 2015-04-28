@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class AST_Decl;
 class AST_Interface;
 class AST_Enum;
+class AST_Fixed;
 class AST_Union;
 class AST_UnionLabel;
 class UTL_String;
@@ -149,6 +150,7 @@ public:
     EIDL_T_ARG_LENGTH,          // Wrong # of template args
     EIDL_MISMATCHED_SEQ_PARAM,  // 'sequence<T>' must match a previous param
     EIDL_TEMPLATE_NOT_ALIASED,  // ref to tmpl module scope must be via alias
+    EIDL_FIXED_UNSUPPORTED,     // fixed data type is not supported
     EIDL_OK                     // No error
   };
 
@@ -338,6 +340,9 @@ public:
 
   // Report not a type error
   void not_a_type (AST_Decl *d);
+
+  // Fixed data type is not supported
+  void fixed_unsupported (AST_Fixed *f);
 
   // Report back-end error
   void back_end (long lineno,
