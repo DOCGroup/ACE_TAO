@@ -1348,7 +1348,10 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
   if (rhs.scale_ && rhs.scale_ <= this->scale_)
     this->scale_ -= rhs.scale_;
   else if (rhs.scale_)
-    this->scale_ -= this->lshift (rhs.scale_ - this->scale_);
+    {
+      const Octet shifted = this->lshift (rhs.scale_ - this->scale_);
+      this->scale_ -= shifted;
+    }
 
   Fixed rhs_no_scale = rhs;
   rhs_no_scale.scale_ = 0;
@@ -1362,9 +1365,13 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
   else if (this->sign () && rhs.sign ())
     this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
 
-  static const Fixed two = from_integer (LongLong (2)),
+  static const Fixed one = from_integer (LongLong (1)),
+    two = from_integer (LongLong (2)),
     three = from_integer (LongLong (3)),
     five = from_integer (LongLong (5));
+
+  if (rhs_no_scale == one)
+    return *this;
 
   // Most sig digit of rhs must be >= 5
   switch (rhs_no_scale.digit (rhs_no_scale.digits_ - 1))
