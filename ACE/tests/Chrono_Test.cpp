@@ -20,6 +20,8 @@
 
 #if defined (ACE_HAS_CPP11)
 
+#include "ace/Truncate.h"
+
 int
 test_assignments ()
 {
