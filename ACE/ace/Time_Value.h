@@ -22,7 +22,8 @@
 # include "ace/os_include/os_time.h"
 
 #if defined (ACE_HAS_CPP11)
-#include <chrono>
+# include <chrono>
+# include "ace/Truncate.h"
 #endif /* ACE_HAS_CPP11 */
 
 // Define some helpful constants.
@@ -128,7 +129,7 @@ public:
     std::chrono::microseconds const usec {
       std::chrono::duration_cast<std::chrono::microseconds>(
         duration % std::chrono::seconds (1))};
-    this->set (s.count (), usec.count ());
+    this->set (s.count (), ACE_Utils::truncate_cast<suseconds_t>(usec.count ()));
   }
 #endif /* ACE_HAS_CPP11 */
 
