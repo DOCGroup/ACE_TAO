@@ -821,7 +821,6 @@ def create_file_lists (base_dir, prefix, exclude):
             if fullitem in exclude or item in exclude:
 #                print "Removing " + fullitem + " from consideration...."
                 files.remove (item)
-                continue
             else:
                 if bin_regex.search (fullitem) is not None:
                     bin_files.append ('"' + os.path.join (prefix, fullitem) + '"')
