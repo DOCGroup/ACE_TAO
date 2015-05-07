@@ -795,19 +795,7 @@ def create_file_lists (base_dir, prefix, exclude):
         if len(relroot) and relroot[0] == '/':
             relroot = relroot [1:]
 
-        excluded = False
-        for item in exclude:
-            dir_item = item + '/'
-            if relroot.startswith (dir_item) or relroot.startswith (item):
-#                print "excluding", relroot
-                excluded = True
-#            else:
-#                print relroot, "does not start with", dir_item, "or", item
-
-        if excluded:
-            continue
-
-        # Remove dirs from our exclude pattern
+        # Remove dirs that are listed in our exclude pattern
         for item in dirs:
 #            print "item", item
             # Remove our excludes
@@ -815,8 +803,8 @@ def create_file_lists (base_dir, prefix, exclude):
 #                print "Removing " + item + " from consideration...."
                 dirs.remove (item)
 
+        # Remove files that are listed in our exclude pattern
         for item in files:
-
             fullitem = os.path.join (relroot, item)
             if fullitem in exclude or item in exclude:
 #                print "Removing " + fullitem + " from consideration...."
