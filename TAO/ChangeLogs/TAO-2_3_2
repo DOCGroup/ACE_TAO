@@ -1,0 +1,741 @@
+commit 1e6bfa375e153d5c7d1b907dc70a3b599a07ee6c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 6 11:08:42 2015 +0200
+
+    Don't use global CORBA scope
+        * TAO/tao/AnyTypeCode/Recursive_Type_TypeCode.cpp:
+
+commit 2032aabf520416c5dfd8774cc7e33b6d2f2027f6
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Apr 27 13:42:56 2015 -0500
+
+    ACE_CDR::Fixed-related warning on android and error on VMS.
+
+commit 5324658dacd6ad89562dff5a19e61acd729a7647
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Apr 24 16:51:30 2015 -0500
+
+    ACE_CDR::Fixed corrected warnings and errors, fixed bugs.
+
+commit a2962f51db8ed5cf8f5d4154a7eefb0f63b2192b
+Merge: c9eaefe 8f10863
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Apr 23 09:27:35 2015 -0500
+
+    Merge pull request #59 from pmesnier/master
+    
+    Fix for evaluating profiles that have multiple endpoints including
+
+commit 3ea00930d57de83f784d08bb42cbf1823ba94ea7
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Apr 22 14:04:50 2015 -0500
+
+    tao_idl command line option to suppress the error for fixed data type.
+
+commit 647d0d06c7bcc271a571ee6244555ed9af4d304c
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Apr 22 09:54:47 2015 -0500
+
+    Restored changes to flex/bison output files.
+    
+    These changes were overwritten when the generators were run.
+    Please don't change output files.
+
+commit 8f1086372ebb8273191fd32356fe3ddc21b88b24
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Tue Apr 21 18:06:03 2015 -0500
+
+    Fix for evaluating profiles that have multiple endpoints including
+    both IPv4 and IPv6 with prefer IPv6 set and trouble reaching the
+    server.
+
+commit 802f25773229db5207d15c9a1071d1ae8cd37521
+Merge: 954a5f1 60c0e95
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Apr 21 09:08:04 2015 -0500
+
+    Merge remote-tracking branch 'upstream/master' into idl-fixed-type
+
+commit e2a993c59034dabe3bac2e69af227741f480de27
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 20 08:48:58 2015 +0200
+
+    OpenVMS lacks termios, the code assumed incorrectly that each platform does support this
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+commit 53f49cb9f68e87467f1f4ad00c1453a5fa1ab5a8
+Merge: 15da6ff 1f88315
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Apr 17 11:31:27 2015 -0500
+
+    Merge remote-tracking branch 'upstream/master' into idl-fixed-type
+
+commit 15da6fff40d2f125c8c9b139e9dfc8de536875c5
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Apr 17 10:24:20 2015 -0500
+
+    Fixed lexer issues with rules that don't end in break or return.
+    
+    All rules must end in break or return so that the generated YY_BREAK can be
+    replaced with the ACE_NOTREACHED macro.  Removed lexer debugging.
+
+commit 8a6e0893941061b06716dabf2bcfb0a808dd6e97
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Apr 17 09:19:14 2015 -0500
+
+    Debugging lexer and parser.  Fixed some warnings.
+
+commit 2525e19f6d65fa9a5bb9efa9b3642459d49d08dc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 17 11:35:55 2015 +0200
+
+    Corrected executable bit
+
+commit 2018b75b5caecfb209ef67886ca63c1447fabb08
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Apr 16 15:44:26 2015 -0500
+
+    CDR Fixed data type: CDR streaming
+    
+    tao_idl and tao_ifr back ends now generate errors for fixed
+    updated .gitignore files based on build results
+
+commit b0f102a81e8dafc0f2a80046b4241e9a1f76f6f2
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Apr 9 16:54:45 2015 -0500
+
+    Arithmetic operations + - * on Fixed numbers.
+    
+    Also added Fixed-type expression handling to TAO_IDL_FE.
+
+commit f1d214369e66045e00263d6c46d753e62653daf0
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Apr 1 17:50:05 2015 -0500
+
+    Continued developing ACE_CDR::Fixed and tao_idl fixed parsing.
+
+commit bf2ffa440b86dd711c25abb38630a6c16924fde7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Mar 29 16:08:41 2015 +0200
+
+    Removed implementatin of validate_impl, all code was really doing nothing
+        * TAO/tao/ZIOP/ZIOP_Policy_Validator.cpp:
+
+commit 2377fde5bc56200e2f85a6a943a5d1364108e6f6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Mar 29 16:08:18 2015 +0200
+
+    Just have one exit point so that we get 100% code coverage
+        * TAO/tao/BiDir_GIOP/BiDirPolicy_Validator.cpp:
+
+commit 8a6c15ddd897c15d075f0016de2ca83290b5af35
+Merge: 0ce3ff4 cbc73c1
+Author: marcelsmit <msmit@remedy.nl>
+Date:   Sun Mar 29 13:14:46 2015 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 6b5c388813e1bbac774902e449d1a9f3c25fff96
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Mar 27 17:01:22 2015 -0500
+
+    Work in progress on supporting the fixed type in ACE_CDR and TAO_IDL_FE.
+
+commit cbc73c1cdbdbaef6886cfff9a94380ad118fd419
+Merge: 71c70d7 02716e3
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Fri Mar 27 12:37:43 2015 -0500
+
+    Merge pull request #50 from pmesnier/master
+    
+    Incremental improvements to SSLIOP support
+
+commit 0ce3ff43ec5d97dc767a99815866b83664f43312
+Author: marcelsmit <msmit@remedy.nl>
+Date:   Fri Mar 27 09:15:24 2015 +0100
+
+    Taking the generation of the AmiC-file into account when determining the
+    header_outputext. It could be that an MPC project just want to generate
+    the AmiC header and source.
+    
+        * TAO/MPC/config/taobaseidldefaults.mpb:
+
+commit 02716e3474e6e972c39235406fb00470a1311d99
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Mar 26 17:08:36 2015 -0500
+
+    New configurations to enable testing of various scenarios.
+
+commit c3e149a93b87397116cbd3439c16f61e1885a6f7
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Mar 26 17:05:58 2015 -0500
+
+    Cleaned up the duplication of tagged component IDs.
+
+commit 488e02ff8dfe9ddeaabcf0ed6a697f2bcc8e8a02
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Mar 26 17:04:23 2015 -0500
+
+    Revert a change to enable profile sharing. It's not supported.
+
+commit 71c70d7944a861c17545ac53e8d6ab5f37b79a12
+Merge: b8fb11e 63f5607
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 26 08:35:09 2015 -0700
+
+    Merge pull request #49 from jwillemsen/master
+    
+    Update News file
+
+commit c190d67fc2dc883ba65124cc39ffa62da6c097f3
+Author: marcelsmit <msmit@remedy.nl>
+Date:   Thu Mar 26 14:16:39 2015 +0100
+
+    Reverted last change regarding the source_outputext.
+    
+        * TAO/MPC/config/taobaseidldefaults.mpb:
+
+commit 63f5607438ff01b733b771a0145efc74b4b4c0d1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 26 01:11:30 2015 +0100
+
+    Corrected C++BuilderXE support
+
+commit 691e7cc806ec69524a73388c938b181247b614d1
+Merge: 24d4204 f432ac5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 26 00:45:37 2015 +0100
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 24d4204d35b565e23a3e7596011f619ec98fa94c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 25 22:22:31 2015 +0100
+
+    Layout changes
+
+commit 77c46b418d74ad00c818644ea35b074558ed3c9b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 25 22:22:14 2015 +0100
+
+    Clearify that we just ended maintenance for Solaris
+
+commit 308544833e69154ae835dd7d818f558d648e5148
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Mar 25 15:36:15 2015 -0500
+
+    Removed the need to patch the output of flex, let the sed commands handle it.
+
+commit 4fd4259579cc879a06184a2dc423222ef3a0f0b5
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Mar 25 12:02:54 2015 -0500
+
+    Cleanup and make it compile.
+
+commit 8a9e15a719d31e302edac5a69d9b6cb6a0d45b58
+Author: marcelsmit <msmit@remedy.nl>
+Date:   Wed Mar 25 12:10:25 2015 +0100
+
+    Fixed header_outputext and source_outputext
+    
+        * TAO/MPC/config/taobaseidldefaults.mpb:
+
+commit c3423eaaca19b754c93f1c9afd7390be0082b5a0
+Author: marcelsmit <msmit@remedy.nl>
+Date:   Wed Mar 25 11:07:56 2015 +0100
+
+    Header ouput extension should be optional otherwise the make files
+    always has an header included. This goes wrong when only an IDL file
+    is created by the R/TAO IDL compiler.
+    
+        * TAO/MPC/config/taobaseidldefaults.mpb:
+
+commit 9137b890fb81221751ce106098f6d66355e567fa
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Mar 24 17:11:23 2015 -0500
+
+    Started lexer and parser changes for IDL "fixed" datatype.
+    
+    Cleaned up post-processing of the flex and bison output and renamed
+    generated files to start with 'idl'.
+
+commit 3cf6b37e7903bc49438242b083eb78aa6cb00d55
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Sun Mar 22 13:31:23 2015 -0500
+
+    refactor for coverity issue.
+
+commit 6518391f8ce12a3dfcadaf9b403a3029d512ede2
+Merge: abba999 5f3c3fe
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Tue Mar 17 17:05:57 2015 -0500
+
+    Merge branch 'master' of github.com:DOCGroup/ATCD
+
+commit abba99954a4df6c680aeb4764ece28885f199e14
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Tue Mar 17 17:04:29 2015 -0500
+
+    Added SSLIOP enhancements as factory config options. See SSLIOP-USAGE.html
+    for descriptions of -SSLCheckHost, -SSLPassword, and -SSLVersionList.
+    -SSLCheckHost enforces verification of peer-host identity in certificate
+    -SSLPassword supports password protected private keys
+    -SSLVersionList limits allowed crypto library versions
+
+commit 19903115ff9671d44ada6fdd75a7fdd555161618
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 17 09:00:00 2015 +0100
+
+    Removed not needed return
+
+commit d76367da7959e9eeeff67b308052d5008cd74d2b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 17 08:59:03 2015 +0100
+
+    Removed empty line
+        * TAO/tao/DynamicInterface/Dynamic_Implementation.cpp:
+
+commit 57c6f367640694b185db7f836396319730653334
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 17 08:58:50 2015 +0100
+
+    Layout changes
+
+commit d76f6806a615edbcf2e9906a470f0f0d76429faf
+Merge: ceb1c3b e46385b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 9 15:35:45 2015 +0100
+
+    Merge pull request #27 from jwillemsen/master
+    
+    Suppress valgrind reported conditional jumps in grep and fixed a few Coverity reported errors
+
+commit 36c75b3b5e8fba1e686f51d794a4a7fce9d2bcc7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 9 09:06:38 2015 +0100
+
+    Fixed Coverity insufficient function coverage
+        * TAO/orbsvcs/orbsvcs/Event/EC_Per_Supplier_Filter.cpp:
+
+commit 506127ad1b262cc79d36febcc4dc03faa1f90f65
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Mar 6 17:07:53 2015 -0600
+
+    Updated .gitignore files
+
+commit 84369222bca140abba58ff0a8d51f1aa323f8bdc
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Mar 2 13:08:36 2015 -0600
+
+    Added to .gitignore for TAO orbsvcs.
+
+commit 614a53d6ae063edda770c385fae7e757f73a5d8f
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Mar 2 11:56:25 2015 -0600
+
+    Added to .gitignore files based on what was generated during a build
+
+commit 5d7b031e2f9b2793e51cc591e16b5ddec7ce6c0a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Mar 2 11:29:09 2015 -0600
+
+    Added .gitignore files based on svn:ignore properties
+
+commit 8dd3c8372e291717b3d02c411fe63f2b365cdb9f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 2 09:12:45 2015 +0100
+
+    Check for a nil pointer passed to string_to_ObjectId, resolves several Coverity reported errrors
+
+commit 00b991864c9b1dcc151f35a2c624c8f4328b9213
+Author: Olli Savia <ops@iki.fi>
+Date:   Fri Feb 27 11:09:46 2015 +0200
+
+    Cleanup LynxOS compiler warning
+
+commit 51b38da91eacc2994b4189bdcb03f7d12b17c9cc
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Feb 26 18:08:53 2015 -0600
+
+    Add a check to prevent a possible integer wrap that would lead to an invalid array access.
+
+commit feacd91489b9bfaa5770100b49987fc7aae6ac7c
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Mon Feb 23 16:22:42 2015 -0600
+
+    Restore support for statically linked builds of the IDL compiler. The BE library is subdivided to avoid "xargs ar" triggered module overwrites.
+
+commit f5a9516a05ca017e5b5e5ffb2d8e6a6f04fdb7d4
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Feb 11 11:58:00 2015 -0600
+
+    Refactor funtion to satisfy compilers that doubt there is a clear return path in all cases.
+
+commit 4edbe1c7a4992e58c35cb917c6d2d207cf654215
+Merge: fd347b2 b82b798
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Feb 11 11:37:03 2015 -0600
+
+    Merge branch 'master' of github.com:DOCGroup/ATCD
+
+commit fd347b22a6773e11b9d06ef9144041373edd2cb7
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Feb 11 11:35:21 2015 -0600
+
+    Clean up old commented code, fix a memory leak that occurred
+    when reloading a cached server state, fix a core dump on exit
+    that could happen in some cases when the AAM map was destroyed
+    after the Locator Repository.
+
+commit 4eb6e57a3a501f16d3f7946bebe275461a98cb35
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Feb 11 09:04:21 2015 -0600
+
+    Updated the remaining cases of %s logging formatters for prog_name() to %C.
+
+commit ced85d0ca79f87a9eb54c9c1702288b5b480c639
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Feb 11 08:58:41 2015 -0600
+
+    Updated error logging format string to match other instances in this file.
+
+commit 35cce6f3e5dffa216f3bf064ff45454d3e7c222d
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Feb 10 14:35:07 2015 -0600
+
+    ACE_Process on Windows:
+    
+    Allow redirection of child's stdout/stderr when there is no
+    stdin handle available (for example when running in a service).
+    TAO_IDL drv_preproc: check for errors from ACE_Process
+
+commit bb6489e541e3e7ad410969aa91cc44a5c79997ea
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Fri Jan 23 16:32:18 2015 -0600
+
+    Fix for a core if a kill is requested for a server who's activator is dead.
+
+commit 3467082a7aee25071672fae7d668b64daa3b8985
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Fri Jan 23 16:13:58 2015 -0600
+
+    reenable support for the connection cleanup option when using RW client wait strategy
+
+commit 0bcc4babd87d79eedbf9bee2bd7fcebab98cf514
+Author: Olli Savia <ops@iki.fi>
+Date:   Mon Jan 19 09:45:44 2015 +0200
+
+    Use ACE::is_inequal to compare floating point values.
+
+commit 14ca4c63822e2787621c0f513dc8e06b1ade6896
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 8 09:08:15 2015 +0100
+
+    Fixed fuzz
+        * ACE/bin/fuzz.pl:
+        * TAO/orbsvcs/examples/Notify/MC/TkMonitor/monitor.pl:
+
+commit 425df00f4d29485f37c34f380e4513f3eddac2c9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 8 08:57:25 2015 +0100
+
+    Small change and removed Id from generated TAO_IDL header
+        * ACE/ace/Future.cpp:
+        * TAO/TAO_IDL/be/be_helper.cpp:
+
+commit a629fb98175e200c1ba79c5492c30c2c397683b7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 8 08:46:38 2015 +0100
+
+    Fixed fuzz
+
+commit 816d2988789a093b50da0916d04d17aa712bb4a1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 20:24:25 2015 +0100
+
+    Removed trailing whitespaces
+
+commit d31114c457f2b91039c48175adbb8af7b778df62
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 20:22:05 2015 +0100
+
+    removed incorrect id tags
+
+commit 27f4a3165d1f86fd109781dd6f769b77dae94324
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 20:15:17 2015 +0100
+
+    Trailing whitespaces
+
+commit e622d14630dcf240e23b63df36cd789807b6ddf0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 20:11:03 2015 +0100
+
+    removed id and shorter headers
+
+commit 9c5168ba61bdadcdc1cd8befaa512d37d41f5eac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 20:07:07 2015 +0100
+
+    Trailing whitespaces
+
+commit 322fd406942c192a285f815078d4944c87c29b9e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 20:04:29 2015 +0100
+
+    Removed trailing white spaces
+
+commit 225584d307c3091584000ccfd8fbacf861a06d5d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 20:02:31 2015 +0100
+
+    removed empty headers
+
+commit cf0c16455b648b9c5a887900081eb2a8536b5506
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 20:00:14 2015 +0100
+
+    removed id tag
+
+commit 3378cfa045cab63e02223ffe4f11794a338c05a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:58:50 2015 +0100
+
+    Shorter header
+
+commit 91ec92bc2e0052c8ab2a6bdfd2da3069218a6422
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:58:17 2015 +0100
+
+    Shorter header
+
+commit 8ff95cb206cb5bdbad270e244b562e4bd8df82d3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:55:43 2015 +0100
+
+    Shorter headers
+
+commit 2bcc8e5c24190d4519adee50e21a2c2ee570bd38
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:55:18 2015 +0100
+
+    Shorter headers
+
+commit dba7680c49b0f125faccb7a1602b5f7cc4ad4beb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:54:36 2015 +0100
+
+    Shorter headers
+
+commit b24d5d0bda484e2cb589085e9744114eefc5717c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:53:50 2015 +0100
+
+    Removed incorrect id tags
+
+commit 0a977f27ba62c2b857aef60f91c132c1a06307d5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:51:42 2015 +0100
+
+    Shorter headers
+
+commit e0cbd2706b515bc7cd2590af30fb3253e0c5b559
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:50:05 2015 +0100
+
+    Removed id tag from mwc files
+
+commit 19957310d2aa9503d5c4b8d8b066692c282eca4b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:46:31 2015 +0100
+
+    Fixed file headers
+
+commit 4dbc901534957272603a84d7a72c9f9dde292a0d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:41:56 2015 +0100
+
+    Shorten file headers
+
+commit 22d7fb7eebc9c4ca1cdd4637a4f1daacc0a530ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:39:53 2015 +0100
+
+    Shorten file headers
+
+commit e392479f563136c2bedd53b6e3af905965116fa0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:38:09 2015 +0100
+
+    Shorten file headers
+
+commit 8a994ba86db0a57456af7d697820df0b52065e38
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:34:38 2015 +0100
+
+    Removed trailing whitespaces
+
+commit 3eb45c4c5724d2bb22fb930dbf4ee12f4fa7e627
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:33:16 2015 +0100
+
+    Removed trailing whitespaces
+
+commit aa92464eac39bfb6acbc27a877f8765f1d7b8489
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:29:31 2015 +0100
+
+    Zap id tag from .txt files
+
+commit d1c9896e849a693fa7a5ae62d6958073dfc9eb01
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:24:43 2015 +0100
+
+    Replace sh files
+
+commit 50713a94ac4d7d8d97a1f82ca95dc80969763219
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:23:15 2015 +0100
+
+    Replace pidl and GNU files
+
+commit e76c0ec84f136b31c92c9da86b97eaf0ebb61cbb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 18:56:29 2015 +0100
+
+    Replaced README files
+
+commit d0ee55944daa991efdf212ab9d930890f92c4699
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 17:08:49 2015 +0100
+
+    and zap Id tag from cxx files
+
+commit b75e816374aff56ec178f2cdf92c1cee422fff8d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 17:07:46 2015 +0100
+
+    Zap Id from java files
+
+commit 3a0d034996ef1662a992a326c17c3276ee01adf3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 17:05:51 2015 +0100
+
+    TAO replacements
+
+commit 169db677980c71427658d590f1d7d2f5365a94b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:56:24 2015 +0100
+
+    Perl files
+
+commit d3a107625182634ae0be8f003d9130f8bb5c3567
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:40:30 2015 +0100
+
+    Handle perl files
+
+commit 894f0c22281e0c75e15d6d8688288b7ee5486f46
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:36:43 2015 +0100
+
+    Zap more id
+
+commit b67c7965596044a438458d3f703531a9acc94bde
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:35:11 2015 +0100
+
+    Also search hpp files
+
+commit 7ccdbcae5788afb4b817e41afb489890ef68bd61
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:30:32 2015 +0100
+
+    Removed more Id
+
+commit a15fbbb314fa9c27f7823a6ce77f307e7b048724
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:26:58 2015 +0100
+
+    Also handle mpb files
+
+commit 5400e6326203303388e1ca1adab2cceae1130fd2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:21:46 2015 +0100
+
+    Removed some more id tags
+
+commit 31233b7514d981674e787e3b69cf4b54a77117e5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:17:55 2015 +0100
+
+    Zapped c-style id tag with no space between // and $Id$
+
+commit 7b07caedd286b60f2ed3d99d78f3d4407511d936
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:15:20 2015 +0100
+
+    Remove doxygen style Id tag with two space before $Id#
+
+commit c88815f2039e7152d735c18650c102df84d9aa36
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:12:49 2015 +0100
+
+    Removed single line Id tag
+
+commit 0fbdabcd0a8970712cbbdef06465d061a4ec13c4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:11:17 2015 +0100
+
+    Zapped two line id tags
+
+commit e1c9cd39aa8c1b7f8a1749d2a22b451d114bb0e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:08:29 2015 +0100
+
+    Removed a lot of old Id tags
+
+commit 0e6203659f85d3d23bcb769f5d384d13b0caa70f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 15:59:09 2015 +0100
+
+    Zapped Id tag
+
+commit f86011a8ac05229f47fad5b9d87a905edff2a834
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 2 12:35:21 2015 +0100
+
+    Updated copyright year
+        * ACE/AUTHORS:
+        * ACE/COPYING:
+        * CIAO/COPYING:
+        * DAnCE/COPYING:
+        * TAO/COPYING:
+
+commit 364d174fc121234926023e862f65045c7c95e3ab
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 29 20:06:02 2014 +0100
+
+    Zapped empty line
+        * TAO/tao/TAO_Server_Request.cpp:
+
+commit 007d13b20702a2af96fa930058d89d23ae6c470b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 29 20:05:44 2014 +0100
+
+    Change argument name from error to error_message to get rid of incorrect errors reported by our nologging build
+        * TAO/tests/Bug_3524_Regression/client.cpp:
+
+commit 073c9cd5877ca4889d14c86b586af5297165bba8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 29 12:02:23 2014 +0100
+
+    Changes to make x.3.1 public
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * CIAO/NEWS:
+        * DAnCE/NEWS:
+        * TAO/NEWS:

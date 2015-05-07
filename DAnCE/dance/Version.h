@@ -4,5 +4,5 @@
 
 #define DAnCE_MAJOR_VERSION 1
 #define DAnCE_MINOR_VERSION 3
-#define DAnCE_BETA_VERSION 1
-#define DAnCE_VERSION "1.3.1"
+#define DAnCE_BETA_VERSION 2
+#define DAnCE_VERSION "1.3.2"

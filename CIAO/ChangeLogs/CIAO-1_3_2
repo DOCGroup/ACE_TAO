@@ -1,0 +1,255 @@
+commit e0c46f9452917282db4e88e9c0d51d72f4aafc41
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 5 17:12:22 2015 +0200
+
+    Mention Shapes interop fixes
+        * CIAO/NEWS:
+
+commit b4ca591baeee935fe431c5235518538338799308
+Merge: 56091ec d713960
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 17:40:07 2015 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 56091ec04aaa174530b0027ac3f6702869fb13cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 13:12:02 2015 +0200
+
+    Use a bounded string to match the RTI DDS UI
+        * CIAO/connectors/dds4ccm/tutorials/Shapes/Shapes_asm/ports/Shapes_ShapeType_msg.idl:
+
+commit 2525e19f6d65fa9a5bb9efa9b3642459d49d08dc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 17 11:35:55 2015 +0200
+
+    Corrected executable bit
+
+commit 14925c7e938611e3d328a3e2db8ba30f4a9b8da1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 13 14:40:30 2015 +0200
+
+    Executable bit
+
+commit 3cc55b395c4ff501799c5bb82ef69e36c5f11a72
+Author: marcelsmit <msmit@remedy.nl>
+Date:   Thu Mar 12 09:33:32 2015 +0100
+
+    is_default_qos set to false.
+    
+        * CIAO/connectors/dds4ccm/examples/Hello/descriptors/USER_QOS_PROFILES.xml:
+
+commit 9f0291524be7646f49e5e29d56c8d548f003f151
+Author: Marcel Smit <msmit@remedy.nl>
+Date:   Thu Mar 12 09:06:53 2015 +0100
+
+    Set is_default_qos to false. One should explicitly set the qos_profile string in the deployment
+    plan. Since this is consistently done, we can set the is_default_qos to false.
+    
+        * CIAO/connectors/dds4ccm/examples/IDL2CPPWrapper/Shapes/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/examples/ShapesContr/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/performance-tests/DDSLatency/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/performance-tests/DDSThroughput/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/performance-tests/Keyed/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/performance-tests/Latency/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/performance-tests/Throughput/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/CSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/CSLQoS/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/CSLSampleRejected/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/CSLUnexpStat/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/CoherentUpdater/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/CoherentWriter/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/ContentFilteredTopic/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/Getter/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/HomeTest/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/KeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/LateBinding/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/ListenManyByMany/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/PSLDeadline/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/PSLSampleLost/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/Proxies/ReadWrite/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/QosProfile/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/DDS/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/DDS_OneByOne/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/Different/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueries/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/QueryCondition/TwoQueriesMany/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/Reader/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/ResetTopic/ReadGet/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/SLManyByMany/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/SLOneByOne/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDatatype/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/DifferentDomainID/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/SharedDomainParticipant/SameDatatype/descriptors/USER_QOS_PROFILES.xml:
+        * CIAO/connectors/dds4ccm/tests/UnkeyedWriter/descriptors/USER_QOS_PROFILES.xml:
+        * DAnCE/tools/Logger_Backend/ndds/USER_QOS_PROFILES.xml:
+
+commit 614a53d6ae063edda770c385fae7e757f73a5d8f
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Mar 2 11:56:25 2015 -0600
+
+    Added to .gitignore files based on what was generated during a build
+
+commit 5d7b031e2f9b2793e51cc591e16b5ddec7ce6c0a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Mar 2 11:29:09 2015 -0600
+
+    Added .gitignore files based on svn:ignore properties
+
+commit 4a3ce425d65c7da274d65d89c0cee53c14fe101c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 20:14:23 2015 +0100
+
+    removed id and shorter headers
+
+commit 3378cfa045cab63e02223ffe4f11794a338c05a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:58:50 2015 +0100
+
+    Shorter header
+
+commit 91ec92bc2e0052c8ab2a6bdfd2da3069218a6422
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:58:17 2015 +0100
+
+    Shorter header
+
+commit 8ff95cb206cb5bdbad270e244b562e4bd8df82d3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:55:43 2015 +0100
+
+    Shorter headers
+
+commit 2bcc8e5c24190d4519adee50e21a2c2ee570bd38
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:55:18 2015 +0100
+
+    Shorter headers
+
+commit e0cbd2706b515bc7cd2590af30fb3253e0c5b559
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:50:05 2015 +0100
+
+    Removed id tag from mwc files
+
+commit 4dbc901534957272603a84d7a72c9f9dde292a0d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:41:56 2015 +0100
+
+    Shorten file headers
+
+commit 22d7fb7eebc9c4ca1cdd4637a4f1daacc0a530ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:39:53 2015 +0100
+
+    Shorten file headers
+
+commit aa92464eac39bfb6acbc27a877f8765f1d7b8489
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:29:31 2015 +0100
+
+    Zap id tag from .txt files
+
+commit 50713a94ac4d7d8d97a1f82ca95dc80969763219
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 19:23:15 2015 +0100
+
+    Replace pidl and GNU files
+
+commit e76c0ec84f136b31c92c9da86b97eaf0ebb61cbb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 18:56:29 2015 +0100
+
+    Replaced README files
+
+commit b422ba6462486c0fff96575cf8f30a7579a3a217
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 18:55:38 2015 +0100
+
+    Replaced cdp files
+
+commit b4e516ee293e47146e144f35baff6150ea11e3a4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 17:06:33 2015 +0100
+
+    Id tag from CIAO and DAnCE
+
+commit 169db677980c71427658d590f1d7d2f5365a94b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:56:24 2015 +0100
+
+    Perl files
+
+commit d3a107625182634ae0be8f003d9130f8bb5c3567
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:40:30 2015 +0100
+
+    Handle perl files
+
+commit a15fbbb314fa9c27f7823a6ce77f307e7b048724
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:26:58 2015 +0100
+
+    Also handle mpb files
+
+commit 31233b7514d981674e787e3b69cf4b54a77117e5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:17:55 2015 +0100
+
+    Zapped c-style id tag with no space between // and $Id$
+
+commit 7b07caedd286b60f2ed3d99d78f3d4407511d936
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:15:20 2015 +0100
+
+    Remove doxygen style Id tag with two space before $Id#
+
+commit c88815f2039e7152d735c18650c102df84d9aa36
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:12:49 2015 +0100
+
+    Removed single line Id tag
+
+commit 0fbdabcd0a8970712cbbdef06465d061a4ec13c4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:11:17 2015 +0100
+
+    Zapped two line id tags
+
+commit e1c9cd39aa8c1b7f8a1749d2a22b451d114bb0e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 16:08:29 2015 +0100
+
+    Removed a lot of old Id tags
+
+commit 0e6203659f85d3d23bcb769f5d384d13b0caa70f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 7 15:59:09 2015 +0100
+
+    Zapped Id tag
+
+commit f86011a8ac05229f47fad5b9d87a905edff2a834
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 2 12:35:21 2015 +0100
+
+    Updated copyright year
+        * ACE/AUTHORS:
+        * ACE/COPYING:
+        * CIAO/COPYING:
+        * DAnCE/COPYING:
+        * TAO/COPYING:
+
+commit 073c9cd5877ca4889d14c86b586af5297165bba8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 29 12:02:23 2014 +0100
+
+    Changes to make x.3.1 public
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * CIAO/NEWS:
+        * DAnCE/NEWS:
+        * TAO/NEWS:
