@@ -795,6 +795,18 @@ def create_file_lists (base_dir, prefix, exclude):
         if len(relroot) and relroot[0] == '/':
             relroot = relroot [1:]
 
+        excluded = False
+        for item in exclude:
+            dir_item = item + '/'
+            if relroot.startswith (dir_item) or relroot.startswith (item):
+#                print "excluding", relroot
+                excluded = True
+#            else:
+#                print relroot, "does not start with", dir_item, "or", item
+
+        if excluded:
+            continue
+
         # Remove dirs that are listed in our exclude pattern
         for item in dirs:
 #            print "item", item
@@ -848,7 +860,7 @@ def package (stage_dir, package_dir, decorator):
         pass # swallow any errors
 
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers"),
-                                               "ACE_wrappers", ["TAO", ".gitignore"])
+                                               "ACE_wrappers", ["TAO"])
 
 #    write_file_lists ("fACE" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -863,7 +875,7 @@ def package (stage_dir, package_dir, decorator):
 
     # for TAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
-                                                     "ACE_wrappers/TAO", ["CIAO", "DAnCE", ".gitignore"])
+                                                     "ACE_wrappers/TAO", ["CIAO", "DAnCE"])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -878,7 +890,7 @@ def package (stage_dir, package_dir, decorator):
 
     # for DAnCE:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/DAnCE"),
-                                               "ACE_wrappers/TAO/DAnCE", [".gitignore"])
+                                               "ACE_wrappers/TAO/DAnCE", [])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -892,7 +904,7 @@ def package (stage_dir, package_dir, decorator):
     bin_files = list ()
     # for CIAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/CIAO"),
-                                               "ACE_wrappers/TAO/CIAO", [".gitignore"])
+                                               "ACE_wrappers/TAO/CIAO", [])
 
 #    write_file_lists ("fCIAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
