@@ -38,5 +38,8 @@
 // Visual Studio 2015 has 3 parameter wcstok
 #define ACE_HAS_3_PARAM_WCSTOK
 
+// Visual Studio 2015 has adequate C++11 support
+#define ACE_HAS_CPP11
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_14_H */
