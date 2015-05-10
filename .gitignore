@@ -24,9 +24,7 @@ lib*.dylib
 *~
 ipch/
 
-/ACE/ace/config.h
 /ACE/bin/MakeProjectCreator/config/default.features
-/ACE/include/makeinclude/platform_macros.GNU
 /setenv.cmd
 /setenv.sh
 /build
