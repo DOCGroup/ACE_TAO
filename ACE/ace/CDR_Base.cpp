@@ -852,7 +852,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
 #endif
 
   Fixed f;
-  f.digits_ = 0;
+  f.digits_ = f.scale_ = 0;
   bool negative = false;
   if (val < 0)
     {
@@ -864,7 +864,10 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
   const size_t digits_left =
     static_cast<size_t> (1 + ((val > 0) ? std::log10 (val) : 0));
   if (digits_left > MAX_DIGITS)
-    return f;
+    {
+      ACE_OS::memset (f.value_, 0, sizeof f.value_);
+      return f;
+    }
 
   f.digits_ = MAX_DIGITS;
   f.scale_ = 0;
@@ -948,8 +951,8 @@ void ACE_CDR::Fixed::normalize (UShort min_scale)
 
 ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
 {
-  const bool negative = str && *str == '-';
-  if (negative || (str && *str == '+'))
+  const bool negative = *str == '-';
+  if (negative || *str == '+')
     ++str;
 
   const size_t span = ACE_OS::strspn (str, ".0123456789");
