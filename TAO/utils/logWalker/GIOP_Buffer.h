@@ -111,6 +111,7 @@ private:
   size_t  num_contexts_;
   bool header_parsed_;
   char * payload_start_;
+  size_t payload_size_;
 };
 
 #endif // LOG_WALKER_GIOP_BUFFER_H

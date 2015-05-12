@@ -38,7 +38,7 @@ Endpoint::assign (const char *addr, EndpointRole role)
   this->addr_ = addr;
   this->role_ = role;
   size_t p = addr_.rfind (':');
-  this->port_ = addr_.substring(p);
+  this->port_ = addr_.substring(p+1);
   this->host_ = addr_.substring(0,p);
 
   this->is_localhost_ = this->host_ == "localhost" ||
@@ -105,13 +105,18 @@ PeerProcess::nextIdent(bool is_server)
 }
 
 PeerProcess::PeerProcess (size_t offset, bool is_server)
-  : owner_ (0),
+  : ident_ (0),
+    origin_ (0),
+    owner_ (0),
     remote_ (0),
-    server_ep_(),
+    server_ep_ (),
+    transports_ (),
+    last_transport_ (0),
     is_server_role_(is_server),
     ssl_(false),
     origin_offset_ (offset),
     objects_ (),
+    invocations_ (),
     object_by_index_ ()
 {
   this->ident_ = PeerProcess::nextIdent(is_server);
