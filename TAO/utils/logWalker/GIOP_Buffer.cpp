@@ -130,7 +130,8 @@ GIOP_Buffer::GIOP_Buffer(void)
     msg_size_ (0),
     num_contexts_ (0),
     header_parsed_ (false),
-    payload_start_ (0)
+    payload_start_ (0),
+    payload_size_ (0)
 {
 }
 
@@ -162,13 +163,14 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
     msg_size_ (0),
     num_contexts_ (0),
     header_parsed_ (false),
-    payload_start_ (0)
+    payload_start_ (0),
+    payload_size_ (0)
 {
   const char *size_str = ACE_OS::strstr(text, size_leadin);
   if (size_str != 0)
     {
-      size_str += ACE_OS::strlen (size_leadin);
-      size_str += 3;
+      size_str += leadin_len; //ACE_OS::strlen (size_leadin);
+      //      size_str += 3;
       this->expected_size_ = ACE_OS::strtol(size_str, 0, 10);
       const char *id = ACE_OS::strchr(size_str, '[') + 1;
       this->expected_req_id_ = ACE_OS::strtol(id, 0, 10);
@@ -181,11 +183,11 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
       char timebuf[30];
       ACE_OS::strncpy(timebuf, text, (time_tok - text));
       timebuf[time_tok - text] = 0;
-      char *hms = ACE_OS::strchr (timebuf,' ');
+      char *hms = ACE_OS::strchr (timebuf,':');
       if (hms != 0)
         {
           int hr, min, sec, msec;
-          ::sscanf (hms+1,"%d:%d:%d.%d", &hr, &min, &sec, &msec);
+          ::sscanf (hms-2,"%d:%d:%d.%d", &hr, &min, &sec, &msec);
           this->time_ = (hr * 3600 + min *60 + sec) * 1000 + msec;
         }
     }
@@ -210,6 +212,7 @@ GIOP_Buffer::init_buf (const char *text, size_t offset)
   this->log_offset_ = offset;
   const char * size_str = ACE_OS::strstr (text,"HEXDUMP ") + 8;
   this->buffer_size_ = ACE_OS::strtol (size_str, 0, 10);
+  this->payload_size_ = this->buffer_size_ - 12;
   size_str =  ACE_OS::strstr (text,"showing first ");
   if (size_str != 0)
     {
@@ -371,7 +374,7 @@ GIOP_Buffer::msg_size (void)
     return 0;
   if (!this->header_parsed_)
     this->header_parsed_ = this->parse_header();
-  return this->msg_size_;
+  return (size_leadin == size_leadin_1_5) ? this->payload_size_ : this->msg_size_;
 }
 
 size_t
@@ -568,6 +571,7 @@ GIOP_Buffer::reset (void)
   this->octets_ = 0;
   this->wr_pos_ = 0;
   this->buffer_size_ = 0;
+  this->payload_size_ = 0;
   this->buffer_lost_ = true;
   this->header_parsed_ = false;
   this->opname_ = 0;
@@ -580,6 +584,7 @@ GIOP_Buffer::transfer_from (GIOP_Buffer *other)
   this->octets_ = other->octets_;
   this->wr_pos_ = other->wr_pos_;
   this->buffer_size_ = other->buffer_size_;
+  this->payload_size_ = other->payload_size_;
   this->header_parsed_ = false;
   other->reset();
 }
@@ -589,13 +594,16 @@ GIOP_Buffer::swap (GIOP_Buffer *other)
 {
   char *tmp_octets = this->octets_;
   char *tmp_wr_pos = this->wr_pos_;
-  size_t tmp_size = this->buffer_size_;
+  size_t tmp_bsize = this->buffer_size_;
+  size_t tmp_psize = this->payload_size_;
 
   this->octets_ = other->octets_;
   this->wr_pos_ = other->wr_pos_;
   this->buffer_size_ = other->buffer_size_;
+  this->payload_size_ = other->payload_size_;
 
   other->octets_ = tmp_octets;
   other->wr_pos_ = tmp_wr_pos;
-  other->buffer_size_ = tmp_size;
+  other->buffer_size_ = tmp_bsize;
+  other->payload_size_= tmp_psize;
 }

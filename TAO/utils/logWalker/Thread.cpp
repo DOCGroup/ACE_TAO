@@ -89,8 +89,16 @@ Thread::exit_wait (PeerProcess *pp, size_t linenum)
                   "Line %d, Ending an invocation to peer %s, but most recent started"
                   " is to peer %s\n", linenum, pp->id(), old->id()));
       //      this->pending_.push(old);
-  if (this->pending_.pop(old) == -1)
-    return;
+      if (this->pending_.pop(old) == -1)
+        return;
+    }
+  if (this->pending_.top (old) == 0)
+    {
+      this->active_handle (old->last_transport ()->handle_);
+    }
+  else
+    {
+      this->active_handle (0);
     }
 }
 
@@ -225,10 +233,11 @@ void
 Thread::dump_detail (ostream &strm)
 {
   strm << "   " << this->alias_ << " tid = 0x" << hex << this->id_
-       << "\tfirst line " << dec << this->first_line_ << "\t"
-       << this->server_encounters_ << " requests sent "
-       << this->client_encounters_ << " requests received";
-  if (this->count_nesting () > 0)
+       << " (" << dec << this->id_
+       << ")\tfirst line " << this->first_line_ << " \t"
+       << this->client_encounters_ << " requests sent "
+       << this->server_encounters_ << " requests received";
+  if (this->count_nesting () > 0 && this->max_depth_ > 0)
     strm <<", with " << this->nested_ << " nested upcalls, max depth "
          << this->max_depth_;
   strm << endl;

@@ -456,6 +456,15 @@ Log::parse_wait_on_read_i (void)
 }
 
 void
+Log::parse_make_idle_i (void)
+{
+  char *hpos = ACE_OS::strchr(this->info_,'[');
+  long handle = ACE_OS::strtol(hpos+1,0,10);
+  PeerProcess *pp = this->hostproc_->find_peer(handle);
+  this->thr_->exit_wait (pp, this->offset_);
+}
+
+void
 Log::parse_cleanup_queue_i (void)
 {
   char *hpos = ACE_OS::strchr(this->info_,'[');
@@ -584,7 +593,7 @@ Log::parse_handler_open_i (bool is_ssl)
   if (*c == '[')
     c++;
   long handle = ACE_OS::strtol(c,0,10);
-  PeerProcess *pp = 0;
+  PeerProcess *pp = this->thr_->peek_new_connection();
   if (this->conn_waiters_.size() > 0)
     {
       // ACE_DEBUG ((LM_DEBUG,"%d: handler_open: conn_waiters_.size() = %d, addr = %s\n",
@@ -597,13 +606,27 @@ Log::parse_handler_open_i (bool is_ssl)
           c_iter.next(waiter);
           if (waiter != 0 && waiter->match_server_addr (addr))
             {
+              if (pp != 0 && waiter != pp)
+                {
+                  // ACE_DEBUG ((LM_DEBUG,"%d: handler_open: found waiter other than for tid %d\n",
+                  //             this->offset_, thr_->id ()));
+                  continue;
+                }
+              // ACE_DEBUG ((LM_DEBUG,"%d: handler_open: found waiter addr = %s:%s\n",
+              //           this->offset_,
+              //           (waiter == 0 ? "<null>" :  waiter->server_addr().host_.c_str()),
+              //           (waiter == 0 ? "<null>" :  waiter->server_addr().port_.c_str())
+              //           ));
               pp = waiter;
               c_iter.remove();
               break;
             }
           // else
-          //   ACE_DEBUG ((LM_DEBUG,"%d: handler_open: no match waiter addr = %s\n",
-          //               this->offset_, (waiter == 0 ? "<null>" :  waiter->server_addr().c_str()) ));
+            // ACE_DEBUG ((LM_DEBUG,"%d: handler_open: no match waiter addr = %s:%s\n",
+            //             this->offset_,
+            //             (waiter == 0 ? "<null>" :  waiter->server_addr().host_.c_str()),
+            //             (waiter == 0 ? "<null>" :  waiter->server_addr().port_.c_str())
+            //             ));
         }
     }
 
@@ -625,6 +648,9 @@ Log::parse_handler_open_i (bool is_ssl)
   const ACE_CString &local_addr = this->thr_->pending_local_addr();
   if (local_addr.length() > 0 )
     {
+      // ACE_DEBUG ((LM_DEBUG,"%d: handler_open: local addr = %s, pp is server = %d\n",
+      //             this->offset_, local_addr.c_str(), pp->is_server() ));
+
       if (pp->is_server())
         {
           Transport *t = new Transport (local_addr.c_str(), true, this->offset_);
@@ -637,6 +663,10 @@ Log::parse_handler_open_i (bool is_ssl)
         }
       this->thr_->pending_local_addr ("");
     }
+  // else
+  //   ACE_DEBUG ((LM_DEBUG,"%d: handler_open: tid %d, local addr = empty\n",
+  //               this->offset_, this->thr_->id () ));
+
 
   Transport *trans = 0;
   if (pp->is_server())
@@ -650,7 +680,7 @@ Log::parse_handler_open_i (bool is_ssl)
                       this->offset_, this->origin_.c_str()));
           return;
         }
-      //      trans->client_endpoint_ = addr;
+
     }
   else
     {
@@ -675,7 +705,8 @@ Log::parse_begin_connection_i (void)
     }
   this->conn_waiters_.insert_tail (pp);
   this->thr_->push_new_connection (pp);
-  // ACE_DEBUG ((LM_DEBUG,"%d: begin_connection: pushing pp for addr %s\n", offset_,addr));
+  // ACE_DEBUG ((LM_DEBUG,"%d: begin_connection: tid %d pushing pp for addr %s\n",
+  //             offset_,thr_->id (), addr));
 }
 
 void
@@ -697,12 +728,16 @@ Log::parse_local_addr_i (void)
   PeerProcess *peer = this->thr_->peek_new_connection();
   if (peer == 0)
     {
+      // ACE_DEBUG ((LM_DEBUG, "%d: local_addr: thr %d, pending = %s\n",
+      //             offset_, thr_->id(), addr));
       this->thr_->pending_local_addr (addr);
       return;
     }
 
   if (peer->is_server())
     {
+      // ACE_DEBUG ((LM_DEBUG, "%d: local_addr: thr %d, peer is server addr = %s\n",
+      //             offset_, thr_->id(), addr));
       Transport *t = new Transport (addr, true, this->offset_);
       peer->add_transport (t);
       this->hostproc_->add_client_endpoint (t->client_endpoint_);
@@ -723,7 +758,7 @@ Log::parse_connection_not_complete_i (void)
       //             offset_, pp->offset()));
     }
   else
-    ACE_DEBUG ((LM_DEBUG,"%d: connection_not_complete: no pending peer\n", offset_));
+    ACE_ERROR ((LM_ERROR,"%d: connection_not_complete: no pending peer\n", offset_));
 }
 
 void
@@ -770,7 +805,10 @@ Log::parse_wait_for_connection_i (void)
       long handle = ACE_OS::strtol (pos, 0, 10);
       PeerProcess *pp = 0;
 
-      ACE_DEBUG ((LM_DEBUG, "%d: wait_for_connection: wait done, result = %d, purging handle = %d\n", this->offset_, result, handle));
+      // ACE_DEBUG ((LM_DEBUG,
+      //             "%d: wait_for_connection: wait done, result = %d, "
+      //             "purging handle = %d\n",
+      //             this->offset_, result, handle));
 
       if (this->conn_waiters_.size() > 0)
         {
@@ -983,6 +1021,10 @@ Log::parse_line (void)
   else if (ACE_OS::strstr (this->info_, "Wait_On_Read") != 0)
     {
       this->parse_wait_on_read_i();
+    }
+  else if (ACE_OS::strstr (this->info_, "::make_idle") != 0)
+    {
+      this->parse_make_idle_i();
     }
   else if (ACE_OS::strstr (this->info_, "::cleanup_queue, byte_count") != 0)
     {
