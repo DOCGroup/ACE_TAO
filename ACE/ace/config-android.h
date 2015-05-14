@@ -346,6 +346,7 @@
 # define ACE_LACKS_CONDATTR 1
 #elif __ANDROID_API__ == 9
 #elif __ANDROID_API__ == 14
+#elif __ANDROID_API__ == 21
 #else
 # error Unsupported Android release
 #endif
