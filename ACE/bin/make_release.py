@@ -820,7 +820,6 @@ def create_file_lists (base_dir, prefix, exclude):
             fullitem = os.path.join (relroot, item)
             if fullitem in exclude or item in exclude:
 #                print "Removing " + fullitem + " from consideration...."
-                files.remove (item)
                 continue
             else:
                 if bin_regex.search (fullitem) is not None:
@@ -861,7 +860,7 @@ def package (stage_dir, package_dir, decorator):
         pass # swallow any errors
 
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers"),
-                                               "ACE_wrappers", ["TAO"])
+                                               "ACE_wrappers", ["TAO", ".gitignore"])
 
 #    write_file_lists ("fACE" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -876,7 +875,7 @@ def package (stage_dir, package_dir, decorator):
 
     # for TAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
-                                                     "ACE_wrappers/TAO", ["CIAO", "DAnCE"])
+                                                     "ACE_wrappers/TAO", ["CIAO", "DAnCE", ".gitignore"])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -891,7 +890,7 @@ def package (stage_dir, package_dir, decorator):
 
     # for DAnCE:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/DAnCE"),
-                                               "ACE_wrappers/TAO/DAnCE", [])
+                                               "ACE_wrappers/TAO/DAnCE", [".gitignore"])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -905,7 +904,7 @@ def package (stage_dir, package_dir, decorator):
     bin_files = list ()
     # for CIAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/CIAO"),
-                                               "ACE_wrappers/TAO/CIAO", [])
+                                               "ACE_wrappers/TAO/CIAO", [".gitignore"])
 
 #    write_file_lists ("fCIAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
