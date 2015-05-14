@@ -107,11 +107,14 @@ ifeq ($(ssl),1)
   PLATFORM_SSL_CPPFLAGS += -I/usr/kerberos/include
 endif # ssl
 
-PLATFORM_LARGEFILE_CFLAGS := $(shell getconf LFS_CFLAGS 2> /dev/null || echo Unknown)
-ifdef PLATFORM_LARGEFILE_CFLAGS
-  # Large file support
-  CPPFLAGS += $(PLATFORM_LARGEFILE_CFLAGS)
-endif #largefile
+ifndef PLATFORM_LARGEFILE_CFLAGS
+  #this check is not compliant with cross-compilation
+  PLATFORM_LARGEFILE_CFLAGS := $(shell getconf LFS_CFLAGS 2> /dev/null || echo Unknown)
+  ifdef PLATFORM_LARGEFILE_CFLAGS
+    # Large file support
+    CPPFLAGS += $(PLATFORM_LARGEFILE_CFLAGS)
+  endif #largefile
+endif #PLATFORM_LARGEFILE_CFLAGS
 
 SYSARCH := $(shell uname -m)
 

@@ -9,6 +9,9 @@ no_hidden_visibility ?= 1
 # as of NDK r6 inlining is required
 inline ?= 1
 
+# disable large file support for Android
+PLATFORM_LARGEFILE_CFLAGS=no
+
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 #No rwho on Android
@@ -29,14 +32,15 @@ ANDROID_ARCH ?= arm
 #SYSROOT ?= $(NDK)/platforms/android-9/arch-$(ANDROID_ARCH)
 
 ifeq (,$(CROSS_COMPILE))
+  CROSS_COMPILE=unknown-android-arch-
   ifeq ($(ANDROID_ARCH),arm)
     CROSS_COMPILE=arm-linux-androideabi-
-  else
-    ifeq ($(ANDROID_ARCH),x86)
-      CROSS_COMPILE=i686-linux-android-
-    else
-      CROSS_COMPILE=unknown-android-arch-
-    endif
+  endif
+  ifeq ($(ANDROID_ARCH),x86)
+    CROSS_COMPILE=i686-linux-android-
+  endif
+  ifeq ($(ANDROID_ARCH),arm64)
+    CROSS_COMPILE=aarch64-linux-android-
   endif
 endif
 
@@ -55,6 +59,13 @@ ifeq (arm,$(findstring arm,$(ANDROID_ARCH)))
     FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp -mfpu=neon
     LDFLAGS    += -march=armv7-a
   endif
+
+  # Is this correct??
+  # ifeq ($(ANDROID_ABI),arm64-v8a)
+  #   FLAGS_C_CC += -march=arm64-v8a -mfloat-abi=softfp -mfpu=neon
+  #   LDFLAGS    += -march=arm64-v8a
+  # endif
+
 
   # NDK says required for working around a CPU bug in some Cortex-A8 implementations
   LDFLAGS += -Wl,--fix-cortex-a8
