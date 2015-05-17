@@ -461,6 +461,14 @@ Log::parse_make_idle_i (void)
   char *hpos = ACE_OS::strchr(this->info_,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
   PeerProcess *pp = this->hostproc_->find_peer(handle);
+  if (pp == 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%d: make idle, error parsing %C, can't find peer "
+                  "for handle %d, text = %s\n",
+                  this->offset_, this->origin_.c_str(), handle, this->info_));
+      return;
+    }
   this->thr_->exit_wait (pp, this->offset_);
 }
 
