@@ -1665,6 +1665,13 @@ project(Task Test) : acetest {
   }
 }
 
+project(Task_Group Test) : acetest {
+  exename = Task_Group_Test
+  Source_Files {
+    Task_Group_Test.cpp
+  }
+}
+
 project(Task_Ex Test) : acetest {
   exename = Task_Ex_Test
   Source_Files {

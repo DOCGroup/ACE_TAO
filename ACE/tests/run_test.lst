@@ -237,6 +237,7 @@ TP_Reactor_Test: !ACE_FOR_TAO
 TSS_Test
 TSS_Static_Test
 Task_Test
+Task_Group_Test
 Task_Ex_Test
 Thread_Attrs_Test
 Thread_Manager_Test
