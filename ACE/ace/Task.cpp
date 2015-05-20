@@ -125,7 +125,7 @@ ACE_Task_Base::activate (long flags,
     return 1; // Already active.
   else
     {
-      if ((this->thr_count_ > 0 || grp_id == -1) && 
+      if ((this->thr_count_ > 0 || grp_id == -1) &&
             this->grp_id_ != -1)
         // If we're joining an existing group of threads then make
         // sure to (re)use its group id.
