@@ -15,6 +15,7 @@
 #include "test_config.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Task.h"
+#include "ace/OS_NS_unistd.h"
 
 #if defined (ACE_HAS_THREADS)
 
