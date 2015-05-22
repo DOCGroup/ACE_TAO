@@ -113,3 +113,5 @@ SOFLAGS += $(C++_COMPILER) $(OPTION_SHARED_CODE) $(LD_SHARED_LIB) \
 LDFLAGS := $(filter-out -X -N,$(LDFLAGS))
 LDFLAGS += -L$(VSB_DIR)/usr/lib/common$(if $(filter library,$(PRJ_TYPE)),/PIC)
 LIBS += -lstdc++
+
+LDFLAGS += $(if $(filter 1,$(shared_libs)),$(if $(filter 1,$(static_libs_only)),,$(LD_OPTION_DYNAMIC)))
