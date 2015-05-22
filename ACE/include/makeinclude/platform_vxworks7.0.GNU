@@ -20,7 +20,13 @@
 #
 # Not all configurations supported on VxWorks 6.x have been brought forward
 # to this file.  If you are building a configuration that has not yet been
-# attempted on VxWorks 7, this file may need to be changed.
+# attempted on VxWorks 7, this file may need to be changed.  The following have
+# been tested:
+#   hosts: linux
+#   targets: itl_x86
+#   toolchains: gnu4.3
+#   rtp settings: 1
+#   libraries: shared
 
 VXWORKS = 1
 CROSS-COMPILE = 1
@@ -80,12 +86,6 @@ ifeq ($(pthread),1)
 endif
 
 ace_vx_mk_dir = $(if $(findstring 1,$(rtp)),$(WIND_USR_MK),$(WIND_KRNL_MK))
-
-#ace_vx_tool_dir = $(WIND_BUILD_TOOL)/$(TOOL_VERSION)/$(notdir $(ace_vx_mk_dir))
-#include $(ace_vx_mk_dir)/defs.default.mk
-#include $(ace_vx_tool_dir)/defs.$(CPU).mk
-#include $(ace_vx_mk_dir)/defs.$(WIND_HOST_TYPE).mk
-
 include $(ace_vx_mk_dir)/defs.library.mk
 
 CCFLAGS += $(C++FLAGS)
