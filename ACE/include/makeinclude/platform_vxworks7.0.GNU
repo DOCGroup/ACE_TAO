@@ -106,6 +106,8 @@ DCCFLAGS += -g
 LD = $(CPLUS)
 DLD = $(CPLUS)
 
+EXEEXT = $(if $(findstring 1,$(rtp)),.vxe,.out)
+
 SO_NAME = $(SHLIB)
 SOFLAGS += $(C++_COMPILER) $(OPTION_SHARED_CODE) $(LD_SHARED_LIB) \
            $(LD_OPTION_SONAME)
