@@ -117,7 +117,7 @@ List_Node::List_Node (char *k, int len)
   *ptr = '\0';
 
   // Sort the KEYSIG items alphabetically.
-  sort (keysig, ptr - keysig);
+  sort (keysig, ACE_Utils::truncate_cast<int> (ptr - keysig));
 }
 
 List_Node::~List_Node (void)

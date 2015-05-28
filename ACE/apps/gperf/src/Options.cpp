@@ -27,6 +27,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
+#include "ace/Truncate.h"
 
 /// These need to appear before the global class instantiation, since
 /// they are static members with a default constructor that initializes
@@ -518,7 +519,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
                 *l_key_pos = EOS;
 
-                total_keysig_size_ = (l_key_pos - key_positions_);
+                total_keysig_size_ = ACE_Utils::truncate_cast<u_int> (l_key_pos - key_positions_);
                 if (total_keysig_size_ == 0)
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      "No keys selected.\n%r",
