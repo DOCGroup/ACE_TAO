@@ -24,11 +24,11 @@ ACE_OS::uname (ACE_utsname *name)
 
 # if defined (ACE_HAS_WIN32_GETVERSION)
   /* Since MS found it necessary to deprecate these. */
-#   pragma warning disable 4996
+#   pragma warning(disable:4996)
   ACE_TEXT_OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof(ACE_TEXT_OSVERSIONINFO);
   ACE_TEXT_GetVersionEx (&vinfo);
-#   pragma warning enable 4996
+#   pragma warning(enable:4996)
 # endif
 
   SYSTEM_INFO sinfo;
