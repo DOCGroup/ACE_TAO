@@ -24,6 +24,7 @@
 #include "List_Node.h"
 #include "Vectors.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/Truncate.h"
 
 /// Sorts the key set alphabetically to speed up subsequent operation
 /// Uses insertion sort since the set is probably quite small.
