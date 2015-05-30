@@ -258,11 +258,11 @@ ACE_OS_Object_Manager::init (void)
 
 # if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_GETVERSION)
 /* Since MS found it necessary to deprecate these. */
-#   pragma warning disable 4996
+#   pragma warning(disable:4996)
       ACE_OS::win32_versioninfo_.dwOSVersionInfoSize =
         sizeof (ACE_TEXT_OSVERSIONINFO);
       ACE_TEXT_GetVersionEx (&ACE_OS::win32_versioninfo_);
-#   pragma warning enable 4996
+#   pragma warning(enable:4996)
 # endif /* ACE_WIN32 */
       return 0;
     } else {
