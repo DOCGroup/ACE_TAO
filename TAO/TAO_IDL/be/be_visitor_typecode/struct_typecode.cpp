@@ -176,9 +176,9 @@ int
 TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
 {
   AST_Field ** member_ptr = 0;
-  size_t const count = node->nfields ();
+  ACE_CDR::ULong const count = node->nfields ();
 
-  for (size_t i = 0; i < count; ++i)
+  for (ACE_CDR::ULong i = 0; i < count; ++i)
     {
       node->field (member_ptr, i);
 
@@ -218,10 +218,10 @@ int
 TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
 {
   AST_Field ** member_ptr = 0;
-  size_t const count = node->nfields ();
+  ACE_CDR::ULong const count = node->nfields ();
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  for (size_t i = 0; i < count; ++i)
+  for (ACE_CDR::ULong i = 0; i < count; ++i)
     {
       node->field (member_ptr, i);
 

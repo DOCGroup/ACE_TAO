@@ -78,6 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 #include "utl_indenter.h"
 
+#include "ace/Truncate.h"
+
 AST_Structure::AST_Structure (UTL_ScopedName *n,
                               bool local,
                               bool abstract)
@@ -211,7 +213,7 @@ AST_Structure::member_count (void)
 ACE_CDR::ULong
 AST_Structure::nfields (void) const
 {
-  return this->fields_.size ();
+  return ACE_Utils::truncate_cast<ACE_CDR::ULong> (this->fields_.size ());
 }
 
 int
