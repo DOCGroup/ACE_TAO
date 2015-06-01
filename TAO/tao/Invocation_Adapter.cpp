@@ -15,6 +15,7 @@
 #include "tao/Collocation_Resolver.h"
 #include "tao/Invocation_Retry_State.h"
 #include "ace/Service_Config.h"
+#include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Invocation_Adapter.inl"
@@ -36,7 +37,7 @@ namespace TAO
     TAO_Stub *stub = this->get_stub ();
 
     TAO_Operation_Details op_details (this->operation_,
-                                      this->op_len_,
+                                      ACE_Utils::truncate_cast<CORBA::ULong> (this->op_len_),
                                       this->args_,
                                       this->number_args_,
                                       this->has_in_args_,
