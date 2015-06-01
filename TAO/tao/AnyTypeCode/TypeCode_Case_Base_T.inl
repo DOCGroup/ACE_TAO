@@ -1,6 +1,7 @@
 // -*- C++ -*-
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/TypeCode_Traits.h"
+#include "ace/Truncate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,7 +37,8 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::marshal (
          Traits<StringType>::get_string (this->name_), 0))
     && TAO::TypeCode::marshal (cdr,
                                Traits<StringType>::get_typecode (this->type_),
-                               offset + cdr.total_length ());
+                               ACE_Utils::truncate_cast<CORBA::ULong> (
+                                   offset + cdr.total_length ()));
 }
 
 template <typename StringType, typename TypeCodeType>
