@@ -476,7 +476,8 @@ TAO_ServantBase::_find (const char *opname,
                         const size_t length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-  return this->optable_->find (opname, skelfunc, length);
+  return this->optable_->find (opname, skelfunc,
+                               static_cast<unsigned int> (length));
 }
 
 int
@@ -486,7 +487,8 @@ TAO_ServantBase::_find (const char *opname,
                         const size_t length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
-  return this->optable_->find (opname, skelfunc, st, length);
+  return this->optable_->find (opname, skelfunc, st,
+                               static_cast<unsigned int> (length));
 }
 
 TAO_Stub *
