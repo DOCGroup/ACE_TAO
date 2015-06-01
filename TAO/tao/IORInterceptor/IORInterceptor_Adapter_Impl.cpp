@@ -160,7 +160,7 @@ TAO_IORInterceptor_Adapter_Impl::adapter_state_changed (
 
       CORBA::add_ref (member);
 
-      seq_obj_ref_template[counter] = member;
+      seq_obj_ref_template[static_cast<CORBA::ULong> (counter)] = member;
     }
 
   for (size_t i = 0; i < interceptor_count; ++i)
