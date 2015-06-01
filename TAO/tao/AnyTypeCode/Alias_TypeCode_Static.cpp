@@ -13,6 +13,7 @@
 #include "tao/SystemException.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Truncate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,8 +38,9 @@ TAO::TypeCode::Alias<char const *,
   // Aligning on an octet since the next value after the CDR
   // encapsulation length will always be the byte order octet/boolean
   // in this case.
-  offset = ACE_align_binary (offset + 4,
-                             ACE_CDR::OCTET_ALIGN);
+  offset = ACE_Utils::truncate_cast<CORBA::ULong> (
+            ACE_align_binary (offset + 4,
+                              ACE_CDR::OCTET_ALIGN));
 
   return
     enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
@@ -46,7 +48,8 @@ TAO::TypeCode::Alias<char const *,
     && enc << TAO_OutputCDR::from_string (this->attributes_.name (), 0)
     && marshal (enc,
                 Traits<char const *>::get_typecode (this->content_type_),
-                offset + enc.total_length ())
+                ACE_Utils::truncate_cast<CORBA::ULong> (
+                    offset + enc.total_length ()))
     && cdr << static_cast<CORBA::ULong> (enc.total_length ())
     && cdr.write_octet_array_mb (enc.begin ());
 }

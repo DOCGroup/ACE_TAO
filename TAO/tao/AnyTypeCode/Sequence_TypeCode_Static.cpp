@@ -3,6 +3,8 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/TypeCode_Traits.h"
 
+#include "ace/Truncate.h"
+
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Sequence_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
@@ -28,15 +30,17 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
   // Aligning on an octet since the next value after the CDR
   // encapsulation length will always be the byte order octet/boolean
   // in this case.
-  offset = ACE_align_binary (offset + 4,
-                             ACE_CDR::OCTET_ALIGN);
+  offset = ACE_Utils::truncate_cast<CORBA::ULong> (
+              ACE_align_binary (offset + 4,
+                                ACE_CDR::OCTET_ALIGN));
 
   return
     enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
     && marshal (enc,
                 Traits<CORBA::TypeCode_ptr const *>::get_typecode (
                   this->content_type_),
-                offset + enc.total_length ())
+                  ACE_Utils::truncate_cast<CORBA::ULong> (
+                      offset + enc.total_length ()))
     && enc << this->length_
     && cdr << static_cast<CORBA::ULong> (enc.total_length ())
     && cdr.write_octet_array_mb (enc.begin ());

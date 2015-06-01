@@ -11,6 +11,7 @@
 #include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Value_Ptr.h"
+#include "ace/Truncate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,8 +40,9 @@ TAO::TypeCode::Union<StringType,
   // Aligning on an octet since the next value after the CDR
   // encapsulation length will always be the byte order octet/boolean
   // in this case.
-  offset = ACE_align_binary (offset + 4,
-                             ACE_CDR::OCTET_ALIGN);
+  offset = ACE_Utils::truncate_cast<CORBA::ULong> (
+              ACE_align_binary (offset + 4,
+                                ACE_CDR::OCTET_ALIGN));
 
   bool const success =
     (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
@@ -48,7 +50,8 @@ TAO::TypeCode::Union<StringType,
     && (enc << TAO_OutputCDR::from_string (this->base_attributes_.name (), 0))
     && marshal (enc,
                 Traits<StringType>::get_typecode (this->discriminant_type_),
-                offset + enc.total_length ())
+                ACE_Utils::truncate_cast<CORBA::ULong> (
+                    offset + enc.total_length ()))
     && (enc << this->default_index_)
     && (enc << this->ncases_);
 
