@@ -581,7 +581,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
       rtc->union_parameters (name,
                              duped_disc_type,
                              cases,     // Will be copied.
-                             cases.size (),
+                             static_cast<CORBA::ULong> (cases.size ()),
                              default_index);
 
       return recursive_tc._retn ();
@@ -592,7 +592,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
                                    name,
                                    duped_disc_type,
                                    cases,     // Will be copied.
-                                   cases.size (),
+                                   static_cast<CORBA::ULong> (cases.size ()),
                                    default_index),
                     CORBA::NO_MEMORY ());
 
