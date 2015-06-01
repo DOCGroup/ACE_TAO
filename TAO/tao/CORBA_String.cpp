@@ -4,7 +4,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_Memory.h"
-#include "ace/Truncate.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -32,7 +31,7 @@ istream &
 operator>> (istream &is, CORBA::String_var &sv)
 {
   is.seekg (0, ios::end);
-  sv = CORBA::string_alloc (ACE_Utils::truncate_cast<CORBA::ULong> (is.tellg ()));
+  sv = CORBA::string_alloc (static_cast<CORBA::ULong> (is.tellg ()));
   is.seekg (0, ios::beg);
   is >> sv.inout ();
   return is;
@@ -49,7 +48,7 @@ istream &
 operator>> (istream &is, CORBA::String_out &so)
 {
   is.seekg (0, ios::end);
-  so = CORBA::string_alloc (ACE_Utils::truncate_cast<CORBA::ULong> (is.tellg ()));
+  so = CORBA::string_alloc (static_cast<CORBA::ULong> (is.tellg ()));
   is.seekg (0, ios::beg);
   is >> so.ptr ();
   return is;
@@ -78,7 +77,7 @@ operator>> (istream &is, CORBA::WString_var &wsv)
 {
   is.seekg (0, ios::end);
   // @@ is.tellg()/sizeof(CORBA::WChar) instead?
-  CORBA::ULong const len = ACE_Utils::truncate_cast<CORBA::ULong> (is.tellg ());
+  CORBA::ULong const len = static_cast<CORBA::ULong> (is.tellg ());
   wsv = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 
@@ -117,7 +116,7 @@ operator>> (istream &is, CORBA::WString_out &wso)
 {
   is.seekg (0, ios::end);
   // @@ is.tellg()/sizeof(CORBA::WChar) instead?
-  const CORBA::ULong len = ACE_Utils::truncate_cast<CORBA::ULong> (is.tellg ());
+  const CORBA::ULong len = static_cast<CORBA::ULong> (is.tellg ());
   wso = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 
