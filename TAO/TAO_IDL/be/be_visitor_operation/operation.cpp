@@ -274,7 +274,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   /// Some compilers can't resolve the stream operator overload.
   const char *lname = opname.c_str ();
-  ACE_CDR::ULong len = opname.length ();
+  ACE_CString::size_type len = opname.length ();
 
   *os << lname << "\"," << be_nl
       << len << "," << be_nl;

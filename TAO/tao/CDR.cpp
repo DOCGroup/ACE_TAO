@@ -4,6 +4,8 @@
 #include "tao/SystemException.h"
 #include "tao/GIOP_Fragmentation_Strategy.h"
 
+#include "ace/Truncate.h"
+
 #if !defined (__ACE_INLINE__)
 # include "tao/CDR.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -256,12 +258,12 @@ TAO_OutputCDR::offset (char* pos)
   {
     if (pos >= cur_mb->rd_ptr () && pos <= cur_mb->wr_ptr ())
     {
-      offset += (cur_mb->wr_ptr () - pos);
+      offset += ACE_Utils::truncate_cast<int> (cur_mb->wr_ptr () - pos);
       found = true;
     }
     else if (found)
     {
-      offset += cur_mb->length ();
+      offset += ACE_Utils::truncate_cast<int> (cur_mb->length ());
     }
 
     if (wr_ptr == cur_mb->wr_ptr ())

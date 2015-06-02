@@ -184,7 +184,7 @@ TAO_DTP_Thread_Pool::current_threads (void) const
                     this->lock_,
                     0);
 
-  return this->threads_.thr_count ();
+  return static_cast<CORBA::ULong> (this->threads_.thr_count ());
 }
 
 void
@@ -336,7 +336,7 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
                       -1);
     result =
       this->threads_.activate (flags,
-                               count,
+                               static_cast<int> (count),
                                force_active,
                                default_grp_id,
                                default_priority,

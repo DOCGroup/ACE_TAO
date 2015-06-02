@@ -12,6 +12,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
+#include "ace/Truncate.h"
 
 static const char the_prefix[] = "diop";
 
@@ -190,7 +191,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
   else if (cp_pos != 0)
     {
       // A port number or port name was specified.
-      CORBA::ULong length_port = okd - cp_pos - 1;
+      CORBA::ULong length_port = ACE_Utils::truncate_cast<CORBA::ULong> (okd - cp_pos - 1);
 
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
@@ -219,10 +220,10 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
             }
         }
 
-      length_host = cp_pos - ior;
+      length_host = ACE_Utils::truncate_cast<CORBA::ULong> (cp_pos - ior);
     }
   else
-    length_host = okd - ior;
+    length_host = ACE_Utils::truncate_cast<CORBA::ULong> (okd - ior);
 
 #if defined (ACE_HAS_IPV6)
   if (ipv6_in_host)

@@ -187,7 +187,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   /// Some compilers can't resolve the stream operator overload.
   const char *op_name = opname.c_str ();
-  ACE_CDR::ULong len = opname.length ();
+  ACE_CString::size_type len = opname.length ();
 
   *os << be_nl_2
       << "TAO::Asynch_Invocation_Adapter _tao_call (" << be_idt << be_idt_nl

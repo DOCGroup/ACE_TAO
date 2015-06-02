@@ -8,6 +8,7 @@
 #include "tao/SystemException.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Truncate.h"
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Value_TypeCode_Static.inl"
@@ -37,8 +38,9 @@ TAO::TypeCode::Value<char const *,
   // Aligning on an octet since the next value after the CDR
   // encapsulation length will always be the byte order octet/boolean
   // in this case.
-  offset = ACE_align_binary (offset + 4,
-                             ACE_CDR::OCTET_ALIGN);
+  offset = ACE_Utils::truncate_cast<CORBA::ULong> (
+              ACE_align_binary (offset + 4,
+                                ACE_CDR::OCTET_ALIGN));
 
   bool const success =
     (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
@@ -47,7 +49,8 @@ TAO::TypeCode::Value<char const *,
     && (enc << this->type_modifier_)
     && marshal (enc,
                 Traits<char const *>::get_typecode (this->concrete_base_),
-                offset + enc.total_length ())
+                ACE_Utils::truncate_cast<CORBA::ULong> (
+                    offset + enc.total_length ()))
     && (enc << this->nfields_);
 
   if (!success)
@@ -68,7 +71,8 @@ TAO::TypeCode::Value<char const *,
       if (!(enc << Traits<char const *>::get_string (field.name))
           || !marshal (enc,
                        Traits<char const *>::get_typecode (field.type),
-                       offset + enc.total_length ())
+                       ACE_Utils::truncate_cast<CORBA::ULong> (
+                           offset + enc.total_length ()))
           || !(enc << field.visibility))
         return false;
     }

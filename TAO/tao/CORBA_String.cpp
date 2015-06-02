@@ -31,7 +31,7 @@ istream &
 operator>> (istream &is, CORBA::String_var &sv)
 {
   is.seekg (0, ios::end);
-  sv = CORBA::string_alloc (is.tellg ());
+  sv = CORBA::string_alloc (static_cast<CORBA::ULong> (is.tellg ()));
   is.seekg (0, ios::beg);
   is >> sv.inout ();
   return is;
@@ -48,7 +48,7 @@ istream &
 operator>> (istream &is, CORBA::String_out &so)
 {
   is.seekg (0, ios::end);
-  so = CORBA::string_alloc (is.tellg ());
+  so = CORBA::string_alloc (static_cast<CORBA::ULong> (is.tellg ()));
   is.seekg (0, ios::beg);
   is >> so.ptr ();
   return is;
@@ -77,7 +77,7 @@ operator>> (istream &is, CORBA::WString_var &wsv)
 {
   is.seekg (0, ios::end);
   // @@ is.tellg()/sizeof(CORBA::WChar) instead?
-  CORBA::ULong const len = is.tellg ();
+  CORBA::ULong const len = static_cast<CORBA::ULong> (is.tellg ());
   wsv = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 
@@ -116,7 +116,7 @@ operator>> (istream &is, CORBA::WString_out &wso)
 {
   is.seekg (0, ios::end);
   // @@ is.tellg()/sizeof(CORBA::WChar) instead?
-  const CORBA::ULong len = is.tellg ();
+  const CORBA::ULong len = static_cast<CORBA::ULong> (is.tellg ());
   wso = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 
