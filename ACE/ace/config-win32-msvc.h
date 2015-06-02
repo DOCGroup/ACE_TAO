@@ -99,7 +99,9 @@
 #define ACE_LACKS_NETDB_H
 #define ACE_LACKS_NET_IF_H
 #define ACE_LACKS_NETINET_IN_H
-#define ACE_LACKS_STDINT_H
+#if !defined (ACE_WIN32_VC14)
+# define ACE_LACKS_STDINT_H
+#endif
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_IOCTL_H
 #define ACE_LACKS_SYS_IPC_H
