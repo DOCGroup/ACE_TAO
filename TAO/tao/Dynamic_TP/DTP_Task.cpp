@@ -193,7 +193,7 @@ TAO_DTP_Task::open (void* /* args */)
   else
     {
       size_t * stack_sz_arr = new size_t[num];
-      for (size_t z = 0; z < num; z++)
+      for (int z = 0; z < num; z++)
         {
           stack_sz_arr[z] = this->thread_stack_size_;
         }
