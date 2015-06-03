@@ -166,7 +166,7 @@ TAO_DIOP_Transport::handle_input (TAO_Resume_Handle &rh,
           this->tms_->connection_closed ();
         }
 
-      return n;
+      return static_cast<int> (n);
     }
 
   // Set the write pointer in the stack buffer

@@ -91,10 +91,10 @@ TAO_POA_Manager::generate_manager_id (void) const
   // 64-bit platforms.
 
   if (sizeof (this) == 4)       // 32 bit address
-    id = reinterpret_cast <ptrdiff_t> (this);
+    id = static_cast<CORBA::Long> (reinterpret_cast <ptrdiff_t> (this));
 
   else if (sizeof (this) == 8)  // 64 bit address -- use lower 32 bits
-    id = reinterpret_cast <ptrdiff_t> (this) & 0xFFFFFFFFu;
+    id = static_cast<CORBA::Long> (reinterpret_cast <ptrdiff_t> (this) & 0xFFFFFFFFu);
 
   // @@ If we ever hit a platform where neither of the above cases are
   //    satisfied, we're up the creek!

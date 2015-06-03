@@ -10,6 +10,8 @@
 #include "tao/CDR.h"
 #include "tao/Valuetype/ValueBase.h"
 
+#include "ace/Truncate.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynValue_i::TAO_DynValue_i (CORBA::Boolean allow_truncation)
@@ -156,7 +158,7 @@ TAO_DynValue_i::get_correct_base_type (
   // and so on until we reach the member we have asked for.
 
   CORBA::ULong
-    currentBase = base_types.size ();
+    currentBase = ACE_Utils::truncate_cast<CORBA::ULong> (base_types.size ());
   if (!currentBase)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
@@ -717,7 +719,8 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
         TAO_OBV_GIOP_Flags::Value_tag_base |
         TAO_OBV_GIOP_Flags::Type_info_single;
 
-      const CORBA::ULong num_ids = this->da_base_types_.size ();
+      const CORBA::ULong num_ids =
+          ACE_Utils::truncate_cast<CORBA::ULong> (this->da_base_types_.size ());
       CORBA::ULong trunc_ids;
       for (trunc_ids= 0u; trunc_ids < num_ids - 1u; ++trunc_ids)
         {
@@ -1106,7 +1109,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
   // marks for each seporate base-type's state we pass).
   CORBA::Boolean need_first = true;
   CORBA::ULong
-    currentBase= this->da_base_types_.size (),
+    currentBase = ACE_Utils::truncate_cast<CORBA::ULong> (this->da_base_types_.size ()),
     currentBaseMember = 0u;
   for (CORBA::ULong currentMember= 0u;
        currentMember < num_fields;

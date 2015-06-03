@@ -219,9 +219,9 @@ CORBA::Request::send_deferred (void)
   TAO::DII_Deferred_Invocation_Adapter _tao_call (
       this->target_,
       _tao_arg_list,
-      number_args,
+      static_cast<int> (number_args),
       this->opname_,
-      static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
+      ACE_OS::strlen (this->opname_),
       0,
       this->orb_->orb_core (),
       this);

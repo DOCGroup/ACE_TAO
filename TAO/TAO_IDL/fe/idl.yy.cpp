@@ -379,7 +379,7 @@ static void yy_fatal_error (yyconst char msg[]  );
  */
 #define YY_DO_BEFORE_ACTION \
         (yytext_ptr) = yy_bp; \
-        tao_yyleng = (size_t) (yy_cp - yy_bp); \
+        tao_yyleng = (int) (yy_cp - yy_bp); \
         (yy_hold_char) = *yy_cp; \
         *yy_cp = '\0'; \
         if ( tao_yyleng >= YYLMAX ) \
@@ -1179,7 +1179,7 @@ static int input (void );
                         buf[n++] = (char) c; \
                 if ( c == EOF && ferror( tao_yyin ) ) \
                         YY_FATAL_ERROR( "input in flex scanner failed" ); \
-                result = n; \
+                result = static_cast<int> (n); \
                 } \
         else \
                 { \
@@ -2245,8 +2245,8 @@ static int yy_get_next_buffer (void)
 
         else
                 {
-                        int num_to_read =
-                        YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
+                        int num_to_read = (int)
+                        (YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1);
 
                 while ( num_to_read <= 0 )
                         { /* Not enough room in the buffer - grow it. */
@@ -2259,7 +2259,7 @@ static int yy_get_next_buffer (void)
 
                         if ( b->yy_is_our_buffer )
                                 {
-                                int new_size = b->yy_buf_size * 2;
+                                int new_size = (int)(b->yy_buf_size * 2);
 
                                 if ( new_size <= 0 )
                                         b->yy_buf_size += b->yy_buf_size / 8;
@@ -2280,8 +2280,8 @@ static int yy_get_next_buffer (void)
 
                         (yy_c_buf_p) = &b->yy_ch_buf[yy_c_buf_p_offset];
 
-                        num_to_read = YY_CURRENT_BUFFER_LVALUE->yy_buf_size -
-                                                number_to_move - 1;
+                        num_to_read = (int)(YY_CURRENT_BUFFER_LVALUE->yy_buf_size -
+                                                number_to_move - 1);
 
                         }
 
@@ -2413,7 +2413,7 @@ static int yy_get_next_buffer (void)
                 yy_cp += (int) (dest - source);
                 yy_bp += (int) (dest - source);
                 YY_CURRENT_BUFFER_LVALUE->yy_n_chars =
-                        (yy_n_chars) = YY_CURRENT_BUFFER_LVALUE->yy_buf_size;
+                        (yy_n_chars) = static_cast<int> (YY_CURRENT_BUFFER_LVALUE->yy_buf_size);
 
                 if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
                         YY_FATAL_ERROR( "flex scanner push-back overflow" );
@@ -2450,7 +2450,7 @@ static int yy_get_next_buffer (void)
 
                 else
                         { /* need more input */
-                        int offset = (yy_c_buf_p) - (yytext_ptr);
+                        int offset = static_cast<int> ((yy_c_buf_p) - (yytext_ptr));
                         ++(yy_c_buf_p);
 
                         switch ( yy_get_next_buffer(  ) )
@@ -2751,7 +2751,7 @@ static void tao_yyensure_buffer_stack (void)
                 /* Increase the buffer to prepare for a possible push. */
                 int grow_size = 8 /* arbitrary grow size */;
 
-                num_to_alloc = (yy_buffer_stack_max) + grow_size;
+                num_to_alloc = static_cast<int> (yy_buffer_stack_max) + grow_size;
                 (yy_buffer_stack) = (struct yy_buffer_state**)tao_yyrealloc
                                                                 ((yy_buffer_stack),
                                                                 num_to_alloc * sizeof(struct yy_buffer_state*)
@@ -2789,7 +2789,7 @@ YY_BUFFER_STATE tao_yy_scan_buffer  (char * base, yy_size_t  size )
         b->yy_buf_pos = b->yy_ch_buf = base;
         b->yy_is_our_buffer = 0;
         b->yy_input_file = 0;
-        b->yy_n_chars = b->yy_buf_size;
+        b->yy_n_chars = static_cast<int> (b->yy_buf_size);
         b->yy_is_interactive = 0;
         b->yy_at_bol = 1;
         b->yy_fill_buffer = 0;
@@ -2811,7 +2811,7 @@ YY_BUFFER_STATE tao_yy_scan_buffer  (char * base, yy_size_t  size )
 YY_BUFFER_STATE tao_yy_scan_string (yyconst char * yystr )
 {
 
-        return tao_yy_scan_bytes(yystr,strlen(yystr) );
+        return tao_yy_scan_bytes(yystr, static_cast<int> (strlen(yystr)) );
 }
 
 /** Setup the input buffer state to scan the given bytes. The next call to tao_yylex() will
@@ -3915,7 +3915,7 @@ idl_get_pragma_string (char *pragma)
       return 0;
     }
 
-  int len = end - start;
+  int len = static_cast<int> (end - start);
   char *retval = 0;
 
   ACE_NEW_RETURN (retval,

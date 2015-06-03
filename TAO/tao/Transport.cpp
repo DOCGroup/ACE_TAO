@@ -31,6 +31,7 @@
 #include "ace/os_include/sys/os_uio.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/CORBA_macros.h"
+#include "ace/Truncate.h"
 
 /*
  * Specialization hook to add include files from
@@ -1971,7 +1972,7 @@ TAO_Transport::handle_input_missing_data (TAO_Resume_Handle &rh,
 
   if (n <= 0)
     {
-      return n;
+      return ACE_Utils::truncate_cast<int> (n);
     }
 
   if (TAO_debug_level > 3)
@@ -2201,7 +2202,7 @@ TAO_Transport::handle_input_parse_data  (TAO_Resume_Handle &rh,
           this->partial_message_->reset ();
         }
 
-      return n;
+      return ACE_Utils::truncate_cast<int> (n);
     }
 
   if (this->partial_message_ != 0 && this->partial_message_->length () > 0)
