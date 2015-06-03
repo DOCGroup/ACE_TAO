@@ -54,7 +54,7 @@ TAO_Container_i::destroy_references_i (void)
   ACE_Configuration_Section_Key refs_key;
   status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "refs",
+                                          ACE_TEXT("refs"),
                                           0,
                                           refs_key);
   // This section may not have been created.
