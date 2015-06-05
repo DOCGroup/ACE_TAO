@@ -17,7 +17,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_netdb.h" /* MAXHOSTNAMELEN */
+#include "ace/OS_NS_netdb.h"
 
 #ifdef ACE_HAS_THREADS
 # include "ace/Thread_Mutex.h"
@@ -29,7 +29,6 @@
 #include <openssl/err.h>
 #include <openssl/rand.h>
 #include <openssl/safestack.h>
-#include <openssl/dh.h>
 
 namespace
 {
@@ -155,11 +154,7 @@ ACE_SSL_Context::ssl_library_init (void)
 # if !defined (WIN32)
       // This call isn't necessary on some platforms.  See the CRYPTO
       // library's threads(3) man page for details.
-
-# ifdef OPENSSL_USE_DEPRECATED
       ::CRYPTO_set_id_callback (ACE_SSL_THREAD_ID_NAME);
-#endif
-
 # endif  /* !WIN32 */
       ::CRYPTO_set_locking_callback (ACE_SSL_LOCKING_CALLBACK_NAME);
 #endif  /* ACE_HAS_THREADS */
