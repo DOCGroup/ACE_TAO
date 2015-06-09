@@ -623,7 +623,7 @@ yynewstate:
 #endif
 
       /* Get the current used size of the three stacks, in elements.  */
-      int size = yyssp - yyss + 1;
+      int size = (int)(yyssp - yyss + 1);
 
 #ifdef yyoverflow
       /* Each stack pointer address is followed by the size of

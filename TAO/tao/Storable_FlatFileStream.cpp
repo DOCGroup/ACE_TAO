@@ -15,6 +15,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Numeric_Limits.h"
+#include "ace/Truncate.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -383,7 +384,8 @@ TAO::Storable_FlatFileStream::operator >> (unsigned int &i)
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)
 {
-  unsigned int const length = cdr.total_length ();
+  unsigned int const length =
+      ACE_Utils::truncate_cast<unsigned int> (cdr.total_length ());
   *this << length;
   for (const ACE_Message_Block *i = cdr.begin (); i != 0; i = i->cont ())
     {

@@ -256,10 +256,14 @@ ACE_OS_Object_Manager::init (void)
       // been initialized.
       object_manager_state_ = OBJ_MAN_INITIALIZED;
 
-# if defined (ACE_WIN32)
+# if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_GETVERSION)
+/* Since MS found it necessary to deprecate these. */
+#   pragma warning(push)
+#   pragma warning(disable:4996)
       ACE_OS::win32_versioninfo_.dwOSVersionInfoSize =
         sizeof (ACE_TEXT_OSVERSIONINFO);
       ACE_TEXT_GetVersionEx (&ACE_OS::win32_versioninfo_);
+#   pragma warning(pop)
 # endif /* ACE_WIN32 */
       return 0;
     } else {

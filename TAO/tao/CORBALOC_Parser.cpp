@@ -14,6 +14,7 @@
 #include "ace/Vector_T.h"
 #include "ace/INET_Addr.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
 
 #include "ace/os_include/os_netdb.h"
 
@@ -201,7 +202,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
 
   // now take the collection of endpoints along with the decoded key and
   // mix them together to get the mprofile.
-  TAO_MProfile mprofile (endpoints.size());
+  TAO_MProfile mprofile (ACE_Utils::truncate_cast<CORBA::ULong> (endpoints.size()));
 
   for (size_t i = 0; i < endpoints.size(); i++)
     {

@@ -65,7 +65,7 @@ TAO_IOR_Multicast::init (const char *ior,
   if (tmpnic != 0)
     {
       // i.e. a nic name has been specified
-      length_addr = tmpnic - mcast_addr + 1;
+      length_addr = static_cast<CORBA::ULong> (tmpnic - mcast_addr + 1);
       actual_mcast_addr = CORBA::string_alloc (length_addr);
 
       ACE_OS::strncpy (actual_mcast_addr.inout (),
@@ -277,8 +277,8 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   // length as the first element, and ior itself as the second.)
 
   // Length of ior to be sent.
-  CORBA::Short data_len =
-    static_cast<CORBA::Short> (ACE_HTONS (this->ior_.length () + 1));
+  CORBA::UShort data_len =
+    ACE_HTONS (static_cast<CORBA::UShort> (this->ior_.length () + 1));
 
   // Vector to be sent.
   const int cnt = 2;

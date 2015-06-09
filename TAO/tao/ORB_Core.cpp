@@ -2744,7 +2744,7 @@ TAO_ORB_Core::resolve_iormanipulation_i (void)
 void
 TAO_ORB_Core::resolve_ior_table_i (void)
 {
-  TAO_Adapter_Factory *factory = 0;
+  TAO_Adapter_Factory *factory =
   ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
     (this->configuration (), ACE_TEXT("TAO_IORTable"));
   if (factory == 0)
@@ -2778,7 +2778,7 @@ TAO_ORB_Core::resolve_ior_table_i (void)
 void
 TAO_ORB_Core::resolve_async_ior_table_i (void)
 {
-  TAO_Adapter_Factory *factory = 0;
+  TAO_Adapter_Factory *factory =
   ACE_Dynamic_Service<TAO_Adapter_Factory>::instance
     (this->configuration (), ACE_TEXT("TAO_Async_IORTable"));
   if (factory == 0)

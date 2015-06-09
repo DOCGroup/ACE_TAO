@@ -1267,7 +1267,7 @@ idl_get_pragma_string (char *pragma)
       return 0;
     }
 
-  int len = end - start;
+  int len = static_cast<int> (end - start);
   char *retval = 0;
 
   ACE_NEW_RETURN (retval,

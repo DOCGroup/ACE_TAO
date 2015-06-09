@@ -65,7 +65,7 @@ namespace TAO
     {
       const TAO_Transport* t = this->transport ();
 
-      return (t==0) ? 0 : t->id ();
+      return (t==0) ? 0 : static_cast<CORBA::Long> (t->id ());
     }
 
     CounterT Current_Impl::bytes_sent (void)

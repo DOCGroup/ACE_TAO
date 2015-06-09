@@ -136,7 +136,7 @@ TAO_DTP_Task::open (void* /* args */)
       return 0;
     }
 
-  size_t num = this->init_pool_threads_;
+  int num = static_cast<int> (this->init_pool_threads_);
 
   if (TAO_debug_level > 4)
     {
@@ -193,7 +193,7 @@ TAO_DTP_Task::open (void* /* args */)
   else
     {
       size_t * stack_sz_arr = new size_t[num];
-      for (size_t z = 0; z < num; z++)
+      for (int z = 0; z < num; z++)
         {
           stack_sz_arr[z] = this->thread_stack_size_;
         }
@@ -225,7 +225,7 @@ TAO_DTP_Task::open (void* /* args */)
                      num));
     }
 
-  this->active_count_ = num;
+  this->active_count_ = static_cast<size_t> (num);
 
   this->opened_ = true;
   this->accepting_requests_ = true;
@@ -307,7 +307,7 @@ bool
 TAO_DTP_Task::need_active (void)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->aw_lock_, false);
-  return ((this->busy_threads_ == this->active_count_) &&
+  return ((this->busy_threads_ == static_cast<unsigned long> (this->active_count_)) &&
           ((this->max_pool_threads_ < 1) ||
            (this->active_count_ < this->max_pool_threads_)));
 }

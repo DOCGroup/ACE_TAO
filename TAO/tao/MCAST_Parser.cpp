@@ -11,6 +11,7 @@
 #include "ace/SOCK_Dgram.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Truncate.h"
 
 #if !defined(__ACE_INLINE__)
 #include "tao/MCAST_Parser.inl"
@@ -200,7 +201,9 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
 
           // Length of service name we will send.
           CORBA::Short data_len =
-            (CORBA::Short) ACE_HTONS (ACE_OS::strlen (service_name) + 1);
+            (CORBA::Short) ACE_HTONS (
+                ACE_Utils::truncate_cast<ACE_UINT16> (
+                    ACE_OS::strlen (service_name) + 1));
 
           // Vector we will send.  It contains: 1) length of service
           // name string, 2)port on which we are listening for
