@@ -120,7 +120,7 @@ Config_Backing_Store::loadServers ()
 
           config_.get_string_value (key, JACORB_SERVER, tmp);
           si->is_jacorb = (tmp == ACE_TEXT("1"));
-          
+
           config_.get_string_value (key, ACTIVATOR, tmp);
           si->activator = ACE_TEXT_ALWAYS_CHAR(tmp.c_str());
 
@@ -137,8 +137,8 @@ Config_Backing_Store::loadServers ()
           config_.get_integer_value (key, ACTIVATION, tmp_int);
           si->activation_mode_ =
             static_cast <ImplementationRepository::ActivationMode> (tmp_int);
-          
-          
+
+
           config_.get_string_value (key, PARTIAL_IOR, tmp);
           si->partial_ior = ACE_TEXT_ALWAYS_CHAR(tmp.c_str());
 
@@ -147,10 +147,10 @@ Config_Backing_Store::loadServers ()
 
           config_.get_integer_value (key, START_LIMIT, tmp_int);
           si->start_limit_ = tmp_int;
-          
+
           config_.get_integer_value (key, PID, tmp_int);
           si->pid = tmp_int;
-          
+
           if (config_.get_string_value (key, ALTKEY, tmp))
             {
               tmp_cstr = ACE_TEXT_ALWAYS_CHAR(tmp.c_str());
