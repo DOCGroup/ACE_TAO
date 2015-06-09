@@ -8,7 +8,7 @@
 # for information on creating a VSB (VxWorks Source Build).
 #
 # Create the file ace/config.h containing #include "ace/config-vxworks.h"
-# Create the file include/makeinclude/platform_macro.GNU containing...
+# Create the file include/makeinclude/platform_macros.GNU containing...
 # VSB_DIR = <<absolute path to the VSB directory for the target system>>
 # HOST_ROOT = <<location of host tools if using tao_idl, etc.>>
 # << add other build settings here (debug, optimize, inline, rtp) >>
