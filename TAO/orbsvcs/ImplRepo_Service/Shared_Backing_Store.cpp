@@ -236,13 +236,13 @@ namespace {
     switch (repo_type)
       {
       case Options::BACKUP_IMR:
-        id.repo_type_str = "0";
+        id.repo_type_str = ACE_TEXT("0");
         break;
       case Options::PRIMARY_IMR:
-        id.repo_type_str = "1";
+        id.repo_type_str = ACE_TEXT("1");
         break;
       case Options::STANDALONE_IMR:
-        id.repo_type_str = "2";
+        id.repo_type_str = ACE_TEXT("2");
       }
 
     ACE_TCHAR tmp[20];
@@ -315,15 +315,15 @@ Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
   repo_values_ (2),
   loc_impl_ (loc_impl)
 {
-  IMR_REPLICA[Options::PRIMARY_IMR] = ACE_TEXT ("ImR_ReplicaPrimary");
-  IMR_REPLICA[Options::BACKUP_IMR] = ACE_TEXT ("ImR_ReplicaBackup");
-  IMR_REPLICA[Options::STANDALONE_IMR] = ACE_TEXT ("ImR_NoReplica");
+  IMR_REPLICA[Options::PRIMARY_IMR] = "ImR_ReplicaPrimary";
+  IMR_REPLICA[Options::BACKUP_IMR] = "ImR_ReplicaBackup";
+  IMR_REPLICA[Options::STANDALONE_IMR] = "ImR_NoReplica";
 
   this->repo_values_[REPO_TYPE] =
-    std::make_pair(ACE_CString(ACE_TEXT ("repo_type")),
+    std::make_pair(ACE_CString("repo_type"),
                    ACE_CString());
   this->repo_values_[REPO_ID] =
-    std::make_pair(ACE_CString(ACE_TEXT ("repo_id")),
+    std::make_pair(ACE_CString("repo_id"),
                    ACE_CString());
 }
 
@@ -478,7 +478,7 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
         }
     }
 
-  ACE_CString name = ACEXML_escape_string (info->key_name_);
+  ACE_TString name = ACEXML_escape_string (ACE_TEXT_CHAR_TO_TCHAR(info->key_name_.c_str()));
 
   UniqueId uid;
   this->find_unique_id (info->key_name_, this->server_uids_, uid);
@@ -490,7 +490,7 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
         fname.c_str(), info->key_name_.c_str()));
     }
   Lockable_File server_file (fname, O_WRONLY);
-  const ACE_TString bfname = fname.c_str() + ACE_TString(".bak");
+  const ACE_TString bfname = fname.c_str() + ACE_TString(ACE_TEXT(".bak"));
   FILE* fp = server_file.get_file();
   if (fp == 0)
     {
@@ -502,8 +502,8 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
   listing_lf.release();
   ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
 
-  this->repo_values_[REPO_TYPE].second = uid.repo_type_str;
-  this->repo_values_[REPO_ID].second = uid.repo_id_str;
+  this->repo_values_[REPO_TYPE].second = ACE_TEXT_ALWAYS_CHAR(uid.repo_type_str.c_str());
+  this->repo_values_[REPO_ID].second = ACE_TEXT_ALWAYS_CHAR(uid.repo_id_str.c_str());
 
   persist (fp, *info, "", this->repo_values_);
 
@@ -552,7 +552,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
                       fname.c_str(), info->name.c_str()));
     }
   Lockable_File activator_file (fname, O_WRONLY);
-  const ACE_TString bfname = fname.c_str() + ACE_TString(".bak");
+  const ACE_TString bfname = fname.c_str() + ACE_TString(ACE_TEXT(".bak"));
   FILE* fp = activator_file.get_file();
   if (fp == 0)
     {
@@ -565,8 +565,8 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
   listing_lf.release ();
   ACE_OS::fprintf (fp, "<?xml version=\"1.0\"?>\n");
 
-  this->repo_values_[REPO_TYPE].second = uid.repo_type_str;
-  this->repo_values_[REPO_ID].second = uid.repo_id_str;
+  this->repo_values_[REPO_TYPE].second = ACE_TEXT_ALWAYS_CHAR(uid.repo_type_str.c_str());
+  this->repo_values_[REPO_ID].second = ACE_TEXT_ALWAYS_CHAR(uid.repo_id_str.c_str());
 
   persist (fp, *info, "", this->repo_values_);
 
@@ -595,7 +595,7 @@ Shared_Backing_Store::repo_mode() const
 int
 Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
 {
-  const ACE_TString& replica_ior_file = replica_ior_filename(true);
+  const ACE_TString replica_ior_file = replica_ior_filename(true);
   if (this->opts_.debug() > 1)
     {
       ORBSVCS_DEBUG((LM_INFO,
@@ -615,7 +615,7 @@ Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
 
   if (peer_started_previously)
     {
-      ACE_TString replica_ior = "file://" + replica_ior_file;
+      ACE_TString replica_ior = ACE_TEXT("file://") + replica_ior_file;
       CORBA::Object_var obj =
         this->orb_->string_to_object (replica_ior.c_str());
 
@@ -808,7 +808,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
 
       if (this->load_file (fname, file.get_file()) != 0)
         {
-          this->load_file (fname + ".bak");
+          this->load_file (fname + ACE_TEXT(".bak"));
         }
     }
 
@@ -842,7 +842,7 @@ Shared_Backing_Store::get_listings (Lockable_File& listing_lf,
                        this->opts_.debug(),
                        listing_lf.get_file (this->listing_file_, O_RDONLY)) != 0)
     {
-      if (this->load_file (this->listing_file_ + ".bak",
+      if (this->load_file (this->listing_file_ + ACE_TEXT(".bak"),
                            *listings_handler,
                            this->opts_.debug()) != 0)
          {
@@ -908,8 +908,10 @@ Shared_Backing_Store::write_listing (FILE* list)
       const Server_Info_Ptr& info = sientry->int_id_;
 
       this->find_unique_id (sientry->ext_id_, this->server_uids_, uid);
-      ACE_CString listing_name = ACEXML_escape_string (info->key_name_);
-      ::write_listing_item (list, uid.unique_filename, listing_name,
+      ACEXML_String keyName(ACE_TEXT_CHAR_TO_TCHAR(info->key_name_.c_str()));
+      ACEXML_String listing_name = ACEXML_escape_string (keyName);
+      ACE_CString listing_name_cstr(ACE_TEXT_ALWAYS_CHAR(listing_name.c_str()));
+      ::write_listing_item (list, uid.unique_filename, listing_name_cstr,
                           Locator_XMLHandler::SERVER_INFO_TAG);
     }
 
@@ -941,7 +943,7 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
 
    write_listing(list);
 
-  const ACE_TString bfname = this->listing_file_.c_str() + ACE_TString(".bak");
+  const ACE_TString bfname = this->listing_file_.c_str() + ACE_TString(ACE_TEXT(".bak"));
 
   // Write backup file
   FILE* baklist = ACE_OS::fopen(bfname.c_str(),ACE_TEXT("w"));
@@ -1285,7 +1287,7 @@ Shared_Backing_Store::register_replica
   Locator_Repository::report_ior(null_poa.in ());
 }
 
-ACE_CString
+ACE_TString
 Shared_Backing_Store::replica_ior_filename(bool peer_ior_file) const
 {
   Options::ImrType desired_type = this->imr_type_;
@@ -1295,8 +1297,8 @@ Shared_Backing_Store::replica_ior_filename(bool peer_ior_file) const
         Options::BACKUP_IMR :
         Options::PRIMARY_IMR;
     }
-  ACE_CString ior =
-    this->filename_ + IMR_REPLICA[desired_type] + ACE_TEXT(".ior");
+  ACE_TString ior =
+    this->filename_ + ACE_TEXT_CHAR_TO_TCHAR(IMR_REPLICA[desired_type]) + ACE_TEXT(".ior");
 
   return ior;
 }

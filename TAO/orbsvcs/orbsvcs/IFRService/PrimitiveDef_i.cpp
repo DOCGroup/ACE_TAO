@@ -46,7 +46,7 @@ TAO_PrimitiveDef_i::type_i (void)
 {
   u_int pkind = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "pkind",
+                                             ACE_TEXT("pkind"),
                                              pkind);
 
   switch (static_cast<CORBA::PrimitiveKind> (pkind))
@@ -115,7 +115,7 @@ TAO_PrimitiveDef_i::kind_i (void)
 {
   u_int pkind = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "pkind",
+                                             ACE_TEXT("pkind"),
                                              pkind);
 
   return static_cast<CORBA::PrimitiveKind> (pkind);

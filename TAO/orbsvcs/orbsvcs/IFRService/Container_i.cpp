@@ -913,13 +913,13 @@ TAO_Container_i::create_struct_i (const char *id,
   // Open a section for the struct's members.
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (new_key,
-                                        "refs",
+                                        ACE_TEXT("refs"),
                                         1,
                                         refs_key);
 
   CORBA::ULong count = members.length ();
   this->repo_->config ()->set_integer_value (refs_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
   char *member_path = 0;
 
@@ -930,20 +930,20 @@ TAO_Container_i::create_struct_i (const char *id,
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            stringified,
+                                            ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                             1,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "name",
-                                                members[i].name.in ());
+                                                ACE_TEXT("name"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(members[i].name.in ()));
 
       member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "path",
-                                                member_path);
+                                                ACE_TEXT("path"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(member_path));
     }
 
   CORBA::DefinitionKind def_kind =
@@ -953,14 +953,14 @@ TAO_Container_i::create_struct_i (const char *id,
       || def_kind == CORBA::dk_Union
       || def_kind == CORBA::dk_Exception)
     {
-      this->update_refs (path.c_str (),
+      this->update_refs (ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                          name);
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Struct,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::StructDef::_narrow (obj.in ());
@@ -1014,21 +1014,21 @@ TAO_Container_i::create_union_i (const char *id,
         TAO_IFR_Service_Utils::reference_to_path (discriminator_type);
 
       this->repo_->config ()->set_string_value (new_key,
-                                                "disc_path",
-                                                disc_path);
+                                                ACE_TEXT("disc_path"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(disc_path));
     }
 
   ACE_Configuration_Section_Key refs_key;
 
   // For the union's members.
   this->repo_->config ()->open_section (new_key,
-                                        "refs",
+                                        ACE_TEXT("refs"),
                                         1,
                                         refs_key);
 
   CORBA::ULong count = members.length ();
   this->repo_->config ()->set_integer_value (refs_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
   char *member_path = 0;
 
@@ -1039,20 +1039,20 @@ TAO_Container_i::create_union_i (const char *id,
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            stringified,
+                                            ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                             1,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "name",
-                                                members[i].name.in ());
+                                                ACE_TEXT("name"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(members[i].name.in ()));
 
       member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "path",
-                                                member_path);
+                                                ACE_TEXT("path"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(member_path));
 
       this->store_label (member_key,
                          members[i].label);
@@ -1065,14 +1065,14 @@ TAO_Container_i::create_union_i (const char *id,
       || def_kind == CORBA::dk_Union
       || def_kind == CORBA::dk_Exception)
     {
-      this->update_refs (path.c_str (),
+      this->update_refs (ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                          name);
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Union,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::UnionDef::_narrow (obj.in ());
@@ -1117,7 +1117,7 @@ TAO_Container_i::create_enum_i (const char *id,
   // Store the member count of the enum.
   CORBA::ULong count = members.length ();
   this->repo_->config ()->set_integer_value (new_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
 
   // Create a section for each member, named for
@@ -1127,13 +1127,13 @@ TAO_Container_i::create_enum_i (const char *id,
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (new_key,
-                                            stringified,
+                                            ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                             1,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "name",
-                                                members[i].in ());
+                                                ACE_TEXT("name"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(members[i].in ()));
     }
 
   CORBA::DefinitionKind def_kind =
@@ -1143,14 +1143,14 @@ TAO_Container_i::create_enum_i (const char *id,
       || def_kind == CORBA::dk_Union
       || def_kind == CORBA::dk_Exception)
     {
-      this->update_refs (path.c_str (),
+      this->update_refs (ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                          name);
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Enum,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::EnumDef::_narrow (obj.in ());
@@ -1197,13 +1197,13 @@ TAO_Container_i::create_alias_i (const char *id,
     TAO_IFR_Service_Utils::reference_to_path (original_type);
 
   this->repo_->config ()->set_string_value (new_key,
-                                            "original_type",
-                                            unalias_path);
+                                            ACE_TEXT("original_type"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(unalias_path));
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Alias,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::AliasDef::_narrow (obj.in ());
@@ -1252,7 +1252,7 @@ TAO_Container_i::create_interface_i (const char *id,
       // Open a section for the base interfaces.
       ACE_Configuration_Section_Key inherited_key;
       this->repo_->config ()->open_section (new_key,
-                                            "inherited",
+                                            ACE_TEXT("inherited"),
                                             1,
                                             inherited_key);
       char *inherited_path = 0;
@@ -1266,15 +1266,15 @@ TAO_Container_i::create_interface_i (const char *id,
               );
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (inherited_key,
-                                                    stringified,
-                                                    inherited_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR(stringified),
+                                                    ACE_TEXT_CHAR_TO_TCHAR(inherited_path));
         }
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Interface,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::InterfaceDef::_narrow (obj.in ());
@@ -1348,7 +1348,7 @@ TAO_Container_i::create_value_i (
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Value,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::ValueDef::_narrow (obj.in ());
@@ -1396,13 +1396,13 @@ TAO_Container_i::create_value_box_i (const char *id,
     TAO_IFR_Service_Utils::reference_to_path (original_type_def);
 
   this->repo_->config ()->set_string_value (new_key,
-                                            "boxed_type",
-                                            boxed_path);
+                                            ACE_TEXT("boxed_type"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(boxed_path));
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_ValueBox,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::ValueBoxDef::_narrow (obj.in ());
@@ -1446,13 +1446,13 @@ TAO_Container_i::create_exception_i (const char *id,
 
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (new_key,
-                                        "refs",
+                                        ACE_TEXT("refs"),
                                         1,
                                         refs_key);
 
   CORBA::ULong count = members.length ();
   this->repo_->config ()->set_integer_value (refs_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
   char *member_path = 0;
 
@@ -1463,26 +1463,26 @@ TAO_Container_i::create_exception_i (const char *id,
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            stringified,
+                                            ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                             1,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "name",
-                                                members[i].name.in ());
+                                                ACE_TEXT("name"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(members[i].name.in ()));
 
       member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "path",
-                                                member_path);
+                                                ACE_TEXT("path"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(member_path));
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::ExceptionDef::_narrow (obj.in ());
@@ -1524,7 +1524,7 @@ TAO_Container_i::create_native_i (const char *id,
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Native,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::NativeDef::_narrow (obj.in ());
@@ -1578,7 +1578,7 @@ TAO_Container_i::create_abstract_interface_i (
       ACE_Configuration_Section_Key inherited_key;
 
       this->repo_->config ()->open_section (new_key,
-                                            "inherited",
+                                            ACE_TEXT("inherited"),
                                             1,
                                             inherited_key);
       char *inherited_path = 0;
@@ -1591,15 +1591,15 @@ TAO_Container_i::create_abstract_interface_i (
 
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (inherited_key,
-                                                    stringified,
-                                                    inherited_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR(stringified),
+                                                    ACE_TEXT_CHAR_TO_TCHAR(inherited_path));
         }
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_AbstractInterface,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::AbstractInterfaceDef::_narrow (obj.in ());
@@ -1653,7 +1653,7 @@ TAO_Container_i::create_local_interface_i (
       ACE_Configuration_Section_Key inherited_key;
 
       this->repo_->config ()->open_section (new_key,
-                                            "inherited",
+                                            ACE_TEXT("inherited"),
                                             1,
                                             inherited_key);
       char *inherited_path = 0;
@@ -1666,15 +1666,15 @@ TAO_Container_i::create_local_interface_i (
 
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (inherited_key,
-                                                    stringified,
-                                                    inherited_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR(stringified),
+                                                    ACE_TEXT_CHAR_TO_TCHAR(inherited_path));
         }
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_LocalInterface,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::LocalInterfaceDef::_narrow (obj.in ());
@@ -1754,7 +1754,7 @@ TAO_Container_i::create_ext_value_i (
       char *stringified = 0;
 
       this->repo_->config ()->open_section (new_key,
-                                            "initializers",
+                                            ACE_TEXT("initializers"),
                                             0,
                                             initializers_key);
 
@@ -1762,7 +1762,7 @@ TAO_Container_i::create_ext_value_i (
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
-                                                stringified,
+                                                ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                                 0,
                                                 initializer_key);
 
@@ -1777,7 +1777,7 @@ TAO_Container_i::create_ext_value_i (
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Value,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                           this->repo_);
 
   return CORBA::ExtValueDef::_narrow (obj.in ());
@@ -1808,7 +1808,7 @@ TAO_Container_i::lookup_name_recursive (
   ACE_Configuration_Section_Key defns_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "defns",
+                                          ACE_TEXT("defns"),
                                           0,
                                           defns_key);
 
@@ -1829,7 +1829,7 @@ TAO_Container_i::lookup_name_recursive (
 
           u_int kind = 0;
           this->repo_->config ()->get_integer_value (defn_key,
-                                                     "def_kind",
+                                                     ACE_TEXT("def_kind"),
                                                      kind);
 
           CORBA::DefinitionKind def_kind =
@@ -1837,7 +1837,7 @@ TAO_Container_i::lookup_name_recursive (
 
           ACE_TString id;
           this->repo_->config ()->get_string_value (defn_key,
-                                                    "id",
+                                                    ACE_TEXT("id"),
                                                     id);
 
           ACE_TString path;
@@ -1851,10 +1851,10 @@ TAO_Container_i::lookup_name_recursive (
             {
               ACE_TString name;
               this->repo_->config ()->get_string_value (defn_key,
-                                                        "name",
+                                                        ACE_TEXT("name"),
                                                         name);
 
-              if (ACE_OS::strcmp (name.c_str (), search_name) == 0)
+              if (ACE_OS::strcmp (name.c_str (), ACE_TEXT_CHAR_TO_TCHAR(search_name)) == 0)
                 {
                   kind_queue.enqueue_tail (def_kind);
 
@@ -1922,7 +1922,7 @@ TAO_Container_i:: lookup_attr (
   ACE_Configuration_Section_Key sub_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "attrs",
+                                          ACE_TEXT("attrs"),
                                           0,
                                           sub_key);
 
@@ -1941,16 +1941,16 @@ TAO_Container_i:: lookup_attr (
 
           ACE_TString name;
           this->repo_->config ()->get_string_value (member_key,
-                                                    "name",
+                                                    ACE_TEXT("name"),
                                                     name);
 
-          if (name == search_name)
+          if (name == ACE_TEXT_CHAR_TO_TCHAR(search_name))
             {
               kind_queue.enqueue_tail (CORBA::dk_Attribute);
 
               ACE_TString id;
               this->repo_->config ()->get_string_value (member_key,
-                                                        "id",
+                                                        ACE_TEXT("id"),
                                                         id);
 
               ACE_TString path;
@@ -1970,7 +1970,7 @@ TAO_Container_i:: lookup_attr (
       ACE_Configuration_Section_Key bases_key;
       status =
         this->repo_->config ()->open_section (this->section_key_,
-                                              "inherited",
+                                              ACE_TEXT("inherited"),
                                               0,
                                               bases_key);
 
@@ -2024,7 +2024,7 @@ TAO_Container_i::lookup_op (
   ACE_Configuration_Section_Key sub_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "ops",
+                                          ACE_TEXT("ops"),
                                           0,
                                           sub_key);
 
@@ -2043,16 +2043,16 @@ TAO_Container_i::lookup_op (
 
           ACE_TString name;
           this->repo_->config ()->get_string_value (member_key,
-                                                    "name",
+                                                    ACE_TEXT("name"),
                                                     name);
 
-          if (name == search_name)
+          if (name == ACE_TEXT_CHAR_TO_TCHAR(search_name))
             {
               kind_queue.enqueue_tail (CORBA::dk_Operation);
 
               ACE_TString id;
               this->repo_->config ()->get_string_value (member_key,
-                                                        "id",
+                                                        ACE_TEXT("id"),
                                                         id);
 
               ACE_TString path;
@@ -2072,7 +2072,7 @@ TAO_Container_i::lookup_op (
       ACE_Configuration_Section_Key bases_key;
       status =
         this->repo_->config ()->open_section (this->section_key_,
-                                              "inherited",
+                                              ACE_TEXT("inherited"),
                                               0,
                                               bases_key);
 
@@ -2226,13 +2226,13 @@ TAO_Container_i::store_label (ACE_Configuration_Section_Key key,
   if (default_label == 1)
     {
       this->repo_->config ()->set_string_value (key,
-                                                "label",
-                                                "default");
+                                                ACE_TEXT("label"),
+                                                ACE_TEXT("default"));
     }
   else
     {
       this->repo_->config ()->set_integer_value (key,
-                                                 "label",
+                                                 ACE_TEXT("label"),
                                                  result);
     }
 }
@@ -2244,7 +2244,7 @@ TAO_Container_i::update_refs (const char *path,
   ACE_Configuration_Section_Key refs_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "refs",
+                                          ACE_TEXT("refs"),
                                           0,
                                           refs_key);
 
@@ -2256,7 +2256,7 @@ TAO_Container_i::update_refs (const char *path,
 
   u_int count = 0;
   this->repo_->config ()->get_integer_value (refs_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
 
   int index = 0;
@@ -2274,10 +2274,10 @@ TAO_Container_i::update_refs (const char *path,
 
       ACE_TString ref_name;
       this->repo_->config ()->get_string_value (ref_key,
-                                                "name",
+                                                ACE_TEXT("name"),
                                                 ref_name);
 
-      ACE_TString::size_type pos = ref_name.find (this->repo_->extension ());
+      ACE_TString::size_type pos = ref_name.find (ACE_TEXT_CHAR_TO_TCHAR(this->repo_->extension ()));
 
       // If one of the names has been mangled by move(), fix it.
       if (pos != ACE_TString::npos)
@@ -2287,19 +2287,19 @@ TAO_Container_i::update_refs (const char *path,
           if (name != 0)
             {
               this->repo_->config ()->set_string_value (ref_key,
-                                                        "name",
-                                                        name);
+                                                        ACE_TEXT("name"),
+                                                        ACE_TEXT_CHAR_TO_TCHAR(name));
             }
           else
             {
               this->repo_->config ()->set_string_value (ref_key,
-                                                        "name",
+                                                        ACE_TEXT("name"),
                                                         ref_name.substr (0, pos));
             }
 
           this->repo_->config ()->set_string_value (ref_key,
-                                                    "path",
-                                                    path);
+                                                    ACE_TEXT("path"),
+                                                    ACE_TEXT_CHAR_TO_TCHAR(path));
 
           return;
         }
@@ -2315,20 +2315,20 @@ TAO_Container_i::update_refs (const char *path,
   ACE_Configuration_Section_Key new_key;
   char *stringified = TAO_IFR_Service_Utils::int_to_string (count);
   this->repo_->config ()->open_section (refs_key,
-                                        stringified,
+                                        ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                         1,
                                         new_key);
 
   this->repo_->config ()->set_string_value (new_key,
-                                            "name",
-                                            name);
+                                            ACE_TEXT("name"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(name));
 
   this->repo_->config ()->set_string_value (new_key,
-                                            "path",
-                                            path);
+                                            ACE_TEXT("path"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(path));
 
   this->repo_->config ()->set_integer_value (refs_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count + 1);
 }
 
@@ -2363,15 +2363,15 @@ TAO_Container_i::create_value_common (
                                           "defns");
 
   this->repo_->config ()->set_integer_value (new_key,
-                                             "is_custom",
+                                             ACE_TEXT("is_custom"),
                                              (CORBA::ULong) is_custom);
 
   this->repo_->config ()->set_integer_value (new_key,
-                                             "is_abstract",
+                                             ACE_TEXT("is_abstract"),
                                              (CORBA::ULong) is_abstract);
 
   this->repo_->config ()->set_integer_value (new_key,
-                                             "is_truncatable",
+                                             ACE_TEXT("is_truncatable"),
                                              (CORBA::ULong) is_truncatable);
   if (!CORBA::is_nil (base_value))
     {
@@ -2383,7 +2383,7 @@ TAO_Container_i::create_value_common (
       // no other way to know about a specific key.
       this->repo_->config ()->expand_path (
                                   this->repo_->root_key (),
-                                  base_path,
+                                  ACE_TEXT_CHAR_TO_TCHAR(base_path),
                                   TAO_IFR_Service_Utils::tmp_key_,
                                   0
                                 );
@@ -2393,8 +2393,8 @@ TAO_Container_i::create_value_common (
                                           CORBA::dk_Value);
 
       this->repo_->config ()->set_string_value (new_key,
-                                                "base_value",
-                                                base_path);
+                                                ACE_TEXT("base_value"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(base_path));
     }
 
   CORBA::ULong length = abstract_base_values.length ();
@@ -2403,11 +2403,11 @@ TAO_Container_i::create_value_common (
     {
       ACE_Configuration_Section_Key bases_key;
       this->repo_->config ()->open_section (this->section_key_,
-                                            "abstract_bases",
+                                            ACE_TEXT("abstract_bases"),
                                             1,
                                             bases_key);
       this->repo_->config ()->set_integer_value (bases_key,
-                                                 "count",
+                                                 ACE_TEXT("count"),
                                                  length);
 
       ACE_TString base_id;
@@ -2426,7 +2426,7 @@ TAO_Container_i::create_value_common (
           // no other way to know about a specific key.
           this->repo_->config ()->expand_path (
                                       this->repo_->root_key (),
-                                      base_path,
+                                      ACE_TEXT_CHAR_TO_TCHAR(base_path),
                                       TAO_IFR_Service_Utils::tmp_key_,
                                       0
                                     );
@@ -2437,12 +2437,12 @@ TAO_Container_i::create_value_common (
 
           this->repo_->config ()->get_string_value (
               TAO_IFR_Service_Utils::tmp_key_,
-              "id",
+              ACE_TEXT("id"),
               base_id
             );
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (bases_key,
-                                                    stringified,
+                                                    ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                                     base_id);
         }
     }
@@ -2453,11 +2453,11 @@ TAO_Container_i::create_value_common (
     {
       ACE_Configuration_Section_Key supported_key;
       this->repo_->config ()->open_section (new_key,
-                                            "supported",
+                                            ACE_TEXT("supported"),
                                             1,
                                             supported_key);
       this->repo_->config ()->set_integer_value (supported_key,
-                                                 "count",
+                                                 ACE_TEXT("count"),
                                                  length);
       ACE_TString supported_id;
       const char *supported_path = 0;
@@ -2476,12 +2476,12 @@ TAO_Container_i::create_value_common (
           // the name clash checker for base interfaces is static, and has
           // no other way to know about a specific key.
           this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                               supported_path,
+                                               ACE_TEXT_CHAR_TO_TCHAR(supported_path),
                                                TAO_IFR_Service_Utils::tmp_key_,
                                                0);
           this->repo_->config ()->get_integer_value (
                                       TAO_IFR_Service_Utils::tmp_key_,
-                                      "def_kind",
+                                      ACE_TEXT("def_kind"),
                                       kind);
           def_kind = static_cast<CORBA::DefinitionKind> (kind);
 
@@ -2506,12 +2506,12 @@ TAO_Container_i::create_value_common (
 
           this->repo_->config ()->get_string_value (
               TAO_IFR_Service_Utils::tmp_key_,
-              "id",
+              ACE_TEXT("id"),
               supported_id
             );
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (supported_key,
-                                                    stringified,
+                                                    ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                                     supported_id);
         }
     }

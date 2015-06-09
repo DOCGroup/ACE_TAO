@@ -84,23 +84,23 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
     {
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (initializers_key,
-                            stringified,
+                            ACE_TEXT_CHAR_TO_TCHAR(stringified),
                             1,
                             initializer_key);
       config->set_string_value (initializer_key,
-                                "name",
-                                initializers[i].name.in ());
+                                ACE_TEXT("name"),
+                                ACE_TEXT_CHAR_TO_TCHAR(initializers[i].name.in ()));
 
       arg_count = initializers[i].members.length ();
 
       if (arg_count > 0)
         {
           config->open_section (initializer_key,
-                                "params",
+                                ACE_TEXT("params"),
                                 1,
                                 params_key);
           config->set_integer_value (params_key,
-                                     "count",
+                                     ACE_TEXT("count"),
                                      arg_count);
 
           for (CORBA::ULong j = 0; j < arg_count; ++j)
@@ -108,21 +108,21 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
               char *stringified =
                 TAO_IFR_Service_Utils::int_to_string (j);
               config->open_section (params_key,
-                                    stringified,
+                                    ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                     1,
                                     arg_key);
               config->set_string_value (
                   arg_key,
-                  "arg_name",
-                  initializers[i].members[j].name.in ()
+                  ACE_TEXT("arg_name"),
+                  ACE_TEXT_CHAR_TO_TCHAR(initializers[i].members[j].name.in ())
                 );
               arg_path =
                 TAO_IFR_Service_Utils::reference_to_path (
                     initializers[i].members[j].type_def.in ()
                   );
               config->set_string_value (arg_key,
-                                        "arg_path",
-                                        arg_path);
+                                        ACE_TEXT("arg_path"),
+                                        ACE_TEXT_CHAR_TO_TCHAR(arg_path));
             }
         }
     }
@@ -163,7 +163,7 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
 {
   ACE_Configuration_Section_Key section_key;
   int status = config->open_section (key,
-                                     section_name,
+                                     ACE_TEXT_CHAR_TO_TCHAR(section_name),
                                      0,
                                      section_key);
 
@@ -185,9 +185,9 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->get_string_value (section_key,
-                                stringified,
+                                ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                 holder);
-      seq[i] = holder.fast_rep ();
+      seq[i] = ACE_TEXT_ALWAYS_CHAR(holder.fast_rep ());
     }
 }
 

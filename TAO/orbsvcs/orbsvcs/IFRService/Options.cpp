@@ -33,7 +33,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'o':  // Set the IOR output filename.
         ACE_OS::free (this->ior_output_file_);
-        this->ior_output_file_ = ACE_OS::strdup (get_opts.opt_arg ());
+        this->ior_output_file_ = ACE_TEXT_ALWAYS_CHAR(ACE_OS::strdup (get_opts.opt_arg ()));
         break;
       case 'p': // Make the IFR persistent
         this->persistent_ = 1;
@@ -41,7 +41,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'b':
         ACE_OS::free (this->persistent_file_);
-        this->persistent_file_ = ACE_OS::strdup (get_opts.opt_arg ());
+        this->persistent_file_ = ACE_TEXT_ALWAYS_CHAR(ACE_OS::strdup (get_opts.opt_arg ()));
         break;
       case 'l':
 #if defined (ACE_HAS_THREADS)

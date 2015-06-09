@@ -42,17 +42,17 @@ TAO_ValueBoxDef_i::type_i (void)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             id);
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             name);
 
   ACE_TString boxed_type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "boxed_type",
+                                            ACE_TEXT("boxed_type"),
                                             boxed_type_path);
 
   TAO_IDLType_i *impl =
@@ -61,8 +61,8 @@ TAO_ValueBoxDef_i::type_i (void)
 
   CORBA::TypeCode_var tc = impl->type_i ();
 
-  return this->repo_->tc_factory ()->create_value_box_tc (id.c_str (),
-                                                          name.c_str (),
+  return this->repo_->tc_factory ()->create_value_box_tc (ACE_TEXT_ALWAYS_CHAR(id.c_str ()),
+                                                          ACE_TEXT_ALWAYS_CHAR(name.c_str ()),
                                                           tc.in ());
 }
 
@@ -81,7 +81,7 @@ TAO_ValueBoxDef_i::original_type_def_i (void)
 {
   ACE_TString boxed_type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "boxed_type",
+                                            ACE_TEXT("boxed_type"),
                                             boxed_type_path);
 
   CORBA::Object_var obj =
@@ -108,8 +108,8 @@ TAO_ValueBoxDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def)
     TAO_IFR_Service_Utils::reference_to_path (original_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "boxed_type",
-                                            boxed_type);
+                                            ACE_TEXT("boxed_type"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(boxed_type));
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

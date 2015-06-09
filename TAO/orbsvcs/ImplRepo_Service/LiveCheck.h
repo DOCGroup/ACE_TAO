@@ -121,7 +121,7 @@ class Locator_Export LiveEntry
   void reset_status (void);
 
   /// the current state value as text
-  static const char *status_name (LiveStatus s);
+  static const ACE_TCHAR* status_name (LiveStatus s);
 
   void update_listeners (void);
   bool validate_ping (bool &want_reping, ACE_Time_Value &next);
