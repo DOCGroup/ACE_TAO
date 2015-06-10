@@ -6,7 +6,7 @@ env:
     - FUZZ=1
 #    - CORBAEMICRO=1 ACEFORTAO=0
 #    - CORBAECOMPACT=1 ACEFORTAO=0
-#    - ACEFORTAO=1
+     - ACEFORTAO=1 ACEUSESWCHAR=1
 #    - CCMLW=0 ACEFORTAO=0
 #    - CCMLW=1 ACEFORTAO=0
 #    - CCMNOEVENT=1 ACEFORTAO=0
@@ -27,6 +27,7 @@ branches:
     - master
 before_script:
   - export
+  - if [ "$ACEUSESWCHAR" == "1" ]; then echo -e "#define ACE_USES_WCHAR 1\n" >> $ACE_ROOT/ace/config.h; fi
   - echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h
   - echo -e "workspace {\n\$(TAO_ROOT)/TAO_ACE.mwc\n\$(TAO_ROOT)/tests/Hello\n" >> $TRAVIS_BUILD_DIR/travis.mwc
   - if [ "$ACEFORTAO" == "0" ]; then echo -e "\$(CIAO_ROOT)/CIAO_TAO_DAnCE.mwc\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
