@@ -56,7 +56,10 @@ DCFLAGS  += -ggdb
 DCCFLAGS += -ggdb
 DLD      = $(CXX)
 LD       = $(CXX)
-LIBS     += -ldl
+
+ifneq ($(dynamic_loader),0)
+  LIBS     += -ldl
+endif
 
 ifeq ($(threads),1)
   FLAGS_C_CC += -pthread
@@ -66,6 +69,10 @@ endif
 
 ifeq ($(optimize),1)
   SOFLAGS += -Wl,-O3
+endif
+
+ifeq ($(static_stdlibs),1)
+  LDFLAGS += -static-libgcc -static-libstdc++
 endif
 
 SOFLAGS += -shared
