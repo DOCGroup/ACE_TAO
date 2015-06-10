@@ -93,7 +93,7 @@ namespace {
       this->file_ = ACE_OS::fopen (file.c_str(), flags_str);
 #else
       this->file_lock_.reset
-        (new ACE_File_Lock (ACE_TEXT_CHAR_TO_TCHAR (file.c_str ()),
+        (new ACE_File_Lock (file.c_str (),
                             flags_, 0666, unlink_in_destructor));
 
       // Truncating output so this will not allow reading then writing
