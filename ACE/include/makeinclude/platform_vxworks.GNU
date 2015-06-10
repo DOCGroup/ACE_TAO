@@ -30,4 +30,6 @@ endif
 ifeq (vxworks-6.9, $(findstring vxworks-6.9,$(WIND_PLATFORM)))
   include $(ACE_ROOT)/include/makeinclude/platform_vxworks6.9.GNU
 endif
-
+ifeq (vxworks-7.0, $(findstring vxworks-7.0,$(WIND_PLATFORM)))
+  include $(ACE_ROOT)/include/makeinclude/platform_vxworks7.0.GNU
+endif
