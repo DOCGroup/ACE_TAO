@@ -224,6 +224,9 @@ int run_main (int, ACE_TCHAR *[])
   Fixed f29 = Fixed::from_integer (LongLong (1)) / Fixed::from_integer (LongLong (-3));
   EXPECT ("-0.333333333333333333333333333333", f29); //TODO: one more 3
 
+  Fixed f30 = Fixed::from_string("-9999752.0000") / Fixed::from_string("-4999876.00");
+  EXPECT ("2", f30);
+
   ACE_END_TEST;
   return failed;
 }
