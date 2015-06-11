@@ -155,10 +155,10 @@ $(VLIB): $(VLOBJS)
 	@echo xargs $(AR) $(ARFLAGS) $(notdir $@) $(AREXTRA) >> .prelink.spec
 	@if not [""]==["$(ACE_SHLIBS)"] @echo $(subst -l,,$(ACE_SHLIBS)) >> .prelink.spec
 	@echo Add .rpo files
-	echo .prelink.spec $(foreach rpo,$(patsubst %.o,%.rpo,$(filter %.o, $?)),$(shell if exist $(rpo) echo $(rpo))) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+	echo .prelink.spec $(foreach rpo,$(patsubst %.$(OBJEXT),%.rpo,$(filter %.$(OBJEXT), $?)),$(shell if exist $(rpo) echo $(rpo))) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
   endif
 	@echo Add .o files
-	echo $(TMPINCDIR:%=%/*.o) $(filter %.o, $?) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+	echo $(TMPINCDIR:%=%/*.$(OBJEXT)) $(filter %.$(OBJEXT), $?) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
 	-chmod a+r $@
   ifneq (,$(RANLIB))
 	-$(RANLIB) $@
@@ -186,13 +186,13 @@ $(VLIB): $(VLOBJS)
 	-$(LINK.cc) $(LINK_OUTPUT_FLAG) ace-templ_inst $? $(LDFLAGS) $(ACE_NUL_STDERR)
   endif # ace_lib_prelink
   ifeq (1,$(ACE_OPENVMS))
-	find $(TMPINCDIR:%=%) -name "*.o" -or -name "*.obj" | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+	find $(TMPINCDIR:%=%) -name "*.$(OBJEXT)" -or -name "*.obj" | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
   else
     ifneq (,$(AR.cc.override))
 	$(AR.cc.override)
     else
-	([ "`echo $(TMPINCDIR:%=%/*.o)`" != "$(TMPINCDIR:%=%/*.o)" ] && echo $(TMPINCDIR:%=%/*.o); \
-	echo $(filter %.o, $^)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
+	([ "`echo $(TMPINCDIR:%=%/*.$(OBJEXT))`" != "$(TMPINCDIR:%=%/*.$(OBJEXT))" ] && echo $(TMPINCDIR:%=%/*.$(OBJEXT)); \
+	echo $(filter %.$(OBJEXT), $^)) | xargs $(AR) $(ARFLAGS) $@ $(AREXTRA)
     endif
   endif
   ifdef ibmcxx_build
