@@ -917,36 +917,19 @@ void ACE_CDR::Fixed::normalize (UShort min_scale)
   if (this->value_[15] & 0xf0 || !this->scale_)
     return;
 
-  size_t bytes = 0; // number of bytes to shift down
-  while (2 * (bytes + 1) < this->scale_
-         && this->scale_ - 2 * (bytes + 1) >= min_scale
-         && !this->value_[14 - bytes])
-    ++bytes;
+  // Calculate the number of nibbles that can be moved.
+  size_t nibbles = 0;
+  while (digit(nibbles) == 0 && this->scale_ - nibbles > min_scale)
+    ++nibbles;
 
-  const bool extra_nibble = 2 * (bytes + 1) <= this->scale_
-                            && this->scale_ - 2 * (bytes + 1) >= min_scale
-                            && !(this->value_[14 - bytes] & 0xf);
-  const size_t nibbles = 1 /*[15].high*/ + bytes * 2 + extra_nibble;
-  this->digits_ -= static_cast<Octet> (nibbles);
-  this->scale_ -= static_cast<Octet> (nibbles);
+  // Move and clear the nibbles.
+  for (size_t idx = nibbles; idx != this->digits_; ++idx) {
+    digit (idx - nibbles, digit (idx));
+    digit (idx, 0);
+  }
 
-  if (extra_nibble)
-    {
-      const bool sign = this->sign ();
-      std::memmove (this->value_ + bytes + 1, this->value_, 15 - bytes);
-      std::memset (this->value_, 0, bytes + 1);
-      this->value_[15] |= sign ? NEGATIVE : POSITIVE;
-    }
-  else
-    {
-      this->value_[15] = (this->value_[14 - bytes] & 0xf) << 4
-                         | (this->value_[15] & 0xf);
-      for (size_t i = 14; i > bytes; --i)
-        this->value_[i] = (this->value_[i - bytes - 1] & 0xf) << 4
-                          | (this->value_[i - bytes] >> 4);
-      this->value_[bytes] = this->value_[0] >> 4;
-      std::memset (this->value_, 0, bytes);
-    }
+  this->scale_ -= nibbles;
+  this->digits_ -= nibbles;
 }
 
 ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
@@ -1394,7 +1377,8 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
   if (neg)
     this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;
 
-  Fixed r, q = this->div_helper2 (rhs_no_scale, r);
+  Fixed r;
+  Fixed q = this->div_helper2 (rhs_no_scale, r);
 
   if (!r)
     return *this = neg ? -q : q;;
@@ -1461,6 +1445,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::div_helper1 (const Fixed &rhs, Fixed &r) const
   if (q > 9)
     q = 9;
   Fixed t = from_integer (LongLong (q)) * rhs;
+  t.scale_ = this->scale_;
   for (int i = 0; i < 2 && t > *this; ++i)
     {
       --q;
