@@ -25,8 +25,8 @@
 #   hosts: linux
 #   targets: itl_x86
 #   toolchains: gnu4.3
-#   rtp settings: 1
-#   libraries: shared
+#   rtp settings: 1, 0
+#   libraries: shared, static
 
 VXWORKS = 1
 CROSS-COMPILE = 1
@@ -85,6 +85,24 @@ ifeq ($(pthread),1)
   CPPFLAGS += -DACE_HAS_PTHREADS
 endif
 
+ifeq ($(rtp),0)
+  VSHDIR = $(VDIR)
+
+  ifneq ($(shared_libs_only),1)
+    DKM_LIBS = $(if $(findstring 1,$(static_libs)$(static_libs_only)),$(LDLIBS))
+  endif
+
+  define LINK.cc.override
+$(LD) -r -nostdlib -Wl,-X $(LDFLAGS) -o $(VDIR)$(basename $@)_partial.o $(filter %.o,$^) $(DKM_LIBS)
+	$(NM) $(VDIR)$(basename $@)_partial.o | $(MUNCH) > $(VDIR)$(basename $@)_ctdt.c
+	$(COMPILE.cc) -o $(VDIR)$(basename $@)_ctdt.o $(VDIR)$(basename $@)_ctdt.c
+	$(LD) -r -nostdlib -Wl,-X $(LD_SCRIPT_DOWNLOAD) -o $@ $(VDIR)$(basename $@)_ctdt.o $(VDIR)$(basename $@)_partial.o
+  endef
+
+  SOLINK.cc.override = $(LINK.cc.override)
+  CLEANUP_OBJS += $(foreach x,_ctdt.c _ctdt.o _partial.o,$(addsuffix $(x),$(VDIR)$(basename $(if $(LIB_NAME),$(VLIB),$(VBIN)))))
+endif
+
 ace_vx_mk_dir = $(if $(findstring 1,$(rtp)),$(WIND_USR_MK),$(WIND_KRNL_MK))
 include $(ace_vx_mk_dir)/defs.library.mk
 
@@ -103,8 +121,8 @@ endif
 DCFLAGS += -g
 DCCFLAGS += -g
 
-LD = $(CPLUS)
-DLD = $(CPLUS)
+LD = $(CXX)
+DLD = $(LD)
 
 EXEEXT = $(if $(findstring 1,$(rtp)),.vxe,.out)
 
@@ -117,3 +135,4 @@ LDFLAGS += -L$(VSB_DIR)/usr/lib/common$(if $(filter library,$(PRJ_TYPE)),/PIC)
 LIBS += -lstdc++
 
 LDFLAGS += $(if $(filter 1,$(shared_libs)),$(if $(filter 1,$(static_libs_only)),,$(LD_OPTION_DYNAMIC)))
+
