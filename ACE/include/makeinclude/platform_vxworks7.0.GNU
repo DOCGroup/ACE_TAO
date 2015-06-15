@@ -92,15 +92,16 @@ ifeq ($(rtp),0)
     DKM_LIBS = $(if $(findstring 1,$(static_libs)$(static_libs_only)),$(LDLIBS))
   endif
 
+  IFILE = $(VDIR)$(notdir $(basename $(1)))
   define LINK.cc.override
-$(LD) -r -nostdlib -Wl,-X $(LDFLAGS) -o $(VDIR)$(basename $@)_partial.o $(filter %.o,$^) $(DKM_LIBS)
-	$(NM) $(VDIR)$(basename $@)_partial.o | $(MUNCH) > $(VDIR)$(basename $@)_ctdt.c
-	$(COMPILE.cc) -o $(VDIR)$(basename $@)_ctdt.o $(VDIR)$(basename $@)_ctdt.c
-	$(LD) -r -nostdlib -Wl,-X $(LD_SCRIPT_DOWNLOAD) -o $@ $(VDIR)$(basename $@)_ctdt.o $(VDIR)$(basename $@)_partial.o
+$(LD) -r -nostdlib -Wl,-X $(LDFLAGS) -o $(call IFILE,$@)_partial.o $(filter %.o,$^) $(DKM_LIBS)
+	$(NM) $(call IFILE,$@)_partial.o | $(MUNCH) > $(call IFILE,$@)_ctdt.c
+	$(COMPILE.cc) -o $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_ctdt.c
+	$(LD) -r -nostdlib -Wl,-X $(LD_SCRIPT_DOWNLOAD) -o $@ $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_partial.o
   endef
 
   SOLINK.cc.override = $(LINK.cc.override)
-  CLEANUP_OBJS += $(foreach x,_ctdt.c _ctdt.o _partial.o,$(addsuffix $(x),$(VDIR)$(basename $(if $(LIB_NAME),$(VLIB),$(VBIN)))))
+  CLEANUP_OBJS += $(foreach x,_ctdt.c _ctdt.o _partial.o,$(addsuffix $(x),$(VDIR)$(notdir $(basename $(if $(LIB_NAME),$(VLIB),$(VBIN))))))
 endif
 
 ace_vx_mk_dir = $(if $(findstring 1,$(rtp)),$(WIND_USR_MK),$(WIND_KRNL_MK))
