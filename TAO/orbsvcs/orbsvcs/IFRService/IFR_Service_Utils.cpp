@@ -239,9 +239,9 @@ TAO_IFR_Server::open_config (void)
 
       if (OPTIONS::instance ()->persistent ())
         {
-          const char *filename = OPTIONS::instance ()->persistent_file ();
+          const ACE_TCHAR* filename = OPTIONS::instance ()->persistent_file ();
 
-          if (heap->open (ACE_TEXT_CHAR_TO_TCHAR(filename)))
+          if (heap->open (filename))
             {
               delete heap;
               heap = 0;

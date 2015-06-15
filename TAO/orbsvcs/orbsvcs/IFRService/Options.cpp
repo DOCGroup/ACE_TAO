@@ -7,9 +7,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Options::Options ()
-  : ior_output_file_ (ACE_OS::strdup ("if_repo.ior")),
+  : ior_output_file_ (ACE_OS::strdup (ACE_TEXT("if_repo.ior"))),
     persistent_ (0),
-    persistent_file_ (ACE_OS::strdup ("ifr_default_backing_store")),
+    persistent_file_ (ACE_OS::strdup (ACE_TEXT("ifr_default_backing_store"))),
     using_registry_ (0),
     enable_locking_ (0),
     support_multicast_(0)
@@ -33,7 +33,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'o':  // Set the IOR output filename.
         ACE_OS::free (this->ior_output_file_);
-        this->ior_output_file_ = ACE_TEXT_ALWAYS_CHAR(ACE_OS::strdup (get_opts.opt_arg ()));
+        this->ior_output_file_ = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'p': // Make the IFR persistent
         this->persistent_ = 1;
@@ -41,7 +41,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'b':
         ACE_OS::free (this->persistent_file_);
-        this->persistent_file_ = ACE_TEXT_ALWAYS_CHAR(ACE_OS::strdup (get_opts.opt_arg ()));
+        this->persistent_file_ = ACE_OS::strdup (get_opts.opt_arg ());
         break;
       case 'l':
 #if defined (ACE_HAS_THREADS)
@@ -89,7 +89,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-const char *
+const ACE_TCHAR*
 Options::ior_output_file (void) const
 {
   return this->ior_output_file_;
@@ -101,7 +101,7 @@ Options::persistent (void) const
   return this->persistent_;
 }
 
-const char *
+const ACE_TCHAR*
 Options::persistent_file (void) const
 {
   return this->persistent_file_;
