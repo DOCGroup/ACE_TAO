@@ -137,5 +137,5 @@ ifeq ($(rtp),1)
 endif
 LIBS += -lstdc++
 
-LDFLAGS += $(if $(filter 1,$(shared_libs)),$(if $(filter 1,$(static_libs_only)),,$(LD_OPTION_DYNAMIC)))
-
+build_nonstatic = $(if $(findstring 1,$(shared_libs)$(shared_libs_only)),$(if $(filter 1,$(static_libs_only)),,1))
+LDFLAGS += $(if $(build_nonstatic),$(LD_OPTION_DYNAMIC),-static)
