@@ -14,6 +14,14 @@
 
 #include "ace/config-vxworks6.9.h"
 
+#ifndef ACE_LACKS_REGEX_H
+# define ACE_LACKS_REGEX_H
+#endif
+
+#ifndef __RTP__
+# define ACE_LACKS_ALARM
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_VXWORKS_7_0_H */
 
