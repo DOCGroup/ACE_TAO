@@ -133,6 +133,9 @@ namespace TAO
                                   ACE_TEXT ("remote_twoway retrying on TRANSIENT ")
                                   ACE_TEXT ("exception\n")));
                     this->retry_state_->next_profile_retry (*this->stub ());
+#if TAO_HAS_INTERCEPTORS == 1
+                    s = this->receive_other_interception ();
+#endif /* TAO_HAS_INTERCEPTORS */
                     return TAO_INVOKE_RESTART;
                   }
             else
