@@ -49,7 +49,7 @@ TAO_ValueMemberDef_i::describe_i (void)
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "type_path",
+                                            ACE_TEXT("type_path"),
                                             holder);
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (holder,
@@ -59,7 +59,7 @@ TAO_ValueMemberDef_i::describe_i (void)
 
   CORBA::ULong val = 0;
   this->repo_->config ()->get_integer_value  (this->section_key_,
-                                              "access",
+                                              ACE_TEXT("access"),
                                               val);
   vm.access = static_cast<CORBA::Visibility> (val);
 
@@ -88,7 +88,7 @@ TAO_ValueMemberDef_i::type_i (void)
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "type_path",
+                                            ACE_TEXT("type_path"),
                                             holder);
   TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (holder,
@@ -111,7 +111,7 @@ TAO_ValueMemberDef_i::type_def_i (void)
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "type_path",
+                                            ACE_TEXT("type_path"),
                                             holder);
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (holder,
@@ -135,8 +135,8 @@ TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr type_def)
 {
   const char *path = TAO_IFR_Service_Utils::reference_to_path (type_def);
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "type_path",
-                                            path);
+                                            ACE_TEXT("type_path"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(path));
 }
 
 CORBA::Visibility
@@ -154,7 +154,7 @@ TAO_ValueMemberDef_i::access_i (void)
 {
   CORBA::ULong val = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "access",
+                                             ACE_TEXT("access"),
                                              val);
   return static_cast<CORBA::Visibility> (val);
 }
@@ -173,7 +173,7 @@ void
 TAO_ValueMemberDef_i::access_i (CORBA::Visibility access)
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
-                                             "access",
+                                             ACE_TEXT("access"),
                                              access);
 }
 

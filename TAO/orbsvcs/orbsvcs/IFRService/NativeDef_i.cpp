@@ -38,16 +38,16 @@ TAO_NativeDef_i::type_i (void)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             id);
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             name);
 
-  return this->repo_->tc_factory ()->create_native_tc (id.c_str (),
-                                                       name.c_str ());
+  return this->repo_->tc_factory ()->create_native_tc (ACE_TEXT_ALWAYS_CHAR(id.c_str ()),
+                                                       ACE_TEXT_ALWAYS_CHAR(name.c_str ()));
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

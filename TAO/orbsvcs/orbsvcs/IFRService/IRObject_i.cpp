@@ -60,7 +60,7 @@ TAO_IRObject_i::update_key (void)
       return;
     }
 
-  ACE_TString path (oid_string,
+  ACE_TString path (ACE_TEXT_CHAR_TO_TCHAR(oid_string),
                     0,
                     false);
 

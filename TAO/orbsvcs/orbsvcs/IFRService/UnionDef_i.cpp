@@ -65,7 +65,7 @@ TAO_UnionDef_i::type_i (void)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             id);
 
   //---------------------------------------------------------------------------
@@ -77,7 +77,7 @@ TAO_UnionDef_i::type_i (void)
 
   if (TAO_RecursiveDef_OuterScopes::SeenBefore( id ))
     return this->repo_->tc_factory ()->
-                 create_recursive_tc ( id.c_str ());
+                 create_recursive_tc (ACE_TEXT_ALWAYS_CHAR(id.c_str ()));
 
   TAO_RecursiveDef_OuterScopes NowSeenThis( id );
 
@@ -89,15 +89,15 @@ TAO_UnionDef_i::type_i (void)
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             name);
 
   CORBA::TypeCode_var tc = this->discriminator_type_i ();
 
   CORBA::UnionMemberSeq_var members = this->members_i ();
 
-  return this->repo_->tc_factory ()->create_union_tc (id.c_str (),
-                                                      name.c_str (),
+  return this->repo_->tc_factory ()->create_union_tc (ACE_TEXT_ALWAYS_CHAR(id.c_str ()),
+                                                      ACE_TEXT_ALWAYS_CHAR(name.c_str ()),
                                                       tc.in (),
                                                       members.in ());
 }
@@ -117,7 +117,7 @@ TAO_UnionDef_i::discriminator_type_i (void)
 {
   ACE_TString disc_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "disc_path",
+                                            ACE_TEXT("disc_path"),
                                             disc_path);
 
   TAO_IDLType_i *impl =
@@ -146,7 +146,7 @@ TAO_UnionDef_i::discriminator_type_def_i (void)
 {
   ACE_TString disc_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "disc_path",
+                                            ACE_TEXT("disc_path"),
                                             disc_path);
 
   CORBA::Object_var obj =
@@ -177,8 +177,8 @@ TAO_UnionDef_i::discriminator_type_def_i (
     TAO_IFR_Service_Utils::reference_to_path (discriminator_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "disc_path",
-                                            disc_path);
+                                            ACE_TEXT("disc_path"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(disc_path));
 }
 
 CORBA::UnionMemberSeq *
@@ -198,13 +198,13 @@ TAO_UnionDef_i::members_i (void)
 
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "refs",
+                                        ACE_TEXT("refs"),
                                         0,
                                         refs_key);
 
   u_int count;
   this->repo_->config ()->get_integer_value (refs_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
 
   for (u_int i = 0; i < count; ++i)
@@ -212,14 +212,14 @@ TAO_UnionDef_i::members_i (void)
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       if (this->repo_->config ()->open_section (refs_key,
-                                                stringified,
+                                                ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                                 0,
                                                 member_key)
            == 0)
         {
           ACE_TString path;
           this->repo_->config ()->get_string_value (member_key,
-                                                    "path",
+                                                    ACE_TEXT("path"),
                                                     path);
 
           ACE_Configuration_Section_Key entry_key;
@@ -259,16 +259,16 @@ TAO_UnionDef_i::members_i (void)
       key_queue.dequeue_head (next_key);
 
       this->repo_->config ()->get_string_value (next_key,
-                                                "name",
+                                                ACE_TEXT("name"),
                                                 name);
 
-      retval[k].name = name.c_str ();
+      retval[k].name = ACE_TEXT_ALWAYS_CHAR(name.c_str ());
 
       this->fetch_label (next_key,
                          retval[k]);
 
       this->repo_->config ()->get_string_value (next_key,
-                                                "path",
+                                                ACE_TEXT("path"),
                                                 path);
 
       obj = TAO_IFR_Service_Utils::path_to_ir_object (path,
@@ -314,14 +314,14 @@ TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members)
   ACE_Configuration_Section_Key refs_key;
 
   this->repo_->config ()->open_section (this->section_key_,
-                                        "refs",
+                                        ACE_TEXT("refs"),
                                         1,
                                         refs_key);
 
   // Store the new member count of the union.
   CORBA::ULong count = members.length ();
   this->repo_->config ()->set_integer_value (refs_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
   char *member_path = 0;
 
@@ -332,20 +332,20 @@ TAO_UnionDef_i::members_i (const CORBA::UnionMemberSeq &members)
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            stringified,
+                                            ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                             1,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "name",
-                                                members[i].name.in ());
+                                                ACE_TEXT("name"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(members[i].name.in ()));
 
       member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "path",
-                                                member_path);
+                                                ACE_TEXT("path"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(member_path));
 
       this->store_label (member_key,
                          members[i].label);
@@ -358,7 +358,7 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
 {
   ACE_Configuration::VALUETYPE vt;
   this->repo_->config ()->find_value (member_key,
-                                      "label",
+                                      ACE_TEXT("label"),
                                       vt);
 
   if (vt == ACE_Configuration::STRING)
@@ -370,7 +370,7 @@ TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
 
   u_int value = 0;
   this->repo_->config ()->get_integer_value (member_key,
-                                             "label",
+                                             ACE_TEXT("label"),
                                              value);
 
   CORBA::TypeCode_var tc =

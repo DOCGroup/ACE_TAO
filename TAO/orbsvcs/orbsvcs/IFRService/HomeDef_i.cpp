@@ -87,7 +87,7 @@ TAO_HomeDef_i::describe_i (void)
   ACE_TString holder;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "base_home",
+                                              ACE_TEXT("base_home"),
                                               holder);
 
   ACE_Configuration_Section_Key tmp_key;
@@ -99,19 +99,19 @@ TAO_HomeDef_i::describe_i (void)
                                            tmp_key,
                                            0);
       this->repo_->config ()->get_string_value (tmp_key,
-                                                "id",
+                                                ACE_TEXT("id"),
                                                 holder);
-      home_desc.base_home = holder.fast_rep ();
+      home_desc.base_home = ACE_TEXT_ALWAYS_CHAR(holder.fast_rep ());
     }
 
   // No need to check the status - this one is required.
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "managed",
+                                            ACE_TEXT("managed"),
                                             holder);
-  home_desc.managed_component = holder.fast_rep ();
+  home_desc.managed_component = ACE_TEXT_ALWAYS_CHAR(holder.fast_rep ());
   status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "primary_key",
+                                              ACE_TEXT("primary_key"),
                                               holder);
 
   if (status == 0)
@@ -164,16 +164,16 @@ TAO_HomeDef_i::type_i (void)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             id);
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             name);
 
-  return this->repo_->tc_factory ()->create_home_tc (id.fast_rep (),
-                                                     name.fast_rep ());
+  return this->repo_->tc_factory ()->create_home_tc (ACE_TEXT_ALWAYS_CHAR(id.fast_rep ()),
+                                                     ACE_TEXT_ALWAYS_CHAR(name.fast_rep ()));
 }
 
 CORBA::ComponentIR::HomeDef_ptr
@@ -192,7 +192,7 @@ TAO_HomeDef_i::base_home_i (void)
   ACE_TString path;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "base_home",
+                                              ACE_TEXT("base_home"),
                                               path);
 
   if (status != 0)
@@ -226,8 +226,8 @@ TAO_HomeDef_i::base_home_i (
 {
   char *path = TAO_IFR_Service_Utils::reference_to_path (base_home);
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "base_home",
-                                            path);
+                                            ACE_TEXT("base_home"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(path));
 }
 
 CORBA::InterfaceDefSeq *
@@ -254,7 +254,7 @@ TAO_HomeDef_i::supported_interfaces_i (
   ACE_Configuration_Section_Key supported_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "supported",
+                                          ACE_TEXT("supported"),
                                           0,
                                           supported_key);
 
@@ -265,7 +265,7 @@ TAO_HomeDef_i::supported_interfaces_i (
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (supported_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
   retval->length (count);
   char *stringified = 0;
@@ -276,7 +276,7 @@ TAO_HomeDef_i::supported_interfaces_i (
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (supported_key,
-                                                stringified,
+                                                ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                                 holder);
       obj = TAO_IFR_Service_Utils::path_to_ir_object (holder,
                                                       this->repo_);
@@ -305,7 +305,7 @@ TAO_HomeDef_i::supported_interfaces_i (
   )
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "supported",
+                                          ACE_TEXT("supported"),
                                           1);
   CORBA::ULong length = supported_interfaces.length ();
 
@@ -316,7 +316,7 @@ TAO_HomeDef_i::supported_interfaces_i (
 
   ACE_Configuration_Section_Key supported_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "supported",
+                                        ACE_TEXT("supported"),
                                         1,
                                         supported_key);
   char *stringified = 0;
@@ -330,8 +330,8 @@ TAO_HomeDef_i::supported_interfaces_i (
             supported_interfaces[i]
           );
       this->repo_->config ()->set_string_value (supported_key,
-                                                stringified,
-                                                path);
+                                                ACE_TEXT_CHAR_TO_TCHAR(stringified),
+                                                ACE_TEXT_CHAR_TO_TCHAR(path));
     }
 }
 
@@ -350,7 +350,7 @@ TAO_HomeDef_i::managed_component_i (void)
 {
   ACE_TString path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "managed",
+                                            ACE_TEXT("managed"),
                                             path);
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::path_to_ir_object (path,
@@ -378,8 +378,8 @@ TAO_HomeDef_i::managed_component_i (
 {
   char *path = TAO_IFR_Service_Utils::reference_to_path (managed_component);
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "managed",
-                                            path);
+                                            ACE_TEXT("managed"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(path));
 }
 
 CORBA::ValueDef_ptr
@@ -398,7 +398,7 @@ TAO_HomeDef_i::primary_key_i (void)
   ACE_TString path;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "primary_key",
+                                              ACE_TEXT("primary_key"),
                                               path);
 
   if (status != 0)
@@ -433,14 +433,14 @@ TAO_HomeDef_i::primary_key_i (
   if (CORBA::is_nil (primary_key))
     {
       this->repo_->config ()->remove_value (this->section_key_,
-                                            "primary_key");
+                                            ACE_TEXT("primary_key"));
       return;
     }
 
   char *path = TAO_IFR_Service_Utils::reference_to_path (primary_key);
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "primary_key",
-                                            path);
+                                            ACE_TEXT("primary_key"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(path));
 }
 
 CORBA::ComponentIR::FactoryDef_ptr
@@ -547,15 +547,15 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
   // Set the 'result' field with the path of our managed component.
   ACE_TString managed_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "managed",
+                                            ACE_TEXT("managed"),
                                             managed_path);
   this->repo_->config ()->set_string_value (new_key,
-                                            "result",
+                                            ACE_TEXT("result"),
                                             managed_path);
 
   // Always OP_NORMAL for factories.
   this->repo_->config ()->set_integer_value (new_key,
-                                             "mode",
+                                             ACE_TEXT("mode"),
                                              CORBA::OP_NORMAL);
 
   CORBA::ULong i = 0;
@@ -567,12 +567,12 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
     {
       ACE_Configuration_Section_Key params_key;
       this->repo_->config ()->open_section (new_key,
-                                            "params",
+                                            ACE_TEXT("params"),
                                             1,
                                             params_key);
 
       this->repo_->config ()->set_integer_value (params_key,
-                                                 "count",
+                                                 ACE_TEXT("count"),
                                                  length);
       char *type_path = 0;
       char *stringified = 0;
@@ -582,21 +582,21 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (params_key,
-                                                stringified,
+                                                ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                                 1,
                                                 param_key);
 
           this->repo_->config ()->set_string_value (param_key,
-                                                    "name",
-                                                    params[i].name.in ());
+                                                    ACE_TEXT("name"),
+                                                    ACE_TEXT_CHAR_TO_TCHAR(params[i].name.in ()));
           type_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 params[i].type_def.in ()
               );
 
           this->repo_->config ()->set_string_value (param_key,
-                                                    "type_path",
-                                                    type_path);
+                                                    ACE_TEXT("type_path"),
+                                                    ACE_TEXT_CHAR_TO_TCHAR(type_path));
 
           if (params[i].mode != CORBA::PARAM_IN)
             {
@@ -605,7 +605,7 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
             }
 
           this->repo_->config ()->set_integer_value (param_key,
-                                                     "mode",
+                                                     ACE_TEXT("mode"),
                                                      CORBA::PARAM_IN);
        }
     }
@@ -617,12 +617,12 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
     {
       ACE_Configuration_Section_Key excepts_key;
       this->repo_->config ()->open_section (new_key,
-                                            "excepts",
+                                            ACE_TEXT("excepts"),
                                             1,
                                             excepts_key);
 
       this->repo_->config ()->set_integer_value (excepts_key,
-                                                 "count",
+                                                 ACE_TEXT("count"),
                                                  length);
       char *type_path = 0;
 
@@ -633,15 +633,15 @@ TAO_HomeDef_i::create_common (CORBA::DefinitionKind created_kind,
 
           char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (excepts_key,
-                                                    stringified,
-                                                    type_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR(stringified),
+                                                    ACE_TEXT_CHAR_TO_TCHAR(type_path));
         }
     }
 
   // Create the object reference.
   return
     TAO_IFR_Service_Utils::create_objref (created_kind,
-                                          result_path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR(result_path.c_str ()),
                                           this->repo_);
 }
 
@@ -654,7 +654,7 @@ TAO_HomeDef_i::fill_op_desc_seq (ACE_Configuration_Section_Key &key,
   ACE_Configuration_Section_Key sub_key;
   int status =
     this->repo_->config ()->open_section (key,
-                                          sub_section,
+                                          ACE_TEXT_CHAR_TO_TCHAR(sub_section),
                                           0,
                                           sub_key);
 
@@ -665,7 +665,7 @@ TAO_HomeDef_i::fill_op_desc_seq (ACE_Configuration_Section_Key &key,
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (sub_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
   ods.length (count);
   char *stringified = 0;
@@ -686,7 +686,7 @@ TAO_HomeDef_i::fill_op_desc (ACE_Configuration_Section_Key &key,
 {
   ACE_Configuration_Section_Key op_key;
   this->repo_->config ()->open_section (key,
-                                        sub_section,
+                                        ACE_TEXT_CHAR_TO_TCHAR(sub_section),
                                         0,
                                         op_key);
   TAO_IFR_Desc_Utils<CORBA::OperationDescription,
@@ -698,7 +698,7 @@ TAO_HomeDef_i::fill_op_desc (ACE_Configuration_Section_Key &key,
 
   ACE_TString result_path;
   this->repo_->config ()->get_string_value (key,
-                                            "result",
+                                            ACE_TEXT("result"),
                                             result_path);
   TAO_IDLType_i *result =
     TAO_IFR_Service_Utils::path_to_idltype (result_path,
@@ -734,7 +734,7 @@ TAO_HomeDef_i::fill_param_desc_seq (ACE_Configuration_Section_Key &key,
   ACE_Configuration_Section_Key params_key;
   int status =
     this->repo_->config ()->open_section (key,
-                                          sub_section,
+                                          ACE_TEXT_CHAR_TO_TCHAR(sub_section),
                                           0,
                                           params_key);
 
@@ -745,7 +745,7 @@ TAO_HomeDef_i::fill_param_desc_seq (ACE_Configuration_Section_Key &key,
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (params_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
   pds.length (count);
   char *stringified = 0;
@@ -766,16 +766,16 @@ TAO_HomeDef_i::fill_param_desc (ACE_Configuration_Section_Key &key,
 {
   ACE_Configuration_Section_Key param_key;
   this->repo_->config ()->open_section (key,
-                                        sub_section,
+                                        ACE_TEXT_CHAR_TO_TCHAR(sub_section),
                                         0,
                                         param_key);
   ACE_TString holder;
   this->repo_->config ()->get_string_value (param_key,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             holder);
-  pd.name = holder.fast_rep ();
+  pd.name = ACE_TEXT_ALWAYS_CHAR(holder.fast_rep ());
   this->repo_->config ()->get_string_value (param_key,
-                                            "type_path",
+                                            ACE_TEXT("type_path"),
                                             holder);
   TAO_IDLType_i *impl = TAO_IFR_Service_Utils::path_to_idltype (holder,
                                                                 this->repo_);
@@ -789,7 +789,7 @@ TAO_HomeDef_i::fill_param_desc (ACE_Configuration_Section_Key &key,
 
   CORBA::ULong val;
   this->repo_->config ()->get_integer_value (param_key,
-                                             "mode",
+                                             ACE_TEXT("mode"),
                                              val);
   pd.mode = static_cast<CORBA::ParameterMode> (val);
 }
@@ -803,7 +803,7 @@ TAO_HomeDef_i::fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
   ACE_Configuration_Section_Key excepts_key;
   int status =
     this->repo_->config ()->open_section (key,
-                                          sub_section,
+                                          ACE_TEXT_CHAR_TO_TCHAR(sub_section),
                                           0,
                                           excepts_key);
 
@@ -814,7 +814,7 @@ TAO_HomeDef_i::fill_exc_desc_seq (ACE_Configuration_Section_Key &key,
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (excepts_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
   eds.length (count);
   char *stringified = 0;
@@ -835,7 +835,7 @@ TAO_HomeDef_i::fill_exc_desc (ACE_Configuration_Section_Key &key,
 {
   ACE_TString path;
   this->repo_->config ()->get_string_value (key,
-                                            sub_section,
+                                            ACE_TEXT_CHAR_TO_TCHAR(sub_section),
                                             path);
 
   // Description information for exceptions refers to the definition, not
@@ -867,7 +867,7 @@ TAO_HomeDef_i::fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
   ACE_Configuration_Section_Key attrs_key;
   int status =
     this->repo_->config ()->open_section (key,
-                                          sub_section,
+                                          ACE_TEXT_CHAR_TO_TCHAR(sub_section),
                                           0,
                                           attrs_key);
 
@@ -878,7 +878,7 @@ TAO_HomeDef_i::fill_attr_desc_seq (ACE_Configuration_Section_Key &key,
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (attrs_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
   eads.length (count);
   char *stringified = 0;
@@ -899,7 +899,7 @@ TAO_HomeDef_i::fill_attr_desc (ACE_Configuration_Section_Key &key,
 {
   ACE_Configuration_Section_Key attr_key;
   this->repo_->config ()->open_section (key,
-                                        sub_section,
+                                        ACE_TEXT_CHAR_TO_TCHAR(sub_section),
                                         0,
                                         attr_key);
   TAO_IFR_Desc_Utils<CORBA::ExtAttributeDescription,

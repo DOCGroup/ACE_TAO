@@ -62,7 +62,7 @@ TAO_StructDef_i::type_i (void)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             id);
 
   //---------------------------------------------------------------------------
@@ -74,7 +74,7 @@ TAO_StructDef_i::type_i (void)
 
   if (TAO_RecursiveDef_OuterScopes::SeenBefore( id ))
     return this->repo_->tc_factory ()->
-                 create_recursive_tc ( id.c_str ());
+                 create_recursive_tc (ACE_TEXT_ALWAYS_CHAR(id.c_str ()));
 
   TAO_RecursiveDef_OuterScopes NowSeenThis( id );
 
@@ -86,13 +86,13 @@ TAO_StructDef_i::type_i (void)
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             name);
 
   CORBA::StructMemberSeq_var members = this->members_i ();
 
-  return this->repo_->tc_factory ()->create_struct_tc (id.c_str (),
-                                                       name.c_str (),
+  return this->repo_->tc_factory ()->create_struct_tc (ACE_TEXT_ALWAYS_CHAR(id.c_str ()),
+                                                       ACE_TEXT_ALWAYS_CHAR(name.c_str ()),
                                                        members.in ());
 }
 
@@ -115,13 +115,13 @@ TAO_StructDef_i::members_i (void)
 
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "refs",
+                                        ACE_TEXT("refs"),
                                         0,
                                         refs_key);
 
   u_int count = 0;
   this->repo_->config ()->get_integer_value (refs_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
 
   for (u_int i = 0; i < count; ++i)
@@ -129,13 +129,13 @@ TAO_StructDef_i::members_i (void)
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            stringified,
+                                            ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                             0,
                                             member_key);
 
       ACE_TString path;
       this->repo_->config ()->get_string_value (member_key,
-                                                "path",
+                                                ACE_TEXT("path"),
                                                 path);
 
       ACE_Configuration_Section_Key entry_key;
@@ -152,14 +152,14 @@ TAO_StructDef_i::members_i (void)
 
           ACE_TString name;
           this->repo_->config ()->get_string_value (member_key,
-                                                    "name",
+                                                    ACE_TEXT("name"),
                                                     name);
 
           name_queue.enqueue_tail (name);
 
           u_int kind = 0;
           this->repo_->config ()->get_integer_value (entry_key,
-                                                     "def_kind",
+                                                     ACE_TEXT("def_kind"),
                                                      kind);
 
           CORBA::DefinitionKind def_kind =
@@ -192,12 +192,12 @@ TAO_StructDef_i::members_i (void)
   for (CORBA::ULong k = 0; k < size; ++k)
     {
       name_queue.dequeue_head (name);
-      retval[k].name = name.c_str ();
+      retval[k].name = ACE_TEXT_ALWAYS_CHAR(name.c_str ());
       kind_queue.dequeue_head (kind);
       path_queue.dequeue_head (path);
 
       obj = TAO_IFR_Service_Utils::create_objref (kind,
-                                                  path.c_str (),
+                                                  ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                                   this->repo_);
 
       retval[k].type_def = CORBA::IDLType::_narrow (obj.in ());
@@ -247,7 +247,7 @@ TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members)
   ACE_Configuration_Section_Key refs_key;
 
   this->repo_->config ()->open_section (this->section_key_,
-                                        "refs",
+                                        ACE_TEXT("refs"),
                                         1,
                                         refs_key);
   char *path = 0;
@@ -259,24 +259,24 @@ TAO_StructDef_i::members_i (const CORBA::StructMemberSeq &members)
       ACE_Configuration_Section_Key member_key;
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
-                                            stringified,
+                                            ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                             1,
                                             member_key);
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "name",
-                                                members[i].name.in ());
+                                                ACE_TEXT("name"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(members[i].name.in ()));
 
       path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
-                                                "path",
-                                                path);
+                                                ACE_TEXT("path"),
+                                                ACE_TEXT_CHAR_TO_TCHAR(path));
     }
 
   this->repo_->config ()->set_integer_value (refs_key,
-                                             "count",
+                                             ACE_TEXT("count"),
                                              count);
 }
 

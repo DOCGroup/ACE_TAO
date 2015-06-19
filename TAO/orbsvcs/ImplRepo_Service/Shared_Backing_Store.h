@@ -242,7 +242,7 @@ private:
   /// determine the filename where the replica ior is reported
   /// @param peer_ior_file if this is the filename for the peer
   ///        replica or this replica
-  ACE_CString replica_ior_filename(bool peer_ior_file) const;
+  ACE_TString replica_ior_filename(bool peer_ior_file) const;
 
   /// get the listings file contents
   /// @param listing_lf a Lockable_File for the listings file

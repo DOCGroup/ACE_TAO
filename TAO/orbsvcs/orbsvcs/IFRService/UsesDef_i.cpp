@@ -46,9 +46,9 @@ TAO_UsesDef_i::describe_i (void)
 
   ACE_TString base_type_id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_type",
+                                            ACE_TEXT("base_type"),
                                             base_type_id);
-  ud.interface_type = base_type_id.fast_rep ();
+  ud.interface_type = ACE_TEXT_ALWAYS_CHAR(base_type_id.fast_rep ());
   ud.is_multiple = this->is_multiple_i ();
 
   CORBA::Contained::Description *retval = 0;
@@ -76,7 +76,7 @@ TAO_UsesDef_i::interface_type_i (void)
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_type",
+                                            ACE_TEXT("base_type"),
                                             holder);
   this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
                                             holder.fast_rep (),
@@ -106,7 +106,7 @@ TAO_UsesDef_i::interface_type_i (
   )
 {
   this->repo_->config ()->remove_value (this->section_key_,
-                                        "base_type");
+                                        ACE_TEXT("base_type"));
 
   if (CORBA::is_nil (interface_type))
     {
@@ -118,18 +118,18 @@ TAO_UsesDef_i::interface_type_i (
 
   ACE_Configuration_Section_Key new_key;
   this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                       tmp,
+                                       ACE_TEXT_CHAR_TO_TCHAR(tmp),
                                        new_key,
                                        0);
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (new_key,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             holder);
 
   this->repo_->config ()->set_string_value (
                               this->section_key_,
-                              "base_type",
+                              ACE_TEXT("base_type"),
                               holder
                             );
 }
@@ -149,7 +149,7 @@ TAO_UsesDef_i::is_multiple_i (void)
 {
   CORBA::ULong val = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "is_multiple",
+                                             ACE_TEXT("is_multiple"),
                                              val);
   return static_cast<CORBA::Boolean> (val);
 }
@@ -172,7 +172,7 @@ TAO_UsesDef_i::is_multiple_i (
   )
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
-                                             "is_multiple",
+                                             ACE_TEXT("is_multiple"),
                                              is_multiple);
 }
 

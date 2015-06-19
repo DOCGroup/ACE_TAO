@@ -24,7 +24,7 @@ TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple
 {
   CORBA::ULong is_multiple = 0;
   config->get_integer_value (key,
-                             "is_multiple",
+                             ACE_TEXT("is_multiple"),
                              is_multiple);
   desc_seq[index].is_multiple =
     static_cast<CORBA::Boolean> (is_multiple);
@@ -39,7 +39,7 @@ TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>::port_base_
     CORBA::ULong index
   )
 {
-  desc_seq[index].event = holder.fast_rep ();
+  desc_seq[index].event = ACE_TEXT_ALWAYS_CHAR(holder.fast_rep ());
 }
 
 /// Specialization.
@@ -52,7 +52,7 @@ TAO_Port_Utils<CORBA::ComponentIR::UsesDef>::set_is_multiple (
   )
 {
   config->set_integer_value (key,
-                             "is_multiple",
+                             ACE_TEXT("is_multiple"),
                              is_multiple);
 }
 
@@ -152,7 +152,7 @@ TAO_ComponentDef_i::describe_i (void)
   ACE_TString holder;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "base_component",
+                                              ACE_TEXT("base_component"),
                                               holder);
 
   if (status == 0)
@@ -163,24 +163,24 @@ TAO_ComponentDef_i::describe_i (void)
                                            base_key,
                                            0);
       this->repo_->config ()->get_string_value (base_key,
-                                                "id",
+                                                ACE_TEXT("id"),
                                                 holder);
     }
 
   // If status wasn't 0, holder will contain the empty string.
-  cd.base_component = holder.fast_rep ();
+  cd.base_component = ACE_TEXT_ALWAYS_CHAR(holder.fast_rep ());
 
   CORBA::ULong count = 0;
   ACE_Configuration_Section_Key supports_key;
   status = this->repo_->config ()->open_section (this->section_key_,
-                                                 "supported",
+                                                 ACE_TEXT("supported"),
                                                  0,
                                                  supports_key);
 
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (supports_key,
-                                                 "count",
+                                                 ACE_TEXT("count"),
                                                  count);
     }
 
@@ -192,10 +192,10 @@ TAO_ComponentDef_i::describe_i (void)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (supports_key,
-                                                stringified,
+                                                ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                                 holder);
 
-      cd.supported_interfaces[i] = holder.c_str ();
+      cd.supported_interfaces[i] = ACE_TEXT_ALWAYS_CHAR(holder.c_str ());
     }
 
   TAO_Port_Desc_Seq_Utils<
@@ -237,13 +237,13 @@ TAO_ComponentDef_i::describe_i (void)
   ACE_Configuration_Section_Key attrs_key;
   status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "attrs",
+                                          ACE_TEXT("attrs"),
                                           0,
                                           attrs_key);
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (attrs_key,
-                                                 "count",
+                                                 ACE_TEXT("count"),
                                                  count);
     }
 
@@ -254,7 +254,7 @@ TAO_ComponentDef_i::describe_i (void)
     {
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (attrs_key,
-                                            stringified,
+                                            ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                             0,
                                             attr_key);
 
@@ -292,17 +292,17 @@ TAO_ComponentDef_i::type_i (void)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             id);
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             name);
 
   return this->repo_->tc_factory ()->create_component_tc (
-                                         id.c_str (),
-                                         name.c_str ()
+                                         ACE_TEXT_ALWAYS_CHAR(id.c_str ()),
+                                         ACE_TEXT_ALWAYS_CHAR(name.c_str ())
                                        );
 }
 
@@ -330,14 +330,14 @@ TAO_ComponentDef_i::supported_interfaces_i (void)
   ACE_Configuration_Section_Key supported_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "supported",
+                                          ACE_TEXT("supported"),
                                           0,
                                           supported_key);
 
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (supported_key,
-                                                 "count",
+                                                 ACE_TEXT("count"),
                                                  count);
       retval->length (count);
       char *stringified = 0;
@@ -348,7 +348,7 @@ TAO_ComponentDef_i::supported_interfaces_i (void)
         {
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->get_string_value (supported_key,
-                                                    stringified,
+                                                    ACE_TEXT_CHAR_TO_TCHAR(stringified),
                                                     path);
           tmp =
             TAO_IFR_Service_Utils::path_to_ir_object (path,
@@ -380,13 +380,13 @@ TAO_ComponentDef_i::supported_interfaces_i (
 {
   // Remove the old supported interfaces.
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "supported",
+                                          ACE_TEXT("supported"),
                                           0);
 
   CORBA::ULong length = supported_interfaces.length ();
   ACE_Configuration_Section_Key inherited_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "supported",
+                                        ACE_TEXT("supported"),
                                         1,
                                         inherited_key);
 
@@ -405,7 +405,7 @@ TAO_ComponentDef_i::supported_interfaces_i (
       // the name clash checker for base interfaces is static, and has
       // no other way to know about a specific key.
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                            supported_path,
+                                           ACE_TEXT_CHAR_TO_TCHAR(supported_path),
                                             TAO_IFR_Service_Utils::tmp_key_,
                                             0);
       TAO_IFR_Service_Utils::name_exists (&TAO_InterfaceDef_i::name_clash,
@@ -415,8 +415,8 @@ TAO_ComponentDef_i::supported_interfaces_i (
 
       char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (supported_key,
-                                                stringified,
-                                                supported_path);
+                                                ACE_TEXT_CHAR_TO_TCHAR(stringified),
+                                                ACE_TEXT_CHAR_TO_TCHAR(supported_path));
     }
 }
 
@@ -436,7 +436,7 @@ TAO_ComponentDef_i::base_component_i (void)
   ACE_TString base_path;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "base_component",
+                                              ACE_TEXT("base_component"),
                                               base_path);
 
   if (status != 0)
@@ -471,7 +471,7 @@ TAO_ComponentDef_i::base_component_i (
   if (CORBA::is_nil (base_component))
     {
       this->repo_->config ()->remove_value (this->section_key_,
-                                            "base_component");
+                                            ACE_TEXT("base_component"));
       return;
     }
 
@@ -483,7 +483,7 @@ TAO_ComponentDef_i::base_component_i (
   // no other way to know about a specific key.
   this->repo_->config ()->expand_path (
                               this->repo_->root_key (),
-                              base_path,
+                              ACE_TEXT_CHAR_TO_TCHAR(base_path),
                               TAO_IFR_Service_Utils::tmp_key_,
                               0
                             );
@@ -494,8 +494,8 @@ TAO_ComponentDef_i::base_component_i (
 
   this->repo_->config ()->set_string_value (
                               this->section_key_,
-                              "base_component",
-                              base_path
+                              ACE_TEXT("base_component"),
+                              ACE_TEXT_CHAR_TO_TCHAR(base_path)
                             );
 }
 
