@@ -1110,7 +1110,7 @@ ACE_OS::ualarm (useconds_t usecs, useconds_t interval)
 
 #if defined (ACE_HAS_UALARM)
   return ::ualarm (usecs, interval);
-#elif !defined (ACE_LACKS_UNIX_SIGNALS)
+#elif !defined (ACE_LACKS_UNIX_SIGNALS) && !defined (ACE_LACKS_ALARM)
   ACE_UNUSED_ARG (interval);
 # if defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x690 && defined (_WRS_CONFIG_LP64)
   return ::alarm (static_cast<unsigned int> (usecs * ACE_ONE_SECOND_IN_USECS));
@@ -1135,7 +1135,7 @@ ACE_OS::ualarm (const ACE_Time_Value &tv,
   useconds_t interval =
     (tv_interval.sec () * ACE_ONE_SECOND_IN_USECS) + tv_interval.usec ();
   return ::ualarm (usecs, interval);
-#elif !defined (ACE_LACKS_UNIX_SIGNALS)
+#elif !defined (ACE_LACKS_UNIX_SIGNALS) && !defined (ACE_LACKS_ALARM)
   ACE_UNUSED_ARG (tv_interval);
 # if defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x690 && defined (_WRS_CONFIG_LP64)
   return ::alarm (static_cast<unsigned int> (tv.sec ()));

@@ -2,7 +2,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 ====================================================
 
 . Visual Studio 2015 has adequate C++11 support, because of this
-  ACE_HAS_CPP11 is now defined with this compiler
+  ACE_HAS_CPP11 is now defined with this compiler. A large amount
+  of warnings given by this new compiler have been fixed
 
 . As part of the release script we now generate vc12 and vc14
   solution files which are packaged as part of the release
