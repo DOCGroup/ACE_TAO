@@ -1,5 +1,3 @@
-# $Id$
-#
 # Platform macros for building on AIX with g++.  This has been tested on
 # AIX 4.3 and 5 with gcc 3. Earlier versions of gcc may compile, but are
 # known to have serious problems on AIX.
