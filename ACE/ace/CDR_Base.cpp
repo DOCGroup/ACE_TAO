@@ -919,17 +919,17 @@ void ACE_CDR::Fixed::normalize (UShort min_scale)
 
   // Calculate the number of nibbles that can be moved.
   size_t nibbles = 0;
-  while (digit(nibbles) == 0 && this->scale_ - nibbles > min_scale)
+  while (this->digit(nibbles) == 0 && this->scale_ - nibbles > min_scale)
     ++nibbles;
 
   // Move and clear the nibbles.
   for (size_t idx = nibbles; idx != this->digits_; ++idx) {
-    digit (idx - nibbles, digit (idx));
-    digit (idx, 0);
+    this->digit (idx - nibbles, this->digit (idx));
+    this->digit (idx, 0);
   }
 
-  this->scale_ -= nibbles;
-  this->digits_ -= nibbles;
+  this->scale_ -= static_cast<ACE_CDR::Octet>(nibbles);
+  this->digits_ -= static_cast<ACE_CDR::Octet>(nibbles);
 }
 
 ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
@@ -1143,14 +1143,16 @@ ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (const ACE_CDR::Fixed &f)
 
   if (f.digits_ - f.scale_ > this->digits_ - this->scale_)
     {
-      this->digits_ += f.digits_ - f.scale_ - this->digits_ + this->scale_;
-      if (this->digits_ > MAX_DIGITS)
+      ACE_CDR::Octet new_digits = this->digits_ + (f.digits_ - f.scale_) - (this->digits_ - this->scale_);
+      if (new_digits > MAX_DIGITS)
         {
-          for (size_t i = 0; i < static_cast<size_t> (this->digits_ - MAX_DIGITS); ++i)
+          for (size_t i = 0; i < static_cast<size_t> (new_digits - MAX_DIGITS); ++i)
             this->digit (static_cast<int> (i), 0);
-          this->normalize (this->scale_ - MAX_DIGITS - this->digits_);
+          this->normalize (this->scale_ - (new_digits - MAX_DIGITS));
           this->digits_ = MAX_DIGITS;
         }
+      else
+        this->digits_ = new_digits;
     }
   return rhs_iter;
 }
@@ -1379,9 +1381,13 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
 
   Fixed r;
   Fixed q = this->div_helper2 (rhs_no_scale, r);
+  q.scale_ = this->scale_;
 
-  if (!r)
-    return *this = neg ? -q : q;;
+  if (!r) {
+    *this = neg ? -q : q;
+    this->normalize ();
+    return *this;
+  }
 
   const int shift = q.lshift (MAX_DIGITS);
   if (shift)
