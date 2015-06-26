@@ -119,20 +119,22 @@ ifdef ARCH
   ARCHDIR = $(ARCH)/
 endif
 
-ifdef static_libs
-  LIB_INSTALL += $(VLIB:$(ARCHDIR)%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VLIB:$(ARCHDIR)%=$(INSLIB)/%)
-endif # static_libs
+ifneq ($(INSLIB),)
+  ifdef static_libs
+    LIB_INSTALL += $(VLIB:$(ARCHDIR)%=$(INSLIB)/%)
+    CLEANUP_INSTALL += $(CLEANUP_VLIB:$(ARCHDIR)%=$(INSLIB)/%)
+  endif # static_libs
 
-ifdef shared_libs
-  LIB_INSTALL += $(VSHLIB:$(ARCHDIR)%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VSHLIB:$(ARCHDIR)%=$(INSLIB)/%)
-  CLEANUP_INSTALL += $(CLEANUP_VSHLIB_NO_VER:$(ARCHDIR)%=$(INSLIB)/%*)
-  ifdef SHLIBA
-    LIB_INSTALL += $(VSHLIBA:$(ARCHDIR)%=$(INSLIB)/%)
-    CLEANUP_INSTALL += $(CLEANUP_SHLIBA:$(ARCHDIR)%=$(INSLIB)/%)
-  endif
-endif # shared_libs
+  ifdef shared_libs
+    LIB_INSTALL += $(VSHLIB:$(ARCHDIR)%=$(INSLIB)/%)
+    CLEANUP_INSTALL += $(CLEANUP_VSHLIB:$(ARCHDIR)%=$(INSLIB)/%)
+    CLEANUP_INSTALL += $(CLEANUP_VSHLIB_NO_VER:$(ARCHDIR)%=$(INSLIB)/%*)
+    ifdef SHLIBA
+      LIB_INSTALL += $(VSHLIBA:$(ARCHDIR)%=$(INSLIB)/%)
+      CLEANUP_INSTALL += $(CLEANUP_SHLIBA:$(ARCHDIR)%=$(INSLIB)/%)
+    endif
+  endif # shared_libs
+endif # INSLIB
 
 ace_lib_prelink ?= 0
 aix_build ?= 0

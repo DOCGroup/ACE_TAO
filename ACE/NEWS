@@ -8,6 +8,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 . As part of the release script we generate vc12 and vc14
   solution files which are packaged as part of the release
 
+. Added support for VxWorks 7 (kernel mode and RTP).
+  See the comments in include/makeinclude/platform_vxworks7.0.GNU for details.
+
 . Ended daily maintenance for OpenVMS
 
 USER VISIBLE CHANGES BETWEEN ACE-6.3.1 and ACE-6.3.2
