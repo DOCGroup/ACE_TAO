@@ -918,18 +918,18 @@ void ACE_CDR::Fixed::normalize (UShort min_scale)
     return;
 
   // Calculate the number of nibbles that can be moved.
-  size_t nibbles = 0;
+  ACE_CDR::Octet nibbles = 0;
   while (this->digit(nibbles) == 0 && this->scale_ - nibbles > min_scale)
     ++nibbles;
 
   // Move and clear the nibbles.
-  for (size_t idx = nibbles; idx != this->digits_; ++idx) {
+  for (ACE_CDR::Octet idx = nibbles; idx != this->digits_; ++idx) {
     this->digit (idx - nibbles, this->digit (idx));
     this->digit (idx, 0);
   }
 
-  this->scale_ -= static_cast<ACE_CDR::Octet>(nibbles);
-  this->digits_ -= static_cast<ACE_CDR::Octet>(nibbles);
+  this->scale_ -= nibbles;
+  this->digits_ -= nibbles;
 }
 
 ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
