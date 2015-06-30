@@ -464,11 +464,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                               mgr,
                               4,
                               5);
-#if defined (ACE_HAS_CPP11)
-  result = mgr.wait (0, std::chrono::seconds (1), &exitcode);
-#else
   result = mgr.wait (0, ACE_Time_Value (1), &exitcode);
-#endif
   if (result != 0)
     {
       ACE_ERROR ((LM_ERROR,
