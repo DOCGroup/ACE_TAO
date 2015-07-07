@@ -1,6 +1,13 @@
 USER VISIBLE CHANGES BETWEEN CIAO-1.3.2 and CIAO-1.3.3
 =======================================================
 
+. In order to support RTI Connext DDS 5.2.0 we introduced
+  a new NDDSSCRIPTDIR environment variable which should
+  be the directory in which the RTI scripts are available.
+  This will be $NDDSHOME/scripts for RTI 5.1.0 and older
+  and $NDDSHOME/bin for RTI 5.2.0 and newer. With GNU
+  make we will detect this automatically
+
 USER VISIBLE CHANGES BETWEEN CIAO-1.3.1 and CIAO-1.3.2
 =======================================================
 
