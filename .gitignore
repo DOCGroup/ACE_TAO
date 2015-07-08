@@ -29,3 +29,6 @@ lib*.dylib
 /setenv.cmd
 /setenv.sh
 /build
+/ACE/build
+Debug
+/ACE/apps/gperf/tests/iout2_gen/idl.cpp
