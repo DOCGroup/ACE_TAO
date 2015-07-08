@@ -8,10 +8,4 @@ project : ndds_cck_ts_defaults, nddslib, taolib {
   }
 
   dynamicflags += NDDS_USER_DLL_EXPORT
-
-  verbatim(gnuace, macros) {
-    override no_hidden_visibility = 1
-    override no_strict_aliasing = 1
-  }
-
 }
