@@ -636,6 +636,10 @@ ACE_WIN32_Proactor::application_specific_code (ACE_WIN32_Asynch_Result *asynch_r
                                                const void *completion_key,
                                                u_long error)
 {
+  // *NOTE*: this needs to be compiled with /EHa to work, otherwise
+  //         asynch_result leaks memory (see below)
+  // *BUG*: the default (auto-)generated MPC project files do not enforce this
+  //        (uses /EHsc) ...
   ACE_SEH_TRY
     {
       // Call completion hook
