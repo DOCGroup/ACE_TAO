@@ -12,14 +12,14 @@
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 int number_of_tries = 5;
 int ofs = 100;
-ACE_Thread_Mutex ofs_lock;
+TAO_SYNCH_MUTEX ofs_lock;
 PortableInterceptor::Current_var pic;
 PortableInterceptor::SlotId slot_id;
 const IOP::ServiceId service_id = 0xdeadbeef;
 
 int get_offset (void)
 {
-  ACE_Guard<ACE_Thread_Mutex> g(ofs_lock);
+  ACE_GUARD (TAO_SYNCH_MUTEX, mon, ofs_lock);
   int r = ofs;
   ofs += 100;
   return r;
@@ -105,7 +105,7 @@ public:
 
     if (CORBA::is_nil (this->pic_.in()))
       {
-        ACE_GUARD (ACE_Thread_Mutex, g, this->lock_);
+        ACE_GUARD (TAO_SYNCH_MUTEX, g, this->lock_);
         if (CORBA::is_nil (this->pic_.in()))
           {
             int argc = 0;
@@ -147,7 +147,7 @@ public:
       }
   }
 private:
-  ACE_Thread_Mutex lock_;
+  TAO_SYNCH_MUTEX lock_;
   PortableInterceptor::Current_var pic_;
 
 };
