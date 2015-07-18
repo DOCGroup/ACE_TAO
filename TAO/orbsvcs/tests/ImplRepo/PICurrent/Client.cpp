@@ -128,21 +128,6 @@ public:
                     ACE_TEXT("(%P|%t) send_request got %u\n"), v));
         IOP::ServiceContext sc;
         sc.context_id = ::service_id;
-        char msg [100];
-#if defined (ACE_WIN32)
-        unsigned tid = static_cast<unsigned>(ACE_Thread::self());
-        ACE_OS::snprintf (msg,100,"thread %u data %u", tid, v);
-#else
-        ACE_hthread_t tid;
-        ACE_OS::thr_self (tid);
-        ACE_OS::snprintf (msg,100,"thread %lu data %u",
-                          reinterpret_cast<unsigned long>(tid), v);
-#endif /* ACE_WIN32 */
-        CORBA::ULong string_len = ACE_OS::strlen (msg) + 1;
-        CORBA::Octet *buf = CORBA::OctetSeq::allocbuf (string_len);
-        ACE_OS::strcpy (reinterpret_cast<char *> (buf), msg);
-
-        sc.context_data.replace (string_len, string_len, buf, 1);
 
         ri->add_request_service_context (sc, 0);
       }
