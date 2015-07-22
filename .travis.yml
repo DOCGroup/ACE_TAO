@@ -19,9 +19,12 @@ env:
     - DANCE_ROOT=$TRAVIS_BUILD_DIR/DAnCE
     - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
     - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
+addons:
+  apt:
+    packages:
+    - libssl-dev
+    - libxerces-c-dev
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y libssl-dev libxerces-c-dev
   - git clone git://github.com/DOCGroup/MPC.git
 branches:
   only:
