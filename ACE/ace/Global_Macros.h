@@ -95,7 +95,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  define ACE_ENDLESS_LOOP
 # endif /* ! ACE_ENDLESS_LOOP */
 
-# if defined (ACE_NEEDS_FUNC_DEFINITIONS)
+# if defined (ACE_NEEDS_FUNC_DEFINITIONS) && !defined (ACE_HAS_CPP11)
     // It just evaporated ;-)  Not pleasant.
 #   define ACE_UNIMPLEMENTED_FUNC(f)
 # else
