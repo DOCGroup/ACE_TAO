@@ -97,7 +97,6 @@ public:
 
   typedef TAO_DII_Reply_Handler_ptr _ptr_type;
   typedef TAO_DII_Reply_Handler_var _var_type;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

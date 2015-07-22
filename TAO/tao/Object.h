@@ -345,8 +345,8 @@ namespace CORBA
   private:
 
     // = Unimplemented methods
-    Object (const Object &);
-    Object &operator = (const Object &);
+    ACE_UNIMPLEMENTED_FUNC (Object (const Object &))
+    ACE_UNIMPLEMENTED_FUNC (Object &operator = (const Object &))
 
   private:
     /// Specify whether this is a local object or not.
