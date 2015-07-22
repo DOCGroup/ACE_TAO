@@ -24,12 +24,8 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT("Compiler_Features_27_Test"));
 
-  // Visual Studio 2015 has a small issue with this construct, will reenable
-  // when the final release is available
-#if !defined (ACE_WIN32_VC14)
   Foo any;
   any <<= std::move("abc");
-#endif
 
   ACE_END_TEST;
 
