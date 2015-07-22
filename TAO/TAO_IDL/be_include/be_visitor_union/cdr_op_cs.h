@@ -39,6 +39,9 @@ public:
 
   virtual int pre_process (be_decl *);
   virtual int post_process (be_decl *);
+
+private:
+  BoolUnionBranch latest_branch_;
 };
 
 #endif /* _BE_VISITOR_UNION_CDR_OP_CS_H_ */
