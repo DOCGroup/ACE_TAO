@@ -81,6 +81,25 @@ module UnionDiscTest
     };
 };
 
+module AllBoolUnions
+{
+  union OneBranchT switch (boolean) { case TRUE: octet val; };
+  union OneBranchF switch (boolean) { case FALSE: octet val; };
+  union OneBranchD switch (boolean) { default: octet val; };
+  union OneBranchTF switch (boolean) { case TRUE: case FALSE: octet val; };
+  union OneBranchFT switch (boolean) { case FALSE: case TRUE: octet val; };
+  union OneBranchTD switch (boolean) { case TRUE: default: octet val; };
+  union OneBranchDT switch (boolean) { default: case TRUE: octet val; };
+  union OneBranchFD switch (boolean) { case FALSE: default : octet val; };
+  union OneBranchDF switch (boolean) { default: case FALSE: octet val; };
+  union TwoBranchesTF switch (boolean) { case TRUE: octet val1; case FALSE: char val2; };
+  union TwoBranchesFT switch (boolean) { case FALSE: octet val1; case TRUE: char val2; };
+  union TwoBranchesTD switch (boolean) { case TRUE: octet val1; default: char val2; };
+  union TwoBranchesDT switch (boolean) { default: octet val1; case TRUE: char val2; };
+  union TwoBranchesFD switch (boolean) { case FALSE: octet val1; default: char val2; };
+  union TwoBranchesDF switch (boolean) { default: octet val1; case FALSE: char val2; };
+};
+
 // Nested unions
 
 enum disc1

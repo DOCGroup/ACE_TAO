@@ -168,7 +168,7 @@ local interface testlocal
 };
 
 interface A {
-  union U switch(boolean)
+  union U switch (Bool)
   {
     case TRUE: A aa;
   };

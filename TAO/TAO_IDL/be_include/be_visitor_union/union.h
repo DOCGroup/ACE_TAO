@@ -38,6 +38,10 @@ public:
 
   /// visit union_branch
   virtual int visit_union_branch (be_union_branch *node);
+
+  enum BoolUnionBranch { BUB_NONE, BUB_UNCONDITIONAL, BUB_TRUE, BUB_FALSE };
+
+  static BoolUnionBranch boolean_branch (be_union_branch *b);
 };
 
 #endif /* _BE_VISITOR_UNION_UNION_H_ */
