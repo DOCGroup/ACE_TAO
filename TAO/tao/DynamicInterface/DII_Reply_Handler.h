@@ -99,7 +99,7 @@ public:
   typedef TAO_DII_Reply_Handler_var _var_type;
 
 #if defined (ACE_WIN32_VC14)
-  // Workaround for connect issue 801202
+  // Workaround for connect issue 1577211
   ACE_UNIMPLEMENTED_FUNC (TAO_DII_Reply_Handler (const TAO_DII_Reply_Handler &))
   ACE_UNIMPLEMENTED_FUNC (TAO_DII_Reply_Handler &operator = (const TAO_DII_Reply_Handler &))
 #endif
