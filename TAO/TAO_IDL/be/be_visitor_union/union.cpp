@@ -181,6 +181,8 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
           << "{" << be_idt_nl;
     case BUB_UNCONDITIONAL:
       return 0;
+    default:
+      break;
     }
 
   *os << be_nl;
