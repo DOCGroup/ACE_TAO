@@ -160,13 +160,12 @@ namespace CORBA
     LocalObject (void);
 
   private:
-
     /**
      * @name Unimplemented methods
      */
     //@{
-    LocalObject (const LocalObject &);
-    LocalObject & operator = (const LocalObject &);
+    ACE_UNIMPLEMENTED_FUNC (LocalObject (const LocalObject &))
+    ACE_UNIMPLEMENTED_FUNC (LocalObject & operator = (const LocalObject &))
     //@}
 
   };
