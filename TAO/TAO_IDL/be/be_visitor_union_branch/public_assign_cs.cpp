@@ -73,6 +73,8 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
     case be_visitor_union::BUB_FALSE:
       *os << "if (" << (bub == be_visitor_union::BUB_TRUE ? "" : "!")
           << "this->disc_)" << be_idt_nl << "{" << be_idt_nl;
+    default:
+      break;
     }
 
   // first generate the type information

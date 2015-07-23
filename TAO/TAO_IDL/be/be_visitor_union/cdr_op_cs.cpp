@@ -193,7 +193,15 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       << "}" << be_uidt_nl << be_nl
       << "::CORBA::Boolean result = true;" << be_nl_2;
 
-  if (!boolDisc)
+  if (boolDisc)
+    {
+      if (node->gen_empty_default_label ())
+        {
+          *os << "_tao_union._default ();" << be_nl
+              << "_tao_union._d (_tao_discriminant);" << be_nl;
+        }
+    }
+  else
     {
       *os << "switch (_tao_discriminant)" << be_nl
           << "{" << be_idt;
