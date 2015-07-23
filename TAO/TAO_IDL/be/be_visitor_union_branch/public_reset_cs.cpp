@@ -77,6 +77,8 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
     case be_visitor_union::BUB_FALSE:
       *os << "if (" << (bub == be_visitor_union::BUB_TRUE ? "" : "!")
           << "this->disc_)" << be_idt_nl << "{" << be_idt_nl;
+    default:
+      break;
     }
 
   if (bt->accept (this) == -1)
@@ -96,6 +98,8 @@ be_visitor_union_branch_public_reset_cs::visit_union_branch (
     case be_visitor_union::BUB_TRUE:
     case be_visitor_union::BUB_FALSE:
       *os << be_uidt_nl << "}" << be_uidt_nl;
+    default:
+      break;
     }
 
   return 0;
