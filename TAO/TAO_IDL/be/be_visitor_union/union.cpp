@@ -124,7 +124,7 @@ be_visitor_union::boolean_branch (be_union_branch *b)
   if ((br_t && br_f) || (u->nfields () == 1 && br_d))
     return BUB_UNCONDITIONAL;
 
-  bool has_other = false, other_val;
+  bool has_other = false, other_val = false;
   for (unsigned int i = 0; br_d && i < u->nfields (); ++i)
     {
       AST_Field **f;
