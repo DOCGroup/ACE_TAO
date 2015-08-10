@@ -138,8 +138,23 @@ DRV_cpp_putarg (const char *str)
       throw Bailout ();
     }
 
-  DRV_arglist[DRV_argcount++] =
-    ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
+  if (str && ACE_OS::strchr (str, ' '))
+    {
+      ACE_TCHAR *buf = 0;
+      ACE_NEW_NORETURN (buf, ACE_TCHAR[ACE_OS::strlen (str) + 3]);
+      if (buf)
+        {
+          buf[0] = ACE_TEXT ('"');
+          ACE_OS::strcpy (buf + 1, ACE_TEXT_CHAR_TO_TCHAR (str));
+          ACE_OS::strcat (buf, ACE_TEXT ("\""));
+          DRV_arglist[DRV_argcount++] = buf;
+        }
+    }
+  else
+    {
+      DRV_arglist[DRV_argcount++] =
+        ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
+    }
 }
 
 // Expand the output argument with the given filename.
