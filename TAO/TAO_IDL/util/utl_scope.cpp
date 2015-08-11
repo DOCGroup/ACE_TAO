@@ -265,13 +265,11 @@ UTL_Scope::idl_keyword_clash (Identifier *e)
       if (idl_global->case_diff_error ())
         {
           idl_global->err ()->idl_keyword_error (tmp);
-        }
-      else
-        {
-          idl_global->err ()->idl_keyword_warning (tmp);
+
+          return -1;
         }
 
-      return -1;
+      idl_global->err ()->idl_keyword_warning (tmp);
     }
 
   return 0;
