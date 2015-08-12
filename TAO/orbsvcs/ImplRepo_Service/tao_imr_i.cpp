@@ -250,6 +250,7 @@ TAO_IMR_Op_List::TAO_IMR_Op_List (void)
 : verbose_server_information_ (0)
 , list_only_active_servers_ (0)
 , how_many_ (0)
+, terse_ (0)
 {
   // Nothing
 }
@@ -271,12 +272,13 @@ TAO_IMR_Op_Register::TAO_IMR_Op_Register (bool is_add)
 void
 TAO_IMR_Op_Activate::print_usage (void)
 {
-  ORBSVCS_ERROR ((LM_ERROR, "Starts a server using its registered Activator.\n"
-    "\n"
-    "Usage: tao_imr [options] start <name>\n"
-    "  where [options] are ORB options\n"
-    "  where <name> is the name of a registered POA.\n"
-    "  -h Displays this\n"));
+  ORBSVCS_ERROR ((LM_ERROR,
+                  "Starts a server using its registered Activator.\n\n"
+                  "Usage: tao_imr [options] start <name>\n"
+                  "  where [options] are ORB options\n"
+                  "  where <name> is the name of a registered POA.\n"
+                  "  -q run quietly\n"
+                  "  -h Displays this\n"));
 }
 
 int
@@ -290,7 +292,7 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
     }
 
   // Skip both the program name and the "activate" command
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hq"));
 
   this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   int c;
@@ -299,6 +301,9 @@ TAO_IMR_Op_Activate::parse (int argc, ACE_TCHAR **argv)
     {
       switch (c)
       {
+      case 'q' :
+        this->quiet_ = true;
+        break;
       case 'h':
         this->print_usage ();
         return -1;
@@ -403,15 +408,17 @@ TAO_IMR_Op_IOR::parse (int argc, ACE_TCHAR **argv)
 void
 TAO_IMR_Op_Kill::print_usage (void)
 {
-  ORBSVCS_ERROR ((LM_ERROR, "Sends a signal to the designated process\n"
-    "The process must have been started by the ImR and may not use\n"
-    "per-client activation\n"
-    "Usage: tao_imr [options] kill [name] [command-arguments]\n"
-    "  where [options] are ORB options\n"
-    "  where [name] is the registered POA name the peers link to\n"
-    "  where [command-arguments] can be\n"
-    "    -s signum   default 9, the signal to be sent to the process for"
-    "                named server\n"));
+  ORBSVCS_ERROR ((LM_ERROR,
+                  "Sends a signal to the designated process\n\n"
+                  "The process must have been started by the ImR\n"
+                  "and may not use per-client activation\n"
+                  "Usage: tao_imr [options] kill [name] [command-arguments]\n"
+                  "  where [options] are ORB options\n"
+                  "  where [name] is the registered POA name the peers link to\n"
+                  "  where [command-arguments] can be\n"
+                  "    -q run quietly\n"
+                  "    -s signum   default 9, the signal to be sent to the\n"
+                  "                process for named server\n"));
 }
 
 int
@@ -427,7 +434,7 @@ TAO_IMR_Op_Kill::parse (int argc, ACE_TCHAR **argv)
   this->signum_ = 9;
 
   // Skip both the program name and the "list" command
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:h"), server_flag);
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:hq"), server_flag);
 
   int c;
 
@@ -437,6 +444,9 @@ TAO_IMR_Op_Kill::parse (int argc, ACE_TCHAR **argv)
       {
       case 's': //signum
         this->signum_ = ACE_OS::strtol (get_opts.opt_arg (), 0, 10);
+        break;
+      case 'q' :
+        this->quiet_ = true;
         break;
       case 'h':  // display help
         this->print_usage ();
@@ -548,7 +558,7 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
   }
 
   // Skip both the program name and the "list" command
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("vahn:"), server_flag);
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ahn:tv"), server_flag);
 
   int c;
 
@@ -558,6 +568,9 @@ TAO_IMR_Op_List::parse (int argc, ACE_TCHAR **argv)
       {
       case 'v': // verbose server display
         this->verbose_server_information_ = 1;
+        break;
+      case 't':
+        this->terse_ = 1;
         break;
       case 'a':
         this->list_only_active_servers_ = 1;
@@ -623,12 +636,13 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
 void
 TAO_IMR_Op_Shutdown::print_usage (void)
 {
-  ORBSVCS_ERROR ((LM_ERROR, "Shuts down a server\n"
-    "\n"
-    "Usage: tao_imr [options] shutdown <name>\n"
-    "  where [options] are ORB options\n"
-    "  where <name> is the name of the server object\n"
-    "  -h Displays this\n"));
+  ORBSVCS_ERROR ((LM_ERROR,
+                  "Shuts down a server\n\n"
+                  "Usage: tao_imr [options] shutdown <name>\n"
+                  "  where [options] are ORB options\n"
+                  "  where <name> is the name of the server object\n"
+                  "  -q run quietly\n"
+                  "  -h Displays this\n"));
 }
 
 int
@@ -642,7 +656,7 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
     }
 
   // Skip both the program name and the "shutdown" command
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hq"));
 
   this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   int c;
@@ -651,6 +665,9 @@ TAO_IMR_Op_Shutdown::parse (int argc, ACE_TCHAR **argv)
     {
       switch (c)
       {
+      case 'q' :
+        this->quiet_ = true;
+        break;
       case 'h':
         this->print_usage ();
         return -1;
@@ -733,13 +750,13 @@ void
 TAO_IMR_Op_Register::print_usage (void)
 {
   ORBSVCS_ERROR ((LM_ERROR,
-    "Adds/Updates a server entry\n"
-    "\n"
+    "Adds/Updates a server entry\n\n"
     "Usage: tao_imr [options] <add|update> <name> [command-arguments]\n"
     "  where [options] are ORB options\n"
     "  where <name> is the POA name used by the server object\n"
     "  where [command-arguments] can be\n"
     "    -h            Displays this\n"
+    "    -q            run quietly\n"
     "    -l            Activator name.\n"
     "    -c command    Startup command\n"
     "    -w dir        Working directory\n"
@@ -760,7 +777,7 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
     }
 
   // Skip both the program name and the "update" command
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hc:w:a:e:r:R:l:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hqc:w:a:e:r:R:l:"));
 
   this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   int c;
@@ -810,6 +827,9 @@ TAO_IMR_Op_Register::parse (int argc, ACE_TCHAR **argv)
         this->activator_ = ACE_TEXT_ALWAYS_CHAR(get_opts.optarg);
         this->set_activator_ = true;
         break;
+      case 'q' :
+        this->quiet_ = true;
+        break;
       case 'h':  // display help
         this->print_usage ();
         return -1;
@@ -834,21 +854,32 @@ TAO_IMR_Op_Activate::run (void)
   try
     {
       this->imr_->activate_server (this->server_name_.c_str ());
-      ORBSVCS_DEBUG ((LM_DEBUG,
-        "Successfully Activated server <%C>\n",
-        this->server_name_.c_str ()));
+      if (!this->quiet_)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "Successfully Activated server <%C>\n",
+                          this->server_name_.c_str ()));
+        }
     }
   catch (const ImplementationRepository::CannotActivate& ex)
     {
-      ORBSVCS_ERROR ((LM_ERROR,
-                      "Cannot activate server <%C>, reason: <%s>\n",
-                      this->server_name_.c_str (),
-                      ex.reason.in ()));
+      if (!this->quiet_)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "Cannot activate server <%C>, reason: <%s>\n",
+                          this->server_name_.c_str (),
+                          ex.reason.in ()));
+        }
       return TAO_IMR_Op::CANNOT_ACTIVATE;
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ORBSVCS_ERROR ((LM_ERROR, "Could not find server <%C>.\n", this->server_name_.c_str ()));
+      if (!this->quiet_)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "Could not find server <%C>.\n",
+                          this->server_name_.c_str ()));
+        }
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const PortableServer::ForwardRequest&)
@@ -857,7 +888,10 @@ TAO_IMR_Op_Activate::run (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Activating Server");
+      if (!this->quiet_)
+        {
+          ex._tao_print_exception ("Activating Server");
+        }
       return TAO_IMR_Op::UNKNOWN;
     }
 
@@ -1015,17 +1049,23 @@ TAO_IMR_Op_Kill::run (void)
     }
   catch (const ImplementationRepository::NotFound &)
     {
-      ORBSVCS_ERROR ((LM_ERROR,
-                      "Could not find server <%C>.\n",
-                      this->server_name_.c_str ()));
+      if (!this->quiet_)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "Could not find server <%C>.\n",
+                          this->server_name_.c_str ()));
+        }
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const ImplementationRepository::CannotComplete& ex)
     {
-      ORBSVCS_ERROR ((LM_ERROR,
-                      "Cannot complete kill of <%C>, reason: <%s>\n",
-                      this->server_name_.c_str (),
-                      ex.reason.in ()));
+      if (!this->quiet_)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "Cannot complete kill of <%C>, reason: <%s>\n",
+                          this->server_name_.c_str (),
+                          ex.reason.in ()));
+        }
       return TAO_IMR_Op::CANNOT_COMPLETE;
     }
   catch (const CORBA::Exception& ex)
@@ -1194,18 +1234,31 @@ TAO_IMR_Op_Shutdown::run (void)
     {
       this->imr_->shutdown_server (this->server_name_.c_str ());
 
-      ORBSVCS_DEBUG ((LM_DEBUG, "Successfully shut down server <%C>\n",
-        this->server_name_.c_str ()));
+      if (!this->quiet_)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "Successfully shut down server <%C>\n",
+                          this->server_name_.c_str ()));
+        }
     }
   catch (const ImplementationRepository::NotFound&)
     {
-      ORBSVCS_ERROR ((LM_ERROR, "Server <%C> already shut down.\n", this->server_name_.c_str ()));
+      if (!this->quiet_)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          "Server <%C> already shut down.\n",
+                          this->server_name_.c_str ()));
+        }
       return TAO_IMR_Op::NOT_FOUND;
     }
   catch (const CORBA::TIMEOUT&)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG, "Timeout waiting for <%C> to shutdown.\n",
-        this->server_name_.c_str ()));
+      if (!this->quiet_)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          "Timeout waiting for <%C> to shutdown.\n",
+                          this->server_name_.c_str ()));
+        }
     }
   catch (const CORBA::Exception& ex)
     {
@@ -1259,7 +1312,12 @@ TAO_IMR_Op_Register::run (void)
         {
           if (is_add_)
             {
-              ORBSVCS_DEBUG((LM_DEBUG, "Server <%C> already registered.\n", this->server_name_.c_str ()));
+              if (!this->quiet_)
+                {
+                  ORBSVCS_DEBUG((LM_DEBUG,
+                                 "Server <%C> already registered.\n",
+                                 this->server_name_.c_str ()));
+                }
               return ALREADY_REGISTERED;
             }
           options = &server_information->startup;
@@ -1268,7 +1326,12 @@ TAO_IMR_Op_Register::run (void)
         {
           if (!is_add_)
           {
-            ORBSVCS_DEBUG((LM_DEBUG, "Adding Server <%C> on update command.\n", this->server_name_.c_str ()));
+            if (!this->quiet_)
+              {
+                ORBSVCS_DEBUG((LM_DEBUG,
+                               "Adding Server <%C> on update command.\n",
+                               this->server_name_.c_str ()));
+              }
             is_add_ = true;
           }
           local.activation= ImplementationRepository::NORMAL;
@@ -1299,13 +1362,23 @@ TAO_IMR_Op_Register::run (void)
           char host_name[MAXHOSTNAMELEN + 1];
           ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
           options->activator = CORBA::string_dup (host_name);
-          ORBSVCS_DEBUG ((LM_DEBUG, "Updating Server <%C> with default activator of <%s>.\n",
-            this->server_name_.c_str (), options->activator.in ()));
+          if (!this->quiet_)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              "Updating Server <%C> with default "
+                              "activator of <%s>.\n",
+                              this->server_name_.c_str (),
+                              options->activator.in ()));
+            }
         }
-
       this->imr_->add_or_update_server (this->server_name_.c_str (), *options);
 
-      ORBSVCS_DEBUG((LM_DEBUG, "Successfully registered <%C>.\n", this->server_name_.c_str ()));
+      if (!this->quiet_)
+        {
+          ORBSVCS_DEBUG((LM_DEBUG,
+                         "Successfully registered <%C>.\n",
+                         this->server_name_.c_str ()));
+        }
     }
   catch (const CORBA::NO_PERMISSION&)
     {
@@ -1346,6 +1419,9 @@ TAO_IMR_Op_List::display_server_information (const ImplementationRepository::Ser
     TAO_IMR_Op::display_server_information (info);
   else
     {
-      ORBSVCS_DEBUG ((LM_DEBUG, "<%s> %s\n", info.server.in (), maybe));
+      if (this->terse_)
+        ORBSVCS_DEBUG ((LM_DEBUG, "%s\n", info.server.in ()));
+      else
+        ORBSVCS_DEBUG ((LM_DEBUG, "<%s> %s\n", info.server.in (), maybe));
     }
 }
