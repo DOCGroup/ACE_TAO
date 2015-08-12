@@ -59,6 +59,8 @@ public:
 
   virtual ~Locator_Repository();
 
+  virtual void shutdown (void);
+
   int unregister_if_address_reused (const ACE_CString& fqname,
                                     const char* partial_ior,
                                     ImR_Locator_i* imr_locator);
