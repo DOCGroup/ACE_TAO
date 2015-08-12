@@ -239,13 +239,13 @@ ImR_Activator_i::fini (void)
     {
       if (debug_ > 1)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ImR Activator: Unable to unregister from ImR.\n")));
+                        ACE_TEXT ("(%P|%t) ImR Activator: Unable to unregister from ImR.\n")));
     }
   catch (const CORBA::TRANSIENT&)
     {
       if (debug_ > 1)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ImR Activator: Unable to unregister from ImR.\n")));
+                        ACE_TEXT ("(%P|%t) ImR Activator: Unable to unregister from ImR.\n")));
     }
   catch (const CORBA::Exception& ex)
   {
@@ -484,7 +484,7 @@ ImR_Activator_i::start_server(const char* name,
               if (debug_ > 1)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT ("ImR Activator: Notifying ImR that ")
+                                  ACE_TEXT ("(%P|%t) ImR Activator: Notifying ImR that ")
                                   ACE_TEXT ("<%C> has started.\n"),
                                   name));
                 }
@@ -496,7 +496,7 @@ ImR_Activator_i::start_server(const char* name,
   if (debug_ > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("ImR Activator: Successfully started <%C>, pid=%d\n"),
+                      ACE_TEXT ("(%P|%t) ImR Activator: Successfully started <%C>, pid=%d\n"),
                       name, pid));
     }
 }
@@ -521,7 +521,7 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
       if (debug_ > 1)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("ImR Activator: Notifying ImR that ")
+                          ACE_TEXT ("(%P|%t) ImR Activator: Notifying ImR that ")
                           ACE_TEXT ("server[%d], <%C> has exited.\n"),
                           pid, name.c_str()));
         }
@@ -534,7 +534,7 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
           if (debug_ > 1)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("ImR Activator: caught %s from locator::child_death_pid\n"),
+                              ACE_TEXT ("(%P|%t) ImR Activator: caught %s from locator::child_death_pid\n"),
                               ex._name()));
             }
         }
