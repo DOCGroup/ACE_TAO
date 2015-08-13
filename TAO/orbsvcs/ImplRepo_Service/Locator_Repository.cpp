@@ -25,6 +25,12 @@ Locator_Repository::~Locator_Repository ()
   teardown_multicast();
 }
 
+void
+Locator_Repository::shutdown (void)
+{
+  // default impl - no op
+}
+
 int
 Locator_Repository::init (PortableServer::POA_ptr root_poa,
                           PortableServer::POA_ptr imr_poa,
@@ -58,7 +64,7 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
 
   if (this->opts_.debug () > 0)
     {
-      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("report_ior <%C>\n"),
+      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) report_ior <%C>\n"),
         this->imr_ior_.in ()));
     }
 
@@ -107,7 +113,7 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
           if (fp == 0)
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                ACE_TEXT("ImR: Could not open file: %s\n"),
+                ACE_TEXT ("(%P|%t) ImR: Could not open file: %s\n"),
                 this->opts_.ior_filename ().c_str ()), -1);
             }
           ACE_OS::fprintf (fp, "%s", this->imr_ior_.in ());
@@ -467,7 +473,9 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
     {
       if (this->opts_.debug() > 5)
         {
-          ORBSVCS_DEBUG ((LM_DEBUG, "get_active_server could not find %C\n", name.c_str()));
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) get_active_server could not find %C\n"),
+                          name.c_str()));
         }
       si = find_by_poa (key);
       if (si.null())
@@ -499,7 +507,9 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
     {
       if (this->opts_.debug() > 5)
         {
-          ORBSVCS_DEBUG ((LM_DEBUG, "get_active_server could not find %C, %d != %d\n",
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) get_active_server could not")
+                          ACE_TEXT (" find %C, %d != %d\n"),
                           name.c_str(), pid, si->pid));
         }
       si.reset ();
@@ -723,4 +733,3 @@ No_Backing_Store::persistent_remove (const ACE_CString& , bool )
   // nothing more to do for no backing store remove
   return 0;
 }
-

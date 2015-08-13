@@ -139,7 +139,7 @@ void
 AsyncAccessManager::final_state (bool active)
 {
   bool success = this->status_ == ImplementationRepository::AAM_SERVER_READY;
-  this->info_.edit ()->started (success);
+  this->info_.edit (active)->started (success);
   this->retries_ = this->info_->start_limit_;
   if (active)
     {
@@ -255,6 +255,9 @@ AsyncAccessManager::status_name (ImplementationRepository::AAM_Status s)
       return ACE_TEXT ("NO_COMMANDLINE");
     case ImplementationRepository::AAM_RETRIES_EXCEEDED:
       return ACE_TEXT ("RETRIES_EXCEEDED");
+    case ImplementationRepository::AAM_UPDATE_FAILED:
+      return ACE_TEXT ("UPDATE_FAILED");
+
     }
   return ACE_TEXT ("<undefined status>");
 }

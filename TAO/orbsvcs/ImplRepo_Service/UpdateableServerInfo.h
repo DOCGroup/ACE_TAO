@@ -64,10 +64,7 @@ public:
 
   /// retrieve smart pointer to non-const Server_Info
   /// and indicate repo update required
-  const Server_Info_Ptr& edit(void);
-
-  /// force indication of update needed
-  void needs_update(void);
+  const Server_Info_Ptr& edit(bool active = true);
 
   /// indicate it Server_Info_Ptr is null
   bool null(void) const;
