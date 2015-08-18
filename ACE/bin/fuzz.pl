@@ -67,13 +67,13 @@ $warnings = 0;
 
 ##############################################################################
 
-# Find_Modified_Files will use 'svn -q st' to get a list of locally modified
+# Use 'svn -q st' to get a list of locally modified
 # files to look through
-sub find_mod_files ()
+sub find_mod_svn_files ()
 {
     unless (open (SVN, "svn -q st |")) {
         print STDERR "Error: Could not run svn\n";
-        exit (1);
+        return 0;
     }
 
     while (<SVN>) {
@@ -83,6 +83,33 @@ sub find_mod_files ()
         }
     }
     close (SVN);
+    return 1;
+}
+
+# Use 'git status -s' to get a list of locally modified
+# files to look through
+sub find_mod_git_files ()
+{
+    unless (open (GIT, "git status -s |")) {
+        print STDERR "Error: Could not run git\n";
+        return 0;
+    }
+
+    while (<GIT>) {
+        if (/^ [MA] +(.*)$/) {
+            store_file ($1);
+        }
+    }
+    close (GIT);
+    return 1;
+}
+
+sub find_mod_files ()
+{
+  if (!(find_mod_svn_files() && find_mod_git_files())) {
+    print "Could use neither svn nor git to find modified files\n";
+    exit (1);
+  }
 }
 
 
