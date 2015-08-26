@@ -882,6 +882,7 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   size_t ipv4_cnt = 0;
   size_t ipv4_lo_cnt = 0;
   size_t ipv6_ll = 0;
+  bool ipv4_non_lo = false;
   bool ipv6_non_ll = false;
   // Scan for IPv4 interfaces since these should not be included
   // when IPv6-only is selected.
@@ -892,6 +893,8 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
         ++ipv4_cnt;
         if (if_addrs[j].is_loopback ())
           ++ipv4_lo_cnt;  // keep track of IPv4 loopback ifs
+        else
+          ipv4_non_lo = true;
       }
     else if (!if_addrs[j].is_linklocal () &&
              !if_addrs[j].is_loopback())
@@ -935,7 +938,10 @@ TAO_IIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
   else if (ipv4_only)
     ignore_lo = ipv4_cnt != ipv4_lo_cnt;
   else
-    ignore_lo = if_cnt != lo_cnt;
+    {
+      ipv6_non_ll |= ipv4_non_lo;
+      ignore_lo = ipv6_non_ll;
+    }
 
   // Adjust counts for IPv6 only if required
   size_t if_ok_cnt = if_cnt;
