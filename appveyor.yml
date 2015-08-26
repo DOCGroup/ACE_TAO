@@ -10,7 +10,7 @@ install:
   - cd ..
   - set MPC_ROOT=%CD%\ext\MPC
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" amd64
-  - call perl %CD%\ACE\mwc.pl -type vc12
+  - call perl %CD%\ACE\mwc.pl -type vc12 %CD%\TAO\TAO_ACE.mwc
 
 platform:
   - x64
@@ -20,6 +20,6 @@ configuration:
 
 build:
   parallel: true
-  project: ATCD.sln
+  project: TAO\TAO_ACE.sln
 
 test: off
