@@ -1,0 +1,23 @@
+branches:
+  only:
+    - master
+
+install:
+  - mkdir ext && cd ext
+  - git clone --depth 1 git://github.com/DOCGroup/MPC.git
+  - cd ..
+  - set MPC_ROOT=%CD%\ext\MPC
+  - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" amd64
+  - call perl %CD%\ACE\mwc.pl -type vc12
+
+platform:
+  - x64
+
+configuration:
+  - Debug
+
+build:
+  parallel: true
+  project: ATCD.sln
+
+test: off
