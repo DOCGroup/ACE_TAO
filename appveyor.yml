@@ -12,7 +12,7 @@ install:
   - set ACE_ROOT=%CD%\ACE
   - set TAO_ROOT=%CD%\TAO
   - set PATH=%ACE_ROOT%\lib:%PATH%
-  - echo #include "ace/config-win32.h" > %ACE_ROOT%\ace\config.h
+  - ps: "#include \"ace/config-win32.h\"" > %ACE_ROOT%\ace\config.h
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" amd64
   - call perl %CD%\ACE\bin\mwc.pl -type vc12 %CD%\TAO\TAO_ACE.mwc
 
