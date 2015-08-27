@@ -89,10 +89,3 @@ along with some diagnostic messages.
    incremented by 2 (or 1).
 
 6. Thus, the second run of client should give you an output 4 (or 2).
-
-
-
-
-
-
-
