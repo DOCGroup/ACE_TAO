@@ -19,7 +19,7 @@ master: [![Build Status](https://snap-ci.com/DOCGroup/ATCD/branch/master/build_i
 AppVeyor status
 ================
 
-master: [![Build Status](https://ci.appveyor.com/api/projects/status/uxnvychqk0tmy3sh/branch/master?svg=true)](AppVeyor)
+master: [![Build Status](https://ci.appveyor.com/api/projects/status/uxnvychqk0tmy3sh/branch/master?svg=true)](https://ci.appveyor.com/project/jwillemsen/atcd)
 
 Coverity Scan status
 ====================
