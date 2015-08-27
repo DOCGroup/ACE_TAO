@@ -2,13 +2,16 @@ branches:
   only:
     - master
 
-clone_depth: 1
+clone_depth: 15
 
 install:
   - mkdir ext && cd ext
   - git clone --depth 1 git://github.com/DOCGroup/MPC.git
   - cd ..
   - set MPC_ROOT=%CD%\ext\MPC
+  - set ACE_ROOT=%CD%\ACE
+  - set TAO_ROOT=%CD%\TAO
+  - set PATH=%ACE_ROOT%\lib:%PATH%
   - call "C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" amd64
   - call perl %CD%\ACE\bin\mwc.pl -type vc12 %CD%\TAO\TAO_ACE.mwc
 
