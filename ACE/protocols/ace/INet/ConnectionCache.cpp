@@ -40,6 +40,15 @@ namespace ACE
         *this = cachekey;
       }
 
+    ConnectionCacheKey::~ConnectionCacheKey ()
+      {
+        if (this->key_ != 0 && this->delete_key_)
+          {
+            delete this->key_;
+            this->delete_key_ = false;
+          }
+      }
+
     ConnectionCacheKey& ConnectionCacheKey::operator =(const ConnectionCacheKey& cachekey)
       {
         if (this != &cachekey)
