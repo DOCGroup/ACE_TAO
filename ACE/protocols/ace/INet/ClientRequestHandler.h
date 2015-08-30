@@ -100,6 +100,8 @@ namespace ACE
       }
   }
 
+ACE_INET_SINGLETON_DECLARE (ACE_Singleton, ACE::INet::ConnectionCache, ACE_SYNCH_MUTEX);
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
