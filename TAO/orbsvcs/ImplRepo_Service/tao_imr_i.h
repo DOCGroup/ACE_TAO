@@ -102,6 +102,8 @@ public:
   void set_imr (ImplementationRepository::Administration_ptr imr);
 
 protected:
+  TAO_IMR_Op (void) : quiet_ (false) {}
+
   /// Reference to our implementation repository.
   ImplementationRepository::Administration_ptr imr_;
 
@@ -109,6 +111,8 @@ protected:
 
   /// Prints out the information contained in a ServerInformation structure.
   void display_server_information (const ImplementationRepository::ServerInformation &info);
+
+  bool quiet_;
 };
 
 
@@ -256,6 +260,9 @@ protected:
 
   /// retrieve no more than this number of entries at a time
   CORBA::ULong how_many_;
+
+  /// If true, use minimum formatting.
+  int terse_;
 
   /// Prints out the information contained in a ServerInformation structure.
   /// Specialized to only print server information

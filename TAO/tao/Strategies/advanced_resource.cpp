@@ -429,7 +429,9 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
     {
     case TAO_REACTOR_SELECT_MT:
       ACE_NEW_RETURN (impl,
-                      TAO_REACTOR ((ACE_Sig_Handler*)0,
+                      TAO_REACTOR (ACE::max_handles (),
+                                   1,
+                                   (ACE_Sig_Handler*)0,
                                    tmq.get (),
                                    0,
                                    (ACE_Reactor_Notify*)0,
@@ -439,7 +441,9 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
 
     case TAO_REACTOR_SELECT_ST:
       ACE_NEW_RETURN (impl,
-                      TAO_NULL_LOCK_REACTOR ((ACE_Sig_Handler*)0,
+                      TAO_NULL_LOCK_REACTOR (ACE::max_handles (),
+                                             1,
+                                             (ACE_Sig_Handler*)0,
                                              tmq.get (),
                                              0,
                                              (ACE_Reactor_Notify*)0,

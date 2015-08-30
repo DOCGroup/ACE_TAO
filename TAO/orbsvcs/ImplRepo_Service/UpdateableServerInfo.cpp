@@ -63,7 +63,11 @@ UpdateableServerInfo::update_repo ()
     {
       err = repo_->update_server (si_->alt_info_);
     }
-  ACE_ASSERT (err == 0);
+  if (err != 0)
+    {
+      ORBSVCS_ERROR ((LM_ERROR,"(%P|%t) update repo failed err = %d, %p\n",
+                      err, "update_server"));
+    }
 }
 
 const Server_Info*
@@ -80,16 +84,10 @@ UpdateableServerInfo::operator* () const
 
 
 const Server_Info_Ptr&
-UpdateableServerInfo::edit ()
+UpdateableServerInfo::edit (bool active)
 {
-  needs_update_ = repo_.get() != 0;
+  needs_update_ = active && repo_.get() != 0;
   return si_;
-}
-
-void
-UpdateableServerInfo::needs_update ()
-{
-  needs_update_ = true;
 }
 
 bool

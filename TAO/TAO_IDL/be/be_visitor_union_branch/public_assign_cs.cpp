@@ -39,29 +39,43 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
 
   *os << be_nl;
 
-  // This visitor is used when we are generating the copy ctor and
-  // assignment operator for the union.
-  // Individual assignment of the members takes place inside a case
-  // statement because the type of member assigned is based on the value
-  // of the discriminant
-  for (unsigned long i = 0;
-       i < node->label_list_length ();
-       ++i)
-    {
-      // check if we are printing the default case
-      if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
-        {
-          *os << "default:" << be_nl;
-        }
-      else
-        {
-          *os << "case ";
-          node->gen_label_value (os, i);
-          *os << ":" << be_nl;
-        }
-    }
+  const be_visitor_union::BoolUnionBranch bub =
+    be_visitor_union::boolean_branch (node);
 
-  *os << "{" << be_idt_nl;
+  switch (bub)
+    {
+    case be_visitor_union::BUB_NONE:
+      // This visitor is used when we are generating the copy ctor and
+      // assignment operator for the union.
+      // Individual assignment of the members takes place inside a case
+      // statement because the type of member assigned is based on the value
+      // of the discriminant
+      for (unsigned long i = 0;
+           i < node->label_list_length ();
+           ++i)
+        {
+          // check if we are printing the default case
+          if (node->label (i)->label_kind () == AST_UnionLabel::UL_default)
+            {
+              *os << "default:" << be_nl;
+            }
+          else
+            {
+              *os << "case ";
+              node->gen_label_value (os, i);
+              *os << ":" << be_nl;
+            }
+        }
+
+      *os << "{" << be_idt_nl;
+      break;
+    case be_visitor_union::BUB_TRUE:
+    case be_visitor_union::BUB_FALSE:
+      *os << "if (" << (bub == be_visitor_union::BUB_TRUE ? "" : "!")
+          << "this->disc_)" << be_idt_nl << "{" << be_idt_nl;
+    default:
+      break;
+    }
 
   // first generate the type information
   be_type *bt = be_type::narrow_from_decl (node->field_type ());
@@ -86,8 +100,18 @@ be_visitor_union_branch_public_assign_cs::visit_union_branch (
                          ), -1);
     }
 
-  *os << "}" << be_nl;
-  *os << "break;";
+  switch (bub)
+    {
+    case be_visitor_union::BUB_NONE:
+      *os << "}" << be_nl << "break;";
+      break;
+    case be_visitor_union::BUB_TRUE:
+    case be_visitor_union::BUB_FALSE:
+      *os << "}" << be_uidt_nl;
+      break;
+    case be_visitor_union::BUB_UNCONDITIONAL:
+      *os << be_nl;
+    }
 
   return 0;
 }

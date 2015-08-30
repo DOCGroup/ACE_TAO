@@ -225,7 +225,7 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
 
   if (debug > 9)
     {
-      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("load %s%C\n"), filename.c_str(),
+      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) load %s%C\n"), filename.c_str(),
                  ((err == 0) ? ACE_TEXT ("")
                   : ACE_TEXT (" (file doesn't exist)"))));
     }

@@ -107,6 +107,42 @@ be_visitor_union::visit_union_branch (be_union_branch *node)
   return 0;
 }
 
+be_visitor_union::BoolUnionBranch
+be_visitor_union::boolean_branch (be_union_branch *b)
+{
+  be_union *u = be_union::narrow_from_scope (b->defined_in ());
+  if (!u || u->udisc_type () != AST_Expression::EV_bool)
+    return BUB_NONE;
+
+  bool br_d = false, br_t = false, br_f = false;
+  for (unsigned long i = 0; i < b->label_list_length (); ++i)
+    if (b->label (i)->label_kind () == AST_UnionLabel::UL_default)
+      br_d = true;
+    else
+      (b->label (i)->label_val ()->ev ()->u.bval ? br_t : br_f) = true;
+
+  if ((br_t && br_f) || (u->nfields () == 1 && br_d))
+    return BUB_UNCONDITIONAL;
+
+  bool has_other = false, other_val = false;
+  for (unsigned int i = 0; br_d && i < u->nfields (); ++i)
+    {
+      AST_Field **f;
+      u->field (f, i);
+      if (*f != b)
+        {
+          AST_UnionBranch *other = AST_UnionBranch::narrow_from_decl (*f);
+          for (unsigned long j = 0; j < other->label_list_length (); ++j)
+            {
+              has_other = true;
+              other_val = other->label (j)->label_val ()->ev ()->u.bval;
+            }
+        }
+    }
+
+  return (br_t || (has_other && !other_val)) ? BUB_TRUE : BUB_FALSE;
+}
+
 int
 be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
 {
@@ -132,6 +168,21 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
   if (b == 0)
     {
       return 0;
+    }
+
+  this->latest_branch_ = boolean_branch (b);
+  switch (this->latest_branch_)
+    {
+    case BUB_TRUE:
+    case BUB_FALSE:
+      *os << "if (" << (this->latest_branch_ == BUB_TRUE ? "" : "!")
+          << (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT ?
+              "_tao_union._d ()" : "_tao_discriminant") << ")" << be_idt_nl
+          << "{" << be_idt_nl;
+    case BUB_UNCONDITIONAL:
+      return 0;
+    default:
+      break;
     }
 
   *os << be_nl;
@@ -182,8 +233,18 @@ be_visitor_union_cdr_op_cs::post_process (be_decl *bd)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_uidt_nl << "}" << be_nl
-      << "break;" << be_uidt;
+  switch (this->latest_branch_)
+    {
+    case BUB_NONE:
+      *os << be_uidt_nl << "}" << be_nl << "break;" << be_uidt;
+      break;
+    case BUB_TRUE:
+    case BUB_FALSE:
+      *os << be_uidt_nl << "}" << be_uidt_nl << be_nl;
+      break;
+    case BUB_UNCONDITIONAL:
+      *os << be_nl;
+    }
 
   return 0;
 }

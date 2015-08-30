@@ -17,6 +17,7 @@
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
+#include "tao/ORB_Core.h"
 
 namespace {
   class Lockable_File
@@ -81,15 +82,15 @@ namespace {
                   bool unlink_in_destructor = false)
     {
       release ();
-
+      errno = 0;
       flags_ = flags | O_CREAT;
       unlink_in_destructor_ = unlink_in_destructor;
 
       const ACE_TCHAR* const flags_str =
         ((flags_ & O_RDWR) != 0) ? ACE_TEXT ("r+") :
         (((flags_ & O_WRONLY) != 0) ? ACE_TEXT ("w") : ACE_TEXT ("r"));
-#ifdef ACE_WIN32
       this->filename_ = file;
+#ifdef ACE_WIN32
       this->file_ = ACE_OS::fopen (file.c_str(), flags_str);
 #else
       this->file_lock_.reset
@@ -135,18 +136,22 @@ namespace {
           return;
         }
 
+      int res = -1;
       if ((this->flags_ & O_RDWR) != 0)
         {
-          this->locked_ = (file_lock_->acquire() == 0);
+          res = file_lock_->acquire();
         }
-      if ((this->flags_ & O_WRONLY) != 0)
+      else if ((this->flags_ & O_WRONLY) != 0)
         {
-          this->locked_ = (file_lock_->acquire_write() == 0);
+          res = file_lock_->acquire_write();
         }
       else
         {
-          this->locked_ = (file_lock_->acquire_read() == 0);
+          res = file_lock_->acquire_read();
         }
+
+      this->locked_ = res == 0;
+
       if (!this->locked_)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
@@ -164,67 +169,6 @@ namespace {
     ACE_TString filename_;
   }; // class Lockable_File
 
-  void replicate_i (Shared_Backing_Store::Replica_ptr replica,
-                    const ImplementationRepository::ServerUpdate& update)
-  {
-    // replicate the ServerUpdate to our replicated locator
-    replica->notify_updated_server(update);
-  }
-
-  void replicate_i (Shared_Backing_Store::Replica_ptr replica,
-                    const ImplementationRepository::ActivatorUpdate& update)
-  {
-    // replicate the ActivatorUpdate to our replicated locator
-    replica->notify_updated_activator(update);
-  }
-
-  template< typename Update >
-  void replicate (Shared_Backing_Store::Replica_ptr replica,
-                  const ACE_CString &key,
-                  const Shared_Backing_Store::UniqueId& uid,
-                  const ImplementationRepository::UpdateType type,
-                  const ImplementationRepository::SequenceNum seq_num)
-  {
-    if (CORBA::is_nil (replica))
-      {
-        return;
-      }
-
-    try
-      {
-        Update update;
-        update.name =  key.c_str();
-        update.type = type;
-        update.seq_num = seq_num;
-        update.repo_id = uid.repo_id;
-        update.repo_type = uid.repo_type;
-        replicate_i (replica, update);
-      }
-    catch (const CORBA::COMM_FAILURE&)
-      {
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("(%P|%t) Replicated ImR: COMM_FAILURE Exception\n")));
-      }
-    catch (const CORBA::TRANSIENT&)
-      {
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT("(%P|%t) Replicated ImR: TRANSIENT Exception\n")));
-      }
-    catch (const CORBA::OBJECT_NOT_EXIST&)
-      {
-        ORBSVCS_DEBUG ((
-                    LM_DEBUG,
-                    ACE_TEXT("(%P|%t) Replicated ImR: OBJECT_NOT_EXIST ")
-                    ACE_TEXT("Exception, dropping replica\n")));
-        replica = TAO::Objref_Traits
-          <ImplementationRepository::UpdatePushNotification>::nil ();
-      }
-    catch (const CORBA::Exception& ex)
-      {
-        ex._tao_print_exception (ACE_TEXT("Replicated ImR: notify update"));
-        replica = 0;
-      }
-  }
 
   void
   create_uid (const Options::ImrType repo_type,
@@ -253,41 +197,6 @@ namespace {
       id.repo_id_str + ACE_TEXT (".xml");
   }
 
-
-  template< typename Update >
-  int
-  remove (const ACE_CString& key,
-          const Shared_Backing_Store::UniqueIdMap& unique_ids,
-          const ACE_TString& path,
-          Lockable_File& listing_lf,
-          Shared_Backing_Store::Replica_ptr peer_replica,
-          ImplementationRepository::SequenceNum& seq_num)
-  {
-    Shared_Backing_Store::UniqueId uid;
-    const int err = unique_ids.find (key, uid);
-    if (err != 0)
-      {
-        ORBSVCS_ERROR((LM_ERROR,
-                   ACE_TEXT("(%P|%t) Couldn't find unique repo id for name = %C\n"),
-                   key.c_str()));
-        return err;
-      }
-
-    const ACE_TString fname = path + uid.unique_filename;
-
-    {
-      // take the lock, then remove the file
-      Lockable_File file(fname, O_WRONLY, true);
-    }
-    listing_lf.release();
-
-    replicate<Update> (peer_replica, key, uid,
-                       ImplementationRepository::repo_remove,
-                       ++seq_num);
-
-    return 0;
-  }
-
   void write_listing_item (FILE* list,
                            const ACE_TString& fname,
                            const ACE_CString& name,
@@ -307,13 +216,20 @@ Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
                                            ImR_Locator_i *loc_impl)
 : XML_Backing_Store (opts, orb, true),
   listing_file_ (opts.persist_file_name() + ACE_TEXT("imr_listing.xml")),
-  seq_num_ (0),
-  replica_seq_num_ (0),
   imr_type_ (opts.imr_type ()),
   sync_needed_ (NO_SYNC),
+  sync_files_ (),
+  non_ft_imr_ior_ (),
+  server_uids_ (),
+  activator_uids_ (),
   repo_id_ (1),
   repo_values_ (2),
-  loc_impl_ (loc_impl)
+  loc_impl_ (loc_impl),
+  /*  sync_lock_ (), */
+  replicator_ (*this, opts),
+  updates_ (10),
+  notified_ (false),
+  update_handler_ (this)
 {
   IMR_REPLICA[Options::PRIMARY_IMR] = ACE_TEXT ("ImR_ReplicaPrimary");
   IMR_REPLICA[Options::BACKUP_IMR] = ACE_TEXT ("ImR_ReplicaBackup");
@@ -331,6 +247,12 @@ Shared_Backing_Store::~Shared_Backing_Store()
 {
 }
 
+void
+Shared_Backing_Store::shutdown (void)
+{
+  this->replicator_.stop ();
+  this->replicator_.wait ();
+}
 
 void
 Shared_Backing_Store::bind_unique_id (const ACE_CString& key,
@@ -444,25 +366,37 @@ Shared_Backing_Store::persistent_remove (const ACE_CString& name,
                                          bool activator)
 {
   Lockable_File listing_lf;
-  int err = persist_listings(listing_lf);
+  int err = this->persist_listings (listing_lf);
   if (err != 0)
     {
       return err;
     }
+  Shared_Backing_Store::UniqueId uid;
+  err = activator ?
+    this->activator_uids_.find (name, uid) :
+    this->server_uids_.find (name, uid);
+  if (err != 0)
+    {
+      ORBSVCS_ERROR((LM_ERROR,
+                     ACE_TEXT("(%P|%t) Couldn't find unique repo id for name = %C\n"),
+                     name.c_str()));
+      return err;
+      }
 
-  if (activator)
-    {
-      err = remove<ImplementationRepository::ActivatorUpdate>
-        (name, this->activator_uids_, this->filename_, listing_lf,
-         this->peer_replica_.in (), this->seq_num_);
-    }
-  else
-    {
-      err = remove<ImplementationRepository::ServerUpdate>
-        (name, this->server_uids_, this->filename_, listing_lf,
-         this->peer_replica_.in (), this->seq_num_);
-    }
-  return err;
+  const ACE_TString fname = this->filename_ + uid.unique_filename;
+  {
+    // take the lock, then remove the file
+    Lockable_File file(fname, O_WRONLY, true);
+  }
+  listing_lf.release();
+
+  ImplementationRepository::UpdateInfo info;
+  info.name = CORBA::string_dup (name.c_str ());
+  info.action.kind (activator ?
+                    ImplementationRepository::repo_activator :
+                    ImplementationRepository::repo_server);
+  this->replicator_.send_entity (info);
+  return 0;
 }
 
 int
@@ -471,7 +405,7 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
   Lockable_File listing_lf;
   if (add)
     {
-      const int err = persist_listings(listing_lf);
+      const int err = this->persist_listings (listing_lf);
       if (err != 0)
         {
           return err;
@@ -486,7 +420,7 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
   const ACE_TString fname = this->filename_ + uid.unique_filename;
   if (this->opts_.debug() > 9)
     {
-      ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("Persisting server to %s(%C)\n"),
+      ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) Persisting server to %s(%C)\n"),
         fname.c_str(), info->key_name_.c_str()));
     }
   Lockable_File server_file (fname, O_WRONLY);
@@ -494,45 +428,50 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
   FILE* fp = server_file.get_file();
   if (fp == 0)
     {
-      ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %s\n"),
+      ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
         fname.c_str()));
-      return -1;
+      //return -1;
     }
-  // successfully added file (if adding), so release the listing file lock
+  // successful added file (if adding), so release the listing file lock
   listing_lf.release();
-  ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
+  if (fp != 0)
+    {
+      ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
 
-  this->repo_values_[REPO_TYPE].second = uid.repo_type_str;
-  this->repo_values_[REPO_ID].second = uid.repo_id_str;
+      this->repo_values_[REPO_TYPE].second = uid.repo_type_str;
+      this->repo_values_[REPO_ID].second = uid.repo_id_str;
 
-  persist (fp, *info, "", this->repo_values_);
+      this->persist (fp, *info, "", this->repo_values_);
 
-  // Copy the current file to a backup.
-  FILE* bfp = ACE_OS::fopen (bfname.c_str(),ACE_TEXT("w"));
-  ACE_OS::fprintf (bfp,"<?xml version=\"1.0\"?>\n");
-  persist (bfp, *info, "", this->repo_values_);
-  ACE_OS::fflush (bfp);
-  ACE_OS::fclose (bfp);
+      // Copy the current file to a backup.
+      FILE* bfp = ACE_OS::fopen (bfname.c_str(),ACE_TEXT("w"));
+      ACE_OS::fprintf (bfp,"<?xml version=\"1.0\"?>\n");
+      this->persist (bfp, *info, "", this->repo_values_);
+      ACE_OS::fflush (bfp);
+      ACE_OS::fclose (bfp);
+    }
   server_file.release ();
 
-  const ImplementationRepository::UpdateType type = add ?
-    ImplementationRepository::repo_add :
-    ImplementationRepository::repo_update;
-  replicate<ImplementationRepository::ServerUpdate> (peer_replica_.in (),
-                                                     info->key_name_, uid, type,
-                                                     ++seq_num_);
+  ImplementationRepository::UpdateInfo entity;
+  entity.name = CORBA::string_dup (name.c_str ());
+  ImplementationRepository::RepoInfo rinfo;
+  rinfo.kind = ImplementationRepository::repo_server;
+  rinfo.repo.repo_id = uid.repo_id;
+  rinfo.repo.repo_type = uid.repo_type;
+  entity.action.info (rinfo);
+  this->replicator_.send_entity (entity);
+
   return 0;
 }
 
 
 int
-Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
-                                        bool add)
+Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add)
 {
   Lockable_File listing_lf;
   if (add)
     {
-      const int err = persist_listings(listing_lf);
+      const int err = this->persist_listings (listing_lf);
       if (err != 0)
         {
           return err;
@@ -548,7 +487,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
   if (this->opts_.debug() > 9)
     {
       ORBSVCS_DEBUG ((LM_INFO,
-                      ACE_TEXT ("Persisting activator to %s(%C)\n"),
+                      ACE_TEXT ("(%P|%t) Persisting activator to %s(%C)\n"),
                       fname.c_str(), info->name.c_str()));
     }
   Lockable_File activator_file (fname, O_WRONLY);
@@ -557,7 +496,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
   if (fp == 0)
     {
       ORBSVCS_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Couldn't write to file %s\n"),
+                      ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
                       fname.c_str()));
       return -1;
     }
@@ -578,11 +517,15 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info,
   ACE_OS::fclose (bfp);
   activator_file.release ();
 
-  const ImplementationRepository::UpdateType type = add ?
-    ImplementationRepository::repo_add :
-    ImplementationRepository::repo_update;
-  replicate<ImplementationRepository::ActivatorUpdate>
-    (peer_replica_.in (), name, uid, type, ++seq_num_);
+  ImplementationRepository::UpdateInfo entity;
+  entity.name = CORBA::string_dup (name.c_str ());
+  ImplementationRepository::RepoInfo rinfo;
+  rinfo.kind = ImplementationRepository::repo_activator;
+  rinfo.repo.repo_id = uid.repo_id;
+  rinfo.repo.repo_type = uid.repo_type;
+  entity.action.info (rinfo);
+  this->replicator_.send_entity (entity);
+
   return 0;
 }
 
@@ -593,146 +536,66 @@ Shared_Backing_Store::repo_mode() const
 }
 
 int
-Shared_Backing_Store::connect_replicas (Replica_ptr this_replica)
+Shared_Backing_Store::connect_replicas (void)
 {
-  const ACE_TString& replica_ior_file = replica_ior_filename(true);
-  if (this->opts_.debug() > 1)
-    {
-      ORBSVCS_DEBUG((LM_INFO,
-        ACE_TEXT("Resolving ImR replica %s\n"), replica_ior_file.c_str()));
-    }
-
-  // Determine if the peer has started previously by checking if the
-  // ior file for the replica is there.
-  int peer_started_previously = 0;
-  if (ACE_OS::access (replica_ior_file.c_str (), F_OK) == 0)
-    {
-      peer_started_previously = 1;
-    }
-  else
-    this->peer_replica_ =
-      ImplementationRepository::UpdatePushNotification::_nil();
-
-  if (peer_started_previously)
-    {
-      ACE_TString replica_ior = "file://" + replica_ior_file;
-      CORBA::Object_var obj =
-        this->orb_->string_to_object (replica_ior.c_str());
-
-      if (!CORBA::is_nil (obj.in ()))
-        {
-          bool non_exist = true;
-          try
-            {
-              this->peer_replica_ = ImplementationRepository::
-                UpdatePushNotification::_narrow (obj.in());
-              non_exist = (this->peer_replica_->_non_existent() == 1);
-            }
-          catch (const CORBA::Exception& )
-            {
-              // let error be handled below
-            }
-
-          if (non_exist)
-            {
-              this->peer_replica_ =
-                ImplementationRepository::UpdatePushNotification::_nil();
-            }
-        }
-    }
+  ACE_CString replica_ior_file = this->replica_ior_filename (true);
+  bool was_running = this->replicator_.init_peer (replica_ior_file);
 
   // Check if a peer IOR is defined
-  if (CORBA::is_nil (this->peer_replica_.in()))
+  if (replicator_.peer_available ())
     {
-      if (this->imr_type_ == Options::BACKUP_IMR)
-        { // We are a backup IMR Locator
+      return replicator_.send_registration (this->imr_ior_.inout());
+    }
+  if (this->imr_type_ == Options::BACKUP_IMR)
+    { // We are a backup IMR Locator
 
-          // If the primary has started at some point in the past, but is
-          // not available right now, then we will assume that we are in
-          // a restart situation where the backup is being started while
-          // the primary is still down. This implies that a successful
-          // start of the replication pair has been made in the past and
-          // we can use the combined ior from the previous run.
-          if (peer_started_previously)
-            {
-              // Verify that we recovered the IOR successfully. If we did not
-              // then fail startup of the backup IMR Locator.
-              if (this->recover_ior () == -1)
-                ORBSVCS_ERROR_RETURN ((LM_ERROR,
+      // If the primary has started at some point in the past, but is
+      // not available right now, then we will assume that we are in
+      // a restart situation where the backup is being started while
+      // the primary is still down. This implies that a successful
+      // start of the replication pair has been made in the past and
+      // we can use the combined ior from the previous run.
+      if (was_running)
+        {
+          // Verify that we recovered the IOR successfully. If we did not
+          // then fail startup of the backup IMR Locator.
+          if (this->recover_ior () == -1)
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT("Error: Unable to retrieve IOR from combined IOR ")
                                    ACE_TEXT ("file: %C\n"),
                                    replica_ior_file.c_str()),
                                   -1);
-            }
-          else
-            { // There has been a startup error. The backup can only be started
-              // after the primary has been successfully started.
-              ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT("Error: Primary has not been started previously.\n ")
-                               ACE_TEXT ("file: %C\n"),
-                               replica_ior_file.c_str()),
-                              -1);
-            }
         }
-
-      // For either primary or backup - no connection currently, just wait for peer to start
-      return 0;
+      else
+        { // There has been a startup error. The backup can only be started
+          // after the primary has been successfully started.
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT("Error: Primary has not been started previously.\n ")
+                                 ACE_TEXT ("file: %C\n"),
+                                 replica_ior_file.c_str()),
+                                -1);
+        }
     }
 
-  if (opts_.debug() > 1)
-    {
-      ORBSVCS_DEBUG((LM_INFO,
-        ACE_TEXT("Registering with previously running ImR replica\n")));
-    }
-
-  try
-    {
-      this->peer_replica_->register_replica(this_replica,
-                                            this->imr_ior_.inout(),
-                                            this->replica_seq_num_);
-    }
-  catch (const ImplementationRepository::InvalidPeer& ip)
-    {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT("Error: obj key <%s> is an invalid ImR replica because %s\n"),
-        replica_ior_file.c_str(), ip.reason.in()), -1);
-    }
-
-  if (opts_.debug() > 9)
-    {
-      ORBSVCS_DEBUG((LM_INFO,
-        ACE_TEXT("Initializing repository with ft ior=<%C> ")
-        ACE_TEXT("and replica seq number %d\n"),
-        this->imr_ior_.in(), replica_seq_num_));
-    }
-
+  // For either primary or backup - no connection currently, just wait for peer to start
   return 0;
 }
 
 int
-Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
+Shared_Backing_Store::init_repo(PortableServer::POA_ptr)
 {
   this->non_ft_imr_ior_ = this->imr_ior_;
-  PortableServer::ObjectId_var id =
-    PortableServer::string_to_ObjectId ("ImR_Replica");
-  imr_poa->activate_object_with_id (id.in (), this);
 
   if (this->imr_type_ != Options::STANDALONE_IMR)
     {
-      CORBA::Object_var obj = imr_poa->id_to_reference (id.in ());
-
-      Replica_var this_replica =
-        ImplementationRepository::UpdatePushNotification::_narrow (obj.in());
-      const int err = connect_replicas(this_replica.in());
-      if (err != 0)
-        {
-          return err;
-        }
+      this->replicator_.init_orb ();
+      this->replicator_.activate ();
+      this->connect_replicas ();
     }
 
   // only start the repo clean if no replica is running
   if (this->opts_.repository_erase() &&
-      CORBA::is_nil (this->peer_replica_.in ()))
+      !this->replicator_.peer_available ())
     {
       Lockable_File listing_lf;
       const XMLHandler_Ptr listings = get_listings(listing_lf, false);
@@ -741,7 +604,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
           if (this->opts_.debug() > 9)
             {
               ORBSVCS_DEBUG((LM_INFO,
-                ACE_TEXT ("Persisted Repository already empty\n")));
+                ACE_TEXT ("(%P|%t) Persisted Repository already empty\n")));
             }
         }
       else
@@ -752,7 +615,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
             {
               if (this->opts_.debug() > 9)
                 {
-                  ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("Removing %s\n"),
+                  ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) Removing %s\n"),
                     filenames[i].c_str()));
                 }
               ACE_OS::unlink ( filenames[i].c_str () );
@@ -760,7 +623,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
 
           if (this->opts_.debug() > 9)
             {
-              ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("Removing %s\n"),
+              ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) Removing %s\n"),
                 this->listing_file_.c_str()));
             }
           ACE_OS::unlink ( this->listing_file_.c_str () );
@@ -768,12 +631,12 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr imr_poa)
     }
 
   // ignore persistent_load return since files don't have to exist
-  persistent_load(false);
+  this->persistent_load (false);
 
   if (this->opts_.debug() > 9)
     {
       ORBSVCS_DEBUG((LM_INFO,
-        ACE_TEXT ("ImR Repository initialized\n")));
+        ACE_TEXT ("(%P|%t) ImR Repository initialized\n")));
     }
 
   return 0;
@@ -799,7 +662,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
   size_t sz = filenames.size ();
   if (this->opts_.debug() > 9)
     {
-      ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("persistent_load %d files\n"), sz));
+      ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) persistent_load %d files\n"), sz));
     }
   for (CORBA::ULong i = 0; i < sz; ++i)
     {
@@ -857,19 +720,30 @@ int
 Shared_Backing_Store::sync_load ()
 {
   int err = 0;
-  if (this->opts_.debug() > 5)
-    {
-      ORBSVCS_DEBUG((
-        LM_INFO,
-        ACE_TEXT("(%P|%t) sync_load %d, %d\n"),
-        this->sync_needed_, this->sync_files_.size()));
-    }
   if (this->sync_needed_ == FULL_SYNC)
     {
-      err = persistent_load(false);
+      if (this->opts_.debug() > 5)
+        {
+          ORBSVCS_DEBUG((LM_INFO,
+                         ACE_TEXT("(%P|%t) sync_load FULL_SYNC\n")));
+        }
+      err = this->persistent_load (false);
     }
   else if (this->sync_needed_ == INC_SYNC)
     {
+      if (this->sync_files_.size () == 0)
+        {
+          return 0;
+        }
+      if (this->opts_.debug() > 5)
+        {
+          ORBSVCS_DEBUG((LM_INFO,
+                         ACE_TEXT("(%P|%t) sync_load INC_SYNC, %d files\n"),
+                         this->sync_files_.size ()));
+        }
+
+      //      ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->sync_lock_, -1);
+
       std::set<ACE_TString>::const_iterator fname = this->sync_files_.begin();
       for ( ; fname != this->sync_files_.end(); ++fname)
         {
@@ -930,6 +804,7 @@ Shared_Backing_Store::write_listing (FILE* list)
 int
 Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
 {
+  //  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->sync_lock_, -1);
   FILE* list = listing_lf.get_file (this->listing_file_, O_WRONLY);
   if (list == 0)
     {
@@ -939,12 +814,12 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
       return -1;
     }
 
-   write_listing(list);
+  this->write_listing (list);
 
   const ACE_TString bfname = this->listing_file_.c_str() + ACE_TString(".bak");
 
   // Write backup file
-  FILE* baklist = ACE_OS::fopen(bfname.c_str(),ACE_TEXT("w"));
+  FILE* baklist = ACE_OS::fopen (bfname.c_str(), ACE_TEXT("w"));
   if (baklist == 0)
     {
       ORBSVCS_ERROR ((LM_ERROR,
@@ -953,9 +828,9 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
       return -1;
     }
 
-  write_listing(baklist);
-  ACE_OS::fflush(baklist);
-  ACE_OS::fclose(baklist);
+  this->write_listing (baklist);
+  ACE_OS::fflush (baklist);
+  ACE_OS::fclose (baklist);
 
   return 0;
 }
@@ -978,18 +853,18 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
   if (fp == 0)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT("ImR: Could not open file: %s\n"),
+        ACE_TEXT ("(%P|%t) ImR: Could not open file: %s\n"),
         replica_filename.c_str ()), -1);
     }
-  obj = imr_poa->servant_to_reference (this);
-  const CORBA::String_var replica_ior = this->orb_->object_to_string (obj.in ());
+
+  CORBA::String_var replica_ior = this->replicator_.ior ();
   ior_table->bind(replica_name, replica_ior.in());
   ACE_OS::fprintf (fp, "%s", replica_ior.in ());
   ACE_OS::fclose (fp);
 
   int err = 0;
   // only report the imr ior if the fault tolerant ImR is complete
-  if (!CORBA::is_nil (this->peer_replica_.in()))
+  if (this->replicator_.peer_available ())
     {
       err = Locator_Repository::report_ior(imr_poa);
     }
@@ -998,10 +873,10 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
 }
 
 char*
-Shared_Backing_Store::locator_service_ior(const char* peer_ior) const
+Shared_Backing_Store::locator_service_ior (const char* peer_ior) const
 {
   const CORBA::Object_ptr this_obj =
-    this->orb_->string_to_object(this->non_ft_imr_ior_.in());
+    this->orb_->string_to_object(this->non_ft_imr_ior_.in ());
   const CORBA::Object_ptr peer_obj =
     this->orb_->string_to_object(peer_ior);
   const CORBA::Object_ptr& obj1 =
@@ -1013,12 +888,12 @@ Shared_Backing_Store::locator_service_ior(const char* peer_ior) const
     this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
 
   TAO_IOP::TAO_IOR_Manipulation_var iorm =
-    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in());
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());
 
-  CORBA::Object_var locator_service = iorm->add_profiles(obj1, obj2);
+  CORBA::Object_var locator_service = iorm->add_profiles (obj1, obj2);
 
   char* const combined_ior =
-    this->orb_->object_to_string(locator_service.in());
+    this->orb_->object_to_string(locator_service.in ());
   return combined_ior;
 
 }
@@ -1090,142 +965,133 @@ void
 Shared_Backing_Store::notify_remote_access (const char * id,
                                           ImplementationRepository::AAM_Status s)
 {
-  ImplementationRepository::AccessStateUpdate asu;
-  asu.name = id;
-  asu.state = s;
-  try
-    {
-      if (!CORBA::is_nil (this->peer_replica_.in ()))
-        {
-          this->peer_replica_->notify_access_state_update (asu);
-        }
-    }
-  catch (const CORBA::Exception &ex)
-    {
-      if (this->opts_.debug () > 4)
-        {
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) notify remote access caught %C sending ")
-                          ACE_TEXT ("%C to %s\n"),
-                          ex._name (), id,
-                          AsyncAccessManager::status_name (s)));
-        }
-    }
-}
-
-
-void
-Shared_Backing_Store::notify_access_state_update
-(const ImplementationRepository::AccessStateUpdate& server)
-{
-  if (this->opts_.debug() > 4)
-    {
-      ORBSVCS_DEBUG ((LM_INFO,
-                      ACE_TEXT("(%P|%t) notify_access_state_update, %C now %s\n"),
-                      server.name.in(),
-                      AsyncAccessManager::status_name (server.state)));
-    }
-  this->loc_impl_->remote_access_update (server.name.in(), server.state);
+  this->replicator_.send_access_state (id, s);
 }
 
 void
-Shared_Backing_Store::notify_updated_server
-(const ImplementationRepository::ServerUpdate& server)
+Shared_Backing_Store::updates_available
+(const ImplementationRepository::UpdateInfoSeq& info, bool seq_gap)
 {
-  if (this->opts_.debug() > 4)
+  //  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->sync_lock_);
+  CORBA::Long len = this->updates_.length ();
+  this->updates_.length (len + info.length () + (seq_gap ? 1 : 0));
+  if (seq_gap)
     {
-      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT("(%P|%t) notify_updated_server=%C\n"),
-                      server.name.in()));
+      bool found = false;
+      for (CORBA::Long i = 0; !found && i < len; i++)
+        {
+          if (this->updates_[i].action._d () == ImplementationRepository::repo_update)
+            {
+              this->updates_[i].action.info ().repo.repo_id = -1;
+              this->updates_[i].action.info ().repo.repo_type = -1;
+              found = true;
+            }
+        }
+      if (!found)
+        {
+          ImplementationRepository::RepoInfo rinfo;
+          rinfo.kind = ImplementationRepository::repo_server;
+          rinfo.repo.repo_id = -1;
+          rinfo.repo.repo_type = -1;
+          this->updates_[len++].action.info (rinfo);
+        }
     }
-  if ((this->sync_needed_ == FULL_SYNC) ||
-      (++this->replica_seq_num_ != server.seq_num))
+  for (CORBA::ULong i = 0; i < info.length (); i++)
     {
-      this->replica_seq_num_ = server.seq_num;
-      this->sync_needed_ = FULL_SYNC;
-      this->sync_files_.clear();
-      return;
+      if (info[i].action._d () == ImplementationRepository::access || !seq_gap)
+        {
+          this->updates_[len++] = info[i];
+        }
     }
+  this->updates_.length (len);
 
-  const ACE_CString name = server.name.in();
-  if (server.type == ImplementationRepository::repo_remove)
-    {
-      this->opts_.pinger ()->remove_server (name.c_str());
-      // sync_needed_ doesn't change, since we handle the change
-      // immediately
-      this->servers().unbind (name);
-      return;
-    }
+  if (this->notified_)
+    return;
+  this->notified_ = true;
+  this->orb_->orb_core ()->reactor ()->notify (&this->update_handler_);
+}
 
-  this->sync_needed_ = INC_SYNC;
-  Options::ImrType repo_type = (Options::ImrType)server.repo_type;
-  unsigned int repo_id = server.repo_id;
-  UniqueId uid;
-  update_unique_id (name, this->server_uids_, repo_type, repo_id, uid);
-  const ACE_TString fname = this->filename_ + uid.unique_filename;
-  this->sync_files_.insert (fname);
+int
+Shared_Backing_Store::Update_Handler::handle_exception (ACE_HANDLE)
+{
+  this->owner_->process_updates ();
+  return 0;
+}
+
+void
+Shared_Backing_Store::process_updates (void)
+{
+  //  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->sync_lock_);
+  this->notified_ = false;
+  this->sync_needed_ = NO_SYNC;
+  for (CORBA::ULong i = 0; i < this->updates_.length (); i++)
+    {
+      ImplementationRepository::UpdateInfo &entity = this->updates_[i];
+      switch (entity.action._d ())
+        {
+        case ImplementationRepository::access:
+          {
+            if (this->opts_.debug() > 4)
+              {
+                ORBSVCS_DEBUG ((LM_INFO,
+                                ACE_TEXT("(%P|%t) notify_access_state_update, %C now %s\n"),
+                                entity.name.in (),
+                                AsyncAccessManager::status_name (entity.action.state ())));
+              }
+            this->loc_impl_->remote_access_update (entity.name.in (),
+                                                   entity.action.state ());
+            break;
+          }
+        case ImplementationRepository::repo_update:
+          {
+            if (this->sync_needed_ == FULL_SYNC)
+              {
+                continue;
+              }
+            if (entity.action.info().repo.repo_id == -1)
+              {
+                this->sync_needed_ = FULL_SYNC;
+                this->sync_files_.clear();
+                continue;
+              }
+            this->sync_needed_ = INC_SYNC;
+            const ACE_CString name = entity.name.in ();
+            Options::ImrType repo_type = (Options::ImrType)entity.action.info().repo.repo_type;
+            unsigned int repo_id = entity.action.info().repo.repo_id;
+            UniqueId uid;
+            update_unique_id (name,
+                              entity.action.info().kind == ImplementationRepository::repo_activator ?
+                              this->activator_uids_ :
+                              this->server_uids_,
+                              repo_type, repo_id, uid);
+            const ACE_TString fname = this->filename_ + uid.unique_filename;
+            this->sync_files_.insert (fname);
+            break;
+          }
+        case ImplementationRepository::repo_remove:
+          {
+            const ACE_CString name = entity.name.in ();
+            if (entity.action.kind() == ImplementationRepository::repo_activator)
+              {
+                this->activators().unbind (name);
+              }
+            else
+              {
+                this->opts_.pinger ()->remove_server (name.c_str());
+                this->servers().unbind (name);
+              }
+            break;
+          }
+        }
+    }
+  this->updates_.length (0);
+  //  mon.release ();
   this->sync_load ();
 }
 
 void
-Shared_Backing_Store::notify_updated_activator(
-  const ImplementationRepository::ActivatorUpdate& activator)
+Shared_Backing_Store::gen_ior (char*& ft_imr_ior)
 {
-  if (this->opts_.debug() > 4)
-    {
-      ORBSVCS_DEBUG ((LM_INFO,
-                      ACE_TEXT("(%P|%t) notify_updated_activator = %C\n"),
-                      activator.name.in()));
-    }
-  if ((this->sync_needed_ == FULL_SYNC) ||
-      (++this->replica_seq_num_ != activator.seq_num))
-    {
-      this->replica_seq_num_ = activator.seq_num;
-      this->sync_needed_ = FULL_SYNC;
-      this->sync_files_.clear();
-      return;
-    }
-
-  const ACE_CString name = lcase (activator.name.in());
-  if (activator.type == ImplementationRepository::repo_remove)
-    {
-      // sync_needed_ doesn't change, since we handle the change
-      // immediately
-      this->activators().unbind (name);
-      return;
-    }
-
-  this->sync_needed_ = INC_SYNC;
-  Options::ImrType repo_type = (Options::ImrType)activator.repo_type;
-  unsigned int repo_id = activator.repo_id;
-  UniqueId uid;
-  update_unique_id (name, this->activator_uids_, repo_type, repo_id, uid);
-  const ACE_TString fname = this->filename_ + uid.unique_filename;
-  this->sync_files_.insert (fname);
-  this->sync_load ();
-}
-
-void
-Shared_Backing_Store::register_replica
-( ImplementationRepository::UpdatePushNotification_ptr replica,
-  char*& ft_imr_ior,
-  ImplementationRepository::SequenceNum_out seq_num)
-{
-  ACE_ASSERT (! CORBA::is_nil (replica));
-  this->peer_replica_ =
-    ImplementationRepository::UpdatePushNotification::_duplicate (replica);
-
-  seq_num = this->seq_num_;
-  if (this->imr_type_ == Options::STANDALONE_IMR)
-    {
-      ORBSVCS_ERROR((LM_ERROR,
-        ACE_TEXT("Error: Non-replicated ImR receiving replica ")
-        ACE_TEXT("registration <%s>\n"),
-        ft_imr_ior));
-      return;
-    }
-
-  this->replica_seq_num_ = 0;
-
   // store off original char* to ensure memory cleanup
   CORBA::String_var ior = ft_imr_ior;
 

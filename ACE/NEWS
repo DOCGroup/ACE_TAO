@@ -2,10 +2,16 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 ====================================================
 
 . Visual Studio 2015 has adequate C++11 support, because of this
-  ACE_HAS_CPP11 is now defined with this compiler
+  ACE_HAS_CPP11 is now defined with this compiler. A large amount
+  of warnings given by this new compiler have been fixed
 
-. As part of the release script we now generate vc12 and vc14
+. As part of the release script we generate vc12 and vc14
   solution files which are packaged as part of the release
+
+. Added support for VxWorks 7 (kernel mode and RTP).
+  See the comments in include/makeinclude/platform_vxworks7.0.GNU for details.
+
+. Ended daily maintenance for OpenVMS
 
 USER VISIBLE CHANGES BETWEEN ACE-6.3.1 and ACE-6.3.2
 ====================================================
@@ -140,7 +146,7 @@ USER VISIBLE CHANGES BETWEEN ACE-6.2.4 and ACE-6.2.5
 USER VISIBLE CHANGES BETWEEN ACE-6.2.3 and ACE-6.2.4
 ====================================================
 
-. Added support for FC20 and ended support for FC19
+. Added support for FC20 and ended maintenance for FC19
 
 . Extended C++11 feature test suite
 

@@ -122,6 +122,12 @@ public:
   enum ImrType { BACKUP_IMR, PRIMARY_IMR, STANDALONE_IMR };
   ImrType imr_type(void) const;
 
+  int threads (void) const;
+
+  const ACE_CString &ft_endpoint (void) const;
+
+  ACE_Time_Value ft_update_delay (void) const;
+
 private:
   /// Parses and pulls out arguments for the ImR
   int parse_args (int &argc, ACE_TCHAR *argv[]);
@@ -133,7 +139,6 @@ private:
   int run_service_command (const ACE_TString& cmdline);
 
   int load_registry_options();
-private:
 
   /// xml, heap, or registry
   RepoMode repo_mode_;
@@ -181,20 +186,28 @@ private:
   /// the address is reused.
   bool unregister_if_address_reused_;
 
-  /// If enabled, use a global start count and lock access to the server without
-  /// user intervention. Otherwise start count is reset for every start request
+  /// If enabled, use a global start count and lock access to the
+  /// server without user intervention. Otherwise start count is reset
+  /// for every start request
   bool lockout_;
 
   /// The type of ImR Locator this is.
   ImrType imr_type_;
 
-  /// Have the "shutdown_server" command forward any exceptions (such as transient)
-  /// back to the caller. Default behavior is to not do that since doing so may break
-  /// existing installations. There is no command line option for this yet, but I want
-  /// to preserve the framework for future use.
+  /// Have the "shutdown_server" command forward any exceptions (such
+  /// as transient) back to the caller. Default behavior is to not do
+  /// that since doing so may break existing installations. There is
+  /// no command line option for this yet, but I want to preserve the
+  /// framework for future use.
   bool throw_shutdown_exceptions_;
 
   LiveCheck *pinger_;
+
+  int threads_;
+
+  ACE_CString ft_endpoint_;
+
+  ACE_Time_Value ft_update_delay_;
 };
 
 #endif

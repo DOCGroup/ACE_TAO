@@ -3,6 +3,7 @@
 
 module ImplementationRepository
 {
+
   interface Locator : AdministrationExt
   {
     /// returns a token that can be used (along with activator name) to
@@ -29,30 +30,21 @@ module ImplementationRepository
 
   enum UpdateType
   {
-    repo_add,
     repo_update,
-    repo_remove
+    repo_remove,
+    access
   };
 
-  typedef long SequenceNum;
-
-  struct ServerUpdate
+  enum EntityType
   {
-    string      name;
-    string      server_id;
-    UpdateType  type;
-    long        repo_id;
-    long        repo_type;
-    SequenceNum seq_num;
+    repo_activator,
+    repo_server
   };
 
-  struct ActivatorUpdate
+  struct RepoIdent
   {
-    string      name;
-    UpdateType  type;
-    long        repo_id;
-    long        repo_type;
-    SequenceNum seq_num;
+    long repo_id;
+    long repo_type;
   };
 
   enum AAM_Status
@@ -69,14 +61,33 @@ module ImplementationRepository
     AAM_NOT_MANUAL,
     AAM_NO_ACTIVATOR,
     AAM_NO_COMMANDLINE,
-    AAM_RETRIES_EXCEEDED
+    AAM_RETRIES_EXCEEDED,
+    AAM_UPDATE_FAILED
   };
 
-  struct AccessStateUpdate
+  struct RepoInfo
   {
-    string    name;
+    EntityType kind;
+    RepoIdent repo;
+  };
+
+  union UpdateAction switch (UpdateType)
+  {
+  case repo_update:
+    RepoInfo info;
+  case repo_remove:
+    EntityType kind;
+  case access:
     AAM_Status state;
   };
+
+  struct UpdateInfo
+  {
+    string name;
+    UpdateAction action;
+  };
+
+  typedef sequence<UpdateInfo> UpdateInfoSeq;
 
   exception InvalidPeer
   {
@@ -85,21 +96,13 @@ module ImplementationRepository
 
   interface UpdatePushNotification
   {
-    /// provide information about access request status to allow primary
-    /// and backup ImR to both
-    oneway void notify_access_state_update (in AccessStateUpdate server);
-
     /// indicate existing server with name was updated
-    oneway void notify_updated_server(in ServerUpdate server);
-
-    /// indicate existing activator with name was updated
-    //oneway void notify_updated_activator(in ActivatorUpdate activator);
-    oneway void notify_updated_activator(in ActivatorUpdate activator);
+    oneway void notify_update (in unsigned long long seq_num, in UpdateInfoSeq info);
 
     /// register peer as replica and indicate sequence number
-    void register_replica(in UpdatePushNotification peer,
-                          inout string ft_imr_ior,
-                          out SequenceNum seq_num)
+    void register_replica (in UpdatePushNotification peer,
+                           inout string ft_imr_ior,
+                           out unsigned long long seq_num)
       raises (InvalidPeer);
   };
 };

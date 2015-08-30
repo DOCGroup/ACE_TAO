@@ -84,9 +84,12 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       << ")" << be_uidt_nl
       << "{" << be_idt_nl;
 
+  bool boolDisc = false;
+
   switch (node->udisc_type ())
     {
       case AST_Expression::EV_bool:
+        boolDisc = true;
         *os << "::ACE_OutputCDR::from_boolean tmp (_tao_union._d ());" << be_nl
             << "if ( !(strm << tmp) )" << be_idt_nl;
 
@@ -110,9 +113,13 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = true;" << be_nl_2
-      << "switch (_tao_union._d ())" << be_nl
-      << "{" << be_idt;
+      << "::CORBA::Boolean result = true;" << be_nl_2;
+
+  if (!boolDisc)
+    {
+      *os << "switch (_tao_union._d ())" << be_nl
+          << "{" << be_idt;
+    }
 
   if (this->visit_scope (node) == -1)
     {
@@ -129,14 +136,18 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   // not all case values are included. If there is no
   // implicit default case, or the discriminator is not
   // an enum, this does no harm.
-  if (node->gen_empty_default_label ())
+  if (!boolDisc && node->gen_empty_default_label ())
     {
       *os << be_nl << "default:" << be_idt_nl;
       *os << "break;"<< be_uidt;
     }
 
-  *os << be_uidt_nl << "}" << be_nl_2
-      << "return result;" << be_uidt_nl
+  if (!boolDisc)
+    {
+      *os << be_uidt_nl << "}" << be_nl_2;
+    }
+
+  *os << "return result;" << be_uidt_nl
       << "}" << be_nl_2;
 
   // Set the substate as generating code for the input operator.
@@ -180,9 +191,21 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   *os << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = true;" << be_nl_2
-      << "switch (_tao_discriminant)" << be_nl
-      << "{" << be_idt;
+      << "::CORBA::Boolean result = true;" << be_nl_2;
+
+  if (boolDisc)
+    {
+      if (node->gen_empty_default_label ())
+        {
+          *os << "_tao_union._default ();" << be_nl
+              << "_tao_union._d (_tao_discriminant);" << be_nl;
+        }
+    }
+  else
+    {
+      *os << "switch (_tao_discriminant)" << be_nl
+          << "{" << be_idt;
+    }
 
   if (this->visit_scope (node) == -1)
     {
@@ -199,7 +222,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   // not all case values are included. If there is no
   // implicit default case, or the discriminator is not
   // an enum, this does no harm.
-  if (node->gen_empty_default_label ())
+  if (!boolDisc && node->gen_empty_default_label ())
     {
       *os << be_nl;
       *os << "default:" << be_idt_nl;
@@ -209,9 +232,12 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       *os << "break;" << be_uidt;
     }
 
-  *os << be_uidt_nl
-      << "}" << be_nl_2
-      << "return result;" << be_uidt_nl
+  if (!boolDisc)
+    {
+      *os << be_uidt_nl << "}" << be_nl_2;
+    }
+
+  *os << "return result;" << be_uidt_nl
       << "}" << be_nl;
 
   bool use_underscore = (this->ctx_->tdef () == 0);
