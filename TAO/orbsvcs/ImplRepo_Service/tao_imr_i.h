@@ -102,16 +102,15 @@ public:
   void set_imr (ImplementationRepository::Administration_ptr imr);
 
 protected:
-  TAO_IMR_Op (void) : quiet_ (false) {}
-
-  /// Reference to our implementation repository.
-  ImplementationRepository::Administration_ptr imr_;
+  TAO_IMR_Op (void) : imr_ (0), quiet_ (false) {}
 
   // = Helper methods
 
   /// Prints out the information contained in a ServerInformation structure.
   void display_server_information (const ImplementationRepository::ServerInformation &info);
 
+  /// Reference to our implementation repository.
+  ImplementationRepository::Administration_ptr imr_;
   bool quiet_;
 };
 
