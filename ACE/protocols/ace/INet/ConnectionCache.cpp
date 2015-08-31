@@ -351,7 +351,7 @@ namespace ACE
              iter != this->cache_map_.end ();
              ++iter)
           {
-            if ((*iter).int_id_.state () == ConnectionCacheValue::CST_CLOSED)
+            if ((*iter).int_id_.state () != ConnectionCacheValue::CST_CLOSED)
               {
                 connection_type* conn = (*iter).int_id_.connection ();
                 (*iter).int_id_.connection (0);
