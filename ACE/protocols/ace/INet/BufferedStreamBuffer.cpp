@@ -65,7 +65,7 @@ namespace ACE
         if (putback > 4) putback = 4;
 
         ACE_OS::memmove (this->buffer_.get () + (4 - putback),
-                         this->gptr (),
+                         this->gptr () - putback,
                          putback * sizeof (char_type));
 
         if (this->interceptor_)
