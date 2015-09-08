@@ -96,7 +96,7 @@ Replicator::init_orb (void)
   if (endpoint_.length ())
     {
       argv[6] = ACE_OS::strdup (ACE_TEXT ("-ORBListenEnpoints"));
-      argv[7] = ACE_OS::strdup (endpoint_.c_str ());
+      argv[7] = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR (endpoint_.c_str ()));
     }
   else
     {
@@ -373,7 +373,7 @@ Replicator::init_peer (const ACE_CString &replica_ior_file)
       return false;
     }
 
-  ACE_TString replica_ior = "file://" + replica_ior_file;
+  ACE_CString replica_ior = "file://" + replica_ior_file;
   CORBA::Object_var obj =
     this->orb_->string_to_object (replica_ior.c_str());
 
