@@ -102,7 +102,6 @@ project(ImR_Locator) : orbsvcslib, orbsvcs_output, conv_lib, avoids_minimum_corb
   dynamicflags += LOCATOR_BUILD_DLL
   after       += ImR_Locator_IDL
   libs        += TAO_ImR_Locator_IDL TAO_ImR_Activator_IDL TAO_Async_ImR_Client_IDL
-  avoids      += uses_wchar
 
   Source_Files {
     Activator_Info.cpp
@@ -139,7 +138,6 @@ project(ImR_Locator_Service) : orbsvcsexe, install_bin, avoids_minimum_corba, av
   exename  = tao_imr_locator
   after   += ImR_Locator
   libs    += TAO_ImR_Locator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL TAO_Async_ImR_Client_IDL
-  avoids  += uses_wchar
 
   // Static Debug builds on Windows will not link properly due
   // to a linker bug.  It complains that the ACEXML library duplicates
