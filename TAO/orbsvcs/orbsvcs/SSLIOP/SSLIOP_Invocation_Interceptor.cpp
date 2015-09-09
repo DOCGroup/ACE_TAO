@@ -149,12 +149,12 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
       CORBA::OctetSeq_var object_id = ri->object_id ();
       CORBA::String_var operation_name = ri->operation ();
 
-      CORBA::Boolean it_should_happen = false;
-      it_should_happen = ad->access_allowed_ex (orb_id.in (),
-                                                adapter_id.in (),
-                                                object_id.in (),
-                                                cred_list,
-                                                operation_name.in());
+      CORBA::Boolean const it_should_happen =
+        ad->access_allowed_ex (orb_id.in (),
+                               adapter_id.in (),
+                               object_id.in (),
+                               cred_list,
+                               operation_name.in());
       if (TAO_debug_level >= 3)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
