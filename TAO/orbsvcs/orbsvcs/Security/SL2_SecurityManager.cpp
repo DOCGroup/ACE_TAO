@@ -161,7 +161,7 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
       access_decision = this->default_allowance_decision_;
       if (TAO_debug_level >= 3)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
+                    "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%C)"
                     " NOT FOUND using default %d\n",
                     hash.operator()(key),
                     operation_name, access_decision));
@@ -169,7 +169,7 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
   else if (TAO_debug_level >= 3)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
+                  "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%C)"
                   " found with decision %d\n",
                   hash.operator()(key),
                   operation_name, access_decision));
