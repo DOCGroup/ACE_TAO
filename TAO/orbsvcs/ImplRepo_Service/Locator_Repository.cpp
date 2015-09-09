@@ -151,7 +151,7 @@ Locator_Repository::recover_ior (void)
     return -1;
 
   try {
-    ACE_TString combined_ior = "file://" + combined_ior_file;
+    ACE_TString combined_ior = ACE_TEXT ("file://") + combined_ior_file;
 
     CORBA::Object_var combined_obj =
       this->orb_->string_to_object (combined_ior.c_str());
