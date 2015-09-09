@@ -54,7 +54,7 @@ namespace TAO
     {
     public:
       /*! Constructor */
-      AccessDecision (/* not yet known */);
+      AccessDecision (void);
       ~AccessDecision (void);
 
       virtual ::CORBA::Boolean access_allowed (

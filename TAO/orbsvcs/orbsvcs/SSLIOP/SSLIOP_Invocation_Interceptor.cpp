@@ -87,7 +87,6 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
 {
 }
 
-
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
     PortableInterceptor::ServerRequestInfo_ptr ri )
