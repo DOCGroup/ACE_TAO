@@ -84,6 +84,30 @@ static bool test_tao_use (void)
   return true;
 }
 
+static bool test_port_assignment (void)
+{
+#if defined (ACE_HAS_IPV6)
+  ACE_INET_Addr addr1 (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6);
+  ACE_INET_Addr addr2;
+
+  addr1.set_port_number (12345);
+  addr2.set (addr1);
+  if (addr1.get_port_number () != addr2.get_port_number ())
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("port number not properly copied. ")
+                  ACE_TEXT ("addr1 port = %d addr2 port = %d\n"),
+                  addr1.get_port_number (), addr2.get_port_number ()));
+      return false;
+    }
+   ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Test Port Assignment passed\n")));
+#else
+   ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Test Port Assignment is IPv6 only\n")));
+#endif /* ACE_HAS_IPV6 */
+  return true;
+}
 
 static bool test_multiple (void)
 {
@@ -464,6 +488,9 @@ int run_main (int, ACE_TCHAR *[])
     status = 1;
 
   if (!test_multiple ())
+    status = 1;
+
+  if (!test_port_assignment ())
     status = 1;
 
   ACE_INET_Addr a1 (80, "127.0.0.1");
