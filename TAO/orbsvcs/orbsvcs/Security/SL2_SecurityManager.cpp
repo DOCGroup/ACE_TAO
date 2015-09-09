@@ -164,9 +164,9 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
       if (TAO_debug_level >= 3)
         ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%C)"
-                    " NOT FOUND using default %d\n",
+                    " collocated %d NOT FOUND using default %d\n",
                     hash.operator()(key),
-                    operation_name, access_decision));
+                    operation_name, collocated, access_decision));
     }
   else if (TAO_debug_level >= 3)
     {
