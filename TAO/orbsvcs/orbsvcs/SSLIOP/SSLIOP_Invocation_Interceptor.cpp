@@ -30,21 +30,17 @@ TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor (
 
   if (!CORBA::is_nil (this->ssliop_current_.in ()))
     {
-      // For the remote instance we already do this
-      if (!this->collocated_)
-        {
-          TAO::SSLIOP::Current *tao_current =
-            dynamic_cast<TAO::SSLIOP::Current *> (this->ssliop_current_.in ());
+      TAO::SSLIOP::Current *tao_current =
+        dynamic_cast<TAO::SSLIOP::Current *> (this->ssliop_current_.in ());
 
-          if (tao_current != 0)
-            {
-              if (TAO_debug_level > 3)
-                ORBSVCS_DEBUG ((LM_DEBUG, "TAO (%P|%t) SSLIOP_Invocation_Interceptor::CTOR--setting up SSLIOP Current with slot %d\n", tss_slot));
-              tao_current->tss_slot (tss_slot);
-            }
-          else
-            throw CORBA::INTERNAL ();
+      if (tao_current != 0)
+        {
+          if (TAO_debug_level > 3)
+            ORBSVCS_DEBUG ((LM_DEBUG, "TAO (%P|%t) SSLIOP_Invocation_Interceptor::CTOR--setting up SSLIOP Current with slot %d\n", tss_slot));
+          tao_current->tss_slot (tss_slot);
         }
+      else
+        throw CORBA::INTERNAL ();
     }
 
   obj = info->resolve_initial_references ("SecurityLevel2:SecurityManager");
