@@ -92,35 +92,6 @@ TAO::SSLIOP::ORBInitializer::post_init (
   // with the ORB.
   info->add_server_request_interceptor (si_interceptor.in ());
 
-//   TAO_ORBInitInfo_var tao_info =
-//     TAO_ORBInitInfo::_narrow (info
-//);
-
-//   if (CORBA::is_nil (tao_info.in ()))
-//     ACE_THROW (CORBA::INV_OBJREF ());
-
-//   TAO_ORB_Core * orb_core = tao_info->orb_core ();
-
-//   // Create the SSLIOP IOR interceptor.
-//   PortableInterceptor::IORInterceptor_ptr ii =
-//     PortableInterceptor::IORInterceptor::_nil ();
-//   ACE_NEW_THROW_EX (ii,
-//                     TAO::SSLIOP::IORInterceptor (orb_core,
-//                                                  this->csiv2_target_supports_,
-//                                                  this->csiv2_target_requires_),
-//                     CORBA::NO_MEMORY (
-//                       CORBA::SystemException::_tao_minor_code (
-//                         TAO::VMCID,
-//                         ENOMEM),
-//                       CORBA::COMPLETED_NO));
-
-//   PortableInterceptor::IORInterceptor_var ior_interceptor =
-//     ii;
-
-//   // Register the SSLIOP IORInterceptor.
-//   info->add_ior_interceptor (ior_interceptor.in ()
-//);
-
   // Register the SSLIOP-specific vault with the
   // PrincipalAuthenticator.
   CORBA::Object_var obj =
@@ -135,7 +106,7 @@ TAO::SSLIOP::ORBInitializer::post_init (
   TAO::SL3::CredentialsCurator_var tao_curator =
     TAO::SL3::CredentialsCurator::_narrow (curator.in ());
 
-  TAO::SSLIOP::CredentialsAcquirerFactory * factory;
+  TAO::SSLIOP::CredentialsAcquirerFactory * factory = 0;
   ACE_NEW_THROW_EX (factory,
                     TAO::SSLIOP::CredentialsAcquirerFactory,
                     CORBA::NO_MEMORY ());
