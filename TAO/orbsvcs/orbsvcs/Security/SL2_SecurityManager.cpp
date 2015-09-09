@@ -96,8 +96,8 @@ bool
 TAO::Security::AccessDecision::ReferenceKeyType::operator==
   (const ReferenceKeyType& other) const
 {
-  ::CORBA::ULong olen = this->oid_->length();
-  ::CORBA::ULong alen = this->adapter_id_->length();
+  ::CORBA::ULong const olen = this->oid_->length();
+  ::CORBA::ULong const alen = this->adapter_id_->length();
 
   if (olen == other.oid_->length() &&
       alen == other.adapter_id_->length())
