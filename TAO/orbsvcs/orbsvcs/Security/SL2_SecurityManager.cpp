@@ -159,8 +159,11 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
   CORBA::Boolean access_decision = false;
   if (this->access_map_.find (key, access_decision) == -1)
     {
-      // Couldn't find the IOR in the map, so we use the default dependent on collocation or not
-      access_decision = collocated ? this->default_collocated_decision_ : this->default_allowance_decision_;
+      // It is not in the map, so let us take the global default
+      access_decision = this->default_allowance_decision_;
+      // When collocated is enabled, this overrides the global value
+      if (this->default_collocated_decision_)
+        access_decision = true;
       if (TAO_debug_level >= 3)
         ORBSVCS_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%C)"
