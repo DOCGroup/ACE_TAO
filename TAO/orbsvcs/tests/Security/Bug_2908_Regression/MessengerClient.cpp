@@ -52,6 +52,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     CORBA::String_var message = CORBA::string_dup("Hello!");
 
+    ACE_DEBUG((LM_DEBUG, "CLIENT: Start sending message\n"));
+
     // Send a message
     messenger->send_message("user", "TAO Test", message.inout());
 
