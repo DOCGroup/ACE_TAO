@@ -94,7 +94,7 @@ namespace {
       this->file_ = ACE_OS::fopen (file.c_str(), flags_str);
 #else
       this->file_lock_.reset
-        (new ACE_File_Lock (ACE_TEXT_CHAR_TO_TCHAR (file.c_str ()),
+        (new ACE_File_Lock (file.c_str (),
                             flags_, 0666, unlink_in_destructor));
 
       // Truncating output so this will not allow reading then writing
@@ -202,8 +202,8 @@ namespace {
                            const ACE_CString& name,
                            const ACE_TCHAR* tag)
   {
-    ACE_OS::fprintf (list, "\t<%s", tag);
-    ACE_OS::fprintf (list, " fname=\"%s\"", fname.c_str ());
+    ACE_OS::fprintf (list, "\t<%s", ACE_TEXT_ALWAYS_CHAR (tag));
+    ACE_OS::fprintf (list, " fname=\"%s\"", ACE_TEXT_ALWAYS_CHAR (fname.c_str ()));
     ACE_OS::fprintf (list, " name=\"%s\" />\n", name.c_str ());
   }
 
