@@ -14,12 +14,10 @@ Messenger_i::~Messenger_i (void)
 {
 }
 
-CORBA::Boolean Messenger_i::send_message (
-    const char *,
-    const char *,
-    char *&)
+CORBA::Boolean
+Messenger_i::send_message (const char *, const char *, char *&)
 {
-  ACE_DEBUG((LM_DEBUG, "\nInside send_message()...."));
+  ACE_DEBUG((LM_DEBUG, "Inside send_message()....\n"));
   const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
   CORBA::Object_var obj =
     orb_->string_to_object (ior);
@@ -49,9 +47,16 @@ CORBA::Boolean Messenger_i::send_message (
   return client_task.result_;
 }
 
-CORBA::Boolean Messenger_i::call_message (const char * user_name)
+CORBA::Boolean
+Messenger_i::call_message (const char * user_name)
 {
-    ACE_DEBUG((LM_DEBUG, "\nInside call_message()...."));
-    ACE_DEBUG((LM_DEBUG, "\nMessage from: %s", user_name));
+    ACE_DEBUG((LM_DEBUG, "Inside call_message()....\n"));
+    ACE_DEBUG((LM_DEBUG, "Message from: %s\n", user_name));
     return true;
+}
+
+void
+Messenger_i::shutdown (void)
+{
+  this->orb_->shutdown (0);
 }
