@@ -182,8 +182,7 @@ namespace TAO
     /// @c IOP::ServiceContextList.
     virtual void add_reply_service_context (
         const IOP::ServiceContext & service_context,
-        CORBA::Boolean replace
-        );
+        CORBA::Boolean replace);
 
   public:
 
