@@ -59,6 +59,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     ACE_DEBUG((LM_DEBUG, "CLIENT: Message was sent\n"));
 
+    messenger->shutdown ();
+
     orb->destroy();
   }
   catch (const CORBA::Exception& ex)

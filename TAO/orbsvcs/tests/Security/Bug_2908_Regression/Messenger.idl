@@ -1,9 +1,15 @@
 interface Messenger
-    {
-        boolean send_message ( in    string user_name,
-                               in    string subject,
-                               inout string message );
+  {
+    boolean send_message (in string user_name,
+                          in string subject,
+                          inout string message );
 
-       boolean call_message( in    string user_name);
-    };
+    boolean call_message(in string user_name);
+
+    /// A method to shutdown the ORB
+    /**
+     * This method is used to simplify the test shutdown process
+     */
+    oneway void shutdown ();
+  };
 
