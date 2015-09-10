@@ -9,25 +9,20 @@
 #include "tao/PortableServer/POAC.h"
 #include "tao/debug.h"
 
-#if defined (SSLIOP_DEBUG_PEER_CERTIFICATE)
-#include <openssl/x509.h>   // @@ For debugging code below
-#endif /* SSLIOP_DEBUG_PEER_CERTIFICATE */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor
-(
+TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor (
   PortableInterceptor::ORBInitInfo_ptr info,
   ::Security::QOP default_qop,
-  size_t tss_slot
-)
-: qop_ (default_qop)
+  size_t tss_slot,
+  bool collocated)
+  : qop_ (default_qop),
+    collocated_ (collocated)
 {
   /*
    * Cache references to the "Current" objects that we'll need during
    * during invocations.
    */
-
   CORBA::Object_var obj =
     info->resolve_initial_references ("SSLIOPCurrent");
 
@@ -50,30 +45,19 @@ TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor
 
   obj = info->resolve_initial_references ("SecurityLevel2:SecurityManager");
   this->sec2manager_ = SecurityLevel2::SecurityManager::_narrow (obj.in ());
-
-  if (! CORBA::is_nil (this->sec2manager_.in ()))
-    {
-      // set the slot id?  things seem to work without doing this
-    }
-
-#if 0
-  // Don't need this now that we're not using access_allowed(), but
-  // I'm leaving the code here just in case it would become convenient
-  // for some other use.
-  obj = info->resolve_initial_references ("POACurrent");
-  this->poa_current_ = PortableServer::Current::_narrow (obj.in ());
-#endif
 }
 
-TAO::SSLIOP::Server_Invocation_Interceptor::~Server_Invocation_Interceptor (
-  void)
+TAO::SSLIOP::Server_Invocation_Interceptor::~Server_Invocation_Interceptor (void)
 {
 }
 
 char *
 TAO::SSLIOP::Server_Invocation_Interceptor::name ()
 {
-  return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor");
+  if (this->collocated_)
+    return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor::Collocated");
+  else
+    return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor::Remote");
 }
 
 void
@@ -87,10 +71,9 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request_service_contexts (
 {
 }
 
-
 void
 TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
-    PortableInterceptor::ServerRequestInfo_ptr ri )
+    PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   SecurityLevel2::AccessDecision_var ad_tmp =
     this->sec2manager_->access_decision ();
@@ -101,7 +84,7 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
     this->ssliop_current_->no_context ();
 
   if (TAO_debug_level >= 3)
-    ORBSVCS_DEBUG ((LM_DEBUG, "SSLIOP (%P|%t) Interceptor (context), ssl=%d\n", !(no_ssl)));
+    ORBSVCS_DEBUG ((LM_DEBUG, "SSLIOP (%P|%t) Interceptor (context), ssl=%d collocated=%d\n", !(no_ssl), this->collocated_));
 
   // if
   // (1) no SSL session state is available (which means that the
@@ -142,23 +125,24 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
       catch (...) {
       }
 #endif
-
       /* Gather the elements that uniquely identify the target object */
       CORBA::ORBid_var orb_id = ri->orb_id ();
       CORBA::OctetSeq_var adapter_id = ri->adapter_id ();
       CORBA::OctetSeq_var object_id = ri->object_id ();
       CORBA::String_var operation_name = ri->operation ();
 
-      CORBA::Boolean it_should_happen = false;
-      it_should_happen = ad->access_allowed_ex (orb_id.in (),
-                                                adapter_id.in (),
-                                                object_id.in (),
-                                                cred_list,
-                                                operation_name.in());
+      CORBA::Boolean const it_should_happen =
+        ad->access_allowed_ex (orb_id.in (),
+                               adapter_id.in (),
+                               object_id.in (),
+                               cred_list,
+                               operation_name.in(),
+                               this->collocated_);
+
       if (TAO_debug_level >= 3)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-            "TAO (%P|%t) SL2::access_allowed_ex returned %s\n",
+            "TAO (%P|%t) SL2::access_allowed_ex returned %C\n",
             it_should_happen ? "true" : "false"));
         }
 

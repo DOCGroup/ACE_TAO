@@ -48,7 +48,10 @@ namespace TAO
      *
      * This server request interceptor rejects insecure request
      * invocations if the effective target object policy requires
-     * secure invocations.
+     * secure invocations. Two instances are going to be used,
+     * one for collocated and one for remote invocations because
+     * within the interception point we don't know whether we
+     * are collocated or not
      */
     class Server_Invocation_Interceptor
       : public virtual PortableInterceptor::ServerRequestInterceptor,
@@ -62,10 +65,12 @@ namespace TAO
                     the interceptor can get access to initial references, etc.
         \param default_qop the default Quality of Protection
         \param tss_slot the TSS slot used by the various security features.
+        \param collocated Are we handling collocated calls in this instance or not
       */
       Server_Invocation_Interceptor (PortableInterceptor::ORBInitInfo_ptr info,
                                      ::Security::QOP default_qop,
-                                     size_t tss_slot);
+                                     size_t tss_slot,
+                                     bool collocated);
 
       /**
        * @name PortableInterceptor::ServerRequestInterceptor Methods
@@ -126,6 +131,9 @@ namespace TAO
 
       /// The default quality-of-protection settings in use.
       ::Security::QOP qop_;
+
+      /// Are we handling collocated calls
+      bool collocated_;
 
       /// SecurityLevel2 security manager reference
       SecurityLevel2::SecurityManager_var sec2manager_;

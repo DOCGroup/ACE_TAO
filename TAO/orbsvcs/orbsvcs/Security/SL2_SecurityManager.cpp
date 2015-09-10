@@ -96,8 +96,8 @@ bool
 TAO::Security::AccessDecision::ReferenceKeyType::operator==
   (const ReferenceKeyType& other) const
 {
-  ::CORBA::ULong olen = this->oid_->length();
-  ::CORBA::ULong alen = this->adapter_id_->length();
+  ::CORBA::ULong const olen = this->oid_->length();
+  ::CORBA::ULong const alen = this->adapter_id_->length();
 
   if (olen == other.oid_->length() &&
       alen == other.adapter_id_->length())
@@ -121,7 +121,8 @@ TAO::Security::AccessDecision::ReferenceKeyType::operator const char* () const
 }
 
 TAO::Security::AccessDecision::AccessDecision ()
-  : default_allowance_decision_ (false)
+  : default_allowance_decision_ (false),
+    default_collocated_decision_ (false)
 {
 }
 
@@ -144,7 +145,8 @@ TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr /*obj */)
 
 CORBA::Boolean
 TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
-                                                 const char *operation_name)
+                                                 const char *operation_name,
+                                                 CORBA::Boolean collocated)
 {
   // LOCK THE MAP!
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->map_lock_,
@@ -157,19 +159,22 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
   CORBA::Boolean access_decision = false;
   if (this->access_map_.find (key, access_decision) == -1)
     {
-      // Couldn't find the IOR in the map, so we use the default
+      // It is not in the map, so let us take the global default
       access_decision = this->default_allowance_decision_;
+      // When collocated is enabled, this overrides the global value
+      if (this->default_collocated_decision_)
+        access_decision = true;
       if (TAO_debug_level >= 3)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
-                    " NOT FOUND using default %d\n",
+                    "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%C)"
+                    " collocated %d NOT FOUND using default %d\n",
                     hash.operator()(key),
-                    operation_name, access_decision));
+                    operation_name, collocated, access_decision));
     }
   else if (TAO_debug_level >= 3)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%s)"
+                  "TAO (%P|%t) SL2_AccessDecision::access_decision(%x,%C)"
                   " found with decision %d\n",
                   hash.operator()(key),
                   operation_name, access_decision));
@@ -186,14 +191,15 @@ TAO::Security::AccessDecision::access_allowed_ex (
           const ::CORBA::OctetSeq & adapter_id,
           const ::CORBA::OctetSeq & object_id,
           const ::SecurityLevel2::CredentialsList & /*cred_list */,
-          const char * operation_name)
+          const char * operation_name,
+          ::CORBA::Boolean collocated_invocation)
 {
   OBJECT_KEY key;
   key.orbid_ = orb_id;
   key.adapter_id_ = adapter_id;
   key.oid_ = object_id;
 
-  return this->access_allowed_i (key, operation_name);
+  return this->access_allowed_i (key, operation_name, collocated_invocation);
 }
 
 CORBA::Boolean
@@ -318,6 +324,18 @@ void
 TAO::Security::AccessDecision::default_decision (CORBA::Boolean d)
 {
   this->default_allowance_decision_ = d;
+}
+
+CORBA::Boolean
+TAO::Security::AccessDecision::default_collocated_decision (void)
+{
+  return this->default_collocated_decision_;
+}
+
+void
+TAO::Security::AccessDecision::default_collocated_decision (CORBA::Boolean d)
+{
+  this->default_collocated_decision_ = d;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
