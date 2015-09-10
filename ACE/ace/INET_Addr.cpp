@@ -896,7 +896,21 @@ ACE_INET_Addr::set_port_number (u_short port_number,
     this->inet_addr_.in6_.sin6_port = port_number;
   else
 #endif /* ACE_HAS_IPV6 */
-  this->inet_addr_.in4_.sin_port = port_number;
+    this->inet_addr_.in4_.sin_port = port_number;
+
+  if (this->inet_addrs_.empty ())
+    return;
+  for (std::vector<union ip46>::iterator i = this->inet_addrs_.begin ();
+       i != this->inet_addrs_.end ();
+       i++)
+    {
+#if defined (ACE_HAS_IPV6)
+      if (this->get_type () == AF_INET6)
+        i->in6_.sin6_port = port_number;
+      else
+#endif /* ACE_HAS_IPV6 */
+        i->in4_.sin_port = port_number;
+    }
 }
 
 // returns -2 when the hostname is truncated

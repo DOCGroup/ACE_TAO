@@ -307,7 +307,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
               this->print_usage ();
               return -1;
             }
-          this->ft_endpoint_ = shifter.get_current ();
+          this->ft_endpoint_ = ACE_TEXT_ALWAYS_CHAR (shifter.get_current ());
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("--ftupdatedelay")) == 0)
@@ -672,7 +672,7 @@ Options::load_registry_options ()
     {
       ACE_ASSERT (type == REG_SZ);
       tmpstr[sz - 1] = '\0';
-      this->ft_endpoint_ = tmpstr;
+      this->ft_endpoint_ = ACE_TEXT_ALWAYS_CHAR (tmpstr);
     }
 
   tmp = 0;
