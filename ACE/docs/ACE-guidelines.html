@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>ACE Software Development Guidelines</title>
-    <link rev=made href="mailto:ace-users@cs.wustl.edu">
+    <link rev=made href="mailto:ace-users@list.isis.vanderbilt.edu">
   </head>
 
 <body text = "#000000"
@@ -811,7 +811,7 @@ Foo::bar ()
 
     <li>Don't use template template arguments, this C++ construct is not
         supported by the HP aCC 3.70 compiler at this moment. For example the
-	following template decleration is one that just doesn't work.
+  following template decleration is one that just doesn't work.
         <pre>
         template&lt;typename S_var, size_t BOUND, template &lt;typename&gt; class Insert_Policy&gt; class A {};
         </pre>
@@ -1186,12 +1186,12 @@ public:
       safe to use the STL generic algoritms. The following have been
       used already and don't seem to cause any portability issues:
       <pre>
-	std::swap
-	std::for_each
-	std::fill
-	std::generate
-	std::transform
-	std::copy
+  std::swap
+  std::for_each
+  std::fill
+  std::generate
+  std::transform
+  std::copy
       </pre><p>
 
   <li>Be <em>very</em> careful with <code>ACE_ASSERT</code>.  It

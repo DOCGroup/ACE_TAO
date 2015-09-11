@@ -543,7 +543,7 @@
 #define LT_OBJDIR ".libs/"
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "ace-bugs@cs.wustl.edu"
+#define PACKAGE_BUGREPORT "ace-bugs@list.isis.vanderbilt.edu"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "ACE"
