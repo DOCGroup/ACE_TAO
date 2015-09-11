@@ -238,7 +238,7 @@ ImR_Locator_i::init (Options& opts)
   this->opts_ = &opts;
   ACE_CString cmdline = opts.cmdline ();
   cmdline += " -orbuseimr 0";
-  ACE_ARGV av (cmdline.c_str ());
+  ACE_ARGV av (ACE_TEXT_CHAR_TO_TCHAR (cmdline.c_str ()));
   int argc = av.argc ();
   ACE_TCHAR** argv = av.argv ();
 

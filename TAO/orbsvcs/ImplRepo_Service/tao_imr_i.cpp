@@ -81,7 +81,7 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
     }
   catch (const CORBA::Exception& ex)
     {
-      ORBSVCS_ERROR ((LM_ERROR, "TAO_IMR_i::init - %s\n", exception_message));
+      ORBSVCS_ERROR ((LM_ERROR, "TAO_IMR_i::init - %C\n", exception_message));
       ex._tao_print_exception ("Exception");
       return -1;
     }
@@ -203,7 +203,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
     act = "AUTO_START";
 
   // Print out information
-  ORBSVCS_DEBUG ((LM_DEBUG, "Server <%s>\n", info.server.in ()));
+  ORBSVCS_DEBUG ((LM_DEBUG, "Server <%C>\n", info.server.in ()));
 
   const char * locked_out = "";
 
@@ -217,7 +217,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   ORBSVCS_DEBUG ((LM_DEBUG,
     "  Activator: %C\n"
     "  Command Line: %C\n"
-    "  Working Directory: %s\n"
+    "  Working Directory: %C\n"
     "  Activation Mode: %C\n"
     "  Number of retries: %d\n"
     "%C",
@@ -228,7 +228,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
     limit - 1,
     locked_out));
   for (CORBA::ULong i = 0; i < info.startup.environment.length (); ++i)
-    ORBSVCS_DEBUG ((LM_DEBUG, "Environment Variable: %s=%s\n",
+    ORBSVCS_DEBUG ((LM_DEBUG, "Environment Variable: %C=%C\n",
     info.startup.environment[i].name.in (),
     info.startup.environment[i].value.in ()));
 
@@ -866,7 +866,7 @@ TAO_IMR_Op_Activate::run (void)
       if (!this->quiet_)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                          "Cannot activate server <%C>, reason: <%s>\n",
+                          "Cannot activate server <%C>, reason: <%C>\n",
                           this->server_name_.c_str (),
                           ex.reason.in ()));
         }
@@ -1001,7 +1001,7 @@ TAO_IMR_Op_IOR::run (void)
         ior += this->server_name_;
       }
 
-      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), ior.c_str ()));
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), ior.c_str ()));
 
       if (this->filename_.length () > 0)
       {
@@ -1062,7 +1062,7 @@ TAO_IMR_Op_Kill::run (void)
       if (!this->quiet_)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                          "Cannot complete kill of <%C>, reason: <%s>\n",
+                          "Cannot complete kill of <%C>, reason: <%C>\n",
                           this->server_name_.c_str (),
                           ex.reason.in ()));
         }
@@ -1106,7 +1106,7 @@ TAO_IMR_Op_Link::run (void)
   catch (const ImplementationRepository::CannotComplete& ex)
     {
       ORBSVCS_ERROR ((LM_ERROR,
-                      "Cannot complete kill of <%C>, reason: <%s>\n",
+                      "Cannot complete kill of <%C>, reason: <%C>\n",
                       this->server_name_.c_str (),
                       ex.reason.in ()));
       return TAO_IMR_Op::CANNOT_COMPLETE;
@@ -1366,7 +1366,7 @@ TAO_IMR_Op_Register::run (void)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               "Updating Server <%C> with default "
-                              "activator of <%s>.\n",
+                              "activator of <%C>.\n",
                               this->server_name_.c_str (),
                               options->activator.in ()));
             }
@@ -1420,8 +1420,8 @@ TAO_IMR_Op_List::display_server_information (const ImplementationRepository::Ser
   else
     {
       if (this->terse_)
-        ORBSVCS_DEBUG ((LM_DEBUG, "%s\n", info.server.in ()));
+        ORBSVCS_DEBUG ((LM_DEBUG, "%C\n", info.server.in ()));
       else
-        ORBSVCS_DEBUG ((LM_DEBUG, "<%s> %s\n", info.server.in (), maybe));
+        ORBSVCS_DEBUG ((LM_DEBUG, "<%C> %C\n", info.server.in (), maybe));
     }
 }
