@@ -125,7 +125,8 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
                 }
               else
                 {
-                  this->extra_params_.push_back (std::make_pair (ACE_TEXT_ALWAYS_CHAR (name.c_str()), value));
+                  const ACE_CString name_cstr (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
+                  this->extra_params_.push_back (std::make_pair (name_cstr, value));
                 }
             }
         }
