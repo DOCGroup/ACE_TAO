@@ -150,7 +150,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       CORBA::String_var ior = this->orb_->object_to_string (activator.in ());
 
       if (this->debug_ > 0)
-        ORBSVCS_DEBUG((LM_DEBUG, "ImR Activator: Starting %s\n", name_.c_str ()));
+        ORBSVCS_DEBUG((LM_DEBUG, "ImR Activator: Starting %C\n", name_.c_str ()));
 
       // initialize our process manager.
       // This requires a reactor that has signal handling.
@@ -173,7 +173,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       if (this->debug_ > 1)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-            "ImR Activator: The Activator IOR is: <%s>\n", ior.in ()));
+            "ImR Activator: The Activator IOR is: <%C>\n", ior.in ()));
         }
 
       // The last thing we do is write out the ior so that a test program can assume
@@ -206,7 +206,7 @@ ImR_Activator_i::init (Activator_Options& opts)
   // Must use IOR style objrefs, because URLs sometimes get mangled when passed
   // to ACE_Process::spawn().
   cmdline += "-ORBUseImR 0 -ORBObjRefStyle IOR ";
-  ACE_ARGV av (cmdline.c_str ());
+  ACE_ARGV av (ACE_TEXT_CHAR_TO_TCHAR (cmdline.c_str ()));
   int argc = av.argc ();
 
   CORBA::ORB_var orb =
@@ -306,7 +306,7 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
 {
   if (debug_ > 1)
     ORBSVCS_DEBUG((LM_DEBUG,
-                   "ImR Activator: Killing server <%s>...\n",
+                   "ImR Activator: Killing server <%C>...\n",
                    name));
   pid_t pid = static_cast<pid_t>(lastpid);
   bool found = false;
@@ -329,7 +329,7 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
         : ACE::terminate_process (pid);
       if (debug_ > 1)
         ORBSVCS_DEBUG((LM_DEBUG,
-                       "ImR Activator: Killing server <%s> "
+                       "ImR Activator: Killing server <%C> "
                        "signal %d to pid %d, result = %d\n",
                        name, signum, pid, result));
       if (!found && result == 0 && this->notify_imr_)
@@ -442,23 +442,25 @@ ImR_Activator_i::start_server(const char* name,
   // process's environment.
   proc_opts.enable_unicode_environment ();
 
-  proc_opts.setenv (ACE_TEXT("TAO_USE_IMR"), "1");
+  proc_opts.setenv (ACE_TEXT ("TAO_USE_IMR"), ACE_TEXT ("1"));
   if (!CORBA::is_nil (this->locator_.in ()))
     {
       CORBA::String_var ior = orb_->object_to_string (locator_.in ());
-      proc_opts.setenv (ACE_TEXT("ImplRepoServiceIOR"), ior.in());
+      proc_opts.setenv (ACE_TEXT ("ImplRepoServiceIOR"),
+                        ACE_TEXT_CHAR_TO_TCHAR (ior.in ()));
     }
 
   for (CORBA::ULong i = 0; i < env.length (); ++i)
     {
-      proc_opts.setenv (ACE_TEXT_CHAR_TO_TCHAR(env[i].name.in ()), env[i].value.in ());
+      proc_opts.setenv (ACE_TEXT_CHAR_TO_TCHAR (env[i].name.in ()),
+                        ACE_TEXT_CHAR_TO_TCHAR (env[i].value.in ()));
     }
 
   pid_t pid = this->process_mgr_.spawn (proc_opts, this);
   if (pid == ACE_INVALID_PID)
     {
       ORBSVCS_ERROR ((LM_ERROR,
-        "ImR Activator: Cannot start server <%C> using <%s>\n", name, cmdline));
+        "ImR Activator: Cannot start server <%C> using <%C>\n", name, cmdline));
 
       throw ImplementationRepository::CannotActivate(
         CORBA::string_dup (
