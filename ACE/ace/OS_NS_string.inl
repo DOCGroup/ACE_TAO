@@ -216,7 +216,11 @@ ACE_OS::strdup (const char *s)
 #  elif defined (ACE_HAS_NONCONST_STRDUP)
   return ::strdup (const_cast<char *> (s));
 #else
+#if defined (_MSC_VER) && (_MSC_VER >= 1800)
+  return ::_strdup (s);
+#else
   return ::strdup (s);
+#endif /* defined (_MSC_VER) && (_MSC_VER >= 1800) */
 #  endif /* (ACE_LACKS_STRDUP && !ACE_STRDUP_EQUIVALENT) || ... */
 }
 

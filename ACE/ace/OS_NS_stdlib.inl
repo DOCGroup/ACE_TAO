@@ -337,7 +337,11 @@ ACE_OS::putenv (const char *string)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
 #else /* ! ACE_HAS_WINCE */
+#if defined (_MSC_VER) && (_MSC_VER >= 1800)
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::_putenv (const_cast <char *> (string)), int, -1);
+#else
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::putenv (const_cast <char *> (string)), int, -1);
+#endif /* defined (_MSC_VER) && (_MSC_VER >= 1800) */
 #endif /* ACE_LACKS_PUTENV && ACE_HAS_SETENV */
 }
 

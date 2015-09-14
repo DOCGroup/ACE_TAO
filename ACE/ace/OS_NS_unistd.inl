@@ -53,8 +53,13 @@ ACE_OS::access (const char *path, int amode)
     ACE_NOTSUP_RETURN (-1);
 #  endif  /* ACE_HAS_ACCESS_EMULATION */
 #elif defined(ACE_WIN32)
+#if defined (_MSC_VER) && (_MSC_VER >= 1800)
+  // Windows doesn't support checking X_OK(6)
+  ACE_OSCALL_RETURN (::_access (path, amode & 6), int, -1);
+#else
   // Windows doesn't support checking X_OK(6)
   ACE_OSCALL_RETURN (::access (path, amode & 6), int, -1);
+#endif /* defined (_MSC_VER) && (_MSC_VER >= 1800)*/
 #else
   ACE_OSCALL_RETURN (::access (path, amode), int, -1);
 #endif /* ACE_LACKS_ACCESS */
@@ -125,7 +130,11 @@ ACE_OS::chdir (const char *path)
 #elif defined (ACE_HAS_NONCONST_CHDIR)
   ACE_OSCALL_RETURN (::chdir (const_cast<char *> (path)), int, -1);
 #else
+#if defined (_MSC_VER) && (_MSC_VER >= 1800)
+  ACE_OSCALL_RETURN (::_chdir (path), int, -1);
+#else
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
+#endif /* defined (_MSC_VER) && (_MSC_VER >= 1800) */
 #endif /* ACE_HAS_NONCONST_CHDIR */
 }
 
@@ -152,7 +161,11 @@ ACE_OS::rmdir (const char *path)
                                           ace_result_),
                         int, -1);
 #else
+#if defined (_MSC_VER) && (_MSC_VER >= 1800)
+  ACE_OSCALL_RETURN (::_rmdir (path), int, -1);
+#else
   ACE_OSCALL_RETURN (::rmdir (path), int, -1);
+#endif /* defined (_MSC_VER) && (_MSC_VER >= 1800) */
 #endif /* ACE_WIN32 */
 }
 
@@ -403,7 +416,11 @@ ACE_OS::getcwd (char *buf, size_t size)
   ACE_UNUSED_ARG (size);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
+#if defined (_MSC_VER) && (_MSC_VER >= 1800)
+  return ::_getcwd (buf, static_cast<int> (size));
+#else
   return ::getcwd (buf, static_cast<int> (size));
+#endif /* defined (_MSC_VER) && (_MSC_VER >= 1800) */
 #else
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
 #endif /* ACE_LACKS_GETCWD */
@@ -1008,8 +1025,12 @@ ACE_OS::swab (const void *src,
   char *to = static_cast<char *> (dest);
 #  if defined (ACE_HAS_INT_SWAB)
   int ilength = ACE_Utils::truncate_cast<int> (length);
+#if defined (_MSC_VER) && (_MSC_VER >= 1800)
+  ::_swab (from, to, ilength);
+#else
   ::swab (from, to, ilength);
-#  else
+#endif
+#else
   ::swab (from, to, length);
 #  endif /* ACE_HAS_INT_SWAB */
 #elif defined (ACE_HAS_CONST_CHAR_SWAB)
@@ -1163,7 +1184,11 @@ ACE_OS::unlink (const char *path)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
 # else
+#if defined (_MSC_VER) && (_MSC_VER >= 1800)
+  ACE_OSCALL_RETURN (::_unlink (path), int, -1);
+#else
   ACE_OSCALL_RETURN (::unlink (path), int, -1);
+#endif /* defined (_MSC_VER) && (_MSC_VER >= 1800) */
 # endif /* ACE_HAS_NONCONST_UNLINK */
 }
 
