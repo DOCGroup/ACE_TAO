@@ -2,6 +2,7 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
+#include "ace/ACE.h"
 #include "ace/Monitor_Admin_Manager.h"
 #include "ace/Monitor_Control_Action.h"
 #include "ace/Monitor_Point_Registry.h"
