@@ -974,7 +974,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // addr.  All endpoint strings should be of the above
           // form(s).
           //
-          // Multiple sets of endpoint may be seperated by a semi-colon `;'.
+          // Multiple sets of endpoint may be separated by a semi-colon `;'.
           // For example:
           //
           //   corbaloc:space:2001,1.2@odyssey:2010;uiop://foo,bar

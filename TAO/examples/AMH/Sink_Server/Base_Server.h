@@ -68,7 +68,7 @@ public:
   // @@ Mayur, please put inlined methods in a separate `.inl' file,
   //    as detailed in the ACE/TAO coding/style guidelines, and as per
   //    our conventions.
-  // Mayur: A seperate file for just one method? AAAGH. OK.
+  // Mayur: A separate file for just one method? AAAGH. OK.
 
   /// Accesor method (for servants) to the initialised ORB
   CORBA::ORB_ptr orb (void);
