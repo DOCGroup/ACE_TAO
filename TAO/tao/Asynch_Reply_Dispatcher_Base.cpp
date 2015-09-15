@@ -32,7 +32,7 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
   , lock_ (0)
   , is_reply_dispatched_ (false)
 {
-  // @@ NOTE: Need a seperate option for this..
+  // @@ NOTE: Need a separate option for this..
   this->lock_ =
     orb_core->resource_factory ()->create_cached_connection_lock ();
 }

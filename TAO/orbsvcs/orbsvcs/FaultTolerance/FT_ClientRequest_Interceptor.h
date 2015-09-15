@@ -46,7 +46,7 @@ namespace TAO
    *
    * @brief Request service context generator class for the client.
    *
-   * @@TODO Need to see whether we can have seperate resource factory
+   * @@TODO Need to see whether we can have separate resource factory
    * and put this there.  Let us get this going first
    */
   class FT_TSS

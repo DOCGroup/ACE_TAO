@@ -133,7 +133,7 @@ int
 TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
                                              TAO_EndpointSet &endpoint_set)
 {
-  // Parse the string into seperate endpoints, where `endpoints' is of
+  // Parse the string into separate endpoints, where `endpoints' is of
   // the form:
   //
   //    protocol1://V,v@addr1,...,addrN;protocol2://addr1,...,W.w@addrN;...

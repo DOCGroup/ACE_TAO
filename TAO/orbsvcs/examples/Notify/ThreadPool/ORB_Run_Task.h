@@ -16,7 +16,7 @@
 /**
  * @class TAO_Notify_ORB_Run_Task
  *
- * @brief Run the ORB::run method in a seperate thread.
+ * @brief Run the ORB::run method in a separate thread.
  */
 class TAO_Notify_ORB_Run_Task : public ACE_Task_Base
 {

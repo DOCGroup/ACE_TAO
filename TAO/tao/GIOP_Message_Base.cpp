@@ -563,7 +563,7 @@ TAO_GIOP_Message_Base::consolidate_node (TAO_Queued_Data *qd,
     }
   else
     {
-      // @todo: Need to abstract this out to a seperate method...
+      // @todo: Need to abstract this out to a separate method...
       size_t copy_len = qd->missing_data ();
 
       if (copy_len > incoming.length ())

@@ -53,7 +53,7 @@ public:
 private:
 
   /// Directives to be passed to be processed by the Service
-  /// Configurator in seperate threads.
+  /// Configurator in separate threads.
   ACE_TCHAR directive_[2][BUFSIZ];
 
 };

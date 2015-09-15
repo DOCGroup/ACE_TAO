@@ -15,7 +15,7 @@
  *  async scatter/gather stream I/O and async scatter/gather file I/O.
  *  The wire transfer protocol is very naive (and totally non
  *  reliable...) - when both connections are closed, EOF is assumed.
- *  The test can be also run in a seperated sender and receiver mode,
+ *  The test can be also run in a separated sender and receiver mode,
  *  to test real network influences.
  *
  *  This test is based upon some building blocks taken from the
