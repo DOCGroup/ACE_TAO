@@ -30,7 +30,7 @@ do { \
 
 int
 // This has been unconditionally turned on for the time being since I can't
-// figure out an easy way to enable it and still keep ACE_TMAIN in a seperate
+// figure out an easy way to enable it and still keep ACE_TMAIN in a separate
 // cpp.
 #if 1 || defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) || defined (ACE_LACKS_FORK)
 // ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two

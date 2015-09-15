@@ -66,7 +66,7 @@ namespace TAO
         break;
 
     case TAO_Target_Specification::Reference_Addr:
-      // We need to call the method seperately. If there is no
+      // We need to call the method separately. If there is no
       // IOP::IOR info, the call would create the info and return the
       // index that we need.
       CORBA::ULong index = 0;

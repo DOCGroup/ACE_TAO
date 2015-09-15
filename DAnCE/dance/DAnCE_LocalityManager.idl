@@ -20,7 +20,7 @@ module DAnCE
    * @brief Interface used to manage the lifecycle of instances.
    *
    * This interface is used by the LocalityManager to manage the lifecycle
-   * of various instance types.  Each instance type requires a seperate IDH.
+   * of various instance types.  Each instance type requires a separate IDH.
    */
   local interface InstanceDeploymentHandler
   {

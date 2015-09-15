@@ -40,7 +40,7 @@ IOR_corbaname_Client_i::run (void)
 
       // The corbaname URL contains the host at which an NamingContext
       // Object can be found and also the stringified form of an entry
-      // in the Naming Service seperated by '#'. For simplicity,
+      // in the Naming Service separated by '#'. For simplicity,
       // in this example, we are specifying the stringified form of
       // the binding directly without using <to_string> method on
       // <name>. "#" refers to the seperator between the host and the
