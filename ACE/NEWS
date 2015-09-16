@@ -13,18 +13,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 
 . Ended daily maintenance for OpenVMS
 
-. Relaxed upper limit on POA Thread pool size.
-
-. Fixed PICurrent improper reset issue. Now slot data is retained through an
-  ImR forced retry.
-
-. Bugzilla #4205 fixed.
-
-. Defaulted IIOP endpoints on IPv6 enabled systems will no longer append localhost
-  to the IOR if there are no routable IPv6 addresses but there are routable IPv4
-  addresses available.
-
-. Improved the performance of the FT-ImR while under very heavy loads.
+. Fixed a defect in ACE_INET_Addr when there is a non-empty interface
+  address list and set_port_number() is called.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.3.1 and ACE-6.3.2
 ====================================================
