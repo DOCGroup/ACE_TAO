@@ -2229,10 +2229,3 @@ project(Missing_Svc_Conf_Test) : acetest {
     Missing_Svc_Conf_Test.cpp
   }
 }
-
-project(Cached_Conn_Strategy_Fail_Test): acetest {
-  exename = Cached_Conn_Strategy_Fail_Test
-  Source_Files {
-    Cached_Conn_Strategy_Fail_Test.cpp
-  }
-}

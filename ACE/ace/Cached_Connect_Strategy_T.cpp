@@ -271,10 +271,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
       // connect().
 
       if (errno == EWOULDBLOCK || errno == ETIMEDOUT)
-        {
-          errno = ENOTSUP;
-          return -1;
-        }
+        errno = ENOTSUP;
       else if (ACE::out_of_handles (errno) || errno == EADDRINUSE)
         {
           // If the connect failed due to the process running out of
