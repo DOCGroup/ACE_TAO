@@ -136,6 +136,9 @@ public:
   /// nothing else is available.
   static ACE_SSL_Context *instance (void);
 
+  /// Explicitly delete the Singleton context.
+  static void close (void);
+
   /**
    * Set the CTX mode.  The mode can be set only once, afterwards the
    * function has no effect and returns -1.
