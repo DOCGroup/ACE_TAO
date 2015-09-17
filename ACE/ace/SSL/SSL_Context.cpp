@@ -135,6 +135,12 @@ ACE_SSL_Context::instance (void)
 }
 
 void
+ACE_SSL_Context::close (void)
+{
+  ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::close ();
+}
+
+void
 ACE_SSL_Context::ssl_library_init (void)
 {
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex,
