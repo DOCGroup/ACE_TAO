@@ -1,0 +1,697 @@
+commit bb08a81357f6b7e87aafb1807d114b945552c11b
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Sep 16 16:25:36 2015 -0500
+
+    update NEWS, putting TAO notes in the correct file
+
+commit 9b0d572eac0fe89c731d0b4d537fc02a02f4c694
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Sep 16 13:59:48 2015 -0500
+
+    update NEWS
+
+commit 8b0ee3b9d25f29c23bb13919865d6b8266faa5d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 16 08:55:38 2015 +0200
+
+    Revert "Fix connecting timeout without returning -1 in ACE_Cached_Connect_Strategy_T"
+
+commit 784e8c92244dc081bef3d7ac6ba5ddc0d720474b
+Merge: 006534e 5100781
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 18:26:56 2015 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 006534e2c5070472f5ae630018a904191dbf42a1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 18:26:19 2015 +0200
+
+    Use separate instead of seperate
+        * ACE/ace/Functor_String.h:
+        * ACE/ace/WFMO_Reactor.h:
+        * ACE/tests/Env_Value_Test.cpp:
+        * ACE/tests/Proactor_Scatter_Gather_Test.cpp:
+        * ACE/tests/Service_Config_DLL.h:
+        * CIAO/docs/TODO.html:
+        * DAnCE/dance/DAnCE_LocalityManager.idl:
+        * TAO/TAO-INSTALL.html:
+        * TAO/docs/releasenotes/index.html:
+        * TAO/examples/AMH/Sink_Server/Base_Server.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.h:
+        * TAO/orbsvcs/examples/Notify/Lanes/ORB_Run_Task.h:
+        * TAO/orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * TAO/orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.h:
+        * TAO/orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+        * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+        * TAO/orbsvcs/tests/ior_corbaname/ior_corbaname_client_i.cpp:
+        * TAO/tao/Asynch_Reply_Dispatcher_Base.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/Remote_Invocation.cpp:
+        * TAO/tao/Transport_Connector.cpp:
+        * TAO/tao/params.cpp:
+        * TAO/tests/ORB_Local_Config/Service_Dependency/Service_Config_DLL.h:
+
+commit 51007817985b0c4eb361d567929be02d2f1b9109
+Merge: 7809d18 2a15b7e
+Author: Steve Huston <shuston@riverace.com>
+Date:   Tue Sep 15 11:08:08 2015 -0400
+
+    Merge pull request #45 from likema/feature/fix-cached-connect-return-code
+    
+    Fix connecting timeout without returning -1 in ACE_Cached_Connect_Strategy_T
+
+commit 98a1a5b72caee91fe080503dc8ad1a044fd35749
+Author: Felix Bünemann <buenemann@louis.info>
+Date:   Mon Sep 14 18:49:46 2015 +0200
+
+    Add ACE support for MacOS X 10.11 El Capitan
+
+commit 469dbb215ee76dce382038a179847f4ecb6c65a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 21:03:29 2015 +0200
+
+    Updated old email addresses
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/docs/ACE-guidelines.html:
+        * ACE/docs/ACE-subsets.html:
+        * TAO/docs/implrepo/paper.html:
+        * TAO/docs/minimumTAO.html:
+
+commit 133850bf8c710a14fd0600060b1ab75c10b7e36a
+Merge: 2a231f8 99c0673
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Sep 9 10:43:26 2015 -0500
+
+    Merge pull request #130 from iamtheschmitzer/master
+    
+    make fuzz.pl -m work for GIT repos also
+
+commit 46dae9e6dcf5bfd00096b6e9f24cced71df9e28a
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Sep 9 06:22:34 2015 -0500
+
+    fix for setting port number on an ACE_INET_Addr with a non-empty inet_addrs_ list.
+
+commit 2a15b7ef22158c98c28c04fc7699b47aa3e097c0
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Mon Sep 7 10:47:53 2015 +0800
+
+    Add Cached_Conn_Strategy_Fail_Test into tests/run_test.lst
+
+commit abb7f56a6cc6bace6ccceaa415dde311d63e9ce1
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Aug 31 10:51:10 2015 +0200
+
+    Fix incorrect buffer access.
+    
+        * ACE/protocols/ace/INet/BufferedStreamBuffer.cpp:
+
+commit 392bd7909440c44c5b961fecef14f6e92a4f9889
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Aug 31 08:16:11 2015 +0200
+
+    Plug another hole. Correct state comparison.
+    
+        * ACE/protocols/ace/INet/ClientRequestHandler.cpp:
+        * ACE/protocols/ace/INet/ClientRequestHandler.h:
+          Revert unnecessary singleton export.
+    
+        * ACE/protocols/ace/INet/ConnectionCache.cpp:
+
+commit 99f34e144b81cd42152df1d1e07d39a37b00c0ab
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Sun Aug 30 12:52:17 2015 +0200
+
+    Fix incorrect macro use.
+    
+        * ACE/protocols/ace/INet/ClientRequestHandler.cpp:
+
+commit 9110555c863b7c49e9fa9e50dfb13fecfefdc660
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Sun Aug 30 12:00:21 2015 +0200
+
+    Fix singleton exports.
+    
+        * ACE/protocols/ace/INet/ClientRequestHandler.cpp:
+        * ACE/protocols/ace/INet/ClientRequestHandler.h:
+
+commit 29251f7f353f03eca7675ff30703fb9e5ee35725
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Sun Aug 30 11:44:19 2015 +0200
+
+    Plug a hole. Add missing dtor to clean up.
+    
+        * ACE/protocols/ace/INet/ConnectionCache.cpp:
+        * ACE/protocols/ace/INet/ConnectionCache.h:
+
+commit d9b48d61fcd21a29e1769f5b0e27a590c7e7819f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 27 19:02:49 2015 +0200
+
+    Upgrade to newer doxygen
+        * ACE/etc/ace.doxygen:
+
+commit 99c0673e9717753033d328625110fc08e5601ebc
+Author: Jeff Schmitz <jeffrey.j.schmitz@gmail.com>
+Date:   Tue Aug 18 09:43:05 2015 -0500
+
+    make fuzz.pl -m work for GIT repos also
+
+commit 29c32167113d58737826d774ff248982c220e653
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Tue Aug 4 09:11:45 2015 -0500
+
+    fix for bug 4205
+
+commit 10d715e89013186abbc5d7eac535f8cb7c83489c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 22 16:08:46 2015 +0200
+
+    Also use =delete with Visual Studio 2015
+        * ACE/ace/Global_Macros.h:
+
+commit 8430ff7587150f24d6a050e0ec3e06659c8c3117
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 22 16:08:30 2015 +0200
+
+    Reapply workaround for Visual Studio 2015, not fixed in the final release
+        * ACE/tests/Compiler_Features_27_Test.cpp:
+
+commit bcd30c56f7ef39674a82eb29aa52e9284b923b7e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 22 11:05:34 2015 +0200
+
+    Removed workaround for msvc14 RC
+        * ACE/tests/Compiler_Features_27_Test.cpp:
+
+commit 0f745de1a4b3133f508729e9a7b1328bb8cac884
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Mon Jul 6 17:01:44 2015 -0500
+
+    Add required explicit include as identified by VC12.
+
+commit bde47e74c5571ce65d3550ad47f18b134e88c94f
+Merge: d1888c8 2aa6b42
+Author: Steve Huston <shuston@riverace.com>
+Date:   Wed Jul 1 18:23:33 2015 -0400
+
+    Merge pull request #43 from likema/feature/aix5.1
+    
+    feature/aix5.1
+
+commit d1888c8fc434c9d8250d525a74a4bd8aa948d5bf
+Merge: 6d42324 ea28a54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 30 13:08:06 2015 +0200
+
+    Merge pull request #107 from jwillemsen/jwi-feature-cpp11-chrono-reactor
+    
+    Added support to schedule and reset timers using std::chrono::duratio…
+
+commit 6d423246e5b09cedddd4bdeccfe5b716c0c64195
+Merge: d2b8229 64ee27f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 30 13:07:25 2015 +0200
+
+    Merge pull request #106 from jwillemsen/jwi-cpp11_processmanager-wait
+    
+    Added support to use the wait operations of the ACE process manager u…
+
+commit ea28a545402c6766a376b81ebe0922d0a0ab1d19
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 30 09:21:29 2015 +0200
+
+    Added support to schedule and reset timers using std::chrono::duration at the moment C++11 support is available
+        * ACE/ace/Reactor.h:
+        * ACE/ace/Reactor_Timer_Interface.h:
+        * ACE/tests/Reactor_Timer_Test.cpp:
+
+commit 64ee27f10bdffeb044559503039cc6bf1bc70fe2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 30 08:38:22 2015 +0200
+
+    Revert one test case
+        * ACE/tests/Process_Manager_Test.cpp:
+
+commit ce529b4bc2b80e512f6146c36320e86ace287716
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 29 19:52:49 2015 +0200
+
+    Added support to use the wait operations of the ACE process manager using std::chrono::duration as alternative to ACE_Time_Value
+        * ACE/ace/Process_Manager.h:
+        * ACE/tests/Process_Manager_Test.cpp:
+
+commit b997e3306c121a2c9c3f598c067cdb48c6d5e6eb
+Author: Justin Wilson <wilsonj@ociweb.com>
+Date:   Mon Jun 29 08:37:58 2015 -0500
+
+    Fix conversion warnings.
+
+commit 4c426c4597dae76475eea85d8c130d56142d1032
+Author: Justin Wilson <wilsonj@ociweb.com>
+Date:   Thu Jun 25 14:41:30 2015 -0500
+
+    Fix compiler warnings and failing unit tests.
+
+commit 4bc46d9d28b19bbcb52c43d7a89a588c39098936
+Author: Justin Wilson <wilsonj@ociweb.com>
+Date:   Thu Jun 11 10:48:05 2015 -0500
+
+    Rewrote normalize to fix off-by-one error.  Fixed bug in division and added test.
+
+commit 9a7f51508f6b16367adb043e44d26aff6d265239
+Merge: 0514e70 9ec2d24
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Fri Jun 26 08:35:28 2015 -0500
+
+    Merge pull request #102 from DOCGroup/revert-96-master
+    
+    Revert "Rewrote normalize to fix off-by-one error.  Fixed bug in divi…
+
+commit bfca83a85103a76bd4058697204ba063f1b2f9e6
+Merge: 99c243c fba94d0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 26 13:35:00 2015 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+    
+    Conflicts:
+    	ACE/NEWS
+
+commit 99c243c3bdd0b9994bb5ed432e712969af48247f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 26 13:34:36 2015 +0200
+
+    Mention end of OpenVMS daily maintenance
+        * ACE/NEWS:
+
+commit 9ec2d24abd4b99f6a0233b1ec9b87f527267e563
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Jun 25 12:43:02 2015 -0500
+
+    Revert "Rewrote normalize to fix off-by-one error.  Fixed bug in division and added test."
+
+commit 2aa6b42fa27706a8103c1233d4cbe0164eba7f32
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Fri Jun 26 01:22:59 2015 +0800
+
+    Remove $Id$.
+
+commit e972985eee19a0c0894a5865ae32acedf417dea3
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Fri Jun 26 01:22:22 2015 +0800
+
+    Protect AIX 5.1 lack features.
+
+commit fba94d061ecdf31bf853f1c7a52bba7f54429e25
+Merge: b589dc3 ceb825a
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Jun 24 09:18:27 2015 -0500
+
+    Merge pull request #96 from jrw972/master
+    
+    Rewrote normalize to fix off-by-one error.  Fixed bug in division and added test.
+    This only impacts the new Fixed type.
+
+commit 999fa10b949cb90f86dc8095fff0a5d549a5f910
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Jun 18 13:46:55 2015 -0500
+
+    NEWS entry for VxWorks 7
+
+commit 960cbf4485832a0efda67d62fca20ccbe1153f13
+Merge: 70dbf3e 335210e
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Jun 18 11:11:10 2015 -0500
+
+    Merge remote-tracking branch 'origin/master' into VxWorks7
+
+commit 70dbf3eaa502ada6723ee70bc5f1cdbc38990776
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Jun 18 11:09:59 2015 -0500
+
+    Allow the INSLIB make variable to empty.
+
+commit c851103ff4dc66b76a3071ee88a6c28d93db756c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 18 14:03:40 2015 +0200
+
+    Updated news file
+        * ACE/NEWS:
+
+commit 78cc1a6348d9e7041dd4179796cc2bcbc56d311b
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Jun 16 12:28:20 2015 -0500
+
+    Use -static when linking VxWorks 7 static RTPs.
+    
+    This allows the same lib dir to have libFoo.a and libFoo.so, and the linker
+    will select libFoo.a due to -static.
+
+commit 380e05ec176c6adf52dabf358a80159893d1db1a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jun 15 16:14:04 2015 -0500
+
+    Allow VxWorks kernel DKMs to be built in other directories.
+
+commit 4f176a53eb6d2fbe24bfc2b3fd7fa57fb47a128a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jun 15 10:38:48 2015 -0500
+
+    Support for VxWorks 7.0 kernel mode.
+
+commit 20cf91a8349ef44cba4b01d31d2bea07b2204ec7
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Jun 12 12:48:23 2015 -0500
+
+    Added support for VxWorks 7 kernel mode.
+
+commit 9347add1c3faf5773eec2373b58e7e2569472254
+Merge: 6b75144 37e576e
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Jun 11 15:16:05 2015 -0400
+
+    Merge pull request #98 from DOCGroup/BZ4204
+    
+    MKDIR on the install dirs as needed - fixes Bugzilla 4204
+
+commit 37e576ee1ec440fb836dd22174bfb6347fb64487
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Jun 11 14:39:21 2015 -0400
+
+    MKDIR on the install dirs as needed - fixes Bugzilla 4204
+
+commit 95aa0bfccda0da42e5bf1850aaff5fd96a278c19
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Jun 11 12:22:44 2015 -0400
+
+    Use OBJEXT instead of .o - fixes Bugzilla 4203
+
+commit ceb825a446f74288f4bdb66170aaba8e096996f5
+Author: Justin Wilson <wilsonj@ociweb.com>
+Date:   Thu Jun 11 10:48:05 2015 -0500
+
+    Rewrote normalize to fix off-by-one error.  Fixed bug in division and added test.
+
+commit 8de0874bd988aaf3989cc1ac27584b4d88d1ceff
+Merge: 4c30956 1a8fff41
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Jun 9 16:21:10 2015 -0500
+
+    Merge remote-tracking branch 'origin/master' into VxWorks7
+
+commit 4c309562d826575f4a16c886768b10a60e5cf1df
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Jun 9 15:23:39 2015 -0500
+
+    Settings for reducing dependencies on Linux system libraries.
+    
+    Building with these options and other related settings in platform_macros.GNU,
+    one can create executables that can run on older Linux distros.
+
+commit 243dc9722b6c0914335e5af53148c44d659c820e
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Jun 9 15:23:29 2015 -0500
+
+    Fixed typo in comment
+
+commit 20efa1b185d5a9aa938a321b712a00d55c46dce3
+Author: sphawk <sphawk@nate.com>
+Date:   Fri Jun 5 20:47:04 2015 +0900
+
+    fix compile error for ssl (MAXHOSTNAMELEN missing)
+
+commit c0f166c8ef8638e9331b706e8ccf5c679a013f7e
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Jun 4 14:19:31 2015 -0500
+
+    Applying Cesar Mello's fix for wchar IFR build
+
+commit 9fd86dc7a42aea70ea0fec17286c16e27d05e818
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Tue Jun 2 10:53:22 2015 +0200
+
+    Prevent macro redefinitions with MSVC14.
+    
+        * ACE/ace/config-win32-msvc.h:
+
+commit 636d2e64ab16a78bb6e281326ef6bcf69ca08081
+Merge: d933f8a e23f049
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Sun May 31 10:25:27 2015 +0200
+
+    Merge branch 'master' of https://github.com/mcorino/ATCD
+
+commit d933f8a18bf2bfc2165183bee3772308416fd140
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Sun May 31 10:25:14 2015 +0200
+
+    Oops. Fix MSVC pragma warning syntax.
+    
+        * ACE/ace/OS_NS_sys_utsname.cpp:
+        * ACE/ace/Object_Manager_Base.cpp:
+
+commit f9ce7915129d21d0deb9a5ead23cd17831310518
+Merge: aef72ee 87a419c
+Author: mcorino <mcorino@remedy.nl>
+Date:   Sat May 30 17:41:16 2015 +0200
+
+    Merge pull request #86 from mcorino/master
+    
+    Fix incorrect MSVC pragma warning format.
+
+commit 87a419ccb20491fa65e86963c73afe6730a59001
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Sat May 30 17:38:15 2015 +0200
+
+    Fix incorrect MSVC pragma warning format.
+    
+        * ACE/ace/OS_NS_sys_utsname.cpp:
+        * ACE/ace/Object_Manager_Base.cpp:
+
+commit 432e6627b94fbd397e4374105b4403248be2066b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 29 08:09:03 2015 +0200
+
+    Fixed missing include
+        * ACE/apps/gperf/src/List_Node.cpp:
+
+commit 4cc58ce93b93e07f2d73228ad7c621c7fccbd2f6
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Thu May 28 13:43:18 2015 +0200
+
+    Changes to fix integer type  conversion warnings.
+    
+        * ACE/ace/ETCL/ETCL_y.cpp:
+        * ACE/ace/XML_Utils/XercesString.cpp:
+        * ACE/apps/gperf/src/Gen_Perf.cpp:
+        * ACE/apps/gperf/src/List_Node.cpp:
+        * ACE/apps/gperf/src/Options.cpp:
+
+commit a94947b7106d3da8ea549c730629553ac4d4c3a0
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Thu May 28 13:29:15 2015 +0200
+
+    Changes to fix compile warnings as result of deprecation Win32 GetVersion API.
+    
+        * ACE/ace/OS_NS_sys_utsname.cpp:
+        * ACE/ace/Object_Manager_Base.cpp:
+        * ACE/ace/config-win32-common.h:
+
+commit b5c13e8692f545594c42a1ceb0b89dd2610f5fb2
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue May 26 14:01:50 2015 -0500
+
+    Set EXEEXT for VxWorks
+
+commit 999e4568b6b995df93d5d703f9ef0fe3b9ccbbe7
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Tue May 26 23:18:27 2015 +0800
+
+    Add unit test for ACE_Cached_Connect_Strategy_T connecting timeout.
+
+commit 8fa9d6678bb5b90f26a55d60b87d20fca71cd44e
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri May 22 18:03:36 2015 -0500
+
+    Cleaned up comments
+
+commit 1a9551dd3f1b49ab90bebc6d28aceb698e96ad9c
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri May 22 17:58:17 2015 -0500
+
+    Add -non-static when linking an RTP with shared libs.
+
+commit 49279311637960ce259ab32e2fc03775fdb5c161
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri May 22 17:08:16 2015 -0500
+
+    Configuration files for VxWorks 7.
+    
+    Tested x86 RTP shared libs.
+
+commit 7b4773454758486a1e0efc48f7bd08c200b4c051
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Thu May 21 08:07:37 2015 +0200
+
+    Add include for ACE_OS::sleep.
+
+commit 1a47c6956c0d369e10a7431e2650a19d0c679372
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Wed May 20 12:13:59 2015 +0200
+
+    Added new test for task grp_id handling.
+
+commit ec6f20a8ca583815a397de4f0085786199120b12
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Wed May 20 10:40:43 2015 +0200
+
+    Removed trailing whitespace.
+
+commit 68d717f0575e13550df7d5044403e2b983318481
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Tue May 19 15:51:39 2015 +0200
+
+    Make the group id handling more consistent.
+
+commit a69317924b6b5b60085c87b694f9337e57a377a2
+Merge: 9ca96f7 e86b6d0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun May 17 19:58:13 2015 +0200
+
+    Merge pull request #80 from jwillemsen/master
+    
+    Use add_compile instead of addcompile
+
+commit e86b6d0c60dc422878d4d23422eae708a1779c86
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun May 17 19:57:51 2015 +0200
+
+    Use add_compile instead of addcompile
+        * ACE/bin/MakeProjectCreator/config/vc14nmake.mpb:
+        * ACE/bin/MakeProjectCreator/config/vc9nmake.mpb:
+
+commit 9ca96f7dad4827185a74e8859892e192211b5b19
+Merge: bd5084b 4f9054d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun May 17 09:16:15 2015 +0200
+
+    Merge pull request #79 from jwillemsen/master
+
+commit bd5084bffc2940ce1155ee0ae0ccccc36efeaad6
+Author: Steve Huston <shuston@riverace.com>
+Date:   Sat May 16 18:19:13 2015 -0400
+
+    Adjust logging to help diagnose things
+
+commit 4f9054decf2026decd0340a54b461fffc73058e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 15 10:56:11 2015 +0200
+
+    Package vc12 and vc14 solutions
+        * ACE/NEWS:
+        * ACE/bin/make_release.py:
+
+commit 66069eed4dcf9a13f482fa8ae985281529c0b280
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu May 14 11:02:23 2015 -0500
+
+    Fixed bug in excluding certain files from release packages.
+
+commit c456315e3e91199fd28706253598c2800cf60f4c
+Merge: 1a9ce1f 2a152dd
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed May 13 17:46:49 2015 -0500
+
+    Merge branch 'gitignore_release'
+
+commit 57397b45b69524f4493d63ee951e9badcd3a4ea4
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon May 11 15:22:12 2015 -0500
+
+    Fixed coverity issues 1297401 and 1297404
+
+commit 2a152dd9eefc1dfbc5043e8279a83c24dfcf45ea
+Merge: 68e9480 32e3e82
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon May 11 15:26:36 2015 -0500
+
+    Merge commit '32e3e82ef65c5b1b47163853c3c1fc062b0fafe6' into coverity
+
+commit 5a13bf268fc4f3502d289a613d3e90f7b9f19883
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 8 09:00:21 2015 +0200
+
+    Enable ACE_HAS_CPP11 for Visual Studio 2015, but disable part
+    of compiler feature test 27, that will be fixed in the final
+    release
+        * ACE/NEWS:
+        * ACE/ace/config-win32-msvc-14.h:
+        * ACE/tests/Compiler_Features_27_Test.cpp:
+
+commit 32e3e82ef65c5b1b47163853c3c1fc062b0fafe6
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Mar 2 13:47:35 2015 -0600
+
+    Exclude .gitignore files from release packages.
+
+commit 92811a82a2ddd0d975f7cae040e81c833d640f86
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu May 7 09:43:44 2015 -0500
+
+    Updated .gitignore for ACE tests.
+
+commit 541dc7f089619c59447020906764783a0acea1d3
+Merge: 59e037d 36f1ecd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 13:22:43 2015 +0200
+
+    Merge pull request #74 from jwillemsen/master
+    
+    Make x.3.2 public and prepare for x.3.3
+
+commit 36f1ecd6eb1defa405372adb5f4075049e2a74e9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 10:56:48 2015 +0200
+
+    Added link for 6.3.2 doxygen documentation
+        * ACE/etc/index.html:
+
+commit 049c2cbbb808ca8a8ae30e3a33321397fe69bd74
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 10:33:17 2015 +0200
+
+    Make x.3.2 public and prepare for next release
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * CIAO/NEWS:
+        * DAnCE/NEWS:
+        * TAO/NEWS:
+
+commit 5f837b5430465967e2e1abf2f0fa64a0c41de22a
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Thu Mar 26 09:26:12 2015 +0800
+
+    Use FLAGS_C_CC instead of CFLAGS in AIX makefile.
+
+commit c3bb78b8cd08ebf3b40521054c8f47a30d6fc000
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Mon Mar 23 01:31:15 2015 +0800
+
+    Fix connecting timeout without returning -1 in ACE_Cached_Connect_Strategy_T
+
+commit 342e3ea8933d1e3d79c833853fb78270b0e6ff7b
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sun Mar 22 02:39:54 2015 +0800
+
+    Fix lack of unsetenv, log2 and pthread_attr_setstack in AIX 5.1
+
+commit e7a2a824a4ed1164792551dfa370fd319a402caf
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sat Mar 14 15:31:52 2015 +0800
+
+    Fix GCC 4.5.4 AIX 5.1 warnings of size_t and ssize_t format.
