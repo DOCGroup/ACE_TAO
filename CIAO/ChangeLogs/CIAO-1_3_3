@@ -1,0 +1,56 @@
+commit 006534e2c5070472f5ae630018a904191dbf42a1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 18:26:19 2015 +0200
+
+    Use separate instead of seperate
+        * ACE/ace/Functor_String.h:
+        * ACE/ace/WFMO_Reactor.h:
+        * ACE/tests/Env_Value_Test.cpp:
+        * ACE/tests/Proactor_Scatter_Gather_Test.cpp:
+        * ACE/tests/Service_Config_DLL.h:
+        * CIAO/docs/TODO.html:
+        * DAnCE/dance/DAnCE_LocalityManager.idl:
+        * TAO/TAO-INSTALL.html:
+        * TAO/docs/releasenotes/index.html:
+        * TAO/examples/AMH/Sink_Server/Base_Server.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.h:
+        * TAO/orbsvcs/examples/Notify/Lanes/ORB_Run_Task.h:
+        * TAO/orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * TAO/orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.h:
+        * TAO/orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+        * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+        * TAO/orbsvcs/tests/ior_corbaname/ior_corbaname_client_i.cpp:
+        * TAO/tao/Asynch_Reply_Dispatcher_Base.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/Remote_Invocation.cpp:
+        * TAO/tao/Transport_Connector.cpp:
+        * TAO/tao/params.cpp:
+        * TAO/tests/ORB_Local_Config/Service_Dependency/Service_Config_DLL.h:
+
+commit 1497ecf2c616fcf1e8ddd1182bdd139daade656f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 8 09:33:37 2015 +0200
+
+    Removed verbatim section, that is already done in the ndds base projects
+        * CIAO/MPC/config/ndds_idltocpp_ts_defaults.mpb:
+
+commit 68bb2cb2d2bd3d3df268ab86eb4feb51cf874ef2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 7 17:08:28 2015 +0200
+
+    Added mention of NDDSSCRIPTDIR
+        * CIAO/NEWS:
+
+commit 049c2cbbb808ca8a8ae30e3a33321397fe69bd74
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 10:33:17 2015 +0200
+
+    Make x.3.2 public and prepare for next release
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * CIAO/NEWS:
+        * DAnCE/NEWS:
+        * TAO/NEWS:

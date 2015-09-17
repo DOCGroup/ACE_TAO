@@ -1,0 +1,635 @@
+commit bb08a81357f6b7e87aafb1807d114b945552c11b
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Sep 16 16:25:36 2015 -0500
+
+    update NEWS, putting TAO notes in the correct file
+
+commit 784e8c92244dc081bef3d7ac6ba5ddc0d720474b
+Merge: 006534e 5100781
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 18:26:56 2015 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 006534e2c5070472f5ae630018a904191dbf42a1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 15 18:26:19 2015 +0200
+
+    Use separate instead of seperate
+        * ACE/ace/Functor_String.h:
+        * ACE/ace/WFMO_Reactor.h:
+        * ACE/tests/Env_Value_Test.cpp:
+        * ACE/tests/Proactor_Scatter_Gather_Test.cpp:
+        * ACE/tests/Service_Config_DLL.h:
+        * CIAO/docs/TODO.html:
+        * DAnCE/dance/DAnCE_LocalityManager.idl:
+        * TAO/TAO-INSTALL.html:
+        * TAO/docs/releasenotes/index.html:
+        * TAO/examples/AMH/Sink_Server/Base_Server.h:
+        * TAO/orbsvcs/examples/CosEC/RtEC_Based/lib/CosEvent_Utilities.h:
+        * TAO/orbsvcs/examples/Notify/Lanes/ORB_Run_Task.h:
+        * TAO/orbsvcs/examples/Notify/Lanes/Supplier_Client.cpp:
+        * TAO/orbsvcs/examples/Notify/ThreadPool/ORB_Run_Task.h:
+        * TAO/orbsvcs/examples/Notify/ThreadPool/Supplier_Client.cpp:
+        * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h:
+        * TAO/orbsvcs/tests/ior_corbaname/ior_corbaname_client_i.cpp:
+        * TAO/tao/Asynch_Reply_Dispatcher_Base.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/Remote_Invocation.cpp:
+        * TAO/tao/Transport_Connector.cpp:
+        * TAO/tao/params.cpp:
+        * TAO/tests/ORB_Local_Config/Service_Dependency/Service_Config_DLL.h:
+
+commit 82968ffb2f5cfb9c94f54d5f1f1418c0510830c0
+Merge: 3e600c2 7384879
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 11 16:27:23 2015 -0500
+
+    Merge pull request #140 from mitza-oci/master
+    
+    ImR changes for uses_wchar=1
+
+commit 7384879f35a47c0a274cfe2d2434a2e74993dfbb
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 11 15:25:21 2015 -0500
+
+    ImR changes for uses_wchar=1
+
+commit 204173216165220b541fede9f04190466040618e
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 11 15:23:54 2015 -0500
+
+    Updated prior ImR change for compatibility with SunCC's "standard" library.
+
+commit 469dbb215ee76dce382038a179847f4ecb6c65a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 21:03:29 2015 +0200
+
+    Updated old email addresses
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/docs/ACE-guidelines.html:
+        * ACE/docs/ACE-subsets.html:
+        * TAO/docs/implrepo/paper.html:
+        * TAO/docs/minimumTAO.html:
+
+commit 821e278fc22951934becf3fa2f90d4942c669f17
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 11 21:03:19 2015 +0200
+
+    Updated platform list
+        * TAO/TAO-INSTALL.html:
+
+commit 4538c1b541cb9831b189ff259f8e266f1d1738d0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 10 13:35:12 2015 +0200
+
+    bug 2908 regression now runs so include it in our default test suite
+        * TAO/bin/tao_other_tests.lst:
+
+commit af99f78ea32f83e3afc2bf390936dcdf5edc55cb
+Merge: 0a76e44 133850b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 10 09:20:50 2015 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 0a76e4463b396ec068be691b2254e0e209473b0d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 10 09:14:35 2015 +0200
+
+    Document SL2 extension
+        * TAO/NEWS:
+
+commit 60a5c5332af44d77d371289529839e8bbbc3a4af
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 16:58:59 2015 +0200
+
+    More comments
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+        * TAO/orbsvcs/orbsvcs/SecurityLevel2.idl:
+
+commit ed1cc7358b47a35146b9b8ba2b640288dfa652f4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 16:51:47 2015 +0200
+
+    Simplify changes
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+
+commit dd02063104bb2412e1f278c2e276ec8e1faec480
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 16:16:28 2015 +0200
+
+    Extended the SL2 Security Manager to have a separate flag for the default for collocated calls. This is now used by SSLIOP to do check whether the call is allowed to go through or not. It is very likely that a user does want to allow non-secure collocated calls but does want to block non-secure remote calls. He has now the flexibility to do so. Bugzilla 2908 now runs by setting the collocated flag
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.h:
+        * TAO/orbsvcs/orbsvcs/Security/SL3_SecurityManager.h:
+        * TAO/orbsvcs/orbsvcs/SecurityLevel2.idl:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/MessengerServer.cpp:
+        * TAO/tao/PI_Server/ServerRequestInfo.h:
+
+commit 7f921a893520c4b94e774375afe33806409221b5
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Sep 9 09:02:49 2015 -0500
+
+    TAO ImplRepo: fixed a few remaining wchar issues
+
+commit aacf0068c2ec6949756e8a3faf2787ed12e622f9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 14:09:23 2015 +0200
+
+    Const fix
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+
+commit 8bda962113de9163a935e97008d4199eeced83f3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 14:09:03 2015 +0200
+
+    Layout changes
+        * TAO/orbsvcs/orbsvcs/SecurityLevel2.idl:
+
+commit ca6f0f3e612b842f7c105efa0ace1ec3aedc7c17
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 13:56:35 2015 +0200
+
+    Layout changes
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.h:
+
+commit d2b7e872d182e052da5e3adbf4650a4624358734
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 13:55:52 2015 +0200
+
+    Unicode fix
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+
+commit de0aac404402347cc4eed44fc672658a11c3bb89
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 12:56:08 2015 +0200
+
+    Added functionality for the client to shutdown the server
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/Messenger.idl:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/MessengerClient.cpp:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/Messenger_i.cpp:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/Messenger_i.h:
+
+commit dc973e3a494597670d5ca79eb9dff6fa9d8c0b9b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 12:34:33 2015 +0200
+
+    Simplify code
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.cpp:
+
+commit e8e4e34da15ce12376d4f12c63e4228458835cb0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 12:33:42 2015 +0200
+
+    Removed block of commented out code
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_ORBInitializer.cpp:
+
+commit f938c43aaf808d8f2dc96666b131af7ed778157f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 12:29:23 2015 +0200
+
+    Added additional log line
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/MessengerClient.cpp:
+
+commit 68e826407a51d241847557f2ebd7f167d9047b54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 12:29:13 2015 +0200
+
+    Also destroy the POA at shutdown
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/MessengerServer.cpp:
+
+commit 59f70f68950aa0eb99b3c5a6b52551e751749250
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Sep 8 16:34:27 2015 -0500
+
+    TAO ImplRepo: build with uses_wchar=1
+
+commit 1fdd544a984a58d4860f3a2f8c7aa7d29a188bb9
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Mon Aug 31 10:51:24 2015 -0500
+
+    Fix coverity raised concern.
+
+commit 6f4cf37d8cf5117467b4d64010a4ff87ba3952a9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 27 19:02:09 2015 +0200
+
+    Zap empty lines
+        * TAO/tests/POA/On_Demand_Activation/README:
+
+commit 96dac2b18934edae0aa15d6a003cbcf3aea06f3e
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Aug 26 11:21:50 2015 -0500
+
+    Make the Select MT/ST reactor initialization consistent with the TP reactor setting the max files value
+
+commit 38d2953ca537b6b910864ee707940a390664b7f9
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Aug 26 11:19:18 2015 -0500
+
+    Fix to avoid adding ::1 as an extra endpoint to defaulted address lists when non-local IPv4 addresses are available.
+
+commit 02b0d27297ca3efc46fc53f54391f0ebd2b27dca
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Aug 13 14:29:14 2015 -0500
+
+    AVSteams: Workaround for vc14 known issue
+
+commit fecaccad1d5a0cacdf731a71ce7b24789f0a12ae
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Aug 12 14:51:38 2015 -0500
+
+    Test added to stress the ImR in as MT features are enabled.
+
+commit b0423e2cc4592ff5fce0d7c4541192ff4a0c9cb4
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Aug 12 14:49:49 2015 -0500
+
+    Added a new cl option -q for quiet operation to improve its scripting ability.
+
+commit abe659c254f8e06dc32bb259097490b6175e2767
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Aug 12 14:47:26 2015 -0500
+
+    Prevent the passive peer of a FT pair from echoing a persistent file update, possibly overwriting a later update.
+
+commit 49988227fcafe89aa6c3e709d5b6c606d1a3a382
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Aug 12 14:44:45 2015 -0500
+
+    General debug log improvements.
+
+commit 8d70a5080aa550f9136434c351c873d4ca7a1cf8
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Aug 12 14:41:56 2015 -0500
+
+    Separate out the FT peer synchronization to a separate ORB run in
+    its own thread. This avoids an update backlog that may lead to a
+    deadlock in exstream situations. Replicator is the new class. New
+    cl options --FtEndpoint and --FtUpdateDelay provide configuration
+    to the replicator instance.
+
+commit 7dff918d854b9cfea1860c149efa80de4b9124b0
+Merge: f997d2e 984413e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 11 09:24:28 2015 +0200
+
+    Merge pull request #126 from dpward/master
+    
+    Honor '-Cw' flag passed to tao_idl
+
+commit 984413efa99c12a3462680cdf6351bb590caa6d3
+Author: David Ward <david.ward@ll.mit.edu>
+Date:   Thu Jun 25 17:12:18 2015 -0400
+
+    Honor '-Cw' flag passed to tao_idl
+    
+    tao_idl was not able to compile IDL files which had an identifier
+    that differed only in case from an IDL keyword, even if the '-Cw'
+    flag was used.
+    
+    Signed-off-by: David Ward <david.ward@ll.mit.edu>
+
+commit 173757d6e24f4a31c3a65a957b891c4df5a3f177
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Aug 10 12:45:41 2015 -0500
+
+    Allow spaces in the temp dir used for tao_idl's invocation of the preprocessor.
+
+commit f75c149b7a54b5fe1e3a6a7bf2b4ba96f135c547
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Jul 24 08:26:44 2015 -0500
+
+    TAO_IDL: silence a warning from some older versions of GCC
+
+commit b3a628795fe7da876e5fd42a5f15788038f7e9c9
+Merge: ee3abcc 21d1c42
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Jul 23 10:40:59 2015 -0500
+
+    Merge remote-tracking branch 'upstream/master' into tao-idl-switch-warnings
+
+commit ee3abcc9270a2f30309d3fd925621528d453bbe6
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Jul 23 10:31:06 2015 -0500
+
+    TAO_IDL: fixed regression test 3821 failure, cleaned up warnings.
+
+commit 7e1493ffc1bfd2ec200a620827ae00bf899cc11b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 23 08:28:22 2015 +0200
+
+    Updated comment
+        * TAO/tao/Compression/Compressor_Factory.h:
+        * TAO/tao/DynamicInterface/DII_Reply_Handler.h:
+        * TAO/tao/TransportCurrent/Current_ORBInitializer_Base.h:
+
+commit ca284c2597f205e1c71044f62fe85ca517f2ed88
+Merge: c4a0a7c cbb0e28
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Jul 22 13:19:36 2015 -0500
+
+    Merge pull request #118 from mitza-oci/tao-idl-switch-warnings
+    
+    TAO_IDL: generate "if" instead of "switch" for bool-discriminated unions.
+
+commit cbb0e28afb2bbd09d668c42d8b280aad4d69b582
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Jul 22 09:30:02 2015 -0500
+
+    TAO_IDL: generate "if" instead of "switch" for bool-discriminated unions.
+    
+    Eliminates warnings in generated code with newer clang and gcc.
+
+commit 710a4fb630d92f42cfb1286106c4f90d818965ae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 22 16:29:44 2015 +0200
+
+    Add workarounds for msvc14 connect bug 801202
+        * TAO/tao/Compression/Compressor_Factory.h:
+        * TAO/tao/DynamicInterface/DII_Reply_Handler.h:
+        * TAO/tao/TransportCurrent/Current_ORBInitializer_Base.h:
+
+commit 34499bb7c5e0c1be2ede98b8e32266ddaf5e3ead
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 22 14:34:48 2015 +0200
+
+    Use ACE_UNIMPLEMENTED_FUNC so that with C++11 the operators are marked with =delete
+        * TAO/tao/DynamicInterface/DII_Reply_Handler.h:
+        * TAO/tao/LocalObject.h:
+        * TAO/tao/Object.h:
+
+commit 501301d2ccb74552aa87f09050643a520cb00855
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Mon Jul 20 15:43:15 2015 -0500
+
+    Fix a logic error.
+
+commit ba7d2cc24f4a113c2025f8600c45d9572f1ad8f6
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Sat Jul 18 07:56:41 2015 -0500
+
+    remove superfluous code segment that fails to compile on some platforms
+
+commit 3bafdc5f7fbb39720c2c1d8a492e9dbd2f5217c8
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Fri Jul 17 08:54:33 2015 -0500
+
+    PICurrent / ImR, fix build farm exposed issues
+
+commit dff936ede216e5eb8aa490bea37edb0ffbdacf67
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Jul 16 14:13:17 2015 -0500
+
+    Fuzz fix
+
+commit ae45f27cba5fd007e6e079257aaa9cc4d40af146
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Jul 16 11:14:24 2015 -0500
+
+    regression test for PI current slot state preservation
+
+commit 2cd30eee84ad81b1c3ecb61707b91c735622d652
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Mon Jul 6 17:43:50 2015 -0500
+
+    Removed accidental patch artifact addition
+
+commit 33bcfff73df7a0ec8005c1b4649dd2bc49e8566c
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Mon Jul 6 17:41:29 2015 -0500
+
+    Correct a Veracode identified potential risk.
+
+commit 01bd56a1749daeb14cebcda217474b364b120f22
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Fri Jun 19 11:28:20 2015 -0500
+
+    Ensure the PICurrent stack is reset in the case of a retry due to
+    a retry on a TRANSIENT. This is now consistent with other retries.
+
+commit 521090d1937300aa22df95805ad641b08b79e6d2
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Tue Jun 9 11:09:32 2015 -0500
+
+    Thread pool bugfixes
+    relax limits on fixed POA pool size.
+    Ensure the dynamic thread activation succeeded before entering wait
+
+commit 9acd83fb4fbdf677f4ab402da4dd2e875ec4d14e
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Jun 4 14:21:21 2015 -0500
+
+    Correcting a typo I made two years ago.
+
+commit c0f166c8ef8638e9331b706e8ccf5c679a013f7e
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Jun 4 14:19:31 2015 -0500
+
+    Applying Cesar Mello's fix for wchar IFR build
+
+commit d19f0a4740e37517207c4d204639b9ccdff00f4e
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Wed Jun 3 10:17:20 2015 +0200
+
+    Fix integer signedness comparison warning.
+    
+        * TAO/tao/Dynamic_TP/DTP_Task.cpp:
+
+commit 404853f41d696d1b0cd421a594d1f69825c95f1f
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Tue Jun 2 13:58:59 2015 +0200
+
+    Fix MSVC integer conversion warnings.
+    
+        * TAO/orbsvcs/orbsvcs/IOR_Multicast.cpp:
+
+commit 0b5d570a53372274fd306e0d23506a3ac9e007e8
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Tue Jun 2 11:16:30 2015 +0200
+
+    Fix MSVC integer conversion warnings.
+    
+        * TAO/TAO_IDL/fe/idl.ll:
+        * TAO/TAO_IDL/fe/idl.yy.cpp:
+
+commit cfb1dc00fd905b7bccff6a15f6352d7f613e3867
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 12:20:08 2015 +0200
+
+    Fix MSVC integer conversion warnings.
+    
+        * TAO/tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+commit 2d32faafe14a59e1f23e77afdcb860d9aa6546e7
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 12:08:05 2015 +0200
+
+    Fix MSVC integer conversion warning.
+    
+        * TAO/tao/Monitor/Monitor_Impl.cpp:
+
+commit 3bd319a01dcfa241855b6b736bd12056565b52d7
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 12:01:55 2015 +0200
+
+    Fix MSVC integer conversion warning.
+    
+        * TAO/tao/TransportCurrent/Current_Impl.cpp:
+
+commit 3217bb88f53bca2644aed79a0589a82352fa2982
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 11:59:42 2015 +0200
+
+    Fix MSVC integer conversion warnings.
+    
+        * TAO/tao/Strategies/DIOP_Profile.cpp:
+        * TAO/tao/Strategies/DIOP_Transport.cpp:
+        * TAO/tao/Strategies/SHMIOP_Profile.cpp:
+
+commit 1c9e65f71f07c3438ae98ddba6b4563578bf25a0
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 11:55:05 2015 +0200
+
+    Fix MSVC integer connversion warning.
+    
+        * TAO/tao/RTCORBA/Thread_Pool.cpp:
+
+commit 5b1613d351b8958cff8fff5de9322bf8dff64fcb
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 11:53:52 2015 +0200
+
+    Fix MSVC integer conversion warning.
+    
+        * TAO/tao/IORInterceptor/IORInterceptor_Adapter_Impl.cpp:
+
+commit f2f183b53d7c683f8fe420c236e305b3d1febe7f
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 11:50:53 2015 +0200
+
+    Fix MSVC integer conversion warnings.
+    
+        * TAO/tao/Dynamic_TP/DTP_Task.cpp:
+        * TAO/tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+
+commit 242514556a78edf036bc2b791ef4c8ad8675237b
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 11:35:13 2015 +0200
+
+    Fix MSVC integer conversion warnings.
+    
+        * TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * TAO/tao/DynamicInterface/Request.cpp:
+
+commit 7bc30b68770f26eb53e194c54f1e1e92ccd8fe43
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 11:29:42 2015 +0200
+
+    Fix MSVC integer conversion warnings.
+    
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+
+commit 98a76c8a801f3c9d35ebedca4de7bb18effdc888
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 11:22:37 2015 +0200
+
+    Fix MSVC integer conversion warnings.
+    
+        * TAO/tao/Valuetype/ValueBase.cpp:
+
+commit d6b3c39af65a94712d7860c5301ccd49f540b814
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 11:17:42 2015 +0200
+
+    Fix MSVC integer conversion warnings.
+    
+        * TAO/tao/PortableServer/POAManager.inl:
+        * TAO/tao/PortableServer/Servant_Base.cpp:
+
+commit 66bc5ea15a06468eced9efc553ae570b584c1a9f
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 10:08:52 2015 +0200
+
+    Fix compile problems with integer conversions.
+    
+        * TAO/tao/CORBA_String.cpp:
+
+commit ba64a124f699c1e6d2125c619480c8a40c4683aa
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 09:30:38 2015 +0200
+
+    Fixing MSVC integer conversion warnings.
+    
+        * TAO/tao/AnyTypeCode/Alias_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Alias_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/Sequence_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Sequence_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/Struct_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Struct_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/TypeCode_Case_Base_T.inl:
+        * TAO/tao/AnyTypeCode/Union_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Union_TypeCode_Static.cpp:
+        * TAO/tao/AnyTypeCode/Value_TypeCode.cpp:
+        * TAO/tao/AnyTypeCode/Value_TypeCode_Static.cpp:
+
+commit e23c3772c686b0b4af2eb0b7af622c7075b4b4df
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Mon Jun 1 09:07:30 2015 +0200
+
+    Fixing MSVC integer conversion warnings.
+    
+        * TAO/tao/CDR.cpp:
+        * TAO/tao/CORBALOC_Parser.cpp:
+        * TAO/tao/CORBA_String.cpp:
+        * TAO/tao/HTTP_Client.cpp:
+        * TAO/tao/IIOP_Profile.cpp:
+        * TAO/tao/Invocation_Adapter.cpp:
+        * TAO/tao/MCAST_Parser.cpp:
+        * TAO/tao/On_Demand_Fragmentation_Strategy.cpp:
+        * TAO/tao/Storable_FlatFileStream.cpp:
+        * TAO/tao/Transport.cpp:
+
+commit f2e0d66eb15f56231e44bd44c57b12e3d0b70765
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Sun May 31 15:10:18 2015 +0200
+
+    Fix MSVC14 integer conversion warnings.
+    
+        * TAO/TAO_IDL/ast/ast_structure.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/ami_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/operation.cpp:
+        * TAO/TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+        * TAO/TAO_IDL/driver/drv_preproc.cpp:
+
+commit 749d397ff387941c2a5e5dc9692619300ad64f88
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Sun May 17 16:03:55 2015 -0500
+
+    Coverity fix
+
+commit 15980669c54c3b1eb2651dd3b24a64d1a4c77e48
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Tue May 12 18:01:28 2015 -0500
+
+    Improve processing of old TAO logs.
+    fix output errors, fix parsing heavily threaded, RW strategy based logs.
+
+commit 049c2cbbb808ca8a8ae30e3a33321397fe69bd74
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 10:33:17 2015 +0200
+
+    Make x.3.2 public and prepare for next release
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * CIAO/NEWS:
+        * DAnCE/NEWS:
+        * TAO/NEWS:
