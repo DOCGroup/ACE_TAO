@@ -173,9 +173,14 @@ ACE_WIN32_Asynch_Operation::cancel (void)
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
 
-  // @@ This API returns 0 on failure. So, I am returning -1 in that
-  //    case. Is that right? (Alex).
+  //// @@ This API returns 0 on failure. So, I am returning 2 in that
+  ////    case. Is that right? (Alex).
+#if (_WIN32_WINNT <= 0x0501)
   int const result = (int) ::CancelIo (this->handle_);
+#else
+  int const result = (int) ::CancelIoEx (this->handle_,
+                                         NULL);
+#endif
 
   if (result == 0)
     // Couldn't cancel the operations.
