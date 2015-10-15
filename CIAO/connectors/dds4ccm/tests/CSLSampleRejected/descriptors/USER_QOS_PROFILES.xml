@@ -13,7 +13,7 @@ The QoS configuration of the DDS entities in the generated example is
 loaded from this file.
 
 This file is used only when it is in the current working directory
-or when the enviroment variable
+or when the environment variable
 NDDS_QOS_PROFILES is defined and points to this file.
 
 For more information about XML QoS Profiles see Chapter 15 in the
