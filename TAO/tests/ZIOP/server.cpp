@@ -54,10 +54,12 @@ register_factories (CORBA::ORB_ptr orb)
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Panic: nil compression manager\n"),
                       1);
-  //register Zlib compressor
   ::Compression::CompressorFactory_ptr compressor_factory;
+  ::Compression::CompressorFactory_var compr_fact;
+
+  //register Zlib compressor
   ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
-  ::Compression::CompressorFactory_var compr_fact = compressor_factory;
+  compr_fact = compressor_factory;
   manager->register_factory(compr_fact.in ());
 
   // register bzip2 compressor
