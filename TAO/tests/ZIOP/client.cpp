@@ -8,13 +8,14 @@
 #include "common.h"
 static const ACE_TCHAR *ior = ACE_TEXT("file://") DEFAULT_IOR_FILENAME;
 static ::Compression::CompressionManager_var compression_manager = 0;
+CORBA::ULong big_msg_size = 40000;
 
 int start_tests (Test::Hello_ptr hello, CORBA::ORB_ptr orb);
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:s:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -22,6 +23,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'k':
         ior = get_opts.opt_arg ();
+        break;
+      case 's':
+        big_msg_size = ACE_OS::strtoul (get_opts.opt_arg (),0,10);
         break;
       case 't':
         test = ACE_OS::atoi (get_opts.opt_arg ());
@@ -53,10 +57,12 @@ register_factories (CORBA::ORB_ptr orb)
     ACE_ERROR_RETURN ((LM_ERROR,
                        " (%P|%t) Panic: nil compression manager\n"),
                       1);
-  //register Zlib compressor
   ::Compression::CompressorFactory_ptr compressor_factory;
+  ::Compression::CompressorFactory_var compr_fact;
+
+  //register Zlib compressor
   ACE_NEW_RETURN (compressor_factory, TAO::Zlib_CompressorFactory (), 1);
-  ::Compression::CompressorFactory_var compr_fact = compressor_factory;
+  compr_fact = compressor_factory;
   compression_manager->register_factory(compr_fact.in ());
 
   // register bzip2 compressor
@@ -330,7 +336,7 @@ run_big_reply_test (Test::Hello_ptr hello)
     }
 
   //Prepare to send a large number of bytes. Should be compressed
-  Test::Octet_Seq_var dummy = hello->get_big_reply ();
+  Test::Octet_Seq_var dummy = hello->get_big_reply (big_msg_size);
   if (dummy->length () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -350,17 +356,16 @@ run_big_reply_test (Test::Hello_ptr hello)
 int
 run_big_request_test (Test::Hello_ptr hello)
 {
-  const int length = 40000;
-  Test::Octet_Seq send_msg(length);
-  send_msg.length (length);
+  Test::Octet_Seq send_msg(big_msg_size);
+  send_msg.length (big_msg_size);
 
-  for (int i= 0; i<length; ++i)
+  for (CORBA::ULong i = 0; i < big_msg_size; ++i)
     {
       send_msg[i]= static_cast<CORBA::Octet> (i & 0xff);
     }
 
   ACE_DEBUG((LM_DEBUG,
-              ACE_TEXT("run_big_request_test, send = %d bytes\n"), length));
+              ACE_TEXT("run_big_request_test, send = %d bytes\n"), big_msg_size));
 
   if (test == 2)
     {
