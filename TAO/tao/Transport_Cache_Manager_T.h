@@ -19,7 +19,7 @@
 #define  ACE_LACKS_PRAGMA_ONCE
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "ace/Hash_Multi_Map_Manager_T.h"
 
 #include "tao/Cache_Entries_T.h"
 #include "tao/orbconf.h"
@@ -77,7 +77,7 @@ namespace TAO
     typedef Cache_IntId_T <transport_type> Cache_IntId;
 
     // Some useful typedef's
-    typedef ACE_Hash_Map_Manager_Ex <Cache_ExtId,
+    typedef ACE_Hash_Multi_Map_Manager <Cache_ExtId,
                                      Cache_IntId,
                                      ACE_Hash<Cache_ExtId>,
                                      ACE_Equal_To<Cache_ExtId>,
@@ -85,10 +85,13 @@ namespace TAO
     HASH_MAP;
 
     typedef typename HASH_MAP::iterator HASH_MAP_ITER;
+    typedef typename HASH_MAP::ENTRY HASH_MAP_ENTRY;
 
-    typedef ACE_Hash_Map_Entry <Cache_ExtId,
-                                Cache_IntId>
-    HASH_MAP_ENTRY;
+    struct HASH_MAP_ENTRY_REF
+    {
+      HASH_MAP_ENTRY *entry_;
+      Cache_IntId* int_id_;
+    };
 
     typedef TAO_Condition<TAO_SYNCH_MUTEX> CONDITION;
 
@@ -126,21 +129,21 @@ namespace TAO
     int purge (void);
 
     /// Purge the entry from the Cache Map
-    int purge_entry (HASH_MAP_ENTRY *& entry);
+    int purge_entry (HASH_MAP_ENTRY_REF & entry);
 
     /// Mark the entry as connected.
-    void mark_connected (HASH_MAP_ENTRY *& entry, bool state);
+    void mark_connected (HASH_MAP_ENTRY_REF & entry, bool state);
 
     /// Make the entry idle and ready for use.
-    int make_idle (HASH_MAP_ENTRY *&entry);
+    int make_idle (HASH_MAP_ENTRY_REF &entry);
 
     /// Modify the state setting on the provided entry.
-    void set_entry_state (HASH_MAP_ENTRY *&entry,
+    void set_entry_state (HASH_MAP_ENTRY_REF &entry,
                           TAO::Cache_Entries_State state);
 
     /// Mark the entry as touched. This call updates the purging
     /// strategy policy information.
-    int update_entry (HASH_MAP_ENTRY *&entry);
+    int update_entry (HASH_MAP_ENTRY_REF &entry);
 
     /// Close the underlying hash map manager and return any handlers
     /// still registered
@@ -195,36 +198,36 @@ namespace TAO
       size_t & busy_count);
 
     /// Non-locking version and actual implementation of make_idle ().
-    int make_idle_i (HASH_MAP_ENTRY *entry);
+    int make_idle_i (HASH_MAP_ENTRY_REF &entry);
 
     /// Non-locking version and actual implementation of close ()
     int close_i (Connection_Handler_Set &handlers);
 
     /// Purge the entry from the Cache Map
-    int purge_entry_i (HASH_MAP_ENTRY *entry);
+    int purge_entry_i (const HASH_MAP_ENTRY_REF &entry);
 
   private:
     /**
      * Tries to find if the @c int_id_ in @a entry is available for use.
      */
-    bool is_entry_available_i (const HASH_MAP_ENTRY &entry);
+    bool is_entry_available_i (const Cache_IntId& int_id);
 
     /**
      * Tries to find if the @c int_id_ in @a entry is connect pending
      */
-    bool is_entry_connecting_i (const HASH_MAP_ENTRY &entry);
+    bool is_entry_connecting_i (const Cache_IntId& int_id);
 
     /**
      * Tries to find if the @c int_id_ in @a entry is purgable
      */
-    bool is_entry_purgable_i (HASH_MAP_ENTRY &entry);
+    bool is_entry_purgable_i (HASH_MAP_ENTRY_REF &entry);
 
 #if !defined(ACE_LACKS_QSORT)
     /// Used by qsort
     static int cpscmp(const void* a, const void* b);
 #endif
 
-    typedef HASH_MAP_ENTRY** DESCRIPTOR_SET;
+    typedef HASH_MAP_ENTRY_REF* DESCRIPTOR_SET;
 
     /// Sort the list of entries
     void sort_set (DESCRIPTOR_SET& entries, int size);

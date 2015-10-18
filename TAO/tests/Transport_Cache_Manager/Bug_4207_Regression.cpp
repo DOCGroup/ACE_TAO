@@ -19,7 +19,7 @@ typedef TAO::Transport_Cache_Manager_T<mock_transport, mock_tdi, mock_ps> TCM;
 class mock_transport
 {
 public:
-  mock_transport () : id_(0), is_connected_(true), entry_(0), purging_order_ (0), purged_count_ (0) {}
+  mock_transport () : id_(0), is_connected_(true), purging_order_ (0), purged_count_ (0) {memset(&entry_,0,sizeof(entry_));}
   size_t id (void) const {return id_;}
   void id (size_t id) { this->id_ = id;}
   unsigned long purging_order (void) const {return purging_order_;}
@@ -28,8 +28,8 @@ public:
   void is_connected (bool is_connected) { this->is_connected_ = is_connected;}
   ACE_Event_Handler::Reference_Count add_reference (void) {return 0;}
   ACE_Event_Handler::Reference_Count remove_reference (void) {return 0;}
-  void cache_map_entry (TCM::HASH_MAP_ENTRY *entry) {this->entry_ = entry;}
-  TCM::HASH_MAP_ENTRY *cache_map_entry (void) {return this->entry_;}
+  void cache_map_entry (TCM::HASH_MAP_ENTRY_REF& entry) {this->entry_ = entry;}
+  const TCM::HASH_MAP_ENTRY_REF& cache_map_entry (void) {return this->entry_;}
   void close_connection (void) { purged_count_ = ++global_purged_count;};
   int purged_count (void) { return this->purged_count_;}
   bool can_be_purged (void) { return true;}
@@ -55,7 +55,7 @@ public:
 private:
   size_t id_;
   bool is_connected_;
-  TCM::HASH_MAP_ENTRY *entry_;
+  TCM::HASH_MAP_ENTRY_REF entry_;
   unsigned long purging_order_;
   /// When did we got purged
   int purged_count_;
@@ -125,8 +125,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       // transport #1 is busy
 
-      mytransport[0].cache_map_entry()->item().recycle_state (TAO::ENTRY_IDLE_AND_PURGABLE);
-      mytransport[1].cache_map_entry()->item().recycle_state (TAO::ENTRY_IDLE_AND_PURGABLE);
+      mytransport[0].cache_map_entry().int_id_->recycle_state (TAO::ENTRY_IDLE_AND_PURGABLE);
+      mytransport[1].cache_map_entry().int_id_->recycle_state (TAO::ENTRY_IDLE_AND_PURGABLE);
       // both transports are idle
       fr = my_cache.find_transport (
         &mytdi[0],
@@ -138,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       // release transport #0
-      TCM::HASH_MAP_ENTRY* entry0 = mytransport[0].cache_map_entry();
+      TCM::HASH_MAP_ENTRY_REF entry0 = mytransport[0].cache_map_entry();
       if (my_cache.purge_entry (entry0) || my_cache.current_size() != 1)
         {
           ACE_ERROR ((LM_ERROR, "ERROR Failed to remove entry %d\n", my_cache.current_size ()));

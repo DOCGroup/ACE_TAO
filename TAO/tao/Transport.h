@@ -400,10 +400,10 @@ public:
   void bidirectional_flag (int flag);
 
   /// Set the Cache Map entry
-  void cache_map_entry (TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
+  void cache_map_entry (const TAO::Transport_Cache_Manager::HASH_MAP_ENTRY_REF& entry);
 
   /// Get the Cache Map entry
-  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
+  const TAO::Transport_Cache_Manager::HASH_MAP_ENTRY_REF& cache_map_entry (void) const;
 
   /// Set and Get the identifier for this transport instance.
   /**
@@ -1096,7 +1096,7 @@ protected:
 
   /// Our entry in the cache. We don't own this. It is here for our
   /// convenience. We cannot just change things around.
-  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry_;
+  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY_REF cache_map_entry_;
 
   /// Strategy to decide whether multiple requests can be sent over the
   /// same connection or the connection is exclusive for a request.

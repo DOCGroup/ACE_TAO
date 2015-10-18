@@ -35,25 +35,24 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry (HASH_MAP_ENTRY_REF &entry)
   {
     int retval = 0;
 
-    if (entry != 0)
+    if (entry.entry_ != 0)
     {
-      HASH_MAP_ENTRY* cached_entry = 0;
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
-      if (entry != 0) // in case someone beat us to it (entry is reference to transport member)
+      if (entry.entry_ != 0) // in case someone beat us to it (entry is reference to transport member)
       {
         // Store the entry in a temporary and zero out the reference.
         // If there is only one reference count for the transport, we will end up causing
         // it's destruction.  And the transport can not be holding a cache map entry if
         // that happens.
-        cached_entry = entry;
-        entry = 0;
+        HASH_MAP_ENTRY_REF ref = entry;
+        entry = HASH_MAP_ENTRY_REF();
 
-        // now it's save to really purge the entry
-        retval = this->purge_entry_i (cached_entry);
+        // now it's safe to really purge the entry
+        retval = this->purge_entry_i (ref);
       }
     }
 
@@ -62,27 +61,27 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE void
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::mark_connected (HASH_MAP_ENTRY *&entry, bool state)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::mark_connected (HASH_MAP_ENTRY_REF &entry, bool state)
   {
     ACE_MT (ACE_GUARD (ACE_Lock, guard, *this->cache_lock_));
-    if (entry == 0)
+    if (entry.entry_ == 0)
       return;
 
-    if (TAO_debug_level > 9 && state != entry->item ().is_connected ())
+    if (TAO_debug_level > 9 && state != entry.int_id_->is_connected ())
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
                   ACE_TEXT ("::mark_connected, %s Transport[%d]\n"),
                   (state ? ACE_TEXT("true") : ACE_TEXT("false")),
-                  entry->item ().transport ()->id ()
+                  entry.int_id_->transport ()->id ()
                   ));
-    entry->item().is_connected (state);
+    entry.int_id_->is_connected (state);
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
   ACE_INLINE int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::make_idle (HASH_MAP_ENTRY *&entry)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::make_idle (HASH_MAP_ENTRY_REF &entry)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_Lock, guard, *this->cache_lock_, -1));
-    if (entry == 0) // in case someone beat us to it (entry is reference to transport member)
+    if (entry.entry_ == 0) // in case someone beat us to it (entry is reference to transport member)
       return -1;
 
     return this->make_idle_i (entry);
