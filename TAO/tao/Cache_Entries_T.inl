@@ -128,6 +128,9 @@ namespace TAO
   {
     if (this != &rhs)
       {
+        if (this->is_delete_)
+          delete this->transport_property_;
+
         // Do a deep copy
         this->transport_property_ =
           rhs.transport_property_->duplicate ();
