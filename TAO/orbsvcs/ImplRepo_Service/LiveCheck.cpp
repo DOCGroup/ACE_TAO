@@ -579,7 +579,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 
-LC_TimeoutGuard::LC_TimeoutGuard (LiveCheck *owner, int token)
+LC_TimeoutGuard::LC_TimeoutGuard (LiveCheck *owner, LC_token_type token)
   :owner_ (owner),
    token_ (token),
    blocked_ (owner->handle_timeout_busy_ == 0)
@@ -698,11 +698,7 @@ int
 LiveCheck::handle_timeout (const ACE_Time_Value &,
                            const void * tok)
 {
-#if (ACE_SIZEOF_VOID_P == 8)
-  ACE_INT64 token = reinterpret_cast<ACE_INT64>(tok);
-#else
-  ACE_INT32 token = reinterpret_cast<ACE_INT32>(tok);
-#endif
+  LC_token_type token = reinterpret_cast<LC_token_type>(tok);
   if (ImR_Locator_i::debug () > 2)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -713,7 +709,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
   if (!this->running_)
     return -1;
 
-  LC_TimeoutGuard tg (this, static_cast<int>(token));
+  LC_TimeoutGuard tg (this, token);
   if (tg.blocked ())
     return 0;
 

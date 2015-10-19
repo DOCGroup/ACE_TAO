@@ -198,12 +198,18 @@ class Locator_Export PingReceiver :
  * subsequent timeouts.
  * */
 
+#if (ACE_SIZEOF_VOID_P == 8)
+  typedef ACE_INT64 LC_token_type;
+#else
+  typedef ACE_INT32 LC_token_type;
+#endif
+
 class Locator_Export LC_TimeoutGuard
 {
  public:
   /// construct a new stack-based guard. This sets a flag in the owner that will
   /// be cleared on destruction.
-  LC_TimeoutGuard (LiveCheck *owner, int token);
+  LC_TimeoutGuard (LiveCheck *owner, LC_token_type token);
 
   /// releases the flag. If the LiveCheck received any requests for an immediate
   /// or defered ping during this time, schedule it now.
@@ -214,7 +220,7 @@ class Locator_Export LC_TimeoutGuard
 
  private:
   LiveCheck *owner_;
-  int token_;
+  LC_token_type token_;
   bool blocked_;
 };
 
@@ -285,7 +291,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   PortableServer::POA_var poa_;
   ACE_Time_Value ping_interval_;
   bool running_;
-  int token_;
+  LC_token_type token_;
   int handle_timeout_busy_;
   bool want_timeout_;
   ACE_Time_Value deferred_timeout_;
@@ -293,4 +299,3 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
 };
 
 #endif /* IMR_LIVECHECK_H_  */
-
