@@ -84,7 +84,7 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
   int run (void);
 
   /// Shutdown the orb.
-  void shutdown (bool wait_for_completion);
+  void shutdown (bool signaled);
 
 private:
 
@@ -98,6 +98,8 @@ private:
   int handle_exit_i (pid_t pid);
 
   bool still_running_i (const char *name);
+
+  bool in_upcall (void);
 
 private:
 
@@ -113,6 +115,7 @@ private:
 
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var imr_poa_;
+  PortableServer::Current_var current_;
 
   ImplementationRepository::Locator_var locator_;
 
