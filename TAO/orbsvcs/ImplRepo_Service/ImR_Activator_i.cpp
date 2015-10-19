@@ -559,7 +559,7 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
         {
           this->locator_->child_death_pid (name.c_str(), pid);
         }
-      catch (CORBA::Exception &ex)
+      catch (const CORBA::Exception &ex)
         {
           if (debug_ > 1)
             {
