@@ -151,7 +151,7 @@ Replicator::svc (void)
     {
       this->orb_->run ();
     }
-  catch (CORBA::SystemException &ex)
+  catch (const CORBA::SystemException &ex)
     {
       if (this->debug_ > 0)
         {
@@ -204,7 +204,7 @@ Replicator::handle_exception (ACE_HANDLE )
       mon.release ();
       this->peer_->notify_update (seq, payload);
     }
-  catch (CORBA::Exception &)
+  catch (const CORBA::Exception &)
     {
       this->peer_ =
         ImplementationRepository::UpdatePushNotification::_nil ();
