@@ -14,6 +14,12 @@
 
 #include "ace/config-vxworks6.9.h"
 
+#define ACE_HAS_AUTOMATIC_INIT_FINI
+
+#if defined ACE_HAS_PTHREADS && !defined __RTP__
+# define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
+#endif
+
 #ifndef ACE_LACKS_REGEX_H
 # define ACE_LACKS_REGEX_H
 #endif
