@@ -1,5 +1,3 @@
-
-
 Here is a simple to test the corbaname: style URL. The simple way to
 test is to run the run_test.pl.
 
@@ -7,26 +5,25 @@ To test manually:
 
 1. Run the NamingService at a specified endpoint.
 
-	$NamingService -ORBEndPoint iiop://doc.ece.uci.edu:12345 &
+  $NamingService -ORBEndPoint iiop://doc.ece.uci.edu:12345 &
 
 2. Run the server.
 
-	./server &
+  ./server &
 
 3. Run the client as one of these.
 
- a)	./client corbaname:doc.ece.uci.edu:12345
+ a) ./client corbaname:doc.ece.uci.edu:12345
 
-	CORBANAME style URL is used and the protocol used to
-	contact the naming context is <iiop> implicitly.
+    CORBANAME style URL is used and the protocol used to
+    contact the naming context is <iiop> implicitly.
 
- b)	./client corbaname::iiop:doc.ece.uci.edu:12345
+ b) ./client corbaname::iiop:doc.ece.uci.edu:12345
 
-	CORBANAME style URL is used and the protocol used to
-	contact the naming context is <iiop>.
+    CORBANAME style URL is used and the protocol used to
+    contact the naming context is <iiop>.
 
+ c) ./client corbaname:rir:
 
- c)	./client corbaname:rir:
-
-	CORBANAME style URL is used and the protocol used to
-	contact the naming context is <rir>.
+    CORBANAME style URL is used and the protocol used to
+    contact the naming context is <rir>.
