@@ -42,6 +42,7 @@ versioned_so ?= 0
 footprint ?= 0
 rwho = 0
 templates ?= automatic
+build_tao_idl_be = 0
 
 ifeq (,$(WIND_BASE))
   default:
