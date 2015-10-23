@@ -148,7 +148,11 @@ namespace ACE_OS
                           int, -1);
 #elif defined (ACE_MKDIR_LACKS_MODE)
     ACE_UNUSED_ARG (mode);
+#  if defined (ACE_MKDIR_EQUIVALENT)
+    ACE_OSCALL_RETURN (ACE_MKDIR_EQUIVALENT (path), int, -1);
+#  else
     ACE_OSCALL_RETURN (::mkdir (path), int, -1);
+#  endif
 #else
     ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
 #endif

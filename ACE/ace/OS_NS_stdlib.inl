@@ -336,6 +336,8 @@ ACE_OS::putenv (const char *string)
 #elif defined (ACE_LACKS_PUTENV)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_PUTENV_EQUIVALENT)
+  return ACE_PUTENV_EQUIVALENT (s, t, len);
 #else /* ! ACE_HAS_WINCE */
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::putenv (const_cast <char *> (string)), int, -1);
 #endif /* ACE_LACKS_PUTENV && ACE_HAS_SETENV */
@@ -378,6 +380,8 @@ ACE_OS::putenv (const wchar_t *string)
 #if defined (ACE_LACKS_PUTENV)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_PUTENV_EQUIVALENT)
+  return ACE_PUTENV_EQUIVALENT (s, t, len);
 #else
   ACE_OSCALL_RETURN (::_wputenv (string), int, -1);
 #endif /* ACE_LACKS_PUTENV */
