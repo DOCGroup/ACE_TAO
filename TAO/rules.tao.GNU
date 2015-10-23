@@ -115,6 +115,8 @@ endif # interceptors
 # CPPFLAGS += -DTAO_HAS_TRANSPORT_CURRENT=1
 transport_current ?= 1
 
+build_tao_idl_be ?= 1
+
 ifeq (1,$(CROSS-COMPILE))
   ACE_MAKE_OPTIONS += cross_compile
 else
