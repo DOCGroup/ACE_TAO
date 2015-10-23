@@ -1178,7 +1178,7 @@ ACE_OS::unlink (const char *path)
 # elif defined (ACE_LACKS_UNLINK)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
-# elif define (ACE_UNLINK_EQUIVALENT)
+# elif defined (ACE_UNLINK_EQUIVALENT)
   ACE_OSCALL_RETURN (ACE_UNLINK_EQUIVALENT (path), int, -1);
 # else
   ACE_OSCALL_RETURN (::unlink (path), int, -1);
