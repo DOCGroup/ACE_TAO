@@ -380,8 +380,6 @@ ACE_OS::putenv (const wchar_t *string)
 #if defined (ACE_LACKS_PUTENV)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_PUTENV_EQUIVALENT)
-  return ACE_PUTENV_EQUIVALENT (s, t, len);
 #else
   ACE_OSCALL_RETURN (::_wputenv (string), int, -1);
 #endif /* ACE_LACKS_PUTENV */
