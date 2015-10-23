@@ -52,7 +52,7 @@ cpu_count = multiprocessing.cpu_count()
 
 """ This is a regex that detects files that SHOULD NOT have line endings
 converted to CRLF when being put into a ZIP file """
-bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt)$")
+bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt|sh)$")
 
 ##################################################
 #### Utility Methods

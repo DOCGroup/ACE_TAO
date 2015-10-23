@@ -139,8 +139,13 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
         "ImR_Activator");
       ACE_ASSERT (! CORBA::is_nil(this->imr_poa_.in ()));
 
+      obj = orb->resolve_initial_references ("POACurrent");
+      ACE_ASSERT (! CORBA::is_nil (obj.in ()));
+      this->current_ = PortableServer::Current::_narrow (obj.in ());
+
       // Activate ourself
-      PortableServer::ObjectId_var id = PortableServer::string_to_ObjectId ("ImR_Activator");
+      PortableServer::ObjectId_var id =
+        PortableServer::string_to_ObjectId ("ImR_Activator");
       this->imr_poa_->activate_object_with_id (id.in (), this);
       obj = this->imr_poa_->id_to_reference (id.in ());
       ImplementationRepository::ActivatorExt_var activator =
@@ -281,9 +286,30 @@ ImR_Activator_i::shutdown (void)
   this->shutdown (false);
 }
 
-void
-ImR_Activator_i::shutdown (bool wait_for_completion)
+bool
+ImR_Activator_i::in_upcall (void)
 {
+  try
+    {
+      PortableServer::POA_var poa = current_->get_POA ();
+      return !CORBA::is_nil (poa.in ());
+    }
+  catch (const CORBA::Exception& )
+    {
+      // no-op
+    }
+  return false;
+}
+
+void
+ImR_Activator_i::shutdown (bool signaled)
+{
+  if (signaled && this->in_upcall ())
+    {
+      if (debug_ > 0)
+        ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: ignoring signal during upcall.\n"));
+      return;
+    }
   if (! CORBA::is_nil (this->locator_.in ()) && this->registration_token_ != 0)
     {
       try
@@ -298,7 +324,7 @@ ImR_Activator_i::shutdown (bool wait_for_completion)
     }
   this->locator_ = ImplementationRepository::Locator::_nil ();
 
-  this->orb_->shutdown (wait_for_completion);
+  this->orb_->shutdown (false);
 }
 
 CORBA::Boolean
@@ -441,6 +467,8 @@ ImR_Activator_i::start_server(const char* name,
   // the setenv() calls, since the first of those will copy the current
   // process's environment.
   proc_opts.enable_unicode_environment ();
+
+  proc_opts.setgroup (0);
 
   proc_opts.setenv (ACE_TEXT ("TAO_USE_IMR"), ACE_TEXT ("1"));
   if (!CORBA::is_nil (this->locator_.in ()))
