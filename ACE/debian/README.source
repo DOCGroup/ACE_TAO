@@ -1,6 +1,6 @@
 = Compiling ACE+TAO Debian packages =
 
- * ACE+TAO-src-<version>.tar.bz2 is retrieved from:
+ * ACE+TAO-src-<version>.tar.gz is retrieved from:
      http://download.dre.vanderbilt.edu/previous_versions/
    The -src version does not contain pre-generated Makefiles. They are
    regenerated in the buid process.
