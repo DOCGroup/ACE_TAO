@@ -21,7 +21,7 @@ static const ACE_TCHAR* JACORB_SERVER = ACE_TEXT("JacORBServer");
 static const ACE_TCHAR* ALTKEY = ACE_TEXT("AltKey");
 static const ACE_TCHAR* POA = ACE_TEXT("POA");
 static const ACE_TCHAR* PEERS = ACE_TEXT("Peers");
-static const ACE_TCHAR* PID = ACE_TEXT("Pid");
+static const ACE_TCHAR* CONFIG_PID = ACE_TEXT("Pid");
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 static const ACE_TCHAR WIN32_REG_KEY[] = ACE_TEXT ("Software\\TAO\\ImplementationRepository");
 #endif
@@ -147,7 +147,7 @@ Config_Backing_Store::loadServers ()
           get_cstring_value (this->config_, key, IOR, si->ior);
           config_.get_integer_value (key, START_LIMIT, tmp_int);
           si->start_limit_ = tmp_int;
-          config_.get_integer_value (key, PID, tmp_int);
+          config_.get_integer_value (key, CONFIG_PID, tmp_int);
           si->pid = tmp_int;
           if (get_cstring_value (this->config_, key, ALTKEY, tmp))
             {
@@ -247,7 +247,7 @@ Config_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool )
   this->config_.set_integer_value (key, START_LIMIT, info->start_limit_);
   set_cstring_value (this->config_, key, PARTIAL_IOR, info->partial_ior);
   set_cstring_value (this->config_, key, IOR, info->ior);
-  this->config_.set_integer_value (key, PID, info->pid);
+  this->config_.set_integer_value (key, CONFIG_PID, info->pid);
   set_cstring_value (this->config_, key, ALTKEY,
                                   info->alt_info_.null () ? ACE_CString("") : info->alt_info_->key_name_);
   set_cstring_value (this->config_, key, PEERS, peerstr);

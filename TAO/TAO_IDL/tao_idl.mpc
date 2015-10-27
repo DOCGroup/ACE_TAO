@@ -5,6 +5,7 @@ project(TAO_IDL_EXE) : aceexe, install, tao_output, tao_idl_fe {
   after       += TAO_IDL_BE gperf
   includes    += $(TAO_ROOT)
   includes    += include be_include fe ..
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the exe
