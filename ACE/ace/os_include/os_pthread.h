@@ -43,15 +43,8 @@
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 # endif /* ACE_HAS_PTHREADS */
 
-
 #if !defined (ACE_LACKS_PTHREAD_H)
-# if !defined ACE_VXWORKS || ACE_VXWORKS < 0x700
-   extern "C" {
-# endif
 #  include /**/ <pthread.h>
-# if !defined ACE_VXWORKS || ACE_VXWORKS < 0x700
-   }
-# endif
 #endif /* !ACE_LACKS_PTHREAD_H */
 
 #if defined (ACE_HAS_PTHREAD_NP_H)
