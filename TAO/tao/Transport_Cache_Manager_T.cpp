@@ -118,10 +118,9 @@ namespace TAO
        {
          TAOLIB_DEBUG ((LM_INFO,
             ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i, ")
-            ACE_TEXT ("Transport[%d] @ hash:index{%d:%d}\n"),
+            ACE_TEXT ("Transport[%d] @ hash{%d}\n"),
             int_id.transport ()->id (),
-            ext_id.hash (),
-            ext_id.index ()));
+            ext_id.hash ()));
        }
 
     // Get the entry too
@@ -205,11 +204,10 @@ namespace TAO
           {
             TAOLIB_DEBUG ((LM_INFO,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::bind_i: ")
-              ACE_TEXT ("Success Transport[%d] @ hash:index{%d:%d}. ")
+              ACE_TEXT ("Success Transport[%d] @ hash{%d}. ")
               ACE_TEXT ("Cache size is [%d]\n"),
               int_id.transport ()->id (),
               ext_id.hash (),
-              ext_id.index (),
               this->current_size ()
               ));
           }
