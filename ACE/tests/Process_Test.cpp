@@ -144,6 +144,7 @@ run_parent (bool inherit_files)
     }
 
   ACE_Process_Options options;
+#ifndef ACE_LACKS_VA_FUNCTIONS
   options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                         ACE_TEXT ("%sProcess_Test")
                         ACE_PLATFORM_EXE_SUFFIX
@@ -151,6 +152,7 @@ run_parent (bool inherit_files)
                         exe_sub_dir.c_str(),
                         (int)inherit_files,
                         tempfile);
+#endif
   options.handle_inheritance (inherit_files); /* ! */
 
   // Spawn child
@@ -224,8 +226,8 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_TCHAR lognm[MAXPATHLEN];
       int const mypid (ACE_OS::getpid ());
-      ACE_OS::sprintf(lognm, ACE_TEXT ("Process_Test-child-%d"), mypid);
-
+      ACE_OS::snprintf (lognm, MAXPATHLEN,
+                        ACE_TEXT ("Process_Test-child-%d"), mypid);
       ACE_START_TEST (lognm);
 
       int result = check_temp_file (temp_file_name);

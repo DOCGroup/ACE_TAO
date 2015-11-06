@@ -67,6 +67,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
 // Consolidate the ACE_Pipe initializations.
 
+#ifdef ACE_HAS_PROCESS_SPAWN
 static void
 open_pipe (ACE_Pipe &pipe,
       const char *name)
@@ -82,11 +83,17 @@ open_pipe (ACE_Pipe &pipe,
   if (close_pipe)
     pipe.close ();
 }
+#endif
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   parse_args (argc, argv);
+
+#ifndef ACE_HAS_PROCESS_SPAWN
+  ACE_START_TEST (ACE_TEXT ("Pipe_Test"));
+  ACE_END_TEST;
+#else
 
   if (child_process)
     {
@@ -112,9 +119,13 @@ run_main (int argc, ACE_TCHAR *argv[])
       const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%ls -c%ls");
 #  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
       ACE_Process_Options options;
+#  ifndef ACE_LACKS_VA_FUNCTIONS
       options.command_line (cmdline_fmt,
                             argc > 0 ? argv[0] : ACE_TEXT ("Pipe_Test"),
                             close_pipe == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
+#  else
+      ACE_UNUSED_ARG (cmdline_fmt);
+#  endif
 
       ACE_exitcode status = 0;
 
@@ -159,6 +170,6 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
       ACE_END_TEST;
     }
-
+#endif // ACE_HAS_PROCESS_SPAWN
   return 0;
 }

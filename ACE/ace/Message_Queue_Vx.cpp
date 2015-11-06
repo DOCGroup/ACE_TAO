@@ -14,6 +14,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // class ACE_Message_Queue_Vx //
 ////////////////////////////////
 
+ACE_ALLOC_HOOK_DEFINE (ACE_Message_Queue_Vx);
+
 void
 ACE_Message_Queue_Vx::dump (void) const
 {

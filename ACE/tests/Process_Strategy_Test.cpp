@@ -70,7 +70,7 @@ typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
 static size_t connections = 0;
 
 // Use this to show down the process gracefully.
-static void
+void
 connection_completed (void)
 {
   // Increment connection counter.
@@ -302,11 +302,9 @@ Counting_Service::read (void)
                        ACE_TEXT ("(%P|%t) %p\n"),
                        ACE_TEXT ("read")),
                       -1);
-  char buf[BUFSIZ];
 
-  int n = ACE_OS::sprintf (buf,
-                           "count = %d\n",
-                           count);
+  char buf[BUFSIZ];
+  int n = ACE_OS::snprintf (buf, BUFSIZ, "count = %d\n", count);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) count = %d\n"),
               count));
@@ -482,7 +480,7 @@ Counting_Service::open (void *)
 
 // Execute the client tests.
 
-static void *
+void *
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr =
@@ -511,6 +509,7 @@ client (void *arg)
       command = "inc";
       command_len = ACE_OS::strlen (command);
 
+#ifndef ACE_LACKS_VA_FUNCTIONS
       if (stream.send (4,
                        &command_len, sizeof command_len,
                        command, command_len) == -1)
@@ -533,7 +532,9 @@ client (void *arg)
                            ACE_TEXT ("(%P|%t) %p\n"),
                            ACE_TEXT ("recv")),
                           0);
-
+#else
+      ACE_UNUSED_ARG (command_len);
+#endif
       // ACE_DEBUG ((LM_DEBUG,
       //             ACE_TEXT ("(%P|%t) client iteration %d, buf = %C\n"),
       //             i, buf));
@@ -554,6 +555,7 @@ client (void *arg)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("open")),
                       0);
+#ifndef ACE_LACKS_VA_FUNCTIONS
   else if (stream.send (4,
                         &command_len, sizeof command_len,
                         command, command_len) == -1)
@@ -561,6 +563,7 @@ client (void *arg)
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("send")),
                       0);
+#endif
   else if ((bytes_read = stream.recv (buf, sizeof buf)) <= 0)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
@@ -604,13 +607,13 @@ client (void *arg)
 
 // Have all connections been serviced?
 
-static int
+int
 done (void)
 {
   return connections == ACE_MAX_ITERATIONS + 1;
 }
 
-static void *
+void *
 server (void *)
 {
   int result = 0;
@@ -635,6 +638,8 @@ run_main (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("parse_args")),
                       -1);
+
+#ifndef ACE_LACKS_ACCEPT
 
   ACCEPTOR acceptor;
 
@@ -706,6 +711,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_HAS_THREADS */
     }
 
+#endif // ACE_LACKS_ACCEPT
   ACE_END_TEST;
   return 0;
 }

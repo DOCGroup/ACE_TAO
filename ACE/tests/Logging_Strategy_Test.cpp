@@ -64,9 +64,7 @@ cdecl_decoration (ACE_TCHAR const *func_name)
 {
 #if defined(ACE_NEEDS_DL_UNDERSCORE)
   static ACE_TCHAR decorated_func_name[10*1024];
-  ACE_OS::sprintf (decorated_func_name,
-                   ACE_TEXT ("_%s"),
-                   func_name);
+  ACE_OS::snprintf (decorated_func_name, 10*1024, ACE_TEXT ("_%s"), func_name);
   return decorated_func_name;
 #else
   return func_name;
@@ -139,11 +137,11 @@ count_files (void)
   do
     {
       if (i == 0)
-        ACE_OS::sprintf (backup_ct,
+        ACE_OS::snprintf (backup_ct, MAXPATHLEN + 1,
                          ACE_TEXT ("%s"),
                          file_name);
       else
-        ACE_OS::sprintf (backup_ct,
+        ACE_OS::snprintf (backup_ct, MAXPATHLEN + 1,
                          ACE_TEXT ("%s.%d"),
                          file_name,
                          i);
@@ -238,11 +236,11 @@ order (void)
       time_t tm_bk_1, tm_bk_2;
       ACE_TCHAR backup_1[MAXPATHLEN+1];
       ACE_TCHAR backup_2[MAXPATHLEN+1];
-      ACE_OS::sprintf (backup_1,
+      ACE_OS::snprintf (backup_1, MAXPATHLEN + 1,
                        ACE_TEXT ("%s.%d"),
                        file_name,
                        1);
-      ACE_OS::sprintf (backup_2,
+      ACE_OS::snprintf (backup_2, MAXPATHLEN + 1,
                        ACE_TEXT ("%s.%d"),
                        file_name,
                        num_files - 1);
@@ -297,7 +295,7 @@ remove_files (void)
     {
       ++i;
       ACE_TCHAR backup[MAXPATHLEN+1];
-      ACE_OS::sprintf (backup,
+      ACE_OS::snprintf (backup, MAXPATHLEN + 1,
                        ACE_TEXT ("%s.%d"),
                        file_name,
                        i);
@@ -439,7 +437,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
 
   // Platform support DLLs, and not configured to link statically
   ACE_TCHAR arg_str[250];
-  ACE_OS::sprintf (arg_str,
+  ACE_OS::snprintf (arg_str, 250,
                    ACE_TEXT ("dynamic Logger Service_Object ")
                    ACE_TEXT ("*ACE:_make_ACE_Logging_Strategy()")
                    ACE_TEXT ("\""));

@@ -201,6 +201,9 @@ namespace ACE_OS {
   extern ACE_Export
   char *strsignal (int signum);
 
+  extern ACE_Export
+  char *strerror_r (int errnum, char *buf, size_t buflen);
+
   /// Finds the length of a string (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strlen (const char *s);

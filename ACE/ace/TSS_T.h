@@ -168,8 +168,8 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Actually implements the code that retrieves the object from

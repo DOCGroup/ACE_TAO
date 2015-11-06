@@ -8,6 +8,10 @@
 # include "ace/OS_NS_string.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
+#if defined (ACE_HAS_ALLOC_HOOKS)
+# include "ace/Malloc_Base.h"
+#endif /* ACE_HAS_ALLOC_HOOKS */
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_LACKS_MEMCHR)
@@ -32,7 +36,12 @@ ACE_OS::memchr_emulation (const void *s, int c, size_t len)
 char *
 ACE_OS::strdup_emulation (const char *s)
 {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  char *t = (char *) ACE_Allocator::instance()->malloc (ACE_OS::strlen (s) + 1);
+#else
   char *t = (char *) ACE_OS::malloc (ACE_OS::strlen (s) + 1);
+#endif /* ACE_HAS_ALLOC_HOOKS */
+
   if (t == 0)
     return 0;
 
@@ -125,7 +134,7 @@ ACE_OS::strerror (int errnum)
 
   if (errno == EINVAL || errmsg == 0 || errmsg[0] == 0)
     {
-      ACE_OS::sprintf (ret_errortext, "Unknown error %d", errnum);
+      ACE_OS::snprintf (ret_errortext, 128, "Unknown error %d", errnum);
       errmsg = ret_errortext;
       g = EINVAL;
     }
@@ -144,7 +153,6 @@ ACE_OS::strerror_emulation (int)
 }
 #endif /* ACE_LACKS_STRERROR */
 
-
 char *
 ACE_OS::strsignal (int signum)
 {
@@ -161,23 +169,39 @@ ACE_OS::strsignal (int signum)
 
   if (ret_val <= reinterpret_cast<char *> (0))
     {
-      ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
+      ACE_OS::snprintf (signal_text, 128, "Unknown signal: %d", signum);
       ret_val = signal_text;
     }
   return ret_val;
 #else
   if (signum < 0 || signum >= ACE_NSIG)
     {
-      ACE_OS::sprintf (signal_text, "Unknown signal: %d", signum);
+      ACE_OS::snprintf (signal_text, 128, "Unknown signal: %d", signum);
       return signal_text;
     }
 # if defined (ACE_SYS_SIGLIST)
   return ACE_SYS_SIGLIST[signum];
 # else
-  ACE_OS::sprintf (signal_text, "Signal: %d", signum);
+  ACE_OS::snprintf (signal_text, 128, "Signal: %d", signum);
   return signal_text;
 # endif /* ACE_SYS_SIGLIST */
 #endif /* ACE_HAS_STRSIGNAL */
+}
+
+char *
+ACE_OS::strerror_r (int errnum, char *buf, size_t buflen)
+{
+#ifdef ACE_HAS_STRERROR_R
+# ifdef ACE_HAS_STRERROR_R_XSI
+  if (::strerror_r (errnum, buf, buflen) == 0)
+    return buf;
+  return const_cast <char*> ("Unknown Error");
+# else
+  return ::strerror_r (errnum, buf, buflen);
+# endif
+#else
+  return ACE_OS::strncpy (buf, strerror (errnum), buflen);
+#endif
 }
 
 const char *

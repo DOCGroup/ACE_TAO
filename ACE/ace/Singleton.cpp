@@ -19,6 +19,13 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Singleton)
+ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Unmanaged_Singleton)
+ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_TSS_Singleton)
+ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Unmanaged_TSS_Singleton)
+ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_DLL_Singleton_T)
+ACE_ALLOC_HOOK_DEFINE_Tc(ACE_DLL_Singleton_Adapter_T)
+
 template <class TYPE, class ACE_LOCK> void
 ACE_Singleton<TYPE, ACE_LOCK>::dump (void)
 {
@@ -76,7 +83,12 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per ACE_Singleton
           // instantiation.
+#if defined(ACE_FACE_SAFETY_BASE)
+          static ACE_LOCK the_lock;
+          static ACE_LOCK *lock = &the_lock;
+#else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock = 0;
+#endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             // Failed to acquire the lock!
             return 0;
@@ -188,7 +200,12 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance (void)
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per
           // ACE_Unmanaged_Singleton instantiation.
+#if defined(ACE_FACE_SAFETY_BASE)
+          static ACE_LOCK the_lock;
+          static ACE_LOCK *lock = &the_lock;
+#else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock = 0;
+#endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             // Failed to acquire the lock!
             return 0;
@@ -276,7 +293,12 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
 
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per ACE_Singleton instantiation.
+#if defined(ACE_FACE_SAFETY_BASE)
+          static ACE_LOCK the_lock;
+          static ACE_LOCK *lock = &the_lock;
+#else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock = 0;
+#endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             // Failed to acquire the lock!
             return 0;
@@ -367,7 +389,12 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per
           // ACE_Unmanaged_Singleton instantiation.
+#if defined(ACE_FACE_SAFETY_BASE)
+          static ACE_LOCK the_lock;
+          static ACE_LOCK *lock = &the_lock;
+#else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock = 0;
+#endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             // Failed to acquire the lock!
             return 0;
@@ -474,7 +501,12 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance (void)
           // Obtain a lock from the ACE_Object_Manager.  The pointer
           // is static, so we only obtain one per
           // ACE_Unmanaged_Singleton instantiation.
+#if defined(ACE_FACE_SAFETY_BASE)
+          static ACE_LOCK the_lock;
+          static ACE_LOCK *lock = &the_lock;
+#else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock = 0;
+#endif /* ACE_FACE_SAFETY_BASE */
           if (ACE_Object_Manager::get_singleton_lock (lock) != 0)
             // Failed to acquire the lock!
             return 0;

@@ -142,7 +142,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   if (!this->output_file_->good ())
     return -1;
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
-  ACE_TCHAR *fmode = 0;
+  const ACE_TCHAR *fmode = 0;
   if (append)
     fmode = ACE_TEXT ("a");
   else

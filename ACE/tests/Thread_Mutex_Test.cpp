@@ -44,7 +44,7 @@ test (void *args)
 {
   ACE_TEST_MUTEX *mutex = (ACE_TEST_MUTEX *) args;
   ACE_UNUSED_ARG (mutex); // Suppress ghs warning about unused local "mutex".
-  ACE_OS::srand ((u_int) ACE_OS::time (0));
+  u_int seed = (u_int) ACE_OS::time (0);
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
     {
@@ -112,7 +112,7 @@ test (void *args)
       // Sleep for a random amount of time between 0 and 2 seconds.
       // Note that it's ok to use rand() here because we are running
       // within the critical section defined by the Thread_Mutex.
-      ACE_OS::sleep (ACE_OS::rand () % 2);
+      ACE_OS::sleep (ACE_OS::rand_r (&seed) % 2);
 
       result = mutex->release ();
       ACE_TEST_ASSERT (result == 0);

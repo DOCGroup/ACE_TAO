@@ -236,7 +236,7 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
         {
           static size_t count = 0;
 
-          ACE_OS::sprintf (reinterpret_cast<ACE_TCHAR *> (mb->wr_ptr ()),
+          ACE_OS::snprintf (reinterpret_cast<ACE_TCHAR *> (mb->wr_ptr ()), BUFSIZ,
                            ACE_SIZE_T_FORMAT_SPECIFIER,
                            count);
           n = ACE_OS::strlen (mb->rd_ptr ());
@@ -328,7 +328,7 @@ Thread_Pool::test_empty_message_shutdown (void)
         {
           static size_t count = 0;
 
-          ACE_OS::sprintf (reinterpret_cast<ACE_TCHAR *> (mb->wr_ptr ()),
+          ACE_OS::snprintf (reinterpret_cast<ACE_TCHAR *> (mb->wr_ptr ()), BUFSIZ,
                            ACE_SIZE_T_FORMAT_SPECIFIER,
                            count);
           n = ACE_OS::strlen (mb->rd_ptr ());

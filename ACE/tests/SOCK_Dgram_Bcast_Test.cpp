@@ -249,7 +249,11 @@ int run_main (int argc, ACE_TCHAR *argv[])
         return -1;
       }
   ACE_START_TEST (ACE_TEXT ("SOCK_Dgram_Bcast_Test"));
+
+#ifndef ACE_LACKS_IOCTL
   result = run_auto_test (argc > 0 ? argv[0] : ACE_TEXT ("SOCK_Dgram_Bcast_Test"));
+#endif
+
   ACE_END_TEST;
   return result;
 }

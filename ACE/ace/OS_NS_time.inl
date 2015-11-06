@@ -90,7 +90,10 @@ ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime (const time_t *t)
 {
   ACE_OS_TRACE ("ACE_OS::ctime");
-#if defined (ACE_HAS_WINCE)
+#if defined (ACE_LACKS_CTIME)
+  ACE_UNUSED_ARG (t);
+  ACE_NOTSUP_RETURN (0);
+#elif defined (ACE_HAS_WINCE)
   static ACE_TCHAR buf [ctime_buf_size];
   return ACE_OS::ctime_r (t,
                           buf,
@@ -272,21 +275,23 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   ACE_UNUSED_ARG (op);
   // Use .obj/gethrtime.o, which was compiled with g++.
   return ACE_GETHRTIME_NAME ();
-#elif (defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)
+#elif (defined (__GNUG__) || defined (__INTEL_COMPILER)) && \
+  !defined (ACE_VXWORKS) && defined (ACE_HAS_PENTIUM) && \
+  !defined (ACE_LACKS_PENTIUM_RDTSC)
   ACE_UNUSED_ARG (op);
   ACE_hrtime_t now;
 
-#if defined (__amd64__) || defined (__x86_64__)
+# if defined (__amd64__) || defined (__x86_64__)
   // Read the high res tick counter into 32 bit int variables "eax" and
   // "edx", and then combine them into 64 bit int "now"
   ACE_UINT32 eax, edx;
   asm volatile ("rdtsc" : "=a" (eax), "=d" (edx) : : "memory");
   now = (((ACE_UINT64) eax) | (((ACE_UINT64) edx) << 32));
-#else
+# else
   // Read the high-res tick counter directly into memory variable "now".
   // The A constraint signifies a 64-bit int.
   asm volatile ("rdtsc" : "=A" (now) : : "memory");
-#endif
+# endif
 
   return now;
 #elif defined (ACE_LINUX) && defined (ACE_HAS_ALPHA_TIMER)

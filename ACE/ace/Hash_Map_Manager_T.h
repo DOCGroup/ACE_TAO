@@ -426,6 +426,9 @@ public:
   const_reverse_iterator rbegin (void) const;
   const_reverse_iterator rend (void) const;
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 protected:
   // = The following methods do the actual work.
 

@@ -94,8 +94,12 @@ Logger::log (ACE_Log_Record &log_record)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Logger::log->%s\n"),
                     log_record.msg_data ()));
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
       else
+#ifdef ACE_LACKS_IOSTREAM_TOTALLY
+        ACE_OS::fprintf (ace_file_stream::instance ()->output_file (),
+                         "Recursive Logger callback = %s\n",
+                         ACE_TEXT_ALWAYS_CHAR (log_record.msg_data ()));
+#else
         *ace_file_stream::instance ()->output_file ()
           << "Recursive Logger callback = "
           << log_record.msg_data ()
@@ -107,15 +111,20 @@ Logger::log (ACE_Log_Record &log_record)
       ACE_TCHAR verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
       int result = log_record.format_msg (ACE_LOG_MSG->local_host (),
                                           ACE_LOG_MSG->flags (),
-                                          verbose_msg);
+                                          verbose_msg,
+                                          ACE_Log_Record::MAXVERBOSELOGMSGLEN);
       if (result == 0)
         {
           if (use_log_msg)
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("Logger::log->%s\n"),
                         verbose_msg));
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
           else
+#ifdef ACE_LACKS_IOSTREAM_TOTALLY
+            ACE_OS::fprintf (ace_file_stream::instance ()->output_file (),
+                             "Recursive Logger callback = %s\n",
+                             ACE_TEXT_ALWAYS_CHAR (log_record.msg_data ()));
+#else
             *ace_file_stream::instance ()->output_file ()
               << "Recursive Logger callback = "
               << log_record.msg_data ()
@@ -712,12 +721,12 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%*ISTART INDENTING %{\n"), 4));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%IONE%{\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%ITWO%{\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%ITHREE\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%ITHREE%*Iwp == 1\n"), 1));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%ITWO\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IONE\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IENDINDENTING\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), ACE_TEXT_WIDE ("My string test\n")));
-  ACE_TCHAR* nill_string = 0;
+  ACE_WCHAR_T *nill_string = 0;
   char* char_nill_string = 0;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), nill_string));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), nill_string));
@@ -744,9 +753,15 @@ test_format_specs (void)
   ACE_LOG_MSG->linenum (42);
   ACE_LOG_MSG->file ("Log_Msg_Test.cpp");
 
-  ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l1:%l"));
-  ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l2:%5l"));
-  ACE_LOG_MSG->log (LM_DEBUG, ACE_TEXT ("l3N1:%0*l,%.7N"), 4);
+#ifdef ACE_LACKS_VA_FUNCTIONS
+#define LOG_ARGS
+#else
+#define LOG_ARGS(X) X
+#endif
+
+  ACE_LOG_MSG->log LOG_ARGS ((LM_DEBUG, ACE_TEXT ("l1:%l")));
+  ACE_LOG_MSG->log LOG_ARGS ((LM_DEBUG, ACE_TEXT ("l2:%5l")));
+  ACE_LOG_MSG->log LOG_ARGS ((LM_DEBUG, ACE_TEXT ("l3N1:%0*l,%.7N"), 4));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l4:%T")));
 
   ACE_LOG_MSG->priority_mask (LM_SHUTDOWN |

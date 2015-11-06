@@ -217,6 +217,9 @@ public:
   /// The caching strategy used on the cache.
   CACHING_STRATEGY &caching_strategy (void);
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 protected:
 
   /// The underlying map which needs to be cached.

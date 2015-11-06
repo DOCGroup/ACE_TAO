@@ -82,7 +82,8 @@ Logger::log (ACE_Log_Record &log_record)
       ACE_TCHAR verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
       int result = log_record.format_msg (ACE_LOG_MSG->local_host (),
                                           ACE_LOG_MSG->flags (),
-                                          verbose_msg);
+                                          verbose_msg,
+                                          ACE_Log_Record::MAXVERBOSELOGMSGLEN);
       if (result == 0)
         {
           if (use_log_msg)

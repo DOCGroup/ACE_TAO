@@ -116,7 +116,7 @@ Client::handle_output (ACE_HANDLE)
     {
       char buffer[BUFSIZ] = { 0 };
 
-      ACE_OS::sprintf (buffer, "test message %d.\n", i);
+      ACE_OS::snprintf (buffer, BUFSIZ, "test message %d.\n", i);
 
       ssize_t bytes_sent =
         this->peer ().send (buffer, ACE_OS::strlen (buffer));

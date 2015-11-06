@@ -93,7 +93,7 @@ extern "C"
   };
 # endif /* ACE_LACKS_IP_MREQ */
 
-#if !defined (IPPORT_RESERVED)
+#if !defined (ACE_HAS_IPPORT_RESERVED) && !defined (IPPORT_RESERVED)
 #  define IPPORT_RESERVED       1024
 #endif /* !IPPORT_RESERVED */
 

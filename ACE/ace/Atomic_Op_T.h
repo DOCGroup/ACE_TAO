@@ -209,8 +209,8 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
 
   /// Manage copying...
   ACE_Atomic_Op_Ex (ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> const &);
@@ -322,6 +322,9 @@ public:
 
   /// Dump the state of an object.
   void dump (void) const;
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
 
   /**
    * Explicitly return @c value_ (by reference).  This gives the user

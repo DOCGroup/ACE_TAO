@@ -180,6 +180,9 @@ public:
   void get_addresses(sockaddr_in6 *addrs, size_t size) const;
 #endif /* ACE_HAS_IPV6 */
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   ACE_Array<ACE_INET_Addr> secondaries_;
 };

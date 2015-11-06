@@ -4,8 +4,8 @@
 #endif /* ! ACE_LACKS_ACE_TOKEN */
 #include "ace/Thread_Manager.h"
 #if !defined (ACE_LACKS_ACE_SVCCONF)
-#  include "ace/Service_Manager.h"
-#  include "ace/Service_Config.h"
+# include "ace/Service_Manager.h"
+# include "ace/Service_Config.h"
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 #include "ace/Signal.h"
 #include "ace/Log_Category.h"
@@ -119,6 +119,8 @@ public:
   ACE_Object_Manager_Preallocations (void);
   ~ACE_Object_Manager_Preallocations (void);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   ACE_Static_Svc_Descriptor ace_svc_desc_ACE_Service_Manager;
 };
@@ -146,6 +148,8 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
 ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations (void)
 {
 }
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Object_Manager_Preallocations)
 
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
@@ -411,6 +415,8 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
   dynamically_allocated_ = false;   // Don't delete this again in fini()
   fini ();
 }
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Object_Manager)
 
 ACE_Object_Manager *
 ACE_Object_Manager::instance (void)

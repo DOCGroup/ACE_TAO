@@ -51,7 +51,7 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
                   argv[0],
                   argv[1]));
 
-      ACE_OS::sprintf (this->directive_[0],
+      ACE_OS::snprintf (this->directive_[0], BUFSIZ,
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
                        ACE_TEXT ("dynamic Test_Object_%s Service_Object * Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_%s\""),
 #else
@@ -60,7 +60,7 @@ Service_Config_DLL::init (int argc, ACE_TCHAR *argv[])
                        argv[0],
                        argv[0]);
 
-      ACE_OS::sprintf (this->directive_[1],
+      ACE_OS::snprintf (this->directive_[1], BUFSIZ,
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
                        ACE_TEXT ("dynamic Test_Object_%s Service_Object * Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_%s\""),
 #else

@@ -92,7 +92,7 @@ client (void *)
 
   ACE_SOCK_Stream stream;
   ACE_SOCK_Connector connector;
-  ACE_OS::sprintf (buf, "Client: the life was good!");
+  ACE_OS::snprintf (buf, 100, "Client: the life was good!");
 
   mes_len = (int) htonl (ACE_OS::strlen (buf) + 1);
 
@@ -130,28 +130,23 @@ inc_count (Widget, XtPointer client_data, XtPointer)
 {
   char new_string[80];
 
-  ACE_OS::sprintf (new_string,
-                   "Events: [%d] [%d] [%d]",
-                   count1++,
-                   count2,
-                   count3);
+  ACE_OS::snprintf (new_string, 80, "Events: [%d] [%d] [%d]",
+                    count1++, count2, count3);
+
   set_label((Widget) client_data, new_string);
 }
 
 // Callback for X Timer.
 
 static void
-inc_tmo (void *w,XtIntervalId *)
+inc_tmo (void *w, XtIntervalId *)
 {
   char new_string[80];
 
   if (count2 > 10)
     ACE_OS::exit (0);
-  ACE_OS::sprintf (new_string,
-                   "Events: [%d] [%d] [%d]",
-                   count1,
-                   count2++,
-                   count3);
+  ACE_OS::snprintf (new_string, 80, "Events: [%d] [%d] [%d]",
+                    count1, count2++, count3);
 
   set_label((Widget) w, new_string);
 
@@ -168,11 +163,8 @@ public:
                               const void *arg)
   {
     char new_string[80];
-    ACE_OS::sprintf (new_string,
-                     "Events: [%d] [%d] [%d]",
-                     count1,
-                     count2,
-                     count3++);
+    ACE_OS::snprintf (new_string, 80, "Events: [%d] [%d] [%d]",
+                      count1, count2, count3++);
     set_label((Widget) arg, new_string);
     return 0;
   }

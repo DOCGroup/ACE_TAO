@@ -1,8 +1,8 @@
 // The following configuration file is designed to work for LynxOS,
 // version 4.0.0 and later, using the GNU g++ compiler.
 
-#ifndef ACE_CONFIG_H
-#define ACE_CONFIG_H
+#ifndef ACE_CONFIG_LYNXOS_H
+#define ACE_CONFIG_LYNXOS_H
 #include /**/ "ace/pre.h"
 
 // System include files are not in sys/, this gets rid of warning.
@@ -182,4 +182,4 @@
 
 #include /**/ "ace/post.h"
 
-#endif /* ACE_CONFIG_H */
+#endif /* ACE_CONFIG_LYNXOS_H */
