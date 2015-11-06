@@ -77,9 +77,7 @@ find_last (void)
   find_called++;
 
   char search_string[MAX_STRING_SIZE];
-  ACE_OS::sprintf (search_string,
-                   "%d",
-                   n_entries - 1);
+  ACE_OS::snprintf (search_string, MAX_STRING_SIZE, "%d", n_entries - 1);
   ACE_CString cString (search_string);
   Element *element_ptr = 0;
 
@@ -324,7 +322,7 @@ init (void)
 
   for (u_int i = 0; i < n_entries; i++)
     {
-      ACE_OS::sprintf (entry, "%d", i);
+      ACE_OS::snprintf (entry, MAX_STRING_SIZE, "%d", i);
       ACE_NEW_RETURN (cString_ptr,
                       ACE_CString (entry),
                       -1);

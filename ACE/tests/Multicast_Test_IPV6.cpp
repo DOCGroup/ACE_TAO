@@ -547,9 +547,9 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                          const ACE_TCHAR *net_if)
 {
   char buf[MAX_STRING_SIZE];
-  ACE_OS::sprintf (buf, "%s/%d",
-                   mcast_addr.get_host_addr (),
-                   mcast_addr.get_port_number ());
+  ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d",
+                    mcast_addr.get_host_addr (),
+                    mcast_addr.get_port_number ());
 
   if (this->mcast_.join (mcast_addr, reuse_addr, net_if) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -575,9 +575,9 @@ MCT_Event_Handler::leave (const ACE_INET_Addr &mcast_addr,
       size_t size = this->address_vec_.size ();
       for (size_t i = 0; i < size; ++i)
         {
-          ACE_OS::sprintf (buf, "%s/%d",
-                           mcast_addr.get_host_addr (),
-                           mcast_addr.get_port_number ());
+          ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d",
+                            mcast_addr.get_host_addr (),
+                            mcast_addr.get_port_number ());
           if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
           {
             this->address_vec_[i]->set ("");
@@ -769,7 +769,7 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
       if (done)
         buf[0] = 0;
       else
-        ACE_OS::sprintf (buf, "%s/%d", address, port);
+        ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d", address, port);
       //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sending (%s)\n"), buf));
       if (socket.send (buf, ACE_OS::strlen (buf),addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -900,8 +900,8 @@ int advance_addr (ACE_INET_Addr &addr)
                           -1);
 
       ACE_TCHAR buf[MAX_STRING_SIZE];
-      ACE_OS::sprintf (buf, ACE_TEXT ("%d.%d.%d.%d:%d"),
-                       a, b, c, d, addr.get_port_number ());
+      ACE_OS::snprintf (buf, MAX_STRING_SIZE, ACE_TEXT ("%d.%d.%d.%d:%d"),
+                        a, b, c, d, addr.get_port_number ());
       addr.set (buf);
       return 0;
     }

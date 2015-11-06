@@ -972,29 +972,48 @@ ACE_INLINE unsigned int
 ACE_OS::if_nametoindex (const char *ifname)
 {
   ACE_OS_TRACE ("ACE_OS::if_nametoindex");
+#if defined (ACE_LACKS_IF_NAME_INDEX)
+  ACE_UNUSED_ARG (ifname);
+  ACE_NOTSUP_RETURN (0);
+#else
   ACE_OSCALL_RETURN (::if_nametoindex (ifname), int, 0);
+#endif /* ACE_LACKS_IF_NAME_INDEX */
 }
 
 ACE_INLINE char *
 ACE_OS::if_indextoname (unsigned int ifindex, char *ifname)
 {
   ACE_OS_TRACE ("ACE_OS::if_indextoname");
+#if defined (ACE_LACKS_IF_NAME_INDEX)
+  ACE_UNUSED_ARG (ifindex);
+  ACE_UNUSED_ARG (ifname);
+  ACE_NOTSUP_RETURN (0);
+#else
   ACE_OSCALL_RETURN (::if_indextoname (ifindex, ifname), char *, 0);
+#endif /* ACE_LACKS_IF_NAME_INDEX */
 }
 
 ACE_INLINE struct if_nameindex *
 ACE_OS::if_nameindex (void)
 {
   ACE_OS_TRACE ("ACE_OS::if_nameindex");
+#if defined (ACE_LACKS_IF_NAME_INDEX)
+  ACE_NOTSUP_RETURN (0);
+#else
   ACE_OSCALL_RETURN (::if_nameindex (), struct if_nameindex *, 0);
+#endif /* ACE_LACKS_IF_NAME_INDEX */
 }
 
 ACE_INLINE void
 ACE_OS::if_freenameindex (struct if_nameindex *ptr)
 {
   ACE_OS_TRACE ("ACE_OS::if_freenameindex");
+#if defined (ACE_LACKS_IF_NAME_INDEX)
+  ACE_UNUSED_ARG (ptr);
+#else
   if (ptr != 0)
     ::if_freenameindex (ptr);
+#endif /* ACE_LACKS_IF_NAME_INDEX */
 }
 #endif /* ACE_LINUX && ACE_HAS_IPV6 */
 

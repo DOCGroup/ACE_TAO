@@ -35,6 +35,7 @@
 #endif /* ACE_HAS_PRIOCNTL */
 
 #include "ace/os_include/sys/os_types.h"
+#include "ace/os_include/os_stdint.h"
 
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
@@ -336,7 +337,7 @@ public:
 #    endif /* !ACE_HAS_POSIX_SEM */
 #  endif /* !ACE_HAS_STHREADS */
 
-#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+#  if defined (ACE_HAS_PTHREADS_UNIX98_EXT) && !defined (ACE_LACKS_RWLOCK_T)
      typedef pthread_rwlock_t ACE_rwlock_t;
 #   endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 

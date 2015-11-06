@@ -64,7 +64,9 @@ run_main (int, ACE_TCHAR *[])
 
   const ACE_TCHAR *server_cl = APPLICATION ACE_TEXT ("server.conf");
   ACE_Process_Options server_options;
+#ifndef ACE_LACKS_VA_FUNCTIONS
   server_options.command_line (server_cl);
+#endif
   ACE_Process server;
 
   if (server.spawn (server_options) == -1)
@@ -82,7 +84,9 @@ run_main (int, ACE_TCHAR *[])
 
   const ACE_TCHAR *clerk_cl = APPLICATION ACE_TEXT ("clerk.conf");
   ACE_Process_Options clerk_options;
+#ifndef ACE_LACKS_VA_FUNCTIONS
   clerk_options.command_line (clerk_cl);
+#endif
   ACE_Process clerk;
 
   if (clerk.spawn (clerk_options) == -1)

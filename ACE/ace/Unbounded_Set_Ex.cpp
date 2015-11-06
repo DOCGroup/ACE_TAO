@@ -15,7 +15,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Ex)
+ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Unbounded_Set_Ex)
 
 template <class T, class C> size_t
 ACE_Unbounded_Set_Ex<T, C>::size (void) const
@@ -278,7 +278,7 @@ ACE_Unbounded_Set_Ex<T, C>::end (void) const
   return const_iterator (*this, 1);
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Ex_Iterator)
+ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Unbounded_Set_Ex_Iterator)
 
 template <class T, class C> void
 ACE_Unbounded_Set_Ex_Iterator<T, C>::dump (void) const
@@ -385,7 +385,7 @@ ACE_Unbounded_Set_Ex_Iterator<T, C>::operator!= (const ACE_Unbounded_Set_Ex_Iter
   return (this->set_ != rhs.set_ || this->current_ != rhs.current_);
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_Set_Ex_Const_Iterator)
+ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Unbounded_Set_Ex_Const_Iterator)
 
 template <class T, class C> void
 ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::dump (void) const

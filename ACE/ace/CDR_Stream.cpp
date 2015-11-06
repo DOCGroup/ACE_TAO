@@ -1520,9 +1520,15 @@ ACE_InputCDR::read_string (ACE_CDR::Char *&x)
   // the memory is allocated.
   if (len > 0 && len <= this->length())
     {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_ALLOCATOR_RETURN (x,
+                            static_cast<ACE_CDR::Char*> (ACE_Allocator::instance()->malloc(sizeof (ACE_CDR::Char) * (len))),
+                            0);
+#else
       ACE_NEW_RETURN (x,
                       ACE_CDR::Char[len],
                       0);
+#endif /* ACE_HAS_ALLOC_HOOKS */
 
       ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char> safe_data (x);
 
@@ -1536,9 +1542,16 @@ ACE_InputCDR::read_string (ACE_CDR::Char *&x)
     {
       // Convert any null strings to empty strings since empty
       // strings can cause crashes. (See bug 58.)
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_ALLOCATOR_RETURN (x,
+                            static_cast<ACE_CDR::Char*> (ACE_Allocator::instance()->malloc(sizeof (ACE_CDR::Char) * (1))),
+                            0);
+#else
       ACE_NEW_RETURN (x,
                       ACE_CDR::Char[1],
                       0);
+#endif /* ACE_HAS_ALLOC_HOOKS */
+
       ACE_OS::strcpy (const_cast<char *&> (x), "");
       return true;
     }
@@ -1601,9 +1614,15 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
               ACE_OutputCDR::wchar_maxbytes_);
 
           //allocating one extra for the null character needed by applications
+#if defined (ACE_HAS_ALLOC_HOOKS)
+          ACE_ALLOCATOR_RETURN (x,
+                                static_cast<ACE_CDR::WChar*> (ACE_Allocator::instance()->malloc(sizeof (ACE_CDR::WChar) * (len + 1))),
+                                0);
+#else
           ACE_NEW_RETURN (x,
                           ACE_CDR::WChar [len + 1],
                           false);
+#endif /* ACE_HAS_ALLOC_HOOKS */
 
           ACE_auto_ptr_reset (safe_data, x);
 
@@ -1622,9 +1641,15 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
         }
       else
         {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+          ACE_ALLOCATOR_RETURN (x,
+                                static_cast<ACE_CDR::WChar*> (ACE_Allocator::instance()->malloc(sizeof (ACE_CDR::WChar) * (len))),
+                                0);
+#else
           ACE_NEW_RETURN (x,
                           ACE_CDR::WChar [len],
                           false);
+#endif /* ACE_HAS_ALLOC_HOOKS */
 
           ACE_auto_ptr_reset (safe_data, x);
 
@@ -1640,9 +1665,16 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
     {
       // Convert any null strings to empty strings since empty
       // strings can cause crashes. (See bug 58.)
-      ACE_NEW_RETURN (x,
-                      ACE_CDR::WChar[1],
-                      false);
+#if defined (ACE_HAS_ALLOC_HOOKS)
+          ACE_ALLOCATOR_RETURN (x,
+                                static_cast<ACE_CDR::WChar*> (ACE_Allocator::instance()->malloc(sizeof (ACE_CDR::WChar) * (1))),
+                                0);
+#else
+          ACE_NEW_RETURN (x,
+                          ACE_CDR::WChar [1],
+                          false);
+#endif /* ACE_HAS_ALLOC_HOOKS */
+
       x[0] = '\x00';
       return true;
     }

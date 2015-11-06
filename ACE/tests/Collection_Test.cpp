@@ -46,11 +46,11 @@ void iterate_const(const UNBOUNDED_SET& set)
       iterator.next (data);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                  data->alloc_, data->dfunc_));
+                  data->alloc_, (void *) data->dfunc_));
 
       DATA data_second = *iterator;
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                  data_second.alloc_, data_second.dfunc_));
+                  data_second.alloc_, (void *) data_second.dfunc_));
 
       iterator.advance ();
     }
@@ -82,7 +82,7 @@ run_main (int, ACE_TCHAR *[])
            ++iterator)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                      (*iterator).alloc_, (*iterator).dfunc_));
+                      (*iterator).alloc_, (void *) (*iterator).dfunc_));
         }
     }
 
@@ -96,7 +96,7 @@ run_main (int, ACE_TCHAR *[])
           DATA *data = 0;
           iterator.next (data);
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                      data->alloc_, data->dfunc_));
+                      data->alloc_, (void *) data->dfunc_));
           iterator.advance ();
         }
     }
@@ -110,7 +110,7 @@ run_main (int, ACE_TCHAR *[])
 
       while (i.next (data) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "%x,%x\n", data->alloc_, data->dfunc_));
+          ACE_DEBUG ((LM_DEBUG, "%x,%x\n", data->alloc_, (void *) data->dfunc_));
           i.advance ();
         }
     }

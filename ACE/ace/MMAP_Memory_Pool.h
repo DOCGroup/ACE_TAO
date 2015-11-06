@@ -333,6 +333,10 @@ public:
 
   /// Overwrite the default sync behavior with no-op
   virtual int sync (void *addr, size_t len, int flags = MS_SYNC);
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

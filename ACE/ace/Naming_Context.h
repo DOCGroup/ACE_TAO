@@ -339,6 +339,8 @@ public:
   /// Return verbose status
   bool verbose (void);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   /// Extra debugging info
   bool debugging_;

@@ -347,4 +347,8 @@ ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
   return -1;
 }
 
+ACE_ALLOC_HOOK_DEFINE(ACE_StringCapEntry)
+ACE_ALLOC_HOOK_DEFINE(ACE_IntCapEntry)
+ACE_ALLOC_HOOK_DEFINE(ACE_BoolCapEntry)
+
 ACE_END_VERSIONED_NAMESPACE_DECL

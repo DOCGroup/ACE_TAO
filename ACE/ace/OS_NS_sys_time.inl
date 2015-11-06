@@ -2,7 +2,7 @@
 #include "ace/os_include/sys/os_time.h"
 #include "ace/os_include/os_errno.h"
 
-#if defined (ACE_VXWORKS) || defined (ACE_HAS_CLOCK_GETTIME_REALTIME)
+#if defined (ACE_VXWORKS) || defined (ACE_HAS_CLOCK_GETTIME_REALTIME) || defined (ACE_LACKS_GETTIMEOFDAY)
 #  include "ace/OS_NS_time.h"
 #endif /* ACE_VXWORKS || ACE_HAS_CLOCK_REALTIME */
 
@@ -18,12 +18,14 @@ ACE_OS::gettimeofday (void)
   int result = 0;
 #endif // !defined (ACE_WIN32)
 
-#if defined (ACE_HAS_CLOCK_GETTIME_REALTIME)
-  struct timespec ts;
+#if defined (ACE_LACKS_GETTIMEOFDAY) && defined (ACE_HAS_CLOCK_GETTIME)
+  timespec ts;
+  if (ACE_OS::clock_gettime (CLOCK_REALTIME, &ts) == -1)
+    {
+      return ACE_Time_Value (-1);
+    }
 
-  ACE_OSCALL (ACE_OS::clock_gettime (CLOCK_REALTIME, &ts), int, -1, result);
-  tv.tv_sec = ts.tv_sec;
-  tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
+  return ACE_Time_Value (ts);
 
 #elif defined (ACE_WIN32) && defined (ACE_LACKS_GETSYSTEMTIMEASFILETIME)
   SYSTEMTIME tsys;
@@ -58,7 +60,11 @@ ACE_OS::gettimeofday (void)
   tv.tv_sec = ts.tv_sec;
   tv.tv_usec = ts.tv_nsec / 1000L;  // timespec has nsec, but timeval has usec
 # else
+#  if defined (ACE_LACKS_GETTIMEOFDAY)
+  ACE_NOTSUP_RETURN (ACE_Time_Value ((time_t)-1));
+#  else
   ACE_OSCALL (::gettimeofday (&tv), int, -1, result);
+#  endif /* ACE_LACKS_GETTIMEOFDAY */
 # endif /* ACE_HAS_SVR4_GETTIMEOFDAY */
 #endif /* 0 */
 #if !defined (ACE_WIN32)
@@ -67,6 +73,12 @@ ACE_OS::gettimeofday (void)
   else
     return ACE_Time_Value (tv);
 #endif // !defined (ACE_WIN32)
+}
+
+ACE_INLINE ACE_Time_Value
+ACE_OS::gettimeofday_ (void)
+{
+  return ACE_OS::gettimeofday ();
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

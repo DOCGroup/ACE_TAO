@@ -22,7 +22,7 @@
 #if defined (ACE_HAS_THREADS)
 
 /// default params
-#if defined (ACE_VXWORKS)
+#if defined (ACE_VXWORKS) || defined (ACE_LYNXOS_MAJOR)
 // this is a very expensive test on VxWorks so limit it otherwise it will never finish in time:-)
 const ACE_INT32 PRODUCER_THREADS_NO=10;
 const ACE_INT32 CONSUMER_THREADS_NO=10;

@@ -72,6 +72,8 @@ ACE_Log_Category_TSS::ACE_Log_Category_TSS(ACE_Log_Category* category, ACE_Log_M
 {
 }
 
+ACE_ALLOC_HOOK_DEFINE(ACE_Log_Category_TSS)
+
 ACE_Log_Category_TSS*
 ACE_Log_Category::per_thr_obj()
 {

@@ -67,6 +67,7 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 #  else
 #    include "ace/Process_Mutex.h"
      typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
+#    define CLEANUP_PROCESS_MUTEX
 #  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 #endif /* ACE_LACKS_FORK */
 
@@ -260,7 +261,7 @@ struct Client_Info
 
 #if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
 
-static void
+void
 timed_blocking_connect (CONNECTOR &con,
                         const ACE_INET_Addr &server_addr)
 {
@@ -293,7 +294,7 @@ timed_blocking_connect (CONNECTOR &con,
     }
 }
 
-static void
+void
 blocking_connect (CONNECTOR &con,
                   const ACE_INET_Addr &server_addr)
 {
@@ -323,7 +324,7 @@ blocking_connect (CONNECTOR &con,
 // This function runs the more sophisticated tests involving the
 // Caching_Connect_Strategy.
 
-static void
+void
 cached_connect (STRAT_CONNECTOR &con,
                 const ACE_INET_Addr &server_addr)
 {
@@ -358,7 +359,7 @@ cached_connect (STRAT_CONNECTOR &con,
     }
 }
 
-static void *
+void *
 client_connections (void *arg)
 {
   Client_Info *info = (Client_Info *) arg;
@@ -395,7 +396,7 @@ client_connections (void *arg)
 
 // Execute the client tests.
 
-static void *
+void *
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
@@ -446,7 +447,7 @@ client (void *arg)
 
 // Performs the iterative server activities.
 
-static void *
+void *
 server (void *arg)
 {
 #if defined (VXWORKS)
@@ -518,7 +519,7 @@ server (void *arg)
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
 
 #if !defined (ACE_LACKS_FORK)
-static void
+void
 handler (int /* signum */)
 {
   // No printout here, to be safe.  Signal handlers must not acquire
@@ -528,7 +529,7 @@ handler (int /* signum */)
 
 // Spawn threads.
 
-static int
+int
 spawn_processes (ACCEPTOR *acceptor,
                  ACE_INET_Addr *server_addr)
 {
@@ -582,7 +583,7 @@ spawn_processes (ACCEPTOR *acceptor,
 
   do
     {
-      child = ACE_OS::wait ();
+      child = ACE_OS::waitpid (0, 0, 0);
       if (child != -1)
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) reaping %d\n"),
@@ -595,7 +596,8 @@ spawn_processes (ACCEPTOR *acceptor,
 }
 #endif /* ! ACE_LACKS_FORK */
 
-#if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS)
+#if defined (ACE_LACKS_FORK) && defined (ACE_HAS_THREADS) \
+  && !defined ACE_LACKS_ACCEPT
 // Spawn threads and run the client and server.
 
 static
@@ -706,7 +708,7 @@ spawn_threads (ACCEPTOR *acceptor,
 
   return status;
 }
-#endif /* ! ACE_LACKS_FORK && ACE_HAS_THREADS */
+#endif /* ! ACE_LACKS_FORK && ACE_HAS_THREADS && ! ACE_LACKS_ACCEPT */
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
@@ -731,6 +733,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         break;
       }
 
+#ifndef ACE_LACKS_ACCEPT
   // Acceptor
   ACCEPTOR acceptor;
   ACE_INET_Addr server_addr;
@@ -750,23 +753,28 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("(%P|%t) starting server at port %d\n"),
                   server_addr.get_port_number ()));
 
-#if !defined (ACE_LACKS_FORK)
+# if !defined (ACE_LACKS_FORK)
       if (spawn_processes (&acceptor,
                            &server_addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("(%P|%t) %p\n"),
                            ACE_TEXT ("spawn_processes")),
                           1);
-#elif defined (ACE_HAS_THREADS)
+# elif defined (ACE_HAS_THREADS)
       status = spawn_threads (&acceptor, &server_addr);
-#else  /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
+# else  /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
       ACE_ERROR ((LM_INFO,
                   ACE_TEXT ("(%P|%t) ")
                   ACE_TEXT ("only one thread may be run")
                   ACE_TEXT (" in a process on this platform")));
-#endif /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
+# endif /* ACE_LACKS_FORK && ! ACE_HAS_THREADS */
     }
 
+# ifdef CLEANUP_PROCESS_MUTEX
+  ACE_Process_Mutex::unlink (acceptor.acceptor ().lock ().name ());
+# endif
+
+#endif // ACE_LACKS_ACCEPT
   ACE_END_TEST;
   return status;
 }

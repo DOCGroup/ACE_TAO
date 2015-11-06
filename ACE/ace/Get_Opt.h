@@ -405,6 +405,8 @@ private:
     /// simplifying long option handling, see tests/Get_Opt_Test.cpp
     /// for an example of this technique.
     int val_;
+
+    ACE_ALLOC_HOOK_DECLARE;
   };
 
   /// Updates nextchar_.

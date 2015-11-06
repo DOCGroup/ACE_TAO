@@ -255,7 +255,11 @@ ACE::handle_exception_ready (ACE_HANDLE handle, const ACE_Time_Value *timeout)
 ACE_INLINE void
 ACE::strdelete (char *s)
 {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance()->free(s);
+#else
   delete [] s;
+#endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
 #if defined (ACE_HAS_WCHAR)

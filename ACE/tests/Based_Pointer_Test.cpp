@@ -301,7 +301,7 @@ mmap_remap_test(void)
     for (i= 0; i<3; ++i)
       {
         ACE_TCHAR store[ MAXPATHLEN + 1 ];
-        ACE_OS::sprintf( store, ACE_TEXT("foo%d"), i );
+        ACE_OS::snprintf( store, MAXPATHLEN + 1, ACE_TEXT("foo%d"), i );
         ACE_OS::unlink( store );
 
         ACE_NEW_RETURN (alloc[ i ],

@@ -115,6 +115,7 @@
 # define ACE_LACKS_SIGINFO_H
 # define ACE_HAS_UCONTEXT_T
 # define ACE_HAS_SIGTIMEDWAIT
+# define ACE_HAS_STRERROR_R
 
 #else  /* ! __GLIBC__ */
     // Fixes a problem with some non-glibc versions of Linux...

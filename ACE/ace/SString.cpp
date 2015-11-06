@@ -63,9 +63,15 @@ ACE_NS_WString::char_rep (void) const
     {
       char *t = 0;
 
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_ALLOCATOR_RETURN (t,
+                            static_cast<char*>(ACE_Allocator::instance()->malloc (sizeof (char) * (this->len_ + 1))),
+                            0);
+#else
       ACE_NEW_RETURN (t,
                       char[this->len_ + 1],
                       0);
+#endif
 
       for (size_type i = 0; i < this->len_; ++i)
         // Note that this cast may lose data if wide chars are
@@ -87,9 +93,15 @@ ACE_NS_WString::ushort_rep (void) const
     {
       ACE_UINT16 *t = 0;
 
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_ALLOCATOR_RETURN (t,
+                            static_cast<ACE_UINT16*> (ACE_Allocator::instance()->malloc(sizeof(ACE_UINT16) * (this->len_ + 1))),
+                            0);
+#else
       ACE_NEW_RETURN (t,
                       ACE_UINT16[this->len_ + 1],
                       0);
+#endif
 
       for (size_type i = 0; i < this->len_; ++i)
         // Note that this cast may lose data if wide chars are

@@ -56,6 +56,9 @@ public:
 
   /// Re-enable a previously suspended service.
   virtual int resume (void);
+
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
 };
 
 // Forward decl.

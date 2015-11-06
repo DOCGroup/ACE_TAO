@@ -37,10 +37,10 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
 
   ACE_TCHAR buf[BUFSIZ];
 
-  ACE_OS::sprintf (buf,
-                   ACE_TEXT ("%s\t#%s\n"),
-                   ACE_TEXT ("ACE_Naming_Context"),
-                   ACE_TEXT ("Proxy for making calls to a Name Server"));
+  ACE_OS::snprintf (buf, BUFSIZ,
+                    ACE_TEXT ("%s\t#%s\n"),
+                    ACE_TEXT ("ACE_Naming_Context"),
+                    ACE_TEXT ("Proxy for making calls to a Name Server"));
 
   if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
     return -1;
@@ -430,7 +430,11 @@ ACE_Name_Options::ACE_Name_Options (void)
   this->namespace_dir_ = ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR);
 #else /* ACE_DEFAULT_NAMESPACE_DIR */
   size_t pathsize = (MAXPATHLEN + 1) * sizeof (ACE_TCHAR);
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  this->namespace_dir_ = static_cast <ACE_TCHAR *> (ACE_Allocator::instance()->malloc (pathsize));
+#else
   this->namespace_dir_ = static_cast <ACE_TCHAR *> (ACE_OS::malloc (pathsize));
+#endif /* ACE_HAS_ALLOC_HOOKS */
 
   if (ACE::get_temp_dir (this->namespace_dir_, MAXPATHLEN) == -1)
     {
@@ -447,11 +451,20 @@ ACE_Name_Options::~ACE_Name_Options (void)
 {
   ACE_TRACE ("ACE_Name_Options::~ACE_Name_Options");
 
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance()->free ((void *) this->nameserver_host_);
+  ACE_Allocator::instance()->free ((void *) this->namespace_dir_ );
+  ACE_Allocator::instance()->free ((void *) this->process_name_ );
+  ACE_Allocator::instance()->free ((void *) this->database_ );
+#else
   ACE_OS::free ((void *) this->nameserver_host_);
   ACE_OS::free ((void *) this->namespace_dir_ );
   ACE_OS::free ((void *) this->process_name_ );
   ACE_OS::free ((void *) this->database_ );
+#endif /* ACE_HAS_ALLOC_HOOKS */
 }
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Name_Options)
 
 void
 ACE_Name_Options::nameserver_port (int port)
@@ -471,7 +484,11 @@ void
 ACE_Name_Options::namespace_dir (const ACE_TCHAR *dir)
 {
   ACE_TRACE ("ACE_Name_Options::namespace_dir");
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance()->free ((void *) this->namespace_dir_ );
+#else
   ACE_OS::free ((void *) this->namespace_dir_ );
+#endif /* ACE_HAS_ALLOC_HOOKS */
   this->namespace_dir_ = ACE_OS::strdup (dir);
 }
 
@@ -480,7 +497,11 @@ ACE_Name_Options::process_name (const ACE_TCHAR *pname)
 {
   ACE_TRACE ("ACE_Name_Options::process_name");
   const ACE_TCHAR *t = ACE::basename (pname, ACE_DIRECTORY_SEPARATOR_CHAR);
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance()->free ((void *) this->process_name_ );
+#else
   ACE_OS::free ((void *) this->process_name_ );
+#endif /* ACE_HAS_ALLOC_HOOKS */
   this->process_name_ = ACE_OS::strdup (t);
 }
 
@@ -488,7 +509,11 @@ void
 ACE_Name_Options::nameserver_host (const ACE_TCHAR *host)
 {
   ACE_TRACE ("ACE_Name_Options::nameserver_host");
-  ACE_OS::free ((void *) this->nameserver_host_);
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance()->free ((void *) this->nameserver_host_ );
+#else
+  ACE_OS::free ((void *) this->nameserver_host_ );
+#endif /* ACE_HAS_ALLOC_HOOKS */
   this->nameserver_host_ = ACE_OS::strdup (host);
 }
 
@@ -510,7 +535,11 @@ void
 ACE_Name_Options::database (const ACE_TCHAR *db)
 {
   ACE_TRACE ("ACE_Name_Options::database");
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance()->free ((void *) this->database_);
+#else
   ACE_OS::free ((void *) this->database_);
+#endif /* ACE_HAS_ALLOC_HOOKS */
   this->database_ = ACE_OS::strdup (db);
 }
 
@@ -616,6 +645,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
         this->verbosity_ = true;
         break;
       default:
+#ifndef ACE_LACKS_STDERR
         ACE_OS::fprintf (stderr, "%s\n"
                          "\t[-d] (enable debugging)\n"
                          "\t[-h nameserver host]\n"
@@ -627,6 +657,7 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
                          "\t[-v] (verbose)\n"
                          "\t[-r] (use Win32 Registry)\n",
                          ACE_TEXT_ALWAYS_CHAR (argv[0]));
+#endif
         /* NOTREACHED */
         break;
       }

@@ -3,6 +3,10 @@
 # LynxOS with g++.  Defaults to LynxOS Version 4.0.0.  For Version 4.2.0,
 # for example, add "VERSION=4.2.0" to your make invocation.
 
+ifeq ($(static_libs_only),1)
+  shared_libs = 0
+endif
+
 ifeq ($(shell uname -s),LynxOS)
   export VERSION=$(shell uname -r)
 
@@ -13,7 +17,8 @@ else
   CROSS-COMPILE = 1
 
   ifeq (,$(VERSION))
-    export VERSION = 4.0.0
+#    export VERSION = 4.0.0
+    export VERSION = 2.3.0
   endif # VERSION
 endif # ! LynxOS
 
@@ -41,6 +46,8 @@ ifeq ($(shared_libs),1)
   ifeq ($(CROSS-COMPILE),1)
     LDFLAGS  += -Wl,-rpath-link,$(ACE_ROOT)/lib
   endif
+else
+  LIBS     += -lnetinet
 endif
 
 CC              = gcc
@@ -81,6 +88,8 @@ PLATFORM_TK_LDFLAGS=$(PLATFORM_X11_LDFLAGS)
 # add -E to LDFLAGS if using GNU ld
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+
+CCFLAGS += -fpermissive -fno-strict-aliasing
 
 # To save much disk space, strip all executables.  Comment the
 # following line out if you want to debug.  Or, add "POSTLINK="

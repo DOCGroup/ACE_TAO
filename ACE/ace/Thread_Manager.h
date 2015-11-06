@@ -137,6 +137,8 @@ public:
 
   virtual ~ACE_At_Thread_Exit_Func (void);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 protected:
    /// The object to be cleanup
    void *object_;
@@ -191,6 +193,8 @@ public:
   /// Return the pointer to an ACE_Task_Base or NULL if there's no
   /// ACE_Task_Base associated with this thread.;
   ACE_Task_Base *task (void) const;
+
+  ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Reset this base thread descriptor.
@@ -1240,6 +1244,10 @@ protected:
 #endif /* ACE_HAS_THREADS */
 
   ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_SYNCH_MUTEX> thread_desc_freelist_;
+
+#if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_PTHREAD_JOIN)
+  ACE_Condition_Thread_Mutex join_cond_;
+#endif
 
 private:
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)

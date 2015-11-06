@@ -103,8 +103,8 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Condition variable.
@@ -146,8 +146,8 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

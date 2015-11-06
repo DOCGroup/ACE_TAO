@@ -135,11 +135,14 @@ client (void *arg)
   u_char buffer2[255];
   // Give it a chance to get here
   ACE_OS::sleep (2);
+#ifndef ACE_LACKS_VA_FUNCTIONS
   len = cli_stream.recv (4,
                          buffer2,
                          150,
                          &buffer2[150],
                          105);
+#endif
+
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
@@ -232,6 +235,7 @@ server (void *arg)
   //
   // Send the buffer back, using send (size_t n, ...) in 3 pieces.
 
+#ifndef ACE_LACKS_VA_FUNCTIONS
   len = sock_str.send (6,
                        buffer,
                        42,
@@ -239,6 +243,8 @@ server (void *arg)
                        189,
                        &buffer[231],
                        24);
+#endif
+
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
@@ -253,7 +259,7 @@ server (void *arg)
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
 
-static void
+void
 spawn (void)
 {
   // Acceptor
@@ -328,7 +334,9 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Sendfile_Test"));
 
+#ifndef ACE_LACKS_ACCEPT
   spawn ();
+#endif
 
   ACE_END_TEST;
   return Test_Result;

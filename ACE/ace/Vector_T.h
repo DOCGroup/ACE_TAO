@@ -90,6 +90,9 @@ public:
    */
   ~ACE_Vector ();
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
   /**
    * Returns the current vector capacity, that is, the currently
    * allocated buffer size.

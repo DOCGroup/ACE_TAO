@@ -109,7 +109,6 @@ void *
 ACE_New_Allocator::malloc (size_t nbytes)
 {
   char *ptr = 0;
-
   if (nbytes > 0)
     ACE_NEW_RETURN (ptr, char[nbytes], 0);
   return (void *) ptr;
@@ -136,7 +135,11 @@ ACE_New_Allocator::calloc (size_t n_elem, size_t elem_size, char initial_value)
 void
 ACE_New_Allocator::free (void *ptr)
 {
+#ifdef ACE_FACE_SAFETY_BASE
+  ACE_UNUSED_ARG (ptr);
+#else
   delete [] (char *) ptr;
+#endif
 }
 
 int

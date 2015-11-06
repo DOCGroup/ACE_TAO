@@ -93,9 +93,9 @@ acquire_release (void)
   ACE_HANDLE checker_handle = ACE_OS::open (mutex_check, O_CREAT | O_EXCL);
   if (checker_handle == ACE_INVALID_HANDLE)
     {
-      ACE_TEST_ASSERT (errno != EEXIST);
       ACE_DEBUG ((LM_WARNING, ACE_TEXT ("(%P): %p\n"),
                   ACE_TEXT ("checker file open")));
+      ACE_TEST_ASSERT (errno != EEXIST);
     }
   else
     ACE_OS::close (checker_handle);
@@ -130,7 +130,8 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_TCHAR lognm[MAXPATHLEN];
       int mypid (ACE_OS::getpid ());
-      ACE_OS::sprintf(lognm, ACE_TEXT ("Process_Mutex_Test-child-%d"), mypid);
+      ACE_OS::snprintf (lognm, MAXPATHLEN,
+                        ACE_TEXT ("Process_Mutex_Test-child-%d"), mypid);
 
       ACE_START_TEST (lognm);
       acquire_release ();
@@ -154,9 +155,15 @@ run_main (int argc, ACE_TCHAR *argv[])
       static const ACE_TCHAR* format = ACE_TEXT ("%s -c -n %s%s");
 #endif /* !ACE_WIN32 && ACE_USES_WCHAR */
       ACE_Process_Options options;
+
+#ifndef ACE_LACKS_VA_FUNCTIONS
       options.command_line (format, argc > 0 ? argv[0] : ACE_TEXT ("Process_Mutex_Test"), mutex_name,
                             release_mutex == 0 ? ACE_TEXT (" -d") : ACE_TEXT (""));
+#else
+      ACE_UNUSED_ARG (format);
+#endif
 
+#ifdef ACE_HAS_PROCESS_SPAWN
       // Spawn <n_processes> child processes that will contend for the
       // lock.
       ACE_Process children[n_processes];
@@ -205,6 +212,8 @@ run_main (int argc, ACE_TCHAR *argv[])
                         children[i].getpid (), child_status));
         }
 
+#endif // ACE_HAS_PROCESS_SPAWN
+      ACE_Process_Mutex::unlink (mutex_name);
       ACE_END_TEST;
     }
 

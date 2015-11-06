@@ -183,6 +183,9 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
   /// Remove entry from map.
   int unbind (CACHE_ENTRY *entry);
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 protected:
   /// Base class.
   typedef ACE_CACHE_MAP_MANAGER ACE_HCMM_BASE;

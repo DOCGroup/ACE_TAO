@@ -234,9 +234,6 @@
 /* Compiler requires extern "C" functions for signals. */
 #define ACE_HAS_SIG_C_FUNC 1
 
-/* Define to 1 if platform has snprintf(). */
-#define ACE_HAS_SNPRINTF 1
-
 /* Define to 1 if `sin6_len' is a member of `sockaddr_in6'. */
 #define ACE_HAS_SOCKADDR_IN6_SIN6_LEN 1
 
