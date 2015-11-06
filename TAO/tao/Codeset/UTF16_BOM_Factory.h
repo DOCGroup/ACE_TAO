@@ -53,7 +53,8 @@ private:
 
 private:
   TAO_UTF16_BOM_Translator *translator_;
-  bool forceBE_;    // force big endian wchar, warray, & wstring
+  /// Force big endian wchar, warray, & wstring
+  bool forceBE_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF16_BOM_Factory)
