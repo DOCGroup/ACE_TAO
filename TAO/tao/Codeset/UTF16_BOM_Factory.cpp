@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "tao/debug.h"
 #include "tao/Codeset/UTF16_BOM_Factory.h"
 #include "ace/OS_NS_strings.h"
@@ -27,8 +26,6 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
                        | ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF16_BOM_Factory)
-
-
 
 TAO_UTF16_BOM_Factory::TAO_UTF16_BOM_Factory ()
   : translator_ (0)
