@@ -235,7 +235,7 @@ int AIO_CLD_Connector::validate_connection
 
   if (ssl_ctx_ == 0) {
     OpenSSL_add_ssl_algorithms ();
-    ssl_ctx_ = SSL_CTX_new (SSLv3_client_method ());
+    ssl_ctx_ = SSL_CTX_new (SSLv23_client_method ());
     if (ssl_ctx_ == 0) return -1;
 
     if (SSL_CTX_use_certificate_file (ssl_ctx_,

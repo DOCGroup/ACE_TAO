@@ -16,7 +16,7 @@ namespace ACE
   namespace HTTPS
   {
 
-    int Context::ssl_mode_ =  ACE_SSL_Context::SSLv3;
+    int Context::ssl_mode_ =  ACE_SSL_Context::SSLv23;
     bool Context::ssl_strict_ = false;
     bool Context::ssl_once_ = true;
     int Context::ssl_depth_ = 0;
