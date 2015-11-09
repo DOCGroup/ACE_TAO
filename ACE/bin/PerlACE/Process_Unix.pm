@@ -185,7 +185,7 @@ sub CommandLine ()
                                    $self->{TARGET}->{TEST_ROOT});
       $cur_root = $self->{TARGET}->{TEST_ROOT};
     }
-    
+
     # Translate to different filesystem
     if (defined $self->{TARGET} && defined $ENV{TEST_ROOT} &&
         defined $self->{TARGET}->{TEST_FSROOT}) {
@@ -353,7 +353,7 @@ sub CommandLine ()
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "INFO: created run script [",$self->{SCRIPTFILE},"]\n", $run_script;
         }
-        if (defined $self->{TARGET} && 
+        if (defined $self->{TARGET} &&
             (defined $self->{TARGET}->{TARGET_FSROOT} ||
              defined $self->{TARGET}->{TEST_ROOT})) {
            # Already written to proper dir
@@ -724,20 +724,29 @@ sub Kill ($)
             $self->{REMOTE_PID} = $rc;
         }
     }
-    if (!defined $self->{REMOTE_PID}) {
-        print STDERR "ERROR: Remote command: $! No PID found at Kill.\n";
-        return -1;
-    }
+    my $child_killed = 0;
+
     if ($self->{RUNNING} && !defined $ENV{'ACE_TEST_WINDOW'}) {
         if (defined $self->{TARGET} && defined $self->{TARGET}->{REMOTE_SHELL}) {
-            my $cmd = $self->{TARGET}->{REMOTE_SHELL}." kill -s KILL ".$self->{REMOTE_PID};
-            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-                print STDERR "INFO: Killing remote process <", $cmd, ">\n";
+            # Kill remote process
+            if (defined $self->{REMOTE_PID}) {
+                my $cmd = $self->{TARGET}->{REMOTE_SHELL}." kill -s KILL ".$self->{REMOTE_PID};
+                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                    print STDERR "INFO: Killing remote process <", $cmd, ">\n";
+                select(undef, undef, undef, .5);
+                }
+                $cmd = `$cmd 2>&1`;
+                # Wait to give remote process time to exit
+                select(undef, undef, undef, 3.0);
+            } else {
+                print STDERR "INFO: remote process PID unknown, can't kill\n";
             }
-            $cmd = `$cmd 2>&1`;
         } else {
             kill ('KILL', $self->{PROCESS});
+            $child_killed = 1;
         }
+
+
         for(my $i = 0; $i < 10; $i++) {
             my $pid = waitpid ($self->{PROCESS}, WNOHANG);
             if ($pid > 0) {
@@ -747,6 +756,11 @@ sub Kill ($)
                 last;
             }
             else {
+                if (!$child_killed) {
+                  # Kill child process (may be remote shell))
+                  kill ('KILL', $self->{PROCESS});
+                  $child_killed = 1;
+                }
                 select(undef, undef, undef, .5);
             }
         }
