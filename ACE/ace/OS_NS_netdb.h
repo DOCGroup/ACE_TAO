@@ -113,7 +113,7 @@ namespace ACE_OS
   void freeaddrinfo (addrinfo *result);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  const char *gai_strerror (int errcode);
+  const ACE_TCHAR *gai_strerror (int errcode);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int getnameinfo (const sockaddr *addr, ACE_SOCKET_LEN addr_len,

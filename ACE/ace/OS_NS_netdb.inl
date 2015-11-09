@@ -761,7 +761,7 @@ ACE_OS::freeaddrinfo (addrinfo *result)
 #endif
 }
 
-ACE_INLINE const char *
+ACE_INLINE const ACE_TCHAR *
 ACE_OS::gai_strerror (int errcode)
 {
   ACE_OS_TRACE ("ACE_OS::gai_strerror");
@@ -769,22 +769,24 @@ ACE_OS::gai_strerror (int errcode)
   switch (errcode)
     {
     case EAI_NONAME:
-      return "Name does not resolve to an address";
+      return ACE_TEXT ("Name does not resolve to an address");
     case EAI_AGAIN:
-      return "Temporary failure, try again";
+      return ACE_TEXT ("Temporary failure, try again");
     case EAI_FAIL:
-      return "Name resolution failed";
+      return ACE_TEXT ("Name resolution failed");
     case EAI_FAMILY:
-      return "Address family not supported";
+      return ACE_TEXT ("Address family not supported");
     case EAI_MEMORY:
-      return "Out of memory";
+      return ACE_TEXT ("Out of memory");
     case EAI_SYSTEM:
-      return "Other error, see errno";
+      return ACE_TEXT ("Other error, see errno");
     case EAI_OVERFLOW:
-      return "Buffer provided by caller was too small";
+      return ACE_TEXT ("Buffer provided by caller was too small");
     default:
-      return "Unknown error";
+      return ACE_TEXT ("Unknown error");
     }
+#elif !defined ACE_WIN32
+  return ACE_TEXT_CHAR_TO_TCHAR (::gai_strerror (errcode));
 #else
   return ::gai_strerror (errcode);
 #endif
