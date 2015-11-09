@@ -571,8 +571,7 @@ sub Spawn ()
             }
         }
         if (!defined $self->{REMOTE_PID}) {
-            print STDERR "ERROR: Remote command failed <" . $cmdline . ">: $! No PID found.\n";
-            return -1;
+            print STDERR "Warning: Remote command <" . $cmdline . ">: $! No PID found at Spawn.\n";
         }
     }
 
@@ -719,6 +718,16 @@ sub Kill ($)
     my $self = shift;
     my $ignore_return_value = shift;
 
+    if (!defined $self->{REMOTE_PID}) {
+        my $rc = $self->ReadPidFile($self->{PIDFILE});
+        if ($rc != 0) {
+            $self->{REMOTE_PID} = $rc;
+        }
+    }
+    if (!defined $self->{REMOTE_PID}) {
+        print STDERR "ERROR: Remote command: $! No PID found at Kill.\n";
+        return -1;
+    }
     if ($self->{RUNNING} && !defined $ENV{'ACE_TEST_WINDOW'}) {
         if (defined $self->{TARGET} && defined $self->{TARGET}->{REMOTE_SHELL}) {
             my $cmd = $self->{TARGET}->{REMOTE_SHELL}." kill -s KILL ".$self->{REMOTE_PID};
