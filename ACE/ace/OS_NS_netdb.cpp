@@ -11,6 +11,7 @@
 
 #include "ace/os_include/net/os_if.h"
 #include "ace/Global_Macros.h"
+#include "ace/OS_NS_arpa_inet.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_stropts.h"
 #include "ace/OS_NS_sys_socket.h"
@@ -385,13 +386,24 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
         return EAI_AGAIN;
       case NO_RECOVERY:
         return EAI_FAIL;
+      case ENOTSUP:
+        if (ACE_OS::inet_aton (name, (in_addr *) &buffer[0]) != 0)
+          {
+            host = &entry;
+            entry.h_length = sizeof (in_addr);
+            entry.h_addr_list = (char **) (buffer + sizeof (in_addr));
+            entry.h_addr_list[0] = buffer;
+            entry.h_addr_list[1] = 0;
+            break;
+          }
+        // fall-through
       default:
         errno = herr;
         return EAI_SYSTEM;
       }
 
   size_t n = 0;
-  for (char **addr = host->h_addr_list; addr; ++addr, ++n) /*empty*/;
+  for (char **addr = host->h_addr_list; *addr; ++addr, ++n) /*empty*/;
 
 # ifdef ACE_HAS_ALLOC_HOOKS
   ACE_Allocator *const al = ACE_Allocator::instance ();
@@ -467,7 +479,7 @@ ACE_OS::getnameinfo_emulation (const sockaddr *saddr, ACE_SOCKET_LEN saddr_len,
   if (hp == 0 || hp->h_name == 0)
     return EAI_NONAME;
 
-  if (ACE_OS::strlen (hp->h_name) >= host_len)
+  if (ACE_OS::strlen (hp->h_name) >= size_t (host_len))
     {
       if (host_len > 0)
         {
