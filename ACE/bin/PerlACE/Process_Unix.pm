@@ -571,7 +571,7 @@ sub Spawn ()
             }
         }
         if (!defined $self->{REMOTE_PID}) {
-            print STDERR "Warning: Remote command <" . $cmdline . ">: $! No PID found at Spawn.\n";
+            print STDERR "Remote command <" . $cmdline . ">: $! No PID found at Spawn.\n";
         }
     }
 
