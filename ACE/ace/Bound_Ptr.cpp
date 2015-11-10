@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #ifndef ACE_BOUND_PTR_CPP
 #define ACE_BOUND_PTR_CPP
 

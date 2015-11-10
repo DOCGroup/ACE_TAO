@@ -1,5 +1,3 @@
-// $Id$
-
 // The following configuration file is designed to work for LynxOS 178,
 // based on lynxos 2.3 originally with g++ 2.9
 

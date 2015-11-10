@@ -1,5 +1,3 @@
-# $Id$
-#
 # This is the list of run_test.pl's that need to be run by
 # auto_run_tests.pl.
 # Each line has its own test, and a test can be followed by a
