@@ -16,6 +16,7 @@
 
 #include "test_config.h"
 #include "ace/ACE.h"
+#include "ace/Init_ACE.h"
 #include "ace/Thread.h"
 
 

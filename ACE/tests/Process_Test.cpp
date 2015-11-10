@@ -35,11 +35,13 @@ test_setenv (void)
   for (int i = 0; i < 100; ++i)
     ACE_OS::strcat (bigval,
                     ACE_TEXT ("01234567890123456789012345678901234567890123456789"));
+#ifndef ACE_LACKS_VA_FUNCTIONS
 # if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   const ACE_TCHAR *fmt = ACE_TEXT ("%ls");
 # else
   const ACE_TCHAR *fmt = ACE_TEXT ("%s");
 # endif
+
   if (0 != opts.setenv (ACE_TEXT ("A"), fmt, bigval))
     {
       status = errno;
@@ -56,6 +58,7 @@ test_setenv (void)
                       env_len));
         }
     }
+#endif
   return status;
 }
 
