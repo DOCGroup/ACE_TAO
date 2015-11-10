@@ -922,11 +922,19 @@ namespace { // helpers for vsnprintf_emulation
             }
 
           if (flags.has (SNPRINTF_FLEXPONENT) && !flags.has (SNPRINTF_ALT))
-            for (char *f = it - 1; f >= frac_start; --f)
-              if (*f == '0' || *f == radix)
-                --it;
-              else
-                break;
+            {
+              for (char *f = it - 1; f >= frac_start; --f)
+                {
+                  if (*f == '0' || *f == radix)
+                    {
+                      --it;
+                    }
+                  else
+                    {
+                      break;
+                    }
+                }
+            }
         }
 
       if (flags.has (SNPRINTF_EXPONENT))
@@ -999,7 +1007,7 @@ namespace { // helpers for vsnprintf_emulation
       ACE_Allocator::instance ()->free (buf);
 #endif
     }
-    
+
     char *buf_;
     size_t avail_, written_;
   };
