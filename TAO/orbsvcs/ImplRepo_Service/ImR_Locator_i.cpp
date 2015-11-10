@@ -500,24 +500,21 @@ ImR_Locator_i::remote_access_update (const char *name,
 }
 
 void
-ImR_Locator_i::notify_child_death
-(ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
- const char* name)
+ImR_Locator_i::child_death_i (const char* name, pid_t pid)
 {
   if (debug_ > 1)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) ImR: Server[0] has died <%C>.\n"),
-                    name));
+                    ACE_TEXT ("(%P|%t) ImR: Server[%d] has died <%C>.\n"),
+                    pid, name));
 
+  this->pinger_.remove_server (name, pid);
   AsyncAccessManager_ptr aam (this->find_aam (name));
   if (!aam.is_nil())
     {
-      aam->notify_child_death ();
+      aam->notify_child_death (pid);
     }
 
-  this->pinger_.remove_server (name);
-
-  UpdateableServerInfo info (this->repository_, name);
+  UpdateableServerInfo info(this->repository_, name, pid);
   if (! info.null ())
     {
       info.edit ()->reset_runtime ();
@@ -526,8 +523,17 @@ ImR_Locator_i::notify_child_death
     {
       if (debug_ > 1)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) ImR: Failed to find server in repository.\n")));
+                    ACE_TEXT ("(%P|%t) ImR: Failed to find server/pid in repository.\n")));
     }
+
+}
+
+void
+ImR_Locator_i::notify_child_death
+(ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
+ const char* name)
+{
+  this->child_death_i (name, 0);
   _tao_rh->notify_child_death ();
 }
 
@@ -536,27 +542,7 @@ ImR_Locator_i::child_death_pid
 (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
  const char* name, CORBA::Long pid)
 {
-  if (debug_ > 1)
-    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Server[%d] has died <%C>.\n"), pid, name));
-
-  UpdateableServerInfo info(this->repository_, name, pid);
-  if (! info.null ())
-    {
-      info.edit ()->reset_runtime ();
-      AsyncAccessManager_ptr aam (this->find_aam (name));
-      if (!aam.is_nil())
-        {
-          aam->notify_child_death ();
-        }
-      this->pinger_.remove_server (name);
-    }
-  else
-    {
-      if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) ImR: Failed to find server in repository.\n")));
-    }
-
+  this->child_death_i (name, static_cast<pid_t>(pid));
   _tao_rh->child_death_pid ();
 }
 
@@ -581,6 +567,7 @@ ImR_Locator_i::spawn_pid
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) ImR: Failed to find server in repository.\n")));
     }
+  this->pinger_.set_pid (name, pid);
 
   _tao_rh->spawn_pid ();
 }
@@ -929,6 +916,18 @@ ImR_Locator_i::kill_server
 }
 
 void
+ImR_Locator_i::destroy_poa (const ACE_CString &poa_name)
+{
+  PortableServer::POA_var poa = findPOA (poa_name.c_str());
+  if (! CORBA::is_nil (poa.in ()))
+    {
+      bool etherealize = true;
+      bool wait = false;
+      poa->destroy (etherealize, wait);
+    }
+}
+
+void
 ImR_Locator_i::remove_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
  const char* id)
@@ -947,28 +946,21 @@ ImR_Locator_i::remove_server
       return;
     }
 
-  // Note : This will be safe, because any Server_Info_Ptr objects will still
-  // be valid, and the actual Server_Info will be destroyed when the last
-  // one goes out of scope.
-
   Server_Info_Ptr info = this->repository_->get_active_server (id);
   if (! info.null ())
     {
-      ACE_CString poa_name = info->poa_name;
-      if (this->repository_->remove_server (info->key_name_) == 0)
-        {
-          if (debug_ > 1)
-            ORBSVCS_DEBUG ((LM_DEBUG,
+      if (debug_ > 1)
+        ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%P|%t) ImR: Removing Server <%C>...\n"),
-                        id));
+                        info->key_name_.c_str()));
 
-          PortableServer::POA_var poa = findPOA (poa_name.c_str());
-          if (! CORBA::is_nil (poa.in ()))
-            {
-              bool etherealize = true;
-              bool wait = false;
-              poa->destroy (etherealize, wait);
-            }
+      this->remove_aam (info->key_name_.c_str());
+      this->pinger_.remove_server (info->key_name_.c_str());
+
+      ACE_CString poa_name = info->poa_name;
+      if (this->repository_->remove_server (info->key_name_, this) == 0)
+        {
+          this->destroy_poa (poa_name);
           if (debug_ > 0)
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%P|%t) ImR: Removed Server <%C>.\n"),
