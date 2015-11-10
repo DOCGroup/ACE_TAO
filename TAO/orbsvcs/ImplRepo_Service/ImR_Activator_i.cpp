@@ -361,12 +361,8 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
       if (!found && result == 0 && this->notify_imr_)
         {
           this->process_map_.bind (pid, name);
-#if (ACE_SIZEOF_VOID_P == 8)
-          ACE_INT64 token = static_cast<ACE_INT64>(pid);
-#else
-          ACE_INT32 token = static_cast<ACE_INT32>(pid);
-#endif
           ACE_Reactor *r = this->orb_->orb_core()->reactor();
+          Act_token_type token = static_cast<Act_token_type>(pid);
           r->schedule_timer (this, reinterpret_cast<void *>(token), ACE_Time_Value ());
         }
     }
@@ -389,13 +385,13 @@ ImR_Activator_i::still_alive (CORBA::Long pid)
 }
 
 bool
-ImR_Activator_i::still_running_i (const char *name)
+ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
 {
   bool is_running =  this->server_list_.find (name) == 0;
-#if defined (ACE_WIN32)
+
   if (is_running)
     {
-      pid_t pid = ACE_INVALID_PID;
+      pid = ACE_INVALID_PID;
       for (ProcessMap::ITERATOR iter = this->process_map_.begin ();
            iter != process_map_.end ();
            iter++)
@@ -406,13 +402,14 @@ ImR_Activator_i::still_running_i (const char *name)
               break;
             }
         }
+#if defined (ACE_WIN32)
       if (pid != ACE_INVALID_PID)
         {
           pid_t waitp = this->process_mgr_.wait (pid, ACE_Time_Value::zero);
           is_running = (waitp != pid);
         }
-    }
 #endif /* ACE_WIN32 */
+    }
   return is_running;
 }
 
@@ -434,13 +431,17 @@ ImR_Activator_i::start_server(const char* name,
     ORBSVCS_DEBUG((LM_DEBUG,
                    "ImR Activator: Starting %C <%C>...\n",
                    (unique ? "unique server" : "server"), name));
-
-  if (unique && this->still_running_i (name))
+  pid_t pid;
+  if (unique && this->still_running_i (name, pid))
     {
       if (debug_ > 1)
         ORBSVCS_DEBUG((LM_DEBUG,
-                       "ImR Activator: Unique instance already running\n"));
-      return;
+                       "ImR Activator: Unique instance already running %d\n",
+                       pid));
+      char reason[32];
+      ACE_OS::snprintf (reason,32,"pid:%d",pid);
+      throw ImplementationRepository::CannotActivate(
+        CORBA::string_dup (reason));
     }
 
   ACE_TString cmdline_tstr(ACE_TEXT_CHAR_TO_TCHAR(cmdline));
@@ -484,7 +485,7 @@ ImR_Activator_i::start_server(const char* name,
                         ACE_TEXT_CHAR_TO_TCHAR (env[i].value.in ()));
     }
 
-  pid_t pid = this->process_mgr_.spawn (proc_opts, this);
+  pid = this->process_mgr_.spawn (proc_opts, this);
   if (pid == ACE_INVALID_PID)
     {
       ORBSVCS_ERROR ((LM_ERROR,
@@ -493,7 +494,6 @@ ImR_Activator_i::start_server(const char* name,
       throw ImplementationRepository::CannotActivate(
         CORBA::string_dup (
           "Process Creation Failed"));
-      return;
     }
   else
     {
@@ -589,12 +589,7 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
       ACE_Reactor *r = this->orb_->orb_core()->reactor();
       ACE_Time_Value dtv (0, this->induce_delay_ * 1000);
       pid_t pid = process->getpid();
-#if (ACE_SIZEOF_VOID_P == 8)
-      ACE_INT64 token = static_cast<ACE_INT64>(pid);
-#else
-      ACE_INT32 token = static_cast<ACE_INT32>(pid);
-#endif
-
+      Act_token_type token = static_cast<Act_token_type>(pid);
       r->schedule_timer (this, reinterpret_cast<void *>(token), dtv );
     }
   else
@@ -608,11 +603,7 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
 int
 ImR_Activator_i::handle_timeout (const ACE_Time_Value &, const void * tok)
 {
-#if (ACE_SIZEOF_VOID_P == 8)
-  ACE_INT64 token = reinterpret_cast<ACE_INT64>(tok);
-#else
-  ACE_INT32 token = reinterpret_cast<ACE_INT32>(tok);
-#endif
+  Act_token_type token = reinterpret_cast<Act_token_type>(tok);
   this->handle_exit_i (static_cast<pid_t>(token));
   return 0;
 }
