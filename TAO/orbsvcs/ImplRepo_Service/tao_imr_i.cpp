@@ -483,7 +483,7 @@ TAO_IMR_Op_Link::print_usage (void)
 {
   ORBSVCS_ERROR ((LM_ERROR, "Links multiple POAs to a single executable\n"
     "\n"
-    "Usage: tao_imr [options] link [name] [peers]\n"
+    "Usage: tao_imr [options] link [name] [command-arguments]\n"
     "  where [options] are ORB options\n"
     "  where [name] is the registered POA name the peers link to\n"
     "  where [command-arguments] can be\n"

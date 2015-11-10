@@ -46,6 +46,13 @@ struct ACE_Equal_To_pid_t
 };
 
 
+#if (ACE_SIZEOF_VOID_P == 8)
+  typedef ACE_INT64 Act_token_type;
+#else
+  typedef ACE_INT32 Act_token_type;
+#endif
+
+
 /**
 * @class ImR_Activator_i
 *
@@ -97,7 +104,7 @@ private:
   int handle_exit (ACE_Process * process);
   int handle_exit_i (pid_t pid);
 
-  bool still_running_i (const char *name);
+  bool still_running_i (const char *name, pid_t& pid);
 
   bool in_upcall (void);
 
