@@ -528,7 +528,8 @@ Locator_Repository::get_info (const ACE_CString& name)
 }
 
 int
-Locator_Repository::remove_server (const ACE_CString& name)
+Locator_Repository::remove_server (const ACE_CString& name,
+                                   ImR_Locator_i* imr_locator)
 {
   int err = sync_load ();
   if (err != 0)
@@ -545,7 +546,7 @@ Locator_Repository::remove_server (const ACE_CString& name)
 
   if (!si->alt_info_.null ())
     {
-      // name is a peer to another an must be removed from other list
+      // name is a peer to another and must be removed from other list
       bool found = false;
       for (CORBA::ULong i = 0; i < si->alt_info_->peers.length(); i++)
         {
@@ -569,6 +570,9 @@ Locator_Repository::remove_server (const ACE_CString& name)
           ACE_CString peer (si->peers[i]);
           Server_Info::gen_key (si->server_id, peer, key);
 
+          Server_Info_Ptr si2;
+          this->servers().find (key, si2);
+          imr_locator->destroy_poa (si2->poa_name);
           this->servers ().unbind (key);
           this->persistent_remove (key, false);
         }
