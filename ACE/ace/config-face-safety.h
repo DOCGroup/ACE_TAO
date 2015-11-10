@@ -1,5 +1,3 @@
-// $Id$
-
 // Specialized configuration for FACE Safety Profiles
 // See http://www.opengroup.org/face for more info about the Future Airborne
 // Capability Environment
