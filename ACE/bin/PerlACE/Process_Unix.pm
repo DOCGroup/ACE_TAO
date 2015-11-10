@@ -718,12 +718,16 @@ sub Kill ($)
     my $self = shift;
     my $ignore_return_value = shift;
 
-    if (!defined $self->{REMOTE_PID}) {
+    # If Remote PID not known, but should be
+    if (defined $self->{TARGET} &&
+        defined $self->{TARGET}->{REMOTE_SHELL} &&
+        !defined $self->{REMOTE_PID}) {
         my $rc = $self->ReadPidFile($self->{PIDFILE});
         if ($rc != 0) {
             $self->{REMOTE_PID} = $rc;
         }
     }
+
     my $child_killed = 0;
 
     if ($self->{RUNNING} && !defined $ENV{'ACE_TEST_WINDOW'}) {
