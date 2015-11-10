@@ -233,7 +233,7 @@ RTCP_BYE_Packet::build_packet(void)
       index+=4;
     }
 
-  if (this->reason_)
+  if (this->reason_length_)
     {
       this->packet_data_[index] = this->reason_length_;
       index++;
