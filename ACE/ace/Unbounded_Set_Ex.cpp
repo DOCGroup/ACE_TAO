@@ -226,13 +226,18 @@ ACE_Unbounded_Set_Ex<T, C>::remove (const T &item)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::remove");
 
-  // Insert the item to be founded into the dummy node.
+  // Insert the item to be found into the dummy node.
   this->head_->item_ = item;
 
   NODE *curr = this->head_;
 
   while (!(this->comp_ (curr->next_->item_, item)))
     curr = curr->next_;
+
+  // reset the dummy node. This ensures reference counted items are
+  // completely released. Without this, a reference can linger as
+  // the dummy long after it was removed from the list.
+  this->head_->item_ = T();
 
   if (curr->next_ == this->head_)
     return -1; // Item was not found.
