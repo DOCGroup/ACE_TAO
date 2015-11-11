@@ -243,12 +243,15 @@ LOCAL_EXTERN_PREFIX
 void
 ACE_TSS_CLEANUP_NAME (void *ptr)
 {
-  // Delegate to thr_desc if this not has terminated
-  ACE_Log_Msg* log_msg = (ACE_Log_Msg*) ptr;
-  if (log_msg->thr_desc()!=0)
-    log_msg->thr_desc()->log_msg_cleanup(log_msg);
-  else
-    delete log_msg;
+  if (ptr != 0)
+    {
+      // Delegate to thr_desc if this not has terminated
+      ACE_Log_Msg *log_msg = (ACE_Log_Msg *) ptr;
+      if (log_msg->thr_desc () != 0)
+        log_msg->thr_desc ()->log_msg_cleanup (log_msg);
+      else
+        delete log_msg;
+    }
 }
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ! ACE_MT_SAFE */
