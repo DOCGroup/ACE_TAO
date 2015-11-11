@@ -416,7 +416,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   else
     {
       ACE_START_TEST (ACE_TEXT ("RW_Process_Mutex_Test"));
-#ifdef ACE_HAS_PROCESS_SPAWN
+#if defined ACE_HAS_PROCESS_SPAWN && !defined ACE_LACKS_FILELOCKS
       // Although it should be safe for each process to construct and
       // destruct the rw lock, this can disturb other process still
       // using the lock. This is not really correct, and should be
