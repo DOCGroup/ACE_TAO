@@ -50,6 +50,8 @@ ACE_TSS<TYPE>::~ACE_TSS (void)
     // A bug in LynxOS-178 causes pthread_setspecific (called from ts_value(0)
     // above) to call the cleanup function, so we need to avoid calling it here.
     ACE_TSS<TYPE>::cleanup (ts_obj);
+#  else
+    ACE_UNUSED_ARG (ts_obj);
 #  endif
 # endif /* ACE_HAS_THR_C_DEST */
 
