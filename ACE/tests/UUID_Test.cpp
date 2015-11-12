@@ -54,13 +54,13 @@ Tester::test (void)
                        -1);
 
   // Check the hash value of the 2 UUIDs
- 
+
   if (new_uuid.hash () != new_uuid_assign.hash ())
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: hash value of UUIDs are ")
                        ACE_TEXT ("not the same")),
                        -1);
-  
+
 #else
   const ACE_Utils::UUID &new_uuid = *uuid;
 #endif

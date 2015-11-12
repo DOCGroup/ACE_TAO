@@ -335,7 +335,7 @@ spawn (int num_clients)
               // Break out of 'for' loop.
               break;
             case 0:
-              ACE_LOG_MSG->sync ("MT_SOCK_Test-child");
+              ACE_LOG_MSG->sync (ACE_TEXT ("MT_SOCK_Test-child"));
               client (&server_addr);
               ACE_OS::exit (0);
               /* NOTREACHED */

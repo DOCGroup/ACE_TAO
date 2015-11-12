@@ -192,7 +192,7 @@ sub GetConfigSettings ($)
       $self->{TEST_ROOT} = $ENV{$env_name};
     } else {
       $self->{TEST_ROOT} = $self->{ACE_ROOT};
-    } 
+    }
 
     $env_name = $env_prefix.'TEST_FSROOT';
     if (exists $ENV{$env_name}) {
@@ -461,7 +461,7 @@ sub LocalEnvDir ($)
     return $newdir;
 }
 
-# Convert a file in current directory to be local to the target 
+# Convert a file in current directory to be local to the target
 sub LocalFile ($)
 {
     my $self = shift;

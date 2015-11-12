@@ -1804,10 +1804,16 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       ACE_OS::sprintf (bp,
                                        format,
                                        static_cast <unsigned> (ACE_Thread::self ()));
+#elif defined ACE_USES_WCHAR
+                  {
+                    char tid_buf[32] = {};
+                    ACE_OS::thr_id (tid_buf, sizeof tid_buf);
+                    this_len = ACE_OS::strlen (tid_buf);
+                    ACE_OS::strncpy (bp, ACE_TEXT_CHAR_TO_TCHAR (tid_buf),
+                                     bspace);
+                  }
 #else
-
-                  this_len =  ACE_OS::thr_id (bp, bspace);
-
+                  this_len = ACE_OS::thr_id (bp, bspace);
 #endif /* ACE_WIN32 */
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;

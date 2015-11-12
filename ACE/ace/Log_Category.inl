@@ -111,8 +111,6 @@ ACE_Log_Category_TSS::log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *form
 #endif /* ACE_HAS_WCHAR */
 #else /* ACE_LACKS_VA_FUNCTIONS */
 
-#include "ace/Log_Record.h"
-
 ACE_INLINE ssize_t
 ACE_Log_Category_TSS::log (const ACE_Log_Formatter &formatter)
 {

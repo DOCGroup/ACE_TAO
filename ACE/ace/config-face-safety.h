@@ -6,7 +6,7 @@
 // In ace/config.h, #define ACE_FACE_SAFETY_BASE or ACE_FACE_SAFETY_EXTENDED
 // Optionally #define ACE_FACE_DEV
 // ACE_FACE_DEV is a development mode setting which produces an ACE library
-// that allows ACE_DEBUG (doesn't enforce ACE_NDEBUG) and ACE_OS::getenv().
+// that allows debug logging (doesn't enforce ACE_NDEBUG) and ACE_OS::getenv().
 
 // Maintaining this header:
 // This version of the header is written for FACE technical standard 2.1.
