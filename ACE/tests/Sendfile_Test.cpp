@@ -11,6 +11,8 @@
  */
 
 #include "test_config.h"
+#include "ace/Lib_Find.h"
+#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
@@ -86,13 +88,14 @@ client (void *arg)
   for (i = 0; i < sizeof buffer; ++i)
     buffer[i] = static_cast<u_char> (i);
 
-  ACE_TCHAR const test_file[] = ACE_TEXT ("Sendfile_Test_File");
-  ACE_HANDLE in_fd =
-    ACE_OS::open (test_file,
-                  O_CREAT | O_RDWR | O_TRUNC,
-                  ACE_DEFAULT_FILE_PERMS);
-
-  if (in_fd == ACE_INVALID_HANDLE)
+  const ACE_TCHAR file[] = ACE_TEXT ("Sendfile_Test_File");
+  static const size_t file_sz = sizeof (file) / sizeof (file[0]);
+  ACE_TCHAR test_file[MAXPATHLEN + 1];
+  ACE_HANDLE in_fd;
+  if (ACE::get_temp_dir (test_file, MAXPATHLEN - file_sz) == -1
+      || ACE_OS::strcat (test_file, file) == 0
+      || (in_fd = ACE_OS::open (test_file, O_CREAT | O_RDWR | O_TRUNC,
+                                ACE_DEFAULT_FILE_PERMS)) == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) open %p\n"), test_file));
       Test_Result = 1;
