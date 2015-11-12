@@ -1051,7 +1051,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
     {
       both = 1;               // client and server simultaneosly
       duplex = 1;             // full duplex is on
-      host = ACE_TEXT ("localhost");      // server to connect
+      host = ACE_LOCALHOST;   // server to connect
       port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
       threads = 3;            // size of Proactor thread pool
       senders = 20;           // number of senders
