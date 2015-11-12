@@ -402,7 +402,7 @@ spawn (void)
                       1));
           /* NOTREACHED */
         case 0:
-          ACE_LOG_MSG->sync ("SOCK_Send_Recv_Test-child");
+          ACE_LOG_MSG->sync (ACE_TEXT ("SOCK_Send_Recv_Test-child"));
           client (&server_addr);
           ACE_OS::exit (0);
           /* NOTREACHED */

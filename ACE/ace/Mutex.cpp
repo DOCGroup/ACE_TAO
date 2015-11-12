@@ -118,7 +118,6 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
           ACE_TCHAR *const un =
 # ifdef ACE_HAS_ALLOC_HOOKS
             (ACE_TCHAR *) ACE_Allocator::instance ()->malloc (un_len);
-                                                
 # else
             (ACE_TCHAR *) ACE_OS::malloc (un_len);
 # endif /* ACE_HAS_ALLOC_HOOKS */

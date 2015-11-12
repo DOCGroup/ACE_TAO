@@ -1,7 +1,7 @@
 #ifndef ACE_OS_NS_DEVCTL_H
 #define ACE_OS_NS_DEVCTL_H
 
-#include "ace/pre.h"
+#include /**/ "ace/pre.h"
 #include "ace/config-all.h"
 
 #ifndef ACE_LACKS_PRAGMA_ONCE
@@ -36,5 +36,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # include "ace/OS_NS_devctl.inl"
 #endif
 
-#include "ace/post.h"
+#include /**/ "ace/post.h"
 #endif // ACE_OS_NS_DEVCTL_H

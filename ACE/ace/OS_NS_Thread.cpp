@@ -3032,7 +3032,7 @@ ACE_OS::event_timedwait (ACE_event_t *event,
                 break;
               }
           }
-      
+
       // Reset the auto_event_signaled_ to false now that we have woken up.
       if (event->eventdata_->auto_event_signaled_)
         event->eventdata_->auto_event_signaled_ = false;

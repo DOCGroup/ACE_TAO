@@ -1004,8 +1004,8 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
       //}
 
 #  if defined (ACE_WIN32)
-      sockaddr *sa = reinterpret_cast<sockaddr *> 
-		  (const_cast<sockaddr_in6 *> (&this->inet_addr_.in6_));
+      sockaddr *sa = reinterpret_cast<sockaddr *>
+                       (const_cast<sockaddr_in6 *> (&this->inet_addr_.in6_));
       if (ACE_OS::getnameinfo (sa, this->get_size (), dst, size,
                                0, 0,    // Don't want service name
                                NI_NUMERICHOST) == 0)
