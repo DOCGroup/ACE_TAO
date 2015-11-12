@@ -3,9 +3,9 @@
 
 #if defined (ACE_WIN32) || defined (HPUX)
 # include "ace/OS_NS_sys_socket.h"
-#else
-# include "ace/OS_NS_unistd.h"
 #endif  /* ACE_WIN32 || HPUX */
+
+#include "ace/OS_NS_unistd.h"
 
 #ifndef ACE_HAS_INLINED_OSCALLS
 # include "ace/OS_NS_sys_sendfile.inl"
