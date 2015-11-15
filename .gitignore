@@ -33,3 +33,6 @@ ipch/
 /ACE/build
 Debug
 /ACE/apps/gperf/tests/iout2_gen/idl.cpp
+*.ipdb
+*.iobj
+*.res

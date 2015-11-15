@@ -89,6 +89,12 @@ public:
 
 #endif /* ACE_HAS_THREADS */
 
+#if defined (ACE_HAS_THREADS)
+#define ACE_SYNCH ACE_MT_SYNCH
+#else /* ACE_HAS_THREADS */
+#define ACE_SYNCH ACE_NULL_SYNCH
+#endif /* ACE_HAS_THREADS */
+
 #define ACE_SYNCH_MUTEX ACE_SYNCH::MUTEX
 #define ACE_SYNCH_NULL_MUTEX ACE_SYNCH::NULL_MUTEX
 #define ACE_SYNCH_RECURSIVE_MUTEX ACE_SYNCH::RECURSIVE_MUTEX
@@ -101,12 +107,6 @@ public:
 // These are available on *all* platforms
 #define ACE_SYNCH_PROCESS_SEMAPHORE ACE_Process_Semaphore
 #define ACE_SYNCH_PROCESS_MUTEX  ACE_Process_Mutex
-
-#if defined (ACE_HAS_THREADS)
-#define ACE_SYNCH ACE_MT_SYNCH
-#else /* ACE_HAS_THREADS */
-#define ACE_SYNCH ACE_NULL_SYNCH
-#endif /* ACE_HAS_THREADS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
