@@ -44,7 +44,7 @@ Monitor_Impl::get_statistic_names (const char * filter)
 
   ::Monitor::NameList *namelist = 0;
   ACE_NEW_THROW_EX (namelist,
-                    ::Monitor::NameList (mc_names.size ()),
+                    ::Monitor::NameList (static_cast<CORBA::ULong> (mc_names.size ())),
                     CORBA::NO_MEMORY ());
 
   CORBA::ULong index = 0;

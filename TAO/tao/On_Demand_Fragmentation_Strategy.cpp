@@ -6,6 +6,8 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/debug.h"
 
+#include "ace/Truncate.h"
+
 TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
   TAO_Transport * transport,
   CORBA::ULong max_message_size)
@@ -42,14 +44,16 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   // marshaled, taking into account the alignment for the given data
   // type.
   ACE_CDR::ULong const total_pending_length =
-    ACE_align_binary (cdr.total_length (), pending_alignment)
-    + pending_length;
+    ACE_Utils::truncate_cast<ACE_CDR::ULong> (
+        ACE_align_binary (cdr.total_length (), pending_alignment)
+        + pending_length);
 
   // Except for the last fragment, fragmented GIOP messages must
   // always be aligned on an 8-byte boundary.  Padding will be added
   // if necessary.
   ACE_CDR::ULong const aligned_length =
-    ACE_align_binary (total_pending_length, ACE_CDR::MAX_ALIGNMENT);
+      ACE_Utils::truncate_cast<ACE_CDR::ULong> (
+          ACE_align_binary (total_pending_length, ACE_CDR::MAX_ALIGNMENT));
 
   // this->max_message_size_ must be >= 24 bytes, i.e.:
   //   12 for GIOP protocol header

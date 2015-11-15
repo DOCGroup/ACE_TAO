@@ -111,6 +111,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_string.h"
 #include "be_typedef.h"
 #include "be_native.h"
+#include "be_fixed.h"
 #include "be_factory.h"
 #include "be_finder.h"
 #include "utl_identifier.h"
@@ -819,6 +820,17 @@ be_generator::create_expr (ACE_CDR::Double d)
   return retval;
 }
 
+AST_Expression *
+be_generator::create_expr (const ACE_CDR::Fixed &f)
+{
+  be_expression *retval = 0;
+  ACE_NEW_RETURN (retval,
+                  be_expression (f),
+                  0);
+
+  return retval;
+}
+
 AST_EnumVal *
 be_generator::create_enum_val (ACE_CDR::ULong v,
                                UTL_ScopedName *n)
@@ -908,6 +920,17 @@ be_generator::create_wstring (AST_Expression *v)
                              sizeof (ACE_CDR::WChar)),
                   0);
 
+  return retval;
+}
+
+AST_Fixed *
+be_generator::create_fixed (AST_Expression *digits,
+                            AST_Expression *scale)
+{
+  Identifier id ("fixed");
+  UTL_ScopedName name (&id, 0);
+  AST_Fixed *retval = 0;
+  ACE_NEW_RETURN (retval, be_fixed (&name, digits, scale), 0);
   return retval;
 }
 

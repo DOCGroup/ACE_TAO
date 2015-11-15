@@ -90,6 +90,11 @@ be_expression::be_expression (ACE_CDR::Double d)
 {
 }
 
+be_expression::be_expression (const ACE_CDR::Fixed &f)
+  : AST_Expression (f)
+{
+}
+
 int
 be_expression::accept (be_visitor *visitor)
 {

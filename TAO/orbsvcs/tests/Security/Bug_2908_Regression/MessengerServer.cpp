@@ -1,5 +1,6 @@
 #include "Messenger_i.h"
 #include "ace/Get_Opt.h"
+#include <orbsvcs/SecurityLevel2C.h>
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT ("server.ior");
 
@@ -52,6 +53,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     Messenger_i messenger_servant (orb);
     Messenger_var messenger_factory = messenger_servant._this ();
 
+    // In order to allow collocated invocations we need to allow unsecured
+    // collocated invocations to the object else our security manager will
+    // block the collocated invocation unless you explicitly allow it
+    CORBA::Object_var sec_man =
+      orb->resolve_initial_references ("SecurityLevel2:SecurityManager");
+    SecurityLevel2::SecurityManager_var sec2manager =
+      SecurityLevel2::SecurityManager::_narrow (sec_man.in ());
+    SecurityLevel2::AccessDecision_var ad_tmp =
+      sec2manager->access_decision ();
+    TAO::SL2::AccessDecision_var ad =
+      TAO::SL2::AccessDecision::_narrow (ad_tmp.in ());
+    // Allow unsecured collocated invocations
+    ad->default_collocated_decision (true);
+
     CORBA::String_var ior =
       orb->object_to_string (messenger_factory.in ());
 
@@ -70,6 +85,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Accept requests
     orb->run();
+
+    poa->destroy (1, 1);
+
     orb->destroy();
   }
   catch (const CORBA::Exception&)

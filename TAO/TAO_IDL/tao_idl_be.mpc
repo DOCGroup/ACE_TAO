@@ -4,6 +4,7 @@ project(TAO_IDL_BE) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe 
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   includes    += $(TAO_ROOT)
   includes    += include be_include fe
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the backend
@@ -58,6 +59,7 @@ project(TAO_IDL_BE_VIS_A) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   after       += TAO_IDL_BE
   includes    += $(TAO_ROOT)
   includes    += include be_include fe
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the backend
@@ -86,6 +88,7 @@ project(TAO_IDL_BE_VIS_C) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   after       += TAO_IDL_BE_VIS_A
   includes    += $(TAO_ROOT)
   includes    += include be_include fe
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the backend
@@ -115,6 +118,7 @@ project(TAO_IDL_BE_VIS_E) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   after       += TAO_IDL_BE_VIS_C
   includes    += $(TAO_ROOT)
   includes    += include be_include fe
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the backend
@@ -144,6 +148,7 @@ project(TAO_IDL_BE_VIS_I) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   after       += TAO_IDL_BE_VIS_E
   includes    += $(TAO_ROOT)
   includes    += include be_include fe
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the backend
@@ -173,6 +178,7 @@ project(TAO_IDL_BE_VIS_O) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   after       += TAO_IDL_BE_VIS_I
   includes    += $(TAO_ROOT)
   includes    += include be_include fe
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the backend
@@ -200,6 +206,7 @@ project(TAO_IDL_BE_VIS_S) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   after       += TAO_IDL_BE_VIS_O
   includes    += $(TAO_ROOT)
   includes    += include be_include fe
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the backend
@@ -230,6 +237,7 @@ project(TAO_IDL_BE_VIS_U) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   after       += TAO_IDL_BE_VIS_S
   includes    += $(TAO_ROOT)
   includes    += include be_include fe
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the backend
@@ -258,6 +266,7 @@ project(TAO_IDL_BE_VIS_V) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   after       += TAO_IDL_BE_VIS_U
   includes    += $(TAO_ROOT)
   includes    += include be_include fe
+  requires    += build_tao_idl_be
 
   specific {
     // Override the template value for optimize.  Building the backend

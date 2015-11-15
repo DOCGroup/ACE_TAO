@@ -11,6 +11,8 @@
  * Brunsch, Irfan Pyarali and a cast of thousands.
  */
 
+#include "ace/Versioned_Namespace.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declares

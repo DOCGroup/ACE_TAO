@@ -537,6 +537,14 @@ project(CDR File Test) : acetest {
   }
 }
 
+project(CDR Fixed Test) : acetest {
+  avoids += ace_for_tao
+  exename = CDR_Fixed_Test
+  Source_Files {
+    CDR_Fixed_Test.cpp
+  }
+}
+
 project(CDR Test) : acetest {
   exename = CDR_Test
   Source_Files {
@@ -1654,6 +1662,13 @@ project(Task Test) : acetest {
   exename = Task_Test
   Source_Files {
     Task_Test.cpp
+  }
+}
+
+project(Task_Group Test) : acetest {
+  exename = Task_Group_Test
+  Source_Files {
+    Task_Group_Test.cpp
   }
 }
 

@@ -463,9 +463,9 @@ TAO::SSLIOP::Connection_Handler::check_host (void)
 {
   ACE_SSL_Context *ssl_ctx = ACE_SSL_Context::instance ();
   ACE_INET_Addr remote_addr;
-  if (this->peer ().get_remote_addr (remote_addr) == -1)
-    return -1;
-  return ssl_ctx->check_host (remote_addr, this->peer ().ssl ());
+  return (this->peer ().get_remote_addr (remote_addr) == -1) ?
+    false :
+    ssl_ctx->check_host (remote_addr, this->peer ().ssl ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

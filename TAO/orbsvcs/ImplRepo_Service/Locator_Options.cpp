@@ -21,7 +21,7 @@ static const ACE_TCHAR *SERVICE_REG_PATH =
 static const int DEFAULT_PING_INTERVAL = 10; // seconds
 static const int DEFAULT_PING_TIMEOUT = 1; // seconds
 static const int DEFAULT_START_TIMEOUT = 60; // seconds
-
+static const long DEFAULT_FT_UPDATE_DELAY = 0; //250000; // useconds
 Options::Options ()
 : repo_mode_ (REPO_NONE)
 , erase_repo_ (false)
@@ -37,7 +37,11 @@ Options::Options ()
 , unregister_if_address_reused_ (false)
 , lockout_ (false)
 , imr_type_ (STANDALONE_IMR)
-, throw_shutdown_exceptions_  (false)
+, throw_shutdown_exceptions_ (false)
+, pinger_ (0)
+, threads_ (1)
+, ft_endpoint_ ()
+, ft_update_delay_ (0, DEFAULT_FT_UPDATE_DELAY)
 {
 }
 
@@ -275,6 +279,51 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->ping_timeout_ =
             ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
+#if 0
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--threads")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Error: --threads option needs a value\n")));
+              this->print_usage ();
+              return -1;
+            }
+          this->threads_ = ACE_OS::atoi (shifter.get_current ());
+        }
+#endif
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--ftendpoint")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Error: --FtEndpoint option needs a value\n")));
+              this->print_usage ();
+              return -1;
+            }
+          this->ft_endpoint_ = ACE_TEXT_ALWAYS_CHAR (shifter.get_current ());
+        }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("--ftupdatedelay")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Error: -FtUpdateDelay option needs a value\n")));
+              this->print_usage ();
+              return -1;
+            }
+          this->ft_update_delay_ =
+            ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
+        }
       else
         {
           shifter.ignore_arg ();
@@ -446,6 +495,19 @@ Options::save_registry_options ()
     (LPBYTE) &this->imr_type_ , sizeof (this->imr_type_));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("Threads"), 0, REG_DWORD,
+    (LPBYTE) &this->threads_ , sizeof (this->threads_));
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("FtEndpoint"), 0, REG_SZ,
+    (LPBYTE) this->ft_endpoint_.c_str (), this->ft_endpoint_.length () + 1);
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
+  tmp = this->ft_update_delay_.msec ();
+  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("FtUpdateDelay"), 0, REG_DWORD,
+    (LPBYTE) &tmp, sizeof (DWORD));
+  ACE_ASSERT (err == ERROR_SUCCESS);
+
   err = ::RegCloseKey (key);
   ACE_ASSERT (err == ERROR_SUCCESS);
 #endif
@@ -595,6 +657,34 @@ Options::load_registry_options ()
       ACE_ASSERT (type == REG_DWORD);
     }
 
+  sz = sizeof(threads_);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("Threads"), 0, &type,
+    (LPBYTE) &this->threads_, &sz);
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+    }
+
+  sz = sizeof(tmpstr);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("FtEndpoint"), 0, &type,
+    (LPBYTE) tmpstr, &sz);
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_SZ);
+      tmpstr[sz - 1] = '\0';
+      this->ft_endpoint_ = ACE_TEXT_ALWAYS_CHAR (tmpstr);
+    }
+
+  tmp = 0;
+  sz = sizeof(tmp);
+  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("FtUpdateDelay"), 0, &type,
+    (LPBYTE) &tmp, &sz);
+  if (err == ERROR_SUCCESS)
+    {
+      ACE_ASSERT (type == REG_DWORD);
+      ft_update_delay_.msec (static_cast<long> (tmp));
+    }
+
   err = ::RegCloseKey (key);
   ACE_ASSERT (err == ERROR_SUCCESS);
 #endif
@@ -717,4 +807,22 @@ Options::ImrType
 Options::imr_type (void) const
 {
   return this->imr_type_;
+}
+
+int
+Options::threads (void) const
+{
+  return this->threads_;
+}
+
+const ACE_CString &
+Options::ft_endpoint (void) const
+{
+  return this->ft_endpoint_;
+}
+
+ACE_Time_Value
+Options::ft_update_delay (void) const
+{
+  return this->ft_update_delay_;
 }

@@ -131,11 +131,11 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   /// The Supplier QOS.
   ACE_SupplierQOS_Factory supplier_qos_;
 
-  /// The list of EventTypeIDs (for ConsumerQOS) seperated by spaces.
+  /// The list of EventTypeIDs (for ConsumerQOS) separated by spaces.
   /// e.g. "1 2 3 4"
   ACE_TCHAR *eventTypeIds_;
 
-  /// The list of EventSourceIDs (for ConsumerQOS) seperated by spaces.
+  /// The list of EventSourceIDs (for ConsumerQOS) separated by spaces.
   /// e.g. "1 2 3 4"
   ACE_TCHAR *eventSourceIds_;
 

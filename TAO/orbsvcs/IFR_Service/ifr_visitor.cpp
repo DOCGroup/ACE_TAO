@@ -1,5 +1,9 @@
 /* -*- c++ -*- */
 #include "ifr_visitor.h"
+
+#include "global_extern.h"
+#include "utl_err.h"
+
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
@@ -332,6 +336,13 @@ int
 ifr_visitor::visit_native (AST_Native *)
 {
   return 0;
+}
+
+int
+ifr_visitor::visit_fixed (AST_Fixed *node)
+{
+  idl_global->err ()->fixed_unsupported (node);
+  return 1;
 }
 
 ACE_Lock &

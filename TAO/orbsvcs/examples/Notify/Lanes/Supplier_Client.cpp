@@ -206,7 +206,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb_objects.init (orb);
 
-      /* Run the ORB in a seperate thread */
+      /* Run the ORB in a separate thread */
       TAO_Notify_ORB_Run_Task orb_run_task (orb_objects);
 
       /* Create a Client */

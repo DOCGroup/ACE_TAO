@@ -46,6 +46,13 @@ struct ACE_Equal_To_pid_t
 };
 
 
+#if (ACE_SIZEOF_VOID_P == 8)
+  typedef ACE_INT64 Act_token_type;
+#else
+  typedef ACE_INT32 Act_token_type;
+#endif
+
+
 /**
 * @class ImR_Activator_i
 *
@@ -84,7 +91,7 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
   int run (void);
 
   /// Shutdown the orb.
-  void shutdown (bool wait_for_completion);
+  void shutdown (bool signaled);
 
 private:
 
@@ -97,7 +104,9 @@ private:
   int handle_exit (ACE_Process * process);
   int handle_exit_i (pid_t pid);
 
-  bool still_running_i (const char *name);
+  bool still_running_i (const char *name, pid_t& pid);
+
+  bool in_upcall (void);
 
 private:
 
@@ -113,6 +122,7 @@ private:
 
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var imr_poa_;
+  PortableServer::Current_var current_;
 
   ImplementationRepository::Locator_var locator_;
 

@@ -12,7 +12,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
-#include "ace/os_include/os_netdb.h"
+#include "ace/Truncate.h"
 
 static const char prefix_[] = "shmiop";
 
@@ -158,7 +158,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
   // Don't increment the pointer 'cp' directly since we still need
   // to use it immediately after this block.
 
-  CORBA::ULong length = okd - (cp + 1);
+  CORBA::ULong length = ACE_Utils::truncate_cast<CORBA::ULong> (okd - (cp + 1));
   // Don't allocate space for the colon ':'.
 
   CORBA::String_var tmp = CORBA::string_alloc (length);
@@ -188,7 +188,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string
         }
     }
 
-  length = cp - start;
+  length = ACE_Utils::truncate_cast<CORBA::ULong> (cp - start);
 
   tmp = CORBA::string_alloc (length);
 

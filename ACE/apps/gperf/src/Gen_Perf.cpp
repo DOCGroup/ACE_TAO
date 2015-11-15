@@ -27,6 +27,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
+#include "ace/Truncate.h"
 
 /// Current release version.
 extern const char *version_string;
@@ -77,7 +78,7 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
         set3++;
     }
   *set3 = '\0';
-  return set3 - base;
+  return ACE_Utils::truncate_cast<int> (set3 - base);
 }
 
 /// Sort the UNION_SET in increasing frequency of occurrence.  This

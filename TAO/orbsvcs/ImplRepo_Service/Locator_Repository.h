@@ -59,6 +59,8 @@ public:
 
   virtual ~Locator_Repository();
 
+  virtual void shutdown (void);
+
   int unregister_if_address_reused (const ACE_CString& fqname,
                                     const char* partial_ior,
                                     ImR_Locator_i* imr_locator);
@@ -105,7 +107,8 @@ public:
   bool has_activator(const ACE_CString& name);
 
   /// Removes the server from the Repository.
-  int remove_server (const ACE_CString& name);
+  int remove_server (const ACE_CString& name,
+                     ImR_Locator_i* imr_locator);
   /// Removes the activator from the Repository.
   int remove_activator (const ACE_CString& name);
 

@@ -78,6 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/UUID.h"
 #include "ace/Dirent.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/Truncate.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -137,8 +138,23 @@ DRV_cpp_putarg (const char *str)
       throw Bailout ();
     }
 
-  DRV_arglist[DRV_argcount++] =
-    ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
+  if (str && ACE_OS::strchr (str, ' '))
+    {
+      ACE_TCHAR *buf = 0;
+      ACE_NEW_NORETURN (buf, ACE_TCHAR[ACE_OS::strlen (str) + 3]);
+      if (buf)
+        {
+          buf[0] = ACE_TEXT ('"');
+          ACE_OS::strcpy (buf + 1, ACE_TEXT_CHAR_TO_TCHAR (str));
+          ACE_OS::strcat (buf, ACE_TEXT ("\""));
+          DRV_arglist[DRV_argcount++] = buf;
+        }
+    }
+  else
+    {
+      DRV_arglist[DRV_argcount++] =
+        ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
+    }
 }
 
 // Expand the output argument with the given filename.
@@ -171,7 +187,7 @@ DRV_cpp_calc_total_argsize(void)
   unsigned long ix = 0;
   while (DRV_arglist[ix] != 0)
     {
-      size += ACE_OS::strlen (DRV_arglist[ix]) + 1;
+      size += ACE_Utils::truncate_cast<unsigned long> (ACE_OS::strlen (DRV_arglist[ix]) + 1);
       ++ix;
     }
   return size;
@@ -182,7 +198,7 @@ static bool
 DRV_get_line (FILE *file)
 {
   char *line = ACE_OS::fgets (drv_line,
-                              drv_line_size,
+                              ACE_Utils::truncate_cast<int> (drv_line_size),
                               file);
   if (!line || (!*line && feof (file)))
     {
@@ -226,7 +242,7 @@ DRV_get_line (FILE *file)
         }
 
       line = ACE_OS::fgets (drv_line + len,
-                            drv_line_size - len,
+                            ACE_Utils::truncate_cast<int> (drv_line_size - len),
                             file);
     } while (line && *line);
 

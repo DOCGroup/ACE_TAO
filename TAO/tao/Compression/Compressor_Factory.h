@@ -40,6 +40,12 @@ namespace TAO
 
   private:
     ::Compression::CompressorId const compressor_id_;
+
+#if defined (ACE_WIN32_VC14)
+    // Workaround for connect issue 1577211
+    ACE_UNIMPLEMENTED_FUNC (CompressorFactory (const CompressorFactory &))
+    ACE_UNIMPLEMENTED_FUNC (CompressorFactory &operator = (const CompressorFactory &))
+#endif
   };
 }
 

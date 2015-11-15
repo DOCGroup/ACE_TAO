@@ -239,6 +239,10 @@
 #define ACE_HAS_SOCKADDR_MSG_NAME
 #define ACE_HAS_THREAD_SAFE_ACCEPT
 
+/* MS is phasing out the GetVersion API so let's prepare */
+/* For now all releases still provide it. */
+#define ACE_HAS_WIN32_GETVERSION
+
 /* LACKS dir-related facilities */
 #define ACE_LACKS_READDIR_R
 #define ACE_LACKS_REWINDDIR

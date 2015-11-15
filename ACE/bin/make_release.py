@@ -52,7 +52,7 @@ cpu_count = multiprocessing.cpu_count()
 
 """ This is a regex that detects files that SHOULD NOT have line endings
 converted to CRLF when being put into a ZIP file """
-bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt)$")
+bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt|sh)$")
 
 ##################################################
 #### Utility Methods
@@ -292,10 +292,6 @@ def update_spec_file ():
                 line = "%define ACEVER  " + comp_versions["ACE_version"] + "\n"
             if line.find ("define TAOVER ") is not -1:
                 line = "%define TAOVER  " + comp_versions["TAO_version"] + "\n"
-            if line.find ("define CIAOVER ") is not -1:
-                line = "%define CIAOVER " + comp_versions["CIAO_version"] + "\n"
-            if line.find ("define DANCEVER ") is not -1:
-                line = "%define DANCEVER " + comp_versions["DAnCE_version"] + "\n"
             if line.find ("define is_major_ver") is not -1:
                 if opts.release_type == "beta":
                     line = "%define is_major_ver 0\n"
@@ -392,14 +388,14 @@ def update_debianbuild ():
 
     # rewrite debian/dsc
     dsc_lines = """Format: 1.0
-Source: ACE+TAO+CIAO-src-%s
+Source: ACE+TAO-src-%s
 Version: %s
 Binary: ace
 Maintainer: Johnny Willemsen  <jwillemsen@remedy.nl>
 Architecture: any
 Build-Depends: gcc, make, g++, debhelper (>= 5), dpkg-dev, libssl-dev (>= 0.9.7d), dpatch (>= 2.0.10), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev, zlib1g-dev, docbook-to-man, bzip2, autoconf, automake, libtool, autotools-dev, doxygen, graphviz, libfox-1.6-dev, libzzip-dev, libbz2-dev
 Files:
- 65b34001c9605f056713a7e146b052d1 46346654 ACE+TAO+CIAO-src-%s.tar.gz
+ 65b34001c9605f056713a7e146b052d1 46346654 ACE+TAO-src-%s.tar.gz
 
 """ % (comp_versions["ACE_version"], comp_versions["TAO_version"], comp_versions["ACE_version"])
     if opts.take_action:
@@ -807,7 +803,7 @@ def create_file_lists (base_dir, prefix, exclude):
         if excluded:
             continue
 
-        # Remove dirs from our exclude pattern
+        # Remove dirs that are listed in our exclude pattern
         for item in dirs:
 #            print "item", item
             # Remove our excludes
@@ -815,12 +811,11 @@ def create_file_lists (base_dir, prefix, exclude):
 #                print "Removing " + item + " from consideration...."
                 dirs.remove (item)
 
+        # Remove files that are listed in our exclude pattern
         for item in files:
-
             fullitem = os.path.join (relroot, item)
             if fullitem in exclude or item in exclude:
 #                print "Removing " + fullitem + " from consideration...."
-                files.remove (item)
                 continue
             else:
                 if bin_regex.search (fullitem) is not None:
@@ -941,8 +936,8 @@ def generate_workspaces (stage_dir):
     mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
     mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/DAnCE '
     msvc_exclude_option = ' -exclude TAO/CIAO/CIAO_TAO_DAnCE_OpenDDS.mwc,TAO/CIAO/CIAO_TAO_OpenDDS.mwc,TAO/CIAO/CIAO_TAO_DAnCE_OpenDDS_shapes.mwc '
-    vc11_option = ' -name_modifier *_vc11 '
     vc12_option = ' -name_modifier *_vc12 '
+    vc14_option = ' -name_modifier *_vc14 '
 
     redirect_option = str ()
     if not opts.verbose:
@@ -951,11 +946,12 @@ def generate_workspaces (stage_dir):
     print "\tGenerating GNUmakefiles...."
     ex (mpc_command + " -type gnuace " + exclude_option + workers_option + mpc_option + redirect_option)
 
-    print "\tGenerating VC11 solutions..."
-    ex (mpc_command + " -type vc11 "  + msvc_exclude_option + mpc_option + workers_option + vc11_option + redirect_option)
-
     print "\tGenerating VC12 solutions..."
     ex (mpc_command + " -type vc12 "  + msvc_exclude_option + mpc_option + workers_option + vc12_option + redirect_option)
+
+    print "\tGenerating VC14 solutions..."
+    ex (mpc_command + " -type vc14 "  + msvc_exclude_option + mpc_option + workers_option + vc14_option + redirect_option)
+
 
     print "\tCorrecting permissions for all generated files..."
     ex ("find ./ -name '*.vc[p,w]' -or -name '*.bmak' -or -name '*.vcproj' -or -name '*.sln' -or -name '*.vcxproj' -or -name '*.filters' -or -name 'GNUmake*' | xargs chmod 0644")

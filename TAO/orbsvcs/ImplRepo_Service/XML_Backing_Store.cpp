@@ -85,26 +85,34 @@ XML_Backing_Store::persist ()
   return 0;
 }
 
+namespace {
+  ACE_CString ACEXML_escape_cstring (const ACE_CString &str)
+  {
+    return ACE_TEXT_ALWAYS_CHAR (ACEXML_escape_string (
+      ACE_TEXT_CHAR_TO_TCHAR (str.c_str ())).c_str ());
+  }
+}
+
 void
 XML_Backing_Store::persist (FILE* fp,
                             const Server_Info& info,
                             const char* tag_prepend,
                             const NameValues& name_values)
 {
-  ACE_CString server_id = ACEXML_escape_string (info.server_id);
-  ACE_CString pname = ACEXML_escape_string (info.poa_name);
-  ACE_CString keyname = ACEXML_escape_string (info.key_name_);
+  ACE_CString server_id = ACEXML_escape_cstring (info.server_id);
+  ACE_CString pname = ACEXML_escape_cstring (info.poa_name);
+  ACE_CString keyname = ACEXML_escape_cstring (info.key_name_);
   ACE_CString altkey = "";
   if (!info.alt_info_.null())
     {
-      altkey = ACEXML_escape_string (info.alt_info_->key_name_);
+      altkey = ACEXML_escape_cstring (info.alt_info_->key_name_);
     }
 
-  ACE_CString activator = ACEXML_escape_string (info.activator);
-  ACE_CString cmdline = ACEXML_escape_string (info.cmdline);
-  ACE_CString wdir = ACEXML_escape_string (info.dir);
-  ACE_CString partial_ior = ACEXML_escape_string (info.partial_ior);
-  ACE_CString ior = ACEXML_escape_string (info.ior);
+  ACE_CString activator = ACEXML_escape_cstring (info.activator);
+  ACE_CString cmdline = ACEXML_escape_cstring (info.cmdline);
+  ACE_CString wdir = ACEXML_escape_cstring (info.dir);
+  ACE_CString partial_ior = ACEXML_escape_cstring (info.partial_ior);
+  ACE_CString ior = ACEXML_escape_cstring (info.ior);
   ACE_CString amodestr =
     ImR_Utils::activationModeToString (info.activation_mode_);
 
@@ -143,7 +151,7 @@ XML_Backing_Store::persist (FILE* fp,
           ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
             Locator_XMLHandler::ENVIRONMENT_TAG);
           ACE_OS::fprintf (fp," name=\"%s\"", info.env_vars[i].name.in ());
-          ACE_CString val = ACEXML_escape_string(info.env_vars[i].value.in());
+          ACE_CString val = ACEXML_escape_cstring(info.env_vars[i].value.in());
           ACE_OS::fprintf (fp," value=\"%s\"", val.c_str());
           ACE_OS::fprintf (fp,"/>\n");
         }
@@ -151,7 +159,7 @@ XML_Backing_Store::persist (FILE* fp,
         {
           ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
             Locator_XMLHandler::PEER_TAG);
-          ACE_CString name = ACEXML_escape_string(info.peers[i].in());
+          ACE_CString name = ACEXML_escape_cstring(info.peers[i].in());
           ACE_OS::fprintf (fp," name=\"%s\"", name.c_str());
           ACE_OS::fprintf (fp,"/>\n");
         }
@@ -225,7 +233,7 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
 
   if (debug > 9)
     {
-      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("load %s%C\n"), filename.c_str(),
+      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) load %s%C\n"), filename.c_str(),
                  ((err == 0) ? ACE_TEXT ("")
                   : ACE_TEXT (" (file doesn't exist)"))));
     }

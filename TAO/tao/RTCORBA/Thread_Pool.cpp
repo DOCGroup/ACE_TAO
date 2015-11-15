@@ -391,8 +391,8 @@ TAO_Thread_Lane::current_threads (void) const
                     this->lock_,
                     0);
 
-  return (this->static_threads_.thr_count () +
-         this->dynamic_threads_.thr_count ());
+  return static_cast<CORBA::ULong> (this->static_threads_.thr_count () +
+                                    this->dynamic_threads_.thr_count ());
 }
 
 

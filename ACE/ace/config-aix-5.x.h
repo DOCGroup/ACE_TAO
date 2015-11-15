@@ -192,6 +192,8 @@
 
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
+#define ACE_HAS_SIOCGIFCONF
+
 // Compiler/platform defines the sig_atomic_t typedef
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_SIGINFO_T
@@ -319,5 +321,14 @@
 #define ACE_LACKS_ISCTYPE
 #define ACE_HAS_STRSIGNAL
 #define ACE_NEEDS_STRSIGNAL_RANGE_CHECK
+
+#if defined (ACE_AIX_VERS) && (ACE_AIX_VERS < 503)
+#  define ACE_LACKS_UNSETENV
+#  define ACE_LACKS_LOG2
+#  define ACE_LACKS_PTHREAD_ATTR_SETSTACK
+#endif /* ACE_AIX_VERS < 503 */
+
+#define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "%ld"
+#define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
 #endif /* ACE_CONFIG_AIX_5_X_H */

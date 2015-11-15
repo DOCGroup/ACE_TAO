@@ -98,8 +98,13 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
     }
   else if (current_count == -1)
     {
+#if defined (ACE_HAS_CPP11)
+      int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
+                                                                   std::chrono::seconds {the_count + 1});
+#else
       int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
                                                                    ACE_Time_Value (the_count + 1));
+#endif
       if (result == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Error resetting timer interval\n")));
@@ -132,9 +137,15 @@ test_registering_all_handlers (void)
   for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] =
+#if defined (ACE_HAS_CPP11)
+        ACE_Reactor::instance ()->schedule_timer (&rt[i],
+                                                  (const void *) i,
+                                                  std::chrono::seconds {2 * i + 1});
+#else
         ACE_Reactor::instance ()->schedule_timer (&rt[i],
                                                   (const void *) i,
                                                   ACE_Time_Value (2 * i + 1));
+#endif
       ACE_TEST_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
     }

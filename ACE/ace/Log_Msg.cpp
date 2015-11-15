@@ -1147,9 +1147,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case '8':
                 case '9':
                 case '.':
-                case 'L':
                 case 'h':
                   *fp++ = *format_str;
+                  done = false;
+                  break;
+                case 'L':
+                  *fp++ = 'l';
                   done = false;
                   break;
 

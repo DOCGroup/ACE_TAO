@@ -52,6 +52,9 @@ public:
   /// Run using the orb reference created during init()
   int run (void);
 
+  /// Called by the signal handler to notify of shutdown request
+  void signal_shutdown (void);
+
   /// Shutdown the orb.
   void shutdown (bool wait_for_completion);
 
@@ -160,9 +163,11 @@ public:
   PortableServer::POA_ptr root_poa (void);
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
+  void destroy_poa (const ACE_CString &poa_name);
   void remove_aam (AsyncAccessManager_ptr &aam);
   void remove_aam (const char *name);
   AsyncAccessManager *find_aam (const char *name);
+  AsyncAccessManager *create_aam (UpdateableServerInfo &info, bool running = false);
 
   /// Receiving an update from remote peer
   void remote_access_update (const char *name,
@@ -192,6 +197,8 @@ private:
 
   PortableServer::POA_ptr findPOA (const char* name);
 
+  void child_death_i (const char* name, pid_t pid);
+
 private:
 
   static int debug_;
@@ -219,6 +226,16 @@ private:
   Repository_Ptr repository_;
 
   Options *opts_;
+
+  TAO_SYNCH_MUTEX lock_;
+
+  class Shutdown_Handler : public ACE_Event_Handler
+  {
+  public :
+    ImR_Locator_i *owner_;
+    Shutdown_Handler (ImR_Locator_i *owner) : owner_ (owner) {}
+    int handle_exception (ACE_HANDLE);
+  } shutdown_handler_;
 };
 
 //----------------------------------------------------------------------------

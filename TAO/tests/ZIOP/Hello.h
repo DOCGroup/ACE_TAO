@@ -13,7 +13,7 @@ public:
   /// Constructor
   Hello (CORBA::ORB_ptr orb);
 
-  virtual Test::Octet_Seq *get_big_reply ();
+  virtual Test::Octet_Seq *get_big_reply (CORBA::ULong size);
   virtual void big_request (const ::Test::Octet_Seq & octet_in);
 
   // = The skeleton methods
@@ -24,8 +24,6 @@ public:
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ULong length_;
-
   CORBA::ORB_var orb_;
 };
 

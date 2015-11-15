@@ -22,17 +22,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "XML_Backing_Store.h"
-
-#include "ImR_LocatorS.h"
+#include "Replicator.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Vector_T.h"
 #include "ACEXML/common/DefaultHandler.h"
 
 #include <set>
-
-class ACE_Configuration;
-class ACEXML_FileCharStream;
-class LocatorListings_XMLHandler;
 
 namespace {
   class Lockable_File;
@@ -45,9 +40,7 @@ namespace {
 * multiple files shared between multiple Locators
 *
 */
-class Shared_Backing_Store
-  : public XML_Backing_Store,
-    public virtual POA_ImplementationRepository::UpdatePushNotification
+class Shared_Backing_Store : public XML_Backing_Store
 {
 public:
   typedef ImplementationRepository::UpdatePushNotification_var Replica_var;
@@ -74,35 +67,10 @@ public:
 
   virtual ~Shared_Backing_Store();
 
+  virtual void shutdown (void);
+
   /// indicate the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode() const;
-
-  virtual void notify_remote_access (const char *,
-                                     ImplementationRepository::AAM_Status);
-
-  virtual void notify_access_state_update
-  (const ImplementationRepository::AccessStateUpdate& server);
-
-  /// provide the implementation for being notified of a
-  /// server update
-  virtual void notify_updated_server
-  (const ImplementationRepository::ServerUpdate& server);
-
-  /// provide the implementation for being notified of a
-  /// activator update
-  virtual void notify_updated_activator
-  (const ImplementationRepository::ActivatorUpdate& activator);
-
-  /// provide the implementation for registering a peer replica
-  /// @param replica the peer replica
-  /// @param ft_imr_ior the fault tolerant ImR IOR (passed in
-  ///        as the replica's ImR IOR, passed back as fault
-  ///        tolerant ImR IOR)
-  /// @param seq_num current sequence number to return to replica
-  virtual void register_replica
-  (ImplementationRepository::UpdatePushNotification_ptr replica,
-   char*& ft_imr_ior,
-   ImplementationRepository::SequenceNum_out seq_num);
 
   /// enum to indicate whether the repo is in-sync, individual
   /// server and/or activator files need to be sync-ed or if
@@ -130,10 +98,18 @@ public:
                                const ACE_CString& ior,
                                const NameValues& extra_params);
 
+  virtual void notify_remote_access (const char * id,
+                                     ImplementationRepository::AAM_Status s);
+
   /// calls Locator_Repository::report_ior with the Fault Tolerant ImR
   /// Locator's IOR if available, otherwise reporting the ior is delayed
   /// until the peer replica registers with this replica
   virtual int report_ior(PortableServer::POA_ptr imr_poa);
+
+  void gen_ior (char*& ft_imr_ior);
+  void updates_available (const ImplementationRepository::UpdateInfoSeq& info,
+                          bool missed);
+  void process_updates (void);
 
 protected:
   /// perform shared backing store specific initialization
@@ -159,6 +135,8 @@ protected:
   /// create the Fault Tolerant ImR Locator IOR, using the peer_ior and
   /// this ImR Locator's IOR
   char* locator_service_ior(const char* peer_ior) const;
+
+  int connect_replicas (void);
 
 private:
   /// map management helper functions
@@ -273,13 +251,6 @@ private:
 
   /// the path and filename for the listings file
   const ACE_TString listing_file_;
-  /// the path and filename for the listings file
-  Replica_var peer_replica_;
-  /// the current sequence number for reporting changes made directly to
-  /// this repo
-  ImplementationRepository::SequenceNum seq_num_;
-  /// the current sequence number last reported by the peer replica
-  ImplementationRepository::SequenceNum replica_seq_num_;
   /// the imr type of this Shared_Backing_Store
   const Options::ImrType imr_type_;
   /// the current type of sync needed by the repo
@@ -301,6 +272,23 @@ private:
   XML_Backing_Store::NameValues repo_values_;
   /// reference to the locator implmentation
   ImR_Locator_i *loc_impl_;
+
+  /*  TAO_SYNCH_MUTEX sync_lock_; */
+
+  Replicator replicator_;
+
+  ImplementationRepository::UpdateInfoSeq updates_;
+
+  bool notified_;
+
+   class Update_Handler : public ACE_Event_Handler
+  {
+  public :
+    Shared_Backing_Store *owner_;
+    Update_Handler (Shared_Backing_Store *owner) : owner_ (owner) {}
+    int handle_exception (ACE_HANDLE);
+  } update_handler_;
+
 };
 
 #endif /* SHARED_BACKING_STORE_H */

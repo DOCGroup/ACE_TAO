@@ -43,8 +43,8 @@ static void convertEnvList (const Locator_XMLHandler::EnvList& in,
   out.length (sz);
   for (CORBA::ULong i = 0; i < sz; ++i)
     {
-      out[i].name = in[i].name.c_str ();
-      out[i].value = in[i].value.c_str ();
+      out[i].name = ACE_TEXT_ALWAYS_CHAR (in[i].name.c_str ());
+      out[i].value = ACE_TEXT_ALWAYS_CHAR (in[i].value.c_str ());
     }
 }
 
@@ -76,16 +76,16 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
       if (attrs != 0 && attrs->getLength () >= previous_size)
         {
           size_t index = 0;
-          this->si_->server_id = attrs->getValue (index++);
-          this->si_->poa_name = attrs->getValue (index++);
-          this->si_->activator = attrs->getValue (index++);
-          this->si_->cmdline = attrs->getValue (index++);
-          this->si_->dir = attrs->getValue (index++);
+          this->si_->server_id = ACE_TEXT_ALWAYS_CHAR (attrs->getValue (index++));
+          this->si_->poa_name = ACE_TEXT_ALWAYS_CHAR (attrs->getValue (index++));
+          this->si_->activator = ACE_TEXT_ALWAYS_CHAR (attrs->getValue (index++));
+          this->si_->cmdline = ACE_TEXT_ALWAYS_CHAR (attrs->getValue (index++));
+          this->si_->dir = ACE_TEXT_ALWAYS_CHAR (attrs->getValue (index++));
           this->si_->activation_mode_ =
-            ImR_Utils::stringToActivationMode (attrs->getValue (index++));
+            ImR_Utils::stringToActivationMode (ACE_TEXT_ALWAYS_CHAR (attrs->getValue (index++)));
           this->si_->start_limit_ = ACE_OS::atoi (attrs->getValue (index++));
-          this->si_->partial_ior = attrs->getValue (index++);
-          this->si_->ior = attrs->getValue (index++);
+          this->si_->partial_ior = ACE_TEXT_ALWAYS_CHAR (attrs->getValue (index++));
+          this->si_->ior = ACE_TEXT_ALWAYS_CHAR (attrs->getValue (index++));
 
           if (attrs->getLength () >= index)
             {
@@ -100,8 +100,8 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
 
           for ( ; index < attrs->getLength(); ++index)
             {
-              ACE_CString name (attrs->getLocalName (index));
-              ACE_CString value (attrs->getValue (index));
+              ACE_TString name (attrs->getLocalName (index));
+              ACE_CString value (ACE_TEXT_ALWAYS_CHAR (attrs->getValue (index)));
               if (name == KEYNAME_TAG)
                 {
                   this->si_->key_name_ = value;
@@ -125,7 +125,8 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
                 }
               else
                 {
-                  this->extra_params_.push_back (std::make_pair (name, value));
+                  const ACE_CString name_cstr (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
+                  this->extra_params_.push_back (std::make_pair (name_cstr, value));
                 }
             }
         }
@@ -144,8 +145,8 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
         NameValues extra_params;
         for ( ; index < attrs->getLength(); ++index)
           {
-            ACE_CString name (attrs->getLocalName(index));
-            ACE_CString value (attrs->getValue(index));
+            ACE_CString name (ACE_TEXT_ALWAYS_CHAR (attrs->getLocalName(index)));
+            ACE_CString value (ACE_TEXT_ALWAYS_CHAR (attrs->getValue(index)));
             extra_params.push_back (std::make_pair (name, value));
           }
         this->repo_.load_activator (aname, token, ior, extra_params);
@@ -165,7 +166,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
     {
       if (attrs != 0)
         {
-          ACE_CString peer (attrs->getValue((size_t)0));
+          ACE_CString peer (ACE_TEXT_ALWAYS_CHAR (attrs->getValue((size_t)0)));
           this->peer_list_.push_back (peer);
         }
     }

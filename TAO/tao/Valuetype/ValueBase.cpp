@@ -395,9 +395,9 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
 
   CORBA::ValueFactory_var factory;
   CORBA::Boolean requires_truncation = false;
-  const CORBA::ULong num_ids = ids.size ();
+  const size_t num_ids = ids.size ();
   const char *id = (num_ids) ? ids[0].c_str () : "{Null}";
-  for (CORBA::ULong i = 0u; i < num_ids; ++i)
+  for (size_t i = 0u; i < num_ids; ++i)
     {
       factory = orb_core->orb ()->lookup_value_factory (ids[i].c_str ());
       if (factory.in() != 0)
@@ -955,7 +955,8 @@ TAO_ChunkInfo::write_previous_chunk_size(TAO_OutputCDR &strm)
   if (this->chunk_size_pos_ != 0)
     {
       // Calculate the chunk size.
-      CORBA::Long const chunk_size = strm.total_length () - this->length_to_chunk_octets_pos_;
+      CORBA::Long const chunk_size =
+          static_cast<CORBA::Long> (strm.total_length () - this->length_to_chunk_octets_pos_);
 
       // This should not happen since this is called in end_chunk() and
       // the idl generated code always have the matched start_chunk() and

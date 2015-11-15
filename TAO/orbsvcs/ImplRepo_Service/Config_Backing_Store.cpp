@@ -21,9 +21,9 @@ static const ACE_TCHAR* JACORB_SERVER = ACE_TEXT("JacORBServer");
 static const ACE_TCHAR* ALTKEY = ACE_TEXT("AltKey");
 static const ACE_TCHAR* POA = ACE_TEXT("POA");
 static const ACE_TCHAR* PEERS = ACE_TEXT("Peers");
-static const ACE_TCHAR* PID = ACE_TEXT("Pid");
+static const ACE_TCHAR* CONFIG_PID = ACE_TEXT("Pid");
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
-static const char* WIN32_REG_KEY = "Software\\TAO\\ImplementationRepository";
+static const ACE_TCHAR WIN32_REG_KEY[] = ACE_TEXT ("Software\\TAO\\ImplementationRepository");
 #endif
 
 Config_Backing_Store::Config_Backing_Store (const Options& opts,
@@ -37,6 +37,30 @@ Config_Backing_Store::Config_Backing_Store (const Options& opts,
 
 Config_Backing_Store::~Config_Backing_Store ()
 {
+}
+
+namespace {
+  int get_cstring_value (ACE_Configuration &config,
+                         const ACE_Configuration_Section_Key &key,
+                         const ACE_TCHAR *name,
+                         ACE_CString &value)
+  {
+    ACE_TString tmp;
+    const int ret = config.get_string_value (key, name, tmp);
+    if (ret == 0)
+      {
+        value = ACE_TEXT_ALWAYS_CHAR (tmp.c_str ());
+      }
+    return ret;
+  }
+
+  int set_cstring_value (ACE_Configuration &config,
+                         const ACE_Configuration_Section_Key &key,
+                         const ACE_TCHAR *name,
+                         const ACE_CString &value)
+  {
+    return config.set_string_value (key, name, ACE_TEXT_CHAR_TO_TCHAR (value.c_str ()));
+  }
 }
 
 void Config_Backing_Store::loadActivators ()
@@ -58,14 +82,16 @@ void Config_Backing_Store::loadActivators ()
           // Can't fail, because we're enumerating
           config_.open_section (root, name.c_str(), 0, key);
 
-          config_.get_string_value (key, IOR, ior);
+          get_cstring_value (this->config_, key, IOR, ior);
           config_.get_integer_value (key, TOKEN, token);
 
+          const ACE_CString name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
+
           Activator_Info* ai;
-          ACE_NEW (ai, Activator_Info (name, token, ior));
+          ACE_NEW (ai, Activator_Info (name_cstr, token, ior));
 
           Activator_Info_Ptr info (ai);
-          activators ().bind (lcase (name), info);
+          activators ().bind (lcase (name_cstr), info);
           ++index;
         }
     }
@@ -87,42 +113,43 @@ Config_Backing_Store::loadServers ()
 
       while (config_.enumerate_sections (root, index, name) == 0)
         {
+          const ACE_CString name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
           Server_Info_Ptr info;
-          if (this->servers ().find (name, info) != 0)
+          if (this->servers ().find (name_cstr, info) != 0)
             {
               ACE_NEW (si, Server_Info);
               info.reset (si);
-              si->key_name_ = name;
+              si->key_name_ = name_cstr;
             }
 
           ACE_Configuration_Section_Key key;
 
           // Can't fail, because we're enumerating
           config_.open_section (root, name.c_str(), 0, key);
-          if (!config_.get_string_value (key, POA, si->poa_name))
+          if (!get_cstring_value (this->config_, key, POA, si->poa_name))
             {
               si->poa_name = si->key_name_;
             }
 
           // Ignore any missing values. Server name is enough on its own.
-          config_.get_string_value (key, SERVER_ID, si->server_id);
-          config_.get_string_value (key, JACORB_SERVER, tmp);
+          get_cstring_value (this->config_, key, SERVER_ID, si->server_id);
+          get_cstring_value (this->config_, key, JACORB_SERVER, tmp);
           si->is_jacorb = (tmp == "1");
-          config_.get_string_value (key, ACTIVATOR, si->activator);
-          config_.get_string_value (key, STARTUP_COMMAND, si->cmdline);
-          config_.get_string_value (key, WORKING_DIR, si->dir);
-          config_.get_string_value (key, ENVIRONMENT, tmp);
+          get_cstring_value (this->config_, key, ACTIVATOR, si->activator);
+          get_cstring_value (this->config_, key, STARTUP_COMMAND, si->cmdline);
+          get_cstring_value (this->config_, key, WORKING_DIR, si->dir);
+          get_cstring_value (this->config_, key, ENVIRONMENT, tmp);
           ImR_Utils::stringToEnvList (tmp, si->env_vars);
           config_.get_integer_value (key, ACTIVATION, tmp_int);
           si->activation_mode_ =
             static_cast <ImplementationRepository::ActivationMode> (tmp_int);
-          config_.get_string_value (key, PARTIAL_IOR, si->partial_ior);
-          config_.get_string_value (key, IOR, si->ior);
+          get_cstring_value (this->config_, key, PARTIAL_IOR, si->partial_ior);
+          get_cstring_value (this->config_, key, IOR, si->ior);
           config_.get_integer_value (key, START_LIMIT, tmp_int);
           si->start_limit_ = tmp_int;
-          config_.get_integer_value (key, PID, tmp_int);
+          config_.get_integer_value (key, CONFIG_PID, tmp_int);
           si->pid = tmp_int;
-          if (config_.get_string_value (key, ALTKEY, tmp))
+          if (get_cstring_value (this->config_, key, ALTKEY, tmp))
             {
               if (tmp.length () > 0 &&
                   this->servers ().find (tmp, si->alt_info_) != 0)
@@ -134,9 +161,9 @@ Config_Backing_Store::loadServers ()
                   this->servers ().bind (tmp, si->alt_info_);
                 }
             }
-          config_.get_string_value (key, PEERS, tmp);
+          get_cstring_value (this->config_, key, PEERS, tmp);
           ImR_Utils::stringToPeerList (tmp, si->peers);
-          this->servers ().bind (name, info);
+          this->servers ().bind (name_cstr, info);
           si = 0;
           ++index;
         }
@@ -166,7 +193,7 @@ Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
         }
       return 0; // Already gone.
     }
-  return config_.remove_section (root, name.c_str(), 1);
+  return config_.remove_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), 1);
 }
 
 static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
@@ -181,7 +208,7 @@ static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
         sub_section));
       return err;
     }
-  err = cfg.open_section (root, name.c_str (), 1, key);
+  err = cfg.open_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), 1, key);
   if (err != 0)
     {
       ORBSVCS_ERROR((LM_ERROR, ACE_TEXT ("Unable to open config section:%C\n"),
@@ -209,21 +236,21 @@ Config_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool )
   ACE_CString envstr = ImR_Utils::envListToString (info->env_vars);
   ACE_CString peerstr = ImR_Utils::peerListToString (info->peers);
 
-  this->config_.set_string_value (key, POA, info->poa_name);
-  this->config_.set_string_value (key, SERVER_ID, info->server_id);
-  this->config_.set_string_value (key, JACORB_SERVER, info->is_jacorb ? "1" : "0");
-  this->config_.set_string_value (key, ACTIVATOR, info->activator);
-  this->config_.set_string_value (key, STARTUP_COMMAND, info->cmdline);
-  this->config_.set_string_value (key, WORKING_DIR, info->dir);
-  this->config_.set_string_value (key, ENVIRONMENT, envstr);
+  set_cstring_value (this->config_, key, POA, info->poa_name);
+  set_cstring_value (this->config_, key, SERVER_ID, info->server_id);
+  set_cstring_value (this->config_, key, JACORB_SERVER, info->is_jacorb ? "1" : "0");
+  set_cstring_value (this->config_, key, ACTIVATOR, info->activator);
+  set_cstring_value (this->config_, key, STARTUP_COMMAND, info->cmdline);
+  set_cstring_value (this->config_, key, WORKING_DIR, info->dir);
+  set_cstring_value (this->config_, key, ENVIRONMENT, envstr);
   this->config_.set_integer_value (key, ACTIVATION, info->activation_mode_);
   this->config_.set_integer_value (key, START_LIMIT, info->start_limit_);
-  this->config_.set_string_value (key, PARTIAL_IOR, info->partial_ior);
-  this->config_.set_string_value (key, IOR, info->ior);
-  this->config_.set_integer_value (key, PID, info->pid);
-  this->config_.set_string_value (key, ALTKEY,
+  set_cstring_value (this->config_, key, PARTIAL_IOR, info->partial_ior);
+  set_cstring_value (this->config_, key, IOR, info->ior);
+  this->config_.set_integer_value (key, CONFIG_PID, info->pid);
+  set_cstring_value (this->config_, key, ALTKEY,
                                   info->alt_info_.null () ? ACE_CString("") : info->alt_info_->key_name_);
-  this->config_.set_string_value (key, PEERS, peerstr);
+  set_cstring_value (this->config_, key, PEERS, peerstr);
 
   return 0;
 }
@@ -247,7 +274,7 @@ Config_Backing_Store::persistent_update (const Activator_Info_Ptr& info, bool )
         info->name.c_str ()));
     }
   this->config_.set_integer_value (key, TOKEN, info->token);
-  this->config_.set_string_value (key, IOR, info->ior.c_str());
+  set_cstring_value (this->config_, key, IOR, info->ior.c_str());
 
   return 0;
 }
@@ -304,8 +331,8 @@ static HKEY setup_registry (const bool start_clean)
     {
       ACE_Configuration_Win32Registry config ( HKEY_LOCAL_MACHINE );
       ACE_Configuration_Section_Key root;
-      config.open_section (config.root_section(), "Software\\TAO", 0, root);
-      config.remove_section (root, "ImplementationRepository", 1);
+      config.open_section (config.root_section(), ACE_TEXT ("Software\\TAO"), 0, root);
+      config.remove_section (root, ACE_TEXT ("ImplementationRepository"), 1);
     }
 
   return ACE_Configuration_Win32Registry::

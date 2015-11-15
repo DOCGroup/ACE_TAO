@@ -119,6 +119,7 @@ public:
       , EK_ulonglong
       , EK_octet
       , EK_floating_point
+      , EK_fixed_point
     };
 
   // Enum to define expression type.
@@ -151,6 +152,7 @@ public:
       , EV_any                    // Used for CORBA::Any operation parameters
       , EV_object                 // Used for CORBA::Object parameters
 
+      , EV_fixed
       , EV_void                   // Expression value is void (absent).
       , EV_none                   // Expression value is missing.
     };
@@ -177,6 +179,7 @@ public:
           UTL_String          *strval;  // Contains String * expr value.
           char                *wstrval; // Contains wide string expr value.
           ACE_CDR::ULong      eval;     // Contains enumeration value.
+          ACE_CDR::Fixed      fixedval; // Contains IDL fixed value.
         } u;
 
       ExprType et;
@@ -224,6 +227,8 @@ public:
   AST_Expression (char *s);
 
   AST_Expression (UTL_ScopedName *n);
+
+  AST_Expression (const ACE_CDR::Fixed &f);
 
   // Destructor.
   virtual ~AST_Expression (void);

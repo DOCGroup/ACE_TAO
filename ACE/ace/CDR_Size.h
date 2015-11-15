@@ -68,6 +68,7 @@ public:
   ACE_CDR::Boolean write_float (ACE_CDR::Float x);
   ACE_CDR::Boolean write_double (const ACE_CDR::Double &x);
   ACE_CDR::Boolean write_longdouble (const ACE_CDR::LongDouble &x);
+  ACE_CDR::Boolean write_fixed (const ACE_CDR::Fixed &x);
 
   /// For string we offer methods that accept a precomputed length.
   ACE_CDR::Boolean write_string (const ACE_CDR::Char *x);
@@ -201,6 +202,8 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                ACE_CDR::Float x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                ACE_CDR::Double x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
+                                               const ACE_CDR::Fixed &x);
 
 // CDR size-calculating output operator from helper classes
 

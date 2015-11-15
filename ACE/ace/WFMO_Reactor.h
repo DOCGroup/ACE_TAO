@@ -113,7 +113,7 @@ public:
    * Event_Handler entry. The reason the event is not in this
    * structure is because we need to pass an event array into
    * WaitForMultipleObjects and therefore keeping the events
-   * seperate makes sense.
+   * separate makes sense.
    */
   class Common_Info
   {

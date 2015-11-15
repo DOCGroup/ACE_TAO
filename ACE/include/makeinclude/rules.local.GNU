@@ -290,6 +290,7 @@ $(INSMAN)/man7/% \
 $(INSMAN)/man8/% \
 $(INSMAN)/manl/% \
 $(INSMAN)/mann/% :
+	@$(MKDIR) $(@D)
 ifeq ($(vxworks_ntbuild),1)
 	@if not exist $@ $(RM) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \
 		$(LN_S) $(ARCH_SOURCE_DIR)/$(@F) $(@:%.$(SOEXT)$(SOVERSION)=%.$(SOEXT)) && \

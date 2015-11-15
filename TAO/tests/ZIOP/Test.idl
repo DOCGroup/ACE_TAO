@@ -12,7 +12,7 @@ module Test
     string get_string (in string mystring);
 
     /// Return binary info
-    Octet_Seq get_big_reply ();
+    Octet_Seq get_big_reply (in unsigned long size);
 
     ///recieve a large number of bytes
     void big_request (in Octet_Seq octet_in);

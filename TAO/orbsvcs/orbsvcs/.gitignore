@@ -303,6 +303,10 @@
 /sfpC.inl
 /sfpS.cpp
 /sfpS.h
+/SSLIOPC.cpp
+/SSLIOPC.h
+/SSLIOPC.inl
+/SSLIOPS.h
 /TimeBaseC.cpp
 /TimeBaseC.h
 /TimeBaseC.inl

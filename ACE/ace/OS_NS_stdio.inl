@@ -881,6 +881,8 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_TEMPNAM)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *, 0);
+#elif defined (ACE_TEMPNAM_EQUIVALENT)
+  ACE_OSCALL_RETURN (ACE_TEMPNAM_EQUIVALENT (dir, pfx), char *, 0);
 #else /* ACE_LACKS_TEMPNAM */
 #if defined (_MSC_VER) && (_MSC_VER >= 1800)
   ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::_tempnam (dir, pfx), char *, 0);

@@ -12,6 +12,7 @@
 #endif  /* !__ACE_INLINE__ */
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Truncate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,8 +38,9 @@ TAO::TypeCode::Struct<char const *,
   // Aligning on an octet since the next value after the CDR
   // encapsulation length will always be the byte order octet/boolean
   // in this case.
-  offset = ACE_align_binary (offset + 4,
-                             ACE_CDR::OCTET_ALIGN);
+  offset = ACE_Utils::truncate_cast<CORBA::ULong> (
+              ACE_align_binary (offset + 4,
+                                ACE_CDR::OCTET_ALIGN));
 
   bool const success =
     (enc << TAO_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
@@ -66,7 +68,8 @@ TAO::TypeCode::Struct<char const *,
                        Traits<char const *>::get_string (field.name), 0))
           || !marshal (enc,
                        Traits<char const *>::get_typecode (field.type),
-                       offset + enc.total_length ()))
+                       ACE_Utils::truncate_cast<CORBA::ULong> (
+                           offset + enc.total_length ())))
         return false;
     }
 

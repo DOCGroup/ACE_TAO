@@ -43,11 +43,8 @@
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 # endif /* ACE_HAS_PTHREADS */
 
-
 #if !defined (ACE_LACKS_PTHREAD_H)
-   extern "C" {
 #  include /**/ <pthread.h>
-   }
 #endif /* !ACE_LACKS_PTHREAD_H */
 
 #if defined (ACE_HAS_PTHREAD_NP_H)

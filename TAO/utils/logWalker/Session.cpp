@@ -7,7 +7,7 @@
 #include "ace/OS_NS_sys_stat.h"
 
 long
-Session::tao_version_ = 200;
+Session::tao_version_ = 220;
 
 AltAddresses
 Session::alt_addrs_;
@@ -43,6 +43,8 @@ Session::set_tao_version (ACE_TCHAR *str)
     tao_version_ = 180;
   else if (ACE_OS::strncmp (str, ACE_TEXT("2.0"), 3) == 0)
     tao_version_ = 200;
+  else if (ACE_OS::strncmp (str, ACE_TEXT("2.2"), 3) == 0)
+    tao_version_ = 220;
   else
     return false;
   return true;

@@ -22,7 +22,8 @@
 # include "ace/os_include/os_time.h"
 
 #if defined (ACE_HAS_CPP11)
-#include <chrono>
+# include <chrono>
+# include "ace/Truncate.h"
 #endif /* ACE_HAS_CPP11 */
 
 // Define some helpful constants.
@@ -128,7 +129,7 @@ public:
     std::chrono::microseconds const usec {
       std::chrono::duration_cast<std::chrono::microseconds>(
         duration % std::chrono::seconds (1))};
-    this->set (s.count (), usec.count ());
+    this->set (s.count (), ACE_Utils::truncate_cast<suseconds_t>(usec.count ()));
   }
 #endif /* ACE_HAS_CPP11 */
 
@@ -487,12 +488,12 @@ namespace std
     *
     */
     //@{
-    nanoseconds& operator <<(nanoseconds &ns, ACE_Time_Value const &tv);
-    microseconds& operator <<(microseconds &us, ACE_Time_Value const &tv);
-    milliseconds& operator <<(milliseconds &ms, ACE_Time_Value const &tv);
-    seconds& operator <<(seconds &s, ACE_Time_Value const &tv);
-    minutes& operator <<(minutes &m, ACE_Time_Value const &tv);
-    hours& operator <<(hours &h, ACE_Time_Value const &tv);
+    ACE_Export nanoseconds& operator <<(nanoseconds &ns, ACE_Time_Value const &tv);
+    ACE_Export microseconds& operator <<(microseconds &us, ACE_Time_Value const &tv);
+    ACE_Export milliseconds& operator <<(milliseconds &ms, ACE_Time_Value const &tv);
+    ACE_Export seconds& operator <<(seconds &s, ACE_Time_Value const &tv);
+    ACE_Export minutes& operator <<(minutes &m, ACE_Time_Value const &tv);
+    ACE_Export hours& operator <<(hours &h, ACE_Time_Value const &tv);
     //@}
 
     /**
@@ -503,12 +504,12 @@ namespace std
     *
     */
     //@{
-    nanoseconds& operator +=(nanoseconds &ns, ACE_Time_Value const &tv);
-    microseconds& operator +=(microseconds &us, ACE_Time_Value const &tv);
-    milliseconds& operator +=(milliseconds &ms, ACE_Time_Value const &tv);
-    seconds& operator +=(seconds &s, ACE_Time_Value const &tv);
-    minutes& operator +=(minutes &m, ACE_Time_Value const &tv);
-    hours& operator +=(hours &h, ACE_Time_Value const &tv);
+    ACE_Export nanoseconds& operator +=(nanoseconds &ns, ACE_Time_Value const &tv);
+    ACE_Export microseconds& operator +=(microseconds &us, ACE_Time_Value const &tv);
+    ACE_Export milliseconds& operator +=(milliseconds &ms, ACE_Time_Value const &tv);
+    ACE_Export seconds& operator +=(seconds &s, ACE_Time_Value const &tv);
+    ACE_Export minutes& operator +=(minutes &m, ACE_Time_Value const &tv);
+    ACE_Export hours& operator +=(hours &h, ACE_Time_Value const &tv);
     //@}
 
     /**
@@ -519,12 +520,12 @@ namespace std
     *
     */
     //@{
-    nanoseconds& operator -=(nanoseconds &ns, ACE_Time_Value const &tv);
-    microseconds& operator -=(microseconds &us, ACE_Time_Value const &tv);
-    milliseconds& operator -=(milliseconds &ms, ACE_Time_Value const &tv);
-    seconds& operator -=(seconds &s, ACE_Time_Value const &tv);
-    minutes& operator -=(minutes &m, ACE_Time_Value const &tv);
-    hours& operator -=(hours &h, ACE_Time_Value const &tv);
+    ACE_Export nanoseconds& operator -=(nanoseconds &ns, ACE_Time_Value const &tv);
+    ACE_Export microseconds& operator -=(microseconds &us, ACE_Time_Value const &tv);
+    ACE_Export milliseconds& operator -=(milliseconds &ms, ACE_Time_Value const &tv);
+    ACE_Export seconds& operator -=(seconds &s, ACE_Time_Value const &tv);
+    ACE_Export minutes& operator -=(minutes &m, ACE_Time_Value const &tv);
+    ACE_Export hours& operator -=(hours &h, ACE_Time_Value const &tv);
     //@}
   }
 }

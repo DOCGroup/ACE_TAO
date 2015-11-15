@@ -18,7 +18,7 @@ project: build_files {
     keyword idlflags     = commandflags
 
     optional(header_outputext) {
-      commandflags(!-Sch || !-Ssh) = .h, .hpp, .hxx, .hh
+      commandflags(!-Sch || !-Ssh || -GC) = .h, .hpp, .hxx, .hh
     }
 
     optional(source_pre_extension) {

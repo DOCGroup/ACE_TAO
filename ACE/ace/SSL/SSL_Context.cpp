@@ -17,6 +17,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/OS_NS_netdb.h"
 
 #ifdef ACE_HAS_THREADS
 # include "ace/Thread_Mutex.h"
@@ -131,6 +132,12 @@ ACE_SSL_Context *
 ACE_SSL_Context::instance (void)
 {
   return ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::instance ();
+}
+
+void
+ACE_SSL_Context::close (void)
+{
+  ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::close ();
 }
 
 void

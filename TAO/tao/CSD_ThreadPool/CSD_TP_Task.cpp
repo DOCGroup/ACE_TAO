@@ -46,7 +46,6 @@ int
 TAO::CSD::TP_Task::open(void* args)
 {
   Thread_Counter num = 1;
-
   Thread_Counter* tmp = static_cast<Thread_Counter*> (args);
 
   if (tmp == 0)
@@ -71,30 +70,14 @@ TAO::CSD::TP_Task::open(void* args)
                        -1);
     }
 
-  // Likewise, we can't activate too many.  Make sure this isn't the case.
-  if (num > MAX_THREADPOOL_TASK_WORKER_THREADS)
-    {
-      TAOLIB_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
-                        ACE_TEXT ("num_threads (%u) is too large.  ")
-                        ACE_TEXT ("Max is %d.\n"),
-                        num, MAX_THREADPOOL_TASK_WORKER_THREADS),
-                        -1);
-    }
-
   // We need the lock acquired from here on out.
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, -1);
 
-  // We can assume that we are in the proper state to handle this open()
-  // call as long as we haven't been open()'ed before.
+  // Multiple POA_Manager::activate() calls trigger multiple calls to open()
+  // and that is OK
   if (this->opened_)
     {
-      //FUZZ: disable check_for_lack_ACE_OS
-      TAOLIB_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) TP_Task failed to open.  ")
-                        ACE_TEXT ("Task has previously been open()'ed.\n")),
-                       -1);
-      //FUZZ: enable check_for_lack_ACE_OS
+      return 0;
     }
 
   // Activate this task object with 'num' worker threads.

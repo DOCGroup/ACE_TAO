@@ -1,43 +1,13 @@
-//
-
 #include "fe_private.h"
 #include "ace/OS_NS_string.h"
 
 /* C++ code produced by gperf version 2.8 (ACE version) */
-/* Command-line: ../../bin/ace_gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat  */
+/* Command-line: /tao_builds/mitza/DOC_fixed/ACE/bin/ace_gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$ fe/keywords.dat  */
 unsigned int
 TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
 {
   static const unsigned char asso_values[] =
     {
-#if defined (ACE_MVS)
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252,  15,
-      35,  65,   0,   0,  35,   5,   0,  60, 252, 252,
-     252, 252, 252, 252, 252, 252,   0,  30,   0,   5,
-       5,  20,  50,  40, 252, 252, 252, 252, 252, 252,
-     252, 252,  20, 110,   0,  45,  35,  95,  55, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
-     252, 252, 252, 252, 252, 252,
-#else
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
@@ -51,9 +21,8 @@ TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
        0,   0,  35,   5,   0,  60, 252,   0,  30,   0,
        5,   5,  20,  50,  40,  20, 110,   0,  45,  35,
       95,  55, 252, 252, 252, 252, 252, 252,
-#endif /* ACE_MVS */
     };
-  return len + asso_values[(int) str[1]] + asso_values[(int) str[0]] + asso_values[(int) str[len - 1]];
+  return len + asso_values[static_cast<int>(str[1])] + asso_values[static_cast<int>(str[0])] + asso_values[static_cast<int>(str[len - 1])];
 }
 
 const struct TAO_IDL_CPP_Keyword_Entry *
@@ -71,7 +40,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
       WORDLIST_SIZE = 80
     };
 
-  static const struct TAO_IDL_CPP_Keyword_Entry  wordlist[] =
+  static const struct TAO_IDL_CPP_Keyword_Entry wordlist[] =
     {
       {"",0},{"",0},{"",0},{"",0},{"",0},{"",0},
       {"delete",  "_cxx_delete"},

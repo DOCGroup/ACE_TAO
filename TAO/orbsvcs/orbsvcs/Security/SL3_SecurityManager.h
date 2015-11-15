@@ -28,7 +28,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

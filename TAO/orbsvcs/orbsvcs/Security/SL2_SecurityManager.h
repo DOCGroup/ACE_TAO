@@ -54,7 +54,7 @@ namespace TAO
     {
     public:
       /*! Constructor */
-      AccessDecision (/* not yet known */);
+      AccessDecision (void);
       ~AccessDecision (void);
 
       virtual ::CORBA::Boolean access_allowed (
@@ -68,10 +68,14 @@ namespace TAO
           const ::CORBA::OctetSeq & adapter_id,
           const ::CORBA::OctetSeq & object_id,
           const ::SecurityLevel2::CredentialsList & cred_list,
-          const char * operation_name);
+          const char * operation_name,
+          ::CORBA::Boolean collocated_invocation);
 
       virtual ::CORBA::Boolean default_decision (void);
       virtual void default_decision (::CORBA::Boolean d);
+
+      virtual ::CORBA::Boolean default_collocated_decision (void);
+      virtual void default_collocated_decision (::CORBA::Boolean d);
 
       virtual void add_object (const char * orbid,
                                const ::CORBA::OctetSeq & adapter_id,
@@ -89,6 +93,12 @@ namespace TAO
        */
       ::CORBA::Boolean default_allowance_decision_;
 
+      /*!
+       * This is the default value that's returned from access_allowed()
+       * when the access table doesn't contain an entry for the reference and
+       * we are handling a collocated call
+       */
+      ::CORBA::Boolean default_collocated_decision_;
       /*!
        * Map containing references and their designated insecure access.
        */
@@ -151,7 +161,8 @@ namespace TAO
       // This is the private implementation that is common to both
       // access_allowed and access_allowed_ex.
       ::CORBA::Boolean access_allowed_i (OBJECT_KEY& key,
-                                         const char *operation_name);
+                                         const char *operation_name,
+                                         CORBA::Boolean collocated = false);
 
     };
 

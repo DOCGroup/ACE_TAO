@@ -24,6 +24,7 @@
 #include "List_Node.h"
 #include "Vectors.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/Truncate.h"
 
 /// Sorts the key set alphabetically to speed up subsequent operation
 /// Uses insertion sort since the set is probably quite small.
@@ -117,7 +118,7 @@ List_Node::List_Node (char *k, int len)
   *ptr = '\0';
 
   // Sort the KEYSIG items alphabetically.
-  sort (keysig, ptr - keysig);
+  sort (keysig, ACE_Utils::truncate_cast<int> (ptr - keysig));
 }
 
 List_Node::~List_Node (void)

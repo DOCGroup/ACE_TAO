@@ -36,6 +36,9 @@
 #include "ace/Basic_Types.h"
 #include "ace/Default_Constants.h"
 #include "ace/Global_Macros.h"
+#include "ace/iosfwd.h"
+
+#include <iterator>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -351,6 +354,171 @@ public:
        };
 #    endif /* ACE_SIZEOF_LONG_DOUBLE != 16 */
 
+#define ACE_HAS_CDR_FIXED
+       /// Fixed-point data type: up to 31 decimal digits and a sign bit
+       ///
+       /// See OMG 2011-11-01 CORBA Interfaces v3.2 sections 7.10, 7.11.3.4
+       /// See OMG 2011-11-02 CORBA Interoperability v3.2 section 9.3.2.8
+       /// See OMG 2012-07-02 IDL-to-C++ Mapping v1.3 section 5.13
+       /// This class doesn't exactly match the IDL-to-C++ mapping because
+       /// it is meant for use inside a union in the IDL compiler and therefore
+       /// has no constructors.  Standards-based middlware libraries such as
+       /// ORBs and DDSs can wrap this class in a class of their own to provide
+       /// the exact interface described by the mapping specification.
+       class ACE_Export Fixed
+       {
+       public:
+         enum
+         {
+           MAX_DIGITS = 31,
+           MAX_STRING_SIZE = 4 + MAX_DIGITS, // includes -, 0, ., terminator
+           POSITIVE = 0xc,
+           NEGATIVE = 0xd
+         };
+
+         static Fixed from_integer (LongLong val = 0);
+         static Fixed from_integer (ULongLong val);
+         static Fixed from_floating (LongDouble val);
+         static Fixed from_string (const char *str);
+         static Fixed from_octets (const Octet *array, int len,
+                                   unsigned int scale = 0);
+
+         operator LongLong () const;
+         operator LongDouble () const;
+
+         Fixed round (UShort scale) const;
+         Fixed truncate (UShort scale) const;
+
+         bool to_string (char *buffer, size_t buffer_size) const;
+         const Octet *to_octets (int &n) const;
+
+         Fixed &operator+= (const Fixed &rhs);
+         Fixed &operator-= (const Fixed &rhs);
+         Fixed &operator*= (const Fixed &rhs);
+         Fixed &operator/= (const Fixed &rhs);
+
+         Fixed &operator++ ();
+         Fixed operator++ (int);
+         Fixed &operator-- ();
+         Fixed operator-- (int);
+
+         Fixed operator+ () const;
+         Fixed operator- () const;
+         bool operator! () const;
+
+         UShort fixed_digits () const;
+         UShort fixed_scale () const;
+
+         bool sign () const;
+         Octet digit (int n) const;
+         void digit (int n, int value);
+
+         bool less (const Fixed &rhs) const;
+         bool equal (const Fixed &rhs) const;
+
+         class Proxy
+         {
+           bool high_nibble_;
+           Octet &element_;
+         public:
+           Proxy (bool high_nibble, Octet &element);
+           Proxy &operator= (Octet val);
+           Proxy &operator+= (int rhs);
+           Proxy &operator-= (int rhs);
+           Proxy &operator++ ();
+           Proxy &operator-- ();
+           operator Octet () const;
+         };
+
+         class IteratorBase
+         {
+         protected:
+           explicit IteratorBase (int digit);
+           bool high_nibble () const;
+           Octet &storage (Fixed *outer) const;
+           Octet storage (const Fixed *outer) const;
+           bool compare (const IteratorBase &rhs) const;
+           int digit_;
+         };
+
+         class Iterator
+           : public std::iterator<std::bidirectional_iterator_tag, Proxy>
+           , private IteratorBase
+         {
+         public:
+           explicit Iterator (Fixed *outer, int digit = 0);
+           Proxy operator* ();
+           Iterator &operator+= (std::ptrdiff_t n);
+           Iterator &operator++ ();
+           Iterator operator++ (int);
+           Iterator &operator-- ();
+           Iterator operator-- (int);
+           bool operator== (const Iterator &rhs) const;
+           bool operator!= (const Iterator &rhs) const;
+         private:
+           Fixed *outer_;
+         };
+
+         class ConstIterator
+           : public std::iterator<std::bidirectional_iterator_tag, Octet>
+           , private IteratorBase
+         {
+         public:
+           explicit ConstIterator (const Fixed *outer, int digit = 0);
+           Octet operator* ();
+           ConstIterator &operator+= (std::ptrdiff_t n);
+           ConstIterator &operator++ ();
+           ConstIterator operator++ (int);
+           ConstIterator &operator-- ();
+           ConstIterator operator-- (int);
+           bool operator== (const ConstIterator &rhs) const;
+           bool operator!= (const ConstIterator &rhs) const;
+         private:
+           const Fixed *outer_;
+         };
+
+         Iterator begin ();
+         ConstIterator begin () const;
+         ConstIterator cbegin () const;
+         Iterator end ();
+         ConstIterator end () const;
+         ConstIterator cend () const;
+
+       private:
+         /// CDR wire format for Fixed: marshaled as an octet array with
+         /// index 0 as the most significant octet and index n the least
+         /// significant.  Each octet contains two decimal digits except for
+         /// the last octet (least sig) which has one decimal digit in
+         /// the high nibble and the sign indicator in the low nibble.
+         Octet value_[16];
+
+         /// digits_ is not marshaled, the receiver needs to know it
+         /// from the type information (for example, IDL).  The value of
+         /// digits_ determines how many octets of value_ are masharled.
+         Octet digits_;
+
+         /// scale_ is not marshaled, the receiver needs to know it
+         /// from the type information (for example, IDL).
+         Octet scale_;
+
+         /// remove trailing zeros, shift down and reduce digits and scale
+         void normalize (UShort min_scale = 0);
+
+         /// Add up to 'digits' of additional scale by shifting left without
+         /// removing significant digits.  Returns number of digits shifted.
+         int lshift (int digits);
+
+         /// Prepare to add (or subtract) f by changing the digits and scale
+         /// of *this, returnins an iterator to the least significant
+         /// digit of f that will influence the sum (or difference).
+         ConstIterator pre_add (const Fixed &f);
+
+         Fixed div_helper2 (const Fixed &rhs, Fixed &r) const;
+         Fixed div_helper1 (const Fixed &rhs, Fixed &r) const;
+         Fixed join (int digits, const Fixed &bottom) const;
+         void ltrim ();
+       };
+
   //@}
 
 #if !defined (ACE_CDR_GIOP_MAJOR_VERSION)
@@ -361,6 +529,44 @@ public:
 #   define ACE_CDR_GIOP_MINOR_VERSION 2
 #endif /* ACE_CDR_GIOP_MINOR_VERSION */
 };
+
+ACE_Export
+ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs, const ACE_CDR::Fixed &rhs);
+
+#ifndef ACE_LACKS_IOSTREAM_TOTALLY
+ACE_Export
+std::istream &operator>> (std::istream &lhs, ACE_CDR::Fixed &rhs);
+#endif
+
+ACE_Export
+bool operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+bool operator> (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+bool operator>= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+bool operator<= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+bool operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+bool operator!= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+ACE_CDR::Fixed operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+ACE_CDR::Fixed operator- (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+ACE_CDR::Fixed operator* (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+
+ACE_Export
+ACE_CDR::Fixed operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

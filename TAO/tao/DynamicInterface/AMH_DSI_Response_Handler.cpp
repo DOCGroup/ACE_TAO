@@ -12,6 +12,8 @@
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 
+#include "ace/Truncate.h"
+
 #if !defined (__ACE_INLINE__)
 # include "AMH_DSI_Response_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -403,7 +405,8 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
       // We know nothing about this exception, so we marshal it as a block
       // of bytes. The outgoing stream's byte order has already been matched
       // to the original source of the reply.
-      this->_tao_out.write_char_array (encap.buffer (), encap.length ());
+      this->_tao_out.write_char_array (encap.buffer (),
+                                       ACE_Utils::truncate_cast<ACE_CDR::ULong> (encap.length ()));
       // This will prevent the marshaling of any parameters into this reply.
       //  this->sent_gateway_exception_ = 1;
       this->_tao_rh_send_reply ();

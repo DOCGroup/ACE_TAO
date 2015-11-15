@@ -118,7 +118,7 @@
           </ul>
           If you want to perform a full build with qt support, than run:
           <ul>
-            <li><code>yum install rubygem-rmagick bison libxerces-c-devel psmisc yum-utils gdb unzip glibc-devel libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.7.0-openjdk git-svn perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git telnet GitPython NetworkManager wget mailx</code></li>
+            <li><code>yum install ntp rubygem-rmagick bison libxerces-c-devel psmisc yum-utils gdb unzip glibc-devel libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.7.0-openjdk git-svn perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git telnet GitPython NetworkManager wget mailx</code></li>
           </ul>
           For some optional i686 packages run
           <ul>
@@ -288,7 +288,7 @@
             version number being released e.g. 5_6_7)
             <br>
             <code>svn co
-              git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_1 ATCD<br>
+              git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_3 ATCD<br>
           </li>
           <li>Change to the ATCD directory using <br>
           cd ATCD</li>
@@ -319,7 +319,7 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_1 ATCD<br>
+        git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_3 ATCD<br>
         cd ATCD<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
@@ -328,8 +328,8 @@
         export DDS_ROOT=<br>
         cd ACE<br>
         $ACE_ROOT/bin/generate_rel_manpages<br>
-        scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution<br>
- </code>
+        scp ACE-html.tar.gz ACE-html.tar.bz2 ACE-html.zip ACE-html.tar.gz.md5 ACE-html.tar.bz2.md5 ACE-html.zip.md5 bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution
+     </code>
 <br>
       <li>
         While doxygen churns, format a release announcement, including the release

@@ -61,6 +61,7 @@ namespace ACE
               ConnectionCacheKey ();
               ConnectionCacheKey (const ConnectionKey& key);
               ConnectionCacheKey (const ConnectionCacheKey& cachekey);
+              virtual ~ConnectionCacheKey ();
 
               ConnectionCacheKey& operator =(const ConnectionCacheKey& cachekey);
 

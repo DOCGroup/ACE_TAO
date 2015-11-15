@@ -184,7 +184,7 @@ TAO_DTP_Thread_Pool::current_threads (void) const
                     this->lock_,
                     0);
 
-  return this->threads_.thr_count ();
+  return static_cast<CORBA::ULong> (this->threads_.thr_count ());
 }
 
 void
@@ -336,7 +336,7 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
                       -1);
     result =
       this->threads_.activate (flags,
-                               count,
+                               static_cast<int> (count),
                                force_active,
                                default_grp_id,
                                default_priority,
@@ -344,12 +344,24 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
                                default_thread_handles,
                                default_stack,
                                stack_size_array);
-    if (TAO_debug_level > 7)
+    if (result == 0)
       {
-        TAOLIB_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO (%P|%t) new DTP thread requester waiting\n")));
+        if (TAO_debug_level > 7)
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) new DTP thread requester waiting\n")));
+          }
+        this->activation_cond_.wait ();
       }
-    this->activation_cond_.wait ();
+    else
+      {
+        if (TAO_debug_level > 0)
+          {
+            TAOLIB_ERROR ((LM_ERROR,
+                           ACE_TEXT ("TAO (%P|%t) new DTP thread failed %p\n"),
+                           ACE_TEXT ("ACE_Task_Base::activate")));
+          }
+      }
   }
   if (TAO_debug_level > 7)
     {

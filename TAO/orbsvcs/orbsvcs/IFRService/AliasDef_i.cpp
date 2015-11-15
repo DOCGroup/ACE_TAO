@@ -64,7 +64,7 @@ TAO_AliasDef_i::type_i (void)
 
   return this->repo_->tc_factory ()->create_alias_tc (id.c_str (),
                                                       name.c_str (),
-                                                      tc.in ());
+                                                      ACE_TEXT_ALWAYS_CHAR (tc.in ()));
 }
 
 CORBA::IDLType_ptr

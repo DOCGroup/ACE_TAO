@@ -415,6 +415,13 @@ ACE_INET_Addr::set (u_short port_number,
       int error = 0;
       ACE_OS::memset (&hints, 0, sizeof (hints));
       hints.ai_family = AF_INET6;
+      // Note - specify the socktype here to avoid getting multiple entries
+      // returned with the same address for different socket types or
+      // protocols. If this causes a problem for some reason (an address that's
+      // available for TCP but not UDP, or vice-versa) this will need to change
+      // back to unrestricted hints and weed out the duplicate addresses by
+      // searching this->inet_addrs_ which would slow things down.
+      hints.ai_socktype = SOCK_STREAM;
       if ((error = ::getaddrinfo (host_name, 0, &hints, &res)) == 0)
         {
           this->set_type (res->ai_family);
@@ -889,7 +896,21 @@ ACE_INET_Addr::set_port_number (u_short port_number,
     this->inet_addr_.in6_.sin6_port = port_number;
   else
 #endif /* ACE_HAS_IPV6 */
-  this->inet_addr_.in4_.sin_port = port_number;
+    this->inet_addr_.in4_.sin_port = port_number;
+
+  if (this->inet_addrs_.empty ())
+    return;
+  for (std::vector<union ip46>::iterator i = this->inet_addrs_.begin ();
+       i != this->inet_addrs_.end ();
+       i++)
+    {
+#if defined (ACE_HAS_IPV6)
+      if (this->get_type () == AF_INET6)
+        i->in6_.sin6_port = port_number;
+      else
+#endif /* ACE_HAS_IPV6 */
+        i->in4_.sin_port = port_number;
+    }
 }
 
 // returns -2 when the hostname is truncated

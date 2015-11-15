@@ -69,6 +69,7 @@ Bug_4055_Regression_Test: !ST
 Bug_4189_Regression_Test: !ST
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
+CDR_Fixed_Test: !ACE_FOR_TAO
 CDR_Test
 Chrono_Test
 Cache_Map_Manager_Test
@@ -236,6 +237,7 @@ TP_Reactor_Test: !ACE_FOR_TAO
 TSS_Test
 TSS_Static_Test
 Task_Test
+Task_Group_Test
 Task_Ex_Test
 Thread_Attrs_Test
 Thread_Manager_Test

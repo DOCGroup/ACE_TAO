@@ -84,6 +84,30 @@ static bool test_tao_use (void)
   return true;
 }
 
+static bool test_port_assignment (void)
+{
+#if defined (ACE_HAS_IPV6)
+  ACE_INET_Addr addr1 (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6);
+  ACE_INET_Addr addr2;
+
+  addr1.set_port_number (12345);
+  addr2.set (addr1);
+  if (addr1.get_port_number () != addr2.get_port_number ())
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("port number not properly copied. ")
+                  ACE_TEXT ("addr1 port = %d addr2 port = %d\n"),
+                  addr1.get_port_number (), addr2.get_port_number ()));
+      return false;
+    }
+   ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Test Port Assignment passed\n")));
+#else
+   ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Test Port Assignment is IPv6 only\n")));
+#endif /* ACE_HAS_IPV6 */
+  return true;
+}
 
 static bool test_multiple (void)
 {
@@ -95,8 +119,11 @@ static bool test_multiple (void)
   ACE_INET_Addr ntp;
   if (ntp.set (123, ACE_TEXT ("pool.ntp.org")) == -1)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pool.ntp.org")));
-      return false;
+      // This is just a warning to prevent fails on lookups on hosts with no
+      // DNS service. The real value of this test is to accurately get
+      // multiples from the result.
+      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%p\n"), ACE_TEXT ("pool.ntp.org")));
+      return true;
     }
   size_t count = 0;
   ACE_TCHAR addr_string[256];
@@ -190,21 +217,43 @@ int run_main (int, ACE_TCHAR *[])
   ACE_INET_Addr addr_port;
   for (int i = 0; addr_ports[i] != 0; ++i)
     {
-      addr_port.set (addr_ports[i]);
-      status |= check_type_consistency (addr_port);
-      if (addr_port.get_port_number () != 80)
+      if (addr_port.set (addr_ports[i]) == 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Got port %d from %s\n"),
-                      (int)(addr_port.get_port_number ()),
-                      addr_ports[i]));
-          status = 1;
+          status |= check_type_consistency (addr_port);
+          if (addr_port.get_port_number () != 80)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Got port %d from %s\n"),
+                          (int)(addr_port.get_port_number ()),
+                          addr_ports[i]));
+              status = 1;
+            }
+          ACE_INET_Addr check (addr_ports[i]);
+          if (addr_port != check)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reset on iter %d failed\n"), i));
+              status = 1;
+            }
         }
-      ACE_INET_Addr check (addr_ports[i]);
-      if (addr_port != check)
+      else
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reset on iter %d failed\n"), i));
-          status = 1;
+          // Sometimes this fails because the run-time host lacks the capability to
+          // resolve a name. But it shouldn't fail on the first one, 127.0.0.1.
+          if (i == 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%C: %p\n"),
+                          addr_ports[i],
+                          ACE_TEXT ("lookup")));
+              status = 1;
+            }
+          else
+            {
+              ACE_ERROR ((LM_WARNING,
+                          ACE_TEXT ("%C: %p\n"),
+                          addr_ports[i],
+                          ACE_TEXT ("lookup")));
+            }
         }
     }
 
@@ -227,7 +276,7 @@ int run_main (int, ACE_TCHAR *[])
 
       ACE_OS::memcpy (&addr32, &addrv4, sizeof (addr32));
 
-      addr.set (80, ipv4_addresses[i]);
+      status |= !(addr.set (80, ipv4_addresses[i]) == 0);
       status |= check_type_consistency (addr);
 
       /*
@@ -439,6 +488,9 @@ int run_main (int, ACE_TCHAR *[])
     status = 1;
 
   if (!test_multiple ())
+    status = 1;
+
+  if (!test_port_assignment ())
     status = 1;
 
   ACE_INET_Addr a1 (80, "127.0.0.1");
