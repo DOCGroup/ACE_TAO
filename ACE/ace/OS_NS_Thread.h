@@ -1959,9 +1959,9 @@ private:
 # endif
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* ACE_WIN32 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
