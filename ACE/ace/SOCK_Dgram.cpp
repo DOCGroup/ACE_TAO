@@ -8,6 +8,9 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/os_include/net/os_if.h"
 #include "ace/Truncate.h"
+#if defined (ACE_HAS_ALLOC_HOOKS)
+# include "ace/Malloc_Base.h"
+#endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
 #  include "ace/SOCK_Dgram.inl"
@@ -63,9 +66,16 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
     return -1;
   else if (inlen > 0)
     {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_ALLOCATOR_RETURN (io_vec->iov_base,
+                            static_cast<char*>(ACE_Allocator::instance()->malloc(sizeof(char) * inlen)),
+                            -1);
+#else
       ACE_NEW_RETURN (io_vec->iov_base,
                       char[inlen],
                       -1);
+#endif /* ACE_HAS_ALLOC_HOOKS */
+
       ssize_t rcv_len = ACE_OS::recvfrom (this->get_handle (),
                                           (char *) io_vec->iov_base,
                                           inlen,
@@ -74,7 +84,11 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
                                           &addr_len);
       if (rcv_len < 0)
         {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+          ACE_Allocator::instance()->free(io_vec->iov_base);
+#else
           delete [] (char *)io_vec->iov_base;
+#endif /* ACE_HAS_ALLOC_HOOKS */
           io_vec->iov_base = 0;
         }
       else
@@ -253,7 +267,7 @@ ACE_SOCK_Dgram::send (const iovec iov[],
   send_msg.msg_control = 0;
   send_msg.msg_controllen = 0;
   send_msg.msg_flags = 0;
-#else
+#elif !defined ACE_LACKS_SENDMSG
   send_msg.msg_accrights    = 0;
   send_msg.msg_accrightslen = 0;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
@@ -287,7 +301,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
   recv_msg.msg_control = 0 ;
   recv_msg.msg_controllen = 0 ;
-#else
+#elif !defined ACE_LACKS_SENDMSG
   recv_msg.msg_accrights = 0;
   recv_msg.msg_accrightslen = 0;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
@@ -332,9 +346,14 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
 #else
+# ifdef ACE_HAS_ALLOC_HOOKS
+  ACE_ALLOCATOR_RETURN (buf, (buf *)
+                        ACE_Allocator::instance ()->malloc (length), -1);
+# else
   ACE_NEW_RETURN (buf,
                   char[length],
                   -1);
+# endif /* ACE_HAS_ALLOC_HOOKS */
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   char *ptr = buf;
@@ -347,7 +366,11 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
   ssize_t result = ACE_SOCK_Dgram::send (buf, length, addr, flags);
 #if !defined (ACE_HAS_ALLOCA)
+# ifdef ACE_HAS_ALLOC_HOOKS
+  ACE_Allocator::instance ()->free (buf);
+# else
   delete [] buf;
+# endif /* ACE_HAS_ALLOC_HOOKS */
 #endif /* !defined (ACE_HAS_ALLOCA) */
   return result;
 }
@@ -381,9 +404,14 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #if defined (ACE_HAS_ALLOCA)
   buf = alloca (length);
 #else
+# ifdef ACE_HAS_ALLOC_HOOKS
+  ACE_ALLOCATOR_RETURN (buf, (buf *)
+                        ACE_Allocator::instance ()->malloc (length), -1);
+# else
   ACE_NEW_RETURN (buf,
                   char[length],
                   -1);
+# endif /* ACE_HAS_ALLOC_HOOKS */
 #endif /* !defined (ACE_HAS_ALLOCA) */
 
   length = ACE_SOCK_Dgram::recv (buf, length, addr, flags);
@@ -408,7 +436,11 @@ ACE_SOCK_Dgram::recv (iovec iov[],
     }
 
 #if !defined (ACE_HAS_ALLOCA)
+# ifdef ACE_HAS_ALLOC_HOOKS
+  ACE_Allocator::instance ()->free (buf);
+# else
   delete [] buf;
+# endif /* ACE_HAS_ALLOC_HOOKS */
 #endif /* !defined (ACE_HAS_ALLOCA) */
   return length;
 }

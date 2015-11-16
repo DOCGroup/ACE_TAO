@@ -132,14 +132,24 @@ Processed_Static_Svc (const ACE_Static_Svc_Descriptor *assd)
   :name_(0),
    assd_(assd)
 {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_ALLOCATOR_NORETURN (name_, static_cast<ACE_TCHAR*>(ACE_Allocator::instance()->malloc (sizeof(ACE_TCHAR) * (ACE_OS::strlen(assd->name_)+1))));
+#else
   ACE_NEW_NORETURN (name_, ACE_TCHAR[ACE_OS::strlen(assd->name_)+1]);
+#endif /* ACE_HAS_ALLOC_HOOKS */
   ACE_OS::strcpy(name_,assd->name_);
 }
 
 ACE_Service_Gestalt::Processed_Static_Svc::~Processed_Static_Svc (void)
 {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance()->free(name_);
+#else
   delete [] name_;
+#endif /* ACE_HAS_ALLOC_HOOKS */
 }
+
+ACE_ALLOC_HOOK_DEFINE(ACE_Service_Gestalt::Processed_Static_Svc)
 
 void
 ACE_Service_Gestalt::intrusive_add_ref (ACE_Service_Gestalt* g)

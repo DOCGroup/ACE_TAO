@@ -84,6 +84,9 @@ public:
                 ACE_Event_Handler *handler,
                 const void *arg);
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
 
   /// Flag indicating that reference counting is required for this

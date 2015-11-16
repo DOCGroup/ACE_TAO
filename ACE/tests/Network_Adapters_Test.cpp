@@ -13,7 +13,8 @@
 #include "ace/config-all.h"
 #include "test_config.h"
 
-#if defined (ACE_HAS_ICMP_SUPPORT) && (ACE_HAS_ICMP_SUPPORT == 1)
+#if defined (ACE_HAS_ICMP_SUPPORT) && (ACE_HAS_ICMP_SUPPORT == 1) && \
+  !defined ACE_LACKS_GETPROTOBYNAME
 
 #include "ace/ACE.h"
 #include "ace/Get_Opt.h"

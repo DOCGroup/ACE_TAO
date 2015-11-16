@@ -1,5 +1,7 @@
 #include "ace/FILE_Addr.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Truncate.h"
+
 #include "ACEXML/common/Mem_Map_Stream.h"
 
 

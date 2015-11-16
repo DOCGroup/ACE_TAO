@@ -37,6 +37,9 @@ namespace ACE_OS
 {
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_Time_Value gettimeofday (void);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ACE_Time_Value gettimeofday_ (void);
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -322,6 +322,7 @@ public:
     ~Processed_Static_Svc (void);
     ACE_TCHAR * name_;
     const ACE_Static_Svc_Descriptor *assd_;
+    ACE_ALLOC_HOOK_DECLARE;
   };
 
   /// Get the current ACE_Service_Repository held by this object.

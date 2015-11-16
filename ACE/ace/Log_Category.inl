@@ -75,6 +75,7 @@ void ACE_Log_Category_TSS::conditional_set (const char *file,
   logger_->conditional_set(file, line, op_status, errnum);
 }
 
+#if !defined (ACE_LACKS_VA_FUNCTIONS)
 ACE_INLINE ssize_t
 ACE_Log_Category_TSS::log (ACE_Log_Priority priority, const ACE_TCHAR *format_str, ...)
 {
@@ -108,6 +109,18 @@ ACE_Log_Category_TSS::log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *form
   return result;
 }
 #endif /* ACE_HAS_WCHAR */
+#else /* ACE_LACKS_VA_FUNCTIONS */
+
+ACE_INLINE ssize_t
+ACE_Log_Category_TSS::log (const ACE_Log_Formatter &formatter)
+{
+  if (this->log_priority_enabled (formatter.priority ()))
+    return logger_->log (formatter);
+
+  return 0;
+}
+
+#endif /* ACE_LACKS_VA_FUNCTIONS */
 
 /**
  * An alternative logging mechanism that makes it possible to
@@ -125,6 +138,12 @@ ACE_Log_Category_TSS::log (const ACE_TCHAR *format,
   return logger_->log(format, priority, argp, this);
 }
 
+ACE_INLINE ssize_t
+ACE_Log_Category_TSS::log (ACE_Log_Record &log_record,
+                           int suppress_stderr)
+{
+  return logger_->log(log_record, suppress_stderr);
+}
 
 ACE_INLINE int
 ACE_Log_Category_TSS::log_hexdump (ACE_Log_Priority priority,

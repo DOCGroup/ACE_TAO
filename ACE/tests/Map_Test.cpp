@@ -197,7 +197,7 @@ find_test (TEST_MAP &map,
   // Find system generated keys.
   for (VALUE i = 0; i < iterations; ++i)
     {
-      VALUE j;
+      VALUE j = 0;
       THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.find (keys[i], j) != -1);
       THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (i == j);
     }

@@ -44,7 +44,7 @@ Bug_2740_Regression_Test: !ST
 Bug_2772_Regression_Test: !ST !FIXED_BUGS_ONLY
 Bug_2815_Regression_Test
 Bug_2820_Regression_Test
-Bug_2980_Regression_Test: !STATIC !Win32 !VxWorks !WCHAR
+Bug_2980_Regression_Test: !STATIC !Win32 !VxWorks !WCHAR !FACE_SAFETY
 Bug_3102_Regression_Test
 Bug_3319_Regression_Test
 Bug_3334_Regression_Test: !STATIC
@@ -119,7 +119,7 @@ Dev_Poll_Reactor_Echo_Test: !nsk !ST
 Dirent_Test: !VxWorks_RTP !LabVIEW_RT
 Dynamic_Priority_Test
 Dynamic_Test
-Enum_Interfaces_Test: !NO_NETWORK
+Enum_Interfaces_Test: !NO_NETWORK !LynxOS
 Env_Value_Test: !WinCE !LabVIEW_RT
 FIFO_Test: !ACE_FOR_TAO
 Framework_Component_Test: !STATIC !nsk
@@ -143,18 +143,20 @@ Log_Thread_Inheritance_Test: !ST
 Logging_Strategy_Test: !LynxOS !STATIC !ST
 Manual_Event_Test
 MEM_Stream_Test: !VxWorks !nsk !ACE_FOR_TAO !PHARLAP !QNX !LynxOS
-MM_Shared_Memory_Test: !VxWorks !nsk !ACE_FOR_TAO
+MM_Shared_Memory_Test: !VxWorks !nsk !ACE_FOR_TAO !LynxOS
 MT_NonBlocking_Connect_Test: !ST
 MT_Reactor_Timer_Test
 MT_Reactor_Upcall_Test: !nsk
-MT_Reference_Counted_Event_Handler_Test: !OpenVMS_IA64Crash
+MT_Reference_Counted_Event_Handler_Test: !OpenVMS_IA64Crash !LynxOS
+MT_Reference_Counted_Event_Handler_Test -b 0: LynxOS
+MT_Reference_Counted_Event_Handler_Test -a 0: LynxOS
 MT_Reference_Counted_Notify_Test
 MT_SOCK_Test: !LynxOS
 Malloc_Test: !VxWorks !LynxOS !ACE_FOR_TAO !PHARLAP
 Map_Manager_Test: !ACE_FOR_TAO
 Map_Test: !ACE_FOR_TAO
 Max_Default_Port_Test: !ST
-Mem_Map_Test: !VxWorks !nsk !ACE_FOR_TAO
+Mem_Map_Test: !VxWorks !nsk !ACE_FOR_TAO !LynxOS
 Memcpy_Test: !ACE_FOR_TAO
 Message_Block_Large_Copy_Test
 Message_Block_Test: !ACE_FOR_TAO
@@ -245,7 +247,7 @@ Thread_Mutex_Test
 Thread_Pool_Reactor_Resume_Test: !NO_OTHER !ST
 Thread_Pool_Reactor_Test: !NO_OTHER
 Thread_Pool_Test
-Thread_Creation_Threshold_Test
+Thread_Creation_Threshold_Test: !LynxOS
 Time_Service_Test: !STATIC !DISABLED !missing_netsvcs TOKEN
 Time_Value_Test
 Timeprobe_Test

@@ -54,6 +54,7 @@
 #  else
 #    include "ace/Process_Mutex.h"
      typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
+#    define CLEANUP_PROCESS_MUTEX
 #  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 #endif /* ACE_LACKS_FORK */
 
@@ -1042,7 +1043,6 @@ server (void *arg)
 
 // Spawn threads and run the client and server.
 
-static
 int
 spawn_threads (ACCEPTOR *acceptor,
                ACE_INET_Addr *server_addr)
@@ -1103,7 +1103,9 @@ run_main (int , ACE_TCHAR *[])
   int status = 0;
 #if defined (ACE_HAS_THREADS)
 # if !defined (ACE_WIN32) || ((defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) || !defined (ACE_LACKS_SEND))
-  // Acceptor
+
+# ifndef ACE_LACKS_ACCEPT
+
   ACCEPTOR acceptor;
   ACE_INET_Addr server_addr;
 
@@ -1132,6 +1134,11 @@ run_main (int , ACE_TCHAR *[])
   if (!client_complete || !server_complete)
     status = 1;
 
+#  ifdef CLEANUP_PROCESS_MUTEX
+  ACE_Process_Mutex::unlink (acceptor.acceptor ().lock ().name ());
+#  endif
+
+# endif // ACE_LACKS_ACCEPT
 # endif /* ACE_HAS_WINSOCK2 && (ACE_HAS_WINSOCK2 != 0)) || !ACE_LACKS_SEND */
 #else  /* !ACE_HAS_THREADS */
   ACE_ERROR ((LM_INFO,

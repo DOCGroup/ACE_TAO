@@ -438,6 +438,9 @@ public:
   /// Destroys all nodes and sets the root pointer null.
   void clear (void);
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 protected:
   /// Reinitialize constructor.
   /**

@@ -187,6 +187,18 @@ sub GetConfigSettings ($)
         $self->{dance_root} = "$self->{tao_root}/DAnCE";
     }
 
+    $env_name = $env_prefix.'TEST_ROOT';
+    if (exists $ENV{$env_name}) {
+      $self->{TEST_ROOT} = $ENV{$env_name};
+    } else {
+      $self->{TEST_ROOT} = $self->{ACE_ROOT};
+    }
+
+    $env_name = $env_prefix.'TEST_FSROOT';
+    if (exists $ENV{$env_name}) {
+      $self->{TEST_FSROOT} = $ENV{$env_name};
+    }
+
     if ($fs_root ne $tgt_fs_root) {
       $self->{HOST_FSROOT} = dirname ($fs_root);
       $self->{TARGET_FSROOT} = dirname ($tgt_fs_root);
@@ -449,6 +461,7 @@ sub LocalEnvDir ($)
     return $newdir;
 }
 
+# Convert a file in current directory to be local to the target
 sub LocalFile ($)
 {
     my $self = shift;

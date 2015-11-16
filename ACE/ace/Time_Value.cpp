@@ -1,5 +1,9 @@
 #include "ace/Time_Value.h"
 
+#if defined (ACE_HAS_ALLOC_HOOKS)
+# include "ace/Malloc_Base.h"
+#endif /* ACE_HAS_ALLOC_HOOKS */
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
@@ -341,9 +345,9 @@ ostream &operator<<(ostream &o, const ACE_Time_Value &v)
       o << tv->tv_sec;
       if (tv->tv_usec)
 #ifdef ACE_HAS_CPP11
-        o << '.' << std::setw (6) << std::abs (tv->tv_usec);
+        o << '.' << std::setw (6) << std::labs (tv->tv_usec);
 #else
-        o << '.' << std::setw (6) << ACE_STD_NAMESPACE::abs (tv->tv_usec);
+        o << '.' << std::setw (6) << ACE_STD_NAMESPACE::labs (tv->tv_usec);
 #endif
     }
   else if (tv->tv_usec < 0)

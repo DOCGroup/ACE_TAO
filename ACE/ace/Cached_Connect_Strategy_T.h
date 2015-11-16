@@ -102,6 +102,9 @@ public:
   // = Accessor.
   CACHING_STRATEGY &caching_strategy (void);
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 protected:
 
   /// Find an idle handle.
@@ -222,11 +225,11 @@ public:
                                        MUTEX *lock = 0,
                                        int delete_lock = 0);
 
-   /// Destructor
-   virtual ~ACE_Bounded_Cached_Connect_Strategy (void);
+  /// Destructor
+  virtual ~ACE_Bounded_Cached_Connect_Strategy (void);
 
-   /// Declare the dynamic allocation hooks.
-   ACE_ALLOC_HOOK_DECLARE;
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
 
 protected:
 

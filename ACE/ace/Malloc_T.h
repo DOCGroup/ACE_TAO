@@ -51,6 +51,8 @@ public:
   /// Set the next ACE_Cached_Mem_Pool_Node.
   void set_next (ACE_Cached_Mem_Pool_Node<T> *ptr);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   /**
    * Since memory is not used when placed in a free list,
@@ -118,6 +120,8 @@ public:
 
   /// Return the number of chunks available in the cache.
   size_t pool_depth (void);
+
+  ACE_ALLOC_HOOK_DECLARE;
 
 private:
   /// Remember how we allocate the memory in the first place so
@@ -343,6 +347,8 @@ public:
 
   /// Dump the state of the object.
   virtual void dump (void) const;
+
+  ACE_ALLOC_HOOK_DECLARE;
 
 private:
   /// ALLOCATOR instance, which is owned by the adapter.

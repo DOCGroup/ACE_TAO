@@ -44,7 +44,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
   while ((*wtemp) != 0) // Hopefully the string is null terminated!
     ++wtemp;
 
-  int const len = wtemp - wstr + 1;
+  size_t const len = wtemp - wstr + 1;
 # else  /* ACE_WIN32 */
   size_t const len = ::wcslen (wstr) + 1;
 # endif /* ACE_WIN32 */

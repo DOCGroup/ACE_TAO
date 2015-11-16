@@ -1515,7 +1515,11 @@ ACE_OutputCDR::append_string (ACE_InputCDR &stream)
   ACE_CDR::Char *x = 0;
   ACE_CDR::Boolean const flag =
     (stream.read_string (x) ? this->write_string (x) : false);
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance()->free(x);
+#else
   delete [] x;
+#endif /* ACE_HAS_ALLOC_HOOKS */
   return flag;
 }
 
@@ -1525,7 +1529,11 @@ ACE_OutputCDR::append_wstring (ACE_InputCDR &stream)
   ACE_CDR::WChar *x = 0;
   ACE_CDR::Boolean const flag =
     (stream.read_wstring (x) ? this->write_wstring (x) : false);
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance()->free(x);
+#else
   delete [] x;
+#endif /* ACE_HAS_ALLOC_HOOKS */
   return flag;
 }
 

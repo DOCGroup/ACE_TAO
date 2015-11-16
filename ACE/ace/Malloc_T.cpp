@@ -35,8 +35,13 @@ ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
   // previous versions of ACE
   size_t chunk_size = sizeof (T);
   chunk_size = ACE_MALLOC_ROUNDUP (chunk_size, ACE_MALLOC_ALIGN);
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_ALLOCATOR (this->pool_,
+                 static_cast<char*>(ACE_Allocator::instance()->malloc(sizeof(char) * n_chunks * chunk_size)));
+#else
   ACE_NEW (this->pool_,
            char[n_chunks * chunk_size]);
+#endif /* ACE_HAS_ALLOC_HOOKS */
 
   for (size_t c = 0;
        c < n_chunks;
@@ -52,8 +57,14 @@ ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
 template <class T, class ACE_LOCK>
 ACE_Cached_Allocator<T, ACE_LOCK>::~ACE_Cached_Allocator (void)
 {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance()->free (this->pool_);
+#else
   delete [] this->pool_;
+#endif /* ACE_HAS_ALLOC_HOOKS */
 }
+
+ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Cached_Allocator)
 
 template <class T, class ACE_LOCK> void *
 ACE_Cached_Allocator<T, ACE_LOCK>::malloc (size_t nbytes)
@@ -170,7 +181,7 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
     this->free_list_.add ((ACE_Cached_Mem_Pool_Node<char> *) ptr);
 }
 
-ACE_ALLOC_HOOK_DEFINE (ACE_Malloc_T)
+ACE_ALLOC_HOOK_DEFINE_Tmcc (ACE_Malloc_T)
 
 template <class MALLOC> void *
 ACE_Allocator_Adapter<MALLOC>::malloc (size_t nbytes)
@@ -354,6 +365,8 @@ ACE_Allocator_Adapter<MALLOC>::dump (void) const
   this->allocator_.dump ();
 #endif /* ACE_HAS_DUMP */
 }
+
+ACE_ALLOC_HOOK_DEFINE_Tt(ACE_Allocator_Adapter)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const

@@ -17,8 +17,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
 
-
-
 /*
  * The Decrypter service is static and is configured into a stream
  * dynamically.
@@ -78,6 +76,8 @@ public:
         M_DELETE_NONE) // Tasks are members; don't delete
   {}
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   Static_Task writer_;
   Static_Task reader_;
@@ -93,6 +93,7 @@ ACE_STATIC_SVC_DEFINE (Decrypter_Descriptor,
                        1)
 ACE_STATIC_SVC_REQUIRE (Decrypter_Descriptor)
 
+ACE_ALLOC_HOOK_DEFINE(Decrypter);
 
 int
 run_main (int, ACE_TCHAR *argv[])

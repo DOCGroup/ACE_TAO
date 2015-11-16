@@ -27,6 +27,7 @@ const int SEC_TO_KEEP_SOCKET_OPEN = 2;
 
 int reuseAddr_test (void)
 {
+# if defined ACE_WIN32 || !defined ACE_LACKS_IOCTL
   ACE_SOCK_Dgram_Bcast sock1;
   if (sock1.open(ACE_INET_Addr(UDP_PORT),PF_INET,0,1) != 0)
   {
@@ -42,6 +43,7 @@ int reuseAddr_test (void)
 
     sock1.close();
   }
+# endif
   return result;
 }
 

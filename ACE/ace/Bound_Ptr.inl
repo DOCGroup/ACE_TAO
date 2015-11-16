@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// Bound_Ptr.i
-
 #include "ace/Guard_T.h"
 #if !defined (ACE_NEW_THROWS_EXCEPTIONS)
 #  include "ace/Log_Category.h"

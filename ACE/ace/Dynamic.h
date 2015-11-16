@@ -54,6 +54,8 @@ public:
 
   static ACE_Dynamic *instance (void);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   /**
    * Flag that indicates that the object was dynamically created. This
