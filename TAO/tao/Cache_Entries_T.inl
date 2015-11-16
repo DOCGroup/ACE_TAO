@@ -127,7 +127,10 @@ namespace TAO
     if (this != &rhs)
       {
         if (this->is_delete_)
-          delete this->transport_property_;
+          {
+            delete this->transport_property_;
+            this->transport_property_ = 0;
+          }
 
         // Do a deep copy
         this->transport_property_ =
