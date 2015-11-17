@@ -726,7 +726,7 @@ public:
   template <size_t N>
   void to_string (char (&thr_string)[N]) const
   {
-    return this->to_string (thr_string, N);
+    this->to_string (thr_string, N);
   }
 
   /// Equality operator.
