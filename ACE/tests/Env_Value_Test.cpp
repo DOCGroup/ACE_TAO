@@ -29,14 +29,12 @@ do { \
 } while (0)
 
 int
-// This has been unconditionally turned on for the time being since I can't
-// figure out an easy way to enable it and still keep ACE_TMAIN in a separate
-// cpp.
-#if 1 || defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) || defined (ACE_LACKS_FORK)
-// ACE_HAS_NONSTATIC_OBJECT_MANAGER only allows main to have two
-// arguments.  And on platforms that lack fork (), we can't use spawn.
 run_main (int, ACE_TCHAR* [])
 {
+#ifdef ACE_LACKS_PUTENV
+    ACE_START_TEST (ACE_TEXT ("Env_Value_Test"));
+    ACE_END_TEST;
+#else
   // Only Win32 can set wide-char environment strings. So, for all
   // others, use char string literals regardless of ACE_USES_WCHAR.
 #  if defined (ACE_WIN32)
@@ -46,50 +44,7 @@ run_main (int, ACE_TCHAR* [])
   ACE_OS::putenv ("TEST_VALUE_POSITIVE=10.2");
   ACE_OS::putenv ("TEST_VALUE_NEGATIVE=-10.2");
 #  endif /* ACE_WIN32 */
-#else  /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER  &&  ! ACE_LACKS_FORK */
-run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
-{
-  if (argc == 1)
     {
-      int status;
-
-      // No arguments means we're the initial test.
-      ACE_Process_Options options (1);
-      status = options.setenv (envp);
-      if (status != 0)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("setenv(envp)")));
-
-      options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
-                            ACE_TEXT ("Env_Value_Test run_as_test"));
-
-      status = options.setenv (ACE_TEXT ("TEST_VALUE_POSITIVE"),
-                               ACE_TEXT ("%s"),
-                               ACE_TEXT ("10.2"));
-      if (status != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("setenv(TEST_VALUE_POSITIVE)")));
-
-      status = options.setenv (ACE_TEXT ("TEST_VALUE_NEGATIVE"),
-                               ACE_TEXT ("%s"),
-                               ACE_TEXT ("-10.2"));
-      if (status != 0)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("setenv(TEST_VALUE_NEGATIVE)")));
-
-      ACE_Process p;
-      pid_t result = p.spawn (options);
-      if (result == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")));
-      else
-        p.wait ();
-    }
-  else
-#endif /* ! ACE_HAS_NONSTATIC_OBJECT_MANAGER  &&  ! ACE_LACKS_FORK */
-    {
-      // In this case we're the child
-
     ACE_START_TEST (ACE_TEXT ("Env_Value_Test"));
 
       TEST_THIS (int, ACE_TEXT ("TEST_VALUE_POSITIVE"), 4, 10);
@@ -115,6 +70,7 @@ run_main (int argc, ACE_TCHAR * [], ACE_TCHAR *envp[])
                     (const ACE_TCHAR *)sval, defstr));
       ACE_END_TEST;
     }
+#endif // ACE_LACKS_PUTENV
   return 0;
 }
 

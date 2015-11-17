@@ -139,6 +139,8 @@ public:
    */
   ACE_SHLIB_HANDLE get_handle (bool become_owner = false);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
 
   /// Returns a string explaining why <symbol> or <open>
@@ -246,6 +248,8 @@ public:
   /// LAZY to EAGER, then it will also unload any dlls with zero
   /// refcounts.
   void unload_policy (u_long unload_policy);
+
+  ACE_ALLOC_HOOK_DECLARE;
 
 protected:
 

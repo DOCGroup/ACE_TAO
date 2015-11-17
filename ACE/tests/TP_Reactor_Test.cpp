@@ -320,11 +320,11 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
+  ACE_OS::snprintf (bufs, 256, ACE_TEXT ("%ld(%ld)"),
                     rcvr.get_total_snd (),
-                    rcvr.get_total_w () );
+                    rcvr.get_total_w ());
 
-  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
+  ACE_OS::snprintf (bufr, 256, ACE_TEXT ("%ld(%ld)"),
                     rcvr.get_total_rcv (),
                     rcvr.get_total_r ());
 
@@ -679,13 +679,13 @@ Connector::on_delete_sender (Sender & sndr)
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
-                    sndr.get_total_snd(),
-                    sndr.get_total_w() );
+  ACE_OS::snprintf (bufs, 256, ACE_TEXT ("%ld(%ld)"),
+                    sndr.get_total_snd (),
+                    sndr.get_total_w ());
 
-  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
-                    sndr.get_total_rcv(),
-                    sndr.get_total_r() );
+  ACE_OS::snprintf (bufr, 256, ACE_TEXT ("%ld(%ld)"),
+                    sndr.get_total_rcv (),
+                    sndr.get_total_r ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Sender::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
@@ -759,7 +759,7 @@ Sender::Sender (Connector* connector, size_t index)
   if (connector_ != 0)
     connector_->on_new_sender (*this);
 
-  ACE_OS::sprintf (send_buf_, "%s", data);
+  ACE_OS::snprintf (send_buf_, 1024, "%s", data);
 }
 
 
@@ -1044,14 +1044,14 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
   return -1;
 }
 
-static int
+int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   if (argc == 1) // no arguments , so one button test
     {
       both = 1;               // client and server simultaneosly
       duplex = 1;             // full duplex is on
-      host = ACE_TEXT ("localhost");      // server to connect
+      host = ACE_LOCALHOST;   // server to connect
       port = ACE_DEFAULT_SERVER_PORT; // port to connect/listen
       threads = 3;            // size of Proactor thread pool
       senders = 20;           // number of senders
@@ -1150,7 +1150,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("TP_Reactor_Test"));
 
-#if defined(ACE_HAS_THREADS)
+#if defined(ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
   if (::parse_args (argc, argv) == -1)
     return -1;
 
@@ -1201,13 +1201,13 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
-                    connector.get_total_snd(),
-                    connector.get_total_w() );
+  ACE_OS::snprintf (bufs, 256, ACE_TEXT ("%ld(%ld)"),
+                    connector.get_total_snd (),
+                    connector.get_total_w ());
 
-  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
-                    connector.get_total_rcv(),
-                    connector.get_total_r() );
+  ACE_OS::snprintf (bufr, 256, ACE_TEXT ("%ld(%ld)"),
+                    connector.get_total_rcv (),
+                    connector.get_total_r ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Connector/Senders  total bytes: snd=%s rcv=%s\n"),
@@ -1215,13 +1215,13 @@ run_main (int argc, ACE_TCHAR *argv[])
               bufr
             ));
 
-  ACE_OS::sprintf ( bufs , ACE_TEXT ("%ld(%ld)"),
-                    acceptor.get_total_snd(),
-                    acceptor.get_total_w() );
+  ACE_OS::snprintf (bufs, 256, ACE_TEXT ("%ld(%ld)"),
+                    acceptor.get_total_snd (),
+                    acceptor.get_total_w ());
 
-  ACE_OS::sprintf ( bufr , ACE_TEXT ("%ld(%ld)"),
-                    acceptor.get_total_rcv(),
-                    acceptor.get_total_r() );
+  ACE_OS::snprintf (bufr, 256, ACE_TEXT ("%ld(%ld)"),
+                    acceptor.get_total_rcv (),
+                    acceptor.get_total_r ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Acceptor/Receivers total bytes: snd=%s rcv=%s\n"),

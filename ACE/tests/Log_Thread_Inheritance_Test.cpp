@@ -10,6 +10,8 @@
 #if !defined (ACE_HAS_THREADS) || defined (ACE_LACKS_IOSTREAM_TOTALLY)
 int run_main (int, ACE_TCHAR *[])
 {
+  ACE_START_TEST (ACE_TEXT ("Log_Thread_Inheritance_Test"));
+  ACE_END_TEST;
   return 0;
 }
 #else

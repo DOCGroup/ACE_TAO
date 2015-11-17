@@ -99,6 +99,8 @@ public:
   /// Resizes the free list to @a newsize.
   virtual void resize (size_t newsize);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 protected:
   /// Allocates @a n extra nodes for the freelist.
   virtual void alloc (size_t n);

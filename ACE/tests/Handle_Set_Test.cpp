@@ -29,12 +29,12 @@ test_duplicates (size_t count)
 
   ACE_Handle_Set handle_set;
 
-  ACE_OS::srand ((u_int) ACE_OS::time (0L));
+  u_int seed = (u_int) ACE_OS::time (0);
 
   for (size_t i = 0; i < count; i++)
     {
       size_t handle =
-        static_cast<size_t> (ACE_OS::rand () % ACE_Handle_Set::MAXSIZE);
+        static_cast<size_t> (ACE_OS::rand_r (&seed) % ACE_Handle_Set::MAXSIZE);
 
       if (ACE_ODD (handle))
         {

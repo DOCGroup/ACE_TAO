@@ -102,33 +102,33 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   if (my_process_id == 1)
     {
       opts.creation_flags (ABOVE_NORMAL_PRIORITY_CLASS);
-      ACE_OS::sprintf (prio, ACE_TEXT("and priority 'above normal'"));
+      ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'above normal'"));
     }
   else if (my_process_id == 2)
     {
       opts.creation_flags (BELOW_NORMAL_PRIORITY_CLASS);
-      ACE_OS::sprintf (prio, ACE_TEXT("and priority 'below normal'"));
+      ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'below normal'"));
     }
   else if (my_process_id == 3)
     {
       opts.creation_flags (IDLE_PRIORITY_CLASS);
-      ACE_OS::sprintf (prio, ACE_TEXT("and priority 'idle'"));
+      ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'idle'"));
     }
   else if (my_process_id == 4)
     {
       opts.creation_flags (HIGH_PRIORITY_CLASS);
-      ACE_OS::sprintf (prio, ACE_TEXT("and priority 'high'"));
+      ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'high'"));
     }
   else if (my_process_id == 5)
     {
       opts.creation_flags (NORMAL_PRIORITY_CLASS);
-      ACE_OS::sprintf (prio, ACE_TEXT("and priority 'normal'"));
+      ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'normal'"));
     }
   else
     prio[0] = ACE_TEXT ('\0');
 
   ACE_TCHAR pd [16];
-  ACE_OS::sprintf (pd, ACE_TEXT (" -p %d"), my_process_id);
+  ACE_OS::snprintf (pd, 16, ACE_TEXT (" -p %d"), my_process_id);
   ACE_OS::strcat (cmd, pd);
 #else
   ACE_UNUSED_ARG (my_process_id);
@@ -136,12 +136,16 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
 #endif
 
   opts.process_name (argv0);
+#ifndef ACE_LACKS_VA_FUNCTIONS
   opts.command_line (cmdline_format,
 #if !defined (ACE_HAS_WINCE)
                      argv0,
 #endif /* !ACE_HAS_WINCE */
                      cmd,
                      sleep_time);
+#else
+  ACE_UNUSED_ARG (cmdline_format);
+#endif /* ACE_LACKS_VA_FUNCTIONS */
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Spawning <%s> <%s>\n"),
                         opts.process_name(),
@@ -228,6 +232,7 @@ private:
   int sleep_time_;
 };
 
+#ifdef ACE_HAS_PROCESS_SPAWN
 static int
 command_line_test (void)
 {
@@ -237,7 +242,11 @@ command_line_test (void)
   const ACE_TCHAR *command = ACE_TEXT ("test Hello");
   size_t command_len = ACE_OS::strlen (command);
   ACE_Process_Options options (1, command_len + 1);
+
+#ifndef ACE_LACKS_VA_FUNCTIONS
   options.command_line (command);
+#endif
+
   ACE_TCHAR * const *procargv = options.command_line_argv ();
   if (ACE_OS::strcmp (procargv [1], ACE_TEXT ("Hello")) != 0)
     {
@@ -249,6 +258,7 @@ command_line_test (void)
     }
   return result;
 }
+#endif
 
 #if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
 void
@@ -299,7 +309,8 @@ run_main (int argc, ACE_TCHAR *argv[])
       // child process: sleep & exit
       ACE_TCHAR lognm[MAXPATHLEN];
       int const mypid (ACE_OS::getpid ());
-      ACE_OS::sprintf(lognm, ACE_TEXT ("Process_Manager_Test-child-%d"), mypid);
+      ACE_OS::snprintf (lognm, MAXPATHLEN,
+                        ACE_TEXT ("Process_Manager_Test-child-%d"), mypid);
 
       ACE_START_TEST (lognm);
       int const secs = ACE_OS::atoi (argv[get_opt.opt_ind ()]);
@@ -312,17 +323,17 @@ run_main (int argc, ACE_TCHAR *argv[])
       check_process_priority(priority);
 
       if (priority == ABOVE_NORMAL_PRIORITY_CLASS)
-        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'above normal'"));
+        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'above normal'"));
       else if (priority == BELOW_NORMAL_PRIORITY_CLASS)
-        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'below normal'"));
+        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'below normal'"));
       else if (priority == HIGH_PRIORITY_CLASS)
-        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'high'"));
+        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'high'"));
       else if (priority == IDLE_PRIORITY_CLASS)
-        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'idle'"));
+        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'idle'"));
       else if (priority == NORMAL_PRIORITY_CLASS)
-        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'normal'"));
+        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'normal'"));
       else if (priority == REALTIME_PRIORITY_CLASS)
-        ACE_OS::sprintf (prio, ACE_TEXT("and priority 'realtime'"));
+        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'realtime'"));
 #else
       prio[0] = ACE_TEXT ('\0');
 #endif
@@ -341,9 +352,11 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_START_TEST (ACE_TEXT ("Process_Manager_Test"));
 
-  int result = 0;
   int test_status = 0;
 
+#ifdef ACE_HAS_PROCESS_SPAWN
+
+  int result = 0;
   if ((result = command_line_test ()) != 0)
     test_status = result;
 
@@ -566,7 +579,8 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 #endif /* ACE_HAS_THREADS */
 
-#if !defined (ACE_OPENVMS)
+#if !defined (ACE_OPENVMS) && \
+  (defined ACE_WIN32 || !defined ACE_LACKS_UNIX_SIGNALS)
   // --------------------------------------------------
   // Finally, try the reactor stuff...
   mgr.open (ACE_Process_Manager::DEFAULT_SIZE,
@@ -597,7 +611,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("(%P) %d processes left in manager\n"),
                 nr_procs));
 #endif /* !defined (ACE_OPENVMS) */
+#endif // ACE_HAS_PROCESS_SPAWN
   ACE_END_TEST;
   return test_status;
 }
-

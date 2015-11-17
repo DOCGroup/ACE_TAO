@@ -575,13 +575,13 @@ TestData::report (void)
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
 
-  ACE_OS::sprintf (bufs,
+  ACE_OS::snprintf (bufs, 256,
                    ACE_SIZE_T_FORMAT_SPECIFIER
                    ACE_TEXT ("(") ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT (")"),
                    this->clients_.w_cnt_.value (),
                    this->clients_.w_ops_.value ());
 
-  ACE_OS::sprintf (bufr,
+  ACE_OS::snprintf (bufr, 256,
                    ACE_SIZE_T_FORMAT_SPECIFIER
                    ACE_TEXT ("(") ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT (")"),
                    this->clients_.r_cnt_.value (),
@@ -592,13 +592,13 @@ TestData::report (void)
               bufs,
               bufr));
 
-  ACE_OS::sprintf (bufs,
+  ACE_OS::snprintf (bufs, 256,
                    ACE_SIZE_T_FORMAT_SPECIFIER
                    ACE_TEXT ("(") ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT (")"),
                    this->servers_.w_cnt_.value (),
                    this->servers_.w_ops_.value ());
 
-  ACE_OS::sprintf (bufr,
+  ACE_OS::snprintf (bufr, 256,
                    ACE_SIZE_T_FORMAT_SPECIFIER
                    ACE_TEXT ("(") ACE_SIZE_T_FORMAT_SPECIFIER ACE_TEXT (")"),
                    this->servers_.r_cnt_.value (),

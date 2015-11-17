@@ -38,7 +38,7 @@ static const int NUM_CLIENTS = 30;
 
 #if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
 
-static void *
+void *
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
@@ -144,7 +144,7 @@ client (void *arg)
   return 0;
 }
 
-static void *
+void *
 server (void *arg)
 {
   ACE_SOCK_Acceptor *peer_acceptor =
@@ -188,7 +188,7 @@ server (void *arg)
                           ACE_TEXT ("(%P|%t) server: Test finished.\n")));
               // The meaning of the backlog parameter for listen() varies by
               // platform. For some reason lost to history, the specified value
-              // is typically backlog * 1.5, backlog * 1.5 + 1, or event taken
+              // is typically backlog * 1.5, backlog * 1.5 + 1, or even taken
               // literally as on Windows. We'll accept any number less than
               // backlog * 2 as valid.
               if (num_clients_connected > BACKLOG * 2)
@@ -302,7 +302,7 @@ server (void *arg)
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
 
-static void
+void
 spawn (int num_clients)
 {
   // Acceptor
@@ -335,6 +335,7 @@ spawn (int num_clients)
               // Break out of 'for' loop.
               break;
             case 0:
+              ACE_LOG_MSG->sync (ACE_TEXT ("MT_SOCK_Test-child"));
               client (&server_addr);
               ACE_OS::exit (0);
               /* NOTREACHED */
@@ -348,7 +349,7 @@ spawn (int num_clients)
       peer_acceptor.close();
 
       // Reap the child pids.
-      for (pid_t pid; (pid = ACE_OS::wait ()) != -1; )
+      for (pid_t pid; (pid = ACE_OS::waitpid (0, 0, 0)) != -1; )
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) spawn: reaping pid %d\n"), pid));
 
@@ -400,7 +401,9 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("MT_SOCK_Test"));
 
+#ifndef ACE_LACKS_ACCEPT
   spawn (NUM_CLIENTS);
+#endif
 
   ACE_END_TEST;
   return 0;

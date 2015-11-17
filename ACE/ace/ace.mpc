@@ -134,6 +134,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Netlink_Addr.cpp
     Notification_Strategy.cpp
     Notification_Queue.cpp
+    Null_Mutex.cpp
     Obchunk.cpp
     Object_Manager.cpp
     Object_Manager_Base.cpp
@@ -143,6 +144,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     OS_main.cpp
     OS_NS_arpa_inet.cpp
     OS_NS_ctype.cpp
+    OS_NS_devctl.cpp
     OS_NS_dirent.cpp
     OS_NS_dlfcn.cpp
     OS_NS_errno.cpp
@@ -298,6 +300,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Auto_IncDec_T.cpp
     Auto_Ptr.cpp
     Based_Pointer_T.cpp
+    Bound_Ptr.cpp
     Cache_Map_Manager_T.cpp
     Cached_Connect_Strategy_T.cpp
     Caching_Strategies_T.cpp

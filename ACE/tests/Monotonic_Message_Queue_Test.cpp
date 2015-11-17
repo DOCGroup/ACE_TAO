@@ -288,7 +288,7 @@ timeout_test (void)
     }
   else
     {
-      ACE_Message_Block *b;
+      ACE_Message_Block *b = 0;
       ACE_Time_Value_T<ACE_Monotonic_Time_Policy> tv;
       tv = (tv.now () + ACE_Time_Value (3,0)); // Now (monotonic time) + 3 sec
 

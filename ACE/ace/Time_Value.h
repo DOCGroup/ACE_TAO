@@ -95,6 +95,9 @@ public:
   /// Destructor
   virtual ~ACE_Time_Value ();
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 # if defined (ACE_WIN32)
   /// Construct the ACE_Time_Value object from a Win32 FILETIME
   explicit ACE_Time_Value (const FILETIME &ft);

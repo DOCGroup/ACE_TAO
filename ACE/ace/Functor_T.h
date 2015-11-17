@@ -69,6 +69,8 @@ public:
   /// Invokes the method @c action_ from the object @c receiver_.
   virtual int execute (void *arg = 0);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   /// Object where the method resides.
   RECEIVER &receiver_;

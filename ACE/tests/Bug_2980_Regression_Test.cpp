@@ -1,12 +1,13 @@
 //FUZZ: disable check_for_lack_ACE_OS
 
+#include "ace/config-lite.h"
+
 #include <iostream>
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-#include "ace/config-lite.h"
+#include <string.h>
 
 // This is a non-ACE driver program which loads an ACE-based DLL.  The
 // usual ACE-related defines will not apply and we must use
@@ -20,7 +21,8 @@
 #  undef CAN_USE_THREADS
 #endif
 
-#if  !(defined (WIN32) || defined (ACE_VXWORKS))
+#if !(defined (WIN32) || defined (ACE_VXWORKS) || defined (ACE_HAS_LYNXOS_178))\
+    && !defined ACE_FACE_SAFETY_EXTENDED
 #  define CAN_RUN_TEST
 
 #  include <dlfcn.h>
@@ -62,10 +64,9 @@ static voidfunction   capi_dosomething = 0;
 extern "C"
 void* loadDll(void*)
 {
-  PRINTF ("loadDll - entered\n");
-
 #if defined (CAN_RUN_TEST)
 
+  PRINTF ("loadDll - entered\n");
   const char *subdir_env = getenv ("ACE_EXE_SUB_DIR");
   if (subdir_env)
     {
@@ -112,24 +113,20 @@ void* loadDll(void*)
     assert(capi_dosomething != 0);
   }
   capi_init();
-#endif /* defined (CAN_RUN_TEST) */
-
   PRINTF ("loadDll - leaving\n");
-
+#endif /* defined (CAN_RUN_TEST) */
   return 0;
 }
 
 extern "C"
 void* unloadDll(void*)
 {
-  PRINTF ("unloadDll - entered\n");
-
 #if defined (CAN_RUN_TEST)
+  PRINTF ("unloadDll - entered\n");
   capi_fini();
   dlclose(dllHandle);
-#endif /* defined (CAN_RUN_TEST) */
-
   PRINTF ("unloadDll - leaving\n");
+#endif /* defined (CAN_RUN_TEST) */
   return 0;
 }
 
@@ -149,15 +146,13 @@ void * loadunloadDll(void *pp)
 // FUZZ: disable check_for_improper_main_declaration
 int main (int, char *[])
 {
-  PRINTF ("main called\n");
-
 #if !defined (CAN_RUN_TEST)
-
+# ifndef ACE_FACE_SAFETY_EXTENDED
   PRINTF ("Terminating because this test has not been designed "
           "to run on WIN32 or VXWORKS.\n");
-
+# endif
 #else
-
+  PRINTF ("main called\n");
   PRINTF ("main - calling loadDll\n");
 
 #  if defined (CAN_USE_THREADS)
@@ -200,9 +195,9 @@ int main (int, char *[])
 
 #  endif /* defined (CAN_USE_THREADS) */
 
+  PRINTF ("main finished\n");
 #endif /* defined (CAN_RUN_TEST) */
 
-  PRINTF ("main finished\n");
   return 0;
 
 }

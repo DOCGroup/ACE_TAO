@@ -99,7 +99,7 @@ My_Accept_Handler::port ()
 
 long max_connected_port = 0;
 
-static void *
+void *
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
@@ -169,6 +169,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);
+
+#ifndef ACE_LACKS_ACCEPT
 
   u_short max_listened_port = 0;
 
@@ -288,6 +290,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     }
 
+#endif // ACE_LACKS_ACCEPT
   ACE_END_TEST;
   return 0;
 }

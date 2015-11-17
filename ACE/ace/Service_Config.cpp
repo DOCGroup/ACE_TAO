@@ -22,6 +22,9 @@
 #include "ace/Log_Category.h"
 #include "ace/ACE.h"
 
+#ifdef ACE_HAS_TSS_EMULATION
+#include "ace/Object_Manager.h"
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

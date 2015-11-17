@@ -202,7 +202,12 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("Thus, the test is disabled in this case\n")));
 
 #else
-  int max_notifications = 512 * 1024;
+
+# ifdef ACE_LYNXOS_MAJOR
+  const int max_notifications = 512;
+# else
+  const int max_notifications = 512 * 1024;
+# endif
 
   {
     ACE_Reactor select_reactor (

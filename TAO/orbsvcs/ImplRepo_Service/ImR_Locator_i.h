@@ -163,6 +163,7 @@ public:
   PortableServer::POA_ptr root_poa (void);
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
+  void destroy_poa (const ACE_CString &poa_name);
   void remove_aam (AsyncAccessManager_ptr &aam);
   void remove_aam (const char *name);
   AsyncAccessManager *find_aam (const char *name);
@@ -195,6 +196,8 @@ private:
   void connect_server (UpdateableServerInfo& info);
 
   PortableServer::POA_ptr findPOA (const char* name);
+
+  void child_death_i (const char* name, pid_t pid);
 
 private:
 

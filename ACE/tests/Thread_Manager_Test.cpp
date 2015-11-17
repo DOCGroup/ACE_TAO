@@ -292,12 +292,8 @@ run_main (int, ACE_TCHAR *[])
     {
       if (i < n_threads - 1)
         {
-          ACE_NEW_RETURN (thread_name[i],
-                          char[32],
-                          -1);
-          ACE_OS::sprintf (thread_name[i],
-                           ACE_TEXT ("thread%u"),
-                           i);
+          ACE_NEW_RETURN (thread_name[i], char[32], -1);
+          ACE_OS::snprintf (thread_name[i], 32, ACE_TEXT ("thread%u"), i);
         }
       else
         // Pass an ACE_thread_t pointer of 0 for the last thread name.

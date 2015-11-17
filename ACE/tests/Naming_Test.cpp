@@ -23,12 +23,13 @@
 #include "ace/OS_NS_unistd.h"
 
 
+#if !defined ACE_LACKS_FCNTL || defined ACE_WIN32
 
 static char name[BUFSIZ];
 static char value[BUFSIZ];
 static char type[BUFSIZ];
 
-void
+static void
 initialize_array (int * array, int size)
 {
   for (int n = 0; n < size; ++n)
@@ -62,13 +63,13 @@ test_bind (ACE_Naming_Context &ns_context)
   // do the binds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
     {
-      ACE_OS::sprintf (name, "%s%d", "name", array[i]);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
       ACE_NS_WString w_name (name);
 
-      ACE_OS::sprintf (value, "%s%d", "value", array[i]);
+      ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", array[i]);
       ACE_NS_WString w_value (value);
 
-      ACE_OS::sprintf (type, "%s%d", "type", array [i]);
+      ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", array [i]);
       int bind_result = ns_context.bind (w_name, w_value, type);
       ACE_TEST_ASSERT (bind_result != -1);
     }
@@ -77,7 +78,7 @@ test_bind (ACE_Naming_Context &ns_context)
 static void
 test_find_failure (ACE_Naming_Context &ns_context)
 {
-  ACE_OS::sprintf (name, "%s", "foo-bar");
+  ACE_OS::snprintf (name, BUFSIZ, "%s", "foo-bar");
   ACE_NS_WString w_name (name);
   ACE_NS_WString w_value;
   char *l_type = 0;
@@ -101,13 +102,13 @@ test_rebind (ACE_Naming_Context &ns_context)
   // do the rebinds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
     {
-      ACE_OS::sprintf (name, "%s%d", "name", array[i]);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
       ACE_NS_WString w_name (name);
 
-      ACE_OS::sprintf (value, "%s%d", "value", -array[i]);
+      ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", -array[i]);
       ACE_NS_WString w_value (value);
 
-      ACE_OS::sprintf (type, "%s%d", "type", -array[i]);
+      ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", -array[i]);
       int rebind = ns_context.rebind (w_name, w_value, type);
       ACE_TEST_ASSERT (rebind != -1);
     }
@@ -124,7 +125,7 @@ test_unbind (ACE_Naming_Context &ns_context)
   // do the unbinds
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
     {
-      ACE_OS::sprintf (name, "%s%d", "name", array[i]);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
       ACE_NS_WString w_name (name);
       int unbind = ns_context.unbind (w_name);
       ACE_TEST_ASSERT (unbind != -1);
@@ -147,16 +148,16 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
     {
       if (sign == 1)
         {
-          ACE_OS::sprintf (temp_val, "%s%d", "value", array[i]);
-          ACE_OS::sprintf (temp_type, "%s%d", "type", array[i]);
+          ACE_OS::snprintf (temp_val, BUFSIZ, "%s%d", "value", array[i]);
+          ACE_OS::snprintf (temp_type, BUFSIZ, "%s%d", "type", array[i]);
         }
       else
         {
-          ACE_OS::sprintf (temp_val, "%s%d", "value", -array[i]);
-          ACE_OS::sprintf (temp_type, "%s%d", "type", -array[i]);
+          ACE_OS::snprintf (temp_val, BUFSIZ, "%s%d", "value", -array[i]);
+          ACE_OS::snprintf (temp_type, BUFSIZ, "%s%d", "type", -array[i]);
         }
 
-      ACE_OS::sprintf (name, "%s%d", "name", array[i]);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
 
       ACE_NS_WString w_name (name);
       ACE_NS_WString w_value;
@@ -195,12 +196,16 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
       delete[] l_value;
     }
 }
-
+#endif
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Naming_Test"));
+#if defined ACE_LACKS_FCNTL && !defined ACE_WIN32
+  ACE_UNUSED_ARG (argc);
+  ACE_UNUSED_ARG (argv);
+#else
   ACE_TCHAR temp_file [BUFSIZ];
   ACE_Naming_Context *ns_context = 0;
   ACE_NEW_RETURN (ns_context, ACE_Naming_Context, -1);
@@ -220,11 +225,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   */
 # if defined (ACE_LINUX) && defined (__x86_64__)
   name_options->base_address ((char*)0x3c00000000);
-#endif
+# endif
   bool unicode = false;
-#if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
+# if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
   unicode = true;
-#endif /* ACE_WIN32 && ACE_USES_WCHAR */
+# endif /* ACE_WIN32 && ACE_USES_WCHAR */
   if (unicode && name_options->use_registry () == 1)
     {
       name_options->namespace_dir (ACE_TEXT ("Software\\ACE\\Name Service"));
@@ -307,10 +312,10 @@ run_main (int argc, ACE_TCHAR *argv[])
   test_unbind (*ns_context);
   print_time (timer, "Unbinds");
 
-  ACE_OS::sprintf (temp_file, ACE_TEXT ("%s%s%s"),
-                   name_options->namespace_dir (),
-                   ACE_DIRECTORY_SEPARATOR_STR,
-                   name_options->database ());
+  ACE_OS::snprintf (temp_file, BUFSIZ, ACE_TEXT ("%s%s%s"),
+                    name_options->namespace_dir (),
+                    ACE_DIRECTORY_SEPARATOR_STR,
+                    name_options->database ());
 
   delete ns_context;
 
@@ -318,6 +323,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // since we don't care if the file doesn't exist.
   ACE_OS::unlink (temp_file);
 
+#endif // !defined ACE_LACKS_FCNTL || defined ACE_WIN32
   ACE_END_TEST;
   return 0;
 }

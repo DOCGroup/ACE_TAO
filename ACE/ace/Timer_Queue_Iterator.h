@@ -121,6 +121,9 @@ public:
   /// Dump the state of an TYPE.
   void dump (void) const;
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   /// Type of object stored in the Queue
   TYPE type_;

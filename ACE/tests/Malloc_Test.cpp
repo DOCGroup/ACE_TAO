@@ -392,6 +392,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                            ACE_TEXT ("wait")), 1);
       ACE_TEST_ASSERT (myalloc->ref_counter () == 1);
       myalloc->remove ();
+      ACE_Process_Mutex::unlink (MUTEX_NAME);
       ACE_END_TEST;
       return 0;
     }
