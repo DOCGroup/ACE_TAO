@@ -501,8 +501,9 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
 
 #ifdef ACE_LACKS_WCHAR_H
   typedef int wint_t;
-#else
+#elif !defined ACE_LACKS_WCHAR_STD_NAMESPACE
   using std::wint_t;
+  using std::wcsrtombs;
 #endif
 
 namespace { // helpers for vsnprintf_emulation
@@ -997,11 +998,11 @@ namespace { // helpers for vsnprintf_emulation
                       flags, width, precision);
 #else
       std::mbstate_t mbstate = std::mbstate_t ();
-      const size_t n = 1 + std::wcsrtombs (0, &str, 0, &mbstate);
+      const size_t n = 1 + wcsrtombs (0, &str, 0, &mbstate);
       char *buf = static_cast<char *> (ACE_Allocator::instance ()->malloc (n));
       if (buf)
         {
-          std::wcsrtombs (buf, &str, n, &mbstate);
+          wcsrtombs (buf, &str, n, &mbstate);
           this->conv_str (buf, flags, width, precision);
         }
       ACE_Allocator::instance ()->free (buf);
