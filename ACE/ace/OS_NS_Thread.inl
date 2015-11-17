@@ -1185,6 +1185,11 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_trywrlock (rw),
                                        result),
                      int, -1);
+# elif !defined (ACE_LACKS_RWLOCK_T)
+  // Some native rwlocks, such as those on Solaris, don't
+  // support the upgrade feature . . .
+  ACE_UNUSED_ARG (rw);
+  ACE_NOTSUP_RETURN (-1);
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   // The ACE rwlock emulation does support upgrade . . .
   int result = 0;
