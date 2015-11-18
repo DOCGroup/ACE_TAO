@@ -14,11 +14,10 @@ ifeq ($(IPHONE_TARGET), SIMULATOR)
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneSimulator${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=i386
 
-  # crt1.10.7.o is missing under MacOSX 10.7, fallback to 10.6
-  # until apple provides the missing crt1.10.7.o
-  CFLAGS  += -mmacosx-version-min=10.6
-  CCFLAGS += -mmacosx-version-min=10.6
-  LDFLAGS += -mmacosx-version-min=10.6
+  CFLAGS  += -mios-simulator-version-min=7.0
+  CCFLAGS += -mios-simulator-version-min=7.0
+  LDFLAGS += -mios-simulator-version-min=7.0
+
 endif
 
 ifeq ($(IPHONE_TARGET), HARDWARE)
@@ -26,6 +25,11 @@ ifeq ($(IPHONE_TARGET), HARDWARE)
   IPHONE_PLATFORM:=$(XCODE)/Contents/Developer/Platforms/iPhoneOS.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneOS${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=armv7
+
+  CFLAGS  += -miphoneos-version-min=7.0
+  CCFLAGS += -miphoneos-version-min=7.0
+  LDFLAGS += -miphoneos-version-min=7.0
+
 ifeq ($(iphone_codesign),1)
   CODESIGN_ALLOCATE:=$(IPHONE_PLATFORM)/usr/bin/codesign_allocate
   POSTLINK=; codesign -f -s "iPhone Developer" $(BIN)
@@ -35,12 +39,12 @@ endif
 
 CC:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-AR:=$(IPHONE_PLATFORM)/usr/bin/ar
-RANLIB:=$(IPHONE_PLATFORM)/usr/bin/ranlib
+AR:=/usr/bin/ar
+RANLIB:=/usr/bin/ranlib
 DLD = $(CXX)
 LD  = $(CXX)
-CFLAGS  += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK)
-CCFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK)
+CFLAGS  += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK) -DENABLE_BITCODE
+CCFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK) -DENABLE_BITCODE
 
 ifneq (,$(HOST_ROOT))
   TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
