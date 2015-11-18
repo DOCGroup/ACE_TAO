@@ -43,8 +43,8 @@ AR:=/usr/bin/ar
 RANLIB:=/usr/bin/ranlib
 DLD = $(CXX)
 LD  = $(CXX)
-CFLAGS  += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK) -DENABLE_BITCODE
-CCFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK) -DENABLE_BITCODE
+CFLAGS  += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK) -fembed-bitcode
+CCFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK) -fembed-bitcode
 
 ifneq (,$(HOST_ROOT))
   TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
