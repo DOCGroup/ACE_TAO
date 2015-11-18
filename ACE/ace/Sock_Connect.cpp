@@ -349,8 +349,9 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
     sizeof (sockaddr_in);
 
   if (ACE_OS::getnameinfo ((const sockaddr *) addr.get_addr (),
-                           addr_size, hostname, len, 0, 0,
-                           NI_NAMEREQD) != 0)
+                           addr_size, hostname,
+                           static_cast<ACE_SOCKET_LEN> (len),
+                           0, 0, NI_NAMEREQD) != 0)
     return -1;
 
   if (ACE::debug ())
