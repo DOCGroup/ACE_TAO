@@ -100,9 +100,9 @@ public:
   typedef value_type const *                     const_pointer;
   typedef value_type *                           iterator;
   typedef value_type const *                     const_iterator;
-  ACE_DECLARE_STL_REVERSE_ITERATORS
   typedef ptrdiff_t                              difference_type;
   typedef size_t                                 size_type;
+  ACE_DECLARE_STL_REVERSE_ITERATORS
 
   /// Default Constructor.
   /**
