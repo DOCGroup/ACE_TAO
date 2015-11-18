@@ -350,7 +350,7 @@ sub shutdown_servers(@)
         $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
                         "kill $objprefix" . '_' . $i . "_a -s $signum" );
         $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-        if ($TI_status != 0) {
+        if ($TI_status != 0 && $TI_status != 5) {
             print STDERR "ERROR: tao_imr shutdown returned $TI_status\n";
             $status = 1;
             last;

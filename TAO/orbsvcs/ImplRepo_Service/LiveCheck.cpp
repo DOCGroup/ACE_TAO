@@ -314,13 +314,13 @@ LiveEntry::server_name (void) const
 }
 
 void
-LiveEntry::set_pid (pid_t pid)
+LiveEntry::set_pid (int pid)
 {
   this->pid_ = pid;
 }
 
 bool
-LiveEntry::has_pid (pid_t pid)
+LiveEntry::has_pid (int pid)
 {
   return this->pid_ == 0 || pid == 0 || pid == this->pid_;
 }
@@ -809,7 +809,7 @@ LiveCheck::add_server (const char *server,
 }
 
 void
-LiveCheck::set_pid (const char *server, pid_t pid)
+LiveCheck::set_pid (const char *server, int pid)
 {
   ACE_CString s(server);
   LiveEntry *entry = 0;
@@ -820,7 +820,7 @@ LiveCheck::set_pid (const char *server, pid_t pid)
 }
 
 void
-LiveCheck::remove_server (const char *server, pid_t pid)
+LiveCheck::remove_server (const char *server, int pid)
 {
   ACE_CString s(server);
   LiveEntry *entry = 0;
