@@ -5,16 +5,20 @@
 
 char pause_poa = ' ';
 char resume_poa = ' ';
+bool expect_transient = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT(""));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("e"));
   int c;
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
+      case 'e':
+        expect_transient = true;
+        break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -46,13 +50,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_DEBUG ((LM_DEBUG,
                 "Client received reply from server %d\n",
                 n));
-
+    if (expect_transient)
+      return -1;
     return 0;
 
+  }
+  catch(const CORBA::TRANSIENT& ex) {
+    if (expect_transient)
+      return 0;
+
+    ex._tao_print_exception ("client:");
   }
   catch(const CORBA::Exception& ex) {
     ex._tao_print_exception ("client:");
   }
-
   return -1;
 }

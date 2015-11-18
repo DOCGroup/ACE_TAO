@@ -16,7 +16,8 @@ my $servers_count = 2;
 my $servers_kill_count = 1;
 my $signalnum = 9;
 my $rm2523 = 0;
-my $act_delay = 00; #msec
+my $act_delay = 800; #msec
+my $start_delay = 0; #sec
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
@@ -40,6 +41,11 @@ if ($#ARGV >= 0) {
             $rm2523 = 1;
             $signalnum = 15;
             $servers_count = 3;
+        }
+        elsif ($ARGV[$i] eq "-start_delay") {
+            $i++;
+           # $act_delay = 0;
+            $start_delay = $ARGV[$i];
         }
 	else {
 	    usage();
@@ -193,7 +199,7 @@ sub servers_setup ()
         $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
                         "add $objprefix" . '_' . $i . "_a -c \"".
                         $srv_server_cmd[$i].
-                        " -ORBUseIMR 1 -n $i ".
+                        " -ORBUseIMR 1 -n $i -d $start_delay ".
                         "-orbendpoint iiop://localhost: " .
                         "-ORBInitRef ImplRepoService=file://$srv_imriorfile\"");
 
@@ -297,14 +303,39 @@ sub make_server_requests()
 
     ##### Run client against servers to active them #####
     for(my $i = 0; $i < $servers_count; $i++ ) {
-	my $status_file_name = $objprefix . "_$i.status";
-	$CLI->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" . '_' . $i . "_a" );
+	$CLI->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" . '_' . $i . "_a" . $debug );
 	$CLI_status = $CLI->SpawnWaitKill ($cli->ProcessStartWaitInterval());
 	if ($CLI_status != 0) {
 	    print STDERR "ERROR: client returned $CLI_status\n";
 	    $status = 1;
-	    last;
 	}
+    }
+}
+
+sub trigger_the_one ()
+{
+    print "Starting slow server\n";
+
+    my $i = 1;
+    my $opt_arg = " -e" if ($start_delay > 0);
+    $CLI->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" . '_' . $i . "_a" .
+        $opt_arg);
+    $CLI_status = $CLI->Spawn ($cli->ProcessStartWaitInterval());
+    if ($CLI_status != 0) {
+        print STDERR "ERROR: client returned $CLI_status\n";
+        $status = 1;
+        last;
+    }
+}
+
+sub wait_for_client ()
+{
+    print "Wait for client exit\n" ;
+
+    $CLI_status = $CLI->WaitKill (10);
+    if ($CLI_status != 0) {
+        print STDERR "ERROR: client returned $CLI_status\n";
+        $status = 1;
     }
 }
 
@@ -376,52 +407,52 @@ sub rm2523_test
     my $start_time = time();
     servers_setup();
 
-    # Make sure servers are active whether activator is used or not by making
-    # CORBA requests.
-    make_server_requests();
+    if ($start_delay == 0) {
+        make_server_requests();
+        list_servers("-a");
 
-    list_servers("-a");
+        print "Update to manual\n";
+        update_manual();
+        list_servers("-v");
 
-    print "Update to manual\n";
-    update_manual();
-    list_servers("-v");
+        print "kill the one\n";
+        kill_the_one();
+        list_servers("");
 
-    print "kill the one\n";
-    kill_the_one();
-    list_servers("");
+        print "remove primary\n";
+        remove_entry("a");
+        list_servers("");
 
-    print "remove peer\n";
-    remove_entry("b");
-    list_servers("-a");
+        sleep 1;
 
-    print "remove primary\n";
-    remove_entry("a");
-    list_servers("");
+        print "kill the one again\n";
+        kill_the_one();
+        list_servers("");
 
-    sleep 1;
+        print "re-add entry\n";
+        update_normal();
+        list_servers("");
 
-    print "kill the one again\n";
-    kill_the_one();
-    list_servers("");
+        print "start the server\n";
+        start_the_one ();
+        list_servers("-a");
+    }
+    else {
+        print "start_all - total delay " . ($servers_count * $start_delay) . " seconds\n";
+        make_server_requests ();
+        print "kill then list\n";
+        kill_the_one ();
+        list_servers("");
+        sleep 2;
+        print "triggering the one\n";
+        trigger_the_one ();
+        kill_the_one ();
+        list_servers("-a");
+        sleep 1;
+        remove_entry ("a");
 
-    print "re-add entry\n";
-    update_normal();
-    list_servers("");
-
-    print "kill the one again\n";
-    kill_the_one();
-    list_servers("-a");
-    list_servers("");
-
-    print "start the server\n";
-    start_the_one ();
-    list_servers("-a");
-
-    sleep 2;
-    print "start the server again\n";
-    start_the_one ();
-    list_servers("-a");
-
+        wait_for_client ();
+    }
     shutdown_servers (0, $servers_count, 9);
 
     my $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());

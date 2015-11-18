@@ -132,6 +132,8 @@ TAO/orbsvcs/tests/ImplRepo/PICurrent/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT 
 TAO/orbsvcs/tests/ImplRepo/double_start/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !Win32
 TAO/orbsvcs/tests/ImplRepo/double_start/run_test.pl -kill: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !ACE_FOR_TAO !LynxOS !Win32 !FIXED_BUGS_ONLY
 TAO/orbsvcs/tests/ImplRepo/kill_server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
+TAO/orbsvcs/tests/ImplRepo/kill_server/run_test.pl -rm2523: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
+TAO/orbsvcs/tests/ImplRepo/kill_server/run_test.pl -rm2523 -start_delay 3: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/kill_slow_server/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/oneway/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/ImplRepo/locked/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !WCHAR !LynxOS !ACE_FOR_TAO

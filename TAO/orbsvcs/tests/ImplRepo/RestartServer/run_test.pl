@@ -20,7 +20,7 @@ foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debugging = 1;
         $imr_debug = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile imr.log -d 5 ";
-        $act_debug = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile imr.log -d 5 ";
+        $act_debug = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile act.log -d 5 ";
     }
     elsif ($i eq '-manual') {
         # in manual mode the server is manually started, so it should
