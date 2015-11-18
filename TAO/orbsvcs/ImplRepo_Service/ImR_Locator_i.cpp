@@ -72,7 +72,8 @@ int ImR_Locator_i::debug_ = 0;
 ImR_Locator_i::ImR_Locator_i (void)
   : dsi_forwarder_ (*this)
   , ins_locator_ (0)
-  , aam_set_ ()
+  , aam_active_ ()
+  , aam_terminating_ ()
   , opts_ (0)
   , lock_ ()
   , shutdown_handler_ (this)
@@ -297,7 +298,8 @@ ImR_Locator_i::shutdown
  CORBA::Boolean activators, CORBA::Boolean servers)
 {
   this->pinger_.shutdown ();
-  this->aam_set_.reset ();
+  this->aam_active_.reset ();
+  this->aam_terminating_.reset ();
   if (servers != 0 && this->repository_->servers ().current_size () > 0)
     {
       // Note : shutdown is oneway, so we can't throw
@@ -500,7 +502,7 @@ ImR_Locator_i::remote_access_update (const char *name,
 }
 
 void
-ImR_Locator_i::child_death_i (const char* name, pid_t pid)
+ImR_Locator_i::child_death_i (const char* name, int pid)
 {
   if (debug_ > 1)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -508,12 +510,13 @@ ImR_Locator_i::child_death_i (const char* name, pid_t pid)
                     pid, name));
 
   this->pinger_.remove_server (name, pid);
-  AsyncAccessManager_ptr aam (this->find_aam (name));
-  if (!aam.is_nil())
+  AsyncAccessManager_ptr aam (this->find_aam (name, false));
+  bool terminated = !aam.is_nil () && aam->notify_child_death (pid);
+  aam = this->find_aam (name, true);
+  if (!terminated && !aam.is_nil ())
     {
-      aam->notify_child_death (pid);
+      terminated = aam->notify_child_death (pid);
     }
-
   UpdateableServerInfo info(this->repository_, name, pid);
   if (! info.null ())
     {
@@ -542,7 +545,7 @@ ImR_Locator_i::child_death_pid
 (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
  const char* name, CORBA::Long pid)
 {
-  this->child_death_i (name, static_cast<pid_t>(pid));
+  this->child_death_i (name, pid);
   _tao_rh->child_death_pid ();
 }
 
@@ -911,8 +914,12 @@ ImR_Locator_i::kill_server
   else
     {
       _tao_rh->kill_server ();
+      AsyncAccessManager_ptr aam = this->find_aam (si->key_name_.c_str ());
+      if (!aam.is_nil ())
+        {
+          aam->shutdown_initiated ();
+        }
     }
-  return;
 }
 
 void
@@ -949,13 +956,25 @@ ImR_Locator_i::remove_server
   Server_Info_Ptr info = this->repository_->get_active_server (id);
   if (! info.null ())
     {
+      AsyncAccessManager_ptr aam(this->find_aam  (info->key_name_.c_str()));
+      if (!aam.is_nil())
+        {
+          if (debug_ > 0)
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) ImR: Can't remove active server <%C>.\n"),
+                            info->key_name_.c_str()));
+          CORBA::Exception *ex =
+            new CORBA::NO_PERMISSION (CORBA::SystemException::_tao_minor_code
+                                      (TAO_IMPLREPO_MINOR_CODE, EBUSY),
+                                      CORBA::COMPLETED_NO);
+          ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
+          _tao_rh->remove_server_excep (&h);
+          return;
+        }
       if (debug_ > 1)
         ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%P|%t) ImR: Removing Server <%C>...\n"),
                         info->key_name_.c_str()));
-
-      this->remove_aam (info->key_name_.c_str());
-      this->pinger_.remove_server (info->key_name_.c_str());
 
       ACE_CString poa_name = info->poa_name;
       if (this->repository_->remove_server (info->key_name_, this) == 0)
@@ -1047,6 +1066,11 @@ ImR_Locator_i::shutdown_server
       // acting on the shutdown. Either it is shutting down already, or hasn't yet started,
       // in which case the shutdown will need to be reissued.
       info.edit ()->reset_runtime ();
+      AsyncAccessManager_ptr aam = this->find_aam (info->ping_id ());
+      if (!aam.is_nil())
+        {
+          aam->shutdown_initiated ();
+        }
     }
   catch (const CORBA::TIMEOUT &ex)
     {
@@ -1507,32 +1531,47 @@ ImR_Locator_i::root_poa (void)
 void
 ImR_Locator_i::remove_aam (AsyncAccessManager_ptr &aam)
 {
-  this->aam_set_.remove (aam);
-
+  if (this->aam_terminating_.remove (aam) == -1)
+    {
+      this->aam_active_.remove (aam);
+    }
 }
 
 void
-ImR_Locator_i::remove_aam (const char *name)
+ImR_Locator_i::remove_aam_i (const char *name, bool active)
 {
-  for (AAM_Set::ITERATOR i = this->aam_set_.begin();
-       i != this->aam_set_.end();
-       ++i)
+  AAM_Set &set = active ? this->aam_active_ : this->aam_terminating_;
+
+  for (AAM_Set::ITERATOR i = set.begin(); i != set.end(); ++i)
     {
       if ((*i)->has_server (name))
         {
           ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-          this->aam_set_.remove (*i);
+          set.remove (*i);
           return;
         }
     }
 }
 
-AsyncAccessManager *
-ImR_Locator_i::find_aam (const char *name)
+void
+ImR_Locator_i::remove_aam (const char *name)
 {
-  for (AAM_Set::ITERATOR i = this->aam_set_.begin();
-       i != this->aam_set_.end();
-       ++i)
+  this->remove_aam_i (name,true);
+  this->remove_aam_i (name,false);
+}
+
+void
+ImR_Locator_i::make_terminating (AsyncAccessManager_ptr &aam)
+{
+  this->aam_active_.remove (aam);
+  this->aam_terminating_.insert_tail (aam);
+}
+
+AsyncAccessManager *
+ImR_Locator_i::find_aam (const char *name, bool active)
+{
+  AAM_Set &set = active ? this->aam_active_ : this->aam_terminating_;
+  for (AAM_Set::ITERATOR i = set.begin(); i != set.end(); ++i)
     {
       if ((*i)->has_server (name))
         {
@@ -1552,7 +1591,7 @@ ImR_Locator_i::create_aam (UpdateableServerInfo &info, bool running)
       aam->started_running ();
     }
   {
-    this->aam_set_.insert_tail (aam);
+    this->aam_active_.insert_tail (aam);
   }
   return aam._retn ();
 }

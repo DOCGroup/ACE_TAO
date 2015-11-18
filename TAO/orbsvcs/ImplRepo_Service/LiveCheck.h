@@ -132,8 +132,8 @@ class Locator_Export LiveEntry
   int next_reping (void);
   void max_retry_msec (int max);
   const char *server_name (void) const;
-  void set_pid (pid_t pid);
-  bool has_pid (pid_t pid);
+  void set_pid (int pid);
+  bool has_pid (int pid);
 
  private:
   LiveCheck *owner_;
@@ -149,7 +149,7 @@ class Locator_Export LiveEntry
   Listen_Set listeners_;
   TAO_SYNCH_MUTEX lock_;
   PortableServer::ServantBase_var callback_;
-  pid_t pid_;
+  int pid_;
 
   static const int reping_msec_ [];
   static int reping_limit_;
@@ -255,8 +255,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   void add_server (const char *server,
                    bool may_ping,
                    ImplementationRepository::ServerObject_ptr ref);
-  void set_pid (const char *server, pid_t pid);
-  void remove_server (const char *server, pid_t pid = 0);
+  void set_pid (const char *server, int pid);
+  void remove_server (const char *server, int pid = 0);
   void remove_deferred_servers (void);
   bool remove_per_client_entry (LiveEntry *entry);
   bool add_listener (LiveListener *listener);
