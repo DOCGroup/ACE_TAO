@@ -64,13 +64,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     int server_num = 0;
+    int start_delay = 0;
 
-    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("n:?"));
+    ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("d:n:?"));
     int c;
 
     while ((c = get_opts ()) != -1)
       switch (c)
         {
+        case 'd':
+          start_delay = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
         case 'n':
           server_num = ACE_OS::atoi (get_opts.opt_arg ());
           break;
@@ -125,6 +129,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     //
     // Stop discarding requests.
     //
+    ACE_OS::sleep (start_delay);
     activatePOAs ();
 
     //

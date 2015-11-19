@@ -62,7 +62,8 @@ module ImplementationRepository
     AAM_NO_ACTIVATOR,
     AAM_NO_COMMANDLINE,
     AAM_RETRIES_EXCEEDED,
-    AAM_UPDATE_FAILED
+    AAM_UPDATE_FAILED,
+    AAM_ACTIVE_TERMINATE
   };
 
   struct RepoInfo

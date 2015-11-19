@@ -9,10 +9,14 @@ use PerlACE::TestTarget;
 
 $status = 0;
 $debug_level = '0';
+$use_file = 0;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
+    }
+    elsif ($i eq '-file') {
+        $use_file = 1;
     }
 }
 
@@ -20,6 +24,7 @@ my $client = PerlACE::TestTarget::create_target (1) || die "Create target 1 fail
 
 my $iorbase = "test.ior";
 my $client_iorfile = $client->LocalFile ($iorbase);
+my $ior_arg = ($use_file == 0) ? "corbaloc::1.2\@192.100.0.0:49440/no_object" : "file://$client_iorfile";
 
 $CL = $client->CreateProcess ("client");
 
@@ -28,7 +33,7 @@ my @levels = ("obj", "orb", "thread");
 
 foreach $synch (@synchs) {
     foreach $level (@levels) {
-        $CL->Arguments ("-ORBDebuglevel $debug_level -k file://$client_iorfile -s$synch -l$level");
+        $CL->Arguments ("-ORBDebuglevel $debug_level -k $ior_arg -s$synch -l$level");
 
         $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 285);
 

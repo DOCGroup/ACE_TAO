@@ -47,6 +47,12 @@ AsyncAccessManager::started_running (void)
 }
 
 bool
+AsyncAccessManager::is_terminating (void)
+{
+  return this->status_ == ImplementationRepository::AAM_ACTIVE_TERMINATE;
+}
+
+bool
 AsyncAccessManager::has_server (const char *s)
 {
   return ACE_OS::strcmp (this->info_->ping_id (), s) == 0;
@@ -59,10 +65,17 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
     this->rh_list_.push_back (rh);
   }
+
   if (manual)
     {
       this->manual_start_ = true;
     }
+  else if (this->is_terminating())
+    {
+      this->notify_waiters ();
+      return;
+    }
+
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -129,6 +142,12 @@ void
 AsyncAccessManager::remote_state (ImplementationRepository::AAM_Status state)
 {
   this->status (state);
+  if (this->is_terminating ())
+    {
+      AsyncAccessManager_ptr aam (this->_add_ref());
+      this->locator_.make_terminating (aam);
+      this->notify_waiters ();
+    }
   if (AsyncAccessManager::is_final (state))
     {
       this->final_state (false);
@@ -198,6 +217,9 @@ AsyncAccessManager::notify_waiters (void)
                     case ImplementationRepository::AAM_RETRIES_EXCEEDED:
                       throw ImplementationRepository::CannotActivate
                         ("Restart attempt count exceeded.");
+                    case  ImplementationRepository::AAM_ACTIVE_TERMINATE:
+                      throw ImplementationRepository::CannotActivate
+                        ("Server terminating.");
                     default:
                       throw ImplementationRepository::CannotActivate
                         ("Unknown Failure");
@@ -257,6 +279,8 @@ AsyncAccessManager::status_name (ImplementationRepository::AAM_Status s)
       return ACE_TEXT ("RETRIES_EXCEEDED");
     case ImplementationRepository::AAM_UPDATE_FAILED:
       return ACE_TEXT ("UPDATE_FAILED");
+    case ImplementationRepository::AAM_ACTIVE_TERMINATE:
+      return ACE_TEXT ("ACTIVE_TERMINATE");
 
     }
   return ACE_TEXT ("<undefined status>");
@@ -273,6 +297,10 @@ AsyncAccessManager::status (ImplementationRepository::AAM_Status s)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   this->status_ = s;
+  if (s == ImplementationRepository::AAM_SERVER_DEAD)
+    {
+      this->info_.edit()->pid = 0;
+    }
 }
 
 void
@@ -283,7 +311,7 @@ AsyncAccessManager::update_status (ImplementationRepository::AAM_Status s)
 }
 
 void
-AsyncAccessManager::activator_replied (bool success, pid_t pid)
+AsyncAccessManager::activator_replied (bool success, int pid)
 {
   if (success)
     {
@@ -298,7 +326,7 @@ AsyncAccessManager::activator_replied (bool success, pid_t pid)
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::activator_replied with ")
                               ACE_TEXT ("pid = %d this pid = %d, status = %s\n"),
-                              pid, this->info_->pid, status_name (this->status_)));
+                              this, pid, this->info_->pid, status_name (this->status_)));
             }
           this->update_status (ImplementationRepository::AAM_SERVER_READY);
           this->info_.edit()->pid = pid;
@@ -313,8 +341,36 @@ AsyncAccessManager::activator_replied (bool success, pid_t pid)
 }
 
 void
+AsyncAccessManager::shutdown_initiated (void)
+{
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::shutdown_initiated ")
+                      ACE_TEXT ("on server <%C> pid=%d current status = %s\n"),
+                      this, this->info_->ping_id(), this->info_->pid, status_name (this->status_)));
+    }
+
+  this->status (ImplementationRepository::AAM_ACTIVE_TERMINATE);
+  if (this->info_->pid != 0)
+    {
+      AsyncAccessManager_ptr aam (this->_add_ref());
+      this->locator_.make_terminating (aam);
+    }
+  this->notify_waiters ();
+}
+
+void
 AsyncAccessManager::server_is_shutting_down (void)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::server_is_shutting_down ")
+                      ACE_TEXT ("on server <%C> pid=%d current status = %s\n"),
+                      this, this->info_->ping_id(), this->info_->pid, status_name (this->status_)));
+    }
+
   this->status (ImplementationRepository::AAM_SERVER_DEAD);
   this->final_state ();
 }
@@ -326,7 +382,8 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager::server_is_running\n")));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::server_is_running\n"),
+                      this));
     }
 
   this->update_status (ImplementationRepository::AAM_WAIT_FOR_ALIVE);
@@ -363,26 +420,29 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
     }
 }
 
-void
-AsyncAccessManager::notify_child_death (pid_t pid)
+bool
+AsyncAccessManager::notify_child_death (int pid)
 {
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, pid = %d\n"),
-                      this, pid));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, pid = %d, ")
+                      ACE_TEXT ("this pid = %d, waiter count = %d\n"),
+                      this, pid, this->info_->pid, this->rh_list_.size() ));
     }
-  if (this->info_->pid == 0 || pid == 0 || this->info_->pid == pid)
+  if (this->info_->pid == pid)
     {
       if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_DEATH &&
           this->rh_list_.size() > 0)
         {
           this->send_start_request ();
-          return;
+          return true;
         }
       this->status (ImplementationRepository::AAM_SERVER_DEAD);
       this->final_state ();
+      return true;
     }
+  return false;
 }
 
 void

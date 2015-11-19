@@ -2,3 +2,7 @@
 
 This test starts up servers then uses the tao_imr kill command to force server
 termination via signal.
+
+Extension test "-rm2523" is a variation that removes a killed server from the
+locator repository then readding it while simulating a heavy machine load by forcing
+delay in reporting server death.
