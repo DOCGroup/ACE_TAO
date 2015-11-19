@@ -51,7 +51,7 @@ namespace TAO
    * & TAO_Cache_IntId. This class is wrapper around the
    * ACE_Hash_Map_Manager  class which is used as a container to Cache
    * the connections. This class protects the entries with a lock. The
-   * map is updated only by holding the lock. The more compelling reason
+   * map is updated only by holding the lock. The more compeling reason
    * to have the lock in this class and not in the Hash_Map is that, we
    * do quite a bit of work in this class for which we need a lock.
    *
