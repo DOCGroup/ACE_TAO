@@ -245,26 +245,6 @@ ACE_SSL_Context::set_mode (int mode)
 
   switch (mode)
     {
-#if !defined (OPENSSL_NO_SSL2)
-    case ACE_SSL_Context::SSLv2_client:
-      method = ::SSLv2_client_method ();
-      break;
-    case ACE_SSL_Context::SSLv2_server:
-      method = ::SSLv2_server_method ();
-      break;
-    case ACE_SSL_Context::SSLv2:
-      method = ::SSLv2_method ();
-      break;
-#endif /* OPENSSL_NO_SSL2 */
-    case ACE_SSL_Context::SSLv3_client:
-      method = ::SSLv3_client_method ();
-      break;
-    case ACE_SSL_Context::SSLv3_server:
-      method = ::SSLv3_server_method ();
-      break;
-    case ACE_SSL_Context::SSLv3:
-      method = ::SSLv3_method ();
-      break;
     case ACE_SSL_Context::SSLv23_client:
       method = ::SSLv23_client_method ();
       break;
@@ -274,39 +254,8 @@ ACE_SSL_Context::set_mode (int mode)
     case ACE_SSL_Context::SSLv23:
       method = ::SSLv23_method ();
       break;
-    case ACE_SSL_Context::TLSv1_client:
-      method = ::TLSv1_client_method ();
-      break;
-    case ACE_SSL_Context::TLSv1_server:
-      method = ::TLSv1_server_method ();
-      break;
-    case ACE_SSL_Context::TLSv1:
-      method = ::TLSv1_method ();
-      break;
-#if defined(TLS1_1_VERSION) && (TLS_MAX_VERSION >= TLS1_1_VERSION)
-    case ACE_SSL_Context::TLSv1_1_client:
-      method = ::TLSv1_1_client_method ();
-      break;
-    case ACE_SSL_Context::TLSv1_1_server:
-      method = ::TLSv1_1_server_method ();
-      break;
-    case ACE_SSL_Context::TLSv1_1:
-      method = ::TLSv1_1_method ();
-      break;
-#endif
-#if defined(TLS1_2_VERSION) && (TLS_MAX_VERSION >= TLS1_2_VERSION)
-    case ACE_SSL_Context::TLSv1_2_client:
-      method = ::TLSv1_2_client_method ();
-      break;
-    case ACE_SSL_Context::TLSv1_2_server:
-      method = ::TLSv1_2_server_method ();
-      break;
-    case ACE_SSL_Context::TLSv1_2:
-      method = ::TLSv1_2_method ();
-      break;
-#endif
     default:
-      method = ::SSLv3_method ();
+      method = ::SSLv23_method ();
       break;
     }
 
@@ -492,16 +441,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
 
   // For TLS/SSL servers scan all certificates in ca_file and ca_dir and
   // list them as acceptable CAs when requesting a client certificate.
-  if (mode_ == SSLv23
-      || mode_ == SSLv23_server
-      || mode_ == TLSv1
-      || mode_ == TLSv1_server
-#if !defined (OPENSSL_NO_SSL2)
-      || mode_ == SSLv2
-      || mode_ == SSLv2_server
-#endif /* !OPENSSL_NO_SSL2 */
-      || mode_ == SSLv3
-      || mode_ == SSLv3_server)
+  if (mode_ == SSLv23 || mode_ == SSLv23_server)
     {
       // Note: The STACK_OF(X509_NAME) pointer is a copy of the pointer in
       // the CTX; any changes to it by way of these function calls will
