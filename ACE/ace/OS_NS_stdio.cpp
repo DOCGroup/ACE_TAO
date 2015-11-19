@@ -755,10 +755,11 @@ namespace { // helpers for vsnprintf_emulation
         {
           if (dg.next (it))
             ++sep_chars;
-          *--it = v % base < 10 ? '0' + v % base : a + v % base - 10;
+          *--it = static_cast<char> (v % base < 10 ?
+                                     '0' + v % base : a + v % base - 10);
         }
 
-      const int digits = buf + sizeof buf - it - sep_chars;
+      const int digits = static_cast<int> (buf + sizeof buf - it - sep_chars);
 
       if (base == 8 && flags.has (SNPRINTF_ALT) && precision <= digits)
         precision = digits + 1;
@@ -1269,8 +1270,13 @@ namespace { // helpers for vsnprintf_emulation
           case Positional_Arg::PA_SIZE:
             (*this)[i].ui64 = va_arg (ap, size_t);
             break;
+#ifdef __MINGW32__
+#define ACE_WINT_T_VA_ARG int
+#else
+#define ACE_WINT_T_VA_ARG wint_t
+#endif
           case Positional_Arg::PA_WINT:
-            (*this)[i].ui64 = va_arg (ap, wint_t);
+            (*this)[i].ui64 = va_arg (ap, ACE_WINT_T_VA_ARG);
             break;
           case Positional_Arg::PA_DOUBLE:
             (*this)[i].f = va_arg (ap, double);
@@ -1515,7 +1521,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
           if (flags.has (SNPRINTF_LONG))
             {
               *tmp_wstr = static_cast<wchar_t> (
-                posn ? pos_arg[posn].ui64 : va_arg (ap, wint_t));
+                posn ? pos_arg[posn].ui64 : va_arg (ap, ACE_WINT_T_VA_ARG));
               sb.conv_str (tmp_wstr, flags, width, precision);
             }
           else
@@ -1565,7 +1571,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
   // Output remaining part of format string
   sb.out (fmt, ACE_OS::strlen (fmt));
   *sb.buf_ = 0;
-  return sb.written_;
+  return static_cast<int> (sb.written_);
 }
 #endif // ACE_LACKS_VA_FUNCTIONS
 ACE_END_VERSIONED_NAMESPACE_DECL

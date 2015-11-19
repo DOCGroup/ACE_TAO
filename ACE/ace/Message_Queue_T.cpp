@@ -1735,8 +1735,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::peek_dequeue_head (ACE_Message_Bl
     return -1;
 
   first_item = this->head_;
-  //  return ACE_Utils::truncate_cast<int> (this->cur_count_);
-  return this->cur_count_;
+  return ACE_Utils::truncate_cast<int> (this->cur_count_);
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
