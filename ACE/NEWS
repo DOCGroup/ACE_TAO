@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.3.3 and ACE-6.3.4
 ====================================================
 
+. Removed support for SSLv2/SSLv3/TLSv1/TLS1.v2 because
+  they have been removed from OpenSSL because they are not
+  secure. SSL v2.3 is the only currently used
+
 USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 ====================================================
 
