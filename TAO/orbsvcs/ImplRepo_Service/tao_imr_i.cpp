@@ -612,7 +612,7 @@ TAO_IMR_Op_Remove::print_usage (void)
 {
   ORBSVCS_ERROR ((LM_ERROR, "Removes a server entry\n"
     "\n"
-    "Usage: tao_imr [options] remove [-f [-s <signum>]] <name>\n"
+    "Usage: tao_imr [options] remove <name> [-f [-s <signum>]]\n"
     "  where [options] are ORB options\n"
     "  -f forces shutdown or kill of a running server"
     "  -s specifies a signal for killing the server, if it is 0, a shutdown will be used"
@@ -631,10 +631,11 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
     }
   this->force_ = false;
   this->signum_ = 0;
-  int server_arg = 1;
+
   // Skip both the program name and the "remove" command
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hfs:"));
 
+  this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -646,11 +647,9 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
         return -1;
       case 'f':
         this->force_ = true;
-        ++server_arg;
         break;
       case 's':
         this->signum_ = ACE_OS::strtol (get_opts.opt_arg (), 0, 10);
-        server_arg += 2;
         break;
       default:
         ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
@@ -659,7 +658,6 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
       }
     }
 
-  this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[server_arg]);
   return 0;
 }
 
