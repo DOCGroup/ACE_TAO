@@ -18,8 +18,11 @@ my $signalnum = 9;
 my $rm2523 = 0;
 my $act_delay = 800; #msec
 my $start_delay = 0; #sec
+my $rm_cmd = "remove";
+my $force = 0;
 
 if ($#ARGV >= 0) {
+    my $sn_set = 0;
     for (my $i = 0; $i <= $#ARGV; $i++) {
 	if ($ARGV[$i] eq '-debug') {
 	    $orb_debug = 4;
@@ -36,15 +39,19 @@ if ($#ARGV >= 0) {
         elsif ($ARGV[$i] eq "-signal") {
             $i++;
             $signalnum = $ARGV[$i];
+            $sn_set = 1;
         }
         elsif ($ARGV[$i] eq "-rm2523") {
             $rm2523 = 1;
             $signalnum = 15;
             $servers_count = 3;
         }
+        elsif ($ARGV[$i] eq "-force") {
+            $rm_cmd = "remove -f";
+            $force = 1;
+        }
         elsif ($ARGV[$i] eq "-start_delay") {
             $i++;
-           # $act_delay = 0;
             $start_delay = $ARGV[$i];
         }
 	else {
@@ -52,6 +59,7 @@ if ($#ARGV >= 0) {
 	    exit 1;
 	}
     }
+    $rm_cmd .= " -s $signalnum" if ($force == 1 && $sn_set == 1);
 }
 
 #$ENV{ACE_TEST_VERBOSE} = "1";
@@ -290,10 +298,10 @@ sub remove_entry(@)
     my $obj = shift;
     my $i = 1;
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "remove $objprefix" . '_' . $i . "_$obj");
+                    "$rm_cmd $objprefix" . '_' . $i . "_$obj");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
-        print STDERR "tao_imr remove returned $TI_status\n";
+        print STDERR "tao_imr $rm_cmd returned $TI_status\n";
     }
 }
 
@@ -351,7 +359,7 @@ sub shutdown_servers(@)
                         "kill $objprefix" . '_' . $i . "_a -s $signum" );
         $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
         if ($TI_status != 0 && $TI_status != 5) {
-            print STDERR "ERROR: tao_imr shutdown returned $TI_status\n";
+            print STDERR "ERROR: tao_imr kill returned $TI_status\n";
             $status = 1;
             last;
         }
@@ -411,15 +419,20 @@ sub rm2523_test
         make_server_requests();
         list_servers("-a");
 
-        print "Update to manual\n";
-        update_manual();
-        list_servers("-v");
+        if ($force == 0) {
+            print "Update to manual\n";
+            update_manual();
+            list_servers("-v");
 
-        print "kill the one\n";
-        kill_the_one();
-        list_servers("");
+            print "kill the one\n";
+            kill_the_one();
+            list_servers("");
 
-        print "remove primary\n";
+            print "remove primary\n";
+        }
+        else {
+            print "force remove primary\n";
+        }
         remove_entry("a");
         list_servers("");
 
@@ -446,9 +459,11 @@ sub rm2523_test
         sleep 2;
         print "triggering the one\n";
         trigger_the_one ();
-        kill_the_one ();
-        list_servers("-a");
-        sleep 1;
+        if ($force == 0) {
+            kill_the_one ();
+            list_servers("-a");
+            sleep 1;
+        }
         remove_entry ("a");
 
         wait_for_client ();
