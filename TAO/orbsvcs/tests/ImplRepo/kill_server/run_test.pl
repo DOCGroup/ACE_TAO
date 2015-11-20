@@ -18,7 +18,7 @@ my $signalnum = 9;
 my $rm2523 = 0;
 my $act_delay = 800; #msec
 my $start_delay = 0; #sec
-my $rm_cmd = "remove";
+my $rm_opts = "";
 my $force = 0;
 
 if ($#ARGV >= 0) {
@@ -47,7 +47,7 @@ if ($#ARGV >= 0) {
             $servers_count = 3;
         }
         elsif ($ARGV[$i] eq "-force") {
-            $rm_cmd = "remove -f";
+            $rm_opts = "-f";
             $force = 1;
         }
         elsif ($ARGV[$i] eq "-start_delay") {
@@ -59,7 +59,7 @@ if ($#ARGV >= 0) {
 	    exit 1;
 	}
     }
-    $rm_cmd .= " -s $signalnum" if ($force == 1 && $sn_set == 1);
+    $rm_opts .= " -s $signalnum" if ($force == 1 && $sn_set == 1);
 }
 
 #$ENV{ACE_TEST_VERBOSE} = "1";
@@ -261,7 +261,7 @@ sub update_normal()
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
                     "add $objprefix" . '_' . $i . "_a -c \"".
                     $srv_server_cmd[$i].
-                    " -ORBUseIMR 1 -n $i -ORBDebugLevel 10 -ORBLogFile svr.log ".
+                    " -ORBUseIMR 1 -n $i ".
                     "-orbendpoint iiop://localhost: " .
                     "-ORBInitRef ImplRepoService=file://$srv_imriorfile\"");
 
@@ -298,10 +298,10 @@ sub remove_entry(@)
     my $obj = shift;
     my $i = 1;
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "$rm_cmd $objprefix" . '_' . $i . "_$obj");
+                    "remove $objprefix" . '_' . $i . "_$obj $rm_opts");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
-        print STDERR "tao_imr $rm_cmd returned $TI_status\n";
+        print STDERR "tao_imr remove $rm_opts returned $TI_status\n";
     }
 }
 
