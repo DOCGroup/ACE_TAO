@@ -15,6 +15,7 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
   :info_(info),
    manual_start_ (false),
    retries_ (info->start_limit_),
+   remove_on_death_rh_ (0),
    locator_ (locator),
    poa_ (locator.root_poa ()),
    rh_list_ (),
@@ -49,7 +50,8 @@ AsyncAccessManager::started_running (void)
 bool
 AsyncAccessManager::is_terminating (void)
 {
-  return this->status_ == ImplementationRepository::AAM_ACTIVE_TERMINATE;
+  return this->status_ == ImplementationRepository::AAM_ACTIVE_TERMINATE ||
+    remove_on_death_rh_ != 0;
 }
 
 bool
@@ -138,6 +140,22 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
     }
 }
 
+bool
+AsyncAccessManager::force_remove_rh (ImR_ResponseHandler *rh)
+{
+  bool busy = true;
+  if (this->remove_on_death_rh_ == 0 || rh == 0)
+    {
+      if (rh == 0)
+        {
+          delete this->remove_on_death_rh_;
+        }
+      this->remove_on_death_rh_ = rh;
+      busy = false;
+    }
+  return busy;
+}
+
 void
 AsyncAccessManager::remote_state (ImplementationRepository::AAM_Status state)
 {
@@ -180,6 +198,11 @@ AsyncAccessManager::final_state (bool active)
                           ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state ")
                           ACE_TEXT ("removing this from map, server = %s\n"),
                           this, info_->ping_id ()));
+        }
+      if (this->remove_on_death_rh_ != 0)
+        {
+          this->locator_.remove_server_i (this->info_.edit());
+          this->remove_on_death_rh_->send_ior("");
         }
       AsyncAccessManager_ptr aam (this);
       this->locator_.remove_aam (aam);

@@ -612,8 +612,10 @@ TAO_IMR_Op_Remove::print_usage (void)
 {
   ORBSVCS_ERROR ((LM_ERROR, "Removes a server entry\n"
     "\n"
-    "Usage: tao_imr [options] remove <name>\n"
+    "Usage: tao_imr [options] remove <name> [-f [-s <signum>]]\n"
     "  where [options] are ORB options\n"
+    "  -f forces shutdown or kill of a running server"
+    "  -s specifies a signal for killing the server, if it is 0, a shutdown will be used"
     "  where <name> is the POA name used by the server object\n"
     "  -h Displays this\n"));
 }
@@ -627,9 +629,11 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
       this->print_usage ();
       return -1;
     }
+  this->force_ = false;
+  this->signum_ = 0;
 
   // Skip both the program name and the "remove" command
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hfs:"));
 
   this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   int c;
@@ -641,12 +645,19 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
       case 'h':
         this->print_usage ();
         return -1;
+      case 'f':
+        this->force_ = true;
+        break;
+      case 's':
+        this->signum_ = ACE_OS::strtol (get_opts.opt_arg (), 0, 10);
+        break;
       default:
         ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
         this->print_usage ();
         return -1;
       }
     }
+
   return 0;
 }
 
@@ -1217,8 +1228,18 @@ TAO_IMR_Op_Remove::run (void)
 
   try
     {
-      this->imr_->remove_server (this->server_name_.c_str ());
-
+      if (this->force_)
+        {
+          ImplementationRepository::AdministrationExt_var ext =
+            ImplementationRepository::AdministrationExt::_narrow (imr_);
+          ACE_ASSERT (! CORBA::is_nil(ext));
+          ext->force_remove_server (this->server_name_.c_str (),
+                                    this->signum_);
+        }
+      else
+        {
+          this->imr_->remove_server (this->server_name_.c_str ());
+        }
       ORBSVCS_DEBUG ((LM_DEBUG, "Successfully removed server <%C>\n",
         this->server_name_.c_str ()));
     }
@@ -1227,6 +1248,12 @@ TAO_IMR_Op_Remove::run (void)
       ORBSVCS_ERROR ((LM_ERROR, "Could not find server <%C>.\n",
         this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
+    }
+  catch (const ImplementationRepository::CannotComplete& cc)
+    {
+      ORBSVCS_ERROR ((LM_ERROR, "Could not complete forced removal of server <%C>. reason: %C\n",
+                      this->server_name_.c_str (), cc.reason.in() ));
+      return TAO_IMR_Op::CANNOT_COMPLETE;
     }
   catch (const CORBA::NO_PERMISSION& np)
     {
