@@ -27,7 +27,7 @@
 
 
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
@@ -407,9 +407,9 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Reactor_Performance_Test"));
 
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads/accept not supported on this platform\n")));
 
   ACE_END_TEST;
   return 0;
 }
-#endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS && ! ACE_LACKS_ACCEPT */

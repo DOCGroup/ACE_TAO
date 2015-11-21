@@ -38,7 +38,7 @@
 
 
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 static const char message[] = "abcdefghijklmnopqrstuvwxyz";
 static const int message_size = 26;
@@ -1008,7 +1008,7 @@ Close_Socket_Thread::Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
 int
 Close_Socket_Thread::svc (void)
 {
-  ACE_OS::srand ((u_int) ACE_OS::time ());
+  unsigned int seed = (unsigned int) ACE_OS::time ();
   ACE_Time_Value timeout (0, close_timeout * 1000);
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Close_Socket_Thread::svc commencing\n")));
@@ -1038,7 +1038,7 @@ Close_Socket_Thread::svc (void)
       if (this->make_invocations_ &&
           this->run_receiver_thread_)
         // Randomize which socket to close.
-        close_client = ACE_OS::rand () % 2;
+        close_client = ACE_OS::rand_r (&seed) % 2;
 
       // If the invocation thread is making invocations, only close
       // the client socket.
@@ -1485,7 +1485,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-#else /* ACE_HAS_THREADS */
+#else /* ACE_HAS_THREADS && ! ACE_LACKS_ACCEPT */
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -1493,11 +1493,11 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("MT_Reference_Counted_Event_Handler_Test"));
 
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads/accept not supported on this platform\n")));
 
   ACE_END_TEST;
 
   return 0;
 }
 
-#endif /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS && ! ACE_LACKS_ACCEPT */

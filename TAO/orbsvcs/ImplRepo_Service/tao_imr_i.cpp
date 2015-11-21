@@ -6,7 +6,6 @@
 
 #include "tao/Stub.h"
 #include "tao/Profile.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_strings.h"
@@ -483,7 +482,7 @@ TAO_IMR_Op_Link::print_usage (void)
 {
   ORBSVCS_ERROR ((LM_ERROR, "Links multiple POAs to a single executable\n"
     "\n"
-    "Usage: tao_imr [options] link [name] [peers]\n"
+    "Usage: tao_imr [options] link [name] [command-arguments]\n"
     "  where [options] are ORB options\n"
     "  where [name] is the registered POA name the peers link to\n"
     "  where [command-arguments] can be\n"
@@ -1229,8 +1228,14 @@ TAO_IMR_Op_Remove::run (void)
         this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
-  catch (const CORBA::NO_PERMISSION&)
+  catch (const CORBA::NO_PERMISSION& np)
     {
+      if ((np.minor () & 0x7FU) == 0xFU) //TAO_EBUSY_MINOR_CODE)
+        {
+          ORBSVCS_ERROR ((LM_ERROR, "Server <%C> still busy.\n",
+                          this->server_name_.c_str ()));
+          return TAO_IMR_Op::CANNOT_COMPLETE;
+        }
       ORBSVCS_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;
     }

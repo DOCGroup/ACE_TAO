@@ -318,7 +318,7 @@ int AC_CLD_Acceptor::handle_close (ACE_HANDLE,
 int AC_CLD_Connector::open (ACE_Reactor *r, int flags) {
   if (PARENT::open (r, flags) != 0) return -1;
   OpenSSL_add_ssl_algorithms ();
-  ssl_ctx_ = SSL_CTX_new (SSLv3_client_method ());
+  ssl_ctx_ = SSL_CTX_new (SSLv23_client_method ());
   if (ssl_ctx_ == 0) return -1;
 
   if (SSL_CTX_use_certificate_file (ssl_ctx_,

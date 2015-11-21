@@ -28,7 +28,7 @@
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
-static void *
+void *
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
@@ -96,7 +96,7 @@ client (void *arg)
   return 0;
 }
 
-static void *
+void *
 server (void *arg)
 {
   ACE_SOCK_Acceptor *peer_acceptor = (ACE_SOCK_Acceptor *) arg;
@@ -180,7 +180,7 @@ server (void *arg)
   return 0;
 }
 
-static void
+void
 spawn (void)
 {
   // Acceptor
@@ -252,7 +252,9 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SOCK_Test"));
 
+#ifndef ACE_LACKS_ACCEPT
   spawn ();
+#endif
 
   ACE_END_TEST;
   return 0;

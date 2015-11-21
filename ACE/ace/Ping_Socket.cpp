@@ -7,7 +7,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_sys_socket.h"
-# include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_unistd.h"
+#if defined (ACE_HAS_ALLOC_HOOKS)
+# include "ace/Malloc_Base.h"
+#endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
 # include "ace/Ping_Socket.inl"

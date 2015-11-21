@@ -163,11 +163,12 @@ public:
   PortableServer::POA_ptr root_poa (void);
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
+  void destroy_poa (const ACE_CString &poa_name);
   void remove_aam (AsyncAccessManager_ptr &aam);
   void remove_aam (const char *name);
-  AsyncAccessManager *find_aam (const char *name);
+  AsyncAccessManager *find_aam (const char *name, bool active = true);
   AsyncAccessManager *create_aam (UpdateableServerInfo &info, bool running = false);
-
+  void make_terminating (AsyncAccessManager_ptr &aam);
   /// Receiving an update from remote peer
   void remote_access_update (const char *name,
                              ImplementationRepository::AAM_Status state);
@@ -196,6 +197,10 @@ private:
 
   PortableServer::POA_ptr findPOA (const char* name);
 
+  void child_death_i (const char* name, int pid);
+
+  void remove_aam_i (const char *name, bool active);
+
 private:
 
   static int debug_;
@@ -214,7 +219,8 @@ private:
 
   /// A collection of asynch activator instances
   typedef ACE_Unbounded_Set<AsyncAccessManager_ptr> AAM_Set;
-  AAM_Set aam_set_;
+  AAM_Set aam_active_;
+  AAM_Set aam_terminating_;
 
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;

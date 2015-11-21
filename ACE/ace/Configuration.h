@@ -735,6 +735,9 @@ public:
 
   /// The sub section iterator
   SUBSECTION_HASH::ITERATOR* section_iter_;
+
+  ACE_ALLOC_HOOK_DECLARE;
+
 protected:
   /// Destructor - will delete the iterators
   virtual ~ACE_Configuration_Section_Key_Heap (void);

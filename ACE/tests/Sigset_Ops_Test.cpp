@@ -24,8 +24,6 @@ siglistset (sigset_t x, int *sigset, int can_miss = 0)
   bool empty = true;
   int result = 0;
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal (s) in the set = %08x:\n"), x)) ;
-
   for (int i = 1; i < ACE_NSIG; i++)
     {
       result = ACE_OS::sigismember (&x, i);

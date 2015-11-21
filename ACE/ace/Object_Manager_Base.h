@@ -127,6 +127,8 @@ class ACE_Log_Msg;
 class ACE_Export ACE_OS_Object_Manager : public ACE_Object_Manager_Base
 {
 public:
+  ACE_ALLOC_HOOK_DECLARE;
+
   /// Explicitly initialize.
   virtual int init (void);
 

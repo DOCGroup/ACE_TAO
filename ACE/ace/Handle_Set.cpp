@@ -1,5 +1,8 @@
 // Handle_Set.cpp
 #include "ace/Handle_Set.h"
+#if defined (ACE_HAS_ALLOC_HOOKS)
+# include "ace/Malloc_Base.h"
+#endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Handle_Set.inl"
@@ -25,6 +28,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
   // default on Linux/glibc-2.1.x systems.  Instead use "__fds_bits."
   // Ugly, but "what are you going to do?" 8-)
 #define fds_bits __fds_bits
+#elif defined ACE_FDS_BITS
+#define fds_bits ACE_FDS_BITS
 #endif  /* ACE_LINUX && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1 && !_XOPEN_SOURCE */
 
 void

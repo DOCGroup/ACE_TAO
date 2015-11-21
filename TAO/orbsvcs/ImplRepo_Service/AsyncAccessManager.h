@@ -58,17 +58,19 @@ class Locator_Export AsyncAccessManager
 
   void started_running (void);
 
+  bool is_terminating (void);
   bool has_server (const char *name);
   void remote_state (ImplementationRepository::AAM_Status s);
 
   void add_interest (ImR_ResponseHandler *rh, bool manual);
   ImplementationRepository::AAM_Status status (void) const;
 
-  void activator_replied (bool success);
+  void activator_replied (bool success, int pid);
   void server_is_running (const char *partial_ior,
                           ImplementationRepository::ServerObject_ptr ref);
   void server_is_shutting_down (void);
-  void notify_child_death (void);
+  void shutdown_initiated (void);
+  bool notify_child_death (int pid = 0);
   void ping_replied (LiveStatus server);
 
   AsyncAccessManager *_add_ref (void);

@@ -87,6 +87,9 @@ public:
   ACE_CLEANUP_FUNC cleanup_hook (void);
 
   void *param (void);
+
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   /// Point to object that gets passed into the <cleanup_hook_>.
   void *object_;

@@ -537,7 +537,7 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                          const ACE_TCHAR *net_if)
 {
   char buf[MAX_STRING_SIZE];
-  ACE_OS::sprintf (buf, "%s/%d",
+  ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d",
                    mcast_addr.get_host_addr (),
                    mcast_addr.get_port_number ());
 
@@ -565,7 +565,7 @@ MCT_Event_Handler::leave (const ACE_INET_Addr &mcast_addr,
       size_t size = this->address_vec_.size ();
       for (size_t i = 0; i < size; ++i)
         {
-          ACE_OS::sprintf (buf, "%s/%d",
+          ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d",
                            mcast_addr.get_host_addr (),
                            mcast_addr.get_port_number ());
           if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
@@ -775,7 +775,7 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
       if (done)
         buf[0] = 0;
       else
-        ACE_OS::sprintf (buf, "%s/%d", address, port);
+        ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d", address, port);
 
       if (socket.send (buf, ACE_OS::strlen (buf),addr) == -1)
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Send to %C, %p\n"),
@@ -872,7 +872,7 @@ int advance_addr (ACE_INET_Addr &addr)
                       -1);
 
   ACE_TCHAR buf[MAX_STRING_SIZE];
-  ACE_OS::sprintf (buf, ACE_TEXT ("%d.%d.%d.%d:%d"),
+  ACE_OS::snprintf (buf, MAX_STRING_SIZE, ACE_TEXT ("%d.%d.%d.%d:%d"),
                    a, b, c, d, addr.get_port_number ());
   addr.set (buf);
   return 0;

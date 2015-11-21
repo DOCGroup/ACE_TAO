@@ -331,7 +331,7 @@ ACE_OS::execvp (const char *file,
                 char *const argv[])
 {
   ACE_OS_TRACE ("ACE_OS::execvp");
-#if defined (ACE_LACKS_EXEC)
+#if defined (ACE_LACKS_EXEC) || defined (ACE_LACKS_EXECVP)
   ACE_UNUSED_ARG (file);
   ACE_UNUSED_ARG (argv);
 
@@ -931,10 +931,7 @@ ACE_INLINE int
 ACE_OS::sleep (u_int seconds)
 {
   ACE_OS_TRACE ("ACE_OS::sleep");
-#if defined (ACE_WIN32)
-  ::Sleep (seconds * ACE_ONE_SECOND_IN_MSECS);
-  return 0;
-#elif defined (ACE_HAS_CLOCK_GETTIME)
+#if defined (ACE_HAS_CLOCK_GETTIME)
   struct timespec rqtp;
   // Initializer doesn't work with Green Hills 1.8.7
   rqtp.tv_sec = seconds;
@@ -942,6 +939,12 @@ ACE_OS::sleep (u_int seconds)
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (::nanosleep (&rqtp, 0), int, -1);
   //FUZZ: enable check_for_lack_ACE_OS
+#elif defined (ACE_LACKS_SLEEP)
+  ACE_UNUSED_ARG (seconds);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
+  ::Sleep (seconds * ACE_ONE_SECOND_IN_MSECS);
+  return 0;
 #else
   ACE_OSCALL_RETURN (::sleep (seconds), int, -1);
 #endif /* ACE_WIN32 */

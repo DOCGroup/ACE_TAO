@@ -132,6 +132,8 @@ class Locator_Export LiveEntry
   int next_reping (void);
   void max_retry_msec (int max);
   const char *server_name (void) const;
+  void set_pid (int pid);
+  bool has_pid (int pid);
 
  private:
   LiveCheck *owner_;
@@ -147,6 +149,7 @@ class Locator_Export LiveEntry
   Listen_Set listeners_;
   TAO_SYNCH_MUTEX lock_;
   PortableServer::ServantBase_var callback_;
+  int pid_;
 
   static const int reping_msec_ [];
   static int reping_limit_;
@@ -246,35 +249,23 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   void init (CORBA::ORB_ptr orb,
              const ACE_Time_Value &interval);
   void shutdown (void);
-
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void *act = 0);
-
   bool has_server (const char *server);
-
   void add_server (const char *server,
                    bool may_ping,
                    ImplementationRepository::ServerObject_ptr ref);
-
-  void remove_server (const char *server);
-
+  void set_pid (const char *server, int pid);
+  void remove_server (const char *server, int pid = 0);
   void remove_deferred_servers (void);
-
   bool remove_per_client_entry (LiveEntry *entry);
-
   bool add_listener (LiveListener *listener);
-
   bool add_poll_listener (LiveListener *listener);
-
   bool add_per_client_listener (LiveListener *listener,
                                 ImplementationRepository::ServerObject_ptr ref);
-
   void remove_listener (LiveListener *listener);
-
   bool schedule_ping (LiveEntry *entry);
-
   LiveStatus is_alive (const char *server);
-
   const ACE_Time_Value &ping_interval (void) const;
 
  private:

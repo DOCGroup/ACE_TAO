@@ -23,7 +23,6 @@
 #include "ace/Global_Macros.h"
 #include "ace/OS_Memory.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
@@ -80,6 +79,8 @@ public:
   //ACE_ALLOC_HOOK_DECLARE;
 
   int lock_; // A dummy lock.
+
+  ACE_ALLOC_HOOK_DECLARE;
 };
 
 // FUZZ: disable check_for_ACE_Guard

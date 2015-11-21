@@ -127,6 +127,8 @@ run_main (int, ACE_TCHAR *[])
 
   ReactorTask reactor_task;
 
+#if !defined ACE_HAS_PTHREADS || !defined ACE_LACKS_PTHREAD_KILL
+
   if (reactor_task.activate () == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -164,8 +166,9 @@ run_main (int, ACE_TCHAR *[])
       ACE_ERROR_RETURN ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) Error, task wait failed.\n")),
                         -1);
-      }
+    }
 
+#endif
   ACE_END_TEST;
 
   return 0;

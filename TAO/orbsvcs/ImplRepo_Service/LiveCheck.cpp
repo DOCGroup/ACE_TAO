@@ -136,7 +136,8 @@ LiveEntry::LiveEntry (LiveCheck *owner,
     may_ping_ (may_ping),
     listeners_ (),
     lock_ (),
-    callback_ (0)
+    callback_ (0),
+    pid_ (0)
 {
   if (ImR_Locator_i::debug () > 4)
     {
@@ -310,6 +311,18 @@ const char *
 LiveEntry::server_name (void) const
 {
   return this->server_.c_str();
+}
+
+void
+LiveEntry::set_pid (int pid)
+{
+  this->pid_ = pid;
+}
+
+bool
+LiveEntry::has_pid (int pid)
+{
+  return this->pid_ == 0 || pid == 0 || pid == this->pid_;
 }
 
 bool
@@ -796,29 +809,48 @@ LiveCheck::add_server (const char *server,
 }
 
 void
-LiveCheck::remove_server (const char *server)
+LiveCheck::set_pid (const char *server, int pid)
 {
   ACE_CString s(server);
   LiveEntry *entry = 0;
-  if (this->handle_timeout_busy_ > 0)
+  if (entry_map_.find (s, entry) != -1 && entry != 0)
     {
-      int result = entry_map_.unbind (s, entry);
-      if (result == 0)
-        delete entry;
+      entry->set_pid (pid);
+    }
+}
+
+void
+LiveCheck::remove_server (const char *server, int pid)
+{
+  ACE_CString s(server);
+  LiveEntry *entry = 0;
+  if (entry_map_.find (s, entry) != -1 && entry->has_pid (pid))
+    {
+      if (this->handle_timeout_busy_ > 0)
+        {
+          if (entry_map_.unbind (s, entry) == 0)
+            delete entry;
+        }
+      else
+        {
+          if (ImR_Locator_i::debug () > 0)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server %s ")
+                              ACE_TEXT ("called during handle_timeout\n"), server));
+            }
+          this->removed_entries_.insert_tail (s);
+        }
     }
   else
     {
-      if (ImR_Locator_i::debug () > 0)
+      if (entry != 0 && ImR_Locator_i::debug () > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveCheck::remove_server %s ")
-                          ACE_TEXT ("called during handle_timeout\n"), server));
-        }
-      int result = entry_map_.find (s, entry);
-      if (result != -1 && entry != 0)
-        {
-          this->removed_entries_.insert_tail (s);
-        }
+                              ACE_TEXT ("pid %d does not match entry\n"),
+                          server, pid));
+            }
     }
 }
 

@@ -34,6 +34,7 @@ static ACE_TCHAR *shm_key;
 #if defined (ACE_LACKS_FORK)
 #include "ace/Thread_Semaphore.h"
 typedef ACE_Thread_Semaphore SYNCHRONIZER;
+#define SYNC_EXTRA_ARGS
 #elif defined (ACE_HAS_POSIX_SEM) && defined(ACE_HAS_SYSV_IPC)
 /**
  * @class SYNCHRONIZER
@@ -51,8 +52,19 @@ public:
                                initial_value)
   {}
 };
+#define SYNC_EXTRA_ARGS
 #else
+
 typedef ACE_Process_Semaphore SYNCHRONIZER;
+
+#define SYNC_EXTRA_ARGS , sem_name ()
+ACE_TCHAR sem_name_[ACE_UNIQUE_NAME_LEN] = ACE_TEXT ("/");
+
+const ACE_TCHAR *sem_name ()
+{
+  ACE::unique_name (sem_name_, sem_name_ + 1, ACE_UNIQUE_NAME_LEN - 1);
+  return sem_name_;
+}
 #endif /* !defined (ACE_LACKS_FORK) */
 
 // Synchronize the start of the parent and the child.
@@ -132,7 +144,7 @@ spawn (void)
   // to avoid race condition between the creation in the parent and
   // use in the child.
   ACE_NEW_RETURN (synchronizer,
-                  SYNCHRONIZER ((unsigned int)0), // Locked by default...
+                  SYNCHRONIZER (0u /*locked*/ SYNC_EXTRA_ARGS),
                   -1);
 
 #if !defined (ACE_LACKS_FORK)
@@ -145,14 +157,14 @@ spawn (void)
                         1);
       /* NOTREACHED */
     case 0:
-      parent ();
+      child ();
       // Remove the semaphore.
       synchronizer->remove ();
       delete synchronizer;
       break;
       /* NOTREACHED */
     default:
-      child ();
+      parent ();
       delete synchronizer;
       break;
       /* NOTREACHED */

@@ -199,9 +199,6 @@ public:
   /// Dump the state of an object.
   virtual void dump (void) const = 0;
 
-  /// Declare the dynamic allocation hooks.
-  ACE_ALLOC_HOOK_DECLARE;
-
 private:
   // = Disallow copying and assignment.
   ACE_Message_Queue_Base (const ACE_Message_Queue_Base &);

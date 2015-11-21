@@ -172,7 +172,7 @@ Write_Handler::svc (void)
 #if !defined (ACE_LACKS_FORK) || defined (ACE_HAS_THREADS)
 
 // Execute the client tests.
-static void *
+void *
 client (void *arg)
 {
   ACE_INET_Addr *connection_addr =
@@ -289,7 +289,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   Read_Handler::set_countdown (opt_nchildren);
 
-  // Acceptor
+#ifndef ACE_LACKS_ACCEPT
+
   ACCEPTOR acceptor;
 
   acceptor.priority (ACE_Event_Handler::HI_PRIORITY);
@@ -379,10 +380,9 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("(%P|%t) child %d terminated\n"),
                   pid));
     }
-#else
-  /* NOTREACHED */
-  // We aborted on the previous #ifdef
 #endif /* ACE_HAS_THREADS */
+
+#endif // ACE_LACKS_ACCEPT
 
   if (orig_reactor != 0)
     ACE_Reactor::instance (orig_reactor);

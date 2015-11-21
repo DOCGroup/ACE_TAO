@@ -47,7 +47,7 @@ const size_t Test3_Loops = 10;
 const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 
 
-static void *
+void *
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
@@ -164,15 +164,17 @@ client (void *arg)
   u_char buffer2[255];
   // Give it a chance to get here
   ACE_OS::sleep (2);
+#ifndef ACE_LACKS_VA_FUNCTIONS
   len = cli_stream.recv (4,
                          buffer2,
                          150,
                          &buffer2[150],
                          105);
+#endif
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p; len is %d, but should be 255!\n"),
+                  ACE_TEXT ("(%P|%t) %m; len is %d, but should be 255!\n"),
                   len));
     }
 
@@ -216,7 +218,7 @@ client (void *arg)
   return 0;
 }
 
-static void *
+void *
 server (void *arg)
 {
   ACE_SOCK_Acceptor *peer_acceptor = (ACE_SOCK_Acceptor *) arg;
@@ -303,6 +305,7 @@ server (void *arg)
   //
   // Send the buffer back, using send (size_t n, ...) in 3 pieces.
 
+#ifndef ACE_LACKS_VA_FUNCTIONS
   len = sock_str.send (6,
                        buffer,
                        42,
@@ -310,6 +313,8 @@ server (void *arg)
                        189,
                        &buffer[231],
                        24);
+#endif
+
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
@@ -366,7 +371,7 @@ server (void *arg)
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
 
-static void
+void
 spawn (void)
 {
   // Acceptor
@@ -397,12 +402,13 @@ spawn (void)
                       1));
           /* NOTREACHED */
         case 0:
+          ACE_LOG_MSG->sync (ACE_TEXT ("SOCK_Send_Recv_Test-child"));
           client (&server_addr);
           ACE_OS::exit (0);
           /* NOTREACHED */
         default:
           server (reinterpret_cast<void *> (&peer_acceptor));
-          ACE_OS::wait ();
+          ACE_OS::waitpid (0, 0, 0);
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
@@ -441,7 +447,9 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SOCK_Send_Recv_Test"));
 
+#ifndef ACE_LACKS_ACCEPT
   spawn ();
+#endif
 
   ACE_END_TEST;
   return Test_Result;

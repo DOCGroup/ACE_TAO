@@ -22,6 +22,7 @@
 #include "ace/Default_Constants.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Array_Map.h"
+#include "ace/Malloc_Base.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -185,7 +186,11 @@ protected:
                   const ACE_DLL &adll);
 
   /// The typedef of the array used to store the services.
-  typedef ACE_Array_Map <size_t, const ACE_Service_Type*> array_type;
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      typedef ACE_Array_Map<size_t, const ACE_Service_Type*, std::equal_to<size_t>, ACE_Allocator_Std_Adapter<std::pair<size_t, const ACE_Service_Type*> > > array_type;
+#else
+      typedef ACE_Array_Map<size_t, const ACE_Service_Type*> array_type;
+#endif /* ACE_HAS_ALLOC_HOOKS */
 
   /// Contains all the configured services.
   array_type service_array_;

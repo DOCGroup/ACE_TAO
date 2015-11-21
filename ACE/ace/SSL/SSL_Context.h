@@ -104,26 +104,9 @@ public:
 
   enum {
     INVALID_METHOD = -1,
-#if !defined (OPENSSL_NO_SSL2)
-    SSLv2_client = 1,
-    SSLv2_server,
-    SSLv2,
-#endif /* !OPENSSL_NO_SSL2 */
-    SSLv3_client = 4,
-    SSLv3_server,
-    SSLv3,
     SSLv23_client,
     SSLv23_server,
     SSLv23,
-    TLSv1_client,
-    TLSv1_server,
-    TLSv1,
-    TLSv1_1_client,
-    TLSv1_1_server,
-    TLSv1_1,
-    TLSv1_2_client,
-    TLSv1_2_server,
-    TLSv1_2
   };
 
   /// Constructor

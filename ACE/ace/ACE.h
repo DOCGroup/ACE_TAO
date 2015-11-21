@@ -211,7 +211,9 @@ namespace ACE
    *
    * @return -1 on error, else total number of bytes received.
    */
+#if !defined (ACE_LACKS_VA_FUNCTIONS)
   extern ACE_Export ssize_t recv (ACE_HANDLE handle, size_t n, ...);
+#endif /* ACE_LACKS_VA_FUNCTIONS */
 
   extern ACE_Export ssize_t recvv (ACE_HANDLE handle,
                                    iovec *iov,
@@ -292,7 +294,9 @@ namespace ACE
                   size_t *bytes_transferred = 0);
 
   /// Varargs variant.
+#if !defined (ACE_LACKS_VA_FUNCTIONS)
   extern ACE_Export ssize_t send (ACE_HANDLE handle, size_t n, ...);
+#endif /* ACE_LACKS_VA_FUNCTIONS */
 
   extern ACE_Export ssize_t sendv (ACE_HANDLE handle,
                                    const iovec *iov,

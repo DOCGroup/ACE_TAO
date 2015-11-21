@@ -133,6 +133,8 @@ public:
   /// Dump the state of the object.
   virtual void dump (void) const;
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   /// Interface to Name server process for NET_LOCAL namespace.
   ACE_Name_Proxy ns_proxy_;

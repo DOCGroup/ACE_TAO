@@ -72,7 +72,7 @@ static u_short connection_count = 0;
 typedef ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> ACCEPTOR;
 typedef ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> S_ACCEPTOR;
 
-static void reset_handler (int conn)
+void reset_handler (int conn)
 {
   // Reset the number of connection the test should perform.
   *Waiting::instance () = conn;
@@ -89,8 +89,8 @@ Echo_Handler::Echo_Handler (ACE_Thread_Manager *thr_mgr)
   : ACE_Svc_Handler<ACE_MEM_STREAM, ACE_SYNCH> (thr_mgr),
     connection_ (++connection_count)
 {
-  ACE_OS::sprintf (this->name_, ACE_TEXT ("Connection %d --> "),
-                   this->connection_);
+  ACE_OS::snprintf (this->name_, MAXPATHLEN, ACE_TEXT ("Connection %d --> "),
+                    this->connection_);
 }
 
 int
@@ -158,7 +158,7 @@ Echo_Handler::svc (void)
   return 0;
 }
 
-static int
+int
 run_client (u_short port,
             ACE_MEM_IO::Signal_Strategy strategy)
 {
@@ -181,8 +181,9 @@ run_client (u_short port,
 
   for (size_t cntr = 0; cntr < NUMBER_OF_ITERATIONS; cntr ++)
     {
-      ACE_OS::sprintf (buf, ACE_TEXT ("Iteration ")ACE_SIZE_T_FORMAT_SPECIFIER,
-                       cntr);
+      ACE_OS::snprintf (buf, MAXPATHLEN,
+                        ACE_TEXT ("Iteration ") ACE_SIZE_T_FORMAT_SPECIFIER,
+                        cntr);
 
       ssize_t slen = (ACE_OS::strlen (buf) + 1) * sizeof (ACE_TCHAR);
 
@@ -212,7 +213,7 @@ run_client (u_short port,
 }
 
 #if defined (_TEST_USES_THREADS)
-static ACE_THR_FUNC_RETURN
+ACE_THR_FUNC_RETURN
 connect_client (void *arg)
 {
   u_short *sport =  reinterpret_cast <u_short *> (arg);
@@ -221,7 +222,7 @@ connect_client (void *arg)
 }
 #endif
 
-static void
+void
 create_reactor (void)
 {
   ACE_Reactor_Impl *impl = 0;
@@ -242,7 +243,7 @@ create_reactor (void)
   ACE_Reactor::instance (reactor);
 }
 
-static int
+int
 test_reactive (const ACE_TCHAR *prog,
                ACE_MEM_Addr &server_addr)
 {
@@ -322,7 +323,7 @@ test_reactive (const ACE_TCHAR *prog,
   return status;
 }
 
-static int
+int
 test_concurrent (const ACE_TCHAR *prog,
                  ACE_MEM_Addr &server_addr)
 {
@@ -422,6 +423,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // This is the "master" process.
 
       ACE_START_TEST (ACE_TEXT ("MEM_Stream_Test"));
+#ifndef ACE_LACKS_ACCEPT
       create_reactor ();
       ACE_MEM_Addr server_addr (port);
 
@@ -439,6 +441,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       test_concurrent (argc > 0 ? argv[0] : ACE_TEXT ("MEM_Stream_Test"), server_addr);
 
+#endif // ACE_LACKS_ACCEPT
       ACE_END_TEST;
       return 0;
     }
@@ -450,7 +453,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_TCHAR lognm[MAXPATHLEN];
       int mypid (ACE_OS::getpid ());
-      ACE_OS::sprintf(lognm, ACE_TEXT ("MEM_Stream_Test-%d"), mypid);
+      ACE_OS::snprintf (lognm, MAXPATHLEN,
+                        ACE_TEXT ("MEM_Stream_Test-%d"), mypid);
       ACE_START_TEST (lognm);
 
       ACE_Get_Opt opts (argc, argv, ACE_TEXT ("p:rm"));
