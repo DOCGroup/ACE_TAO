@@ -553,6 +553,11 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
     cpscmp(const HASH_MAP_ENTRY_REF* left, const HASH_MAP_ENTRY_REF* right)
   {
+    if (is_entry_purgable_i (*left) && !is_entry_purgable_i (*right))
+      return -1;
+    if (!is_entry_purgable_i (*left) && is_entry_purgable_i (*right))
+      return 1;
+
     if (left->int_id_->transport ()->purging_order () <
         right->int_id_->transport ()->purging_order ())
       return -1;
@@ -599,10 +604,12 @@ namespace TAO
 
           int count = 0;
 
-          for (int i = 0; count < amount && i < sorted_size; ++i)
+          for (int i = 0;
+               count < amount &&
+                 i < sorted_size &&
+                 is_entry_purgable_i (sorted_set[i]);
+               ++i)
             {
-              if (is_entry_purgable_i (sorted_set[i]))
-                {
                   transport_type* transport =
                     sorted_set[i].int_id_->transport ();
                   sorted_set[i].int_id_->recycle_state (ENTRY_BUSY);
@@ -633,7 +640,6 @@ namespace TAO
 
                   // Count this as a successful purged entry
                   ++count;
-                }
             }
 
           delete [] sorted_set;
