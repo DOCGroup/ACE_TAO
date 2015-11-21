@@ -294,7 +294,7 @@ namespace TAO
       for (typename ACE_Unbounded_Set<Cache_IntId>::iterator it = int_ids.begin();
            it != int_ids.end(); ++it)
         {
-          if (this->is_entry_available_i (*it))
+          if (is_entry_available_i (*it))
               {
                 // Successfully found a transport_type.
                 found = CACHE_FOUND_AVAILABLE;
@@ -313,7 +313,7 @@ namespace TAO
                   }
                 break;
               }
-          else if (this->is_entry_connecting_i (*it))
+          else if (is_entry_connecting_i (*it))
               {
                 if (TAO_debug_level > 6)
                   {
@@ -498,7 +498,8 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   bool
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_purgable_i (HASH_MAP_ENTRY_REF &entry)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_purgable_i (
+    const HASH_MAP_ENTRY_REF &entry)
   {
     Cache_Entries_State entry_state = entry.int_id_->recycle_state ();
     transport_type* transport = entry.int_id_->transport ();
@@ -600,7 +601,7 @@ namespace TAO
 
           for (int i = 0; count < amount && i < sorted_size; ++i)
             {
-              if (this->is_entry_purgable_i (sorted_set[i]))
+              if (is_entry_purgable_i (sorted_set[i]))
                 {
                   transport_type* transport =
                     sorted_set[i].int_id_->transport ();

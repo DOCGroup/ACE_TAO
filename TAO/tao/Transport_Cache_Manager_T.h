@@ -210,17 +210,17 @@ namespace TAO
     /**
      * Tries to find if the @c int_id_ in @a entry is available for use.
      */
-    bool is_entry_available_i (const Cache_IntId& int_id);
+    static bool is_entry_available_i (const Cache_IntId& int_id);
 
     /**
      * Tries to find if the @c int_id_ in @a entry is connect pending
      */
-    bool is_entry_connecting_i (const Cache_IntId& int_id);
+    static bool is_entry_connecting_i (const Cache_IntId& int_id);
 
     /**
      * Tries to find if the @c int_id_ in @a entry is purgable
      */
-    bool is_entry_purgable_i (HASH_MAP_ENTRY_REF &entry);
+    static bool is_entry_purgable_i (const HASH_MAP_ENTRY_REF &entry);
 
     /// Used by qsort
     static int cpscmp(const HASH_MAP_ENTRY_REF* left,
