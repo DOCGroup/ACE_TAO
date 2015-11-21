@@ -163,8 +163,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
   , flush_in_post_open_ (false)
 {
-  cache_map_entry_.entry_ = 0;
-  cache_map_entry_.int_id_ = 0;
   ACE_NEW (this->messaging_object_,
             TAO_GIOP_Message_Base (orb_core,
                                    this,
@@ -561,8 +559,10 @@ TAO_Transport::purge_entry (void)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_entry, ")
-                  ACE_TEXT ("entry is %@\n"),
-                  this->id (), this->cache_map_entry_.entry_));
+                  ACE_TEXT ("entry is {%@:%@}\n"),
+                  this->id (),
+                  this->cache_map_entry_.entry_,
+                  this->cache_map_entry_.int_id_));
     }
 
   return this->transport_cache_manager ().purge_entry (this->cache_map_entry_);

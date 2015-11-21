@@ -8,6 +8,8 @@
 #include "ace/Reactor.h"
 #include "ace/Lock_Adapter_T.h"
 
+#include <algorithm>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Cache_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -400,8 +402,6 @@ namespace TAO
   {
     HASH_MAP_ITER end_iter = this->cache_map_.end ();
     HASH_MAP_ENTRY_REF zero_ref;
-    zero_ref.entry_ = 0;
-    zero_ref.int_id_ = 0;
 
     for (HASH_MAP_ITER iter = this->cache_map_.begin ();
          iter != end_iter;
@@ -549,49 +549,39 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
-  int
+  bool
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
-    cpscmp(const HASH_MAP_ENTRY_REF* left, const HASH_MAP_ENTRY_REF* right)
+    cpsless(const HASH_MAP_ENTRY_REF& left, const HASH_MAP_ENTRY_REF& right)
   {
-    if (is_entry_purgable_i (*left) && !is_entry_purgable_i (*right))
-      return -1;
-    if (!is_entry_purgable_i (*left) && is_entry_purgable_i (*right))
-      return 1;
+    if (is_entry_purgable_i (left) && !is_entry_purgable_i (right))
+      return true;
+    if (!is_entry_purgable_i (left) && is_entry_purgable_i (right))
+      return false;
 
-    if (left->int_id_->transport ()->purging_order () <
-        right->int_id_->transport ()->purging_order ())
-      return -1;
-
-    if (left->int_id_->transport ()->purging_order () >
-        right->int_id_->transport ()->purging_order ())
-      return 1;
-
-    return 0;
+    return left.int_id_->transport ()->purging_order () <
+            right.int_id_->transport ()->purging_order ();
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge (void)
   {
-    typedef ACE_Unbounded_Set<transport_type*> transport_set_type;
+    typedef ACE_Array<HASH_MAP_ENTRY_REF> transport_set_type;
     transport_set_type transports_to_be_closed;
 
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->cache_lock_, 0));
 
-      DESCRIPTOR_SET sorted_set = 0;
-      int const sorted_size = this->fill_set_i (sorted_set);
+      // Calculate the number of entries to purge
+      int const amount = (this->current_size() * this->percent_) / 100;
 
-      // Only call close_entries () if sorted_set != 0.  It takes
-      // control of sorted_set and cleans up any allocated memory.  If
-      // sorted_set == 0, then there is nothing to de-allocate.
-      if (sorted_set != 0)
+      this->fill_set_i (transports_to_be_closed, amount);
+
+      // Only call close_entries () if transports_to_be_closed is not empty,
+      // otherwise there is nothing to de-allocate.
+      if (transports_to_be_closed.size() != 0)
         {
           // BEGIN FORMER close_entries
-          // Calculate the number of entries to purge, when we have
-          // to purge try to at least to purge minimal of 1 entry
-          // which is needed if we have a very small cache maximum
-          int const amount = (sorted_size * this->percent_) / 100;
 
           if (TAO_debug_level > 4)
             {
@@ -599,71 +589,40 @@ namespace TAO
                 ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
                 ACE_TEXT ("Trying to purge %d of %d cache entries\n"),
                 amount,
-                sorted_size));
+                transports_to_be_closed.size ()));
             }
-
-          int count = 0;
-
-          for (int i = 0;
-               count < amount &&
-                 i < sorted_size &&
-                 is_entry_purgable_i (sorted_set[i]);
-               ++i)
+          for (typename transport_set_type::iterator it =
+                 transports_to_be_closed.begin();
+               it != transports_to_be_closed.end(); ++it)
             {
-                  transport_type* transport =
-                    sorted_set[i].int_id_->transport ();
-                  sorted_set[i].int_id_->recycle_state (ENTRY_BUSY);
-                  transport->add_reference ();
-
-                  if (TAO_debug_level > 4)
-                    {
-                      TAOLIB_DEBUG ((LM_INFO,
+              (*it).int_id_->recycle_state (ENTRY_BUSY);
+              transport_type* transport = (*it).int_id_->transport ();
+              transport->add_reference ();
+              if (TAO_debug_level > 4)
+                {
+                  TAOLIB_DEBUG ((LM_INFO,
                         ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
                         ACE_TEXT ("Purgable Transport[%d] found in ")
                         ACE_TEXT ("cache\n"),
                         transport->id ()));
-                    }
-
-                  if (transports_to_be_closed.insert_tail (transport) != 0)
-                    {
-                      if (TAO_debug_level > 0)
-                        {
-                          TAOLIB_ERROR ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T")
-                            ACE_TEXT ("::purge, Unable to add transport[%d] ")
-                            ACE_TEXT ("on the to-be-closed set, so ")
-                            ACE_TEXT ("it will not be purged\n"),
-                            transport->id ()));
-                        }
-                      transport->remove_reference ();
-                    }
-
-                  // Count this as a successful purged entry
-                  ++count;
+                }
             }
-
-          delete [] sorted_set;
-          sorted_set = 0;
           // END FORMER close_entries
         }
     }
 
     // Now, without the lock held, lets go through and close all the transports.
-    if (! transports_to_be_closed.is_empty ())
+    for (typename transport_set_type::iterator it =
+           transports_to_be_closed.begin();
+         it != transports_to_be_closed.end(); ++it)
       {
-        typename transport_set_type::iterator it (transports_to_be_closed);
-        while (! it.done ())
-          {
-            transport_type *transport = *it;
-
-            it.advance ();
+            transport_type *transport = (*it).int_id_->transport ();
 
             if (transport)
               {
                 transport->close_connection ();
                 transport->remove_reference ();
               }
-          }
       }
 
     if (TAO_debug_level > 4)
@@ -689,42 +648,13 @@ namespace TAO
   template <typename TT, typename TRDT, typename PSTRAT>
   void
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
-    sort_set (DESCRIPTOR_SET& entries, int current_size)
-  {
-#if defined (ACE_LACKS_QSORT)
-    // Use insertion sort if we don't have qsort
-    for(int i = 1; i < current_size; ++i)
-      {
-        if (cpscmp (&entries[i],&entries[i-1])< 0)
-          {
-            HASH_MAP_ENTRY_REF entry = entries[i];
-
-            for(int j = i; j > 0 &&
-                  cpscmp (&entries[j - 1], &entry) > 0; --j)
-              {
-                HASH_MAP_ENTRY_REF holder = entries[j];
-                entries[j] = entries[j - 1];
-                entries[j - 1] = holder;
-              }
-          }
-      }
-#else
-    ACE_OS::qsort (entries, current_size,
-                   sizeof (HASH_MAP_ENTRY_REF),
-                   reinterpret_cast<ACE_COMPARE_FUNC>(cpscmp));
-#endif /* ACE_LACKS_QSORT */
-  }
-
-  template <typename TT, typename TRDT, typename PSTRAT>
-  int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
-    fill_set_i (DESCRIPTOR_SET& sorted_set)
+    fill_set_i (ACE_Array<HASH_MAP_ENTRY_REF>& entries, int amount)
   {
     int current_size = 0;
     int const cache_maximum = this->purging_strategy_->cache_maximum ();
 
-    // set sorted_set to 0.  This signifies nothing to purge.
-    sorted_set = 0;
+    // set entries to 0.  This signifies nothing to purge.
+    entries.size (0);
 
     // Do we need to worry about cache purging?
     if (cache_maximum >= 0)
@@ -741,28 +671,48 @@ namespace TAO
 
         if (current_size >= cache_maximum)
           {
-            ACE_NEW_RETURN (sorted_set, HASH_MAP_ENTRY_REF[current_size], 0);
+            if (entries.size(current_size) < 0)
+              return;
 
             HASH_MAP_ITER iter = this->cache_map_.begin ();
 
             for (int i = 0; i < current_size; ++i)
               {
                 ACE_Unbounded_Set<Cache_IntId>& int_ids = (*iter).item();
-                for (typename ACE_Unbounded_Set<Cache_IntId>::iterator it = int_ids.begin(); it != int_ids.end(); ++it)
+                for (typename ACE_Unbounded_Set<Cache_IntId>::iterator it =
+                       int_ids.begin(); it != int_ids.end(); ++it)
                   {
                     HASH_MAP_ENTRY_REF ref;
                     ref.entry_ = &*iter;
                     ref.int_id_ = &*it;
-                    sorted_set[i] = ref;
+                    entries[i] = ref;
                   }
                 ++iter;
               }
 
-            this->sort_set (sorted_set, current_size);
+#if !defined (ACE_LACKS_STD_PARTIAL_SORT)
+           std::partial_sort (
+              entries.begin(),
+              entries.begin() + amount,
+              entries.end(),
+              &cpsless);
+#else
+           // Use (partial) selection sort if we don't have std::partial_sort
+           for (int i = 0; i < amount; ++i)
+             {
+               int m = i;
+               for (int j = i + 1; j < current_size; ++j)
+                 {
+                   if (cpsless (entries[j], entries[m]))
+                     m = j;
+                 }
+               if (m != i)
+                 std::swap (entries[m], entries[i]);
+             }
+#endif // ACE_LACKS_STD_PARTIAL_SORT
+            entries.size (amount);
           }
       }
-
-    return current_size;
   }
 }
 

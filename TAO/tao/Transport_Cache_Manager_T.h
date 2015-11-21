@@ -30,6 +30,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Handle_Set;
+template <class T> class ACE_Array;
 template <class T> class ACE_Unbounded_Set;
 template <class T> class ACE_Unbounded_Set_Iterator;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -89,6 +90,7 @@ namespace TAO
 
     struct HASH_MAP_ENTRY_REF
     {
+      HASH_MAP_ENTRY_REF() : entry_(0), int_id_(0) {}
       HASH_MAP_ENTRY *entry_;
       Cache_IntId* int_id_;
     };
@@ -222,18 +224,21 @@ namespace TAO
      */
     static bool is_entry_purgable_i (const HASH_MAP_ENTRY_REF &entry);
 
-    /// Used by qsort
-    static int cpscmp(const HASH_MAP_ENTRY_REF* left,
-                      const HASH_MAP_ENTRY_REF* right);
+    /**
+     * Comparison function used by fill_set_i
+     *
+     * @return true if @a left is less then @a right
+     */
+    static bool cpsless (
+       const HASH_MAP_ENTRY_REF& left,
+       const HASH_MAP_ENTRY_REF& right);
 
-    typedef HASH_MAP_ENTRY_REF* DESCRIPTOR_SET;
-
-    /// Sort the list of entries
-    void sort_set (DESCRIPTOR_SET& entries, int size);
-
-    /// Fill sorted_set in with the transport_descriptor_type's in
-    /// a sorted order.
-    int fill_set_i (DESCRIPTOR_SET& sorted_set);
+    /**
+     * Fill sorted_set with in with @a n smallest elements, based on
+     * cpsless and cpscmp, and sort them.
+     */
+    void fill_set_i (
+      ACE_Array<HASH_MAP_ENTRY_REF>& sorted_set, int nth_index);
 
     /// Non-locking version of blockable_client_transports ().
     bool blockable_client_transports_i (Connection_Handler_Set &handlers);
