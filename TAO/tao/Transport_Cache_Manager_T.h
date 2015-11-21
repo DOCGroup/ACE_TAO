@@ -222,10 +222,9 @@ namespace TAO
      */
     bool is_entry_purgable_i (HASH_MAP_ENTRY_REF &entry);
 
-#if !defined(ACE_LACKS_QSORT)
     /// Used by qsort
-    static int cpscmp(const void* a, const void* b);
-#endif
+    static int cpscmp(const HASH_MAP_ENTRY_REF* left,
+                      const HASH_MAP_ENTRY_REF* right);
 
     typedef HASH_MAP_ENTRY_REF* DESCRIPTOR_SET;
 

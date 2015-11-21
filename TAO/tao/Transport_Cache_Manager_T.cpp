@@ -547,15 +547,11 @@ namespace TAO
     return result;
   }
 
-#if !defined (ACE_LACKS_QSORT)
   template <typename TT, typename TRDT, typename PSTRAT>
   int
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::
-    cpscmp(const void* a, const void* b)
+    cpscmp(const HASH_MAP_ENTRY_REF* left, const HASH_MAP_ENTRY_REF* right)
   {
-    const HASH_MAP_ENTRY_REF* left  = static_cast<const HASH_MAP_ENTRY_REF*>(a);
-    const HASH_MAP_ENTRY_REF* right = static_cast<const HASH_MAP_ENTRY_REF*>(b);
-
     if (left->int_id_->transport ()->purging_order () <
         right->int_id_->transport ()->purging_order ())
       return -1;
@@ -566,7 +562,6 @@ namespace TAO
 
     return 0;
   }
-#endif /* ACE_LACKS_QSORT */
 
   template <typename TT, typename TRDT, typename PSTRAT>
   int
@@ -693,16 +688,14 @@ namespace TAO
     // Use insertion sort if we don't have qsort
     for(int i = 1; i < current_size; ++i)
       {
-        if (entries[i]->int_id_.transport ()->purging_order () <
-            entries[i - 1]->int_id_.transport ()->purging_order ())
+        if (cpscmp (&entries[i],&entries[i-1])< 0)
           {
-            HASH_MAP_ENTRY* entry = entries[i];
+            HASH_MAP_ENTRY_REF entry = entries[i];
 
             for(int j = i; j > 0 &&
-                  entries[j - 1]->int_id_.transport ()->purging_order () >
-                  entry.item ().transport ()->purging_order (); --j)
+                  cpscmp (&entries[j - 1], &entry) > 0; --j)
               {
-                HASH_MAP_ENTRY* holder = entries[j];
+                HASH_MAP_ENTRY_REF holder = entries[j];
                 entries[j] = entries[j - 1];
                 entries[j - 1] = holder;
               }
@@ -710,7 +703,8 @@ namespace TAO
       }
 #else
     ACE_OS::qsort (entries, current_size,
-                   sizeof (HASH_MAP_ENTRY_REF), (ACE_COMPARE_FUNC)cpscmp);
+                   sizeof (HASH_MAP_ENTRY_REF),
+                   reinterpret_cast<ACE_COMPARE_FUNC>(cpscmp));
 #endif /* ACE_LACKS_QSORT */
   }
 
