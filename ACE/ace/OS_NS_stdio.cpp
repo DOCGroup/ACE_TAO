@@ -895,8 +895,15 @@ namespace { // helpers for vsnprintf_emulation
         }
       else
         {
+#if defined __MINGW32__ && defined __x86_64__
+          // Avoid std::modf(long double, long double*) on MinGW-W64 64-bit:
+          // see https://sourceforge.net/p/mingw-w64/bugs/478
+          double int_part;
+          double frac_part = std::modf (static_cast<double> (val), &int_part);
+#else
           long double int_part;
           long double frac_part = std::modf (val, &int_part);
+#endif
 
           Snprintf_Digit_Grouping dg (flags, grouping, thousands_sep);
           dig_left += dg.separators_needed (dig_left);
