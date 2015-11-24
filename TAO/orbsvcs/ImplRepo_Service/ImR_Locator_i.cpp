@@ -854,83 +854,91 @@ ImR_Locator_i::link_servers
   return;
 }
 
-void
-ImR_Locator_i::kill_server
-(ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
- const char * name,
- CORBA::Short signum)
+bool
+ImR_Locator_i::kill_server_i (const Server_Info_Ptr &si,
+                              CORBA::Short signum,
+                              CORBA::Exception *& ex)
 {
-  Server_Info_Ptr si;
-  if (!this->get_info_for_name (name, si))
+  if (si->is_mode(ImplementationRepository::PER_CLIENT))
     {
-      CORBA::Exception *ex =
-        new ImplementationRepository::NotFound;
-      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
-      _tao_rh->kill_server_excep (&h);
-      return;
-    }
-
-  if (!si->alt_info_.null ())
-    {
-      si = si->alt_info_;
-    }
-
-  UpdateableServerInfo info (this->repository_, si, true);
-  if (info->is_mode(ImplementationRepository::PER_CLIENT))
-    {
-      CORBA::Exception *ex =
-        new ImplementationRepository::CannotComplete ("per-client server");
-      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
-      _tao_rh->kill_server_excep (&h);
-      return;
+      ex = new ImplementationRepository::CannotComplete ("per-client server");
+      return false;
     }
 
   Activator_Info_Ptr ainfo = this->get_activator (si->activator);
   if (ainfo.null ())
     {
-       CORBA::Exception *ex =
-        new ImplementationRepository::CannotComplete ("no activator");
-      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
-      _tao_rh->kill_server_excep (&h);
-      return;
-   }
+      ex = new ImplementationRepository::CannotComplete ("no activator");
+      return false;
+    }
+
   ImplementationRepository::ActivatorExt_var actext =
     ImplementationRepository::ActivatorExt::_narrow (ainfo->activator.in());
+
   if (CORBA::is_nil (actext.in()))
     {
-      CORBA::Exception *ex =
-        new ImplementationRepository::CannotComplete ("activator incompatible");
-      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
-      _tao_rh->kill_server_excep (&h);
-      return;
+      ex = new ImplementationRepository::CannotComplete ("activator incompatible");
+      return false;
     }
-  if (!actext->kill_server (si->key_name_.c_str(), si->pid, signum))
+  return actext->kill_server (si->key_name_.c_str(), si->pid, signum);
+}
+
+void
+ImR_Locator_i::kill_server
+(ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
+ const char * name, CORBA::Short signum)
+{
+  CORBA::Exception *ex = 0;
+  Server_Info_Ptr si;
+  if (!this->get_info_for_name (name, si))
     {
-      CORBA::Exception *ex =
-        new ImplementationRepository::CannotComplete ("server not running");
-      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
-      _tao_rh->kill_server_excep (&h);
+      ex = new ImplementationRepository::NotFound;
     }
   else
     {
-      _tao_rh->kill_server ();
-      AsyncAccessManager_ptr aam = this->find_aam (si->key_name_.c_str ());
-      if (!aam.is_nil ())
+      if (!si->alt_info_.null ())
         {
-          aam->shutdown_initiated ();
+          si = si->alt_info_;
         }
+      if (!this->kill_server_i (si, signum, ex))
+        {
+          if (ex == 0)
+            {
+              ex = new ImplementationRepository::CannotComplete ("server not running");
+            }
+        }
+    }
+  if (ex != 0)
+    {
+      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+      _tao_rh->kill_server_excep (&h);
+      return;
+    }
+
+  _tao_rh->kill_server ();
+  AsyncAccessManager_ptr aam = this->find_aam (si->key_name_.c_str ());
+  if (!aam.is_nil ())
+    {
+      aam->shutdown_initiated ();
     }
 }
 
 void
-ImR_Locator_i::destroy_poa (const ACE_CString &poa_name)
+ImR_Locator_i::remove_server_i (const Server_Info_Ptr &info)
 {
-  PortableServer::POA_var poa = findPOA (poa_name.c_str());
-  if (! CORBA::is_nil (poa.in ()))
+  if (debug_ > 1)
+    ORBSVCS_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P|%t) ImR: Removing Server <%C>...\n"),
+                    info->key_name_.c_str()));
+
+  ACE_CString poa_name = info->poa_name;
+  if (this->repository_->remove_server (info->key_name_, this) == 0)
     {
-      bool etherealize = true;
-      bool wait = false;
-      poa->destroy (etherealize, wait);
+      this->destroy_poa (poa_name);
+      if (debug_ > 0)
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) ImR: Removed Server <%C>.\n"),
+                        info->key_name_.c_str()));
     }
 }
 
@@ -971,20 +979,7 @@ ImR_Locator_i::remove_server
           _tao_rh->remove_server_excep (&h);
           return;
         }
-      if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) ImR: Removing Server <%C>...\n"),
-                        info->key_name_.c_str()));
-
-      ACE_CString poa_name = info->poa_name;
-      if (this->repository_->remove_server (info->key_name_, this) == 0)
-        {
-          this->destroy_poa (poa_name);
-          if (debug_ > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) ImR: Removed Server <%C>.\n"),
-                        id));
-        }
+      this->remove_server_i (info);
     }
   else
     {
@@ -997,6 +992,95 @@ ImR_Locator_i::remove_server
     }
   _tao_rh->remove_server ();
 }
+
+void
+ImR_Locator_i::force_remove_server
+(ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
+ const char *name, CORBA::Short signum)
+{
+  CORBA::Exception *ex = 0;
+  Server_Info_Ptr si;
+  AsyncAccessManager_ptr aam;
+  if (this->opts_->readonly ())
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) ImR: Can't remove server <%C> due to locked database.\n"),
+                      name));
+      ex =
+        new CORBA::NO_PERMISSION (CORBA::SystemException::_tao_minor_code
+                                  (TAO_IMPLREPO_MINOR_CODE, 0),
+                                  CORBA::COMPLETED_NO);
+      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+      _tao_rh->force_remove_server_excep (&h);
+      return;
+    }
+
+
+  if (!this->get_info_for_name (name, si))
+    {
+      ex = new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+      _tao_rh->force_remove_server_excep (&h);
+      return;
+   }
+
+  if (!si->alt_info_.null ())
+    {
+      si = si->alt_info_;
+    }
+  aam = this->find_aam (si->key_name_.c_str ());
+  if (aam.is_nil ())
+    {
+      this->remove_server_i (si);
+      _tao_rh->force_remove_server ();
+      return;
+    }
+
+  ImR_ResponseHandler *aam_rh =
+    new ImR_Loc_ResponseHandler (ImR_Loc_ResponseHandler::LOC_FORCE_REMOVE_SERVER,
+                                 _tao_rh);
+  if (aam->force_remove_rh (aam_rh))
+    {
+      delete aam_rh;
+      _tao_rh->force_remove_server ();
+      return;
+     }
+
+  bool active = (signum > 0) ?
+    this->kill_server_i (si, signum, ex) :
+    this->shutdown_server_i (si, ex, true);
+
+  if (ex != 0)
+    {
+      ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+      _tao_rh->force_remove_server_excep (&h);
+      aam->force_remove_rh (0);
+      return;
+    }
+  if (active)
+    {
+      aam->shutdown_initiated ();
+    }
+  else
+    {
+      aam->force_remove_rh (0);
+      remove_server_i (si);
+      _tao_rh->force_remove_server ();
+    }
+}
+
+void
+ImR_Locator_i::destroy_poa (const ACE_CString &poa_name)
+{
+  PortableServer::POA_var poa = findPOA (poa_name.c_str());
+  if (! CORBA::is_nil (poa.in ()))
+    {
+      bool etherealize = true;
+      bool wait = false;
+      poa->destroy (etherealize, wait);
+    }
+}
+
 
 PortableServer::POA_ptr
 ImR_Locator_i::findPOA (const char* name)
@@ -1012,27 +1096,27 @@ ImR_Locator_i::findPOA (const char* name)
   return PortableServer::POA::_nil ();
 }
 
-void
-ImR_Locator_i::shutdown_server
-(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
- const char* id)
+bool
+ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
+                                  CORBA::Exception *&ex_ret,
+                                  bool force)
 {
   const CORBA::ULong TAO_MINOR_MASK = 0x00000f80;
+  const char *id = si->key_name_.c_str();
   if (debug_ > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) ImR: Shutting down server <%C>.\n"),
-                id));
+                    ACE_TEXT ("(%P|%t) ImR: Shutting down server <%C>.\n"),
+                    id));
 
-  UpdateableServerInfo info (this->repository_, id);
+  UpdateableServerInfo info (this->repository_, si);
   if (info.null ())
     {
       ORBSVCS_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) ImR: shutdown_server () Cannot find info for server <%C>\n"),
-                  id));
-      CORBA::Exception *ex = new ImplementationRepository::NotFound;
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
-      _tao_rh->shutdown_server_excep (&h);
-      return;
+                      ACE_TEXT ("(%P|%t) ImR: shutdown_server () ")
+                      ACE_TEXT ("Cannot find info for server <%C>\n"),
+                      id));
+      ex_ret = new ImplementationRepository::NotFound;
+      return false;
     }
 
   this->connect_server (info);
@@ -1040,19 +1124,11 @@ ImR_Locator_i::shutdown_server
   if (CORBA::is_nil (info->active_info()->server.in ()))
     {
       ORBSVCS_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) ImR: shutdown_server () Cannot connect to server <%C>\n"),
-                  id));
-      CORBA::Exception *ex = new ImplementationRepository::NotFound;
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
-      try
-        {
-          _tao_rh->shutdown_server_excep (&h);
-        }
-      catch (const CORBA::Exception &ex)
-        {
-          ex._tao_print_exception (ACE_TEXT ("reporting connect error\n"));
-        }
-      return;
+                      ACE_TEXT ("(%P|%t) ImR: shutdown_server ()")
+                      ACE_TEXT (" Cannot connect to server <%C>\n"),
+                      id));
+      ex_ret = new ImplementationRepository::NotFound;
+      return false;
     }
 
   try
@@ -1062,15 +1138,7 @@ ImR_Locator_i::shutdown_server
       ImplementationRepository::ServerObject_var server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
       server->shutdown ();
-      // reset the server info on a successful call. A failure indicates the server isn't
-      // acting on the shutdown. Either it is shutting down already, or hasn't yet started,
-      // in which case the shutdown will need to be reissued.
-      info.edit ()->reset_runtime ();
-      AsyncAccessManager_ptr aam = this->find_aam (info->ping_id ());
-      if (!aam.is_nil())
-        {
-          aam->shutdown_initiated ();
-        }
+      return true;
     }
   catch (const CORBA::TIMEOUT &ex)
     {
@@ -1083,9 +1151,10 @@ ImR_Locator_i::shutdown_server
                       ACE_TEXT ("(%P|%t) ImR: Timeout while waiting for <%C> shutdown.\n"),
                       id));
         }
-      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
-      _tao_rh->shutdown_server_excep (&h);
-      return;
+      if (!force && this->opts_->throw_shutdown_exceptions ())
+        {
+          ex_ret = ex._tao_duplicate();
+        }
     }
   catch (const CORBA::COMM_FAILURE& ex)
     {
@@ -1096,11 +1165,9 @@ ImR_Locator_i::shutdown_server
                       ACE_TEXT ("ImR: COMM_FAILURE while waiting for <%C> shutdown.\n"),
                       id));
         }
-      if (this->opts_->throw_shutdown_exceptions ())
+      if (!force && this->opts_->throw_shutdown_exceptions ())
         {
-          ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
-          _tao_rh->shutdown_server_excep (&h);
-          return;
+          ex_ret = ex._tao_duplicate();
         }
     }
   catch (const CORBA::TRANSIENT& ex)
@@ -1116,11 +1183,9 @@ ImR_Locator_i::shutdown_server
                       ACE_TEXT ("ImR: TRANSIENT while waiting for <%C> shutdown.\n"),
                       id));
         }
-      if (this->opts_->throw_shutdown_exceptions ())
+      if (!force && this->opts_->throw_shutdown_exceptions ())
         {
-          ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
-          _tao_rh->shutdown_server_excep (&h);
-          return;
+          ex_ret = ex._tao_duplicate();
         }
     }
   catch (const CORBA::Exception &ex)
@@ -1131,15 +1196,47 @@ ImR_Locator_i::shutdown_server
             ACE_TEXT ("(%P|%t) ImR: Exception while shutting down <%C>\n"),
             id));
         }
-      if (this->opts_->throw_shutdown_exceptions ())
+      if (!force && this->opts_->throw_shutdown_exceptions ())
         {
-          ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
-          _tao_rh->shutdown_server_excep (&h);
-          return;
+          ex_ret = ex._tao_duplicate();
         }
     }
+  return false;
+}
 
-  _tao_rh->shutdown_server ();
+void
+ImR_Locator_i::shutdown_server
+(ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
+ const char* name)
+{
+  CORBA::Exception *ex = 0;
+  Server_Info_Ptr si;
+
+  if (!this->get_info_for_name (name, si))
+    {
+      ex = new ImplementationRepository::NotFound;
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
+      _tao_rh->shutdown_server_excep (&h);
+      return;
+   }
+
+  if (this->shutdown_server_i (si, ex, false))
+    {
+      AsyncAccessManager_ptr aam = this->find_aam (si->ping_id ());
+      if (!aam.is_nil())
+        {
+          aam->shutdown_initiated ();
+        }
+    }
+  if (ex != 0)
+    {
+      ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
+      _tao_rh->shutdown_server_excep (&h);
+    }
+  else
+    {
+      _tao_rh->shutdown_server ();
+    }
 }
 
 void
@@ -1688,10 +1785,19 @@ ImR_SyncResponseHandler::wait_for_result (void)
 
 //---------------------------------------------------------------------------
 
-ImR_Loc_ResponseHandler::ImR_Loc_ResponseHandler (Loc_Operation_Id opid,
-                                            ImplementationRepository::AMH_AdministrationResponseHandler_ptr rh)
+ImR_Loc_ResponseHandler::ImR_Loc_ResponseHandler
+(Loc_Operation_Id opid,
+ ImplementationRepository::AMH_AdministrationResponseHandler_ptr rh)
   :op_id_ (opid),
    resp_ (ImplementationRepository::AMH_AdministrationResponseHandler::_duplicate (rh))
+{
+}
+
+ImR_Loc_ResponseHandler::ImR_Loc_ResponseHandler
+(Loc_Operation_Id opid,
+ ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr rh)
+  :op_id_ (opid),
+   ext_ (ImplementationRepository::AMH_AdministrationExtResponseHandler::_duplicate (rh))
 {
 }
 
@@ -1702,6 +1808,11 @@ ImR_Loc_ResponseHandler::~ImR_Loc_ResponseHandler (void)
 void
 ImR_Loc_ResponseHandler::send_ior (const char *)
 {
+  if (CORBA::is_nil (this->resp_))
+    {
+      this->send_ior_ext ("");
+      return;
+    }
   switch (this->op_id_)
     {
     case LOC_ACTIVATE_SERVER:
@@ -1722,6 +1833,23 @@ ImR_Loc_ResponseHandler::send_ior (const char *)
     case LOC_SERVER_IS_SHUTTING_DOWN:
       resp_->server_is_shutting_down ();
       break;
+    default:
+      break;
+    };
+
+  delete this;
+}
+
+void
+ImR_Loc_ResponseHandler::send_ior_ext (const char *)
+{
+  switch (this->op_id_)
+    {
+    case LOC_FORCE_REMOVE_SERVER:
+      ext_->force_remove_server ();
+      break;
+    default:
+      break;
     };
 
   delete this;
@@ -1730,6 +1858,11 @@ ImR_Loc_ResponseHandler::send_ior (const char *)
 void
 ImR_Loc_ResponseHandler::send_exception (CORBA::Exception *ex)
 {
+  if (CORBA::is_nil (this->resp_))
+    {
+      this->send_exception_ext (ex);
+      return;
+    }
   ImplementationRepository::AMH_AdministrationExceptionHolder h (ex);
   switch (this->op_id_)
     {
@@ -1750,6 +1883,22 @@ ImR_Loc_ResponseHandler::send_exception (CORBA::Exception *ex)
       break;
     case LOC_SERVER_IS_SHUTTING_DOWN:
       resp_->server_is_shutting_down_excep (&h);
+      break;
+    default:
+      break;
+    };
+  delete this;
+}
+void
+ImR_Loc_ResponseHandler::send_exception_ext (CORBA::Exception *ex)
+{
+  ImplementationRepository::AMH_AdministrationExtExceptionHolder h (ex);
+  switch (this->op_id_)
+    {
+    case LOC_FORCE_REMOVE_SERVER:
+        ext_->force_remove_server_excep (&h);
+      break;
+    default:
       break;
     };
   delete this;

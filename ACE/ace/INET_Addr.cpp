@@ -846,7 +846,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
 #endif
     sizeof (sockaddr_in);
 
-  const int res = ACE_OS::getnameinfo ((const sockaddr *) &this->inet_addr_,
+  const int res = ACE_OS::getnameinfo ((const sockaddr *) this->get_addr (),
                                        addr_size, hostname,
                                        static_cast<ACE_SOCKET_LEN> (len),
                                        0, 0, 0);

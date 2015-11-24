@@ -64,13 +64,14 @@ class Locator_Export AsyncAccessManager
 
   void add_interest (ImR_ResponseHandler *rh, bool manual);
   ImplementationRepository::AAM_Status status (void) const;
+  bool force_remove_rh (ImR_ResponseHandler *rh);
 
   void activator_replied (bool success, int pid);
   void server_is_running (const char *partial_ior,
                           ImplementationRepository::ServerObject_ptr ref);
   void server_is_shutting_down (void);
   void shutdown_initiated (void);
-  bool notify_child_death (int pid = 0);
+  bool notify_child_death (int pid);
   void ping_replied (LiveStatus server);
 
   AsyncAccessManager *_add_ref (void);
@@ -88,6 +89,7 @@ class Locator_Export AsyncAccessManager
   UpdateableServerInfo info_;
   bool manual_start_;
   int retries_;
+  ImR_ResponseHandler *remove_on_death_rh_;
   ImR_Locator_i &locator_;
   PortableServer::POA_var poa_;
   ACE_Vector<ImR_ResponseHandler *> rh_list_;
