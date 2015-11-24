@@ -106,7 +106,7 @@ public:
     INVALID_METHOD = -1,
     SSLv23_client,
     SSLv23_server,
-    SSLv23,
+    SSLv23
   };
 
   /// Constructor
