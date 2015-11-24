@@ -100,7 +100,7 @@ following class categories:
         . The ADAPTIVE Service Executive
                 -- A user-level implementation of System V STREAMS,
                    that supports modular integration of
-                   hierarchically-related communicaion services;
+                   hierarchically-related communication services;
 
         . Concurrency
                 -- Various types of higher-level concurrency
