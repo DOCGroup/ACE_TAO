@@ -20,6 +20,9 @@
 #  undef ACE_LACKS_ALPHASORT
 #endif
 
+#undef ACE_LACKS_GETADDRINFO
+#undef ACE_LACKS_GETNAMEINFO
+
 // Solaris 10 offers a useable log2() unlike previous Solaris versions.
 #if defined (ACE_LACKS_LOG2)
 #  undef ACE_LACKS_LOG2
