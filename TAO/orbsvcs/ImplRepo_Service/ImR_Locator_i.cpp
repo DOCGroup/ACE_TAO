@@ -1368,7 +1368,11 @@ ImR_Locator_i::server_is_shutting_down
     {
       this->pinger_.remove_server (info->ping_id());
       {
-        AsyncAccessManager_ptr aam = this->find_aam (info->ping_id ());
+        AsyncAccessManager_ptr aam = this->find_aam (info->ping_id (), false);
+        if (aam.is_nil())
+          {
+            aam = this->find_aam(info->ping_id(), true);
+          }
         if (!aam.is_nil())
           {
             aam->server_is_shutting_down ();

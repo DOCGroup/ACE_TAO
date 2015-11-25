@@ -203,6 +203,7 @@ AsyncAccessManager::final_state (bool active)
         {
           this->locator_.remove_server_i (this->info_.edit());
           this->remove_on_death_rh_->send_ior("");
+          this->remove_on_death_rh_ = 0;
         }
       AsyncAccessManager_ptr aam (this);
       this->locator_.remove_aam (aam);
