@@ -2707,8 +2707,10 @@ ACE_OS::event_init (ACE_event_t *event,
         }
 # endif
 
+# if !ACE_EVENT_USE_COND_PSHARED || !ACE_EVENT_USE_MUTEX_PSHARED
       if (result != 0 && owner)
         ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name_p));
+# endif
 
       return result;
     }
