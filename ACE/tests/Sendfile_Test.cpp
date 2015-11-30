@@ -91,7 +91,7 @@ client (void *arg)
   const ACE_TCHAR file[] = ACE_TEXT ("Sendfile_Test_File");
   static const size_t file_sz = sizeof (file) / sizeof (file[0]);
   ACE_TCHAR test_file[MAXPATHLEN + 1];
-  ACE_HANDLE in_fd;
+  ACE_HANDLE in_fd = ACE_INVALID_HANDLE;
   if (ACE::get_temp_dir (test_file, MAXPATHLEN - file_sz) == -1
       || ACE_OS::strcat (test_file, file) == 0
       || (in_fd = ACE_OS::open (test_file, O_CREAT | O_RDWR | O_TRUNC,
@@ -164,7 +164,8 @@ client (void *arg)
 
 cleanup:
   cli_stream.close ();
-  (void) ACE_OS::close (in_fd);
+  if (in_fd != ACE_INVALID_HANDLE)
+    (void) ACE_OS::close (in_fd);
 
   return 0;
 }
