@@ -159,7 +159,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
           buf[0] = 0;
         }
 
-      ACE_OS::snprintf (name, 256,
+      ACE_OS::snprintf (name, 25,
                         ACE_TEXT ("MEM_Acceptor_%d_"),
                         local_addr.get_port_number ());
       ACE_OS::strcat (buf, name);

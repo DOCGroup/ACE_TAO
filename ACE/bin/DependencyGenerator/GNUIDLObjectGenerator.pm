@@ -28,7 +28,6 @@ sub process {
           "\$(IDL_GEN_FILES_DIR)\/$noext\$(IDL_CLIENT_INL_EXT)",
           "\$(IDL_GEN_FILES_DIR)\/$noext\$(IDL_CLIENT_SRC_EXT)",
           "\$(IDL_GEN_FILES_DIR)\/$noext\$(IDL_SERVER_HDR_EXT)",
-          "\$(IDL_GEN_FILES_DIR)\/$noext\$(IDL_SERVER_INL_EXT)",
           "\$(IDL_GEN_FILES_DIR)\/$noext\$(IDL_SERVER_SRC_EXT)",
           "\$(IDL_GEN_FILES_DIR)\/$noext\$(IDL_SERVER_THDR_EXT)",
           "\$(IDL_GEN_FILES_DIR)\/$noext\$(IDL_SERVER_TINL_EXT)",
