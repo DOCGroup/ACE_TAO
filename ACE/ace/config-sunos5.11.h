@@ -10,4 +10,6 @@
 // #include the SunOS 5.10 config, then add any SunOS 5.11 updates below.
 #include "ace/config-sunos5.10.h"
 
+#define ACE_HAS_SOLARIS11_GETPWNAM_R
+
 #endif /* ACE_CONFIG_H */

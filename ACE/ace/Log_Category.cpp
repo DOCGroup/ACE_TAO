@@ -2,7 +2,10 @@
 #include "ace/Log_Category.h"
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_Thread.h"
-
+#if defined (ACE_HAS_THREADS)
+#include "ace/Guard_T.h"
+#include "ace/Thread_Mutex.h"
+#endif /* ACE_HAS_THREADS */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Log_Category.inl"

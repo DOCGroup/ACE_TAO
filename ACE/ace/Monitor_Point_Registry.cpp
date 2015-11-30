@@ -1,5 +1,7 @@
 #include "ace/Monitor_Point_Registry.h"
 
+#include "ace/Synch_Traits.h"
+
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 #include "ace/Monitor_Base.h"

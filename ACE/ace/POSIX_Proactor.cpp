@@ -1578,7 +1578,10 @@ ACE_POSIX_AIOCB_Proactor::cancel_aiocb (ACE_POSIX_Asynch_Result * result)
   else if (rc == AIO_ALLDONE)
     return 1;
   else // (rc == AIO_NOTCANCELED)
+  {
+    ACE_OS::last_error (aio_error (result));
     return 2;
+  }
 }
 
 

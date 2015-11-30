@@ -9,6 +9,7 @@
 
 #include "ace/Log_Category.h"
 #include "ace/Service_Object.h"
+#include "ace/OS.h"
 #include "ace/OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -148,11 +148,11 @@ namespace ACE_OS
                           int, -1);
 #elif defined (ACE_MKDIR_LACKS_MODE)
     ACE_UNUSED_ARG (mode);
-#  if defined (ACE_MKDIR_EQUIVALENT)
-    ACE_OSCALL_RETURN (ACE_MKDIR_EQUIVALENT (path), int, -1);
-#  else
+#if defined (_MSC_VER) && (_MSC_VER >= 1800)
+    ACE_OSCALL_RETURN (::_mkdir (path), int, -1);
+#else
     ACE_OSCALL_RETURN (::mkdir (path), int, -1);
-#  endif
+#endif /* (_MSC_VER) && (_MSC_VER >= 1800) */
 #else
     ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
 #endif

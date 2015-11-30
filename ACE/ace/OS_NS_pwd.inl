@@ -56,6 +56,16 @@ ACE_OS::getpwnam_r (const char *name,
     }
   *result = pwd;
   return 0;
+/*#elif defined (ACE_HAS_SOLARIS11_GETPWNAM_R)
+  struct passwd *result_p =
+    ::getpwnam_r (name, pwd, buffer, bufsize);
+  if (!result_p)
+    {
+      *result = 0;
+      return -1;
+    }
+  *result = pwd;
+  return 0;*/
 #elif defined (ACE_HAS_STHREADS)
   if (::getpwnam_r (name, pwd, buffer, bufsize) != 0)
     {

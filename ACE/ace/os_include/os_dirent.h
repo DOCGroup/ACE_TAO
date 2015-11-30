@@ -46,7 +46,7 @@ struct dirent {
 };
 #endif /* ACE_HAS_DIRENT */
 
-#if defined (ACE_LACKS_STRUCT_DIR)
+#if defined (ACE_LACKS_DIRENT_H)
 struct dirent {
   unsigned short d_ino;
   unsigned short d_off;
@@ -56,10 +56,12 @@ struct dirent {
   // character builds with Visual C++ 6.0.
   ACE_TCHAR *d_name;
 };
+#endif /* ACE_LACKS_DIRENT_H */
 
 #define ACE_DIRENT dirent
 #define ACE_HAS_TCHAR_DIRENT
 
+#if defined (ACE_WIN32)
 struct ACE_DIR {
   /// The name of the directory we are looking into
   ACE_TCHAR *directory_name_;
@@ -76,13 +78,19 @@ struct ACE_DIR {
   /// A flag to remember if we started reading already.
   int started_reading_;
 };
-#elif defined (ACE_WIN32) && (__BORLANDC__) && defined (ACE_USES_WCHAR)
+#endif
+
+#if defined (ACE_LACKS_STRUCT_DIR)
+#else
+#if defined (ACE_WIN32) && (__BORLANDC__) && defined (ACE_USES_WCHAR)
 #define ACE_HAS_TCHAR_DIRENT
+#undef ACE_DIRENT
 #define ACE_DIRENT wdirent
 typedef wDIR ACE_DIR;
 #else
 #define ACE_DIRENT dirent
 typedef DIR ACE_DIR;
+#endif /* ACE_WIN32 && __BORLANDC__ && ACE_USES_WCHAR */
 #endif /* ACE_LACKS_STRUCT_DIR */
 
 #if defined (ACE_LACKS_SCANDIR_PROTOTYPE)
