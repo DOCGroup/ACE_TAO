@@ -503,7 +503,9 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
   typedef int wint_t;
 #elif !defined ACE_LACKS_WCHAR_STD_NAMESPACE
   using std::wint_t;
+# ifndef ACE_LACKS_WCSRTOMBS
   using std::wcsrtombs;
+# endif
 #endif
 
 namespace { // helpers for vsnprintf_emulation
