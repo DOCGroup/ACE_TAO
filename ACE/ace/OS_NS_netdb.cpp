@@ -428,14 +428,14 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
 
   for (size_t i = 0; i < n; ++i)
     {
-      result[i]->ai_family = AF_INET;
-      result[i]->ai_addrlen = sizeof (sockaddr_in);
-      result[i]->ai_addr = (sockaddr *) addr_storage + i;
-      result[i]->ai_addr->sa_family = AF_INET;
+      (*result)[i].ai_family = AF_INET;
+      (*result)[i].ai_addrlen = sizeof (sockaddr_in);
+      (*result)[i].ai_addr = (sockaddr *) addr_storage + i;
+      (*result)[i].ai_addr->sa_family = AF_INET;
       ACE_OS::memcpy (&addr_storage[i].sin_addr, host->h_addr_list[i],
                       (std::min) (size_t (host->h_length), sizeof (in_addr)));
       if (i < n - 1)
-        result[i]->ai_next = result[i + 1];
+        (*result)[i].ai_next = (*result) + i + 1;
     }
 
   return 0;
