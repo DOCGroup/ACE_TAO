@@ -23,6 +23,9 @@
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/Condition_Recursive_Thread_Mutex.h"
 
+// *NOTE*: explicit template instantiation required here...
+template class ACE_Condition<ACE_Recursive_Thread_Mutex>;
+
 #if defined (ACE_HAS_THREADS)
 
 // Number of iterations for the performance tests.

@@ -22,7 +22,8 @@
 #include "ace/Condition_T.h"
 #include "ace/Thread_Mutex.h"
 
-
+// *NOTE*: explicit template instantiation required here...
+template class ACE_Condition<ACE_Recursive_Thread_Mutex>;
 
 // Administrivia methods...
 Handler::Handler(const ACE_Time_Value &expiration_time)

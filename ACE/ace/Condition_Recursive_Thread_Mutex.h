@@ -23,12 +23,17 @@
 #if !defined (ACE_HAS_THREADS)
 #  include "ace/Null_Condition.h"
 #else /* ACE_HAS_THREADS */
+// ACE platform supports some form of threading.
+
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Condition_Attributes.h"
 #include "ace/Condition_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class ACE_Time_Value;
+
+#if defined (ACE_BUILD_DLL)
 /**
  * @brief ACE_Condition template specialization written using
  *  @a ACE_Recursive_Thread_Mutex.  This allows threads to block until
@@ -86,6 +91,9 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
 
   // = Prevent assignment and copying.
@@ -101,10 +109,17 @@ private:
   ACE_Recursive_Thread_Mutex &mutex_;
 
 };
+#else
+extern template ACE_Export class ACE_Condition<ACE_Recursive_Thread_Mutex>;
+#endif
 
 typedef ACE_Condition<ACE_Recursive_Thread_Mutex> ACE_Condition_Recursive_Thread_Mutex;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__ACE_INLINE__)
+#include "ace/Condition_Recursive_Thread_Mutex.inl"
+#endif /* __ACE_INLINE__ */
 
 #endif /* !ACE_HAS_THREADS */
 

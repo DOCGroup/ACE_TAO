@@ -16,6 +16,9 @@
 #include "ace/Condition_Recursive_Thread_Mutex.h"
 #include "ace/Thread.h"
 
+// *NOTE*: explicit template instantiation required here...
+template class ACE_Condition<ACE_Recursive_Thread_Mutex>;
+
 class ThreadTest
 {
  public:

@@ -12,6 +12,9 @@
 #include "ace/Activation_Queue.h"
 #include "ace/Condition_T.h"
 
+// *NOTE*: explicit template instantiation required here...
+template class ACE_Condition<ACE_Recursive_Thread_Mutex>;
+
 #define OUTSTANDING_REQUESTS 20
 
 // Listing 2 code/ch16
