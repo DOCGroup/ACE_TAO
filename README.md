@@ -316,7 +316,7 @@ Sometimes work on your topic branch may include several commits. For example, co
 
 Also, it is important to make sure you don't accidentally commit files for which no real changes have happened, but rather, whitespace has been modified. This often happens with some IDEs. `git diff --check` should be run before you issue such a pull request, which will check for such "noise" commits and warn you accordingly. Such files should be reverted and not be committed to the branch.
 
-Adhering to [ATCD's code style](https://github.com/DOCGroup/ATCD/blob/master/doc/Coding.txt) guidelines will help minimise "noise" commits. Project Admins are going to ask contributors to reformat their code if necessary.
+Adhering to [ATCD's code style](http://htmlpreview.github.io/?https://github.com/DOCGroup/ATCD/blob/master/ACE/docs/ACE-guidelines.html) guidelines will help minimise "noise" commits. Project Admins are going to ask contributors to reformat their code if necessary.
 
 ## Keeping your repo in sync with upstream
 
