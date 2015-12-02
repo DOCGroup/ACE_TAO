@@ -503,7 +503,9 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
   typedef int wint_t;
 #elif !defined ACE_LACKS_WCHAR_STD_NAMESPACE
   using std::wint_t;
+# ifndef ACE_LACKS_WCSRTOMBS
   using std::wcsrtombs;
+# endif
 #endif
 
 namespace { // helpers for vsnprintf_emulation
@@ -856,7 +858,11 @@ namespace { // helpers for vsnprintf_emulation
       const long double log = val > 0 ? std::log10 (val) : 0;
       int dig_left = static_cast<int> (1 + ((val >= 1) ? log : 0));
 
+#if defined __HP_aCC && __HP_aCC < 40000
+      int exp = static_cast<int> (log);
+#else
       int exp = static_cast<int> (std::floor (log));
+#endif
       if (flags.has (SNPRINTF_FLEXPONENT))
         {
           const int p = precision > 0 ? precision : (precision < 0 ? 6 : 1);
@@ -895,8 +901,15 @@ namespace { // helpers for vsnprintf_emulation
         }
       else
         {
+#if defined __MINGW32__ && defined __x86_64__
+          // Avoid std::modf(long double, long double*) on MinGW-W64 64-bit:
+          // see https://sourceforge.net/p/mingw-w64/bugs/478
+          double int_part;
+          double frac_part = std::modf (static_cast<double> (val), &int_part);
+#else
           long double int_part;
           long double frac_part = std::modf (val, &int_part);
+#endif
 
           Snprintf_Digit_Grouping dg (flags, grouping, thousands_sep);
           dig_left += dg.separators_needed (dig_left);

@@ -45,6 +45,13 @@ To redirect execution of a test's component, you must do three things:
          <configuration-name>_IPNAME: The machine's IP hostname or address
          <configuration-name>_ACE_ROOT: ACE_ROOT for the configuration's files
          <configuration-name>_TAO_ROOT: TAO_ROOT for the configuration's files
+         <configuration-name>_TEST_ROOT: Root directory for target path
+                                  translation, when $TEST_ROOT is set,
+                                  indicating both are reachable from host.
+         <configuration-name>_TEST_FSROOT: Root directory for target node path,
+                                  translation, when $TEST_ROOT is set.  Used
+                                  to translate to a different filesystem, when
+                                  not reachable from host.
          <configuration-name>_EXE_SUBDIR: Subdirectory for the executable
          <configuration-name>_PROCESS_START_WAIT_INTERVAL: Time waited for the
                                   process to start. Default 15 seconds.
