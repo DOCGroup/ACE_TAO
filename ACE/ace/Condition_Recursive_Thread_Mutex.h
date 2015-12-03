@@ -33,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 
-#if defined (ACE_BUILD_DLL)
 /**
  * @brief ACE_Condition template specialization written using
  *  @a ACE_Recursive_Thread_Mutex.  This allows threads to block until
@@ -109,9 +108,13 @@ private:
   ACE_Recursive_Thread_Mutex &mutex_;
 
 };
+// *NOTE*: prevent implicit instantiations by includees to relieve the linker
+#if defined (__GNUG__)
+// g++ (5.2.1) does not support attributes on explicit template instantiations
+extern template class ACE_Condition<ACE_Recursive_Thread_Mutex>;
 #else
 extern template ACE_Export class ACE_Condition<ACE_Recursive_Thread_Mutex>;
-#endif
+#endif /* __GNUG__ */
 
 typedef ACE_Condition<ACE_Recursive_Thread_Mutex> ACE_Condition_Recursive_Thread_Mutex;
 
