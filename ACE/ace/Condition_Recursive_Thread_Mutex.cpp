@@ -108,18 +108,6 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
   return result;
 }
 
-int
-ACE_Condition<ACE_Recursive_Thread_Mutex>::signal (void)
-{
-  return ACE_OS::cond_signal (&this->cond_);
-}
-
-int
-ACE_Condition<ACE_Recursive_Thread_Mutex>::broadcast (void)
-{
-  return ACE_OS::cond_broadcast (&this->cond_);
-}
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */

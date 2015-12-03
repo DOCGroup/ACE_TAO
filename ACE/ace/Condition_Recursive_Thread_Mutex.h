@@ -33,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 
-#if defined (ACE_BUILD_DLL)
 /**
  * @brief ACE_Condition template specialization written using
  *  @a ACE_Recursive_Thread_Mutex.  This allows threads to block until
@@ -109,9 +108,7 @@ private:
   ACE_Recursive_Thread_Mutex &mutex_;
 
 };
-#else
 extern template ACE_Export class ACE_Condition<ACE_Recursive_Thread_Mutex>;
-#endif
 
 typedef ACE_Condition<ACE_Recursive_Thread_Mutex> ACE_Condition_Recursive_Thread_Mutex;
 
