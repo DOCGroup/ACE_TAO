@@ -3,7 +3,7 @@
 #define JAWS_SYMBOL_TABLE_H
 
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 
 #include "jaws3/Export.h"
 

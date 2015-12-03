@@ -3,9 +3,9 @@
 #define JAWS_DATAGRAM_H
 
 #include "ace/Addr.h"
-#include "ace/Synch.h"
 #include "ace/Singleton.h"
 #include "ace/SOCK_Dgram.h"
+#include "ace/Synch_Traits.h"
 
 #include "jaws3/Export.h"
 #include "jaws3/Event_Completer.h"

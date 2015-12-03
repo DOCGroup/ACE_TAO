@@ -3,8 +3,8 @@
 #ifndef TMCAST_MESSAGING_HPP
 #define TMCAST_MESSAGING_HPP
 
-#include <ace/Synch.h>
-#include <ace/Bound_Ptr.h>
+#include "ace/Bound_Ptr.h"
+#include "ace/Synch_Traits.h"
 
 #include "MTQueue.hpp"
 
@@ -22,7 +22,7 @@ namespace ACE_TMCast
   MessagePtr;
 
   typedef
-  MTQueue<MessagePtr, ACE_Thread_Mutex, ACE_Condition<ACE_Thread_Mutex> >
+  MTQueue<MessagePtr, ACE_SYNCH_MUTEX, ACE_SYNCH_CONDITION >
   MessageQueue;
 
   struct MessageQueueAutoLock
