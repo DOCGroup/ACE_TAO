@@ -1,6 +1,5 @@
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/os_include/os_netdb.h"
