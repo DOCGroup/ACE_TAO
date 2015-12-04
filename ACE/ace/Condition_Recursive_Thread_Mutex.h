@@ -110,13 +110,11 @@ private:
 };
 // prevent implicit instantiations by includers to relieve the linker
 #if defined (ACE_HAS_CPP11_EXTERN_TEMPLATES)
-// suppress a warning, g++ 5.2.1 does not support attributes on template
-// instantiation declarations. *TODO*: this may go back further
-# if defined (__GNUG__) && (__GNUC__ == 5 && __GNUC_MINOR__ == 2 && __GNUC_PATCHLEVEL__ == 1)
+# if defined (ACE_LACKS_CPP11_EXTERN_TEMPLATE_ATTRIBUTES)
 extern template class ACE_Condition<ACE_Recursive_Thread_Mutex>;
 # else
 extern template ACE_Export class ACE_Condition<ACE_Recursive_Thread_Mutex>;
-# endif /* __GNUG__ && (__GNUC__ == 5 && __GNUC_MINOR__ == 2 && __GNUC_PATCHLEVEL__ == 1) */
+# endif /* ACE_LACKS_CPP11_EXTERN_TEMPLATE_ATTRIBUTES */
 #endif /* ACE_HAS_CPP11_EXTERN_TEMPLATES */
 
 typedef ACE_Condition<ACE_Recursive_Thread_Mutex> ACE_Condition_Recursive_Thread_Mutex;
