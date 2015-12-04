@@ -50,7 +50,7 @@
 // *NOTE*: suppress a warning, g++ 5.2.1 does not support attributes on template
 // instantiation declarations
 // *TODO*: this probably goes back further than 5.2
-# if (__GNUC__ >= 5 || (__GNUC__ == 5 && __GNUC_MINOR__ >= 2))
+# if (__GNUC__ >= 6 || (__GNUC__ == 5 && __GNUC_MINOR__ >= 2))
 #  define ACE_LACKS_CPP11_EXTERN_TEMPLATE_ATTRIBUTES
 # endif /* __GNUC__ >= 5.2 */
 #endif /* ACE_HAS_CPP11 */
