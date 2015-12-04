@@ -59,7 +59,6 @@ private:
 
 // These are for the basic functionality tests.
 ACE_SYNCH_RECURSIVE_MUTEX mutex_;
-//ACE_Condition<ACE_SYNCH_RECURSIVE_MUTEX> condition_ (mutex_);
 ACE_SYNCH_RECURSIVE_CONDITION condition_ (mutex_);
 // Test driver sets this to non-zero before spawning and to zero for
 // waiter.
