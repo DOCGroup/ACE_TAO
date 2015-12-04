@@ -3,10 +3,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
   avoids       = ace_for_tao
   sharedname   = ACE
   dynamicflags += ACE_BUILD_DLL
-//  specific(prop:microsoft) {
-//      compile_flags -= /EHsc
-//      compile_flags += /EHa
-//  }
 
   Source_Files(ACE_COMPONENTS) {
     ACE.cpp
