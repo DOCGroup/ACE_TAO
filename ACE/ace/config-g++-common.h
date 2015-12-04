@@ -38,7 +38,15 @@
 # if __cplusplus > 201103L
 #  define ACE_HAS_CPP14
 # endif
-#endif
+#endif /* __GNUC__ >= 4.7 */
+
+// *NOTE*: this feature may go back further, see e.g.:
+//         https://gcc.gnu.org/projects/cxx0x.html
+#if defined (ACE_HAS_CPP11)
+# if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))
+#  define ACE_HAS_CPP11_EXTERN_TEMPLATES
+# endif /* __GNUC__ >= 4.3 */
+#endif /* ACE_HAS_CPP11 */
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
 # define ACE_SIZEOF_LONG_DOUBLE 12

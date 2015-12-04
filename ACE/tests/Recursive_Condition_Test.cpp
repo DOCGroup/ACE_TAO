@@ -25,9 +25,6 @@
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap> Thread_Timer_Queue;
-//
-//// *NOTE*: explicit template instantiation required here...  
-//template class ACE_Condition<ACE_Recursive_Thread_Mutex>;
 
 class Test_Handler : public ACE_Event_Handler
 {
