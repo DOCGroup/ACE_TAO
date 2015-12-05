@@ -282,6 +282,9 @@ $C1_status = $C1->SpawnWaitKill ($c1->ProcessStartWaitInterval() + $extra_timeou
 
 if ($C1_status == 2) {
     print STDERR "Warning: This test does not currently run under this operating system.\n";
+    if ($mode eq "-a MANUAL ") {
+        ti_cmd ("shutdown");
+    }
     kill_imr ();
     exit 0;
 }
