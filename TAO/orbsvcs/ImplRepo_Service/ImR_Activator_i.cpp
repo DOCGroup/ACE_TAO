@@ -352,7 +352,7 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
   if (pid != 0)
     {
       result =
-#if !define (ACE_WIN32)
+#if !defined (ACE_WIN32)
         (signum != 9) ? ACE_OS::kill (pid, signum) :
 #endif
         ACE::terminate_process (pid);
