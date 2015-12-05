@@ -351,8 +351,11 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
 #endif
   if (pid != 0)
     {
-      result = (signum != 9) ? ACE_OS::kill (pid, signum)
-        : ACE::terminate_process (pid);
+      result =
+#if !define (ACE_WIN32)
+        (signum != 9) ? ACE_OS::kill (pid, signum) :
+#endif
+        ACE::terminate_process (pid);
       if (debug_ > 1)
         ORBSVCS_DEBUG((LM_DEBUG,
                        "ImR Activator: Killing server <%C> "

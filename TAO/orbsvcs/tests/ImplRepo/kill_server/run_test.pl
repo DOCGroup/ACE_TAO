@@ -7,6 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 ###############################################################################
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
+use English;
 
 my $status = 0;
 my $imr_debug = 0;
@@ -185,7 +186,7 @@ sub servers_setup ()
 
     my $act_args = "-l -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile  -orbendpoint iiop://localhost:";
     $act_args .= " -d $imr_debug -orbdebuglevel $orb_debug -orbverboselogging 1 -orblogfile act.log" if ($imr_debug > 0);
-    $act_args .= " -delay $act_delay" if ($rm2523 == 1);
+    $act_args .= " -delay $act_delay" if ($rm2523 == 1 && $OSNAME ne "MSWin32");
     $ACT->Arguments ($act_args);
 
     $ACT_status = $ACT->Spawn ();
@@ -361,7 +362,6 @@ sub shutdown_servers(@)
         if ($TI_status != 0 && $TI_status != 5) {
             print STDERR "ERROR: tao_imr kill returned $TI_status\n";
             $status = 1;
-            last;
         }
 	$srv[$i]->DeleteFile ($status_file_name);
     }
