@@ -179,7 +179,7 @@ ACE_WIN32_Asynch_Operation::cancel (void)
   int const result = (int) ::CancelIo (this->handle_);
 #else
   int const result = (int) ::CancelIoEx (this->handle_,
-                                         NULL);
+                                         0);
 #endif /* _WIN32_WINNT < 0x0600 */
 
   if (result == 0)
