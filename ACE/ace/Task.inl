@@ -1,4 +1,6 @@
 // -*- C++ -*-
+#include "ace/Thread_Manager.h"
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Get the current group id.

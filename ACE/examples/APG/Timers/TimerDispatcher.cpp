@@ -1,4 +1,7 @@
 #include "TimerDispatcher.h"
+
+#include "ace/Abstract_Timer_Queue.h"
+
 // Listing 1 code/ch20
 void Timer_Dispatcher::wait_for_event (void)
 {

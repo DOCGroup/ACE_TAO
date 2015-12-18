@@ -372,7 +372,7 @@ run_main(int /*argc*/, ACE_TCHAR * /*argv*/[])
     // start the repeating timer for data transmission
 
     ACE_Time_Value repeatTime(0, 50000); // 0.05 second time interval
-    ACE_Proactor::instance()->schedule_repeating_timer(fileIOHandler,
+    ACE_Proactor::instance()->schedule_repeating_timer(&fileIOHandler,
                                                        (void *) (100),
                                                        repeatTime);
 

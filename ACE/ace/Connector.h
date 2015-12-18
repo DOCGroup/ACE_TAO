@@ -13,12 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
+#include "ace/Event_Handler.h"
 #include "ace/Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Reactor.h"
 #include "ace/Strategies_T.h"
 #include "ace/Synch_Options.h"
 #include "ace/Unbounded_Set.h"

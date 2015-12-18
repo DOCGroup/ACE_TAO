@@ -1,7 +1,9 @@
 #include "ace/Thread_Exit.h"
-#include "ace/Managed_Object.h"
-#include "ace/Thread_Manager.h"
+
 #include "ace/Guard_T.h"
+#include "ace/Managed_Object.h"
+#include "ace/Synch.h"
+#include "ace/Thread_Manager.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

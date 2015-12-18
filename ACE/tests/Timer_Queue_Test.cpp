@@ -685,7 +685,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                   -1);
 
   // new (optimized) version
-  typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
+  typedef ACE_Timer_Heap_T<ACE_Event_Handler,
                            ACE_Event_Handler_Handle_Timeout_Upcall,
                            ACE_SYNCH_RECURSIVE_MUTEX,
                            ACE_HR_Time_Policy>

@@ -1,23 +1,22 @@
 #include /**/ "ace/config-lite.h"
+
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
+
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 // This only works on Win32 platforms and on Unix platforms with aio
 // calls.
-
+#include "ace/Auto_Event.h"
 #include "ace/Auto_Ptr.h"
-#include "ace/Proactor_Impl.h"
+#include "ace/Framework_Component.h"
+#include "ace/Log_Category.h"
 #include "ace/Object_Manager.h"
-#include "ace/Task_T.h"
-
+#include "ace/Proactor_Impl.h"
 #if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_ACE_SVCCONF)
 #    include "ace/Service_Config.h"
 #endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
-
-
 #include "ace/Task_T.h"
-#include "ace/Log_Category.h"
-#include "ace/Framework_Component.h"
 
 #if defined (ACE_HAS_AIO_CALLS)
 #   include "ace/POSIX_Proactor.h"
@@ -29,8 +28,6 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/Proactor.inl"
 #endif /* __ACE_INLINE__ */
-
-#include "ace/Auto_Event.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -185,10 +182,10 @@ ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall (void)
 
 int
 ACE_Proactor_Handle_Timeout_Upcall::registration (ACE_Proactor_Timer_Queue &,
-                                                  ACE_Handler * handler,
+                                                  ACE_Handler *handler,
                                                   const void *)
 {
-  handler->proactor(proactor_);
+  handler->proactor (proactor_);
   return 0;
 }
 
@@ -403,7 +400,7 @@ ACE_Proactor::instance (ACE_Proactor * r, bool delete_proactor)
 
   ACE_Proactor::delete_proactor_ = delete_proactor;
   ACE_Proactor::proactor_ = r;
-  ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_Proactor, ACE_Proactor::proactor_);
+  ACE_REGISTER_FRAMEWORK_COMPONENT (ACE_Proactor, ACE_Proactor::proactor_);
 
   return t;
 }
@@ -654,7 +651,7 @@ ACE_Proactor::register_handle (ACE_HANDLE handle,
 }
 
 long
-ACE_Proactor::schedule_timer (ACE_Handler &handler,
+ACE_Proactor::schedule_timer (ACE_Handler *handler,
                               const void *act,
                               const ACE_Time_Value &time)
 {
@@ -665,7 +662,7 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
 }
 
 long
-ACE_Proactor::schedule_repeating_timer (ACE_Handler &handler,
+ACE_Proactor::schedule_repeating_timer (ACE_Handler *handler,
                                         const void *act,
                                         const ACE_Time_Value &interval)
 {
@@ -676,7 +673,7 @@ ACE_Proactor::schedule_repeating_timer (ACE_Handler &handler,
 }
 
 long
-ACE_Proactor::schedule_timer (ACE_Handler &handler,
+ACE_Proactor::schedule_timer (ACE_Handler *handler,
                               const void *act,
                               const ACE_Time_Value &time,
                               const ACE_Time_Value &interval)
@@ -684,7 +681,7 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
   // absolute time.
   ACE_Time_Value absolute_time =
     this->timer_queue_->gettimeofday () + time;
-  long result = this->timer_queue_->schedule (&handler,
+  long result = this->timer_queue_->schedule (handler,
                                               act,
                                               absolute_time,
                                               interval);
@@ -711,12 +708,12 @@ ACE_Proactor::cancel_timer (long timer_id,
 }
 
 int
-ACE_Proactor::cancel_timer (ACE_Handler &handler,
-                                  int dont_call_handle_close)
+ACE_Proactor::cancel_timer (ACE_Handler *handler,
+                            int dont_call_handle_close)
 {
   // No need to signal timer event here. Even if the cancel timer was
   // the earliest, we will have an extra wakeup.
-  return this->timer_queue_->cancel (&handler,
+  return this->timer_queue_->cancel (handler,
                                      dont_call_handle_close);
 }
 
@@ -790,7 +787,7 @@ ACE_Proactor::timer_queue (ACE_Proactor_Timer_Queue *tq)
     }
 
   // Set the proactor in the timer queue's functor
-  typedef ACE_Timer_Queue_Upcall_Base<ACE_Handler*,ACE_Proactor_Handle_Timeout_Upcall> TQ_Base;
+  typedef ACE_Timer_Queue_Upcall_Base<ACE_Proactor_Handle_Timeout_Upcall> TQ_Base;
 
   TQ_Base * tqb = dynamic_cast<TQ_Base*> (this->timer_queue_);
 
@@ -977,7 +974,7 @@ ACE_Proactor::create_asynch_read_dgram_result
    int priority,
    int signal_number)
 {
-  return this->implementation()->create_asynch_read_dgram_result
+  return this->implementation ()->create_asynch_read_dgram_result
     (handler_proxy,
      handle,
      message_block,
@@ -1002,7 +999,7 @@ ACE_Proactor::create_asynch_write_dgram_result
    int priority,
    int signal_number)
 {
-  return this->implementation()->create_asynch_write_dgram_result
+  return this->implementation ()->create_asynch_write_dgram_result
     (handler_proxy,
      handle,
      message_block,

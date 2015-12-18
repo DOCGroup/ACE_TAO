@@ -33,7 +33,7 @@ template<typename TYPE> class ACE_Timer_Node_T;
  * In short, the Reactor (and potentially other classes) want to refer
  * to timer queues regardless of the implementation internals.
  */
-template<typename TYPE>
+template <typename TYPE>
 class ACE_Abstract_Timer_Queue
 {
 public:
@@ -43,7 +43,7 @@ public:
   /// True if queue is empty, else false.
   virtual bool is_empty (void) const = 0;
 
-  /// Returns the time of the earlier node in the Timer_Queue.  Must
+  /// Returns the earliest due time in the Timer_Queue.  Must
   /// be called on a non-empty queue.
   virtual const ACE_Time_Value &earliest_time (void) const = 0;
 
@@ -62,7 +62,7 @@ public:
    * wrong timer.  Returns -1 on failure (which is guaranteed never to
    * be a valid <timer_id>).
    */
-  virtual long schedule (const TYPE &type,
+  virtual long schedule (TYPE *handler,
                          const void *act,
                          const ACE_Time_Value &future_time,
                          const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
@@ -122,7 +122,7 @@ public:
    * only if an event will be dispatched, are encapsulated in the
    * ACE_Command_Base object.
    */
-  virtual int expire_single(ACE_Command_Base & pre_dispatch_command) = 0;
+  virtual int expire_single (ACE_Command_Base &pre_dispatch_command) = 0;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -140,8 +140,8 @@ public:
    * which typically invokes the <handle_close> hook.  Returns number
    * of timers cancelled.
    */
-  virtual int cancel (const TYPE &type,
-                      int dont_call_handle_close = 1) = 0;
+  virtual int cancel (TYPE *handler,
+                      int dont_call = 1) = 0;
 
   /**
    * Cancel the single timer that matches the @a timer_id value (which
@@ -171,7 +171,9 @@ public:
 
   /**
    * Allows applications to control how the timer queue gets the time
-   * of day.
+   * of day. Note: this will only have any effect when the TIME_POLICY
+   * is ACE_FPointer_Time_Policy. Other (standard ACE) time policies will
+   * ignore this.
    * @deprecated Use TIME_POLICY support instead. See Timer_Queue_T.h
    */
   virtual void gettimeofday (ACE_Time_Value (*gettimeofday)(void)) = 0;
@@ -194,17 +196,11 @@ public:
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max,
                                              ACE_Time_Value *the_timeout) = 0;
 
-  /**
-   * Return the current time, using the right time policy and any
-   * timer skew defined in derived classes.
-   */
-  virtual ACE_Time_Value current_time() = 0;
-
   /// Type of Iterator.
-  typedef ACE_Timer_Queue_Iterator_T<TYPE> ITERATOR;
+  typedef ACE_Timer_Queue_Iterator_T<TYPE> ITERATOR_T;
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
-  virtual ITERATOR & iter (void) = 0;
+  virtual ITERATOR_T &iter (void) = 0;
 
   /// Removes the earliest node from the queue and returns it
   virtual ACE_Timer_Node_T<TYPE> *remove_first (void) = 0;

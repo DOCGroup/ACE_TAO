@@ -1,31 +1,30 @@
-#include "ace/Svc_Conf.h"
-#include "ace/Get_Opt.h"
+#include "ace/Service_Gestalt.h"
+
 #include "ace/ARGV.h"
+#include "ace/Auto_Ptr.h"
+#include "ace/Containers.h"
+#include "ace/DLL.h"
+#include "ace/Get_Opt.h"
 #include "ace/Malloc.h"
+#include "ace/Reactor.h"
 #include "ace/Service_Manager.h"
 #include "ace/Service_Types.h"
-#include "ace/Containers.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Reactor.h"
-#include "ace/Thread_Manager.h"
-#include "ace/DLL.h"
-#include "ace/XML_Svc_Conf.h"
-#include "ace/SString.h"
-
 #ifndef ACE_LACKS_UNIX_SIGNALS
 # include "ace/Signal.h"
 #endif  /* !ACE_LACKS_UNIX_SIGNALS */
+#include "ace/SString.h"
+#include "ace/Svc_Conf.h"
+#include "ace/Svc_Conf_Param.h"
+#include "ace/Synch.h"
+#include "ace/Thread_Manager.h"
+#include "ace/TSS_T.h"
+#include "ace/XML_Svc_Conf.h"
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
-
-#include "ace/TSS_T.h"
-#include "ace/Service_Gestalt.h"
-
-#include "ace/Svc_Conf_Param.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

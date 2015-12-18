@@ -2,14 +2,15 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
+#include "ace/ACE.h"
+#include "ace/ARGV.h"
+#include "ace/DLL.h"
+#include "ace/OS_NS_string.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "ace/Service_Types.h"
+#include "ace/Svc_Conf.h"
 #include "ace/Task.h"
-#include "ace/DLL.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
-#include "ace/ARGV.h"
 
 #include <list>
 

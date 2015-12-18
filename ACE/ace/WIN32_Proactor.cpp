@@ -1,5 +1,4 @@
-//
-
+#include "ace/Synch.h"
 #include "ace/WIN32_Proactor.h"
 
 #if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_OVERLAPPED_IO)

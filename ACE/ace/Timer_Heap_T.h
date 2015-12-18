@@ -24,7 +24,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declaration
-template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_Default_Time_Policy>
 class ACE_Timer_Heap_T;
 
 /**
@@ -84,14 +84,18 @@ protected:
  * dynamic memory allocation, which is important for real-time
  * systems.
  */
-template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_Default_Time_Policy>
+template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 class ACE_Timer_Heap_T : public ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>
 {
 public:
-  typedef ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> HEAP_ITERATOR;
+  /// Type of iterator
+  typedef ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> ITERATOR_T;
+
+  /// Iterator is a friend
   friend class ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
 
-  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base_Time_Policy;
+  /// Type inherited from
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> TIMER_QUEUE_T;
 
   // = Initialization and termination methods.
   /**
@@ -112,7 +116,7 @@ public:
                     bool preallocated = false,
                     FUNCTOR *upcall_functor = 0,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
-                    TIME_POLICY const & time_policy = TIME_POLICY());
+                    TIME_POLICY const & time_policy = TIME_POLICY ());
 
   /**
    * Default constructor. @c upcall_functor is the instance of the
@@ -123,7 +127,7 @@ public:
    */
   ACE_Timer_Heap_T (FUNCTOR *upcall_functor = 0,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
-                    TIME_POLICY const & time_policy = TIME_POLICY());
+                    TIME_POLICY const & time_policy = TIME_POLICY ());
 
   /// Destructor.
   virtual ~ACE_Timer_Heap_T (void);
@@ -146,25 +150,24 @@ public:
                               const ACE_Time_Value &interval);
 
   /**
-   * Cancel all timers associated with @a type.  If @a dont_call_handle_close
-   * is 0 then the <functor> will be invoked.  Returns number of timers
-   * cancelled.
+   * Cancel all timers associated with @a type.  If @a dont_call is 0 then the
+   * <functor> will be invoked.  Returns number of timers cancelled.
    */
-  virtual int cancel (const TYPE &type,
-                      int dont_call_handle_close = 1);
+  virtual int cancel (TYPE *handler,
+                      int dont_call = 1);
 
   /**
    * Cancel the single timer that matches the @a timer_id value (which
    * was returned from the <schedule> method).  If act is non-NULL
    * then it will be set to point to the ``magic cookie'' argument
    * passed in when the timer was registered.  This makes it possible
-   * to free up the memory and avoid memory leaks. If @a dont_call_handle_close
+   * to free up the memory and avoid memory leaks. If @a dont_call
    * is 0 then the <functor> will be invoked.  Returns 1 if cancellation
    * succeeded and 0 if the @a timer_id wasn't found.
    */
   virtual int cancel (long timer_id,
                       const void **act = 0,
-                      int dont_call_handle_close = 1);
+                      int dont_call = 1);
 
   /**
    * Destroy timer queue. Cancels all timers.
@@ -211,7 +214,7 @@ protected:
    * wrong timer.  Returns -1 on failure (which is guaranteed never to
    * be a valid <timer_id>).
    */
-  virtual long schedule_i (const TYPE &type,
+  virtual long schedule_i (TYPE *handler,
                            const void *act,
                            const ACE_Time_Value &future_time,
                            const ACE_Time_Value &interval);
@@ -231,6 +234,8 @@ protected:
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
 
 private:
+  typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> inherited;
+
   /// Remove and return the @a sloth ACE_Timer_Node and restore the
   /// heap property.
   ACE_Timer_Node_T<TYPE> *remove (size_t slot);
@@ -284,7 +289,7 @@ private:
   size_t cur_limbo_;
 
   /// Iterator used to expire timers.
-  HEAP_ITERATOR *iterator_;
+  ITERATOR_T *iterator_;
 
   /**
    * Current contents of the Heap, which is organized as a "heap" of

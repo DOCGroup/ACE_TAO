@@ -15,8 +15,10 @@
 #ifndef _CUSTOM_HANDLER_H_
 #define _CUSTOM_HANDLER_H_
 
-#include "ace/Timer_Queue.h"
 #include "ace/svc_export.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Time_Value.h"
+#include "ace/Timer_Queue_T.h"
 
 /**
  * @class Custom_Handler
@@ -62,32 +64,33 @@ class ACE_Svc_Export Custom_Handler_Upcall
 {
     public:
 
-        typedef ACE_Timer_Queue_T<Custom_Handler*,
+        typedef ACE_Timer_Queue_T<Custom_Handler,
                                   Custom_Handler_Upcall,
-                                  ACE_Null_Mutex> TTimerQueue;
+                                  ACE_SYNCH_NULL_MUTEX,
+                                  ACE_Default_Time_Policy> TTimerQueue;
 
         // Default constructor
-        Custom_Handler_Upcall()
+        Custom_Handler_Upcall ()
         {
         }
 
         // Destructor.
-        ~Custom_Handler_Upcall()
+        ~Custom_Handler_Upcall ()
         {
         }
 
         // This method is called when a timer is registered.
-        int registration(TTimerQueue& timer_queue,
-                         Custom_Handler* handler,
-                         const void* arg);
+        int registration (TTimerQueue& timer_queue,
+                          Custom_Handler* handler,
+                          const void* arg);
 
         // This method is called before the timer expires.
-        int preinvoke(TTimerQueue& timer_queue,
-                      Custom_Handler* handler,
-                      const void* arg,
-                      int recurring_timer,
-                      const ACE_Time_Value& cur_time,
-                      const void*& upcall_act);
+        int preinvoke (TTimerQueue& timer_queue,
+                       Custom_Handler* handler,
+                       const void* arg,
+                       int recurring_timer,
+                       const ACE_Time_Value& cur_time,
+                       const void*& upcall_act);
 
         // This method is called when the timer expires.
         int timeout (TTimerQueue& timer_queue,
@@ -97,30 +100,30 @@ class ACE_Svc_Export Custom_Handler_Upcall
                      const ACE_Time_Value& cur_time);
 
         // This method is called after the timer expires.
-        int postinvoke(TTimerQueue& timer_queue,
-                       Custom_Handler* handler,
-                       const void* arg,
-                       int recurring_timer,
-                       const ACE_Time_Value& cur_time,
-                       const void* upcall_act);
+        int postinvoke (TTimerQueue& timer_queue,
+                        Custom_Handler* handler,
+                        const void* arg,
+                        int recurring_timer,
+                        const ACE_Time_Value& cur_time,
+                        const void* upcall_act);
 
         // This method is called when a handler is canceled
-        int cancel_type(TTimerQueue& timer_queue,
-                        Custom_Handler* handler,
-                        int dont_call,
-                        int& requires_reference_counting);
-
-        // This method is called when a timer is canceled
-        int cancel_timer(TTimerQueue& timer_queue,
+        int cancel_type (TTimerQueue& timer_queue,
                          Custom_Handler* handler,
                          int dont_call,
-                         int requires_reference_counting);
+                         int& requires_reference_counting);
+
+        // This method is called when a timer is canceled
+        int cancel_timer (TTimerQueue& timer_queue,
+                          Custom_Handler* handler,
+                          int dont_call,
+                          int requires_reference_counting);
 
         // This method is called when the timer queue is destroyed and
         // the timer is still contained in it
-        int deletion(TTimerQueue& timer_queue,
-                     Custom_Handler* handler,
-                     const void* arg);
+        int deletion (TTimerQueue& timer_queue,
+                      Custom_Handler* handler,
+                      const void* arg);
 };
 
 #endif

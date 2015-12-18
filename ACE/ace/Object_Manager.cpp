@@ -1,20 +1,22 @@
 #include "ace/Object_Manager.h"
-#if !defined (ACE_LACKS_ACE_TOKEN)
-# include "ace/Token_Manager.h"
-#endif /* ! ACE_LACKS_ACE_TOKEN */
-#include "ace/Thread_Manager.h"
+
+#include "ace/Atomic_Op.h"
+#include "ace/DLL_Manager.h"
+#include "ace/Framework_Component.h"
+#include "ace/Guard_T.h"
+#include "ace/Malloc.h"
+#include "ace/OS_NS_sys_time.h"
 #if !defined (ACE_LACKS_ACE_SVCCONF)
 # include "ace/Service_Manager.h"
 # include "ace/Service_Config.h"
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
-#include "ace/Signal.h"
-#include "ace/Log_Category.h"
-#include "ace/Malloc.h"
 #include "ace/Sig_Adapter.h"
-#include "ace/Framework_Component.h"
-#include "ace/DLL_Manager.h"
-#include "ace/Atomic_Op.h"
-#include "ace/OS_NS_sys_time.h"
+#include "ace/Signal.h"
+#include "ace/Synch.h"
+#if !defined (ACE_LACKS_ACE_TOKEN)
+# include "ace/Token_Manager.h"
+#endif /* ! ACE_LACKS_ACE_TOKEN */
+#include "ace/Thread_Manager.h"
 
 #if defined (ACE_HAS_TRACE)
 #include "ace/Trace.h"
@@ -24,12 +26,8 @@
 # include "ace/Object_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Guard_T.h"
-#include "ace/Null_Mutex.h"
-#include "ace/Mutex.h"
-#include "ace/RW_Thread_Mutex.h"
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && !defined (ACE_HAS_WINCE)
-  #include "ace/OS_NS_stdlib.h"
+# include "ace/OS_NS_stdlib.h"
 #endif // ACE_DISABLE_WIN32_ERROR_WINDOWS
 
 #if ! defined (ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS)

@@ -22,14 +22,15 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
+#include "ace/Auto_Ptr.h"
 #include "ace/DLL.h"
 #include "ace/SString.h"
-#include "ace/Svc_Conf.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class ACE_Service_Config;
+class ACE_Service_Gestalt;
 class ACE_Service_Type;
 
 /**
@@ -503,7 +504,7 @@ private:
     (ACE_Service_Type_Factory(const ACE_Service_Type_Factory&))
 
   ACE_UNIMPLEMENTED_FUNC
-    (ACE_Service_Type_Factory& operator=(const ACE_Service_Type_Factory&))
+    (ACE_Service_Type_Factory& operator= (const ACE_Service_Type_Factory&))
 
 private:
   ACE_TString name_;

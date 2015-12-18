@@ -8,7 +8,6 @@
 #define ACE_NTRACE 1
 
 #include "ace/ACE.h"
-#include "ace/Thread_Manager.h"
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
@@ -16,6 +15,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_signal.h"
+#include "ace/Synch.h"
+#include "ace/Thread_Manager.h"
+
 #include "ace/os_include/os_typeinfo.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)

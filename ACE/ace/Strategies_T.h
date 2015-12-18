@@ -13,17 +13,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Reactor.h"
-#include "ace/Thread_Manager.h"
 #include "ace/Connection_Recycling_Strategy.h"
-#include "ace/Refcountable_T.h"
+#include "ace/Hash_Map_Manager_T.h"
 #include "ace/Hashable.h"
+#include "ace/Reactor.h"
+#include "ace/Refcountable_T.h"
 #include "ace/Recyclable.h"
 #include "ace/Reverse_Lock_T.h"
 
@@ -33,6 +31,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Service_Repository;
+class ACE_Thread_Manager;
 
 /**
  * @class ACE_Recycling_Strategy

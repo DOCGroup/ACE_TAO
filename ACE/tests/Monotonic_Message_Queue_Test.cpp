@@ -52,7 +52,7 @@ create_timer_queue (void)
 {
   ACE_Timer_Queue * tmq = 0;
 
-  typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
+  typedef ACE_Timer_Heap_T<ACE_Event_Handler,
                            ACE_Event_Handler_Handle_Timeout_Upcall,
                            ACE_SYNCH_RECURSIVE_MUTEX,
                            ACE_HR_Time_Policy> timer_queue_type;

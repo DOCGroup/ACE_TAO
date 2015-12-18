@@ -13,12 +13,11 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
+#include "ace/Thread_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "ace/Thread_Manager.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

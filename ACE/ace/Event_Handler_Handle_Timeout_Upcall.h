@@ -12,8 +12,9 @@
  * Brunsch, Irfan Pyarali and a cast of thousands.
  */
 
-#include "ace/Timer_Queuefwd.h"
 #include "ace/Copy_Disabled.h"
+#include "ace/Timer_Queuefwd.h"
+#include "ace/Timer_Queue_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,7 +29,7 @@ class ACE_Time_Value;
  * Queue to call <handle_timeout> on ACE_Event_Handlers.
  */
 class ACE_Export ACE_Event_Handler_Handle_Timeout_Upcall
-  : private ACE_Copy_Disabled
+ : private ACE_Copy_Disabled
 {
 public:
   // = Initialization and termination methods.

@@ -8,7 +8,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Module.h"
-#include "ace/Null_Condition.h"
+#include "ace/Synch.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Task_T.inl"
@@ -45,7 +45,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump (void) const
 
 template<ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::ACE_Task (ACE_Thread_Manager *thr_man,
-                                   ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *mq)
+                                                ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *mq)
   : ACE_Task_Base (thr_man),
     msg_queue_ (0),
     delete_msg_queue_ (false),
