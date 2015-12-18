@@ -24,7 +24,7 @@ project (*sender): orbsvcsexe, rtevent_serv, rtsched {
 }
 
 project (*receiver) : orbsvcsexe, rtevent_serv, rtsched {
-  after += *idl;
+  after += *idl
 
   exename = receiver
   Source_Files {
