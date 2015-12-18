@@ -1,9 +1,12 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.3.3 and ACE-6.3.4
 ====================================================
 
-. Removed support for SSLv2/SSLv3/TLSv1/TLS1.v2 because
-  they have been removed from OpenSSL because they are not
-  secure. SSL v2.3 is the only currently used
+. ACE_SSL_Context::set_mode() can no longer be used to select a specific
+  SSL/TLS protocol version, use ACE_SSL_Context::filter_versions() for that.
+  This follows general advice by the OpenSSL project to go through
+  SSL_CTX_set_options() to limit the list of protocols available. The purpose
+  of ACE_SSL_Context::set_mode() is now limited to explicitly restricting
+  behaviour to client or server (defaults to both).
 
 USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 ====================================================
