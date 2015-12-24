@@ -1889,10 +1889,17 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
                 return -1;
               }
 # endif
-            ACE_SET_BITS (iter.next ()->thr_state_,
-                          ACE_THR_JOINING);
+            ACE_SET_BITS (iter.next ()->thr_state_, ACE_THR_JOINING);
+            this->thr_to_be_removed_.enqueue_tail (iter.next ());
             copy_table[copy_count++] = *iter.next ();
           }
+      }
+
+    if (!this->thr_to_be_removed_.is_empty ())
+      {
+        ACE_Thread_Descriptor *td = 0;
+        while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+          this->remove_thr (td, 0); // *NOTE*: ACE_OS::thr_join() calls ::CloseHandle()
       }
 
 #if !defined (ACE_HAS_VXTHREADS)
