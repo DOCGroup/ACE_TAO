@@ -17,6 +17,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Event_Handler.h"
 #include "ace/Event_Handler_Handle_Timeout_Upcall.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Timer_Heap_T.h"
@@ -24,8 +25,6 @@
 #include "ace/Timer_List_T.h"
 #include "ace/Timer_Queuefwd.h"
 #include "ace/Timer_Wheel_T.h"
-
-class ACE_Event_Handler;
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
