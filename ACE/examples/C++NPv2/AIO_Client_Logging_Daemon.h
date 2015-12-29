@@ -98,7 +98,7 @@ public:
   virtual ~AIO_CLD_Connector (void) {
     SSL_free (ssl_);
     SSL_CTX_free (ssl_ctx_);
-    proactor ()->cancel_timer (*this);
+    proactor ()->cancel_timer (this);
   }
 
   // Hook method to detect failure and validate peer before

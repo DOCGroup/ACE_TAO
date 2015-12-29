@@ -228,7 +228,7 @@ int AIO_CLD_Connector::validate_connection
     retry_delay_ *= 2;
     if (retry_delay_ > MAX_RETRY_DELAY)
       retry_delay_ = MAX_RETRY_DELAY;
-    proactor ()->schedule_timer (*this, 0, delay);
+    proactor ()->schedule_timer (this, 0, delay);
     return -1;
   }
   retry_delay_ = INITIAL_RETRY_DELAY;
