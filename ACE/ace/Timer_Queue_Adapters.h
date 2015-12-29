@@ -64,7 +64,7 @@ public:
                          const void *act,
                          const ACE_Time_Value &future_time,
                          const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
-  
+
   /**
     * Cancel all timer associated with @a type.  If <dont_call> is 0
     * then the <functor> will be invoked.  Returns number of timers
@@ -72,7 +72,7 @@ public:
     */
   virtual int cancel (TYPE *type,
                       int dont_call = 1);
-  
+
   /**
     * Cancel the single timer that matches the @a timer_id value (which
     * was returned from the <schedule> method).  If act is non-NULL
@@ -85,7 +85,7 @@ public:
   virtual int cancel (long timer_id,
                       const void **act = 0,
                       int dont_call = 1) = 0;
-  
+
   /**
     * Retrieve the time of day (according to the TIME POLICY of the timer queue)
     */

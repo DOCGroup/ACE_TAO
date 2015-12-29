@@ -14,7 +14,7 @@ ACE_Timer_Queue_Upcall_Base<FUNCTOR>::upcall_functor (
 {
   if (delete_upcall_functor_)
     delete upcall_functor_;
-  
+
   upcall_functor_ = upcall_functor;
   delete_upcall_functor_ = (upcall_functor && delete_upcall_functor);
 }
@@ -25,7 +25,7 @@ ACE_Timer_Queue_Upcall_Base<FUNCTOR>::make_functor ()
   FUNCTOR* functor = 0;
   ACE_NEW_NORETURN (functor,
                     FUNCTOR ());
-  
+
   return functor;
 }
 

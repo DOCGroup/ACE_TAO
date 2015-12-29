@@ -46,7 +46,7 @@ public:
   // = Initialization and termination methods.
   /// Constructor.
   ACE_Timer_Queue_Functor (void);
-  
+
   /// Destructor.
   virtual ~ACE_Timer_Queue_Functor (void);
 
@@ -54,7 +54,7 @@ public:
   int registration (TQ_TYPE &timer_queue,
                     TYPE *handler,
                     const void *arg);
-  
+
   /// This method is called before the timer expires.
   int preinvoke (TQ_TYPE &timer_queue,
                  TYPE *handler,
@@ -62,7 +62,7 @@ public:
                  int recurring_timer,
                  const ACE_Time_Value &cur_time,
                  const void *&upcall_act);
-  
+
   /// This method is called when the timer expires.
   int timeout (TQ_TYPE &timer_queue,
                TYPE *handler,
@@ -77,7 +77,7 @@ public:
                   int recurring_timer,
                   const ACE_Time_Value &cur_time,
                   const void *upcall_act);
-  
+
   /// This method is called when a handler is cancelled
   int cancel_type (TQ_TYPE &timer_queue,
                    TYPE *handler,
@@ -122,7 +122,7 @@ public:
   /// Setter to the upcall functor
   void upcall_functor (FUNCTOR *upcall_functor,
                        bool delete_upcall_functor = false);
-  
+
   /// Make default upcall functor
   /// Note: return value needs to be freed !
   static FUNCTOR *make_functor (void);

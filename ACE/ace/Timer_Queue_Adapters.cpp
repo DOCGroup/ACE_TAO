@@ -236,7 +236,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::cancel (
   int dont_call)
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mutex_, -1);
-  
+
   int result = this->timer_queue_->cancel (handler, dont_call);
   condition_.signal ();
   return result;

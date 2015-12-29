@@ -892,7 +892,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::expire (const AC
           h =
             reinterpret_cast<Hash_Token<TYPE> *> (const_cast<void *> (expired->get_act ()));
           ACE_ASSERT (h && (h->pos_ == i));
-          
+
           info.act_ = h->act_;
 
           // Check if this is an interval timer.
