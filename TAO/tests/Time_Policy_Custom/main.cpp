@@ -12,6 +12,8 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/PortableServer/PortableServer.h"
+
+#include "ace/Abstract_Timer_Queue.h"
 #include "ace/Reactor.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Time_Value.h"
