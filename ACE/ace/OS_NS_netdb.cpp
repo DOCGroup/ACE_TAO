@@ -25,6 +25,10 @@
 #include "ace/OS_NS_devctl.h"
 #endif
 
+#ifdef ACE_VXWORKS
+# include "ace/os_include/sys/os_sysctl.h"
+#endif
+
 #ifdef ACE_HAS_ALLOC_HOOKS
 # include "ace/Malloc_Base.h"
 #endif
@@ -361,6 +365,58 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
   ACE_OS::close (handle);
 
   return 0;
+
+#elif defined ACE_VXWORKS
+
+  int name[] = {CTL_NET, AF_ROUTE, 0, 0, NET_RT_IFLIST, 0};
+  static const size_t name_elts = sizeof name / sizeof name[0];
+
+  size_t result_sz = 0u;
+  if (sysctl (name, name_elts, 0, &result_sz, 0, 0u) != 0)
+    return -1;
+
+# ifdef ACE_HAS_ALLOC_HOOKS
+  char *const result =
+    static_cast<char *> (ACE_Allocator::instance ()->malloc (result_sz));
+#  define ACE_NETDB_CLEANUP ACE_Allocator::instance ()->free (result)
+# else
+  char *const result = static_cast<char *> (ACE_OS::malloc (result_sz));
+#  define ACE_NETDB_CLEANUP ACE_OS::free (result)
+# endif
+
+  if (sysctl (name, name_elts, result, &result_sz, 0, 0u) != 0)
+    {
+      ACE_NETDB_CLEANUP;
+      return -1;
+    }
+
+  for (size_t pos = 0, n; pos + sizeof (if_msghdr) < result_sz; pos += n)
+    {
+      if_msghdr *const hdr = reinterpret_cast<if_msghdr *> (result + pos);
+      n = hdr->ifm_msglen;
+      sockaddr_dl *const addr =
+        reinterpret_cast<sockaddr_dl *> (result + pos + sizeof (if_msghdr));
+
+      if (addr->sdl_alen >= sizeof node->node)
+        {
+          ACE_OS::memcpy (node->node, LLADDR (addr), sizeof node->node);
+          ACE_NETDB_CLEANUP;
+          return 0;
+        }
+
+      while (pos + n < result_sz)
+        {
+          ifa_msghdr *const ifa =
+            reinterpret_cast<ifa_msghdr *> (result + pos + n);
+          if (ifa->ifam_type != RTM_NEWADDR)
+            break;
+          n += ifa->ifam_msglen;
+        }
+    }
+
+  ACE_NETDB_CLEANUP;
+# undef ACE_NETDB_CLEANUP
+  return -1;
 
 #else
   ACE_UNUSED_ARG (node);
