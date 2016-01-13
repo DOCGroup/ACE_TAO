@@ -40,14 +40,16 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::stop_dds (
   DDS4CCM_TRACE ("DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::stop_dds");
 
   if (this->topic_name_.in () != 0)
-    { //topic name already set
-      // do not stop DDS when topic names are equal
+    {
+      // Topic name already set
+      // Do not stop DDS when topic names are equal
       if (ACE_OS::strlen (this->topic_name_.in ()) == 0)
         return false;
       return ACE_OS::strcmp (this->topic_name_.in (), topic_name) != 0;
     }
   else
-    { //topic is not set
+    {
+      // Topic is not set
       return false;
     }
 }
@@ -61,9 +63,9 @@ DDS_TopicBase_Connector_T<CCM_TYPE, DDS_TYPE, SEQ_TYPE>::late_binded (
 
   this->late_binding (ACE_OS::strlen (topic_name) == 0);
 
-  if (ACE_OS::strlen (topic_name) > 0 &&
-      !CORBA::is_nil (this->topic_name_) &&
-      ACE_OS::strlen (this->topic_name_.in ()) == 0)
+  if ((ACE_OS::strlen (topic_name) > 0) &&
+      (this->topic_name_.in () != 0) &&
+      (ACE_OS::strlen (this->topic_name_.in ()) == 0))
     {
       DDS4CCM_DEBUG (DDS4CCM_LOG_LEVEL_ACTION, (LM_DEBUG, DDS4CCM_INFO
                     ACE_TEXT ("DDS_TopicBase_Connector_T::late_binded - ")
