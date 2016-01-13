@@ -36,6 +36,12 @@ getmacaddress_test (void)
                   ACE_TEXT ("ACE_OS::getmacaddress() returned %d, should be 0. %p\n"),
                   retval, ACE_TEXT ("error:")));
     }
+
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("MAC address: %02x:%02x:%02x:%02x:%02x:%02x\n"),
+              node.node[0], node.node[1], node.node[2],
+              node.node[3], node.node[4], node.node[5]));
+
   return retval;
 #endif /* ACE_LACKS_NETWORKING */
 }
