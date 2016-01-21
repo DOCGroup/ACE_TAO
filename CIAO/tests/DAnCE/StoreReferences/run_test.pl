@@ -158,7 +158,7 @@ else {
 foreach $file (@files) {
     print "Starting test for deployment $file\n";
 
-    # determin number of daemons required
+    # determine number of daemons required
     if ($file =~ /^(\d+)Node/) {
       $nr_daemon = int($1);
     } else {
