@@ -30,3 +30,5 @@ ipch/
 /setenv.cmd
 /setenv.sh
 /build
+
+*.o
