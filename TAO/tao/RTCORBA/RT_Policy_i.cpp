@@ -122,7 +122,7 @@ TAO_PriorityModelPolicy::_tao_cached_type (void) const
 TAO_Policy_Scope
 TAO_PriorityModelPolicy::_tao_scope (void) const
 {
-  // Note that this policy is propogated to the client even though
+  // Note that this policy is propagated to the client even though
   // it is not specified here.  The reason for this is that the
   // server priority field is set dynamically depending on the model
   // and the servant's priority.  Therefore, it can't be simply

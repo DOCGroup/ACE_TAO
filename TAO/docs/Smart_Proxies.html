@@ -174,7 +174,7 @@ public:
     if (this->delete_proxy_factory_ == 0 && this->proxy_factory_ != 0)
     {
       // Its necessary to set <delete_proxy_factory_> to 1 to make sure that it
-      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is 
+      // doesnt get into an infinite loop in <unregister_proxy_factory> as it is
       // invoked in the destructor of the class too.
       this->delete_proxy_factory_ = 1;
       delete this->proxy_factory_;
@@ -191,7 +191,7 @@ public:
  }
 
 protected:
- 
+
  TAO_Test_Default_Proxy_Factory *proxy_factory_;
  int delete_proxy_factory_;
  TAO_SYNCH_RECURSIVE_MUTEX lock_;
@@ -259,7 +259,7 @@ public:
  // @@ How are exceptions handled?
  // This not an issue really because the actual method call is simply
  // to the application level which is catch it as the exception is
- // propogated upwards from the proxy level. 
+ // propagated upwards from the proxy level.
 
 protected:
  // This var member denotes the kind of proxy used:
@@ -360,7 +360,7 @@ the interface pointer to make the desired invocations.
 <LI> Native exceptions? How are these to be handled?</p>
 <p> This not an issue really because the actual method call is simply
 to the application level which will catch it as the exception is
-propogated upwards from the proxy level.</p>
+propagated upwards from the proxy level.</p>
 
 <LI> What if the user wants to have a smart proxy which inherits from
 many interfaces?
@@ -376,14 +376,14 @@ smart proxy?
 automatically used to create the proxy and thus a smart proxy is
 obtained instead of the default one. When the smart proxy makes its
 first invocation, this factory is unregistered. So all the proxies
-created from then on will be the default one.     
+created from then on will be the default one.
 </UL>
 
 <Hr><P>
 <h3><a name="Options">Usage Options</a></h3>
 <p> To use this feature in TAO, one must do the following:
 (1) Generate smart proxy classes using the IDL compiler option of
--Gsp and (2) Link client and server to the TAO_SmartProxies library, in 
+-Gsp and (2) Link client and server to the TAO_SmartProxies library, in
 $ACE_ROOT/TAO/tao/SmartProxies.
 A new smart proxy option has been added to the design: one-shot or
 permanent versus per-object smart proxy.  The one-shot smart proxy
@@ -404,7 +404,7 @@ href="mailto:schmidt@cs.wustl.edu">Dr.Schmidt</a> for their help in
 designing and discussing this feature. <P>
 
 <P><a href="mailto:brian.wallis@ot.com.au">Brian Wallis</a> for
-contributing the implementation inheritance feature. 
+contributing the implementation inheritance feature.
 
 <Hr><P>
 <h3><a name="ref">References</a></h3>
