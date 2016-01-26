@@ -159,7 +159,7 @@ project(ImR_Locator_Service) : orbsvcsexe, install_bin, avoids_minimum_corba, av
 }
 
 
-project(ImR_Activator_Service) : orbsvcsexe, install, acexml, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, messaging, svc_utils {
+project(ImR_Activator_Service) : orbsvcsexe, install, acexml, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, messaging, dynamicinterface, svc_utils {
   exename  = tao_imr_activator
   after   += ImR_Activator
   libs    += TAO_ImR_Activator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL TAO_Async_ImR_Client_IDL
