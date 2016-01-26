@@ -56,7 +56,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
                         ACE_Message_Block::DONT_DELETE))
     db->release ();
 
-  // Steal the buffer, that way we don't do any unnecesary copies of
+  // Steal the buffer, that way we don't do any unnecessary copies of
   // this data.
   CORBA::ULong max = params.svc_ctx_.maximum ();
   CORBA::ULong len = params.svc_ctx_.length ();
@@ -165,7 +165,7 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
                         ACE_Message_Block::DONT_DELETE))
     db->release ();
 
-  // Steal the buffer, that way we don't do any unnecesary copies of
+  // Steal the buffer, that way we don't do any unnecessary copies of
   // this data.
   CORBA::ULong max = params.svc_ctx_.maximum ();
   CORBA::ULong len = params.svc_ctx_.length ();
