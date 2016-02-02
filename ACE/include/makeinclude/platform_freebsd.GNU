@@ -6,14 +6,21 @@
 ##  variable, especially with respect to defining the correct compiler
 ##  flags for threads.
 OSVERSION := $(shell sysctl -n kern.osreldate)
+OSMAJOR := $(firstword $(subst ., ,$(shell sysctl -n kern.osrelease)))
 
 debug ?= 1
 optimize ?= 1
 threads ?= 1
 versioned_so ?= 1
 
-CC              ?= gcc
-CXX             ?= g++
+ifeq ($(OSMAJOR),10)
+  CC            ?= clang
+  CXX           ?= clang++
+  CCFLAGS       += -fdelayed-template-parsing
+else
+  CC            ?= gcc
+  CXX           ?= g++
+endif
 
 AR              = ar
 ARFLAGS         = ruv
