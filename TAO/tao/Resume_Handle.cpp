@@ -21,7 +21,13 @@ TAO_Resume_Handle::resume_handle (void)
       this->flag_ == TAO_HANDLE_RESUMABLE &&
       this->handle_ != ACE_INVALID_HANDLE)
     {
-      this->orb_core_->reactor ()->resume_handler (this->handle_);
+      if (this->orb_core_->reactor ()->resume_handler (this->handle_) == -1)
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    "TAO (%P|%t) - Resume_Handle::resume_handle, "
+                    "resuming handler returned -1 for handle = %d\n",
+                    this->handle_));
+      }
     }
 
   // Set the flag, so that we don't resume again..
