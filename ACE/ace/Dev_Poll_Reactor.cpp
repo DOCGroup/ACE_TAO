@@ -78,8 +78,14 @@ ACE_Dev_Poll_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
 #if defined (F_SETFD)
       // close-on-exec
-      ACE_OS::fcntl (this->notification_pipe_.read_handle (), F_SETFD, 1);
-      ACE_OS::fcntl (this->notification_pipe_.write_handle (), F_SETFD, 1);
+      if (ACE_OS::fcntl (this->notification_pipe_.read_handle (), F_SETFD, 1) == -1)
+        {
+          return -1;
+        }
+      if (ACE_OS::fcntl (this->notification_pipe_.write_handle (), F_SETFD, 1) == -1)
+        {
+          return -1;
+        }
 #endif /* F_SETFD */
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
