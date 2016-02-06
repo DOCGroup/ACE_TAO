@@ -165,7 +165,7 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
     }
 
   const char endpoint_delimiter = ',';
-  // The delimiter used to separate inidividual addresses.
+  // The delimiter used to separate individual addresses.
 
   // Count the number of endpoints in the IOR.  This will be the number
   // of entries in the MProfile.
