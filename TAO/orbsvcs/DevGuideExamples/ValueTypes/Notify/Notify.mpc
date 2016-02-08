@@ -10,6 +10,7 @@ project(*supplier) : taoexe, portableserver, valuetype, notify, portableserver, 
 
 project(*consumer) : taoexe, portableserver, valuetype, notify, portableserver, event_skel {
   exename = consumer
+  after += *supplier
   source_files {
     consumer.cpp
   }
