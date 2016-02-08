@@ -89,9 +89,6 @@
 # ifndef ACE_LACKS_FCNTL
 #  define ACE_LACKS_FCNTL
 # endif
-# if defined (F_SETFD)
-#  undef F_SETFD
-# endif
 
 # ifndef ACE_LACKS_FORK
 #  define ACE_LACKS_FORK

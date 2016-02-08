@@ -76,7 +76,7 @@ ACE_Dev_Poll_Reactor_Notify::open (ACE_Reactor_Impl *r,
       if (this->notification_pipe_.open () == -1)
         return -1;
 
-#if defined (F_SETFD)
+#if defined (F_SETFD) && !defined (ACE_LACKS_FCNTL)
       // close-on-exec
       if (ACE_OS::fcntl (this->notification_pipe_.read_handle (), F_SETFD, 1) == -1)
         {
