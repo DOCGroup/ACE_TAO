@@ -297,7 +297,7 @@ private:
   /// The array of string arguments.
   CHAR_TYPE **argv_;
 
-  /// Buffer containing the <argv> contents.
+  /// Buffer containing the argv contents.
   CHAR_TYPE *buf_;
 
   /// Total length of the arguments in the queue, not counting
