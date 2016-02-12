@@ -205,7 +205,7 @@ protected:
   /// Must delete the @c svc_rep_ if true.
   static bool delete_svc_rep_;
 
-  /// Synchronization variable for the MT_SAFE Repository
+  /// Synchronization variable for the ACE_Service_Repository.
   mutable ACE_SYNCH_RECURSIVE_MUTEX lock_;
 };
 
