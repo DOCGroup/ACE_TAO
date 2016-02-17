@@ -21,14 +21,16 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
    rh_list_ (),
    status_ (ImplementationRepository::AAM_INIT),
    refcount_ (1),
-   lock_ ()
+   lock_ (),
+   prev_pid_ (0)
 {
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server = %C\n"),
-                      this, info->ping_id ()));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server = %C pid = %d, %d\n"),
+                      this, info->ping_id (), info->pid, info_->pid));
     }
+  this->prev_pid_ = info_->pid;
 }
 
 AsyncAccessManager::~AsyncAccessManager (void)
@@ -58,6 +60,20 @@ bool
 AsyncAccessManager::has_server (const char *s)
 {
   return ACE_OS::strcmp (this->info_->ping_id (), s) == 0;
+}
+
+void
+AsyncAccessManager::report (void)
+{
+  ORBSVCS_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) AsyncAccessManager(%@) - Server: %C, pid: %d, lastpid: %d, status: %C, waiters: %d\n"),
+                  this, info_->ping_id (), info_->pid, this->prev_pid_, status_name (this->status_), this->rh_list_ .size()));
+}
+
+void
+AsyncAccessManager::update_prev_pid (void)
+{
+  this->prev_pid_ = this->info_->pid;
 }
 
 void
@@ -163,7 +179,7 @@ AsyncAccessManager::remote_state (ImplementationRepository::AAM_Status state)
   if (this->is_terminating ())
     {
       AsyncAccessManager_ptr aam (this->_add_ref());
-      this->locator_.make_terminating (aam);
+      this->locator_.make_terminating (aam,this->info_->ping_id(), this->info_->pid);
       this->notify_waiters ();
     }
   if (AsyncAccessManager::is_final (state))
@@ -374,12 +390,12 @@ AsyncAccessManager::shutdown_initiated (void)
                       ACE_TEXT ("on server <%C> pid=%d current status = %s\n"),
                       this, this->info_->ping_id(), this->info_->pid, status_name (this->status_)));
     }
-
+  this->prev_pid_ = this->info_->pid;
   this->status (ImplementationRepository::AAM_ACTIVE_TERMINATE);
   if (this->info_->pid != 0)
     {
       AsyncAccessManager_ptr aam (this->_add_ref());
-      this->locator_.make_terminating (aam);
+      this->locator_.make_terminating (aam,this->info_->ping_id(), this->info_->pid);
     }
   this->notify_waiters ();
 }
@@ -391,10 +407,10 @@ AsyncAccessManager::server_is_shutting_down (void)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::server_is_shutting_down ")
-                      ACE_TEXT ("on server <%C> pid=%d current status = %s\n"),
-                      this, this->info_->ping_id(), this->info_->pid, status_name (this->status_)));
+                      ACE_TEXT ("on server <%C> pid = %d prev_pid = %d, current status = %s\n"),
+                      this, this->info_->ping_id(), this->info_->pid, this->prev_pid_, status_name (this->status_)));
     }
-
+  this->prev_pid_ = this->info_->pid;
   this->status (ImplementationRepository::AAM_SERVER_DEAD);
   this->final_state ();
 }
@@ -451,10 +467,10 @@ AsyncAccessManager::notify_child_death (int pid)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, pid = %d, ")
-                      ACE_TEXT ("this pid = %d, waiter count = %d\n"),
-                      this, pid, this->info_->pid, this->rh_list_.size() ));
+                      ACE_TEXT ("this info_.pid = %d, prev_pid = %d, waiter count = %d\n"),
+                      this, pid, this->info_->pid, this->prev_pid_, this->rh_list_.size() ));
     }
-  if (this->info_->pid == pid)
+  if (this->info_->pid == pid || this->prev_pid_)
     {
       if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_DEATH &&
           this->rh_list_.size() > 0)
@@ -467,6 +483,21 @@ AsyncAccessManager::notify_child_death (int pid)
       return true;
     }
   return false;
+}
+
+void
+AsyncAccessManager::listener_disconnected (void)
+{
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::listener_disconnected,")
+                      ACE_TEXT (" this status %s\n"),
+                      this, status_name (this->status_)));
+    }
+
+  this->status (ImplementationRepository::AAM_SERVER_DEAD);
+
 }
 
 void
@@ -487,6 +518,18 @@ AsyncAccessManager::ping_replied (LiveStatus server)
     case LS_TIMEDOUT:
       this->status (ImplementationRepository::AAM_SERVER_READY);
       break;
+    case LS_CANCELLED:
+      {
+        if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_PING)
+          {
+            AccessLiveListener *l = 0;
+            ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
+                                            this,
+                                            this->locator_.pinger()));
+            LiveListener_ptr llp(l);
+          }
+        return;
+      }
     case LS_DEAD:
       {
         if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_PING)
@@ -721,28 +764,40 @@ AccessLiveListener::AccessLiveListener (const char *server,
 
 AccessLiveListener::~AccessLiveListener (void)
 {
+  if (!this->aam_.is_nil())
+  {
+    aam_->listener_disconnected();
+  }
 }
 
 bool
 AccessLiveListener::start (void)
 {
-  bool rtn = this->per_client_ ?
+  bool started = this->per_client_ ?
     this->pinger_.add_per_client_listener (this, srv_ref_.in()) :
     this->pinger_.add_listener (this);
-  return rtn;
+  if (!started)
+    {
+      this->aam_ = 0;
+    }
+  return started;
 }
 
 bool
 AccessLiveListener::status_changed (LiveStatus status)
 {
   this->status_ = status;
-  if (status == LS_TRANSIENT)
+  switch (status_) {
+    case LS_TRANSIENT:
     {
       return false;
     }
-  else
-    {
-      this->aam_->ping_replied (status);
+    default:
+      if (!this->aam_.is_nil())
+        {
+          this->aam_->ping_replied (status);
+        }
+      this->aam_ = 0;
     }
   return true;
 }

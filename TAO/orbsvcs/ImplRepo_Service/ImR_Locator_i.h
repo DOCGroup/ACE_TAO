@@ -174,7 +174,7 @@ public:
   void remove_aam (const char *name);
   AsyncAccessManager *find_aam (const char *name, bool active = true);
   AsyncAccessManager *create_aam (UpdateableServerInfo &info, bool running = false);
-  void make_terminating (AsyncAccessManager_ptr &aam);
+  void make_terminating (AsyncAccessManager_ptr &aam, const char *name, int pid);
   /// Receiving an update from remote peer
   void remote_access_update (const char *name,
                              ImplementationRepository::AAM_Status state);
