@@ -48,7 +48,8 @@ enum LiveStatus {
   LS_ALIVE,
   LS_TRANSIENT,
   LS_LAST_TRANSIENT,
-  LS_TIMEDOUT
+  LS_TIMEDOUT,
+  LS_CANCELLED
 };
 
 //---------------------------------------------------------------------------
@@ -257,7 +258,6 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                    ImplementationRepository::ServerObject_ptr ref);
   void set_pid (const char *server, int pid);
   void remove_server (const char *server, int pid = 0);
-  void remove_deferred_servers (void);
   bool remove_per_client_entry (LiveEntry *entry);
   bool add_listener (LiveListener *listener);
   bool add_poll_listener (LiveListener *listener);
@@ -269,6 +269,11 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   const ACE_Time_Value &ping_interval (void) const;
 
  private:
+  void enter_handle_timeout (void);
+  void exit_handle_timeout (void);
+  bool in_handle_timeout (void);
+  void remove_deferred_servers (void);
+
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   LiveEntry *,
                                   ACE_Hash<ACE_CString>,

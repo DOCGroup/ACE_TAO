@@ -120,6 +120,8 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
   induce_delay_ = opts.induce_delay ();
   env_buf_len_ = opts.env_buf_len ();
   max_env_vars_ = opts.max_env_vars ();
+  detach_child_ = opts.detach_child ();
+
   if (opts.name ().length () > 0)
     {
       name_ = opts.name();
@@ -332,9 +334,10 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
 {
   if (debug_ > 1)
     ORBSVCS_DEBUG((LM_DEBUG,
-                   "ImR Activator: Killing server <%C>...\n",
-                   name));
-  pid_t pid = static_cast<pid_t>(lastpid);
+                   "ImR Activator: Killing server <%C>, lastpid = %d\n",
+                   name, lastpid));
+  pid_t lpid = static_cast<pid_t>(lastpid);
+  pid_t pid = 0;
   bool found = false;
   int result = -1;
   for (ProcessMap::iterator iter = process_map_.begin();
@@ -343,7 +346,7 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
       if (iter->item () == name)
         {
           pid = iter->key ();
-          found = true;
+          found = pid == lpid;
         }
     }
 #if defined (ACE_WIN32)
@@ -356,11 +359,17 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
         (signum != 9) ? ACE_OS::kill (pid, signum) :
 #endif
         ACE::terminate_process (pid);
+
+      if (this->running_server_list_.remove (name) == 0)
+        {
+          this->dying_server_list_.insert (name);
+        }
+
       if (debug_ > 1)
         ORBSVCS_DEBUG((LM_DEBUG,
                        "ImR Activator: Killing server <%C> "
-                       "signal %d to pid %d, result = %d\n",
-                       name, signum, static_cast<int> (pid), result));
+                       "signal %d to pid %d, found %d, this->notify_imr_ %d,  result = %d\n",
+                       name, signum, static_cast<int> (pid), found, this->notify_imr_, result));
       if (!found && result == 0 && this->notify_imr_)
         {
           this->process_map_.bind (pid, name);
@@ -390,7 +399,7 @@ ImR_Activator_i::still_alive (CORBA::Long pid)
 bool
 ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
 {
-  bool is_running =  this->server_list_.find (name) == 0;
+  bool is_running =  this->running_server_list_.find (name) == 0;
 
   if (is_running)
     {
@@ -472,7 +481,13 @@ ImR_Activator_i::start_server(const char* name,
   // process's environment.
   proc_opts.enable_unicode_environment ();
 
-  proc_opts.setgroup (0);
+  // Guard against possible signal reflection which can happen on very heavily
+  // loaded systems. Detaching the child process avoids that possibility but at
+  // the cost of required explicit child termination prior to activator shutdown
+  if (this->detach_child_)
+    {
+      proc_opts.setgroup (0);
+    }
 
   proc_opts.setenv (ACE_TEXT ("TAO_USE_IMR"), ACE_TEXT ("1"));
   if (!CORBA::is_nil (this->locator_.in ()))
@@ -509,7 +524,7 @@ ImR_Activator_i::start_server(const char* name,
       this->process_map_.rebind (pid, name);
       if (unique)
         {
-          this->server_list_.insert (name);
+          this->running_server_list_.insert (name);
         }
       if (!CORBA::is_nil (this->locator_.in ()))
         {
@@ -548,7 +563,10 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
       this->process_map_.unbind (pid);
     }
 
-  this->server_list_.remove (name);
+  if (this->running_server_list_.remove (name) == -1)
+    {
+      this->dying_server_list_.remove (name);
+    }
 
   if (this->notify_imr_ && !CORBA::is_nil (this->locator_.in ()))
     {
@@ -584,8 +602,8 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
     {
       ORBSVCS_DEBUG
         ((LM_DEBUG,
-        ACE_TEXT ("Process %d exited with exit code %d\n"),
-        process->getpid (), process->return_value ()));
+        ACE_TEXT ("Process %d exited with exit code %d, delay = %d\n"),
+          process->getpid (), process->return_value (), this->induce_delay_));
     }
 
   if (this->induce_delay_ > 0)
