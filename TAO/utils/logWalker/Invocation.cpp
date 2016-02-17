@@ -46,7 +46,6 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
       return false;
   }
 
-
   if( ACE_OS::strstr(text,"Request") == 0)
     this->repl_octets_ = new GIOP_Buffer(text, offset, thread, this);
   else

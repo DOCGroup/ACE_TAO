@@ -134,7 +134,7 @@ Log::get_preamble ()
   if (this->hostproc_ == 0)
     {
       size_t numprocs = this->procs_.size();
-      this->hostproc_ = new HostProcess (this->origin_,pid);
+      this->hostproc_ = new HostProcess (this->origin_, pid);
       this->procs_.insert_tail(this->hostproc_);
       ACE_CString &procname = this->alias_.length() > 0 ?
         this->alias_ : this->origin_;
@@ -163,6 +163,7 @@ Log::get_preamble ()
       this->session_.add_process (this->hostproc_);
     }
   this->thr_ = this->hostproc_->find_thread (tid, this->offset_);
+  this->thr_->add_time (this->timestamp_);
   return;
 }
 
@@ -419,8 +420,8 @@ Log::parse_process_parsed_msgs_i (void)
                   "%d: Error parsing %C, can't find peer "
                   "for handle %d, text = %s\n",
                   this->offset_, this->origin_.c_str(), handle, this->info_));
-      pp = new PeerProcess (this->offset_, true);
-      Transport *t = new Transport ("<unknown>", false, this->offset_);
+      pp = new PeerProcess (this->offset_, this->timestamp_, true);
+      Transport *t = new Transport ("<unknown>", false, this->offset_, this->timestamp_);
       t->handle_ = handle;
       pp->add_transport(t);
       this->hostproc_->add_peer (handle,pp);
@@ -584,7 +585,9 @@ Log::parse_close_connection_i (void)
     {
       Transport *t = pp->find_transport (handle);
       if (t != 0)
-        t->close_offset_ = this->offset_;
+        {
+          t->close (this->offset_, this->timestamp_);
+        }
     }
 
   this->hostproc_->remove_peer(handle);
@@ -661,7 +664,7 @@ Log::parse_handler_open_i (bool is_ssl)
 
       if (pp->is_server())
         {
-          Transport *t = new Transport (local_addr.c_str(), true, this->offset_);
+          Transport *t = new Transport (local_addr.c_str(), true, this->offset_, this->timestamp_);
           pp->add_transport (t);
           this->hostproc_->add_client_endpoint (t->client_endpoint_);
         }
@@ -692,7 +695,7 @@ Log::parse_handler_open_i (bool is_ssl)
     }
   else
     {
-      trans = new Transport (addr, false, this->offset_);
+      trans = new Transport (addr, false, this->offset_, this->timestamp_);
       pp->add_transport(trans);
     }
   trans->handle_ = handle;
@@ -708,7 +711,7 @@ Log::parse_begin_connection_i (void)
   PeerProcess *pp = this->hostproc_->find_peer(addr);
   if (pp == 0)
     {
-      pp = new PeerProcess(this->offset_, true);
+      pp = new PeerProcess(this->offset_, this->timestamp_, true);
       pp->set_server_addr (addr);
     }
   this->conn_waiters_.insert_tail (pp);
@@ -746,7 +749,7 @@ Log::parse_local_addr_i (void)
     {
       // ACE_DEBUG ((LM_DEBUG, "%d: local_addr: thr %d, peer is server addr = %s\n",
       //             offset_, thr_->id(), addr));
-      Transport *t = new Transport (addr, true, this->offset_);
+      Transport *t = new Transport (addr, true, this->offset_, this->timestamp_);
       peer->add_transport (t);
       this->hostproc_->add_client_endpoint (t->client_endpoint_);
     }
@@ -774,7 +777,7 @@ Log::parse_open_as_server_i (void)
 {
   // ACE_DEBUG ((LM_DEBUG,"%d: open_as_server: adding peer process\n", offset_));
 
-  this->thr_->push_new_connection (new PeerProcess(this->offset_, false));
+  this->thr_->push_new_connection (new PeerProcess(this->offset_, this->timestamp_, false));
 }
 
 void

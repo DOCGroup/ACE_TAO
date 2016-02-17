@@ -95,10 +95,12 @@ public:
   // various output methods
   void dump_ident (ostream &strm, const char *extra);
   void dump_summary (ostream &strm);
-  void dump_thread_detail (ostream &strm);
+  void dump_thread_summary (ostream &strm);
+  void split_thread_invocations (Session *session);
   void dump_thread_invocations (ostream &strm);
-  void dump_peer_detail (ostream &strm);
+  void dump_peer_summary (ostream &strm);
   void dump_object_detail (ostream &strm);
+  void split_peer_invocations (Session *session);
   void dump_invocation_detail (ostream &strm);
 
   // reconcile_peers gives an opportunity to resolve peer process names
