@@ -87,12 +87,21 @@ Endpoint::is_client (void) const
 }
 
 
-Transport::Transport (const char *addr, bool is_client, size_t offset)
+Transport::Transport (const char *addr, bool is_client, size_t offset, const ACE_CString &time)
   : handle_ (0),
     client_endpoint_ (addr, is_client ? ER_CLIENT : ER_SERVER),
     open_offset_ (offset),
-    close_offset_ (0)
+    open_time_ (time),
+    close_offset_ (0),
+    close_time_ ()
 {
+}
+
+void
+Transport::close (size_t offset, const ACE_CString &time)
+{
+  this->close_offset_ = offset;
+  this->close_time_ = time;
 }
 
 char *
@@ -104,7 +113,7 @@ PeerProcess::nextIdent(bool is_server)
   return ident;
 }
 
-PeerProcess::PeerProcess (size_t offset, bool is_server)
+PeerProcess::PeerProcess (size_t offset, const ACE_CString &time, bool is_server)
   : ident_ (0),
     origin_ (0),
     owner_ (0),
@@ -117,7 +126,8 @@ PeerProcess::PeerProcess (size_t offset, bool is_server)
     origin_offset_ (offset),
     objects_ (),
     invocations_ (),
-    object_by_index_ ()
+    object_by_index_ (),
+    first_time_ (time)
 {
   this->ident_ = PeerProcess::nextIdent(is_server);
 }
@@ -242,6 +252,12 @@ PeerProcess::id (void) const
   return this->ident_;
 }
 
+void
+PeerProcess::split_filename (char *buffer, size_t len) const
+{
+  snprintf (buffer, len, "%s.txt", this->ident_);
+}
+
 PeerObject *
 PeerProcess::object_for (const char *oid, size_t len)
 {
@@ -335,7 +351,11 @@ PeerProcess::dump_summary (ostream &strm)
     strm << "server at ";
   else
     strm << "client to ";
-  strm << this->server_ep_.host_ << ":" << this->server_ep_.port_;
+  strm << this->server_ep_.host_ << ":" << this->server_ep_.port_ << endl;
+  strm << "   ";
+  if (this->first_time_.length())
+    strm << " first seen at " << this->first_time_;
+
   strm << " with " << num_transports << " connections, ";
   strm << " referenced " << this->objects_.current_size()
        << " objects in " << this->invocations_.size() << " invocations";
@@ -354,6 +374,7 @@ PeerProcess::dump_summary (ostream &strm)
         strm << " closed line " << tran->close_offset_;
       strm << endl;
     }
+  strm << endl;
 }
 
 void

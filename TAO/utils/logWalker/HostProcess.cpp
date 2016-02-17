@@ -2,6 +2,7 @@
 #include "Invocation.h"
 #include "PeerProcess.h"
 #include "Thread.h"
+#include "Session.h"
 
 #include "ace/OS_NS_stdio.h"
 
@@ -67,7 +68,7 @@ HostProcess::find_thread (long tid, size_t offset)
         return thr;
     }
   char alias[20];
-  ACE_OS::sprintf (alias,"Thread[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "]",
+  ACE_OS::snprintf (alias, 20, "Thread[" ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "]",
                    this->threads_.size() + 1);
   thr = new Thread (tid, alias, offset);
   threads_.insert_tail (thr);
@@ -252,9 +253,9 @@ HostProcess::dump_ident (ostream &strm, const char *message)
 }
 
 void
-HostProcess::dump_thread_detail (ostream &strm)
+HostProcess::dump_thread_summary (ostream &strm)
 {
-  this->dump_ident (strm, "thread details:");
+  this->dump_ident (strm, "thread summary:");
   long total_sent = 0;
   long total_recv = 0;
   size_t total_bytes_sent = 0;
@@ -265,13 +266,32 @@ HostProcess::dump_thread_detail (ostream &strm)
     {
       Thread *thr = 0;
       t_iter.next(thr);
-      thr->dump_detail (strm);
+      thr->dump_summary (strm);
       thr->get_summary (total_recv, total_sent, total_bytes_recv, total_bytes_sent);
     }
   strm << "Total requests sent: " << total_sent << " received: " << total_recv << endl;
   strm << "Total requests bytes sent: " << total_bytes_sent << " received: " << total_bytes_recv << endl;
 }
 
+void
+HostProcess::split_thread_invocations (Session *session)
+{
+  for (ACE_DLList_Iterator <Thread> t_iter (this->threads_);
+       !t_iter.done();
+       t_iter.advance())
+    {
+      Thread *thr = 0;
+      t_iter.next(thr);
+      char fname[100];
+      thr->split_filename(fname,100);
+      ostream *strm = session->stream_for (0, this, "threads", fname);
+      thr->dump_invocations (*strm);
+      *strm << endl;
+      thr->dump_incidents (*strm);
+      *strm << endl;
+      delete strm;
+    }
+}
 void
 HostProcess::dump_thread_invocations (ostream &strm)
 {
@@ -319,10 +339,24 @@ HostProcess::iterate_peers (int group,
           *strm << endl;
           break;
         case 2:
-          if (!first)
-            this->dump_ident (*strm,"Invocations continued");
-          entry->item()->dump_invocation_detail (*strm);
-          *strm << endl;
+          if (strm == 0)
+            {
+              char fname[100];
+              entry->item()->split_filename(fname,100);
+              strm = session->stream_for (0, this, "peers",fname);
+              this->dump_ident (*strm, "Invocation Detail");
+              entry->item()->dump_invocation_detail (*strm);
+              *strm << endl;
+              delete (strm);
+              strm = 0;
+            }
+          else
+            {
+              if (!first)
+                this->dump_ident (*strm,"Invocations continued");
+              entry->item()->dump_invocation_detail (*strm);
+              *strm << endl;
+            }
           break;
         case 3:
           entry->item()->match_hosts (session);
@@ -333,7 +367,7 @@ HostProcess::iterate_peers (int group,
 }
 
 void
-HostProcess::dump_peer_detail (ostream &strm)
+HostProcess::dump_peer_summary (ostream &strm)
 {
   this->dump_ident (strm, "peer processes:");
   size_t num_servers = 0;
@@ -364,6 +398,12 @@ HostProcess::dump_object_detail (ostream &strm)
 {
   this->dump_ident (strm, "peer objects: ");
   this->iterate_peers (3, 1, &strm);
+}
+
+void
+HostProcess::split_peer_invocations (Session *session)
+{
+  this->iterate_peers (3, 2, 0, session);
 }
 
 void
