@@ -115,7 +115,7 @@ public:
    *
    * The algorithm used is:
    * - If hostname_in_ior_ has been set, it is used "as is";
-   * - else if use_dotted_decimal_addresses_ is set, the text representaion
+   * - else if use_dotted_decimal_addresses_ is set, the text representation
    *   of the IP is used;
    * - else if specified_hostname is given, it used "as is";
    * - else a reverse (address to name) lookup is used to obtain the
