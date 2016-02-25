@@ -20,7 +20,7 @@ ACE_Service_Repository::current_size (void) const
 }
 
 ACE_INLINE ACE_SYNCH_RECURSIVE_MUTEX&
-ACE_Service_Repository::lock (void)
+ACE_Service_Repository::lock (void) const
 {
   return this->lock_;
 }
