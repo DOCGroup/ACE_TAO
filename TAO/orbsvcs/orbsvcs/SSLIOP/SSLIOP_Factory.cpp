@@ -49,7 +49,7 @@ namespace
     size_t len = 0;
     char c = '\0';
 #if defined (ACE_WIN32)
-    if (!ACE_OS::isatty (stdin->_file))
+    if (!ACE_OS::isatty (ACE_STDIN))
       {
         len = ACE_OS::fread (buf, 1, max, stdin);
         buf[len] = 0;
