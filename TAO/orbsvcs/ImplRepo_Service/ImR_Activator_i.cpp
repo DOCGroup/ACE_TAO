@@ -349,6 +349,11 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
           found = pid == lpid;
         }
     }
+  if (!found && pid == 0)
+    {
+      pid = lpid;
+    }
+
 #if defined (ACE_WIN32)
   found = false; // sigchild apparently doesn't work on windows
 #endif
