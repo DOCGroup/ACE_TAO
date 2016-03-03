@@ -255,7 +255,7 @@ PeerProcess::id (void) const
 void
 PeerProcess::split_filename (char *buffer, size_t len) const
 {
-  snprintf (buffer, len, "%s.txt", this->ident_);
+  ACE_OS::snprintf (buffer, len, "%s.txt", this->ident_);
 }
 
 PeerObject *

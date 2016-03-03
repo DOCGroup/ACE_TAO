@@ -1,5 +1,6 @@
 #include "GIOP_Buffer.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Log_Msg.h"
 
 static const char *size_leadin_1_5 = "GIOP v1."; //"x msg, ";
 static size_t leadin_len_1_5 = 15;
