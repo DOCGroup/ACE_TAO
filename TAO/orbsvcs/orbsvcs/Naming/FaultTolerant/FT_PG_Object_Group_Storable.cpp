@@ -128,9 +128,8 @@ TAO::FT_PG_Object_Group_Storable::state_written (void)
 }
 
 bool
-TAO::FT_PG_Object_Group_Storable::is_obsolete (time_t stored_time)
+TAO::FT_PG_Object_Group_Storable::is_obsolete (time_t )
 {
-  ACE_UNUSED_ARG (stored_time);
   return (!this->loaded_from_stream_) || this->stale_;
 }
 

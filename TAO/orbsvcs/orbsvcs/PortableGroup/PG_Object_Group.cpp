@@ -502,7 +502,7 @@ TAO::PG_Object_Group::increment_version (void)
   if (TAO_debug_level > 3)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%T %n (%P|%t) - Setting IOGR version to %u\n"),
+                  ACE_TEXT ("TAO (%P|%t) PG_Object_Group::increment_version now %u\n"),
                   static_cast<unsigned> (this->tagged_component_.object_group_ref_version)
                   ));
     }
@@ -868,7 +868,7 @@ TAO::PG_Object_Group::initial_populate (void)
       PortableGroup::InitialNumberMembersValue initial_number_members =
         this->get_initial_number_members ();
 
-      if (((PortableGroup::InitialNumberMembersValue)this->members_.current_size ()) < initial_number_members)
+      if (this->members_.current_size () < initial_number_members)
         {
           this->create_members (initial_number_members);
         }
@@ -880,11 +880,11 @@ TAO::PG_Object_Group::minimum_populate (void)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  if ( this->get_membership_style () == PortableGroup::MEMB_INF_CTRL)
+  if ( this->get_membership_style () == PortableGroup::MEMB_INF_CTRL )
     {
       PortableGroup::MinimumNumberMembersValue minimum_number_members =
         this->get_minimum_number_members ();
-      if (((PortableGroup::InitialNumberMembersValue)members_.current_size ()) < minimum_number_members)
+      if (members_.current_size () < minimum_number_members)
         {
           this->create_members (minimum_number_members);
         }
@@ -932,4 +932,3 @@ TAO::PG_Object_Group::clear_members_map (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
