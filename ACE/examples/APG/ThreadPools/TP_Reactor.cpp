@@ -31,7 +31,7 @@ static size_t svr_thrno = 5;
 // Total number of client threads.
 static size_t cli_runs = 2;
 
-// Total connection attemps of a client thread.
+// Total connection attempts of a client thread.
 static size_t cli_conn_no = 2;
 
 // Total requests a client thread sends.

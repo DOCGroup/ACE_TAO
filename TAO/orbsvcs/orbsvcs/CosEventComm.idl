@@ -114,7 +114,7 @@ module CosEventComm
      * The disconnect_pull_consumer operation indicates that the peer
      * has disconnected, for example, because it has been destroyed.
      * The application can safely release all resources attached to
-     * this consumer and destroy it, any attemps to pull more data
+     * this consumer and destroy it, any attempts to pull more data
      * should fail.
      */
     void disconnect_pull_consumer ();
