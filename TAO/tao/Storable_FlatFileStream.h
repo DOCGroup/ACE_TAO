@@ -4,6 +4,8 @@
 /**
  * @file  Storable_FlatFileStream.h
  *
+ * $Id: Storable_FlatFileStream.h 2827 2016-02-22 23:52:38Z mesnierp $
+ *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Byron Harris <harrisb@ociweb.com>
  */
@@ -37,8 +39,8 @@ namespace TAO
   public:
 
     Storable_FlatFileStream(const ACE_CString & file, const char * mode,
-                            bool use_backup =
-                            Storable_Base::use_backup_default);
+                            bool use_backup = Storable_Base::use_backup_default,
+                            bool retry_on_ebadf = Storable_Base::retry_on_ebadf_default);
 
     virtual ~Storable_FlatFileStream();
 
@@ -47,6 +49,11 @@ namespace TAO
 
     /// Open a file (the remaining methods below all require an open file)
     virtual int open ();
+
+    /// When the locked file resides on an NFS mounted volume, occasionally
+    /// the FD of the opened file becomes stale, when that happens the handle
+    /// needs to be refreshed and the lock verified
+    virtual int reopen ();
 
     /// Acquire a file lock
     virtual int close ();
@@ -120,7 +127,11 @@ namespace TAO
 
     /// @param directory Directory to contain file passed in
     /// create_stream (). The directory is assumed to already exist.
-    Storable_FlatFileFactory(const ACE_CString & directory);
+    Storable_FlatFileFactory(const ACE_CString & directory,
+                             bool use_backup = Storable_Base::use_backup_default);
+    Storable_FlatFileFactory(const ACE_CString & directory,
+                             bool use_backup,
+                             bool retry_on_ebadf);
 
     const ACE_CString & get_directory () const;
 
@@ -131,11 +142,12 @@ namespace TAO
   /// Create the stream that can operate on a disk file
     virtual Storable_Base *create_stream (const ACE_CString & file,
                                           const char * mode,
-                                          bool use_backup =
-                                          Storable_Base::use_backup_default);
+                                          bool = false);
   private:
+    static bool is_nfs (const ACE_CString &dir);
     ACE_CString directory_;
-
+    bool use_backup_;
+    bool retry_on_ebadf_;
   };
 }
 

@@ -71,7 +71,7 @@ namespace TAO
       TAO::Storable_Factory & storable_factory);
 
     /// Destructor
-    ~FT_PG_Object_Group_Storable ();
+    virtual ~FT_PG_Object_Group_Storable ();
 
     /////////////////
     // public methods
