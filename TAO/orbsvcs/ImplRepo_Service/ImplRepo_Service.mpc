@@ -175,14 +175,20 @@ project(ImR_Activator_Service) : orbsvcsexe, install, acexml, avoids_minimum_cor
 project(tao_imr) : orbsvcsexe, install, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, portableserver, imr_client, messaging, svc_utils {
   install         = $(ACE_ROOT)/bin
   exename  = tao_imr
+
   Source_Files {
     tao_imr.cpp
     tao_imr_i.cpp
   }
+
   idl_files {
   }
+
+  specific {
+    install_dir = tao/docs/implrepo
+  }
+
   InstallData_Files {
-    gendir = tao-imr
     README
   }
 }
