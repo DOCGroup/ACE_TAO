@@ -1,6 +1,6 @@
 // -*- MPC -*-
 project(*idl): taoidldefaults {
-  Source_Files {
+  IDL_Files {
     test.idl
   }
   custom_only = 1
