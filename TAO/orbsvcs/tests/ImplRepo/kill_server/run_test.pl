@@ -100,8 +100,8 @@ my $act_actiorfile = $act->LocalFile ($actiorfile);
 my $imr_imrlogfile = $imr->LocalFile ($imrlogfile);
 my $act_actlogfile = $act->LocalFile ($actlogfile);
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator");
-$ACT = $act->CreateProcess ("../../../ImplRepo_Service/tao_imr_activator");
+$IMR = $imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
+$ACT = $act->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_activator");
 $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 
 $CLI = $cli->CreateProcess ("client");
