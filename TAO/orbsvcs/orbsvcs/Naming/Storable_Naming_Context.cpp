@@ -957,27 +957,14 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   typedef ACE_Hash_Map_Manager<TAO_Storable_ExtId,
                                TAO_Storable_IntId,
                                ACE_Null_Mutex>::ENTRY ENTRY_DEF;
-
-  // Typedef to the type of BindingIterator servant for ease of use.
   typedef TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF> ITER_SERVANT;
 
-  // A pointer to BindingIterator servant.
-  ITER_SERVANT *bind_iter = 0;
-
-  // Number of bindings that will go into the BindingList <bl>.
-  CORBA::ULong n;
-
-  // Calculate number of bindings that will go into <bl>.
-  if (this->context_->current_size () > how_many)
-    n = how_many;
-  else
-    n = static_cast<CORBA::ULong> (this->context_->current_size ());
-
-  // Use the hash map iterator to populate <bl> with bindings.
+  CORBA::ULong n = (this->context_->current_size () > how_many) ?
+    how_many :
+    static_cast<CORBA::ULong> (this->context_->current_size ());
   bl->length (n);
 
   ENTRY_DEF *hash_entry = 0;
-
   for (CORBA::ULong i = 0; i < n; i++)
     {
       hash_iter->next (hash_entry);
@@ -987,35 +974,26 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
           throw CORBA::NO_MEMORY();
     }
 
-  // Now we are done with the BindingsList, and we can follow up on
-  // the BindingIterator business.
-
-  // If we do not need to pass back BindingIterator.
   if (this->context_->current_size () <= how_many)
     return;
   else if (redundant_)
     {
-      ACE_UNUSED_ARG (bind_iter);
       throw CORBA::NO_IMPLEMENT ();
     }
   else
     {
-      // Create a BindingIterator for return.
+      ITER_SERVANT *bind_iter = 0;
       ACE_NEW_THROW_EX (bind_iter,
                         ITER_SERVANT (this, hash_iter, this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
-      // Release <hash_iter> from auto pointer, and start using
-      // reference counting to control our servant.
       temp.release ();
-      PortableServer::ServantBase_var iter = bind_iter;
+      PortableServer::ServantBase_var svt = bind_iter;
 
       // Increment reference count on this Naming Context, so it doesn't get
       // deleted before the BindingIterator servant gets deleted.
       interface_->_add_ref ();
 
-      // Register with the POA.
-      // Is an ACE_UINT32 enough?
       char poa_id[BUFSIZ];
       ACE_OS::snprintf (poa_id,
                         BUFSIZ,
@@ -1025,9 +1003,9 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId (poa_id);
 
-      this->poa_->activate_object_with_id (id.in (),
-                                           bind_iter);
-      bi = bind_iter->_this ();
+      this->poa_->activate_object_with_id (id.in (), svt.in());
+      CORBA::Object_var obj = this->poa_->id_to_reference (id.in ());
+      bi = CosNaming::BindingIterator::_narrow (obj.in());
     }
 }
 
