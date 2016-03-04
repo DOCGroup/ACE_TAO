@@ -4,8 +4,6 @@
 /**
  * @file   FT_Naming_Server.cpp
  *
- * $Id: FT_Naming_Server.cpp 2827 2016-02-22 23:52:38Z mesnierp $
- *
  * @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================
