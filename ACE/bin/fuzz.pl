@@ -173,6 +173,9 @@ sub store_file ($)
         push @files_idl, ($name);
     }
     elsif ($name =~ /\.pl$/i) {
+        if ($name =~ /fuzz.pl/) {
+          return;
+        }
         push @files_pl, ($name);
         if ($name =~ /^run.*\.pl$/i) {
             push @files_run_pl, ($name);
