@@ -304,13 +304,13 @@ sub check_for_id_string ()
                 if (/\$Id:\$/) {
                     print_error ("$file:$.: Incorrect \$Id:\$ found (remove colon)");
                 }
-                if (/\$Id\$/) {
+                if (/\$Id\$/ || /\$Id: /) {
                     $found = 1;
                 }
             }
             close (FILE);
             if ($found == 1) {
-                print_error ("$file:1: \$Id\$ string found, not used anymore.");
+                print_error ("$file: \$Id\$ string found, not used anymore.");
             }
         }
         else {
