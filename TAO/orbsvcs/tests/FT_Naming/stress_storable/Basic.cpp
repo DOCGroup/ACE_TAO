@@ -1,5 +1,3 @@
-// $Id: Basic.cpp 2827 2016-02-22 23:52:38Z mesnierp $
-
 #include "Basic.h"
 #include "LB_server.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"

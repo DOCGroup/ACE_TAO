@@ -1,5 +1,3 @@
-// $Id: client.cpp 2834 2016-03-01 17:41:28Z mesnierp $
-
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 #include "ace/Time_Value.h"

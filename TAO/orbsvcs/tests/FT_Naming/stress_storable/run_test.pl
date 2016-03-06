@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id: run_test.pl 2833 2016-02-24 22:10:33Z mesnierp $
 # -*- perl -*-
 
 # This is a Perl script that runs a Naming Service test.  It starts
