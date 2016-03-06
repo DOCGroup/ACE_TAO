@@ -1,5 +1,3 @@
-// $Id: server.cpp 2827 2016-02-22 23:52:38Z mesnierp $
-
 #include "LB_server.h"
 #include "Basic.h"
 

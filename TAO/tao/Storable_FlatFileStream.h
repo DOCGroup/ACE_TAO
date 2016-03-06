@@ -4,8 +4,6 @@
 /**
  * @file  Storable_FlatFileStream.h
  *
- * $Id: Storable_FlatFileStream.h 2827 2016-02-22 23:52:38Z mesnierp $
- *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Byron Harris <harrisb@ociweb.com>
  */

@@ -4,8 +4,6 @@
 /**
  *  @file   LB_server.h
  *
- *  $Id: LB_server.h 2827 2016-02-22 23:52:38Z mesnierp $
- *
  *  @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */

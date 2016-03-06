@@ -1,5 +1,4 @@
 //
-// $Id: Test.idl 2827 2016-02-22 23:52:38Z mesnierp $
 
 #include "orbsvcs/FT_NamingManager.idl"
 
@@ -24,4 +23,3 @@ module Test
     oneway void remove_member ();
   };
 };
-

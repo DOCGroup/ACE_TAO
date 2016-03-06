@@ -1,5 +1,3 @@
-$Id: README 2833 2016-02-24 22:10:33Z mesnierp $
-
 This test attempts to overwhelm a multithreaded naming server by running
 more client connections than there are server threads
 

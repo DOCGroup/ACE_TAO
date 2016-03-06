@@ -1,6 +1,5 @@
 // -*- C++ -*-
 //
-// $Id: Basic.h 2827 2016-02-22 23:52:38Z mesnierp $
 
 #ifndef BASIC_H
 #define BASIC_H
