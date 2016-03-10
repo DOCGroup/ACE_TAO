@@ -1,4 +1,3 @@
-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
@@ -152,6 +151,10 @@ sub kill_imr
 {
     my $msg = shift;
     print STDERR "ERROR: $msg\n" if (length ($msg) > 0);
+    if ($mode eq "-a MANUAL ") {
+        $TI->Arguments ("$tiinitref kill MessengerService");
+        $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval() + $extra_timeout);
+    }
     $ACT->Kill (); $ACT->TimedWait (1);
     $IR->Kill (); $IR->TimedWait (1);
     return 1;
@@ -282,9 +285,6 @@ $C1_status = $C1->SpawnWaitKill ($c1->ProcessStartWaitInterval() + $extra_timeou
 
 if ($C1_status == 2) {
     print STDERR "Warning: This test does not currently run under this operating system.\n";
-    if ($mode eq "-a MANUAL ") {
-        ti_cmd ("shutdown");
-    }
     kill_imr ();
     exit 0;
 }

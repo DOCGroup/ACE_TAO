@@ -502,7 +502,7 @@ TAO::PG_Object_Group::increment_version (void)
   if (TAO_debug_level > 3)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%T %n (%P|%t) - Setting IOGR version to %u\n"),
+                  ACE_TEXT ("TAO (%P|%t) PG_Object_Group::increment_version now %u\n"),
                   static_cast<unsigned> (this->tagged_component_.object_group_ref_version)
                   ));
     }
@@ -932,4 +932,3 @@ TAO::PG_Object_Group::clear_members_map (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-

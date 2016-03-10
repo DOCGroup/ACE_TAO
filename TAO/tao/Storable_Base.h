@@ -32,19 +32,24 @@ namespace TAO
   {
   public:
 
-    Storable_Base (bool use_backup);
+    Storable_Base (bool use_backup, bool retry_ebadf);
 
     virtual ~Storable_Base ();
 
-    /// The process-wide default policy
-    /// for doing a backup when close ()
+    /// The process-wide default policy for doing a backup when close ()
     /// is called.
-    /// The backup can then be restored if
-    /// restore_backup () is called.
+    /// The backup can then be restored if restore_backup () is called.
     /// The initial value for the default is false.
     static bool use_backup_default;
 
+    /// The process-wide default policy for retring certain flock operations
+    /// if an ebadf is returned. This can happen spurously on nfs mounted
+    /// file.
+    static bool retry_on_ebadf_default;
+
     bool use_backup ();
+
+    bool retry_on_ebadf ();
 
     /// Remove the file that is assumed to not be open.
     /// If backup are used, the backup will also be removed.
@@ -124,6 +129,7 @@ namespace TAO
     virtual void remove_backup () = 0;
 
     bool use_backup_;
+    bool retry_on_ebadf_;
 
   private:
     Storable_State state_;

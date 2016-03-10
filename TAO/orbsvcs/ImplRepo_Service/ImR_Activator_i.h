@@ -142,13 +142,17 @@ private:
 
   ProcessMap process_map_;
 
-  UniqueServerList server_list_;
+  UniqueServerList running_server_list_;
+  UniqueServerList dying_server_list_;
 
   /// The default environment buffer length
   int env_buf_len_;
 
   /// Maximum number of environment variables
   int max_env_vars_;
+
+  bool detach_child_;
+
 };
 
 #endif /* IMR_ACTIVATOR_I_H */

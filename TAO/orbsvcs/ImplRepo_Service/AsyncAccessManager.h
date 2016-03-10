@@ -73,11 +73,14 @@ class Locator_Export AsyncAccessManager
   void shutdown_initiated (void);
   bool notify_child_death (int pid);
   void ping_replied (LiveStatus server);
+  void listener_disconnected (void);
 
   AsyncAccessManager *_add_ref (void);
   void _remove_ref (void);
   static const ACE_TCHAR *status_name (ImplementationRepository::AAM_Status s);
   static bool is_final (ImplementationRepository::AAM_Status s);
+  void report (void);
+  void update_prev_pid (void);
 
  private:
   void final_state (bool active = true);
@@ -98,6 +101,7 @@ class Locator_Export AsyncAccessManager
 
   int refcount_;
   TAO_SYNCH_MUTEX lock_;
+  int prev_pid_;
 };
 
 typedef TAO_Intrusive_Ref_Count_Handle<AsyncAccessManager> AsyncAccessManager_ptr;

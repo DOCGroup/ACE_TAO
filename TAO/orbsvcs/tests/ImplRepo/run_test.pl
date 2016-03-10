@@ -403,7 +403,7 @@ sub shutdown_servers_using_tao_imr
             "shutdown $a_srv_name[$index]");
         my $TI_status = $repo_ref->[$index]->{TI}->SpawnWaitKill (
             $repo_ref->[$index]->{ti}->ProcessStartWaitInterval());
-        if ($TI_status != 0) {
+        if ($TI_status != 0 ) {
             print STDERR "ERROR: tao_imr ($index) returned $TI_status\n";
             kill_act();
             kill_imr();
@@ -429,7 +429,11 @@ sub shutdown_servers_using_ior
             "shutdown $a_srv_name[$index]");
         my $TI_status = $TI->SpawnWaitKill (
             $target->ProcessStartWaitInterval());
-        if ($TI_status != 0) {
+        if ($TI_status == 5) {
+            print STDERR "INFO: tao_imr ($index) returned NOT_FOUND\n";
+            $TI_status = 0
+        }
+        elsif ($TI_status != 0) {
             print STDERR "ERROR: tao_imr ($index) returned $TI_status\n";
             kill_act();
             kill_imr();
@@ -2008,8 +2012,8 @@ sub persistent_ir_test
 sub failover_test
 {
     if (!$replica) {
-      # The failover test needs the -replica flag
-      return 0;
+        print STDERR "The failover test needs the -replica flag\n";
+        return 0;
     }
 
     my $status = 0;

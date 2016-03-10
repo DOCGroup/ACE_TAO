@@ -46,7 +46,6 @@ Invocation::init (const char * text, size_t offset, Thread *thread)
       return false;
   }
 
-
   if( ACE_OS::strstr(text,"Request") == 0)
     this->repl_octets_ = new GIOP_Buffer(text, offset, thread, this);
   else
@@ -462,7 +461,8 @@ Invocation::dump_special_details (ostream &strm, size_t indent, const char *opna
     {
       opid = 2;
     }
-  else if (ACE_OS::strcmp (opname, "resolve_str") == 0)
+  else if (ACE_OS::strcmp (opname, "resolve_str") == 0 ||
+           ACE_OS::strcmp (opname, "get_object_group_ref_from_name") == 0)
     {
       opid = 3;
       ACE_InputCDR &giop_cdr = this->req_octets_->payload();

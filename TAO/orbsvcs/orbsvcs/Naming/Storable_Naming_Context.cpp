@@ -1015,7 +1015,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
+/* static */
+CosNaming::NamingContext_ptr
+TAO_Storable_Naming_Context::recreate_all (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
@@ -1073,8 +1075,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
   // around a Storable_File_Guard derived class.
   gfl_.reset(pers_factory->
              create_stream (file_name.c_str(),
-                            "crw",
-                            false));
+                            "crw"));
   if (gfl_->open() != 0)
     {
       delete gfl_.release();

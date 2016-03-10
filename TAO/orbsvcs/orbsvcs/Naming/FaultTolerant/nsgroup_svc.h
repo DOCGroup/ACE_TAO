@@ -14,10 +14,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+
 /**
  * @class NS_group_svc
  *
  * @brief Encapsulate the NS group operations in a class.
+ *
+ *
  */
 class  TAO_FtNaming_Intf_Export NS_group_svc
 {
@@ -26,7 +29,7 @@ public:
   /**
    *  Constructor
    */
-  NS_group_svc (void);
+  NS_group_svc (bool quiet = false);
 
   /**
    * The naming service shall provide a command line utility for creating
@@ -182,6 +185,7 @@ private:
   CosNaming::NamingContextExt_var name_service_;
 
   CORBA::ORB_var orb_;
+  bool quiet_;
 
 };
 
