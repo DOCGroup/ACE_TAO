@@ -1673,7 +1673,7 @@ ImR_Locator_i::remove_aam (const char *name)
 
 void
 ImR_Locator_i::make_terminating (AsyncAccessManager_ptr &aam,
-                                 const char *name, pid_t pid)
+                                 const char *name, int pid)
 {
   this->aam_active_.remove (aam);
   this->aam_terminating_.insert_tail (aam);
