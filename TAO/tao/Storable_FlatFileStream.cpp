@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 
 //=============================================================================
@@ -718,6 +719,8 @@ TAO::Storable_FlatFileFactory::is_nfs (const ACE_CString& directory)
         }
     }
   ::endmntent (mt);
+#else
+  ACE_UNUSED_ARG (directory);
 #endif /* ACE_HAS_MNTENT */
   return ret;
 }
