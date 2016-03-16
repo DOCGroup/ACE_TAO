@@ -168,7 +168,7 @@ TAO::PG_Group_List_Store::~PG_Group_List_Store ()
 PortableGroup::ObjectGroupId
 TAO::PG_Group_List_Store::get_next_group_id ()
 {
-  File_Guard fg(*this, SFG::ACCESSOR);
+  File_Guard fg(*this, SFG::MUTATOR);
   PortableGroup::ObjectGroupId next_id = this->next_group_id_;
   ++this->next_group_id_;
   this->write (fg.peer ());
