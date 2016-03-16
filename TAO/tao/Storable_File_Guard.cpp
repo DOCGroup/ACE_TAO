@@ -43,7 +43,7 @@ TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
       this->rwflags_ = mode_read;
       break;
     case CREATE_WITHOUT_FILE:
-      mode = "wc";
+      mode = "rwc";
       this->rwflags_ = mode_write | mode_create;
       break;
     case MUTATOR:
@@ -164,8 +164,7 @@ TAO::Storable_File_Guard::release (void)
   if ( ! closed_ )
     {
       if (this->use_backup_ &&
-          (rwflags_ & mode_write) != 0 &&
-          (rwflags_ & mode_create) == 0)
+          (rwflags_ & mode_write) != 0)
         {
           fl_->create_backup ();
         }

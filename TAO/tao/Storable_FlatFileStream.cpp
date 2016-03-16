@@ -80,44 +80,45 @@ namespace
       }
   }
 
-  int file_copy(FILE *f1, FILE *f2)
+  int file_copy (FILE *f1, FILE *f2)
   {
     char buffer[BUFSIZ];
     size_t n_read;
 
-    bool all_read = false;
-    bool some_read = false;
-
-    while (!all_read)
+    while (!::feof (f1))
       {
         n_read =
           ACE_OS::fread(buffer, 1, sizeof(buffer), f1);
         if (n_read > 0)
           {
             if (ACE_OS::fwrite(buffer, 1, n_read, f2) != n_read)
-              return -1;
-            some_read = true;
-          }
-        else if (!some_read)
-          {
-            // Nothing was read
-            TAOLIB_ERROR ((LM_ERROR,
-                           ACE_TEXT ("TAO: (%P|%t) ERROR: could not read from file\n")));
-
-            if (ferror (f1))
               {
-                TAOLIB_ERROR ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) handle = %d, %p\n"),
-                               ACE_OS::fileno(f1), ACE_TEXT ("ACE_OS::fread")));
+                ::ferror (f2);
+                if (TAO_debug_level > 0)
+                  {
+                    TAOLIB_ERROR ((LM_ERROR,
+                                   ACE_TEXT ("(%P|%t) TAO::Storable_FlatFileStream, file_copy, f2 handle = %d, %p\n"),
+                                   ACE_OS::fileno(f2), ACE_TEXT ("ACE_OS::fwrite")));
+                  }
+                return -1;
               }
-            return -1;
           }
         else
           {
-            all_read = true;
+            errno = 0;
+            if (!::feof (f1))
+              {
+                ::ferror (f1);
+                if (TAO_debug_level > 0)
+                  {
+                    TAOLIB_ERROR ((LM_ERROR,
+                                   ACE_TEXT ("(%P|%t) TAO::Storable_FlatFileStream, file_copy, f1 handle = %d, %p\n"),
+                                   ACE_OS::fileno(f1), ACE_TEXT ("ACE_OS::fread")));
+                  }
+                return -1;
+              }
           }
       }
-
     return 0;
   }
 
@@ -552,10 +553,13 @@ TAO::Storable_FlatFileStream::create_backup ()
       result = file_copy(this->fl_, backup);
       if (result != 0)
         {
-          TAOLIB_ERROR ((LM_ERROR,
-                         ACE_TEXT ("TAO: (%P|%t) Storable_FlatFileStream::")
-                         ACE_TEXT ("create_backup Unable to create backup ")
-                         ACE_TEXT ("of file %s\n"), file_.c_str ()));
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO: (%P|%t) Storable_FlatFileStream::")
+                             ACE_TEXT ("create_backup Unable to create backup ")
+                             ACE_TEXT ("of file %s\n"), file_.c_str ()));
+            }
           if (errno != EBADF)
             {
               ACE_OS::fclose (backup);
