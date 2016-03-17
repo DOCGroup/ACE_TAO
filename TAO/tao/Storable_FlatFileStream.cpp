@@ -85,7 +85,7 @@ namespace
     char buffer[BUFSIZ];
     size_t n_read;
 
-    while (!::feof (f1))
+    while (!feof (f1))
       {
         n_read =
           ACE_OS::fread(buffer, 1, sizeof(buffer), f1);
@@ -93,7 +93,7 @@ namespace
           {
             if (ACE_OS::fwrite(buffer, 1, n_read, f2) != n_read)
               {
-                ::ferror (f2);
+                ferror (f2);
                 if (TAO_debug_level > 0)
                   {
                     TAOLIB_ERROR ((LM_ERROR,
@@ -106,9 +106,9 @@ namespace
         else
           {
             errno = 0;
-            if (!::feof (f1))
+            if (!feof (f1))
               {
-                ::ferror (f1);
+                ferror (f1);
                 if (TAO_debug_level > 0)
                   {
                     TAOLIB_ERROR ((LM_ERROR,
@@ -452,42 +452,85 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator << (int i)
+TAO::Storable_FlatFileStream::operator << (ACE_UINT32 i)
 {
-  int const n = ACE_OS::fprintf (this->fl_, "%d\n", i);
+  int const n =
+    ACE_OS::fprintf (this->fl_, ACE_UINT32_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
     this->throw_on_write_error (badbit);
   return *this;
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator >> (int &i)
+TAO::Storable_FlatFileStream::operator >> (ACE_UINT32 &i)
 {
   Storable_State state = this->rdstate ();
-  read_integer ("%d\n", i, state, fl_);
+  read_integer (ACE_UINT32_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
   this->throw_on_read_error (state);
 
   return *this;
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator << (unsigned int i)
+TAO::Storable_FlatFileStream::operator << (ACE_UINT64 i)
 {
-  int const n = ACE_OS::fprintf (this->fl_, "%u\n", i);
+  int const n =
+    ACE_OS::fprintf (this->fl_, ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
     this->throw_on_write_error (badbit);
   return *this;
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator >> (unsigned int &i)
+TAO::Storable_FlatFileStream::operator >> (ACE_UINT64 &i)
 {
   Storable_State state = this->rdstate ();
-  read_integer ("%u\n", i, state, fl_);
+  read_integer (ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
   this->throw_on_read_error (state);
 
   return *this;
 }
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator << (ACE_INT32 i)
+{
+  int const n =
+    ACE_OS::fprintf (this->fl_, ACE_INT32_FORMAT_SPECIFIER_ASCII "\n", i);
+  if (n < 0)
+    this->throw_on_write_error (badbit);
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator >> (ACE_INT32 &i)
+{
+  Storable_State state = this->rdstate ();
+  read_integer (ACE_INT32_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
+  this->throw_on_read_error (state);
+
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator << (ACE_INT64 i)
+{
+  int const n =
+    ACE_OS::fprintf (this->fl_, ACE_INT64_FORMAT_SPECIFIER_ASCII "\n", i);
+  if (n < 0)
+    this->throw_on_write_error (badbit);
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator >> (ACE_INT64 &i)
+{
+  Storable_State state = this->rdstate ();
+  read_integer (ACE_INT64_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
+  this->throw_on_read_error (state);
+
+  return *this;
+}
+
 
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)

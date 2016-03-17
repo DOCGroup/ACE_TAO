@@ -101,17 +101,16 @@ namespace TAO
     /// Returns 0 on success, otherwise EOF
     virtual int sync (void) = 0;
 
-    virtual Storable_Base& operator << (const ACE_CString& str) = 0;
-
-    virtual Storable_Base& operator >> (ACE_CString& str) = 0;
-
-    virtual Storable_Base& operator << (int i) = 0;
-
-    virtual Storable_Base& operator >> (int &i) = 0;
-
-    virtual Storable_Base& operator << (unsigned int i) = 0;
-
-    virtual Storable_Base& operator >> (unsigned int &i) = 0;
+    virtual Storable_Base& operator << (const ACE_CString&) = 0;
+    virtual Storable_Base& operator >> (ACE_CString&) = 0;
+    virtual Storable_Base& operator << (ACE_UINT32 ) = 0;
+    virtual Storable_Base& operator >> (ACE_UINT32 &) = 0;
+    virtual Storable_Base& operator << (ACE_UINT64 ) = 0;
+    virtual Storable_Base& operator >> (ACE_UINT64 &) = 0;
+    virtual Storable_Base& operator << (ACE_INT32 ) = 0;
+    virtual Storable_Base& operator >> (ACE_INT32 &) = 0;
+    virtual Storable_Base& operator << (ACE_INT64 ) = 0;
+    virtual Storable_Base& operator >> (ACE_INT64 &) = 0;
 
     virtual Storable_Base& operator << (const TAO_OutputCDR & cdr) = 0;
 
