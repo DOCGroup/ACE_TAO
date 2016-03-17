@@ -17,11 +17,18 @@ class Hammer : public ACE_Task_Base
   NS_group_svc group_svc;
 
 public:
-  Hammer (CORBA::ORB_ptr orb, FT_Naming::NamingManager_ptr nm)
+  Hammer ()
     : group_svc(true)
+  {}
+
+  int setup (CORBA::ORB_ptr orb, FT_Naming::NamingManager_ptr nm)
   {
-    group_svc.set_orb (orb);
-    group_svc.set_naming_manager (nm);
+    if (group_svc.set_orb (orb) != 0 || group_svc.set_naming_manager (nm))
+      {
+        ACE_DEBUG ((LM_DEBUG, "Hammer setup failed\n"));
+        return -1;
+      }
+    return 0;
   }
 
   int svc (void)
@@ -116,7 +123,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
 
 
-      Hammer hammer (orb.in(), naming_manager.in());
+      Hammer hammer;
+
+      if (hammer.setup(orb.in(), naming_manager.in()) == -1)
+        {
+          return 1;
+        }
 
       CosNaming::Name name (1);
       name.length (1);

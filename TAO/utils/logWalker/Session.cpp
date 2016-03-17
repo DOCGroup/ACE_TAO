@@ -187,20 +187,31 @@ Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub, cons
 
       if (oldstream == 0 && hp == 0)
         {
-          ACE_OS::mkdir(this->base_dir_.c_str());
+          if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
+            ACE_ERROR ((LM_ERROR,
+                        "Session::stream_for unable to make dir %C, %p\n",
+                        outname.c_str(), "mkdir"));
         }
       delete oldstream;
       outname += ACE_DIRECTORY_SEPARATOR_CHAR;
       if (hp != 0)
         {
           outname += hp->proc_name();
-          ACE_OS::mkdir(outname.c_str());
+          if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
+            ACE_ERROR ((LM_ERROR,
+                        "Session::stream_for unable to make dir %C, %p\n",
+                        outname.c_str(), "mkdir"));
+
           outname += ACE_DIRECTORY_SEPARATOR_CHAR;
         }
       outname += (sub == 0) ? "summary.txt" : sub;
       if (detail != 0)
         {
-          ACE_OS::mkdir(outname.c_str());
+          if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
+            ACE_ERROR ((LM_ERROR,
+                        "Session::stream_for unable to make dir %C, %p\n",
+                        outname.c_str(), "mkdir"));
+
           outname += ACE_DIRECTORY_SEPARATOR_CHAR;
           outname += detail;
         }
