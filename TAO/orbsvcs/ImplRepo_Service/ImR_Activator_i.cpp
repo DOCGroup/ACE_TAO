@@ -31,6 +31,7 @@ ImR_Activator_i::ImR_Activator_i (void)
 , name_ (getHostName ())
 , env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
 , max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
+, detach_child_ (false)
 {
 }
 
