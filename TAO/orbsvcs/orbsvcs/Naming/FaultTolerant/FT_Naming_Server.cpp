@@ -792,11 +792,11 @@ TAO_FT_Naming_Server::parse_args (int argc,
       if (this->use_redundancy_ == 1)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      ACE_TEXT ("INFO: Cannot run standalone with ")
-                      ACE_TEXT ("-r option. Using -u instead.\n")
-                      ACE_TEXT ("Must start a '--primary' and a '--backup' ")
-                      ACE_TEXT ("server to run as a Fault \n")
-                      ACE_TEXT ("Tolerant Naming Service. \n")));
+                          ACE_TEXT ("INFO: Standalone name server ignoring ")
+                          ACE_TEXT ("-r option, treating it as -u instead.\n")
+                          ACE_TEXT ("Start a '--primary' and a '--backup' ")
+                          ACE_TEXT ("server to run as a Fault Tolerant ")
+                          ACE_TEXT ("Naming Service. \n")));
           this->use_redundancy_ = 0;
         }
 
@@ -804,21 +804,13 @@ TAO_FT_Naming_Server::parse_args (int argc,
   else
     {
       // Only the backup should be requested to write the multi-profile IOR
-      if ((this->server_role_ != TAO_FT_Naming_Server::BACKUP) &&
-          (this->combined_naming_service_ior_file_name_ != 0))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: Must export the multi-profile ")
-                           ACE_TEXT ("IOR (using '-c' option) from the backup")
-                           ACE_TEXT (" server.\n\n")),
-                          -1);
-
-      // Only the backup should be requested to write the multi-profile IOR
-      if ((this->server_role_ == TAO_FT_Naming_Server::BACKUP) &&
+      // so fail if (role is backup) is the same as (no filename)
+      if ((this->server_role_ == TAO_FT_Naming_Server::BACKUP) ==
           (this->combined_naming_service_ior_file_name_ == 0))
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("ERROR: Must export the multi-profile ")
-                           ACE_TEXT ("IOR (using '-c' option) from the backup")
-                           ACE_TEXT (" server.\n\n")),
+                           ACE_TEXT ("IOR (using '-c' option) from the backup ")
+                           ACE_TEXT ("server.\n\n")),
                           -1);
     }
   return 0;

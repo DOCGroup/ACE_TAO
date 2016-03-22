@@ -77,7 +77,9 @@ $| = 1;
 sub LocalFile ($)
 {
     my $file = shift;
-
+    if (File::Spec->file_name_is_absolute( $file )) {
+       return $file;
+    }
     my $newfile = getcwd () . '/' . $file;
 
     if ($^O eq "MSWin32") {

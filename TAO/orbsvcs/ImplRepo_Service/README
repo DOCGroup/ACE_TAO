@@ -216,6 +216,11 @@ The Commandline parameters that are valid for tao_imr_activator are
                 detection of a child process death before notifying the
                 locator of the termination. Should not be used in
                 production environments
+-detatch <1|0>  Override the default child-process detachment. By default
+                this value is 0, indicating the child process will terminate.
+                This may also be set or overridden by adding
+                #define IMR_DETACH_CHILD_DEF
+                to your $ACE_ROOT/ace/config.h file to make the default value 1.
 -h              Prints the help.
 
 @subsection work So how does the whole thing work?

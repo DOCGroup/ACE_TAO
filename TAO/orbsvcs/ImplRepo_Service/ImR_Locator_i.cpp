@@ -562,6 +562,16 @@ ImR_Locator_i::spawn_pid
   if (! info.null ())
     {
       info.edit ()->active_info ()->pid = pid;
+      AsyncAccessManager_ptr aam (this->find_aam (name));
+      if (aam.is_nil ())
+        {
+          aam = this->find_aam (name, false);
+        }
+      else
+        {
+          aam->update_prev_pid ();
+        }
+
       info.edit ()->active_info ()->death_notify = true;
     }
   else
@@ -1662,10 +1672,12 @@ ImR_Locator_i::remove_aam (const char *name)
 }
 
 void
-ImR_Locator_i::make_terminating (AsyncAccessManager_ptr &aam)
+ImR_Locator_i::make_terminating (AsyncAccessManager_ptr &aam,
+                                 const char *name, int pid)
 {
   this->aam_active_.remove (aam);
   this->aam_terminating_.insert_tail (aam);
+  this->pinger_.remove_server (name, pid);
 }
 
 AsyncAccessManager *

@@ -168,7 +168,7 @@ TAO::PG_Group_List_Store::~PG_Group_List_Store ()
 PortableGroup::ObjectGroupId
 TAO::PG_Group_List_Store::get_next_group_id ()
 {
-  File_Guard fg(*this, SFG::ACCESSOR);
+  File_Guard fg(*this, SFG::MUTATOR);
   PortableGroup::ObjectGroupId next_id = this->next_group_id_;
   ++this->next_group_id_;
   this->write (fg.peer ());
@@ -217,17 +217,13 @@ TAO::PG_Group_List_Store::read (TAO::Storable_Base & stream)
 
   stream.rewind ();
 
-  unsigned int next_group_id;
-  stream >> next_group_id;
-  this->next_group_id_ = next_group_id;
+  stream >> this->next_group_id_;
 
-  int size;
+  size_t size;
   stream >> size;
 
-  // TODO: Look at adding streaming of unsigned long long
-  // PortableGroup::ObjectGroupId group_id;
-  int group_id;
-  for (int i = 0; i < size; ++i)
+  PortableGroup::ObjectGroupId group_id;
+  for (size_t i = 0; i < size; ++i)
     {
       stream >> group_id;
       group_ids_.insert (group_id);
@@ -239,16 +235,12 @@ TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
 {
   stream.rewind ();
 
-  unsigned int next_group_id = static_cast<unsigned int> (this->next_group_id_);
-  stream << next_group_id;
-
-  int size = group_ids_.size ();
-  stream << size;
+  stream << this->next_group_id_;
+  stream << group_ids_.size ();
   for (Group_Id_Const_Iterator it = group_ids_.begin ();
                                it != group_ids_.end (); ++it)
     {
-      int group_id = static_cast<int> (*it);
-      stream << group_id;
+      stream << *it;
     }
 
   stream.flush ();

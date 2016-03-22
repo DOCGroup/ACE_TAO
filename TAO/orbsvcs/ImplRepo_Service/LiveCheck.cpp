@@ -86,6 +86,8 @@ LiveEntry::status_name (LiveStatus s)
       return ACE_TEXT ("LAST_TRANSIENT");
     case LS_TIMEDOUT:
       return ACE_TEXT ("TIMEDOUT");
+    case LS_CANCELLED:
+      return ACE_TEXT ("CANCELLED");
     }
   return ACE_TEXT ("<undefined status>");
 }
@@ -595,11 +597,11 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
 LC_TimeoutGuard::LC_TimeoutGuard (LiveCheck *owner, LC_token_type token)
   :owner_ (owner),
    token_ (token),
-   blocked_ (owner->handle_timeout_busy_ == 0)
+   blocked_ (owner->in_handle_timeout ())
 {
   if (!blocked_)
     {
-      --owner_->handle_timeout_busy_;
+      owner_->enter_handle_timeout ();
     }
 }
 
@@ -610,7 +612,7 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
       return;
     }
 
-  ++owner_->handle_timeout_busy_;
+  owner_->exit_handle_timeout ();
 
   owner_->remove_deferred_servers ();
 
@@ -680,6 +682,24 @@ LiveCheck::~LiveCheck (void)
     }
   this->per_client_.reset ();
   this->removed_entries_.reset ();
+}
+
+void
+LiveCheck::enter_handle_timeout (void)
+{
+  --this->handle_timeout_busy_;
+}
+
+void
+LiveCheck::exit_handle_timeout (void)
+{
+  ++this->handle_timeout_busy_;
+}
+
+bool
+LiveCheck::in_handle_timeout (void)
+{
+  return this->handle_timeout_busy_ == 0;
 }
 
 void
@@ -804,6 +824,10 @@ LiveCheck::add_server (const char *server,
     {
       LiveEntry *old = 0;
       result = entry_map_.rebind (s, entry, old);
+      if (old)
+      {
+        old->status (LS_CANCELLED);
+      }
       delete old;
     }
 }
@@ -826,10 +850,12 @@ LiveCheck::remove_server (const char *server, int pid)
   LiveEntry *entry = 0;
   if (entry_map_.find (s, entry) != -1 && entry->has_pid (pid))
     {
-      if (this->handle_timeout_busy_ > 0)
+      if (!this->in_handle_timeout ())
         {
           if (entry_map_.unbind (s, entry) == 0)
-            delete entry;
+            {
+              delete entry;
+            }
         }
       else
         {
@@ -848,9 +874,9 @@ LiveCheck::remove_server (const char *server, int pid)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveCheck::remove_server %s ")
-                              ACE_TEXT ("pid %d does not match entry\n"),
+                          ACE_TEXT ("pid %d does not match entry\n"),
                           server, pid));
-            }
+        }
     }
 }
 
@@ -902,7 +928,7 @@ LiveCheck::add_per_client_listener (LiveListener *l,
     {
       entry->add_listener (l);
 
-      if (this->handle_timeout_busy_ > 0)
+      if (!this->in_handle_timeout ())
         {
           ++this->token_;
           this->reactor()->schedule_timer (this,
@@ -987,7 +1013,7 @@ LiveCheck::schedule_ping (LiveEntry *entry)
   ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
   ACE_Time_Value next = entry->next_check ();
 
-  if (this->handle_timeout_busy_ > 0)
+  if (!this->in_handle_timeout () )
     {
       ACE_Time_Value delay = ACE_Time_Value::zero;
       if (next > now)

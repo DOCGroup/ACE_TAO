@@ -14,6 +14,7 @@ Session::alt_addrs_;
 
 
 Session::Session (void)
+  : split_details_ (false)
 {
   ACE_CString n ("localhost");
   ACE_CString v ("127.0.0.1");
@@ -153,9 +154,10 @@ Session::find_host (const Endpoint &endpoint, bool server)
 }
 
 void
-Session::make_dir (const char *dirname)
+Session::make_dir (const char *dirname, bool split)
 {
   this->base_dir_ = dirname;
+  this->split_details_ = split;
 }
 
 void
@@ -177,25 +179,42 @@ Session::has_outfile (void)
 }
 
 ostream *
-Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub)
+Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub, const char *detail)
 {
   if (this->has_dir())
     {
       ACE_CString outname = this->base_dir_;
 
-      if (oldstream == 0)
+      if (oldstream == 0 && hp == 0)
         {
-          ACE_OS::mkdir(this->base_dir_.c_str());
+          if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
+            ACE_ERROR ((LM_ERROR,
+                        "Session::stream_for unable to make dir %C, %p\n",
+                        outname.c_str(), "mkdir"));
         }
       delete oldstream;
       outname += ACE_DIRECTORY_SEPARATOR_CHAR;
       if (hp != 0)
         {
           outname += hp->proc_name();
-          ACE_OS::mkdir(outname.c_str());
+          if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
+            ACE_ERROR ((LM_ERROR,
+                        "Session::stream_for unable to make dir %C, %p\n",
+                        outname.c_str(), "mkdir"));
+
           outname += ACE_DIRECTORY_SEPARATOR_CHAR;
         }
       outname += (sub == 0) ? "summary.txt" : sub;
+      if (detail != 0)
+        {
+          if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
+            ACE_ERROR ((LM_ERROR,
+                        "Session::stream_for unable to make dir %C, %p\n",
+                        outname.c_str(), "mkdir"));
+
+          outname += ACE_DIRECTORY_SEPARATOR_CHAR;
+          outname += detail;
+        }
       return new ofstream (outname.c_str());
     }
 
@@ -212,12 +231,14 @@ Session::dump ()
 {
   bool single = !this->has_dir();
   ostream *strm = this->stream_for(0);
-
   // report session metrics
 
   if (single)
-    *strm << "Session summary report: "
-        << this->processes_.current_size() << " Processes detected." << endl;
+    {
+      this->split_details_ = false;
+      *strm << "Session summary report: "
+            << this->processes_.current_size() << " Processes detected." << endl;
+    }
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
@@ -233,8 +254,10 @@ Session::dump ()
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
         continue;
-      strm = stream_for (strm,entry->item(),"threads.txt");
-      entry->item()->dump_thread_detail (*strm);
+      strm = this->split_details_ ?
+        stream_for (strm,entry->item(),"threads", "summary.txt"):
+        stream_for (strm,entry->item(),"threads.txt");
+      entry->item()->dump_thread_summary (*strm);
     }
 
   if (single)
@@ -244,8 +267,10 @@ Session::dump ()
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
         continue;
-      strm = stream_for (strm,entry->item(),"peer_processes.txt");
-      entry->item()->dump_peer_detail (*strm);
+      strm = this->split_details_ ?
+        stream_for (strm,entry->item(),"peers", "summary.txt") :
+        stream_for (strm,entry->item(),"peer_processes.txt");
+      entry->item()->dump_peer_summary (*strm);
     }
 
   if (single)
@@ -266,8 +291,15 @@ Session::dump ()
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
         continue;
-      strm = stream_for (strm,entry->item(),"invocation_by_peer.txt");
-      entry->item()->dump_invocation_detail (*strm);
+      if (this->split_details_)
+        {
+          entry->item()->split_peer_invocations (this);
+        }
+      else
+        {
+          strm = stream_for (strm,entry->item(),"invocation_by_peer.txt");
+          entry->item()->dump_invocation_detail (*strm);
+        }
     }
 
   if (single)
@@ -277,9 +309,15 @@ Session::dump ()
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
         continue;
-      strm = stream_for (strm,entry->item(),"invocation_by_thread.txt");
-//       entry->item()->dump_invocation_detail (*strm);
-       entry->item()->dump_thread_invocations (*strm);
+      if (this->split_details_)
+        {
+          entry->item()->split_thread_invocations (this);
+        }
+      else
+        {
+          strm = stream_for (strm,entry->item(),"invocation_by_thread.txt");
+          entry->item()->dump_thread_invocations (*strm);
+        }
     }
   if (this->has_outfile() || this->has_dir())
     delete strm;

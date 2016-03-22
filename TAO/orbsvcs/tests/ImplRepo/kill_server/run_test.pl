@@ -25,18 +25,18 @@ my $force = 0;
 if ($#ARGV >= 0) {
     my $sn_set = 0;
     for (my $i = 0; $i <= $#ARGV; $i++) {
-	if ($ARGV[$i] eq '-debug') {
-	    $orb_debug = 4;
+        if ($ARGV[$i] eq '-debug') {
+            $orb_debug = 4;
             $imr_debug = 6;
-	}
-	elsif ($ARGV[$i] eq "-servers") {
-	    $i++;
-	    $servers_count = $ARGV[$i];
-	}
-	elsif ($ARGV[$i] eq "-servers_to_kill") {
-	    $i++;
-	    $servers_kill_count = $ARGV[$i];
-	}
+        }
+        elsif ($ARGV[$i] eq "-servers") {
+            $i++;
+            $servers_count = $ARGV[$i];
+        }
+        elsif ($ARGV[$i] eq "-servers_to_kill") {
+            $i++;
+            $servers_kill_count = $ARGV[$i];
+        }
         elsif ($ARGV[$i] eq "-signal") {
             $i++;
             $signalnum = $ARGV[$i];
@@ -44,6 +44,11 @@ if ($#ARGV >= 0) {
         }
         elsif ($ARGV[$i] eq "-rm2523") {
             $rm2523 = 1;
+            $signalnum = 15;
+            $servers_count = 3;
+        }
+        elsif ($ARGV[$1] eq "-rm2523ol") {
+            $rm2523 = 2;
             $signalnum = 15;
             $servers_count = 3;
         }
@@ -55,10 +60,10 @@ if ($#ARGV >= 0) {
             $i++;
             $start_delay = $ARGV[$i];
         }
-	else {
-	    usage();
-	    exit 1;
-	}
+        else {
+            usage();
+            exit 1;
+        }
     }
     $rm_opts .= " -s $signalnum" if ($force == 1 && $sn_set == 1);
 }
@@ -76,7 +81,7 @@ for(my $i = 0; $i < $servers_count; $i++) {
 }
 
 my $refstyle = " -ORBobjrefstyle URL";
-my $obj_count = ($rm2523 == 1) ? 1 : 2;
+my $obj_count = ($rm2523 > 0) ? 1 : 2;
 my $port = 9876;
 
 my $objprefix = "TestObject";
@@ -84,12 +89,16 @@ my $client_wait_time = 10;
 
 $imriorfile = "imr_locator.ior";
 $actiorfile = "imr_activator.ior";
+$imrlogfile = "imr.log";
+$actlogfile = "act.log";
 
 my $imr_imriorfile = $imr->LocalFile ($imriorfile);
 my $act_imriorfile = $act->LocalFile ($imriorfile);
 my $ti_imriorfile = $ti->LocalFile ($imriorfile);
 my $srv_imriorfile = $srv[0]->LocalFile ($imriorfile);
 my $act_actiorfile = $act->LocalFile ($actiorfile);
+my $imr_imrlogfile = $imr->LocalFile ($imrlogfile);
+my $act_actlogfile = $act->LocalFile ($actlogfile);
 
 $IMR = $imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
 $ACT = $act->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_activator");
@@ -109,6 +118,8 @@ $act->DeleteFile ($imriorfile);
 $ti->DeleteFile ($imriorfile);
 $srv[0]->DeleteFile ($imriorfile);
 $act->DeleteFile ($actiorfile);
+$imr->DeleteFile ($imrlogfile);
+$act->DeleteFile ($actlogfile);
 
 my $stdout_file      = "test.out";
 my $stderr_file      = "test.err";
@@ -127,7 +138,7 @@ END
     $ti->DeleteFile ($stdout_file);
     $ti->DeleteFile ($stderr_file);
 
-    # Remove any stray server status files caused by aborting services
+   # Remove any stray server status files caused by aborting services
     unlink <*.status>;
 }
 
@@ -148,7 +159,7 @@ sub restore_output()
 sub servers_setup ()
 {
     my $imr_args = "-v 1000 -o $imr_imriorfile -orbendpoint iiop://localhost:$port";
-    $imr_args .= " -d $imr_debug -orbdebuglevel $orb_debug -orbverboselogging 1 -orblogfile imr.log" if ($imr_debug > 0);
+    $imr_args .= " -d $imr_debug -orbdebuglevel $orb_debug -orbverboselogging 1 -orblogfile $imr_imrlogfile" if ($imr_debug > 0);
     print "$imr_args \n";
     $IMR->Arguments ($imr_args);
 
@@ -185,8 +196,8 @@ sub servers_setup ()
     }
 
     my $act_args = "-l -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile  -orbendpoint iiop://localhost:";
-    $act_args .= " -d $imr_debug -orbdebuglevel $orb_debug -orbverboselogging 1 -orblogfile act.log" if ($imr_debug > 0);
-    $act_args .= " -delay $act_delay" if ($rm2523 == 1 && $OSNAME ne "MSWin32");
+    $act_args .= " -d $imr_debug -orbdebuglevel $orb_debug -orbverboselogging 1 -orblogfile $actlogfile" if ($imr_debug > 0);
+    $act_args .= " -delay $act_delay" if ($rm2523 > 0 && $OSNAME ne "MSWin32");
     $ACT->Arguments ($act_args);
 
     $ACT_status = $ACT->Spawn ();
@@ -219,7 +230,7 @@ sub servers_setup ()
             $IMR->Kill (); $IMR->TimedWait (1);
             return 1;
         }
-        if ($rm2523 == 1) {
+        if ($rm2523 > 0) {
             $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
                             "link $objprefix" . '_' . $i . "_a " .
                             " -p $objprefix" . '_' . $i . "_b ");
@@ -407,6 +418,43 @@ sub count_active_servers($)
     return $active_servers;
 }
 
+
+sub rm2523_update_test
+{
+    print "Running slow activator kill test with $servers_count servers \n";
+
+    my $result = 0;
+    my $start_time = time();
+    servers_setup();
+
+    print "make server requests\n";
+    make_server_requests();
+    list_servers("-a");
+
+    print "kill then start the server twice\n";
+    kill_the_one();
+    trigger_the_one ();
+    start_the_one ();
+    print "pausing 2 seconds\n";
+    sleep (2);
+    wait_for_client ();
+    shutdown_servers (0, $servers_count, 9);
+
+    my $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());
+    if ($ACT_status != 0) {
+        print STDERR "ERROR: IMR Activator returned $ACT_status\n";
+        $status = 1;
+    }
+
+    my $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: IMR returned $IMR_status\n";
+        $status = 1;
+    }
+
+}
+
+
 sub rm2523_test
 {
     print "Running slow activator kill test with $servers_count servers \n";
@@ -545,5 +593,7 @@ sub usage() {
 
 ###############################################################################
 ###############################################################################
-my $ret = ($rm2523 == 1) ? rm2523_test() : servers_kill_test();
+my $ret = ($rm2523 > 0) ?
+    ($rm2523 == 1) ? rm2523_test () : rm2523_update_test()
+    : servers_kill_test();
 exit $ret;
