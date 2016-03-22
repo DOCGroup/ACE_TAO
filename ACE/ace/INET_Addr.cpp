@@ -407,7 +407,10 @@ ACE_INET_Addr::set (u_short port_number,
   addrinfo hints;
   ACE_OS::memset (&hints, 0, sizeof hints);
   hints.ai_family = address_family;
-  hints.ai_flags = AI_ADDRCONFIG | AI_V4MAPPED;
+  // The ai_flags used to contain AI_ADDRCONFIG as well but that prevented
+  // lookups from completing if there is no, or only a loopback, IPv6
+  // interface configured. See Bugzilla 4211 for more info.
+  hints.ai_flags = AI_V4MAPPED;
   // Note - specify the socktype here to avoid getting multiple entries
   // returned with the same address for different socket types or
   // protocols. If this causes a problem for some reason (an address that's
