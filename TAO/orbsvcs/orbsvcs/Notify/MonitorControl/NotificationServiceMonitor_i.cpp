@@ -25,7 +25,7 @@ NotificationServiceMonitor_i::get_statistic_names (void)
 {
   Monitor_Control_Types::NameList name_list =
     Monitor_Point_Registry::instance ()->names ();
-  CORBA::ULong the_length = name_list.size ();
+  CORBA::ULong the_length = static_cast <CORBA::ULong> (name_list.size ());
 
   Monitor::NameList* the_names = 0;
   ACE_NEW_RETURN (the_names,

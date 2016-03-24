@@ -160,7 +160,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
   ACE_NEW_RETURN (types,
                   CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq(length),
                   0);
-  types->length(this->type_map_.current_size ());
+  types->length(length);
 
   bool const all = which_types._d () == CosTradingRepos::ServiceTypeRepository::all;
   // FIXME: && (which_types.all_ () == true) ?
