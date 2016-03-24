@@ -38,8 +38,8 @@ namespace
   const char
     *myTree = "|",      // Default string to draw tree "tram-lines"
     *myNode = "+";      // Default string to draw tree node end-points
-  int sizeMyTree;       // Initialised by main to strlen (myTree)
-  int sizeMyNode;       // Initialised by main to strlen (myNode)
+  size_t sizeMyTree;       // Initialised by main to strlen (myTree)
+  size_t sizeMyNode;       // Initialised by main to strlen (myNode)
   int maxDepth= 0;      // Limit to display depth (default unlimited)
   ACE_Time_Value
     rtt = ACE_Time_Value::zero; // relative roundtrip timeout for ctx
@@ -162,7 +162,7 @@ namespace
     get_tag_name (tag, tag_name);
 
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    int count;
+    size_t count;
     for (count= 0; count < level; ++count)
       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
     for (count= 0; count < sizeMyNode; ++count)
@@ -249,7 +249,7 @@ namespace
                     for (count= 0; count < (level - backwards); ++count)
                       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
                     ACE_DEBUG ((LM_DEBUG, "^"));
-                    int chars;
+                    size_t chars;
                     while (++count < level)
                       for (chars= 0; chars <= sizeMyTree; ++chars)
                         ACE_DEBUG ((LM_DEBUG, "-"));
