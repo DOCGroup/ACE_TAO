@@ -85,7 +85,7 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
           if (this->debug_ > 9)
             {
               CORBA::String_var ior = orb_->object_to_string (obj.in ());
-              ORBSVCS_DEBUG((LM_DEBUG, "ImR Activator: ImplRepoService ior=<%s>\n",
+              ORBSVCS_DEBUG((LM_DEBUG, "ImR Activator: ImplRepoService ior=<%C>\n",
                 ior.in()));
             }
 
