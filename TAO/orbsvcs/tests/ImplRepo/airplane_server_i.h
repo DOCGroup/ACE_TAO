@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #if !defined (AIRPLANE_SERVER_I_H)
 #define AIRPLANE_SERVER_I_H
 
@@ -68,7 +67,10 @@ private:
   /// File where the IOR of the server object is stored.
   FILE *ior_output_file_;
 
-  /// the server name
+  /// File where the pid of the server is stored.
+  FILE *pid_output_file_;
+
+  /// The server name
   ACE_CString server_name_;
 };
 

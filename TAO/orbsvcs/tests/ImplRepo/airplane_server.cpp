@@ -9,13 +9,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-      int retval = server.init (argc, argv);
-
-      if (retval == -1)
+      if (server.init (argc, argv) == -1)
         return -1;
 
-
-      retval = server.run ();
+      int const retval = server.run ();
 
       ACE_DEBUG ((LM_DEBUG, "Paper Airplane Server says goodnight\n"));
 
