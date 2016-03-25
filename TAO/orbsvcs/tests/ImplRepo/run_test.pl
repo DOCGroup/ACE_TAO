@@ -713,7 +713,7 @@ get_server_pid ();
 signal_server ("KILL");
 #TODO Kill Server
     # Starting the TAO_ImRActivator will also start the TAOImR
-    print "Starting TAO ImR Services\n";
+    print "Starting TAO ImR Activator Services\n";
     my $net_start_status = system("net start taoimractivator 2>&1");
     if ($net_start_status != 0) {
         print STDERR "ERROR: Stopping ImR service returned $net_start_status\n";
@@ -721,20 +721,20 @@ signal_server ("KILL");
     }
 
 	print "Listing TAO ImR Services after start of the activator\n";
-    $TI->Arguments ("$imr_initref list ");
+    $TI->Arguments ("$imr_initref list -v ");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
         return 1;
     }
 
+	print "Starting server again\n";
     $TI->Arguments ("$imr_initref start $a_srv_name[0]");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
-        print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
+        print STDERR "ERROR: tao_imr start returned $TI_status\n";
         return 1;
     }
-
 
     $TI->Arguments ("$imr_initref ior $a_srv_name[0] -f $a_srv_airplaneiorfile");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
