@@ -741,7 +741,7 @@ sub nt_service_test
     # Just to show that it's possible, this test uses corbaloc instead of ior file.
     my $imr_initref = "-orbinitref ImplRepoService=corbaloc::$bin_imr_host:8888/ImplRepoService";
 
-    # To avoid having to ensure that they LocalSystem account has the correct path
+    # To avoid having to ensure that the LocalSystem account has the correct path
     # we simply copy the imr executables to the same directory as the DLL's.
     my $BIN_IMR = $bin_imr->CreateProcess ("$ENV{ACE_ROOT}/lib/tao_imr_locator","");
     my $BIN_ACT = $bin_act->CreateProcess ("$ENV{ACE_ROOT}/lib/tao_imr_activator","");
