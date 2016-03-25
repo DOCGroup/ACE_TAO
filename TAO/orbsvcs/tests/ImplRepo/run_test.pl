@@ -751,10 +751,8 @@ sub nt_service_test
     print "Copying ImplRepo services to the same location as the dlls.\n";
     $bin_imr->DeleteFile ($BIN_IMR->Executable ());
     copy ($IMR->Executable (), $BIN_IMR->Executable ());
-#    chmod(0755, $BIN_IMR->Executable ());
     $bin_act->DeleteFile ($BIN_ACT->Executable ());
     copy ($ACT->Executable (), $BIN_ACT->Executable ());
-#    chmod(0755, $BIN_ACT->Executable ());
 
     print "Stopping any existing TAO ImR Services\n";
     system("net stop taoimractivator > nul 2>&1");
