@@ -18,6 +18,7 @@ my $test_debug_level = '2';
 my $num_srvr = 1;
 my $replica = 0;
 my $all_tests = 0;
+my $server_pid = 0;
 
 foreach my $i (@ARGV) {
     if ($i eq '-debug') {
@@ -671,7 +672,7 @@ sub nt_service_test_i
     }
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
-    $TI->Arguments ("$imr_initref add $a_srv_name[0] -a MANUAL -c \"$imr_A_SRV_cmd[0] -s $a_srv_name[0]\" ".
+    $TI->Arguments ("$imr_initref add $a_srv_name[0] -a MANUAL -c \"$imr_A_SRV_cmd[0] -s $a_srv_name[0] -p c:\\ace\\server.pid\" ".
                     "-w \"$ENV{ACE_ROOT}/lib\"");
     my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
@@ -708,6 +709,8 @@ sub nt_service_test_i
         #return 1;
     }
 
+get_server_pid ();
+signal_server ("KILL");
 #TODO Kill Server
     # Starting the TAO_ImRActivator will also start the TAOImR
     print "Starting TAO ImR Services\n";
@@ -2931,6 +2934,29 @@ print "Comment line arguments: -d $test_debug_level -o $repo{imr_imriorfile} " .
 
 ###############################################################################
 
+my $srvpidfile = "server.pid";
+#my $srv_srvpidfile = $srv->LocalFile ($srvpidfile);
+
+sub get_server_pid
+{
+    my $pid = 0;
+    open (FILE, "c:\\ace\\server.pid") or die "Can't open server.pid: $!";
+    while (<FILE>) {
+        chomp;
+        $pid = $_;
+        $server_pid = $pid if ($server_pid == 0);
+    }
+    close FILE;
+    return $pid;
+}
+
+sub signal_server
+{
+    my $sig = shift;
+    print "signal $sig to server $server_pid\n";
+    kill ($sig, $server_pid);
+}
+
 sub both_ir_test
 {
     my $status = 0;
@@ -3025,7 +3051,7 @@ sub both_ir_test
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "add $a_srv_name[0] -c \"$imr_A_SRV_cmd[0] $refstyle -s $a_srv_name[0]\"");
+                    "add $a_srv_name[0] -c \"$imr_A_SRV_cmd[0] $refstyle -s $a_srv_name[0] -p server.pid\"");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr returned $TI_status\n";
