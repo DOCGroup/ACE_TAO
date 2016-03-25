@@ -269,11 +269,11 @@ Activator_Options::save_registry_options()
       return -1;
     }
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("ORBInitOptions"), 0, REG_SZ,
-    (LPBYTE) this->cmdline_.c_str (), this->cmdline_.length () + 1);
+    (LPBYTE) this->cmdline_.c_str (), (DWORD) this->cmdline_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("IORFile"), 0, REG_SZ,
-    (LPBYTE) this->ior_output_file_.c_str (), this->ior_output_file_.length () + 1);
+    (LPBYTE) this->ior_output_file_.c_str (), (DWORD) this->ior_output_file_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("DebugLevel"), 0, REG_DWORD,
@@ -281,7 +281,7 @@ Activator_Options::save_registry_options()
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx( key, ACE_TEXT("Name"), 0, REG_SZ,
-    (LPBYTE) this->name_.c_str (), this->name_.length () + 1);
+    (LPBYTE) this->name_.c_str (), (DWORD) this->name_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   DWORD tmpint = this->notify_imr_;
