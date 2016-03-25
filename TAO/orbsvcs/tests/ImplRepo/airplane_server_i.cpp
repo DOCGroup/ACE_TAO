@@ -9,6 +9,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
 
 // The server name of the Aiprlane Server
 const char SERVER_NAME[] = "airplane_server";
