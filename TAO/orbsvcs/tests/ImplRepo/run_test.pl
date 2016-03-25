@@ -645,8 +645,8 @@ sub nt_service_test_i
     my $a_srv_airplaneiorfile = $a_srv[0]->LocalFile ($airplaneiorfile[0]);
 
     print "Installing TAO ImR Services\n";
-    $BIN_ACT->Arguments ("-c install $imr_initref -d $test_debug_level -ORBDebugLevel $debug_level");
-    $BIN_IMR->Arguments ("-c install -d $test_debug_level -orbendpoint iiop://:8888");
+    $BIN_ACT->Arguments ("-c install $imr_initref -d $test_debug_level -ORBDebugLevel $debug_level -ORBLogFile act.log");
+    $BIN_IMR->Arguments ("-c install --directory c:\ace c:\ACE\ImRf.txt -d $test_debug_level -orbendpoint iiop://:8888 -ORBLogFile imr.log");
 
     my $BIN_IMR_status = $BIN_IMR->SpawnWaitKill ($bin_imr->ProcessStartWaitInterval());
     if ($BIN_IMR_status != 0) {
@@ -671,7 +671,7 @@ sub nt_service_test_i
     }
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
-    $TI->Arguments ("$imr_initref add $a_srv_name[0] -c \"$imr_A_SRV_cmd[0] -s $a_srv_name[0]\" ".
+    $TI->Arguments ("$imr_initref add $a_srv_name[0] -a MANUAL -c \"$imr_A_SRV_cmd[0] -s $a_srv_name[0]\" ".
                     "-w \"$ENV{ACE_ROOT}/lib\"");
     my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
@@ -679,12 +679,59 @@ sub nt_service_test_i
         return 1;
     }
 
-    $TI->Arguments ("$imr_initref list -v");
+    $TI->Arguments ("$imr_initref list $a_srv_name[0]");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
         return 1;
     }
+
+    $TI->Arguments ("$imr_initref start $a_srv_name[0]");
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
+        return 1;
+    }
+
+    $TI->Arguments ("$imr_initref list $a_srv_name[0]");
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
+        return 1;
+    }
+
+    # Stopping the TAO_ImR will also stop the Activator
+    print "Stopping TAO ImR Services\n";
+    my $net_stop_status = system("net stop taoimr /y 2>&1");
+    if ($net_stop_status != 0) {
+        print STDERR "ERROR: Stopping ImR service returned $net_stop_status\n";
+        #return 1;
+    }
+
+#TODO Kill Server
+    # Starting the TAO_ImRActivator will also start the TAOImR
+    print "Starting TAO ImR Services\n";
+    my $net_start_status = system("net start taoimractivator 2>&1");
+    if ($net_start_status != 0) {
+        print STDERR "ERROR: Stopping ImR service returned $net_start_status\n";
+        #return 1;
+    }
+
+	print "Listing TAO ImR Services after start of the activator\n";
+    $TI->Arguments ("$imr_initref list ");
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
+        return 1;
+    }
+
+    $TI->Arguments ("$imr_initref start $a_srv_name[0]");
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
+        return 1;
+    }
+
 
     $TI->Arguments ("$imr_initref ior $a_srv_name[0] -f $a_srv_airplaneiorfile");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
@@ -739,7 +786,7 @@ sub nt_service_test
     my $bin_imr_host = $bin_imr->HostName ();
 
     # Just to show that it's possible, this test uses corbaloc instead of ior file.
-    my $imr_initref = "-orbinitref ImplRepoService=corbaloc::$bin_imr_host:8888/ImplRepoService";
+    my $imr_initref = "-orbinitref ImplRepoService=corbaloc::$bin_imr_host:8888/ImplRepoService";# -ORBDebugLevel 10";
 
     # To avoid having to ensure that they LocalSystem account has the correct path
     # we simply copy the imr executables to the same directory as the DLL's.
