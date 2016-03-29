@@ -169,7 +169,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
   ior_table->set_locator (this->ins_locator_.in ());
 
-  // initialize the repository. This will load any values that
+  // Initialize the repository. This will load any values that
   // may have been persisted before.
   int result = this->repository_->init(this->root_poa_.in (),
                                        this->imr_poa_.in (),
@@ -185,17 +185,21 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
   for (;it.next (entry) != 0; it.advance ())
     {
       UpdateableServerInfo info (this->repository_, entry->int_id_);
-      bool is_alive = this->server_is_alive (info);
+      bool const is_alive = this->server_is_alive (info);
       Server_Info *active = info.edit()->active_info ();
       if (this->debug_ > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("server %C is_alive = %d\n"),
+                          ACE_TEXT ("server <%C> is_alive = %d\n"),
                           active->ping_id(), is_alive));
         }
 
       if (!is_alive)
         {
+          // We have read an existing configuration from the repository
+          // and when a server is not alive we reset it, it could have
+          // been shutdown when we where offline
+          this->pinger_.remove_server (active->ping_id());
           info.edit()->reset_runtime ();
           active->reset_runtime ();
           continue;
@@ -229,7 +233,7 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
         }
     }
 
-  //only after verifying do we report the IOR and become open for business
+  // Only after verifying do we report the IOR and become open for business
   return this->repository_->report_ior(this->imr_poa_.in ());
 }
 
