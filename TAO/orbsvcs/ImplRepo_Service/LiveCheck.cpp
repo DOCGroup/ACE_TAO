@@ -862,7 +862,7 @@ LiveCheck::remove_server (const char *server, int pid)
           if (ImR_Locator_i::debug () > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server %s ")
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
                               ACE_TEXT ("called during handle_timeout\n"), server));
             }
           this->removed_entries_.insert_tail (s);
@@ -873,7 +873,7 @@ LiveCheck::remove_server (const char *server, int pid)
       if (entry != 0 && ImR_Locator_i::debug () > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveCheck::remove_server %s ")
+                          ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
                           ACE_TEXT ("pid %d does not match entry\n"),
                           server, pid));
         }
