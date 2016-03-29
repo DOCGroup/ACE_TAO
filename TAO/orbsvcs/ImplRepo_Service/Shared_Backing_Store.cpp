@@ -903,9 +903,12 @@ Shared_Backing_Store::load_server (Server_Info *info,
                                    bool server_started,
                                    const NameValues& extra_params)
 {
-  ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) loading server <%C>\n"),
-                  info->key_name_.c_str ()));
+  if (this->opts_.debug() > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) loading server <%C>\n"),
+                      info->key_name_.c_str ()));
+    }
 
   // Ensure there is an entry for this server
   this->verify_unique_id (info->key_name_,
