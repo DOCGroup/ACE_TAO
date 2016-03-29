@@ -33,3 +33,4 @@ ipch/
 
 *.o
 *.res
+*.opendb
