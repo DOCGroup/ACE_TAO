@@ -37,7 +37,7 @@ class PingReceiver;
  *  LS_PING_AWAY - A ping request has been issued, waiting for reply
  *  LS_DEAD      - The ping failed for reasons other than POA Activation
  *  LS_ALIVE     - The server positively acknowledged a ping
- *  LS_TRANSIENT - The server connected, but acively raised a transient
+ *  LS_TRANSIENT - The server connected, but actively raised a transient
  *  LS_LAST_TRANSIENT - The maximum number of retries is reached
  *  LS_TIMEDOUT  - The server connected, but never returned any result.
  */
