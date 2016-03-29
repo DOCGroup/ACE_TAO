@@ -485,7 +485,7 @@ PingReceiver::cancel (void)
           server = this->entry_->server_name ();
         }
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) PingReceiver::cancel server = %s\n"),
+                      ACE_TEXT ("(%P|%t) PingReceiver::cancel server = <%C>\n"),
                       server));
     }
 

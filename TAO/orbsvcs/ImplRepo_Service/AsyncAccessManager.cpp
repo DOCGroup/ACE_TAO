@@ -212,7 +212,7 @@ AsyncAccessManager::final_state (bool active)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state ")
-                          ACE_TEXT ("removing this from map, server = %s\n"),
+                          ACE_TEXT ("removing this from map, server = <%C>\n"),
                           this, info_->ping_id ()));
         }
       if (this->remove_on_death_rh_ != 0)
