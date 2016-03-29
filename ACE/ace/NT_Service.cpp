@@ -203,8 +203,8 @@ ACE_NT_Service::insert (DWORD start_type,
                                              SC_MANAGER_ALL_ACCESS);
   if (sc_mgr == 0)
     {
-	  ACE_OS::set_errno_to_last_error();
-	  return -1;
+      ACE_OS::set_errno_to_last_error();
+      return -1;
     }
 
   SC_HANDLE sh = ACE_TEXT_CreateService (sc_mgr,

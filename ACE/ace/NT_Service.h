@@ -290,7 +290,7 @@ public:
   int continue_svc (ACE_Time_Value *wait_time = 0, DWORD *svc_state = 0);
 
   /**
-   * Get the current state for the service.  If <wait_hint> is not 0,
+   * Get the current state for the service.  If @a wait_hint is not 0,
    * it receives the service's reported wait hint.  Note that this
    * function returns 0 on failure (not -1 as is usual in ACE).  A
    * zero return would (probably) only be returned if there is either
@@ -328,7 +328,7 @@ protected:
   SC_HANDLE svc_sc_handle (void);
 
   /**
-   * Waits for the service to reach <desired_state> or get
+   * Waits for the service to reach @a desired_state or get
    * (apparently) stuck before it reaches that state.  Will wait at
    * most @a wait_time to get to the desired state.  If @a wait_time is
    * 0, then the function keeps waiting until the desired state is
