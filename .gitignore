@@ -32,3 +32,4 @@ ipch/
 /build
 
 *.o
+*.res
