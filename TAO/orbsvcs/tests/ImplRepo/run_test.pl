@@ -693,7 +693,7 @@ sub manual_persistent_restart_test
 
     ## Be sure to start the ImR on a consistent endpoint, so that any created IORs
     ## remain valid even if the ImR restarts.
-    my $imr_arguments = "-orbendpoint iiop://:8888 $backing_store_flag $imr_storefile -d $test_debug_level -o $imr_imriorfile $imr_refstyle ";
+    my $imr_arguments = "-orbendpoint iiop://:8888 $backing_store_flag $imr_storefile -d $test_debug_level -o $imr_imriorfile $imr_refstyle";
     $IMR->Arguments ("$imr_arguments -e ");
     test_info("starting IMR=" . $IMR->CommandLine() . "\n");
     my $IMR_status = $IMR->Spawn ();
@@ -765,7 +765,7 @@ sub manual_persistent_restart_test
         $TI->Arguments (
           "-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
           "add $a_srv_name[$index] -a MANUAL -c \"\\\"$imr_P_SRV_cmd[$index]\\\" " .
-          "$refstyle -s $a_srv_name[$index]\"");
+          "$refstyle -s $a_srv_name[$index] -o $a_srv_airplaneiorfile[$index] -p $a_srv_name[$index].pid\"");
         test_info("starting TI=" . $TI->CommandLine() . "\n");
         my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
         if ($TI_status != 0) {
@@ -790,7 +790,40 @@ sub manual_persistent_restart_test
       $TI->Arguments ("$imr_initref start $a_srv_name[$index]");
       my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
       if ($TI_status != 0) {
+          print STDERR "ERROR: tao_imr start -v returned $TI_status\n";
+          return 1;
+      }
+    }
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+      $TI->Arguments ("$imr_initref list $a_srv_name[$index]");
+      my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+      if ($TI_status != 0) {
           print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
+          return 1;
+      }
+    }
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        test_info("killing server=" . $a_srv_name[$index] . "\n");
+        my $server_pid = get_server_pid ($a_srv_name[$index]. ".pid");
+        signal_server ($server_pid, "KILL");
+    }
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+      $TI->Arguments ("$imr_initref list $a_srv_name[$index]");
+      my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+      if ($TI_status != 0) {
+          print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
+          return 1;
+      }
+    }
+
+    for ($index = 0; $index < $num_srvr; ++$index) {
+      $TI->Arguments ("$imr_initref start $a_srv_name[$index]");
+      my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+      if ($TI_status != 0) {
+          print STDERR "ERROR: tao_imr start -v returned $TI_status\n";
           return 1;
       }
     }
@@ -814,6 +847,12 @@ sub manual_persistent_restart_test
         }
     }
 
+    for ($index = 0; $index < $num_srvr; ++$index) {
+        test_info("killing server=" . $a_srv_name[$index] . "\n");
+        my $server_pid = get_server_pid ($a_srv_name[$index]. ".pid");
+        signal_server ($server_pid, "KILL");
+    }
+
     # Unlink so that we can wait on them again to know the server started.
     $imr->DeleteFile ($imriorfile);
     $act->DeleteFile ($imriorfile);
@@ -824,7 +863,7 @@ sub manual_persistent_restart_test
     }
 
     print "Restarting Implementation Repository.\n";
-    $IMR->Arguments ("$imr_arguments ");
+    $IMR->Arguments ("$imr_arguments");
     test_info("restarting IMR=" . $IMR->CommandLine() . "\n");
     $IMR_status = $IMR->Spawn ();
     if ($IMR_status != 0) {
@@ -875,9 +914,10 @@ sub manual_persistent_restart_test
         print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
         return 1;
     }
-  print "Starting server again\n";
+
+    print "Starting server again\n";
     for ($index = 0; $index < $num_srvr; ++$index) {
-      $TI->Arguments ("$imr_initref start $a_srv_name[$index] -ORBDebugLevel 10");
+      $TI->Arguments ("$imr_initref start $a_srv_name[$index]");
       my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
       if ($TI_status != 0) {
           print STDERR "ERROR: tao_imr start returned $TI_status\n";
@@ -885,7 +925,14 @@ sub manual_persistent_restart_test
       }
     }
 
-    my $A_CLI_status = $A_CLI[0]->SpawnWaitKill ($a_cli[0]->ProcessStartWaitInterval()+5);
+    $TI->Arguments ("$imr_initref list -v ");
+    my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    if ($TI_status != 0) {
+        print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
+        return 1;
+    }
+
+    my $A_CLI_status = $A_CLI[0]->SpawnWaitKill ($a_cli[0]->ProcessStartWaitInterval());
     if ($A_CLI_status != 0) {
         print STDERR "ERROR: airplane client returned $A_CLI_status\n";
         kill_then_timed_wait(\@A_SRV, 1);
@@ -893,15 +940,9 @@ sub manual_persistent_restart_test
     }
 
     for ($index = 0; $index < $num_srvr; ++$index) {
-        # Shutdown airplane_server
-        $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                        "shutdown $a_srv_name[$index]");
-        test_info("starting TI=" . $TI->CommandLine() . "\n");
-        my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-        if ($TI_status != 0) {
-            print STDERR "ERROR: tao_imr shutdown 3 returned $TI_status\n";
-            $status = 1;
-        }
+        test_info("killing server=" . $a_srv_name[$index] . "\n");
+        my $server_pid = get_server_pid ($a_srv_name[$index]. ".pid");
+        signal_server ($server_pid, "KILL");
     }
 
     for ($index = 0; $index < $num_srvr; ++$index) {
@@ -970,8 +1011,8 @@ sub nt_service_test_i
     my $a_srv_airplaneiorfile = $a_srv[0]->LocalFile ($airplaneiorfile[0]);
 
     print "Installing TAO ImR Services\n";
-    $BIN_ACT->Arguments ("-c install $imr_initref -d $test_debug_level -ORBDebugLevel $debug_level -ORBLogFile act.log");
-    $BIN_IMR->Arguments ("-c install --directory c:\\ace c:\ACE\ImRf.txt -d $test_debug_level -orbendpoint iiop://:8888 -ORBLogFile imr.log");
+    $BIN_ACT->Arguments ("-c install $imr_initref -d $test_debug_level -ORBDebugLevel $debug_level");
+    $BIN_IMR->Arguments ("-c install -d $test_debug_level -orbendpoint iiop://:8888");
 
     my $BIN_IMR_status = $BIN_IMR->SpawnWaitKill ($bin_imr->ProcessStartWaitInterval());
     if ($BIN_IMR_status != 0) {
@@ -996,7 +1037,7 @@ sub nt_service_test_i
     }
 
     # No need to specify imr_initref or -orbuseimr 1 for servers spawned by activator
-    $TI->Arguments ("$imr_initref add $a_srv_name[0] -a MANUAL -c \"$imr_A_SRV_cmd[0] -s $a_srv_name[0] -p c:\\ace\\server.pid\" ".
+    $TI->Arguments ("$imr_initref add $a_srv_name[0] -c \"$imr_A_SRV_cmd[0] -s $a_srv_name[0]\" ".
                     "-w \"$ENV{ACE_ROOT}/lib\"");
     my $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
@@ -1004,60 +1045,10 @@ sub nt_service_test_i
         return 1;
     }
 
-    $TI->Arguments ("$imr_initref list $a_srv_name[0]");
+    $TI->Arguments ("$imr_initref list -v");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
-        return 1;
-    }
-
-    $TI->Arguments ("$imr_initref start $a_srv_name[0]");
-    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-    if ($TI_status != 0) {
-        print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
-        return 1;
-    }
-
-    $TI->Arguments ("$imr_initref list $a_srv_name[0]");
-    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-    if ($TI_status != 0) {
-        print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
-        return 1;
-    }
-
-    # Stopping the TAO_ImR will also stop the Activator
-    print "Stopping TAO ImR Services\n";
-    my $net_stop_status = system("net stop taoimr /y 2>&1");
-    if ($net_stop_status != 0) {
-        print STDERR "ERROR: Stopping ImR service returned $net_stop_status\n";
-        #return 1;
-    }
-
-get_server_pid ();
-signal_server ("KILL");
-#TODO Kill Server
-    # Starting the TAO_ImRActivator will also start the TAOImR
-    print "Starting TAO ImR Activator Services\n";
-    my $net_start_status = system("net start taoimractivator 2>&1");
-    if ($net_start_status != 0) {
-        print STDERR "ERROR: Stopping ImR service returned $net_start_status\n";
-        #return 1;
-    }
-
-  print "Listing TAO ImR Services after start of the activator\n";
-    $TI->Arguments ("$imr_initref list -v ");
-    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-    if ($TI_status != 0) {
-        print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
-        return 1;
-    }
-  print "sleep";
-  sleep (60);
-  print "Starting server again\n";
-    $TI->Arguments ("$imr_initref start $a_srv_name[0] -ORBDebugLevel 10");
-    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval() + 600000);
-    if ($TI_status != 0) {
-        print STDERR "ERROR: tao_imr start returned $TI_status\n";
         return 1;
     }
 
@@ -3259,13 +3250,11 @@ print "Comment line arguments: -d $test_debug_level -o $repo{imr_imriorfile} " .
 
 ###############################################################################
 
-my $srvpidfile = "server.pid";
-#my $srv_srvpidfile = $srv->LocalFile ($srvpidfile);
-
 sub get_server_pid
 {
+    my $file = shift;
     my $pid = 0;
-    open (FILE, "c:\\ace\\server.pid") or die "Can't open server.pid: $!";
+    open (FILE, $file) or die "Can't open $file: $!";
     while (<FILE>) {
         chomp;
         $pid = $_;
@@ -3277,9 +3266,10 @@ sub get_server_pid
 
 sub signal_server
 {
+    my $pid = shift;
     my $sig = shift;
-    print "signal $sig to server $server_pid\n";
-    kill ($sig, $server_pid);
+    print "signal $sig to server $pid\n";
+    kill ($sig, $pid);
 }
 
 sub both_ir_test
@@ -3558,9 +3548,11 @@ my $test_num = 0;
 my @tests = ("airplane", "airplane_ir", "nestea", "nestea_ir",
              "both_ir", "persistent_ir", "persistent_ir_hash",
              "persistent_ir_shared", "persistent_ft", "failover",
-             "backup_restart");
+             "backup_restart", "manual_persistent_restart",
+             "manual_persistent_restart_hash",
+             "manual_persistent_restart_shared");
 
-my @nt_tests = ("nt_service_ir", "persistent_ir_registry");
+my @nt_tests = ("nt_service_ir", "persistent_ir_registry", "manual_persistent_restart_registry");
 
 my $i;
 if ($all_tests) {
@@ -3613,6 +3605,15 @@ for ($i = 0; $i <= $#ARGV; $i++) {
         $ret = nt_service_test ();
     }
     elsif ($ARGV[$i] eq "manual_persistent_restart") {
+        $ret = manual_persistent_restart_test ("-x");
+    }
+    elsif ($ARGV[$i] eq "manual_persistent_restart_hash") {
+        $ret = manual_persistent_restart_test ("-p");
+    }
+    elsif ($ARGV[$i] eq "manual_persistent_restart_registry") {
+        $ret = manual_persistent_restart_test ("-x");
+    }
+    elsif ($ARGV[$i] eq "manual_persistent_restart_shared") {
         $ret = manual_persistent_restart_test ("--directory");
     }
     elsif ($ARGV[$i] eq "nestea") {
