@@ -18,7 +18,6 @@ my $test_debug_level = '2';
 my $num_srvr = 1;
 my $replica = 0;
 my $all_tests = 0;
-my $server_pid = 0;
 
 foreach my $i (@ARGV) {
     if ($i eq '-debug') {
@@ -3254,6 +3253,7 @@ sub get_server_pid
 {
     my $file = shift;
     my $pid = 0;
+    my $server_pid = 0;
     open (FILE, $file) or die "Can't open $file: $!";
     while (<FILE>) {
         chomp;
@@ -3261,7 +3261,7 @@ sub get_server_pid
         $server_pid = $pid if ($server_pid == 0);
     }
     close FILE;
-    return $pid;
+    return $server_pid;
 }
 
 sub signal_server
