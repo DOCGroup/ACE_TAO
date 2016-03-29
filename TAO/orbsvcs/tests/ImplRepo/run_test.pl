@@ -1104,7 +1104,7 @@ sub nt_service_test
     my $bin_imr_host = $bin_imr->HostName ();
 
     # Just to show that it's possible, this test uses corbaloc instead of ior file.
-    my $imr_initref = "-orbinitref ImplRepoService=corbaloc::$bin_imr_host:8888/ImplRepoService";# -ORBDebugLevel 10";
+    my $imr_initref = "-orbinitref ImplRepoService=corbaloc::$bin_imr_host:8888/ImplRepoService";
 
     # To avoid having to ensure that the LocalSystem account has the correct path
     # we simply copy the imr executables to the same directory as the DLL's.
