@@ -647,7 +647,7 @@ sub nt_service_test_i
 
     print "Installing TAO ImR Services\n";
     $BIN_ACT->Arguments ("-c install $imr_initref -d $test_debug_level -ORBDebugLevel $debug_level -ORBLogFile act.log");
-    $BIN_IMR->Arguments ("-c install --directory c:\ace c:\ACE\ImRf.txt -d $test_debug_level -orbendpoint iiop://:8888 -ORBLogFile imr.log");
+    $BIN_IMR->Arguments ("-c install --directory c:\\ace c:\ACE\ImRf.txt -d $test_debug_level -orbendpoint iiop://:8888 -ORBLogFile imr.log");
 
     my $BIN_IMR_status = $BIN_IMR->SpawnWaitKill ($bin_imr->ProcessStartWaitInterval());
     if ($BIN_IMR_status != 0) {
@@ -727,10 +727,11 @@ signal_server ("KILL");
         print STDERR "ERROR: tao_imr list -v returned $TI_status\n";
         return 1;
     }
-
+	print "sleep";
+	sleep (60);
 	print "Starting server again\n";
-    $TI->Arguments ("$imr_initref start $a_srv_name[0]");
-    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+    $TI->Arguments ("$imr_initref start $a_srv_name[0] -ORBDebugLevel 10");
+    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval() + 600000);
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr start returned $TI_status\n";
         return 1;
