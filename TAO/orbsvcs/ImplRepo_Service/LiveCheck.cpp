@@ -144,7 +144,7 @@ LiveEntry::LiveEntry (LiveCheck *owner,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server = %s, may_ping = %d\n"),
+                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server = <%C>, may_ping = %d\n"),
                       server, may_ping));
     }
 }
@@ -219,7 +219,6 @@ LiveEntry::status (void) const
     {
       return LS_ALIVE;
     }
-
 
   if ( this->liveliness_ == LS_ALIVE &&
        this->owner_->ping_interval() != ACE_Time_Value::zero )
