@@ -253,7 +253,7 @@ LiveEntry::update_listeners (void)
          i.advance ())
       {
         LiveListener_ptr llp (*i);
-        int result = this->listeners_.remove (llp);
+        int const result = this->listeners_.remove (llp);
         if (result == -1)
           {
           }
