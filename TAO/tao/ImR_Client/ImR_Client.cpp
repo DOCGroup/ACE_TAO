@@ -129,7 +129,7 @@ namespace
       catch (const ::CORBA::Exception& )
         {
           return default_obj (
-            "could not ImRify object with all profiles.");
+            "could not ImRify object with all profiles");
         }
     }
   private:
