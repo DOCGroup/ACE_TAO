@@ -32,3 +32,5 @@ ipch/
 /build
 
 *.o
+*.res
+*.opendb

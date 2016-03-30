@@ -144,7 +144,7 @@ LiveEntry::LiveEntry (LiveCheck *owner,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server = %s, may_ping = %d\n"),
+                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server = <%C>, may_ping = %d\n"),
                       server, may_ping));
     }
 }
@@ -220,7 +220,6 @@ LiveEntry::status (void) const
       return LS_ALIVE;
     }
 
-
   if ( this->liveliness_ == LS_ALIVE &&
        this->owner_->ping_interval() != ACE_Time_Value::zero )
     {
@@ -254,7 +253,7 @@ LiveEntry::update_listeners (void)
          i.advance ())
       {
         LiveListener_ptr llp (*i);
-        int result = this->listeners_.remove (llp);
+        int const result = this->listeners_.remove (llp);
         if (result == -1)
           {
           }
@@ -486,7 +485,7 @@ PingReceiver::cancel (void)
           server = this->entry_->server_name ();
         }
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) PingReceiver::cancel server = %s\n"),
+                      ACE_TEXT ("(%P|%t) PingReceiver::cancel server = <%C>\n"),
                       server));
     }
 
@@ -862,7 +861,7 @@ LiveCheck::remove_server (const char *server, int pid)
           if (ImR_Locator_i::debug () > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server %s ")
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
                               ACE_TEXT ("called during handle_timeout\n"), server));
             }
           this->removed_entries_.insert_tail (s);
@@ -873,7 +872,7 @@ LiveCheck::remove_server (const char *server, int pid)
       if (entry != 0 && ImR_Locator_i::debug () > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveCheck::remove_server %s ")
+                          ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
                           ACE_TEXT ("pid %d does not match entry\n"),
                           server, pid));
         }
