@@ -836,15 +836,16 @@ sub manual_persistent_restart_test
       }
     }
 
-    for ($index = 0; $index < $num_srvr; ++$index) {
-        test_info("killing IMR=" . $IMR->CommandLine() . "\n");
-        my $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
-        if ($IMR_status != 0) {
-            print STDERR "ERROR: ImR returned $IMR_status\n";
-            $ACT->Kill (); $ACT->TimedWait (1);
-            return 1;
-        }
+    test_info("killing IMR=" . $IMR->CommandLine() . "\n");
+    my $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
+    if ($IMR_status != 0) {
+        print STDERR "ERROR: ImR returned $IMR_status\n";
+        $ACT->Kill (); $ACT->TimedWait (1);
+        return 1;
     }
+
+    test_info("killing ACT=" . $ACT->CommandLine() . "\n");
+    $ACT->Kill (); $ACT->TimedWait (1);
 
     for ($index = 0; $index < $num_srvr; ++$index) {
         test_info("killing server=" . $a_srv_name[$index] . "\n");
@@ -891,6 +892,26 @@ sub manual_persistent_restart_test
     }
     if ($ti->PutFile ($imriorfile) == -1) {
         print STDERR "ERROR: cannot set file <$ti_imriorfile>\n";
+        $ACT->Kill (); $ACT->TimedWait (1);
+        $IMR->Kill (); $IMR->TimedWait (1);
+        return 1;
+    }
+
+    test_info("restarting ACT=" . $ACT->CommandLine() . "\n");
+    my $ACT_status = $ACT->Spawn ();
+    if ($ACT_status != 0) {
+        print STDERR "ERROR: ImR Activator returned $ACT_status\n";
+        return 1;
+    }
+
+    if ($act->WaitForFileTimed ($actiorfile,$act->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$act_actiorfile>\n";
+        $ACT->Kill (); $ACT->TimedWait (1);
+        $IMR->Kill (); $IMR->TimedWait (1);
+        return 1;
+    }
+    if ($act->GetFile ($actiorfile) == -1) {
+        print STDERR "ERROR: cannot retrieve file <$act_actiorfile>\n";
         $ACT->Kill (); $ACT->TimedWait (1);
         $IMR->Kill (); $IMR->TimedWait (1);
         return 1;
