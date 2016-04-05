@@ -716,7 +716,7 @@ namespace DAnCE
                     int (proc->getpid ()),
                     int (proc->exit_code ()) ));
 
-      // this method is guarenteed to be called synchronously
+      // this method is guaranteed to be called synchronously
       // so we can safely call anything we like
 
       // Check if the termination was requested, log an error if not.
