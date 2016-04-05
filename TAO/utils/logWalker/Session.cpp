@@ -304,6 +304,20 @@ Session::dump ()
 
   if (single)
     *strm << "\n\n\nSession detail invocation by thread report: " << endl;
+
+  ACE_Time_Value start = ACE_Time_Value::zero;
+  for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
+    {
+      Procs_By_Name::ENTRY *entry;
+      if (i.next(entry) == 0)
+        continue;
+      if (start == ACE_Time_Value::zero ||
+          entry->item()->start_time().msec() < start.msec())
+        {
+          start = entry->item()->start_time();
+        }
+    }
+
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
@@ -311,12 +325,12 @@ Session::dump ()
         continue;
       if (this->split_details_)
         {
-          entry->item()->split_thread_invocations (this);
+          entry->item()->split_thread_invocations (this, start);
         }
       else
         {
           strm = stream_for (strm,entry->item(),"invocation_by_thread.txt");
-          entry->item()->dump_thread_invocations (*strm);
+          entry->item()->dump_thread_invocations (*strm, start);
         }
     }
   if (this->has_outfile() || this->has_dir())

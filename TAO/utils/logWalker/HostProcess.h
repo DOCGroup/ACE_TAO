@@ -66,7 +66,10 @@ public:
   // Returns the process id.
   long pid (void) const;
 
-  // returns true if the supplied endpoint has been visited before. This
+  const ACE_Time_Value &start_time (void) const;
+  void start_time (const ACE_Time_Value &);
+
+  // Return true if the supplied endpoint has been visited before. This
   // may be either a listen endpoint or a client endpoint used to connect
   // to another peer.
   bool has_endpoint (const Endpoint& addr, bool listen);
@@ -96,8 +99,8 @@ public:
   void dump_ident (ostream &strm, const char *extra);
   void dump_summary (ostream &strm);
   void dump_thread_summary (ostream &strm);
-  void split_thread_invocations (Session *session);
-  void dump_thread_invocations (ostream &strm);
+  void split_thread_invocations (Session *session, const ACE_Time_Value& start);
+  void dump_thread_invocations (ostream &strm, const ACE_Time_Value& start);
   void dump_peer_summary (ostream &strm);
   void dump_object_detail (ostream &strm);
   void split_peer_invocations (Session *session);
@@ -122,6 +125,7 @@ private:
 
   PeerProcs   by_addr_;
   PeerArray   by_handle_;
+  ACE_Time_Value start_time_;
 };
 
 #endif // LOG_WALKER_HOST_PROCESS_H

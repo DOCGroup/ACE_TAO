@@ -42,7 +42,7 @@ public:
   void set_giop_target (GIOP_Buffer *buffer);
   void dump_summary (ostream &strm);
   void dump_invocations (ostream &strm);
-  void dump_incidents (ostream &strm);
+  void dump_incidents (ostream &strm, const ACE_Time_Value& start);
 
   void get_summary (long &sent_reqs, long &recv_reqs, size_t &sent_size, size_t &recv_size);
 
