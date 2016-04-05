@@ -565,8 +565,15 @@ ImR_Locator_i::spawn_pid
   UpdateableServerInfo info(this->repository_, name);
   if (! info.null ())
     {
-      info.edit ()->active_info ()->pid = pid;
-      AsyncAccessManager_ptr aam (this->find_aam (name));
+      if (debug_ > 4)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) ImR: Spawn_pid prev pid was %d becoming %d\n"),
+                          info.edit ()->active_info ()->pid, pid));
+        }
+
+      //info.edit ()->active_info ()->pid = pid;
+     AsyncAccessManager_ptr aam (this->find_aam (name, true));
       if (aam.is_nil ())
         {
           aam = this->find_aam (name, false);
@@ -575,7 +582,7 @@ ImR_Locator_i::spawn_pid
         {
           aam->update_prev_pid ();
         }
-
+      info.edit ()->active_info ()->pid = pid;
       info.edit ()->active_info ()->death_notify = true;
     }
   else

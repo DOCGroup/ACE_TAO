@@ -33,15 +33,18 @@ class PingReceiver;
  *
  * @brief indication of the known condition of a target server
  *
- *  LS_UNKNOWN   - The server hasn't yet been pinged
+ *  LS_INIT      - This is a new entry
+ *  LS_UNKNOWN   - The server status was reset
  *  LS_PING_AWAY - A ping request has been issued, waiting for reply
  *  LS_DEAD      - The ping failed for reasons other than POA Activation
  *  LS_ALIVE     - The server positively acknowledged a ping
  *  LS_TRANSIENT - The server connected, but actively raised a transient
  *  LS_LAST_TRANSIENT - The maximum number of retries is reached
  *  LS_TIMEDOUT  - The server connected, but never returned any result.
+ *  LS_CANCELED  - The ping was canceled by the owner
  */
 enum LiveStatus {
+  LS_INIT,
   LS_UNKNOWN,
   LS_PING_AWAY,
   LS_DEAD,
@@ -49,7 +52,7 @@ enum LiveStatus {
   LS_TRANSIENT,
   LS_LAST_TRANSIENT,
   LS_TIMEDOUT,
-  LS_CANCELLED
+  LS_CANCELED
 };
 
 //---------------------------------------------------------------------------
@@ -278,7 +281,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                                   LiveEntry *,
                                   ACE_Hash<ACE_CString>,
                                   ACE_Equal_To<ACE_CString>,
-                                  TAO_SYNCH_MUTEX> LiveEntryMap;
+                                  ACE_Null_Mutex> LiveEntryMap;
   typedef ACE_Unbounded_Set<LiveEntry *> PerClientStack;
   typedef ACE_Unbounded_Set<ACE_CString> NameStack;
 
