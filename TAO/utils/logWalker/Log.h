@@ -87,6 +87,7 @@ protected:
 
   // parsed for every line
   ACE_CString timestamp_;
+  ACE_Time_Value time_;
   char *line_;
   char *info_;
   size_t offset_;

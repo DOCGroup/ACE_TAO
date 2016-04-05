@@ -13,6 +13,7 @@ Log::Log (Session &session)
     dump_target_ (0),
     history_ (),
     timestamp_ (),
+    time_ (0,0),
     line_ (0),
     info_ (0),
     offset_ (0),
@@ -103,7 +104,6 @@ Log::get_preamble ()
         }
     }
 
-
   long pid = ACE_OS::strtol(p + 1, &t, 10);
   if (pid == 0)
     return;
@@ -136,6 +136,7 @@ Log::get_preamble ()
       size_t numprocs = this->procs_.size();
       this->hostproc_ = new HostProcess (this->origin_, pid);
       this->procs_.insert_tail(this->hostproc_);
+      this->hostproc_->start_time (this->time_);
       ACE_CString &procname = this->alias_.length() > 0 ?
         this->alias_ : this->origin_;
       switch (numprocs)
@@ -264,6 +265,7 @@ Log::parse_dump_giop_msg_i (void)
       inv->init (this->line_, this->offset_, this->thr_);
       this->thr_->push_invocation (inv);
       target = inv->octets(true);
+      target->time (this->time_);
       if (target == 0)
         {
           ACE_ERROR ((LM_ERROR, "%d: no target octets for new recv reqeust, id = %d\n",
@@ -287,6 +289,7 @@ Log::parse_dump_giop_msg_i (void)
         }
       inv->init (this->line_, this->offset_, this->thr_);
       target = inv->octets(mode == 0);
+      target->time (this->time_);
       if (target == 0 && mode == 3)
         {
           ACE_ERROR ((LM_ERROR,
@@ -300,6 +303,7 @@ Log::parse_dump_giop_msg_i (void)
     }
     case 2: { // sending reply
       target = new GIOP_Buffer(this->line_, this->offset_, this->thr_);
+      target->time (this->time_);
       this->thr_->pop_invocation ();
       break;
     }
@@ -971,17 +975,31 @@ Log::get_timestamp (void)
 {
   const char *time_tok = ACE_OS::strchr (this->line_,'@');
   size_t len = (size_t)(time_tok - this->line_);
-  if (time_tok != 0 && len < 30)
+
+  if (time_tok != 0 && len < 28 )
     {
+      if (this->line_[4] != '-' ||
+          this->line_[7] != '-' ||
+          this->line_[10] != ' ')
+        {
+          return;
+        }
+      ACE_CString prev_st = this->timestamp_;
       this->timestamp_ = ACE_CString (this->line_, len);
-#if 0
-      int year, mon, day;
-      int hr, min, sec, msec;
-      ::sscanf (hms+1,"%d-%d-%d %d:%d:%d.%d", &year, &mon, &day, &hr, &min, &sec, &msec);
-      time = (hr * 3600 + min *60 + sec) * 1000 + msec;
-      if (this->time_ > time)
-        time += 24 * 3600 * 1000;
-#endif
+
+      struct tm tms;
+      int msec;
+      ::sscanf (this->timestamp_.c_str(),"%d-%d-%d %d:%d:%d.%d",
+        &tms.tm_year, &tms.tm_mon, &tms.tm_mday,
+        &tms.tm_hour, &tms.tm_min, &tms.tm_sec, &msec);
+      tms.tm_year -= 1900;
+      tms.tm_mon -= 1;
+      tms.tm_isdst = 0;
+      tms.tm_wday = 0;
+      tms.tm_yday = 0;
+
+      this->time_ = ::mktime (&tms);
+      this->time_.usec (msec * 1000);
     }
 }
 
@@ -994,8 +1012,8 @@ Log::parse_line (void)
       return;
     }
 
-  this->get_preamble();
   this->get_timestamp();
+  this->get_preamble();
 
   if (ACE_OS::strstr (this->info_, "Handler::open, IIOP connection to peer") != 0)
     {
