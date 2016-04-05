@@ -61,6 +61,7 @@ activatePOAs (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  printf ("---------------------------------------> server starting %d\n", ACE_OS::getpid());
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
   ORB_Runner *runner = new ORB_Runner (orb);
   int poa_delay = 10;
@@ -152,5 +153,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, "Exiting Server pid = %d \n",
               ACE_OS::getpid ()));
 
+  printf ("---------------------------------------> server exit %d\n", ACE_OS::getpid());
   return 0;
 }
