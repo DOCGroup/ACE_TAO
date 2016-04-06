@@ -12,6 +12,7 @@ $status = 0;
 $debug_level = 0;
 $no_dns = 0;
 $imrhost = "127.0.0.1";
+$srvport = "33222";
 $poa_delay = 3;
 
 if ($#ARGV >= 0) {
@@ -122,6 +123,21 @@ sub restore_output
     open(STDOUT, ">&OLDOUT") or die "Can't dup OLDOUT: $!";
 }
 
+sub netstat
+{
+  open CMD,'-|','netstat -nat' or die $@;
+  my $line;
+  my $count = 0;
+  while (defined($line=<CMD>)) {
+   if ($line =~ /$srvport/) {
+    print $line;
+    $count++;
+   }
+  }
+  close CMD;
+  print "netstat found $count listeners and clients\n";
+}
+
 sub register_server
 {
     if ($debug_level > 0) {
@@ -132,7 +148,7 @@ sub register_server
 
     my $expected = shift;
     my $debugarg = "-ORBVerboseLogging 1 -ORBDebugLevel $debug_level -ORBLogfile $srvlogfile" if ($debug_level > 0);
-    my $endpointarg = "-ORBDottedDecimalAddresses 1 -ORBListenEndpoints iiop://127.0.0.1:" if ($no_dns == 1);
+    my $endpointarg = "-ORBDottedDecimalAddresses 1 -ORBListenEndpoints iiop://127.0.0.1:$srvport" if ($no_dns == 1);
 
     $TI->Arguments ($ti_cmd_base.
                     "add TestObject_a -c \"".
@@ -308,20 +324,22 @@ sub double_server_test
     manual_start_server();
 
     if ($status == 0) {
+netstat ();
+
         print "Initial client request to kill server\n";
         run_client ("-k");
-
+netstat ();
         sleep (1);
 
         print "Second client request to reactivate server \n";
         start_client_no_wait ();
-
+netstat ();
         print "Second shutdown of server\n";
         shutdown_server ();
-
+netstat ();
         print "manual start\n";
         manual_start_server();
-
+netstat ();
         print "Third client request should just work \n";
         run_client ("");
 
@@ -371,4 +389,5 @@ deletefiles (1);
 
 my $ret = double_server_test();
 
+deletefiles (0);
 exit $ret;

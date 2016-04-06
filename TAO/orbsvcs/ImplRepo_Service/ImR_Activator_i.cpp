@@ -406,7 +406,8 @@ bool
 ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
 {
   bool is_running =  this->running_server_list_.find (name) == 0;
-
+  ACE_DEBUG((LM_DEBUG, "Activator still_running_i %s is running? %d\n", name, is_running));
+  
   if (is_running)
     {
       pid = ACE_INVALID_PID;
@@ -425,6 +426,9 @@ ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
         {
           pid_t waitp = this->process_mgr_.wait (pid, ACE_Time_Value::zero);
           is_running = (waitp != pid);
+          ACE_DEBUG((LM_DEBUG, "Activator still running (win32) %s pid = %d, waitp = %d, is_running = %d\n",
+            name, pid, waitp, is_running));
+
         }
 #endif /* ACE_WIN32 */
     }
@@ -445,14 +449,14 @@ ImR_Activator_i::start_server(const char* name,
       name += unique_prefix_len;
     }
 
-  if (debug_ > 1)
+ // if (debug_ > 1)
     ORBSVCS_DEBUG((LM_DEBUG,
                    "ImR Activator: Starting %C <%C>...\n",
                    (unique ? "unique server" : "server"), name));
   pid_t pid;
   if (unique && this->still_running_i (name, pid))
     {
-      if (debug_ > 1)
+     // if (debug_ > 1)
         ORBSVCS_DEBUG((LM_DEBUG,
                        "ImR Activator: Unique instance already running %d\n",
                        static_cast<int> (pid)));
@@ -530,6 +534,7 @@ ImR_Activator_i::start_server(const char* name,
       this->process_map_.rebind (pid, name);
       if (unique)
         {
+        ACE_DEBUG((LM_DEBUG, "Activator adding %s to running server list\n", name));
           this->running_server_list_.insert (name);
         }
       if (!CORBA::is_nil (this->locator_.in ()))
@@ -568,9 +573,10 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
     {
       this->process_map_.unbind (pid);
     }
-
+  ACE_DEBUG((LM_DEBUG, "Activator::handle_exit_i removing %s, pid %d from running server list\n", name.c_str(), pid));
   if (this->running_server_list_.remove (name) == -1)
     {
+    ACE_DEBUG((LM_DEBUG, "Activator removing %s from dying server list\n", name.c_str()));
       this->dying_server_list_.remove (name);
     }
 
