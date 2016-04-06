@@ -572,8 +572,7 @@ ImR_Locator_i::spawn_pid
                           info.edit ()->active_info ()->pid, pid));
         }
 
-      //info.edit ()->active_info ()->pid = pid;
-     AsyncAccessManager_ptr aam (this->find_aam (name, true));
+      AsyncAccessManager_ptr aam (this->find_aam (name, true));
       if (aam.is_nil ())
         {
           aam = this->find_aam (name, false);
@@ -583,6 +582,7 @@ ImR_Locator_i::spawn_pid
           aam->update_prev_pid ();
         }
       info.edit ()->active_info ()->pid = pid;
+      ACE_DEBUG((LM_DEBUG, "spawn_pid setting death_notify true\n"));
       info.edit ()->active_info ()->death_notify = true;
     }
   else
@@ -1163,7 +1163,8 @@ ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
     }
   catch (const CORBA::TIMEOUT &ex)
     {
-      info.edit ()->reset_runtime ();
+    ACE_DEBUG((LM_DEBUG, "shutdown server caught timeout, calling reset_runtime\n"));
+    info.edit ()->reset_runtime ();
       // Note : This is a good thing. It means we didn't waste our time waiting for
       // the server to finish shutting down.
       if (debug_ > 1)
@@ -1179,7 +1180,8 @@ ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
     }
   catch (const CORBA::COMM_FAILURE& ex)
     {
-      info.edit ()->reset_runtime ();
+    ACE_DEBUG((LM_DEBUG, "shutdown_server caught comm fail, calling reset_runtime\n"));
+    info.edit ()->reset_runtime ();
       if (debug_ > 1)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
@@ -1196,7 +1198,8 @@ ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
       CORBA::ULong minor = ex.minor () & TAO_MINOR_MASK;
       if (minor != TAO_POA_DISCARDING && minor != TAO_POA_HOLDING)
         {
-          info.edit ()->reset_runtime ();
+        ACE_DEBUG((LM_DEBUG, "shutdown server caught transient calling reset_runtime\n"));
+        info.edit ()->reset_runtime ();
         }
       if (debug_ > 1)
         {
@@ -1400,6 +1403,7 @@ ImR_Locator_i::server_is_shutting_down
           }
       }
     }
+  ACE_DEBUG((LM_DEBUG, "server_is_shutting_down calling reset_runtime\n"));
   info.edit ()->reset_runtime ();
   _tao_rh->server_is_shutting_down ();
 }
@@ -1491,7 +1495,8 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
 
       if (CORBA::is_nil (obj.in ()))
         {
-          info.reset_runtime ();
+        ACE_DEBUG((LM_DEBUG, "connect_activator(ior is nil) calling reset_runtime\n"));
+        info.reset_runtime ();
           return;
         }
 
@@ -1505,7 +1510,8 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
 
       if (CORBA::is_nil (info.activator.in ()))
         {
-          info.reset_runtime ();
+        ACE_DEBUG((LM_DEBUG, "connect_acceptor(narrow failed) calling reset_runtime\n"));
+        info.reset_runtime ();
           return;
         }
 
@@ -1514,9 +1520,10 @@ ImR_Locator_i::connect_activator (Activator_Info& info)
                         ACE_TEXT ("(%P|%t) ImR: Connected to activator <%C>\n"),
                         info.name.c_str ()));
     }
-  catch (const CORBA::Exception&)
+  catch (const CORBA::Exception& ex)
     {
-      info.reset_runtime ();
+    ACE_DEBUG((LM_DEBUG, "connect_server(caught %s) calling reset_runtime\n", ex._name()));
+    info.reset_runtime ();
     }
 }
 
@@ -1577,7 +1584,8 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 
   if (sip->ior.length () == 0)
     {
-      sip->reset_runtime ();
+    ACE_DEBUG((LM_DEBUG, "connect_server(no ior) calling reset_runtime\n"));
+    sip->reset_runtime ();
       return; // can't connect
     }
 
@@ -1587,7 +1595,8 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 
       if (CORBA::is_nil (obj.in ()))
         {
-          sip->reset_runtime ();
+        ACE_DEBUG((LM_DEBUG, "connect_server(string to object failed) calling reset_runtime\n"));
+        sip->reset_runtime ();
           return;
         }
 
@@ -1598,7 +1607,8 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 
       if (CORBA::is_nil (sip->server.in ()))
         {
-          sip->reset_runtime ();
+        ACE_DEBUG((LM_DEBUG, "connect_server(narrow failed) calling reset_runtime\n"));
+        sip->reset_runtime ();
           return;
         }
 
@@ -1612,9 +1622,10 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 
 
     }
-  catch (const CORBA::Exception&)
+  catch (const CORBA::Exception& ex)
     {
-      sip->reset_runtime ();
+    ACE_DEBUG((LM_DEBUG, "connect_server(caught %s) calling reset_runtime\n", ex._name()));
+    sip->reset_runtime ();
     }
 }
 

@@ -337,6 +337,7 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
           {
             aam->server_is_shutting_down ();
           }
+        ACE_DEBUG((LM_DEBUG, "address reuse calling reset_runtime\n"));
         info->reset_runtime ();
       }
   }
