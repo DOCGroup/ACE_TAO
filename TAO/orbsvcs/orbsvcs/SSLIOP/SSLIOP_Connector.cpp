@@ -286,7 +286,7 @@ TAO::SSLIOP::Connector::corbaloc_scan (const char *endpoint, size_t &len)
        }
        len = ACE_OS::strlen (endpoint);
    }
-   else if (slash_pos != 0 || comma_pos > slash_pos)
+   else if (comma_pos == 0 || comma_pos > slash_pos)
    {
        // The endpoint address does not extend past the first '/' or ','
        len = slash_pos - endpoint;
