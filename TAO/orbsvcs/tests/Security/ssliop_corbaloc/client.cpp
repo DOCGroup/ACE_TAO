@@ -182,7 +182,14 @@ CosNaming_Client::parse_args (void)
 int
 CosNaming_Client::run (void)
 {
-  return test_->execute (naming_client_);
+  this->activate();
+  int rv = test_->execute (naming_client_);
+  {
+    CORBA::ORB_var orb = this->orbmgr_.orb();
+    orb->shutdown();
+  }
+  this->wait();
+  return rv;
 }
 
 CosNaming_Client::~CosNaming_Client (void)
@@ -1078,6 +1085,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (cosnaming_client.init (argc, argv) == -1)
     return 1;
 
-  cosnaming_client.activate();
   return cosnaming_client.run ();
 }
