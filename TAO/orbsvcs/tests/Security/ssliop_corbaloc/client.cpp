@@ -1061,6 +1061,13 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
   return 0;
 }
 
+int CosNaming_Client::svc()
+{
+  CORBA::ORB_var orb = orbmgr_.orb();
+  orb->run ();
+  return 0;
+}
+
 // This function runs the test.
 
 int
@@ -1071,5 +1078,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (cosnaming_client.init (argc, argv) == -1)
     return 1;
 
+  cosnaming_client.activate();
   return cosnaming_client.run ();
 }
