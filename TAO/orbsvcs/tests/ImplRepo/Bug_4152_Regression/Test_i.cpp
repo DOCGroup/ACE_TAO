@@ -13,6 +13,5 @@ Test_i::get_server_num (void)
 void
 Test_i::terminate (void)
 {
-  printf ("---------------------------------------> server terminate %d\n", ACE_OS::getpid());
   exit (0);
 }

@@ -23,6 +23,17 @@ static ACE_CString getHostName ()
   return ACE_CString (host_name);
 }
 
+Active_Pid_Setter::Active_Pid_Setter(ImR_Activator_i &owner, pid_t pid)
+  :owner_(owner)
+  {
+  owner_.active_check_pid_ = pid;
+  }
+
+Active_Pid_Setter::~Active_Pid_Setter()
+  {
+    owner_.active_check_pid_ = ACE_INVALID_PID;
+  }
+
 ImR_Activator_i::ImR_Activator_i (void)
 : registration_token_(0)
 , debug_(0)
@@ -32,6 +43,7 @@ ImR_Activator_i::ImR_Activator_i (void)
 , env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
 , max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
 , detach_child_ (false)
+, active_check_pid_ (ACE_INVALID_PID)
 {
 }
 
@@ -406,7 +418,6 @@ bool
 ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
 {
   bool is_running =  this->running_server_list_.find (name) == 0;
-  ACE_DEBUG((LM_DEBUG, "Activator still_running_i %s is running? %d\n", name, is_running));
   
   if (is_running)
     {
@@ -424,11 +435,9 @@ ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
 #if defined (ACE_WIN32)
       if (pid != ACE_INVALID_PID)
         {
-          pid_t waitp = this->process_mgr_.wait (pid, ACE_Time_Value::zero);
+        Active_Pid_Setter aps(*this, pid);
+        pid_t waitp = this->process_mgr_.wait (pid, ACE_Time_Value::zero);
           is_running = (waitp != pid);
-          ACE_DEBUG((LM_DEBUG, "Activator still running (win32) %s pid = %d, waitp = %d, is_running = %d\n",
-            name, pid, waitp, is_running));
-
         }
 #endif /* ACE_WIN32 */
     }
@@ -534,7 +543,6 @@ ImR_Activator_i::start_server(const char* name,
       this->process_map_.rebind (pid, name);
       if (unique)
         {
-        ACE_DEBUG((LM_DEBUG, "Activator adding %s to running server list\n", name));
           this->running_server_list_.insert (name);
         }
       if (!CORBA::is_nil (this->locator_.in ()))
@@ -573,10 +581,8 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
     {
       this->process_map_.unbind (pid);
     }
-  ACE_DEBUG((LM_DEBUG, "Activator::handle_exit_i removing %s, pid %d from running server list\n", name.c_str(), pid));
   if (this->running_server_list_.remove (name) == -1)
     {
-    ACE_DEBUG((LM_DEBUG, "Activator removing %s from dying server list\n", name.c_str()));
       this->dying_server_list_.remove (name);
     }
 
@@ -618,7 +624,7 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
           process->getpid (), process->return_value (), this->induce_delay_));
     }
 
-  if (this->induce_delay_ > 0)
+  if (this->induce_delay_ > 0 && this->active_check_pid_ == ACE_INVALID_PID)
     {
       ACE_Reactor *r = this->orb_->orb_core()->reactor();
       ACE_Time_Value dtv (0, this->induce_delay_ * 1000);

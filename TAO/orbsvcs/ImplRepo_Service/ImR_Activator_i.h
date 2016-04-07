@@ -52,7 +52,11 @@ struct ACE_Equal_To_pid_t
   typedef ACE_INT32 Act_token_type;
 #endif
 
+  class ImR_Activator_i;
 
+  class Active_Pid_Setter;
+
+ 
 /**
 * @class ImR_Activator_i
 *
@@ -66,6 +70,8 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
                                          public ACE_Event_Handler
 {
  public:
+   friend class Active_Pid_Setter;
+
   ImR_Activator_i (void);
 
   void start_server (const char* name,
@@ -152,7 +158,18 @@ private:
   int max_env_vars_;
 
   bool detach_child_;
-
+  pid_t active_check_pid_;
 };
+
+class Active_Pid_Setter
+  {
+  public:
+    Active_Pid_Setter(ImR_Activator_i &owner, pid_t pid);
+    ~Active_Pid_Setter();
+
+    ImR_Activator_i &owner_;
+
+  };
+
 
 #endif /* IMR_ACTIVATOR_I_H */
