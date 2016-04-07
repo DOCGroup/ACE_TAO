@@ -537,7 +537,6 @@ AsyncAccessManager::ping_replied (LiveStatus server)
       {
         if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_PING)
           {
-          ACE_DEBUG((LM_DEBUG, "death notify is %d\n", this->info_->death_notify));
             if (this->info_->death_notify && this->info_->pid != 0)
               {
                 if (ImR_Locator_i::debug () > 4)

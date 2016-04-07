@@ -29,7 +29,6 @@ Server_Info::operator= (const Server_Info &other)
   server = other.server;
   alt_info_ = other.alt_info_;
   pid = other.pid;
-  ACE_DEBUG((LM_DEBUG, "server_info.assignment setting death_notify %d\n", other.death_notify));
   death_notify = other.death_notify;
   peers = other.peers;
   env_vars = other.env_vars;
@@ -289,7 +288,6 @@ Server_Info::clear (void)
   peers.length (0);
   alt_info_.reset ();
   pid = 0;
-  ACE_DEBUG((LM_DEBUG, "server_info.clear setting death_notify false\n"));
   death_notify = false;
 }
 
@@ -299,7 +297,6 @@ Server_Info::reset_runtime (void)
   this->partial_ior = "";
   Server_Info *startup = this->active_info ();
   startup->ior = "";
-  ACE_DEBUG((LM_DEBUG, "server_info.reset_runtime setting death_notify false\n"));
   startup->death_notify = false;
   startup->last_ping = ACE_Time_Value::zero;
   startup->server = ImplementationRepository::ServerObject::_nil ();
