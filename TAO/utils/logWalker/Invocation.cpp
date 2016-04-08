@@ -232,12 +232,33 @@ Invocation::new_line (ostream &strm, int indent, int offset, bool add_nl, bool s
 }
 
 void
-Invocation::dump_start_line (ostream &strm, size_t indent)
+Invocation::dump_rel_time (ostream &strm, const ACE_Time_Value &tv, const ACE_Time_Value& start)
+{
+  ACE_Time_Value reltime = tv - start;
+  int hours = reltime.sec() / 3600;
+  int min = (reltime.sec() %3600) / 60;
+  int sec = (reltime.sec() %60);
+
+  char buffer[20];
+  ::snprintf (buffer, 20, "%d:%02d:%02d.%03d",
+              hours, min, sec, reltime.usec()/1000);
+
+  strm << buffer << ' ';
+}
+
+void
+Invocation::dump_start_line (ostream &strm, size_t indent, const ACE_Time_Value& start)
 {
   if (this->req_octets_ == 0)
     return;
   this->req_level_ = indent;
   strm << setw(7) << this->req_octets_->log_posn() << " " << setw(0);
+
+  const ACE_Time_Value &tv = this->req_octets_->time();
+  if (tv != ACE_Time_Value::zero)
+    {
+      dump_rel_time (strm, tv, start);
+    }
 
   const char *opname = "";
   const char *dir_1 = "sent to ";
@@ -275,7 +296,7 @@ Invocation::dump_start_line (ostream &strm, size_t indent)
 }
 
 void
-Invocation::dump_finish_line (ostream &strm, size_t indent)
+Invocation::dump_finish_line (ostream &strm, size_t indent, const ACE_Time_Value& start)
 {
   bool is_popped = this->repl_level_ > 0 && indent == this->req_level_;
 
@@ -288,14 +309,24 @@ Invocation::dump_finish_line (ostream &strm, size_t indent)
     }
 
   this->finish_reported_ = true;
-
   strm << setw(7) << this->repl_octets_->log_posn() << " " << setw(0);
 
   const char *opname = "";
+  const ACE_Time_Value &tv = this->repl_octets_->time();
+  if (tv != ACE_Time_Value::zero)
+    {
+      dump_rel_time (strm, tv, start);
+    }
+
+  const char *dir = "reply from ";
 
   if (this->req_octets_ != 0)
     {
       opname = this->req_octets_->operation();
+      if (this->req_octets_->sending())
+        {
+          dir = "reply to ";
+        }
     }
 
   if (opname == 0 || opname[0] == 0)
@@ -305,7 +336,7 @@ Invocation::dump_finish_line (ostream &strm, size_t indent)
 
   this->new_line (strm, indent, 0, false, true);
 
-  strm << "reply for " << this->peer_->id() << ", req " << this->req_id_;
+  strm << dir << this->peer_->id() << ", req " << this->req_id_;
   strm << " [" << opname << "]";
   if (is_popped)
     {
@@ -359,8 +390,8 @@ Invocation::dump_detail (ostream &strm,
   if (show_handle)
     strm << "(h=" << this->handle_ << ")";
   strm << " [" << opname << "]\t";
-  time_t req_time = 0;
-  time_t rep_time = 0;
+  ACE_Time_Value req_time;
+  ACE_Time_Value rep_time;
   size_t delta = 0;
   if (!this->is_oneway() && this->req_octets_ != 0)
     {
@@ -372,8 +403,8 @@ Invocation::dump_detail (ostream &strm,
             this->req_octets_->log_posn();
         }
     }
-  if (req_time != 0 && rep_time != 0)
-    strm << " took " << (rep_time - req_time) << " ms";
+  if (req_time.msec() != 0 && rep_time.msec() != 0)
+    strm << " took " << (rep_time.msec() - req_time.msec()) << " ms";
 
   if (this->req_octets_ != 0)
     {

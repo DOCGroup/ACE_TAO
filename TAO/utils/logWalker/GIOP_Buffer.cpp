@@ -111,7 +111,7 @@ GIOP_Buffer::GIOP_Buffer(void)
     preamble_(),
     log_offset_(0),
     thr_(0),
-    time_(0),
+    time_(),
     expected_req_id_(0),
     expected_size_(0),
     expected_type_(0),
@@ -144,7 +144,7 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
     preamble_(text),
     log_offset_(offset),
     thr_(thread),
-    time_(0),
+    time_(ACE_Time_Value::zero),
     expected_req_id_(0),
     expected_size_(0),
     expected_type_(0),
@@ -178,20 +178,6 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
     }
   this->sending_ = ACE_OS::strstr(text,"send") ? 0 : 1;
   this->expected_type_ = ACE_OS::strstr(text,"Request") ? 0 : 1;
-  const char *time_tok = ACE_OS::strchr (text,'@');
-  if (time_tok != 0)
-    {
-      char timebuf[30];
-      ACE_OS::strncpy(timebuf, text, (time_tok - text));
-      timebuf[time_tok - text] = 0;
-      char *hms = ACE_OS::strchr (timebuf,':');
-      if (hms != 0)
-        {
-          int hr, min, sec, msec;
-          ::sscanf (hms-2,"%d:%d:%d.%d", &hr, &min, &sec, &msec);
-          this->time_ = (hr * 3600 + min *60 + sec) * 1000 + msec;
-        }
-    }
 }
 
 void
@@ -350,10 +336,16 @@ GIOP_Buffer::thread (void)
   return this->thr_;
 }
 
-time_t
+const ACE_Time_Value &
 GIOP_Buffer::time (void) const
 {
   return this->time_;
+}
+
+void
+GIOP_Buffer::time (const ACE_Time_Value &t)
+{
+  this->time_ = t;
 }
 
 const ACE_CString &

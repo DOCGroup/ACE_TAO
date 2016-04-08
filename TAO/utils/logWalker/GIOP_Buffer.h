@@ -59,7 +59,9 @@ public:
   bool is_full (void) const;
   size_t log_posn (void) const;
   Thread *thread (void);
-  time_t time (void) const;
+
+  const ACE_Time_Value & time (void) const;
+  void time (const ACE_Time_Value &);
 
   const ACE_CString &preamble(void) const;
   size_t expected_req_id(void) const;
@@ -90,7 +92,7 @@ private:
   ACE_CString preamble_;
   size_t log_offset_;
   Thread *thr_;
-  time_t time_;
+  ACE_Time_Value time_;
   size_t expected_req_id_;
   size_t expected_size_;
   char   expected_type_;
