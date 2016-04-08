@@ -137,7 +137,7 @@ sub register_server
     $TI->Arguments ($ti_cmd_base.
                     "add TestObject_a -c \"".
                     $srv_server_cmd .
-                    " -ORBUseIMR 1 -p $poa_delay " .
+                    " -ORBUseIMR 1 -p $poa_delay -ORBLingerTimeout 0 " .
                     "$debugarg $endpointarg " .
                     "-ORBInitRef ImplRepoService=file://$imr_imriorfile\"");
 
