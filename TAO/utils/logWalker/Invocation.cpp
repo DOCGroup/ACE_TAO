@@ -235,12 +235,12 @@ void
 Invocation::dump_rel_time (ostream &strm, const ACE_Time_Value &tv, const ACE_Time_Value& start)
 {
   ACE_Time_Value reltime = tv - start;
-  int hours = reltime.sec() / 3600;
-  int min = (reltime.sec() %3600) / 60;
-  int sec = (reltime.sec() %60);
+  int hours = (int)(reltime.sec()) / 3600;
+  int min = (int)(reltime.sec() %3600) / 60;
+  int sec = (int)(reltime.sec()) % 60;
 
   char buffer[20];
-  ::snprintf (buffer, 20, "%d:%02d:%02d.%03d",
+  ACE_OS::snprintf (buffer, 20, "%d:%02d:%02d.%03d",
               hours, min, sec, reltime.usec()/1000);
 
   strm << buffer << ' ';
