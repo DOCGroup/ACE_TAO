@@ -265,13 +265,13 @@ Log::parse_dump_giop_msg_i (void)
       inv->init (this->line_, this->offset_, this->thr_);
       this->thr_->push_invocation (inv);
       target = inv->octets(true);
-      target->time (this->time_);
       if (target == 0)
         {
           ACE_ERROR ((LM_ERROR, "%d: no target octets for new recv reqeust, id = %d\n",
                       this->offset_, rid));
           return;
         }
+      target->time (this->time_);
       break;
     }
     case 0: // sending request
@@ -289,13 +289,19 @@ Log::parse_dump_giop_msg_i (void)
         }
       inv->init (this->line_, this->offset_, this->thr_);
       target = inv->octets(mode == 0);
-      target->time (this->time_);
-      if (target == 0 && mode == 3)
+      if (target == 0)
         {
-          ACE_ERROR ((LM_ERROR,
-                      "%d: could not map invocation to target for req_id %d\n",
-                      this->offset_, rid));
-          return;
+          if (mode == 3)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "%d: could not map invocation to target for req_id %d\n",
+                          this->offset_, rid));
+              return;
+            }
+        }
+      else
+        {
+          target->time (this->time_);
         }
 //       if (mode == 3)
 //         this->thr_->exit_wait(pp, this->offset_);
