@@ -14,7 +14,8 @@ PeerNode::PeerNode (long h, PeerProcess *p)
 
 HostProcess::HostProcess (const ACE_CString &src, long pid)
   : pid_(pid),
-    logfile_name_(src)
+    logfile_name_(src),
+    start_time_ (ACE_Time_Value::zero)
 {
 }
 
@@ -141,6 +142,19 @@ long
 HostProcess::pid (void) const
 {
   return this->pid_;
+}
+
+
+const ACE_Time_Value &
+HostProcess::start_time (void) const
+{
+  return this->start_time_;
+}
+
+void
+HostProcess::start_time (const ACE_Time_Value &start)
+{
+  this->start_time_ = start;
 }
 
 bool
@@ -274,7 +288,7 @@ HostProcess::dump_thread_summary (ostream &strm)
 }
 
 void
-HostProcess::split_thread_invocations (Session *session)
+HostProcess::split_thread_invocations (Session *session, const ACE_Time_Value& start)
 {
   for (ACE_DLList_Iterator <Thread> t_iter (this->threads_);
        !t_iter.done();
@@ -287,13 +301,13 @@ HostProcess::split_thread_invocations (Session *session)
       ostream *strm = session->stream_for (0, this, "threads", fname);
       thr->dump_invocations (*strm);
       *strm << endl;
-      thr->dump_incidents (*strm);
+      thr->dump_incidents (*strm, start);
       *strm << endl;
       delete strm;
     }
 }
 void
-HostProcess::dump_thread_invocations (ostream &strm)
+HostProcess::dump_thread_invocations (ostream &strm, const ACE_Time_Value& start)
 {
   this->dump_ident (strm, "invocations by thread:");
   for (ACE_DLList_Iterator <Thread> t_iter (this->threads_);
@@ -304,7 +318,7 @@ HostProcess::dump_thread_invocations (ostream &strm)
       t_iter.next(thr);
       thr->dump_invocations (strm);
       strm << endl;
-      thr->dump_incidents (strm);
+      thr->dump_incidents (strm, start);
       strm << endl;
     }
 }

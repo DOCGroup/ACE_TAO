@@ -337,7 +337,7 @@ Thread::dump_invocations (ostream &strm)
 }
 
 void
-Thread::dump_incidents (ostream &strm)
+Thread::dump_incidents (ostream &strm, const ACE_Time_Value& relstart)
 {
   if (this->nested_ == 0)
     return;
@@ -362,7 +362,7 @@ Thread::dump_incidents (ostream &strm)
             }
           nested_queue.pop_back ();
           level--;
-          prev->dump_finish_line (strm, level);
+          prev->dump_finish_line (strm, level, relstart);
         }
       if (nested_queue.size() > 1)
         {
@@ -373,12 +373,12 @@ Thread::dump_incidents (ostream &strm)
             {
               if ((*j)->repl_line () < inv_line)
                 {
-                  (*j)->dump_finish_line (strm, level);
+                  (*j)->dump_finish_line (strm, level, relstart);
                 }
             }
         }
       nested_queue.push_back (inv);
-      inv->dump_start_line (strm, level);
+      inv->dump_start_line (strm, level, relstart);
     }
 }
 
