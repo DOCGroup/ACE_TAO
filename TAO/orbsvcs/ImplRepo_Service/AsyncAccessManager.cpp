@@ -262,7 +262,7 @@ AsyncAccessManager::notify_waiters (void)
                         ("Server terminating.");
                     default: {
                       ACE_CString reason = ACE_CString ("AAM_Status is ") +
-                        ACE_CString (status_name (this->status_));
+                        ACE_TEXT_ALWAYS_CHAR (status_name (this->status_));
                       throw ImplementationRepository::CannotActivate (reason.c_str());
                     }
                     }
