@@ -6,7 +6,7 @@
 
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
-#include "ace/High_Res_Timer.h"
+#include "ace/OS_NS_sys_time.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_Queue_Iterator.h"
 
@@ -72,6 +72,8 @@ LiveEntry::status_name (LiveStatus s)
 {
   switch (s)
     {
+    case LS_INIT:
+      return ACE_TEXT ("INIT");
     case LS_UNKNOWN:
       return ACE_TEXT ("UNKNOWN");
     case LS_PING_AWAY:
@@ -86,8 +88,8 @@ LiveEntry::status_name (LiveStatus s)
       return ACE_TEXT ("LAST_TRANSIENT");
     case LS_TIMEDOUT:
       return ACE_TEXT ("TIMEDOUT");
-    case LS_CANCELLED:
-      return ACE_TEXT ("CANCELLED");
+    case LS_CANCELED:
+      return ACE_TEXT ("CANCELED");
     }
   return ACE_TEXT ("<undefined status>");
 }
@@ -131,8 +133,8 @@ LiveEntry::LiveEntry (LiveCheck *owner,
   : owner_ (owner),
     server_ (server),
     ref_ (ImplementationRepository::ServerObject::_duplicate (ref)),
-    liveliness_ (LS_UNKNOWN),
-    next_check_ (ACE_High_Res_Timer::gettimeofday_hr()),
+    liveliness_ (LS_INIT),
+    next_check_ (ACE_OS::gettimeofday()),
     repings_ (0),
     max_retry_ (LiveEntry::reping_limit_),
     may_ping_ (may_ping),
@@ -199,7 +201,7 @@ LiveEntry::reset_status (void)
     {
       this->liveliness_ = LS_UNKNOWN;
       this->repings_ = 0;
-      this->next_check_ = ACE_High_Res_Timer::gettimeofday_hr();
+      this->next_check_ = ACE_OS::gettimeofday();
     }
   if (ImR_Locator_i::debug () > 2)
     {
@@ -223,7 +225,7 @@ LiveEntry::status (void) const
   if ( this->liveliness_ == LS_ALIVE &&
        this->owner_->ping_interval() != ACE_Time_Value::zero )
     {
-      ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
+      ACE_Time_Value now (ACE_OS::gettimeofday());
       if (now >= this->next_check_)
         {
           return LS_UNKNOWN;
@@ -271,7 +273,7 @@ LiveEntry::status (LiveStatus l)
     this->liveliness_ = l;
     if (l == LS_ALIVE)
       {
-        ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
+        ACE_Time_Value now (ACE_OS::gettimeofday());
         this->next_check_ = now + owner_->ping_interval();
       }
     if (l == LS_TRANSIENT && !this->reping_available())
@@ -343,7 +345,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         }
       return false;
     }
-  ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
+  ACE_Time_Value now (ACE_OS::gettimeofday());
   ACE_Time_Value diff = this->next_check_ - now;
   long msec = diff.msec();
   if (msec > 0)
@@ -358,17 +360,16 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
                           ACE_TEXT ("status = %s, listeners = %d, ")
-                          ACE_TEXT ("diff = %d,%d, msec = %d ")
-                          ACE_TEXT ("server %C\n"),
+                          ACE_TEXT ("msec = %d server %C\n"),
                           status_name (this->liveliness_), this->listeners_.size (),
-                          diff.sec(), diff.usec(), msec,
-                          this->server_.c_str()));
+                          msec, this->server_.c_str()));
         }
       return false;
     }
   switch (this->liveliness_)
     {
     case LS_UNKNOWN:
+    case LS_INIT:
       break;
     case LS_ALIVE:
     case LS_TIMEDOUT:
@@ -620,7 +621,7 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
       ACE_Time_Value delay = ACE_Time_Value::zero;
       if (owner_->deferred_timeout_ != ACE_Time_Value::zero)
         {
-          ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
+          ACE_Time_Value now (ACE_OS::gettimeofday());
           if (owner_->deferred_timeout_ > now)
             delay = owner_->deferred_timeout_ - now;
         }
@@ -825,7 +826,7 @@ LiveCheck::add_server (const char *server,
       result = entry_map_.rebind (s, entry, old);
       if (old)
       {
-        old->status (LS_CANCELLED);
+        old->status (LS_CANCELED);
       }
       delete old;
     }
@@ -836,7 +837,8 @@ LiveCheck::set_pid (const char *server, int pid)
 {
   ACE_CString s(server);
   LiveEntry *entry = 0;
-  if (entry_map_.find (s, entry) != -1 && entry != 0)
+  int result = entry_map_.find (s, entry);
+  if (result != -1 && entry != 0)
     {
       entry->set_pid (pid);
     }
@@ -847,7 +849,8 @@ LiveCheck::remove_server (const char *server, int pid)
 {
   ACE_CString s(server);
   LiveEntry *entry = 0;
-  if (entry_map_.find (s, entry) != -1 && entry->has_pid (pid))
+  int result = entry_map_.find (s, entry);
+  if (result != -1 && entry->has_pid (pid))
     {
       if (!this->in_handle_timeout ())
         {
@@ -1009,7 +1012,7 @@ LiveCheck::schedule_ping (LiveEntry *entry)
       return status != LS_DEAD;
     }
 
-  ACE_Time_Value now (ACE_High_Res_Timer::gettimeofday_hr());
+  ACE_Time_Value now (ACE_OS::gettimeofday());
   ACE_Time_Value next = entry->next_check ();
 
   if (!this->in_handle_timeout () )

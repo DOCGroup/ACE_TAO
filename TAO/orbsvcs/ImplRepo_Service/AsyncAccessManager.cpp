@@ -260,9 +260,11 @@ AsyncAccessManager::notify_waiters (void)
                     case  ImplementationRepository::AAM_ACTIVE_TERMINATE:
                       throw ImplementationRepository::CannotActivate
                         ("Server terminating.");
-                    default:
-                      throw ImplementationRepository::CannotActivate
-                        ("Unknown Failure");
+                    default: {
+                      ACE_CString reason = ACE_CString ("AAM_Status is ") +
+                        ACE_TEXT_ALWAYS_CHAR (status_name (this->status_));
+                      throw ImplementationRepository::CannotActivate (reason.c_str());
+                    }
                     }
                 }
               catch (const CORBA::Exception &ex)
@@ -466,11 +468,12 @@ AsyncAccessManager::notify_child_death (int pid)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, pid = %d, ")
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, pid = %d, status = %s ")
                       ACE_TEXT ("this info_.pid = %d, prev_pid = %d, waiter count = %d\n"),
-                      this, pid, this->info_->pid, this->prev_pid_, this->rh_list_.size() ));
+                      this, pid, status_name (status_),
+                      this->info_->pid, this->prev_pid_, this->rh_list_.size() ));
     }
-  if (this->info_->pid == pid || this->prev_pid_)
+  if (this->info_->pid == pid || this->prev_pid_ == pid)
     {
       if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_DEATH &&
           this->rh_list_.size() > 0)
@@ -518,7 +521,7 @@ AsyncAccessManager::ping_replied (LiveStatus server)
     case LS_TIMEDOUT:
       this->status (ImplementationRepository::AAM_SERVER_READY);
       break;
-    case LS_CANCELLED:
+    case LS_CANCELED:
       {
         if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_PING)
           {
