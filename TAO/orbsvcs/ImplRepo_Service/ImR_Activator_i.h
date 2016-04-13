@@ -1,11 +1,11 @@
 // -*- C++ -*-
 //=============================================================================
 /**
-*  @file   ImR_Activator_i.h
-*
-*  @author Priyanka Gontla <gontla_p@ociweb.com>
-*  @author Darrell Brunsch <brunsch@cs.wustl.edu>
-*/
+ *  @file   ImR_Activator_i.h
+ *
+ *  @author Priyanka Gontla <gontla_p@ociweb.com>
+ *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ */
 //=============================================================================
 
 #ifndef IMR_ACTIVATOR_I_H
@@ -47,27 +47,27 @@ struct ACE_Equal_To_pid_t
 
 
 #if (ACE_SIZEOF_VOID_P == 8)
-  typedef ACE_INT64 Act_token_type;
+typedef ACE_INT64 Act_token_type;
 #else
-  typedef ACE_INT32 Act_token_type;
+typedef ACE_INT32 Act_token_type;
 #endif
 
-  class Active_Pid_Setter;
+class Active_Pid_Setter;
 
 /**
-* @class ImR_Activator_i
-*
-* @brief IMR Activator Interface.
-*
-* This class provides the interface for the various activities
-* that can be done by the ImR_Activator.
-*
-*/
+ * @class ImR_Activator_i
+ *
+ * @brief IMR Activator Interface.
+ *
+ * This class provides the interface for the various activities
+ * that can be done by the ImR_Activator.
+ *
+ */
 class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::ActivatorExt,
                                          public ACE_Event_Handler
 {
  public:
-   friend class Active_Pid_Setter;
+  friend class Active_Pid_Setter;
 
   ImR_Activator_i (void);
 
@@ -96,7 +96,7 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
   /// Shutdown the orb.
   void shutdown (bool signaled);
 
-private:
+ private:
 
   int init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opts);
 
@@ -111,7 +111,7 @@ private:
 
   bool in_upcall (void);
 
-private:
+ private:
 
   typedef ACE_Unbounded_Set<ACE_CString> UniqueServerList;
 
@@ -159,14 +159,14 @@ private:
 };
 
 class Active_Pid_Setter
-  {
-  public:
-    Active_Pid_Setter(ImR_Activator_i &owner, pid_t pid);
-    ~Active_Pid_Setter();
+{
+public:
+  Active_Pid_Setter(ImR_Activator_i &owner, pid_t pid);
+  ~Active_Pid_Setter();
 
-    ImR_Activator_i &owner_;
+  ImR_Activator_i &owner_;
 
-  };
+};
 
 
 #endif /* IMR_ACTIVATOR_I_H */
