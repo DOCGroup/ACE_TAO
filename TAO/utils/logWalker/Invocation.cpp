@@ -199,15 +199,15 @@ Invocation::repl_line (void)
 }
 
 void
-Invocation::new_line (ostream &strm, int indent, int offset, bool add_nl, bool show_indent)
+Invocation::new_line (ostream &strm, size_t indent, int offset, bool add_nl, bool show_indent)
 {
   if (add_nl)
     {
       strm << "\n";
     }
 
-  int steps = indent / 20;
-  int extra = indent % 20;
+  size_t steps = indent / 20;
+  size_t extra = indent % 20;
 
   if (steps > 1)
     {
@@ -238,10 +238,11 @@ Invocation::dump_rel_time (ostream &strm, const ACE_Time_Value &tv, const ACE_Ti
   int hours = (int)(reltime.sec()) / 3600;
   int min = (int)(reltime.sec() %3600) / 60;
   int sec = (int)(reltime.sec()) % 60;
+  int subsec = (int)(reltime.usec()/1000);
 
   char buffer[20];
   ACE_OS::snprintf (buffer, 20, "%d:%02d:%02d.%03d",
-              hours, min, sec, reltime.usec()/1000);
+              hours, min, sec, subsec);
 
   strm << buffer << ' ';
 }
