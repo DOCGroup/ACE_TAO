@@ -29,8 +29,6 @@ TAO_IMR_i::~TAO_IMR_i (void)
 int
 TAO_IMR_i::run ()
 {
-ACE_Time_Value tv(0, 100000);
-ACE_OS::sleep(tv);
   if (this->op_.get () == 0)
     {
       ORBSVCS_ERROR ((LM_ERROR, "Unknown operation"));

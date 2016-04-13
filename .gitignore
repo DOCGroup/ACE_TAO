@@ -12,16 +12,6 @@
 *.sdf
 *.sln
 *.suo
-Debug
-*A.cpp
-*A.h
-*A.inl
-*C.cpp
-*C.h
-*C.inl
-*S.cpp
-*S.h
-*S.inl
 *S_T.cpp
 *S_T.h
 *S_T.inl
