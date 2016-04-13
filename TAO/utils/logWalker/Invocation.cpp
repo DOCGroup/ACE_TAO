@@ -199,15 +199,15 @@ Invocation::repl_line (void)
 }
 
 void
-Invocation::new_line (ostream &strm, int indent, int offset, bool add_nl, bool show_indent)
+Invocation::new_line (ostream &strm, size_t indent, int offset, bool add_nl, bool show_indent)
 {
   if (add_nl)
     {
       strm << "\n";
     }
 
-  int steps = indent / 20;
-  int extra = indent % 20;
+  size_t steps = indent / 20;
+  size_t extra = indent % 20;
 
   if (steps > 1)
     {

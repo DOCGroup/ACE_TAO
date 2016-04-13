@@ -168,7 +168,7 @@ class Locator_Export LiveEntry
  *
  * An instance of the ping receiver is used to handle the reply from a ping
  * request. Instances are created for the ping, then destroyed.
-`*/
+ `*/
 class Locator_Export PingReceiver :
   public virtual POA_ImplementationRepository::AMI_ServerObjectHandler
 {
@@ -206,9 +206,9 @@ class Locator_Export PingReceiver :
  * */
 
 #if (ACE_SIZEOF_VOID_P == 8)
-  typedef ACE_INT64 LC_token_type;
+typedef ACE_INT64 LC_token_type;
 #else
-  typedef ACE_INT32 LC_token_type;
+typedef ACE_INT32 LC_token_type;
 #endif
 
 class Locator_Export LC_TimeoutGuard

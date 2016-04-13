@@ -550,7 +550,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
               {
                 this->entry_->release_callback ();
                 this->entry_->status (LS_TRANSIENT);
-             }
+              }
             break;
           }
         default: //case TAO_INVOCATION_SEND_REQUEST_MINOR_CODE:
@@ -559,7 +559,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
               {
                 this->entry_->release_callback ();
                 this->entry_->status (LS_DEAD);
-             }
+              }
           }
         }
     }
@@ -825,9 +825,9 @@ LiveCheck::add_server (const char *server,
       LiveEntry *old = 0;
       result = entry_map_.rebind (s, entry, old);
       if (old)
-      {
-        old->status (LS_CANCELED);
-      }
+        {
+          old->status (LS_CANCELED);
+        }
       delete old;
     }
 }
