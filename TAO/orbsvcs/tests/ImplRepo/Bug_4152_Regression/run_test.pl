@@ -250,6 +250,7 @@ sub validate_servers
         }
     }
     close FILE;
+    return $count != 2;
 }
 
 
