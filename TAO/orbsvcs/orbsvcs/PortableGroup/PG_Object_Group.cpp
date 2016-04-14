@@ -593,7 +593,7 @@ TAO::PG_Object_Group::locations_of_members (void)
 
   PortableGroup::Locations * result = 0;
 
-  size_t count = this->members_.current_size ();
+  CORBA::ULong count = static_cast<CORBA::ULong> (this->members_.current_size ());
 
   ACE_NEW_THROW_EX (
     result,
@@ -602,7 +602,7 @@ TAO::PG_Object_Group::locations_of_members (void)
 
   result->length (count);
 
-  size_t pos = 0;
+  CORBA::ULong pos = 0;
   for (MemberMap_Iterator it = this->members_.begin();
       it != this->members_.end();
       ++it)
