@@ -1118,7 +1118,7 @@ ImR_Locator_i::findPOA (const char* name)
 
 bool
 ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
-                                  CORBA::Exception *&exret,
+                                  CORBA::Exception *&ex_ret,
                                   bool force)
 {
   const CORBA::ULong TAO_MINOR_MASK = 0x00000f80;
