@@ -1118,7 +1118,7 @@ ImR_Locator_i::findPOA (const char* name)
 
 bool
 ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
-                                  CORBA::Exception *&ex_ret,
+                                  CORBA::Exception *&exret,
                                   bool force)
 {
   const CORBA::ULong TAO_MINOR_MASK = 0x00000f80;
@@ -1611,7 +1611,7 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception& )
     {
       sip->reset_runtime ();
     }
