@@ -1611,7 +1611,7 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
 
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception& )
     {
       sip->reset_runtime ();
     }
