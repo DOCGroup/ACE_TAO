@@ -4,7 +4,7 @@
 # @file make_release.py
 # @author William R. Otte <wotte@dre.vanderbilt.edu>
 #
-# Packaging script for ACE/TAO/CIAO/DAnCE
+# Packaging script for ACE/TAO
 
 from __future__ import with_statement
 from time import strftime
@@ -163,9 +163,9 @@ def commit (files):
     import shutil, os
     global comp_versions
 
-    version = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
-                                         comp_versions["ACE_minor"],
-                                         comp_versions["ACE_beta"])
+    version = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
+                                    comp_versions["ACE_minor"],
+                                    comp_versions["ACE_beta"])
     vprint ("Committing the following files for " + version + " ".join (files))
 
     if opts.take_action:
@@ -182,9 +182,9 @@ def check_workspace ():
     global opts, doc_root
     try:
         ex ("cd $DOC_ROOT/ATCD && git pull -p")
-        print "Successfully updated ACE/TAO/CIAO/DAnCE working copy"
+        print "Successfully updated ACE/TAO working copy"
     except:
-        print "Unable to update ACE/TAO/CIAO/DAnCE workspace at " + doc_root
+        print "Unable to update ACE/TAO workspace at " + doc_root
         raise
 
     try:
@@ -420,19 +420,13 @@ def get_and_update_versions ():
     try:
         get_comp_versions ("ACE")
         get_comp_versions ("TAO")
-        get_comp_versions ("CIAO")
-        get_comp_versions ("DAnCE")
 
         if opts.update:
             files = list ()
             files += update_version_files ("ACE")
             files += update_version_files ("TAO")
-            files += update_version_files ("CIAO")
-            files += update_version_files ("DAnCE")
             files += create_changelog ("ACE")
             files += create_changelog ("TAO")
-            files += create_changelog ("CIAO")
-            files += create_changelog ("DAnCE")
             files += update_spec_file ()
             files += update_debianbuild ()
 
@@ -450,7 +444,7 @@ def create_changelog (component):
 
     global old_comp_versions, comp_versions, opts
 
-    old_tag = "ACE+TAO+CIAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
+    old_tag = "ACE+TAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
                                          old_comp_versions["ACE_minor"],
                                          old_comp_versions["ACE_beta"])
 
@@ -586,9 +580,9 @@ def tag ():
     """ Tags the DOC and MPC repositories for the version and push that remote """
     global comp_versions, opts
 
-    tagname = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
-                                        comp_versions["ACE_minor"],
-                                        comp_versions["ACE_beta"])
+    tagname = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
+                                    comp_versions["ACE_minor"],
+                                    comp_versions["ACE_beta"])
 
     if opts.tag:
         if opts.take_action:
@@ -618,9 +612,9 @@ def push ():
     """ Tags the DOC and MPC repositories for the version and push that remote """
     global comp_versions, opts
 
-    tagname = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
-                                        comp_versions["ACE_minor"],
-                                        comp_versions["ACE_beta"])
+    tagname = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
+                                    comp_versions["ACE_minor"],
+                                    comp_versions["ACE_beta"])
 
     if opts.push:
         if opts.take_action:
@@ -656,9 +650,9 @@ def export_wc (stage_dir):
 
     global doc_root, comp_versions
 
-    tag = "ACE+TAO+CIAO-%d_%d_%d" % (comp_versions["ACE_major"],
-                                     comp_versions["ACE_minor"],
-                                     comp_versions["ACE_beta"])
+    tag = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
+                                comp_versions["ACE_minor"],
+                                comp_versions["ACE_beta"])
 
     # Clone the ACE repository with the needed tag
     print ("Retrieving ACE with tag " + tag)
@@ -673,10 +667,6 @@ def export_wc (stage_dir):
     ex ("mv " + stage_dir + "/ATCD/ACE " + stage_dir + "/ACE_wrappers")
     print ("Moving TAO")
     ex ("mv " + stage_dir + "/ATCD/TAO " + stage_dir + "/ACE_wrappers/TAO")
-    print ("Moving CIAO")
-    ex ("mv " + stage_dir + "/ATCD/CIAO " + stage_dir + "/ACE_wrappers/TAO/CIAO")
-    print ("Moving DAnCE")
-    ex ("mv " + stage_dir + "/ATCD/DAnCE " + stage_dir + "/ACE_wrappers/TAO/DAnCE")
     print ("Moving MPC")
     ex ("mv " + stage_dir + "/MPC " + stage_dir + "/ACE_wrappers/MPC")
 
@@ -835,7 +825,7 @@ def write_file_lists (comp, text, bin):
     outfile.close ()
 
 def package (stage_dir, package_dir, decorator):
-    """ Packages ACE, ACE+TAO, and ACE+TAO+CIAO releases of current
+    """ Packages ACE, ACE+TAO releases of current
         staged tree, with decorator appended to the name of the archive. """
     from os.path import join
     from os import remove
@@ -871,7 +861,7 @@ def package (stage_dir, package_dir, decorator):
 
     # for TAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
-                                                     "ACE_wrappers/TAO", ["CIAO", "DAnCE", ".gitignore"])
+                                                     "ACE_wrappers/TAO", [".gitignore"])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
     update_packages ("\n".join (text_files),
@@ -880,35 +870,6 @@ def package (stage_dir, package_dir, decorator):
                      package_dir)
 
     move_packages ("ACE+TAO" + decorator, stage_dir, package_dir)
-
-    text_files = list ()
-    bin_files = list ()
-
-    # for DAnCE:
-    text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/DAnCE"),
-                                               "ACE_wrappers/TAO/DAnCE", [".gitignore"])
-
-#    write_file_lists ("fTAO" + decorator, text_files, bin_files)
-    update_packages ("\n".join (text_files),
-                     "\n".join (bin_files),
-                     stage_dir,
-                     package_dir)
-
-    move_packages ("ACE+TAO+DAnCE" + decorator, stage_dir, package_dir)
-
-    text_files = list ()
-    bin_files = list ()
-    # for CIAO:
-    text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO/CIAO"),
-                                               "ACE_wrappers/TAO/CIAO", [".gitignore"])
-
-#    write_file_lists ("fCIAO" + decorator, text_files, bin_files)
-    update_packages ("\n".join (text_files),
-                     "\n".join (bin_files),
-                     stage_dir,
-                     package_dir)
-
-    move_packages ("ACE+TAO+CIAO" + decorator, stage_dir, package_dir)
 
 def generate_workspaces (stage_dir):
     """ Generates workspaces in the given stage_dir """
@@ -923,19 +884,17 @@ def generate_workspaces (stage_dir):
     os.putenv ("ACE_ROOT", os.path.join (stage_dir, "ACE_wrappers"))
     os.putenv ("MPC_ROOT", os.path.join (stage_dir, "ACE_wrappers", "MPC"))
     os.putenv ("TAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO"))
-    os.putenv ("CIAO_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "CIAO"))
-    os.putenv ("DANCE_ROOT", os.path.join (stage_dir, "ACE_wrappers", "TAO", "DAnCE"))
+    os.putenv ("CIAO_ROOT", "")
+    os.putenv ("DANCE_ROOT", "")
     os.putenv ("DDS_ROOT", "")
 
     # Create option strings
     mpc_command = os.path.join (stage_dir, "ACE_wrappers", "bin", "mwc.pl")
-    exclude_option = ' -exclude TAO/TAO_*.mwc,TAO/CIAO/CIAO_*.mwc '
+    exclude_option = ' -exclude TAO/TAO_*.mwc '
     workers_option = ' -workers ' + str(cpu_count)
     mpc_option = ' -recurse -hierarchy -relative ACE_ROOT=' + stage_dir + '/ACE_wrappers '
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
-    mpc_option += ' -relative CIAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO/CIAO '
-    mpc_option += ' -relative DANCE_ROOT=' + stage_dir + '/ACE_wrappers/TAO/DAnCE '
-    msvc_exclude_option = ' -exclude TAO/CIAO/CIAO_TAO_DAnCE_OpenDDS.mwc,TAO/CIAO/CIAO_TAO_OpenDDS.mwc,TAO/CIAO/CIAO_TAO_DAnCE_OpenDDS_shapes.mwc '
+    msvc_exclude_option = ' '
     vc12_option = ' -name_modifier *_vc12 '
     vc14_option = ' -name_modifier *_vc14 '
 
@@ -966,8 +925,6 @@ def create_kit ():
 
     get_comp_versions ("ACE")
     get_comp_versions ("TAO")
-    get_comp_versions ("CIAO")
-    get_comp_versions ("DAnCE")
 
     print "Creating working directories...."
     stage_dir, package_dir = make_working_directories ()
