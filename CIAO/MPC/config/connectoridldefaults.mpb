@@ -1,5 +1,0 @@
-// -*- MPC -*-
-project : componentidldefaults {
- idlflags += -Gcn -Gxhcn -I$(CIAO_ROOT)/connectors -Sa -St
- idlflags -= -Gxhex
-}
