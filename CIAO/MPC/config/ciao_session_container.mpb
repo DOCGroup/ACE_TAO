@@ -1,6 +1,0 @@
-// -*- MPC -*-
-project :  utils, ciao_servant, \
-         ciao_session_container_stub, ccm_direct_collocation {
-  libs += CIAO_Session_Container
-  after += CIAO_Session_Container
-}

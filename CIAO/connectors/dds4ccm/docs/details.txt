@@ -1,5 +1,0 @@
-
-
-For more information regarding DDS4CCM also check the CCM tutoral, see
-$CIAO_ROOT/docs/OMG-CCM-Tutorial.ppt
-

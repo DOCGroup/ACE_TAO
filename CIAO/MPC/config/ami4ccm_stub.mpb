@@ -1,6 +1,0 @@
-// -*- MPC -*-
-project : ciao_connector_base, messaging {
-  after += AMI4CCM_stub
-  libs += AMI4CCM_stub
-  includes += $(CIAO_ROOT)/connectors/ami4ccm
-}

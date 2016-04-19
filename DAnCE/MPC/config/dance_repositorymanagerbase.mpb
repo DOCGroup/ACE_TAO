@@ -1,7 +1,0 @@
-// -*- MPC -*-
-feature(jaws) {
-  includes += $(ACE_ROOT)/apps
-  libs += JAWS
-  after += JAWS
-  macros += DANCE_RM_USES_JAWS
-}
