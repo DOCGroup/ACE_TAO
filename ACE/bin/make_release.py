@@ -83,7 +83,7 @@ def parse_args ():
 
     parser.add_option ("--root", dest="repo_root", action="store",
                        help="Specify an alternate repository root",
-                       default="https://github.com/DOCGroup/ATCD.git")
+                       default="https://github.com/DOCGroup/ACE_TAO.git")
 
     parser.add_option ("--mpc_root", dest="mpc_root", action="store",
                        help="Specify an alternate MPC repository root",

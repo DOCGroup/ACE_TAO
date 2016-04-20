@@ -9,12 +9,12 @@ The quality of ACE/TAO is monitored through our distributed [scoreboard](http://
 Travis-CI status
 ================
 
-master: [![Build Status](https://travis-ci.org/DOCGroup/ATCD.svg?branch=master)](https://travis-ci.org/DOCGroup/ATCD)
+master: [![Build Status](https://travis-ci.org/DOCGroup/ACE_TAO.svg?branch=master)](https://travis-ci.org/DOCGroup/ACE_TAO)
 
 Snap-CI status
 ================
 
-master: [![Build Status](https://snap-ci.com/DOCGroup/ATCD/branch/master/build_image)](https://snap-ci.com/DOCGroup/ATCD/branch/master)
+master: [![Build Status](https://snap-ci.com/DOCGroup/ACE_TAO/branch/master/build_image)](https://snap-ci.com/DOCGroup/ACE_TAO/branch/master)
 
 AppVeyor status
 ================
@@ -50,7 +50,7 @@ Bugzilla for issues is [here](http://bugzilla.dre.vanderbilt.edu/).
 
 These guidelines are for all developers, whether occasional or regular. They have been sourced from various 'best practice' documents but primarily [here](https://github.com/JacORB/JacORB).
 
-![Warning][warn] As a convention, <i>upstream</i> is used as the name of the <a href="http://github.com/DOCGroup/ATCD">http://github.com/DOCGroup/ATCD</a> repository. This repository is the canonical repository for ATCD. We usually name <i>origin</i> the fork on github of each contributor. So the exact meaning of <i>origin</i> is relative to the developer: you could think of <i>origin</i> as your own fork.
+![Warning][warn] As a convention, <i>upstream</i> is used as the name of the <a href="http://github.com/DOCGroup/ACE_TAO">http://github.com/DOCGroup/ACE_TAO</a> repository. This repository is the canonical repository for ATCD. We usually name <i>origin</i> the fork on github of each contributor. So the exact meaning of <i>origin</i> is relative to the developer: you could think of <i>origin</i> as your own fork.
 
 ## Pre-requisites
 
@@ -58,7 +58,7 @@ This document assumes some working knowledge of git. We recommend Scott Chacon's
 
 ## Repositories
 
-ACE/TAO uses [http://github.com/DOCGroup/ATCD](http://github.com/DOCGroup/ATCD) as its
+ACE/TAO uses [http://github.com/DOCGroup/ACE_TAO](http://github.com/DOCGroup/ACE_TAO) as its
 canonical repository, and this repository contains the stable code on master.
 
 Typically, only _Project Admins_ would be able to push to this repo while all else may clone or fork this repo.
@@ -324,7 +324,7 @@ Sometimes work on your topic branch may include several commits. For example, co
 
 Also, it is important to make sure you don't accidentally commit files for which no real changes have happened, but rather, whitespace has been modified. This often happens with some IDEs. `git diff --check` should be run before you issue such a pull request, which will check for such "noise" commits and warn you accordingly. Such files should be reverted and not be committed to the branch.
 
-Adhering to [ACE/TAO's code style](http://htmlpreview.github.io/?https://github.com/DOCGroup/ATCD/blob/master/ACE/docs/ACE-guidelines.html) guidelines will help minimise "noise" commits. Project Admins are going to ask contributors to reformat their code if necessary.
+Adhering to [ACE/TAO's code style](http://htmlpreview.github.io/?https://github.com/DOCGroup/ACE_TAO/blob/master/ACE/docs/ACE-guidelines.html) guidelines will help minimise "noise" commits. Project Admins are going to ask contributors to reformat their code if necessary.
 
 ## Keeping your repo in sync with upstream
 
@@ -367,7 +367,7 @@ $ git rebase ACE+TAO+CIAO-6_3_1
 If you have a fork of upstream, you should probably define upstream as one of your remotes:
 
 ```
-$ git remote add upstream git://github.com/DOCGroup/ATCD.git
+$ git remote add upstream git://github.com/DOCGroup/ACE_TAO.git
 ```
 
 You should now be able to fetch and pull changes from upstream into your local repository, though you should make sure you have no uncommitted changes. (You *do* use topic branches, right?)
