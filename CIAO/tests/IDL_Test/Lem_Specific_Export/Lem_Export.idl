@@ -1,6 +1,0 @@
-
-#include <Components.idl>
-
-component Foo
-{
-};

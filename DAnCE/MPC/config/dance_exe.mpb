@@ -1,4 +1,0 @@
-// -*- MPC -*-
-project : dance {
-  install = $(DANCE_ROOT)/bin
-}

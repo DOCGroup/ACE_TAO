@@ -1,5 +1,0 @@
-// -*- MPC -*-
-project : ccm_svnt, avoids_corba_e_micro {
-  after += CIAO_Container_Base_stub
-  libs += CIAO_Container_Base_stub
-}
