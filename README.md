@@ -37,9 +37,8 @@ http://www.iconarchive.com/show/fugue-icons-by-yusuke-kamiyamane.html
 [warn]: http://icons.iconarchive.com/icons/yusuke-kamiyamane/fugue/16/exclamation-icon.png "Warning"
 [err]: http://icons.iconarchive.com/icons/yusuke-kamiyamane/fugue/16/minus-circle-icon.png "Error"
 
-# ATCD #
+# ACE/TAO #
 
-ATCD is a [freely licensed](https://raw.githubusercontent.com/DOCGroup/ATCD/master/ACE/COPYING) C++ suite.
 [ACE](http://www.dre.vanderbilt.edu/~schmidt/ACE.html) is a C++ framework for implementing distributed and
 networked applications, [TAO](http://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++
 implementation of the OMG's [CORBA](http://www.omg.org/spec/CORBA/) standard. The main home page
