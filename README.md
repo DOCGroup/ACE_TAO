@@ -59,7 +59,7 @@ This document assumes some working knowledge of git. We recommend Scott Chacon's
 
 ## Repositories
 
-AT uses [http://github.com/DOCGroup/ATCD](http://github.com/DOCGroup/ATCD) as its
+ACE/TAO uses [http://github.com/DOCGroup/ATCD](http://github.com/DOCGroup/ATCD) as its
 canonical repository, and this repository contains the stable code on master.
 
 Typically, only _Project Admins_ would be able to push to this repo while all else may clone or fork this repo.
