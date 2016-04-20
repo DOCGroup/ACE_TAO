@@ -1,9 +1,9 @@
 ACE/TAO/CIAO/DAnCE
 ==================
 
-See [Douglas C. Schmidt website](http://www.dre.vanderbilt.edu/~schmidt)  for more information about ACE/TAO/CIAO/DAnCE (ATCD for short)
+See [Douglas C. Schmidt website](http://www.dre.vanderbilt.edu/~schmidt)  for more information about ACE/TAO
 
-The quality of ATCD is monitored through our distributed [scoreboard](http://www.dre.vanderbilt.edu/scoreboard/)
+The quality of ACE/TAO is monitored through our distributed [scoreboard](http://www.dre.vanderbilt.edu/scoreboard/)
 
 
 Travis-CI status
@@ -39,7 +39,13 @@ http://www.iconarchive.com/show/fugue-icons-by-yusuke-kamiyamane.html
 
 # ATCD #
 
-ATCD is a [freely licensed](https://raw.githubusercontent.com/DOCGroup/ATCD/master/ACE/COPYING) C++ suite. [ACE](http://www.dre.vanderbilt.edu/~schmidt/ACE.html) is a C++ framework for implementing distributed and networked applications, [TAO](http://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++ implementation of the OMG's [CORBA](http://www.omg.org/spec/CORBA/) standard, [CIAO](http://www.dre.vanderbilt.edu/~schmidt/CIAO.html) is a C++ implementation of the OMG's [LwCCM](http://www.omg.org/spec/CORBA/) standard, and DAnCE is a C++ implementation of the OMG's [Deployment and Configuration](http://www.omg.org/spec/DEPL/) standard. The main home page is [here](http://www.dre.vanderbilt.edu/~schmidt/). Mailing lists are available [here](http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html) and the Bugzilla for issues is [here](http://bugzilla.dre.vanderbilt.edu/).
+ATCD is a [freely licensed](https://raw.githubusercontent.com/DOCGroup/ATCD/master/ACE/COPYING) C++ suite.
+[ACE](http://www.dre.vanderbilt.edu/~schmidt/ACE.html) is a C++ framework for implementing distributed and
+networked applications, [TAO](http://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++
+implementation of the OMG's [CORBA](http://www.omg.org/spec/CORBA/) standard. The main home page
+is [here](http://www.dre.vanderbilt.edu/~schmidt/). Mailing lists are
+available [here](http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html) and the
+Bugzilla for issues is [here](http://bugzilla.dre.vanderbilt.edu/).
 
 ## Contributing Via GitHub ##
 
@@ -53,7 +59,8 @@ This document assumes some working knowledge of git. We recommend Scott Chacon's
 
 ## Repositories
 
-ATCD uses [http://github.com/DOCGroup/ATCD](http://github.com/DOCGroup/ATCD) as its canonical repository, and this repository contains the stable code on master.
+AT uses [http://github.com/DOCGroup/ATCD](http://github.com/DOCGroup/ATCD) as its
+canonical repository, and this repository contains the stable code on master.
 
 Typically, only _Project Admins_ would be able to push to this repo while all else may clone or fork this repo.
 
@@ -75,7 +82,9 @@ This role defines a user who browses through the source code of the project and 
 *  Attach a patch file to the Bugzila issue (ATCD Bug tracking system may be found [here](http://bugzilla.dre.vanderbilt.edu/)).
 *  Creating a pull request on GitHub
 
-The approach a contributor chooses to use depends entirely his/her personal preference, but usually is tied to how the contributor accesses ATCD's source code. If the contributor directly clones the upstream repository, they should submit patch files. If the contributor instead uses their personal GitHub account to fork the upstream repository, then they are should issue a pull request.
+The approach a contributor chooses to use depends entirely his/her personal preference, but usually is tied to how the
+contributor accesses ACE/TAO source code. If the contributor directly clones the upstream repository,
+they should submit patch files. If the contributor instead uses their personal GitHub account to fork the upstream repository, then they are should issue a pull request.
 
 ![Tip][tip] A GitHub pull request is the preferred method to submit a patch!
 
@@ -95,7 +104,7 @@ More information on generating patches suitable for attaching to a Bugzilla can 
 
 ![Git Workflow 2](https://docs.jboss.org/author/download/attachments/4784485/git_wf_2.png)
 
-In this workflow, the contributor forks the ATCD upstream repository on GitHub, clones their fork, and makes changes to this private fork. When changes have been tested and are ready to be contributed back to the project, a *pull request* is issued via GitHub so that one of the Project Administrators can pull in the change.
+In this workflow, the contributor forks the ACE/TAO upstream repository on GitHub, clones their fork, and makes changes to this private fork. When changes have been tested and are ready to be contributed back to the project, a *pull request* is issued via GitHub so that one of the Project Administrators can pull in the change.
 
 ![Warning][warn] It is desirable to work off a <i>topic branch</i>, even when using your own, forked repository. A topic branch is created for every feature or bug fix you do. Typically you would create one topic branch per issue, but if several patches are related it's acceptable to have several commits in the same branch; however different changes should always be identified by different commits.
 
@@ -161,18 +170,18 @@ git push -f origin BZ-12345
 
 7. Continue your work on your topic branch.
 
-![Warning][warn] If you are sharing your forked ATCD repo with others, then do not rebase! Use a merge instead.
+![Warning][warn] If you are sharing your forked ACE/TAO repo with others, then do not rebase! Use a merge instead.
 
 
 #### Multi-step coordination between developers using forked repositories
 
-Sometimes a feature/task is rather complex to implement and requires competence from multiple areas of the projects. In such occasions it is not uncommon for developers to coordinate feature implementation using personal forks of ATCD prior to finally issuing request to integrate into ATCD main repository on GitHub.
+Sometimes a feature/task is rather complex to implement and requires competence from multiple areas of the projects. In such occasions it is not uncommon for developers to coordinate feature implementation using personal forks of ACE/TAO prior to finally issuing request to integrate into ACE/TAO main repository on GitHub.
 
-For example, developer A using his personal ATCD fork creates a topic branch T and completes as much work as he/she can before requesting for assistance from developer B. Developer A pushes topic T to his personal ATCD fork where developer B picks it up and brings it down to his local repo. Developer B then in turn completes necessary work, commits his/her changes on branch T, and finally pushes back T to his own personal fork. After issuing request for pull to developer A, developer B waits for notification that developer A integrated his changes. This exchange can be repeated as much as it is necessary and can involve multiple developers.
+For example, developer A using his personal ACE/TAO fork creates a topic branch T and completes as much work as he/she can before requesting for assistance from developer B. Developer A pushes topic T to his personal ACE/TAO fork where developer B picks it up and brings it down to his local repo. Developer B then in turn completes necessary work, commits his/her changes on branch T, and finally pushes back T to his own personal fork. After issuing request for pull to developer A, developer B waits for notification that developer A integrated his changes. This exchange can be repeated as much as it is necessary and can involve multiple developers.
 
 ##### A worked example
 
-This example assumes that developer A and B have added each others ATCD forked repositories with the *git add remote* command. For example, developer B would add developer A's personal ATCD fork repository with the command
+This example assumes that developer A and B have added each others ACE/TAO forked repositories with the *git add remote* command. For example, developer B would add developer A's personal ACE/TAO fork repository with the command
 
 ```
     git remote add devA https://github.com/developerA/ATCD.git
@@ -206,7 +215,7 @@ A frequent contributor will only ever submit patches via a pull requests. The pu
 
 Frequent contributors should *always* fork the upstream project on GitHub and work off a clone of this fork. This is very similar to [Creating a pull request on GitHub](#creating-a-pull-request-on-github) workflow used by a [#Occasional Contributor](#occasional-contributor).
 
-![Warning][warn] All ATCD core developers are considered frequent contributors and work off personal forks of the upstream repository. This allows for complex features to be developed in parallel without tripping up over one another. This process is certainly not restricted to just ATCD core developers; any contributor is welcome to also participate in this manner.
+![Warning][warn] All ACE/TAO core developers are considered frequent contributors and work off personal forks of the upstream repository. This allows for complex features to be developed in parallel without tripping up over one another. This process is certainly not restricted to just ACE/TAO core developers; any contributor is welcome to also participate in this manner.
 
 
 
@@ -217,7 +226,7 @@ Project Admins have a very limited role. Only Project Admins are allowed to push
 ![Warning][warn] All Contributors who are also Project Admins are encouraged to not merge their own changes, to ensure that all changes are reviewed.
 
 
-This approach ensures ATCD maintains quality on the main code source tree, and allows for important code reviews to take place again ensuring quality. Further, it ensures clean and easily traceable code history and makes sure that more than one person knows about the changes being performed.
+This approach ensures ACE/TAO maintains quality on the main code source tree, and allows for important code reviews to take place again ensuring quality. Further, it ensures clean and easily traceable code history and makes sure that more than one person knows about the changes being performed.
 
 #### Merging in patches
 
@@ -269,13 +278,13 @@ Releases can only be cut by Project Admins, and must be done off a recently upda
 
 ### Release branches
 
-ATCD currently has a primary release branch of master and a maintenance branch used by Red Hat JBoss. In future further release branches may be created. (e.g. for maintenance purposes). Work should never be committed directly to a release branch; topic branches should always be used for work, and these topic branches should be merged in.
+ACE/TAO currently has a primary release branch of master. In future further release branches may be created. (e.g. for maintenance purposes). Work should never be committed directly to a release branch; topic branches should always be used for work, and these topic branches should be merged in.
 
 ### Topic branches
 
 Some of the biggest features of git are speed and efficiency of branching, and accuracy of merging. As a result, best practices involve making frequent use of branches. Creating several topic branches a day, even, should not be considered excessive, and working on several topic branches simultaneously again should be commonplace.
 
-[Chapter 3, Section 4](http://progit.org/book/ch3-4.html) of Pro Git has a detailed discussion of topic branches. For ATCD, it makes sense to create a topic branch and name it after the Bugzilla it corresponds to. (if it doesn't correspond to a Bugzilla, a simple but descriptive name should be used).
+[Chapter 3, Section 4](http://progit.org/book/ch3-4.html) of Pro Git has a detailed discussion of topic branches. For ACE/TAO, it makes sense to create a topic branch and name it after the Bugzilla it corresponds to. (if it doesn't correspond to a Bugzilla, a simple but descriptive name should be used).
 
 #### Topic Branches Affecting More Than One Release Branch
 
@@ -316,7 +325,7 @@ Sometimes work on your topic branch may include several commits. For example, co
 
 Also, it is important to make sure you don't accidentally commit files for which no real changes have happened, but rather, whitespace has been modified. This often happens with some IDEs. `git diff --check` should be run before you issue such a pull request, which will check for such "noise" commits and warn you accordingly. Such files should be reverted and not be committed to the branch.
 
-Adhering to [ATCD's code style](http://htmlpreview.github.io/?https://github.com/DOCGroup/ATCD/blob/master/ACE/docs/ACE-guidelines.html) guidelines will help minimise "noise" commits. Project Admins are going to ask contributors to reformat their code if necessary.
+Adhering to [ACE/TAO's code style](http://htmlpreview.github.io/?https://github.com/DOCGroup/ATCD/blob/master/ACE/docs/ACE-guidelines.html) guidelines will help minimise "noise" commits. Project Admins are going to ask contributors to reformat their code if necessary.
 
 ## Keeping your repo in sync with upstream
 
