@@ -133,7 +133,7 @@ public:
   void dump (void) const;
 
   /// Returns a reference to the lock used by the ACE_Service_Repository
-  ACE_SYNCH_RECURSIVE_MUTEX &lock (void);
+  ACE_SYNCH_RECURSIVE_MUTEX &lock (void) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

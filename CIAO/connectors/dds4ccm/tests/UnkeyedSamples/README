@@ -1,6 +1,0 @@
-
-
-UnkeyedSamples consists of a Sender and a Receiver.
-The Sender writes samples unkeyed; the Receiver should
-receive the same number of samples. An error is printed
-when this isn't the case.

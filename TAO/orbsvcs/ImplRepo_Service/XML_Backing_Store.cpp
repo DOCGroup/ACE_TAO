@@ -275,8 +275,6 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
       return -1;
     }
 
-
-
   return 0;
 }
 

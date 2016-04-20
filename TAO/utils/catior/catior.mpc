@@ -8,6 +8,10 @@ project(*lib): tao_output, rtcorba, install, messaging, ziop {
   Source_Files {
     Catior_i.cpp
   }
+
+  specific {
+    install_dir = tao/catior
+  }
 }
 
 project: namingexe, rtcorba, install, messaging, ziop {
@@ -23,8 +27,11 @@ project: namingexe, rtcorba, install, messaging, ziop {
   Header_Files {
   }
 
+  specific {
+    install_dir = tao
+  }
+
   InstallData_Files {
-    gendir = tao-utils
     README.catior
   }
 }

@@ -1,8 +1,12 @@
 // -*- MPC -*-
 project : orbsvcsexe, utils, install, naming, trading_serv {
   exename  = tao_costrading
+
+  specific {
+    install_dir = tao/docs/trading
+  }
+
   InstallData_Files {
-    gendir = tao-trading
     README
   }
 }

@@ -20,8 +20,21 @@ Thread::Thread (long tid, const char *alias, size_t offset)
     target_dup_(0),
     current_invocation_ (),
     active_handle_ (0),
-    first_line_ (offset)
+    first_line_ (offset),
+    first_time_ (),
+    last_time_ ()
 {
+}
+
+void
+Thread::add_time (const ACE_CString &time)
+{
+  if (time.length())
+    {
+      last_time_ = time;
+      if (first_time_.length() == 0)
+        first_time_ = time;
+    }
 }
 
 void
@@ -118,6 +131,17 @@ const ACE_CString &
 Thread::alias (void) const
 {
   return this->alias_;
+}
+
+void
+Thread::split_filename (char *buff, size_t len) const
+{
+  strncpy (buff, this->alias_.c_str(), len);
+  char *c = strchr(buff, '[');
+  *c = '_';
+  c = strchr (c, ']');
+  strcpy (c, ".txt");
+
 }
 
 void
@@ -230,7 +254,7 @@ Thread::current_invocation (void) const
 }
 
 void
-Thread::dump_detail (ostream &strm)
+Thread::dump_summary (ostream &strm)
 {
   strm << "   " << this->alias_ << " tid = 0x" << hex << this->id_
        << " (" << dec << this->id_
@@ -238,9 +262,17 @@ Thread::dump_detail (ostream &strm)
        << this->client_encounters_ << " requests sent "
        << this->server_encounters_ << " requests received";
   if (this->count_nesting () > 0 && this->max_depth_ > 0)
-    strm <<", with " << this->nested_ << " nested upcalls, max depth "
-         << this->max_depth_;
-  strm << endl;
+    {
+      strm <<", with " << this->nested_ << " nested upcalls, max depth "
+           << this->max_depth_ << endl;
+    }
+  if (this->first_time_.length() )
+    {
+      strm << " first encountered " << this->first_time_
+           << " last encountered " << this->last_time_;
+    }
+
+  strm << "\n" << endl;
 }
 
 void
@@ -305,7 +337,7 @@ Thread::dump_invocations (ostream &strm)
 }
 
 void
-Thread::dump_incidents (ostream &strm)
+Thread::dump_incidents (ostream &strm, const ACE_Time_Value& relstart)
 {
   if (this->nested_ == 0)
     return;
@@ -330,7 +362,7 @@ Thread::dump_incidents (ostream &strm)
             }
           nested_queue.pop_back ();
           level--;
-          prev->dump_finish_line (strm, level);
+          prev->dump_finish_line (strm, level, relstart);
         }
       if (nested_queue.size() > 1)
         {
@@ -341,12 +373,12 @@ Thread::dump_incidents (ostream &strm)
             {
               if ((*j)->repl_line () < inv_line)
                 {
-                  (*j)->dump_finish_line (strm, level);
+                  (*j)->dump_finish_line (strm, level, relstart);
                 }
             }
         }
       nested_queue.push_back (inv);
-      inv->dump_start_line (strm, level);
+      inv->dump_start_line (strm, level, relstart);
     }
 }
 

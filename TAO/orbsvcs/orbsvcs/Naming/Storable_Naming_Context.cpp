@@ -247,6 +247,7 @@ void TAO_Storable_Naming_Context::Write (TAO::Storable_Base& wrtr)
   ACE_TRACE("Write");
   TAO_Storable_Naming_Context_ReaderWriter rw(wrtr);
   rw.write(*this);
+
 }
 
 // Helpers function to load a new context into the binding_map
@@ -269,7 +270,7 @@ File_Open_Lock_and_Check::File_Open_Lock_and_Check
   try
     {
       this->init_no_load (method_type);
-      if (force_load)
+      if (force_load || method_type == CREATE_WITHOUT_FILE)
         this->reload ();
       else
         {
@@ -401,6 +402,16 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
     write_occurred_ (0)
 {
   ACE_TRACE("TAO_Storable_Naming_Context");
+  // Create a temporary stream simply to check if a readable
+  // version already exists.
+
+  ACE_Auto_Ptr<TAO::Storable_Base> stream
+    (this->factory_->create_stream(context_name_.c_str(), "r"));
+  if (!stream->exists ())
+    {
+      File_Open_Lock_and_Check fg(this, SFG::CREATE_WITHOUT_FILE, false);
+      this->Write (fg.peer ());
+    }
 }
 
 TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
@@ -1015,7 +1026,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
+/* static */
+CosNaming::NamingContext_ptr
+TAO_Storable_Naming_Context::recreate_all (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
@@ -1073,8 +1086,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
   // around a Storable_File_Guard derived class.
   gfl_.reset(pers_factory->
              create_stream (file_name.c_str(),
-                            "crw",
-                            false));
+                            "crw"));
   if (gfl_->open() != 0)
     {
       delete gfl_.release();

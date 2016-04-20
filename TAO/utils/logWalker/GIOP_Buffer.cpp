@@ -1,5 +1,6 @@
 #include "GIOP_Buffer.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Log_Msg.h"
 
 static const char *size_leadin_1_5 = "GIOP v1."; //"x msg, ";
 static size_t leadin_len_1_5 = 15;
@@ -110,7 +111,7 @@ GIOP_Buffer::GIOP_Buffer(void)
     preamble_(),
     log_offset_(0),
     thr_(0),
-    time_(0),
+    time_(),
     expected_req_id_(0),
     expected_size_(0),
     expected_type_(0),
@@ -143,7 +144,7 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
     preamble_(text),
     log_offset_(offset),
     thr_(thread),
-    time_(0),
+    time_(ACE_Time_Value::zero),
     expected_req_id_(0),
     expected_size_(0),
     expected_type_(0),
@@ -177,20 +178,6 @@ GIOP_Buffer::GIOP_Buffer(const char *text,
     }
   this->sending_ = ACE_OS::strstr(text,"send") ? 0 : 1;
   this->expected_type_ = ACE_OS::strstr(text,"Request") ? 0 : 1;
-  const char *time_tok = ACE_OS::strchr (text,'@');
-  if (time_tok != 0)
-    {
-      char timebuf[30];
-      ACE_OS::strncpy(timebuf, text, (time_tok - text));
-      timebuf[time_tok - text] = 0;
-      char *hms = ACE_OS::strchr (timebuf,':');
-      if (hms != 0)
-        {
-          int hr, min, sec, msec;
-          ::sscanf (hms-2,"%d:%d:%d.%d", &hr, &min, &sec, &msec);
-          this->time_ = (hr * 3600 + min *60 + sec) * 1000 + msec;
-        }
-    }
 }
 
 void
@@ -349,10 +336,16 @@ GIOP_Buffer::thread (void)
   return this->thr_;
 }
 
-time_t
+const ACE_Time_Value &
 GIOP_Buffer::time (void) const
 {
   return this->time_;
+}
+
+void
+GIOP_Buffer::time (const ACE_Time_Value &t)
+{
+  this->time_ = t;
 }
 
 const ACE_CString &
@@ -415,8 +408,14 @@ GIOP_Buffer::parse_svc_contexts (void)
         return false;
       if (!(*this->cdr_ >> temp))
         return false;
+      if ((this->cur_size() == this->buffer_size_) && (this->cdr_->length() < temp))
+        {
+          return this->cdr_->skip_bytes (this->cdr_->length());
+        }
       if (!this->cdr_->skip_bytes(temp))
-        return false;
+        {
+          return this->cur_size() == this->buffer_size_;
+        }
       --num_svc_cont;
     }
   return true;
@@ -436,8 +435,9 @@ GIOP_Buffer::parse_header (void)
 
   char mtype = this->octets_[7];
   if (mtype > 1) // not a request or reply
-    return false;
-
+    {
+      return false;
+    }
   delete this->cdr_;
   this->cdr_ = new ACE_InputCDR (this->octets_,
                                  this->cur_size(),
@@ -452,36 +452,54 @@ GIOP_Buffer::parse_header (void)
   if (this->ver_minor_ < 2)
     {
       if (!this->parse_svc_contexts())
-        return false;
+        {
+          return false;
+        }
     }
 
   if (!(*this->cdr_ >> len_ulong))
-    return false;
+    {
+      return false;
+    }
   this->req_id_ = static_cast<size_t>(len_ulong);
 
   switch (mtype) {
   case 0: //Request
     if (!(*this->cdr_ >> this->resp_exp_))
-      return false;
+      {
+        return false;
+      }
     if (this->ver_minor_ > 1 &&
         !(*this->cdr_ >> len_ulong)) // address disposition
-      return false;
+      {
+        return false;
+      }
     if (!(*this->cdr_ >> len_ulong))
-      return false;
+      {
+        return false;
+      }
     this->oid_len_ = static_cast<size_t>(len_ulong);
     this->oid_ = this->cdr_->rd_ptr();
     if (!this->cdr_->skip_bytes(len_ulong))
-      return false;
+      {
 
+        return false;
+      }
     if (!(*this->cdr_ >> len_ulong))
-      return false;
+      {
+        return false;
+      }
     this->opname_ = this->cdr_->rd_ptr();
     if (!this->cdr_->skip_bytes(len_ulong))
-      return false;
+      {
+        return false;
+      }
     break;
   case 1: //Reply
     if (!(*this->cdr_ >> len_ulong))
-      return false;
+      {
+        return false;
+      }
     this->reply_status_ = static_cast<size_t>(len_ulong);
     break;
   default:
@@ -554,15 +572,16 @@ bool
 GIOP_Buffer::matches (GIOP_Buffer *other) const
 {
   if (other->header_parsed_)
-    return this->expected_req_id_ == other->actual_req_id() &&
-      this->expected_type_ == other->type() &&
-      (this->expected_size_ == other->msg_size() ||
-       this->expected_size_ == other->msg_size() + 4);
-  else
-    return this->expected_req_id_ == other->expected_req_id() &&
-      this->expected_type_ == other->expected_type() &&
-      this->sending_ == other->sending() &&
-      this->expected_size_ == other->expected_size();
+    {
+      return this->expected_req_id_ == other->actual_req_id() &&
+        this->expected_type_ == other->type() &&
+        (this->expected_size_ == other->msg_size() ||
+         this->expected_size_ == other->msg_size() + 4);
+    }
+  return this->expected_req_id_ == other->expected_req_id() &&
+    this->expected_type_ == other->expected_type() &&
+    this->sending_ == other->sending() &&
+    this->expected_size_ == other->expected_size();
 }
 
 void
