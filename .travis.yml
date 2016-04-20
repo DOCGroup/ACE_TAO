@@ -24,7 +24,7 @@ addons:
     - libssl-dev
     - libxerces-c-dev
 before_install:
-  - git clone git://github.com/DOCGroup/MPC.git
+  - git clone --depth 1 git://github.com/DOCGroup/MPC.git
 branches:
   only:
     - master
