@@ -135,9 +135,9 @@
             Checkout like this:
             <ul>
               <li>
-                <code>git clone https://github.com/DOCGroup/ATCD.git ATCD</code></li>
+                <code>git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO</code></li>
               <li>
-                <code>git clone https://github.com/DOCGroup/ATCD.git MPC</code></li>
+                <code>git clone https://github.com/DOCGroup/ACE_TAO.git MPC</code></li>
             </ul>
         </ul>
         <li>
@@ -204,8 +204,8 @@
     ACE+TAO+CIAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
     Minor and Beta release numbers of the release that is to be restarted).<p>
       E.g.:<br>
-      <code>cd ATCD && git tag -d ACE+TAO+CIAO-X_Y_Z<br />
-        cd MPC && git tag -d ACE+TAO+CIAO-X_Y_Z<br />
+      <code>cd ACE_TAO && git tag -d ACE+TAO-X_Y_Z<br />
+        cd MPC && git tag -d ACE+TAO-X_Y_Z<br />
       </code>
       <br>
       Note that this <em>only</em> needs to be done if the <em>tagging</em> fails. If
@@ -235,9 +235,9 @@
         export DOC_ROOT=$PWD<br>
         export SIGNATURE="Johnny Willemsen"<br>
         export MAILID=jwillemsen@remedy.nl<br>
-        git clone https://github.com/DOCGroup/ATCD.git ATCD<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO<br>
         git clone https://github.com/DOCGroup/MPC.git MPC<br>
-        cd ATCD<br>
+        cd ACE_TAO<br>
         ACE/bin/make_release.py --beta --update --verbose<br>
         ACE/bin/make_release.py --beta --tag --verbose<br>
         ACE/bin/make_release.py --beta --push --verbose<br>
@@ -282,10 +282,10 @@
             version number being released e.g. 5_6_7)
             <br>
             <code>svn co
-              git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_3 ATCD<br>
+              git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_3_3 ACE_TAO<br>
           </li>
-          <li>Change to the ATCD directory using <br>
-          cd ATCD</li>
+          <li>Change to the ACE_TAO directory using <br>
+          cd ACE_TAO</li>
           <li>
             Set the needed environment variables using<br>
             <code>export ACE_ROOT=$PWD/ACE</code><br>
@@ -313,12 +313,12 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_3 ATCD<br>
-        cd ATCD<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_3_3 ACE_TAO<br>
+        cd ACE_TAO<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
-        export CIAO_ROOT=$PWD/CIAO<br>
-        export DANCE_ROOT=$PWD/DAnCE<br>
+        export CIAO_ROOT=<br>
+        export DANCE_ROOT=<br>
         export DDS_ROOT=<br>
         cd ACE<br>
         $ACE_ROOT/bin/generate_rel_manpages<br>

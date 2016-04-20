@@ -83,7 +83,7 @@ def parse_args ():
 
     parser.add_option ("--root", dest="repo_root", action="store",
                        help="Specify an alternate repository root",
-                       default="https://github.com/DOCGroup/ATCD.git")
+                       default="https://github.com/DOCGroup/ACE_TAO.git")
 
     parser.add_option ("--mpc_root", dest="mpc_root", action="store",
                        help="Specify an alternate MPC repository root",
@@ -181,7 +181,7 @@ def check_workspace ():
     """ Checks that the DOC and MPC repositories are up to date.  """
     global opts, doc_root
     try:
-        ex ("cd $DOC_ROOT/ATCD && git pull -p")
+        ex ("cd $DOC_ROOT/ACE_TAO && git pull -p")
         print "Successfully updated ACE/TAO working copy"
     except:
         print "Unable to update ACE/TAO workspace at " + doc_root
@@ -285,7 +285,7 @@ def update_spec_file ():
 
     global comp_versions, opts
 
-    with open (doc_root + "/ATCD/ACE/rpmbuild/ace-tao.spec", 'r+') as spec_file:
+    with open (doc_root + "/ACE_TAO/ACE/rpmbuild/ace-tao.spec", 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
             if line.find ("define ACEVER ") is not -1:
@@ -308,7 +308,7 @@ def update_spec_file ():
             print "New spec file:"
             print "".join (new_spec)
 
-    return [doc_root + "/ATCD/ACE/rpmbuild/ace-tao.spec"]
+    return [doc_root + "/ACE_TAO/ACE/rpmbuild/ace-tao.spec"]
 
 def update_debianbuild ():
     """ Updates ACE_ROOT/debian directory.
@@ -332,7 +332,7 @@ def update_debianbuild ():
     mask = re.compile ("(libace|libkokyu|libtao)(.*)(\d+\.\d+\.\d+)(.*)")
     tao = re.compile ("tao", re.IGNORECASE)
 
-    for fname in glob.iglob(doc_root + '/ATCD/ACE/debian/*'):
+    for fname in glob.iglob(doc_root + '/ACE_TAO/ACE/debian/*'):
         print "Considering " + fname
         match = None
 
@@ -365,7 +365,7 @@ def update_debianbuild ():
         else:
             return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
 
-    with open (doc_root + "/ATCD/ACE/debian/debian.control", 'r+') as control_file:
+    with open (doc_root + "/ACE_TAO/ACE/debian/debian.control", 'r+') as control_file:
         new_ctrl = ""
         for line in control_file.readlines ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
@@ -384,7 +384,7 @@ def update_debianbuild ():
             print "New control file:"
             print "".join (new_ctrl)
 
-    files.append (doc_root + "/ATCD/ACE/debian/debian.control")
+    files.append (doc_root + "/ACE_TAO/ACE/debian/debian.control")
 
     # rewrite debian/dsc
     dsc_lines = """Format: 1.0
@@ -399,7 +399,7 @@ Files:
 
 """ % (comp_versions["ACE_version"], comp_versions["TAO_version"], comp_versions["ACE_version"])
     if opts.take_action:
-        with open (doc_root + "/ATCD/ACE/debian/ace.dsc", 'r+') as dsc_file:
+        with open (doc_root + "/ACE_TAO/ACE/debian/ace.dsc", 'r+') as dsc_file:
             dsc_file.seek (0)
             dsc_file.truncate (0)
             dsc_file.writelines (dsc_lines)
@@ -407,7 +407,7 @@ Files:
         print "New dsc file:\n"
         print dsc_lines
 
-    files.append (doc_root + "/ATCD/ACE/debian/ace.dsc")
+    files.append (doc_root + "/ACE_TAO/ACE/debian/ace.dsc")
 
     return files
 
@@ -449,7 +449,7 @@ def create_changelog (component):
                                          old_comp_versions["ACE_beta"])
 
     # Generate changelogs per component
-    ex ("cd $DOC_ROOT/ATCD && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + "-" + comp_versions[component + "_version_"])
+    ex ("cd $DOC_ROOT/ACE_TAO && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + "-" + comp_versions[component + "_version_"])
 
     return ["%s/ChangeLogs/%s-%s" % (component, component, comp_versions[component + "_version_"])]
 
@@ -558,10 +558,10 @@ def update_latest_tag (which, branch):
 
     # Remove tag locally
     vprint ("Removing tag %s" % (tagname))
-    ex ("cd $DOC_ROOT/ATCD && git tag -d " + tagname)
+    ex ("cd $DOC_ROOT/ACE_TAO && git tag -d " + tagname)
 
     vprint ("Placing tag %s" % (tagname))
-    ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
+    ex ("cd $DOC_ROOT/ACE_TAO && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
 
 def push_latest_tag (which, branch):
@@ -571,10 +571,10 @@ def push_latest_tag (which, branch):
 
     if opts.push:
         # Remove tag in the remote orgin
-        ex ("cd $DOC_ROOT/ATCD && git push origin :refs/tags/" + tagname)
+        ex ("cd $DOC_ROOT/ACE_TAO && git push origin :refs/tags/" + tagname)
 
         vprint ("Pushing tag %s" % (tagname))
-        ex ("cd $DOC_ROOT/ATCD && git push origin " + tagname)
+        ex ("cd $DOC_ROOT/ACE_TAO && git push origin " + tagname)
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version and push that remote """
@@ -586,8 +586,8 @@ def tag ():
 
     if opts.tag:
         if opts.take_action:
-            vprint ("Placing tag %s on ATCD" % (tagname))
-            ex ("cd $DOC_ROOT/ATCD && git tag -a " + tagname + " -m\"" + tagname + "\"")
+            vprint ("Placing tag %s on ACE_TAO" % (tagname))
+            ex ("cd $DOC_ROOT/ACE_TAO && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
             vprint ("Placing tag %s on MPC" % (tagname))
             ex ("cd $DOC_ROOT/MPC && git tag -a " + tagname + " -m\"" + tagname + "\"")
@@ -603,7 +603,7 @@ def tag ():
                 if comp_versions["ACE_beta"] == 1:
                         update_latest_tag ("BFO", tagname)
         else:
-            vprint ("Placing tag %s on ATCD" % (tagname))
+            vprint ("Placing tag %s on ACE_TAO" % (tagname))
             vprint ("Placing tag %s on MPC" % (tagname))
             print "Creating tags:\n"
             print "Placing tag " + tagname + "\n"
@@ -618,11 +618,11 @@ def push ():
 
     if opts.push:
         if opts.take_action:
-            vprint ("Pushing ATCD master to origin")
-            ex ("cd $DOC_ROOT/ATCD && git push origin master")
+            vprint ("Pushing ACE_TAO master to origin")
+            ex ("cd $DOC_ROOT/ACE_TAO && git push origin master")
 
-            vprint ("Pushing tag %s on ATCD" % (tagname))
-            ex ("cd $DOC_ROOT/ATCD && git push origin tag " + tagname)
+            vprint ("Pushing tag %s on ACE_TAO" % (tagname))
+            ex ("cd $DOC_ROOT/ACE_TAO && git push origin tag " + tagname)
 
             vprint ("Pushing tag %s on MPC" % (tagname))
             ex ("cd $DOC_ROOT/MPC && git push origin tag " + tagname)
@@ -638,7 +638,7 @@ def push ():
                 if comp_versions["ACE_beta"] == 1:
                         push_latest_tag ("BFO", tagname)
         else:
-            vprint ("Pushing tag %s on ATCD" % (tagname))
+            vprint ("Pushing tag %s on ACE_TAO" % (tagname))
             vprint ("Pushing tag %s on MPC" % (tagname))
             print "Pushing tags:\n"
             print "Pushing tag " + tagname + "\n"
@@ -656,7 +656,7 @@ def export_wc (stage_dir):
 
     # Clone the ACE repository with the needed tag
     print ("Retrieving ACE with tag " + tag)
-    ex ("git clone --depth 1 --branch " + tag + " " + opts.repo_root + " " + stage_dir + "/ATCD")
+    ex ("git clone --depth 1 --branch " + tag + " " + opts.repo_root + " " + stage_dir + "/ACE_TAO")
 
     # Clone the MPC repository with the needed tag
     print ("Retrieving MPC with tag " + tag)
@@ -664,9 +664,9 @@ def export_wc (stage_dir):
 
     # Settting up stage_dir
     print ("Moving ACE")
-    ex ("mv " + stage_dir + "/ATCD/ACE " + stage_dir + "/ACE_wrappers")
+    ex ("mv " + stage_dir + "/ACE_TAO/ACE " + stage_dir + "/ACE_wrappers")
     print ("Moving TAO")
-    ex ("mv " + stage_dir + "/ATCD/TAO " + stage_dir + "/ACE_wrappers/TAO")
+    ex ("mv " + stage_dir + "/ACE_TAO/TAO " + stage_dir + "/ACE_wrappers/TAO")
     print ("Moving MPC")
     ex ("mv " + stage_dir + "/MPC " + stage_dir + "/ACE_wrappers/MPC")
 
