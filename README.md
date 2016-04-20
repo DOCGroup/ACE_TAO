@@ -1,4 +1,4 @@
-ACE/TAO/CIAO/DAnCE
+ACE/TAO
 ==================
 
 See [Douglas C. Schmidt website](http://www.dre.vanderbilt.edu/~schmidt)  for more information about ACE/TAO
