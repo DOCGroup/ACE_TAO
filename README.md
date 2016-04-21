@@ -19,7 +19,7 @@ master: [![Build Status](https://snap-ci.com/DOCGroup/ACE_TAO/branch/master/buil
 AppVeyor status
 ================
 
-master: [![Build Status](https://ci.appveyor.com/api/projects/status/uxnvychqk0tmy3sh/branch/master?svg=true)](https://ci.appveyor.com/project/jwillemsen/atcd)
+master: [![Build Status](https://ci.appveyor.com/api/projects/status/umif8ghl2fg8rtx6/branch/master?svg=true)](https://ci.appveyor.com/project/jwillemsen/ace-tao)
 
 Coverity Scan status
 ====================
