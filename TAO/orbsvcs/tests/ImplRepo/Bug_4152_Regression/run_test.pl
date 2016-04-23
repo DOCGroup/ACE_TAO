@@ -213,7 +213,7 @@ sub shutdown_server
     $TI->Arguments ($ti_cmd_base .
                     "shutdown TestObject_a" );
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-    if ($TI_status != 0  && $TI_status != 6) {
+    if ($TI_status != 0  && $TI_status != 5) {
         print STDERR "ERROR: tao_imr shutdown returned $TI_status\n";
         $status = 1;
     }
