@@ -86,7 +86,7 @@ TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
                     str));
       return 0;
     }
-  len = (separator - str) + 1;
+  len = separator - str;
   return this->make_profile ();
 }
 
