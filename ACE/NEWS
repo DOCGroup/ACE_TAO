@@ -8,6 +8,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.3 and ACE-6.3.4
   of ACE_SSL_Context::set_mode() is now limited to explicitly restricting
   behaviour to client or server (defaults to both).
 
+. Improve Oracle Studio support
+
 USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 ====================================================
 
