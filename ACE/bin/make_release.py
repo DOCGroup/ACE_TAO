@@ -444,7 +444,7 @@ def create_changelog (component):
 
     global old_comp_versions, comp_versions, opts
 
-    old_tag = "ACE+TAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
+    old_tag = "ACE+TAO+CIAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
                                          old_comp_versions["ACE_minor"],
                                          old_comp_versions["ACE_beta"])
 
