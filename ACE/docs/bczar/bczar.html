@@ -186,14 +186,6 @@
             <li>
               TAO/VERSION</li>
             <li>
-              CIAO/ChangeLog</li>
-            <li>
-              CIAO/PROBLEM-REPORT-FORM</li>
-            <li>
-              CIAO/VERSION</li>
-            <li>
-              CIAO/ciao/Version.h</li>
-            <li>
               TAO/tao/Version.h</li>
             ace/Version.h</li> </code>
         </ul>
@@ -201,7 +193,7 @@
         <code>svn revert -R *</code><br>
         from DOC_ROOT will suffice.<br />
     The tag will also need to be removed (both in Middleware and MPC):
-    ACE+TAO+CIAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
+    ACE+TAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
     Minor and Beta release numbers of the release that is to be restarted).<p>
       E.g.:<br>
       <code>cd ACE_TAO && git tag -d ACE+TAO-X_Y_Z<br />
@@ -290,8 +282,8 @@
             Set the needed environment variables using<br>
             <code>export ACE_ROOT=$PWD/ACE</code><br>
         <code>export TAO_ROOT=$PWD/TAO</code><br>
-        <code>export CIAO_ROOT=$PWD/CIAO</code><br>
-        <code>export DANCE_ROOT=$PWD/DAnCE</code><br>
+        <code>export CIAO_ROOT=</code><br>
+        <code>export DANCE_ROOT=</code><br>
         <code>export DDS_ROOT=</code><br></li>
           <li>
             Check the doxygen version at the shell by executing the command:<br>
@@ -364,7 +356,7 @@
           "Edit". Click on the "Product" link.</li>
         <li>
           you are then at "Select product" page. You should see a list components, i.e.,
-          ACE CIAO TAO. Click on the product you want to edit.</li>
+          ACE TAO. Click on the product you want to edit.</li>
         <li>
           you are then at "Edit product" page. Scroll down a bit, you should see a list
           of all versions coming with this product. At the very beginning of the list,
@@ -435,7 +427,7 @@
         etc/index.hml to show the new doxygen package you installed</li>
         <li>bin/diff-builds-and-group-fixed-tests-only.sh to give the correct default old_date for this release.</li></ul>
       <li>
-        Update the NEWS, TAO/NEWS, TAO/DAnCE/NEWS, and TAO/CIAO/NEWS files to have a new section for the next release.</li>
+        Update the ACE/NEWS and TAO/NEWS files to have a new section for the next release.</li>
       <li>
         Update OpenSuSE Build service using
         <code>
