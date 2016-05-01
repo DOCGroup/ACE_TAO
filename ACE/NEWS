@@ -15,6 +15,15 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.3 and ACE-6.3.4
 
 . Fixed several Coverity reported issues
 
+. Added ACE configuration for FACE safety profiles (see config-face-safety.h).
+  FACE, or Future Airborne Capability Environment http://www.opengroup.org/face,
+  specifies a restricted subset of OS functions and rules for controlling
+  dynamic memory allocation.  When built in this configuration on a platform
+  that supports it, ACE conforms to the FACE requirements.
+
+. ACE uses new netdb.h functions (getaddrinfo/getnameinfo) if they are
+  available, in place of deprecated functions (gethostbyname/addr).
+
 USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 ====================================================
 
