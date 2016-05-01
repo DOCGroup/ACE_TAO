@@ -10,6 +10,11 @@ USER VISIBLE CHANGES BETWEEN ACE-6.3.3 and ACE-6.3.4
 
 . Improve Oracle Studio support
 
+. CIAO and DAnCE are forked to their own github repositories
+  and are not part anymore of the ACE+TAO release packages
+
+. Fixed several Coverity reported issues
+
 USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 ====================================================
 
