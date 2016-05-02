@@ -273,8 +273,7 @@
             Update the workspace with the right version tag (replace the X_Y_Z with the ACE
             version number being released e.g. 5_6_7)
             <br>
-            <code>svn co
-              git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_3_3 ACE_TAO<br>
+            <code>git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_3_4 ACE_TAO</code><br>
           </li>
           <li>Change to the ACE_TAO directory using <br>
           cd ACE_TAO</li>
@@ -305,7 +304,7 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_3_3 ACE_TAO<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_3_4 ACE_TAO<br>
         cd ACE_TAO<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
@@ -322,7 +321,7 @@
         notes gathered from developers.
         <ul>
           <li>Get from bugzilla the bugs fixed. Use the following
-              <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=ACE&product=CIAO&product=CoSMIC&product=MPC&product=OpenDDS&product=TAO&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailassigned_to1=1&emailtype1=substring&email1=&emailreporter2=1&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2010-07-04&chfieldto=Now&chfield=resolution&chfieldvalue=FIXED&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">query</a> as start query and update the start date.</li>
+              <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&chfield=resolution&chfieldfrom=2015-09-07&chfieldto=Now&chfieldvalue=FIXED&list_id=452&product=ACE&product=TAO&query_format=advanced">query</a> as start query and update the start date.</li>
           <li>
             Let <a href="mailto:d.schmidt@vanderbilt.edu">Doug Schmidt</a> review these before
             you do anything with them.</li></ul>
@@ -385,19 +384,19 @@
         <li>back out of the temporary directory<br>
           <code>cd ..</code></li>
         <li>
-          Create directory 'Current Version No' for example 5.8.1 and change directory into this new one<br><code>mkdir 5.8.1<br>cd 5.8.1</code></li>
+          Create directory 'Current Version No' for example 6.3.4 and change directory into this new one<br><code>mkdir 6.3.4<br>cd 6.3.4</code></li>
         <li>
           Move contents of the temporary directory's html to this directory -<br><code>mv ../tmp/html .</code></li>
         <li>
           Now back our of this directory and remove the already existing softlink to the "Micro" directory -<br><code>cd ..<br>rm Micro</code></li>
         <li>
-          Create softlink "Micro" linking it to new Documentation using -<br><code>ln -s 5.8.1/html
+          Create softlink "Micro" linking it to new Documentation using -<br><code>ln -s 6.3.4/html
           Micro</code>. If this is a minor release also update the <code>Stable</code> link.</li>
         <li>
         Remove the directory tmp -<br><code>rm -rf tmp</code></lib>
       </ul><br>
       <li>
-        On <b>anduril.dre.vanderbilt.edu</b> where the kit was being generated and once <b>BOTH</b> the kit
+        On <b>download.dre.vanderbilt.edu</b> where the kit was uploaded to and once <b>BOTH</b> the kit
         and doxygen generation have finished their work, you should also move the packages to the
         previous versions directory with the appropriate decorators.
         <ul>
