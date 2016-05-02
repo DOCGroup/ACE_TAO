@@ -444,9 +444,9 @@ def create_changelog (component):
 
     global old_comp_versions, comp_versions, opts
 
-    old_tag = "ACE+TAO+CIAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
-                                         old_comp_versions["ACE_minor"],
-                                         old_comp_versions["ACE_beta"])
+    old_tag = "ACE+TAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
+                                    old_comp_versions["ACE_minor"],
+                                    old_comp_versions["ACE_beta"])
 
     # Generate changelogs per component
     ex ("cd $DOC_ROOT/ACE_TAO && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + "-" + comp_versions[component + "_version_"])
