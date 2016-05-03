@@ -430,33 +430,36 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
 {
   hostent entry;
   ACE_HOSTENT_DATA buffer;
-  int herr;
+  int herr = 0;
   const hostent *host = ACE_OS::gethostbyname_r (name, &entry, buffer, &herr);
 
   if (host == 0)
-    switch (herr)
-      {
-      case NO_DATA: case HOST_NOT_FOUND:
-        return EAI_NONAME;
-      case TRY_AGAIN:
-        return EAI_AGAIN;
-      case NO_RECOVERY:
-        return EAI_FAIL;
-      case ENOTSUP:
-        if (ACE_OS::inet_aton (name, (in_addr *) &buffer[0]) != 0)
-          {
-            host = &entry;
-            entry.h_length = sizeof (in_addr);
-            entry.h_addr_list = (char **) (buffer + sizeof (in_addr));
-            entry.h_addr_list[0] = buffer;
-            entry.h_addr_list[1] = 0;
-            break;
-          }
-        // fall-through
-      default:
-        errno = herr;
-        return EAI_SYSTEM;
-      }
+    {
+      switch (herr)
+        {
+        case NO_DATA:
+        case HOST_NOT_FOUND:
+          return EAI_NONAME;
+        case TRY_AGAIN:
+          return EAI_AGAIN;
+        case NO_RECOVERY:
+          return EAI_FAIL;
+        case ENOTSUP:
+          if (ACE_OS::inet_aton (name, (in_addr *) &buffer[0]) != 0)
+            {
+              host = &entry;
+              entry.h_length = sizeof (in_addr);
+              entry.h_addr_list = (char **) (buffer + sizeof (in_addr));
+              entry.h_addr_list[0] = buffer;
+              entry.h_addr_list[1] = 0;
+              break;
+            }
+          // fall-through
+        default:
+          errno = herr;
+          return EAI_SYSTEM;
+        }
+    }
 
   size_t n = 0;
   for (char **addr = host->h_addr_list; *addr; ++addr, ++n) /*empty*/;
