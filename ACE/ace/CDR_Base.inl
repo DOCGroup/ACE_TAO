@@ -143,14 +143,10 @@ ACE_CDR::swap_8 (const char* orig, char* target)
     bswap_64 (*reinterpret_cast<uint64_t const *> (orig));
 #elif (defined (__amd64__) || defined (__x86_64__)) && defined(__GNUG__) \
     && !defined(ACE_LACKS_INLINE_ASSEMBLY)
-  ACE_REGISTER unsigned long x =
-    * reinterpret_cast<const unsigned long*> (orig);
-#if defined (__MINGW64__)
-  asm ("bswap %1" : "=r" (x) : "0" (x));
-#else
+  ACE_REGISTER ACE_UINT64 x =
+    * reinterpret_cast<const ACE_UINT64*> (orig);
   asm ("bswapq %1" : "=r" (x) : "0" (x));
-#endif /* __MINGW__ */
-  *reinterpret_cast<unsigned long*> (target) = x;
+  *reinterpret_cast<ACE_UINT64*> (target) = x;
 #elif defined(ACE_HAS_PENTIUM) && defined(__GNUG__) \
     && !defined(ACE_LACKS_INLINE_ASSEMBLY)
   ACE_REGISTER unsigned int i =
