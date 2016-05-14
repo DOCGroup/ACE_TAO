@@ -705,7 +705,7 @@ version_test (void)
   int code = ACE_MAKE_VERSION_CODE(ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_BETA_VERSION);
   bool run_time_check = code == ACE_VERSION_CODE;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE release time version code: %d, runtime version code: %d, %s\n"),
-              ACE_VERSION_CODE, code, run_time_check ? "OK" : "FAIL"));
+              ACE_VERSION_CODE, code, run_time_check ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
 
   // Compile time check. Check we have ACE version 6.x
 #if ACE_VERSION_CODE > ACE_MAKE_VERSION_CODE(5, 88, 99)
@@ -715,7 +715,7 @@ version_test (void)
 #endif
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Compile time version check, %s\n"),
-              compile_time_check ? "OK" : "FAIL"));
+              compile_time_check ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
 
   if(run_time_check && compile_time_check)
     return 0;
