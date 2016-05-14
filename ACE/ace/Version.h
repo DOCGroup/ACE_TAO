@@ -6,3 +6,5 @@
 #define ACE_MINOR_VERSION 3
 #define ACE_BETA_VERSION 4
 #define ACE_VERSION "6.3.4"
+#define ACE_VERSION_CODE 393988
+#define ACE_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))

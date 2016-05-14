@@ -698,6 +698,31 @@ compiler_test (void)
 }
 
 static int
+version_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing version macros\n")));
+
+  int code = ACE_MAKE_VERSION_CODE(ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_BETA_VERSION);
+  bool run_time_check = code == ACE_VERSION_CODE;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE release time version code: %d, runtime version code: %d, %s\n"),
+              ACE_VERSION_CODE, code, run_time_check ? "OK" : "FAIL"));
+
+  // Compile time check. Check we have ACE version 6.x
+#if ACE_VERSION_CODE > ACE_MAKE_VERSION_CODE(5, 88, 99)
+  bool compile_time_check = true;
+#else
+  bool compile_time_check = false;
+#endif
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Compile time version check, %s\n"),
+              compile_time_check ? "OK" : "FAIL"));
+
+  if(run_time_check && compile_time_check)
+    return 0;
+  return 1;
+}
+
+static int
 ctime_r_test (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ctime_r\n")));
@@ -1667,6 +1692,9 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = compiler_test ()) != 0)
+      status = result;
+
+  if ((result = version_test ()) != 0)
       status = result;
 
   ACE_END_TEST;
