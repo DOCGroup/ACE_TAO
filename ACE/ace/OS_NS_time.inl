@@ -26,7 +26,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 # if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   char *result = 0;
-  ACE_OSCALL (::asctime_r (t, buf), char *, 0, result);
+  ace_asctime_r_helper (t, buf);
   ACE_OS::strsncpy (buf, result, buflen);
   return buf;
 # else
@@ -143,7 +143,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
       return 0;
     }
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
-  ACE_OSCALL (::ctime_r (t, bufp), char *, 0, bufp);
+  return ace_ctime_r_helper (t, bufp);
 #   else /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
 #      if defined (ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R)
@@ -375,7 +375,7 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
 {
   ACE_OS_TRACE ("ACE_OS::gmtime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
-  ACE_OSCALL_RETURN (::gmtime_r (t, res), struct tm *, 0);
+  return ace_gmtime_r_helper (t, res);
 #elif defined (ACE_HAS_TR24731_2005_CRT)
   struct tm *tm_p = res;
   ACE_SECURECRTCALL (gmtime_s (res, t), struct tm *, 0, tm_p);
