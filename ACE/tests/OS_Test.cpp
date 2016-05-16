@@ -702,7 +702,7 @@ version_test (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing version macros\n")));
 
-  int code = ACE_MAKE_VERSION_CODE(ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_BETA_VERSION);
+  int code = ACE_MAKE_VERSION_CODE(ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_MICRO_VERSION);
   bool run_time_check = code == ACE_VERSION_CODE;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE release time version code: %d, runtime version code: %d, %s\n"),
               ACE_VERSION_CODE, code, run_time_check ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));

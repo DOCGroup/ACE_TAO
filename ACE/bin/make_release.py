@@ -236,6 +236,7 @@ def update_version_files (component):
 
 #define %s_MAJOR_VERSION %s
 #define %s_MINOR_VERSION %s
+#define %s_MICRO_VERSION %s
 #define %s_BETA_VERSION %s
 #define %s_VERSION \"%s\"
 #define %s_VERSION_CODE %s

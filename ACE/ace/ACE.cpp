@@ -108,6 +108,12 @@ ACE::beta_version (void)
   return ACE_BETA_VERSION;
 }
 
+u_int
+ACE::micro_version (void)
+{
+  return ACE_MICRO_VERSION;
+}
+
 const ACE_TCHAR *
 ACE::compiler_name (void)
 {

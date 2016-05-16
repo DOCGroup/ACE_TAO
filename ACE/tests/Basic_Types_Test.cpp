@@ -58,7 +58,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
               ACE_MAJOR_VERSION,
               ACE_MINOR_VERSION,
-              ACE_BETA_VERSION));
+              ACE_MICRO_VERSION));
 
   u_int errors = 0;
 
