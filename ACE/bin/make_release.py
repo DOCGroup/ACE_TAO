@@ -236,12 +236,14 @@ def update_version_files (component):
 
 #define %s_MAJOR_VERSION %s
 #define %s_MINOR_VERSION %s
+#define %s_MICRO_VERSION %s
 #define %s_BETA_VERSION %s
 #define %s_VERSION \"%s\"
 #define %s_VERSION_CODE %s
 #define %s_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))
 """ % (component, comp_versions[component + "_major"],
        component, comp_versions[component + "_minor"],
+       component, comp_versions[component + "_beta"],
        component, comp_versions[component + "_beta"],
        component, comp_versions[component + "_version"],
        component, comp_versions[component + "_code"],

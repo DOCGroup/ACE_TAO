@@ -272,7 +272,7 @@ DRV_cpp_init (void)
                    "-D__TAO_IDL=0x%2.2d%2.2d%2.2d",
                    ACE_MAJOR_VERSION,
                    ACE_MINOR_VERSION,
-                   ACE_BETA_VERSION);
+                   ACE_MICRO_VERSION);
 
   DRV_cpp_putarg (version_option);
   DRV_cpp_putarg ("-I.");
