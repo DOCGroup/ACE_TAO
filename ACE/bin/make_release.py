@@ -244,6 +244,7 @@ def update_version_files (component):
 """ % (component, comp_versions[component + "_major"],
        component, comp_versions[component + "_minor"],
        component, comp_versions[component + "_beta"],
+       component, comp_versions[component + "_beta"],
        component, comp_versions[component + "_version"],
        component, comp_versions[component + "_code"],
        component)
