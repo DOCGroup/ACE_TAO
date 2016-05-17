@@ -203,7 +203,7 @@ ifeq (cmd,$(findstring cmd,$(SHELL)))
 else
   ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
   ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-  ACE_MICRO_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_MICRO_VERSION := $(shell awk '/ACE_MICRO_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
   ACE_BETA_VERSION := $(shell awk '/ACE_MICRO_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 endif
 
