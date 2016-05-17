@@ -1607,11 +1607,24 @@ swab_test (void)
 }
 
 int
+gai_strerror_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing gai_strerror method\n")));
+
+  const ACE_TCHAR* error_text = ACE_OS::gai_strerror (EAI_FAMILY);
+
+  ACE_UNUSED_ARG (error_text);
+
+  return 0;
+}
+
+int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("OS_Test"));
 
-  // Enable a locale that has digit gropuing so that snprintf's %'d is
+  // Enable a locale that has digit grouping so that snprintf's %'d is
   // different than %d.  If the locale is not available the test won't
   // fail (log file needs to be examined to check formatting).
 #ifdef ACE_WIN32
