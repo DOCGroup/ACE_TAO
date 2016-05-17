@@ -1710,6 +1710,9 @@ run_main (int, ACE_TCHAR *[])
   if ((result = version_test ()) != 0)
       status = result;
 
+  if ((result = gai_strerror_test   ()) != 0)
+      status = result;
+
   ACE_END_TEST;
   return status;
 }
