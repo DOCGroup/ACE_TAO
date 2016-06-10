@@ -143,7 +143,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
       return 0;
     }
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
-  return ace_ctime_r_helper (t, bufp);
+  ACE_OSCALL (::ctime_r (t, bufp), char *, 0, bufp);
 #   else /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
 #      if defined (ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R)
