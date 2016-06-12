@@ -1,0 +1,6 @@
+// -*- MPC -*-
+project(HTTP_handler_bugs): taoclient {
+  Source_Files {
+    HTTP_handler_bugs.cpp
+  }
+}

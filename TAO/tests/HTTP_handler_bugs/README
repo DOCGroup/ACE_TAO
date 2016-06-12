@@ -1,0 +1,33 @@
+/**
+
+
+
+@page HTTP_handler_bugs README File
+
+This tests the method string_to_object() of the orb, case when
+string parameter is an HTTP URL from which IOR is fetched.
+There are two subtests of this test which test 2 different cases
+for the same string_to_object() function.
+
+Summary:
+    A client program is started and it creates its orb. For this orb
+    two tests are performed on string_to_object() function with
+    parameter being an HTTP URL.
+
+    First test tests if IOR is malformed due to usage of ACE::strlen()
+    function on non-zero terminated C string in HTTP_handler.cpp.
+
+    Second test tests if IOR is properly fetched from URL when no HTTP
+    headers are present in response and just IOR string is returned from
+    HTTP server. To avoid bug in first test to appear in this one, HTTP
+    server will return zero-terminated IOR string - will add byte 0 at
+    the end of IOR.
+
+
+To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+  the script returns 0 if the test was successful.
+
+*/
