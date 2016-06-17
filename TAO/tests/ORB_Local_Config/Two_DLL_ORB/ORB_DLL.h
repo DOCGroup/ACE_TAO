@@ -19,6 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Task.h"
 #include "ace/ARGV.h"
 #include "ace/String_Base.h"

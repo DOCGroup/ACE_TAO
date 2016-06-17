@@ -1,5 +1,6 @@
 #include "ace/DLL_Manager.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Log_Category.h"
 #include "ace/ACE.h"
 #include "ace/Framework_Component.h"

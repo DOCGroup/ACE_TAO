@@ -4,6 +4,7 @@
 #include "orbsvcs/CosEventChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_strings.h"

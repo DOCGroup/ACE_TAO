@@ -1,6 +1,5 @@
 // -*- C++ -*-
 #include "Grid_i.h"
-#include "ace/Auto_Ptr.h"
 
 // Solaris and some Windows compilers don't have min in std namespaces
 // moreover on Windows 'min' is a macro, so we have to avoid using it literally.
