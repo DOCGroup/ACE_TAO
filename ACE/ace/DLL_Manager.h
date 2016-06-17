@@ -18,7 +18,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Containers_T.h"
 #include "ace/SString.h"
 #include "ace/os_include/os_dlfcn.h"

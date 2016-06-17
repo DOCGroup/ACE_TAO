@@ -12,6 +12,7 @@
 
 #include "tao/Storable_FlatFileStream.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_stat.h"
