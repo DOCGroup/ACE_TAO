@@ -26,6 +26,8 @@
 
 #include "tao/DynamicAny/DynAnyFactory.h"
 
+#include "ace/Auto_Ptr.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
