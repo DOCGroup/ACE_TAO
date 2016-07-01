@@ -70,7 +70,7 @@ compiling the ACE source distribution, please contact one of the
 commercial support companies, or send a copy of the
 <a href="PROBLEM-REPORT-FORM">PROBLEM-REPORT-FORM</a>, located in the
 ACE_wrappers directory, to either the <a href="news:comp.soft-sys.ace">ACE
-Newsgroup</a> or the <a href="mailto:ace-users@cse.wustl.edu">ace-users
+Newsgroup</a> or the <a href="mailto:ace-users@list.isis.vanderbilt.edu">ace-users
 mailing list</a>.
 The DOC groups at Washington University, UC Irvine, and Vanderbilt
 University provide only "best effort" support for non-sponsors for the
@@ -312,14 +312,15 @@ per-platform configuration method:</p>
       </blockquote>
       <blockquote>
       BASH or Bourne Shell:
-      <code>ACE_ROOT=/home/cs/faculty/schmidt/ACE_wrappers; export ACE_ROOT
+      <code>export ACE_ROOT=/home/cs/faculty/schmidt/ACE_wrappers
       </code>
       </blockquote>
       <p>
       If you're building a number of versions of ACE, however, (e.g., for
       different OS platforms or for different releases of ACE) you might use
       the following approach (assuming TCSH/CSH):
-      </p><blockquote><code>setenv ACE_ROOT $cwd</code>
+      <blockquote>
+      <code>setenv ACE_ROOT $cwd</code>
       </blockquote>
   </li>
   <li>Create a configuration file, <code>$ACE_ROOT/ace/config.h</code>,
@@ -340,7 +341,7 @@ per-platform configuration method:</p>
       There are config files for most versions of UNIX.  If there
       isn't a version of this file that matches your
       platform/compiler, you'll need to make one.  Please send email
-      to the <a href="mailto:ace-users@cse.wustl.edu">ace-users</a> list
+      to the <a href="mailto:ace-users@list.isis.vanderbilt.edu">ace-users</a> list
       if you get it working so it can be added to the master ACE
       release.</p>
   </li>
@@ -379,6 +380,11 @@ INSTALL_PREFIX = /usr/local
       you probably want to do something like the following:
       <blockquote>
       <code>% setenv LD_LIBRARY_PATH $ACE_ROOT/lib:$LD_LIBRARY_PATH</code></blockquote>
+      </blockquote>
+      or
+      <blockquote>
+      <code>% export LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH</code></blockquote>
+      </blockquote>
   </li>
   <li>When all this is done, hopefully all you'll need to do is type:
       <blockquote>
@@ -1330,7 +1336,7 @@ The following, very useful information was contributed by
 <a href="http://people.qualcomm.com/cryan">Chris Ryan</a>
 and <a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a>.
 Please submit corrections, additions, or clarifications to the
-the <a href="mailto:ace-users@cse.wustl.edu">ACE mailing list</a>.<p>
+the <a href="mailto:ace-users@list.isis.vanderbilt.edu">ACE mailing list</a>.<p>
 
 <strong>NOTE:</strong>The make (version 3.74) that is provided with
 Tornado 2.2 cannot be used to build ACE. A working version is available
