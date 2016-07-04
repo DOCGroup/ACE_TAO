@@ -1,4 +1,4 @@
-USER VISIBLE CHANGES BETWEEN ACE-6.3.4 and ACE-6.3.5
+USER VISIBLE CHANGES BETWEEN ACE-6.3.4 and ACE-6.4.0
 ====================================================
 
 . Added support for obtaining the micro version number
