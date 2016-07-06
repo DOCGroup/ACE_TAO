@@ -37,3 +37,4 @@ ipch/
 *.o
 *.res
 *.opendb
+*.VC.db
