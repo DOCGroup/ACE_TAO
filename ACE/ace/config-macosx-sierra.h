@@ -3,4 +3,4 @@
 
 #include "ace/config-macosx-elcapitan.h"
 
-#endif // ACE_CONFIG_MACOSX_ELCAPITAN_H
+#endif // ACE_CONFIG_MACOSX_SIERRA_H
