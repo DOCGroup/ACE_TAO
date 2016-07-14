@@ -10,8 +10,7 @@
 # variable must be set to its actual name before including this
 # file to allow the recursive MAKE to work properly.
 
-TOP_MAKEFILE := $(word 1,$(MAKEFILE_LIST))
-MAKEFILE ?= $(TOP_MAKEFILE)
+MAKEFILE ?= GNUmakefile
 SUBDIR_MAKEFILE ?= $(MAKEFILE)
 
 # Make sure that we build directories with DIRS= in sequence instead of in

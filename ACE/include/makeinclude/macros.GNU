@@ -22,8 +22,7 @@ TARGETS_LOCAL  = \
 	depend.local \
 	rcs_info.local \
 	idl_stubs.local \
-	svnignore.local \
-	$(PRIVATE_TARGETS_LOCAL)
+	svnignore.local
 
 TARGETS_NESTED   = \
 	$(TARGETS_LOCAL:.local=.nested)

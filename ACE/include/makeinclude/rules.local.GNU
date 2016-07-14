@@ -426,8 +426,7 @@ endif # DO_CLEANUP
 #       Dependency generation target
 #----------------------------------------------------------------------------
 
-TOP_MAKEFILE := $(word 1,$(MAKEFILE_LIST))
-MAKEFILE ?= $(TOP_MAKEFILE)
+MAKEFILE ?= GNUmakefile
 DEPENDENCY_FILE ?= $(MAKEFILE)
 IDL_DEPENDENCY_FILES ?= $(MAKEFILE)
 
