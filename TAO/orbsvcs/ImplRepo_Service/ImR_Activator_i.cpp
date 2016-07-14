@@ -23,14 +23,27 @@ static ACE_CString getHostName ()
   return ACE_CString (host_name);
 }
 
+Active_Pid_Setter::Active_Pid_Setter(ImR_Activator_i &owner, pid_t pid)
+  :owner_(owner)
+{
+  owner_.active_check_pid_ = pid;
+}
+
+Active_Pid_Setter::~Active_Pid_Setter()
+{
+  owner_.active_check_pid_ = ACE_INVALID_PID;
+}
+
 ImR_Activator_i::ImR_Activator_i (void)
-: registration_token_(0)
-, debug_(0)
-, notify_imr_ (false)
-, induce_delay_ (0)
-, name_ (getHostName ())
-, env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
-, max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
+  : registration_token_(0)
+  , debug_(0)
+  , notify_imr_ (false)
+  , induce_delay_ (0)
+  , name_ (getHostName ())
+  , env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
+  , max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
+  , detach_child_ (false)
+  , active_check_pid_ (ACE_INVALID_PID)
 {
 }
 
@@ -75,7 +88,7 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
         orb_->resolve_initial_references ("ImplRepoService");
 
       this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE,
-        this->orb_->orb_core ()->reactor ());
+                               this->orb_->orb_core ()->reactor ());
 
       locator_ = ImplementationRepository::Locator::_narrow (obj.in ());
 
@@ -84,8 +97,8 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
           if (this->debug_ > 9)
             {
               CORBA::String_var ior = orb_->object_to_string (obj.in ());
-              ORBSVCS_DEBUG((LM_DEBUG, "ImR Activator: ImplRepoService ior=<%s>\n",
-                ior.in()));
+              ORBSVCS_DEBUG((LM_DEBUG, "ImR Activator: ImplRepoService ior=<%C>\n",
+                             ior.in()));
             }
 
           this->registration_token_ =
@@ -103,7 +116,7 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
     {
       if (debug_ > 1)
         ex._tao_print_exception (
-          "ImR Activator: Can't register with ImR.");
+                                 "ImR Activator: Can't register with ImR.");
     }
 
   if (debug_ > 0)
@@ -120,6 +133,8 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
   induce_delay_ = opts.induce_delay ();
   env_buf_len_ = opts.env_buf_len ();
   max_env_vars_ = opts.max_env_vars ();
+  detach_child_ = opts.detach_child ();
+
   if (opts.name ().length () > 0)
     {
       name_ = opts.name();
@@ -136,7 +151,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       // locator in some scenarios, such as when the locator persists its database, and
       // wants to reconnect to running activators to auto_start some servers.
       this->imr_poa_ = createPersistentPOA (this->root_poa_.in (),
-        "ImR_Activator");
+                                            "ImR_Activator");
       ACE_ASSERT (! CORBA::is_nil(this->imr_poa_.in ()));
 
       obj = orb->resolve_initial_references ("POACurrent");
@@ -165,7 +180,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
           if (this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE, reactor) == -1)
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                "The ACE_Process_Manager didnt get initialized\n"), -1);
+                                     "The ACE_Process_Manager didnt get initialized\n"), -1);
             }
         }
 
@@ -178,7 +193,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
       if (this->debug_ > 1)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-            "ImR Activator: The Activator IOR is: <%C>\n", ior.in ()));
+                          "ImR Activator: The Activator IOR is: <%C>\n", ior.in ()));
         }
 
       // The last thing we do is write out the ior so that a test program can assume
@@ -189,7 +204,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
           if (fp == 0)
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                "ImR Activator: Could not open file: %s\n", opts.ior_filename ().c_str ()), -1);
+                                     "ImR Activator: Could not open file: %s\n", opts.ior_filename ().c_str ()), -1);
             }
           ACE_OS::fprintf (fp, "%s", ior.in ());
           ACE_OS::fclose (fp);
@@ -198,7 +213,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "ImR_Activator_i::init_with_orb");
+                               "ImR_Activator_i::init_with_orb");
       throw;
     }
   return 0;
@@ -237,7 +252,7 @@ ImR_Activator_i::fini (void)
       if (! CORBA::is_nil (this->locator_.in ()) && this->registration_token_ != 0)
         {
           this->locator_->unregister_activator (name_.c_str(),
-            this->registration_token_);
+                                                this->registration_token_);
         }
     }
   catch (const CORBA::COMM_FAILURE&)
@@ -253,10 +268,10 @@ ImR_Activator_i::fini (void)
                         ACE_TEXT ("(%P|%t) ImR Activator: Unable to unregister from ImR.\n")));
     }
   catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("ImR Activator: fini");
-    throw;
-  }
+    {
+      ex._tao_print_exception ("ImR Activator: fini");
+      throw;
+    }
 
   try
     {
@@ -332,9 +347,10 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
 {
   if (debug_ > 1)
     ORBSVCS_DEBUG((LM_DEBUG,
-                   "ImR Activator: Killing server <%C>...\n",
-                   name));
-  pid_t pid = static_cast<pid_t>(lastpid);
+                   "ImR Activator: Killing server <%C>, lastpid = %d\n",
+                   name, lastpid));
+  pid_t lpid = static_cast<pid_t>(lastpid);
+  pid_t pid = 0;
   bool found = false;
   int result = -1;
   for (ProcessMap::iterator iter = process_map_.begin();
@@ -343,21 +359,35 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
       if (iter->item () == name)
         {
           pid = iter->key ();
-          found = true;
+          found = pid == lpid;
         }
     }
+  if (!found && pid == 0)
+    {
+      pid = lpid;
+    }
+
 #if defined (ACE_WIN32)
   found = false; // sigchild apparently doesn't work on windows
 #endif
   if (pid != 0)
     {
-      result = (signum != 9) ? ACE_OS::kill (pid, signum)
-        : ACE::terminate_process (pid);
+      result =
+#if !defined (ACE_WIN32)
+        (signum != 9) ? ACE_OS::kill (pid, signum) :
+#endif
+        ACE::terminate_process (pid);
+
+      if (this->running_server_list_.remove (name) == 0)
+        {
+          this->dying_server_list_.insert (name);
+        }
+
       if (debug_ > 1)
         ORBSVCS_DEBUG((LM_DEBUG,
                        "ImR Activator: Killing server <%C> "
-                       "signal %d to pid %d, result = %d\n",
-                       name, signum, static_cast<int> (pid), result));
+                       "signal %d to pid %d, found %d, this->notify_imr_ %d,  result = %d\n",
+                       name, signum, static_cast<int> (pid), found, this->notify_imr_, result));
       if (!found && result == 0 && this->notify_imr_)
         {
           this->process_map_.bind (pid, name);
@@ -387,7 +417,7 @@ ImR_Activator_i::still_alive (CORBA::Long pid)
 bool
 ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
 {
-  bool is_running =  this->server_list_.find (name) == 0;
+  bool is_running =  this->running_server_list_.find (name) == 0;
 
   if (is_running)
     {
@@ -405,6 +435,7 @@ ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
 #if defined (ACE_WIN32)
       if (pid != ACE_INVALID_PID)
         {
+          Active_Pid_Setter aps(*this, pid);
           pid_t waitp = this->process_mgr_.wait (pid, ACE_Time_Value::zero);
           is_running = (waitp != pid);
         }
@@ -427,34 +458,34 @@ ImR_Activator_i::start_server(const char* name,
       name += unique_prefix_len;
     }
 
-  if (debug_ > 1)
-    ORBSVCS_DEBUG((LM_DEBUG,
-                   "ImR Activator: Starting %C <%C>...\n",
-                   (unique ? "unique server" : "server"), name));
+  // if (debug_ > 1)
+  ORBSVCS_DEBUG((LM_DEBUG,
+                 "ImR Activator: Starting %C <%C>...\n",
+                 (unique ? "unique server" : "server"), name));
   pid_t pid;
   if (unique && this->still_running_i (name, pid))
     {
-      if (debug_ > 1)
-        ORBSVCS_DEBUG((LM_DEBUG,
-                       "ImR Activator: Unique instance already running %d\n",
-                       static_cast<int> (pid)));
+      // if (debug_ > 1)
+      ORBSVCS_DEBUG((LM_DEBUG,
+                     "ImR Activator: Unique instance already running %d\n",
+                     static_cast<int> (pid)));
       char reason[32];
       ACE_OS::snprintf (reason,32,"pid:%d",static_cast<int> (pid));
       throw ImplementationRepository::CannotActivate(
-        CORBA::string_dup (reason));
+                                                     CORBA::string_dup (reason));
     }
 
   ACE_TString cmdline_tstr(ACE_TEXT_CHAR_TO_TCHAR(cmdline));
   size_t cmdline_buf_len = cmdline_tstr.length();
   if (debug_ > 1)
     ORBSVCS_DEBUG((LM_DEBUG,
-            "\tcommand line : len=%d <%s>\n\tdirectory : <%C>\n",
-            cmdline_buf_len, cmdline_tstr.c_str(), dir)  );
+                   "\tcommand line : len=%d <%s>\n\tdirectory : <%C>\n",
+                   cmdline_buf_len, cmdline_tstr.c_str(), dir)  );
 
   ACE_Process_Options proc_opts (
-                        1,
-                        cmdline_buf_len + 1,
-                        this->env_buf_len_, this->max_env_vars_);
+                                 1,
+                                 cmdline_buf_len + 1,
+                                 this->env_buf_len_, this->max_env_vars_);
   proc_opts.command_line (ACE_TEXT_CHAR_TO_TCHAR(cmdline));
   proc_opts.working_directory (dir);
   // Win32 does not support the CLOSE_ON_EXEC semantics for sockets
@@ -469,7 +500,13 @@ ImR_Activator_i::start_server(const char* name,
   // process's environment.
   proc_opts.enable_unicode_environment ();
 
-  proc_opts.setgroup (0);
+  // Guard against possible signal reflection which can happen on very heavily
+  // loaded systems. Detaching the child process avoids that possibility but at
+  // the cost of required explicit child termination prior to activator shutdown
+  if (this->detach_child_)
+    {
+      proc_opts.setgroup (0);
+    }
 
   proc_opts.setenv (ACE_TEXT ("TAO_USE_IMR"), ACE_TEXT ("1"));
   if (!CORBA::is_nil (this->locator_.in ()))
@@ -489,11 +526,11 @@ ImR_Activator_i::start_server(const char* name,
   if (pid == ACE_INVALID_PID)
     {
       ORBSVCS_ERROR ((LM_ERROR,
-        "ImR Activator: Cannot start server <%C> using <%C>\n", name, cmdline));
+                      "ImR Activator: Cannot start server <%C> using <%C>\n", name, cmdline));
 
       throw ImplementationRepository::CannotActivate(
-        CORBA::string_dup (
-          "Process Creation Failed"));
+                                                     CORBA::string_dup (
+                                                                        "Process Creation Failed"));
     }
   else
     {
@@ -506,7 +543,7 @@ ImR_Activator_i::start_server(const char* name,
       this->process_map_.rebind (pid, name);
       if (unique)
         {
-          this->server_list_.insert (name);
+          this->running_server_list_.insert (name);
         }
       if (!CORBA::is_nil (this->locator_.in ()))
         {
@@ -544,8 +581,10 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
     {
       this->process_map_.unbind (pid);
     }
-
-  this->server_list_.remove (name);
+  if (this->running_server_list_.remove (name) == -1)
+    {
+      this->dying_server_list_.remove (name);
+    }
 
   if (this->notify_imr_ && !CORBA::is_nil (this->locator_.in ()))
     {
@@ -581,11 +620,11 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
     {
       ORBSVCS_DEBUG
         ((LM_DEBUG,
-        ACE_TEXT ("Process %d exited with exit code %d\n"),
-        process->getpid (), process->return_value ()));
+          ACE_TEXT ("Process %d exited with exit code %d, delay = %d\n"),
+          process->getpid (), process->return_value (), this->induce_delay_));
     }
 
-  if (this->induce_delay_ > 0)
+  if (this->induce_delay_ > 0 && this->active_check_pid_ == ACE_INVALID_PID)
     {
       ACE_Reactor *r = this->orb_->orb_core()->reactor();
       ACE_Time_Value dtv (0, this->induce_delay_ * 1000);

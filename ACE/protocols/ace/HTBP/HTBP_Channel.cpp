@@ -13,6 +13,7 @@
 #include "HTBP_Channel.inl"
 #endif
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Message_Block.h"
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/OS_NS_time.h"

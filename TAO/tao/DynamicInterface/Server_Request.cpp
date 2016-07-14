@@ -114,11 +114,10 @@ CORBA::ServerRequest::arguments (CORBA::NVList_ptr &list)
 // but not both of them.  Results can be reported (at most once)
 // only after the parameter list has been provided (maybe empty).
 void
-CORBA::ServerRequest::set_result (const CORBA::Any &value
-                                  )
+CORBA::ServerRequest::set_result (const CORBA::Any &value)
 {
   // Setting a result when another result already exists or if an exception
-  // exists or before the args have been processeed is an error.
+  // exists or before the args have been processed is an error.
   if (this->retval_ != 0 || this->exception_ != 0 || this->params_ == 0)
     {
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);

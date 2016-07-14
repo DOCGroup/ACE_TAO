@@ -1,9 +1,38 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.4.0 and ACE-6.4.1
+====================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-6.3.4 and ACE-6.4.0
+====================================================
+
+. Added support for obtaining the micro version number
+
+. Reduced include of ace/Auto_Ptr.h in header files
+
 USER VISIBLE CHANGES BETWEEN ACE-6.3.3 and ACE-6.3.4
 ====================================================
 
-. Removed support for SSLv2/SSLv3/TLSv1/TLS1.v2 because
-  they have been removed from OpenSSL because they are not
-  secure. SSL v2.3 is the only currently used
+. ACE_SSL_Context::set_mode() can no longer be used to select a specific
+  SSL/TLS protocol version, use ACE_SSL_Context::filter_versions() for that.
+  This follows general advice by the OpenSSL project to go through
+  SSL_CTX_set_options() to limit the list of protocols available. The purpose
+  of ACE_SSL_Context::set_mode() is now limited to explicitly restricting
+  behaviour to client or server (defaults to both).
+
+. Improve Oracle Studio support
+
+. CIAO and DAnCE are forked to their own github repositories
+  and are not part anymore of the ACE+TAO release packages
+
+. Fixed several Coverity reported issues
+
+. Added ACE configuration for FACE safety profiles (see config-face-safety.h).
+  FACE, or Future Airborne Capability Environment http://www.opengroup.org/face,
+  specifies a restricted subset of OS functions and rules for controlling
+  dynamic memory allocation.  When built in this configuration on a platform
+  that supports it, ACE conforms to the FACE requirements.
+
+. ACE uses new netdb.h functions (getaddrinfo/getnameinfo) if they are
+  available, in place of deprecated functions (gethostbyname/addr).
 
 USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 ====================================================

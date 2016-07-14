@@ -26,6 +26,13 @@ Activator_Options::Activator_Options ()
 , service_command_(SC_NONE)
 , env_buf_len_ (Activator_Options::ENVIRONMENT_BUFFER)
 , max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
+, detach_child_ (
+#if defined IMR_DETACH_CHILD_DEF
+                 true
+#else
+                 false
+#endif
+                 )
 {
 }
 
@@ -171,6 +178,19 @@ Activator_Options::parse_args (int &argc, ACE_TCHAR *argv[])
             }
           this->induce_delay_ = ACE_OS::atoi (shifter.get_current ());
         }
+      else if (ACE_OS::strcasecmp (shifter.get_current (),
+                                   ACE_TEXT ("-detach")) == 0)
+        {
+          shifter.consume_arg ();
+
+          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
+            {
+              ORBSVCS_ERROR ((LM_ERROR, "Error: -detach option needs a value\n"));
+              this->print_usage ();
+              return -1;
+            }
+          this->detach_child_ = ACE_OS::atoi (shifter.get_current ()) != 0;
+        }
 
       else
         {
@@ -249,11 +269,11 @@ Activator_Options::save_registry_options()
       return -1;
     }
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("ORBInitOptions"), 0, REG_SZ,
-    (LPBYTE) this->cmdline_.c_str (), this->cmdline_.length () + 1);
+    (LPBYTE) this->cmdline_.c_str (), (DWORD) this->cmdline_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("IORFile"), 0, REG_SZ,
-    (LPBYTE) this->ior_output_file_.c_str (), this->ior_output_file_.length () + 1);
+    (LPBYTE) this->ior_output_file_.c_str (), (DWORD) this->ior_output_file_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT("DebugLevel"), 0, REG_DWORD,
@@ -261,7 +281,7 @@ Activator_Options::save_registry_options()
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx( key, ACE_TEXT("Name"), 0, REG_SZ,
-    (LPBYTE) this->name_.c_str (), this->name_.length () + 1);
+    (LPBYTE) this->name_.c_str (), (DWORD) this->name_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   DWORD tmpint = this->notify_imr_;
@@ -430,4 +450,10 @@ int
 Activator_Options::max_env_vars (void) const
 {
   return this->max_env_vars_;
+}
+
+bool
+Activator_Options::detach_child (void) const
+{
+  return this->detach_child_;
 }

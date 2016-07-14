@@ -16,8 +16,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Capabilities.h"
 
-
-
 static const ACE_TCHAR config[] = ACE_TEXT ("Capabilities_Test.cfg");
 
 static int

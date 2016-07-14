@@ -127,7 +127,7 @@ module CosNotification
     /// unsupported value.
     UNSUPPORTED_VALUE,
     /// The application has requested a QoS property with a supported
-    /// value, but unavailable at the requeste scope.
+    /// value, but unavailable at the requested scope.
     UNAVAILABLE_VALUE,
     /// The property name is unknown or not recognized.
     BAD_PROPERTY,

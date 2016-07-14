@@ -38,8 +38,8 @@ ImR is Darrell Brunsch
 The current version is developed by Phil Mesnier
 @<<a href="mailto:mesnier_p@ociweb.com">mesnier_p@ociweb.com</a>@>.
 You can reach us by either email (which is better), or through the
-<a href="http://www.cs.wustl.edu/~schmidt/ACE-mail.html">ACE mailing list</a>
-@<<a href="mailto:ace-useres@cs.wustl.edu">ace-users@cs.wustl.edu</a>@>,
+<a href="http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">ACE mailing list</a>
+@<<a href="mailto:ace-users@list.isis.vanderbilt.edu">ace-users@list.isis.vanderbilt.edu</a>@>,
 or through the <a href="news:comp.soft-sys.ace">comp.soft-sys.ace</a>
 newsgroup. The newsgroup mirrors the mailing list, but not the other way.
 Also, if you use the mailing list, it is best if you join it before sending
@@ -138,7 +138,7 @@ The ImR_Locator implements a fault tolerant service with the following options:
   redundant service pair ImRService ior file, which it can only do after
   successfully starting the primary and backup ImRService instances. The ior
   file contains the combined profiles of the primary and backup ImRLocators. The
-  client must use the ior file to use the fault tolerent locator.
+  client must use the ior file to use the fault tolerant locator.
 
 The primary and backup ImRLocator instances should have the same ORBEndPoint
 protocol list so that any client can send a request to either primary or backup
@@ -197,7 +197,7 @@ can be run on one host. The activator is not exposed at all to the
 application. Only the locator needs to and it is the only one that
 can contact the activator.
 
-  An instance of tao_imr_activator first registers itself with the
+An instance of tao_imr_activator first registers itself with the
 locator so that it can begin to receive requests. When registering
 with the locator, it passes the hostname where it is being run and
 its IOR to the locator. And, the locator reaches it using the
@@ -216,6 +216,11 @@ The Commandline parameters that are valid for tao_imr_activator are
                 detection of a child process death before notifying the
                 locator of the termination. Should not be used in
                 production environments
+-detach <1|0>   Override the default child-process detachment. By default
+                this value is 0, indicating the child process will terminate.
+                This may also be set or overridden by adding
+                #define IMR_DETACH_CHILD_DEF
+                to your $ACE_ROOT/ace/config.h file to make the default value 1.
 -h              Prints the help.
 
 @subsection work So how does the whole thing work?
@@ -388,21 +393,18 @@ simplified name. This can be done by using the IORTable like this:
 
 <CODE>
       CORBA::Object_var table_object =
-        this->orb_->resolve_initial_references ("IORTable",
-                                                ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        this->orb_->resolve_initial_references ("IORTable";
 
       IORTable::Table_var adapter =
-        IORTable::Table::_narrow (table_object.in (), ACE_TRY_ENV);
-      ACE_TRY_CHECK;
+        IORTable::Table::_narrow (table_object.in ());
+
       if (CORBA::is_nil (adapter.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Nil IORTable\n"));
         }
       else
         {
-          adapter->bind (poa_name, server_str.in (), ACE_TRY_ENV);
-          ACE_TRY_CHECK;
+          adapter->bind (poa_name, server_str.in ());
         }
 </CODE>
 
@@ -421,7 +423,7 @@ the ImR as objects in the &quot;nestea_server&quot; server.
 
 @subsection persistence Persistent Implementation Repository
 
-Tao's Implementation Repository can be made persistent by doing two things:
+TAO's Implementation Repository can be made persistent by doing two things:
 
 <ul>
 <li>
@@ -430,8 +432,8 @@ the Implementation Repository will not have to re-ImR-ify the IORs of every serv
 registered to it each time it starts up. The way to accomplish this is to add<br>
 -ORBEndpoint iiop://(hostname):(portnumber)<br>
 
- to the activator's startup command line. The host
-name can be obtained portably in C++ code with the lines<br>
+to the activator's startup command line. The host
+name can be obtained portable in C++ code with the lines<br>
 
   ACE_INET_addr ad;<br>
   char *hostname = ad.get_host_name ();<br>
@@ -522,7 +524,7 @@ ImplRepoService=..." for a more robust solution.
 
 @subsection details Various Details
 
-The Naming Service in TAO contains one persistant POA named "NameService".
+The Naming Service in TAO contains one persistent POA named "NameService".
 If -ORBUseIMR 1 is passed to it, it will communicate with the ImR as any
 other persistent POA does.  Also, the Naming Service recognizes the INS
 object key "NameService".  This allows you to use the "tao_imr ior"

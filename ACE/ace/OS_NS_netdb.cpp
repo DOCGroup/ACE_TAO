@@ -25,6 +25,10 @@
 #include "ace/OS_NS_devctl.h"
 #endif
 
+#ifdef ACE_VXWORKS
+# include "ace/os_include/sys/os_sysctl.h"
+#endif
+
 #ifdef ACE_HAS_ALLOC_HOOKS
 # include "ace/Malloc_Base.h"
 #endif
@@ -362,6 +366,58 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
   return 0;
 
+#elif defined ACE_VXWORKS
+
+  int name[] = {CTL_NET, AF_ROUTE, 0, 0, NET_RT_IFLIST, 0};
+  static const size_t name_elts = sizeof name / sizeof name[0];
+
+  size_t result_sz = 0u;
+  if (sysctl (name, name_elts, 0, &result_sz, 0, 0u) != 0)
+    return -1;
+
+# ifdef ACE_HAS_ALLOC_HOOKS
+  char *const result =
+    static_cast<char *> (ACE_Allocator::instance ()->malloc (result_sz));
+#  define ACE_NETDB_CLEANUP ACE_Allocator::instance ()->free (result)
+# else
+  char *const result = static_cast<char *> (ACE_OS::malloc (result_sz));
+#  define ACE_NETDB_CLEANUP ACE_OS::free (result)
+# endif
+
+  if (sysctl (name, name_elts, result, &result_sz, 0, 0u) != 0)
+    {
+      ACE_NETDB_CLEANUP;
+      return -1;
+    }
+
+  for (size_t pos = 0, n; pos + sizeof (if_msghdr) < result_sz; pos += n)
+    {
+      if_msghdr *const hdr = reinterpret_cast<if_msghdr *> (result + pos);
+      n = hdr->ifm_msglen;
+      sockaddr_dl *const addr =
+        reinterpret_cast<sockaddr_dl *> (result + pos + sizeof (if_msghdr));
+
+      if (addr->sdl_alen >= sizeof node->node)
+        {
+          ACE_OS::memcpy (node->node, LLADDR (addr), sizeof node->node);
+          ACE_NETDB_CLEANUP;
+          return 0;
+        }
+
+      while (pos + n < result_sz)
+        {
+          ifa_msghdr *const ifa =
+            reinterpret_cast<ifa_msghdr *> (result + pos + n);
+          if (ifa->ifam_type != RTM_NEWADDR)
+            break;
+          n += ifa->ifam_msglen;
+        }
+    }
+
+  ACE_NETDB_CLEANUP;
+# undef ACE_NETDB_CLEANUP
+  return -1;
+
 #else
   ACE_UNUSED_ARG (node);
   ACE_NOTSUP_RETURN (-1);
@@ -374,33 +430,36 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
 {
   hostent entry;
   ACE_HOSTENT_DATA buffer;
-  int herr;
+  int herr = 0;
   const hostent *host = ACE_OS::gethostbyname_r (name, &entry, buffer, &herr);
 
   if (host == 0)
-    switch (herr)
-      {
-      case NO_DATA: case HOST_NOT_FOUND:
-        return EAI_NONAME;
-      case TRY_AGAIN:
-        return EAI_AGAIN;
-      case NO_RECOVERY:
-        return EAI_FAIL;
-      case ENOTSUP:
-        if (ACE_OS::inet_aton (name, (in_addr *) &buffer[0]) != 0)
-          {
-            host = &entry;
-            entry.h_length = sizeof (in_addr);
-            entry.h_addr_list = (char **) (buffer + sizeof (in_addr));
-            entry.h_addr_list[0] = buffer;
-            entry.h_addr_list[1] = 0;
-            break;
-          }
-        // fall-through
-      default:
-        errno = herr;
-        return EAI_SYSTEM;
-      }
+    {
+      switch (herr)
+        {
+        case NO_DATA:
+        case HOST_NOT_FOUND:
+          return EAI_NONAME;
+        case TRY_AGAIN:
+          return EAI_AGAIN;
+        case NO_RECOVERY:
+          return EAI_FAIL;
+        case ENOTSUP:
+          if (ACE_OS::inet_aton (name, (in_addr *) &buffer[0]) != 0)
+            {
+              host = &entry;
+              entry.h_length = sizeof (in_addr);
+              entry.h_addr_list = (char **) (buffer + sizeof (in_addr));
+              entry.h_addr_list[0] = buffer;
+              entry.h_addr_list[1] = 0;
+              break;
+            }
+          // fall-through
+        default:
+          errno = herr;
+          return EAI_SYSTEM;
+        }
+    }
 
   size_t n = 0;
   for (char **addr = host->h_addr_list; *addr; ++addr, ++n) /*empty*/;
@@ -428,14 +487,14 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
 
   for (size_t i = 0; i < n; ++i)
     {
-      result[i]->ai_family = AF_INET;
-      result[i]->ai_addrlen = sizeof (sockaddr_in);
-      result[i]->ai_addr = (sockaddr *) addr_storage + i;
-      result[i]->ai_addr->sa_family = AF_INET;
+      (*result)[i].ai_family = AF_INET;
+      (*result)[i].ai_addrlen = sizeof (sockaddr_in);
+      (*result)[i].ai_addr = (sockaddr *) addr_storage + i;
+      (*result)[i].ai_addr->sa_family = AF_INET;
       ACE_OS::memcpy (&addr_storage[i].sin_addr, host->h_addr_list[i],
                       (std::min) (size_t (host->h_length), sizeof (in_addr)));
       if (i < n - 1)
-        result[i]->ai_next = result[i + 1];
+        (*result)[i].ai_next = (*result) + i + 1;
     }
 
   return 0;

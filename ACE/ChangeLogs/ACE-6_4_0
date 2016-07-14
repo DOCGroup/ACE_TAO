@@ -1,0 +1,155 @@
+commit 21d9aeb246af54f23f9054b938e2d4af3dd24e31
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 3 10:05:55 2016 +0200
+
+    Added reduced include of ace/Auto_Ptr.h
+        * ACE/NEWS:
+
+commit 8e3f34f5f3cf09f3e5ac9d35b03cc110959cdc31
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 16:43:46 2016 +0200
+
+    Updated for next release
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit bbae1c3cd833396912cb6931dcab3edde94fd0f6
+Merge: 14f0e5a 9cf2554
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Fri Jul 1 08:55:18 2016 +0200
+
+    Merge pull request #268 from jwillemsen/master
+    
+    Improved documentation
+
+commit 9cf255458ea0917547b6e77c3d2f62f35aab3958
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 08:54:41 2016 +0200
+
+    Improved documentiton
+        * ACE/ACE-INSTALL.html:
+
+commit 14f0e5a70e352cd833e9b71fc41bb1c4eb232510
+Merge: 8bed7fd 9f2aca3
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Fri Jul 1 08:47:19 2016 +0200
+
+    Merge pull request #267 from jwillemsen/master
+    
+    Documentation changes
+
+commit d50ed137e96ef69e1bf1491e97989e02737c0144
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 08:46:06 2016 +0200
+
+    Cleanup and refer to ACE-INSTALL.html within the package
+        * ACE/README:
+
+commit 5a1bb1428f05ebae1f9a616253024fc237d63398
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Jun 17 14:51:34 2016 -0500
+
+    Auto_Ptr.h fixup for ACE netsvcs
+
+commit 7767d0dd86da1d81ebe619f02e5716cac1ea4987
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Jun 17 09:16:49 2016 -0500
+
+    Removed include of ace/Auto_Ptr.h where not needed
+    
+    GCC 6.1 by default issues warnings when seeing std::auto_ptr
+
+commit b985fa97c91e3f1846f5a5e43ce72bf6df6aa277
+Merge: 4309a39 cdcb9de
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 14 10:02:31 2016 +0200
+
+    Merge pull request #256 from likema/feature/cross-aarch64-mips64el
+    
+    feature/cross-aarch64-mips64el
+
+commit e8814092903b46280c792835e1497aa6cf5acaec
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 17 12:23:40 2016 +0200
+
+    Invoke new operation
+        * ACE/tests/OS_Test.cpp:
+
+commit 83330bfd1fefd26347c2c1c2773953ad9f3c7f70
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 17 12:23:09 2016 +0200
+
+    gai_strerror is defined as gai_strerrorA or gai_strerrorW on Windows dependent on Unicode settings. Adapt ACE_OS::gai_strerror for this and invoke this operation as part of a test to make sure we compile this inline code
+        * ACE/ace/OS_NS_netdb.inl:
+        * ACE/ace/ace_wchar.h:
+        * ACE/tests/OS_Test.cpp:
+
+commit dc9d4e9be26a38d42f4f5fc5245a04a5dcea6a04
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 17 09:00:50 2016 +0200
+
+    Fixed version
+
+commit 9e9ae3e3533bd44c7e75804528a23a5154c87892
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 16 15:14:54 2016 +0200
+
+    Small fix
+        * ACE/bin/make_release.py:
+
+commit d2a7d20741730f9b2d98a415df0cffb2ed502b51
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 16 10:51:12 2016 +0200
+
+    We already have micro releases for years, so introduce a MICRO version number which we use instead of the BETA number which is kept for backwards compliance
+
+commit c7413893facd6208ccd3dec05c802f641aec5f1f
+Author: Olli Savia <ops@iki.fi>
+Date:   Sat May 14 20:18:29 2016 +0300
+
+    Added ACE_TEXT() to string constants
+
+commit a11d43ae6c40b99fdf8ced5f70bbfa84ad2a20e8
+Author: Olli Savia <ops@iki.fi>
+Date:   Sat May 14 18:12:38 2016 +0300
+
+    Added helper macros to compare ACE/TAO versions
+
+commit cdcb9de8490f47d7d6c8449fbd3892c90fd7cf8f
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Mon Apr 27 16:27:26 2015 +0800
+
+    Fix format specifiers of UINT64, ssize_t, size_t in Ubuntu 12.04/14.04 aarch64.
+
+commit 686af5dbc1444d3d4834acd27db92f8ef8b3fefa
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Fri Jan 25 22:44:02 2013 +0800
+
+    Fix format specifiers of UINT64, ssize_t, size_t in neokylin 6.0 loongson 64 (mips64el).
+
+commit 3eebc64c2c55a7a946d5d6c76b84dc3ae5197fa1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 6 13:00:50 2016 +0200
+
+    In kfreebasd atop is a macro which we need to undefine
+        * ACE/ace/config-kfreebsd.h:
+
+commit 11aa52c3d6e17d42853d67568100544e70187a2a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 3 19:54:48 2016 +0200
+
+    Fixed may be used uninitialized warning
+        * ACE/ace/OS_NS_netdb.cpp:
+
+commit ce7b17aa7e482180d5eabc852060855775e08dac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 2 10:43:24 2016 +0200
+
+    Make x.3.4 public and prepare for x.3.5
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/bin/make_release.py:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

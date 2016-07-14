@@ -307,7 +307,7 @@
 # define ACE_HAS_STRBUF_T
 #endif
 
-#if defined (__ia64) || defined(__alpha) || defined (__x86_64__) || defined(__powerpc64__)
+#if defined (__ia64) || defined(__alpha) || defined (__x86_64__) || defined(__powerpc64__) || (defined(__mips__) && defined(__LP64__)) || defined (__aarch64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
 # define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%lu"
@@ -403,6 +403,7 @@
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_REENTRANT_FUNCTIONS
+#define ACE_HAS_MNTENT
 
 // To support UCLIBC
 #if defined (__UCLIBC__)

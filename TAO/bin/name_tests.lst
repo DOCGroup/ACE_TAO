@@ -1,0 +1,21 @@
+# This list is a duplicate of just the name service tests from tao_other_test.lst
+# It is simply for local pre-commit coverage of changes isolated to the Name service.
+#
+TAO/orbsvcs/tests/Simple_Naming/run_test.pl: !ST !NO_MESSAGING !ACE_FOR_TAO !LynxOS !CORBA_E_MICRO !DISTRIBUTED !OSX
+TAO/orbsvcs/tests/Simple_Naming/run_test.pl -nommap: !ST !NO_MESSAGING !ACE_FOR_TAO !LynxOS !CORBA_E_MICRO !DISTRIBUTED OSX
+TAO/orbsvcs/tests/Simple_Naming/run_test_ffp.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_MESSAGING !ACE_FOR_TAO !DISTRIBUTED
+TAO/orbsvcs/tests/Simple_Naming/run_test_ft.pl: !Win32 !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !NO_MESSAGING !ACE_FOR_TAO !DISTRIBUTED
+TAO/orbsvcs/tests/Redundant_Naming/run_test.pl: !Win32 !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !DISTRIBUTED
+TAO/orbsvcs/tests/Simple_Naming/run_test_ipv6.pl: IPV6 !ST !NO_MESSAGING !ACE_FOR_TAO !LynxOS !CORBA_E_MICRO !DISTRIBUTED
+TAO/orbsvcs/DevGuideExamples/NamingService/Messenger/run_test.pl: !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
+TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Client/run_test.pl: !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
+TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Context_Ext/run_test.pl: !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
+TAO/orbsvcs/DevGuideExamples/NamingService/Naming_Server/run_test.pl: !ST !NO_MCAST !NO_MESSAGING !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/orbsvcs/DevGuideExamples/NamingService/corbaloc_Messenger/run_test.pl: !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
+TAO/orbsvcs/DevGuideExamples/NamingService/corbaname_Messenger/run_test.pl: !CORBA_E_COMPACT !CORBA_E_MICRO !LynxOS
+TAO/utils/nsgroup/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/Replication/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/Federation/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/stress_storable/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST

@@ -59,7 +59,6 @@ static void convertPeerList (const Locator_XMLHandler::PeerList& in,
     }
 }
 
-
 void
 Locator_XMLHandler::startElement (const ACEXML_Char*,
                                   const ACEXML_Char*,

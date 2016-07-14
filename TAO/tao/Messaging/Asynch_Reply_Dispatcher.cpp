@@ -84,7 +84,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 
   if (!CORBA::is_nil (this->reply_handler_.in ()))
     {
-      // Steal the buffer, that way we don't do any unnecesary copies of
+      // Steal the buffer, that way we don't do any unnecessary copies of
       // this data.
       CORBA::ULong const max = params.svc_ctx_.maximum ();
       CORBA::ULong const len = params.svc_ctx_.length ();

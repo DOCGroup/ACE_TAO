@@ -20,9 +20,10 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Default_Constants.h"
-#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Array_Map.h"
 #include "ace/Malloc_Base.h"
+#include "ace/Recursive_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -131,6 +132,9 @@ public:
   /// Dump the state of an object.
   void dump (void) const;
 
+  /// Returns a reference to the lock used by the ACE_Service_Repository
+  ACE_SYNCH_RECURSIVE_MUTEX &lock (void) const;
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -201,10 +205,8 @@ protected:
   /// Must delete the @c svc_rep_ if true.
   static bool delete_svc_rep_;
 
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  /// Synchronization variable for the MT_SAFE Repository
-  mutable ACE_Recursive_Thread_Mutex lock_;
-#endif /* ACE_MT_SAFE */
+  /// Synchronization variable for the ACE_Service_Repository.
+  mutable ACE_SYNCH_RECURSIVE_MUTEX lock_;
 };
 
 /**

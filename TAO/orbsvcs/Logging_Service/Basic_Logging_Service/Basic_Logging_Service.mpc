@@ -1,7 +1,11 @@
 project: namingexe, iortable, install, dslogadmin_serv, valuetype {
   exename   = tao_tls_basic
+
+  specific {
+    install_dir = tao/docs/basic_logging
+  }
+
   InstallData_Files {
-    gendir = tao-log
     README
   }
 }

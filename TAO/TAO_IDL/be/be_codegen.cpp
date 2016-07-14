@@ -327,7 +327,7 @@ TAO_CodeGen::start_client_header (const char *fname)
   // Generate the regeneration check.
   *this->client_header_ << "\n\n#if TAO_MAJOR_VERSION != " << TAO_MAJOR_VERSION
                         << " || TAO_MINOR_VERSION != " << TAO_MINOR_VERSION
-                        << " || TAO_BETA_VERSION != " << TAO_BETA_VERSION
+                        << " || TAO_MICRO_VERSION != " << TAO_MICRO_VERSION
                         << "\n#error This file should be regenerated with TAO_IDL"
                         << "\n#endif";
 

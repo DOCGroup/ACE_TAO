@@ -698,6 +698,31 @@ compiler_test (void)
 }
 
 static int
+version_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing version macros\n")));
+
+  int code = ACE_MAKE_VERSION_CODE(ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_MICRO_VERSION);
+  bool run_time_check = code == ACE_VERSION_CODE;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE release time version code: %d, runtime version code: %d, %s\n"),
+              ACE_VERSION_CODE, code, run_time_check ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
+
+  // Compile time check. Check we have ACE version 6.x
+#if ACE_VERSION_CODE > ACE_MAKE_VERSION_CODE(5, 88, 99)
+  bool compile_time_check = true;
+#else
+  bool compile_time_check = false;
+#endif
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Compile time version check, %s\n"),
+              compile_time_check ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
+
+  if(run_time_check && compile_time_check)
+    return 0;
+  return 1;
+}
+
+static int
 ctime_r_test (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ctime_r\n")));
@@ -1582,11 +1607,24 @@ swab_test (void)
 }
 
 int
+gai_strerror_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing gai_strerror method\n")));
+
+  const ACE_TCHAR* error_text = ACE_OS::gai_strerror (EAI_FAMILY);
+
+  ACE_UNUSED_ARG (error_text);
+
+  return 0;
+}
+
+int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("OS_Test"));
 
-  // Enable a locale that has digit gropuing so that snprintf's %'d is
+  // Enable a locale that has digit grouping so that snprintf's %'d is
   // different than %d.  If the locale is not available the test won't
   // fail (log file needs to be examined to check formatting).
 #ifdef ACE_WIN32
@@ -1667,6 +1705,12 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = compiler_test ()) != 0)
+      status = result;
+
+  if ((result = version_test ()) != 0)
+      status = result;
+
+  if ((result = gai_strerror_test   ()) != 0)
       status = result;
 
   ACE_END_TEST;

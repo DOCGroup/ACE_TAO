@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 
 //=============================================================================
@@ -11,12 +12,18 @@
 
 #include "tao/Storable_FlatFileStream.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_strings.h"
 #include "ace/Numeric_Limits.h"
 #include "ace/Truncate.h"
 #include "tao/debug.h"
+
+#if defined (ACE_HAS_MNTENT)
+#include <mntent.h>
+#endif /* ACE_HAS_MNTENT */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -74,44 +81,45 @@ namespace
       }
   }
 
-  int file_copy(FILE *f1, FILE *f2)
+  int file_copy (FILE *f1, FILE *f2)
   {
     char buffer[BUFSIZ];
     size_t n_read;
 
-    bool all_read = false;
-    bool some_read = false;
-
-    while (!all_read)
+    while (!feof (f1))
       {
         n_read =
           ACE_OS::fread(buffer, 1, sizeof(buffer), f1);
         if (n_read > 0)
           {
             if (ACE_OS::fwrite(buffer, 1, n_read, f2) != n_read)
-              return -1;
-            some_read = true;
-          }
-        else if (!some_read)
-          {
-            // Nothing was read
-            TAOLIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO: (%P|%t) ERROR: could not read from file\n")));
-
-            if (ferror (f1))
               {
-                TAOLIB_ERROR ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) %p\n"),
-                               ACE_TEXT ("ACE_OS::fread")));
+                ferror (f2);
+                if (TAO_debug_level > 0)
+                  {
+                    TAOLIB_ERROR ((LM_ERROR,
+                                   ACE_TEXT ("(%P|%t) TAO::Storable_FlatFileStream, file_copy, f2 handle = %d, %p\n"),
+                                   ACE_OS::fileno(f2), ACE_TEXT ("ACE_OS::fwrite")));
+                  }
+                return -1;
               }
-            return -1;
           }
         else
           {
-            all_read = true;
+            errno = 0;
+            if (!feof (f1))
+              {
+                ferror (f1);
+                if (TAO_debug_level > 0)
+                  {
+                    TAOLIB_ERROR ((LM_ERROR,
+                                   ACE_TEXT ("(%P|%t) TAO::Storable_FlatFileStream, file_copy, f1 handle = %d, %p\n"),
+                                   ACE_OS::fileno(f1), ACE_TEXT ("ACE_OS::fread")));
+                  }
+                return -1;
+              }
           }
       }
-
     return 0;
   }
 
@@ -119,8 +127,9 @@ namespace
 
 TAO::Storable_FlatFileStream::Storable_FlatFileStream (const ACE_CString & file,
                                                        const char * mode,
-                                                       bool use_backup)
-  : Storable_Base(use_backup)
+                                                       bool use_backup,
+                                                       bool retry_on_ebadf)
+  : Storable_Base(use_backup, retry_on_ebadf)
   , filelock_ ()
   , fl_ (0)
   , file_(file)
@@ -151,6 +160,20 @@ TAO::Storable_FlatFileStream::exists ()
 }
 
 int
+TAO::Storable_FlatFileStream::reopen ()
+{
+  if (TAO_debug_level > 0)
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) Storable_FlatFileStream::reopen, ")
+                     ACE_TEXT (" handle = %d\n"),
+                     filelock_.handle_));
+    }
+  this->close();
+  return this->open();
+}
+
+int
 TAO::Storable_FlatFileStream::open()
 {
   // For now, three flags exist "r", "w",  and "c"
@@ -165,27 +188,47 @@ TAO::Storable_FlatFileStream::open()
     flags = O_WRONLY, fdmode = "w";
   if( ACE_OS::strchr(mode_.c_str(), 'c') )
     flags |= O_CREAT;
+
 #ifndef ACE_WIN32
   if( ACE_OS::flock_init (&filelock_, flags,
                           ACE_TEXT_CHAR_TO_TCHAR (file_.c_str()), 0666) != 0 )
     TAOLIB_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Cannot open file %s for mode %s: %p\n"),
+                          ACE_TEXT ("(%P|%t) Storable_FFS::open ")
+                          ACE_TEXT ("Cannot open file %s for mode %s: %p\n"),
                           file_.c_str(), mode_.c_str(), ACE_TEXT ("ACE_OS::flock_init")),
-                      -1);
+                         -1);
 #else
   if( (filelock_.handle_= ACE_OS::open (file_.c_str(), flags, 0)) == ACE_INVALID_HANDLE )
     TAOLIB_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Cannot open file %s for mode %s: %p\n"),
+                          ACE_TEXT ("(%P|%t) Storable_FFS::open ")
+                          ACE_TEXT ("Cannot open file %s for mode %s: %p\n"),
                           file_.c_str(), mode_.c_str(), ACE_TEXT ("ACE_OS::open")),
-                      -1);
+                         -1);
 #endif
-  this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR (fdmode));
-  if (this->fl_ == 0)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) Cannot open file %s for mode %s: %p\n"),
-                          file_.c_str(), mode_.c_str(), ACE_TEXT ("ACE_OS::fdopen")),
-                      -1);
-  return 0;
+
+  this->fl_ = 0;
+  for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
+       attempts > 0 && this->fl_ == 0;
+       attempts--)
+    {
+      this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR (fdmode));
+
+      if (this->fl_ == 0)
+        {
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Storable_FFS::open ")
+                             ACE_TEXT ("Cannot open file %s for mode %s: %p\n"),
+                             file_.c_str(), mode_.c_str(), ACE_TEXT ("ACE_OS::fdopen")));
+            }
+          if (errno != EBADF)
+            {
+              break;
+            }
+        }
+    }
+  return this->fl_ == 0 ? -1 : 0;
 }
 
 int
@@ -205,69 +248,135 @@ TAO::Storable_FlatFileStream::close()
 int
 TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
 {
+  int result = 0;
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (whence);
   ACE_UNUSED_ARG (start);
   ACE_UNUSED_ARG (len);
 #else
-  if( ACE_OS::strcmp(mode_.c_str(), "r") == 0 )
+  bool shared = ACE_OS::strcmp(mode_.c_str(), "r") == 0;
+  result = -1;
+  bool retry = false;
+  for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
+       attempts > 0 && result != 0;
+       attempts--)
     {
-       if (ACE_OS::flock_rdlock(&filelock_, whence, start, len) != 0)
-         TAOLIB_ERROR_RETURN ((LM_ERROR,
-                            ACE_TEXT ("TAO (%P|%t) - ")
-                            ACE_TEXT ("Storable_FlatFileStream::flock, ")
-                            ACE_TEXT ("Error trying to get a read lock for file %s\n"),
-                            file_.c_str ()),
-                           -1);
-    }
-
-  else
-    {
-      if (ACE_OS::flock_wrlock(&filelock_, whence, start, len) != 0)
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("TAO (%P|%t) - ")
-                           ACE_TEXT ("Storable_FlatFileStream::flock, ")
-                           ACE_TEXT ("Error trying to get a write lock for file %s\n"),
-                           file_.c_str ()),
-                          -1);
+      if (retry)
+        this->reopen();
+      retry = true;
+      result = shared ?
+        ACE_OS::flock_rdlock(&filelock_, whence, start, len) :
+        ACE_OS::flock_wrlock(&filelock_, whence, start, len);
+      if (result != 0)
+        {
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) - ")
+                             ACE_TEXT ("Storable_FlatFileStream::flock, ")
+                             ACE_TEXT ("File %C, %p\n"),
+                             file_.c_str (),
+                             (shared ? ACE_TEXT("rdlock") : ACE_TEXT("wrlock"))));
+            }
+          if (errno != EBADF)
+            {
+              break;
+            }
+        }
     }
 
 #endif
-  return 0;
+  return result;
 }
 
 int
 TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
 {
+  int result = 0;
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (whence);
   ACE_UNUSED_ARG (start);
   ACE_UNUSED_ARG (len);
 #else
-  if (ACE_OS::flock_unlock(&filelock_, whence, start, len) != 0)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("TAO (%P|%t) - ")
-                       ACE_TEXT ("Storable_FlatFileStream::funlock, ")
-                       ACE_TEXT ("Error trying to unlock file %s\n"),
-                       file_.c_str ()),
-                      -1);
+  result = -1;
+  bool retry = false;
+  for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
+       attempts > 0 && result != 0;
+       attempts--)
+    {
+      if (retry)
+        this->reopen();
+      retry = true;
+      result = ACE_OS::flock_unlock(&filelock_, whence, start, len);
+      if (result != 0)
+        {
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) - ")
+                             ACE_TEXT ("Storable_FlatFileStream::flock, ")
+                             ACE_TEXT ("File %C, %p\n"),
+                             file_.c_str (),
+                             ACE_TEXT("unlock")));
+            }
+          if (errno != EBADF)
+            {
+              break;
+            }
+        }
+    }
+
 #endif
-  return 0;
+  return result;
 }
 
 time_t
 TAO::Storable_FlatFileStream::last_changed(void)
 {
   ACE_stat st;
-  int result = filelock_.handle_ != ACE_INVALID_HANDLE ?
-    ACE_OS::fstat(filelock_.handle_, &st) :
-    ACE_OS::stat (file_.c_str (), &st);
+  int result = 0;
+  bool do_stat = filelock_.handle_ == ACE_INVALID_HANDLE;
+  if (!do_stat)
+    {
+      bool retry = false;
+      result = -1;
+      for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
+           attempts > 0 && result != 0;
+           attempts--)
+        {
+          if (retry)
+            this->reopen();
+          retry = true;
+
+          result = ACE_OS::fstat(filelock_.handle_, &st);
+          if (result != 0)
+            {
+              if (TAO_debug_level > 0)
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                                 ACE_TEXT ("TAO (%P|%t) - ")
+                                 ACE_TEXT ("Storable_FlatFileStream::last_changed, ")
+                                 ACE_TEXT ("File %C, handle %d,  %p\n"),
+                                 file_.c_str (), filelock_.handle_,  ACE_TEXT("fstat")));
+                }
+              if (errno != EBADF)
+                {
+                  break;
+                }
+            }
+        }
+    }
+  else
+    {
+      result = ACE_OS::stat (file_.c_str (), &st);
+    }
   if (result != 0)
     {
       TAOLIB_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - ")
-                  ACE_TEXT ("Storable_FlatFileStream::last_changed, ")
-                  ACE_TEXT ("Error getting file information\n")));
+                     ACE_TEXT ("TAO (%P|%t) - ")
+                     ACE_TEXT ("Storable_FlatFileStream::last_changed, ")
+                     ACE_TEXT ("Error getting file information for %C, handle %d, %p\n"),
+                     this->file_.c_str(), filelock_.handle_, ACE_TEXT("fstat")));
       throw Storable_Exception (this->file_);
     }
 
@@ -277,7 +386,7 @@ TAO::Storable_FlatFileStream::last_changed(void)
 void
 TAO::Storable_FlatFileStream::rewind (void)
 {
-  return ACE_OS::rewind(this->fl_);
+  ACE_OS::rewind(this->fl_);
 }
 
 bool
@@ -344,48 +453,91 @@ TAO::Storable_FlatFileStream::operator >> (ACE_CString& str)
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator << (int i)
+TAO::Storable_FlatFileStream::operator << (ACE_UINT32 i)
 {
-  int const n = ACE_OS::fprintf (this->fl_, "%d\n", i);
+  int const n =
+    ACE_OS::fprintf (this->fl_, ACE_UINT32_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
     this->throw_on_write_error (badbit);
   return *this;
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator >> (int &i)
+TAO::Storable_FlatFileStream::operator >> (ACE_UINT32 &i)
 {
   Storable_State state = this->rdstate ();
-  read_integer ("%d\n", i, state, fl_);
+  read_integer (ACE_UINT32_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
   this->throw_on_read_error (state);
 
   return *this;
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator << (unsigned int i)
+TAO::Storable_FlatFileStream::operator << (ACE_UINT64 i)
 {
-  int const n = ACE_OS::fprintf (this->fl_, "%u\n", i);
+  int const n =
+    ACE_OS::fprintf (this->fl_, ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
     this->throw_on_write_error (badbit);
   return *this;
 }
 
 TAO::Storable_Base &
-TAO::Storable_FlatFileStream::operator >> (unsigned int &i)
+TAO::Storable_FlatFileStream::operator >> (ACE_UINT64 &i)
 {
   Storable_State state = this->rdstate ();
-  read_integer ("%u\n", i, state, fl_);
+  read_integer (ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
   this->throw_on_read_error (state);
 
   return *this;
 }
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator << (ACE_INT32 i)
+{
+  int const n =
+    ACE_OS::fprintf (this->fl_, ACE_INT32_FORMAT_SPECIFIER_ASCII "\n", i);
+  if (n < 0)
+    this->throw_on_write_error (badbit);
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator >> (ACE_INT32 &i)
+{
+  Storable_State state = this->rdstate ();
+  read_integer (ACE_INT32_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
+  this->throw_on_read_error (state);
+
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator << (ACE_INT64 i)
+{
+  int const n =
+    ACE_OS::fprintf (this->fl_, ACE_INT64_FORMAT_SPECIFIER_ASCII "\n", i);
+  if (n < 0)
+    this->throw_on_write_error (badbit);
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator >> (ACE_INT64 &i)
+{
+  Storable_State state = this->rdstate ();
+  read_integer (ACE_INT64_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
+  this->throw_on_read_error (state);
+
+  return *this;
+}
+
 
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)
 {
   unsigned int const length =
-      ACE_Utils::truncate_cast<unsigned int> (cdr.total_length ());
+    ACE_Utils::truncate_cast<unsigned int> (cdr.total_length ());
   *this << length;
   for (const ACE_Message_Block *i = cdr.begin (); i != 0; i = i->cont ())
     {
@@ -417,16 +569,49 @@ TAO::Storable_FlatFileStream::backup_file_name ()
 int
 TAO::Storable_FlatFileStream::create_backup ()
 {
-  FILE * backup = ACE_OS::fopen (this->backup_file_name ().c_str (), "w");
-  this->rewind();
-  int result = file_copy(this->fl_, backup);
-  if (result != 0)
+  if (this->fl_ == 0)
     {
-      TAOLIB_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO: (%P|%t) ERROR: Unable to create backup ")
-                  ACE_TEXT ("of file\n%s\n"), file_.c_str ()));
+      return 0;
     }
-  ACE_OS::fclose (backup);
+
+  bool retry = false;
+  int result = -1;
+  for (int attempts = this->retry_on_ebadf_ ? 2 : 1;
+       attempts > 0 && result < 0;
+       attempts--)
+    {
+      if (retry)
+        this->reopen();
+      retry = true;
+      errno = 0;
+      this->rewind();
+      if (errno != 0)
+        {
+          if (errno == EBADF)
+            {
+              continue;
+            }
+          break;
+        }
+      FILE * backup = ACE_OS::fopen (this->backup_file_name ().c_str (), "w");
+      result = file_copy(this->fl_, backup);
+      if (result != 0)
+        {
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO: (%P|%t) Storable_FlatFileStream::")
+                             ACE_TEXT ("create_backup Unable to create backup ")
+                             ACE_TEXT ("of file %s\n"), file_.c_str ()));
+            }
+          if (errno != EBADF)
+            {
+              ACE_OS::fclose (backup);
+              break;
+            }
+        }
+      ACE_OS::fclose (backup);
+    }
   return result;
 }
 
@@ -448,6 +633,12 @@ TAO::Storable_FlatFileStream::restore_backup ()
 
   if (ACE_OS::access (backup_name.c_str (), F_OK))
     return -1;
+
+  if (ACE_OS::strchr (this->mode_.c_str(),'w') == 0)
+    {
+      this->mode_ += 'w';
+    }
+  this->reopen ();
 
   FILE * backup = ACE_OS::fopen (backup_name.c_str (),
                                  "r");
@@ -481,10 +672,105 @@ TAO::Storable_FlatFileStream::throw_on_write_error (Storable_State state)
     }
 }
 
-TAO::Storable_FlatFileFactory::Storable_FlatFileFactory(const ACE_CString & directory)
+//------------------------------------------------
+
+TAO::Storable_FlatFileFactory::Storable_FlatFileFactory(const ACE_CString & directory,
+                                                        bool use_backup,
+                                                        bool retry_on_ebadf)
   : Storable_Factory ()
   , directory_(directory)
+  , use_backup_(use_backup)
+  , retry_on_ebadf_ (retry_on_ebadf)
 {
+}
+
+TAO::Storable_FlatFileFactory::Storable_FlatFileFactory(const ACE_CString & directory,
+                                                        bool use_backup)
+  : Storable_Factory ()
+  , directory_(directory)
+  , use_backup_(use_backup)
+  , retry_on_ebadf_ (Storable_Base::retry_on_ebadf_default)
+{
+  retry_on_ebadf_ = Storable_FlatFileFactory::is_nfs (directory);
+}
+
+bool
+TAO::Storable_FlatFileFactory::is_nfs (const ACE_CString& directory)
+{
+  bool ret = false;
+#if defined (ACE_HAS_MNTENT)
+  const char *dir = directory.c_str();
+  char rpath [PATH_MAX];
+  if (*dir != '/')
+    {
+      rpath[0] = 0;
+      if (ACE_OS::getcwd (rpath, PATH_MAX) == 0)
+        {
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) Storable_FFFactory::is_nfs ")
+                             ACE_TEXT ("could not get full path, %p\n"),
+                             ACE_TEXT ("getcwd")));
+            }
+          return ret;
+        }
+      size_t rootlen = ACE_OS::strlen(rpath);
+      if ((rootlen + directory.length() +1) > PATH_MAX)
+        {
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) Storable_FFFactory::is_nfs ")
+                             ACE_TEXT ("combined root + supplied paths too long:")
+                             ACE_TEXT ("%C + / + %C\n"), rpath, dir));
+            }
+          return ret;
+        }
+      char *pos = rpath + rootlen;
+      *pos++ = '/';
+      ACE_OS::strcpy (pos,directory.c_str());
+      dir = rpath;
+    }
+  size_t match = 0;
+  size_t dirlen = ACE_OS::strlen(dir);
+  struct mntent *ent = 0;
+  const char *fname = "/etc/mtab";
+  FILE *mt = ::setmntent(fname,"r");
+  if (mt == 0)
+    {
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("TAO (%P|%t) Storable_FFFactory::is_nfs ")
+                         ACE_TEXT ("could not open %C, %p\n"),
+                         fname, ACE_TEXT ("setmntent")));
+        }
+      return ret;
+    }
+  while ((ent = ::getmntent(mt)) != 0)
+    {
+      size_t len = ACE_OS::strlen(ent->mnt_dir);
+
+      if (len > dirlen || len < match)
+        {
+          continue;
+        }
+      if (len >= match &&ACE_OS::strstr (dir, ent->mnt_dir) == dir)
+        {
+          match = len;
+          ret = (ACE_OS::strcasecmp (ent->mnt_type, "nfs") == 0);
+          if (len == dirlen)
+            {
+              break; // exact match
+            }
+        }
+    }
+  ::endmntent (mt);
+#else
+  ACE_UNUSED_ARG (directory);
+#endif /* ACE_HAS_MNTENT */
+  return ret;
 }
 
 TAO::Storable_FlatFileFactory::~Storable_FlatFileFactory()
@@ -500,14 +786,15 @@ TAO::Storable_FlatFileFactory::get_directory () const
 TAO::Storable_Base *
 TAO::Storable_FlatFileFactory::create_stream (const ACE_CString & file,
                                               const char * mode,
-                                              bool use_backup)
+                                              bool )
 {
   TAO::Storable_Base *stream = 0;
   ACE_CString path = this->directory_ + "/" + file;
   ACE_NEW_RETURN (stream,
                   TAO::Storable_FlatFileStream(path,
                                                mode,
-                                               use_backup),
+                                               this->use_backup_,
+                                               this->retry_on_ebadf_),
                   0);
   return stream;
 }

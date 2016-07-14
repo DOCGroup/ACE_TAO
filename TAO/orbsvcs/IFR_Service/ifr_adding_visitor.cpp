@@ -3796,7 +3796,7 @@ ifr_adding_visitor::fill_initializers (CORBA::ExtInitializerSeq &result,
         }
     }
 
-  CORBA::ULong n_factories = factories.size ();
+  CORBA::ULong n_factories = static_cast<CORBA::ULong> (factories.size ());
 
   if (n_factories == 0)
     {

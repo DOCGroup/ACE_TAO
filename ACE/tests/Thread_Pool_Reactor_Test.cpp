@@ -68,7 +68,7 @@ static size_t svr_thrno = ACE_MAX_THREADS;
 // Total number of client threads.
 static size_t cli_thrno = ACE_MAX_THREADS ACE_LOAD_FACTOR;
 
-// Total connection attemps of a client thread.
+// Total connection attempts of a client thread.
 static size_t cli_conn_no = ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
 
 // Total requests a client thread sends.

@@ -436,11 +436,11 @@ Options::save_registry_options ()
       return -1;
     }
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("ORBInitOptions"), 0, REG_SZ,
-    (LPBYTE) this->cmdline_.c_str (), this->cmdline_.length () + 1);
+    (LPBYTE) this->cmdline_.c_str (), (DWORD) this->cmdline_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("IORFile"), 0, REG_SZ,
-    (LPBYTE) ior_output_file_.c_str (), ior_output_file_.length () + 1);
+    (LPBYTE) ior_output_file_.c_str (), (DWORD) ior_output_file_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("DebugLevel"), 0, REG_DWORD,
@@ -448,7 +448,7 @@ Options::save_registry_options ()
   ACE_ASSERT(err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("PersistFile"), 0, REG_SZ,
-    (LPBYTE) this->persist_file_name_.c_str (), this->persist_file_name_.length () + 1);
+    (LPBYTE) this->persist_file_name_.c_str (), (DWORD) this->persist_file_name_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   DWORD tmp = this->ping_external_ ? 1 : 0;
@@ -500,7 +500,7 @@ Options::save_registry_options ()
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("FtEndpoint"), 0, REG_SZ,
-    (LPBYTE) this->ft_endpoint_.c_str (), this->ft_endpoint_.length () + 1);
+    (LPBYTE) this->ft_endpoint_.c_str (), (DWORD) this->ft_endpoint_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
 
   tmp = this->ft_update_delay_.msec ();

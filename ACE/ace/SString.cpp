@@ -1,7 +1,6 @@
 #include "ace/Malloc_T.h"
 #include "ace/OS_Memory.h"
 #include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Numeric_Limits.h"
 

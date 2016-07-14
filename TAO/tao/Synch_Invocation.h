@@ -72,7 +72,7 @@ namespace TAO
     /// remote object.
     /**
      * There is a exception declaration in this method which ensures
-     * that the exceptions propogated by the remote objects are
+     * that the exceptions propagated by the remote objects are
      * converted a CORBA exceptions for the clients. This method does
      * a bunch of things necessary to create and send the
      * invocation. This method is also nerve centre for the
@@ -82,7 +82,7 @@ namespace TAO
 
     /**
      * Indicate that retry state should be tracked and controlled
-     * in the presense of exceptions.
+     * in the presence of exceptions.
      */
     void set_retry_state (Invocation_Retry_State *retry_state);
 

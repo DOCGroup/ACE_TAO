@@ -13,27 +13,27 @@
 #include "ace/OS_NS_strings.h"
 
 
-NS_group_svc::NS_group_svc (void)
+NS_group_svc::NS_group_svc (bool quiet )
+  : quiet_ (quiet)
 {
 }
 
 bool
-NS_group_svc::determine_policy_string (
-  const ACE_TCHAR *policy,
-  FT_Naming::LoadBalancingStrategyValue& value)
+NS_group_svc::determine_policy_string (const ACE_TCHAR *policy,
+                                       FT_Naming::LoadBalancingStrategyValue& value)
 {
   bool rc = false;
 
   if (ACE_OS::strcasecmp (policy, ACE_TEXT_CHAR_TO_TCHAR ("round")) == 0)
-  {
-    value = FT_Naming::ROUND_ROBIN;
-    rc = true;
-  }
+    {
+      value = FT_Naming::ROUND_ROBIN;
+      rc = true;
+    }
   if (ACE_OS::strcasecmp (policy, ACE_TEXT_CHAR_TO_TCHAR ("random")) == 0)
-  {
-    value = FT_Naming::RANDOM;
-    rc = true;
-  }
+    {
+      value = FT_Naming::RANDOM;
+      rc = true;
+    }
 
   return rc;
 }
@@ -42,64 +42,80 @@ int
 NS_group_svc::set_orb( CORBA::ORB_ptr orb)
 {
 
-    this->orb_ = CORBA::ORB::_duplicate (orb);
+  this->orb_ = CORBA::ORB::_duplicate (orb);
 
-    if (CORBA::is_nil (this->orb_.in ()))
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (" (%P|%t) Unable to initialize the ")
-                         ACE_TEXT ("ORB.\n")),
-                        -1);
-    return 0;
+  if (CORBA::is_nil (this->orb_.in ()))
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to ")
+                          ACE_TEXT ("initialize the ORB.\n")));
+        }
+      return -1;
+    }
+  return 0;
 }
 
 int
-NS_group_svc::set_naming_manager( FT_Naming::NamingManager_ptr nm)
+NS_group_svc::set_naming_manager (FT_Naming::NamingManager_ptr nm)
 {
 
-    this->naming_manager_ = FT_Naming::NamingManager::_duplicate (nm);
+  this->naming_manager_ = FT_Naming::NamingManager::_duplicate (nm);
 
-    if (CORBA::is_nil (this->naming_manager_.in ()))
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (" (%P|%t) Invalid Naming Manager.\n")),
-                        -1);
-    return 0;
+  if (CORBA::is_nil (this->naming_manager_.in ()))
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Invalid Naming Manager.\n")));
+        }
+      return -1;
+    }
+  return 0;
 }
 
 int
 NS_group_svc::set_name_context( CosNaming::NamingContextExt_ptr nc)
 {
 
-    this->name_service_ = CosNaming::NamingContextExt::_duplicate (nc);
+  this->name_service_ = CosNaming::NamingContextExt::_duplicate (nc);
 
-    if (CORBA::is_nil (this->name_service_.in ()))
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT (" (%P|%t) Invalid Name Context.\n")),
-                        -1);
-    return 0;
+  if (CORBA::is_nil (this->name_service_.in ()))
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Invalid Name Context.\n")));
+        }
+      return -1;
+    }
+  return 0;
 }
 
 bool
-NS_group_svc::group_exist (
-  const ACE_TCHAR* group_name
-)
+NS_group_svc::group_exist ( const ACE_TCHAR* group_name )
 {
   if (group_name == 0 )
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("group_exist args not provided\n")),
-                      false);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc group_exist args not provided\n")));
+        }
+      return false;
+    }
 
   try
     {
-    PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (
-        ACE_TEXT_ALWAYS_CHAR (group_name));
-  }
+      PortableGroup::ObjectGroup_var group_var =
+        this->naming_manager_->get_object_group_ref_from_name
+          (ACE_TEXT_ALWAYS_CHAR (group_name));
+    }
   catch (const PortableGroup::ObjectGroupNotFound&)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   return true;
 }
@@ -112,74 +128,87 @@ NS_group_svc::group_exist (
  */
 
 int
-NS_group_svc::group_create (
-  const ACE_TCHAR* group_name,
-  const ACE_TCHAR* policy )
+NS_group_svc::group_create (const ACE_TCHAR* group_name,
+                            const ACE_TCHAR* policy )
 {
-
   if (group_name == 0 || policy == 0 )
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("group_create args not provided\n")),
-                      -2);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc group_create args not provided\n")));
+        }
+      return -2;
+    }
 
   /// Validate load balancing strategy policy string
   FT_Naming::LoadBalancingStrategyValue strategy;
   if (false == determine_policy_string (policy, strategy))
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s is not a valid policy.\n"),
-                       policy),
-                      -2);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc %s is not a valid policy.\n"),
+                          policy));
+        }
+      return -2;
+    }
 
   try
-  {
-    /// Verify that the group does not already exist
-    /// Group names must be unique
-    if ( true == group_exist (group_name))
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Group %s already exists\n"),
-                         group_name),
-                        -1);
+      /// Verify that the group does not already exist
+      /// Group names must be unique
+      if ( true == group_exist (group_name))
+        {
+          if (TAO_debug_level > 2)
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) NS_group_svc Group %s already exists\n"),
+                              group_name));
+            }
+          return -1;
+        }
+
+      PortableGroup::Criteria criteria (1);
+      criteria.length (1);
+
+      PortableGroup::Property &property = criteria[0];
+      property.nam.length (1);
+
+      property.nam[0].id = CORBA::string_dup ("org.omg.PortableGroup.MembershipStyle");
+
+      PortableGroup::MembershipStyleValue msv = PortableGroup::MEMB_APP_CTRL;
+      property.val <<= msv;
+
+      CORBA::Object_var obj =
+        this->naming_manager_->create_object_group (ACE_TEXT_ALWAYS_CHAR (group_name),
+                                                    strategy,
+                                                    criteria);
+
+      if (CORBA::is_nil (obj.in ()))
+        {
+          {
+            if (TAO_debug_level > 2)
+              {
+                ORBSVCS_ERROR ((LM_ERROR,
+                                ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to create group %s.\n"),
+                                group_name));
+              }
+            return -1;
+          }
+        }
+
     }
-
-    PortableGroup::Criteria criteria (1);
-    criteria.length (1);
-
-    PortableGroup::Property &property = criteria[0];
-    property.nam.length (1);
-
-    property.nam[0].id = CORBA::string_dup (
-      "org.omg.PortableGroup.MembershipStyle");
-
-    PortableGroup::MembershipStyleValue msv = PortableGroup::MEMB_APP_CTRL;
-    property.val <<= msv;
-
-    CORBA::Object_var obj =
-      this->naming_manager_->create_object_group (
-        ACE_TEXT_ALWAYS_CHAR (group_name),
-        strategy,
-        criteria);
-
-    if (CORBA::is_nil (obj.in ()))
-    {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nUnable to create group %s.\n"),
-                         group_name),
-                        -1);
-    }
-
-  }
   catch (const CORBA::Exception&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to create group %s\n"),
-                       group_name),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to create group %s\n"),
+                          group_name));
+        }
+      return -1;
+    }
 
   return 0;
 }
@@ -192,130 +221,165 @@ NS_group_svc::group_create (
  * specified object group.
  */
 int
-NS_group_svc::group_bind (
-  const ACE_TCHAR* group_name,
-  const ACE_TCHAR* path)
+NS_group_svc::group_bind (const ACE_TCHAR* group_name,
+                          const ACE_TCHAR* path)
 {
-
   if (group_name == 0 || path == 0)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("group_bind args not provided\n")),
-                       -2);
-  }
-
-  try
-  {
-
-    PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (
-        ACE_TEXT_ALWAYS_CHAR(group_name));
-
-    if (CORBA::is_nil (group_var.in()))
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Unable to get reference.\n")),
-                         -1);
-
-    CORBA::String_var str = CORBA::string_dup( ACE_TEXT_ALWAYS_CHAR (path) );
-    CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
-
-    this->name_service_->rebind (name.in(), group_var.in());
-
-  }
-  catch (const CosNaming::NamingContextExt::InvalidName& ex){
-      ex._tao_print_exception ("InvalidName Exception in group_bind");
-
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\n%s is invalid\n"),
-                         path),
-                        -1);
-  }
-  catch (const CosNaming::NamingContext::CannotProceed&){
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nCannot proceed with %s\n"),
-                       path),
-                      -1);
-  }
-  catch (const CosNaming::NamingContext::NotFound&){
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nUnable to find %s\n"),
-                         path),
-                        -1);
-  }
-  catch (const CORBA::SystemException& ex){
-
-    ex._tao_print_exception ("SystemException Exception in group_bind");
-
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to bind %s\n"),
-                       path),
-                      -1);
-  }
-  catch (const CORBA::Exception& ex){
-
-    ex._tao_print_exception ("Exception in group_bind");
-
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to bind %s\n"),
-                       path),
-                      -1);
-  }
-  return 0;
-}
-
-int
-NS_group_svc::group_unbind (const ACE_TCHAR* path){
-  if ( path == 0)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("group_unbind args not provided\n")),
-                      -2);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc group_bind args not provided\n")));
+        }
+      return -2;
+    }
 
   try
     {
 
+      PortableGroup::ObjectGroup_var group_var =
+        this->naming_manager_->get_object_group_ref_from_name
+           (ACE_TEXT_ALWAYS_CHAR(group_name));
+
+      if (CORBA::is_nil (group_var.in()))
+        {
+          if (TAO_debug_level > 2)
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to get reference.\n")));
+            }
+          return -1;
+        }
+
+      CORBA::String_var str = CORBA::string_dup( ACE_TEXT_ALWAYS_CHAR (path) );
+      CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
+
+      this->name_service_->rebind (name.in(), group_var.in());
+
+    }
+  catch (const CosNaming::NamingContextExt::InvalidName& )
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc %s is invalid\n"),
+                          path));
+        }
+      return -1;
+    }
+  catch (const CosNaming::NamingContext::CannotProceed&)
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Cannot proceed with %s\n"),
+                          path));
+        }
+      return -1;
+    }
+  catch (const CosNaming::NamingContext::NotFound&)
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to find %s\n"),
+                          path));
+        }
+      return -1;
+    }
+  catch (const CORBA::SystemException& )
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to bind %s\n"),
+                          path));
+        }
+      return -1;
+    }
+  catch (const CORBA::Exception& )
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to bind %s\n"),
+                          path));
+        }
+      return -1;
+    }
+  return 0;
+}
+
+int
+NS_group_svc::group_unbind (const ACE_TCHAR* path)
+{
+  if ( path == 0)
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc group_unbind args not provided\n")));
+        }
+      return -2;
+    }
+
+  try
+    {
       CORBA::String_var str = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (path));
       CosNaming::Name_var name = this->name_service_->to_name ( str.in() );
       this->name_service_->unbind (name.in());
+    }
+  catch (const CosNaming::NamingContext::NotFound&)
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to find %s\n"),
+                          path));
+        }
+      return -1;
+    }
+  catch (const CosNaming::NamingContext::CannotProceed&)
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Cannot proceed with %s\n"),
+                          path));
+        }
+      return -1;
+    }
+  catch (const CosNaming::NamingContext::InvalidName&)
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc %s is invalid\n"),
+                          path));
+        }
+      return -1;
+    }
+  catch (const CORBA::SystemException& )
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to unbind %s\n"),
+                          path));
+        }
+      return -1;
+    }
+  catch (const CORBA::Exception& )
+    {
 
-  }
-  catch (const CosNaming::NamingContext::NotFound&){
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nUnable to find %s\n"),
-                         path),
-                        -1);
-  }
-  catch (const CosNaming::NamingContext::CannotProceed&){
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nCannot proceed with %s\n"),
-                         path),
-                         -1);
-  }
-  catch (const CosNaming::NamingContext::InvalidName&) {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\n%s is invalid\n"),
-                         path),
-                         -1);
-  }
-  catch (const CORBA::SystemException& ex) {
-
-      ex._tao_print_exception ("Exception in group_unbind");
-
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nUnable to unbind %s\n"),
-                         path),
-                         -1);
-  }
-  catch (const CORBA::Exception& ex) {
-
-      ex._tao_print_exception ("Exception in group_unbind");
-
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("\nUnable to unbind %s\n"),
-                         path),
-                         -1);
-  }
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to unbind %s\n"),
+                          path));
+        }
+      return -1;
+    }
   return 0;
 }
 
@@ -335,65 +399,70 @@ NS_group_svc::group_list (void)
   int rc = 0;
   if (display_load_policy_group (FT_Naming::ROUND_ROBIN,
                                  ACE_TEXT ("Round Robin")) < 0 )
-  {
-    rc = -1;
-  }
+    {
+      rc = -1;
+    }
   if (rc == 0 && display_load_policy_group (FT_Naming::RANDOM,
                                             ACE_TEXT ("Random")) < 0 )
-  {
-    rc = -1;
-  }
+    {
+      rc = -1;
+    }
 
   return rc;
 }
 
 int
-NS_group_svc::display_load_policy_group(
-  FT_Naming::LoadBalancingStrategyValue strategy,
-  const ACE_TCHAR *display_label) {
-
-  if( display_label == 0 ) {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("display_load_policy_group args ")
-                       ACE_TEXT ("not provided\n")),
-                       -2);
-  }
-
-  try
-  {
-
-    FT_Naming::GroupNames_var list = this->naming_manager_->groups (strategy);
-
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("\n%s Load Balancing Groups\n"),
-                display_label));
-
-    if ( list->length () > 0 ) {
-
-      for (unsigned int i = 0; i < list->length (); ++i)
-      {
-        CORBA::String_var s = CORBA::string_dup (list[i]);
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("  %C\n"),
-                    s.in ()));
-      }
-
-    } else {
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("No %s Load Balancing Groups Registered\n"),
-                    display_label));
+NS_group_svc::display_load_policy_group(FT_Naming::LoadBalancingStrategyValue strategy,
+                                        const ACE_TCHAR *display_label)
+{
+  if( display_label == 0 )
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc display_load_policy_group args ")
+                          ACE_TEXT ("not provided\n")));
+        }
+      return -2;
     }
 
-  }
-  catch (const CORBA::Exception& ex)
-  {
-    ex._tao_print_exception ("Exception in group_list");
+  try
+    {
+      FT_Naming::GroupNames_var list = this->naming_manager_->groups (strategy);
+      if (!this->quiet_)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("%s Load Balancing Groups\n"),
+                          display_label));
+          if ( list->length () > 0 )
+            {
 
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Unable to get %s group list\n"),
-                       display_label),
-                      -1);
-  }
+              for (unsigned int i = 0; i < list->length (); ++i)
+                {
+                  CORBA::String_var s = CORBA::string_dup (list[i]);
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("  %C\n"),
+                                  s.in ()));
+                }
+            }
+          else
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("No %s Load Balancing Groups Registered\n"),
+                              display_label));
+            }
+        }
+    }
+  catch (const CORBA::Exception& )
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to get %s group list\n"),
+                          display_label));
+        }
+      return -1;
+    }
   return 0;
 }
 
@@ -405,47 +474,57 @@ NS_group_svc::display_load_policy_group(
  * requests to object group members.
  */
 int
-NS_group_svc::group_modify (
-  const ACE_TCHAR* group_name,
-  const ACE_TCHAR* policy)
+NS_group_svc::group_modify (const ACE_TCHAR* group_name,
+                            const ACE_TCHAR* policy)
 {
   if (group_name == 0 || policy == 0)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("group_modify args not provided\n")),
-                      -2);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc group_modify args not provided\n")));
+        }
+      return -2;
+    }
 
   /// Validate load balancing strategy policy string
   FT_Naming::LoadBalancingStrategyValue strategy;
   if (false == determine_policy_string (policy, strategy))
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s is not a valid policy.\n"),
-                       policy),
-                      -2);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc %s is not a valid policy.\n"),
+                          policy));
+        }
+      return -2;
+    }
 
   try
-  {
-    this->naming_manager_->set_load_balancing_strategy (
-                            ACE_TEXT_ALWAYS_CHAR (group_name),
-                            strategy );
-  }
+    {
+      this->naming_manager_->set_load_balancing_strategy
+        (ACE_TEXT_ALWAYS_CHAR (group_name), strategy );
+    }
   catch (const PortableGroup::ObjectGroupNotFound&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to find group %s\n"),
-                       group_name),
-                       -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to find group %s\n"),
+                          group_name));
+        }
+      return -1;
+    }
   catch (const CORBA::Exception&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to modify group %s\n"),
-                       group_name),
-                       -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to modify group %s\n"),
+                          group_name));
+        }
+      return -1;
+    }
 
   return 0;
 }
@@ -459,31 +538,39 @@ int
 NS_group_svc::group_remove (const ACE_TCHAR* group_name)
 {
   if (group_name == 0)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("group_remove args not provided\n")),
-                       -2);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc group_remove args not provided\n")));
+        }
+      return -2;
+    }
 
   try
-  {
-    this->naming_manager_->delete_object_group (
-      ACE_TEXT_ALWAYS_CHAR (group_name));
-  }
+    {
+      this->naming_manager_->delete_object_group (ACE_TEXT_ALWAYS_CHAR (group_name));
+    }
   catch (const PortableGroup::ObjectGroupNotFound&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to find group %s\n"),
-                       group_name),
-                       -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to find group %s\n"),
+                          group_name));
+        }
+      return -1;
+    }
   catch (const CORBA::Exception&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to remove group %s\n"),
-                       group_name),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to remove group %s\n"),
+                          group_name));
+        }
+      return -1;
+    }
 
   return 0;
 }
@@ -495,65 +582,78 @@ NS_group_svc::group_remove (const ACE_TCHAR* group_name)
  * is available for selection.
  */
 int
-NS_group_svc::member_add (
-  const ACE_TCHAR* group_name,
-  const ACE_TCHAR* location,
-  const ACE_TCHAR* ior)
+NS_group_svc::member_add (const ACE_TCHAR* group_name,
+                          const ACE_TCHAR* location,
+                          const ACE_TCHAR* ior)
 {
   if (group_name == 0 || location == 0 || ior == 0 )
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("member_add args not provided\n")),
-                       -2);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc member_add args not provided\n")));
+        }
+      return -2;
+    }
 
   try
-  {
-    PortableGroup::Location location_name;
-    location_name.length (1);
-    location_name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (location));
+    {
+      PortableGroup::Location location_name;
+      location_name.length (1);
+      location_name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (location));
 
-    PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (
-        ACE_TEXT_ALWAYS_CHAR (group_name));
+      PortableGroup::ObjectGroup_var group_var =
+        this->naming_manager_->get_object_group_ref_from_name
+                    (ACE_TEXT_ALWAYS_CHAR (group_name));
 
-    CORBA::Object_var ior_var =
-      this->orb_->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
+      CORBA::Object_var ior_var =
+        this->orb_->string_to_object(ACE_TEXT_ALWAYS_CHAR (ior));
 
-    if (CORBA::is_nil (ior_var.in ()))
-      {
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("\nInvalid member IOR provided.\n")),
-                          -1);
-      }
+      if (CORBA::is_nil (ior_var.in ()))
+        {
+          if (TAO_debug_level > 2)
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                              ACE_TEXT ("TAO (%P|%t) NS_group_svc Invalid member IOR provided.\n")));
+            }
+          return -1;
+        }
 
-    group_var = this->naming_manager_->add_member (group_var.in(),
-                                                   location_name,
-                                                   ior_var.in());
+      group_var = this->naming_manager_->add_member (group_var.in(),
+                                                     location_name,
+                                                     ior_var.in());
 
-  }
+    }
   catch (const PortableGroup::ObjectGroupNotFound&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to find group %s\n"),
-                       group_name),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to find group %s\n"),
+                          group_name));
+        }
+      return -1;
+    }
   catch (const PortableGroup::ObjectNotAdded&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to add location %s to group %s\n"),
-                       location, group_name),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to add location %s to group %s\n"),
+                          location, group_name));
+        }
+      return -1;
+    }
   catch (const CORBA::Exception&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to add location %s to group %s\n"),
-                       location, group_name),
-                      -1);
-  }
-
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to add location %s to group %s\n"),
+                          location, group_name));
+        }
+      return -1;
+    }
   return 0;
 }
 
@@ -566,46 +666,59 @@ int
 NS_group_svc::member_list (const ACE_TCHAR* group_name)
 {
   if (group_name == 0)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("member_list args not provided\n")),
-                      -2);
-  }
-
-  try
-  {
-    PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (
-        ACE_TEXT_ALWAYS_CHAR (group_name));
-
-    PortableGroup::Locations_var locations =
-      this->naming_manager_->locations_of_members (group_var.in());
-
-    for (unsigned int i = 0; i < locations->length(); ++i)
     {
-      const PortableGroup::Location & loc = locations[i];
-      if (loc.length() > 0) {
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%C\n"),
-                    loc[0].id.in()));
-      }
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc member_list args not provided\n")));
+        }
+      return -2;
     }
 
-  }
+  try
+    {
+      PortableGroup::ObjectGroup_var group_var =
+        this->naming_manager_->get_object_group_ref_from_name
+          (ACE_TEXT_ALWAYS_CHAR (group_name));
+
+      PortableGroup::Locations_var locations =
+        this->naming_manager_->locations_of_members (group_var.in());
+
+      if (!this->quiet_)
+        {
+          for (unsigned int i = 0; i < locations->length(); ++i)
+            {
+              const PortableGroup::Location & loc = locations[i];
+              if (loc.length() > 0)
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("%C\n"),
+                                  loc[0].id.in()));
+                }
+            }
+        }
+
+    }
   catch (const PortableGroup::ObjectGroupNotFound&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to find group %s\n"),
-                       group_name),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to find group %s\n"),
+                          group_name));
+        }
+      return -1;
+    }
   catch (const CORBA::Exception&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to list members for group %s\n"),
-                       group_name),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to list members for group %s\n"),
+                          group_name));
+        }
+      return -1;
+    }
 
   return 0;
 }
@@ -616,16 +729,18 @@ NS_group_svc::member_list (const ACE_TCHAR* group_name)
  * Removes the specified member object from the specified object group.
  */
 int
-NS_group_svc::member_remove (
-  const ACE_TCHAR* group_name,
-  const ACE_TCHAR* location)
+NS_group_svc::member_remove (const ACE_TCHAR* group_name,
+                             const ACE_TCHAR* location)
 {
   if (group_name == 0 || location == 0)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("member_remove args not provided\n")),
-                      -2);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc member_remove args not provided\n")));
+        }
+      return -2;
+    }
 
   /**
    * Remove an object at a specific location from the given
@@ -636,39 +751,48 @@ NS_group_svc::member_remove (
    */
 
   try
-  {
-    PortableGroup::Location location_name;
-    location_name.length (1);
-    location_name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (location));
+    {
+      PortableGroup::Location location_name;
+      location_name.length (1);
+      location_name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (location));
 
-    PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (
-        ACE_TEXT_ALWAYS_CHAR (group_name));
+      PortableGroup::ObjectGroup_var group_var =
+        this->naming_manager_->get_object_group_ref_from_name
+        (ACE_TEXT_ALWAYS_CHAR (group_name));
 
-    group_var = this->naming_manager_->remove_member (group_var.in(),
-                                                      location_name);
-  }
+      group_var = this->naming_manager_->remove_member (group_var.in(),
+                                                        location_name);
+    }
   catch (const PortableGroup::ObjectGroupNotFound&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to find group %s\n"),
-                       group_name),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to find group %s\n"),
+                          group_name));
+        }
+      return -1;
+    }
   catch (const PortableGroup::MemberNotFound&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to find member %s\n"),
-                       location),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to find member %s\n"),
+                          location));
+        }
+      return -1;
+    }
   catch (const CORBA::Exception&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to remove member %s\n"),
-                       location),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to remove member %s\n"),
+                          location));
+        }
+      return -1;
+    }
 
   return 0;
 }
@@ -680,60 +804,73 @@ NS_group_svc::member_remove (
  * object group.
  */
 int
-NS_group_svc::member_show (
-  const ACE_TCHAR* group_name,
-  const ACE_TCHAR* location)
+NS_group_svc::member_show (const ACE_TCHAR* group_name,
+                           const ACE_TCHAR* location)
 {
   if (group_name == 0 || location == 0)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("member_show args not provided\n")),
-                      -2);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc member_show args not provided\n")));
+        }
+      return -2;
+    }
 
   //Get and display IOR for the member location
   try
-  {
-    PortableGroup::Location location_name (1);
-    location_name.length (1);
-    location_name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (location));
+    {
+      PortableGroup::Location location_name (1);
+      location_name.length (1);
+      location_name[0].id = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (location));
 
-    PortableGroup::ObjectGroup_var group_var =
-      this->naming_manager_->get_object_group_ref_from_name (
-        ACE_TEXT_ALWAYS_CHAR (group_name));
+      PortableGroup::ObjectGroup_var group_var =
+        this->naming_manager_->get_object_group_ref_from_name
+        (ACE_TEXT_ALWAYS_CHAR (group_name));
 
-    CORBA::Object_var ior_var =
-      this->naming_manager_->get_member_ref (group_var.in(), location_name);
+      CORBA::Object_var ior_var =
+        this->naming_manager_->get_member_ref (group_var.in(), location_name);
 
-    CORBA::String_var ior_string  =
-      this->orb_->object_to_string (ior_var.in());
+      CORBA::String_var ior_string  =
+        this->orb_->object_to_string (ior_var.in());
 
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%C\n"),
-                ior_string.in()));
+      if (!this->quiet_)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), ior_string.in()));
+        }
 
-  }
+    }
   catch (const PortableGroup::ObjectGroupNotFound&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to find group %s\n"),
-                       group_name),
-                      -1);
-  }
+    {
+
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to find group %s\n"),
+                          group_name));
+        }
+      return -1;
+    }
   catch (const PortableGroup::MemberNotFound&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to find member location %s\n"),
-                       location),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to find member location %s\n"),
+                          location));
+        }
+      return -1;
+    }
   catch (const CORBA::Exception&)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("\nUnable to show member location %s\n"),
-                       location),
-                      -1);
-  }
+    {
+      if (TAO_debug_level > 2)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO (%P|%t) NS_group_svc Unable to show member location %s\n"),
+                          location));
+        }
+      return -1;
+    }
 
   return 0;
 }

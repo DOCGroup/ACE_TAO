@@ -14,6 +14,7 @@
 #include "orbsvcs/Naming/Storable.h"
 
 #include "tao/Storable_Base.h"
+#include "tao/Storable_FlatFileStream.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,6 +28,14 @@ void
 TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & context)
 {
   TAO_NS_Persistence_Header header;
+
+  if (context.storable_context_ == 0)
+    {
+      header.size (0);
+      header.destroyed (0);
+      this->write_header (header);
+      return;
+    }
 
   header.size (static_cast<unsigned int> (context.storable_context_->current_size()));
   header.destroyed (context.destroyed_);
@@ -44,13 +53,13 @@ TAO_Storable_Naming_Context_ReaderWriter::write (TAO_Storable_Naming_Context & c
   ACE_Hash_Map_Entry<TAO_Storable_ExtId,TAO_Storable_IntId> ent = *it;
 
   while (!(it == itend))
-  {
-    TAO_NS_Persistence_Record record;
+    {
+      TAO_NS_Persistence_Record record;
 
-    ACE_CString name;
-    CosNaming::BindingType bt = (*it).int_id_.type_;
-    if (bt ==  CosNaming::ncontext)
-      {
+      ACE_CString name;
+      CosNaming::BindingType bt = (*it).int_id_.type_;
+      if (bt ==  CosNaming::ncontext)
+        {
         CORBA::Object_var
           obj = context.orb_->string_to_object ((*it).int_id_.ref_.in ());
         if (obj->_is_collocated ())

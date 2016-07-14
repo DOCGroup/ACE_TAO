@@ -448,25 +448,29 @@ testLimits (int , ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the second service\n")));
     }
 
-  ACE_Service_Repository_Iterator sri (*one.current_service_repository (), 0);
+  {
+    ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, one.current_service_repository ()->lock ());
 
-  size_t index = 0;
-  for (const ACE_Service_Type *sr;
-       sri.next (sr) != 0;
-       sri.advance ())
-    {
-      if (index == 0 && ACE_OS::strcmp (sr->name(), ACE_TEXT ("Test_Object_1_More")) != 0)
-        {
-          ++error;
-          ACE_ERROR ((LM_ERROR, ACE_TEXT("Service 1 is wrong\n")));
-        }
-      if (index == 1 && ACE_OS::strcmp (sr->name(), ACE_TEXT ("Test_Object_2_More")) != 0)
-        {
-          ++error;
-          ACE_ERROR ((LM_ERROR, ACE_TEXT("Service 2 is wrong\n")));
-        }
-      ++index;
-    }
+    ACE_Service_Repository_Iterator sri (*one.current_service_repository (), 0);
+
+    size_t index = 0;
+    for (const ACE_Service_Type *sr;
+        sri.next (sr) != 0;
+        sri.advance ())
+      {
+        if (index == 0 && ACE_OS::strcmp (sr->name(), ACE_TEXT ("Test_Object_1_More")) != 0)
+          {
+            ++error;
+            ACE_ERROR ((LM_ERROR, ACE_TEXT("Service 1 is wrong\n")));
+          }
+        if (index == 1 && ACE_OS::strcmp (sr->name(), ACE_TEXT ("Test_Object_2_More")) != 0)
+          {
+            ++error;
+            ACE_ERROR ((LM_ERROR, ACE_TEXT("Service 2 is wrong\n")));
+          }
+        ++index;
+      }
+  }
 
   // Test close
   one.current_service_repository ()->close();
