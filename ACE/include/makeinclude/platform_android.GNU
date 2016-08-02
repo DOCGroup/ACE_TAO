@@ -9,11 +9,6 @@ no_hidden_visibility ?= 1
 # as of NDK r6 inlining is required
 inline ?= 1
 
-# start of: include most of platform_linux_common.GNU
-
-# We always include config-linux.h on Linux platforms.
-ACE_PLATFORM_CONFIG ?= config-linux.h
-
 debug ?= 1
 optimize ?= 1
 threads ?= 1
@@ -119,6 +114,11 @@ ifeq ($(ssl),1)
 endif # ssl
 
 SYSARCH := $(shell uname -m)
+
+PIC      = -fPIC
+AR      ?= ar
+ARFLAGS ?= rsuv
+RANLIB   = @true
 
 PIC      = -fPIC
 AR      ?= ar
