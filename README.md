@@ -77,20 +77,9 @@ The project assumes one of 3 _roles_ an individual may assume when interacting w
 ### Occasional Contributor
 
 This role defines a user who browses through the source code of the project and occasionally submits patches.
-A occasional contributor will only submit patches via a pull requests. The pull request will be submitted via GitHub.
+An occasional contributor will only submit patches via a pull requests. The pull request will be submitted via GitHub.
 
 Occasional contributors should *always* fork the upstream project on GitHub and work off a clone of this fork
-
-#### Attach a patch file to the Bugzilla issue
-
-![Git Workflow 1](https://docs.jboss.org/author/download/attachments/4784485/git_wf_1.png)
-
-In this workflow, the contributor directly clones the upstream repository, makes changes to his local clone, adequately tests and commits his work with proper comments (more on commit comments later), and generates a patch. The patch should then be attached to the Bugzilla issue.
-
-More information on generating patches suitable for attaching to a Bugzilla can be found in [Chapter 5, Section 2](http://progit.org/book/ch5-2.html) of Pro Git, under the section titled *Public Large Project*.
-
-![Warning][warn] Rather than emailing the patches to a developer mail list, please attach your patch to the Bugzilla issue.
-
 
 #### Creating a pull request on GitHub
 
@@ -219,14 +208,6 @@ Project Admins have a very limited role. Only Project Admins are allowed to push
 
 
 This approach ensures ACE/TAO maintains quality on the main code source tree, and allows for important code reviews to take place again ensuring quality. Further, it ensures clean and easily traceable code history and makes sure that more than one person knows about the changes being performed.
-
-#### Merging in patches
-
-![Git Workflow 3](https://docs.jboss.org/author/download/attachments/4784485/git_wf_3.png)
-
-Patches submitted via Bugzilla are audited and promoted to the upstream repository as detailed above. A Project Admin would typically create a working branch to which the patch is applied and tested. The patch can be further modified, cleaned up, and commit messages made clearer if necessary. The branch should then be merged to the master or one of the maintenance branches before being pushed.
-
-More information on applying patches can be found in [Chapter 5, Section 3](http://progit.org/book/ch5-3.html) of Pro Git, under *Applying Patches From Email.*
 
 #### Handling pull requests
 
