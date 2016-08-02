@@ -76,17 +76,10 @@ The project assumes one of 3 _roles_ an individual may assume when interacting w
 
 ### Occasional Contributor
 
-This role defines a user who browses through the source code of the project and occasionally submits patches. Patches may be submitted in one of two ways:
+This role defines a user who browses through the source code of the project and occasionally submits patches.
+A occasional contributor will only submit patches via a pull requests. The pull request will be submitted via GitHub.
 
-*  Attach a patch file to the Bugzila issue (ATCD Bug tracking system may be found [here](http://bugzilla.dre.vanderbilt.edu/)).
-*  Creating a pull request on GitHub
-
-The approach a contributor chooses to use depends entirely his/her personal preference, but usually is tied to how the
-contributor accesses ACE/TAO source code. If the contributor directly clones the upstream repository,
-they should submit patch files. If the contributor instead uses their personal GitHub account to fork the upstream repository, then they are should issue a pull request.
-
-![Tip][tip] A GitHub pull request is the preferred method to submit a patch!
-
+Occasional contributors should *always* fork the upstream project on GitHub and work off a clone of this fork
 
 #### Attach a patch file to the Bugzilla issue
 
