@@ -958,8 +958,7 @@ sort_list ()
     #echo $i
   done
 
-  # sort eats underscores, soo...
-  sed "s/___/000/g" ${DEST}/tmp_list | sort -f | sed "s/000/___/g"
+  sort -f ${DEST}/tmp_list
 }
 
 ###############################################################################
