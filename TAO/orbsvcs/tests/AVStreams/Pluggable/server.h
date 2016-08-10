@@ -64,7 +64,7 @@ private:
  *
  * @brief Defines the server application class.
  *
- * The actual server progarm that acts as the ftp server that receives data
+ * The actual server program that acts as the ftp server that receives data
  * sent by the ftp client.
  */
 class Server
