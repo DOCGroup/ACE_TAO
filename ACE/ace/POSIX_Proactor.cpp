@@ -992,7 +992,6 @@ ACE_POSIX_AIOCB_Proactor::delete_notify_manager (void)
 {
   // We are responsible for delete as all pointers set to 0 after
   // delete, it is save to delete twice
-
   delete aiocb_notify_pipe_manager_;
   aiocb_notify_pipe_manager_ = 0;
 }
