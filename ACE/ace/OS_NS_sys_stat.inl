@@ -2,6 +2,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_errno.h"
+#include "ace/OS_NS_time.h"
 #include "ace/OS_NS_macros.h"
 
 #ifdef ACE_MQX
@@ -42,14 +43,16 @@ namespace ACE_OS
         ACE_OS::set_errno_to_last_error ();
         return -1;
       }
+# if !defined(ACE_WIN64) && (!defined(_FILE_OFFSET_BITS) || _FILE_OFFSET_BITS != 64)
     else if (fdata.nFileSizeHigh != 0)
       {
         errno = EINVAL;
         return -1;
       }
+# endif /* !defined(ACE_WIN64) && (!defined(_FILE_OFFSET_BITS) || _FILE_OFFSET_BITS != 64)*/
     else
       {
-        stp->st_size = fdata.nFileSizeLow;
+        stp->st_size = ACE_MAKE_QWORD(fdata.nFileSizeLow, fdata.nFileSizeHigh);
         stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
         stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
         stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
