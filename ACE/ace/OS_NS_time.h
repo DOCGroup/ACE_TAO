@@ -102,7 +102,7 @@ inline char *ace_asctime_r_helper (const struct tm *t, char *buf)
   return asctime_r (t, buf);
 #undef asctime_r
 #else
-  return ::asctime_r (t, buf);
+  return ACE_STD_NAMESPACE::asctime_r (t, buf);
 #endif /* defined (asctime_r) */
 }
 
@@ -112,7 +112,7 @@ inline struct tm *ace_gmtime_r_helper (const time_t *clock, struct tm *res)
   return gmtime_r (clock, res);
 #undef gmtime_r
 #else
-  return ::gmtime_r (clock, res);
+  return ACE_STD_NAMESPACE::gmtime_r (clock, res);
 #endif /* defined (gmtime_r) */
 }
 
@@ -122,7 +122,7 @@ inline struct tm *ace_localtime_r_helper (const time_t *clock, struct tm *res)
   return localtime_r (clock, res);
 #undef localtime_r
 #else
-  return ::localtime_r (clock, res);
+  return ACE_STD_NAMESPACE::localtime_r (clock, res);
 #endif /* defined (localtime_r) */
 }
 
