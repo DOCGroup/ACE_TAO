@@ -12,15 +12,9 @@ else
   ifneq ($(CROSS_COMPILE),)
     CROSS-COMPILE = 1
     # Build using the cross-tools
-    ifneq ($($CROSS_COMPILE_POSTFIX),)
-      CC  = ${CROSS_COMPILE}gcc{$CROSS_COMPILE_POSTFIX}
-      CXX = ${CROSS_COMPILE}g++{$CROSS_COMPILE_POSTFIX}
-      AR  = ${CROSS_COMPILE}ar{$CROSS_COMPILE_POSTFIX}
-    else
-      CC  = ${CROSS_COMPILE}gcc
-      CXX = ${CROSS_COMPILE}g++
-      AR  = ${CROSS_COMPILE}ar
-    endif
+    CC  = ${CROSS_COMPILE}gcc${CROSS_COMPILE_SUFFIX}
+    CXX = ${CROSS_COMPILE}g++${CROSS_COMPILE_SUFFIX}
+    AR  = ${CROSS_COMPILE}ar${CROSS_COMPILE_SUFFIX}
     # Cross-linker requires this for linked in shared libs that depend
     # themselves on other shared libs (not directly linked in)
     LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
