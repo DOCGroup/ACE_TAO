@@ -15,8 +15,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX)
-
 namespace ACE_Utils
 {
   // NIL version of the UUID

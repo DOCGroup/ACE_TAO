@@ -105,6 +105,8 @@ protected:
   TAO_Notify_Tests_Priority_Mapping *priority_mapping_;
 };
 
+TAO_NOTIFY_TEST_SINGLETON_DECLARE (ACE_Singleton, TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX)
+
 typedef ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX> _TAO_Notify_Tests_LookupManager;
 
 #define LOOKUP_MANAGER  _TAO_Notify_Tests_LookupManager::instance()

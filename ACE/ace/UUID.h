@@ -275,6 +275,8 @@ namespace ACE_Utils
           UUID_GENERATOR;
 }
 
+ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX)
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
