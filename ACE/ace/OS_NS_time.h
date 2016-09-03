@@ -96,7 +96,7 @@ inline long ace_timezone()
  * be usable later as there is no way to save the macro definition
  * using the pre-processor.
  */
-#if !defined (ACE_LACKS_ASCTIME_R)
+#if !defined (ACE_LACKS_ASCTIME_R) && !defined (ACE_HAS_TR24731_2005_CRT)
 inline char *ace_asctime_r_helper (const struct tm *t, char *buf)
 {
 #  if defined (asctime_r)
@@ -106,9 +106,9 @@ inline char *ace_asctime_r_helper (const struct tm *t, char *buf)
   return ACE_STD_NAMESPACE::asctime_r (t, buf);
 #  endif /* asctime_r */
 }
-#endif /* !ACE_LACKS_ASCTIME_R */
+#endif /* !ACE_LACKS_ASCTIME_R && !ACE_HAS_TR24731_2005_CRT */
 
-#if !defined (ACE_LACKS_GMTIME_R)
+#if !defined (ACE_LACKS_GMTIME_R) && !defined (ACE_HAS_TR24731_2005_CRT)
 inline struct tm *ace_gmtime_r_helper (const time_t *clock, struct tm *res)
 {
 #  if defined (gmtime_r)
@@ -118,9 +118,9 @@ inline struct tm *ace_gmtime_r_helper (const time_t *clock, struct tm *res)
   return ACE_STD_NAMESPACE::gmtime_r (clock, res);
 #  endif /* gmtime_r */
 }
-#endif /* !ACE_LACKS_GMTIME_R */
+#endif /* !ACE_LACKS_GMTIME_R && !ACE_HAS_TR24731_2005_CRT */
 
-#if !defined (ACE_LACKS_LOCALTIME_R)
+#if !defined (ACE_LACKS_LOCALTIME_R) && !defined (ACE_HAS_TR24731_2005_CRT)
 inline struct tm *ace_localtime_r_helper (const time_t *clock, struct tm *res)
 {
 #  if defined (localtime_r)
@@ -130,7 +130,7 @@ inline struct tm *ace_localtime_r_helper (const time_t *clock, struct tm *res)
   return ACE_STD_NAMESPACE::localtime_r (clock, res);
 #  endif /* localtime_r */
 }
-#endif /* !ACE_LACKS_LOCALTIME_R */
+#endif /* !ACE_LACKS_LOCALTIME_R && !ACE_HAS_TR24731_2005_CRT */
 
 #if !defined (ACE_LACKS_DIFFTIME)
 # if defined (_WIN32_WCE) && ((_WIN32_WCE >= 0x600) && (_WIN32_WCE <= 0x700)) && !defined (_USE_32BIT_TIME_T) \
