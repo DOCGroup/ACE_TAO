@@ -96,35 +96,41 @@ inline long ace_timezone()
  * be usable later as there is no way to save the macro definition
  * using the pre-processor.
  */
+#if !defined (ACE_LACKS_ASCTIME_R)
 inline char *ace_asctime_r_helper (const struct tm *t, char *buf)
 {
-#if defined (asctime_r)
+#  if defined (asctime_r)
   return asctime_r (t, buf);
-#undef asctime_r
-#else
+#  undef asctime_r
+#  else
   return ACE_STD_NAMESPACE::asctime_r (t, buf);
-#endif /* defined (asctime_r) */
+#  endif /* asctime_r */
 }
+#endif /* !ACE_LACKS_ASCTIME_R */
 
+#if !defined (ACE_LACKS_GMTIME_R)
 inline struct tm *ace_gmtime_r_helper (const time_t *clock, struct tm *res)
 {
-#if defined (gmtime_r)
+#  if defined (gmtime_r)
   return gmtime_r (clock, res);
-#undef gmtime_r
-#else
+#  undef gmtime_r
+#  else
   return ACE_STD_NAMESPACE::gmtime_r (clock, res);
-#endif /* defined (gmtime_r) */
+#  endif /* gmtime_r */
 }
+#endif /* !ACE_LACKS_GMTIME_R */
 
+#if !defined (ACE_LACKS_LOCALTIME_R)
 inline struct tm *ace_localtime_r_helper (const time_t *clock, struct tm *res)
 {
-#if defined (localtime_r)
+#  if defined (localtime_r)
   return localtime_r (clock, res);
-#undef localtime_r
-#else
+#  undef localtime_r
+#  else
   return ACE_STD_NAMESPACE::localtime_r (clock, res);
-#endif /* defined (localtime_r) */
+#  endif /* localtime_r */
 }
+#endif /* !ACE_LACKS_LOCALTIME_R */
 
 #if !defined (ACE_LACKS_DIFFTIME)
 # if defined (_WIN32_WCE) && ((_WIN32_WCE >= 0x600) && (_WIN32_WCE <= 0x700)) && !defined (_USE_32BIT_TIME_T) \
