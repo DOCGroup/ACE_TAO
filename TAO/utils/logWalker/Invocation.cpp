@@ -457,7 +457,7 @@ Invocation::dump_detail (ostream &strm,
       for (NotifyIncidents::ITERATOR i = this->notify_incidents_.begin();
            !(i.done()); i.advance())
         {
-          ACE_CString *note;
+          ACE_CString *note = 0;
           i.next(note);
           strm << "            " << *note << endl;
         }
