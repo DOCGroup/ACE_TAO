@@ -18,6 +18,8 @@
 # include <iomanip>
 #endif /* ACE_HAS_CPP98_IOSTREAMS */
 
+#include <cstdlib>
+
 #ifdef ACE_HAS_CPP11
 # include <cmath>
 #endif /* ACE_HAS_CPP11 */
@@ -178,7 +180,7 @@ ACE_Time_Value::normalize (bool saturate)
   if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS ||
       this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
-      time_t sec = abs(this->tv_.tv_usec) / ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
+      time_t sec = std::abs(this->tv_.tv_usec) / ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
       suseconds_t usec = this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS;
 
       if (saturate && this->tv_.tv_sec > 0 && sec > 0 &&
