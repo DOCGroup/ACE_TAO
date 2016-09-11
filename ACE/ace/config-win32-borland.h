@@ -154,6 +154,8 @@
 
 #if (__BORLANDC__ <= 0x680)
 # define ACE_LACKS_LOCALTIME_R
+# define ACE_LACKS_GMTIME_R
+# define ACE_LACKS_ASCTIME_R
 #endif
 
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
