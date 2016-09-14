@@ -651,9 +651,14 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
               if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) TAO_StreamCtrl::create_B: succeeded\n"));
 
-              if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-                          "\n(%P|%t)stream_endpoint_b_ = %s",
-                          TAO_ORB_Core_instance ()->orb ()->object_to_string (this->sep_b_.in ())));
+              if (TAO_debug_level > 0)
+                {
+                  CORBA::String_var ep = TAO_ORB_Core_instance ()->orb ()->object_to_string (this->sep_b_.in ());
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                          "\n(%P|%t)stream_endpoint_b_ = <%C>",
+                          ep.in ()));
+                }
+
               // Define ourselves as the related_streamctrl property of the sep.
               CORBA::Any streamctrl_any;
               streamctrl_any <<= this->streamctrl_.in ();
