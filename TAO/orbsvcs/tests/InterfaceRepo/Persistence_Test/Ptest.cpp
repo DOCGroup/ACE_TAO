@@ -60,6 +60,25 @@ Ptest::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
+Ptest::shutdown (void)
+{
+  try
+    {
+      this->repo_ = CORBA::Repository::_nil ();
+
+      this->orb_->destroy ();
+
+      this->orb_ = CORBA::ORB::_nil ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Ptest::init");
+      return -1;
+    }
+  return 0;
+}
+
+int
 Ptest::run (void)
 {
   try
