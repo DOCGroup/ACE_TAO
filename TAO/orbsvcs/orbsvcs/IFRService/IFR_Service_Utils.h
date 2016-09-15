@@ -55,7 +55,7 @@ public:
                      PortableServer::POA_ptr rp,
                      int use_multicast_server = 0);
 
-  /// Destroy the child POA created in <init_with_poa>.
+  /// Destroy the child POA created in init_with_poa().
   int fini (void);
 
   /// Destructor.
