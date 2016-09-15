@@ -3,8 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
-
-
 Ptest::Ptest (void)
   : debug_ (0),
     query_ (0)
