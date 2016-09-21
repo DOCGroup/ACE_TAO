@@ -1146,8 +1146,7 @@ TAO_AV_Core::get_control_flowname(const char *flowname)
   return flowname;
 }
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex> *ACE_Singleton<TAO_AV_Core, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, TAO_AV_Core, ACE_Null_Mutex);
+
 
 TAO_END_VERSIONED_NAMESPACE_DECL

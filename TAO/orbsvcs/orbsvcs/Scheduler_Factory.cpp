@@ -775,8 +775,6 @@ ACE_Scheduler_Factory::set_preemption_priority
 #endif /* HPUX && !g++ */
 }
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex> *ACE_Singleton<ACE_Scheduler_Factory_Data, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_Scheduler_Factory_Data,  ACE_Null_Mutex);
 
 TAO_END_VERSIONED_NAMESPACE_DECL

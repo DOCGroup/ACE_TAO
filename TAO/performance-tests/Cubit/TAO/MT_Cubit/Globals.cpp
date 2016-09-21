@@ -220,6 +220,4 @@ MT_Priority::grain (void)
 }
 
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Globals, ACE_Null_Mutex> *ACE_Singleton<Globals, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Globals,  ACE_Null_Mutex);

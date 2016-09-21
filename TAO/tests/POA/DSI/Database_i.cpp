@@ -369,6 +369,4 @@ DatabaseImpl::Employee::operator delete (void *ptr, const ACE_nothrow_t&) throw 
 
 #endif /* ACE_HAS_NEW_NOTHROW */
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex> *ACE_Singleton<DatabaseImpl::Simpler_Database_Malloc, ACE_Null_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, DatabaseImpl::Simpler_Database_Malloc,  ACE_Null_Mutex);
