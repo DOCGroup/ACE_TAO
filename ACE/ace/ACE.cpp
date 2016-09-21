@@ -164,7 +164,7 @@ ACE::nibble2hex (u_int n)
 bool
 ACE::debug (void)
 {
-  static const char* debug = ACE_OS::getenv ("ACELIB_DEBUG");
+  static const char* debug = ACE_OS::getenv ("ACE_DEBUG");
   return (ACE::debug_ != 0) ? ACE::debug_ : (debug != 0 ? (*debug != '0') : false);
 }
 
