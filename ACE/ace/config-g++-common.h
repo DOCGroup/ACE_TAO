@@ -132,8 +132,9 @@
 #  endif
 
 #  if defined (ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS) && ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS == 1
-#   define ACE_EXPORT_SINGLETON_DECLARATION(T) template class ACE_Proper_Export_Flag T
-#   define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class ACE_Proper_Export_Flag SINGLETON_TYPE <CLASS, LOCK>;
+#   define ACE_EXPORT_SINGLETON_DECLARATION(T) __extension__ extern template class ACE_Proper_Export_Flag T
+#   define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)  __extension__ extern template class ACE_Proper_Export_Flag SINGLETON_TYPE <CLASS, LOCK>;
+#   define ACE_HAS_EXPLICIT_TEMPLATE_CLASS_INSTANTIATION
 #  else  /* ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
 #   define ACE_EXPORT_SINGLETON_DECLARATION(T)     \
         _Pragma ("GCC visibility push(default)")  \
