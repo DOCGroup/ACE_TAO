@@ -207,7 +207,7 @@ protected:
 };
 
 // Beware the SFP_Base code relies on the Singleton being initialized.
-typedef ACE_Singleton <TAO_SFP_Base,TAO_SYNCH_MUTEX> TAO_SFP_BASE;
+// typedef ACE_Singleton <TAO_SFP_Base,TAO_SYNCH_MUTEX> TAO_SFP_BASE;
 
 /**
  * @class TAO_SFP_Object

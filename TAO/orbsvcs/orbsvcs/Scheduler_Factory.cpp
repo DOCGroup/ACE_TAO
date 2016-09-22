@@ -775,6 +775,5 @@ ACE_Scheduler_Factory::set_preemption_priority
 #endif /* HPUX && !g++ */
 }
 
-ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_Scheduler_Factory_Data,  ACE_Null_Mutex);
 
 TAO_END_VERSIONED_NAMESPACE_DECL

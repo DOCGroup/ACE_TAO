@@ -5,6 +5,7 @@
 #include "ace/ARGV.h"
 #include "ace/OS_NS_strings.h"
 
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // default arguments to pass to use for the ORB
@@ -840,7 +841,7 @@ TAO_SFP_Object::TAO_SFP_Object (TAO_AV_Callback *callback,
    max_credit_ (-1),
    current_credit_ (-1)
 {
-  TAO_SFP_BASE::instance ();
+  ACE_Singleton <TAO_SFP_Base,TAO_SYNCH_MUTEX>::instance ();
   this->state_.static_frame_.size (2* this->transport_->mtu ());
 }
 
@@ -1320,7 +1321,7 @@ TAO_SFP_Frame_State::reset (void)
   return 0;
 }
 
-ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, TAO_SFP_Base,  TAO_SYNCH_MUTEX);
+//ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, TAO_SFP_Base,  TAO_SYNCH_MUTEX);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
