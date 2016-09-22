@@ -221,12 +221,6 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << ")" << be_uidt_nl
               << "{" << be_idt_nl
 
-              << "if (0 == &_tao_elem) // Trying to de-reference NULL object"
-              << be_idt_nl
-              << "_tao_any <<= static_cast< ::" << node->name ()
-              << " *>( 0 ); // Use non-copying insertion of a NULL" << be_uidt_nl
-              << "else" << be_idt_nl
-
               << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert_copy ("
               << be_idt << be_idt_nl
               << "_tao_any," << be_nl
@@ -300,12 +294,6 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "const " << node->name () << " &_tao_elem)" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl
-
-      << "if (0 == &_tao_elem) // Trying to de-reference NULL object"
-      << be_idt_nl
-      << "_tao_any <<= static_cast<" << node->name ()
-      << " *>( 0 ); // Use non-copying insertion of a NULL" << be_uidt_nl
-      << "else" << be_idt_nl
 
       << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert_copy ("
       << be_idt << be_idt_nl
