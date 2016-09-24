@@ -400,6 +400,10 @@
 # undef _B
 #endif
 
+// Disable newer features, result in runtime failures on Android
+#define ACE_LACKS_GETADDRINFO
+#define ACE_LACKS_GETNAMEINFO
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_ANDROID_H */
