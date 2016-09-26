@@ -45,7 +45,12 @@
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_SYS_SYSCTL_H
-#define ACE_LACKS_UCONTEXT_H
+
+#if __ANDROID_API__ < 24
+# define ACE_LACKS_UCONTEXT_H
+#else
+# define ACE_HAS_UCONTEXT_T
+#endif
 
 #define ACE_LACKS_CUSERID
 #define ACE_LACKS_FD_MASK
@@ -125,6 +130,8 @@
 #if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
 # define ACE_HAS_ISASTREAM_PROTOTYPE
 # define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
+# define ACE_HAS_CPU_SET_T
+#elif __ANDROID_API__ >= 24
 # define ACE_HAS_CPU_SET_T
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
@@ -346,10 +353,6 @@
 #elif __ANDROID_API__ == 8
 # define ACE_LACKS_REGEX_H 1
 # define ACE_LACKS_CONDATTR 1
-#elif __ANDROID_API__ == 9
-#elif __ANDROID_API__ == 14
-#else
-# error Unsupported Android release
 #endif
 
 #if !defined ACE_DEFAULT_TEMP_DIR
