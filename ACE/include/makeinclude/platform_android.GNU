@@ -3,6 +3,9 @@
 # This file should allow ACE to be built for Android 2.3.1 (API Level 9)
 # or greater, by cross compiling on Linux.
 
+# We always include config-android.h on Android platforms.
+ACE_PLATFORM_CONFIG ?= config-android.h
+
 # The standalone gcc compilers in NDK r6-r9 have issues with the visibility.
 no_hidden_visibility ?= 1
 
