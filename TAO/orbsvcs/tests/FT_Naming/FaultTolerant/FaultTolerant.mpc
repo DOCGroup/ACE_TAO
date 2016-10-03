@@ -26,6 +26,10 @@ project(*Client) : ftnaming {
 
   Source_Files {
     client.cpp
+    TestC.cpp
   }
 
+  IDL_Files {
+    test_object.idl
+  }
 }
