@@ -37,7 +37,7 @@ branches:
 before_script:
   - export
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h; fi
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then echo -e "#include \"ace/config-macosx.h\"" >> $ACE_ROOT/ace/config.h; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo -e "#include \"ace/config-macosx.h\"" >> $ACE_ROOT/ace/config.h; fi
   - echo -e "workspace {\n\$(TAO_ROOT)/TAO_ACE.mwc\n\$(TAO_ROOT)/tests/Hello\n" >> $TRAVIS_BUILD_DIR/travis.mwc
   - if [ "$ACETESTS" == "1" ]; then echo -e "\$(ACE_ROOT)/tests\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
   - echo -e "}\n" >> $TRAVIS_BUILD_DIR/travis.mwc
@@ -54,7 +54,7 @@ before_script:
   - echo -e "xerces3=1\nssl=1\nipv6=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
   - echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features
   - echo -e "TAO/tests/Hello/run_test.pl" >> $TAO_ROOT/bin/travis-ci.lst
-  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_macosx.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_macosx.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
   - cat $TRAVIS_BUILD_DIR/travis.mwc
   - cat $ACE_ROOT/bin/MakeProjectCreator/config/default.features
@@ -66,4 +66,3 @@ script:
   - perl $ACE_ROOT/bin/mwc.pl -type gnuace -workers 2 travis.mwc
   - make -j 2
   - perl $ACE_ROOT/bin/auto_run_tests.pl -l $TAO_ROOT/bin/travis-ci.lst
-
