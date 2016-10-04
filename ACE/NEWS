@@ -12,7 +12,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.4.0 and ACE-6.4.1
   ace/config-macosx.h and include/makeinclude/platform_macosx.GNU.
   Also on 10.11 El Capitan, use rpath to avoid a problem with SIP.
 
-. Added support for Android NDK r12b (Platform API 24)
+. Added support for Android NDK r12b (Platform API 24) and improved
+  cross compilation support
 
 
 USER VISIBLE CHANGES BETWEEN ACE-6.3.4 and ACE-6.4.0
