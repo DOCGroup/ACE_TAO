@@ -199,7 +199,8 @@ sub find_builds ($$$$$)
         }
 
         if ($begin) {
-           %{$revision_hash}->{$columns[$selectcolumn_name]} = $columns[$selectcolumn_revision];
+           my $temp = %{$revision_hash};
+           $temp->{$columns[$selectcolumn_name]} = $columns[$selectcolumn_revision];
            push (@{$rbuilds}, $columns[$selectcolumn_name]);
         }
     }
