@@ -612,8 +612,6 @@ def tag ():
             elif opts.release_type == "beta":
                 update_latest_tag ("Beta", tagname)
                 update_latest_tag ("Micro", tagname)
-                if comp_versions["ACE_beta"] == 1:
-                        update_latest_tag ("BFO", tagname)
         else:
             vprint ("Placing tag %s on ACE_TAO" % (tagname))
             vprint ("Placing tag %s on MPC" % (tagname))
@@ -647,8 +645,6 @@ def push ():
             elif opts.release_type == "beta":
                 push_latest_tag ("Beta", tagname)
                 push_latest_tag ("Micro", tagname)
-                if comp_versions["ACE_beta"] == 1:
-                        push_latest_tag ("BFO", tagname)
         else:
             vprint ("Pushing tag %s on ACE_TAO" % (tagname))
             vprint ("Pushing tag %s on MPC" % (tagname))
