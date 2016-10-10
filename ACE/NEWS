@@ -1,3 +1,6 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.4.1 and ACE-6.4.2
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.0 and ACE-6.4.1
 ====================================================
 
@@ -14,7 +17,6 @@ USER VISIBLE CHANGES BETWEEN ACE-6.4.0 and ACE-6.4.1
 
 . Added support for Android NDK r12b (Platform API 24) and improved
   cross compilation support
-
 
 USER VISIBLE CHANGES BETWEEN ACE-6.3.4 and ACE-6.4.0
 ====================================================
