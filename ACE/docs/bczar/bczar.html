@@ -41,7 +41,7 @@
         Keep an eye on the <a href="http://bugzilla.dre.vanderbilt.edu/">bugzilla
         </a>
       entries that are registered by users and developers. Decide on the bugs that
-      need to be fixed for the beta and pain developers for an ETA.
+      need to be fixed for the micro and pain developers for an ETA.
     </p>
     <P>
       The document <a href="./privileges.html">here </a>talks about the powers of a
@@ -66,14 +66,14 @@
        Do note that when there are a lot of compile errors the test results are really
        unusable.</p>
     <hr>
-    <h2>Recipe for Cutting a Beta/Minor Kit</h2>
+    <h2>Recipe for Cutting a Minor Kit</h2>
     <P>
-      The build czar is also in charge for the release of the beta. Cutting a beta is
+      The build czar is also in charge for the release of the micro. Cutting a micro is
       as simple as cutting butter if things go well. Here is the procedure followed
-      while cutting a beta:
+      while cutting a micro:
       <ol>
         <li>
-          The whole process takes somewhere between 3-4 hours.</li>
+          The whole process takes somewhere between 2-3 hours.</li>
         <li>
           We suggest you take advantage of GNU Screen so that even if your SSH session is
           interrupted, the cutting process can continue. This command must be installed on
@@ -159,10 +159,10 @@
         </li>
         <li>
           Tag the release by executing<br>
-          <code>ACE/bin/make_release.py --beta --update --tag --push</code><br>
+          <code>ACE/bin/make_release.py --micro --update --tag --push</code><br>
           This will only take a couple minutes to complete and once done successfully,
           you can carry on with BOTH creating the kits and generating the doxygen
-          documentation in parallel. NOTE that <code>--beta</code> should be replaced
+          documentation in parallel. NOTE that <code>--micro</code> should be replaced
           with <code>--minor</code> or <code>--major</code> as appropriate.</li>
         <br>
         After the repository has been tagged check each file listed below to make
@@ -194,7 +194,7 @@
         from DOC_ROOT will suffice.<br />
     The tag will also need to be removed (both in Middleware and MPC):
     ACE+TAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
-    Minor and Beta release numbers of the release that is to be restarted).<p>
+    Minor and Micro release numbers of the release that is to be restarted).<p>
       E.g.:<br>
       <code>cd ACE_TAO && git tag -d ACE+TAO-X_Y_Z<br />
         cd MPC && git tag -d ACE+TAO-X_Y_Z<br />
@@ -228,9 +228,9 @@
         git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO<br>
         git clone https://github.com/DOCGroup/MPC.git MPC<br>
         cd ACE_TAO<br>
-        ACE/bin/make_release.py --beta --update --verbose<br>
-        ACE/bin/make_release.py --beta --tag --verbose<br>
-        ACE/bin/make_release.py --beta --push --verbose<br>
+        ACE/bin/make_release.py --micro --update --verbose<br>
+        ACE/bin/make_release.py --micro --tag --verbose<br>
+        ACE/bin/make_release.py --micro --push --verbose<br>
         ACE/bin/make_release.py --kit<br>
       </code>
     <p>
@@ -467,7 +467,7 @@
         DEVO group</a> about it.</li>
       <li>Send a note to  <a href="mailto:sysadmin@isis.vanderbilt.edu">sysadmin@isis.vanderbilt.edu</a> asking for the repo to be frozen. Provide them a list of names, including yourself and bczar to be granted write permission.
       </li>
-      <li>Compile once on Win32, Linux and Solaris before cutting a beta.</li>
+      <li>Compile once on Win32, Linux and Solaris before cutting a micro.</li>
       <li>Trust the release script when making a release. Don't make tar balls by
       hand.</li>
       <li>When all hell breaks loose, don't wait for the nightly builds to monitor
