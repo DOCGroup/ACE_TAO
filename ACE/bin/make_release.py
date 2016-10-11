@@ -28,13 +28,6 @@ args=None
 release"""
 doc_root=None
 
-""" Full name of person performing release, obtained from the
-environment"""
-signature=None
-
-""" Full email address of person performing release. """
-mailid = None
-
 """ A dict containing version information used for the release.
 This dict contains entries of the form
 COMPONENT_version
@@ -130,21 +123,11 @@ def ex (command):
 def check_environment ():
     from os import getenv
 
-    global doc_root, signature, mailid, opts
+    global doc_root, opts
 
     doc_root = getenv ("DOC_ROOT")
     if (doc_root is None):
         print "ERROR: Environment DOC_ROOT must be defined."
-        return False
-
-    signature = getenv ("SIGNATURE")
-    if (signature is None):
-        print "ERROR: Must define SIGNATURE environment variable to your full name, used in changelogs."
-        return False
-
-    mailid = getenv ("MAILID")
-    if (mailid is None):
-        print "ERROR: Must define MAILID environment to your email address for changelogs."
         return False
 
     return True
@@ -670,7 +653,7 @@ def export_wc (stage_dir):
     print ("Retrieving MPC with tag " + tag)
     ex ("git clone --depth 1 --branch " + tag + " " + opts.mpc_root + " " + stage_dir + "/MPC")
 
-    # Settting up stage_dir
+    # Setting up stage_dir
     print ("Moving ACE")
     ex ("mv " + stage_dir + "/ACE_TAO/ACE " + stage_dir + "/ACE_wrappers")
     print ("Moving TAO")
