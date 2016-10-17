@@ -182,8 +182,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "void" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::free ("
       << be_idt << be_idt_nl
-      << fname << "_slice * _tao_slice" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << fname << "_slice * _tao_slice)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << fname << "_free (_tao_slice);" << be_uidt_nl
       << "}";
@@ -193,8 +192,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << fname << "_slice *" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::dup ("
       << be_idt << be_idt_nl
-      << "const " << fname << "_slice * _tao_slice" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "const " << fname << "_slice * _tao_slice)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << fname << "_dup (_tao_slice);" << be_uidt_nl
       << "}";
@@ -205,8 +203,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "TAO::Array_Traits<" << fname << "_forany>::copy ("
       << be_idt << be_idt_nl
       << fname << "_slice * _tao_to," << be_nl
-      << "const " << fname << "_slice * _tao_from" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "const " << fname << "_slice * _tao_from)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl
       << fname << "_copy (_tao_to, _tao_from);" << be_uidt_nl
       << "}";
@@ -216,8 +213,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "void" << be_nl
       << "TAO::Array_Traits<" << fname << "_forany>::zero ("
       << be_idt << be_idt_nl
-      << fname << "_slice * _tao_slice" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << fname << "_slice * _tao_slice)" << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
 
   ACE_CDR::ULong ndims = node->n_dims ();
