@@ -177,6 +177,9 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   unique += "_traits";
 
+  *os << be_nl
+      << be_global->core_versioning_begin ();
+
   *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
@@ -345,6 +348,9 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "}";
 
   *os << be_nl;
+
+  *os << be_nl
+      << be_global->core_versioning_end ();
 
   node->cli_inline_gen (true);
   return 0;
