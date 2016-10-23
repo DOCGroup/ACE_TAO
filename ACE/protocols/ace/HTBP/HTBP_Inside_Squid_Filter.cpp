@@ -2,6 +2,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Synch.h"
 #include "HTBP_Session.h"
 #include "HTBP_Inside_Squid_Filter.h"
 
@@ -11,7 +12,6 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/Synch.h"
 
 #include "HTBP_Session.h"
 

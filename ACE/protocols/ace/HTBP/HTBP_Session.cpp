@@ -5,10 +5,11 @@
 #include "HTBP_Session.inl"
 #endif
 
-#include "ace/Event_Handler.h"
-#include "ace/Log_Msg.h"
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Event_Handler.h"
+#include "ace/Log_Msg.h"
+#include "ace/SOCK_Connector.h"
 
 #include "HTBP_Filter.h"
 #include "HTBP_ID_Requestor.h"
