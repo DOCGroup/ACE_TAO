@@ -21,7 +21,7 @@
  *
  * @brief Defines a class for the server application callback.
  *
- * This class overides the methods of the TAO_AV_Callback so the
+ * This class overrides the methods of the TAO_AV_Callback so the
  * AVStreams can make upcalls to the application.
  */
 class FTP_Server_Callback : public TAO_AV_Callback
@@ -63,8 +63,8 @@ private:
  * @class Server
  *
  * @brief Defines the server application class.
- * = DESCRIPOTION
- * The actual server progarm that acts as the ftp server that receives data
+ *
+ * The actual server program that acts as the ftp server that receives data
  * sent by the ftp client.
  */
 class Server
@@ -73,7 +73,7 @@ public:
   /// Constructor
   Server (void);
 
-  /// Deestructor.
+  /// Destructor.
   ~Server (void);
 
   /// Initialize data components.

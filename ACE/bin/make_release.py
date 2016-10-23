@@ -28,17 +28,10 @@ args=None
 release"""
 doc_root=None
 
-""" Full name of person performing release, obtained from the
-environment"""
-signature=None
-
-""" Full email address of person performing release. """
-mailid = None
-
 """ A dict containing version information used for the release.
 This dict contains entries of the form
 COMPONENT_version
-COMPONENT_beta
+COMPONENT_micro
 COMPONENT_minor
 COMPONENT_major
 COMPONENT_code """
@@ -67,8 +60,8 @@ def parse_args ():
                        help="Create a major release.", default=None, const="major")
     parser.add_option ("--minor", dest="release_type", action="store_const",
                        help="Create a minor release.", default=None, const="minor")
-    parser.add_option ("--beta", dest="release_type", action="store_const",
-                       help="Create a beta release.", default=None, const="beta")
+    parser.add_option ("--micro", dest="release_type", action="store_const",
+                       help="Create a micro release.", default=None, const="micro")
 
     parser.add_option ("--tag", dest="tag", action="store_true",
                        help="Tag the repositorie with all needed tags", default=False)
@@ -130,21 +123,11 @@ def ex (command):
 def check_environment ():
     from os import getenv
 
-    global doc_root, signature, mailid, opts
+    global doc_root, opts
 
     doc_root = getenv ("DOC_ROOT")
     if (doc_root is None):
         print "ERROR: Environment DOC_ROOT must be defined."
-        return False
-
-    signature = getenv ("SIGNATURE")
-    if (signature is None):
-        print "ERROR: Must define SIGNATURE environment variable to your full name, used in changelogs."
-        return False
-
-    mailid = getenv ("MAILID")
-    if (mailid is None):
-        print "ERROR: Must define MAILID environment to your email address for changelogs."
         return False
 
     return True
@@ -166,7 +149,7 @@ def commit (files):
 
     version = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
                                     comp_versions["ACE_minor"],
-                                    comp_versions["ACE_beta"])
+                                    comp_versions["ACE_micro"])
     vprint ("Committing the following files for " + version + " ".join (files))
 
     if opts.take_action:
@@ -243,8 +226,8 @@ def update_version_files (component):
 #define %s_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))
 """ % (component, comp_versions[component + "_major"],
        component, comp_versions[component + "_minor"],
-       component, comp_versions[component + "_beta"],
-       component, comp_versions[component + "_beta"],
+       component, comp_versions[component + "_micro"],
+       component, comp_versions[component + "_micro"],
        component, comp_versions[component + "_version"],
        component, comp_versions[component + "_code"],
        component)
@@ -300,7 +283,7 @@ def update_spec_file ():
             if line.find ("define TAOVER ") is not -1:
                 line = "%define TAOVER  " + comp_versions["TAO_version"] + "\n"
             if line.find ("define is_major_ver") is not -1:
-                if opts.release_type == "beta":
+                if opts.release_type == "micro":
                     line = "%define is_major_ver 0\n"
                 else:
                     line = "%define is_major_ver 1\n"
@@ -453,7 +436,7 @@ def create_changelog (component):
 
     old_tag = "ACE+TAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
                                     old_comp_versions["ACE_minor"],
-                                    old_comp_versions["ACE_beta"])
+                                    old_comp_versions["ACE_micro"])
 
     # Generate changelogs per component
     ex ("cd $DOC_ROOT/ACE_TAO && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + "-" + comp_versions[component + "_version_"])
@@ -470,7 +453,7 @@ def get_comp_versions (component):
 
     global old_comp_versions, comp_versions, opts
 
-    beta = re.compile ("version (\d+)\.(\d+)\.(\d+)")
+    micro = re.compile ("version (\d+)\.(\d+)\.(\d+)")
     minor = re.compile ("version (\d+)\.(\d+)[^\.]")
     major = re.compile ("version (\d+)[^\.]")
 
@@ -478,14 +461,14 @@ def get_comp_versions (component):
         for line in version_file:
             match = None
 
-            match = beta.search (line)
+            match = micro.search (line)
             if match is not None:
-                vprint ("Detected beta version %s.%s.%s" %
+                vprint ("Detected micro version %s.%s.%s" %
                            (match.group (1), match.group (2), match.group (3)))
 
                 comp_versions[component + "_major"] = int (match.group (1))
                 comp_versions[component + "_minor"] = int (match.group (2))
-                comp_versions[component + "_beta"] = int (match.group (3))
+                comp_versions[component + "_micro"] = int (match.group (3))
                 break
 
             match = minor.search (line)
@@ -495,7 +478,7 @@ def get_comp_versions (component):
 
                 comp_versions[component + "_major"] = int (match.group (1))
                 comp_versions[component + "_minor"] = int (match.group (2))
-                comp_versions[component + "_beta"] = 0
+                comp_versions[component + "_micro"] = 0
                 break
 
             match = major.search (line)
@@ -504,7 +487,7 @@ def get_comp_versions (component):
 
                 comp_versions[component + "_major"] = int (match.group (1))
                 comp_versions[component + "_minor"] = 0
-                comp_versions[component + "_beta"] = 0
+                comp_versions[component + "_micro"] = 0
                 break
 
             print "FATAL ERROR: Unable to locate current version for " + component
@@ -513,42 +496,42 @@ def get_comp_versions (component):
     # Also store the current release (old from now)
     old_comp_versions[component + "_major"] = comp_versions[component + "_major"]
     old_comp_versions[component + "_minor"] = comp_versions[component + "_minor"]
-    old_comp_versions[component + "_beta"] = comp_versions[component + "_beta"]
+    old_comp_versions[component + "_micro"] = comp_versions[component + "_micro"]
 
     if opts.update:
         if opts.release_type == "major":
             comp_versions[component + "_major"] += 1
             comp_versions[component + "_minor"] = 0
-            comp_versions[component + "_beta"] = 0
+            comp_versions[component + "_micro"] = 0
         elif opts.release_type == "minor":
             comp_versions[component + "_minor"] += 1
-            comp_versions[component + "_beta"] = 0
-        elif opts.release_type == "beta":
-            comp_versions[component + "_beta"] += 1
+            comp_versions[component + "_micro"] = 0
+        elif opts.release_type == "micro":
+            comp_versions[component + "_micro"] += 1
 
-    #if opts.release_type == "beta":
+    #if opts.release_type == "micro":
     comp_versions [component + "_version"] = \
         str (comp_versions[component + "_major"])  + '.' + \
         str (comp_versions[component + "_minor"])  + '.' + \
-        str (comp_versions[component + "_beta"])
+        str (comp_versions[component + "_micro"])
     comp_versions [component + "_version_"] = \
         str (comp_versions[component + "_major"])  + '_' + \
         str (comp_versions[component + "_minor"])  + '_' + \
-        str (comp_versions[component + "_beta"])
+        str (comp_versions[component + "_micro"])
 
     comp_versions [component + "_code"] = \
         str((comp_versions[component + "_major"] << 16) + \
             (comp_versions[component + "_minor"] << 8) + \
-            comp_versions[component + "_beta"])
+            comp_versions[component + "_micro"])
 
     old_comp_versions [component + "_version"] = \
         str (old_comp_versions[component + "_major"])  + '.' + \
         str (old_comp_versions[component + "_minor"])  + '.' + \
-        str (old_comp_versions[component + "_beta"])
+        str (old_comp_versions[component + "_micro"])
     old_comp_versions [component + "_version_"] = \
         str (old_comp_versions[component + "_major"])  + '_' + \
         str (old_comp_versions[component + "_minor"])  + '_' + \
-        str (old_comp_versions[component + "_beta"])
+        str (old_comp_versions[component + "_micro"])
 
     if opts.update:
       vprint ("Updating from version %s to version %s" %
@@ -594,7 +577,7 @@ def tag ():
 
     tagname = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
                                     comp_versions["ACE_minor"],
-                                    comp_versions["ACE_beta"])
+                                    comp_versions["ACE_micro"])
 
     if opts.tag:
         if opts.take_action:
@@ -609,11 +592,9 @@ def tag ():
                 update_latest_tag ("Major", tagname)
             elif opts.release_type == "minor":
                 update_latest_tag ("Minor", tagname)
-            elif opts.release_type == "beta":
+            elif opts.release_type == "micro":
                 update_latest_tag ("Beta", tagname)
                 update_latest_tag ("Micro", tagname)
-                if comp_versions["ACE_beta"] == 1:
-                        update_latest_tag ("BFO", tagname)
         else:
             vprint ("Placing tag %s on ACE_TAO" % (tagname))
             vprint ("Placing tag %s on MPC" % (tagname))
@@ -626,7 +607,7 @@ def push ():
 
     tagname = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
                                     comp_versions["ACE_minor"],
-                                    comp_versions["ACE_beta"])
+                                    comp_versions["ACE_micro"])
 
     if opts.push:
         if opts.take_action:
@@ -644,11 +625,9 @@ def push ():
                 push_latest_tag ("Major", tagname)
             elif opts.release_type == "minor":
                 push_latest_tag ("Minor", tagname)
-            elif opts.release_type == "beta":
+            elif opts.release_type == "micro":
                 push_latest_tag ("Beta", tagname)
                 push_latest_tag ("Micro", tagname)
-                if comp_versions["ACE_beta"] == 1:
-                        push_latest_tag ("BFO", tagname)
         else:
             vprint ("Pushing tag %s on ACE_TAO" % (tagname))
             vprint ("Pushing tag %s on MPC" % (tagname))
@@ -664,7 +643,7 @@ def export_wc (stage_dir):
 
     tag = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
                                 comp_versions["ACE_minor"],
-                                comp_versions["ACE_beta"])
+                                comp_versions["ACE_micro"])
 
     # Clone the ACE repository with the needed tag
     print ("Retrieving ACE with tag " + tag)
@@ -674,7 +653,7 @@ def export_wc (stage_dir):
     print ("Retrieving MPC with tag " + tag)
     ex ("git clone --depth 1 --branch " + tag + " " + opts.mpc_root + " " + stage_dir + "/MPC")
 
-    # Settting up stage_dir
+    # Setting up stage_dir
     print ("Moving ACE")
     ex ("mv " + stage_dir + "/ACE_TAO/ACE " + stage_dir + "/ACE_wrappers")
     print ("Moving TAO")

@@ -3,8 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
-
-
 Ptest::Ptest (void)
   : debug_ (0),
     query_ (0)
@@ -56,6 +54,25 @@ Ptest::init (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
+  return 0;
+}
+
+int
+Ptest::shutdown (void)
+{
+  try
+    {
+      this->repo_ = CORBA::Repository::_nil ();
+
+      this->orb_->destroy ();
+
+      this->orb_ = CORBA::ORB::_nil ();
+    }
+  catch (const CORBA::Exception& ex)
+    {
+      ex._tao_print_exception ("Ptest::init");
+      return -1;
+    }
   return 0;
 }
 

@@ -193,25 +193,31 @@ TAO_IORManip_IIOP_Filter::get_endpoints (TAO_Profile* profile,
   const TAO_Tagged_Components& comps = profile->tagged_components ();
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO_TAG_ENDPOINTS;
-  comps.get_component (tagged_component);
 
-  // Prepare the CDR for endpoint extraction
-  const CORBA::Octet *buf =
-    tagged_component.component_data.get_buffer ();
+  if (comps.get_component (tagged_component))
+    {
+      // Prepare the CDR for endpoint extraction
+      const CORBA::Octet *buf =
+        tagged_component.component_data.get_buffer ();
 
-  TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
-                       tagged_component.component_data.length ());
+      TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
+                          tagged_component.component_data.length ());
 
-  // Extract the Byte Order.
-  CORBA::Boolean byte_order;
-  if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
-    return 0;
+      // Extract the Byte Order.
+      CORBA::Boolean byte_order;
+      if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
+        return 0;
 
-  in_cdr.reset_byte_order (static_cast<int> (byte_order));
+      in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
-  // Extract endpoints sequence.
-  if (!(in_cdr >> endpoints))
-    return 0;
+      // Extract endpoints sequence.
+      if (!(in_cdr >> endpoints))
+        return 0;
+    }
+  else
+    {
+      return 0;
+    }
 
   return 1;
 }

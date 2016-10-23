@@ -1,51 +1,22 @@
 /* -*- C++ -*- */
-// This configuration file is designed to work with the MacOS X operating system.
+// This configuration file is designed to work with the MacOS X operating system, version 10.2 (Jaguar).
 
-#ifndef ACE_CONFIG_MACOSX_LEOPARD_H
-#define ACE_CONFIG_MACOSX_LEOPARD_H
-
-#include <Availability.h>
-
-#define ACE_HAS_MAC_OSX
-#define ACE_HAS_NET_IF_DL_H
-
-#define ACE_HAS_VOID_UNSETENV
+#ifndef ACE_CONFIG_MACOSX_H
+#define ACE_CONFIG_MACOSX_H
 
 #if ! defined (__ACE_INLINE__)
 #define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-#if !defined (ACE_SIZEOF_LONG_DOUBLE)
-# if (__GNUC__ == 3 && __GNUC_MINOR__ == 3)
-   // Size of long double in GCC 3.3 is 8.
-#  define ACE_SIZEOF_LONG_DOUBLE 8
-# else // Else, the compiler is GCC4
-   // For GCC4, the size is 16.
-#  define ACE_SIZEOF_LONG_DOUBLE 16
-# endif // GCC 3.3
-#endif // ACE_SIZEOF_LONG_DOUBLE
-
 #if defined (__GNUG__)
 # include "ace/config-g++-common.h"
 #endif /* __GNUG__ */
 
-#define ACE_ISCTYPE_EQUIVALENT __isctype
-
-#ifndef ACE_HAS_NONCONST_FD_ISSET
-#define ACE_HAS_NONCONST_FD_ISSET
-#endif
-
-#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-
 #define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
-#if !defined (__i386__)
-# if defined (ACE_HAS_PENTIUM)
-#  undef ACE_HAS_PENTIUM
-# endif /* ACE_HAS_PENTIUM */
-#else // __i386__
-# define ACE_HAS_PENTIUM
-#endif //__i386__
+#if defined (ACE_HAS_PENTIUM)
+# undef ACE_HAS_PENTIUM
+#endif /* ACE_HAS_PENTIUM */
 
 #if !defined (_THREAD_SAFE)
 #define _THREAD_SAFE
@@ -54,27 +25,13 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_POSIX_SEM
 
-#define ACE_HAS_SUNOS4_GETTIMEOFDAY
+//#define ACE_HAS_SVR4_TLI
 
 #define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_WCHAR_H
 
-// Platform provides <execinfo.h> header.
-#define ACE_HAS_EXECINFO_H
+#define ACE_SYS_SELECT_NEEDS_UNISTD_H
 
-// Wcharness....
-#define ACE_HAS_WCHAR
-#define ACE_SIZEOF_WCHAR 4
-
-
-#define ACE_HAS_3_PARAM_WCSTOK
-#define ACE_LACKS_ITOW
-#define ACE_LACKS_WCSICMP
-#define ACE_LACKS_WCSNICMP
-#define ACE_LACKS_WCSDUP
-
-// Mac lacks the following pthread features
-#define ACE_LACKS_MUTEXATTR_PSHARED
-#define ACE_LACKS_CONDATTR_PSHARED
 //
 // Compiler/platform defines the sig_atomic_t typedef.
 #define ACE_HAS_SIG_ATOMIC_T
@@ -85,20 +42,21 @@
 //Platform/compiler has the sigwait(2) prototype
 #define ACE_HAS_SIGWAIT
 
-#define ACE_HAS_AIO_CALLS
-
-#define ACE_HAS_ICMP_SUPPORT 1
-
 //Platform supports sigsuspend()
 #define ACE_HAS_SIGSUSPEND
 
+//#define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_LACKS_GETPGID
 #define ACE_LACKS_RWLOCK_T
+
+#define ACE_HAS_SIOCGIFCONF
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
+
+#define ACE_HAS_SYSCTL
 
 #define ACE_NEEDS_SCHED_H
 
@@ -115,11 +73,7 @@
 
 #define ACE_LACKS_STRRECVFD
 
-#define ACE_HAS_SOCKADDR_IN_SIN_LEN
 #define ACE_HAS_SOCKADDR_IN6_SIN6_LEN
-
-// Platform supports System V IPC (most versions of UNIX, but not Win32)
-#define ACE_HAS_SYSV_IPC
 
 // Compiler/platform contains the <sys/syscall.h> file.
 #define ACE_HAS_SYS_SYSCALL_H
@@ -134,6 +88,9 @@
 
 // Compiler/platform correctly calls init()/fini() for shared libraries.
 #define ACE_HAS_AUTOMATIC_INIT_FINI
+
+// Explicit dynamic linking permits "lazy" symbol resolution
+//#define ACE_HAS_RTLD_LAZY_V
 
 // platform supports POSIX O_NONBLOCK semantics
 #define ACE_HAS_POSIX_NONBLOCK
@@ -150,9 +107,6 @@
 
 // Compiler/platform provides the sockio.h file.
 #define ACE_HAS_SYS_SOCKIO_H
-
-// Compiler/platform provides the socklen_t type.
-#define ACE_HAS_SOCKLEN_T
 
 // Defines the page size of the system.
 #define ACE_HAS_GETPAGESIZE
@@ -178,11 +132,9 @@
 # define ACE_HAS_THREADS
 // And they're even POSIX pthreads
 # define ACE_HAS_PTHREADS
-# define ACE_HAS_PTHREAD_SCHEDPARAM
 # define ACE_HAS_THREAD_SPECIFIC_STORAGE
+# define ACE_LACKS_THREAD_PROCESS_SCOPING
 #endif  /* ACE_MT_SAFE == 1 */
-
-#define ACE_LACKS_THREAD_PROCESS_SCOPING
 
 #define ACE_HAS_DIRENT
 #define ACE_LACKS_POLL_H
@@ -202,16 +154,6 @@
 #define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_UNNAMED_SEMAPHORE
 
-#if !defined (__DARWIN_UNIX03)
-#define ACE_HAS_VOID_UNSETENV
-#endif
-
-#define ACE_LACKS_CONDATTR_SETCLOCK
-#if __MAC_OS_X_VERSION_MAX_ALLOWED < 101200
-#define ACE_LACKS_CLOCKID_T
-#define ACE_LACKS_CLOCK_MONOTONIC
-#define ACE_LACKS_CLOCK_REALTIME
-#endif
 // dlcompat package (not part of base Darwin) is needed for dlopen().
 // You may download directly from sourceforge and install or use fink
 // Fink installer puts libraries in /sw/lib and headers in /sw/include
@@ -220,17 +162,17 @@
 //   - type:
 //        fink install dlcompat
 // as of Dec 2002, if you use fink you will need to uncomment the next line
-// #define ACE_NEEDS_DL_UNDERSCORE
+//#define ACE_NEEDS_DL_UNDERSCORE
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_LD_SEARCH_PATH ACE_TEXT ("DYLD_LIBRARY_PATH")
 #define ACE_DLL_SUFFIX ACE_TEXT (".dylib")
-//#define ACE_LACKS_DLCLOSE
+#define ACE_LACKS_DLCLOSE
 
 // gperf seems to need this
-//#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
+#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
 
 #if defined(__APPLE_CC__) && (__APPLE_CC__ < 1173)
 #error "Compiler must be upgraded, see http://developer.apple.com"
 #endif /* __APPLE_CC__ */
 
-#endif /* ACE_CONFIG_MACOSX_LEOPARD_H */
+#endif /* ACE_CONFIG_MACOSX_H */

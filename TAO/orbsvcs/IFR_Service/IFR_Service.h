@@ -49,12 +49,8 @@ public:
   void shutdown (void);
 
 protected:
-
   /// Reference to our ORB.
   CORBA::ORB_var orb_;
-
-  /// Root POA reference.
-  PortableServer::POA_var root_poa_;
 
   /// IFR Server instance.
   TAO_IFR_Server my_ifr_server_;

@@ -63,7 +63,7 @@ public:
     //
     // = DESCRIPTION
     //   Used so that the process of registering, unregistering
-    //   and exitting neednt be dependent on 'r' 'u' and 'q'.
+    //   and exiting neednt be dependent on 'r' 'u' and 'q'.
     //   Also, #define clutters up the global namespace.
 
     REGISTER = 'r',

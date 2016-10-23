@@ -8,7 +8,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_VOIDPTR_MMAP)
-// Needed for some odd OS's (e.g., SGI).
+// Needed for some odd OS's
 typedef void *ACE_MMAP_TYPE;
 #else
 typedef char *ACE_MMAP_TYPE;

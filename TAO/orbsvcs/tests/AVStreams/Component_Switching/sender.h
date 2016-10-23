@@ -41,7 +41,7 @@ public:
  *
  * @brief Defines a class for the sender application callback.
  *
- * This class overides the methods of the TAO_AV_Callback so the
+ * This class overrides the methods of the TAO_AV_Callback so the
  * AVStreams can make upcalls to the application.
  */
 class Sender_Callback : public TAO_AV_Callback

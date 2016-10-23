@@ -66,7 +66,7 @@ QoS_Util::parse_args (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "usage:  %s"
                            " [-m host:port] QoS multicast session address"
-                           " Overides the receiver address specified in the -n option"
+                           " Overrides the receiver address specified in the -n option"
                            " [-n host:port] Use for a unicast sender. "
                            " Follow by receiver addr"
                            " [-p tcp|udp] specify protocol to be used"

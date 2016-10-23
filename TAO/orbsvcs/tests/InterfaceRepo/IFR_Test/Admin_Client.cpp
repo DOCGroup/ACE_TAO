@@ -1450,7 +1450,7 @@ Admin_Client::union_test (void)
       CORBA::Any_var label = tc->member_label (i);
 
       TAO_InputCDR cdr (static_cast<ACE_Message_Block *> (0));
-      CORBA::ULong val;
+      CORBA::ULong val = 0;
 
       TAO::Any_Impl *impl = label->impl ();
       TAO_OutputCDR out;
