@@ -23,9 +23,6 @@
 
 #include "test_config.h"
 
-// *NOTE*: explicit template instantiation required here...
-template class ACE_Condition<ACE_Recursive_Thread_Mutex>;
-
 #if defined (ACE_HAS_THREADS)
 
 // Number of iterations for the performance tests.
