@@ -97,6 +97,7 @@ TAO_ECG_Mcast_EH::shutdown (void)
   // Indicates that we are in a shutdown state.
   this->receiver_ = 0;
 
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   // Deregister from reactor, close and clean up sockets.
   size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i = 0; i != subscriptions_size; ++i)
@@ -115,6 +116,7 @@ TAO_ECG_Mcast_EH::shutdown (void)
 int
 TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i = 0; i != subscriptions_size; ++i)
     {
@@ -197,6 +199,7 @@ int
 TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
     Address_Set& multicast_addresses)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   for (size_t i = 0; i < this->subscriptions_.size (); ++i)
     {
       ACE_INET_Addr multicast_group = this->subscriptions_[i].mcast_addr;
@@ -230,6 +233,7 @@ void
 TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
 {
   typedef ACE_Unbounded_Set_Iterator<ACE_INET_Addr> Address_Iterator;
+  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   for (Address_Iterator k = multicast_addresses.begin ();
        k != multicast_addresses.end ();
        ++k)

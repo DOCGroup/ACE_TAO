@@ -245,6 +245,7 @@ private:
    * it is probably highly dependent on the pattern of changes.
    */
   Subscriptions subscriptions_;
+  TAO_SYNCH_MUTEX lock_;
 
   /// We callback to this object when a message arrives.
   /*
