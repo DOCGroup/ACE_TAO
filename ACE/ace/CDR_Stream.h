@@ -121,7 +121,7 @@ public:
   /// with the alignment of @a data.
   /**
    * Create an output stream from an arbitrary buffer, care must be
-   * exercised with alignment, because this contructor will align if
+   * exercised with alignment, because this constructor will align if
    * needed.  In this case @a data will not point to the start of the
    * output stream. @c begin()->rd_ptr() points to the start of the
    * output stream.  See @c ACE_ptr_align_binary() to properly align a
@@ -142,7 +142,7 @@ public:
   // careful with the alignment of <data_block>.
   /**
    * Create an output stream from an arbitrary data block, care must be
-   * exercised with alignment, because this contructor will align if
+   * exercised with alignment, because this constructor will align if
    * needed.  In this case @a data_block will not point to the
    * start of the output stream. begin()->rd_ptr() points to the start
    * off the output stream.  See ACE_ptr_align_binary() to properly align a
@@ -645,7 +645,7 @@ public:
 
   /**
    * Create an input stream from an arbitrary buffer.  The buffer must
-   * be properly aligned because this contructor will *not* work if
+   * be properly aligned because this constructor will *not* work if
    * the buffer is aligned unproperly.See ACE_ptr_align_binary() for
    * instructions on how to align a pointer properly and use
    * ACE_CDR::MAX_ALIGNMENT for the correct alignment.

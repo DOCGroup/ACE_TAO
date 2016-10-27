@@ -58,7 +58,7 @@ class Throughput_StructuredPushConsumer
   : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Contructor.
+  /// Constructor.
   Throughput_StructuredPushConsumer (Notify_Throughput *test_client);
 
   // = StructuredPushSupplier methods
