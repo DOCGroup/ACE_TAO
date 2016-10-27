@@ -50,7 +50,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
       void* placement = this->pool_ + c * chunk_size;
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<T>);
     }
-  // Put into free list using placement contructor, no real memory
+  // Put into free list using placement constructor, no real memory
   // allocation in the above <new>.
 }
 
@@ -128,7 +128,7 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Dynamic_Cached_Allocator
 
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<char>);
     }
-  // Put into free list using placement contructor, no real memory
+  // Put into free list using placement constructor, no real memory
   // allocation in the above <new>.
 }
 

@@ -451,7 +451,7 @@ class ACE_Map_Iterator_Base
 {
 public:
   // = Initialization method.
-  /// Contructor.  If head != 0, the iterator constructed is positioned
+  /// Constructor.  If head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Map_Iterator_Base (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
 
@@ -510,7 +510,7 @@ class ACE_Map_Const_Iterator_Base
 {
 public:
   // = Initialization method.
-  /// Contructor.  If head != 0, the iterator constructed is positioned
+  /// Constructor.  If head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Map_Const_Iterator_Base (const ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
 

@@ -48,7 +48,7 @@ public:
   /// Get the original URL
   const ACE_TCHAR *get_url (void) const;
 
-  /// Essentially the copy contructor.
+  /// Essentially the copy constructor.
   int set (const ACE_URL_Addr& address);
 
   /**
