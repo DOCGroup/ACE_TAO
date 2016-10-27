@@ -116,16 +116,20 @@ TAO_ECG_Mcast_EH::shutdown (void)
 int
 TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+  // We don't use ACE_GUARD here. The lock can be released
+  // before calling handle_input ()
+  this->lock_.acquire ();
   size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i = 0; i != subscriptions_size; ++i)
     {
       ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_[i].dgram;
       if (socket->get_handle () == fd)
         {
+          this->lock_.release ();
           return this->receiver_->handle_input (*socket);
         }
     }
+  this->lock_.release ();
   return -1;
 }
 
@@ -242,9 +246,11 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
       new_subscription.mcast_addr = *k;
       ACE_NEW (new_subscription.dgram, ACE_SOCK_Dgram_Mcast);
 
+      this->lock_.acquire ();
       size_t const subscriptions_size = this->subscriptions_.size ();
       this->subscriptions_.size (subscriptions_size + 1);
       this->subscriptions_[subscriptions_size] = new_subscription;
+      this->lock_.release ();
 
       ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
 
