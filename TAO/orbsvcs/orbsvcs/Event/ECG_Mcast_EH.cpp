@@ -116,9 +116,7 @@ TAO_ECG_Mcast_EH::shutdown (void)
 int
 TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 {
-  // We don't use ACE_GUARD here. The lock can be released
-  // before calling handle_input ()
-  this->lock_.acquire ();
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i = 0; i != subscriptions_size; ++i)
     {
@@ -129,7 +127,6 @@ TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
           return this->receiver_->handle_input (*socket);
         }
     }
-  this->lock_.release ();
   return -1;
 }
 
@@ -237,7 +234,6 @@ void
 TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
 {
   typedef ACE_Unbounded_Set_Iterator<ACE_INET_Addr> Address_Iterator;
-  ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   for (Address_Iterator k = multicast_addresses.begin ();
        k != multicast_addresses.end ();
        ++k)
@@ -246,12 +242,12 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
       new_subscription.mcast_addr = *k;
       ACE_NEW (new_subscription.dgram, ACE_SOCK_Dgram_Mcast);
 
-      this->lock_.acquire ();
-      size_t const subscriptions_size = this->subscriptions_.size ();
-      this->subscriptions_.size (subscriptions_size + 1);
-      this->subscriptions_[subscriptions_size] = new_subscription;
-      this->lock_.release ();
-
+      {
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+        size_t const subscriptions_size = this->subscriptions_.size ();
+        this->subscriptions_.size (subscriptions_size + 1);
+        this->subscriptions_[subscriptions_size] = new_subscription;
+      }
       ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
 
       if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
