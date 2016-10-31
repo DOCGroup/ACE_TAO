@@ -7,9 +7,9 @@
 #define __CLIENTCONTEXT_H_
 
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 
-typedef ACE_Hash_Map_Manager<const char *, void *, ACE_Null_Mutex>
+typedef ACE_Hash_Map_Manager<const char *, void *, ACE_SYNCH_NULL_MUTEX>
 Map;
 
 // Listing 1 code/ch14

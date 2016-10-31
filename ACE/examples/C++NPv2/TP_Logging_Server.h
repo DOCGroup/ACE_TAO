@@ -7,8 +7,9 @@
 
 #include "ace/Auto_Ptr.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Task.h"
+
 #include "Logging_Acceptor.h"
 #include "Logging_Event_Handler.h"
 #include "Reactor_Logging_Server_T.h"
@@ -29,7 +30,7 @@ public:
   virtual int svc (void);
 };
 
-typedef ACE_Unmanaged_Singleton<TP_Logging_Task, ACE_Null_Mutex>
+typedef ACE_Unmanaged_Singleton<TP_Logging_Task, ACE_SYNCH_NULL_MUTEX>
         TP_LOGGING_TASK;
 
 /*******************************************************/

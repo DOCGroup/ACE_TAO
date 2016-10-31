@@ -5,6 +5,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/Guard_T.h"
 #include "ace/Message_Block.h"
+#include "ace/Synch.h"
+
 #include "TP_Logging_Server.h"
 
 int TP_Logging_Handler::handle_input (ACE_HANDLE) {

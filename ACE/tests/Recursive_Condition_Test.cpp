@@ -11,17 +11,16 @@
  */
 //=============================================================================
 
-
-#include "test_config.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_sys_time.h"
 #include "ace/Event_Handler.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
 
-
+#include "test_config.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -60,7 +59,7 @@ private:
 
 // These are for the basic functionality tests.
 ACE_SYNCH_RECURSIVE_MUTEX mutex_;
-ACE_Condition<ACE_SYNCH_RECURSIVE_MUTEX> condition_ (mutex_);
+ACE_SYNCH_RECURSIVE_CONDITION condition_ (mutex_);
 // Test driver sets this to non-zero before spawning and to zero for
 // waiter.
 int protected_int = 0;

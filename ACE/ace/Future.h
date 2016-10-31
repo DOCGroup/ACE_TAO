@@ -26,8 +26,6 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Synch_Traits.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Condition_Recursive_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

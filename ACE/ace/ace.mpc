@@ -382,7 +382,9 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
 
   Inline_Files {
     Bound_Ptr.inl
+    Condition_Recursive_Thread_Mutex.inl
     Condition_T.inl
+    Condition_Thread_Mutex.inl
     Guard_T.inl
     Handle_Gobbler.inl
     Intrusive_Auto_Ptr.inl
@@ -392,6 +394,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Reverse_Lock_T.inl
     TSS_T.inl
     Time_Value_T.inl
+    Timer_Queue_Adapters.inl
   }
 
   Header_Files {
@@ -404,7 +407,9 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Codeset_Symbols.h
     CORBA_macros.h
     Codeset_Symbols.h
+    Condition_Recursive_Thread_Mutex.h
     Condition_T.h
+    Condition_Thread_Mutex.h
     Countdown_Time.h
     Default_Constants.h
     Event_Base.h
@@ -459,6 +464,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Timer_Heap.h
     Timer_List.h
     Timer_Queue.h
+    Timer_Queue_Adapters.h
     Timer_Queuefwd.h
     Timer_Wheel.h
     Truncate.h

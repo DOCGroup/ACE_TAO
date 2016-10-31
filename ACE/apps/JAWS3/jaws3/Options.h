@@ -3,7 +3,7 @@
 #define JAWS_OPTIONS_H
 
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 
 #include "jaws3/Export.h"
 #include "jaws3/Config_File.h"

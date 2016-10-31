@@ -276,7 +276,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::svc (void)
             {
               // The earliest time on the Timer_Queue lies in future;
               // convert the tv to an absolute time.
-              ACE_Time_Value const tv = this->timer_queue_->gettimeofday () + (tv_earl - tv_curr);
+              ACE_Time_Value const tv = tv_curr + (tv_earl - tv_curr);
               // ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("waiting until %u.%3.3u secs\n"),
               // tv.sec(), tv.msec()));
               this->condition_.wait (&tv);

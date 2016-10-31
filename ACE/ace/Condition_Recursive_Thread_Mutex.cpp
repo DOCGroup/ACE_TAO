@@ -12,15 +12,15 @@
 
 #if defined (ACE_HAS_THREADS)
 
+#if !defined (__ACE_INLINE__)
+#include "ace/Condition_Recursive_Thread_Mutex.inl"
+#endif /* __ACE_INLINE__ */
+
 #include "ace/Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-int
-ACE_Condition<ACE_Recursive_Thread_Mutex>::remove (void)
-{
-  return ACE_OS::cond_destroy (&this->cond_);
-}
+ACE_ALLOC_HOOK_DEFINE (ACE_Condition<ACE_Recursive_Thread_Mutex>)
 
 void
 ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
@@ -35,11 +35,6 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
-}
-
-ACE_Condition<ACE_Recursive_Thread_Mutex>::~ACE_Condition (void)
-{
-  this->remove ();
 }
 
 ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_Mutex &m)
@@ -58,6 +53,11 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_M
                          const_cast<ACE_condattr_t &> (attributes.attributes ())) != 0)
     ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition<ACE_Recursive_Thread_Mutex>")));
+}
+
+ACE_Condition<ACE_Recursive_Thread_Mutex>::~ACE_Condition (void)
+{
+  this->remove ();
 }
 
 int
@@ -106,24 +106,6 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
   }
 
   return result;
-}
-
-int
-ACE_Condition<ACE_Recursive_Thread_Mutex>::signal (void)
-{
-  return ACE_OS::cond_signal (&this->cond_);
-}
-
-int
-ACE_Condition<ACE_Recursive_Thread_Mutex>::broadcast (void)
-{
-  return ACE_OS::cond_broadcast (&this->cond_);
-}
-
-ACE_Recursive_Thread_Mutex &
-ACE_Condition<ACE_Recursive_Thread_Mutex>::mutex (void)
-{
-  return this->mutex_;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

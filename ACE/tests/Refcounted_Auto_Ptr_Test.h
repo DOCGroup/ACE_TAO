@@ -15,7 +15,7 @@
 #define ACE_TESTS_REFCOUNTED_AUTO_PTR_TEST_H
 
 #include "ace/Atomic_Op.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 
 struct Printer
 {

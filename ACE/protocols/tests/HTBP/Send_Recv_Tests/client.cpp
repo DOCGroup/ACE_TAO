@@ -16,19 +16,19 @@
  */
 //=============================================================================
 
-
-#include "ace/HTBP/HTBP_Stream.h"
-#include "ace/HTBP/HTBP_Session.h"
-#include "ace/HTBP/HTBP_ID_Requestor.h"
-#include "ace/HTBP/HTBP_Environment.h"
-
+#include "ace/Get_Opt.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/Synch.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
-#include "ace/Get_Opt.h"
-#include "ace/OS_NS_sys_socket.h"
+
+#include "ace/HTBP/HTBP_Stream.h"
+#include "ace/HTBP/HTBP_Session.h"
+#include "ace/HTBP/HTBP_ID_Requestor.h"
+#include "ace/HTBP/HTBP_Environment.h"
 
 // Change to non-zero if test fails
 static int Test_Result = 0;

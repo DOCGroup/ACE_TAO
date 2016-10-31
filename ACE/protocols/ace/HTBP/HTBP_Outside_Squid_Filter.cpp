@@ -1,11 +1,13 @@
-#include "ace/Log_Msg.h"
-
-#include "HTBP_Session.h"
 #include "HTBP_Outside_Squid_Filter.h"
 
 #if !defined (__ACE_INLINE__)
 #include "HTBP_Outside_Squid_Filter.inl"
 #endif
+
+#include "ace/Log_Msg.h"
+#include "ace/Synch.h"
+
+#include "HTBP_Session.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

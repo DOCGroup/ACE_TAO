@@ -2,9 +2,9 @@
 #ifndef JAWS_SIGNAL_TASK_H
 #define JAWS_SIGNAL_TASK_H
 
-#include "ace/Synch.h"
 #include "ace/Signal.h"
 #include "ace/Singleton.h"
+#include "ace/Synch_Traits.h"
 
 #include "jaws3/Export.h"
 
