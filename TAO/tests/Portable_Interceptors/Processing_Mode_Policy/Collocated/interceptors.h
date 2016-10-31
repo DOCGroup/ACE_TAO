@@ -40,8 +40,7 @@ public:
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_other (
-        PortableInterceptor::ClientRequestInfo_ptr
-      );
+        PortableInterceptor::ClientRequestInfo_ptr);
 
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
 
@@ -80,8 +79,7 @@ public:
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_other (
-        PortableInterceptor::ServerRequestInfo_ptr
-        );
+        PortableInterceptor::ServerRequestInfo_ptr);
 
   // Some identifiers that are used for error checking
   static CORBA::ULong server_interceptor_check_;
