@@ -1,28 +1,6 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.4.1 and ACE-6.4.2
 ====================================================
 
-. Added support for getpwnam_r on Solaris 11
-
-. ACE_OSTREAM_TYPE uses the std namespace where applicable
-
-. ACE_WIN32_Asynch_Operation::cancel() uses CancelIOEx on Windows Vista and
-  above
-
-. Bugfix of exported template specializations on Win32 platforms
-  (specifically, ACE_Condition_Recursive_Thread_Mutex)
-
-. Fixed potential memory leak when using the ACE_WIN32_Proactor
-
-. Header sanitizations (specifically, ace/Synch.h)
-
-. Fixed a race condition in ACE_Thread_Manager::task_wait() on Win32
-
-. A (major) cleanup of timer queue code
-
-. Repaired the ACE_Timer_Hash class. This class code was unused for a while
-  and essentially broken due to bit-rot. It is now another (meta-)implementation
-  that can be used stand-alone, or with the other timer queue implementations
-
 USER VISIBLE CHANGES BETWEEN ACE-6.4.0 and ACE-6.4.1
 ====================================================
 

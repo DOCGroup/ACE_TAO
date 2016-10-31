@@ -2,11 +2,11 @@
 #ifndef TERA_SS_SERVICE_HANDLER_H
 #define TERA_SS_SERVICE_HANDLER_H
 
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
+#include "ace/Svc_Handler.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/svc_export.h"
-#include "ace/Svc_Handler.h"
-#include "ace/Synch_Traits.h"
 
 #include "jaws3/Protocol_Handler.h"
 

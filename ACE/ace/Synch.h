@@ -20,10 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// *NOTE*: never never never ever #include this file in a header
-//         --> #include "ace/Synch_Traits.h" instead and #include "ace/Synch.h"
-//             in the .cpp. This prevents multiple implicit template
-//             instantiations (linker errors on MSVC)
 #if !defined (DO_NOT_INCLUDE_SYNCH_H)
 
 /* All the classes have been moved out into their own headers as part of

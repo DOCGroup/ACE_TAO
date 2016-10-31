@@ -9,11 +9,10 @@
 //=============================================================================
 #include "HTBP_Stream.h"
 
-#include "ace/Message_Block.h"
-#include "ace/Synch.h"
-
-#include "HTBP_Filter_Factory.h"
 #include "HTBP_Session.h"
+#include "HTBP_Filter_Factory.h"
+
+#include "ace/Message_Block.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

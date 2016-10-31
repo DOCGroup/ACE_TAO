@@ -2,21 +2,21 @@
 #if !defined(UPCALL_H)
 #define UPCALL_H
 
-#include "ace/Synch_Traits.h"
 #include "ace/Timer_Queue_T.h"
 #include "ace/Timer_Heap_T.h"
+#include "ace/Synch.h"
 
 #include "PCB.h"
 
 // Listing 1 code/ch20
 class UpcallHandler;
 
-typedef ACE_Timer_Queue_T<PCB*, UpcallHandler, ACE_SYNCH_NULL_MUTEX>
+typedef ACE_Timer_Queue_T<PCB*, UpcallHandler, ACE_Null_Mutex>
   PTimerQueue;
 
 // Create a special heap-based timer queue that allows you to
 // control exactly how timer evetns are handled.
-typedef ACE_Timer_Heap_T<PCB*, UpcallHandler, ACE_SYNCH_NULL_MUTEX>
+typedef ACE_Timer_Heap_T<PCB*, UpcallHandler, ACE_Null_Mutex>
   PTimerHeap;
 // Listing 1
 

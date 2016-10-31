@@ -1,13 +1,12 @@
-#include "ace/Get_Opt.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/Synch.h"
-
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Addr.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
 #include "ace/HTBP/HTBP_Environment.h"
+
+#include "ace/Log_Msg.h"
+#include "ace/Get_Opt.h"
+#include "ace/OS_NS_sys_socket.h"
 
 const ssize_t Send_Size = 4*1024;
 const size_t Loops = 10;
