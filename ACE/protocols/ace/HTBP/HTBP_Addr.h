@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/INET_Addr.h"
+#include "ace/Synch.h"
 #include "ace/SString.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

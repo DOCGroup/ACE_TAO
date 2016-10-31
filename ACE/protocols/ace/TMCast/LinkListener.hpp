@@ -1,11 +1,12 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
 // OS primitives
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/Refcounted_Auto_Ptr.h"
-#include "ace/SOCK_Dgram_Mcast.h"
-#include "ace/Synch_Traits.h"
+#include <ace/OS_NS_string.h>
+#include <ace/OS_NS_stdlib.h>
+#include <ace/Synch.h>
+#include <ace/SOCK_Dgram_Mcast.h>
+#include <ace/Refcounted_Auto_Ptr.h>
+
 
 #include "Messaging.hpp"
 #include "Protocol.hpp"
@@ -149,7 +150,7 @@ namespace ACE_TMCast
 
   private:
     // FUZZ: disable check_for_ACE_Guard
-    typedef ACE_Guard<ACE_SYNCH_MUTEX> AutoLock;
+    typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
     // FUZZ: enable check_for_ACE_Guard
 
     ACE_hthread_t thread_;

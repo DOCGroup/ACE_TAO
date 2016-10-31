@@ -14,14 +14,14 @@
  */
 //=============================================================================
 
-#include "ace/Activation_Queue.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/Synch.h"
-#include "ace/Task_T.h"
-#include "ace/Timer_Heap.h"
-#include "ace/Timer_Queue_Adapters.h"
 
 #include "test_config.h"
+#include "ace/OS_NS_sys_time.h"
+#include "ace/Task_T.h"
+#include "ace/Activation_Queue.h"
+#include "ace/Timer_Heap.h"
+#include "ace/Timer_Queue_Adapters.h"
+#include "ace/Condition_Recursive_Thread_Mutex.h"
 
 #if defined (ACE_HAS_THREADS)
 

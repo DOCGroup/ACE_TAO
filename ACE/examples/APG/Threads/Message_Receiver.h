@@ -10,7 +10,7 @@
 #include "ace/Message_Block.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
-#include "ace/Synch_Traits.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 
 // Listing 1 code/ch12

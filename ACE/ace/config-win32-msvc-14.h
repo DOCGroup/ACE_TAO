@@ -41,10 +41,6 @@
 // Visual Studio 2015 has adequate C++11 support
 #define ACE_HAS_CPP11
 
-// *TODO*: this C++11-feature goes back further (at least to MSVC 2010), see:
-//         https://msdn.microsoft.com/en-us/library/hh567368.aspx#featurelist
-#define ACE_HAS_CPP11_EXTERN_TEMPLATES
-
 #define ACE_PUTENV_EQUIVALENT ::_putenv
 #define ACE_TEMPNAM_EQUIVALENT ::_tempnam
 #define ACE_STRDUP_EQUIVALENT ::_strdup

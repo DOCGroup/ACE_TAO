@@ -16,9 +16,6 @@
 *S_T.h
 *S_T.inl
 
-*.iobj
-*.ipdb
-
 .depend.*
 GNUmakefile*
 *.ior
@@ -41,4 +38,3 @@ ipch/
 *.res
 *.opendb
 *.VC.db
-build

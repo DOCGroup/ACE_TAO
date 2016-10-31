@@ -2,21 +2,21 @@
  * server for a reactor based connection establishment test using HTBP
  */
 
-#include "ace/Get_Opt.h"
-#include "ace/Event_Handler.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/os_include/os_netdb.h"
-#include "ace/Reactor.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/SOCK_Stream.h"
-#include "ace/Synch.h"
 
 #include "ace/HTBP/HTBP_Session.h"
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Addr.h"
+
+#include "ace/SOCK_Acceptor.h"
+#include "ace/SOCK_Stream.h"
+#include "ace/Event_Handler.h"
+#include "ace/Reactor.h"
+#include "ace/Get_Opt.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_socket.h"
+#include "ace/os_include/os_netdb.h"
 
 unsigned port = 8088;
 const ACE_TCHAR *notifier_file = 0;

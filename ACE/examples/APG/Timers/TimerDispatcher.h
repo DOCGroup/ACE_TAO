@@ -2,10 +2,9 @@
 #if !defined(TIMER_DISPATCHER_H)
 #define TIMER_DISPATCHER_H
 
-#include "ace/Event.h"
 #include "ace/Event_Handler.h"
 #include "ace/Singleton.h"
-#include "ace/Synch_Traits.h"
+#include "ace/Synch.h"  // needed for ACE_Event
 #include "ace/Timer_Queue.h"
 
 // Listing 1 code/ch20
@@ -32,7 +31,7 @@ private:
   ACE_Event timer_;
 };
 
-typedef ACE_Singleton<Timer_Dispatcher, ACE_SYNCH_NULL_MUTEX> Timer;
+typedef ACE_Singleton<Timer_Dispatcher, ACE_Null_Mutex> Timer;
 // Listing 1
 
 #endif /*TIMER_DISPATCHER_H*/
