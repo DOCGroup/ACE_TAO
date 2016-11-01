@@ -1,11 +1,22 @@
 //  -*- MPC -*-
 project(RMCast) : acelib, ace_output, install, threads {
   avoids = ace_for_tao
-  sharedname   = ACE_RMCast
+  sharedname = ACE_RMCast
   dynamicflags += ACE_RMCAST_BUILD_DLL
 
   specific {
     install_dir = ace/RMCast
+  }
+
+  // *TODO*: this is essentially a workaround to be removed ASAP. On modern
+  //         systems, the correct solution is to use (C++11) 'extern templates'
+  //         in all ACE headers and instantiate the templates in the application
+  //         translation units only (instead of (multiple) DLLs).
+  //         Note that previous MSVC do not support this feature, so
+  //         alternatives may need to be found (i.e. 'explicit' template
+  //         instantiation)
+  specific (prop:windows) {
+    linkflags += /force:multiple
   }
 
   Pkgconfig_Files {
