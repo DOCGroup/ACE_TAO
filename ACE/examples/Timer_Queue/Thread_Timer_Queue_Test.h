@@ -16,18 +16,18 @@
 #ifndef _THREAD_TIMER_QUEUE_TEST_H_
 #define _THREAD_TIMER_QUEUE_TEST_H_
 
+#include "ace/Task.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Handler_Handle_Timeout_Upcall.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Task.h"
-#include "ace/Time_Value.h"
+#include "ace/Null_Mutex.h"
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/svc_export.h"
-
+#include "ace/Condition_Recursive_Thread_Mutex.h"
+#include "ace/Event_Handler_Handle_Timeout_Upcall.h"
 #include "Driver.h"
 
 // These typedefs ensure that we use the minimal amount of locking
@@ -36,11 +36,11 @@ typedef ACE_Event_Handler_Handle_Timeout_Upcall
         Upcall;
 typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
                          Upcall,
-                         ACE_SYNCH_NULL_MUTEX>
+                         ACE_Null_Mutex>
         Timer_Heap;
 typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
                                   Upcall,
-                                  ACE_SYNCH_NULL_MUTEX>
+                                  ACE_Null_Mutex>
         Timer_Heap_Iterator;
 typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
         Thread_Timer_Queue;

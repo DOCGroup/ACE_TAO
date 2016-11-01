@@ -3,9 +3,9 @@
 #define JAWS_CACHED_ALLOCATOR_T_H
 
 #include "ace/ACE.h"
-#include "ace/Free_List.h"
+#include "ace/Synch.h"
 #include "ace/Malloc.h"
-#include "ace/Synch_Traits.h"
+#include "ace/Free_List.h"
 
 #define JAWS_DEFAULT_ALLOCATOR_CHUNKS 10
 #define JAWS_CACHED_ALLOCATOR(T) \

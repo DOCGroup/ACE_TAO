@@ -322,7 +322,7 @@ public:
 
   /**
    * Create an input stream from an arbitrary buffer, care must be
-   * exercised wrt alignment, because this contructor will *not* work
+   * exercised wrt alignment, because this constructor will *not* work
    * if the buffer is unproperly aligned.
    */
   TAO_InputCDR (const char* buf,

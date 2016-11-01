@@ -37,7 +37,7 @@ public:
   /// Default constructor
   ACE_SSL_Data_File (void);
 
-  /// Contructor from a file name and the file type.
+  /// Constructor from a file name and the file type.
   ACE_SSL_Data_File (const char *file_name,
                      int type = SSL_FILETYPE_PEM);
 

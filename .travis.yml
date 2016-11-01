@@ -8,15 +8,16 @@ compiler:
 env:
   matrix:
     - FUZZ=1
-    - CORBAEMICRO=1 ACEFORTAO=0
-    - CORBAECOMPACT=1 ACEFORTAO=0
-    - ACEFORTAO=1
-    - CCMLW=0 ACEFORTAO=0
-    - CCMLW=1 ACEFORTAO=0
-    - CCMNOEVENT=1 ACEFORTAO=0
-    - ACETESTS=1 ACEFORTAO=0
-    - USES_WCHAR=1
-    - VERSIONED=1
+    - CORBAEMICRO=1 ACEFORTAO=0 TAO=1
+    - CORBAECOMPACT=1 ACEFORTAO=0 TAO=1
+    - ACEFORTAO=1 TAO=1
+    - CCMLW=0 ACEFORTAO=0 TAO=1
+    - CCMLW=1 ACEFORTAO=0 TAO=1
+    - CCMNOEVENT=1 ACEFORTAO=0 TAO=1
+    - ACETESTS=1 ACEFORTAO=0 TAO=1
+    - USES_WCHAR=1 TAO=1
+    - VERSIONED=1 TAO=1
+    - ACETESTS=1 FACE=1 ACE=1 TAO=0
   global:
     - ACE_ROOT=$TRAVIS_BUILD_DIR/ACE
     - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
@@ -36,9 +37,12 @@ before_script:
   - export
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo -e "#include \"ace/config-macosx.h\"" >> $ACE_ROOT/ace/config.h; fi
-  - echo -e "workspace {\n\$(TAO_ROOT)/TAO_ACE.mwc\n\$(TAO_ROOT)/tests/Hello\n" >> $TRAVIS_BUILD_DIR/travis.mwc
+  - echo -e "workspace {\n" >> $TRAVIS_BUILD_DIR/travis.mwc
+  - if [ "$TAO" == "1" ]; then echo -e "\$(TAO_ROOT)/TAO_ACE.mwc\n\$(TAO_ROOT)/tests/Hello\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
+  - if [ "$ACE" == "1" ]; then echo -e "\$(ACE_ROOT)/ace/ace.mwc\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
   - if [ "$ACETESTS" == "1" ]; then echo -e "\$(ACE_ROOT)/tests\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
   - echo -e "}\n" >> $TRAVIS_BUILD_DIR/travis.mwc
+  - if [ "$FACE" == "1" ]; then echo -e "#define ACE_FACE_SAFETY_BASE" >> $ACE_ROOT/ace/config.h; fi
   - if [ "$CORBAEMICRO" == "1" ]; then echo -e "corba_e_micro=1" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
   - if [ "$CORBAEMICRO" == "1" ]; then echo -e "corba_e_micro=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$CORBAECOMPACT" == "1" ]; then echo -e "corba_e_compact=1" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi

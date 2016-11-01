@@ -53,11 +53,11 @@ class FTP_Client_StreamEndPoint  : public TAO_Client_StreamEndPoint
 {
 
 public:
-  ///Contructor
+  /// Constructor
   FTP_Client_StreamEndPoint (void);
 
   /// Create the application client callback and return its handle to the
-  /// AVSTreams for further application callbacks
+  /// AVStreams for further application callbacks
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
 

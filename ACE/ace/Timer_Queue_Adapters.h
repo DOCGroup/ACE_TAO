@@ -21,7 +21,7 @@
 
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
-#include "ace/Synch_Traits.h"
+#include "ace/Condition_Recursive_Thread_Mutex.h"
 
 #if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 #  include "ace/Unbounded_Queue.h"

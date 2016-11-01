@@ -31,11 +31,10 @@
 // This first #undef protects against command-line definitions.
 #undef ACE_NDEBUG
 #include "ace/streams.h"
-
-#include "ace/ACE.h"
-#include "ace/Log_Msg.h"
 #include "ace/Singleton.h"
-#include "ace/Synch_Traits.h"
+#include "ace/Synch.h"
+#include "ace/Log_Msg.h"
+#include "ace/ACE.h"
 
 // The second #undef protects against being reset in a config.h file.
 #undef ACE_NDEBUG
@@ -304,7 +303,7 @@ randomize (int array[], size_t size)
     }
 }
 
-typedef ACE_Singleton<ACE_Test_Output, ACE_NULL_MUTEX> ace_file_stream;
+typedef ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> ace_file_stream;
 
 #if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
 template ACE_Singleton<ACE_Test_Output, ACE_Null_Mutex> *

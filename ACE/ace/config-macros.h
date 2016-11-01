@@ -49,11 +49,7 @@
 # if defined (ACE_LACKS_IOSTREAM_TOTALLY)
 #   define ACE_OSTREAM_TYPE FILE
 # else  /* ! ACE_LACKS_IOSTREAM_TOTALLY */
-#  if defined ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
-#   define ACE_OSTREAM_TYPE std::ostream
-#  else
 #   define ACE_OSTREAM_TYPE ostream
-#  endif /* ! ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 # endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 #endif /* ! ACE_OSTREAM_TYPE */
 
