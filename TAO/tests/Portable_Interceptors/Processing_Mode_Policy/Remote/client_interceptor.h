@@ -39,8 +39,7 @@ public:
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
 
   virtual void receive_other (
-        PortableInterceptor::ClientRequestInfo_ptr
-      );
+        PortableInterceptor::ClientRequestInfo_ptr);
 
   virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
 

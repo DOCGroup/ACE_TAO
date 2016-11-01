@@ -663,7 +663,7 @@
 
 #if (WINVER>=0x0600)
 // Windows Server 2008 definitions go here
-// Windows Vista defintions go here
+// Windows Vista definitions go here
 #  if ! defined(ACE_DEFAULT_THREAD_KEYS)
 #    define ACE_DEFAULT_THREAD_KEYS 1088
 #  endif // ! defined(ACE_DEFAULT_THREAD_KEYS)

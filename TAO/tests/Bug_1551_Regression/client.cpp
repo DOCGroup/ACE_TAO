@@ -104,8 +104,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
 
       root_poa->destroy (1,  // ethernalize objects
-                         0  // wait for completion
-                        );
+                         0); // wait for completion
 
       orb->destroy ();
     }
