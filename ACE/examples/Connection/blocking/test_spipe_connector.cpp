@@ -1,5 +1,6 @@
 // ACE_SPIPE Client.
 
+#include "ace/Synch.h"
 #include "SPIPE-connector.h"
 
 

@@ -2,6 +2,7 @@
 
 #include "ace/TLI_Connector.h"
 #include "ace/INET_Addr.h"
+#include "ace/Synch.h"
 #include "CPP-connector.h"
 
 

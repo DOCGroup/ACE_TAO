@@ -3,6 +3,7 @@
 #include "ace/TLI_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/Service_Config.h"
+#include "ace/Synch.h"
 #include "CPP-acceptor.h"
 
 #if defined (ACE_HAS_TLI)

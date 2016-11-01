@@ -3,6 +3,7 @@
 // ACE Thread Manager.
 
 #include "ace/OS_main.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 
 #include "ace/Service_Config.h"

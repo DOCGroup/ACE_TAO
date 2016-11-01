@@ -17,6 +17,7 @@
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/Timer_Queue.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Message_Queue.h"
 #include "ace/Monotonic_Time_Policy.h"

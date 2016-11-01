@@ -2,6 +2,7 @@
 // Message_Queue.  It illustrates an implementation of the classic
 // "bounded buffer" program.
 
+#include "ace/Synch.h"
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Truncate.h"

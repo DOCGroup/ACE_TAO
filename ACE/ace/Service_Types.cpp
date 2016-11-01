@@ -4,6 +4,7 @@
 #include "ace/Service_Types.inl"
 #endif /* __ACE_INLINE__ */
 
+#include "ace/Synch.h"
 #include "ace/Stream_Modules.h"
 #include "ace/Stream.h"
 #include "ace/OS_NS_stdio.h"

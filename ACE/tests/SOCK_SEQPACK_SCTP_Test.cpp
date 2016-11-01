@@ -36,6 +36,7 @@
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/SOCK_SEQPACK_Connector.h"
 #include "ace/SOCK_SEQPACK_Acceptor.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 

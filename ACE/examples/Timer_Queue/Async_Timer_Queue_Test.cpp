@@ -14,6 +14,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Signal.h"
 #include "ace/Timer_Heap.h"
+#include "ace/Synch.h"
 #include "ace/Timer_Queue_Adapters.h"
 
 #include "Async_Timer_Queue_Test.h"

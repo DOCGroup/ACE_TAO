@@ -16,6 +16,7 @@
 #include "test_config.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"

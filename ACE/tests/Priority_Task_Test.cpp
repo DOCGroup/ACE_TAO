@@ -13,6 +13,7 @@
 
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"

@@ -3,6 +3,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Synch.h"
 #include "ace/Truncate.h"
 
 #include "ACEXML/common/HttpCharStream.h"

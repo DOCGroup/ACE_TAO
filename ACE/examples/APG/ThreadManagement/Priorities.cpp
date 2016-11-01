@@ -2,6 +2,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"

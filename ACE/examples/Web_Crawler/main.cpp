@@ -13,6 +13,7 @@
 
 #include "ace/OS_main.h"
 #include "ace/Signal.h"
+#include "ace/Synch.h"
 #include "Web_Crawler.h"
 #include "Options.h"
 

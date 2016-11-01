@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "JAWS/Concurrency.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Pipeline.h"

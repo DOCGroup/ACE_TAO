@@ -19,6 +19,7 @@
 #include "ace/Service_Repository.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Types.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Module.h"
 

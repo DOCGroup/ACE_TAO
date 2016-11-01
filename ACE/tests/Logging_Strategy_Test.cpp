@@ -34,6 +34,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 #if defined (ACE_AS_STATIC_LIBS) || \

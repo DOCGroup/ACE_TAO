@@ -6,6 +6,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
 #include "ace/Signal.h"
 #include "ace/Auto_Ptr.h"

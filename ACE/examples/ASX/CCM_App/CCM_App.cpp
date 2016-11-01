@@ -1,5 +1,6 @@
 #define ACE_BUILD_SVC_DLL
 
+#include "ace/Synch.h"
 #include "ace/Stream.h"
 #include "ace/Task.h"
 #include "ace/Module.h"

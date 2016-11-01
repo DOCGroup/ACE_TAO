@@ -1,4 +1,5 @@
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "Token_Handler.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)

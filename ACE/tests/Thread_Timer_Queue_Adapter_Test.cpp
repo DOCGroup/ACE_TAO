@@ -9,6 +9,7 @@
 //=============================================================================
 
 #include "ace/Timer_Wheel.h"
+#include "ace/Synch.h"
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/Truncate.h"
 #include "test_config.h"

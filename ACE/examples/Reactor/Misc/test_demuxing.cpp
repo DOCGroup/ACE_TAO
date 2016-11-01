@@ -9,6 +9,7 @@
 #include "ace/ACE.h"
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Reactor_Notification_Strategy.h"
 #include "ace/Signal.h"

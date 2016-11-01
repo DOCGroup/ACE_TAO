@@ -3,6 +3,7 @@
 // how the ACE_Connector and ACE_Acceptor patterns work when used with
 // ACE_UPIPEs.
 
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"

@@ -1,6 +1,7 @@
 #include "ace/Auto_Ptr.h"
 
 #include "Kokyu.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"

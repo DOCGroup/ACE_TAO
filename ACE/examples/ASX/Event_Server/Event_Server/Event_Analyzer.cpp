@@ -1,6 +1,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 #include "Options.h"
+#include "ace/Synch.h"
 #include "Event_Analyzer.h"
 
 

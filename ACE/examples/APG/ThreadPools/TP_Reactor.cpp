@@ -13,6 +13,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"

@@ -10,7 +10,7 @@
 #if defined (ACE_HAS_THREADS)
 
 #  include "ace/Guard_T.h"
-#  include "ace/Recursive_Thread_Mutex.h"
+#  include "ace/Synch.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

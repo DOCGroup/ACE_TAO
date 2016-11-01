@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "RecordingDevice.h"
 #include "RecordingDeviceFactory.h"
 #include "RecordingDevice_Text.h"

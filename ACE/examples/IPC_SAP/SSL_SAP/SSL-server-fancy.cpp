@@ -3,6 +3,7 @@
 // supports threads it uses a thread-per-connection concurrency model.
 // Otherwise, it uses a single-threaded iterative server model.
 
+#include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Singleton.h"
 #include "ace/Profile_Timer.h"

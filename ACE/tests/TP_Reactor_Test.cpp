@@ -47,6 +47,7 @@
 
 #if defined(ACE_HAS_THREADS)
 
+#include "ace/Synch.h"
 #include "TP_Reactor_Test.h"
 
 #include "ace/Signal.h"

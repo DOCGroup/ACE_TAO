@@ -2,6 +2,7 @@
 // ACE_Streambuf_T templates to create an object based on ACE_*_Stream
 // classes, which mimic a C++ iostream.
 
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Service_Config.h"

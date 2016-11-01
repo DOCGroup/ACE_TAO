@@ -17,6 +17,7 @@
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Guard_T.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Signal.h"

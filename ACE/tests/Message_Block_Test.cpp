@@ -14,6 +14,7 @@
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Malloc_T.h"
 #include "ace/Profile_Timer.h"

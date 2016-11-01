@@ -17,6 +17,7 @@
 
 #include "test_config.h"
 #include "ace/Thread.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Connector.h"

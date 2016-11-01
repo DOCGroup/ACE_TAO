@@ -1,4 +1,5 @@
 #include "ace/OS_NS_string.h"
+#include "ace/Synch.h"
 #include "URL.h"
 #include "HTTP_URL.h"
 #include "Options.h"

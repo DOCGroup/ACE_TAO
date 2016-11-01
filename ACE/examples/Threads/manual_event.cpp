@@ -14,6 +14,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Manual_Event.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op.h"
 

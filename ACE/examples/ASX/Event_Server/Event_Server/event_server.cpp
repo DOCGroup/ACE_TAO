@@ -4,6 +4,7 @@
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_unistd.h"
 #include "Options.h"
+#include "ace/Synch.h"
 #include "Consumer_Router.h"
 #include "Event_Analyzer.h"
 #include "Supplier_Router.h"

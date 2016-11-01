@@ -5,6 +5,7 @@
 #define JAWS_BUILD_DLL
 #endif
 
+#include "ace/Synch.h"
 #include "jaws3/TPOOL_Concurrency.h"
 #include "jaws3/Protocol_Handler.h"
 #include "jaws3/Options.h"

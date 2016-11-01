@@ -41,6 +41,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
 #include "ace/SString.h"

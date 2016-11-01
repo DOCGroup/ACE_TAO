@@ -1,6 +1,7 @@
 #include "ace/Auto_Ptr.h"
 
 #include "Kokyu.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
 #include "ace/SString.h"

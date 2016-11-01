@@ -18,6 +18,7 @@
 
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 #include "ace/Auto_Ptr.h"

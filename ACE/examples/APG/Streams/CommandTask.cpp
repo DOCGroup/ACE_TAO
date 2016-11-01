@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "CommandTask.h"
 
 // Listing 01 code/ch18

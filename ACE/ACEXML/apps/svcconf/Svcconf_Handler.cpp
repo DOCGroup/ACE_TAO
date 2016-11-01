@@ -7,6 +7,7 @@
 #include "ace/Service_Gestalt.h"
 #include "ace/DLL.h"
 #include "ace/ARGV.h"
+#include "ace/Synch.h"
 #include "ace/Module.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/SString.h"

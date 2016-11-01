@@ -1,5 +1,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
+#include "ace/Synch.h"
 #include "CommandStream.h"
 #include "Command.h"
 #include "CommandModule.h"

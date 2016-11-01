@@ -8,6 +8,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Truncate.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/Synch.h"
 #include "SPIPE-connector.h"
 
 

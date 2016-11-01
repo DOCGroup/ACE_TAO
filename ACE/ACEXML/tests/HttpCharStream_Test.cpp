@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "ACEXML/common/HttpCharStream.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_main.h"

@@ -1,4 +1,5 @@
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"

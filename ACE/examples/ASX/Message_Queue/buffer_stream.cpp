@@ -12,6 +12,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Service_Config.h"
+#include "ace/Synch.h"
 #include "ace/Stream.h"
 #include "ace/Module.h"
 #include "ace/Task.h"

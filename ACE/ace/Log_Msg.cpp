@@ -8,6 +8,7 @@
 #define ACE_NTRACE 1
 
 #include "ace/ACE.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_stdio.h"

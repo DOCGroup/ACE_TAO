@@ -1,5 +1,6 @@
 #include "Kokyu.h"
 
+#include "ace/Synch.h"
 #include "Default_Dispatcher_Impl.h"
 
 #if ! defined (__ACE_INLINE__)

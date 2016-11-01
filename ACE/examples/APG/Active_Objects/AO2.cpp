@@ -2,6 +2,7 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/Synch.h"
 #include "ace/Activation_Queue.h"
 #include "ace/Method_Request.h"
 #include "ace/Task.h"

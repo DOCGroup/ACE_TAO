@@ -2,6 +2,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Truncate.h"
 #include "Options.h"
+#include "ace/Synch.h"
 #include "Mem_Map_Stream.h"
 
 

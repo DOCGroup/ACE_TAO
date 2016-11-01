@@ -61,6 +61,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Process.h"
 #include "ace/Profile_Timer.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 #define  ACE_STOP_SIGN  ACE_OS::sleep (0)

@@ -5,6 +5,7 @@
 #define JAWS_BUILD_DLL
 #endif
 
+#include "ace/Synch.h"
 #include "jaws3/Concurrency.h"
 #include "jaws3/THYBRID_Concurrency.h"
 #include "jaws3/Protocol_Handler.h"

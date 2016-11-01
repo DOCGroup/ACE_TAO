@@ -1,6 +1,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Naming_Context.h"
 #include "ace/Dynamic_Service.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/os_ctype.h"

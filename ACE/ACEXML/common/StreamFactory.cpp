@@ -2,6 +2,7 @@
 
 #include "ACEXML/common/StreamFactory.h"
 #include "ACEXML/common/FileCharStream.h"
+#include "ace/Synch.h"
 #include "ACEXML/common/HttpCharStream.h"
 
 #ifdef USE_ZZIP

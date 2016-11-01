@@ -2,6 +2,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
 #include "ace/Truncate.h"

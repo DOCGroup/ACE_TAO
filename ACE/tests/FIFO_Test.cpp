@@ -24,6 +24,7 @@
 #include "ace/Handle_Set.h"
 #include "ace/Lib_Find.h"
 #include "ace/Thread.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 

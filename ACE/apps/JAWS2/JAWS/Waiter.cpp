@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
 
 #include "JAWS/Waiter.h"

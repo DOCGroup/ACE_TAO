@@ -4,6 +4,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Signal.h"
+#include "ace/Synch.h"
 #include "Peer.h"
 
 Peer_Handler::Peer_Handler (void)

@@ -4,6 +4,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 #include "Options.h"
+#include "ace/Synch.h"
 #include "Peer_Router.h"
 
 

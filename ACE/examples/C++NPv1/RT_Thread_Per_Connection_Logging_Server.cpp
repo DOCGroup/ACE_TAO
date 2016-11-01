@@ -7,6 +7,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Sched_Params.h"
 #include "ace/Signal.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 #include "RT_Thread_Per_Connection_Logging_Server.h"

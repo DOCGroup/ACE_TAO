@@ -1,6 +1,7 @@
 // Test the event server.
 
 #include "ace/OS_main.h"
+#include "ace/Synch.h"
 #include "ace/Stream.h"
 #include "ace/Service_Config.h"
 #include "ace/UPIPE_Acceptor.h"

@@ -10,6 +10,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Auto_Event.h"
 #include "ace/Singleton.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 #if defined (ACE_HAS_THREADS)

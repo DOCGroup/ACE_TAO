@@ -1,6 +1,7 @@
 #include "ace/config-lite.h"
 #if defined (ACE_HAS_THREADS)
 
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 

@@ -14,6 +14,7 @@
 
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "MT_Reactor_Timer_Test.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"

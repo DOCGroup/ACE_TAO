@@ -1,4 +1,5 @@
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Containers_T.h"
 #include "ace/Reactor.h"

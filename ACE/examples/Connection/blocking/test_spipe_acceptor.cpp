@@ -1,5 +1,6 @@
 // ACE_SPIPE Server.
 
+#include "ace/Synch.h"
 #include "SPIPE-acceptor.h"
 
 

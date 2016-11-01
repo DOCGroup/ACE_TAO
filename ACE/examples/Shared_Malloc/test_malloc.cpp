@@ -2,6 +2,7 @@
 // the ACE_Allocator_Adapter.
 
 #include "ace/Thread.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Malloc.h"
 #include "ace/Signal.h"

@@ -1,7 +1,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/INET_Addr.h"
 #include "ace/Service_Config.h"
-
+#include "ace/Synch.h"
 #include "CPP-acceptor.h"
 
 typedef Svc_Handler<ACE_SOCK_STREAM> SVC_HANDLER;

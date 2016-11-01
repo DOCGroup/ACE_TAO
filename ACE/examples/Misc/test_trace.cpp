@@ -34,6 +34,7 @@
 
 #include "ace/OS_main.h"
 #include "ace/Signal.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Trace.h"
 

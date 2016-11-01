@@ -1,6 +1,7 @@
 // This example tests the features of the <ACE_SSL_SOCK_Acceptor>,
 // <ACE_SSL_SOCK_Stream>, and <ACE_Svc_Handler> classes.
 
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 #include "ace/Profile_Timer.h"

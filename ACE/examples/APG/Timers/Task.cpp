@@ -1,6 +1,7 @@
 #include "ace/OS_NS_sys_time.h"
 
 // Listing 1 code/ch20
+#include "ace/Synch.h"
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/Timer_Heap.h"
 

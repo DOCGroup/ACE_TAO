@@ -6,6 +6,7 @@
 #include "ace/Trace.h"
 #endif /* (ACE_NTRACE != 1) */
 
+#include "ace/Synch.h"
 #include "JAWS/Server.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Concurrency.h"

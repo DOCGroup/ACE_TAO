@@ -3,7 +3,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"   // abort
 #include "ace/OS_NS_sys_time.h" // gettimeofday
-
+#include "ace/Synch.h"
 #include "Acknowledge.h"
 
 namespace ACE_RMCast

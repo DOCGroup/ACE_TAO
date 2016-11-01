@@ -3,6 +3,7 @@
 
 #include "ace/OS_main.h"
 #include "ace/Thread.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 #include "ace/Atomic_Op.h"

@@ -15,6 +15,7 @@
 
 #include "test_config.h"
 #include "ace/Message_Queue.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 

@@ -1,5 +1,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
+#include "ace/Synch.h"
 #include "URL_Visitor.h"
 #include "Command_Processor.h"
 

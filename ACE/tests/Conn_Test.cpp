@@ -20,6 +20,7 @@
 #include "test_config.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/LOCK_SOCK_Acceptor.h"
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"

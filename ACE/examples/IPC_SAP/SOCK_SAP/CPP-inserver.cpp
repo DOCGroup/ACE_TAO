@@ -4,6 +4,7 @@
 // Otherwise, it uses a single-threaded iterative server model.
 
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 #include "ace/Profile_Timer.h"

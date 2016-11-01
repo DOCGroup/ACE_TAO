@@ -24,6 +24,7 @@
 #include "ace/Local_Tokens.h"
 #include "ace/Token_Collection.h"
 #include "ace/Remote_Tokens.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Token_Invariants.h"
 #include "ace/Barrier.h"

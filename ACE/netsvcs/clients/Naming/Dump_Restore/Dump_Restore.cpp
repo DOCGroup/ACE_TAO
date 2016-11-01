@@ -1,5 +1,6 @@
 #include "ace/Malloc_Base.h"
 #include "ace/Read_Buffer.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 // FUZZ: disable check_for_streams_include

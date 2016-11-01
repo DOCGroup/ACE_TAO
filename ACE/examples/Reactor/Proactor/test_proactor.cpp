@@ -15,6 +15,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_IO.h"
 #include "ace/Asynch_IO_Impl.h"

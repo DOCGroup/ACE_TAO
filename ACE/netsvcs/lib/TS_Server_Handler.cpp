@@ -1,6 +1,7 @@
 #include "ace/SString.h"
 #include "ace/Containers.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "TS_Server_Handler.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Signal.h"

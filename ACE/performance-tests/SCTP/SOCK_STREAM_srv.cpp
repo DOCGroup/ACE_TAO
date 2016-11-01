@@ -2,6 +2,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Log_Msg.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
 #include "ace/CDR_Stream.h"

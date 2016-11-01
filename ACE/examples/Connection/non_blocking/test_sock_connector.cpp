@@ -2,6 +2,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
+#include "ace/Synch.h"
 #include "CPP-connector.h"
 
 

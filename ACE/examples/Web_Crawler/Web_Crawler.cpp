@@ -1,4 +1,5 @@
 #include "Options.h"
+#include "ace/Synch.h"
 #include "URL_Visitor_Factory.h"
 #include "Web_Crawler.h"
 

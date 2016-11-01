@@ -24,6 +24,7 @@
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 #include "Max_Default_Port_Test.h"

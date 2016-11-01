@@ -17,6 +17,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Thread.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Time_Value.h"
 #include "ace/SOCK_Connector.h"

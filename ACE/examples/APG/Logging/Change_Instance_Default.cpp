@@ -7,6 +7,7 @@
  */
 
 #include "ace/Log_Msg.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 ACE_THR_FUNC_RETURN worker (void *)

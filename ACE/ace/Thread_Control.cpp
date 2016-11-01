@@ -1,4 +1,5 @@
 #include "ace/Thread_Control.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)

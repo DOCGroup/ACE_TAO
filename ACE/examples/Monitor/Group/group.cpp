@@ -3,6 +3,7 @@
 #include "ace/Monitor_Point_Registry.h"
 #include "ace/Monitor_Admin_Manager.h"
 
+#include "ace/Synch.h"
 #include "ace/Monitor_Control/Monitor_Control.h"
 
 #include "examples/Monitor/MC_Test_Utilities.h"

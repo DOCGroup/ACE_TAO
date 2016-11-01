@@ -9,6 +9,7 @@
 #include <ace/Reactor.h>
 #include <ace/Signal.h>
 #include <ace/streams.h>
+#include "ace/Synch.h"
 #include <ace/Thread_Manager.h>
 #include <ace/TP_Reactor.h>
 

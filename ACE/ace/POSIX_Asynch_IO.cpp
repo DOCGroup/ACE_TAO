@@ -3,6 +3,7 @@
 #if defined (ACE_HAS_AIO_CALLS)
 
 #include "ace/Flag_Manip.h"
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"

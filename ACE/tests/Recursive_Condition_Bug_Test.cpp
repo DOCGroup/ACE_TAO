@@ -14,9 +14,9 @@
  */
 //=============================================================================
 
+#include "ace/Synch.h"
 #include "ace/Activation_Queue.h"
 #include "ace/OS_NS_sys_time.h"
-#include "ace/Synch.h"
 #include "ace/Task_T.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"

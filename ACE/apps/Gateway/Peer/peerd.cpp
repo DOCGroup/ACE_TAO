@@ -12,6 +12,7 @@
 //=============================================================================
 
 #include "ace/OS_NS_unistd.h"
+#include "ace/Synch.h"
 #include "Peer.h"
 
 int

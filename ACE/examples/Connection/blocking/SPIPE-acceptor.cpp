@@ -4,6 +4,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/SPIPE_Acceptor.h"
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/Signal.h"

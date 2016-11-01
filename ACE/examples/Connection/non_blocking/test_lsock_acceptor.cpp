@@ -19,6 +19,7 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 #else  /* ! ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
 #include "ace/UNIX_Addr.h"
+#include "ace/Synch.h"
 #include "CPP-acceptor.h"
 
 typedef Svc_Handler<ACE_LSOCK_STREAM> SVC_HANDLER;

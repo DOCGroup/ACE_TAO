@@ -8,6 +8,7 @@
 #define JAWS_BUILD_DLL
 #endif
 
+#include "ace/Synch.h"
 #include "jaws3/Concurrency.h"
 #include "jaws3/TPOOL_Concurrency.h"
 #include "jaws3/TPR_Concurrency.h"

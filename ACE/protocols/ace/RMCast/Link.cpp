@@ -4,7 +4,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_sys_socket.h"
-
+#include "ace/Synch.h"
 #include "Link.h"
 
 namespace ACE_RMCast

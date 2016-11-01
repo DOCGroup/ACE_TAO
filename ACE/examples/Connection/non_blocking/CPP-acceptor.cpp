@@ -3,6 +3,7 @@
 #define CPP_ACCEPTOR_C
 
 #include "ace/Service_Config.h"
+#include "ace/Synch.h"
 #include "CPP-acceptor.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Signal.h"

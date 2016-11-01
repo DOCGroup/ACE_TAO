@@ -15,7 +15,7 @@
  */
 //=============================================================================
 
-
+#include "ace/Synch.h"
 #include "Options.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_fcntl.h"
