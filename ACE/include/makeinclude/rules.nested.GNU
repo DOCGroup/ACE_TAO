@@ -30,11 +30,11 @@ endif
 # Triggered by the $(TARGETS_NESTED) target, below.
 
 %.subdir: %
-	ifneq ($(timed,)
+	ifneq ($(timed,))
 	  echo -n "START: $< " && date
 	endif
 	cd $< && $(MAKE) -f $(SUBDIR_MAKEFILE) $(SUBDIR_TARGET)
-	ifneq ($(timed,)
+	ifneq ($(timed,))
 	  echo -n "FINISH: $< " && date
 	endif
 
