@@ -70,8 +70,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
           << ": ::CORBA::UserException ("
           << be_idt << be_idt << be_idt_nl
           << "\"" << node->repoID () << "\"," << be_nl
-          << "\"" << node->local_name () << "\"" << be_uidt_nl
-          << ")" << be_uidt << be_uidt << be_uidt_nl;
+          << "\"" << node->local_name () << "\")" << be_uidt
+          << be_uidt << be_uidt << be_uidt_nl;
       *os << "{" << be_idt;
 
       // Assign each individual member. We need yet another state.
@@ -102,8 +102,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << " (void)" << be_idt_nl;
   *os << ": ::CORBA::UserException (" << be_idt << be_idt << be_idt_nl
       << "\"" << node->repoID () << "\"," << be_nl
-      << "\"" << node->local_name () << "\"" << be_uidt_nl
-      << ")" << be_uidt << be_uidt << be_uidt_nl;
+      << "\"" << node->local_name () << "\")" << be_uidt
+      << be_uidt << be_uidt << be_uidt_nl;
   *os << "{" << be_nl;
   *os << "}" << be_nl_2;
 
@@ -118,8 +118,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << node->name () << " &_tao_excp)" << be_idt_nl;
   *os << ": ::CORBA::UserException (" << be_idt << be_idt << be_idt_nl
       << "_tao_excp._rep_id ()," << be_nl
-      << "_tao_excp._name ()" << be_uidt_nl
-      << ")" << be_uidt << be_uidt << be_uidt_nl;
+      << "_tao_excp._name ())" << be_uidt
+      << be_uidt << be_uidt << be_uidt_nl;
   *os << "{";
 
   ctx = *this->ctx_;
@@ -216,8 +216,8 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
       << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "result," << be_nl
       << "::" << node->name () << " (*this)," << be_nl
-      << "0" << be_uidt_nl
-      << ");" << be_uidt_nl
+      << "0);" << be_uidt
+      << be_uidt_nl
       << "return result;" << be_uidt_nl
       << "}" << be_nl_2;
 

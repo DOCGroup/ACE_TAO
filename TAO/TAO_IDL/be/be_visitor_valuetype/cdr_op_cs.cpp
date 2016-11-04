@@ -68,25 +68,25 @@ be_visitor_valuetype_cdr_op_cs::visit_valuetype (be_valuetype *node)
       << "operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
       << "const " << node->full_name ()
-      << " *_tao_valuetype" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << " *_tao_valuetype)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
   *os << "return" << be_idt_nl
       << "::CORBA::ValueBase::_tao_marshal (" << be_idt << be_idt_nl
       << "strm," << be_nl
       << "_tao_valuetype," << be_nl
       << "reinterpret_cast<ptrdiff_t> (&"
-      << node->full_name () << "::_downcast)"
-      << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl
+      << node->full_name () << "::_downcast));"
+      << be_uidt
+      << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "::CORBA::Boolean" << be_nl
       << "operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
       << node->full_name ()
-      << " *&_tao_valuetype" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << " *&_tao_valuetype)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
   *os << "return " << node->full_name ()
       << "::_tao_unmarshal (strm, _tao_valuetype);"

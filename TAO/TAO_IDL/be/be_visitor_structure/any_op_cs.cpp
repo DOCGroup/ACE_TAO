@@ -146,8 +146,8 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
               << be_uidt_nl
               << "{" << be_idt_nl
               << "return _tao_any >>= const_cast<" << be_idt << be_idt_nl
-              << "const ::" << node->name () << " *&> (" << be_nl
-              << "_tao_elem);" << be_uidt
+              << "const ::" << node->name () << " *&> (_tao_elem);"
+              << be_uidt
               << be_uidt << be_uidt_nl
               << "}" << be_nl_2;
 
@@ -164,8 +164,8 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
               << "_tao_any," << be_nl
               << "::" << node->name () << "::_tao_any_destructor," << be_nl
               << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem" << be_uidt_nl
-              << ");" << be_uidt << be_uidt << be_uidt_nl
+              << "_tao_elem);" << be_uidt
+              << be_uidt << be_uidt << be_uidt_nl
               << "}";
 
           be_util::gen_nested_namespace_end (os, module);
@@ -219,8 +219,8 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << be_uidt_nl
       << "{" << be_idt_nl
       << "return _tao_any >>= const_cast<" << be_idt << be_idt_nl
-      << "const " << node->name () << " *&> (" << be_nl
-      << "_tao_elem);" << be_uidt
+      << "const " << node->name () << " *&> (_tao_elem);"
+      << be_uidt
       << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
