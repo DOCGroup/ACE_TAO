@@ -191,7 +191,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
     {
       *os << " ||" << be_uidt_nl
           << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "(char *)value," << be_nl
+          << "value," << be_nl
           << "\"IDL:omg.org/CORBA/AbstractBase:1.0\""
           << be_uidt_nl
           << ")";
