@@ -56,8 +56,8 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
       << "::CORBA::Boolean" << be_nl
       << "Any_Impl_T<" << node->name () << ">::to_value ("
       << be_idt <<  be_idt_nl
-      << "::CORBA::ValueBase *&_tao_elem" << be_uidt_nl
-      << ") const" << be_uidt_nl
+      << "::CORBA::ValueBase *&_tao_elem) const" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "::CORBA::add_ref (this->value_);" << be_nl
       << "_tao_elem = this->value_;" << be_nl
@@ -90,7 +90,7 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
       be_util::gen_nested_namespace_begin (os, module);
 
       // emit  nested variation of any operators
-      *os << "// Copying insertion." << be_nl
+      *os << "/// Copying insertion." << be_nl
           << "void" << be_nl
           << "operator<<= (" << be_idt << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
@@ -100,7 +100,7 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
           << "_tao_any <<= &_tao_elem;" << be_uidt_nl
           << "}" << be_nl_2;
 
-      *os << "// Non-copying insertion." << be_nl
+      *os << "/// Non-copying insertion." << be_nl
           << "void" << be_nl
           << "operator<<= (" << be_idt << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
@@ -139,31 +139,31 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
 
   *os << be_global->core_versioning_begin () << be_nl;
 
-  *os << "// Copying insertion." << be_nl
+  *os << "/// Copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
-      << node->full_name () << " *_tao_elem" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << node->full_name () << " *_tao_elem)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "::CORBA::add_ref (_tao_elem);" << be_nl
       << "_tao_any <<= &_tao_elem;" << be_uidt_nl
       << "}" << be_nl_2;
 
-  *os << "// Non-copying insertion." << be_nl
+  *os << "/// Non-copying insertion." << be_nl
       << "void" << be_nl
       << "operator<<= (" << be_idt << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
-      << node->full_name () << " **_tao_elem" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << node->full_name () << " **_tao_elem)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "TAO::Any_Impl_T<" << node->name () << ">::insert ("
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
       << node->tc_name () << "," << be_nl
-      << "*_tao_elem" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+      << "*_tao_elem);" << be_uidt
+      << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "::CORBA::Boolean" << be_nl
