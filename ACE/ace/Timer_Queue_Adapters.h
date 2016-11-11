@@ -13,15 +13,18 @@
 #define ACE_TIMER_QUEUE_ADAPTERS_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Task.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Signal.h"
+#include "ace/Event_Handler.h"
+#include "ace/os_include/os_pthread.h"
+#include "ace/os_include/os_ucontext.h"
 #include "ace/Sig_Handler.h"
-#include "ace/Condition_Recursive_Thread_Mutex.h"
+#include "ace/Signal.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Time_Value.h"
+#include "ace/Task.h"
 
 #if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 #  include "ace/Unbounded_Queue.h"
@@ -31,8 +34,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class ACE_Sig_Set;
 
 /**
  * @class ACE_Async_Timer_Queue_Adapter

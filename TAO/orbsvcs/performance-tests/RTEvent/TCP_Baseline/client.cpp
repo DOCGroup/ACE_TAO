@@ -8,6 +8,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"

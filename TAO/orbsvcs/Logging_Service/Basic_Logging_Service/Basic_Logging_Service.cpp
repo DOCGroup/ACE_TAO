@@ -1,4 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
+#include "ace/Synch.h"
 #include "Basic_Logging_Service.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/Log/BasicLogFactory_i.h"

@@ -1,4 +1,4 @@
-
+#include "ace/Synch.h"
 #include "Client_Task.h"
 
 int

@@ -1,6 +1,7 @@
 // -*- C++ -*-
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 
 #include "tao/ORBInitializer_Registry.h"

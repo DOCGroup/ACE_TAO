@@ -1,4 +1,5 @@
 // -*- C++ -*-
+#include "ace/Synch.h"
 #include "Server_Task.h"
 #include "TestS.h"
 #include "Hello.h"

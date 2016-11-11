@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "DllORB.h"
 #include "ace/Barrier.h"
 #include "ace/Arg_Shifter.h"

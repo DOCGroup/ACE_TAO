@@ -1,4 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
+#include "ace/Synch.h"
 #include "Signal_Handler.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"

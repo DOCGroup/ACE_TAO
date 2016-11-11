@@ -1,5 +1,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Stats.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Sample_History.h"
 #include "tao/ORB_Core.h"

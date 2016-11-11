@@ -1,4 +1,4 @@
-
+#include "ace/Synch.h"
 #include "Client_Task.h"
 
 Client_Task::Client_Task (CORBA::ORB_ptr orb,

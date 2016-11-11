@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "ECT_Supplier_Driver.h"
 
 #include "orbsvcs/CosNamingC.h"

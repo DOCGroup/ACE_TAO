@@ -1,4 +1,5 @@
 #include "ace/Service_Config.h"
+#include "ace/Synch.h"
 #include "orbsvcs/Notify_Service/Notify_Service.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "orbsvcs/CosNamingC.h"

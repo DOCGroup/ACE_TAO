@@ -9,7 +9,7 @@
  */
 //=============================================================================
 
-
+#include "ace/Synch.h"
 #include "timeout_client.h"
 
 #include "tao/debug.h"

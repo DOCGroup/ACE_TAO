@@ -1,6 +1,7 @@
 #ifndef HTIOP_ACCEPTOR_IMPL_CPP
 #define HTIOP_ACCEPTOR_IMPL_CPP
 
+#include "ace/Synch.h"
 #include "orbsvcs/HTIOP/HTIOP_Acceptor_Impl.h"
 #include "orbsvcs/HTIOP/HTIOP_Completion_Handler.h"
 

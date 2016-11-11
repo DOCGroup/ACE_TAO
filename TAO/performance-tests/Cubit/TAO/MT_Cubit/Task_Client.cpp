@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Task_Client.h"
 #include "Timer.h"
 #include "ace/Stats.h"

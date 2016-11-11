@@ -1,4 +1,5 @@
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "simple_testC.h"
 

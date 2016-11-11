@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "MT_Disconnect.h"
 #include "Counting_Consumer.h"
 #include "Counting_Supplier.h"

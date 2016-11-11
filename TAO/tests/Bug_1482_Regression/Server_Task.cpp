@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Server_Task.h"
 
 Server_Task::Server_Task (CORBA::ORB_ptr orb,

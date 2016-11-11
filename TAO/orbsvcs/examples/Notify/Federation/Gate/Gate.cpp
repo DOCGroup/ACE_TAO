@@ -1,4 +1,5 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+#include "ace/Synch.h"
 #include "Gate.h"
 #include "ace/Truncate.h"
 

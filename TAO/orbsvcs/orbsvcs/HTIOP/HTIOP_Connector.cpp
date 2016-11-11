@@ -1,5 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
+#include "ace/Synch.h"
 #include "orbsvcs/HTIOP/HTIOP_Connector.h"
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
 

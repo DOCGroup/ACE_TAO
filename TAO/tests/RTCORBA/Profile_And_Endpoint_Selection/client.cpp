@@ -11,6 +11,7 @@
 
 
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/RTCORBA.h"

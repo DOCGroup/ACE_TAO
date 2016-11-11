@@ -1,4 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
+#include "ace/Synch.h"
 #include "Monitor_Signal_Handler.h"
 
 TAO_LB_Monitor_Signal_Handler::TAO_LB_Monitor_Signal_Handler (

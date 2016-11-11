@@ -15,7 +15,7 @@ project(RMCast) : acelib, ace_output, install, threads {
   //         Note that previous MSVC do not support this feature, so
   //         alternatives may need to be found (i.e. 'explicit' template
   //         instantiation)
-  specific (prop:windows) {
+  specific(vc6,vc8,vc9,vc10,vc11,vc12,vc14) {
     linkflags += /force:multiple
   }
 

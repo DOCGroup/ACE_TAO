@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Client_Worker.h"
 #include "tao/debug.h"
 

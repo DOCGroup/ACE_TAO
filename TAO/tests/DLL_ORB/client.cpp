@@ -10,6 +10,7 @@
 
 
 #include "ace/Service_Config.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 int

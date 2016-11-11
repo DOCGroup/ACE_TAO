@@ -5,6 +5,7 @@
  * Implements the Client_Task class defined in Client_Task.h.
  */
 
+#include "ace/Synch.h"
 #include "Client_Task.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"

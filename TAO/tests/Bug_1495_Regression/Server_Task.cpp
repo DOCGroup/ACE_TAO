@@ -6,6 +6,7 @@
  * corba server for Bug_1495_Regression test.
  */
 
+#include "ace/Synch.h"
 #include "Server_Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "test_i.h"

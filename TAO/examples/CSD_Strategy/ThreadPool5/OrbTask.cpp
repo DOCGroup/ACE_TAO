@@ -7,7 +7,7 @@
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================
-
+#include "ace/Synch.h"
 #include "OrbTask.h"
 
 namespace { enum { MAX_ORB_TASK_WORKER_THREADS = 20 }; }

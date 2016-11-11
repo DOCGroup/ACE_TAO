@@ -13,6 +13,7 @@
 
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ami_testC.h"
 #include "ami_testS.h"

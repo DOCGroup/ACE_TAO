@@ -1,5 +1,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Array_Base.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"

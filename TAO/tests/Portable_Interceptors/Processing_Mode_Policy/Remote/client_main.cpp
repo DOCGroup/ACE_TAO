@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 #include "ace/Argv_Type_Converter.h"

@@ -1,4 +1,5 @@
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_unistd.h"
