@@ -36,6 +36,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 #include "ace/Init_ACE.h"
 
 #include "winreg.h"
+#include "ace/Synch.h"
 #include "NT_Notify_Service.h"
 
 // Default for the -i (install) option
