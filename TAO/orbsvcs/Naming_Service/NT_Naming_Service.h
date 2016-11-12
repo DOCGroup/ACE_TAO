@@ -20,7 +20,7 @@
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
 #include /**/ "ace/Singleton.h"
-#include /**/ "ace/Synch.h"
+#include /**/ "ace/Synch_Traits.h"
 #include /**/ "tao/orbconf.h"
 
 /**

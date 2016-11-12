@@ -1,1 +1,0 @@
-../../TAO/TAO_IDL/rules.tao.GNU

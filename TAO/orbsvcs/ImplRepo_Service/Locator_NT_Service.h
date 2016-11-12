@@ -19,7 +19,7 @@
 
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 #include "tao/orbconf.h"
 
 extern const ACE_TCHAR* IMR_LOCATOR_SERVICE_NAME;
@@ -51,7 +51,7 @@ private:
   friend class ACE_Singleton<Locator_NT_Service, MUTEX>;
 };
 
-typedef ACE_Singleton<Locator_NT_Service, ACE_Mutex> SERVICE;
+typedef ACE_Singleton<Locator_NT_Service, Locator_NT_Service::MUTEX> SERVICE;
 
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 
