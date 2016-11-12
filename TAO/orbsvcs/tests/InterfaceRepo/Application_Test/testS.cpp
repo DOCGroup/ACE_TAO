@@ -152,7 +152,7 @@ POA_warehouse::inventory::~inventory (void)
 
 namespace POA_warehouse
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -177,32 +177,32 @@ namespace POA_warehouse
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::inout_arg_type arg_2 =
         TAO::Portable_Server::get_inout_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::CORBA::Float>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::CORBA::Float> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       retval =
         this->servant_->getCDinfo (
           arg_1
           , arg_2
           , arg_3);
     }
-  
+
   private:
     POA_warehouse::inventory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -235,7 +235,7 @@ void POA_warehouse::inventory::getCDinfo_skel (
       &_tao_title,
       &_tao_price
     };
-  
+
   static size_t const nargs = 4;
 
   POA_warehouse::inventory * const impl =
@@ -250,7 +250,7 @@ void POA_warehouse::inventory::getCDinfo_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -314,12 +314,12 @@ POA_warehouse::inventory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

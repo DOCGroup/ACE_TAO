@@ -147,15 +147,15 @@ void
 _TAO_MyInterface_Direct_Proxy_Impl::myMethod (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_MyInterface_ptr _tao_ptr = 
+  POA_MyInterface_ptr _tao_ptr =
     dynamic_cast<POA_MyInterface_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val *) args[0])->arg () =
     _tao_ptr->myMethod (
           ((TAO::Arg_Traits< char *>::in_arg_val *) args[1])->arg ()
@@ -211,13 +211,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< char *>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->myMethod (
         arg_1);
@@ -250,7 +250,7 @@ void POA_MyInterface::myMethod_skel (
       &retval,
       &_tao_stringParam
     };
-  
+
   static size_t const nargs = 2;
 
   POA_MyInterface * const impl =
@@ -265,7 +265,7 @@ void POA_MyInterface::myMethod_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -329,12 +329,12 @@ POA_MyInterface::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

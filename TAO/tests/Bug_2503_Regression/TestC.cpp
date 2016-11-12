@@ -94,7 +94,7 @@ Test::the_operation (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::out_arg_val _tao_x (x);
 
@@ -131,7 +131,7 @@ Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -165,8 +165,8 @@ Test::sendc_the_operation (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -284,7 +284,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test:1.0",
     "Test");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Test =
   &_tao_tc_Test;
 
@@ -332,7 +332,7 @@ AMI_TestHandler::the_operation (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_x (x);
 
@@ -349,7 +349,7 @@ AMI_TestHandler::the_operation (
       "the_operation",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -377,10 +377,10 @@ AMI_TestHandler::the_operation_reply_stub (
             (_tao_in >> x)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->the_operation (
-          
+
           x
         );
       break;
@@ -407,7 +407,7 @@ AMI_TestHandler::the_operation_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->the_operation_excep (
           exception_holder_var
@@ -432,7 +432,7 @@ AMI_TestHandler::the_operation_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -449,7 +449,7 @@ AMI_TestHandler::the_operation_excep (
       "the_operation_excep",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -558,7 +558,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:AMI_TestHandler:1.0",
     "AMI_TestHandler");
-  
+
 ::CORBA::TypeCode_ptr const _tc_AMI_TestHandler =
   &_tao_tc_AMI_TestHandler;
 
@@ -715,13 +715,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -752,13 +752,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::AMI_TestHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

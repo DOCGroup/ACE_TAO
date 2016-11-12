@@ -180,7 +180,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:parent.pragma.prefix/ParentInterface:1.0",
     "ParentInterface");
-  
+
 ::CORBA::TypeCode_ptr const _tc_ParentInterface =
   &_tao_tc_ParentInterface;
 
@@ -320,7 +320,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:parent.pragma.prefix/AMI_ParentInterfaceHandler:1.0",
     "AMI_ParentInterfaceHandler");
-  
+
 ::CORBA::TypeCode_ptr const _tc_AMI_ParentInterfaceHandler =
   &_tao_tc_AMI_ParentInterfaceHandler;
 
@@ -456,7 +456,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:parent.pragma.prefix/ParentModule/ParentInterface:1.0",
     "ParentInterface");
-  
+
 
 namespace ParentModule
 {
@@ -600,7 +600,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:parent.pragma.prefix/ParentModule/AMI_ParentInterfaceHandler:1.0",
     "AMI_ParentInterfaceHandler");
-  
+
 
 namespace ParentModule
 {
@@ -763,7 +763,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace ParentModule
 {
-  
+
 
   /// Copying insertion.
   void
@@ -877,7 +877,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace ParentModule
 {
-  
+
 
   /// Copying insertion.
   void
@@ -989,13 +989,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::ParentInterface RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1026,13 +1026,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::AMI_ParentInterfaceHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1063,13 +1063,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::ParentModule::ParentInterface RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1100,13 +1100,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::ParentModule::AMI_ParentInterfaceHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

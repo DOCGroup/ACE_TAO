@@ -174,13 +174,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< char *>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->log_message (
         arg_1);
@@ -213,7 +213,7 @@ void POA_Logger::log_message_skel (
       &retval,
       &_tao_message
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Logger * const impl =
@@ -228,7 +228,7 @@ void POA_Logger::log_message_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -292,12 +292,12 @@ POA_Logger::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -159,9 +159,9 @@ void Test::Recursive_Type_In_Any_Test_Failed::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Test_Recursive_Type_In_Any_Test_Failed = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -283,9 +283,9 @@ void Test::Demarshaling_From_Any_Failed::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Test_Demarshaling_From_Any_Failed = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -381,7 +381,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_RecursiveStruct,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_RecursiveStructSeq_0 =
         &Test_RecursiveStructSeq_0;
     }
@@ -400,7 +400,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/RecursiveStructSeq:1.0",
     "RecursiveStructSeq",
     &TAO::TypeCode::tc_Test_RecursiveStructSeq_0);
-  
+
 
 namespace Test
 {
@@ -423,14 +423,14 @@ namespace Test
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_RecursiveStruct[] =
       {
         { "recursive_structs", &Test::_tc_RecursiveStructSeq },
         { "i", &CORBA::_tc_long },
         { "recursive_structs_second", &Test::_tc_RecursiveStructSeq }
       };
-  
+
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Struct<
     char const *,
@@ -543,7 +543,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_NestedRecursiveStruct,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_NestedRecursiveStructSeq_0 =
         &Test_NestedRecursiveStructSeq_0;
     }
@@ -562,7 +562,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/NestedRecursiveStructSeq:1.0",
     "NestedRecursiveStructSeq",
     &TAO::TypeCode::tc_Test_NestedRecursiveStructSeq_0);
-  
+
 
 namespace Test
 {
@@ -575,13 +575,13 @@ namespace Test
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_NestedRecursiveStruct[] =
       {
         { "ins", &Test::NestedRecursiveStruct::_tc_InnerStruct },
         { "i", &CORBA::_tc_long }
       };
-  
+
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Struct<
     char const *,
@@ -630,12 +630,12 @@ Test::NestedRecursiveStruct::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_NestedRecursiveStruct_InnerStruct[] =
       {
         { "recursive_structs", &Test::_tc_NestedRecursiveStructSeq }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -739,7 +739,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_RecursiveUnion,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_RecursiveUnionSeq_0 =
         &Test_RecursiveUnionSeq_0;
     }
@@ -758,7 +758,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/RecursiveUnionSeq:1.0",
     "RecursiveUnionSeq",
     &TAO::TypeCode::tc_Test_RecursiveUnionSeq_0);
-  
+
 
 namespace Test
 {
@@ -843,7 +843,7 @@ Test::RecursiveUnion::operator= (const ::Test::RecursiveUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -892,7 +892,7 @@ Test::RecursiveUnion::operator= (const ::Test::RecursiveUnion &u)
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -901,27 +901,27 @@ void Test::RecursiveUnion::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
       delete this->u_.recursive_unions_;
       this->u_.recursive_unions_ = 0;
-      
+
     break;
-    
+
     case 1:
-      
+
     break;
-    
+
     case 2:
       delete this->u_.recursive_unions_second_;
       this->u_.recursive_unions_second_ = 0;
-      
+
     break;
-    
+
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -966,7 +966,7 @@ static TAO::TypeCode::Recursive_Type<
     _tao_cases_Test_RecursiveUnion,
     sizeof (_tao_cases_Test_RecursiveUnion)/sizeof (_tao_cases_Test_RecursiveUnion[0]),
     3);
-  
+
 
 namespace Test
 {
@@ -1048,7 +1048,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_RecursiveUnion2,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_RecursiveUnionSeq2_0 =
         &Test_RecursiveUnionSeq2_0;
     }
@@ -1067,7 +1067,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/RecursiveUnionSeq2:1.0",
     "RecursiveUnionSeq2",
     &TAO::TypeCode::tc_Test_RecursiveUnionSeq2_0);
-  
+
 
 namespace Test
 {
@@ -1085,12 +1085,12 @@ namespace Test
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_RecursiveUnion2_Innerstruct3a[] =
       {
         { "recursive_unions", &Test::_tc_RecursiveUnionSeq2 }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1130,12 +1130,12 @@ Test::RecursiveUnion2::Innerstruct3a::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_RecursiveUnion2_Innerstruct3b[] =
       {
         { "recursive_unions_second", &Test::_tc_RecursiveUnionSeq2 }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1242,7 +1242,7 @@ Test::RecursiveUnion2::operator= (const ::Test::RecursiveUnion2 &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -1291,7 +1291,7 @@ Test::RecursiveUnion2::operator= (const ::Test::RecursiveUnion2 &u)
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -1300,27 +1300,27 @@ void Test::RecursiveUnion2::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
       delete this->u_.insb_;
       this->u_.insb_ = 0;
-      
+
     break;
-    
+
     case 1:
-      
+
     break;
-    
+
     case 2:
       delete this->u_.insa_;
       this->u_.insa_ = 0;
-      
+
     break;
-    
+
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -1355,7 +1355,7 @@ static TAO::TypeCode::Recursive_Type<
     _tao_cases_Test_RecursiveUnion2,
     sizeof (_tao_cases_Test_RecursiveUnion2)/sizeof (_tao_cases_Test_RecursiveUnion2[0]),
     3);
-  
+
 
 namespace Test
 {
@@ -1437,7 +1437,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_RecursiveStruct3,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_RecursiveStructSeq3_0 =
         &Test_RecursiveStructSeq3_0;
     }
@@ -1456,7 +1456,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/RecursiveStructSeq3:1.0",
     "RecursiveStructSeq3",
     &TAO::TypeCode::tc_Test_RecursiveStructSeq3_0);
-  
+
 
 namespace Test
 {
@@ -1538,7 +1538,7 @@ Test::RecursiveUnion3::operator= (const ::Test::RecursiveUnion3 &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -1584,7 +1584,7 @@ Test::RecursiveUnion3::operator= (const ::Test::RecursiveUnion3 &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -1593,23 +1593,23 @@ void Test::RecursiveUnion3::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
-      
+
     break;
-    
+
     case 1:
       delete this->u_.b_;
       this->u_.b_ = 0;
-      
+
     break;
-    
+
     case 2:
       delete this->u_.c_;
       this->u_.c_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -1650,7 +1650,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Test_RecursiveUnion3,
     sizeof (_tao_cases_Test_RecursiveUnion3)/sizeof (_tao_cases_Test_RecursiveUnion3[0]),
     -1);
-  
+
 
 namespace Test
 {
@@ -1663,12 +1663,12 @@ namespace Test
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_RecursiveStruct3[] =
       {
         { "uni", &Test::_tc_RecursiveUnion3 }
       };
-  
+
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Struct<
     char const *,
@@ -1781,7 +1781,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_RecursiveUnionNoDefault,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_RecursiveUnionSeqNoDefault_0 =
         &Test_RecursiveUnionSeqNoDefault_0;
     }
@@ -1800,7 +1800,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/RecursiveUnionSeqNoDefault:1.0",
     "RecursiveUnionSeqNoDefault",
     &TAO::TypeCode::tc_Test_RecursiveUnionSeqNoDefault_0);
-  
+
 
 namespace Test
 {
@@ -1882,7 +1882,7 @@ Test::RecursiveUnionNoDefault::operator= (const ::Test::RecursiveUnionNoDefault 
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -1928,7 +1928,7 @@ Test::RecursiveUnionNoDefault::operator= (const ::Test::RecursiveUnionNoDefault 
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -1937,23 +1937,23 @@ void Test::RecursiveUnionNoDefault::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
       delete this->u_.recursive_unions_;
       this->u_.recursive_unions_ = 0;
-      
+
     break;
-    
+
     case 1:
-      
+
     break;
-    
+
     case 2:
       delete this->u_.recursive_unions_second_;
       this->u_.recursive_unions_second_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -1998,7 +1998,7 @@ static TAO::TypeCode::Recursive_Type<
     _tao_cases_Test_RecursiveUnionNoDefault,
     sizeof (_tao_cases_Test_RecursiveUnionNoDefault)/sizeof (_tao_cases_Test_RecursiveUnionNoDefault[0]),
     -1);
-  
+
 
 namespace Test
 {
@@ -2014,7 +2014,7 @@ static char const * const _tao_enumerators_Test_VSort[] =
     "RECURSIVE_TYPE",
     "LONG_STYPE",
     "BOOL_STYPE"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -2025,7 +2025,7 @@ static TAO::TypeCode::Enum<char const *,
     "VSort",
     _tao_enumerators_Test_VSort,
     4);
-  
+
 
 namespace Test
 {
@@ -2107,7 +2107,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_VSortRecursiveUnion,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_VSortRecursiveUnionSeq_0 =
         &Test_VSortRecursiveUnionSeq_0;
     }
@@ -2126,7 +2126,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/VSortRecursiveUnionSeq:1.0",
     "VSortRecursiveUnionSeq",
     &TAO::TypeCode::tc_Test_VSortRecursiveUnionSeq_0);
-  
+
 
 namespace Test
 {
@@ -2193,7 +2193,7 @@ Test::VSortRecursiveUnion::operator= (const ::Test::VSortRecursiveUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -2223,7 +2223,7 @@ Test::VSortRecursiveUnion::operator= (const ::Test::VSortRecursiveUnion &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -2232,17 +2232,17 @@ void Test::VSortRecursiveUnion::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case Test::RECURSIVE_TYPE:
       delete this->u_.recursive_unions_;
       this->u_.recursive_unions_ = 0;
-      
+
     break;
-    
+
     case Test::LONG_STYPE:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -2280,7 +2280,7 @@ static TAO::TypeCode::Recursive_Type<
     _tao_cases_Test_VSortRecursiveUnion,
     sizeof (_tao_cases_Test_VSortRecursiveUnion)/sizeof (_tao_cases_Test_VSortRecursiveUnion[0]),
     -1);
-  
+
 
 namespace Test
 {
@@ -2337,7 +2337,7 @@ Test::EnumUnion::operator= (const ::Test::EnumUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -2356,7 +2356,7 @@ Test::EnumUnion::operator= (const ::Test::EnumUnion &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -2365,15 +2365,15 @@ void Test::EnumUnion::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case Test::BOOL_STYPE:
-      
+
     break;
-    
+
     case Test::LONG_STYPE:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -2402,7 +2402,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Test_EnumUnion,
     sizeof (_tao_cases_Test_EnumUnion)/sizeof (_tao_cases_Test_EnumUnion[0]),
     -1);
-  
+
 
 namespace Test
 {
@@ -2487,7 +2487,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_IndirectlyRecursiveValuetype,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_IndirectlyRecursiveValuetypeSeq_0 =
         &Test_IndirectlyRecursiveValuetypeSeq_0;
     }
@@ -2506,7 +2506,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/IndirectlyRecursiveValuetypeSeq:1.0",
     "IndirectlyRecursiveValuetypeSeq",
     &TAO::TypeCode::tc_Test_IndirectlyRecursiveValuetypeSeq_0);
-  
+
 
 namespace Test
 {
@@ -2525,7 +2525,7 @@ namespace Test
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Test_IndirectlyRecursiveValuetype[] =
   {
     { "recursive_valuetypes", &Test::_tc_IndirectlyRecursiveValuetypeSeq, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Value<char const *,
@@ -2543,7 +2543,7 @@ static TAO::TypeCode::Recursive_Type<
     &::CORBA::_tc_null,
     _tao_fields_Test_IndirectlyRecursiveValuetype,
     1);
-  
+
 
 namespace Test
 {
@@ -2647,27 +2647,27 @@ Test::IndirectlyRecursiveValuetype::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = IndirectlyRecursiveValuetype::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -2714,7 +2714,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "recursive_valuetype", &Test::_tc_DirectlyRecursiveValuetype, ::CORBA::PUBLIC_MEMBER },
     { "recursive_valuetype_second", &Test::_tc_DirectlyRecursiveValuetype, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Value<char const *,
@@ -2732,7 +2732,7 @@ static TAO::TypeCode::Recursive_Type<
     &::CORBA::_tc_null,
     _tao_fields_Test_DirectlyRecursiveValuetype,
     2);
-  
+
 
 namespace Test
 {
@@ -2836,27 +2836,27 @@ Test::DirectlyRecursiveValuetype::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = DirectlyRecursiveValuetype::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -2901,7 +2901,7 @@ Test::DirectlyRecursiveValuetype_init::create_for_unmarshal (void)
 static char const * const _tao_enumerators_Test_PositionEnum[] =
   {
     "unknownpos"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -2912,7 +2912,7 @@ static TAO::TypeCode::Enum<char const *,
     "PositionEnum",
     _tao_enumerators_Test_PositionEnum,
     1);
-  
+
 
 namespace Test
 {
@@ -2925,12 +2925,12 @@ namespace Test
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_Position[] =
       {
         { "type", &Test::_tc_PositionEnum }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -2975,7 +2975,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/OctetSeq:1.0",
     "OctetSeq",
     &CORBA::_tc_OctetSeq);
-  
+
 
 namespace Test
 {
@@ -2989,7 +2989,7 @@ static char const * const _tao_enumerators_Test_ValueSort[] =
   {
     "POSITION_TYPE",
     "OCTET_SEQ_TYPE"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -3000,7 +3000,7 @@ static TAO::TypeCode::Enum<char const *,
     "ValueSort",
     _tao_enumerators_Test_ValueSort,
     2);
-  
+
 
 namespace Test
 {
@@ -3067,7 +3067,7 @@ Test::NonRecursiveUnionWithEnum::operator= (const ::Test::NonRecursiveUnionWithE
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -3097,7 +3097,7 @@ Test::NonRecursiveUnionWithEnum::operator= (const ::Test::NonRecursiveUnionWithE
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -3106,17 +3106,17 @@ void Test::NonRecursiveUnionWithEnum::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case Test::POSITION_TYPE:
-      
+
     break;
-    
+
     case Test::OCTET_SEQ_TYPE:
       delete this->u_.octet_seq_val_;
       this->u_.octet_seq_val_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -3150,7 +3150,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Test_NonRecursiveUnionWithEnum,
     sizeof (_tao_cases_Test_NonRecursiveUnionWithEnum)/sizeof (_tao_cases_Test_NonRecursiveUnionWithEnum[0]),
     -1);
-  
+
 
 namespace Test
 {
@@ -3163,7 +3163,7 @@ namespace Test
 static char const * const _tao_enumerators_Test_ValueSort2[] =
   {
     "SYMBOL_TYPE2"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -3174,7 +3174,7 @@ static TAO::TypeCode::Enum<char const *,
     "ValueSort2",
     _tao_enumerators_Test_ValueSort2,
     1);
-  
+
 
 namespace Test
 {
@@ -3187,12 +3187,12 @@ namespace Test
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_Symbol2[] =
       {
         { "name", &CORBA::_tc_string }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -3280,7 +3280,7 @@ Test::NonRecursiveUnionWithStringStruct::operator= (const ::Test::NonRecursiveUn
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -3305,7 +3305,7 @@ Test::NonRecursiveUnionWithStringStruct::operator= (const ::Test::NonRecursiveUn
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -3314,13 +3314,13 @@ void Test::NonRecursiveUnionWithStringStruct::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case Test::SYMBOL_TYPE2:
       delete this->u_.symbol_val_;
       this->u_.symbol_val_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -3347,7 +3347,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Test_NonRecursiveUnionWithStringStruct,
     sizeof (_tao_cases_Test_NonRecursiveUnionWithStringStruct)/sizeof (_tao_cases_Test_NonRecursiveUnionWithStringStruct[0]),
     -1);
-  
+
 
 namespace Test
 {
@@ -3399,7 +3399,7 @@ Test::Hello::get_any (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Any>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_the_any (the_any);
 
@@ -3416,7 +3416,7 @@ Test::Hello::get_any (
       "get_any",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -3435,7 +3435,7 @@ Test::Hello::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -3557,7 +3557,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/Hello:1.0",
     "Hello");
-  
+
 
 namespace Test
 {
@@ -3642,7 +3642,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_Recursive2,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_Recursive2Seq2_0 =
         &Test_Recursive2Seq2_0;
     }
@@ -3661,7 +3661,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/Recursive2Seq2:1.0",
     "Recursive2Seq2",
     &TAO::TypeCode::tc_Test_Recursive2Seq2_0);
-  
+
 
 namespace Test
 {
@@ -3677,7 +3677,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
     { "insa", &Test::Recursive2::_tc_Innerstruct3a, ::CORBA::PUBLIC_MEMBER },
     { "a", &CORBA::_tc_short, ::CORBA::PUBLIC_MEMBER },
     { "insb", &Test::Recursive2::_tc_Innerstruct3b, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Value<char const *,
@@ -3695,7 +3695,7 @@ static TAO::TypeCode::Recursive_Type<
     &::CORBA::_tc_null,
     _tao_fields_Test_Recursive2,
     3);
-  
+
 
 namespace Test
 {
@@ -3799,27 +3799,27 @@ Test::Recursive2::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Recursive2::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -3834,12 +3834,12 @@ Test::Recursive2::_tao_unmarshal (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_Recursive2_Innerstruct3a[] =
       {
         { "recursive_unions", &Test::_tc_Recursive2Seq2 }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -3879,12 +3879,12 @@ Test::Recursive2::Innerstruct3a::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_Recursive2_Innerstruct3b[] =
       {
         { "recursive_second", &Test::_tc_Recursive2Seq2 }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -4026,7 +4026,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_Recursive3,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_RecursiveSeq3_0 =
         &Test_RecursiveSeq3_0;
     }
@@ -4045,7 +4045,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/RecursiveSeq3:1.0",
     "RecursiveSeq3",
     &TAO::TypeCode::tc_Test_RecursiveSeq3_0);
-  
+
 
 namespace Test
 {
@@ -4071,7 +4071,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
     { "seq1", &Test::_tc_RecursiveSeq3, ::CORBA::PUBLIC_MEMBER },
     { "a", &CORBA::_tc_short, ::CORBA::PUBLIC_MEMBER },
     { "seq2", &Test::_tc_RecursiveSeq3, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Value<char const *,
@@ -4089,7 +4089,7 @@ static TAO::TypeCode::Recursive_Type<
     &::CORBA::_tc_null,
     _tao_fields_Test_Recursive3,
     3);
-  
+
 
 namespace Test
 {
@@ -4193,27 +4193,27 @@ Test::Recursive3::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Recursive3::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -4650,7 +4650,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -4671,7 +4671,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -4800,7 +4800,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -4821,7 +4821,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -4947,7 +4947,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -5191,7 +5191,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -5549,7 +5549,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -5814,7 +5814,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -6079,7 +6079,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -6458,7 +6458,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -6743,7 +6743,7 @@ namespace Test
       TAO::Any_Basic_Impl_T< ::Test::VSort>::extract (
           _tao_any,
           ::Test::_tc_VSort,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -6773,7 +6773,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<Test::VSort>::extract (
         _tao_any,
         Test::_tc_VSort,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -6797,7 +6797,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -7197,7 +7197,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -7390,7 +7390,7 @@ namespace Test
         );
   }
 
-  
+
 }
 
 #else
@@ -7532,7 +7532,7 @@ namespace Test
         );
   }
 
-  
+
 }
 
 #else
@@ -7631,7 +7631,7 @@ namespace Test
       TAO::Any_Basic_Impl_T< ::Test::PositionEnum>::extract (
           _tao_any,
           ::Test::_tc_PositionEnum,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -7661,7 +7661,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<Test::PositionEnum>::extract (
         _tao_any,
         Test::_tc_PositionEnum,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -7819,7 +7819,7 @@ namespace Test
       TAO::Any_Basic_Impl_T< ::Test::ValueSort>::extract (
           _tao_any,
           ::Test::_tc_ValueSort,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -7849,7 +7849,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<Test::ValueSort>::extract (
         _tao_any,
         Test::_tc_ValueSort,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -8028,7 +8028,7 @@ namespace Test
       TAO::Any_Basic_Impl_T< ::Test::ValueSort2>::extract (
           _tao_any,
           ::Test::_tc_ValueSort2,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -8058,7 +8058,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<Test::ValueSort2>::extract (
         _tao_any,
         Test::_tc_ValueSort2,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -8341,7 +8341,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -8445,7 +8445,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -8638,7 +8638,7 @@ namespace Test
         );
   }
 
-  
+
 }
 
 #else
@@ -8717,7 +8717,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -8910,7 +8910,7 @@ namespace Test
         );
   }
 
-  
+
 }
 
 #else
@@ -9202,7 +9202,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -9242,7 +9242,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -9395,7 +9395,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -9435,7 +9435,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -9538,7 +9538,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -9575,7 +9575,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -9696,7 +9696,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -9733,7 +9733,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -9803,12 +9803,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Test::VSort> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -9857,7 +9857,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -9889,7 +9889,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -9947,7 +9947,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -9979,7 +9979,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -10110,15 +10110,15 @@ OBV_Test::IndirectlyRecursiveValuetype::_tao_marshal_state (TAO_OutputCDR &strm,
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_recursive_valuetypes);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -10127,19 +10127,19 @@ OBV_Test::IndirectlyRecursiveValuetype::_tao_unmarshal_state (TAO_InputCDR &strm
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_recursive_valuetypes);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -10211,16 +10211,16 @@ OBV_Test::DirectlyRecursiveValuetype::_tao_marshal_state (TAO_OutputCDR &strm, T
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_recursive_valuetype.in ()) &&
       (strm << _pd_recursive_valuetype_second.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -10229,20 +10229,20 @@ OBV_Test::DirectlyRecursiveValuetype::_tao_unmarshal_state (TAO_InputCDR &strm, 
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_recursive_valuetype.out ()) &&
       (strm >> _pd_recursive_valuetype_second.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -10268,12 +10268,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Test::PositionEnum> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -10321,12 +10321,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Test::ValueSort> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -10349,7 +10349,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -10381,7 +10381,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -10439,12 +10439,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Test::ValueSort2> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -10492,7 +10492,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -10519,7 +10519,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -10573,13 +10573,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Hello RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -10724,17 +10724,17 @@ OBV_Test::Recursive2::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_insa) &&
       (strm << _pd_a) &&
       (strm << _pd_insb);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -10743,21 +10743,21 @@ OBV_Test::Recursive2::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_insa) &&
       (strm >> _pd_a) &&
       (strm >> _pd_insb);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -10855,17 +10855,17 @@ OBV_Test::Recursive3::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_seq1) &&
       (strm << _pd_a) &&
       (strm << _pd_seq2);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -10874,21 +10874,21 @@ OBV_Test::Recursive3::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_seq1) &&
       (strm >> _pd_a) &&
       (strm >> _pd_seq2);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void

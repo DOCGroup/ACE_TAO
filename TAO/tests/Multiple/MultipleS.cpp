@@ -149,15 +149,15 @@ void
 POA_Multiple::_TAO_Top_Direct_Proxy_Impl::top_quote (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Multiple::Top_ptr _tao_ptr = 
+  POA_Multiple::Top_ptr _tao_ptr =
     dynamic_cast<POA_Multiple::Top_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< char *>::ret_val *) args[0])->arg () =
     _tao_ptr->top_quote (
         );
@@ -169,15 +169,15 @@ void
 POA_Multiple::_TAO_Top_Direct_Proxy_Impl::shutdown (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument **)
-  
+
 {
-  POA_Multiple::Top_ptr _tao_ptr = 
+  POA_Multiple::Top_ptr _tao_ptr =
     dynamic_cast<POA_Multiple::Top_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->shutdown (
       );
 }
@@ -209,7 +209,7 @@ POA_Multiple::Top::~Top (void)
 
 namespace POA_Multiple
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -234,11 +234,11 @@ namespace POA_Multiple
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->top_quote ();
     }
-  
+
   private:
     POA_Multiple::Top * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -265,7 +265,7 @@ void POA_Multiple::Top::top_quote_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Multiple::Top * const impl =
@@ -280,7 +280,7 @@ void POA_Multiple::Top::top_quote_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -297,7 +297,7 @@ void POA_Multiple::Top::top_quote_skel (
 
 namespace POA_Multiple
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -316,7 +316,7 @@ namespace POA_Multiple
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Multiple::Top * const servant_;
   };
@@ -341,7 +341,7 @@ void POA_Multiple::Top::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Multiple::Top * const impl =
@@ -354,7 +354,7 @@ void POA_Multiple::Top::shutdown_skel (
 
   shutdown_Top command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -418,12 +418,12 @@ POA_Multiple::Top::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -533,15 +533,15 @@ void
 POA_Multiple::_TAO_Left_Direct_Proxy_Impl::left_quote (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Multiple::Left_ptr _tao_ptr = 
+  POA_Multiple::Left_ptr _tao_ptr =
     dynamic_cast<POA_Multiple::Left_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< char *>::ret_val *) args[0])->arg () =
     _tao_ptr->left_quote (
         );
@@ -575,7 +575,7 @@ POA_Multiple::Left::~Left (void)
 
 namespace POA_Multiple
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -600,11 +600,11 @@ namespace POA_Multiple
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->left_quote ();
     }
-  
+
   private:
     POA_Multiple::Left * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -631,7 +631,7 @@ void POA_Multiple::Left::left_quote_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Multiple::Left * const impl =
@@ -646,7 +646,7 @@ void POA_Multiple::Left::left_quote_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -714,12 +714,12 @@ POA_Multiple::Left::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -829,15 +829,15 @@ void
 POA_Multiple::_TAO_Right_Direct_Proxy_Impl::right_quote (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Multiple::Right_ptr _tao_ptr = 
+  POA_Multiple::Right_ptr _tao_ptr =
     dynamic_cast<POA_Multiple::Right_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< char *>::ret_val *) args[0])->arg () =
     _tao_ptr->right_quote (
         );
@@ -871,7 +871,7 @@ POA_Multiple::Right::~Right (void)
 
 namespace POA_Multiple
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -896,11 +896,11 @@ namespace POA_Multiple
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->right_quote ();
     }
-  
+
   private:
     POA_Multiple::Right * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -927,7 +927,7 @@ void POA_Multiple::Right::right_quote_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Multiple::Right * const impl =
@@ -942,7 +942,7 @@ void POA_Multiple::Right::right_quote_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1010,12 +1010,12 @@ POA_Multiple::Right::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1127,15 +1127,15 @@ void
 POA_Multiple::_TAO_Bottom_Direct_Proxy_Impl::bottom_quote (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Multiple::Bottom_ptr _tao_ptr = 
+  POA_Multiple::Bottom_ptr _tao_ptr =
     dynamic_cast<POA_Multiple::Bottom_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< char *>::ret_val *) args[0])->arg () =
     _tao_ptr->bottom_quote (
         );
@@ -1171,7 +1171,7 @@ POA_Multiple::Bottom::~Bottom (void)
 
 namespace POA_Multiple
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1196,11 +1196,11 @@ namespace POA_Multiple
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->bottom_quote ();
     }
-  
+
   private:
     POA_Multiple::Bottom * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1227,7 +1227,7 @@ void POA_Multiple::Bottom::bottom_quote_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Multiple::Bottom * const impl =
@@ -1242,7 +1242,7 @@ void POA_Multiple::Bottom::bottom_quote_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1318,12 +1318,12 @@ POA_Multiple::Bottom::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

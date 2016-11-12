@@ -172,16 +172,16 @@ public:
   {
     TAO::SArg_Traits< ::CORBA::Long>::ret_arg_type retval =
       static_cast<TAO::SArg_Traits< ::CORBA::Long>::ret_val *> (this->args_[0])->arg ();
-    
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
       static_cast<TAO::SArg_Traits< ::CORBA::Long>::in_arg_val *> (this->args_[1])->arg ();
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_2 =
       static_cast<TAO::SArg_Traits< ::CORBA::Long>::in_arg_val *> (this->args_[2])->arg ();
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::out_arg_type arg_3 =
       static_cast<TAO::SArg_Traits< ::CORBA::Long>::out_arg_val *> (this->args_[3])->arg ();
-      
+
     retval =
       this->servant_->method (
         arg_1
@@ -219,7 +219,7 @@ void POA_test::method_skel (
       &_tao_iteration,
       &_tao_thread_count
     };
-  
+
   static size_t const nargs = 4;
 
   POA_test * const impl =
@@ -233,7 +233,7 @@ void POA_test::method_skel (
   method_test command (
     impl,
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -290,7 +290,7 @@ void POA_test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -303,7 +303,7 @@ void POA_test::shutdown_skel (
 
   shutdown_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -367,12 +367,12 @@ POA_test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

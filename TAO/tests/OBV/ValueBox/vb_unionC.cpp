@@ -99,7 +99,7 @@ Fixed_Union1::operator= (const ::Fixed_Union1 &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -118,7 +118,7 @@ Fixed_Union1::operator= (const ::Fixed_Union1 &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -127,15 +127,15 @@ void Fixed_Union1::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 1:
-      
+
     break;
-    
+
     case 2:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -164,7 +164,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Fixed_Union1,
     sizeof (_tao_cases_Fixed_Union1)/sizeof (_tao_cases_Fixed_Union1[0]),
     -1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Fixed_Union1 =
   &_tao_tc_Fixed_Union1;
 
@@ -217,7 +217,7 @@ Variable_Union1::operator= (const ::Variable_Union1 &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -236,7 +236,7 @@ Variable_Union1::operator= (const ::Variable_Union1 &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -245,17 +245,17 @@ void Variable_Union1::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 1:
-      
+
     break;
-    
+
     case 2:
       ::CORBA::string_free (this->u_.m2_);
       this->u_.m2_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -284,7 +284,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Variable_Union1,
     sizeof (_tao_cases_Variable_Union1)/sizeof (_tao_cases_Variable_Union1[0]),
     -1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Variable_Union1 =
   &_tao_tc_Variable_Union1;
 
@@ -299,7 +299,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBfixed_union1:1.0",
     "VBfixed_union1",
     &_tc_Fixed_Union1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBfixed_union1 =
   &_tao_tc_VBfixed_union1;
 
@@ -344,7 +344,7 @@ VBfixed_union1::_copy_value (void)
     result,
     VBfixed_union1 (*this),
     0);
-    
+
   return result;
 }
 
@@ -397,24 +397,24 @@ VBfixed_union1::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBfixed_union1::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBfixed_union1,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -452,7 +452,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBvariable_union1:1.0",
     "VBvariable_union1",
     &_tc_Variable_Union1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBvariable_union1 =
   &_tao_tc_VBvariable_union1;
 
@@ -497,7 +497,7 @@ VBvariable_union1::_copy_value (void)
     result,
     VBvariable_union1 (*this),
     0);
-    
+
   return result;
 }
 
@@ -550,24 +550,24 @@ VBvariable_union1::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBvariable_union1::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBvariable_union1,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -893,7 +893,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -925,7 +925,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -983,7 +983,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -1015,7 +1015,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)

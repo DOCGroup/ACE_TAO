@@ -48,13 +48,13 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_ECM_IDLData_Point[] =
       {
         { "x", &CORBA::_tc_double },
         { "y", &CORBA::_tc_double }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -162,7 +162,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &ECM_IDLData::_tc_Point,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_ECM_IDLData_Vector_0 =
         &ECM_IDLData_Vector_0;
     }
@@ -181,7 +181,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:ECM_IDLData/Vector:1.0",
     "Vector",
     &TAO::TypeCode::tc_ECM_IDLData_Vector_0);
-  
+
 
 namespace ECM_IDLData
 {
@@ -199,14 +199,14 @@ namespace ECM_IDLData
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_ECM_IDLData_Info[] =
       {
         { "mobile_name", &CORBA::_tc_string },
         { "mobile_speed", &CORBA::_tc_double },
         { "trajectory", &ECM_IDLData::_tc_Vector }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -369,7 +369,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace ECM_IDLData
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,

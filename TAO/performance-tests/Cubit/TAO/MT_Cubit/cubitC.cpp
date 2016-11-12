@@ -86,14 +86,14 @@ TAO::Objref_Traits<Cubit>::marshal (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Cubit_Many[] =
       {
         { "o", &CORBA::_tc_octet },
         { "l", &CORBA::_tc_long },
         { "s", &CORBA::_tc_short }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -134,7 +134,7 @@ Cubit::cube_octet (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_octet>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ACE_InputCDR::to_octet>::in_arg_val _tao_o (o);
 
@@ -151,7 +151,7 @@ Cubit::cube_octet (
       "cube_octet",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -170,7 +170,7 @@ Cubit::cube_short (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Short>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_s (s);
 
@@ -187,7 +187,7 @@ Cubit::cube_short (
       "cube_short",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -206,7 +206,7 @@ Cubit::cube_long (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_l (l);
 
@@ -223,7 +223,7 @@ Cubit::cube_long (
       "cube_long",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -242,7 +242,7 @@ Cubit::cube_struct (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Cubit::Many>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Cubit::Many>::in_arg_val _tao_values (values);
 
@@ -259,7 +259,7 @@ Cubit::cube_struct (
       "cube_struct",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -278,7 +278,7 @@ Cubit::noop (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -312,7 +312,7 @@ Cubit::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -434,7 +434,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Cubit:1.0",
     "Cubit");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Cubit =
   &_tao_tc_Cubit;
 
@@ -611,13 +611,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Cubit RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

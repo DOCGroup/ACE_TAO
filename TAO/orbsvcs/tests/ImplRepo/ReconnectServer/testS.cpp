@@ -153,10 +153,10 @@ POA_taoimrtest::reconnectserver::Dummy::~Dummy (void)
 
 namespace POA_taoimrtest
 {
-  
+
   namespace reconnectserver
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -181,11 +181,11 @@ namespace POA_taoimrtest
           TAO::Portable_Server::get_ret_arg< char *> (
             this->operation_details_,
             this->args_);
-        
+
         retval =
           this->servant_->getMessage ();
       }
-    
+
     private:
       POA_taoimrtest::reconnectserver::Dummy * const servant_;
       TAO_Operation_Details const * const operation_details_;
@@ -213,7 +213,7 @@ void POA_taoimrtest::reconnectserver::Dummy::getMessage_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_taoimrtest::reconnectserver::Dummy * const impl =
@@ -228,7 +228,7 @@ void POA_taoimrtest::reconnectserver::Dummy::getMessage_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -292,12 +292,12 @@ POA_taoimrtest::reconnectserver::Dummy::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -413,10 +413,10 @@ POA_taoimrtest::reconnectserver::TimeSrv::~TimeSrv (void)
 
 namespace POA_taoimrtest
 {
-  
+
   namespace reconnectserver
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -441,11 +441,11 @@ namespace POA_taoimrtest
           TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
             this->operation_details_,
             this->args_);
-        
+
         retval =
           this->servant_->current_time ();
       }
-    
+
     private:
       POA_taoimrtest::reconnectserver::TimeSrv * const servant_;
       TAO_Operation_Details const * const operation_details_;
@@ -473,7 +473,7 @@ void POA_taoimrtest::reconnectserver::TimeSrv::current_time_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_taoimrtest::reconnectserver::TimeSrv * const impl =
@@ -488,7 +488,7 @@ void POA_taoimrtest::reconnectserver::TimeSrv::current_time_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -505,10 +505,10 @@ void POA_taoimrtest::reconnectserver::TimeSrv::current_time_skel (
 
 namespace POA_taoimrtest
 {
-  
+
   namespace reconnectserver
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -527,7 +527,7 @@ namespace POA_taoimrtest
       {
         this->servant_->shutdown ();
       }
-    
+
     private:
       POA_taoimrtest::reconnectserver::TimeSrv * const servant_;
     };
@@ -553,7 +553,7 @@ void POA_taoimrtest::reconnectserver::TimeSrv::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_taoimrtest::reconnectserver::TimeSrv * const impl =
@@ -566,7 +566,7 @@ void POA_taoimrtest::reconnectserver::TimeSrv::shutdown_skel (
 
   shutdown_TimeSrv command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -630,12 +630,12 @@ POA_taoimrtest::reconnectserver::TimeSrv::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

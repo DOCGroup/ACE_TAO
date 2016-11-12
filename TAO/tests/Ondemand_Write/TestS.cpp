@@ -155,7 +155,7 @@ POA_Test::Hello::~Hello (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -180,31 +180,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_3 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_4 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->get_string (
           arg_1
@@ -212,7 +212,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::Hello * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -247,7 +247,7 @@ void POA_Test::Hello::get_string_skel (
       &_tao_valueb,
       &_tao_inputb
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::Hello * const impl =
@@ -262,7 +262,7 @@ void POA_Test::Hello::get_string_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -279,7 +279,7 @@ void POA_Test::Hello::get_string_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -298,7 +298,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::Hello * const servant_;
   };
@@ -323,7 +323,7 @@ void POA_Test::Hello::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Hello * const impl =
@@ -336,7 +336,7 @@ void POA_Test::Hello::shutdown_skel (
 
   shutdown_Hello command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -400,12 +400,12 @@ POA_Test::Hello::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

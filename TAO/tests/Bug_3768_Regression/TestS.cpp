@@ -155,7 +155,7 @@ POA_Test::TestCallback::~TestCallback (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -174,7 +174,7 @@ namespace POA_Test
     {
       this->servant_->start_threads_and_block ();
     }
-  
+
   private:
     POA_Test::TestCallback * const servant_;
   };
@@ -199,7 +199,7 @@ void POA_Test::TestCallback::start_threads_and_block_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::TestCallback * const impl =
@@ -212,7 +212,7 @@ void POA_Test::TestCallback::start_threads_and_block_skel (
 
   start_threads_and_block_TestCallback command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -229,7 +229,7 @@ void POA_Test::TestCallback::start_threads_and_block_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -248,7 +248,7 @@ namespace POA_Test
     {
       this->servant_->test_call ();
     }
-  
+
   private:
     POA_Test::TestCallback * const servant_;
   };
@@ -273,7 +273,7 @@ void POA_Test::TestCallback::test_call_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::TestCallback * const impl =
@@ -286,7 +286,7 @@ void POA_Test::TestCallback::test_call_skel (
 
   test_call_TestCallback command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -303,7 +303,7 @@ void POA_Test::TestCallback::test_call_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -322,7 +322,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::TestCallback * const servant_;
   };
@@ -347,7 +347,7 @@ void POA_Test::TestCallback::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::TestCallback * const impl =
@@ -360,7 +360,7 @@ void POA_Test::TestCallback::shutdown_skel (
 
   shutdown_TestCallback command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -424,12 +424,12 @@ POA_Test::TestCallback::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -543,7 +543,7 @@ POA_Test::TestServer::~TestServer (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -564,11 +564,11 @@ namespace POA_Test
     {
       TAO::SArg_Traits< ::Test::TestCallback>::in_arg_type arg_1 =
         static_cast<TAO::SArg_Traits< ::Test::TestCallback>::in_arg_val *> (this->args_[1])->arg ();
-        
+
       this->servant_->pass_callback (
         arg_1);
     }
-  
+
   private:
     POA_Test::TestServer * const servant_;
     TAO::Argument * const * const args_;
@@ -596,7 +596,7 @@ void POA_Test::TestServer::pass_callback_skel (
       &retval,
       &_tao_test
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::TestServer * const impl =
@@ -610,7 +610,7 @@ void POA_Test::TestServer::pass_callback_skel (
   pass_callback_TestServer command (
     impl,
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -674,12 +674,12 @@ POA_Test::TestServer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

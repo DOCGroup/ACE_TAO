@@ -115,8 +115,8 @@ TAO_Coffee_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,  -1,  -1,   6, -10,  -2,   7, 
-        8,   9, -21, 
+       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,  -1,  -1,   6, -10,  -2,   7,
+        8,   9, -21,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -196,7 +196,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Coffee::Desc> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->description ();
   }
@@ -226,7 +226,7 @@ void POA_Coffee::_get_description_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Coffee * const impl =
@@ -241,7 +241,7 @@ void POA_Coffee::_get_description_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -281,7 +281,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->description (
       arg_1);
   }
@@ -313,7 +313,7 @@ void POA_Coffee::_set_description_skel (
       &retval,
       &_tao_description
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Coffee * const impl =
@@ -328,7 +328,7 @@ void POA_Coffee::_set_description_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -392,12 +392,12 @@ POA_Coffee::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -512,11 +512,11 @@ TAO_Param_Test_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,  -1, -11,  -2, -18,  -2,  10, -70,  13,  -1, 
-       14,  15,  16,  17, -75,  20,  21,  22,  23,  24, -27,  -2,  25,  -1, 
-       26, -70,  29,  -1, -31,  -2, -44,  -2,  30, -70,  33,  34,  35, -47, 
-       -2,  36,  37,  38,  39,  40,  41,  42,  43, -82,  -1,  46, -78,  49, 
-       50,  -1,  51,  52,  53,  -1,  -1,  -1,  -1,  54, 
+       -1,  -1,  -1,  -1,  -1,  -1, -11,  -2, -18,  -2,  10, -70,  13,  -1,
+       14,  15,  16,  17, -75,  20,  21,  22,  23,  24, -27,  -2,  25,  -1,
+       26, -70,  29,  -1, -31,  -2, -44,  -2,  30, -70,  33,  34,  35, -47,
+       -2,  36,  37,  38,  39,  40,  41,  42,  43, -82,  -1,  46, -78,  49,
+       50,  -1,  51,  52,  53,  -1,  -1,  -1,  -1,  54,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -596,25 +596,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::Short>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::Short>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_short (
         arg_1
@@ -653,7 +653,7 @@ void POA_Param_Test::test_short_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -668,7 +668,7 @@ void POA_Param_Test::test_short_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -707,25 +707,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::ULongLong> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::ULongLong>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::ULongLong> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::ULongLong>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::ULongLong> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::ULongLong>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::ULongLong> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_ulonglong (
         arg_1
@@ -764,7 +764,7 @@ void POA_Param_Test::test_ulonglong_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -779,7 +779,7 @@ void POA_Param_Test::test_ulonglong_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -818,25 +818,25 @@ public:
       TAO::Portable_Server::get_ret_arg< char *> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< char *>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< char *>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< char *> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< char *>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< char *> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_unbounded_string (
         arg_1
@@ -875,7 +875,7 @@ void POA_Param_Test::test_unbounded_string_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -890,7 +890,7 @@ void POA_Param_Test::test_unbounded_string_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -929,25 +929,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::TAO::short_string_128> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::TAO::short_string_128>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::TAO::short_string_128> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::TAO::short_string_128>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::TAO::short_string_128> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::TAO::short_string_128>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::TAO::short_string_128> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_bounded_string (
         arg_1
@@ -986,7 +986,7 @@ void POA_Param_Test::test_bounded_string_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -1001,7 +1001,7 @@ void POA_Param_Test::test_bounded_string_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1040,25 +1040,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::WChar *> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::WChar *>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::WChar *> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::WChar *>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::WChar *> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::WChar *>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::WChar *> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_unbounded_wstring (
         arg_1
@@ -1097,7 +1097,7 @@ void POA_Param_Test::test_unbounded_wstring_skel (
       &_tao_ws2,
       &_tao_ws3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -1112,7 +1112,7 @@ void POA_Param_Test::test_unbounded_wstring_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1151,25 +1151,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::TAO::short_wstring_128> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::TAO::short_wstring_128>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::TAO::short_wstring_128> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::TAO::short_wstring_128>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::TAO::short_wstring_128> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::TAO::short_wstring_128>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::TAO::short_wstring_128> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_bounded_wstring (
         arg_1
@@ -1208,7 +1208,7 @@ void POA_Param_Test::test_bounded_wstring_skel (
       &_tao_ws2,
       &_tao_ws3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -1223,7 +1223,7 @@ void POA_Param_Test::test_bounded_wstring_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1262,25 +1262,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Fixed_Struct> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Fixed_Struct>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Fixed_Struct> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Fixed_Struct>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Fixed_Struct> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Fixed_Struct>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Fixed_Struct> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_fixed_struct (
         arg_1
@@ -1319,7 +1319,7 @@ void POA_Param_Test::test_fixed_struct_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -1334,7 +1334,7 @@ void POA_Param_Test::test_fixed_struct_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1373,25 +1373,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::PathSpec> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::PathSpec>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::PathSpec> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::PathSpec>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::PathSpec> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::PathSpec>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::PathSpec> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_unbounded_struct_sequence (
         arg_1
@@ -1430,7 +1430,7 @@ void POA_Param_Test::test_unbounded_struct_sequence_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -1445,7 +1445,7 @@ void POA_Param_Test::test_unbounded_struct_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1484,25 +1484,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::ShortSeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::ShortSeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::ShortSeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::ShortSeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::ShortSeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::ShortSeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::ShortSeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_short_sequence (
         arg_1
@@ -1541,7 +1541,7 @@ void POA_Param_Test::test_short_sequence_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -1556,7 +1556,7 @@ void POA_Param_Test::test_short_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1595,25 +1595,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_Short_Seq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_Short_Seq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_Short_Seq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_Short_Seq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_Short_Seq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_bounded_short_sequence (
         arg_1
@@ -1652,7 +1652,7 @@ void POA_Param_Test::test_bounded_short_sequence_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -1667,7 +1667,7 @@ void POA_Param_Test::test_bounded_short_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1706,25 +1706,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::LongSeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::LongSeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::LongSeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::LongSeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::LongSeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::LongSeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::LongSeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_long_sequence (
         arg_1
@@ -1763,7 +1763,7 @@ void POA_Param_Test::test_long_sequence_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -1778,7 +1778,7 @@ void POA_Param_Test::test_long_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1817,25 +1817,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_Long_Seq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_Long_Seq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_Long_Seq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_Long_Seq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_Long_Seq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_bounded_long_sequence (
         arg_1
@@ -1874,7 +1874,7 @@ void POA_Param_Test::test_bounded_long_sequence_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -1889,7 +1889,7 @@ void POA_Param_Test::test_bounded_long_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1928,25 +1928,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::StringSeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::StringSeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::StringSeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::StringSeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::StringSeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::StringSeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::StringSeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_strseq (
         arg_1
@@ -1985,7 +1985,7 @@ void POA_Param_Test::test_strseq_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -2000,7 +2000,7 @@ void POA_Param_Test::test_strseq_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2039,25 +2039,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_StrSeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_StrSeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_StrSeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_StrSeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_StrSeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_bounded_strseq (
         arg_1
@@ -2096,7 +2096,7 @@ void POA_Param_Test::test_bounded_strseq_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -2111,7 +2111,7 @@ void POA_Param_Test::test_bounded_strseq_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2150,25 +2150,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::WStringSeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::WStringSeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::WStringSeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::WStringSeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::WStringSeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::WStringSeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::WStringSeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_wstrseq (
         arg_1
@@ -2207,7 +2207,7 @@ void POA_Param_Test::test_wstrseq_skel (
       &_tao_ws2,
       &_tao_ws3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -2222,7 +2222,7 @@ void POA_Param_Test::test_wstrseq_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2261,25 +2261,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_WStrSeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_WStrSeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_WStrSeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_WStrSeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_WStrSeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_bounded_wstrseq (
         arg_1
@@ -2318,7 +2318,7 @@ void POA_Param_Test::test_bounded_wstrseq_skel (
       &_tao_ws2,
       &_tao_ws3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -2333,7 +2333,7 @@ void POA_Param_Test::test_bounded_wstrseq_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2372,25 +2372,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::StructSeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::StructSeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::StructSeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::StructSeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::StructSeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::StructSeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::StructSeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_struct_sequence (
         arg_1
@@ -2429,7 +2429,7 @@ void POA_Param_Test::test_struct_sequence_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -2444,7 +2444,7 @@ void POA_Param_Test::test_struct_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2483,25 +2483,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_StructSeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_StructSeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_StructSeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_StructSeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_StructSeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_bounded_struct_sequence (
         arg_1
@@ -2540,7 +2540,7 @@ void POA_Param_Test::test_bounded_struct_sequence_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -2555,7 +2555,7 @@ void POA_Param_Test::test_bounded_struct_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2594,25 +2594,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Coffee_Mix> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Coffee_Mix> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Coffee_Mix> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Coffee_Mix>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Coffee_Mix> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_coffe_mix (
         arg_1
@@ -2651,7 +2651,7 @@ void POA_Param_Test::test_coffe_mix_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -2666,7 +2666,7 @@ void POA_Param_Test::test_coffe_mix_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2705,25 +2705,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_Coffee_Mix> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_Coffee_Mix> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_Coffee_Mix> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_Coffee_Mix>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_Coffee_Mix> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_bounded_coffe_mix (
         arg_1
@@ -2762,7 +2762,7 @@ void POA_Param_Test::test_bounded_coffe_mix_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -2777,7 +2777,7 @@ void POA_Param_Test::test_bounded_coffe_mix_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2816,25 +2816,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::AnySeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::AnySeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::AnySeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::AnySeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::AnySeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::AnySeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::AnySeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_anyseq (
         arg_1
@@ -2873,7 +2873,7 @@ void POA_Param_Test::test_anyseq_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -2888,7 +2888,7 @@ void POA_Param_Test::test_anyseq_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2927,25 +2927,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Var_Struct> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Var_Struct>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Var_Struct> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Var_Struct>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Var_Struct> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Var_Struct>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Var_Struct> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_var_struct (
         arg_1
@@ -2984,7 +2984,7 @@ void POA_Param_Test::test_var_struct_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -2999,7 +2999,7 @@ void POA_Param_Test::test_var_struct_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3038,25 +3038,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Nested_Struct> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Nested_Struct>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Nested_Struct> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Nested_Struct>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Nested_Struct> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Nested_Struct>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Nested_Struct> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_nested_struct (
         arg_1
@@ -3095,7 +3095,7 @@ void POA_Param_Test::test_nested_struct_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -3110,7 +3110,7 @@ void POA_Param_Test::test_nested_struct_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3149,7 +3149,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Coffee> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->make_coffee ();
   }
@@ -3179,7 +3179,7 @@ void POA_Param_Test::make_coffee_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Param_Test * const impl =
@@ -3194,7 +3194,7 @@ void POA_Param_Test::make_coffee_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3233,25 +3233,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Coffee> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Coffee>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Coffee> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Coffee>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Coffee> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Coffee>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Coffee> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_objref (
         arg_1
@@ -3290,7 +3290,7 @@ void POA_Param_Test::test_objref_skel (
       &_tao_o2,
       &_tao_o3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -3305,7 +3305,7 @@ void POA_Param_Test::test_objref_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3344,25 +3344,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::TypeCode> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::TypeCode>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::TypeCode> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::TypeCode>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::TypeCode> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::TypeCode>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::TypeCode> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_typecode (
         arg_1
@@ -3401,7 +3401,7 @@ void POA_Param_Test::test_typecode_skel (
       &_tao_t2,
       &_tao_t3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -3416,7 +3416,7 @@ void POA_Param_Test::test_typecode_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3455,25 +3455,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Any>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::Any>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::Any>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_any (
         arg_1
@@ -3512,7 +3512,7 @@ void POA_Param_Test::test_any_skel (
       &_tao_a2,
       &_tao_a3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -3527,7 +3527,7 @@ void POA_Param_Test::test_any_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3566,25 +3566,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Objref_Struct> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Objref_Struct>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Objref_Struct> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Objref_Struct>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Objref_Struct> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Objref_Struct>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Objref_Struct> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_objref_struct (
         arg_1
@@ -3623,7 +3623,7 @@ void POA_Param_Test::test_objref_struct_skel (
       &_tao_t2,
       &_tao_t3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -3638,7 +3638,7 @@ void POA_Param_Test::test_objref_struct_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3677,25 +3677,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Fixed_Array_tag> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Fixed_Array_tag>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Fixed_Array_tag> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Fixed_Array_tag>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Fixed_Array_tag> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Fixed_Array_tag>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Fixed_Array_tag> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_fixed_array (
         arg_1
@@ -3734,7 +3734,7 @@ void POA_Param_Test::test_fixed_array_skel (
       &_tao_l2,
       &_tao_l3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -3749,7 +3749,7 @@ void POA_Param_Test::test_fixed_array_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3788,25 +3788,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Var_Array_tag> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Var_Array_tag>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Var_Array_tag> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Var_Array_tag>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Var_Array_tag> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Var_Array_tag>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Var_Array_tag> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_var_array (
         arg_1
@@ -3845,7 +3845,7 @@ void POA_Param_Test::test_var_array_skel (
       &_tao_v2,
       &_tao_v3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -3860,7 +3860,7 @@ void POA_Param_Test::test_var_array_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3899,25 +3899,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::ArraySeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::ArraySeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::ArraySeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::ArraySeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::ArraySeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::ArraySeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::ArraySeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_array_sequence (
         arg_1
@@ -3956,7 +3956,7 @@ void POA_Param_Test::test_array_sequence_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -3971,7 +3971,7 @@ void POA_Param_Test::test_array_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4010,25 +4010,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Bounded_ArraySeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Bounded_ArraySeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Bounded_ArraySeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Bounded_ArraySeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Bounded_ArraySeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_bounded_array_sequence (
         arg_1
@@ -4067,7 +4067,7 @@ void POA_Param_Test::test_bounded_array_sequence_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -4082,7 +4082,7 @@ void POA_Param_Test::test_bounded_array_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4121,25 +4121,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::ULong>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::ULong>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_exception (
         arg_1
@@ -4162,7 +4162,7 @@ void POA_Param_Test::test_exception_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Param_Test::_tc_Ooops
     };
@@ -4181,7 +4181,7 @@ void POA_Param_Test::test_exception_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -4196,7 +4196,7 @@ void POA_Param_Test::test_exception_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4235,25 +4235,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Big_Union> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Big_Union>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Big_Union> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Big_Union>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Big_Union> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Big_Union>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Big_Union> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_big_union (
         arg_1
@@ -4292,7 +4292,7 @@ void POA_Param_Test::test_big_union_skel (
       &_tao_u2,
       &_tao_u3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -4307,7 +4307,7 @@ void POA_Param_Test::test_big_union_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4346,25 +4346,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Small_Union> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Small_Union>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Small_Union> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Small_Union>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Small_Union> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Small_Union>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Small_Union> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_small_union (
         arg_1
@@ -4403,7 +4403,7 @@ void POA_Param_Test::test_small_union_skel (
       &_tao_u2,
       &_tao_u3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -4418,7 +4418,7 @@ void POA_Param_Test::test_small_union_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4457,25 +4457,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Any>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::Any>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::Any>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_complex_any (
         arg_1
@@ -4514,7 +4514,7 @@ void POA_Param_Test::test_complex_any_skel (
       &_tao_ca2,
       &_tao_ca3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -4529,7 +4529,7 @@ void POA_Param_Test::test_complex_any_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4568,25 +4568,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Recursive_Struct> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Recursive_Struct>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Recursive_Struct> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Recursive_Struct>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Recursive_Struct> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Recursive_Struct>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Recursive_Struct> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_recursive_struct (
         arg_1
@@ -4625,7 +4625,7 @@ void POA_Param_Test::test_recursive_struct_skel (
       &_tao_rs2,
       &_tao_rs3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -4640,7 +4640,7 @@ void POA_Param_Test::test_recursive_struct_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4679,25 +4679,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Recursive_Union> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Recursive_Union>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Recursive_Union> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Recursive_Union>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Recursive_Union> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Recursive_Union>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Recursive_Union> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_recursive_union (
         arg_1
@@ -4736,7 +4736,7 @@ void POA_Param_Test::test_recursive_union_skel (
       &_tao_ru2,
       &_tao_ru3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -4751,7 +4751,7 @@ void POA_Param_Test::test_recursive_union_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4790,25 +4790,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Param_Test::Multdim_Array_tag> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Param_Test::Multdim_Array_tag>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Param_Test::Multdim_Array_tag> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Param_Test::Multdim_Array_tag>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Param_Test::Multdim_Array_tag> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Param_Test::Multdim_Array_tag>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Param_Test::Multdim_Array_tag> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_multdim_array (
         arg_1
@@ -4847,7 +4847,7 @@ void POA_Param_Test::test_multdim_array_skel (
       &_tao_m2,
       &_tao_m3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Param_Test * const impl =
@@ -4862,7 +4862,7 @@ void POA_Param_Test::test_multdim_array_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4919,7 +4919,7 @@ void POA_Param_Test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Param_Test * const impl =
@@ -4932,7 +4932,7 @@ void POA_Param_Test::shutdown_skel (
 
   shutdown_Param_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4996,12 +4996,12 @@ POA_Param_Test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

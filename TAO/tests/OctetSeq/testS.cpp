@@ -158,7 +158,7 @@ POA_Test::Database::~Database (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -184,32 +184,32 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test::OctetSeq>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test::OctetSeq> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::CORBA::Double>::in_arg_type arg_3 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Double> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::CORBA::Double>::out_arg_type arg_4 =
         TAO::Portable_Server::get_out_arg< ::CORBA::Double> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       this->servant_->set (
         arg_1
         , arg_2
         , arg_3
         , arg_4);
     }
-  
+
   private:
     POA_Test::Database * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -244,7 +244,7 @@ void POA_Test::Database::set_skel (
       &_tao_verification_token,
       &_tao_returned_token
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::Database * const impl =
@@ -259,7 +259,7 @@ void POA_Test::Database::set_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -276,7 +276,7 @@ void POA_Test::Database::set_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -301,18 +301,18 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::OctetSeq> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::UShort>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::UShort> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->get (
           arg_1);
     }
-  
+
   private:
     POA_Test::Database * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -341,7 +341,7 @@ void POA_Test::Database::get_skel (
       &retval,
       &_tao_i
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Database * const impl =
@@ -356,7 +356,7 @@ void POA_Test::Database::get_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -373,7 +373,7 @@ void POA_Test::Database::get_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -398,18 +398,18 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::UShort>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::UShort> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->get_crc (
           arg_1);
     }
-  
+
   private:
     POA_Test::Database * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -438,7 +438,7 @@ void POA_Test::Database::get_crc_skel (
       &retval,
       &_tao_i
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Database * const impl =
@@ -453,7 +453,7 @@ void POA_Test::Database::get_crc_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -470,7 +470,7 @@ void POA_Test::Database::get_crc_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -489,7 +489,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::Database * const servant_;
   };
@@ -514,7 +514,7 @@ void POA_Test::Database::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Database * const impl =
@@ -527,7 +527,7 @@ void POA_Test::Database::shutdown_skel (
 
   shutdown_Database command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -591,12 +591,12 @@ POA_Test::Database::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

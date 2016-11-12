@@ -126,9 +126,9 @@ TAO_Test_A_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -8,  -2,   6,  -1,   7,  -1, -44,  -1,  10,  11, 
-       -1,  12,  -1,  -1,  -1,  13,  14,  -1,  15, -16,  -2, -40,  -1,  18, 
-       -1,  19,  20,  -1,  -1,  -1,  21,  22,  -1,  -1,  23, 
+       -1,  -1,  -1,  -1,  -8,  -2,   6,  -1,   7,  -1, -44,  -1,  10,  11,
+       -1,  12,  -1,  -1,  -1,  13,  14,  -1,  15, -16,  -2, -40,  -1,  18,
+       -1,  19,  20,  -1,  -1,  -1,  21,  22,  -1,  -1,  23,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -186,7 +186,7 @@ POA_Test::A::~A (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -211,31 +211,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::TAO::bounded_string_10> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::TAO::bounded_string_10>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::TAO::bounded_string_10> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::TAO::bounded_string_10>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::TAO::bounded_string_10> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::TAO::bounded_string_10>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::TAO::bounded_string_10> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->method (
           arg_1
@@ -243,7 +243,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -278,7 +278,7 @@ void POA_Test::A::method_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -293,7 +293,7 @@ void POA_Test::A::method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -310,7 +310,7 @@ void POA_Test::A::method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -335,31 +335,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::TAO::bounded_string_10> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::TAO::bounded_string_10>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::TAO::bounded_string_10> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::TAO::bounded_string_10>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::TAO::bounded_string_10> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::TAO::bounded_string_10>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::TAO::bounded_string_10> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->method_s (
           arg_1
@@ -367,7 +367,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -402,7 +402,7 @@ void POA_Test::A::method_s_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -417,7 +417,7 @@ void POA_Test::A::method_s_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -434,7 +434,7 @@ void POA_Test::A::method_s_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -459,31 +459,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::seq_bd_str> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test::seq_bd_str>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test::seq_bd_str> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::Test::seq_bd_str>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::Test::seq_bd_str> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::Test::seq_bd_str>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::Test::seq_bd_str> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->seq_method (
           arg_1
@@ -491,7 +491,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -526,7 +526,7 @@ void POA_Test::A::seq_method_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -541,7 +541,7 @@ void POA_Test::A::seq_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -558,7 +558,7 @@ void POA_Test::A::seq_method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -583,31 +583,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::seq_bds_str> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test::seq_bds_str>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test::seq_bds_str> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::Test::seq_bds_str>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::Test::seq_bds_str> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::Test::seq_bds_str>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::Test::seq_bds_str> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->seq_method_s (
           arg_1
@@ -615,7 +615,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -650,7 +650,7 @@ void POA_Test::A::seq_method_s_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -665,7 +665,7 @@ void POA_Test::A::seq_method_s_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -682,7 +682,7 @@ void POA_Test::A::seq_method_s_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -707,31 +707,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::arr_bd_str_tag> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test::arr_bd_str_tag>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test::arr_bd_str_tag> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::Test::arr_bd_str_tag>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::Test::arr_bd_str_tag> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::Test::arr_bd_str_tag>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::Test::arr_bd_str_tag> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->arr_method (
           arg_1
@@ -739,7 +739,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -774,7 +774,7 @@ void POA_Test::A::arr_method_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -789,7 +789,7 @@ void POA_Test::A::arr_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -806,7 +806,7 @@ void POA_Test::A::arr_method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -831,31 +831,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::arr_bds_str_tag> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test::arr_bds_str_tag>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test::arr_bds_str_tag> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::Test::arr_bds_str_tag>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::Test::arr_bds_str_tag> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::Test::arr_bds_str_tag>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::Test::arr_bds_str_tag> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->arr_method_s (
           arg_1
@@ -863,7 +863,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -898,7 +898,7 @@ void POA_Test::A::arr_method_s_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -913,7 +913,7 @@ void POA_Test::A::arr_method_s_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -930,7 +930,7 @@ void POA_Test::A::arr_method_s_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -955,31 +955,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::sct> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test::sct>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test::sct> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::Test::sct>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::Test::sct> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::Test::sct>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::Test::sct> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->sct_method (
           arg_1
@@ -987,7 +987,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1022,7 +1022,7 @@ void POA_Test::A::sct_method_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -1037,7 +1037,7 @@ void POA_Test::A::sct_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1054,7 +1054,7 @@ void POA_Test::A::sct_method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1079,31 +1079,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::unn> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test::unn>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test::unn> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::Test::unn>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::Test::unn> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::Test::unn>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::Test::unn> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->unn_method (
           arg_1
@@ -1111,7 +1111,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1146,7 +1146,7 @@ void POA_Test::A::unn_method_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -1161,7 +1161,7 @@ void POA_Test::A::unn_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1178,7 +1178,7 @@ void POA_Test::A::unn_method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1203,31 +1203,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::val_bd_str> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test::val_bd_str>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test::val_bd_str> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::Test::val_bd_str>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::Test::val_bd_str> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::Test::val_bd_str>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::Test::val_bd_str> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->vbx_method (
           arg_1
@@ -1235,7 +1235,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1270,7 +1270,7 @@ void POA_Test::A::vbx_method_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -1285,7 +1285,7 @@ void POA_Test::A::vbx_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1302,7 +1302,7 @@ void POA_Test::A::vbx_method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1327,31 +1327,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::val_bds_str> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test::val_bds_str>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test::val_bds_str> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::Test::val_bds_str>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::Test::val_bds_str> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::Test::val_bds_str>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::Test::val_bds_str> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->vbx_method_s (
           arg_1
@@ -1359,7 +1359,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1394,7 +1394,7 @@ void POA_Test::A::vbx_method_s_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -1409,7 +1409,7 @@ void POA_Test::A::vbx_method_s_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1426,7 +1426,7 @@ void POA_Test::A::vbx_method_s_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1451,31 +1451,31 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::vtp> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::A::FailOn>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::A::FailOn> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test::vtp>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test::vtp> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::Test::vtp>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::Test::vtp> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::Test::vtp>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< ::Test::vtp> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       retval =
         this->servant_->vtp_method (
           arg_1
@@ -1483,7 +1483,7 @@ namespace POA_Test
           , arg_3
           , arg_4);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1518,7 +1518,7 @@ void POA_Test::A::vtp_method_skel (
       &_tao_arg2,
       &_tao_arg3
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Test::A * const impl =
@@ -1533,7 +1533,7 @@ void POA_Test::A::vtp_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1550,7 +1550,7 @@ void POA_Test::A::vtp_method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1576,11 +1576,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->exc_method (
         arg_1);
     }
-  
+
   private:
     POA_Test::A * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1597,7 +1597,7 @@ void POA_Test::A::exc_method_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Test::_tc_exc
     };
@@ -1612,7 +1612,7 @@ void POA_Test::A::exc_method_skel (
       &retval,
       &_tao_f
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::A * const impl =
@@ -1627,7 +1627,7 @@ void POA_Test::A::exc_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1644,7 +1644,7 @@ void POA_Test::A::exc_method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1663,7 +1663,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::A * const servant_;
   };
@@ -1688,7 +1688,7 @@ void POA_Test::A::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::A * const impl =
@@ -1701,7 +1701,7 @@ void POA_Test::A::shutdown_skel (
 
   shutdown_A command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1765,12 +1765,12 @@ POA_Test::A::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

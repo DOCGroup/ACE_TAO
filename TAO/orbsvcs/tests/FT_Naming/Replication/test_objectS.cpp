@@ -115,8 +115,8 @@ TAO_Test_Object_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -6,  -2,   5,  -1, -19,  -1,  -1,   8,  -1,  -1,   9, 
-       10,  11, 
+       -1,  -1,  -1,  -6,  -2,   5,  -1, -19,  -1,  -1,   8,  -1,  -1,   9,
+       10,  11,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -196,7 +196,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->id ();
   }
@@ -226,7 +226,7 @@ void POA_Test_Object::_get_id_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test_Object * const impl =
@@ -241,7 +241,7 @@ void POA_Test_Object::_get_id_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -281,7 +281,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->id (
       arg_1);
   }
@@ -313,7 +313,7 @@ void POA_Test_Object::_set_id_skel (
       &retval,
       &_tao_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test_Object * const impl =
@@ -328,7 +328,7 @@ void POA_Test_Object::_set_id_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -392,12 +392,12 @@ POA_Test_Object::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

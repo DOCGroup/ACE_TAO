@@ -118,8 +118,8 @@ TAO_CCS_Thermometer_Perfect_Hash_OpTable::lookup (const char *str, unsigned int 
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,  -1,  -1,   6,  -1,  -1,   7, 
-        8,   9, -10,  -2, -23,  12,  13,  14, 
+       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,  -1,  -1,   6,  -1,  -1,   7,
+        8,   9, -10,  -2, -23,  12,  13,  14,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -177,7 +177,7 @@ POA_CCS::Thermometer::~Thermometer (void)
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -202,11 +202,11 @@ namespace POA_CCS
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->model ();
     }
-  
+
   private:
     POA_CCS::Thermometer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -233,7 +233,7 @@ void POA_CCS::Thermometer::_get_model_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_CCS::Thermometer * const impl =
@@ -248,7 +248,7 @@ void POA_CCS::Thermometer::_get_model_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -265,7 +265,7 @@ void POA_CCS::Thermometer::_get_model_skel (
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -290,11 +290,11 @@ namespace POA_CCS
         TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->asset_num ();
     }
-  
+
   private:
     POA_CCS::Thermometer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -321,7 +321,7 @@ void POA_CCS::Thermometer::_get_asset_num_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_CCS::Thermometer * const impl =
@@ -336,7 +336,7 @@ void POA_CCS::Thermometer::_get_asset_num_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -353,7 +353,7 @@ void POA_CCS::Thermometer::_get_asset_num_skel (
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -378,11 +378,11 @@ namespace POA_CCS
         TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->temperature ();
     }
-  
+
   private:
     POA_CCS::Thermometer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -409,7 +409,7 @@ void POA_CCS::Thermometer::_get_temperature_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_CCS::Thermometer * const impl =
@@ -424,7 +424,7 @@ void POA_CCS::Thermometer::_get_temperature_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -441,7 +441,7 @@ void POA_CCS::Thermometer::_get_temperature_skel (
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -466,11 +466,11 @@ namespace POA_CCS
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->location ();
     }
-  
+
   private:
     POA_CCS::Thermometer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -497,7 +497,7 @@ void POA_CCS::Thermometer::_get_location_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_CCS::Thermometer * const impl =
@@ -512,7 +512,7 @@ void POA_CCS::Thermometer::_get_location_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -529,7 +529,7 @@ void POA_CCS::Thermometer::_get_location_skel (
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -555,11 +555,11 @@ namespace POA_CCS
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->location (
         arg_1);
     }
-  
+
   private:
     POA_CCS::Thermometer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -588,7 +588,7 @@ void POA_CCS::Thermometer::_set_location_skel (
       &retval,
       &_tao_location
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CCS::Thermometer * const impl =
@@ -603,7 +603,7 @@ void POA_CCS::Thermometer::_set_location_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -667,12 +667,12 @@ POA_CCS::Thermometer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -753,8 +753,8 @@ TAO_CCS_Thermostat_Perfect_Hash_OpTable::lookup (const char *str, unsigned int l
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,  -1,  -1,   6,   7, -11,  -2, 
-        8,   9,  10,  -1, -29,  13,  14,  15,  -1,  16, 
+       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,  -1,  -1,   6,   7, -11,  -2,
+        8,   9,  10,  -1, -29,  13,  14,  15,  -1,  16,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -813,7 +813,7 @@ POA_CCS::Thermostat::~Thermostat (void)
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -838,11 +838,11 @@ namespace POA_CCS
         TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->get_nominal ();
     }
-  
+
   private:
     POA_CCS::Thermostat * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -869,7 +869,7 @@ void POA_CCS::Thermostat::get_nominal_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_CCS::Thermostat * const impl =
@@ -884,7 +884,7 @@ void POA_CCS::Thermostat::get_nominal_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -901,7 +901,7 @@ void POA_CCS::Thermostat::get_nominal_skel (
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -926,18 +926,18 @@ namespace POA_CCS
         TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->set_nominal (
           arg_1);
     }
-  
+
   private:
     POA_CCS::Thermostat * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -966,7 +966,7 @@ void POA_CCS::Thermostat::set_nominal_skel (
       &retval,
       &_tao_new_temp
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CCS::Thermostat * const impl =
@@ -981,7 +981,7 @@ void POA_CCS::Thermostat::set_nominal_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1049,12 +1049,12 @@ POA_CCS::Thermostat::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1169,7 +1169,7 @@ POA_CCS::Controller::~Controller (void)
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1194,11 +1194,11 @@ namespace POA_CCS
         TAO::Portable_Server::get_ret_arg< ::CCS::Controller::ThermometerSeq> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->list ();
     }
-  
+
   private:
     POA_CCS::Controller * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1225,7 +1225,7 @@ void POA_CCS::Controller::list_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_CCS::Controller * const impl =
@@ -1240,7 +1240,7 @@ void POA_CCS::Controller::list_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1257,7 +1257,7 @@ void POA_CCS::Controller::list_skel (
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1283,11 +1283,11 @@ namespace POA_CCS
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->find (
         arg_1);
     }
-  
+
   private:
     POA_CCS::Controller * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1316,7 +1316,7 @@ void POA_CCS::Controller::find_skel (
       &retval,
       &_tao_slist
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CCS::Controller * const impl =
@@ -1331,7 +1331,7 @@ void POA_CCS::Controller::find_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1348,7 +1348,7 @@ void POA_CCS::Controller::find_skel (
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1374,18 +1374,18 @@ namespace POA_CCS
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->change (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_CCS::Controller * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1416,7 +1416,7 @@ void POA_CCS::Controller::change_skel (
       &_tao_tlist,
       &_tao_delta
     };
-  
+
   static size_t const nargs = 3;
 
   POA_CCS::Controller * const impl =
@@ -1431,7 +1431,7 @@ void POA_CCS::Controller::change_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1495,12 +1495,12 @@ POA_CCS::Controller::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

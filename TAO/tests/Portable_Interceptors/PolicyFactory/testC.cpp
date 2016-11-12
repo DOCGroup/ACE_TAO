@@ -180,7 +180,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:Test/Policy:1.0",
     "Policy");
-  
+
 
 namespace Test
 {
@@ -230,7 +230,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void

@@ -181,7 +181,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->log (
       arg_1);
   }
@@ -213,7 +213,7 @@ void POA_Logger::log_skel (
       &retval,
       &_tao_log_rec
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Logger * const impl =
@@ -228,7 +228,7 @@ void POA_Logger::log_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -268,13 +268,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Logger::Verbosity_Level>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::Logger::Verbosity_Level> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->logv (
       arg_1
       , arg_2);
@@ -309,7 +309,7 @@ void POA_Logger::logv_skel (
       &_tao_log_rec,
       &_tao_level
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Logger * const impl =
@@ -324,7 +324,7 @@ void POA_Logger::logv_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -364,7 +364,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->log_twoway (
       arg_1);
   }
@@ -396,7 +396,7 @@ void POA_Logger::log_twoway_skel (
       &retval,
       &_tao_log_rec
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Logger * const impl =
@@ -411,7 +411,7 @@ void POA_Logger::log_twoway_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -451,13 +451,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Logger::Verbosity_Level>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::Logger::Verbosity_Level> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->logv_twoway (
       arg_1
       , arg_2);
@@ -492,7 +492,7 @@ void POA_Logger::logv_twoway_skel (
       &_tao_log_rec,
       &_tao_level
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Logger * const impl =
@@ -507,7 +507,7 @@ void POA_Logger::logv_twoway_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -547,7 +547,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->verbosity (
       arg_1);
   }
@@ -579,7 +579,7 @@ void POA_Logger::verbosity_skel (
       &retval,
       &_tao_level
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Logger * const impl =
@@ -594,7 +594,7 @@ void POA_Logger::verbosity_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -658,12 +658,12 @@ POA_Logger::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -798,13 +798,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Logger> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< char *>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->make_logger (
         arg_1);
@@ -837,7 +837,7 @@ void POA_Logger_Factory::make_logger_skel (
       &retval,
       &_tao_name
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Logger_Factory * const impl =
@@ -852,7 +852,7 @@ void POA_Logger_Factory::make_logger_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -916,12 +916,12 @@ POA_Logger_Factory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

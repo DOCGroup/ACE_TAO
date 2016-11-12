@@ -46,12 +46,12 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Foo_Nested[] =
       {
         { "z", &CORBA::_tc_boolean }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -96,7 +96,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Bar/Nested:1.0",
     "Nested",
     &Foo::_tc_Nested);
-  
+
 
 namespace Bar
 {
@@ -109,13 +109,13 @@ namespace Bar
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Bar_Baz[] =
       {
         { "one", &Bar::_tc_Nested },
         { "two", &Bar::_tc_Nested }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,

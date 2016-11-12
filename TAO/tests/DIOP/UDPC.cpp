@@ -84,7 +84,7 @@ UDP::invoke (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_client_name (client_name);
   TAO::Arg_Traits< ::UDP>::in_arg_val _tao_udpHandler (udpHandler);
@@ -106,7 +106,7 @@ UDP::invoke (
       6,
       TAO::TAO_CO_NONE,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -123,7 +123,7 @@ UDP::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -251,13 +251,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::UDP RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

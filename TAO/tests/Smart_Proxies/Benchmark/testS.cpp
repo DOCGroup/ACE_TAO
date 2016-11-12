@@ -177,7 +177,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->box_prices ();
   }
@@ -207,7 +207,7 @@ void POA_Test::box_prices_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test * const impl =
@@ -222,7 +222,7 @@ void POA_Test::box_prices_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -261,13 +261,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->tickets (
         arg_1);
@@ -300,7 +300,7 @@ void POA_Test::tickets_skel (
       &retval,
       &_tao_number
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test * const impl =
@@ -315,7 +315,7 @@ void POA_Test::tickets_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -372,7 +372,7 @@ void POA_Test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test * const impl =
@@ -385,7 +385,7 @@ void POA_Test::shutdown_skel (
 
   shutdown_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -449,12 +449,12 @@ POA_Test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

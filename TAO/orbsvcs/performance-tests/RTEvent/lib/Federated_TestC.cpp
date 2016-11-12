@@ -89,7 +89,7 @@ Federated_Test::Control::join (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Federated_Test::Peer>::in_arg_val _tao_the_peer (the_peer);
 
@@ -106,7 +106,7 @@ Federated_Test::Control::join (
       "join",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -211,7 +211,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Federated_Test/Control:1.0",
     "Control");
-  
+
 
 namespace Federated_Test
 {
@@ -230,7 +230,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Federated_Test/Experiment_Results:1.0",
     "Experiment_Results",
     &CORBA::_tc_ULongLongSeq);
-  
+
 
 namespace Federated_Test
 {
@@ -282,7 +282,7 @@ Federated_Test::Peer::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -318,7 +318,7 @@ Federated_Test::Peer::setup_loopback (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Federated_Test::Loopback>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_experiment_id (experiment_id);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_base_event_type (base_event_type);
@@ -337,7 +337,7 @@ Federated_Test::Peer::setup_loopback (
       "setup_loopback",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -357,7 +357,7 @@ Federated_Test::Peer::run_experiment (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Federated_Test::Experiment_Results>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_experiment_id (experiment_id);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_iterations (iterations);
@@ -376,7 +376,7 @@ Federated_Test::Peer::run_experiment (
       "run_experiment",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -395,7 +395,7 @@ Federated_Test::Peer::channel (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Object>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -432,7 +432,7 @@ Federated_Test::Peer::connect (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Federated_Test::Peer>::in_arg_val _tao_remote_peer (remote_peer);
 
@@ -449,7 +449,7 @@ Federated_Test::Peer::connect (
       "connect",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -554,7 +554,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Federated_Test/Peer:1.0",
     "Peer");
-  
+
 
 namespace Federated_Test
 {
@@ -606,7 +606,7 @@ Federated_Test::Loopback::disconnect (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -729,7 +729,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Federated_Test/Loopback:1.0",
     "Loopback");
-  
+
 
 namespace Federated_Test
 {
@@ -762,7 +762,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Federated_Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -876,7 +876,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Federated_Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -990,7 +990,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Federated_Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1102,13 +1102,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Federated_Test::Control RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1139,13 +1139,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Federated_Test::Peer RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1176,13 +1176,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Federated_Test::Loopback RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

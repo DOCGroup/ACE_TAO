@@ -155,9 +155,9 @@ void Quoter::Invalid_Stock_Symbol::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Quoter_Invalid_Stock_Symbol = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -223,7 +223,7 @@ Quoter::Stock_Factory::get_stock (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Quoter::Stock>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_symbol (stock_symbol);
 
@@ -234,7 +234,7 @@ Quoter::Stock_Factory::get_stock (
     };
 
   static TAO::Exception_Data
-  _tao_Quoter_Stock_Factory_get_stock_exceptiondata [] = 
+  _tao_Quoter_Stock_Factory_get_stock_exceptiondata [] =
     {
       {
         "IDL:Quoter/Invalid_Stock_Symbol:1.0",
@@ -252,7 +252,7 @@ Quoter::Stock_Factory::get_stock (
       "get_stock",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -275,9 +275,9 @@ Quoter::Stock_Factory::sendc_get_stock (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_symbol (stock_symbol);
 
@@ -401,7 +401,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Quoter/Stock_Factory:1.0",
     "Stock_Factory");
-  
+
 
 namespace Quoter
 {
@@ -453,7 +453,7 @@ Quoter::AMI_Stock_FactoryHandler::get_stock (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Quoter::Stock>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -464,7 +464,7 @@ Quoter::AMI_Stock_FactoryHandler::get_stock (
     };
 
   static TAO::Exception_Data
-  _tao_Quoter_AMI_Stock_FactoryHandler_get_stock_exceptiondata [] = 
+  _tao_Quoter_AMI_Stock_FactoryHandler_get_stock_exceptiondata [] =
     {
       {
         "IDL:Quoter/Invalid_Stock_Symbol:1.0",
@@ -482,7 +482,7 @@ Quoter::AMI_Stock_FactoryHandler::get_stock (
       "get_stock",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -513,10 +513,10 @@ Quoter::AMI_Stock_FactoryHandler::get_stock_reply_stub (
             (_tao_in >> ami_return_val.out ())
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->get_stock (
-          
+
           ami_return_val.in ()
         );
       break;
@@ -525,7 +525,7 @@ Quoter::AMI_Stock_FactoryHandler::get_stock_reply_stub (
     case TAO_AMI_REPLY_SYSTEM_EXCEPTION:
     {
       const ACE_Message_Block* cdr = _tao_in.start ();
-      
+
       static TAO::Exception_Data exceptions_data [] =
       {
         {
@@ -557,7 +557,7 @@ Quoter::AMI_Stock_FactoryHandler::get_stock_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->get_stock_excep (
           exception_holder_var
@@ -582,7 +582,7 @@ Quoter::AMI_Stock_FactoryHandler::get_stock_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -593,7 +593,7 @@ Quoter::AMI_Stock_FactoryHandler::get_stock_excep (
     };
 
   static TAO::Exception_Data
-  _tao_Quoter_AMI_Stock_FactoryHandler_get_stock_excep_exceptiondata [] = 
+  _tao_Quoter_AMI_Stock_FactoryHandler_get_stock_excep_exceptiondata [] =
     {
       {
         "IDL:Quoter/Invalid_Stock_Symbol:1.0",
@@ -611,7 +611,7 @@ Quoter::AMI_Stock_FactoryHandler::get_stock_excep (
       "get_stock_excep",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -723,7 +723,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Quoter/AMI_Stock_FactoryHandler:1.0",
     "AMI_Stock_FactoryHandler");
-  
+
 
 namespace Quoter
 {
@@ -775,7 +775,7 @@ Quoter::Stock::symbol (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -812,7 +812,7 @@ Quoter::Stock::full_name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -849,7 +849,7 @@ Quoter::Stock::price (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Double>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -886,8 +886,8 @@ Quoter::Stock::sendc_get_symbol (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -917,8 +917,8 @@ Quoter::Stock::sendc_get_full_name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -948,8 +948,8 @@ Quoter::Stock::sendc_price (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -1067,7 +1067,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Quoter/Stock:1.0",
     "Stock");
-  
+
 
 namespace Quoter
 {
@@ -1119,7 +1119,7 @@ Quoter::AMI_StockHandler::get_symbol (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -1136,7 +1136,7 @@ Quoter::AMI_StockHandler::get_symbol (
       "get_symbol",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1164,10 +1164,10 @@ Quoter::AMI_StockHandler::get_symbol_reply_stub (
             (_tao_in >> ami_return_val.out ())
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->get_symbol (
-          
+
           ami_return_val.in ()
         );
       break;
@@ -1194,7 +1194,7 @@ Quoter::AMI_StockHandler::get_symbol_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->get_symbol_excep (
           exception_holder_var
@@ -1219,7 +1219,7 @@ Quoter::AMI_StockHandler::get_symbol_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1236,7 +1236,7 @@ Quoter::AMI_StockHandler::get_symbol_excep (
       "get_symbol_excep",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1253,7 +1253,7 @@ Quoter::AMI_StockHandler::get_full_name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -1270,7 +1270,7 @@ Quoter::AMI_StockHandler::get_full_name (
       "get_full_name",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1298,10 +1298,10 @@ Quoter::AMI_StockHandler::get_full_name_reply_stub (
             (_tao_in >> ami_return_val.out ())
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->get_full_name (
-          
+
           ami_return_val.in ()
         );
       break;
@@ -1328,7 +1328,7 @@ Quoter::AMI_StockHandler::get_full_name_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->get_full_name_excep (
           exception_holder_var
@@ -1353,7 +1353,7 @@ Quoter::AMI_StockHandler::get_full_name_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1370,7 +1370,7 @@ Quoter::AMI_StockHandler::get_full_name_excep (
       "get_full_name_excep",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1387,7 +1387,7 @@ Quoter::AMI_StockHandler::price (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Double>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -1404,7 +1404,7 @@ Quoter::AMI_StockHandler::price (
       "price",
       5,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1432,10 +1432,10 @@ Quoter::AMI_StockHandler::price_reply_stub (
             (_tao_in >> ami_return_val)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->price (
-          
+
           ami_return_val
         );
       break;
@@ -1462,7 +1462,7 @@ Quoter::AMI_StockHandler::price_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->price_excep (
           exception_holder_var
@@ -1487,7 +1487,7 @@ Quoter::AMI_StockHandler::price_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1504,7 +1504,7 @@ Quoter::AMI_StockHandler::price_excep (
       "price_excep",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1613,7 +1613,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Quoter/AMI_StockHandler:1.0",
     "AMI_StockHandler");
-  
+
 
 namespace Quoter
 {
@@ -1666,7 +1666,7 @@ Quoter::Single_Query_Stock::get_price_and_names (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Double>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::out_arg_val _tao_symbol (symbol);
   TAO::Arg_Traits< char *>::out_arg_val _tao_full_name (full_name);
@@ -1707,8 +1707,8 @@ Quoter::Single_Query_Stock::sendc_get_price_and_names (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -1830,7 +1830,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Quoter/Single_Query_Stock:1.0",
     "Single_Query_Stock");
-  
+
 
 namespace Quoter
 {
@@ -1884,7 +1884,7 @@ Quoter::AMI_Single_Query_StockHandler::get_price_and_names (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Double>::in_arg_val _tao_ami_return_val (ami_return_val);
   TAO::Arg_Traits< char *>::in_arg_val _tao_symbol (symbol);
@@ -1905,7 +1905,7 @@ Quoter::AMI_Single_Query_StockHandler::get_price_and_names (
       "get_price_and_names",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1937,14 +1937,14 @@ Quoter::AMI_Single_Query_StockHandler::get_price_and_names_reply_stub (
             (_tao_in >> full_name.out ())
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->get_price_and_names (
-          
+
           ami_return_val,
-          
+
           symbol.in (),
-          
+
           full_name.in ()
         );
       break;
@@ -1971,7 +1971,7 @@ Quoter::AMI_Single_Query_StockHandler::get_price_and_names_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->get_price_and_names_excep (
           exception_holder_var
@@ -1996,7 +1996,7 @@ Quoter::AMI_Single_Query_StockHandler::get_price_and_names_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -2013,7 +2013,7 @@ Quoter::AMI_Single_Query_StockHandler::get_price_and_names_excep (
       "get_price_and_names_excep",
       25,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2126,7 +2126,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Quoter/AMI_Single_Query_StockHandler:1.0",
     "AMI_Single_Query_StockHandler");
-  
+
 
 namespace Quoter
 {
@@ -2152,7 +2152,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -2173,7 +2173,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -2309,7 +2309,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2423,7 +2423,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2537,7 +2537,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2651,7 +2651,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2765,7 +2765,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2879,7 +2879,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   /// Copying insertion.
   void
@@ -3018,13 +3018,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::Stock_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3055,13 +3055,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::AMI_Stock_FactoryHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3092,13 +3092,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::Stock RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3129,13 +3129,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::AMI_StockHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3166,13 +3166,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::Single_Query_Stock RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3203,13 +3203,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::AMI_Single_Query_StockHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

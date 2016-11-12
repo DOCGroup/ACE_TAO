@@ -154,7 +154,7 @@ POA_Test_Idl::SharedIntf::~SharedIntf (void)
 
 namespace POA_Test_Idl
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -173,7 +173,7 @@ namespace POA_Test_Idl
     {
       this->servant_->ping ();
     }
-  
+
   private:
     POA_Test_Idl::SharedIntf * const servant_;
   };
@@ -198,7 +198,7 @@ void POA_Test_Idl::SharedIntf::ping_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test_Idl::SharedIntf * const impl =
@@ -211,7 +211,7 @@ void POA_Test_Idl::SharedIntf::ping_skel (
 
   ping_SharedIntf command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -228,7 +228,7 @@ void POA_Test_Idl::SharedIntf::ping_skel (
 
 namespace POA_Test_Idl
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -247,7 +247,7 @@ namespace POA_Test_Idl
     {
       this->servant_->farewell ();
     }
-  
+
   private:
     POA_Test_Idl::SharedIntf * const servant_;
   };
@@ -272,7 +272,7 @@ void POA_Test_Idl::SharedIntf::farewell_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test_Idl::SharedIntf * const impl =
@@ -285,7 +285,7 @@ void POA_Test_Idl::SharedIntf::farewell_skel (
 
   farewell_SharedIntf command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -349,12 +349,12 @@ POA_Test_Idl::SharedIntf::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

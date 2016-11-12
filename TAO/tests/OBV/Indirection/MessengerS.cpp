@@ -161,13 +161,13 @@ POA_demo::value::idl::ValueServer::~ValueServer (void)
 
 namespace POA_demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
-      
+
 
       // TAO_IDL - Generated from
       // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -192,18 +192,18 @@ namespace POA_demo
             TAO::Portable_Server::get_ret_arg< char *> (
               this->operation_details_,
               this->args_);
-          
+
           TAO::SArg_Traits< ::demo::value::idl::boxedValue>::in_arg_type arg_1 =
             TAO::Portable_Server::get_in_arg< ::demo::value::idl::boxedValue> (
               this->operation_details_,
               this->args_,
               1);
-            
+
           retval =
             this->servant_->receive_boxedvalue (
               arg_1);
         }
-      
+
       private:
         POA_demo::value::idl::ValueServer * const servant_;
         TAO_Operation_Details const * const operation_details_;
@@ -234,7 +234,7 @@ void POA_demo::value::idl::ValueServer::receive_boxedvalue_skel (
       &retval,
       &_tao_b
     };
-  
+
   static size_t const nargs = 2;
 
   POA_demo::value::idl::ValueServer * const impl =
@@ -249,7 +249,7 @@ void POA_demo::value::idl::ValueServer::receive_boxedvalue_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -266,13 +266,13 @@ void POA_demo::value::idl::ValueServer::receive_boxedvalue_skel (
 
 namespace POA_demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
-      
+
 
       // TAO_IDL - Generated from
       // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -297,25 +297,25 @@ namespace POA_demo
             TAO::Portable_Server::get_ret_arg< char *> (
               this->operation_details_,
               this->args_);
-          
+
           TAO::SArg_Traits< ::demo::value::idl::boxedLong>::in_arg_type arg_1 =
             TAO::Portable_Server::get_in_arg< ::demo::value::idl::boxedLong> (
               this->operation_details_,
               this->args_,
               1);
-            
+
           TAO::SArg_Traits< ::demo::value::idl::boxedLong>::in_arg_type arg_2 =
             TAO::Portable_Server::get_in_arg< ::demo::value::idl::boxedLong> (
               this->operation_details_,
               this->args_,
               2);
-            
+
           retval =
             this->servant_->receive_long (
               arg_1
               , arg_2);
         }
-      
+
       private:
         POA_demo::value::idl::ValueServer * const servant_;
         TAO_Operation_Details const * const operation_details_;
@@ -348,7 +348,7 @@ void POA_demo::value::idl::ValueServer::receive_long_skel (
       &_tao_p1,
       &_tao_p2
     };
-  
+
   static size_t const nargs = 3;
 
   POA_demo::value::idl::ValueServer * const impl =
@@ -363,7 +363,7 @@ void POA_demo::value::idl::ValueServer::receive_long_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -380,13 +380,13 @@ void POA_demo::value::idl::ValueServer::receive_long_skel (
 
 namespace POA_demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
-      
+
 
       // TAO_IDL - Generated from
       // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -411,25 +411,25 @@ namespace POA_demo
             TAO::Portable_Server::get_ret_arg< char *> (
               this->operation_details_,
               this->args_);
-          
+
           TAO::SArg_Traits< ::demo::value::idl::boxedString>::in_arg_type arg_1 =
             TAO::Portable_Server::get_in_arg< ::demo::value::idl::boxedString> (
               this->operation_details_,
               this->args_,
               1);
-            
+
           TAO::SArg_Traits< ::demo::value::idl::boxedString>::in_arg_type arg_2 =
             TAO::Portable_Server::get_in_arg< ::demo::value::idl::boxedString> (
               this->operation_details_,
               this->args_,
               2);
-            
+
           retval =
             this->servant_->receive_string (
               arg_1
               , arg_2);
         }
-      
+
       private:
         POA_demo::value::idl::ValueServer * const servant_;
         TAO_Operation_Details const * const operation_details_;
@@ -462,7 +462,7 @@ void POA_demo::value::idl::ValueServer::receive_string_skel (
       &_tao_s1,
       &_tao_s2
     };
-  
+
   static size_t const nargs = 3;
 
   POA_demo::value::idl::ValueServer * const impl =
@@ -477,7 +477,7 @@ void POA_demo::value::idl::ValueServer::receive_string_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -494,13 +494,13 @@ void POA_demo::value::idl::ValueServer::receive_string_skel (
 
 namespace POA_demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
-      
+
 
       // TAO_IDL - Generated from
       // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -525,18 +525,18 @@ namespace POA_demo
             TAO::Portable_Server::get_ret_arg< char *> (
               this->operation_details_,
               this->args_);
-          
+
           TAO::SArg_Traits< ::demo::value::idl::Node>::in_arg_type arg_1 =
             TAO::Portable_Server::get_in_arg< ::demo::value::idl::Node> (
               this->operation_details_,
               this->args_,
               1);
-            
+
           retval =
             this->servant_->receive_list (
               arg_1);
         }
-      
+
       private:
         POA_demo::value::idl::ValueServer * const servant_;
         TAO_Operation_Details const * const operation_details_;
@@ -567,7 +567,7 @@ void POA_demo::value::idl::ValueServer::receive_list_skel (
       &retval,
       &_tao_node
     };
-  
+
   static size_t const nargs = 2;
 
   POA_demo::value::idl::ValueServer * const impl =
@@ -582,7 +582,7 @@ void POA_demo::value::idl::ValueServer::receive_list_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -599,13 +599,13 @@ void POA_demo::value::idl::ValueServer::receive_list_skel (
 
 namespace POA_demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
-      
+
 
       // TAO_IDL - Generated from
       // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -630,18 +630,18 @@ namespace POA_demo
             TAO::Portable_Server::get_ret_arg< char *> (
               this->operation_details_,
               this->args_);
-          
+
           TAO::SArg_Traits< ::demo::value::idl::TValue>::inout_arg_type arg_1 =
             TAO::Portable_Server::get_inout_arg< ::demo::value::idl::TValue> (
               this->operation_details_,
               this->args_,
               1);
-            
+
           retval =
             this->servant_->receive_truncatable (
               arg_1);
         }
-      
+
       private:
         POA_demo::value::idl::ValueServer * const servant_;
         TAO_Operation_Details const * const operation_details_;
@@ -672,7 +672,7 @@ void POA_demo::value::idl::ValueServer::receive_truncatable_skel (
       &retval,
       &_tao_v
     };
-  
+
   static size_t const nargs = 2;
 
   POA_demo::value::idl::ValueServer * const impl =
@@ -687,7 +687,7 @@ void POA_demo::value::idl::ValueServer::receive_truncatable_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -704,13 +704,13 @@ void POA_demo::value::idl::ValueServer::receive_truncatable_skel (
 
 namespace POA_demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
-      
+
 
       // TAO_IDL - Generated from
       // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -735,18 +735,18 @@ namespace POA_demo
             TAO::Portable_Server::get_ret_arg< char *> (
               this->operation_details_,
               this->args_);
-          
+
           TAO::SArg_Traits< ::demo::value::idl::ConfigValues>::in_arg_type arg_1 =
             TAO::Portable_Server::get_in_arg< ::demo::value::idl::ConfigValues> (
               this->operation_details_,
               this->args_,
               1);
-            
+
           retval =
             this->servant_->receive_sequence (
               arg_1);
         }
-      
+
       private:
         POA_demo::value::idl::ValueServer * const servant_;
         TAO_Operation_Details const * const operation_details_;
@@ -777,7 +777,7 @@ void POA_demo::value::idl::ValueServer::receive_sequence_skel (
       &retval,
       &_tao_v
     };
-  
+
   static size_t const nargs = 2;
 
   POA_demo::value::idl::ValueServer * const impl =
@@ -792,7 +792,7 @@ void POA_demo::value::idl::ValueServer::receive_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -856,12 +856,12 @@ POA_demo::value::idl::ValueServer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

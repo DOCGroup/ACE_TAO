@@ -175,13 +175,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Person>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Person> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->update (
         arg_1);
@@ -214,7 +214,7 @@ void POA_Transaction::update_skel (
       &retval,
       &_tao_p
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Transaction * const impl =
@@ -229,7 +229,7 @@ void POA_Transaction::update_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -293,12 +293,12 @@ POA_Transaction::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

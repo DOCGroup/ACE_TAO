@@ -131,10 +131,10 @@ TAO_interop_WChar_Passer_Perfect_Hash_OpTable::lookup (const char *str, unsigned
 
   static const signed char lookup[] =
     {
-       -1,  -1, -13,  -2, -15,  -3, -18,  -2,   8,  -1,   9, -20,  -2,  10, 
-       11,  12, -58, -57, -56, -52,  22,  -1,  23,  -1,  -1,  24,  -1,  -1, 
-       25,  -1,  -1,  -1,  -1,  26,  -1,  27,  -1,  -1,  -1,  -1,  28,  -1, 
-       -1,  29,  30, 
+       -1,  -1, -13,  -2, -15,  -3, -18,  -2,   8,  -1,   9, -20,  -2,  10,
+       11,  12, -58, -57, -56, -52,  22,  -1,  23,  -1,  -1,  24,  -1,  -1,
+       25,  -1,  -1,  -1,  -1,  26,  -1,  27,  -1,  -1,  -1,  -1,  28,  -1,
+       -1,  29,  30,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -192,7 +192,7 @@ POA_interop::WChar_Passer::~WChar_Passer (void)
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -217,11 +217,11 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->orb_name ();
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -248,7 +248,7 @@ void POA_interop::WChar_Passer::_get_orb_name_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_interop::WChar_Passer * const impl =
@@ -263,7 +263,7 @@ void POA_interop::WChar_Passer::_get_orb_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -280,7 +280,7 @@ void POA_interop::WChar_Passer::_get_orb_name_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -305,25 +305,25 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::ACE_InputCDR::to_wchar>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_wchar> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->wchar_to_server (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -354,7 +354,7 @@ void POA_interop::WChar_Passer::wchar_to_server_skel (
       &_tao_test,
       &_tao_key
     };
-  
+
   static size_t const nargs = 3;
 
   POA_interop::WChar_Passer * const impl =
@@ -369,7 +369,7 @@ void POA_interop::WChar_Passer::wchar_to_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -386,7 +386,7 @@ void POA_interop::WChar_Passer::wchar_to_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -411,18 +411,18 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_wchar> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->wchar_from_server (
           arg_1);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -451,7 +451,7 @@ void POA_interop::WChar_Passer::wchar_from_server_skel (
       &retval,
       &_tao_key
     };
-  
+
   static size_t const nargs = 2;
 
   POA_interop::WChar_Passer * const impl =
@@ -466,7 +466,7 @@ void POA_interop::WChar_Passer::wchar_from_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -483,7 +483,7 @@ void POA_interop::WChar_Passer::wchar_from_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -508,25 +508,25 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::WChar *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::WChar *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->wstring_to_server (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -557,7 +557,7 @@ void POA_interop::WChar_Passer::wstring_to_server_skel (
       &_tao_test,
       &_tao_key
     };
-  
+
   static size_t const nargs = 3;
 
   POA_interop::WChar_Passer * const impl =
@@ -572,7 +572,7 @@ void POA_interop::WChar_Passer::wstring_to_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -589,7 +589,7 @@ void POA_interop::WChar_Passer::wstring_to_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -614,18 +614,18 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::CORBA::WChar *> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->wstring_from_server (
           arg_1);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -654,7 +654,7 @@ void POA_interop::WChar_Passer::wstring_from_server_skel (
       &retval,
       &_tao_key
     };
-  
+
   static size_t const nargs = 2;
 
   POA_interop::WChar_Passer * const impl =
@@ -669,7 +669,7 @@ void POA_interop::WChar_Passer::wstring_from_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -686,7 +686,7 @@ void POA_interop::WChar_Passer::wstring_from_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -711,25 +711,25 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::interop::warray_tag>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::interop::warray_tag> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->warray_to_server (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -760,7 +760,7 @@ void POA_interop::WChar_Passer::warray_to_server_skel (
       &_tao_test,
       &_tao_key
     };
-  
+
   static size_t const nargs = 3;
 
   POA_interop::WChar_Passer * const impl =
@@ -775,7 +775,7 @@ void POA_interop::WChar_Passer::warray_to_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -792,7 +792,7 @@ void POA_interop::WChar_Passer::warray_to_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -817,18 +817,18 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::interop::warray_tag> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->warray_from_server (
           arg_1);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -857,7 +857,7 @@ void POA_interop::WChar_Passer::warray_from_server_skel (
       &retval,
       &_tao_key
     };
-  
+
   static size_t const nargs = 2;
 
   POA_interop::WChar_Passer * const impl =
@@ -872,7 +872,7 @@ void POA_interop::WChar_Passer::warray_from_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -889,7 +889,7 @@ void POA_interop::WChar_Passer::warray_from_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -914,25 +914,25 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::interop::wstruct>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::interop::wstruct> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->wstruct_to_server (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -963,7 +963,7 @@ void POA_interop::WChar_Passer::wstruct_to_server_skel (
       &_tao_test,
       &_tao_key
     };
-  
+
   static size_t const nargs = 3;
 
   POA_interop::WChar_Passer * const impl =
@@ -978,7 +978,7 @@ void POA_interop::WChar_Passer::wstruct_to_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -995,7 +995,7 @@ void POA_interop::WChar_Passer::wstruct_to_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1020,18 +1020,18 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::interop::wstruct> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->wstruct_from_server (
           arg_1);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1060,7 +1060,7 @@ void POA_interop::WChar_Passer::wstruct_from_server_skel (
       &retval,
       &_tao_key
     };
-  
+
   static size_t const nargs = 2;
 
   POA_interop::WChar_Passer * const impl =
@@ -1075,7 +1075,7 @@ void POA_interop::WChar_Passer::wstruct_from_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1092,7 +1092,7 @@ void POA_interop::WChar_Passer::wstruct_from_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1117,25 +1117,25 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::interop::wstructseq>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::interop::wstructseq> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->wstructseq_to_server (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1166,7 +1166,7 @@ void POA_interop::WChar_Passer::wstructseq_to_server_skel (
       &_tao_test,
       &_tao_key
     };
-  
+
   static size_t const nargs = 3;
 
   POA_interop::WChar_Passer * const impl =
@@ -1181,7 +1181,7 @@ void POA_interop::WChar_Passer::wstructseq_to_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1198,7 +1198,7 @@ void POA_interop::WChar_Passer::wstructseq_to_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1223,18 +1223,18 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::interop::wstructseq> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->wstructseq_from_server (
           arg_1);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1263,7 +1263,7 @@ void POA_interop::WChar_Passer::wstructseq_from_server_skel (
       &retval,
       &_tao_key
     };
-  
+
   static size_t const nargs = 2;
 
   POA_interop::WChar_Passer * const impl =
@@ -1278,7 +1278,7 @@ void POA_interop::WChar_Passer::wstructseq_from_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1295,7 +1295,7 @@ void POA_interop::WChar_Passer::wstructseq_from_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1320,25 +1320,25 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::interop::wunion>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::interop::wunion> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->wunion_to_server (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1369,7 +1369,7 @@ void POA_interop::WChar_Passer::wunion_to_server_skel (
       &_tao_test,
       &_tao_key
     };
-  
+
   static size_t const nargs = 3;
 
   POA_interop::WChar_Passer * const impl =
@@ -1384,7 +1384,7 @@ void POA_interop::WChar_Passer::wunion_to_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1401,7 +1401,7 @@ void POA_interop::WChar_Passer::wunion_to_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1426,25 +1426,25 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::interop::wunion> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::interop::wchar_types>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::interop::wchar_types> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->wunion_from_server (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1475,7 +1475,7 @@ void POA_interop::WChar_Passer::wunion_from_server_skel (
       &_tao_key,
       &_tao_type
     };
-  
+
   static size_t const nargs = 3;
 
   POA_interop::WChar_Passer * const impl =
@@ -1490,7 +1490,7 @@ void POA_interop::WChar_Passer::wunion_from_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1507,7 +1507,7 @@ void POA_interop::WChar_Passer::wunion_from_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1532,25 +1532,25 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Any>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Any> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->any_to_server (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1581,7 +1581,7 @@ void POA_interop::WChar_Passer::any_to_server_skel (
       &_tao_test,
       &_tao_key
     };
-  
+
   static size_t const nargs = 3;
 
   POA_interop::WChar_Passer * const impl =
@@ -1596,7 +1596,7 @@ void POA_interop::WChar_Passer::any_to_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1613,7 +1613,7 @@ void POA_interop::WChar_Passer::any_to_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1638,25 +1638,25 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::CORBA::Any> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::interop::wchar_types>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::interop::wchar_types> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->any_from_server (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1687,7 +1687,7 @@ void POA_interop::WChar_Passer::any_from_server_skel (
       &_tao_key,
       &_tao_type
     };
-  
+
   static size_t const nargs = 3;
 
   POA_interop::WChar_Passer * const impl =
@@ -1702,7 +1702,7 @@ void POA_interop::WChar_Passer::any_from_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1719,7 +1719,7 @@ void POA_interop::WChar_Passer::any_from_server_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1744,18 +1744,18 @@ namespace POA_interop
         TAO::Portable_Server::get_ret_arg< ::CORBA::Any> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Any>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Any> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->any_echo (
           arg_1);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1784,7 +1784,7 @@ void POA_interop::WChar_Passer::any_echo_skel (
       &retval,
       &_tao_test
     };
-  
+
   static size_t const nargs = 2;
 
   POA_interop::WChar_Passer * const impl =
@@ -1799,7 +1799,7 @@ void POA_interop::WChar_Passer::any_echo_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1816,7 +1816,7 @@ void POA_interop::WChar_Passer::any_echo_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1842,11 +1842,11 @@ namespace POA_interop
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->exception_test (
         arg_1);
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1863,7 +1863,7 @@ void POA_interop::WChar_Passer::exception_test_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       interop::WChar_Passer::_tc_WStringException
     };
@@ -1878,7 +1878,7 @@ void POA_interop::WChar_Passer::exception_test_skel (
       &retval,
       &_tao_key
     };
-  
+
   static size_t const nargs = 2;
 
   POA_interop::WChar_Passer * const impl =
@@ -1893,7 +1893,7 @@ void POA_interop::WChar_Passer::exception_test_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1910,7 +1910,7 @@ void POA_interop::WChar_Passer::exception_test_skel (
 
 namespace POA_interop
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1929,7 +1929,7 @@ namespace POA_interop
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_interop::WChar_Passer * const servant_;
   };
@@ -1954,7 +1954,7 @@ void POA_interop::WChar_Passer::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_interop::WChar_Passer * const impl =
@@ -1967,7 +1967,7 @@ void POA_interop::WChar_Passer::shutdown_skel (
 
   shutdown_WChar_Passer command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2031,12 +2031,12 @@ POA_interop::WChar_Passer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

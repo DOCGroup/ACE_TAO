@@ -158,7 +158,7 @@ POA_OBV_FactoryTest::Test::~Test (void)
 
 namespace POA_OBV_FactoryTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -183,11 +183,11 @@ namespace POA_OBV_FactoryTest
         TAO::Portable_Server::get_ret_arg< ::OBV_FactoryTest::BaseValue> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->get_base_value ();
     }
-  
+
   private:
     POA_OBV_FactoryTest::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -214,7 +214,7 @@ void POA_OBV_FactoryTest::Test::get_base_value_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_OBV_FactoryTest::Test * const impl =
@@ -229,7 +229,7 @@ void POA_OBV_FactoryTest::Test::get_base_value_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -246,7 +246,7 @@ void POA_OBV_FactoryTest::Test::get_base_value_skel (
 
 namespace POA_OBV_FactoryTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -271,11 +271,11 @@ namespace POA_OBV_FactoryTest
         TAO::Portable_Server::get_ret_arg< ::OBV_FactoryTest::Value1> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->get_value1 ();
     }
-  
+
   private:
     POA_OBV_FactoryTest::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -302,7 +302,7 @@ void POA_OBV_FactoryTest::Test::get_value1_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_OBV_FactoryTest::Test * const impl =
@@ -317,7 +317,7 @@ void POA_OBV_FactoryTest::Test::get_value1_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -334,7 +334,7 @@ void POA_OBV_FactoryTest::Test::get_value1_skel (
 
 namespace POA_OBV_FactoryTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -359,11 +359,11 @@ namespace POA_OBV_FactoryTest
         TAO::Portable_Server::get_ret_arg< ::OBV_FactoryTest::Value2> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->get_value2 ();
     }
-  
+
   private:
     POA_OBV_FactoryTest::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -390,7 +390,7 @@ void POA_OBV_FactoryTest::Test::get_value2_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_OBV_FactoryTest::Test * const impl =
@@ -405,7 +405,7 @@ void POA_OBV_FactoryTest::Test::get_value2_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -422,7 +422,7 @@ void POA_OBV_FactoryTest::Test::get_value2_skel (
 
 namespace POA_OBV_FactoryTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -441,7 +441,7 @@ namespace POA_OBV_FactoryTest
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_OBV_FactoryTest::Test * const servant_;
   };
@@ -466,7 +466,7 @@ void POA_OBV_FactoryTest::Test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_OBV_FactoryTest::Test * const impl =
@@ -479,7 +479,7 @@ void POA_OBV_FactoryTest::Test::shutdown_skel (
 
   shutdown_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -543,12 +543,12 @@ POA_OBV_FactoryTest::Test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

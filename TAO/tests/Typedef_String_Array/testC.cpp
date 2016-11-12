@@ -46,12 +46,12 @@ ArrayOfString_dup (const ArrayOfString_slice *_tao_src_array)
 {
   ArrayOfString_slice *_tao_dup_array =
     ArrayOfString_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <ArrayOfString_slice *> (0);
     }
-  
+
   ArrayOfString_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -127,7 +127,7 @@ SimpleStrings::get_strings (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ArrayOfString_tag>::out_arg_val _tao_strings (strings);
 
@@ -246,7 +246,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     const ArrayOfString_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 15 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm << _tao_array [i0].in ());
@@ -260,7 +260,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     ArrayOfString_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 15 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm >> _tao_array [i0].out ());
@@ -296,13 +296,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::SimpleStrings RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

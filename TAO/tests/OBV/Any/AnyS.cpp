@@ -156,7 +156,7 @@ POA_OBV_AnyTest::Test::~Test (void)
 
 namespace POA_OBV_AnyTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -181,18 +181,18 @@ namespace POA_OBV_AnyTest
         TAO::Portable_Server::get_ret_arg< ::CORBA::Any> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->get_something (
           arg_1);
     }
-  
+
   private:
     POA_OBV_AnyTest::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -221,7 +221,7 @@ void POA_OBV_AnyTest::Test::get_something_skel (
       &retval,
       &_tao_need_vb
     };
-  
+
   static size_t const nargs = 2;
 
   POA_OBV_AnyTest::Test * const impl =
@@ -236,7 +236,7 @@ void POA_OBV_AnyTest::Test::get_something_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -253,7 +253,7 @@ void POA_OBV_AnyTest::Test::get_something_skel (
 
 namespace POA_OBV_AnyTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -278,11 +278,11 @@ namespace POA_OBV_AnyTest
         TAO::Portable_Server::get_ret_arg< ::OBV_AnyTest::VB> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->get_vb ();
     }
-  
+
   private:
     POA_OBV_AnyTest::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -309,7 +309,7 @@ void POA_OBV_AnyTest::Test::get_vb_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_OBV_AnyTest::Test * const impl =
@@ -324,7 +324,7 @@ void POA_OBV_AnyTest::Test::get_vb_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -341,7 +341,7 @@ void POA_OBV_AnyTest::Test::get_vb_skel (
 
 namespace POA_OBV_AnyTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -360,7 +360,7 @@ namespace POA_OBV_AnyTest
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_OBV_AnyTest::Test * const servant_;
   };
@@ -385,7 +385,7 @@ void POA_OBV_AnyTest::Test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_OBV_AnyTest::Test * const impl =
@@ -398,7 +398,7 @@ void POA_OBV_AnyTest::Test::shutdown_skel (
 
   shutdown_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -462,12 +462,12 @@ POA_OBV_AnyTest::Test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

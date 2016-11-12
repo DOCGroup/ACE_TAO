@@ -91,7 +91,7 @@ FT_TEST::TestReplica::set (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_value (value);
 
@@ -108,7 +108,7 @@ FT_TEST::TestReplica::set (
       "set",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -125,7 +125,7 @@ FT_TEST::TestReplica::increment (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_delta (delta);
 
@@ -142,7 +142,7 @@ FT_TEST::TestReplica::increment (
       "increment",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -161,7 +161,7 @@ FT_TEST::TestReplica::get (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -206,7 +206,7 @@ static char const * const _tao_enumerators_FT_TEST_TestReplica_Bane[] =
     "BEFORE_SET_STATE",
     "AFTER_SET_STATE",
     "CLEAN_EXIT"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -217,7 +217,7 @@ static TAO::TypeCode::Enum<char const *,
     "Bane",
     _tao_enumerators_FT_TEST_TestReplica_Bane,
     15);
-  
+
 ::CORBA::TypeCode_ptr const FT_TEST::TestReplica::_tc_Bane =
   &_tao_tc_FT_TEST_TestReplica_Bane;
 
@@ -232,7 +232,7 @@ FT_TEST::TestReplica::die (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::FT_TEST::TestReplica::Bane>::in_arg_val _tao_when (when);
 
@@ -249,7 +249,7 @@ FT_TEST::TestReplica::die (
       "die",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -266,7 +266,7 @@ FT_TEST::TestReplica::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -300,7 +300,7 @@ FT_TEST::TestReplica::counter (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -337,7 +337,7 @@ FT_TEST::TestReplica::counter (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_counter (counter);
 
@@ -354,7 +354,7 @@ FT_TEST::TestReplica::counter (
       "_set_counter",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -475,7 +475,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:FT_TEST/TestReplica:1.0",
     "TestReplica");
-  
+
 
 namespace FT_TEST
 {
@@ -527,7 +527,7 @@ FT_TEST::ReplicaFactory::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -657,7 +657,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:FT_TEST/ReplicaFactory:1.0",
     "ReplicaFactory");
-  
+
 
 namespace FT_TEST
 {
@@ -690,7 +690,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace FT_TEST
 {
-  
+
 
   /// Copying insertion.
   void
@@ -814,7 +814,7 @@ namespace FT_TEST
       TAO::Any_Basic_Impl_T< ::FT_TEST::TestReplica::Bane>::extract (
           _tao_any,
           ::FT_TEST::TestReplica::_tc_Bane,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -844,7 +844,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<FT_TEST::TestReplica::Bane>::extract (
         _tao_any,
         FT_TEST::TestReplica::_tc_Bane,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -878,7 +878,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace FT_TEST
 {
-  
+
 
   /// Copying insertion.
   void
@@ -982,12 +982,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<FT_TEST::TestReplica::Bane> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -1018,13 +1018,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::FT_TEST::TestReplica RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1055,13 +1055,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::FT_TEST::ReplicaFactory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

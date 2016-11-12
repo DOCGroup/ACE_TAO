@@ -175,7 +175,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:TestModule/test:1.0",
     "test");
-  
+
 
 namespace TestModule
 {
@@ -208,7 +208,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TestModule
 {
-  
+
 
   /// Copying insertion.
   void
@@ -320,13 +320,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::TestModule::test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

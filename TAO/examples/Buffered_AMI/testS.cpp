@@ -179,13 +179,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::ULong>::out_arg_type arg_2 =
       TAO::Portable_Server::get_out_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->method (
       arg_1
       , arg_2);
@@ -220,7 +220,7 @@ void POA_test::method_skel (
       &_tao_request_number,
       &_tao_reply_number
     };
-  
+
   static size_t const nargs = 3;
 
   POA_test * const impl =
@@ -235,7 +235,7 @@ void POA_test::method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -292,7 +292,7 @@ void POA_test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -305,7 +305,7 @@ void POA_test::shutdown_skel (
 
   shutdown_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -369,12 +369,12 @@ POA_test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -515,7 +515,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->method (
       arg_1);
   }
@@ -547,7 +547,7 @@ void POA_AMI_testHandler::method_skel (
       &retval,
       &_tao_reply_number
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_testHandler * const impl =
@@ -562,7 +562,7 @@ void POA_AMI_testHandler::method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -602,7 +602,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->method_excep (
       arg_1);
   }
@@ -634,7 +634,7 @@ void POA_AMI_testHandler::method_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_testHandler * const impl =
@@ -649,7 +649,7 @@ void POA_AMI_testHandler::method_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -706,7 +706,7 @@ void POA_AMI_testHandler::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_AMI_testHandler * const impl =
@@ -719,7 +719,7 @@ void POA_AMI_testHandler::shutdown_skel (
 
   shutdown_AMI_testHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -759,7 +759,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->shutdown_excep (
       arg_1);
   }
@@ -791,7 +791,7 @@ void POA_AMI_testHandler::shutdown_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_testHandler * const impl =
@@ -806,7 +806,7 @@ void POA_AMI_testHandler::shutdown_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -874,12 +874,12 @@ POA_AMI_testHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

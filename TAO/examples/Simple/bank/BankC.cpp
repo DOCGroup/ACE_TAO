@@ -200,12 +200,12 @@ void Bank::Account::Overdraft::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Bank_Account_Overdraft[] =
       {
         { "reason", &CORBA::_tc_string }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -234,7 +234,7 @@ Bank::Account::balance (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Float>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -271,7 +271,7 @@ Bank::Account::deposit (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Float>::in_arg_val _tao_amount (amount);
 
@@ -288,7 +288,7 @@ Bank::Account::deposit (
       "deposit",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -305,7 +305,7 @@ Bank::Account::withdraw (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Float>::in_arg_val _tao_amount (amount);
 
@@ -316,7 +316,7 @@ Bank::Account::withdraw (
     };
 
   static TAO::Exception_Data
-  _tao_Bank_Account_withdraw_exceptiondata [] = 
+  _tao_Bank_Account_withdraw_exceptiondata [] =
     {
       {
         "IDL:Bank/Account/Overdraft:1.0",
@@ -334,7 +334,7 @@ Bank::Account::withdraw (
       "withdraw",
       8,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -354,7 +354,7 @@ Bank::Account::name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -391,7 +391,7 @@ Bank::Account::name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_name (name);
 
@@ -408,7 +408,7 @@ Bank::Account::name (
       "_set_name",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -513,7 +513,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Bank/Account:1.0",
     "Account");
-  
+
 
 namespace Bank
 {
@@ -566,7 +566,7 @@ Bank::AccountManager::open (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Bank::Account>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_name (name);
   TAO::Arg_Traits< ::CORBA::Float>::in_arg_val _tao_initial_balance (initial_balance);
@@ -585,7 +585,7 @@ Bank::AccountManager::open (
       "open",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -604,7 +604,7 @@ Bank::AccountManager::close (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Bank::Account>::in_arg_val _tao_account_ (account_);
 
@@ -621,7 +621,7 @@ Bank::AccountManager::close (
       "close",
       5,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -638,7 +638,7 @@ Bank::AccountManager::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -761,7 +761,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Bank/AccountManager:1.0",
     "AccountManager");
-  
+
 
 namespace Bank
 {
@@ -794,7 +794,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Bank
 {
-  
+
 
   /// Copying insertion.
   void
@@ -901,7 +901,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -922,7 +922,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Bank
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -1058,7 +1058,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Bank
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1210,13 +1210,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Bank::Account RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1247,13 +1247,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Bank::AccountManager RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

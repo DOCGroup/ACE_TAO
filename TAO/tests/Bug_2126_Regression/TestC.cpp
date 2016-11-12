@@ -42,23 +42,23 @@ FirstUnion::FirstUnion (void)
 {
   ACE_OS::memset (&this->u_, 0, sizeof (this->u_));
   this->disc_ = true;
-  
+
 }
 
 FirstUnion::FirstUnion (const ::FirstUnion &u)
 {
   this->disc_ = u.disc_;
-  
+
   if (this->disc_)
     {
       this->u_.first_union_foo_ = u.u_.first_union_foo_;
     }
-  
+
   if (!this->disc_)
     {
       this->u_.first_union_bar_ = u.u_.first_union_bar_;
     }
-  
+
 }
 
 FirstUnion::~FirstUnion (void)
@@ -74,38 +74,38 @@ FirstUnion::operator= (const ::FirstUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
-  
+
   if (this->disc_)
     {
       this->u_.first_union_foo_ = u.u_.first_union_foo_;
     }
-  
+
   if (!this->disc_)
     {
       this->u_.first_union_bar_ = u.u_.first_union_bar_;
     }
-  
+
   return *this;
 }
 
 /// Reset method to reset old values of a union.
 void FirstUnion::_reset (void)
 {
-  
+
   if (this->disc_)
     {
-      
+
     }
-  
+
   if (!this->disc_)
     {
-      
+
     }
-  
+
 }
 
 // TAO_IDL - Generated from
@@ -116,12 +116,12 @@ FirstUnionArray_dup (const FirstUnionArray_slice *_tao_src_array)
 {
   FirstUnionArray_slice *_tao_dup_array =
     FirstUnionArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <FirstUnionArray_slice *> (0);
     }
-  
+
   FirstUnionArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -168,7 +168,7 @@ SecondUnion::SecondUnion (void)
 SecondUnion::SecondUnion (const ::SecondUnion &u)
 {
   this->disc_ = u.disc_;
-  
+
   if (this->disc_)
     {
       if (u.u_.second_union_struct_member_ == 0)
@@ -183,12 +183,12 @@ SecondUnion::SecondUnion (const ::SecondUnion &u)
             );
         }
     }
-  
+
   if (!this->disc_)
     {
       this->u_.wibble_ = u.u_.wibble_;
     }
-  
+
 }
 
 SecondUnion::~SecondUnion (void)
@@ -204,11 +204,11 @@ SecondUnion::operator= (const ::SecondUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
-  
+
   if (this->disc_)
     {
       if (u.u_.second_union_struct_member_ == 0)
@@ -224,31 +224,31 @@ SecondUnion::operator= (const ::SecondUnion &u)
             );
         }
     }
-  
+
   if (!this->disc_)
     {
       this->u_.wibble_ = u.u_.wibble_;
     }
-  
+
   return *this;
 }
 
 /// Reset method to reset old values of a union.
 void SecondUnion::_reset (void)
 {
-  
+
   if (this->disc_)
     {
       delete this->u_.second_union_struct_member_;
       this->u_.second_union_struct_member_ = 0;
-      
+
     }
-  
+
   if (!this->disc_)
     {
-      
+
     }
-  
+
 }
 
 // TAO_IDL - Generated from
@@ -267,19 +267,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_union._d ())
     {
       result = strm << _tao_union.first_union_foo ();
     }
-  
+
   if (!_tao_union._d ())
     {
       result = strm << _tao_union.first_union_bar ();
     }
-  
+
   return result;
 }
 
@@ -294,7 +294,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_discriminant)
@@ -308,7 +308,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   if (!_tao_discriminant)
     {
       CORBA::Long _tao_union_tmp;
@@ -320,7 +320,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   return result;
 }
 
@@ -339,7 +339,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     const FirstUnionArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 2 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm << _tao_array [i0]);
@@ -353,7 +353,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     FirstUnionArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 2 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm >> _tao_array [i0]);
@@ -427,19 +427,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_union._d ())
     {
       result = strm << _tao_union.second_union_struct_member ();
     }
-  
+
   if (!_tao_union._d ())
     {
       result = strm << _tao_union.wibble ();
     }
-  
+
   return result;
 }
 
@@ -454,7 +454,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_discriminant)
@@ -468,7 +468,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   if (!_tao_discriminant)
     {
       CORBA::Long _tao_union_tmp;
@@ -480,7 +480,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   return result;
 }
 

@@ -93,7 +93,7 @@ test::doit (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -219,9 +219,9 @@ void test::Cannot_Forward::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_test_Cannot_Forward = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -250,7 +250,7 @@ test::forward (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -259,7 +259,7 @@ test::forward (
     };
 
   static TAO::Exception_Data
-  _tao_test_forward_exceptiondata [] = 
+  _tao_test_forward_exceptiondata [] =
     {
       {
         "IDL:test/Cannot_Forward:1.0",
@@ -300,7 +300,7 @@ test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -422,7 +422,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:test:1.0",
     "test");
-  
+
 ::CORBA::TypeCode_ptr const _tc_test =
   &_tao_tc_test;
 
@@ -509,7 +509,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -632,13 +632,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

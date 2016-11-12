@@ -53,7 +53,7 @@ static char const * const _tao_enumerators_DynAnyTest_EventKind[] =
   {
     "ALARM_EVENT",
     "LOG_EVENT"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -64,7 +64,7 @@ static TAO::TypeCode::Enum<char const *,
     "EventKind",
     _tao_enumerators_DynAnyTest_EventKind,
     2);
-  
+
 
 namespace DynAnyTest
 {
@@ -131,7 +131,7 @@ DynAnyTest::EventData::operator= (const ::DynAnyTest::EventData &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -161,7 +161,7 @@ DynAnyTest::EventData::operator= (const ::DynAnyTest::EventData &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -170,19 +170,19 @@ void DynAnyTest::EventData::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case DynAnyTest::ALARM_EVENT:
       delete this->u_.ev_data_;
       this->u_.ev_data_ = 0;
-      
+
     break;
-    
+
     case DynAnyTest::LOG_EVENT:
       ::CORBA::string_free (this->u_.ev_desc_);
       this->u_.ev_desc_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -211,7 +211,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_DynAnyTest_EventData,
     sizeof (_tao_cases_DynAnyTest_EventData)/sizeof (_tao_cases_DynAnyTest_EventData[0]),
     -1);
-  
+
 
 namespace DynAnyTest
 {
@@ -254,7 +254,7 @@ namespace DynAnyTest
       TAO::Any_Basic_Impl_T< ::DynAnyTest::EventKind>::extract (
           _tao_any,
           ::DynAnyTest::_tc_EventKind,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -284,7 +284,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<DynAnyTest::EventKind>::extract (
         _tao_any,
         DynAnyTest::_tc_EventKind,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -443,12 +443,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<DynAnyTest::EventKind> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -471,7 +471,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -503,7 +503,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)

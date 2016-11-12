@@ -286,7 +286,7 @@ Broadcaster::add (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Receiver>::in_arg_val _tao_receiver_ (receiver_);
   TAO::Arg_Traits< char *>::in_arg_val _tao_nickname (nickname);
@@ -299,7 +299,7 @@ Broadcaster::add (
     };
 
   static TAO::Exception_Data
-  _tao_Broadcaster_add_exceptiondata [] = 
+  _tao_Broadcaster_add_exceptiondata [] =
     {
       {
         "IDL:Broadcaster/CannotAdd:1.0",
@@ -317,7 +317,7 @@ Broadcaster::add (
       "add",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -337,7 +337,7 @@ Broadcaster::remove (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Receiver>::in_arg_val _tao_receiver_ (receiver_);
 
@@ -348,7 +348,7 @@ Broadcaster::remove (
     };
 
   static TAO::Exception_Data
-  _tao_Broadcaster_remove_exceptiondata [] = 
+  _tao_Broadcaster_remove_exceptiondata [] =
     {
       {
         "IDL:Broadcaster/CannotRemove:1.0",
@@ -366,7 +366,7 @@ Broadcaster::remove (
       "remove",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -387,7 +387,7 @@ Broadcaster::say (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Receiver>::in_arg_val _tao_receiver_ (receiver_);
   TAO::Arg_Traits< char *>::in_arg_val _tao_text (text);
@@ -406,7 +406,7 @@ Broadcaster::say (
       "say",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -597,13 +597,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Broadcaster RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

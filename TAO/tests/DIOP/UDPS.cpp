@@ -172,13 +172,13 @@ public:
   {
     TAO::SArg_Traits< char *>::in_arg_type arg_1 =
       static_cast<TAO::SArg_Traits< char *>::in_arg_val *> (this->args_[1])->arg ();
-      
+
     TAO::SArg_Traits< ::UDP>::in_arg_type arg_2 =
       static_cast<TAO::SArg_Traits< ::UDP>::in_arg_val *> (this->args_[2])->arg ();
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_3 =
       static_cast<TAO::SArg_Traits< ::CORBA::Long>::in_arg_val *> (this->args_[3])->arg ();
-      
+
     this->servant_->invoke (
       arg_1
       , arg_2
@@ -215,7 +215,7 @@ void POA_UDP::invoke_skel (
       &_tao_udpHandler,
       &_tao_request_id
     };
-  
+
   static size_t const nargs = 4;
 
   POA_UDP * const impl =
@@ -229,7 +229,7 @@ void POA_UDP::invoke_skel (
   invoke_UDP command (
     impl,
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -286,7 +286,7 @@ void POA_UDP::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_UDP * const impl =
@@ -299,7 +299,7 @@ void POA_UDP::shutdown_skel (
 
   shutdown_UDP command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -363,12 +363,12 @@ POA_UDP::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

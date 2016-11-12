@@ -171,28 +171,28 @@ POA_Test::AMH_Hello::next_prime_skel (
     dynamic_cast<POA_Test::AMH_Hello *> (_tao_servant);
   if (!_tao_impl)
     throw ::CORBA::INTERNAL ();
-  
+
   TAO_ORB_Core *orb_core =
     _tao_server_request.orb ()->orb_core ();
-  
+
   TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
     orb_core->lane_resources ().amh_response_handler_allocator ();
-  
+
   TAO::TAO_Buffer_Allocator<
       POA_Test::TAO_AMH_HelloResponseHandler,
       TAO_AMH_BUFFER_ALLOCATOR
     > buffer_allocator (amh_allocator);
-  
-  POA_Test::TAO_AMH_HelloResponseHandler_ptr _tao_rh_ptr = 
+
+  POA_Test::TAO_AMH_HelloResponseHandler_ptr _tao_rh_ptr =
     buffer_allocator.allocate();
-  
-  if (!_tao_rh_ptr) 
+
+  if (!_tao_rh_ptr)
     throw ::CORBA::NO_MEMORY ();
-  
+
   _tao_rh_ptr->init (_tao_server_request, amh_allocator);
-  
+
   ACE_Utils::Auto_Functor <POA_Test::TAO_AMH_HelloResponseHandler, TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);
-  
+
   _tao_impl->next_prime (
       safe_rd_.get ()
     );
@@ -244,23 +244,23 @@ POA_Test::AMH_Hello::_this (void)
 
   TAO_Stub_Auto_Ptr safe_stub (stub);
   ::CORBA::Object_ptr tmp = CORBA::Object_ptr ();
-  
+
   ::CORBA::Boolean _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0
     );
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
   typedef ::Test::Hello STUB_SCOPED_NAME;
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
 }
 
 // TAO_IDL - Generated from
@@ -367,7 +367,7 @@ POA_Test::Hello::~Hello (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -392,11 +392,11 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->next_prime ();
     }
-  
+
   private:
     POA_Test::Hello * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -423,7 +423,7 @@ void POA_Test::Hello::next_prime_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Hello * const impl =
@@ -438,7 +438,7 @@ void POA_Test::Hello::next_prime_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -502,12 +502,12 @@ POA_Test::Hello::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -545,7 +545,7 @@ POA_Test::TAO_AMH_HelloResponseHandler::next_prime (
     {
       throw ::CORBA::MARSHAL();
     }
-  
+
   this->_tao_rh_send_reply ();
 }
 
@@ -672,7 +672,7 @@ POA_Test::AMI_HelloHandler::~AMI_HelloHandler (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -698,11 +698,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->next_prime (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_HelloHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -731,7 +731,7 @@ void POA_Test::AMI_HelloHandler::next_prime_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_HelloHandler * const impl =
@@ -746,7 +746,7 @@ void POA_Test::AMI_HelloHandler::next_prime_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -763,7 +763,7 @@ void POA_Test::AMI_HelloHandler::next_prime_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -789,11 +789,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->next_prime_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_HelloHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -822,7 +822,7 @@ void POA_Test::AMI_HelloHandler::next_prime_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_HelloHandler * const impl =
@@ -837,7 +837,7 @@ void POA_Test::AMI_HelloHandler::next_prime_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -905,12 +905,12 @@ POA_Test::AMI_HelloHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

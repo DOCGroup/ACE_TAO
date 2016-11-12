@@ -154,7 +154,7 @@ POA_Quoter::Stock_Factory::~Stock_Factory (void)
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -179,18 +179,18 @@ namespace POA_Quoter
         TAO::Portable_Server::get_ret_arg< ::Quoter::Stock> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->get_stock (
           arg_1);
     }
-  
+
   private:
     POA_Quoter::Stock_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -207,7 +207,7 @@ void POA_Quoter::Stock_Factory::get_stock_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Quoter::_tc_Invalid_Stock_Symbol
     };
@@ -222,7 +222,7 @@ void POA_Quoter::Stock_Factory::get_stock_skel (
       &retval,
       &_tao_stock_symbol
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::Stock_Factory * const impl =
@@ -237,7 +237,7 @@ void POA_Quoter::Stock_Factory::get_stock_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -301,12 +301,12 @@ POA_Quoter::Stock_Factory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -421,7 +421,7 @@ POA_Quoter::AMI_Stock_FactoryHandler::~AMI_Stock_FactoryHandler (void)
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -447,11 +447,11 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->get_stock (
         arg_1);
     }
-  
+
   private:
     POA_Quoter::AMI_Stock_FactoryHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -468,7 +468,7 @@ void POA_Quoter::AMI_Stock_FactoryHandler::get_stock_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Quoter::_tc_Invalid_Stock_Symbol
     };
@@ -483,7 +483,7 @@ void POA_Quoter::AMI_Stock_FactoryHandler::get_stock_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::AMI_Stock_FactoryHandler * const impl =
@@ -498,7 +498,7 @@ void POA_Quoter::AMI_Stock_FactoryHandler::get_stock_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -515,7 +515,7 @@ void POA_Quoter::AMI_Stock_FactoryHandler::get_stock_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -541,11 +541,11 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
-      
+
+
 
       static TAO::Exception_Data
-      _tao_Quoter_AMI_Stock_FactoryHandler_get_stock_excep_exceptiondata [] = 
+      _tao_Quoter_AMI_Stock_FactoryHandler_get_stock_excep_exceptiondata [] =
         {
           {
             "IDL:Quoter/Invalid_Stock_Symbol:1.0",
@@ -555,17 +555,17 @@ namespace POA_Quoter
 #endif /* TAO_HAS_INTERCEPTORS */
           }
         };
-      TAO::ExceptionHolder *tao_excepholder = 
+      TAO::ExceptionHolder *tao_excepholder =
         dynamic_cast<TAO::ExceptionHolder *> (arg_1);
       if (tao_excepholder != 0)
         {
           tao_excepholder->set_exception_data (_tao_Quoter_AMI_Stock_FactoryHandler_get_stock_excep_exceptiondata, 1);
         }
-      
+
       this->servant_->get_stock_excep (
         arg_1);
     }
-  
+
   private:
     POA_Quoter::AMI_Stock_FactoryHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -582,7 +582,7 @@ void POA_Quoter::AMI_Stock_FactoryHandler::get_stock_excep_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Quoter::_tc_Invalid_Stock_Symbol
     };
@@ -597,7 +597,7 @@ void POA_Quoter::AMI_Stock_FactoryHandler::get_stock_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::AMI_Stock_FactoryHandler * const impl =
@@ -612,7 +612,7 @@ void POA_Quoter::AMI_Stock_FactoryHandler::get_stock_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -680,12 +680,12 @@ POA_Quoter::AMI_Stock_FactoryHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -802,7 +802,7 @@ POA_Quoter::Stock::~Stock (void)
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -827,11 +827,11 @@ namespace POA_Quoter
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->symbol ();
     }
-  
+
   private:
     POA_Quoter::Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -858,7 +858,7 @@ void POA_Quoter::Stock::_get_symbol_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Quoter::Stock * const impl =
@@ -873,7 +873,7 @@ void POA_Quoter::Stock::_get_symbol_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -890,7 +890,7 @@ void POA_Quoter::Stock::_get_symbol_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -915,11 +915,11 @@ namespace POA_Quoter
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->full_name ();
     }
-  
+
   private:
     POA_Quoter::Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -946,7 +946,7 @@ void POA_Quoter::Stock::_get_full_name_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Quoter::Stock * const impl =
@@ -961,7 +961,7 @@ void POA_Quoter::Stock::_get_full_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -978,7 +978,7 @@ void POA_Quoter::Stock::_get_full_name_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1003,11 +1003,11 @@ namespace POA_Quoter
         TAO::Portable_Server::get_ret_arg< ::CORBA::Double> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->price ();
     }
-  
+
   private:
     POA_Quoter::Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1034,7 +1034,7 @@ void POA_Quoter::Stock::price_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Quoter::Stock * const impl =
@@ -1049,7 +1049,7 @@ void POA_Quoter::Stock::price_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1113,12 +1113,12 @@ POA_Quoter::Stock::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1239,7 +1239,7 @@ POA_Quoter::AMI_StockHandler::~AMI_StockHandler (void)
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1265,11 +1265,11 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->get_symbol (
         arg_1);
     }
-  
+
   private:
     POA_Quoter::AMI_StockHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1298,7 +1298,7 @@ void POA_Quoter::AMI_StockHandler::get_symbol_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::AMI_StockHandler * const impl =
@@ -1313,7 +1313,7 @@ void POA_Quoter::AMI_StockHandler::get_symbol_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1330,7 +1330,7 @@ void POA_Quoter::AMI_StockHandler::get_symbol_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1356,11 +1356,11 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->get_symbol_excep (
         arg_1);
     }
-  
+
   private:
     POA_Quoter::AMI_StockHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1389,7 +1389,7 @@ void POA_Quoter::AMI_StockHandler::get_symbol_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::AMI_StockHandler * const impl =
@@ -1404,7 +1404,7 @@ void POA_Quoter::AMI_StockHandler::get_symbol_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1421,7 +1421,7 @@ void POA_Quoter::AMI_StockHandler::get_symbol_excep_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1447,11 +1447,11 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->get_full_name (
         arg_1);
     }
-  
+
   private:
     POA_Quoter::AMI_StockHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1480,7 +1480,7 @@ void POA_Quoter::AMI_StockHandler::get_full_name_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::AMI_StockHandler * const impl =
@@ -1495,7 +1495,7 @@ void POA_Quoter::AMI_StockHandler::get_full_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1512,7 +1512,7 @@ void POA_Quoter::AMI_StockHandler::get_full_name_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1538,11 +1538,11 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->get_full_name_excep (
         arg_1);
     }
-  
+
   private:
     POA_Quoter::AMI_StockHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1571,7 +1571,7 @@ void POA_Quoter::AMI_StockHandler::get_full_name_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::AMI_StockHandler * const impl =
@@ -1586,7 +1586,7 @@ void POA_Quoter::AMI_StockHandler::get_full_name_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1603,7 +1603,7 @@ void POA_Quoter::AMI_StockHandler::get_full_name_excep_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1629,11 +1629,11 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->price (
         arg_1);
     }
-  
+
   private:
     POA_Quoter::AMI_StockHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1662,7 +1662,7 @@ void POA_Quoter::AMI_StockHandler::price_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::AMI_StockHandler * const impl =
@@ -1677,7 +1677,7 @@ void POA_Quoter::AMI_StockHandler::price_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1694,7 +1694,7 @@ void POA_Quoter::AMI_StockHandler::price_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1720,11 +1720,11 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->price_excep (
         arg_1);
     }
-  
+
   private:
     POA_Quoter::AMI_StockHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1753,7 +1753,7 @@ void POA_Quoter::AMI_StockHandler::price_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::AMI_StockHandler * const impl =
@@ -1768,7 +1768,7 @@ void POA_Quoter::AMI_StockHandler::price_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1836,12 +1836,12 @@ POA_Quoter::AMI_StockHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1960,7 +1960,7 @@ POA_Quoter::Single_Query_Stock::~Single_Query_Stock (void)
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1985,25 +1985,25 @@ namespace POA_Quoter
         TAO::Portable_Server::get_ret_arg< ::CORBA::Double> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::out_arg_type arg_1 =
         TAO::Portable_Server::get_out_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::out_arg_type arg_2 =
         TAO::Portable_Server::get_out_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->get_price_and_names (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_Quoter::Single_Query_Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2034,7 +2034,7 @@ void POA_Quoter::Single_Query_Stock::get_price_and_names_skel (
       &_tao_symbol,
       &_tao_full_name
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Quoter::Single_Query_Stock * const impl =
@@ -2049,7 +2049,7 @@ void POA_Quoter::Single_Query_Stock::get_price_and_names_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2117,12 +2117,12 @@ POA_Quoter::Single_Query_Stock::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -2246,7 +2246,7 @@ POA_Quoter::AMI_Single_Query_StockHandler::~AMI_Single_Query_StockHandler (void)
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2272,25 +2272,25 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_3 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       this->servant_->get_price_and_names (
         arg_1
         , arg_2
         , arg_3);
     }
-  
+
   private:
     POA_Quoter::AMI_Single_Query_StockHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2323,7 +2323,7 @@ void POA_Quoter::AMI_Single_Query_StockHandler::get_price_and_names_skel (
       &_tao_symbol,
       &_tao_full_name
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Quoter::AMI_Single_Query_StockHandler * const impl =
@@ -2338,7 +2338,7 @@ void POA_Quoter::AMI_Single_Query_StockHandler::get_price_and_names_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2355,7 +2355,7 @@ void POA_Quoter::AMI_Single_Query_StockHandler::get_price_and_names_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2381,11 +2381,11 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->get_price_and_names_excep (
         arg_1);
     }
-  
+
   private:
     POA_Quoter::AMI_Single_Query_StockHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2414,7 +2414,7 @@ void POA_Quoter::AMI_Single_Query_StockHandler::get_price_and_names_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::AMI_Single_Query_StockHandler * const impl =
@@ -2429,7 +2429,7 @@ void POA_Quoter::AMI_Single_Query_StockHandler::get_price_and_names_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2501,12 +2501,12 @@ POA_Quoter::AMI_Single_Query_StockHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

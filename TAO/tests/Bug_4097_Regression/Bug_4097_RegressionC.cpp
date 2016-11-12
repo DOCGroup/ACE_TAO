@@ -94,7 +94,7 @@ MultiLabelUnion::operator= (const ::MultiLabelUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -114,7 +114,7 @@ MultiLabelUnion::operator= (const ::MultiLabelUnion &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -123,16 +123,16 @@ void MultiLabelUnion::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
     case 1:
-      
+
     break;
-    
+
     case 2:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -163,7 +163,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_MultiLabelUnion,
     sizeof (_tao_cases_MultiLabelUnion)/sizeof (_tao_cases_MultiLabelUnion[0]),
     -1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_MultiLabelUnion =
   &_tao_tc_MultiLabelUnion;
 
@@ -252,7 +252,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -285,7 +285,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)

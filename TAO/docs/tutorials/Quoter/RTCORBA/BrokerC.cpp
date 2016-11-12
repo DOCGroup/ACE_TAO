@@ -90,7 +90,7 @@ Stock::StockBroker::get_consumer_notifier (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::StockNameConsumer>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -127,7 +127,7 @@ Stock::StockBroker::connect_quoter_info (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Stock::StockQuoter>::in_arg_val _tao_c (c);
 
@@ -144,7 +144,7 @@ Stock::StockBroker::connect_quoter_info (
       "connect_quoter_info",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -161,7 +161,7 @@ Stock::StockBroker::disconnect_quoter_info (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::StockQuoter>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -198,7 +198,7 @@ Stock::StockBroker::get_connection_quoter_info (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::StockQuoter>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -235,7 +235,7 @@ Stock::StockBroker::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -357,7 +357,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Stock/StockBroker:1.0",
     "StockBroker");
-  
+
 
 namespace Stock
 {
@@ -410,7 +410,7 @@ Stock::StockBrokerHome::create (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::StockBroker>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Stock::StockDistributor>::in_arg_val _tao_dist (dist);
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_name (stock_name);
@@ -429,7 +429,7 @@ Stock::StockBrokerHome::create (
       "create",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -536,7 +536,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Stock/StockBrokerHome:1.0",
     "StockBrokerHome");
-  
+
 
 namespace Stock
 {
@@ -569,7 +569,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   /// Copying insertion.
   void
@@ -683,7 +683,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   /// Copying insertion.
   void
@@ -795,13 +795,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::StockBroker RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -832,13 +832,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::StockBrokerHome RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

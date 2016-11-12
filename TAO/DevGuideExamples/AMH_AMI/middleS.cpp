@@ -172,7 +172,7 @@ POA_AMH_Middle::get_the_answer_skel (
     dynamic_cast<POA_AMH_Middle *> (_tao_servant);
   if (!_tao_impl)
     throw ::CORBA::INTERNAL ();
-  
+
   ::CORBA::String_var question;
   TAO_InputCDR & _tao_in = *_tao_server_request.incoming ();
 
@@ -180,28 +180,28 @@ POA_AMH_Middle::get_the_answer_skel (
       (_tao_in >> question.out ())
     ))
     throw ::CORBA::MARSHAL();
-  
+
   TAO_ORB_Core *orb_core =
     _tao_server_request.orb ()->orb_core ();
-  
+
   TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
     orb_core->lane_resources ().amh_response_handler_allocator ();
-  
+
   TAO::TAO_Buffer_Allocator<
       POA_TAO_AMH_MiddleResponseHandler,
       TAO_AMH_BUFFER_ALLOCATOR
     > buffer_allocator (amh_allocator);
-  
-  POA_TAO_AMH_MiddleResponseHandler_ptr _tao_rh_ptr = 
+
+  POA_TAO_AMH_MiddleResponseHandler_ptr _tao_rh_ptr =
     buffer_allocator.allocate();
-  
-  if (!_tao_rh_ptr) 
+
+  if (!_tao_rh_ptr)
     throw ::CORBA::NO_MEMORY ();
-  
+
   _tao_rh_ptr->init (_tao_server_request, amh_allocator);
-  
+
   ACE_Utils::Auto_Functor <POA_TAO_AMH_MiddleResponseHandler, TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);
-  
+
   _tao_impl->get_the_answer (
       safe_rd_.get (),
       question.in ()
@@ -254,23 +254,23 @@ POA_AMH_Middle::_this (void)
 
   TAO_Stub_Auto_Ptr safe_stub (stub);
   ::CORBA::Object_ptr tmp = CORBA::Object_ptr ();
-  
+
   ::CORBA::Boolean _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0
     );
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
   typedef ::Middle STUB_SCOPED_NAME;
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
 }
 
 // TAO_IDL - Generated from
@@ -399,13 +399,13 @@ public:
       TAO::Portable_Server::get_ret_arg< char *> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< char *>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->get_the_answer (
         arg_1);
@@ -438,7 +438,7 @@ void POA_Middle::get_the_answer_skel (
       &retval,
       &_tao_question
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Middle * const impl =
@@ -453,7 +453,7 @@ void POA_Middle::get_the_answer_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -517,12 +517,12 @@ POA_Middle::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -560,7 +560,7 @@ POA_TAO_AMH_MiddleResponseHandler::get_the_answer (
     {
       throw ::CORBA::MARSHAL();
     }
-  
+
   this->_tao_rh_send_reply ();
 }
 
@@ -710,7 +710,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->get_the_answer (
       arg_1);
   }
@@ -742,7 +742,7 @@ void POA_AMI_MiddleHandler::get_the_answer_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_MiddleHandler * const impl =
@@ -757,7 +757,7 @@ void POA_AMI_MiddleHandler::get_the_answer_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -797,7 +797,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->get_the_answer_excep (
       arg_1);
   }
@@ -829,7 +829,7 @@ void POA_AMI_MiddleHandler::get_the_answer_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_MiddleHandler * const impl =
@@ -844,7 +844,7 @@ void POA_AMI_MiddleHandler::get_the_answer_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -912,12 +912,12 @@ POA_AMI_MiddleHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

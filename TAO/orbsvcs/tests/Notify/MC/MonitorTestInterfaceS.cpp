@@ -177,7 +177,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->running (
       arg_1);
   }
@@ -209,7 +209,7 @@ void POA_MonitorTestInterface::running_skel (
       &retval,
       &_tao_proc
     };
-  
+
   static size_t const nargs = 2;
 
   POA_MonitorTestInterface * const impl =
@@ -224,7 +224,7 @@ void POA_MonitorTestInterface::running_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -264,7 +264,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->finished (
       arg_1);
   }
@@ -296,7 +296,7 @@ void POA_MonitorTestInterface::finished_skel (
       &retval,
       &_tao_proc
     };
-  
+
   static size_t const nargs = 2;
 
   POA_MonitorTestInterface * const impl =
@@ -311,7 +311,7 @@ void POA_MonitorTestInterface::finished_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -375,12 +375,12 @@ POA_MonitorTestInterface::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

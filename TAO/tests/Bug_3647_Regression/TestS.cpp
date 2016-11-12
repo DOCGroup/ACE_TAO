@@ -155,7 +155,7 @@ POA_Bug_3647_Regression::Backend::~Backend (void)
 
 namespace POA_Bug_3647_Regression
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -174,7 +174,7 @@ namespace POA_Bug_3647_Regression
     {
       this->servant_->startup_test ();
     }
-  
+
   private:
     POA_Bug_3647_Regression::Backend * const servant_;
   };
@@ -199,7 +199,7 @@ void POA_Bug_3647_Regression::Backend::startup_test_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Bug_3647_Regression::Backend * const impl =
@@ -212,7 +212,7 @@ void POA_Bug_3647_Regression::Backend::startup_test_skel (
 
   startup_test_Backend command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -229,7 +229,7 @@ void POA_Bug_3647_Regression::Backend::startup_test_skel (
 
 namespace POA_Bug_3647_Regression
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -255,11 +255,11 @@ namespace POA_Bug_3647_Regression
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->ping (
         arg_1);
     }
-  
+
   private:
     POA_Bug_3647_Regression::Backend * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -288,7 +288,7 @@ void POA_Bug_3647_Regression::Backend::ping_skel (
       &retval,
       &_tao_the_payload
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Bug_3647_Regression::Backend * const impl =
@@ -303,7 +303,7 @@ void POA_Bug_3647_Regression::Backend::ping_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -320,7 +320,7 @@ void POA_Bug_3647_Regression::Backend::ping_skel (
 
 namespace POA_Bug_3647_Regression
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -346,11 +346,11 @@ namespace POA_Bug_3647_Regression
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->freeze (
         arg_1);
     }
-  
+
   private:
     POA_Bug_3647_Regression::Backend * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -379,7 +379,7 @@ void POA_Bug_3647_Regression::Backend::freeze_skel (
       &retval,
       &_tao_seconds
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Bug_3647_Regression::Backend * const impl =
@@ -394,7 +394,7 @@ void POA_Bug_3647_Regression::Backend::freeze_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -411,7 +411,7 @@ void POA_Bug_3647_Regression::Backend::freeze_skel (
 
 namespace POA_Bug_3647_Regression
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -430,7 +430,7 @@ namespace POA_Bug_3647_Regression
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Bug_3647_Regression::Backend * const servant_;
   };
@@ -455,7 +455,7 @@ void POA_Bug_3647_Regression::Backend::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Bug_3647_Regression::Backend * const impl =
@@ -468,7 +468,7 @@ void POA_Bug_3647_Regression::Backend::shutdown_skel (
 
   shutdown_Backend command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -532,12 +532,12 @@ POA_Bug_3647_Regression::Backend::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -653,7 +653,7 @@ POA_Bug_3647_Regression::Middle::~Middle (void)
 
 namespace POA_Bug_3647_Regression
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -672,7 +672,7 @@ namespace POA_Bug_3647_Regression
     {
       this->servant_->startup_test ();
     }
-  
+
   private:
     POA_Bug_3647_Regression::Middle * const servant_;
   };
@@ -697,7 +697,7 @@ void POA_Bug_3647_Regression::Middle::startup_test_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Bug_3647_Regression::Middle * const impl =
@@ -710,7 +710,7 @@ void POA_Bug_3647_Regression::Middle::startup_test_skel (
 
   startup_test_Middle command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -727,7 +727,7 @@ void POA_Bug_3647_Regression::Middle::startup_test_skel (
 
 namespace POA_Bug_3647_Regression
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -746,7 +746,7 @@ namespace POA_Bug_3647_Regression
     {
       this->servant_->ping ();
     }
-  
+
   private:
     POA_Bug_3647_Regression::Middle * const servant_;
   };
@@ -771,7 +771,7 @@ void POA_Bug_3647_Regression::Middle::ping_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Bug_3647_Regression::Middle * const impl =
@@ -784,7 +784,7 @@ void POA_Bug_3647_Regression::Middle::ping_skel (
 
   ping_Middle command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -801,7 +801,7 @@ void POA_Bug_3647_Regression::Middle::ping_skel (
 
 namespace POA_Bug_3647_Regression
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -820,7 +820,7 @@ namespace POA_Bug_3647_Regression
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Bug_3647_Regression::Middle * const servant_;
   };
@@ -845,7 +845,7 @@ void POA_Bug_3647_Regression::Middle::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Bug_3647_Regression::Middle * const impl =
@@ -858,7 +858,7 @@ void POA_Bug_3647_Regression::Middle::shutdown_skel (
 
   shutdown_Middle command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -922,12 +922,12 @@ POA_Bug_3647_Regression::Middle::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -206,7 +206,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:local_child:1.0",
     "local_child");
-  
+
 ::CORBA::TypeCode_ptr const _tc_local_child =
   &_tao_tc_local_child;
 

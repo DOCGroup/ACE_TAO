@@ -152,9 +152,9 @@ void Stock::Invalid_Stock::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Stock_Invalid_Stock = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -181,7 +181,7 @@ namespace Stock
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Stock_StockInfo[] =
       {
         { "name", &CORBA::_tc_string },
@@ -189,7 +189,7 @@ static TAO::TypeCode::Struct_Field<
         { "low", &CORBA::_tc_long },
         { "last", &CORBA::_tc_long }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -234,7 +234,7 @@ Stock::StockInfo::_tao_any_destructor (
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Stock_StockNames[] =
   {
     { "names", &CORBA::_tc_StringSeq, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -248,7 +248,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Stock_StockNames,
     1);
-  
+
 
 namespace Stock
 {
@@ -352,27 +352,27 @@ Stock::StockNames::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = StockNames::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -418,7 +418,7 @@ Stock::StockNames_init::create_for_unmarshal (void)
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Stock_Cookie[] =
   {
     { "cookie_id", &CORBA::_tc_string, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -432,7 +432,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Stock_Cookie,
     1);
-  
+
 
 namespace Stock
 {
@@ -536,27 +536,27 @@ Stock::Cookie::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Cookie::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -640,7 +640,7 @@ Stock::Trigger::start (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -675,7 +675,7 @@ Stock::Trigger::stop (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -798,7 +798,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Stock/Trigger:1.0",
     "Trigger");
-  
+
 
 namespace Stock
 {
@@ -850,7 +850,7 @@ Stock::StockNameConsumer::push_StockName (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Stock::StockNames>::in_arg_val _tao_the_stocknames (the_stocknames);
 
@@ -867,7 +867,7 @@ Stock::StockNameConsumer::push_StockName (
       "push_StockName",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -884,7 +884,7 @@ Stock::StockNameConsumer::cookie_ (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::Cookie>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -921,7 +921,7 @@ Stock::StockNameConsumer::cookie_ (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Stock::Cookie>::in_arg_val _tao_cookie_ (cookie_);
 
@@ -938,7 +938,7 @@ Stock::StockNameConsumer::cookie_ (
       "_set_cookie_",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1043,7 +1043,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Stock/StockNameConsumer:1.0",
     "StockNameConsumer");
-  
+
 
 namespace Stock
 {
@@ -1095,7 +1095,7 @@ Stock::StockQuoter::get_stock_info (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::StockInfo>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_name (stock_name);
 
@@ -1106,7 +1106,7 @@ Stock::StockQuoter::get_stock_info (
     };
 
   static TAO::Exception_Data
-  _tao_Stock_StockQuoter_get_stock_info_exceptiondata [] = 
+  _tao_Stock_StockQuoter_get_stock_info_exceptiondata [] =
     {
       {
         "IDL:Stock/Invalid_Stock:1.0",
@@ -1124,7 +1124,7 @@ Stock::StockQuoter::get_stock_info (
       "get_stock_info",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1234,7 +1234,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Stock/StockQuoter:1.0",
     "StockQuoter");
-  
+
 
 namespace Stock
 {
@@ -1402,7 +1402,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -1423,7 +1423,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -1726,7 +1726,7 @@ namespace Stock
         );
   }
 
-  
+
 }
 
 #else
@@ -1868,7 +1868,7 @@ namespace Stock
         );
   }
 
-  
+
 }
 
 #else
@@ -1957,7 +1957,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2071,7 +2071,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2185,7 +2185,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2393,15 +2393,15 @@ OBV_Stock::StockNames::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_names);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2410,19 +2410,19 @@ OBV_Stock::StockNames::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&c
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_names);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -2494,15 +2494,15 @@ OBV_Stock::Cookie::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) co
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_cookie_id.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2511,19 +2511,19 @@ OBV_Stock::Cookie::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_cookie_id.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -2557,13 +2557,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::Trigger RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -2594,13 +2594,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::StockNameConsumer RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -2631,13 +2631,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::StockQuoter RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

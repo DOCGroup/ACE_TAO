@@ -157,7 +157,7 @@ POA_File::Descriptor::~Descriptor (void)
 
 namespace POA_File
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -182,18 +182,18 @@ namespace POA_File
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::File::Descriptor::DataBuffer>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::File::Descriptor::DataBuffer> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->write (
           arg_1);
     }
-  
+
   private:
     POA_File::Descriptor * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -222,7 +222,7 @@ void POA_File::Descriptor::write_skel (
       &retval,
       &_tao_buffer
     };
-  
+
   static size_t const nargs = 2;
 
   POA_File::Descriptor * const impl =
@@ -237,7 +237,7 @@ void POA_File::Descriptor::write_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -254,7 +254,7 @@ void POA_File::Descriptor::write_skel (
 
 namespace POA_File
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -279,18 +279,18 @@ namespace POA_File
         TAO::Portable_Server::get_ret_arg< ::File::Descriptor::DataBuffer> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->read (
           arg_1);
     }
-  
+
   private:
     POA_File::Descriptor * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -319,7 +319,7 @@ void POA_File::Descriptor::read_skel (
       &retval,
       &_tao_num_bytes
     };
-  
+
   static size_t const nargs = 2;
 
   POA_File::Descriptor * const impl =
@@ -334,7 +334,7 @@ void POA_File::Descriptor::read_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -351,7 +351,7 @@ void POA_File::Descriptor::read_skel (
 
 namespace POA_File
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -376,25 +376,25 @@ namespace POA_File
         TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->lseek (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_File::Descriptor * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -425,7 +425,7 @@ void POA_File::Descriptor::lseek_skel (
       &_tao_offset,
       &_tao_whence
     };
-  
+
   static size_t const nargs = 3;
 
   POA_File::Descriptor * const impl =
@@ -440,7 +440,7 @@ void POA_File::Descriptor::lseek_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -457,7 +457,7 @@ void POA_File::Descriptor::lseek_skel (
 
 namespace POA_File
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -476,7 +476,7 @@ namespace POA_File
     {
       this->servant_->destroy ();
     }
-  
+
   private:
     POA_File::Descriptor * const servant_;
   };
@@ -501,7 +501,7 @@ void POA_File::Descriptor::destroy_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_File::Descriptor * const impl =
@@ -514,7 +514,7 @@ void POA_File::Descriptor::destroy_skel (
 
   destroy_Descriptor command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -578,12 +578,12 @@ POA_File::Descriptor::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -696,7 +696,7 @@ POA_File::System::~System (void)
 
 namespace POA_File
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -721,25 +721,25 @@ namespace POA_File
         TAO::Portable_Server::get_ret_arg< ::File::Descriptor> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->open (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_File::System * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -770,7 +770,7 @@ void POA_File::System::open_skel (
       &_tao_file_name,
       &_tao_flags
     };
-  
+
   static size_t const nargs = 3;
 
   POA_File::System * const impl =
@@ -785,7 +785,7 @@ void POA_File::System::open_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -849,12 +849,12 @@ POA_File::System::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

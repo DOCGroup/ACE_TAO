@@ -180,7 +180,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->drink (
       arg_1);
   }
@@ -212,7 +212,7 @@ void POA_Nestea_Bookshelf::drink_skel (
       &retval,
       &_tao_cans
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Nestea_Bookshelf * const impl =
@@ -227,7 +227,7 @@ void POA_Nestea_Bookshelf::drink_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -267,7 +267,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->crush (
       arg_1);
   }
@@ -299,7 +299,7 @@ void POA_Nestea_Bookshelf::crush_skel (
       &retval,
       &_tao_cans
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Nestea_Bookshelf * const impl =
@@ -314,7 +314,7 @@ void POA_Nestea_Bookshelf::crush_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -353,7 +353,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->bookshelf_size ();
   }
@@ -383,7 +383,7 @@ void POA_Nestea_Bookshelf::bookshelf_size_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Nestea_Bookshelf * const impl =
@@ -398,7 +398,7 @@ void POA_Nestea_Bookshelf::bookshelf_size_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -437,7 +437,7 @@ public:
       TAO::Portable_Server::get_ret_arg< char *> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->get_praise ();
   }
@@ -467,7 +467,7 @@ void POA_Nestea_Bookshelf::get_praise_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Nestea_Bookshelf * const impl =
@@ -482,7 +482,7 @@ void POA_Nestea_Bookshelf::get_praise_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -539,7 +539,7 @@ void POA_Nestea_Bookshelf::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Nestea_Bookshelf * const impl =
@@ -552,7 +552,7 @@ void POA_Nestea_Bookshelf::shutdown_skel (
 
   shutdown_Nestea_Bookshelf command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -616,12 +616,12 @@ POA_Nestea_Bookshelf::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

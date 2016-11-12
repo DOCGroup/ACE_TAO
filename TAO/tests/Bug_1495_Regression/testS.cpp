@@ -155,7 +155,7 @@ POA_Bug1495_Regression::Bug1495::~Bug1495 (void)
 
 namespace POA_Bug1495_Regression
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -181,11 +181,11 @@ namespace POA_Bug1495_Regression
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->get_thread_id (
         arg_1);
     }
-  
+
   private:
     POA_Bug1495_Regression::Bug1495 * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -214,7 +214,7 @@ void POA_Bug1495_Regression::Bug1495::get_thread_id_skel (
       &retval,
       &_tao_thread_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Bug1495_Regression::Bug1495 * const impl =
@@ -229,7 +229,7 @@ void POA_Bug1495_Regression::Bug1495::get_thread_id_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -246,7 +246,7 @@ void POA_Bug1495_Regression::Bug1495::get_thread_id_skel (
 
 namespace POA_Bug1495_Regression
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -265,7 +265,7 @@ namespace POA_Bug1495_Regression
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Bug1495_Regression::Bug1495 * const servant_;
   };
@@ -290,7 +290,7 @@ void POA_Bug1495_Regression::Bug1495::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Bug1495_Regression::Bug1495 * const impl =
@@ -303,7 +303,7 @@ void POA_Bug1495_Regression::Bug1495::shutdown_skel (
 
   shutdown_Bug1495 command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -367,12 +367,12 @@ POA_Bug1495_Regression::Bug1495::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

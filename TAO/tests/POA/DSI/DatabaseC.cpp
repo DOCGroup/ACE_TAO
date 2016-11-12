@@ -487,7 +487,7 @@ Database::Entry::name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -639,7 +639,7 @@ Database::Employee::id (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -676,7 +676,7 @@ Database::Employee::id (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_id (id);
 
@@ -693,7 +693,7 @@ Database::Employee::id (
       "_set_id",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -871,7 +871,7 @@ Database::Agent::create_entry (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Database::Entry>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_key (key);
   TAO::Arg_Traits< char *>::in_arg_val _tao_entry_type (entry_type);
@@ -886,7 +886,7 @@ Database::Agent::create_entry (
     };
 
   static TAO::Exception_Data
-  _tao_Database_Agent_create_entry_exceptiondata [] = 
+  _tao_Database_Agent_create_entry_exceptiondata [] =
     {
       {
         "IDL:Database/Unknown_Type:1.0",
@@ -912,7 +912,7 @@ Database::Agent::create_entry (
       "create_entry",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -935,7 +935,7 @@ Database::Agent::find_entry (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Database::Entry>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_key (key);
   TAO::Arg_Traits< char *>::in_arg_val _tao_entry_type (entry_type);
@@ -948,7 +948,7 @@ Database::Agent::find_entry (
     };
 
   static TAO::Exception_Data
-  _tao_Database_Agent_find_entry_exceptiondata [] = 
+  _tao_Database_Agent_find_entry_exceptiondata [] =
     {
       {
         "IDL:Database/Unknown_Type:1.0",
@@ -974,7 +974,7 @@ Database::Agent::find_entry (
       "find_entry",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -997,7 +997,7 @@ Database::Agent::destroy_entry (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_key (key);
   TAO::Arg_Traits< char *>::in_arg_val _tao_entry_type (entry_type);
@@ -1010,7 +1010,7 @@ Database::Agent::destroy_entry (
     };
 
   static TAO::Exception_Data
-  _tao_Database_Agent_destroy_entry_exceptiondata [] = 
+  _tao_Database_Agent_destroy_entry_exceptiondata [] =
     {
       {
         "IDL:Database/Unknown_Type:1.0",
@@ -1036,7 +1036,7 @@ Database::Agent::destroy_entry (
       "destroy_entry",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1056,7 +1056,7 @@ Database::Agent::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1344,13 +1344,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Database::Entry RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1381,13 +1381,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Database::Employee RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1473,13 +1473,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Database::Agent RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

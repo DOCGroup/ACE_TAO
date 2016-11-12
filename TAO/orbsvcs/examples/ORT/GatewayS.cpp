@@ -153,7 +153,7 @@ POA_Gateway::Object_Factory::~Object_Factory (void)
 
 namespace POA_Gateway
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -178,25 +178,25 @@ namespace POA_Gateway
         TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Object>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->create_object (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_Gateway::Object_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -227,7 +227,7 @@ void POA_Gateway::Object_Factory::create_object_skel (
       &_tao_interface_repository_id,
       &_tao_gatewayed_object
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Gateway::Object_Factory * const impl =
@@ -242,7 +242,7 @@ void POA_Gateway::Object_Factory::create_object_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -306,12 +306,12 @@ POA_Gateway::Object_Factory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

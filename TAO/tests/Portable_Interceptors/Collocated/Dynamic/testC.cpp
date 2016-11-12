@@ -149,9 +149,9 @@ void Test_Interceptors::Silly::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Test_Interceptors_Silly = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -217,7 +217,7 @@ Test_Interceptors::Visual::normal (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_arg (arg);
 
@@ -234,7 +234,7 @@ Test_Interceptors::Visual::normal (
       "normal",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -252,7 +252,7 @@ Test_Interceptors::Visual::calculate (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_one (one);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_two (two);
@@ -271,7 +271,7 @@ Test_Interceptors::Visual::calculate (
       "calculate",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -290,7 +290,7 @@ Test_Interceptors::Visual::user (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -299,7 +299,7 @@ Test_Interceptors::Visual::user (
     };
 
   static TAO::Exception_Data
-  _tao_Test_Interceptors_Visual_user_exceptiondata [] = 
+  _tao_Test_Interceptors_Visual_user_exceptiondata [] =
     {
       {
         "IDL:Test_Interceptors/Silly:1.0",
@@ -340,7 +340,7 @@ Test_Interceptors::Visual::system (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -375,7 +375,7 @@ Test_Interceptors::Visual::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -497,7 +497,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test_Interceptors/Visual:1.0",
     "Visual");
-  
+
 
 namespace Test_Interceptors
 {
@@ -523,7 +523,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -544,7 +544,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test_Interceptors
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -680,7 +680,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test_Interceptors
 {
-  
+
 
   /// Copying insertion.
   void
@@ -819,13 +819,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test_Interceptors::Visual RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

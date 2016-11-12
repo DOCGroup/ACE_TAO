@@ -84,7 +84,7 @@ Notifier::register_callback (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_name (stock_name);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_threshold_value (threshold_value);
@@ -99,7 +99,7 @@ Notifier::register_callback (
     };
 
   static TAO::Exception_Data
-  _tao_Notifier_register_callback_exceptiondata [] = 
+  _tao_Notifier_register_callback_exceptiondata [] =
     {
       {
         "IDL:Callback_Quoter/Invalid_Stock:1.0",
@@ -117,7 +117,7 @@ Notifier::register_callback (
       "register_callback",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -137,7 +137,7 @@ Notifier::unregister_callback (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Callback_Quoter::Consumer>::in_arg_val _tao_consumer_handler (consumer_handler);
 
@@ -148,7 +148,7 @@ Notifier::unregister_callback (
     };
 
   static TAO::Exception_Data
-  _tao_Notifier_unregister_callback_exceptiondata [] = 
+  _tao_Notifier_unregister_callback_exceptiondata [] =
     {
       {
         "IDL:Callback_Quoter/Invalid_Handle:1.0",
@@ -166,7 +166,7 @@ Notifier::unregister_callback (
       "unregister_callback",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -187,7 +187,7 @@ Notifier::market_status (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_name (stock_name);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_stock_value (stock_value);
@@ -206,7 +206,7 @@ Notifier::market_status (
       "market_status",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -223,7 +223,7 @@ Notifier::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -352,13 +352,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Notifier RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

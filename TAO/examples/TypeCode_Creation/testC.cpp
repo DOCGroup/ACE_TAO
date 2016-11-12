@@ -181,7 +181,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:iface:1.0",
     "iface");
-  
+
 ::CORBA::TypeCode_ptr const _tc_iface =
   &_tao_tc_iface;
 
@@ -269,7 +269,7 @@ foo::operator= (const ::foo &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -325,7 +325,7 @@ foo::operator= (const ::foo &u)
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -334,27 +334,27 @@ void foo::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 3:
     case 4:
     case 1:
       ::CORBA::string_free (this->u_.foo_str_member_);
       this->u_.foo_str_member_ = 0;
-      
+
     break;
-    
+
     default:
       delete this->u_.foo_iface_member_;
       this->u_.foo_iface_member_ = 0;
-      
+
     break;
-    
+
     case 0:
       delete this->u_.foo_iface_member2_;
       this->u_.foo_iface_member2_ = 0;
-      
+
     break;
-    
+
   }
 }
 
@@ -387,7 +387,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_foo,
     sizeof (_tao_cases_foo)/sizeof (_tao_cases_foo[0]),
     1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_foo =
   &_tao_tc_foo;
 
@@ -396,13 +396,13 @@ static TAO::TypeCode::Union<char const *,
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_bar[] =
       {
         { "bar_long_member", &CORBA::_tc_long },
         { "bar_foo_member", &_tc_foo }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -646,13 +646,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::iface RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -675,7 +675,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -720,7 +720,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)

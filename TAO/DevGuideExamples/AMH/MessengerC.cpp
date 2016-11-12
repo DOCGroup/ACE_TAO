@@ -95,7 +95,7 @@ DevGuide::Messenger::send_message (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_user_name (user_name);
   TAO::Arg_Traits< char *>::in_arg_val _tao_subject (subject);
@@ -116,7 +116,7 @@ DevGuide::Messenger::send_message (
       "send_message",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -223,7 +223,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:DevGuide/Messenger:1.0",
     "Messenger");
-  
+
 
 namespace DevGuide
 {
@@ -247,7 +247,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_DevGuide_AMH_MessengerExceptionHolder,
     0);
-  
+
 
 namespace DevGuide
 {
@@ -373,27 +373,27 @@ DevGuide::AMH_MessengerExceptionHolder::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = AMH_MessengerExceptionHolder::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -543,7 +543,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:DevGuide/AMH_MessengerResponseHandler:1.0",
     "AMH_MessengerResponseHandler");
-  
+
 
 namespace DevGuide
 {
@@ -598,7 +598,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace DevGuide
 {
-  
+
 
   /// Copying insertion.
   void
@@ -765,7 +765,7 @@ namespace DevGuide
         );
   }
 
-  
+
 }
 
 #else
@@ -871,7 +871,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace DevGuide
 {
-  
+
 
   /// Copying insertion.
   void
@@ -983,13 +983,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::DevGuide::Messenger RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

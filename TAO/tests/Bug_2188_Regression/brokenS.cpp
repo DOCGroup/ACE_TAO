@@ -119,8 +119,8 @@ TAO_moola_Account_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -7,  -2,   5, -10,  -2,   6, -25,   9,  -1, -25,  -1, 
-       -1,  12,  -1,  13,  14,  15, 
+       -1,  -1,  -1,  -7,  -2,   5, -10,  -2,   6, -25,   9,  -1, -25,  -1,
+       -1,  12,  -1,  13,  14,  15,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -178,7 +178,7 @@ POA_moola::Account::~Account (void)
 
 namespace POA_moola
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -203,11 +203,11 @@ namespace POA_moola
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->name ();
     }
-  
+
   private:
     POA_moola::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -234,7 +234,7 @@ void POA_moola::Account::_get_name_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_moola::Account * const impl =
@@ -249,7 +249,7 @@ void POA_moola::Account::_get_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -266,7 +266,7 @@ void POA_moola::Account::_get_name_skel (
 
 namespace POA_moola
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -292,11 +292,11 @@ namespace POA_moola
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->name (
         arg_1);
     }
-  
+
   private:
     POA_moola::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -325,7 +325,7 @@ void POA_moola::Account::_set_name_skel (
       &retval,
       &_tao_name
     };
-  
+
   static size_t const nargs = 2;
 
   POA_moola::Account * const impl =
@@ -340,7 +340,7 @@ void POA_moola::Account::_set_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -357,7 +357,7 @@ void POA_moola::Account::_set_name_skel (
 
 namespace POA_moola
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -382,11 +382,11 @@ namespace POA_moola
         TAO::Portable_Server::get_ret_arg< ::CORBA::Float> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->balance ();
     }
-  
+
   private:
     POA_moola::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -413,7 +413,7 @@ void POA_moola::Account::_get_balance_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_moola::Account * const impl =
@@ -428,7 +428,7 @@ void POA_moola::Account::_get_balance_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -445,7 +445,7 @@ void POA_moola::Account::_get_balance_skel (
 
 namespace POA_moola
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -471,11 +471,11 @@ namespace POA_moola
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->balance (
         arg_1);
     }
-  
+
   private:
     POA_moola::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -504,7 +504,7 @@ void POA_moola::Account::_set_balance_skel (
       &retval,
       &_tao_balance
     };
-  
+
   static size_t const nargs = 2;
 
   POA_moola::Account * const impl =
@@ -519,7 +519,7 @@ void POA_moola::Account::_set_balance_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -536,7 +536,7 @@ void POA_moola::Account::_set_balance_skel (
 
 namespace POA_moola
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -562,11 +562,11 @@ namespace POA_moola
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->deposit (
         arg_1);
     }
-  
+
   private:
     POA_moola::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -595,7 +595,7 @@ void POA_moola::Account::deposit_skel (
       &retval,
       &_tao_amount
     };
-  
+
   static size_t const nargs = 2;
 
   POA_moola::Account * const impl =
@@ -610,7 +610,7 @@ void POA_moola::Account::deposit_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -627,7 +627,7 @@ void POA_moola::Account::deposit_skel (
 
 namespace POA_moola
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -653,11 +653,11 @@ namespace POA_moola
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->withdraw (
         arg_1);
     }
-  
+
   private:
     POA_moola::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -686,7 +686,7 @@ void POA_moola::Account::withdraw_skel (
       &retval,
       &_tao_amount
     };
-  
+
   static size_t const nargs = 2;
 
   POA_moola::Account * const impl =
@@ -701,7 +701,7 @@ void POA_moola::Account::withdraw_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -765,12 +765,12 @@ POA_moola::Account::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -886,7 +886,7 @@ TAO_ArrayTest_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {
             {
-              const TAO_operation_db_entry  *resword; 
+              const TAO_operation_db_entry  *resword;
 
               switch (key)
                 {
@@ -1042,25 +1042,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::LongArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::LongArray_tag>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::LongArray_tag> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::LongArray_tag>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::LongArray_tag> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::LongArray_tag>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::LongArray_tag> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->longArrayOp (
         arg_1
@@ -1099,7 +1099,7 @@ void POA_ArrayTest::longArrayOp_skel (
       &_tao_p2,
       &_tao_p3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_ArrayTest * const impl =
@@ -1114,7 +1114,7 @@ void POA_ArrayTest::longArrayOp_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1153,25 +1153,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::StringArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::StringArray_tag>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::StringArray_tag> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::StringArray_tag>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::StringArray_tag> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::StringArray_tag>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::StringArray_tag> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->stringArrayOp (
         arg_1
@@ -1210,7 +1210,7 @@ void POA_ArrayTest::stringArrayOp_skel (
       &_tao_p2,
       &_tao_p3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_ArrayTest * const impl =
@@ -1225,7 +1225,7 @@ void POA_ArrayTest::stringArrayOp_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1264,25 +1264,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ShortArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::ShortArray_tag>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::ShortArray_tag> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::ShortArray_tag>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::ShortArray_tag> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::ShortArray_tag>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::ShortArray_tag> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->shortArrayOp (
         arg_1
@@ -1321,7 +1321,7 @@ void POA_ArrayTest::shortArrayOp_skel (
       &_tao_p2,
       &_tao_p3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_ArrayTest * const impl =
@@ -1336,7 +1336,7 @@ void POA_ArrayTest::shortArrayOp_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1375,25 +1375,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::UShortArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::UShortArray_tag>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::UShortArray_tag> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::UShortArray_tag>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::UShortArray_tag> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::UShortArray_tag>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::UShortArray_tag> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->ushortArrayOp (
         arg_1
@@ -1432,7 +1432,7 @@ void POA_ArrayTest::ushortArrayOp_skel (
       &_tao_p2,
       &_tao_p3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_ArrayTest * const impl =
@@ -1447,7 +1447,7 @@ void POA_ArrayTest::ushortArrayOp_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1486,25 +1486,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::tmp1CharArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::tmp1CharArray_tag>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::tmp1CharArray_tag> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::tmp1CharArray_tag>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::tmp1CharArray_tag> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::tmp1CharArray_tag>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::tmp1CharArray_tag> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->charArrayOp (
         arg_1
@@ -1543,7 +1543,7 @@ void POA_ArrayTest::charArrayOp_skel (
       &_tao_p2,
       &_tao_p3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_ArrayTest * const impl =
@@ -1558,7 +1558,7 @@ void POA_ArrayTest::charArrayOp_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1597,25 +1597,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::OctetArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::OctetArray_tag>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::OctetArray_tag> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::OctetArray_tag>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::OctetArray_tag> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::OctetArray_tag>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::OctetArray_tag> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->octetArrayOp (
         arg_1
@@ -1654,7 +1654,7 @@ void POA_ArrayTest::octetArrayOp_skel (
       &_tao_p2,
       &_tao_p3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_ArrayTest * const impl =
@@ -1669,7 +1669,7 @@ void POA_ArrayTest::octetArrayOp_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1708,25 +1708,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::DoubleArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::DoubleArray_tag>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::DoubleArray_tag> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::DoubleArray_tag>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::DoubleArray_tag> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::DoubleArray_tag>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::DoubleArray_tag> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->doubleArrayOp (
         arg_1
@@ -1765,7 +1765,7 @@ void POA_ArrayTest::doubleArrayOp_skel (
       &_tao_p2,
       &_tao_p3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_ArrayTest * const impl =
@@ -1780,7 +1780,7 @@ void POA_ArrayTest::doubleArrayOp_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1819,7 +1819,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::LongArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_longArray ();
   }
@@ -1849,7 +1849,7 @@ void POA_ArrayTest::_get_a_longArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -1864,7 +1864,7 @@ void POA_ArrayTest::_get_a_longArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1904,7 +1904,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_longArray (
       arg_1);
   }
@@ -1936,7 +1936,7 @@ void POA_ArrayTest::_set_a_longArray_skel (
       &retval,
       &_tao_a_longArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -1951,7 +1951,7 @@ void POA_ArrayTest::_set_a_longArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1990,7 +1990,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ULongArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_ulongArray ();
   }
@@ -2020,7 +2020,7 @@ void POA_ArrayTest::_get_a_ulongArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -2035,7 +2035,7 @@ void POA_ArrayTest::_get_a_ulongArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2075,7 +2075,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_ulongArray (
       arg_1);
   }
@@ -2107,7 +2107,7 @@ void POA_ArrayTest::_set_a_ulongArray_skel (
       &retval,
       &_tao_a_ulongArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -2122,7 +2122,7 @@ void POA_ArrayTest::_set_a_ulongArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2161,7 +2161,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::StringArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_stringArray ();
   }
@@ -2191,7 +2191,7 @@ void POA_ArrayTest::_get_a_stringArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -2206,7 +2206,7 @@ void POA_ArrayTest::_get_a_stringArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2246,7 +2246,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_stringArray (
       arg_1);
   }
@@ -2278,7 +2278,7 @@ void POA_ArrayTest::_set_a_stringArray_skel (
       &retval,
       &_tao_a_stringArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -2293,7 +2293,7 @@ void POA_ArrayTest::_set_a_stringArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2332,7 +2332,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ShortArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_shortArray ();
   }
@@ -2362,7 +2362,7 @@ void POA_ArrayTest::_get_a_shortArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -2377,7 +2377,7 @@ void POA_ArrayTest::_get_a_shortArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2417,7 +2417,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_shortArray (
       arg_1);
   }
@@ -2449,7 +2449,7 @@ void POA_ArrayTest::_set_a_shortArray_skel (
       &retval,
       &_tao_a_shortArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -2464,7 +2464,7 @@ void POA_ArrayTest::_set_a_shortArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2503,7 +2503,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::UShortArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_ushortArray ();
   }
@@ -2533,7 +2533,7 @@ void POA_ArrayTest::_get_a_ushortArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -2548,7 +2548,7 @@ void POA_ArrayTest::_get_a_ushortArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2588,7 +2588,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_ushortArray (
       arg_1);
   }
@@ -2620,7 +2620,7 @@ void POA_ArrayTest::_set_a_ushortArray_skel (
       &retval,
       &_tao_a_ushortArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -2635,7 +2635,7 @@ void POA_ArrayTest::_set_a_ushortArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2674,7 +2674,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_char> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_char ();
   }
@@ -2704,7 +2704,7 @@ void POA_ArrayTest::_get_a_char_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -2719,7 +2719,7 @@ void POA_ArrayTest::_get_a_char_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2759,7 +2759,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_char (
       arg_1);
   }
@@ -2791,7 +2791,7 @@ void POA_ArrayTest::_set_a_char_skel (
       &retval,
       &_tao_a_char
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -2806,7 +2806,7 @@ void POA_ArrayTest::_set_a_char_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2845,7 +2845,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::tmp1CharArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_charArray ();
   }
@@ -2875,7 +2875,7 @@ void POA_ArrayTest::_get_a_charArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -2890,7 +2890,7 @@ void POA_ArrayTest::_get_a_charArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2930,7 +2930,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_charArray (
       arg_1);
   }
@@ -2962,7 +2962,7 @@ void POA_ArrayTest::_set_a_charArray_skel (
       &retval,
       &_tao_a_charArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -2977,7 +2977,7 @@ void POA_ArrayTest::_set_a_charArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3016,7 +3016,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::OctetArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_octetArray ();
   }
@@ -3046,7 +3046,7 @@ void POA_ArrayTest::_get_a_octetArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -3061,7 +3061,7 @@ void POA_ArrayTest::_get_a_octetArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3101,7 +3101,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_octetArray (
       arg_1);
   }
@@ -3133,7 +3133,7 @@ void POA_ArrayTest::_set_a_octetArray_skel (
       &retval,
       &_tao_a_octetArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -3148,7 +3148,7 @@ void POA_ArrayTest::_set_a_octetArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3187,7 +3187,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::DoubleArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_doubleArray ();
   }
@@ -3217,7 +3217,7 @@ void POA_ArrayTest::_get_a_doubleArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -3232,7 +3232,7 @@ void POA_ArrayTest::_get_a_doubleArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3272,7 +3272,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_doubleArray (
       arg_1);
   }
@@ -3304,7 +3304,7 @@ void POA_ArrayTest::_set_a_doubleArray_skel (
       &retval,
       &_tao_a_doubleArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -3319,7 +3319,7 @@ void POA_ArrayTest::_set_a_doubleArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3358,7 +3358,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::FloatArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_floatArray ();
   }
@@ -3388,7 +3388,7 @@ void POA_ArrayTest::_get_a_floatArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -3403,7 +3403,7 @@ void POA_ArrayTest::_get_a_floatArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3443,7 +3443,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_floatArray (
       arg_1);
   }
@@ -3475,7 +3475,7 @@ void POA_ArrayTest::_set_a_floatArray_skel (
       &retval,
       &_tao_a_floatArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -3490,7 +3490,7 @@ void POA_ArrayTest::_set_a_floatArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3529,7 +3529,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::BucketArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_bucketArray ();
   }
@@ -3559,7 +3559,7 @@ void POA_ArrayTest::_get_a_bucketArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -3574,7 +3574,7 @@ void POA_ArrayTest::_get_a_bucketArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3614,7 +3614,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_bucketArray (
       arg_1);
   }
@@ -3646,7 +3646,7 @@ void POA_ArrayTest::_set_a_bucketArray_skel (
       &retval,
       &_tao_a_bucketArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -3661,7 +3661,7 @@ void POA_ArrayTest::_set_a_bucketArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3700,7 +3700,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::AccountArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_accountArray ();
   }
@@ -3730,7 +3730,7 @@ void POA_ArrayTest::_get_a_accountArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -3745,7 +3745,7 @@ void POA_ArrayTest::_get_a_accountArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3785,7 +3785,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_accountArray (
       arg_1);
   }
@@ -3817,7 +3817,7 @@ void POA_ArrayTest::_set_a_accountArray_skel (
       &retval,
       &_tao_a_accountArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -3832,7 +3832,7 @@ void POA_ArrayTest::_set_a_accountArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3871,7 +3871,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::BooleanArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_booleanArray ();
   }
@@ -3901,7 +3901,7 @@ void POA_ArrayTest::_get_a_booleanArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -3916,7 +3916,7 @@ void POA_ArrayTest::_get_a_booleanArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -3956,7 +3956,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_booleanArray (
       arg_1);
   }
@@ -3988,7 +3988,7 @@ void POA_ArrayTest::_set_a_booleanArray_skel (
       &retval,
       &_tao_a_booleanArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -4003,7 +4003,7 @@ void POA_ArrayTest::_set_a_booleanArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4042,7 +4042,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::LongArrayArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_longArrayArray ();
   }
@@ -4072,7 +4072,7 @@ void POA_ArrayTest::_get_a_longArrayArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -4087,7 +4087,7 @@ void POA_ArrayTest::_get_a_longArrayArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4127,7 +4127,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_longArrayArray (
       arg_1);
   }
@@ -4159,7 +4159,7 @@ void POA_ArrayTest::_set_a_longArrayArray_skel (
       &retval,
       &_tao_a_longArrayArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -4174,7 +4174,7 @@ void POA_ArrayTest::_set_a_longArrayArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4213,7 +4213,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::MyEnumArray_tag> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->a_myEnumArray ();
   }
@@ -4243,7 +4243,7 @@ void POA_ArrayTest::_get_a_myEnumArray_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ArrayTest * const impl =
@@ -4258,7 +4258,7 @@ void POA_ArrayTest::_get_a_myEnumArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4298,7 +4298,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->a_myEnumArray (
       arg_1);
   }
@@ -4330,7 +4330,7 @@ void POA_ArrayTest::_set_a_myEnumArray_skel (
       &retval,
       &_tao_a_myEnumArray
     };
-  
+
   static size_t const nargs = 2;
 
   POA_ArrayTest * const impl =
@@ -4345,7 +4345,7 @@ void POA_ArrayTest::_set_a_myEnumArray_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4409,12 +4409,12 @@ POA_ArrayTest::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -4551,7 +4551,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ArrayTest> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->target ();
   }
@@ -4581,7 +4581,7 @@ void POA_ServerAdmin::target_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ServerAdmin * const impl =
@@ -4596,7 +4596,7 @@ void POA_ServerAdmin::target_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4653,7 +4653,7 @@ void POA_ServerAdmin::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ServerAdmin * const impl =
@@ -4666,7 +4666,7 @@ void POA_ServerAdmin::shutdown_skel (
 
   shutdown_ServerAdmin command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -4730,12 +4730,12 @@ POA_ServerAdmin::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

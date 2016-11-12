@@ -175,7 +175,7 @@ public:
       TAO::Portable_Server::get_ret_arg< char *> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->method1 ();
   }
@@ -205,7 +205,7 @@ void POA_A::method1_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_A * const impl =
@@ -220,7 +220,7 @@ void POA_A::method1_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -284,12 +284,12 @@ POA_A::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -427,7 +427,7 @@ public:
       TAO::Portable_Server::get_ret_arg< char *> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->method2 ();
   }
@@ -457,7 +457,7 @@ void POA_intB::method2_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_intB * const impl =
@@ -472,7 +472,7 @@ void POA_intB::method2_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -540,12 +540,12 @@ POA_intB::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -683,7 +683,7 @@ public:
       TAO::Portable_Server::get_ret_arg< char *> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->method3 ();
   }
@@ -713,7 +713,7 @@ void POA_C::method3_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_C * const impl =
@@ -728,7 +728,7 @@ void POA_C::method3_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -796,12 +796,12 @@ POA_C::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -945,7 +945,7 @@ public:
       TAO::Portable_Server::get_ret_arg< char *> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->method4 ();
   }
@@ -975,7 +975,7 @@ void POA_D::method4_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_D * const impl =
@@ -990,7 +990,7 @@ void POA_D::method4_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1066,12 +1066,12 @@ POA_D::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

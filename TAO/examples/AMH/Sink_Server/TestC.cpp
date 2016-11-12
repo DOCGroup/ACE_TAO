@@ -59,7 +59,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/Timestamp:1.0",
     "Timestamp",
     &CORBA::_tc_ulonglong);
-  
+
 
 namespace Test
 {
@@ -111,7 +111,7 @@ Test::Roundtrip::start_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -146,7 +146,7 @@ Test::Roundtrip::end_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -181,7 +181,7 @@ Test::Roundtrip::test_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULongLong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_send_time (send_time);
 
@@ -198,7 +198,7 @@ Test::Roundtrip::test_method (
       "test_method",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -305,7 +305,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/Roundtrip:1.0",
     "Roundtrip");
-  
+
 
 namespace Test
 {
@@ -329,7 +329,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Test_AMH_RoundtripExceptionHolder,
     0);
-  
+
 
 namespace Test
 {
@@ -455,27 +455,27 @@ Test::AMH_RoundtripExceptionHolder::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = AMH_RoundtripExceptionHolder::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -647,7 +647,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:Test/AMH_RoundtripResponseHandler:1.0",
     "AMH_RoundtripResponseHandler");
-  
+
 
 namespace Test
 {
@@ -702,7 +702,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -869,7 +869,7 @@ namespace Test
         );
   }
 
-  
+
 }
 
 #else
@@ -975,7 +975,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1087,13 +1087,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Roundtrip RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

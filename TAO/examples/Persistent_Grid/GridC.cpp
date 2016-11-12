@@ -83,7 +83,7 @@ Grid::height (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Short>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -120,7 +120,7 @@ Grid::height (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_height (height);
 
@@ -137,7 +137,7 @@ Grid::height (
       "_set_height",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -154,7 +154,7 @@ Grid::width (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Short>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -191,7 +191,7 @@ Grid::width (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_width (width);
 
@@ -208,7 +208,7 @@ Grid::width (
       "_set_width",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -325,7 +325,7 @@ Grid::set (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_n (n);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_m (m);
@@ -340,7 +340,7 @@ Grid::set (
     };
 
   static TAO::Exception_Data
-  _tao_Grid_set_exceptiondata [] = 
+  _tao_Grid_set_exceptiondata [] =
     {
       {
         "IDL:Grid/RANGE_ERROR:1.0",
@@ -358,7 +358,7 @@ Grid::set (
       "set",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -379,7 +379,7 @@ Grid::get (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_n (n);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_m (m);
@@ -392,7 +392,7 @@ Grid::get (
     };
 
   static TAO::Exception_Data
-  _tao_Grid_get_exceptiondata [] = 
+  _tao_Grid_get_exceptiondata [] =
     {
       {
         "IDL:Grid/RANGE_ERROR:1.0",
@@ -410,7 +410,7 @@ Grid::get (
       "get",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -432,7 +432,7 @@ Grid::destroy (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -597,7 +597,7 @@ Grid_Factory::make_grid (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Grid>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_height (height);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_width (width);
@@ -616,7 +616,7 @@ Grid_Factory::make_grid (
       "make_grid",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -635,7 +635,7 @@ Grid_Factory::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -670,7 +670,7 @@ Grid_Factory::cleanup (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -826,13 +826,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Grid RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -863,13 +863,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Grid_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

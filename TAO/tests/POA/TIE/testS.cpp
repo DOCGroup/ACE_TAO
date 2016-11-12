@@ -174,7 +174,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->doit ();
   }
@@ -204,7 +204,7 @@ void POA_A::doit_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_A * const impl =
@@ -219,7 +219,7 @@ void POA_A::doit_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -283,12 +283,12 @@ POA_A::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -401,7 +401,7 @@ POA_Outer::B::~B (void)
 
 namespace POA_Outer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -426,11 +426,11 @@ namespace POA_Outer
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->doit ();
     }
-  
+
   private:
     POA_Outer::B * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -457,7 +457,7 @@ void POA_Outer::B::doit_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Outer::B * const impl =
@@ -472,7 +472,7 @@ void POA_Outer::B::doit_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -536,12 +536,12 @@ POA_Outer::B::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -654,10 +654,10 @@ POA_Outer::Inner::C::~C (void)
 
 namespace POA_Outer
 {
-  
+
   namespace Inner
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -682,11 +682,11 @@ namespace POA_Outer
           TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
             this->operation_details_,
             this->args_);
-        
+
         retval =
           this->servant_->doit ();
       }
-    
+
     private:
       POA_Outer::Inner::C * const servant_;
       TAO_Operation_Details const * const operation_details_;
@@ -714,7 +714,7 @@ void POA_Outer::Inner::C::doit_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Outer::Inner::C * const impl =
@@ -729,7 +729,7 @@ void POA_Outer::Inner::C::doit_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -793,12 +793,12 @@ POA_Outer::Inner::C::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

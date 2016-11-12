@@ -118,8 +118,8 @@ TAO_ThreeTier_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -4,  -2, -17,   6,  -8,  -2,   7, -18,  10,  -1,  -1,  11, 
-       12,  13, 
+       -1,  -1,  -4,  -2, -17,   6,  -8,  -2,   7, -18,  10,  -1,  -1,  11,
+       12,  13,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -217,7 +217,7 @@ void POA_ThreeTier::tick_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ThreeTier * const impl =
@@ -230,7 +230,7 @@ void POA_ThreeTier::tick_skel (
 
   tick_ThreeTier command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -287,7 +287,7 @@ void POA_ThreeTier::tock_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ThreeTier * const impl =
@@ -300,7 +300,7 @@ void POA_ThreeTier::tock_skel (
 
   tock_ThreeTier command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -339,7 +339,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->tickCount ();
   }
@@ -369,7 +369,7 @@ void POA_ThreeTier::tickCount_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ThreeTier * const impl =
@@ -384,7 +384,7 @@ void POA_ThreeTier::tickCount_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -423,7 +423,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->tockCount ();
   }
@@ -453,7 +453,7 @@ void POA_ThreeTier::tockCount_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ThreeTier * const impl =
@@ -468,7 +468,7 @@ void POA_ThreeTier::tockCount_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -525,7 +525,7 @@ void POA_ThreeTier::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ThreeTier * const impl =
@@ -538,7 +538,7 @@ void POA_ThreeTier::shutdown_skel (
 
   shutdown_ThreeTier command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -602,12 +602,12 @@ POA_ThreeTier::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

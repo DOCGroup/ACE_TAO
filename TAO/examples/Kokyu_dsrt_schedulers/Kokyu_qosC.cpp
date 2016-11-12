@@ -117,7 +117,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_octet,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Kokyu_GuidType_0 =
         &Kokyu_GuidType_0;
     }
@@ -136,7 +136,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:omg.org/Kokyu/GuidType:1.0",
     "GuidType",
     &TAO::TypeCode::tc_Kokyu_GuidType_0);
-  
+
 
 namespace Kokyu
 {
@@ -154,7 +154,7 @@ namespace Kokyu
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Kokyu_Svc_Ctxt_DSRT_QoS[] =
       {
         { "guid", &Kokyu::_tc_GuidType },
@@ -164,7 +164,7 @@ static TAO::TypeCode::Struct_Field<
         { "deadline", &TimeBase::_tc_TimeT },
         { "estimated_initial_execution_time", &TimeBase::_tc_TimeT }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -213,7 +213,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Kokyu
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,

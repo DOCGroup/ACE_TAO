@@ -89,7 +89,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/TestScenario:1.0",
     "TestScenario",
     &CORBA::_tc_short);
-  
+
 ::CORBA::TypeCode_ptr const Test::_tc_TestScenario =
   &_tao_tc_Test_TestScenario;
 
@@ -186,9 +186,9 @@ void Test::X::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Test_X = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -316,12 +316,12 @@ void Test::UnknownScenario::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_UnknownScenario[] =
       {
         { "scenario", &Test::_tc_TestScenario }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -350,7 +350,7 @@ Test::client_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_scenario (scenario);
 
@@ -361,7 +361,7 @@ Test::client_test (
     };
 
   static TAO::Exception_Data
-  _tao_Test_client_test_exceptiondata [] = 
+  _tao_Test_client_test_exceptiondata [] =
     {
       {
         "IDL:Test/X:1.0",
@@ -387,7 +387,7 @@ Test::client_test (
       "client_test",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -408,7 +408,7 @@ Test::server_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_scenario (scenario);
   TAO::Arg_Traits< ::CORBA::ULongSeq>::out_arg_val _tao_myseq (myseq);
@@ -421,7 +421,7 @@ Test::server_test (
     };
 
   static TAO::Exception_Data
-  _tao_Test_server_test_exceptiondata [] = 
+  _tao_Test_server_test_exceptiondata [] =
     {
       {
         "IDL:Test/X:1.0",
@@ -447,7 +447,7 @@ Test::server_test (
       "server_test",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -467,7 +467,7 @@ Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -581,7 +581,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test:1.0",
     "Test");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Test =
   &_tao_tc_Test;
 
@@ -675,13 +675,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

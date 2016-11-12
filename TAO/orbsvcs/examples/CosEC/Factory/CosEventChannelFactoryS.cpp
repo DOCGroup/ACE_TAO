@@ -157,7 +157,7 @@ POA_CosEventChannelFactory::ChannelFactory::~ChannelFactory (void)
 
 namespace POA_CosEventChannelFactory
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -182,25 +182,25 @@ namespace POA_CosEventChannelFactory
         TAO::Portable_Server::get_ret_arg< ::CosEventChannelAdmin::EventChannel> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->create (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_CosEventChannelFactory::ChannelFactory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -217,7 +217,7 @@ void POA_CosEventChannelFactory::ChannelFactory::create_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       CosEventChannelFactory::_tc_DuplicateChannel,
       CosEventChannelFactory::_tc_BindFailed
@@ -235,7 +235,7 @@ void POA_CosEventChannelFactory::ChannelFactory::create_skel (
       &_tao_channel_id,
       &_tao_store_in_naming_service
     };
-  
+
   static size_t const nargs = 3;
 
   POA_CosEventChannelFactory::ChannelFactory * const impl =
@@ -250,7 +250,7 @@ void POA_CosEventChannelFactory::ChannelFactory::create_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -267,7 +267,7 @@ void POA_CosEventChannelFactory::ChannelFactory::create_skel (
 
 namespace POA_CosEventChannelFactory
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -293,18 +293,18 @@ namespace POA_CosEventChannelFactory
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->destroy (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_CosEventChannelFactory::ChannelFactory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -321,7 +321,7 @@ void POA_CosEventChannelFactory::ChannelFactory::destroy_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       CosEventChannelFactory::_tc_NoSuchChannel
     };
@@ -338,7 +338,7 @@ void POA_CosEventChannelFactory::ChannelFactory::destroy_skel (
       &_tao_channel_id,
       &_tao_unbind_from_naming_service
     };
-  
+
   static size_t const nargs = 3;
 
   POA_CosEventChannelFactory::ChannelFactory * const impl =
@@ -353,7 +353,7 @@ void POA_CosEventChannelFactory::ChannelFactory::destroy_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -370,7 +370,7 @@ void POA_CosEventChannelFactory::ChannelFactory::destroy_skel (
 
 namespace POA_CosEventChannelFactory
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -395,18 +395,18 @@ namespace POA_CosEventChannelFactory
         TAO::Portable_Server::get_ret_arg< ::CosEventChannelAdmin::EventChannel> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->find (
           arg_1);
     }
-  
+
   private:
     POA_CosEventChannelFactory::ChannelFactory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -423,7 +423,7 @@ void POA_CosEventChannelFactory::ChannelFactory::find_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       CosEventChannelFactory::_tc_NoSuchChannel
     };
@@ -438,7 +438,7 @@ void POA_CosEventChannelFactory::ChannelFactory::find_skel (
       &retval,
       &_tao_channel_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CosEventChannelFactory::ChannelFactory * const impl =
@@ -453,7 +453,7 @@ void POA_CosEventChannelFactory::ChannelFactory::find_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -470,7 +470,7 @@ void POA_CosEventChannelFactory::ChannelFactory::find_skel (
 
 namespace POA_CosEventChannelFactory
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -495,18 +495,18 @@ namespace POA_CosEventChannelFactory
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CosEventChannelAdmin::EventChannel>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CosEventChannelAdmin::EventChannel> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->find_channel_id (
           arg_1);
     }
-  
+
   private:
     POA_CosEventChannelFactory::ChannelFactory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -523,7 +523,7 @@ void POA_CosEventChannelFactory::ChannelFactory::find_channel_id_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       CosEventChannelFactory::_tc_NoSuchChannel
     };
@@ -538,7 +538,7 @@ void POA_CosEventChannelFactory::ChannelFactory::find_channel_id_skel (
       &retval,
       &_tao_channel
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CosEventChannelFactory::ChannelFactory * const impl =
@@ -553,7 +553,7 @@ void POA_CosEventChannelFactory::ChannelFactory::find_channel_id_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -617,12 +617,12 @@ POA_CosEventChannelFactory::ChannelFactory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

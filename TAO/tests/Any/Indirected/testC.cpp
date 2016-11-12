@@ -120,7 +120,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_RecursiveStruct3,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_RecursiveStructSeq3_0 =
         &Test_RecursiveStructSeq3_0;
     }
@@ -139,7 +139,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/RecursiveStructSeq3:1.0",
     "RecursiveStructSeq3",
     &TAO::TypeCode::tc_Test_RecursiveStructSeq3_0);
-  
+
 
 namespace Test
 {
@@ -221,7 +221,7 @@ Test::RecursiveUnion3::operator= (const ::Test::RecursiveUnion3 &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -267,7 +267,7 @@ Test::RecursiveUnion3::operator= (const ::Test::RecursiveUnion3 &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -276,23 +276,23 @@ void Test::RecursiveUnion3::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
-      
+
     break;
-    
+
     case 1:
       delete this->u_.b_;
       this->u_.b_ = 0;
-      
+
     break;
-    
+
     case 2:
       delete this->u_.c_;
       this->u_.c_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -333,7 +333,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Test_RecursiveUnion3,
     sizeof (_tao_cases_Test_RecursiveUnion3)/sizeof (_tao_cases_Test_RecursiveUnion3[0]),
     -1);
-  
+
 
 namespace Test
 {
@@ -346,12 +346,12 @@ namespace Test
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_RecursiveStruct3[] =
       {
         { "uni", &Test::_tc_RecursiveUnion3 }
       };
-  
+
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Struct<
     char const *,
@@ -405,7 +405,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -810,7 +810,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -847,7 +847,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)

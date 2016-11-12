@@ -171,28 +171,28 @@ POA_Foo::Bar::AMH_A::op1_skel (
     dynamic_cast<POA_Foo::Bar::AMH_A *> (_tao_servant);
   if (!_tao_impl)
     throw ::CORBA::INTERNAL ();
-  
+
   TAO_ORB_Core *orb_core =
     _tao_server_request.orb ()->orb_core ();
-  
+
   TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
     orb_core->lane_resources ().amh_response_handler_allocator ();
-  
+
   TAO::TAO_Buffer_Allocator<
       POA_Foo::Bar::TAO_AMH_AResponseHandler,
       TAO_AMH_BUFFER_ALLOCATOR
     > buffer_allocator (amh_allocator);
-  
-  POA_Foo::Bar::TAO_AMH_AResponseHandler_ptr _tao_rh_ptr = 
+
+  POA_Foo::Bar::TAO_AMH_AResponseHandler_ptr _tao_rh_ptr =
     buffer_allocator.allocate();
-  
-  if (!_tao_rh_ptr) 
+
+  if (!_tao_rh_ptr)
     throw ::CORBA::NO_MEMORY ();
-  
+
   _tao_rh_ptr->init (_tao_server_request, amh_allocator);
-  
+
   ACE_Utils::Auto_Functor <POA_Foo::Bar::TAO_AMH_AResponseHandler, TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);
-  
+
   _tao_impl->op1 (
       safe_rd_.get ()
     );
@@ -211,28 +211,28 @@ POA_Foo::Bar::AMH_A::op2_skel (
     dynamic_cast<POA_Foo::Bar::AMH_A *> (_tao_servant);
   if (!_tao_impl)
     throw ::CORBA::INTERNAL ();
-  
+
   TAO_ORB_Core *orb_core =
     _tao_server_request.orb ()->orb_core ();
-  
+
   TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
     orb_core->lane_resources ().amh_response_handler_allocator ();
-  
+
   TAO::TAO_Buffer_Allocator<
       POA_Foo::Bar::TAO_AMH_AResponseHandler,
       TAO_AMH_BUFFER_ALLOCATOR
     > buffer_allocator (amh_allocator);
-  
-  POA_Foo::Bar::TAO_AMH_AResponseHandler_ptr _tao_rh_ptr = 
+
+  POA_Foo::Bar::TAO_AMH_AResponseHandler_ptr _tao_rh_ptr =
     buffer_allocator.allocate();
-  
-  if (!_tao_rh_ptr) 
+
+  if (!_tao_rh_ptr)
     throw ::CORBA::NO_MEMORY ();
-  
+
   _tao_rh_ptr->init (_tao_server_request, amh_allocator);
-  
+
   ACE_Utils::Auto_Functor <POA_Foo::Bar::TAO_AMH_AResponseHandler, TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);
-  
+
   _tao_impl->op2 (
       safe_rd_.get ()
     );
@@ -284,23 +284,23 @@ POA_Foo::Bar::AMH_A::_this (void)
 
   TAO_Stub_Auto_Ptr safe_stub (stub);
   ::CORBA::Object_ptr tmp = CORBA::Object_ptr ();
-  
+
   ::CORBA::Boolean _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0
     );
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
   typedef ::Foo::Bar::A STUB_SCOPED_NAME;
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
 }
 
 // TAO_IDL - Generated from
@@ -409,10 +409,10 @@ POA_Foo::Bar::A::~A (void)
 
 namespace POA_Foo
 {
-  
+
   namespace Bar
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -437,11 +437,11 @@ namespace POA_Foo
           TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
             this->operation_details_,
             this->args_);
-        
+
         retval =
           this->servant_->op1 ();
       }
-    
+
     private:
       POA_Foo::Bar::A * const servant_;
       TAO_Operation_Details const * const operation_details_;
@@ -469,7 +469,7 @@ void POA_Foo::Bar::A::op1_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Foo::Bar::A * const impl =
@@ -484,7 +484,7 @@ void POA_Foo::Bar::A::op1_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -501,10 +501,10 @@ void POA_Foo::Bar::A::op1_skel (
 
 namespace POA_Foo
 {
-  
+
   namespace Bar
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -529,11 +529,11 @@ namespace POA_Foo
           TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
             this->operation_details_,
             this->args_);
-        
+
         retval =
           this->servant_->op2 ();
       }
-    
+
     private:
       POA_Foo::Bar::A * const servant_;
       TAO_Operation_Details const * const operation_details_;
@@ -561,7 +561,7 @@ void POA_Foo::Bar::A::op2_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Foo::Bar::A * const impl =
@@ -576,7 +576,7 @@ void POA_Foo::Bar::A::op2_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -640,12 +640,12 @@ POA_Foo::Bar::A::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -683,7 +683,7 @@ POA_Foo::Bar::TAO_AMH_AResponseHandler::op1 (
     {
       throw ::CORBA::MARSHAL();
     }
-  
+
   this->_tao_rh_send_reply ();
 }
 
@@ -719,7 +719,7 @@ POA_Foo::Bar::TAO_AMH_AResponseHandler::op2 (
     {
       throw ::CORBA::MARSHAL();
     }
-  
+
   this->_tao_rh_send_reply ();
 }
 
@@ -856,28 +856,28 @@ POA_Foo::Bar::AMH_B::op3_skel (
     dynamic_cast<POA_Foo::Bar::AMH_B *> (_tao_servant);
   if (!_tao_impl)
     throw ::CORBA::INTERNAL ();
-  
+
   TAO_ORB_Core *orb_core =
     _tao_server_request.orb ()->orb_core ();
-  
+
   TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
     orb_core->lane_resources ().amh_response_handler_allocator ();
-  
+
   TAO::TAO_Buffer_Allocator<
       POA_Foo::Bar::TAO_AMH_BResponseHandler,
       TAO_AMH_BUFFER_ALLOCATOR
     > buffer_allocator (amh_allocator);
-  
-  POA_Foo::Bar::TAO_AMH_BResponseHandler_ptr _tao_rh_ptr = 
+
+  POA_Foo::Bar::TAO_AMH_BResponseHandler_ptr _tao_rh_ptr =
     buffer_allocator.allocate();
-  
-  if (!_tao_rh_ptr) 
+
+  if (!_tao_rh_ptr)
     throw ::CORBA::NO_MEMORY ();
-  
+
   _tao_rh_ptr->init (_tao_server_request, amh_allocator);
-  
+
   ACE_Utils::Auto_Functor <POA_Foo::Bar::TAO_AMH_BResponseHandler, TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);
-  
+
   _tao_impl->op3 (
       safe_rd_.get ()
     );
@@ -929,23 +929,23 @@ POA_Foo::Bar::AMH_B::_this (void)
 
   TAO_Stub_Auto_Ptr safe_stub (stub);
   ::CORBA::Object_ptr tmp = CORBA::Object_ptr ();
-  
+
   ::CORBA::Boolean _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0
     );
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
   typedef ::Foo::Bar::B STUB_SCOPED_NAME;
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
 }
 
 // TAO_IDL - Generated from
@@ -1052,10 +1052,10 @@ POA_Foo::Bar::B::~B (void)
 
 namespace POA_Foo
 {
-  
+
   namespace Bar
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1080,11 +1080,11 @@ namespace POA_Foo
           TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
             this->operation_details_,
             this->args_);
-        
+
         retval =
           this->servant_->op3 ();
       }
-    
+
     private:
       POA_Foo::Bar::B * const servant_;
       TAO_Operation_Details const * const operation_details_;
@@ -1112,7 +1112,7 @@ void POA_Foo::Bar::B::op3_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Foo::Bar::B * const impl =
@@ -1127,7 +1127,7 @@ void POA_Foo::Bar::B::op3_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1191,12 +1191,12 @@ POA_Foo::Bar::B::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1234,7 +1234,7 @@ POA_Foo::Bar::TAO_AMH_BResponseHandler::op3 (
     {
       throw ::CORBA::MARSHAL();
     }
-  
+
   this->_tao_rh_send_reply ();
 }
 
@@ -1379,28 +1379,28 @@ POA_Baz::AMH_C::op4_skel (
     dynamic_cast<POA_Baz::AMH_C *> (_tao_servant);
   if (!_tao_impl)
     throw ::CORBA::INTERNAL ();
-  
+
   TAO_ORB_Core *orb_core =
     _tao_server_request.orb ()->orb_core ();
-  
+
   TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
     orb_core->lane_resources ().amh_response_handler_allocator ();
-  
+
   TAO::TAO_Buffer_Allocator<
       POA_Baz::TAO_AMH_CResponseHandler,
       TAO_AMH_BUFFER_ALLOCATOR
     > buffer_allocator (amh_allocator);
-  
-  POA_Baz::TAO_AMH_CResponseHandler_ptr _tao_rh_ptr = 
+
+  POA_Baz::TAO_AMH_CResponseHandler_ptr _tao_rh_ptr =
     buffer_allocator.allocate();
-  
-  if (!_tao_rh_ptr) 
+
+  if (!_tao_rh_ptr)
     throw ::CORBA::NO_MEMORY ();
-  
+
   _tao_rh_ptr->init (_tao_server_request, amh_allocator);
-  
+
   ACE_Utils::Auto_Functor <POA_Baz::TAO_AMH_CResponseHandler, TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);
-  
+
   _tao_impl->op4 (
       safe_rd_.get ()
     );
@@ -1419,28 +1419,28 @@ POA_Baz::AMH_C::shutdown_skel (
     dynamic_cast<POA_Baz::AMH_C *> (_tao_servant);
   if (!_tao_impl)
     throw ::CORBA::INTERNAL ();
-  
+
   TAO_ORB_Core *orb_core =
     _tao_server_request.orb ()->orb_core ();
-  
+
   TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
     orb_core->lane_resources ().amh_response_handler_allocator ();
-  
+
   TAO::TAO_Buffer_Allocator<
       POA_Baz::TAO_AMH_CResponseHandler,
       TAO_AMH_BUFFER_ALLOCATOR
     > buffer_allocator (amh_allocator);
-  
-  POA_Baz::TAO_AMH_CResponseHandler_ptr _tao_rh_ptr = 
+
+  POA_Baz::TAO_AMH_CResponseHandler_ptr _tao_rh_ptr =
     buffer_allocator.allocate();
-  
-  if (!_tao_rh_ptr) 
+
+  if (!_tao_rh_ptr)
     throw ::CORBA::NO_MEMORY ();
-  
+
   _tao_rh_ptr->init (_tao_server_request, amh_allocator);
-  
+
   ACE_Utils::Auto_Functor <POA_Baz::TAO_AMH_CResponseHandler, TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);
-  
+
   _tao_impl->shutdown (
       safe_rd_.get ()
     );
@@ -1500,23 +1500,23 @@ POA_Baz::AMH_C::_this (void)
 
   TAO_Stub_Auto_Ptr safe_stub (stub);
   ::CORBA::Object_ptr tmp = CORBA::Object_ptr ();
-  
+
   ::CORBA::Boolean _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0
     );
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
   typedef ::Baz::C STUB_SCOPED_NAME;
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
 }
 
 // TAO_IDL - Generated from
@@ -1631,7 +1631,7 @@ POA_Baz::C::~C (void)
 
 namespace POA_Baz
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1656,11 +1656,11 @@ namespace POA_Baz
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->op4 ();
     }
-  
+
   private:
     POA_Baz::C * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1687,7 +1687,7 @@ void POA_Baz::C::op4_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Baz::C * const impl =
@@ -1702,7 +1702,7 @@ void POA_Baz::C::op4_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1719,7 +1719,7 @@ void POA_Baz::C::op4_skel (
 
 namespace POA_Baz
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1738,7 +1738,7 @@ namespace POA_Baz
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Baz::C * const servant_;
   };
@@ -1763,7 +1763,7 @@ void POA_Baz::C::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Baz::C * const impl =
@@ -1776,7 +1776,7 @@ void POA_Baz::C::shutdown_skel (
 
   shutdown_C command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1848,12 +1848,12 @@ POA_Baz::C::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1891,7 +1891,7 @@ POA_Baz::TAO_AMH_CResponseHandler::op4 (
     {
       throw ::CORBA::MARSHAL();
     }
-  
+
   this->_tao_rh_send_reply ();
 }
 
@@ -1921,7 +1921,7 @@ POA_Baz::TAO_AMH_CResponseHandler::shutdown (
 {
   this->_tao_rh_init_reply ();
 
-  
+
   this->_tao_rh_send_reply ();
 }
 

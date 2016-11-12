@@ -98,7 +98,7 @@ Alt_Mapping::test_unbounded_string (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< std::string>::ret_val _tao_retval;
   TAO::Arg_Traits< std::string>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< std::string>::inout_arg_val _tao_s2 (s2);
@@ -119,7 +119,7 @@ Alt_Mapping::test_unbounded_string (
       "test_unbounded_string",
       21,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -132,7 +132,7 @@ Alt_Mapping::test_unbounded_string (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Alt_Mapping_Fixed_Struct[] =
       {
         { "l", &CORBA::_tc_long },
@@ -143,7 +143,7 @@ static TAO::TypeCode::Struct_Field<
         { "b", &CORBA::_tc_boolean },
         { "d", &CORBA::_tc_double }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -199,7 +199,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Alt_Mapping::_tc_Fixed_Struct,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Alt_Mapping_StructSeq_0 =
         &Alt_Mapping_StructSeq_0;
     }
@@ -218,7 +218,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Alt_Mapping/StructSeq:1.0",
     "StructSeq",
     &TAO::TypeCode::tc_Alt_Mapping_StructSeq_0);
-  
+
 ::CORBA::TypeCode_ptr const Alt_Mapping::_tc_StructSeq =
   &_tao_tc_Alt_Mapping_StructSeq;
 
@@ -235,7 +235,7 @@ Alt_Mapping::test_struct_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Alt_Mapping::StructSeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Alt_Mapping::StructSeq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Alt_Mapping::StructSeq>::inout_arg_val _tao_s2 (s2);
@@ -256,7 +256,7 @@ Alt_Mapping::test_struct_sequence (
       "test_struct_sequence",
       20,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -275,7 +275,7 @@ Alt_Mapping::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -398,7 +398,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Alt_Mapping:1.0",
     "Alt_Mapping");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Alt_Mapping =
   &_tao_tc_Alt_Mapping;
 
@@ -611,7 +611,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           return false;
         }
     }
-  
+
   return true;
 }
 
@@ -626,7 +626,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   _tao_vector.resize (length);
 
   for ( ::CORBA::ULong i = 0UL; i < length; ++i)
@@ -635,10 +635,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
         {
           return false;
         }
-      
+
       _tao_vector[i] = tmp;
     }
-  
+
   return true;
 }
 
@@ -670,13 +670,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Alt_Mapping RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

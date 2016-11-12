@@ -85,7 +85,7 @@ Simple_Server::test_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Simple_Server>::in_arg_val _tao_objref (objref);
 
@@ -102,7 +102,7 @@ Simple_Server::test_method (
       "test_method",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -121,7 +121,7 @@ Simple_Server::client_done (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -156,7 +156,7 @@ Simple_Server::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -191,9 +191,9 @@ Simple_Server::sendc_test_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Simple_Server>::in_arg_val _tao_objref (objref);
 
@@ -229,8 +229,8 @@ Simple_Server::sendc_client_done (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -375,7 +375,7 @@ AMI_Simple_ServerHandler::test_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -392,7 +392,7 @@ AMI_Simple_ServerHandler::test_method (
       "test_method",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -420,10 +420,10 @@ AMI_Simple_ServerHandler::test_method_reply_stub (
             (_tao_in >> ami_return_val.out ())
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->test_method (
-          
+
           ami_return_val.in ()
         );
       break;
@@ -450,7 +450,7 @@ AMI_Simple_ServerHandler::test_method_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->test_method_excep (
           exception_holder_var
@@ -475,7 +475,7 @@ AMI_Simple_ServerHandler::test_method_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -492,7 +492,7 @@ AMI_Simple_ServerHandler::test_method_excep (
       "test_method_excep",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -509,7 +509,7 @@ AMI_Simple_ServerHandler::client_done (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -551,7 +551,7 @@ AMI_Simple_ServerHandler::client_done_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->client_done (
-          
+
         );
       break;
     }
@@ -577,7 +577,7 @@ AMI_Simple_ServerHandler::client_done_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->client_done_excep (
           exception_holder_var
@@ -602,7 +602,7 @@ AMI_Simple_ServerHandler::client_done_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -619,7 +619,7 @@ AMI_Simple_ServerHandler::client_done_excep (
       "client_done_excep",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -734,13 +734,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Simple_Server RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -771,13 +771,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::AMI_Simple_ServerHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

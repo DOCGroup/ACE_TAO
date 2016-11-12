@@ -152,7 +152,7 @@ POA_Test::Session_Control::~Session_Control (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -178,11 +178,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->session_finished (
         arg_1);
     }
-  
+
   private:
     POA_Test::Session_Control * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -211,7 +211,7 @@ void POA_Test::Session_Control::session_finished_skel (
       &retval,
       &_tao_success
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Session_Control * const impl =
@@ -226,7 +226,7 @@ void POA_Test::Session_Control::session_finished_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -290,12 +290,12 @@ POA_Test::Session_Control::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -411,7 +411,7 @@ POA_Test::Peer::~Peer (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -436,37 +436,37 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::Session> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::Session_Control>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::Session_Control> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_3 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_4 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_5 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_,
           5);
-        
+
       retval =
         this->servant_->create_session (
           arg_1
@@ -475,7 +475,7 @@ namespace POA_Test
           , arg_4
           , arg_5);
     }
-  
+
   private:
     POA_Test::Peer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -512,7 +512,7 @@ void POA_Test::Peer::create_session_skel (
       &_tao_message_count,
       &_tao_peer_count
     };
-  
+
   static size_t const nargs = 6;
 
   POA_Test::Peer * const impl =
@@ -527,7 +527,7 @@ void POA_Test::Peer::create_session_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -544,7 +544,7 @@ void POA_Test::Peer::create_session_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -563,7 +563,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::Peer * const servant_;
   };
@@ -588,7 +588,7 @@ void POA_Test::Peer::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Peer * const impl =
@@ -601,7 +601,7 @@ void POA_Test::Peer::shutdown_skel (
 
   shutdown_Peer command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -665,12 +665,12 @@ POA_Test::Peer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -787,7 +787,7 @@ POA_Test::Session::~Session (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -813,11 +813,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->start (
         arg_1);
     }
-  
+
   private:
     POA_Test::Session * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -846,7 +846,7 @@ void POA_Test::Session::start_skel (
       &retval,
       &_tao_other_sessions
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Session * const impl =
@@ -861,7 +861,7 @@ void POA_Test::Session::start_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -878,7 +878,7 @@ void POA_Test::Session::start_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -903,18 +903,18 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::Payload> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::Payload>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::Payload> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->echo_payload (
           arg_1);
     }
-  
+
   private:
     POA_Test::Session * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -943,7 +943,7 @@ void POA_Test::Session::echo_payload_skel (
       &retval,
       &_tao_the_payload
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Session * const impl =
@@ -958,7 +958,7 @@ void POA_Test::Session::echo_payload_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -975,7 +975,7 @@ void POA_Test::Session::echo_payload_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -994,7 +994,7 @@ namespace POA_Test
     {
       this->servant_->destroy ();
     }
-  
+
   private:
     POA_Test::Session * const servant_;
   };
@@ -1019,7 +1019,7 @@ void POA_Test::Session::destroy_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Session * const impl =
@@ -1032,7 +1032,7 @@ void POA_Test::Session::destroy_skel (
 
   destroy_Session command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1096,12 +1096,12 @@ POA_Test::Session::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1215,7 +1215,7 @@ POA_Test::Coordinator::~Coordinator (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1241,11 +1241,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->add_peer (
         arg_1);
     }
-  
+
   private:
     POA_Test::Coordinator * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1274,7 +1274,7 @@ void POA_Test::Coordinator::add_peer_skel (
       &retval,
       &_tao_the_peer
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Coordinator * const impl =
@@ -1289,7 +1289,7 @@ void POA_Test::Coordinator::add_peer_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1353,12 +1353,12 @@ POA_Test::Coordinator::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

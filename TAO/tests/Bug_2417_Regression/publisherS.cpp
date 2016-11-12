@@ -178,7 +178,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->subscribe (
       arg_1);
   }
@@ -210,7 +210,7 @@ void POA_Publisher::subscribe_skel (
       &retval,
       &_tao_subscriber
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Publisher * const impl =
@@ -225,7 +225,7 @@ void POA_Publisher::subscribe_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -282,7 +282,7 @@ void POA_Publisher::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Publisher * const impl =
@@ -295,7 +295,7 @@ void POA_Publisher::shutdown_skel (
 
   shutdown_Publisher command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -359,12 +359,12 @@ POA_Publisher::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

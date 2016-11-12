@@ -176,7 +176,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:test:1.0",
     "test");
-  
+
 ::CORBA::TypeCode_ptr const _tc_test =
   &_tao_tc_test;
 

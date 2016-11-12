@@ -50,12 +50,12 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_FP_Scheduling_SegmentSchedulingParameter[] =
       {
         { "base_priority", &RTCORBA::_tc_Priority }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -227,7 +227,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:FP_Scheduling/SegmentSchedulingParameterPolicy:1.0",
     "SegmentSchedulingParameterPolicy");
-  
+
 
 namespace FP_Scheduling
 {
@@ -373,7 +373,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:FP_Scheduling/FP_Scheduler:1.0",
     "FP_Scheduler");
-  
+
 
 namespace FP_Scheduling
 {
@@ -537,7 +537,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace FP_Scheduling
 {
-  
+
 
   /// Copying insertion.
   void
@@ -668,7 +668,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace FP_Scheduling
 {
-  
+
 
   /// Copying insertion.
   void

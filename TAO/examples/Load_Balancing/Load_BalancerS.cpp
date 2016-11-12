@@ -157,7 +157,7 @@ POA_Load_Balancer::Object_Group_Factory::~Object_Group_Factory (void)
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -182,18 +182,18 @@ namespace POA_Load_Balancer
         TAO::Portable_Server::get_ret_arg< ::Load_Balancer::Object_Group> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->make_round_robin (
           arg_1);
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -222,7 +222,7 @@ void POA_Load_Balancer::Object_Group_Factory::make_round_robin_skel (
       &retval,
       &_tao_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Load_Balancer::Object_Group_Factory * const impl =
@@ -237,7 +237,7 @@ void POA_Load_Balancer::Object_Group_Factory::make_round_robin_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -254,7 +254,7 @@ void POA_Load_Balancer::Object_Group_Factory::make_round_robin_skel (
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -279,18 +279,18 @@ namespace POA_Load_Balancer
         TAO::Portable_Server::get_ret_arg< ::Load_Balancer::Object_Group> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->make_random (
           arg_1);
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -319,7 +319,7 @@ void POA_Load_Balancer::Object_Group_Factory::make_random_skel (
       &retval,
       &_tao_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Load_Balancer::Object_Group_Factory * const impl =
@@ -334,7 +334,7 @@ void POA_Load_Balancer::Object_Group_Factory::make_random_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -351,7 +351,7 @@ void POA_Load_Balancer::Object_Group_Factory::make_random_skel (
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -376,18 +376,18 @@ namespace POA_Load_Balancer
         TAO::Portable_Server::get_ret_arg< ::Load_Balancer::Object_Group> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->resolve (
           arg_1);
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -416,7 +416,7 @@ void POA_Load_Balancer::Object_Group_Factory::resolve_skel (
       &retval,
       &_tao_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Load_Balancer::Object_Group_Factory * const impl =
@@ -431,7 +431,7 @@ void POA_Load_Balancer::Object_Group_Factory::resolve_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -448,7 +448,7 @@ void POA_Load_Balancer::Object_Group_Factory::resolve_skel (
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -473,11 +473,11 @@ namespace POA_Load_Balancer
         TAO::Portable_Server::get_ret_arg< ::Load_Balancer::Group_List> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->round_robin_groups ();
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -504,7 +504,7 @@ void POA_Load_Balancer::Object_Group_Factory::round_robin_groups_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Load_Balancer::Object_Group_Factory * const impl =
@@ -519,7 +519,7 @@ void POA_Load_Balancer::Object_Group_Factory::round_robin_groups_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -536,7 +536,7 @@ void POA_Load_Balancer::Object_Group_Factory::round_robin_groups_skel (
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -561,11 +561,11 @@ namespace POA_Load_Balancer
         TAO::Portable_Server::get_ret_arg< ::Load_Balancer::Group_List> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->random_groups ();
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -592,7 +592,7 @@ void POA_Load_Balancer::Object_Group_Factory::random_groups_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Load_Balancer::Object_Group_Factory * const impl =
@@ -607,7 +607,7 @@ void POA_Load_Balancer::Object_Group_Factory::random_groups_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -671,12 +671,12 @@ POA_Load_Balancer::Object_Group_Factory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -798,7 +798,7 @@ POA_Load_Balancer::Object_Group::~Object_Group (void)
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -823,11 +823,11 @@ namespace POA_Load_Balancer
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->id ();
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -854,7 +854,7 @@ void POA_Load_Balancer::Object_Group::_get_id_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Load_Balancer::Object_Group * const impl =
@@ -869,7 +869,7 @@ void POA_Load_Balancer::Object_Group::_get_id_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -886,7 +886,7 @@ void POA_Load_Balancer::Object_Group::_get_id_skel (
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -912,11 +912,11 @@ namespace POA_Load_Balancer
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->bind (
         arg_1);
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -945,7 +945,7 @@ void POA_Load_Balancer::Object_Group::bind_skel (
       &retval,
       &_tao_member_
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Load_Balancer::Object_Group * const impl =
@@ -960,7 +960,7 @@ void POA_Load_Balancer::Object_Group::bind_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -977,7 +977,7 @@ void POA_Load_Balancer::Object_Group::bind_skel (
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1003,11 +1003,11 @@ namespace POA_Load_Balancer
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->unbind (
         arg_1);
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1036,7 +1036,7 @@ void POA_Load_Balancer::Object_Group::unbind_skel (
       &retval,
       &_tao_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Load_Balancer::Object_Group * const impl =
@@ -1051,7 +1051,7 @@ void POA_Load_Balancer::Object_Group::unbind_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1068,7 +1068,7 @@ void POA_Load_Balancer::Object_Group::unbind_skel (
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1093,11 +1093,11 @@ namespace POA_Load_Balancer
         TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->resolve ();
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1124,7 +1124,7 @@ void POA_Load_Balancer::Object_Group::resolve_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Load_Balancer::Object_Group * const impl =
@@ -1139,7 +1139,7 @@ void POA_Load_Balancer::Object_Group::resolve_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1156,7 +1156,7 @@ void POA_Load_Balancer::Object_Group::resolve_skel (
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1181,18 +1181,18 @@ namespace POA_Load_Balancer
         TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->resolve_with_id (
           arg_1);
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1221,7 +1221,7 @@ void POA_Load_Balancer::Object_Group::resolve_with_id_skel (
       &retval,
       &_tao_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Load_Balancer::Object_Group * const impl =
@@ -1236,7 +1236,7 @@ void POA_Load_Balancer::Object_Group::resolve_with_id_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1253,7 +1253,7 @@ void POA_Load_Balancer::Object_Group::resolve_with_id_skel (
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1278,11 +1278,11 @@ namespace POA_Load_Balancer
         TAO::Portable_Server::get_ret_arg< ::Load_Balancer::Member_ID_List> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->members ();
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1309,7 +1309,7 @@ void POA_Load_Balancer::Object_Group::members_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Load_Balancer::Object_Group * const impl =
@@ -1324,7 +1324,7 @@ void POA_Load_Balancer::Object_Group::members_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1341,7 +1341,7 @@ void POA_Load_Balancer::Object_Group::members_skel (
 
 namespace POA_Load_Balancer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1360,7 +1360,7 @@ namespace POA_Load_Balancer
     {
       this->servant_->destroy ();
     }
-  
+
   private:
     POA_Load_Balancer::Object_Group * const servant_;
   };
@@ -1385,7 +1385,7 @@ void POA_Load_Balancer::Object_Group::destroy_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Load_Balancer::Object_Group * const impl =
@@ -1398,7 +1398,7 @@ void POA_Load_Balancer::Object_Group::destroy_skel (
 
   destroy_Object_Group command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1462,12 +1462,12 @@ POA_Load_Balancer::Object_Group::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

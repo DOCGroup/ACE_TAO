@@ -208,7 +208,7 @@ Test::Payload_Receiver::more_data (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::Payload>::in_arg_val _tao_the_payload (the_payload);
 
@@ -219,7 +219,7 @@ Test::Payload_Receiver::more_data (
     };
 
   static TAO::Exception_Data
-  _tao_Test_Payload_Receiver_more_data_exceptiondata [] = 
+  _tao_Test_Payload_Receiver_more_data_exceptiondata [] =
     {
       {
         "IDL:Test/Payload_Receiver/Invalid_Payload:1.0",
@@ -237,7 +237,7 @@ Test::Payload_Receiver::more_data (
       "more_data",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -257,7 +257,7 @@ Test::Payload_Receiver::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -438,13 +438,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Payload_Receiver RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

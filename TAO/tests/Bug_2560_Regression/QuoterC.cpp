@@ -167,7 +167,7 @@ Quoter::Stock_Factory::get_stock (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Quoter::Stock>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_symbol (stock_symbol);
 
@@ -178,7 +178,7 @@ Quoter::Stock_Factory::get_stock (
     };
 
   static TAO::Exception_Data
-  _tao_Quoter_Stock_Factory_get_stock_exceptiondata [] = 
+  _tao_Quoter_Stock_Factory_get_stock_exceptiondata [] =
     {
       {
         "IDL:Quoter/Invalid_Stock_Symbol:1.0",
@@ -196,7 +196,7 @@ Quoter::Stock_Factory::get_stock (
       "get_stock",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -373,7 +373,7 @@ Quoter::Stock::symbol (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -410,7 +410,7 @@ Quoter::Stock::full_name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -447,7 +447,7 @@ Quoter::Stock::price (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Double>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -484,7 +484,7 @@ Quoter::Stock::history (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Quoter::Stock::StockHistory>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -642,13 +642,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::Stock_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -705,13 +705,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::Stock RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

@@ -251,7 +251,7 @@ Test::Hello::get_string (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -288,7 +288,7 @@ Test::Hello::system_exception_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -323,7 +323,7 @@ Test::Hello::user_exception_expected (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -332,7 +332,7 @@ Test::Hello::user_exception_expected (
     };
 
   static TAO::Exception_Data
-  _tao_Test_Hello_user_exception_expected_exceptiondata [] = 
+  _tao_Test_Hello_user_exception_expected_exceptiondata [] =
     {
       {
         "IDL:Test/Hello/A:1.0",
@@ -373,7 +373,7 @@ Test::Hello::user_exception_not_expected (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -382,7 +382,7 @@ Test::Hello::user_exception_not_expected (
     };
 
   static TAO::Exception_Data
-  _tao_Test_Hello_user_exception_not_expected_exceptiondata [] = 
+  _tao_Test_Hello_user_exception_not_expected_exceptiondata [] =
     {
       {
         "IDL:Test/Hello/A:1.0",
@@ -423,7 +423,7 @@ Test::Hello::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -605,13 +605,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Hello RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

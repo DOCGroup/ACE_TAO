@@ -150,9 +150,9 @@ void CosEventChannelFactory::DuplicateChannel::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_CosEventChannelFactory_DuplicateChannel = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -274,9 +274,9 @@ void CosEventChannelFactory::NoSuchChannel::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_CosEventChannelFactory_NoSuchChannel = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -398,9 +398,9 @@ void CosEventChannelFactory::BindFailed::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_CosEventChannelFactory_BindFailed = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -467,7 +467,7 @@ CosEventChannelFactory::ChannelFactory::create (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CosEventChannelAdmin::EventChannel>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_channel_id (channel_id);
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_val _tao_store_in_naming_service (store_in_naming_service);
@@ -480,7 +480,7 @@ CosEventChannelFactory::ChannelFactory::create (
     };
 
   static TAO::Exception_Data
-  _tao_CosEventChannelFactory_ChannelFactory_create_exceptiondata [] = 
+  _tao_CosEventChannelFactory_ChannelFactory_create_exceptiondata [] =
     {
       {
         "IDL:CosEventChannelFactory/DuplicateChannel:1.0",
@@ -506,7 +506,7 @@ CosEventChannelFactory::ChannelFactory::create (
       "create",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -529,7 +529,7 @@ CosEventChannelFactory::ChannelFactory::destroy (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_channel_id (channel_id);
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_val _tao_unbind_from_naming_service (unbind_from_naming_service);
@@ -542,7 +542,7 @@ CosEventChannelFactory::ChannelFactory::destroy (
     };
 
   static TAO::Exception_Data
-  _tao_CosEventChannelFactory_ChannelFactory_destroy_exceptiondata [] = 
+  _tao_CosEventChannelFactory_ChannelFactory_destroy_exceptiondata [] =
     {
       {
         "IDL:CosEventChannelFactory/NoSuchChannel:1.0",
@@ -560,7 +560,7 @@ CosEventChannelFactory::ChannelFactory::destroy (
       "destroy",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -580,7 +580,7 @@ CosEventChannelFactory::ChannelFactory::find (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CosEventChannelAdmin::EventChannel>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_channel_id (channel_id);
 
@@ -591,7 +591,7 @@ CosEventChannelFactory::ChannelFactory::find (
     };
 
   static TAO::Exception_Data
-  _tao_CosEventChannelFactory_ChannelFactory_find_exceptiondata [] = 
+  _tao_CosEventChannelFactory_ChannelFactory_find_exceptiondata [] =
     {
       {
         "IDL:CosEventChannelFactory/NoSuchChannel:1.0",
@@ -609,7 +609,7 @@ CosEventChannelFactory::ChannelFactory::find (
       "find",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -631,7 +631,7 @@ CosEventChannelFactory::ChannelFactory::find_channel_id (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CosEventChannelAdmin::EventChannel>::in_arg_val _tao_channel (channel);
 
@@ -642,7 +642,7 @@ CosEventChannelFactory::ChannelFactory::find_channel_id (
     };
 
   static TAO::Exception_Data
-  _tao_CosEventChannelFactory_ChannelFactory_find_channel_id_exceptiondata [] = 
+  _tao_CosEventChannelFactory_ChannelFactory_find_channel_id_exceptiondata [] =
     {
       {
         "IDL:CosEventChannelFactory/NoSuchChannel:1.0",
@@ -660,7 +660,7 @@ CosEventChannelFactory::ChannelFactory::find_channel_id (
       "find_channel_id",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -770,7 +770,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:CosEventChannelFactory/ChannelFactory:1.0",
     "ChannelFactory");
-  
+
 
 namespace CosEventChannelFactory
 {
@@ -796,7 +796,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -817,7 +817,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace CosEventChannelFactory
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -946,7 +946,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -967,7 +967,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace CosEventChannelFactory
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -1096,7 +1096,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -1117,7 +1117,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace CosEventChannelFactory
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -1253,7 +1253,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace CosEventChannelFactory
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1446,13 +1446,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::CosEventChannelFactory::ChannelFactory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

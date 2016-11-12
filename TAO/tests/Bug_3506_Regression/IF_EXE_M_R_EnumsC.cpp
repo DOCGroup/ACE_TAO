@@ -47,7 +47,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_FOOAMode_E[] =
     "FOOAMODE_E_THROUG_WATER",
     "FOOAMODE_E_OVER_GROUND",
     "FOOAMODE_E_X_NOT_SET"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -58,7 +58,7 @@ static TAO::TypeCode::Enum<char const *,
     "FOOAMode_E",
     _tao_enumerators_IF_EXE_M_R_FOOAMode_E,
     3);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -73,7 +73,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_FOOBMode_E[] =
     "FOOBMODE_E_ABSOLUTE",
     "FOOBMODE_E_HEIGHT_OVER_GROUND",
     "FOOBMODE_E_X_NOT_SET"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -84,7 +84,7 @@ static TAO::TypeCode::Enum<char const *,
     "FOOBMode_E",
     _tao_enumerators_IF_EXE_M_R_FOOBMode_E,
     3);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -98,7 +98,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_FOOCMode_E[] =
   {
     "FOOCMODE_E_CORPEN",
     "FOOCMODE_E_TURN"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -109,7 +109,7 @@ static TAO::TypeCode::Enum<char const *,
     "FOOCMode_E",
     _tao_enumerators_IF_EXE_M_R_FOOCMode_E,
     2);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -123,7 +123,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_Selection[] =
   {
     "X_YES",
     "X_NO"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -134,7 +134,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_Selection",
     _tao_enumerators_IF_EXE_M_R_ENUM_Selection,
     2);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -168,7 +168,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_FOOD[] =
     "FOOQ_RETRANSIT",
     "FOOQ_PASS_SAFETY_AREA",
     "FOOQ_DIRECT_TARGET_FOOR"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -179,7 +179,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_FOOD",
     _tao_enumerators_IF_EXE_M_R_ENUM_FOOD,
     22);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -193,7 +193,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_FOOE[] =
   {
     "ABORT_FOOI",
     "ABORT_FOOH"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -204,7 +204,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_FOOE",
     _tao_enumerators_IF_EXE_M_R_ENUM_FOOE,
     2);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -218,7 +218,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_FOOF[] =
   {
     "MAXIMUM",
     "ECOX_NOMY"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -229,7 +229,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_FOOF",
     _tao_enumerators_IF_EXE_M_R_ENUM_FOOF,
     2);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -243,7 +243,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_ControlMode[] =
   {
     "LINEAR",
     "IMMEDIATELY"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -254,7 +254,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_ControlMode",
     _tao_enumerators_IF_EXE_M_R_ENUM_ControlMode,
     2);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -268,7 +268,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_FOOPDirection[] =
   {
     "LEFT_TO_RIGHT",
     "RIGHT_TO_LEFT"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -279,7 +279,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_FOOPDirection",
     _tao_enumerators_IF_EXE_M_R_ENUM_FOOPDirection,
     2);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -293,7 +293,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_QFOOODirection[] =
   {
     "MIDDLE_TO_LEFT",
     "MIDDLE_TO_RIGHT"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -304,7 +304,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_QFOOODirection",
     _tao_enumerators_IF_EXE_M_R_ENUM_QFOOODirection,
     2);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -318,7 +318,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_FOONDirection[] =
   {
     "CLOCKWISE",
     "COUNTERCLOCKWISE"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -329,7 +329,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_FOONDirection",
     _tao_enumerators_IF_EXE_M_R_ENUM_FOONDirection,
     2);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -344,7 +344,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_FOOMMode[] =
     "OFF",
     "ON_COMPLETE_FOOI",
     "ON_ONLY_ON_FOOGS"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -355,7 +355,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_FOOMMode",
     _tao_enumerators_IF_EXE_M_R_ENUM_FOOMMode,
     3);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -370,7 +370,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_TransitionStatus[] =
     "X_NO_TRANSITION",
     "FOOGTRANSITION",
     "ENDTRANSITION"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -381,7 +381,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_TransitionStatus",
     _tao_enumerators_IF_EXE_M_R_ENUM_TransitionStatus,
     3);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -396,7 +396,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_ParameterType[] =
     "SET1",
     "SET2",
     "SET3"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -407,7 +407,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_ParameterType",
     _tao_enumerators_IF_EXE_M_R_ENUM_ParameterType,
     3);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -422,7 +422,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_FOOHType[] =
     "FOOH",
     "IMCMS",
     "FOOQ"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -433,7 +433,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_FOOHType",
     _tao_enumerators_IF_EXE_M_R_ENUM_FOOHType,
     3);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -453,7 +453,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_FOOKType[] =
     "WP_0",
     "WP_S",
     "WP_TGT"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -464,7 +464,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_FOOKType",
     _tao_enumerators_IF_EXE_M_R_ENUM_FOOKType,
     8);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -478,7 +478,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_CL_FOOSMode[] =
   {
     "FOOROACH_CONTROL",
     "FOOG_CONTROL"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -489,7 +489,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_CL_FOOSMode",
     _tao_enumerators_IF_EXE_M_R_ENUM_CL_FOOSMode,
     2);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -504,7 +504,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_FOOLSide[] =
     "LP_STARBOARD",
     "LP_PORT",
     "LP_STERN"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -515,7 +515,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_FOOLSide",
     _tao_enumerators_IF_EXE_M_R_ENUM_FOOLSide,
     3);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -535,7 +535,7 @@ static char const * const _tao_enumerators_IF_EXE_M_R_ENUM_FOOJType[] =
     "INSIDE_2_OUTSIDE_BOTTOM_2_TOP_CTR_CW",
     "INSIDE_2_OUTSIDE_TOP_2_BOTTOM_CW",
     "INSIDE_2_OUTSIDE_TOP_2_BOTTOM_CTR_CW"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -546,7 +546,7 @@ static TAO::TypeCode::Enum<char const *,
     "ENUM_FOOJType",
     _tao_enumerators_IF_EXE_M_R_ENUM_FOOJType,
     8);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -589,7 +589,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::FOOAMode_E>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_FOOAMode_E,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -619,7 +619,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::FOOAMode_E>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_FOOAMode_E,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -663,7 +663,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::FOOBMode_E>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_FOOBMode_E,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -693,7 +693,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::FOOBMode_E>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_FOOBMode_E,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -737,7 +737,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::FOOCMode_E>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_FOOCMode_E,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -767,7 +767,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::FOOCMode_E>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_FOOCMode_E,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -811,7 +811,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_Selection>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_Selection,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -841,7 +841,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_Selection>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_Selection,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -885,7 +885,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_FOOD>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_FOOD,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -915,7 +915,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_FOOD>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_FOOD,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -959,7 +959,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_FOOE>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_FOOE,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -989,7 +989,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_FOOE>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_FOOE,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1033,7 +1033,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_FOOF>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_FOOF,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1063,7 +1063,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_FOOF>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_FOOF,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1107,7 +1107,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_ControlMode>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_ControlMode,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1137,7 +1137,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_ControlMode>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_ControlMode,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1181,7 +1181,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_FOOPDirection>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_FOOPDirection,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1211,7 +1211,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_FOOPDirection>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_FOOPDirection,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1255,7 +1255,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_QFOOODirection>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_QFOOODirection,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1285,7 +1285,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_QFOOODirection>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_QFOOODirection,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1329,7 +1329,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_FOONDirection>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_FOONDirection,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1359,7 +1359,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_FOONDirection>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_FOONDirection,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1403,7 +1403,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_FOOMMode>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_FOOMMode,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1433,7 +1433,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_FOOMMode>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_FOOMMode,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1477,7 +1477,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_TransitionStatus>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_TransitionStatus,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1507,7 +1507,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_TransitionStatus>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_TransitionStatus,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1551,7 +1551,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_ParameterType>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_ParameterType,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1581,7 +1581,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_ParameterType>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_ParameterType,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1625,7 +1625,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_FOOHType>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_FOOHType,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1655,7 +1655,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_FOOHType>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_FOOHType,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1699,7 +1699,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_FOOKType>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_FOOKType,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1729,7 +1729,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_FOOKType>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_FOOKType,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1773,7 +1773,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_CL_FOOSMode>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_CL_FOOSMode,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1803,7 +1803,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_CL_FOOSMode>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_CL_FOOSMode,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1847,7 +1847,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_FOOLSide>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_FOOLSide,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1877,7 +1877,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_FOOLSide>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_FOOLSide,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1921,7 +1921,7 @@ namespace IF_EXE_M_R
       TAO::Any_Basic_Impl_T< ::IF_EXE_M_R::ENUM_FOOJType>::extract (
           _tao_any,
           ::IF_EXE_M_R::_tc_ENUM_FOOJType,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1951,7 +1951,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<IF_EXE_M_R::ENUM_FOOJType>::extract (
         _tao_any,
         IF_EXE_M_R::_tc_ENUM_FOOJType,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1975,12 +1975,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::FOOAMode_E> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2003,12 +2003,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::FOOBMode_E> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2031,12 +2031,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::FOOCMode_E> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2059,12 +2059,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_Selection> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2087,12 +2087,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_FOOD> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2115,12 +2115,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_FOOE> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2143,12 +2143,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_FOOF> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2171,12 +2171,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_ControlMode> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2199,12 +2199,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_FOOPDirection> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2227,12 +2227,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_QFOOODirection> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2255,12 +2255,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_FOONDirection> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2283,12 +2283,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_FOOMMode> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2311,12 +2311,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_TransitionStatus> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2339,12 +2339,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_ParameterType> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2367,12 +2367,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_FOOHType> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2395,12 +2395,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_FOOKType> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2423,12 +2423,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_CL_FOOSMode> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2451,12 +2451,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_FOOLSide> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2479,12 +2479,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<IF_EXE_M_R::ENUM_FOOJType> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 

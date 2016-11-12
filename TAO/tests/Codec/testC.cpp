@@ -47,7 +47,7 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Foo_Bar[] =
       {
         { "A", &CORBA::_tc_long },
@@ -56,7 +56,7 @@ static TAO::TypeCode::Struct_Field<
         { "D", &CORBA::_tc_string },
         { "E", &CORBA::_tc_wstring }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,

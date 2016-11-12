@@ -153,7 +153,7 @@ POA_Database::Entry::~Entry (void)
 
 namespace POA_Database
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -178,11 +178,11 @@ namespace POA_Database
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->name ();
     }
-  
+
   private:
     POA_Database::Entry * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -209,7 +209,7 @@ void POA_Database::Entry::_get_name_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Database::Entry * const impl =
@@ -224,7 +224,7 @@ void POA_Database::Entry::_get_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -288,12 +288,12 @@ POA_Database::Entry::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -370,8 +370,8 @@ TAO_Database_Employee_Perfect_Hash_OpTable::lookup (const char *str, unsigned in
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -6,  -2,   5,  -1, -18,  -1,  -1,   8,   9,  10,  11, 
-       12, 
+       -1,  -1,  -1,  -6,  -2,   5,  -1, -18,  -1,  -1,   8,   9,  10,  11,
+       12,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -430,7 +430,7 @@ POA_Database::Employee::~Employee (void)
 
 namespace POA_Database
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -455,11 +455,11 @@ namespace POA_Database
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->id ();
     }
-  
+
   private:
     POA_Database::Employee * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -486,7 +486,7 @@ void POA_Database::Employee::_get_id_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Database::Employee * const impl =
@@ -501,7 +501,7 @@ void POA_Database::Employee::_get_id_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -518,7 +518,7 @@ void POA_Database::Employee::_get_id_skel (
 
 namespace POA_Database
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -544,11 +544,11 @@ namespace POA_Database
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->id (
         arg_1);
     }
-  
+
   private:
     POA_Database::Employee * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -577,7 +577,7 @@ void POA_Database::Employee::_set_id_skel (
       &retval,
       &_tao_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Database::Employee * const impl =
@@ -592,7 +592,7 @@ void POA_Database::Employee::_set_id_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -660,12 +660,12 @@ POA_Database::Employee::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -784,7 +784,7 @@ POA_Database::Agent::~Agent (void)
 
 namespace POA_Database
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -809,32 +809,32 @@ namespace POA_Database
         TAO::Portable_Server::get_ret_arg< ::Database::Entry> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::Database::NVPairSequence>::in_arg_type arg_3 =
         TAO::Portable_Server::get_in_arg< ::Database::NVPairSequence> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       retval =
         this->servant_->create_entry (
           arg_1
           , arg_2
           , arg_3);
     }
-  
+
   private:
     POA_Database::Agent * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -867,7 +867,7 @@ void POA_Database::Agent::create_entry_skel (
       &_tao_entry_type,
       &_tao_initial_attributes
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Database::Agent * const impl =
@@ -882,7 +882,7 @@ void POA_Database::Agent::create_entry_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -899,7 +899,7 @@ void POA_Database::Agent::create_entry_skel (
 
 namespace POA_Database
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -924,25 +924,25 @@ namespace POA_Database
         TAO::Portable_Server::get_ret_arg< ::Database::Entry> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->find_entry (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_Database::Agent * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -973,7 +973,7 @@ void POA_Database::Agent::find_entry_skel (
       &_tao_key,
       &_tao_entry_type
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Database::Agent * const impl =
@@ -988,7 +988,7 @@ void POA_Database::Agent::find_entry_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1005,7 +1005,7 @@ void POA_Database::Agent::find_entry_skel (
 
 namespace POA_Database
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1031,18 +1031,18 @@ namespace POA_Database
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->destroy_entry (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_Database::Agent * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1073,7 +1073,7 @@ void POA_Database::Agent::destroy_entry_skel (
       &_tao_key,
       &_tao_entry_type
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Database::Agent * const impl =
@@ -1088,7 +1088,7 @@ void POA_Database::Agent::destroy_entry_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1105,7 +1105,7 @@ void POA_Database::Agent::destroy_entry_skel (
 
 namespace POA_Database
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1124,7 +1124,7 @@ namespace POA_Database
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Database::Agent * const servant_;
   };
@@ -1149,7 +1149,7 @@ void POA_Database::Agent::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Database::Agent * const impl =
@@ -1162,7 +1162,7 @@ void POA_Database::Agent::shutdown_skel (
 
   shutdown_Agent command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1226,12 +1226,12 @@ POA_Database::Agent::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

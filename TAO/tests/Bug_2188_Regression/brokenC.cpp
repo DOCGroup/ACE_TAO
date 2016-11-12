@@ -46,12 +46,12 @@ tmp1CharArray_dup (const tmp1CharArray_slice *_tao_src_array)
 {
   tmp1CharArray_slice *_tao_dup_array =
     tmp1CharArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <tmp1CharArray_slice *> (0);
     }
-  
+
   tmp1CharArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -91,12 +91,12 @@ OctetArray_dup (const OctetArray_slice *_tao_src_array)
 {
   OctetArray_slice *_tao_dup_array =
     OctetArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <OctetArray_slice *> (0);
     }
-  
+
   OctetArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -136,12 +136,12 @@ ShortArray_dup (const ShortArray_slice *_tao_src_array)
 {
   ShortArray_slice *_tao_dup_array =
     ShortArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <ShortArray_slice *> (0);
     }
-  
+
   ShortArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -181,12 +181,12 @@ LongArray_dup (const LongArray_slice *_tao_src_array)
 {
   LongArray_slice *_tao_dup_array =
     LongArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <LongArray_slice *> (0);
     }
-  
+
   LongArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -226,12 +226,12 @@ LongLongArray_dup (const LongLongArray_slice *_tao_src_array)
 {
   LongLongArray_slice *_tao_dup_array =
     LongLongArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <LongLongArray_slice *> (0);
     }
-  
+
   LongLongArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -271,12 +271,12 @@ UShortArray_dup (const UShortArray_slice *_tao_src_array)
 {
   UShortArray_slice *_tao_dup_array =
     UShortArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <UShortArray_slice *> (0);
     }
-  
+
   UShortArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -316,12 +316,12 @@ ULongArray_dup (const ULongArray_slice *_tao_src_array)
 {
   ULongArray_slice *_tao_dup_array =
     ULongArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <ULongArray_slice *> (0);
     }
-  
+
   ULongArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -361,12 +361,12 @@ ULongLongArray_dup (const ULongLongArray_slice *_tao_src_array)
 {
   ULongLongArray_slice *_tao_dup_array =
     ULongLongArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <ULongLongArray_slice *> (0);
     }
-  
+
   ULongLongArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -406,12 +406,12 @@ FloatArray_dup (const FloatArray_slice *_tao_src_array)
 {
   FloatArray_slice *_tao_dup_array =
     FloatArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <FloatArray_slice *> (0);
     }
-  
+
   FloatArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -451,12 +451,12 @@ DoubleArray_dup (const DoubleArray_slice *_tao_src_array)
 {
   DoubleArray_slice *_tao_dup_array =
     DoubleArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <DoubleArray_slice *> (0);
     }
-  
+
   DoubleArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -496,12 +496,12 @@ StringArray_dup (const StringArray_slice *_tao_src_array)
 {
   StringArray_slice *_tao_dup_array =
     StringArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <StringArray_slice *> (0);
     }
-  
+
   StringArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -541,12 +541,12 @@ BooleanArray_dup (const BooleanArray_slice *_tao_src_array)
 {
   BooleanArray_slice *_tao_dup_array =
     BooleanArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <BooleanArray_slice *> (0);
     }
-  
+
   BooleanArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -586,12 +586,12 @@ MyEnumArray_dup (const MyEnumArray_slice *_tao_src_array)
 {
   MyEnumArray_slice *_tao_dup_array =
     MyEnumArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <MyEnumArray_slice *> (0);
     }
-  
+
   MyEnumArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -631,12 +631,12 @@ LongArrayArray_dup (const LongArrayArray_slice *_tao_src_array)
 {
   LongArrayArray_slice *_tao_dup_array =
     LongArrayArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <LongArrayArray_slice *> (0);
     }
-  
+
   LongArrayArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -715,7 +715,7 @@ moola::Account::name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -752,7 +752,7 @@ moola::Account::name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_name (name);
 
@@ -769,7 +769,7 @@ moola::Account::name (
       "_set_name",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -786,7 +786,7 @@ moola::Account::balance (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Float>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -823,7 +823,7 @@ moola::Account::balance (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Float>::in_arg_val _tao_balance (balance);
 
@@ -840,7 +840,7 @@ moola::Account::balance (
       "_set_balance",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -857,7 +857,7 @@ moola::Account::deposit (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Float>::in_arg_val _tao_amount (amount);
 
@@ -874,7 +874,7 @@ moola::Account::deposit (
       "deposit",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -891,7 +891,7 @@ moola::Account::withdraw (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Float>::in_arg_val _tao_amount (amount);
 
@@ -908,7 +908,7 @@ moola::Account::withdraw (
       "withdraw",
       8,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1004,12 +1004,12 @@ BucketArray_dup (const BucketArray_slice *_tao_src_array)
 {
   BucketArray_slice *_tao_dup_array =
     BucketArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <BucketArray_slice *> (0);
     }
-  
+
   BucketArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -1049,12 +1049,12 @@ BucketArrayArray_dup (const BucketArrayArray_slice *_tao_src_array)
 {
   BucketArrayArray_slice *_tao_dup_array =
     BucketArrayArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <BucketArrayArray_slice *> (0);
     }
-  
+
   BucketArrayArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -1097,12 +1097,12 @@ AccountArray_dup (const AccountArray_slice *_tao_src_array)
 {
   AccountArray_slice *_tao_dup_array =
     AccountArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <AccountArray_slice *> (0);
     }
-  
+
   AccountArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -1180,7 +1180,7 @@ ArrayTest::longArrayOp (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::LongArray_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::LongArray_tag>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::LongArray_tag>::inout_arg_val _tao_p2 (p2);
@@ -1201,7 +1201,7 @@ ArrayTest::longArrayOp (
       "longArrayOp",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1222,7 +1222,7 @@ ArrayTest::stringArrayOp (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::StringArray_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::StringArray_tag>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::StringArray_tag>::inout_arg_val _tao_p2 (p2);
@@ -1243,7 +1243,7 @@ ArrayTest::stringArrayOp (
       "stringArrayOp",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1264,7 +1264,7 @@ ArrayTest::shortArrayOp (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ShortArray_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ShortArray_tag>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::ShortArray_tag>::inout_arg_val _tao_p2 (p2);
@@ -1285,7 +1285,7 @@ ArrayTest::shortArrayOp (
       "shortArrayOp",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1306,7 +1306,7 @@ ArrayTest::ushortArrayOp (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::UShortArray_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::UShortArray_tag>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::UShortArray_tag>::inout_arg_val _tao_p2 (p2);
@@ -1327,7 +1327,7 @@ ArrayTest::ushortArrayOp (
       "ushortArrayOp",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1348,7 +1348,7 @@ ArrayTest::charArrayOp (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::tmp1CharArray_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::tmp1CharArray_tag>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::tmp1CharArray_tag>::inout_arg_val _tao_p2 (p2);
@@ -1369,7 +1369,7 @@ ArrayTest::charArrayOp (
       "charArrayOp",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1390,7 +1390,7 @@ ArrayTest::octetArrayOp (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::OctetArray_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::OctetArray_tag>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::OctetArray_tag>::inout_arg_val _tao_p2 (p2);
@@ -1411,7 +1411,7 @@ ArrayTest::octetArrayOp (
       "octetArrayOp",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1432,7 +1432,7 @@ ArrayTest::doubleArrayOp (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::DoubleArray_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::DoubleArray_tag>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::DoubleArray_tag>::inout_arg_val _tao_p2 (p2);
@@ -1453,7 +1453,7 @@ ArrayTest::doubleArrayOp (
       "doubleArrayOp",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1472,7 +1472,7 @@ ArrayTest::a_longArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::LongArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1509,7 +1509,7 @@ ArrayTest::a_longArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::LongArray_tag>::in_arg_val _tao_a_longArray (a_longArray);
 
@@ -1526,7 +1526,7 @@ ArrayTest::a_longArray (
       "_set_a_longArray",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1543,7 +1543,7 @@ ArrayTest::a_ulongArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ULongArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1580,7 +1580,7 @@ ArrayTest::a_ulongArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ULongArray_tag>::in_arg_val _tao_a_ulongArray (a_ulongArray);
 
@@ -1597,7 +1597,7 @@ ArrayTest::a_ulongArray (
       "_set_a_ulongArray",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1614,7 +1614,7 @@ ArrayTest::a_stringArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::StringArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1651,7 +1651,7 @@ ArrayTest::a_stringArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::StringArray_tag>::in_arg_val _tao_a_stringArray (a_stringArray);
 
@@ -1668,7 +1668,7 @@ ArrayTest::a_stringArray (
       "_set_a_stringArray",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1685,7 +1685,7 @@ ArrayTest::a_shortArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ShortArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1722,7 +1722,7 @@ ArrayTest::a_shortArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ShortArray_tag>::in_arg_val _tao_a_shortArray (a_shortArray);
 
@@ -1739,7 +1739,7 @@ ArrayTest::a_shortArray (
       "_set_a_shortArray",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1756,7 +1756,7 @@ ArrayTest::a_ushortArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::UShortArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1793,7 +1793,7 @@ ArrayTest::a_ushortArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::UShortArray_tag>::in_arg_val _tao_a_ushortArray (a_ushortArray);
 
@@ -1810,7 +1810,7 @@ ArrayTest::a_ushortArray (
       "_set_a_ushortArray",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1827,7 +1827,7 @@ ArrayTest::a_char (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_char>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1864,7 +1864,7 @@ ArrayTest::a_char (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ACE_InputCDR::to_char>::in_arg_val _tao_a_char (a_char);
 
@@ -1881,7 +1881,7 @@ ArrayTest::a_char (
       "_set_a_char",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1898,7 +1898,7 @@ ArrayTest::a_charArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::tmp1CharArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1935,7 +1935,7 @@ ArrayTest::a_charArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::tmp1CharArray_tag>::in_arg_val _tao_a_charArray (a_charArray);
 
@@ -1952,7 +1952,7 @@ ArrayTest::a_charArray (
       "_set_a_charArray",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1969,7 +1969,7 @@ ArrayTest::a_octetArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::OctetArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2006,7 +2006,7 @@ ArrayTest::a_octetArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::OctetArray_tag>::in_arg_val _tao_a_octetArray (a_octetArray);
 
@@ -2023,7 +2023,7 @@ ArrayTest::a_octetArray (
       "_set_a_octetArray",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2040,7 +2040,7 @@ ArrayTest::a_doubleArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::DoubleArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2077,7 +2077,7 @@ ArrayTest::a_doubleArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::DoubleArray_tag>::in_arg_val _tao_a_doubleArray (a_doubleArray);
 
@@ -2094,7 +2094,7 @@ ArrayTest::a_doubleArray (
       "_set_a_doubleArray",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2111,7 +2111,7 @@ ArrayTest::a_floatArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::FloatArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2148,7 +2148,7 @@ ArrayTest::a_floatArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::FloatArray_tag>::in_arg_val _tao_a_floatArray (a_floatArray);
 
@@ -2165,7 +2165,7 @@ ArrayTest::a_floatArray (
       "_set_a_floatArray",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2182,7 +2182,7 @@ ArrayTest::a_bucketArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::BucketArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2219,7 +2219,7 @@ ArrayTest::a_bucketArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::BucketArray_tag>::in_arg_val _tao_a_bucketArray (a_bucketArray);
 
@@ -2236,7 +2236,7 @@ ArrayTest::a_bucketArray (
       "_set_a_bucketArray",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2253,7 +2253,7 @@ ArrayTest::a_accountArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::AccountArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2290,7 +2290,7 @@ ArrayTest::a_accountArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::AccountArray_tag>::in_arg_val _tao_a_accountArray (a_accountArray);
 
@@ -2307,7 +2307,7 @@ ArrayTest::a_accountArray (
       "_set_a_accountArray",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2324,7 +2324,7 @@ ArrayTest::a_booleanArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::BooleanArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2361,7 +2361,7 @@ ArrayTest::a_booleanArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::BooleanArray_tag>::in_arg_val _tao_a_booleanArray (a_booleanArray);
 
@@ -2378,7 +2378,7 @@ ArrayTest::a_booleanArray (
       "_set_a_booleanArray",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2395,7 +2395,7 @@ ArrayTest::a_longArrayArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::LongArrayArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2432,7 +2432,7 @@ ArrayTest::a_longArrayArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::LongArrayArray_tag>::in_arg_val _tao_a_longArrayArray (a_longArrayArray);
 
@@ -2449,7 +2449,7 @@ ArrayTest::a_longArrayArray (
       "_set_a_longArrayArray",
       21,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2466,7 +2466,7 @@ ArrayTest::a_myEnumArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::MyEnumArray_tag>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2503,7 +2503,7 @@ ArrayTest::a_myEnumArray (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::MyEnumArray_tag>::in_arg_val _tao_a_myEnumArray (a_myEnumArray);
 
@@ -2520,7 +2520,7 @@ ArrayTest::a_myEnumArray (
       "_set_a_myEnumArray",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2652,7 +2652,7 @@ ServerAdmin::target (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ArrayTest>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2689,7 +2689,7 @@ ServerAdmin::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2809,12 +2809,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<enum1> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -3133,7 +3133,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     const StringArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 10 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm << _tao_array [i0].in ());
@@ -3147,7 +3147,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     StringArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 10 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm >> _tao_array [i0].out ());
@@ -3201,7 +3201,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     const MyEnumArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 10 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm << _tao_array [i0]);
@@ -3215,7 +3215,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     MyEnumArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 10 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm >> _tao_array [i0]);
@@ -3281,13 +3281,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::moola::Account RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3357,7 +3357,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     const BucketArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 10 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm << _tao_array [i0]);
@@ -3371,7 +3371,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     BucketArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 10 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm >> _tao_array [i0]);
@@ -3395,7 +3395,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     const BucketArrayArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 10 && _tao_marshal_flag; ++i0)
     {
       for ( ::CORBA::ULong i1 = 0; i1 < 10 && _tao_marshal_flag; ++i1)
@@ -3412,7 +3412,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     BucketArrayArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 10 && _tao_marshal_flag; ++i0)
     {
       for ( ::CORBA::ULong i1 = 0; i1 < 10 && _tao_marshal_flag; ++i1)
@@ -3439,10 +3439,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     const AccountArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 10 && _tao_marshal_flag; ++i0)
     {
-      _tao_marshal_flag = 
+      _tao_marshal_flag =
         TAO::Objref_Traits<moola::Account>::marshal (_tao_array[i0].in (), strm);
     }
 
@@ -3454,7 +3454,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     AccountArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 10 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm >> _tao_array [i0]);
@@ -3517,13 +3517,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::ArrayTest RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3554,13 +3554,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::ServerAdmin RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

@@ -120,8 +120,8 @@ TAO_Grid_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1, -12,  -2,   3,  -1,   4,  -1,   5,   6,  -1,   7,  25,  -1,  10, 
-       11, -34,  -8,  -2,  -1,  -1,  14, 
+       -1, -12,  -2,   3,  -1,   4,  -1,   5,   6,  -1,   7,  25,  -1,  10,
+       11, -34,  -8,  -2,  -1,  -1,  14,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -201,7 +201,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->height ();
   }
@@ -231,7 +231,7 @@ void POA_Grid::_get_height_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Grid * const impl =
@@ -246,7 +246,7 @@ void POA_Grid::_get_height_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -286,7 +286,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->height (
       arg_1);
   }
@@ -318,7 +318,7 @@ void POA_Grid::_set_height_skel (
       &retval,
       &_tao_height
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Grid * const impl =
@@ -333,7 +333,7 @@ void POA_Grid::_set_height_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -372,7 +372,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->width ();
   }
@@ -402,7 +402,7 @@ void POA_Grid::_get_width_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Grid * const impl =
@@ -417,7 +417,7 @@ void POA_Grid::_get_width_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -457,7 +457,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->width (
       arg_1);
   }
@@ -489,7 +489,7 @@ void POA_Grid::_set_width_skel (
       &retval,
       &_tao_width
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Grid * const impl =
@@ -504,7 +504,7 @@ void POA_Grid::_set_width_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -544,19 +544,19 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_3 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     this->servant_->set (
       arg_1
       , arg_2
@@ -594,7 +594,7 @@ void POA_Grid::set_skel (
       &_tao_m,
       &_tao_value
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Grid * const impl =
@@ -609,7 +609,7 @@ void POA_Grid::set_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -648,19 +648,19 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     retval =
       this->servant_->get (
         arg_1
@@ -696,7 +696,7 @@ void POA_Grid::get_skel (
       &_tao_n,
       &_tao_m
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Grid * const impl =
@@ -711,7 +711,7 @@ void POA_Grid::get_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -768,7 +768,7 @@ void POA_Grid::destroy_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Grid * const impl =
@@ -781,7 +781,7 @@ void POA_Grid::destroy_skel (
 
   destroy_Grid command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -845,12 +845,12 @@ POA_Grid::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -986,19 +986,19 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Grid> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     retval =
       this->servant_->make_grid (
         arg_1
@@ -1034,7 +1034,7 @@ void POA_Grid_Factory::make_grid_skel (
       &_tao_height,
       &_tao_width
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Grid_Factory * const impl =
@@ -1049,7 +1049,7 @@ void POA_Grid_Factory::make_grid_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1106,7 +1106,7 @@ void POA_Grid_Factory::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Grid_Factory * const impl =
@@ -1119,7 +1119,7 @@ void POA_Grid_Factory::shutdown_skel (
 
   shutdown_Grid_Factory command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1183,12 +1183,12 @@ POA_Grid_Factory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

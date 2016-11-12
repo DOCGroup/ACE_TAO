@@ -58,7 +58,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "name", &CORBA::_tc_string, ::CORBA::PUBLIC_MEMBER },
     { "value", &CORBA::_tc_any, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -72,14 +72,14 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_demo_value_idl_ConfigValue,
     2);
-  
+
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       ::CORBA::TypeCode_ptr const _tc_ConfigValue =
@@ -184,27 +184,27 @@ demo::value::idl::ConfigValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = ConfigValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -321,7 +321,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &demo::value::idl::_tc_ConfigValue,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_demo_value_idl_ConfigValues_0 =
         &demo_value_idl_ConfigValues_0;
     }
@@ -340,14 +340,14 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:demo/value/idl/ConfigValues:1.0",
     "ConfigValues",
     &TAO::TypeCode::tc_demo_value_idl_ConfigValues_0);
-  
+
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       ::CORBA::TypeCode_ptr const _tc_ConfigValues =
@@ -362,7 +362,7 @@ namespace demo
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_demo_value_idl_BaseValue[] =
   {
     { "basic_data", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -376,14 +376,14 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_demo_value_idl_BaseValue,
     1);
-  
+
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       ::CORBA::TypeCode_ptr const _tc_BaseValue =
@@ -488,27 +488,27 @@ demo::value::idl::BaseValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = BaseValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -554,7 +554,7 @@ demo::value::idl::BaseValue_init::create_for_unmarshal (void)
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_demo_value_idl_TValue[] =
   {
     { "data", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -568,14 +568,14 @@ static TAO::TypeCode::Value<char const *,
     &demo::value::idl::_tc_BaseValue,
     _tao_fields_demo_value_idl_TValue,
     1);
-  
+
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       ::CORBA::TypeCode_ptr const _tc_TValue =
@@ -681,27 +681,27 @@ demo::value::idl::TValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = TValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -752,14 +752,14 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:demo/value/idl/boxedLong:1.0",
     "boxedLong",
     &CORBA::_tc_long);
-  
+
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       ::CORBA::TypeCode_ptr const _tc_boxedLong =
@@ -809,7 +809,7 @@ demo::value::idl::boxedLong::_copy_value (void)
     result,
     boxedLong (*this),
     0);
-    
+
   return result;
 }
 
@@ -862,24 +862,24 @@ demo::value::idl::boxedLong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return demo::value::idl::boxedLong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     boxedLong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -917,14 +917,14 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:demo/value/idl/boxedString:1.0",
     "boxedString",
     &CORBA::_tc_string);
-  
+
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       ::CORBA::TypeCode_ptr const _tc_boxedString =
@@ -974,7 +974,7 @@ demo::value::idl::boxedString::_copy_value (void)
     result,
     boxedString (*this),
     0);
-    
+
   return result;
 }
 
@@ -1027,24 +1027,24 @@ demo::value::idl::boxedString::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return demo::value::idl::boxedString::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     boxedString,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -1078,7 +1078,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "b1", &demo::value::idl::_tc_boxedLong, ::CORBA::PUBLIC_MEMBER },
     { "b2", &demo::value::idl::_tc_boxedLong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -1092,14 +1092,14 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_demo_value_idl_boxedValue,
     2);
-  
+
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       ::CORBA::TypeCode_ptr const _tc_boxedValue =
@@ -1204,27 +1204,27 @@ demo::value::idl::boxedValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = boxedValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1271,7 +1271,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "id", &CORBA::_tc_long, ::CORBA::PUBLIC_MEMBER },
     { "next", &demo::value::idl::_tc_Node, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Value<char const *,
@@ -1289,14 +1289,14 @@ static TAO::TypeCode::Recursive_Type<
     &::CORBA::_tc_null,
     _tao_fields_demo_value_idl_Node,
     2);
-  
+
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       ::CORBA::TypeCode_ptr const _tc_Node =
@@ -1401,27 +1401,27 @@ demo::value::idl::Node::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Node::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1505,7 +1505,7 @@ demo::value::idl::ValueServer::receive_boxedvalue (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::demo::value::idl::boxedValue>::in_arg_val _tao_b (b);
 
@@ -1522,7 +1522,7 @@ demo::value::idl::ValueServer::receive_boxedvalue (
       "receive_boxedvalue",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1542,7 +1542,7 @@ demo::value::idl::ValueServer::receive_long (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::demo::value::idl::boxedLong>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::demo::value::idl::boxedLong>::in_arg_val _tao_p2 (p2);
@@ -1561,7 +1561,7 @@ demo::value::idl::ValueServer::receive_long (
       "receive_long",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1581,7 +1581,7 @@ demo::value::idl::ValueServer::receive_string (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::demo::value::idl::boxedString>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::demo::value::idl::boxedString>::in_arg_val _tao_s2 (s2);
@@ -1600,7 +1600,7 @@ demo::value::idl::ValueServer::receive_string (
       "receive_string",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1619,7 +1619,7 @@ demo::value::idl::ValueServer::receive_list (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::demo::value::idl::Node>::in_arg_val _tao_node (node);
 
@@ -1636,7 +1636,7 @@ demo::value::idl::ValueServer::receive_list (
       "receive_list",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1655,7 +1655,7 @@ demo::value::idl::ValueServer::receive_truncatable (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::demo::value::idl::TValue>::inout_arg_val _tao_v (v);
 
@@ -1672,7 +1672,7 @@ demo::value::idl::ValueServer::receive_truncatable (
       "receive_truncatable",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1691,7 +1691,7 @@ demo::value::idl::ValueServer::receive_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::demo::value::idl::ConfigValues>::in_arg_val _tao_v (v);
 
@@ -1708,7 +1708,7 @@ demo::value::idl::ValueServer::receive_sequence (
       "receive_sequence",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1815,14 +1815,14 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:demo/value/idl/ValueServer:1.0",
     "ValueServer");
-  
+
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       ::CORBA::TypeCode_ptr const _tc_ValueServer =
@@ -2242,10 +2242,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       // Copying insertion.
@@ -2297,7 +2297,7 @@ namespace demo
             );
       }
 
-      
+
     }
   }
 }
@@ -2378,13 +2378,13 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
-      
+
       // Copying insertion.
       void operator<<= (
           ::CORBA::Any &_tao_any,
@@ -2530,10 +2530,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       // Copying insertion.
@@ -2585,7 +2585,7 @@ namespace demo
             );
       }
 
-      
+
     }
   }
 }
@@ -2680,10 +2680,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       // Copying insertion.
@@ -2735,7 +2735,7 @@ namespace demo
             );
       }
 
-      
+
     }
   }
 }
@@ -2830,10 +2830,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       // Copying insertion.
@@ -2874,7 +2874,7 @@ namespace demo
             );
       }
 
-      
+
     }
   }
 }
@@ -2961,10 +2961,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       // Copying insertion.
@@ -3005,7 +3005,7 @@ namespace demo
             );
       }
 
-      
+
     }
   }
 }
@@ -3092,10 +3092,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       // Copying insertion.
@@ -3147,7 +3147,7 @@ namespace demo
             );
       }
 
-      
+
     }
   }
 }
@@ -3242,10 +3242,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
       // Copying insertion.
@@ -3297,7 +3297,7 @@ namespace demo
             );
       }
 
-      
+
     }
   }
 }
@@ -3388,13 +3388,13 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
-      
+
 
       /// Copying insertion.
       void
@@ -3546,16 +3546,16 @@ OBV_demo::value::idl::ConfigValue::_tao_marshal_state (TAO_OutputCDR &strm, TAO_
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_name.in ()) &&
       (strm << _pd_value);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3564,20 +3564,20 @@ OBV_demo::value::idl::ConfigValue::_tao_unmarshal_state (TAO_InputCDR &strm, TAO
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_name.out ()) &&
       (strm >> _pd_value);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -3675,15 +3675,15 @@ OBV_demo::value::idl::BaseValue::_tao_marshal_state (TAO_OutputCDR &strm, TAO_Ch
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_basic_data);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3692,19 +3692,19 @@ OBV_demo::value::idl::BaseValue::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_C
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_basic_data);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -3776,26 +3776,26 @@ OBV_demo::value::idl::TValue::_tao_marshal_state (TAO_OutputCDR &strm, TAO_Chunk
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__demo_value_idl_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_data);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3804,27 +3804,27 @@ OBV_demo::value::idl::TValue::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_Chun
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__demo_value_idl_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_data);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -3964,16 +3964,16 @@ OBV_demo::value::idl::boxedValue::_tao_marshal_state (TAO_OutputCDR &strm, TAO_C
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_b1.in ()) &&
       (strm << _pd_b2.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3982,20 +3982,20 @@ OBV_demo::value::idl::boxedValue::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_b1.out ()) &&
       (strm >> _pd_b2.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -4067,16 +4067,16 @@ OBV_demo::value::idl::Node::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkIn
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_id) &&
       (strm << _pd_next.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -4085,20 +4085,20 @@ OBV_demo::value::idl::Node::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkI
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_id) &&
       (strm >> _pd_next.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -4132,13 +4132,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::demo::value::idl::ValueServer RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

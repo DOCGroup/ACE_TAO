@@ -176,7 +176,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->shutdown (
       arg_1);
   }
@@ -208,7 +208,7 @@ void POA_Callback::shutdown_skel (
       &retval,
       &_tao_is_clean
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Callback * const impl =
@@ -223,7 +223,7 @@ void POA_Callback::shutdown_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -287,12 +287,12 @@ POA_Callback::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -429,25 +429,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Callback>::in_arg_type arg_3 =
       TAO::Portable_Server::get_in_arg< ::Callback> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_method (
         arg_1
@@ -486,7 +486,7 @@ void POA_Simple_Server::test_method_skel (
       &_tao_is_clean,
       &_tao_cb
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Simple_Server * const impl =
@@ -501,7 +501,7 @@ void POA_Simple_Server::test_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -541,7 +541,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->shutdown_now (
       arg_1);
   }
@@ -573,7 +573,7 @@ void POA_Simple_Server::shutdown_now_skel (
       &retval,
       &_tao_is_clean
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Simple_Server * const impl =
@@ -588,7 +588,7 @@ void POA_Simple_Server::shutdown_now_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -645,7 +645,7 @@ void POA_Simple_Server::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Simple_Server * const impl =
@@ -658,7 +658,7 @@ void POA_Simple_Server::shutdown_skel (
 
   shutdown_Simple_Server command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -722,12 +722,12 @@ POA_Simple_Server::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

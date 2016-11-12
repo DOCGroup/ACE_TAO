@@ -82,7 +82,7 @@ Test::hello (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_howmany (howmany);
 
@@ -99,7 +99,7 @@ Test::hello (
       "hello",
       5,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -116,7 +116,7 @@ Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -271,7 +271,7 @@ TAO_Test_Proxy_Factory_Adapter::register_proxy_factory (
           this->lock_
         )
     );
-  
+
   // Remove any existing <proxy_factory_> and replace with the new one.
   this->unregister_proxy_factory ();
   this->proxy_factory_ = df;
@@ -288,12 +288,12 @@ TAO_Test_Proxy_Factory_Adapter::unregister_proxy_factory (void)
           this->lock_
         )
     );
-  
+
   if (this->one_shot_factory_)
     {
       this->disable_factory_ = true;
     }
-  
+
   if (this->one_shot_factory_ == false && this->proxy_factory_ != 0)
     {
       delete this->proxy_factory_;
@@ -308,7 +308,7 @@ TAO_Test_Proxy_Factory_Adapter::create_proxy (
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
-  
+
   // To take care of those <unchecked_narrow> methods where we
   // want to override the smart proxy factory if there exists one.
   if (this->disable_factory_)
@@ -316,14 +316,14 @@ TAO_Test_Proxy_Factory_Adapter::create_proxy (
       this->disable_factory_ = false;
       return proxy;
     }
-  
+
   // Verify that an <proxy_factory_> is available else make one.
   if (this->proxy_factory_ == 0)
     ACE_NEW_RETURN (this->proxy_factory_,
         TAO_Test_Default_Proxy_Factory (0),
          0);
-      
-    
+
+
   return this->proxy_factory_->create_proxy (proxy);
 }
 
@@ -366,7 +366,7 @@ void TAO_Test_Smart_Proxy_Base::shutdown  (
 
 Test_ptr
 TAO_Test_Smart_Proxy_Base::get_proxy (void)
-  
+
 {
   // Obtain the real proxy stored in <base_proxy_>
   if (CORBA::is_nil (this->proxy_.in ()))
@@ -404,13 +404,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

@@ -116,8 +116,8 @@ TAO_PingObject_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -4,  -2, -17,   6,  -1,  -1,   7,  -1,   8,  -1,  -1,   9, 
-       10,  11, 
+       -1,  -1,  -4,  -2, -17,   6,  -1,  -1,   7,  -1,   8,  -1,  -1,   9,
+       10,  11,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -198,7 +198,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->ping (
       arg_1);
   }
@@ -230,7 +230,7 @@ void POA_PingObject::ping_skel (
       &retval,
       &_tao_callback
     };
-  
+
   static size_t const nargs = 2;
 
   POA_PingObject * const impl =
@@ -245,7 +245,7 @@ void POA_PingObject::ping_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -302,7 +302,7 @@ void POA_PingObject::pong_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_PingObject * const impl =
@@ -315,7 +315,7 @@ void POA_PingObject::pong_skel (
 
   pong_PingObject command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -372,7 +372,7 @@ void POA_PingObject::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_PingObject * const impl =
@@ -385,7 +385,7 @@ void POA_PingObject::shutdown_skel (
 
   shutdown_PingObject command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -449,12 +449,12 @@ POA_PingObject::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

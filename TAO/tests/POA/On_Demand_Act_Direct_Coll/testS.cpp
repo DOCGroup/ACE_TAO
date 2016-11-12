@@ -148,15 +148,15 @@ void
 _TAO_test_Direct_Proxy_Impl::get_string (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_test_ptr _tao_ptr = 
+  POA_test_ptr _tao_ptr =
     dynamic_cast<POA_test_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< char *>::ret_val *) args[0])->arg () =
     _tao_ptr->get_string (
         );
@@ -168,15 +168,15 @@ void
 _TAO_test_Direct_Proxy_Impl::method (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument **)
-  
+
 {
-  POA_test_ptr _tao_ptr = 
+  POA_test_ptr _tao_ptr =
     dynamic_cast<POA_test_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->method (
       );
 }
@@ -230,7 +230,7 @@ public:
       TAO::Portable_Server::get_ret_arg< char *> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->get_string ();
   }
@@ -260,7 +260,7 @@ void POA_test::get_string_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -275,7 +275,7 @@ void POA_test::get_string_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -332,7 +332,7 @@ void POA_test::method_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -345,7 +345,7 @@ void POA_test::method_skel (
 
   method_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -409,12 +409,12 @@ POA_test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

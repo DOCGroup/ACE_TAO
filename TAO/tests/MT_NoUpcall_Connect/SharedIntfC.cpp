@@ -94,7 +94,7 @@ Test_Idl::SharedIntf::do_upcall (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -129,7 +129,7 @@ Test_Idl::SharedIntf::ping (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -164,7 +164,7 @@ Test_Idl::SharedIntf::farewell (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -198,8 +198,8 @@ Test_Idl::SharedIntf::sendc_do_upcall (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -229,8 +229,8 @@ Test_Idl::SharedIntf::sendc_ping (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -348,7 +348,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test_Idl/SharedIntf:1.0",
     "SharedIntf");
-  
+
 
 namespace Test_Idl
 {
@@ -400,7 +400,7 @@ Test_Idl::AMI_SharedIntfHandler::do_upcall (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -442,7 +442,7 @@ Test_Idl::AMI_SharedIntfHandler::do_upcall_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->do_upcall (
-          
+
         );
       break;
     }
@@ -468,7 +468,7 @@ Test_Idl::AMI_SharedIntfHandler::do_upcall_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->do_upcall_excep (
           exception_holder_var
@@ -493,7 +493,7 @@ Test_Idl::AMI_SharedIntfHandler::do_upcall_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -510,7 +510,7 @@ Test_Idl::AMI_SharedIntfHandler::do_upcall_excep (
       "do_upcall_excep",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -527,7 +527,7 @@ Test_Idl::AMI_SharedIntfHandler::ping (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -569,7 +569,7 @@ Test_Idl::AMI_SharedIntfHandler::ping_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->ping (
-          
+
         );
       break;
     }
@@ -595,7 +595,7 @@ Test_Idl::AMI_SharedIntfHandler::ping_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->ping_excep (
           exception_holder_var
@@ -620,7 +620,7 @@ Test_Idl::AMI_SharedIntfHandler::ping_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -637,7 +637,7 @@ Test_Idl::AMI_SharedIntfHandler::ping_excep (
       "ping_excep",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -746,7 +746,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test_Idl/AMI_SharedIntfHandler:1.0",
     "AMI_SharedIntfHandler");
-  
+
 
 namespace Test_Idl
 {
@@ -779,7 +779,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test_Idl
 {
-  
+
 
   /// Copying insertion.
   void
@@ -893,7 +893,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test_Idl
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1005,13 +1005,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test_Idl::SharedIntf RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1042,13 +1042,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test_Idl::AMI_SharedIntfHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

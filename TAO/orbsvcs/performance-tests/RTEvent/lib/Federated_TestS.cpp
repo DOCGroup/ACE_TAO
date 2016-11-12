@@ -152,7 +152,7 @@ POA_Federated_Test::Control::~Control (void)
 
 namespace POA_Federated_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -178,11 +178,11 @@ namespace POA_Federated_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->join (
         arg_1);
     }
-  
+
   private:
     POA_Federated_Test::Control * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -211,7 +211,7 @@ void POA_Federated_Test::Control::join_skel (
       &retval,
       &_tao_the_peer
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Federated_Test::Control * const impl =
@@ -226,7 +226,7 @@ void POA_Federated_Test::Control::join_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -290,12 +290,12 @@ POA_Federated_Test::Control::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -415,7 +415,7 @@ POA_Federated_Test::Peer::~Peer (void)
 
 namespace POA_Federated_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -434,7 +434,7 @@ namespace POA_Federated_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Federated_Test::Peer * const servant_;
   };
@@ -459,7 +459,7 @@ void POA_Federated_Test::Peer::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Federated_Test::Peer * const impl =
@@ -472,7 +472,7 @@ void POA_Federated_Test::Peer::shutdown_skel (
 
   shutdown_Peer command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -489,7 +489,7 @@ void POA_Federated_Test::Peer::shutdown_skel (
 
 namespace POA_Federated_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -514,25 +514,25 @@ namespace POA_Federated_Test
         TAO::Portable_Server::get_ret_arg< ::Federated_Test::Loopback> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->setup_loopback (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_Federated_Test::Peer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -563,7 +563,7 @@ void POA_Federated_Test::Peer::setup_loopback_skel (
       &_tao_experiment_id,
       &_tao_base_event_type
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Federated_Test::Peer * const impl =
@@ -578,7 +578,7 @@ void POA_Federated_Test::Peer::setup_loopback_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -595,7 +595,7 @@ void POA_Federated_Test::Peer::setup_loopback_skel (
 
 namespace POA_Federated_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -620,25 +620,25 @@ namespace POA_Federated_Test
         TAO::Portable_Server::get_ret_arg< ::Federated_Test::Experiment_Results> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->run_experiment (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_Federated_Test::Peer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -669,7 +669,7 @@ void POA_Federated_Test::Peer::run_experiment_skel (
       &_tao_experiment_id,
       &_tao_iterations
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Federated_Test::Peer * const impl =
@@ -684,7 +684,7 @@ void POA_Federated_Test::Peer::run_experiment_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -701,7 +701,7 @@ void POA_Federated_Test::Peer::run_experiment_skel (
 
 namespace POA_Federated_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -726,11 +726,11 @@ namespace POA_Federated_Test
         TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->channel ();
     }
-  
+
   private:
     POA_Federated_Test::Peer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -757,7 +757,7 @@ void POA_Federated_Test::Peer::_get_channel_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Federated_Test::Peer * const impl =
@@ -772,7 +772,7 @@ void POA_Federated_Test::Peer::_get_channel_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -789,7 +789,7 @@ void POA_Federated_Test::Peer::_get_channel_skel (
 
 namespace POA_Federated_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -815,11 +815,11 @@ namespace POA_Federated_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->connect (
         arg_1);
     }
-  
+
   private:
     POA_Federated_Test::Peer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -848,7 +848,7 @@ void POA_Federated_Test::Peer::connect_skel (
       &retval,
       &_tao_remote_peer
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Federated_Test::Peer * const impl =
@@ -863,7 +863,7 @@ void POA_Federated_Test::Peer::connect_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -927,12 +927,12 @@ POA_Federated_Test::Peer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1047,7 +1047,7 @@ POA_Federated_Test::Loopback::~Loopback (void)
 
 namespace POA_Federated_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1066,7 +1066,7 @@ namespace POA_Federated_Test
     {
       this->servant_->disconnect ();
     }
-  
+
   private:
     POA_Federated_Test::Loopback * const servant_;
   };
@@ -1091,7 +1091,7 @@ void POA_Federated_Test::Loopback::disconnect_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Federated_Test::Loopback * const impl =
@@ -1104,7 +1104,7 @@ void POA_Federated_Test::Loopback::disconnect_skel (
 
   disconnect_Loopback command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1168,12 +1168,12 @@ POA_Federated_Test::Loopback::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

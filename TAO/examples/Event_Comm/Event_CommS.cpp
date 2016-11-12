@@ -155,7 +155,7 @@ POA_Event_Comm::Consumer::~Consumer (void)
 
 namespace POA_Event_Comm
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -181,11 +181,11 @@ namespace POA_Event_Comm
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->push (
         arg_1);
     }
-  
+
   private:
     POA_Event_Comm::Consumer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -214,7 +214,7 @@ void POA_Event_Comm::Consumer::push_skel (
       &retval,
       &_tao_event_instance
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Event_Comm::Consumer * const impl =
@@ -229,7 +229,7 @@ void POA_Event_Comm::Consumer::push_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -246,7 +246,7 @@ void POA_Event_Comm::Consumer::push_skel (
 
 namespace POA_Event_Comm
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -272,11 +272,11 @@ namespace POA_Event_Comm
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->disconnect (
         arg_1);
     }
-  
+
   private:
     POA_Event_Comm::Consumer * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -305,7 +305,7 @@ void POA_Event_Comm::Consumer::disconnect_skel (
       &retval,
       &_tao_reason
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Event_Comm::Consumer * const impl =
@@ -320,7 +320,7 @@ void POA_Event_Comm::Consumer::disconnect_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -384,12 +384,12 @@ POA_Event_Comm::Consumer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -507,7 +507,7 @@ POA_Event_Comm::Notifier::~Notifier (void)
 
 namespace POA_Event_Comm
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -533,11 +533,11 @@ namespace POA_Event_Comm
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->disconnect (
         arg_1);
     }
-  
+
   private:
     POA_Event_Comm::Notifier * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -566,7 +566,7 @@ void POA_Event_Comm::Notifier::disconnect_skel (
       &retval,
       &_tao_reason
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Event_Comm::Notifier * const impl =
@@ -581,7 +581,7 @@ void POA_Event_Comm::Notifier::disconnect_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -598,7 +598,7 @@ void POA_Event_Comm::Notifier::disconnect_skel (
 
 namespace POA_Event_Comm
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -624,11 +624,11 @@ namespace POA_Event_Comm
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->push (
         arg_1);
     }
-  
+
   private:
     POA_Event_Comm::Notifier * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -657,7 +657,7 @@ void POA_Event_Comm::Notifier::push_skel (
       &retval,
       &_tao_event_instance
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Event_Comm::Notifier * const impl =
@@ -672,7 +672,7 @@ void POA_Event_Comm::Notifier::push_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -689,7 +689,7 @@ void POA_Event_Comm::Notifier::push_skel (
 
 namespace POA_Event_Comm
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -715,18 +715,18 @@ namespace POA_Event_Comm
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->subscribe (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_Event_Comm::Notifier * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -757,7 +757,7 @@ void POA_Event_Comm::Notifier::subscribe_skel (
       &_tao_subscriber,
       &_tao_filtering_criteria
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Event_Comm::Notifier * const impl =
@@ -772,7 +772,7 @@ void POA_Event_Comm::Notifier::subscribe_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -789,7 +789,7 @@ void POA_Event_Comm::Notifier::subscribe_skel (
 
 namespace POA_Event_Comm
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -815,18 +815,18 @@ namespace POA_Event_Comm
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->unsubscribe (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_Event_Comm::Notifier * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -857,7 +857,7 @@ void POA_Event_Comm::Notifier::unsubscribe_skel (
       &_tao_unsubscriber,
       &_tao_filtering_criteria
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Event_Comm::Notifier * const impl =
@@ -872,7 +872,7 @@ void POA_Event_Comm::Notifier::unsubscribe_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -936,12 +936,12 @@ POA_Event_Comm::Notifier::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -153,7 +153,7 @@ POA_Notify_Test::Activation_Manager::~Activation_Manager (void)
 
 namespace POA_Notify_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -172,7 +172,7 @@ namespace POA_Notify_Test
     {
       this->servant_->start ();
     }
-  
+
   private:
     POA_Notify_Test::Activation_Manager * const servant_;
   };
@@ -197,7 +197,7 @@ void POA_Notify_Test::Activation_Manager::start_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Notify_Test::Activation_Manager * const impl =
@@ -210,7 +210,7 @@ void POA_Notify_Test::Activation_Manager::start_skel (
 
   start_Activation_Manager command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -274,12 +274,12 @@ POA_Notify_Test::Activation_Manager::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -150,9 +150,9 @@ void Test::Invalid_Stock_Symbol::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Test_Invalid_Stock_Symbol = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -218,7 +218,7 @@ Test::StockFactory::get_stock (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Test::Stock>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_symbol (stock_symbol);
 
@@ -229,7 +229,7 @@ Test::StockFactory::get_stock (
     };
 
   static TAO::Exception_Data
-  _tao_Test_StockFactory_get_stock_exceptiondata [] = 
+  _tao_Test_StockFactory_get_stock_exceptiondata [] =
     {
       {
         "IDL:Test/Invalid_Stock_Symbol:1.0",
@@ -247,7 +247,7 @@ Test::StockFactory::get_stock (
       "get_stock",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -269,7 +269,7 @@ Test::StockFactory::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -391,7 +391,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/StockFactory:1.0",
     "StockFactory");
-  
+
 
 namespace Test
 {
@@ -443,7 +443,7 @@ Test::Stock::symbol (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -480,7 +480,7 @@ Test::Stock::full_name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -517,7 +517,7 @@ Test::Stock::price (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Double>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -642,7 +642,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/Stock:1.0",
     "Stock");
-  
+
 
 namespace Test
 {
@@ -668,7 +668,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -689,7 +689,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -825,7 +825,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -939,7 +939,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1078,13 +1078,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::StockFactory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1115,13 +1115,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Stock RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

@@ -127,7 +127,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_octet,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_Payload_0 =
         &Test_Payload_0;
     }
@@ -146,7 +146,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/Payload:1.0",
     "Payload",
     &TAO::TypeCode::tc_Test_Payload_0);
-  
+
 
 namespace Test
 {
@@ -198,7 +198,7 @@ Test::AMI_Buffering::receive_data (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::Payload>::in_arg_val _tao_the_payload (the_payload);
 
@@ -215,7 +215,7 @@ Test::AMI_Buffering::receive_data (
       "receive_data",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -232,7 +232,7 @@ Test::AMI_Buffering::flush (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -266,7 +266,7 @@ Test::AMI_Buffering::sync (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -301,7 +301,7 @@ Test::AMI_Buffering::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -337,9 +337,9 @@ Test::AMI_Buffering::sendc_receive_data (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::Payload>::in_arg_val _tao_the_payload (the_payload);
 
@@ -375,8 +375,8 @@ Test::AMI_Buffering::sendc_sync (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -406,8 +406,8 @@ Test::AMI_Buffering::sendc_shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -525,7 +525,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/AMI_Buffering:1.0",
     "AMI_Buffering");
-  
+
 
 namespace Test
 {
@@ -577,7 +577,7 @@ Test::AMI_AMI_BufferingHandler::receive_data (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -619,7 +619,7 @@ Test::AMI_AMI_BufferingHandler::receive_data_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->receive_data (
-          
+
         );
       break;
     }
@@ -645,7 +645,7 @@ Test::AMI_AMI_BufferingHandler::receive_data_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->receive_data_excep (
           exception_holder_var
@@ -670,7 +670,7 @@ Test::AMI_AMI_BufferingHandler::receive_data_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -687,7 +687,7 @@ Test::AMI_AMI_BufferingHandler::receive_data_excep (
       "receive_data_excep",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -704,7 +704,7 @@ Test::AMI_AMI_BufferingHandler::sync (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -746,7 +746,7 @@ Test::AMI_AMI_BufferingHandler::sync_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->sync (
-          
+
         );
       break;
     }
@@ -772,7 +772,7 @@ Test::AMI_AMI_BufferingHandler::sync_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->sync_excep (
           exception_holder_var
@@ -797,7 +797,7 @@ Test::AMI_AMI_BufferingHandler::sync_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -814,7 +814,7 @@ Test::AMI_AMI_BufferingHandler::sync_excep (
       "sync_excep",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -831,7 +831,7 @@ Test::AMI_AMI_BufferingHandler::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -873,7 +873,7 @@ Test::AMI_AMI_BufferingHandler::shutdown_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->shutdown (
-          
+
         );
       break;
     }
@@ -899,7 +899,7 @@ Test::AMI_AMI_BufferingHandler::shutdown_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->shutdown_excep (
           exception_holder_var
@@ -924,7 +924,7 @@ Test::AMI_AMI_BufferingHandler::shutdown_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -941,7 +941,7 @@ Test::AMI_AMI_BufferingHandler::shutdown_excep (
       "shutdown_excep",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1050,7 +1050,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/AMI_AMI_BufferingHandler:1.0",
     "AMI_AMI_BufferingHandler");
-  
+
 
 namespace Test
 {
@@ -1102,7 +1102,7 @@ Test::AMI_Buffering_Admin::request_count (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1139,7 +1139,7 @@ Test::AMI_Buffering_Admin::bytes_received_count (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1176,7 +1176,7 @@ Test::AMI_Buffering_Admin::request_received (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_payload_length (payload_length);
 
@@ -1193,7 +1193,7 @@ Test::AMI_Buffering_Admin::request_received (
       "request_received",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1210,7 +1210,7 @@ Test::AMI_Buffering_Admin::flush (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1245,7 +1245,7 @@ Test::AMI_Buffering_Admin::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1280,8 +1280,8 @@ Test::AMI_Buffering_Admin::sendc_request_count (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -1311,8 +1311,8 @@ Test::AMI_Buffering_Admin::sendc_bytes_received_count (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -1343,9 +1343,9 @@ Test::AMI_Buffering_Admin::sendc_request_received (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_payload_length (payload_length);
 
@@ -1381,8 +1381,8 @@ Test::AMI_Buffering_Admin::sendc_flush (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -1412,8 +1412,8 @@ Test::AMI_Buffering_Admin::sendc_shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -1531,7 +1531,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/AMI_Buffering_Admin:1.0",
     "AMI_Buffering_Admin");
-  
+
 
 namespace Test
 {
@@ -1583,7 +1583,7 @@ Test::AMI_AMI_Buffering_AdminHandler::request_count (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -1600,7 +1600,7 @@ Test::AMI_AMI_Buffering_AdminHandler::request_count (
       "request_count",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1628,10 +1628,10 @@ Test::AMI_AMI_Buffering_AdminHandler::request_count_reply_stub (
             (_tao_in >> ami_return_val)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->request_count (
-          
+
           ami_return_val
         );
       break;
@@ -1658,7 +1658,7 @@ Test::AMI_AMI_Buffering_AdminHandler::request_count_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->request_count_excep (
           exception_holder_var
@@ -1683,7 +1683,7 @@ Test::AMI_AMI_Buffering_AdminHandler::request_count_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1700,7 +1700,7 @@ Test::AMI_AMI_Buffering_AdminHandler::request_count_excep (
       "request_count_excep",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1717,7 +1717,7 @@ Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -1734,7 +1734,7 @@ Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count (
       "bytes_received_count",
       20,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1762,10 +1762,10 @@ Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count_reply_stub (
             (_tao_in >> ami_return_val)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->bytes_received_count (
-          
+
           ami_return_val
         );
       break;
@@ -1792,7 +1792,7 @@ Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->bytes_received_count_excep (
           exception_holder_var
@@ -1817,7 +1817,7 @@ Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1834,7 +1834,7 @@ Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count_excep (
       "bytes_received_count_excep",
       26,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1851,7 +1851,7 @@ Test::AMI_AMI_Buffering_AdminHandler::request_received (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1893,7 +1893,7 @@ Test::AMI_AMI_Buffering_AdminHandler::request_received_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->request_received (
-          
+
         );
       break;
     }
@@ -1919,7 +1919,7 @@ Test::AMI_AMI_Buffering_AdminHandler::request_received_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->request_received_excep (
           exception_holder_var
@@ -1944,7 +1944,7 @@ Test::AMI_AMI_Buffering_AdminHandler::request_received_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1961,7 +1961,7 @@ Test::AMI_AMI_Buffering_AdminHandler::request_received_excep (
       "request_received_excep",
       22,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1978,7 +1978,7 @@ Test::AMI_AMI_Buffering_AdminHandler::flush (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2020,7 +2020,7 @@ Test::AMI_AMI_Buffering_AdminHandler::flush_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->flush (
-          
+
         );
       break;
     }
@@ -2046,7 +2046,7 @@ Test::AMI_AMI_Buffering_AdminHandler::flush_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->flush_excep (
           exception_holder_var
@@ -2071,7 +2071,7 @@ Test::AMI_AMI_Buffering_AdminHandler::flush_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -2088,7 +2088,7 @@ Test::AMI_AMI_Buffering_AdminHandler::flush_excep (
       "flush_excep",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2105,7 +2105,7 @@ Test::AMI_AMI_Buffering_AdminHandler::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2147,7 +2147,7 @@ Test::AMI_AMI_Buffering_AdminHandler::shutdown_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->shutdown (
-          
+
         );
       break;
     }
@@ -2173,7 +2173,7 @@ Test::AMI_AMI_Buffering_AdminHandler::shutdown_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->shutdown_excep (
           exception_holder_var
@@ -2198,7 +2198,7 @@ Test::AMI_AMI_Buffering_AdminHandler::shutdown_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -2215,7 +2215,7 @@ Test::AMI_AMI_Buffering_AdminHandler::shutdown_excep (
       "shutdown_excep",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2324,7 +2324,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/AMI_AMI_Buffering_AdminHandler:1.0",
     "AMI_AMI_Buffering_AdminHandler");
-  
+
 
 namespace Test
 {
@@ -2347,7 +2347,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -2487,7 +2487,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2601,7 +2601,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2715,7 +2715,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2829,7 +2829,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2967,13 +2967,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::AMI_Buffering RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3004,13 +3004,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::AMI_AMI_BufferingHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3041,13 +3041,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::AMI_Buffering_Admin RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3078,13 +3078,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::AMI_AMI_Buffering_AdminHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

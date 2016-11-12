@@ -154,7 +154,7 @@ POA_Web_Server::Callback::~Callback (void)
 
 namespace POA_Web_Server
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -180,18 +180,18 @@ namespace POA_Web_Server
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->next_chunk (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_Web_Server::Callback * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -222,7 +222,7 @@ void POA_Web_Server::Callback::next_chunk_skel (
       &_tao_chunk,
       &_tao_last_chunk
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Web_Server::Callback * const impl =
@@ -237,7 +237,7 @@ void POA_Web_Server::Callback::next_chunk_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -301,12 +301,12 @@ POA_Web_Server::Callback::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -421,7 +421,7 @@ POA_Web_Server::AMI_CallbackHandler::~AMI_CallbackHandler (void)
 
 namespace POA_Web_Server
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -440,7 +440,7 @@ namespace POA_Web_Server
     {
       this->servant_->next_chunk ();
     }
-  
+
   private:
     POA_Web_Server::AMI_CallbackHandler * const servant_;
   };
@@ -465,7 +465,7 @@ void POA_Web_Server::AMI_CallbackHandler::next_chunk_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Web_Server::AMI_CallbackHandler * const impl =
@@ -478,7 +478,7 @@ void POA_Web_Server::AMI_CallbackHandler::next_chunk_skel (
 
   next_chunk_AMI_CallbackHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -495,7 +495,7 @@ void POA_Web_Server::AMI_CallbackHandler::next_chunk_skel (
 
 namespace POA_Web_Server
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -521,11 +521,11 @@ namespace POA_Web_Server
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->next_chunk_excep (
         arg_1);
     }
-  
+
   private:
     POA_Web_Server::AMI_CallbackHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -554,7 +554,7 @@ void POA_Web_Server::AMI_CallbackHandler::next_chunk_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Web_Server::AMI_CallbackHandler * const impl =
@@ -569,7 +569,7 @@ void POA_Web_Server::AMI_CallbackHandler::next_chunk_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -637,12 +637,12 @@ POA_Web_Server::AMI_CallbackHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -756,7 +756,7 @@ POA_Web_Server::Iterator_Factory::~Iterator_Factory (void)
 
 namespace POA_Web_Server
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -781,25 +781,25 @@ namespace POA_Web_Server
         TAO::Portable_Server::get_ret_arg< ::Web_Server::Metadata_Type> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Web_Server::Callback>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Web_Server::Callback> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->register_callback (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_Web_Server::Iterator_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -816,7 +816,7 @@ void POA_Web_Server::Iterator_Factory::register_callback_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Web_Server::_tc_Error_Result
     };
@@ -833,7 +833,7 @@ void POA_Web_Server::Iterator_Factory::register_callback_skel (
       &_tao_pathname,
       &_tao_client_callback
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Web_Server::Iterator_Factory * const impl =
@@ -848,7 +848,7 @@ void POA_Web_Server::Iterator_Factory::register_callback_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -912,12 +912,12 @@ POA_Web_Server::Iterator_Factory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1034,7 +1034,7 @@ POA_Web_Server::AMI_Iterator_FactoryHandler::~AMI_Iterator_FactoryHandler (void)
 
 namespace POA_Web_Server
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1060,11 +1060,11 @@ namespace POA_Web_Server
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->register_callback (
         arg_1);
     }
-  
+
   private:
     POA_Web_Server::AMI_Iterator_FactoryHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1081,7 +1081,7 @@ void POA_Web_Server::AMI_Iterator_FactoryHandler::register_callback_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Web_Server::_tc_Error_Result
     };
@@ -1096,7 +1096,7 @@ void POA_Web_Server::AMI_Iterator_FactoryHandler::register_callback_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Web_Server::AMI_Iterator_FactoryHandler * const impl =
@@ -1111,7 +1111,7 @@ void POA_Web_Server::AMI_Iterator_FactoryHandler::register_callback_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1128,7 +1128,7 @@ void POA_Web_Server::AMI_Iterator_FactoryHandler::register_callback_skel (
 
 namespace POA_Web_Server
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1154,11 +1154,11 @@ namespace POA_Web_Server
           this->operation_details_,
           this->args_,
           1);
-        
-      
+
+
 
       static TAO::Exception_Data
-      _tao_Web_Server_AMI_Iterator_FactoryHandler_register_callback_excep_exceptiondata [] = 
+      _tao_Web_Server_AMI_Iterator_FactoryHandler_register_callback_excep_exceptiondata [] =
         {
           {
             "IDL:Web_Server/Error_Result:1.0",
@@ -1168,17 +1168,17 @@ namespace POA_Web_Server
 #endif /* TAO_HAS_INTERCEPTORS */
           }
         };
-      TAO::ExceptionHolder *tao_excepholder = 
+      TAO::ExceptionHolder *tao_excepholder =
         dynamic_cast<TAO::ExceptionHolder *> (arg_1);
       if (tao_excepholder != 0)
         {
           tao_excepholder->set_exception_data (_tao_Web_Server_AMI_Iterator_FactoryHandler_register_callback_excep_exceptiondata, 1);
         }
-      
+
       this->servant_->register_callback_excep (
         arg_1);
     }
-  
+
   private:
     POA_Web_Server::AMI_Iterator_FactoryHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1195,7 +1195,7 @@ void POA_Web_Server::AMI_Iterator_FactoryHandler::register_callback_excep_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Web_Server::_tc_Error_Result
     };
@@ -1210,7 +1210,7 @@ void POA_Web_Server::AMI_Iterator_FactoryHandler::register_callback_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Web_Server::AMI_Iterator_FactoryHandler * const impl =
@@ -1225,7 +1225,7 @@ void POA_Web_Server::AMI_Iterator_FactoryHandler::register_callback_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1293,12 +1293,12 @@ POA_Web_Server::AMI_Iterator_FactoryHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -51,7 +51,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
     { "user", &CORBA::_tc_string, ::CORBA::PUBLIC_MEMBER },
     { "subject", &CORBA::_tc_string, ::CORBA::PUBLIC_MEMBER },
     { "text", &CORBA::_tc_string, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -65,7 +65,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Message,
     3);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Message =
   &_tao_tc_Message;
 
@@ -165,27 +165,27 @@ Message::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Message::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -511,17 +511,17 @@ OBV_Message::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) const
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_user.in ()) &&
       (strm << _pd_subject.in ()) &&
       (strm << _pd_text.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -530,21 +530,21 @@ OBV_Message::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_user.out ()) &&
       (strm >> _pd_subject.out ()) &&
       (strm >> _pd_text.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void

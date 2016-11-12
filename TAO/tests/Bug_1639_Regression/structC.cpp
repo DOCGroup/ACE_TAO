@@ -49,13 +49,13 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_StructTest_MyStruct[] =
       {
         { "MyOctet", &CORBA::_tc_octet },
         { "MyLong", &CORBA::_tc_ulong }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -100,7 +100,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:StructTest/MyStructAlias:1.0",
     "MyStructAlias",
     &StructTest::_tc_MyStruct);
-  
+
 
 namespace StructTest
 {
@@ -120,12 +120,12 @@ StructTest::MyUnion::MyUnion (void)
 StructTest::MyUnion::MyUnion (const ::StructTest::MyUnion &u)
 {
   this->disc_ = u.disc_;
-  
+
   if (this->disc_)
     {
       this->u_.MyShort_ = u.u_.MyShort_;
     }
-  
+
 }
 
 StructTest::MyUnion::~MyUnion (void)
@@ -148,28 +148,28 @@ StructTest::MyUnion::operator= (const ::StructTest::MyUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
-  
+
   if (this->disc_)
     {
       this->u_.MyShort_ = u.u_.MyShort_;
     }
-  
+
   return *this;
 }
 
 /// Reset method to reset old values of a union.
 void StructTest::MyUnion::_reset (void)
 {
-  
+
   if (this->disc_)
     {
-      
+
     }
-  
+
 }
 
 // TAO_IDL - Generated from
@@ -193,7 +193,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_StructTest_MyUnion,
     sizeof (_tao_cases_StructTest_MyUnion)/sizeof (_tao_cases_StructTest_MyUnion[0]),
     -1);
-  
+
 
 namespace StructTest
 {
@@ -212,7 +212,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:StructTest/MyUnionAlias:1.0",
     "MyUnionAlias",
     &StructTest::_tc_MyUnion);
-  
+
 
 namespace StructTest
 {
@@ -512,14 +512,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_union._d ())
     {
       result = strm << _tao_union.MyShort ();
     }
-  
+
   return result;
 }
 
@@ -534,7 +534,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   _tao_union._default ();
@@ -550,7 +550,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   return result;
 }
 

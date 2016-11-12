@@ -251,7 +251,7 @@ Stock::Quoter::get_quote (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_name (stock_name);
 
@@ -262,7 +262,7 @@ Stock::Quoter::get_quote (
     };
 
   static TAO::Exception_Data
-  _tao_Stock_Quoter_get_quote_exceptiondata [] = 
+  _tao_Stock_Quoter_get_quote_exceptiondata [] =
     {
       {
         "IDL:Stock/Invalid_Stock:1.0",
@@ -288,7 +288,7 @@ Stock::Quoter::get_quote (
       "get_quote",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -429,7 +429,7 @@ Stock::Quoter_Factory::create_quoter (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::Quoter>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_name (name);
 
@@ -440,7 +440,7 @@ Stock::Quoter_Factory::create_quoter (
     };
 
   static TAO::Exception_Data
-  _tao_Stock_Quoter_Factory_create_quoter_exceptiondata [] = 
+  _tao_Stock_Quoter_Factory_create_quoter_exceptiondata [] =
     {
       {
         "IDL:Stock/Invalid_Quoter:1.0",
@@ -458,7 +458,7 @@ Stock::Quoter_Factory::create_quoter (
       "create_quoter",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -836,7 +836,7 @@ Stock::Quoter_Life_Cycle_Service::register_factory (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_name (name);
   TAO::Arg_Traits< char *>::in_arg_val _tao_location (location);
@@ -859,7 +859,7 @@ Stock::Quoter_Life_Cycle_Service::register_factory (
       "register_factory",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1136,7 +1136,7 @@ Stock::Criteria_Evaluator::getInitialization (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::Criteria_Evaluator::SeqNamedValuePair>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1173,7 +1173,7 @@ Stock::Criteria_Evaluator::getFilter (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1210,7 +1210,7 @@ Stock::Criteria_Evaluator::getLogicalLocation (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::Criteria_Evaluator::SeqNamedValuePair>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1247,7 +1247,7 @@ Stock::Criteria_Evaluator::getPreferences (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1284,7 +1284,7 @@ Stock::Criteria_Evaluator::setCriteria (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Stock::Criteria_Evaluator::Criteria>::in_arg_val _tao_criteria_ (criteria_);
 
@@ -1301,7 +1301,7 @@ Stock::Criteria_Evaluator::setCriteria (
       "setCriteria",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1466,13 +1466,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::Quoter RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1503,13 +1503,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::Quoter_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1540,13 +1540,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::Quoter_Factory_Finder RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1577,13 +1577,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::Quoter_Generic_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1614,13 +1614,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::Quoter_Life_Cycle_Service RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1717,13 +1717,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::Criteria_Evaluator RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

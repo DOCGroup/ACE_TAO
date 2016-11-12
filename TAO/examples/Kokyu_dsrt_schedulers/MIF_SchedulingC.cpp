@@ -50,12 +50,12 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_MIF_Scheduling_SchedulingParameter[] =
       {
         { "importance", &CORBA::_tc_long }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -227,7 +227,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:MIF_Scheduling/SchedulingParameterPolicy:1.0",
     "SchedulingParameterPolicy");
-  
+
 
 namespace MIF_Scheduling
 {
@@ -373,7 +373,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:MIF_Scheduling/Scheduler:1.0",
     "Scheduler");
-  
+
 
 namespace MIF_Scheduling
 {
@@ -537,7 +537,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace MIF_Scheduling
 {
-  
+
 
   /// Copying insertion.
   void
@@ -668,7 +668,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace MIF_Scheduling
 {
-  
+
 
   /// Copying insertion.
   void

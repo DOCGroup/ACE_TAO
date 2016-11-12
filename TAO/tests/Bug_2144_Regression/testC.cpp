@@ -56,7 +56,7 @@ static char const * const _tao_enumerators_Test_Selector[] =
   {
     "STRUCTTYPE",
     "VALTYPE"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -67,7 +67,7 @@ static TAO::TypeCode::Enum<char const *,
     "Selector",
     _tao_enumerators_Test_Selector,
     2);
-  
+
 
 namespace Test
 {
@@ -80,12 +80,12 @@ namespace Test
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_Foo[] =
       {
         { "l", &CORBA::_tc_long }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -125,7 +125,7 @@ Test::Foo::_tao_any_destructor (
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Test_Bar[] =
   {
     { "s", &CORBA::_tc_short, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -139,7 +139,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Test_Bar,
     1);
-  
+
 
 namespace Test
 {
@@ -243,27 +243,27 @@ Test::Bar::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Bar::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -364,7 +364,7 @@ Test::MyUnion::operator= (const ::Test::MyUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -396,7 +396,7 @@ Test::MyUnion::operator= (const ::Test::MyUnion &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -405,17 +405,17 @@ void Test::MyUnion::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case Test::STRUCTTYPE:
-      
+
     break;
-    
+
     case Test::VALTYPE:
       delete this->u_.barData_;
       this->u_.barData_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -444,7 +444,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Test_MyUnion,
     sizeof (_tao_cases_Test_MyUnion)/sizeof (_tao_cases_Test_MyUnion[0]),
     -1);
-  
+
 
 namespace Test
 {
@@ -548,7 +548,7 @@ namespace Test
       TAO::Any_Basic_Impl_T< ::Test::Selector>::extract (
           _tao_any,
           ::Test::_tc_Selector,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -578,7 +578,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<Test::Selector>::extract (
         _tao_any,
         Test::_tc_Selector,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -779,7 +779,7 @@ namespace Test
         );
   }
 
-  
+
 }
 
 #else
@@ -993,12 +993,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Test::Selector> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -1092,15 +1092,15 @@ OBV_Test::Bar::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) const
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_s);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -1109,19 +1109,19 @@ OBV_Test::Bar::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_s);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -1147,7 +1147,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -1179,7 +1179,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)

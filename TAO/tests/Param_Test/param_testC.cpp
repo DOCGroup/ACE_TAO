@@ -95,12 +95,12 @@ TAO::Objref_Traits<Coffee>::marshal (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Coffee_Desc[] =
       {
         { "name", &CORBA::_tc_string }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -141,7 +141,7 @@ Coffee::description (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Coffee::Desc>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -178,7 +178,7 @@ Coffee::description (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Coffee::Desc>::in_arg_val _tao_description (description);
 
@@ -195,7 +195,7 @@ Coffee::description (
       "_set_description",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -300,7 +300,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Coffee:1.0",
     "Coffee");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Coffee =
   &_tao_tc_Coffee;
 
@@ -350,7 +350,7 @@ Param_Test::test_short (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Short>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::CORBA::Short>::inout_arg_val _tao_s2 (s2);
@@ -371,7 +371,7 @@ Param_Test::test_short (
       "test_short",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -392,7 +392,7 @@ Param_Test::test_ulonglong (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULongLong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::CORBA::ULongLong>::inout_arg_val _tao_s2 (s2);
@@ -413,7 +413,7 @@ Param_Test::test_ulonglong (
       "test_ulonglong",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -434,7 +434,7 @@ Param_Test::test_unbounded_string (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< char *>::inout_arg_val _tao_s2 (s2);
@@ -455,7 +455,7 @@ Param_Test::test_unbounded_string (
       "test_unbounded_string",
       21,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -487,7 +487,7 @@ namespace TAO
         CORBA_STRING_128 (
           ::CORBA::tk_string,
           128U);
-        
+
       ::CORBA::TypeCode_ptr const tc_CORBA_STRING_128 =
         &CORBA_STRING_128;
     }
@@ -506,7 +506,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/short_string:1.0",
     "short_string",
     &TAO::TypeCode::tc_CORBA_STRING_128);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_short_string =
   &_tao_tc_Param_Test_short_string;
 
@@ -523,7 +523,7 @@ Param_Test::test_bounded_string (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::TAO::short_string_128>::ret_val _tao_retval;
   TAO::Arg_Traits< ::TAO::short_string_128>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::TAO::short_string_128>::inout_arg_val _tao_s2 (s2);
@@ -544,7 +544,7 @@ Param_Test::test_bounded_string (
       "test_bounded_string",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -565,7 +565,7 @@ Param_Test::test_unbounded_wstring (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::WChar *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::WChar *>::in_arg_val _tao_ws1 (ws1);
   TAO::Arg_Traits< ::CORBA::WChar *>::inout_arg_val _tao_ws2 (ws2);
@@ -586,7 +586,7 @@ Param_Test::test_unbounded_wstring (
       "test_unbounded_wstring",
       22,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -618,7 +618,7 @@ namespace TAO
         CORBA_WSTRING_128 (
           ::CORBA::tk_wstring,
           128U);
-        
+
       ::CORBA::TypeCode_ptr const tc_CORBA_WSTRING_128 =
         &CORBA_WSTRING_128;
     }
@@ -637,7 +637,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/short_wstring:1.0",
     "short_wstring",
     &TAO::TypeCode::tc_CORBA_WSTRING_128);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_short_wstring =
   &_tao_tc_Param_Test_short_wstring;
 
@@ -654,7 +654,7 @@ Param_Test::test_bounded_wstring (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::TAO::short_wstring_128>::ret_val _tao_retval;
   TAO::Arg_Traits< ::TAO::short_wstring_128>::in_arg_val _tao_ws1 (ws1);
   TAO::Arg_Traits< ::TAO::short_wstring_128>::inout_arg_val _tao_ws2 (ws2);
@@ -675,7 +675,7 @@ Param_Test::test_bounded_wstring (
       "test_bounded_wstring",
       20,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -688,7 +688,7 @@ Param_Test::test_bounded_wstring (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Param_Test_Fixed_Struct[] =
       {
         { "l", &CORBA::_tc_long },
@@ -699,7 +699,7 @@ static TAO::TypeCode::Struct_Field<
         { "b", &CORBA::_tc_boolean },
         { "d", &CORBA::_tc_double }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -742,7 +742,7 @@ Param_Test::test_fixed_struct (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Fixed_Struct>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Fixed_Struct>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::Fixed_Struct>::inout_arg_val _tao_s2 (s2);
@@ -763,7 +763,7 @@ Param_Test::test_fixed_struct (
       "test_fixed_struct",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -776,13 +776,13 @@ Param_Test::test_fixed_struct (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Param_Test_NameComponent[] =
       {
         { "id", &CORBA::_tc_string },
         { "kind", &CORBA::_tc_string }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -817,13 +817,13 @@ Param_Test::NameComponent::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Param_Test_Step[] =
       {
         { "name", &Param_Test::_tc_NameComponent },
         { "process", &CORBA::_tc_boolean }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -927,7 +927,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Param_Test::_tc_Step,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_PathSpec_0 =
         &Param_Test_PathSpec_0;
     }
@@ -946,7 +946,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/PathSpec:1.0",
     "PathSpec",
     &TAO::TypeCode::tc_Param_Test_PathSpec_0);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_PathSpec =
   &_tao_tc_Param_Test_PathSpec;
 
@@ -963,7 +963,7 @@ Param_Test::test_unbounded_struct_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::PathSpec>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::PathSpec>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::PathSpec>::inout_arg_val _tao_s2 (s2);
@@ -984,7 +984,7 @@ Param_Test::test_unbounded_struct_sequence (
       "test_unbounded_struct_sequence",
       30,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1005,7 +1005,7 @@ Param_Test::test_short_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ShortSeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ShortSeq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::CORBA::ShortSeq>::inout_arg_val _tao_s2 (s2);
@@ -1026,7 +1026,7 @@ Param_Test::test_short_sequence (
       "test_short_sequence",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1102,7 +1102,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_short,
           32U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Bounded_Short_Seq_32 =
         &Param_Test_Bounded_Short_Seq_32;
     }
@@ -1121,7 +1121,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Bounded_Short_Seq:1.0",
     "Bounded_Short_Seq",
     &TAO::TypeCode::tc_Param_Test_Bounded_Short_Seq_32);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Bounded_Short_Seq =
   &_tao_tc_Param_Test_Bounded_Short_Seq;
 
@@ -1138,7 +1138,7 @@ Param_Test::test_bounded_short_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Bounded_Short_Seq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Bounded_Short_Seq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::Bounded_Short_Seq>::inout_arg_val _tao_s2 (s2);
@@ -1159,7 +1159,7 @@ Param_Test::test_bounded_short_sequence (
       "test_bounded_short_sequence",
       27,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1180,7 +1180,7 @@ Param_Test::test_long_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::LongSeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::LongSeq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::CORBA::LongSeq>::inout_arg_val _tao_s2 (s2);
@@ -1201,7 +1201,7 @@ Param_Test::test_long_sequence (
       "test_long_sequence",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1277,7 +1277,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_long,
           32U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Bounded_Long_Seq_32 =
         &Param_Test_Bounded_Long_Seq_32;
     }
@@ -1296,7 +1296,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Bounded_Long_Seq:1.0",
     "Bounded_Long_Seq",
     &TAO::TypeCode::tc_Param_Test_Bounded_Long_Seq_32);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Bounded_Long_Seq =
   &_tao_tc_Param_Test_Bounded_Long_Seq;
 
@@ -1313,7 +1313,7 @@ Param_Test::test_bounded_long_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Bounded_Long_Seq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Bounded_Long_Seq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::Bounded_Long_Seq>::inout_arg_val _tao_s2 (s2);
@@ -1334,7 +1334,7 @@ Param_Test::test_bounded_long_sequence (
       "test_bounded_long_sequence",
       26,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1355,7 +1355,7 @@ Param_Test::test_strseq (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::StringSeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::StringSeq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::CORBA::StringSeq>::inout_arg_val _tao_s2 (s2);
@@ -1376,7 +1376,7 @@ Param_Test::test_strseq (
       "test_strseq",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1446,7 +1446,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_string,
           32U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Bounded_StrSeq_32 =
         &Param_Test_Bounded_StrSeq_32;
     }
@@ -1465,7 +1465,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Bounded_StrSeq:1.0",
     "Bounded_StrSeq",
     &TAO::TypeCode::tc_Param_Test_Bounded_StrSeq_32);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Bounded_StrSeq =
   &_tao_tc_Param_Test_Bounded_StrSeq;
 
@@ -1482,7 +1482,7 @@ Param_Test::test_bounded_strseq (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Bounded_StrSeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Bounded_StrSeq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::Bounded_StrSeq>::inout_arg_val _tao_s2 (s2);
@@ -1503,7 +1503,7 @@ Param_Test::test_bounded_strseq (
       "test_bounded_strseq",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1524,7 +1524,7 @@ Param_Test::test_wstrseq (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::WStringSeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::WStringSeq>::in_arg_val _tao_ws1 (ws1);
   TAO::Arg_Traits< ::CORBA::WStringSeq>::inout_arg_val _tao_ws2 (ws2);
@@ -1545,7 +1545,7 @@ Param_Test::test_wstrseq (
       "test_wstrseq",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1615,7 +1615,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_wstring,
           32U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Bounded_WStrSeq_32 =
         &Param_Test_Bounded_WStrSeq_32;
     }
@@ -1634,7 +1634,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Bounded_WStrSeq:1.0",
     "Bounded_WStrSeq",
     &TAO::TypeCode::tc_Param_Test_Bounded_WStrSeq_32);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Bounded_WStrSeq =
   &_tao_tc_Param_Test_Bounded_WStrSeq;
 
@@ -1651,7 +1651,7 @@ Param_Test::test_bounded_wstrseq (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Bounded_WStrSeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Bounded_WStrSeq>::in_arg_val _tao_ws1 (ws1);
   TAO::Arg_Traits< ::Param_Test::Bounded_WStrSeq>::inout_arg_val _tao_ws2 (ws2);
@@ -1672,7 +1672,7 @@ Param_Test::test_bounded_wstrseq (
       "test_bounded_wstrseq",
       20,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1754,7 +1754,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Param_Test::_tc_Fixed_Struct,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_StructSeq_0 =
         &Param_Test_StructSeq_0;
     }
@@ -1773,7 +1773,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/StructSeq:1.0",
     "StructSeq",
     &TAO::TypeCode::tc_Param_Test_StructSeq_0);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_StructSeq =
   &_tao_tc_Param_Test_StructSeq;
 
@@ -1790,7 +1790,7 @@ Param_Test::test_struct_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::StructSeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::StructSeq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::StructSeq>::inout_arg_val _tao_s2 (s2);
@@ -1811,7 +1811,7 @@ Param_Test::test_struct_sequence (
       "test_struct_sequence",
       20,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1887,7 +1887,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Param_Test::_tc_Fixed_Struct,
           32U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Bounded_StructSeq_32 =
         &Param_Test_Bounded_StructSeq_32;
     }
@@ -1906,7 +1906,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Bounded_StructSeq:1.0",
     "Bounded_StructSeq",
     &TAO::TypeCode::tc_Param_Test_Bounded_StructSeq_32);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Bounded_StructSeq =
   &_tao_tc_Param_Test_Bounded_StructSeq;
 
@@ -1923,7 +1923,7 @@ Param_Test::test_bounded_struct_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Bounded_StructSeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Bounded_StructSeq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::Bounded_StructSeq>::inout_arg_val _tao_s2 (s2);
@@ -1944,7 +1944,7 @@ Param_Test::test_bounded_struct_sequence (
       "test_bounded_struct_sequence",
       28,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2029,7 +2029,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &_tc_Coffee,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Coffee_Mix_0 =
         &Param_Test_Coffee_Mix_0;
     }
@@ -2048,7 +2048,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Coffee_Mix:1.0",
     "Coffee_Mix",
     &TAO::TypeCode::tc_Param_Test_Coffee_Mix_0);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Coffee_Mix =
   &_tao_tc_Param_Test_Coffee_Mix;
 
@@ -2065,7 +2065,7 @@ Param_Test::test_coffe_mix (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Coffee_Mix>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Coffee_Mix>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::Coffee_Mix>::inout_arg_val _tao_s2 (s2);
@@ -2086,7 +2086,7 @@ Param_Test::test_coffe_mix (
       "test_coffe_mix",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2164,7 +2164,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &_tc_Coffee,
           32U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Bounded_Coffee_Mix_32 =
         &Param_Test_Bounded_Coffee_Mix_32;
     }
@@ -2183,7 +2183,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Bounded_Coffee_Mix:1.0",
     "Bounded_Coffee_Mix",
     &TAO::TypeCode::tc_Param_Test_Bounded_Coffee_Mix_32);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Bounded_Coffee_Mix =
   &_tao_tc_Param_Test_Bounded_Coffee_Mix;
 
@@ -2200,7 +2200,7 @@ Param_Test::test_bounded_coffe_mix (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Bounded_Coffee_Mix>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Bounded_Coffee_Mix>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::Bounded_Coffee_Mix>::inout_arg_val _tao_s2 (s2);
@@ -2221,7 +2221,7 @@ Param_Test::test_bounded_coffe_mix (
       "test_bounded_coffe_mix",
       22,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2242,7 +2242,7 @@ Param_Test::test_anyseq (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::AnySeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::AnySeq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::CORBA::AnySeq>::inout_arg_val _tao_s2 (s2);
@@ -2263,7 +2263,7 @@ Param_Test::test_anyseq (
       "test_anyseq",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2282,7 +2282,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/DUMMY:1.0",
     "DUMMY",
     &CORBA::_tc_string);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_DUMMY =
   &_tao_tc_Param_Test_DUMMY;
 
@@ -2296,7 +2296,7 @@ static TAO::TypeCode::Alias<char const *,
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Param_Test_Var_Struct[] =
       {
         { "dbl", &CORBA::_tc_double },
@@ -2306,7 +2306,7 @@ static TAO::TypeCode::Struct_Field<
         { "shrt", &CORBA::_tc_short },
         { "seq", &CORBA::_tc_StringSeq }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -2349,7 +2349,7 @@ Param_Test::test_var_struct (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Var_Struct>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Var_Struct>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::Var_Struct>::inout_arg_val _tao_s2 (s2);
@@ -2370,7 +2370,7 @@ Param_Test::test_var_struct (
       "test_var_struct",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2383,12 +2383,12 @@ Param_Test::test_var_struct (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Param_Test_Nested_Struct[] =
       {
         { "vs", &Param_Test::_tc_Var_Struct }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -2431,7 +2431,7 @@ Param_Test::test_nested_struct (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Nested_Struct>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Nested_Struct>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::Nested_Struct>::inout_arg_val _tao_s2 (s2);
@@ -2452,7 +2452,7 @@ Param_Test::test_nested_struct (
       "test_nested_struct",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2471,7 +2471,7 @@ Param_Test::make_coffee (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Coffee>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2510,7 +2510,7 @@ Param_Test::test_objref (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Coffee>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Coffee>::in_arg_val _tao_o1 (o1);
   TAO::Arg_Traits< ::Coffee>::inout_arg_val _tao_o2 (o2);
@@ -2531,7 +2531,7 @@ Param_Test::test_objref (
       "test_objref",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2552,7 +2552,7 @@ Param_Test::test_typecode (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::TypeCode>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::TypeCode>::in_arg_val _tao_t1 (t1);
   TAO::Arg_Traits< ::CORBA::TypeCode>::inout_arg_val _tao_t2 (t2);
@@ -2573,7 +2573,7 @@ Param_Test::test_typecode (
       "test_typecode",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2594,7 +2594,7 @@ Param_Test::test_any (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Any>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_a1 (a1);
   TAO::Arg_Traits< ::CORBA::Any>::inout_arg_val _tao_a2 (a2);
@@ -2615,7 +2615,7 @@ Param_Test::test_any (
       "test_any",
       8,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2628,13 +2628,13 @@ Param_Test::test_any (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Param_Test_Objref_Struct[] =
       {
         { "x", &CORBA::_tc_long },
         { "y", &_tc_Coffee }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -2677,7 +2677,7 @@ Param_Test::test_objref_struct (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Objref_Struct>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Objref_Struct>::in_arg_val _tao_t1 (t1);
   TAO::Arg_Traits< ::Param_Test::Objref_Struct>::inout_arg_val _tao_t2 (t2);
@@ -2698,7 +2698,7 @@ Param_Test::test_objref_struct (
       "test_objref_struct",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2721,12 +2721,12 @@ Param_Test::Fixed_Array_dup (const Param_Test::Fixed_Array_slice *_tao_src_array
 {
   Param_Test::Fixed_Array_slice *_tao_dup_array =
     Param_Test::Fixed_Array_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <Param_Test::Fixed_Array_slice *> (0);
     }
-  
+
   Param_Test::Fixed_Array_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -2784,7 +2784,7 @@ namespace TAO
           ::CORBA::tk_array,
           &CORBA::_tc_long,
           10U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Fixed_Array =
         &Param_Test_Fixed_Array_10;
     }
@@ -2802,7 +2802,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Fixed_Array:1.0",
     "Fixed_Array",
     &TAO::TypeCode::tc_Param_Test_Fixed_Array);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Fixed_Array =
   &_tao_tc_Param_Test_Fixed_Array;
 
@@ -2819,7 +2819,7 @@ Param_Test::test_fixed_array (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Fixed_Array_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Fixed_Array_tag>::in_arg_val _tao_l1 (l1);
   TAO::Arg_Traits< ::Param_Test::Fixed_Array_tag>::inout_arg_val _tao_l2 (l2);
@@ -2840,7 +2840,7 @@ Param_Test::test_fixed_array (
       "test_fixed_array",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2863,12 +2863,12 @@ Param_Test::Var_Array_dup (const Param_Test::Var_Array_slice *_tao_src_array)
 {
   Param_Test::Var_Array_slice *_tao_dup_array =
     Param_Test::Var_Array_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <Param_Test::Var_Array_slice *> (0);
     }
-  
+
   Param_Test::Var_Array_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -2926,7 +2926,7 @@ namespace TAO
           ::CORBA::tk_array,
           &CORBA::_tc_string,
           5U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Var_Array =
         &Param_Test_Var_Array_5;
     }
@@ -2944,7 +2944,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Var_Array:1.0",
     "Var_Array",
     &TAO::TypeCode::tc_Param_Test_Var_Array);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Var_Array =
   &_tao_tc_Param_Test_Var_Array;
 
@@ -2961,7 +2961,7 @@ Param_Test::test_var_array (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Var_Array_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Var_Array_tag>::in_arg_val _tao_v1 (v1);
   TAO::Arg_Traits< ::Param_Test::Var_Array_tag>::inout_arg_val _tao_v2 (v2);
@@ -2982,7 +2982,7 @@ Param_Test::test_var_array (
       "test_var_array",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -3070,7 +3070,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Param_Test::_tc_Fixed_Array,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_ArraySeq_0 =
         &Param_Test_ArraySeq_0;
     }
@@ -3089,7 +3089,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/ArraySeq:1.0",
     "ArraySeq",
     &TAO::TypeCode::tc_Param_Test_ArraySeq_0);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_ArraySeq =
   &_tao_tc_Param_Test_ArraySeq;
 
@@ -3106,7 +3106,7 @@ Param_Test::test_array_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::ArraySeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::ArraySeq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::ArraySeq>::inout_arg_val _tao_s2 (s2);
@@ -3127,7 +3127,7 @@ Param_Test::test_array_sequence (
       "test_array_sequence",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -3207,7 +3207,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Param_Test::_tc_Fixed_Array,
           32U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Bounded_ArraySeq_32 =
         &Param_Test_Bounded_ArraySeq_32;
     }
@@ -3226,7 +3226,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Bounded_ArraySeq:1.0",
     "Bounded_ArraySeq",
     &TAO::TypeCode::tc_Param_Test_Bounded_ArraySeq_32);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Bounded_ArraySeq =
   &_tao_tc_Param_Test_Bounded_ArraySeq;
 
@@ -3243,7 +3243,7 @@ Param_Test::test_bounded_array_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Bounded_ArraySeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Bounded_ArraySeq>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::Param_Test::Bounded_ArraySeq>::inout_arg_val _tao_s2 (s2);
@@ -3264,7 +3264,7 @@ Param_Test::test_bounded_array_sequence (
       "test_bounded_array_sequence",
       27,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -3393,13 +3393,13 @@ void Param_Test::Ooops::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Param_Test_Ooops[] =
       {
         { "reason", &CORBA::_tc_string },
         { "input", &CORBA::_tc_ulong }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -3517,9 +3517,9 @@ void Param_Test::BadBoy::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Param_Test_BadBoy = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -3550,7 +3550,7 @@ Param_Test::test_exception (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_s1 (s1);
   TAO::Arg_Traits< ::CORBA::ULong>::inout_arg_val _tao_s2 (s2);
@@ -3565,7 +3565,7 @@ Param_Test::test_exception (
     };
 
   static TAO::Exception_Data
-  _tao_Param_Test_test_exception_exceptiondata [] = 
+  _tao_Param_Test_test_exception_exceptiondata [] =
     {
       {
         "IDL:Param_Test/Ooops:1.0",
@@ -3583,7 +3583,7 @@ Param_Test::test_exception (
       "test_exception",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -3602,12 +3602,12 @@ Param_Test::short_array_dup (const Param_Test::short_array_slice *_tao_src_array
 {
   Param_Test::short_array_slice *_tao_dup_array =
     Param_Test::short_array_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <Param_Test::short_array_slice *> (0);
     }
-  
+
   Param_Test::short_array_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -3665,7 +3665,7 @@ namespace TAO
           ::CORBA::tk_array,
           &CORBA::_tc_short,
           32U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_short_array =
         &Param_Test_short_array_32;
     }
@@ -3683,7 +3683,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/short_array:1.0",
     "short_array",
     &TAO::TypeCode::tc_Param_Test_short_array);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_short_array =
   &_tao_tc_Param_Test_short_array;
 
@@ -3704,7 +3704,7 @@ Param_Test::Big_Union::Big_Union (const ::Param_Test::Big_Union &u)
     case 0:
     {
       // Make a deep copy.
-      this->u_.the_array_ = 
+      this->u_.the_array_ =
         Param_Test::Fixed_Array_dup (u.u_.the_array_);
     }
     break;
@@ -3736,7 +3736,7 @@ Param_Test::Big_Union::Big_Union (const ::Param_Test::Big_Union &u)
     case 3:
     {
       // Make a deep copy.
-      this->u_.another_array_ = 
+      this->u_.another_array_ =
         Param_Test::short_array_dup (u.u_.another_array_);
     }
     break;
@@ -3835,7 +3835,7 @@ Param_Test::Big_Union::operator= (const ::Param_Test::Big_Union &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -3844,7 +3844,7 @@ Param_Test::Big_Union::operator= (const ::Param_Test::Big_Union &u)
     case 0:
     {
       // Make a deep copy.
-      this->u_.the_array_ = 
+      this->u_.the_array_ =
         Param_Test::Fixed_Array_dup (u.u_.the_array_);
     }
     break;
@@ -3877,7 +3877,7 @@ Param_Test::Big_Union::operator= (const ::Param_Test::Big_Union &u)
     case 3:
     {
       // Make a deep copy.
-      this->u_.another_array_ = 
+      this->u_.another_array_ =
         Param_Test::short_array_dup (u.u_.another_array_);
     }
     break;
@@ -3957,7 +3957,7 @@ Param_Test::Big_Union::operator= (const ::Param_Test::Big_Union &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -3966,69 +3966,69 @@ void Param_Test::Big_Union::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
       Param_Test::Fixed_Array_free (this->u_.the_array_);
       this->u_.the_array_ = 0;
-      
+
     break;
-    
+
     case 1:
       delete this->u_.the_interface_;
       this->u_.the_interface_ = 0;
-      
+
     break;
-    
+
     case 2:
-      
+
     break;
-    
+
     case 3:
       Param_Test::short_array_free (this->u_.another_array_);
       this->u_.another_array_ = 0;
-      
+
     break;
-    
+
     case 4:
       ::CORBA::string_free (this->u_.the_string_);
       this->u_.the_string_ = 0;
-      
+
     break;
-    
+
     case 5:
       delete this->u_.the_sequence_;
       this->u_.the_sequence_ = 0;
-      
+
     break;
-    
+
     case 6:
       delete this->u_.the_any_;
       this->u_.the_any_ = 0;
-      
+
     break;
-    
+
     case 7:
-      
+
     break;
-    
+
     case 8:
-      
+
     break;
-    
+
     case 9:
-      
+
     break;
-    
+
     case 10:
       delete this->u_.the_var_struct_;
       this->u_.the_var_struct_ = 0;
-      
+
     break;
-    
+
     case 11:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -4092,7 +4092,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Param_Test_Big_Union,
     sizeof (_tao_cases_Param_Test_Big_Union)/sizeof (_tao_cases_Param_Test_Big_Union[0]),
     -1);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Big_Union =
   &_tao_tc_Param_Test_Big_Union;
 
@@ -4109,7 +4109,7 @@ Param_Test::test_big_union (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Big_Union>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Big_Union>::in_arg_val _tao_u1 (u1);
   TAO::Arg_Traits< ::Param_Test::Big_Union>::inout_arg_val _tao_u2 (u2);
@@ -4130,7 +4130,7 @@ Param_Test::test_big_union (
       "test_big_union",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -4144,7 +4144,7 @@ static char const * const _tao_enumerators_Param_Test_Small_Union_Switch[] =
   {
     "A_LONG",
     "A_SHORT"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -4155,7 +4155,7 @@ static TAO::TypeCode::Enum<char const *,
     "Small_Union_Switch",
     _tao_enumerators_Param_Test_Small_Union_Switch,
     2);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Small_Union_Switch =
   &_tao_tc_Param_Test_Small_Union_Switch;
 
@@ -4208,7 +4208,7 @@ Param_Test::Small_Union::operator= (const ::Param_Test::Small_Union &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -4227,7 +4227,7 @@ Param_Test::Small_Union::operator= (const ::Param_Test::Small_Union &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -4236,15 +4236,15 @@ void Param_Test::Small_Union::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case Param_Test::A_LONG:
-      
+
     break;
-    
+
     case Param_Test::A_SHORT:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -4273,7 +4273,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Param_Test_Small_Union,
     sizeof (_tao_cases_Param_Test_Small_Union)/sizeof (_tao_cases_Param_Test_Small_Union[0]),
     -1);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Small_Union =
   &_tao_tc_Param_Test_Small_Union;
 
@@ -4290,7 +4290,7 @@ Param_Test::test_small_union (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Small_Union>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Small_Union>::in_arg_val _tao_u1 (u1);
   TAO::Arg_Traits< ::Param_Test::Small_Union>::inout_arg_val _tao_u2 (u2);
@@ -4311,7 +4311,7 @@ Param_Test::test_small_union (
       "test_small_union",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -4324,13 +4324,13 @@ Param_Test::test_small_union (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Param_Test_level4[] =
       {
         { "level5_string", &CORBA::_tc_string },
         { "level5_any", &CORBA::_tc_any }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -4365,14 +4365,14 @@ Param_Test::level4::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Param_Test_level8[] =
       {
         { "level9_string", &CORBA::_tc_string },
         { "level9_boolean", &CORBA::_tc_boolean },
         { "level9_short", &CORBA::_tc_short }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -4415,7 +4415,7 @@ Param_Test::test_complex_any (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Any>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_ca1 (ca1);
   TAO::Arg_Traits< ::CORBA::Any>::inout_arg_val _tao_ca2 (ca2);
@@ -4436,7 +4436,7 @@ Param_Test::test_complex_any (
       "test_complex_any",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -4518,7 +4518,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Param_Test::_tc_Recursive_Struct,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_RecStructSeq_0 =
         &Param_Test_RecStructSeq_0;
     }
@@ -4537,7 +4537,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/RecStructSeq:1.0",
     "RecStructSeq",
     &TAO::TypeCode::tc_Param_Test_RecStructSeq_0);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_RecStructSeq =
   &_tao_tc_Param_Test_RecStructSeq;
 
@@ -4551,13 +4551,13 @@ static TAO::TypeCode::Alias<char const *,
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Param_Test_Recursive_Struct[] =
       {
         { "x", &CORBA::_tc_long },
         { "children", &Param_Test::_tc_RecStructSeq }
       };
-  
+
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Struct<
     char const *,
@@ -4605,7 +4605,7 @@ Param_Test::test_recursive_struct (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Recursive_Struct>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Recursive_Struct>::in_arg_val _tao_rs1 (rs1);
   TAO::Arg_Traits< ::Param_Test::Recursive_Struct>::inout_arg_val _tao_rs2 (rs2);
@@ -4626,7 +4626,7 @@ Param_Test::test_recursive_struct (
       "test_recursive_struct",
       21,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -4708,7 +4708,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Param_Test::_tc_nested_rec_union,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_NestedSeq_0 =
         &Param_Test_NestedSeq_0;
     }
@@ -4727,7 +4727,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/NestedSeq:1.0",
     "NestedSeq",
     &TAO::TypeCode::tc_Param_Test_NestedSeq_0);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_NestedSeq =
   &_tao_tc_Param_Test_NestedSeq;
 
@@ -4790,7 +4790,7 @@ Param_Test::nested_rec_union::operator= (const ::Param_Test::nested_rec_union &u
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -4820,7 +4820,7 @@ Param_Test::nested_rec_union::operator= (const ::Param_Test::nested_rec_union &u
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -4829,17 +4829,17 @@ void Param_Test::nested_rec_union::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
-      
+
     break;
-    
+
     case 1:
       delete this->u_.nested_rec_member_;
       this->u_.nested_rec_member_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -4877,7 +4877,7 @@ static TAO::TypeCode::Recursive_Type<
     _tao_cases_Param_Test_nested_rec_union,
     sizeof (_tao_cases_Param_Test_nested_rec_union)/sizeof (_tao_cases_Param_Test_nested_rec_union[0]),
     -1);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_nested_rec_union =
   &_tao_tc_Param_Test_nested_rec_union;
 
@@ -4955,7 +4955,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Param_Test::_tc_Recursive_Union,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_RecUnionSeq_0 =
         &Param_Test_RecUnionSeq_0;
     }
@@ -4974,7 +4974,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/RecUnionSeq:1.0",
     "RecUnionSeq",
     &TAO::TypeCode::tc_Param_Test_RecUnionSeq_0);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_RecUnionSeq =
   &_tao_tc_Param_Test_RecUnionSeq;
 
@@ -5047,7 +5047,7 @@ Param_Test::Recursive_Union::operator= (const ::Param_Test::Recursive_Union &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -5088,7 +5088,7 @@ Param_Test::Recursive_Union::operator= (const ::Param_Test::Recursive_Union &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -5097,19 +5097,19 @@ void Param_Test::Recursive_Union::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
       delete this->u_.rec_member_;
       this->u_.rec_member_ = 0;
-      
+
     break;
-    
+
     case 1:
       delete this->u_.nested_member_;
       this->u_.nested_member_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -5147,7 +5147,7 @@ static TAO::TypeCode::Recursive_Type<
     _tao_cases_Param_Test_Recursive_Union,
     sizeof (_tao_cases_Param_Test_Recursive_Union)/sizeof (_tao_cases_Param_Test_Recursive_Union[0]),
     -1);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Recursive_Union =
   &_tao_tc_Param_Test_Recursive_Union;
 
@@ -5164,7 +5164,7 @@ Param_Test::test_recursive_union (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Recursive_Union>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Recursive_Union>::in_arg_val _tao_ru1 (ru1);
   TAO::Arg_Traits< ::Param_Test::Recursive_Union>::inout_arg_val _tao_ru2 (ru2);
@@ -5185,7 +5185,7 @@ Param_Test::test_recursive_union (
       "test_recursive_union",
       20,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -5208,12 +5208,12 @@ Param_Test::Multdim_Array_dup (const Param_Test::Multdim_Array_slice *_tao_src_a
 {
   Param_Test::Multdim_Array_slice *_tao_dup_array =
     Param_Test::Multdim_Array_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <Param_Test::Multdim_Array_slice *> (0);
     }
-  
+
   Param_Test::Multdim_Array_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -5275,7 +5275,7 @@ namespace TAO
           ::CORBA::tk_array,
           &Param_Test::_tc_Fixed_Array,
           3U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Multdim_Array_3 =
         &Param_Test_Multdim_Array_3;
 
@@ -5285,7 +5285,7 @@ namespace TAO
           ::CORBA::tk_array,
           &tc_Param_Test_Multdim_Array_3,
           5U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Param_Test_Multdim_Array =
         &Param_Test_Multdim_Array_5_3;
     }
@@ -5303,7 +5303,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Param_Test/Multdim_Array:1.0",
     "Multdim_Array",
     &TAO::TypeCode::tc_Param_Test_Multdim_Array);
-  
+
 ::CORBA::TypeCode_ptr const Param_Test::_tc_Multdim_Array =
   &_tao_tc_Param_Test_Multdim_Array;
 
@@ -5320,7 +5320,7 @@ Param_Test::test_multdim_array (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Param_Test::Multdim_Array_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Param_Test::Multdim_Array_tag>::in_arg_val _tao_m1 (m1);
   TAO::Arg_Traits< ::Param_Test::Multdim_Array_tag>::inout_arg_val _tao_m2 (m2);
@@ -5341,7 +5341,7 @@ Param_Test::test_multdim_array (
       "test_multdim_array",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -5360,7 +5360,7 @@ Param_Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -5483,7 +5483,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Param_Test:1.0",
     "Param_Test");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Param_Test =
   &_tao_tc_Param_Test;
 
@@ -6841,7 +6841,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -6932,7 +6932,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -7151,7 +7151,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<Param_Test::Small_Union_Switch>::extract (
         _tao_any,
         Param_Test::_tc_Small_Union_Switch,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -7826,13 +7826,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Coffee RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -8296,7 +8296,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     const Param_Test::Var_Array_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm << _tao_array [i0].in ());
@@ -8310,7 +8310,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     Param_Test::Var_Array_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm >> _tao_array [i0].out ());
@@ -8489,7 +8489,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -8581,7 +8581,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -8768,12 +8768,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Param_Test::Small_Union_Switch> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -8796,7 +8796,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -8828,7 +8828,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -9021,7 +9021,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -9053,7 +9053,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -9137,7 +9137,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -9169,7 +9169,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -9196,7 +9196,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
             _tao_union.nested_member (_tao_union_tmp);
             _tao_union._d (_tao_discriminant);
           }
-        
+
       }
       break;
     default:
@@ -9224,7 +9224,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     const Param_Test::Multdim_Array_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
     {
       for ( ::CORBA::ULong i1 = 0; i1 < 3 && _tao_marshal_flag; ++i1)
@@ -9243,7 +9243,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     Param_Test::Multdim_Array_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 5 && _tao_marshal_flag; ++i0)
     {
       for ( ::CORBA::ULong i1 = 0; i1 < 3 && _tao_marshal_flag; ++i1)
@@ -9285,13 +9285,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Param_Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

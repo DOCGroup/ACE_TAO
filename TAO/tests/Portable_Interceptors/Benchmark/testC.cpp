@@ -150,9 +150,9 @@ void Test_Interceptors::Invalid::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Test_Interceptors_Invalid = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -212,13 +212,13 @@ TAO::Objref_Traits<Test_Interceptors::Secure_Vault>::marshal (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_Interceptors_Secure_Vault_Record[] =
       {
         { "check_num", &CORBA::_tc_long },
         { "amount", &CORBA::_tc_long }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -259,7 +259,7 @@ Test_Interceptors::Secure_Vault::ready (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Short>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -296,7 +296,7 @@ Test_Interceptors::Secure_Vault::authenticate (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_user (user);
 
@@ -307,7 +307,7 @@ Test_Interceptors::Secure_Vault::authenticate (
     };
 
   static TAO::Exception_Data
-  _tao_Test_Interceptors_Secure_Vault_authenticate_exceptiondata [] = 
+  _tao_Test_Interceptors_Secure_Vault_authenticate_exceptiondata [] =
     {
       {
         "IDL:Test_Interceptors/Invalid:1.0",
@@ -325,7 +325,7 @@ Test_Interceptors::Secure_Vault::authenticate (
       "authenticate",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -346,7 +346,7 @@ Test_Interceptors::Secure_Vault::update_records (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_id (id);
   TAO::Arg_Traits< ::Test_Interceptors::Secure_Vault::Record>::in_arg_val _tao_val (val);
@@ -365,7 +365,7 @@ Test_Interceptors::Secure_Vault::update_records (
       "update_records",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -384,7 +384,7 @@ Test_Interceptors::Secure_Vault::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -506,7 +506,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test_Interceptors/Secure_Vault:1.0",
     "Secure_Vault");
-  
+
 
 namespace Test_Interceptors
 {
@@ -532,7 +532,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -553,7 +553,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test_Interceptors
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -689,7 +689,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test_Interceptors
 {
-  
+
 
   /// Copying insertion.
   void
@@ -969,13 +969,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test_Interceptors::Secure_Vault RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

@@ -122,7 +122,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_octet,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Bug_3647_Regression_Payload_0 =
         &Bug_3647_Regression_Payload_0;
     }
@@ -141,7 +141,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Bug_3647_Regression/Payload:1.0",
     "Payload",
     &TAO::TypeCode::tc_Bug_3647_Regression_Payload_0);
-  
+
 
 namespace Bug_3647_Regression
 {
@@ -193,7 +193,7 @@ Bug_3647_Regression::Backend::startup_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -228,7 +228,7 @@ Bug_3647_Regression::Backend::ping (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Bug_3647_Regression::Payload>::in_arg_val _tao_the_payload (the_payload);
 
@@ -246,7 +246,7 @@ Bug_3647_Regression::Backend::ping (
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -263,7 +263,7 @@ Bug_3647_Regression::Backend::freeze (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_seconds (seconds);
 
@@ -281,7 +281,7 @@ Bug_3647_Regression::Backend::freeze (
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -298,7 +298,7 @@ Bug_3647_Regression::Backend::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -420,7 +420,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Bug_3647_Regression/Backend:1.0",
     "Backend");
-  
+
 
 namespace Bug_3647_Regression
 {
@@ -472,7 +472,7 @@ Bug_3647_Regression::Middle::startup_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -507,7 +507,7 @@ Bug_3647_Regression::Middle::ping (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -542,7 +542,7 @@ Bug_3647_Regression::Middle::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -664,7 +664,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Bug_3647_Regression/Middle:1.0",
     "Middle");
-  
+
 
 namespace Bug_3647_Regression
 {
@@ -687,7 +687,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Bug_3647_Regression
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -827,7 +827,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Bug_3647_Regression
 {
-  
+
 
   /// Copying insertion.
   void
@@ -941,7 +941,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Bug_3647_Regression
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1079,13 +1079,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Bug_3647_Regression::Backend RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1116,13 +1116,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Bug_3647_Regression::Middle RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

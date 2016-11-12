@@ -177,31 +177,31 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< char *>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< char *>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< char *>::inout_arg_type arg_3 =
       TAO::Portable_Server::get_inout_arg< char *> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::out_arg_type arg_4 =
       TAO::Portable_Server::get_out_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         4);
-      
+
     retval =
       this->servant_->send_message (
         arg_1
@@ -225,7 +225,7 @@ void POA_Messenger::send_message_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       _tc_MessengerUnableToSendMessage
     };
@@ -246,7 +246,7 @@ void POA_Messenger::send_message_skel (
       &_tao_message,
       &_tao_time_sent
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Messenger * const impl =
@@ -261,7 +261,7 @@ void POA_Messenger::send_message_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -325,12 +325,12 @@ POA_Messenger::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -469,19 +469,19 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< char *>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_3 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     this->servant_->send_message (
       arg_1
       , arg_2
@@ -503,7 +503,7 @@ void POA_AMI_MessengerHandler::send_message_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       _tc_MessengerUnableToSendMessage
     };
@@ -522,7 +522,7 @@ void POA_AMI_MessengerHandler::send_message_skel (
       &_tao_message,
       &_tao_time_sent
     };
-  
+
   static size_t const nargs = 4;
 
   POA_AMI_MessengerHandler * const impl =
@@ -537,7 +537,7 @@ void POA_AMI_MessengerHandler::send_message_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -577,11 +577,11 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
-    
+
+
 
     static TAO::Exception_Data
-    _tao_AMI_MessengerHandler_send_message_excep_exceptiondata [] = 
+    _tao_AMI_MessengerHandler_send_message_excep_exceptiondata [] =
       {
         {
           "IDL:MessengerUnableToSendMessage:1.0",
@@ -591,13 +591,13 @@ public:
 #endif /* TAO_HAS_INTERCEPTORS */
         }
       };
-    TAO::ExceptionHolder *tao_excepholder = 
+    TAO::ExceptionHolder *tao_excepholder =
       dynamic_cast<TAO::ExceptionHolder *> (arg_1);
     if (tao_excepholder != 0)
       {
         tao_excepholder->set_exception_data (_tao_AMI_MessengerHandler_send_message_excep_exceptiondata, 1);
       }
-    
+
     this->servant_->send_message_excep (
       arg_1);
   }
@@ -617,7 +617,7 @@ void POA_AMI_MessengerHandler::send_message_excep_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       _tc_MessengerUnableToSendMessage
     };
@@ -632,7 +632,7 @@ void POA_AMI_MessengerHandler::send_message_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_MessengerHandler * const impl =
@@ -647,7 +647,7 @@ void POA_AMI_MessengerHandler::send_message_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -715,12 +715,12 @@ POA_AMI_MessengerHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -162,7 +162,7 @@ POA_CosNaming::NamingContext::~NamingContext (void)
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -188,18 +188,18 @@ namespace POA_CosNaming
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Object>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->bind (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_CosNaming::NamingContext * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -230,7 +230,7 @@ void POA_CosNaming::NamingContext::bind_skel (
       &_tao_n,
       &_tao_obj
     };
-  
+
   static size_t const nargs = 3;
 
   POA_CosNaming::NamingContext * const impl =
@@ -245,7 +245,7 @@ void POA_CosNaming::NamingContext::bind_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -262,7 +262,7 @@ void POA_CosNaming::NamingContext::bind_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -288,18 +288,18 @@ namespace POA_CosNaming
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Object>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->rebind (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_CosNaming::NamingContext * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -330,7 +330,7 @@ void POA_CosNaming::NamingContext::rebind_skel (
       &_tao_n,
       &_tao_obj
     };
-  
+
   static size_t const nargs = 3;
 
   POA_CosNaming::NamingContext * const impl =
@@ -345,7 +345,7 @@ void POA_CosNaming::NamingContext::rebind_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -362,7 +362,7 @@ void POA_CosNaming::NamingContext::rebind_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -388,18 +388,18 @@ namespace POA_CosNaming
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CosNaming::NamingContext>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CosNaming::NamingContext> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->bind_context (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_CosNaming::NamingContext * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -430,7 +430,7 @@ void POA_CosNaming::NamingContext::bind_context_skel (
       &_tao_n,
       &_tao_nc
     };
-  
+
   static size_t const nargs = 3;
 
   POA_CosNaming::NamingContext * const impl =
@@ -445,7 +445,7 @@ void POA_CosNaming::NamingContext::bind_context_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -462,7 +462,7 @@ void POA_CosNaming::NamingContext::bind_context_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -488,18 +488,18 @@ namespace POA_CosNaming
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CosNaming::NamingContext>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CosNaming::NamingContext> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->rebind_context (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_CosNaming::NamingContext * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -530,7 +530,7 @@ void POA_CosNaming::NamingContext::rebind_context_skel (
       &_tao_n,
       &_tao_nc
     };
-  
+
   static size_t const nargs = 3;
 
   POA_CosNaming::NamingContext * const impl =
@@ -545,7 +545,7 @@ void POA_CosNaming::NamingContext::rebind_context_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -562,7 +562,7 @@ void POA_CosNaming::NamingContext::rebind_context_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -587,18 +587,18 @@ namespace POA_CosNaming
         TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CosNaming::Name>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CosNaming::Name> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->resolve (
           arg_1);
     }
-  
+
   private:
     POA_CosNaming::NamingContext * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -627,7 +627,7 @@ void POA_CosNaming::NamingContext::resolve_skel (
       &retval,
       &_tao_n
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CosNaming::NamingContext * const impl =
@@ -642,7 +642,7 @@ void POA_CosNaming::NamingContext::resolve_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -659,7 +659,7 @@ void POA_CosNaming::NamingContext::resolve_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -685,11 +685,11 @@ namespace POA_CosNaming
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->unbind (
         arg_1);
     }
-  
+
   private:
     POA_CosNaming::NamingContext * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -718,7 +718,7 @@ void POA_CosNaming::NamingContext::unbind_skel (
       &retval,
       &_tao_n
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CosNaming::NamingContext * const impl =
@@ -733,7 +733,7 @@ void POA_CosNaming::NamingContext::unbind_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -750,7 +750,7 @@ void POA_CosNaming::NamingContext::unbind_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -775,11 +775,11 @@ namespace POA_CosNaming
         TAO::Portable_Server::get_ret_arg< ::CosNaming::NamingContext> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->new_context ();
     }
-  
+
   private:
     POA_CosNaming::NamingContext * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -806,7 +806,7 @@ void POA_CosNaming::NamingContext::new_context_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_CosNaming::NamingContext * const impl =
@@ -821,7 +821,7 @@ void POA_CosNaming::NamingContext::new_context_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -838,7 +838,7 @@ void POA_CosNaming::NamingContext::new_context_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -863,18 +863,18 @@ namespace POA_CosNaming
         TAO::Portable_Server::get_ret_arg< ::CosNaming::NamingContext> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CosNaming::Name>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CosNaming::Name> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->bind_new_context (
           arg_1);
     }
-  
+
   private:
     POA_CosNaming::NamingContext * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -903,7 +903,7 @@ void POA_CosNaming::NamingContext::bind_new_context_skel (
       &retval,
       &_tao_n
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CosNaming::NamingContext * const impl =
@@ -918,7 +918,7 @@ void POA_CosNaming::NamingContext::bind_new_context_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -935,7 +935,7 @@ void POA_CosNaming::NamingContext::bind_new_context_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -954,7 +954,7 @@ namespace POA_CosNaming
     {
       this->servant_->destroy ();
     }
-  
+
   private:
     POA_CosNaming::NamingContext * const servant_;
   };
@@ -979,7 +979,7 @@ void POA_CosNaming::NamingContext::destroy_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_CosNaming::NamingContext * const impl =
@@ -992,7 +992,7 @@ void POA_CosNaming::NamingContext::destroy_skel (
 
   destroy_NamingContext command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1009,7 +1009,7 @@ void POA_CosNaming::NamingContext::destroy_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1035,25 +1035,25 @@ namespace POA_CosNaming
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CosNaming::BindingList>::out_arg_type arg_2 =
         TAO::Portable_Server::get_out_arg< ::CosNaming::BindingList> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::CosNaming::BindingIterator>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::CosNaming::BindingIterator> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       this->servant_->list (
         arg_1
         , arg_2
         , arg_3);
     }
-  
+
   private:
     POA_CosNaming::NamingContext * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1086,7 +1086,7 @@ void POA_CosNaming::NamingContext::list_skel (
       &_tao_bl,
       &_tao_bi
     };
-  
+
   static size_t const nargs = 4;
 
   POA_CosNaming::NamingContext * const impl =
@@ -1101,7 +1101,7 @@ void POA_CosNaming::NamingContext::list_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1165,12 +1165,12 @@ POA_CosNaming::NamingContext::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1286,7 +1286,7 @@ POA_CosNaming::BindingIterator::~BindingIterator (void)
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1311,18 +1311,18 @@ namespace POA_CosNaming
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CosNaming::Binding>::out_arg_type arg_1 =
         TAO::Portable_Server::get_out_arg< ::CosNaming::Binding> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->next_one (
           arg_1);
     }
-  
+
   private:
     POA_CosNaming::BindingIterator * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1351,7 +1351,7 @@ void POA_CosNaming::BindingIterator::next_one_skel (
       &retval,
       &_tao_b
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CosNaming::BindingIterator * const impl =
@@ -1366,7 +1366,7 @@ void POA_CosNaming::BindingIterator::next_one_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1383,7 +1383,7 @@ void POA_CosNaming::BindingIterator::next_one_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1408,25 +1408,25 @@ namespace POA_CosNaming
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CosNaming::BindingList>::out_arg_type arg_2 =
         TAO::Portable_Server::get_out_arg< ::CosNaming::BindingList> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->next_n (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_CosNaming::BindingIterator * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1457,7 +1457,7 @@ void POA_CosNaming::BindingIterator::next_n_skel (
       &_tao_how_many,
       &_tao_bl
     };
-  
+
   static size_t const nargs = 3;
 
   POA_CosNaming::BindingIterator * const impl =
@@ -1472,7 +1472,7 @@ void POA_CosNaming::BindingIterator::next_n_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1489,7 +1489,7 @@ void POA_CosNaming::BindingIterator::next_n_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1508,7 +1508,7 @@ namespace POA_CosNaming
     {
       this->servant_->destroy ();
     }
-  
+
   private:
     POA_CosNaming::BindingIterator * const servant_;
   };
@@ -1533,7 +1533,7 @@ void POA_CosNaming::BindingIterator::destroy_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_CosNaming::BindingIterator * const impl =
@@ -1546,7 +1546,7 @@ void POA_CosNaming::BindingIterator::destroy_skel (
 
   destroy_BindingIterator command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1610,12 +1610,12 @@ POA_CosNaming::BindingIterator::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1747,7 +1747,7 @@ POA_CosNaming::NamingContextExt::~NamingContextExt (void)
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1772,18 +1772,18 @@ namespace POA_CosNaming
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CosNaming::Name>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CosNaming::Name> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->to_string (
           arg_1);
     }
-  
+
   private:
     POA_CosNaming::NamingContextExt * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1812,7 +1812,7 @@ void POA_CosNaming::NamingContextExt::to_string_skel (
       &retval,
       &_tao_n
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CosNaming::NamingContextExt * const impl =
@@ -1827,7 +1827,7 @@ void POA_CosNaming::NamingContextExt::to_string_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1844,7 +1844,7 @@ void POA_CosNaming::NamingContextExt::to_string_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1869,18 +1869,18 @@ namespace POA_CosNaming
         TAO::Portable_Server::get_ret_arg< ::CosNaming::Name> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->to_name (
           arg_1);
     }
-  
+
   private:
     POA_CosNaming::NamingContextExt * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1909,7 +1909,7 @@ void POA_CosNaming::NamingContextExt::to_name_skel (
       &retval,
       &_tao_sn
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CosNaming::NamingContextExt * const impl =
@@ -1924,7 +1924,7 @@ void POA_CosNaming::NamingContextExt::to_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1941,7 +1941,7 @@ void POA_CosNaming::NamingContextExt::to_name_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1966,25 +1966,25 @@ namespace POA_CosNaming
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->to_url (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_CosNaming::NamingContextExt * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2015,7 +2015,7 @@ void POA_CosNaming::NamingContextExt::to_url_skel (
       &_tao_addr,
       &_tao_sn
     };
-  
+
   static size_t const nargs = 3;
 
   POA_CosNaming::NamingContextExt * const impl =
@@ -2030,7 +2030,7 @@ void POA_CosNaming::NamingContextExt::to_url_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2047,7 +2047,7 @@ void POA_CosNaming::NamingContextExt::to_url_skel (
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2072,18 +2072,18 @@ namespace POA_CosNaming
         TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->resolve_str (
           arg_1);
     }
-  
+
   private:
     POA_CosNaming::NamingContextExt * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2112,7 +2112,7 @@ void POA_CosNaming::NamingContextExt::resolve_str_skel (
       &retval,
       &_tao_n
     };
-  
+
   static size_t const nargs = 2;
 
   POA_CosNaming::NamingContextExt * const impl =
@@ -2127,7 +2127,7 @@ void POA_CosNaming::NamingContextExt::resolve_str_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2195,12 +2195,12 @@ POA_CosNaming::NamingContextExt::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

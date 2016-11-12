@@ -60,12 +60,12 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Demo_BaseStruct[] =
       {
         { "str", &CORBA::_tc_string }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -173,7 +173,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Demo::_tc_NestedStruct,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Demo_NestedSeq_0 =
         &Demo_NestedSeq_0;
     }
@@ -192,7 +192,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Demo/NestedSeq:1.0",
     "NestedSeq",
     &TAO::TypeCode::tc_Demo_NestedSeq_0);
-  
+
 
 namespace Demo
 {
@@ -210,7 +210,7 @@ namespace Demo
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Demo_NestedStruct[] =
       {
         { "foo1", &Demo::_tc_BaseStruct },
@@ -218,7 +218,7 @@ static TAO::TypeCode::Struct_Field<
         { "foo3", &Demo::_tc_BaseStruct },
         { "bars", &Demo::_tc_NestedSeq }
       };
-  
+
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Struct<
     char const *,
@@ -309,7 +309,7 @@ Demo::BaseUnion::operator= (const ::Demo::BaseUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -331,7 +331,7 @@ Demo::BaseUnion::operator= (const ::Demo::BaseUnion &u)
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -340,21 +340,21 @@ void Demo::BaseUnion::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 1:
       ::CORBA::string_free (this->u_.str_);
       this->u_.str_ = 0;
-      
+
     break;
-    
+
     case 2:
-      
+
     break;
-    
+
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -383,7 +383,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Demo_BaseUnion,
     sizeof (_tao_cases_Demo_BaseUnion)/sizeof (_tao_cases_Demo_BaseUnion[0]),
     2);
-  
+
 
 namespace Demo
 {
@@ -473,7 +473,7 @@ Demo::NestedUnion::operator= (const ::Demo::NestedUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -528,7 +528,7 @@ Demo::NestedUnion::operator= (const ::Demo::NestedUnion &u)
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -537,25 +537,25 @@ void Demo::NestedUnion::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 1:
       delete this->u_.bar1_;
       this->u_.bar1_ = 0;
-      
+
     break;
-    
+
     case 2:
       delete this->u_.bar2_;
       this->u_.bar2_ = 0;
-      
+
     break;
-    
+
     default:
       delete this->u_.defaultBar_;
       this->u_.defaultBar_ = 0;
-      
+
     break;
-    
+
   }
 }
 
@@ -584,7 +584,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Demo_NestedUnion,
     sizeof (_tao_cases_Demo_NestedUnion)/sizeof (_tao_cases_Demo_NestedUnion[0]),
     2);
-  
+
 
 namespace Demo
 {
@@ -598,7 +598,7 @@ namespace Demo
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Demo_BaseValue[] =
   {
     { "str", &CORBA::_tc_string, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -612,7 +612,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Demo_BaseValue,
     1);
-  
+
 
 namespace Demo
 {
@@ -716,27 +716,27 @@ Demo::BaseValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = BaseValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -771,7 +771,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "foo1", &Demo::_tc_BaseValue, ::CORBA::PUBLIC_MEMBER },
     { "foo2", &Demo::_tc_BaseValue, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -785,7 +785,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Demo_NestedValue,
     2);
-  
+
 
 namespace Demo
 {
@@ -889,27 +889,27 @@ Demo::NestedValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = NestedValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -993,7 +993,7 @@ Demo::ATC_Test::do_struct (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_a (a);
 
@@ -1010,7 +1010,7 @@ Demo::ATC_Test::do_struct (
       "do_struct",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1029,7 +1029,7 @@ Demo::ATC_Test::do_union (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_a (a);
 
@@ -1046,7 +1046,7 @@ Demo::ATC_Test::do_union (
       "do_union",
       8,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1065,7 +1065,7 @@ Demo::ATC_Test::do_value (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_a (a);
 
@@ -1082,7 +1082,7 @@ Demo::ATC_Test::do_value (
       "do_value",
       8,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1101,7 +1101,7 @@ Demo::ATC_Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1223,7 +1223,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Demo/ATC_Test:1.0",
     "ATC_Test");
-  
+
 
 namespace Demo
 {
@@ -1507,7 +1507,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Demo
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -2084,7 +2084,7 @@ namespace Demo
         );
   }
 
-  
+
 }
 
 #else
@@ -2226,7 +2226,7 @@ namespace Demo
         );
   }
 
-  
+
 }
 
 #else
@@ -2315,7 +2315,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Demo
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2501,7 +2501,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2536,7 +2536,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2601,7 +2601,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2636,7 +2636,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2651,7 +2651,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
             _tao_union.bar1 (_tao_union_tmp);
             _tao_union._d (_tao_discriminant);
           }
-        
+
       }
       break;
     case 2:
@@ -2664,7 +2664,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
             _tao_union.bar2 (_tao_union_tmp);
             _tao_union._d (_tao_discriminant);
           }
-        
+
       }
       break;
     default:
@@ -2677,7 +2677,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
             _tao_union.defaultBar (_tao_union_tmp);
             _tao_union._d (_tao_discriminant);
           }
-        
+
       }
       break;
   }
@@ -2750,15 +2750,15 @@ OBV_Demo::BaseValue::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) 
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_str.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2767,19 +2767,19 @@ OBV_Demo::BaseValue::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_str.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -2851,16 +2851,16 @@ OBV_Demo::NestedValue::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_foo1.in ()) &&
       (strm << _pd_foo2.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2869,20 +2869,20 @@ OBV_Demo::NestedValue::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&c
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_foo1.out ()) &&
       (strm >> _pd_foo2.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -2916,13 +2916,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Demo::ATC_Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

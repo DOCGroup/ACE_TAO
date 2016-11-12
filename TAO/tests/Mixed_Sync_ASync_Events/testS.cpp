@@ -156,7 +156,7 @@ POA_A::Test::~Test (void)
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -182,25 +182,25 @@ namespace POA_A
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::ULong>::inout_arg_type arg_2 =
         TAO::Portable_Server::get_inout_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::A::FollowUp>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::A::FollowUp> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       this->servant_->request (
         arg_1
         , arg_2
         , arg_3);
     }
-  
+
   private:
     POA_A::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -233,7 +233,7 @@ void POA_A::Test::request_skel (
       &_tao_counter,
       &_tao_follow_up
     };
-  
+
   static size_t const nargs = 4;
 
   POA_A::Test * const impl =
@@ -248,7 +248,7 @@ void POA_A::Test::request_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -265,7 +265,7 @@ void POA_A::Test::request_skel (
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -291,11 +291,11 @@ namespace POA_A
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->report (
         arg_1);
     }
-  
+
   private:
     POA_A::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -324,7 +324,7 @@ void POA_A::Test::report_skel (
       &retval,
       &_tao_msg
     };
-  
+
   static size_t const nargs = 2;
 
   POA_A::Test * const impl =
@@ -339,7 +339,7 @@ void POA_A::Test::report_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -356,7 +356,7 @@ void POA_A::Test::report_skel (
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -375,7 +375,7 @@ namespace POA_A
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_A::Test * const servant_;
   };
@@ -400,7 +400,7 @@ void POA_A::Test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_A::Test * const impl =
@@ -413,7 +413,7 @@ void POA_A::Test::shutdown_skel (
 
   shutdown_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -477,12 +477,12 @@ POA_A::Test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -600,7 +600,7 @@ POA_A::AMI_TestHandler::~AMI_TestHandler (void)
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -626,18 +626,18 @@ namespace POA_A
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::A::FollowUp>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::A::FollowUp> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->request (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_A::AMI_TestHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -668,7 +668,7 @@ void POA_A::AMI_TestHandler::request_skel (
       &_tao_counter,
       &_tao_follow_up
     };
-  
+
   static size_t const nargs = 3;
 
   POA_A::AMI_TestHandler * const impl =
@@ -683,7 +683,7 @@ void POA_A::AMI_TestHandler::request_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -700,7 +700,7 @@ void POA_A::AMI_TestHandler::request_skel (
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -726,11 +726,11 @@ namespace POA_A
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->request_excep (
         arg_1);
     }
-  
+
   private:
     POA_A::AMI_TestHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -759,7 +759,7 @@ void POA_A::AMI_TestHandler::request_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_A::AMI_TestHandler * const impl =
@@ -774,7 +774,7 @@ void POA_A::AMI_TestHandler::request_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -791,7 +791,7 @@ void POA_A::AMI_TestHandler::request_excep_skel (
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -810,7 +810,7 @@ namespace POA_A
     {
       this->servant_->report ();
     }
-  
+
   private:
     POA_A::AMI_TestHandler * const servant_;
   };
@@ -835,7 +835,7 @@ void POA_A::AMI_TestHandler::report_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_A::AMI_TestHandler * const impl =
@@ -848,7 +848,7 @@ void POA_A::AMI_TestHandler::report_skel (
 
   report_AMI_TestHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -865,7 +865,7 @@ void POA_A::AMI_TestHandler::report_skel (
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -891,11 +891,11 @@ namespace POA_A
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->report_excep (
         arg_1);
     }
-  
+
   private:
     POA_A::AMI_TestHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -924,7 +924,7 @@ void POA_A::AMI_TestHandler::report_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_A::AMI_TestHandler * const impl =
@@ -939,7 +939,7 @@ void POA_A::AMI_TestHandler::report_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1007,12 +1007,12 @@ POA_A::AMI_TestHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

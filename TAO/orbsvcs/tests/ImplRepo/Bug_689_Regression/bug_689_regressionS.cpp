@@ -194,7 +194,7 @@ void POA_bug_689_regression::noop_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_bug_689_regression * const impl =
@@ -207,7 +207,7 @@ void POA_bug_689_regression::noop_skel (
 
   noop_bug_689_regression command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -264,7 +264,7 @@ void POA_bug_689_regression::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_bug_689_regression * const impl =
@@ -277,7 +277,7 @@ void POA_bug_689_regression::shutdown_skel (
 
   shutdown_bug_689_regression command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -341,12 +341,12 @@ POA_bug_689_regression::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

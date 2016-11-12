@@ -63,7 +63,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBstring:1.0",
     "VBstring",
     &CORBA::_tc_string);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBstring =
   &_tao_tc_VBstring;
 
@@ -108,7 +108,7 @@ VBstring::_copy_value (void)
     result,
     VBstring (*this),
     0);
-    
+
   return result;
 }
 
@@ -161,24 +161,24 @@ VBstring::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBstring::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBstring,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -216,7 +216,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBwstring:1.0",
     "VBwstring",
     &CORBA::_tc_wstring);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBwstring =
   &_tao_tc_VBwstring;
 
@@ -261,7 +261,7 @@ VBwstring::_copy_value (void)
     result,
     VBwstring (*this),
     0);
-    
+
   return result;
 }
 
@@ -314,24 +314,24 @@ VBwstring::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBwstring::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBwstring,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -432,7 +432,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_long,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_TDseqlong_0 =
         &TDseqlong_0;
     }
@@ -451,7 +451,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDseqlong:1.0",
     "TDseqlong",
     &TAO::TypeCode::tc_TDseqlong_0);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDseqlong =
   &_tao_tc_TDseqlong;
 
@@ -481,7 +481,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_long,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_TDseqlong_0 =
         &TDseqlong_0;
     }
@@ -500,7 +500,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBseqlong:1.0",
     "VBseqlong",
     &TAO::TypeCode::tc_TDseqlong_0);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBseqlong =
   &_tao_tc_VBseqlong;
 
@@ -545,7 +545,7 @@ VBseqlong::_copy_value (void)
     result,
     VBseqlong (*this),
     0);
-    
+
   return result;
 }
 
@@ -598,24 +598,24 @@ VBseqlong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBseqlong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBseqlong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -684,12 +684,12 @@ LongArray_dup (const LongArray_slice *_tao_src_array)
 {
   LongArray_slice *_tao_dup_array =
     LongArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <LongArray_slice *> (0);
     }
-  
+
   LongArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -747,7 +747,7 @@ namespace TAO
           ::CORBA::tk_array,
           &CORBA::_tc_long,
           3U);
-        
+
       ::CORBA::TypeCode_ptr const tc_LongArray =
         &LongArray_3;
     }
@@ -765,7 +765,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:LongArray:1.0",
     "LongArray",
     &TAO::TypeCode::tc_LongArray);
-  
+
 ::CORBA::TypeCode_ptr const _tc_LongArray =
   &_tao_tc_LongArray;
 
@@ -795,7 +795,7 @@ namespace TAO
           ::CORBA::tk_array,
           &CORBA::_tc_long,
           3U);
-        
+
       ::CORBA::TypeCode_ptr const tc_LongArray =
         &LongArray_3;
     }
@@ -813,7 +813,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBlongarray:1.0",
     "VBlongarray",
     &TAO::TypeCode::tc_LongArray);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBlongarray =
   &_tao_tc_VBlongarray;
 
@@ -858,7 +858,7 @@ VBlongarray::_copy_value (void)
     result,
     VBlongarray (*this),
     0);
-    
+
   return result;
 }
 
@@ -911,24 +911,24 @@ VBlongarray::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBlongarray::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBlongarray,
     false);
-  
+
   LongArray_forany temp (vb_object->_boxed_inout ());
   return (strm >> temp);
 }
@@ -965,12 +965,12 @@ StringArray_dup (const StringArray_slice *_tao_src_array)
 {
   StringArray_slice *_tao_dup_array =
     StringArray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <StringArray_slice *> (0);
     }
-  
+
   StringArray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -1028,7 +1028,7 @@ namespace TAO
           ::CORBA::tk_array,
           &CORBA::_tc_string,
           2U);
-        
+
       ::CORBA::TypeCode_ptr const tc_StringArray =
         &StringArray_2;
     }
@@ -1046,7 +1046,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:StringArray:1.0",
     "StringArray",
     &TAO::TypeCode::tc_StringArray);
-  
+
 ::CORBA::TypeCode_ptr const _tc_StringArray =
   &_tao_tc_StringArray;
 
@@ -1076,7 +1076,7 @@ namespace TAO
           ::CORBA::tk_array,
           &CORBA::_tc_string,
           2U);
-        
+
       ::CORBA::TypeCode_ptr const tc_StringArray =
         &StringArray_2;
     }
@@ -1094,7 +1094,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBstringarray:1.0",
     "VBstringarray",
     &TAO::TypeCode::tc_StringArray);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBstringarray =
   &_tao_tc_VBstringarray;
 
@@ -1139,7 +1139,7 @@ VBstringarray::_copy_value (void)
     result,
     VBstringarray (*this),
     0);
-    
+
   return result;
 }
 
@@ -1192,24 +1192,24 @@ VBstringarray::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBstringarray::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBstringarray,
     false);
-  
+
   StringArray_forany temp (vb_object->_boxed_inout ());
   return (strm >> temp);
 }
@@ -1284,7 +1284,7 @@ Test::basic_op1 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::VBlong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::VBlong>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::VBlong>::inout_arg_val _tao_p2 (p2);
@@ -1305,7 +1305,7 @@ Test::basic_op1 (
       "basic_op1",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1326,7 +1326,7 @@ Test::basic_op2 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::vb_basic::M_VBlong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::vb_basic::M_VBlong>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::vb_basic::M_VBlong>::inout_arg_val _tao_p2 (p2);
@@ -1347,7 +1347,7 @@ Test::basic_op2 (
       "basic_op2",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1368,7 +1368,7 @@ Test::basic_op3 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::CORBA::Long>::inout_arg_val _tao_p2 (p2);
@@ -1389,7 +1389,7 @@ Test::basic_op3 (
       "basic_op3",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1410,7 +1410,7 @@ Test::string_op1 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::VBstring>::ret_val _tao_retval;
   TAO::Arg_Traits< ::VBstring>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::VBstring>::inout_arg_val _tao_p2 (p2);
@@ -1431,7 +1431,7 @@ Test::string_op1 (
       "string_op1",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1452,7 +1452,7 @@ Test::string_op2 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< char *>::inout_arg_val _tao_p2 (p2);
@@ -1473,7 +1473,7 @@ Test::string_op2 (
       "string_op2",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1494,7 +1494,7 @@ Test::seq_op1 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::VBseqlong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::VBseqlong>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::VBseqlong>::inout_arg_val _tao_p2 (p2);
@@ -1515,7 +1515,7 @@ Test::seq_op1 (
       "seq_op1",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1536,7 +1536,7 @@ Test::seq_op2 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::TDseqlong>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::TDseqlong>::inout_arg_val _tao_p2 (p2);
@@ -1557,7 +1557,7 @@ Test::seq_op2 (
       "seq_op2",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1576,7 +1576,7 @@ Test::struct_op1 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::VBfixed_struct1>::ret_val _tao_retval;
   TAO::Arg_Traits< ::VBfixed_struct1>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::VBfixed_struct1>::inout_arg_val _tao_p2 (p2);
@@ -1597,7 +1597,7 @@ Test::struct_op1 (
       "struct_op1",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1618,7 +1618,7 @@ Test::struct_op2 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Fixed_Struct1>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::Fixed_Struct1>::inout_arg_val _tao_p2 (p2);
@@ -1639,7 +1639,7 @@ Test::struct_op2 (
       "struct_op2",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1658,7 +1658,7 @@ Test::struct_op3 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::VBvariable_struct1>::ret_val _tao_retval;
   TAO::Arg_Traits< ::VBvariable_struct1>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::VBvariable_struct1>::inout_arg_val _tao_p2 (p2);
@@ -1679,7 +1679,7 @@ Test::struct_op3 (
       "struct_op3",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1700,7 +1700,7 @@ Test::struct_op4 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Variable_Struct1>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::Variable_Struct1>::inout_arg_val _tao_p2 (p2);
@@ -1721,7 +1721,7 @@ Test::struct_op4 (
       "struct_op4",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1740,7 +1740,7 @@ Test::array_op1 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::VBlongarray>::ret_val _tao_retval;
   TAO::Arg_Traits< ::VBlongarray>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::VBlongarray>::inout_arg_val _tao_p2 (p2);
@@ -1761,7 +1761,7 @@ Test::array_op1 (
       "array_op1",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1782,7 +1782,7 @@ Test::array_op2 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::LongArray_tag>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::LongArray_tag>::inout_arg_val _tao_p2 (p2);
@@ -1803,7 +1803,7 @@ Test::array_op2 (
       "array_op2",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1822,7 +1822,7 @@ Test::array_op3 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::VBstringarray>::ret_val _tao_retval;
   TAO::Arg_Traits< ::VBstringarray>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::VBstringarray>::inout_arg_val _tao_p2 (p2);
@@ -1843,7 +1843,7 @@ Test::array_op3 (
       "array_op3",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1864,7 +1864,7 @@ Test::array_op4 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::StringArray_tag>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::StringArray_tag>::inout_arg_val _tao_p2 (p2);
@@ -1885,7 +1885,7 @@ Test::array_op4 (
       "array_op4",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1904,7 +1904,7 @@ Test::union_op1 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::VBfixed_union1>::ret_val _tao_retval;
   TAO::Arg_Traits< ::VBfixed_union1>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::VBfixed_union1>::inout_arg_val _tao_p2 (p2);
@@ -1925,7 +1925,7 @@ Test::union_op1 (
       "union_op1",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1946,7 +1946,7 @@ Test::union_op2 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Fixed_Union1>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::Fixed_Union1>::inout_arg_val _tao_p2 (p2);
@@ -1967,7 +1967,7 @@ Test::union_op2 (
       "union_op2",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1986,7 +1986,7 @@ Test::union_op3 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::VBvariable_union1>::ret_val _tao_retval;
   TAO::Arg_Traits< ::VBvariable_union1>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::VBvariable_union1>::inout_arg_val _tao_p2 (p2);
@@ -2007,7 +2007,7 @@ Test::union_op3 (
       "union_op3",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2028,7 +2028,7 @@ Test::union_op4 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Variable_Union1>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::Variable_Union1>::inout_arg_val _tao_p2 (p2);
@@ -2049,7 +2049,7 @@ Test::union_op4 (
       "union_op4",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -2066,7 +2066,7 @@ Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -2188,7 +2188,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test:1.0",
     "Test");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Test =
   &_tao_tc_Test;
 
@@ -2974,7 +2974,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     const StringArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 2 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm << _tao_array [i0].in ());
@@ -2988,7 +2988,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     StringArray_forany &_tao_array)
 {
   CORBA::Boolean _tao_marshal_flag = true;
-  
+
   for ( ::CORBA::ULong i0 = 0; i0 < 2 && _tao_marshal_flag; ++i0)
     {
       _tao_marshal_flag = (strm >> _tao_array [i0].out ());
@@ -3058,13 +3058,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

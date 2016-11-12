@@ -57,14 +57,14 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_LatLongFOOB[] =
       {
         { "latitude", &CORBA::_tc_double },
         { "longitude", &CORBA::_tc_double },
         { "FOOB", &CORBA::_tc_double }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -103,14 +103,14 @@ IF_EXE_M_R::CORBA_LatLongFOOB::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_PositionXYZ[] =
       {
         { "x", &CORBA::_tc_double },
         { "y", &CORBA::_tc_double },
         { "z", &CORBA::_tc_double }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -149,7 +149,7 @@ IF_EXE_M_R::CORBA_PositionXYZ::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_FOOGIMCMS[] =
       {
         { "FOOBReference", &IF_EXE_M_R::_tc_FOOBMode_E },
@@ -167,7 +167,7 @@ static TAO::TypeCode::Struct_Field<
         { "startPosition", &IF_EXE_M_R::_tc_CORBA_LatLongFOOB },
         { "endPosition", &IF_EXE_M_R::_tc_CORBA_LatLongFOOB }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -206,7 +206,7 @@ IF_EXE_M_R::CORBA_FOOGIMCMS::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_FOOMControl[] =
       {
         { "ecName", &CORBA::_tc_string },
@@ -215,7 +215,7 @@ static TAO::TypeCode::Struct_Field<
         { "ecCommand1", &CORBA::_tc_string },
         { "ecCommand2", &CORBA::_tc_string }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -323,7 +323,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &IF_EXE_M_R::_tc_CORBA_FOOMControl,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_IF_EXE_M_R_CORBA_FOOMList_0 =
         &IF_EXE_M_R_CORBA_FOOMList_0;
     }
@@ -342,7 +342,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:IF_EXE_M_R/CORBA_FOOMList:1.0",
     "CORBA_FOOMList",
     &TAO::TypeCode::tc_IF_EXE_M_R_CORBA_FOOMList_0);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -360,7 +360,7 @@ namespace IF_EXE_M_R
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_BaseArc[] =
       {
         { "FOOD", &IF_EXE_M_R::_tc_ENUM_FOOD },
@@ -388,7 +388,7 @@ static TAO::TypeCode::Struct_Field<
         { "FOOKTypeStart", &IF_EXE_M_R::_tc_ENUM_FOOKType },
         { "FOOKTypeEnd", &IF_EXE_M_R::_tc_ENUM_FOOKType }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -432,7 +432,7 @@ IF_EXE_M_R::CORBA_BaseArc::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_BaseCircle[] =
       {
         { "FOOD", &IF_EXE_M_R::_tc_ENUM_FOOD },
@@ -458,7 +458,7 @@ static TAO::TypeCode::Struct_Field<
         { "FOOKTypeStart", &IF_EXE_M_R::_tc_ENUM_FOOKType },
         { "FOOKTypeEnd", &IF_EXE_M_R::_tc_ENUM_FOOKType }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -502,7 +502,7 @@ IF_EXE_M_R::CORBA_BaseCircle::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_BaseCross[] =
       {
         { "FOOIID", &CORBA::_tc_string },
@@ -535,7 +535,7 @@ static TAO::TypeCode::Struct_Field<
         { "FOOKTypeStart", &IF_EXE_M_R::_tc_ENUM_FOOKType },
         { "FOOKTypeEnd", &IF_EXE_M_R::_tc_ENUM_FOOKType }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -579,7 +579,7 @@ IF_EXE_M_R::CORBA_BaseCross::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_BaseFOOG[] =
       {
         { "FOOD", &IF_EXE_M_R::_tc_ENUM_FOOD },
@@ -607,7 +607,7 @@ static TAO::TypeCode::Struct_Field<
         { "activeComponents", &IF_EXE_M_R::_tc_CORBA_FOOMList },
         { "FOOKTypeEnd", &IF_EXE_M_R::_tc_ENUM_FOOKType }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -755,7 +755,7 @@ IF_EXE_M_R::CORBA_FOOIData::operator= (const ::IF_EXE_M_R::CORBA_FOOIData &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -844,7 +844,7 @@ IF_EXE_M_R::CORBA_FOOIData::operator= (const ::IF_EXE_M_R::CORBA_FOOIData &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -853,37 +853,37 @@ void IF_EXE_M_R::CORBA_FOOIData::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case IF_EXE_M_R::IMCMS_FOOG:
       delete this->u_.manFOOGIMCMS_;
       this->u_.manFOOGIMCMS_ = 0;
-      
+
     break;
-    
+
     case IF_EXE_M_R::BASE_ARC:
       delete this->u_.FOOVArc_;
       this->u_.FOOVArc_ = 0;
-      
+
     break;
-    
+
     case IF_EXE_M_R::BASE_CIRCLE:
       delete this->u_.FOOVCircle_;
       this->u_.FOOVCircle_ = 0;
-      
+
     break;
-    
+
     case IF_EXE_M_R::BASE_CROSS:
       delete this->u_.FOOVCross_;
       this->u_.FOOVCross_ = 0;
-      
+
     break;
-    
+
     case IF_EXE_M_R::BASE_FOOG:
       delete this->u_.FOOVFOOG_;
       this->u_.FOOVFOOG_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -918,7 +918,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_IF_EXE_M_R_CORBA_FOOIData,
     sizeof (_tao_cases_IF_EXE_M_R_CORBA_FOOIData)/sizeof (_tao_cases_IF_EXE_M_R_CORBA_FOOIData[0]),
     -1);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -931,13 +931,13 @@ namespace IF_EXE_M_R
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_FOOIInPlan[] =
       {
         { "type", &IF_EXE_M_R::_tc_ENUM_FOOD },
         { "data", &IF_EXE_M_R::_tc_CORBA_FOOIData }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1045,7 +1045,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &IF_EXE_M_R::_tc_CORBA_FOOIInPlan,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_IF_EXE_M_R_CORBA_FOOIList_0 =
         &IF_EXE_M_R_CORBA_FOOIList_0;
     }
@@ -1064,7 +1064,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:IF_EXE_M_R/CORBA_FOOIList:1.0",
     "CORBA_FOOIList",
     &TAO::TypeCode::tc_IF_EXE_M_R_CORBA_FOOIList_0);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -1077,7 +1077,7 @@ namespace IF_EXE_M_R
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_FOOJPosition[] =
       {
         { "FOOB", &CORBA::_tc_double },
@@ -1086,7 +1086,7 @@ static TAO::TypeCode::Struct_Field<
         { "remark", &CORBA::_tc_string },
         { "FOOBReference", &IF_EXE_M_R::_tc_FOOBMode_E }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1194,7 +1194,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &IF_EXE_M_R::_tc_CORBA_FOOJPosition,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_IF_EXE_M_R_CORBA_FOOJPosList_0 =
         &IF_EXE_M_R_CORBA_FOOJPosList_0;
     }
@@ -1213,7 +1213,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:IF_EXE_M_R/CORBA_FOOJPosList:1.0",
     "CORBA_FOOJPosList",
     &TAO::TypeCode::tc_IF_EXE_M_R_CORBA_FOOJPosList_0);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -1295,7 +1295,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_long,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_IF_EXE_M_R_long_sequence_0 =
         &IF_EXE_M_R_long_sequence_0;
     }
@@ -1314,7 +1314,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:IF_EXE_M_R/long_sequence:1.0",
     "long_sequence",
     &TAO::TypeCode::tc_IF_EXE_M_R_long_sequence_0);
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -1337,7 +1337,7 @@ namespace IF_EXE_M_R
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_CORBA_FOOHPlanHeader[] =
       {
         { "FOOHOffset", &CORBA::_tc_long },
@@ -1350,7 +1350,7 @@ static TAO::TypeCode::Struct_Field<
         { "FOOGingProcedure", &IF_EXE_M_R::_tc_ENUM_FOOJType },
         { "maximum2EconomyAngle", &CORBA::_tc_double }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1389,13 +1389,13 @@ IF_EXE_M_R::CORBA_FOOHPlanHeader::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_IF_EXE_M_R_Test_Struct[] =
       {
         { "l", &CORBA::_tc_long },
         { "whatEver", &CORBA::_tc_any }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1473,7 +1473,7 @@ IF_EXE_M_R::IF_ExeCtrlData::foo (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::IF_EXE_M_R::Test_Struct>::in_arg_val _tao_ts (ts);
 
@@ -1490,7 +1490,7 @@ IF_EXE_M_R::IF_ExeCtrlData::foo (
       "foo",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1507,7 +1507,7 @@ IF_EXE_M_R::IF_ExeCtrlData::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1629,7 +1629,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:IF_EXE_M_R/IF_ExeCtrlData:1.0",
     "IF_ExeCtrlData");
-  
+
 
 namespace IF_EXE_M_R
 {
@@ -2108,7 +2108,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -2943,7 +2943,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -3187,7 +3187,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -3317,7 +3317,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -3685,7 +3685,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
   /// Copying insertion.
   void
@@ -4247,7 +4247,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -4294,7 +4294,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -4602,13 +4602,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::IF_EXE_M_R::IF_ExeCtrlData RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

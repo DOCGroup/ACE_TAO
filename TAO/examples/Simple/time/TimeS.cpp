@@ -177,7 +177,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->current_time ();
   }
@@ -207,7 +207,7 @@ void POA_Time::current_time_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Time * const impl =
@@ -222,7 +222,7 @@ void POA_Time::current_time_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -279,7 +279,7 @@ void POA_Time::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Time * const impl =
@@ -292,7 +292,7 @@ void POA_Time::shutdown_skel (
 
   shutdown_Time command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -356,12 +356,12 @@ POA_Time::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

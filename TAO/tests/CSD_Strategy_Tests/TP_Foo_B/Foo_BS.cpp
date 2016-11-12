@@ -130,9 +130,9 @@ TAO_Foo_B_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1, -19,  -2,   3,  -1,   4,   5,  -1,   6,  -1,   7,   8,  -1,   9, 
-       10,  11,  12,  -1,  13,  14,  15,  -1,  16,  17,  18, -57,  -1,  21, 
-       22,  -1,  23,  -1,  -1,  24, 
+       -1, -19,  -2,   3,  -1,   4,   5,  -1,   6,  -1,   7,   8,  -1,   9,
+       10,  11,  12,  -1,  13,  14,  15,  -1,  16,  17,  18, -57,  -1,  21,
+       22,  -1,  23,  -1,  -1,  24,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -230,7 +230,7 @@ void POA_Foo_B::op1_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Foo_B * const impl =
@@ -243,7 +243,7 @@ void POA_Foo_B::op1_skel (
 
   op1_Foo_B command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -283,7 +283,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->op2 (
       arg_1);
   }
@@ -315,7 +315,7 @@ void POA_Foo_B::op2_skel (
       &retval,
       &_tao_value
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -330,7 +330,7 @@ void POA_Foo_B::op2_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -369,13 +369,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->op3 (
         arg_1);
@@ -408,7 +408,7 @@ void POA_Foo_B::op3_skel (
       &retval,
       &_tao_value
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -423,7 +423,7 @@ void POA_Foo_B::op3_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -463,7 +463,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->op4 (
       arg_1);
   }
@@ -495,7 +495,7 @@ void POA_Foo_B::op4_skel (
       &retval,
       &_tao_value
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -510,7 +510,7 @@ void POA_Foo_B::op4_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -557,7 +557,7 @@ void POA_Foo_B::op5_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       _tc_FooException
     };
@@ -570,7 +570,7 @@ void POA_Foo_B::op5_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Foo_B * const impl =
@@ -583,7 +583,7 @@ void POA_Foo_B::op5_skel (
 
   op5_Foo_B command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -622,19 +622,19 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::TimeOfDay>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::TimeOfDay> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< char *>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< char *> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     retval =
       this->servant_->op6 (
         arg_1
@@ -670,7 +670,7 @@ void POA_Foo_B::op6_skel (
       &_tao_t,
       &_tao_message
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Foo_B * const impl =
@@ -685,7 +685,7 @@ void POA_Foo_B::op6_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -725,7 +725,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->op7 (
       arg_1);
   }
@@ -745,7 +745,7 @@ void POA_Foo_B::op7_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       _tc_FooException
     };
@@ -760,7 +760,7 @@ void POA_Foo_B::op7_skel (
       &retval,
       &_tao_cb
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -775,7 +775,7 @@ void POA_Foo_B::op7_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -815,7 +815,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->test_unbounded_string_arg (
       arg_1);
   }
@@ -847,7 +847,7 @@ void POA_Foo_B::test_unbounded_string_arg_skel (
       &retval,
       &_tao_message
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -862,7 +862,7 @@ void POA_Foo_B::test_unbounded_string_arg_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -902,7 +902,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->test_bounded_string_arg (
       arg_1);
   }
@@ -934,7 +934,7 @@ void POA_Foo_B::test_bounded_string_arg_skel (
       &retval,
       &_tao_message
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -949,7 +949,7 @@ void POA_Foo_B::test_bounded_string_arg_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -989,7 +989,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->test_fixed_array_arg (
       arg_1);
   }
@@ -1021,7 +1021,7 @@ void POA_Foo_B::test_fixed_array_arg_skel (
       &retval,
       &_tao_message
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -1036,7 +1036,7 @@ void POA_Foo_B::test_fixed_array_arg_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1076,7 +1076,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->test_var_array_arg (
       arg_1);
   }
@@ -1108,7 +1108,7 @@ void POA_Foo_B::test_var_array_arg_skel (
       &retval,
       &_tao_messages
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -1123,7 +1123,7 @@ void POA_Foo_B::test_var_array_arg_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1163,7 +1163,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->test_bounded_var_size_arg (
       arg_1);
   }
@@ -1195,7 +1195,7 @@ void POA_Foo_B::test_bounded_var_size_arg_skel (
       &retval,
       &_tao_message
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -1210,7 +1210,7 @@ void POA_Foo_B::test_bounded_var_size_arg_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1250,7 +1250,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->test_unbounded_var_size_arg (
       arg_1);
   }
@@ -1282,7 +1282,7 @@ void POA_Foo_B::test_unbounded_var_size_arg_skel (
       &retval,
       &_tao_message
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -1297,7 +1297,7 @@ void POA_Foo_B::test_unbounded_var_size_arg_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1337,7 +1337,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->test_fixed_size_arg (
       arg_1);
   }
@@ -1369,7 +1369,7 @@ void POA_Foo_B::test_fixed_size_arg_skel (
       &retval,
       &_tao_t
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -1384,7 +1384,7 @@ void POA_Foo_B::test_fixed_size_arg_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1424,13 +1424,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->test_special_basic_arg (
       arg_1
       , arg_2);
@@ -1465,7 +1465,7 @@ void POA_Foo_B::test_special_basic_arg_skel (
       &_tao_value,
       &_tao_client_id
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Foo_B * const impl =
@@ -1480,7 +1480,7 @@ void POA_Foo_B::test_special_basic_arg_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1520,7 +1520,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->test_objref_arg (
       arg_1);
   }
@@ -1552,7 +1552,7 @@ void POA_Foo_B::test_objref_arg_skel (
       &retval,
       &_tao_cb
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Foo_B * const impl =
@@ -1567,7 +1567,7 @@ void POA_Foo_B::test_objref_arg_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1624,7 +1624,7 @@ void POA_Foo_B::done_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Foo_B * const impl =
@@ -1637,7 +1637,7 @@ void POA_Foo_B::done_skel (
 
   done_Foo_B command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1701,12 +1701,12 @@ POA_Foo_B::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

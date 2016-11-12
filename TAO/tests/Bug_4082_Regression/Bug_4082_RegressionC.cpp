@@ -114,7 +114,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_long,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_MyLongSeq_0 =
         &MyLongSeq_0;
     }
@@ -133,7 +133,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:MyLongSeq:1.0",
     "MyLongSeq",
     &TAO::TypeCode::tc_MyLongSeq_0);
-  
+
 ::CORBA::TypeCode_ptr const _tc_MyLongSeq =
   &_tao_tc_MyLongSeq;
 

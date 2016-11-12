@@ -82,7 +82,7 @@ Logger::log (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Logger::Log_Record>::in_arg_val _tao_log_rec (log_rec);
 
@@ -100,7 +100,7 @@ Logger::log (
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -118,7 +118,7 @@ Logger::logv (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Logger::Log_Record>::in_arg_val _tao_log_rec (log_rec);
   TAO::Arg_Traits< ::Logger::Verbosity_Level>::in_arg_val _tao_level (level);
@@ -138,7 +138,7 @@ Logger::logv (
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -155,7 +155,7 @@ Logger::log_twoway (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Logger::Log_Record>::in_arg_val _tao_log_rec (log_rec);
 
@@ -172,7 +172,7 @@ Logger::log_twoway (
       "log_twoway",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -190,7 +190,7 @@ Logger::logv_twoway (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Logger::Log_Record>::in_arg_val _tao_log_rec (log_rec);
   TAO::Arg_Traits< ::Logger::Verbosity_Level>::in_arg_val _tao_level (level);
@@ -209,7 +209,7 @@ Logger::logv_twoway (
       "logv_twoway",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -226,7 +226,7 @@ Logger::verbosity (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Logger::Verbosity_Level>::in_arg_val _tao_level (level);
 
@@ -244,7 +244,7 @@ Logger::verbosity (
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -376,7 +376,7 @@ Logger_Factory::make_logger (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Logger>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_name (name);
 
@@ -393,7 +393,7 @@ Logger_Factory::make_logger (
       "make_logger",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -498,12 +498,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Logger::Log_Priority> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -526,12 +526,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Logger::Verbosity_Level> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -595,13 +595,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Logger RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -632,13 +632,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Logger_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

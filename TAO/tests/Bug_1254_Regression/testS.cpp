@@ -177,13 +177,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::BlobType2>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::BlobType2> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->test (
       arg_1
       , arg_2);
@@ -218,7 +218,7 @@ void POA_BlobServer::test_skel (
       &_tao_blob1,
       &_tao_blob2
     };
-  
+
   static size_t const nargs = 3;
 
   POA_BlobServer * const impl =
@@ -233,7 +233,7 @@ void POA_BlobServer::test_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -290,7 +290,7 @@ void POA_BlobServer::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_BlobServer * const impl =
@@ -303,7 +303,7 @@ void POA_BlobServer::shutdown_skel (
 
   shutdown_BlobServer command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -367,12 +367,12 @@ POA_BlobServer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

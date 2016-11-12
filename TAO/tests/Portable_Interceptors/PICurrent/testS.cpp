@@ -117,8 +117,8 @@ TAO_PICurrentTest_test_Perfect_Hash_OpTable::lookup (const char *str, unsigned i
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,   5,  -7,  -2,   6, -21,   9,  -1,  10,  -1, 
-       11,  12,  -1,  -1,  13, 
+       -1,  -1,  -1,  -1,  -1,   5,  -7,  -2,   6, -21,   9,  -1,  10,  -1,
+       11,  12,  -1,  -1,  13,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -176,7 +176,7 @@ POA_PICurrentTest::test::~test (void)
 
 namespace POA_PICurrentTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -195,7 +195,7 @@ namespace POA_PICurrentTest
     {
       this->servant_->invoke_me ();
     }
-  
+
   private:
     POA_PICurrentTest::test * const servant_;
   };
@@ -220,7 +220,7 @@ void POA_PICurrentTest::test::invoke_me_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_PICurrentTest::test * const impl =
@@ -233,7 +233,7 @@ void POA_PICurrentTest::test::invoke_me_skel (
 
   invoke_me_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -250,7 +250,7 @@ void POA_PICurrentTest::test::invoke_me_skel (
 
 namespace POA_PICurrentTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -269,7 +269,7 @@ namespace POA_PICurrentTest
     {
       this->servant_->invoke_you ();
     }
-  
+
   private:
     POA_PICurrentTest::test * const servant_;
   };
@@ -294,7 +294,7 @@ void POA_PICurrentTest::test::invoke_you_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_PICurrentTest::test * const impl =
@@ -307,7 +307,7 @@ void POA_PICurrentTest::test::invoke_you_skel (
 
   invoke_you_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -324,7 +324,7 @@ void POA_PICurrentTest::test::invoke_you_skel (
 
 namespace POA_PICurrentTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -343,7 +343,7 @@ namespace POA_PICurrentTest
     {
       this->servant_->invoke_we ();
     }
-  
+
   private:
     POA_PICurrentTest::test * const servant_;
   };
@@ -368,7 +368,7 @@ void POA_PICurrentTest::test::invoke_we_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_PICurrentTest::test * const impl =
@@ -381,7 +381,7 @@ void POA_PICurrentTest::test::invoke_we_skel (
 
   invoke_we_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -398,7 +398,7 @@ void POA_PICurrentTest::test::invoke_we_skel (
 
 namespace POA_PICurrentTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -417,7 +417,7 @@ namespace POA_PICurrentTest
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_PICurrentTest::test * const servant_;
   };
@@ -442,7 +442,7 @@ void POA_PICurrentTest::test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_PICurrentTest::test * const impl =
@@ -455,7 +455,7 @@ void POA_PICurrentTest::test::shutdown_skel (
 
   shutdown_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -519,12 +519,12 @@ POA_PICurrentTest::test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

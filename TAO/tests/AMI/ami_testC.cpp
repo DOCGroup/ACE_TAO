@@ -176,13 +176,13 @@ void A::DidTheRightThing::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_A_DidTheRightThing[] =
       {
         { "id", &CORBA::_tc_long },
         { "whatDidTheRightThing", &CORBA::_tc_string }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -250,7 +250,7 @@ A::AMI_Test::foo (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::out_arg_val _tao_out_l (out_l);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_in_l (in_l);
@@ -265,7 +265,7 @@ A::AMI_Test::foo (
     };
 
   static TAO::Exception_Data
-  _tao_A_AMI_Test_foo_exceptiondata [] = 
+  _tao_A_AMI_Test_foo_exceptiondata [] =
     {
       {
         "IDL:A/DidTheRightThing:1.0",
@@ -283,7 +283,7 @@ A::AMI_Test::foo (
       "foo",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -305,7 +305,7 @@ A::AMI_Test::yadda (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -342,7 +342,7 @@ A::AMI_Test::yadda (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_yadda (yadda);
 
@@ -359,7 +359,7 @@ A::AMI_Test::yadda (
       "_set_yadda",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -376,7 +376,7 @@ A::AMI_Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -410,7 +410,7 @@ A::AMI_Test::inout_arg_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::inout_arg_val _tao_str (str);
 
@@ -427,7 +427,7 @@ A::AMI_Test::inout_arg_test (
       "inout_arg_test",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -446,9 +446,9 @@ A::AMI_Test::sendc_foo (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_in_l (in_l);
   TAO::Arg_Traits< char *>::in_arg_val _tao_in_str (in_str);
@@ -487,9 +487,9 @@ A::AMI_Test::sendc_set_yadda (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_yadda (yadda);
 
@@ -525,8 +525,8 @@ A::AMI_Test::sendc_get_yadda (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -557,9 +557,9 @@ A::AMI_Test::sendc_inout_arg_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_str (str);
 
@@ -683,7 +683,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:A/AMI_Test:1.0",
     "AMI_Test");
-  
+
 
 namespace A
 {
@@ -736,7 +736,7 @@ A::AMI_AMI_TestHandler::foo (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_ami_return_val (ami_return_val);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_out_l (out_l);
@@ -749,7 +749,7 @@ A::AMI_AMI_TestHandler::foo (
     };
 
   static TAO::Exception_Data
-  _tao_A_AMI_AMI_TestHandler_foo_exceptiondata [] = 
+  _tao_A_AMI_AMI_TestHandler_foo_exceptiondata [] =
     {
       {
         "IDL:A/DidTheRightThing:1.0",
@@ -767,7 +767,7 @@ A::AMI_AMI_TestHandler::foo (
       "foo",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -800,12 +800,12 @@ A::AMI_AMI_TestHandler::foo_reply_stub (
             (_tao_in >> out_l)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->foo (
-          
+
           ami_return_val,
-          
+
           out_l
         );
       break;
@@ -814,7 +814,7 @@ A::AMI_AMI_TestHandler::foo_reply_stub (
     case TAO_AMI_REPLY_SYSTEM_EXCEPTION:
     {
       const ACE_Message_Block* cdr = _tao_in.start ();
-      
+
       static TAO::Exception_Data exceptions_data [] =
       {
         {
@@ -846,7 +846,7 @@ A::AMI_AMI_TestHandler::foo_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->foo_excep (
           exception_holder_var
@@ -871,7 +871,7 @@ A::AMI_AMI_TestHandler::foo_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -882,7 +882,7 @@ A::AMI_AMI_TestHandler::foo_excep (
     };
 
   static TAO::Exception_Data
-  _tao_A_AMI_AMI_TestHandler_foo_excep_exceptiondata [] = 
+  _tao_A_AMI_AMI_TestHandler_foo_excep_exceptiondata [] =
     {
       {
         "IDL:A/DidTheRightThing:1.0",
@@ -900,7 +900,7 @@ A::AMI_AMI_TestHandler::foo_excep (
       "foo_excep",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -920,7 +920,7 @@ A::AMI_AMI_TestHandler::get_yadda (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -937,7 +937,7 @@ A::AMI_AMI_TestHandler::get_yadda (
       "get_yadda",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -965,10 +965,10 @@ A::AMI_AMI_TestHandler::get_yadda_reply_stub (
             (_tao_in >> ami_return_val)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->get_yadda (
-          
+
           ami_return_val
         );
       break;
@@ -995,7 +995,7 @@ A::AMI_AMI_TestHandler::get_yadda_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->get_yadda_excep (
           exception_holder_var
@@ -1020,7 +1020,7 @@ A::AMI_AMI_TestHandler::get_yadda_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1037,7 +1037,7 @@ A::AMI_AMI_TestHandler::get_yadda_excep (
       "get_yadda_excep",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1054,7 +1054,7 @@ A::AMI_AMI_TestHandler::set_yadda (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1096,7 +1096,7 @@ A::AMI_AMI_TestHandler::set_yadda_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->set_yadda (
-          
+
         );
       break;
     }
@@ -1122,7 +1122,7 @@ A::AMI_AMI_TestHandler::set_yadda_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->set_yadda_excep (
           exception_holder_var
@@ -1147,7 +1147,7 @@ A::AMI_AMI_TestHandler::set_yadda_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1164,7 +1164,7 @@ A::AMI_AMI_TestHandler::set_yadda_excep (
       "set_yadda_excep",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1181,7 +1181,7 @@ A::AMI_AMI_TestHandler::inout_arg_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_str (str);
 
@@ -1198,7 +1198,7 @@ A::AMI_AMI_TestHandler::inout_arg_test (
       "inout_arg_test",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1226,10 +1226,10 @@ A::AMI_AMI_TestHandler::inout_arg_test_reply_stub (
             (_tao_in >> str.out ())
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->inout_arg_test (
-          
+
           str.in ()
         );
       break;
@@ -1256,7 +1256,7 @@ A::AMI_AMI_TestHandler::inout_arg_test_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->inout_arg_test_excep (
           exception_holder_var
@@ -1281,7 +1281,7 @@ A::AMI_AMI_TestHandler::inout_arg_test_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1298,7 +1298,7 @@ A::AMI_AMI_TestHandler::inout_arg_test_excep (
       "inout_arg_test_excep",
       20,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1407,7 +1407,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:A/AMI_AMI_TestHandler:1.0",
     "AMI_AMI_TestHandler");
-  
+
 
 namespace A
 {
@@ -1459,7 +1459,7 @@ A::Test_Child::child_op (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1494,8 +1494,8 @@ A::Test_Child::sendc_child_op (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -1617,7 +1617,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:A/Test_Child:1.0",
     "Test_Child");
-  
+
 
 namespace A
 {
@@ -1669,7 +1669,7 @@ A::AMI_Test_ChildHandler::child_op (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1711,7 +1711,7 @@ A::AMI_Test_ChildHandler::child_op_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->child_op (
-          
+
         );
       break;
     }
@@ -1737,7 +1737,7 @@ A::AMI_Test_ChildHandler::child_op_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->child_op_excep (
           exception_holder_var
@@ -1762,7 +1762,7 @@ A::AMI_Test_ChildHandler::child_op_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1779,7 +1779,7 @@ A::AMI_Test_ChildHandler::child_op_excep (
       "child_op_excep",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1892,7 +1892,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:A/AMI_Test_ChildHandler:1.0",
     "AMI_Test_ChildHandler");
-  
+
 
 namespace A
 {
@@ -1918,7 +1918,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -1939,7 +1939,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -2075,7 +2075,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2189,7 +2189,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2303,7 +2303,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2417,7 +2417,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2571,13 +2571,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::A::AMI_Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -2608,13 +2608,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::A::AMI_AMI_TestHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -2645,13 +2645,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::A::Test_Child RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -2682,13 +2682,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::A::AMI_Test_ChildHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

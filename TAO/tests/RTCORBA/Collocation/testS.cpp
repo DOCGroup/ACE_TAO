@@ -193,7 +193,7 @@ void POA_test::start_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -206,7 +206,7 @@ void POA_test::start_skel (
 
   start_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -263,7 +263,7 @@ void POA_test::method_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -276,7 +276,7 @@ void POA_test::method_skel (
 
   method_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -340,12 +340,12 @@ POA_test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

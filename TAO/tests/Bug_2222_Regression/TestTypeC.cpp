@@ -42,12 +42,12 @@ Array_Typedef_dup (const Array_Typedef_slice *_tao_src_array)
 {
   Array_Typedef_slice *_tao_dup_array =
     Array_Typedef_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <Array_Typedef_slice *> (0);
     }
-  
+
   Array_Typedef_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }

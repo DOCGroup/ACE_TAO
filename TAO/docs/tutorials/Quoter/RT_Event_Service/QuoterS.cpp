@@ -152,7 +152,7 @@ POA_Quoter::Stock_Factory::~Stock_Factory (void)
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -177,18 +177,18 @@ namespace POA_Quoter
         TAO::Portable_Server::get_ret_arg< ::Quoter::Stock> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->get_stock (
           arg_1);
     }
-  
+
   private:
     POA_Quoter::Stock_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -205,7 +205,7 @@ void POA_Quoter::Stock_Factory::get_stock_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Quoter::_tc_Invalid_Stock_Symbol
     };
@@ -220,7 +220,7 @@ void POA_Quoter::Stock_Factory::get_stock_skel (
       &retval,
       &_tao_stock_symbol
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::Stock_Factory * const impl =
@@ -235,7 +235,7 @@ void POA_Quoter::Stock_Factory::get_stock_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -299,12 +299,12 @@ POA_Quoter::Stock_Factory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -421,7 +421,7 @@ POA_Quoter::Stock::~Stock (void)
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -446,11 +446,11 @@ namespace POA_Quoter
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->symbol ();
     }
-  
+
   private:
     POA_Quoter::Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -477,7 +477,7 @@ void POA_Quoter::Stock::_get_symbol_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Quoter::Stock * const impl =
@@ -492,7 +492,7 @@ void POA_Quoter::Stock::_get_symbol_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -509,7 +509,7 @@ void POA_Quoter::Stock::_get_symbol_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -534,11 +534,11 @@ namespace POA_Quoter
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->full_name ();
     }
-  
+
   private:
     POA_Quoter::Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -565,7 +565,7 @@ void POA_Quoter::Stock::_get_full_name_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Quoter::Stock * const impl =
@@ -580,7 +580,7 @@ void POA_Quoter::Stock::_get_full_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -597,7 +597,7 @@ void POA_Quoter::Stock::_get_full_name_skel (
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -622,11 +622,11 @@ namespace POA_Quoter
         TAO::Portable_Server::get_ret_arg< ::CORBA::Double> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->price ();
     }
-  
+
   private:
     POA_Quoter::Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -653,7 +653,7 @@ void POA_Quoter::Stock::price_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Quoter::Stock * const impl =
@@ -668,7 +668,7 @@ void POA_Quoter::Stock::price_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -732,12 +732,12 @@ POA_Quoter::Stock::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -855,7 +855,7 @@ POA_Quoter::Modify_Stock::~Modify_Stock (void)
 
 namespace POA_Quoter
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -881,11 +881,11 @@ namespace POA_Quoter
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->set_price (
         arg_1);
     }
-  
+
   private:
     POA_Quoter::Modify_Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -914,7 +914,7 @@ void POA_Quoter::Modify_Stock::set_price_skel (
       &retval,
       &_tao_new_price
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Quoter::Modify_Stock * const impl =
@@ -929,7 +929,7 @@ void POA_Quoter::Modify_Stock::set_price_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -997,12 +997,12 @@ POA_Quoter::Modify_Stock::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -153,7 +153,7 @@ POA_Two_Objects_Test::First::~First (void)
 
 namespace POA_Two_Objects_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -172,7 +172,7 @@ namespace POA_Two_Objects_Test
     {
       this->servant_->oneway_method ();
     }
-  
+
   private:
     POA_Two_Objects_Test::First * const servant_;
   };
@@ -197,7 +197,7 @@ void POA_Two_Objects_Test::First::oneway_method_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Two_Objects_Test::First * const impl =
@@ -210,7 +210,7 @@ void POA_Two_Objects_Test::First::oneway_method_skel (
 
   oneway_method_First command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -274,12 +274,12 @@ POA_Two_Objects_Test::First::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -396,7 +396,7 @@ POA_Two_Objects_Test::Second::~Second (void)
 
 namespace POA_Two_Objects_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -421,11 +421,11 @@ namespace POA_Two_Objects_Test
         TAO::Portable_Server::get_ret_arg< ::Two_Objects_Test::Octet_Seq> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->twoway_method ();
     }
-  
+
   private:
     POA_Two_Objects_Test::Second * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -452,7 +452,7 @@ void POA_Two_Objects_Test::Second::twoway_method_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Two_Objects_Test::Second * const impl =
@@ -467,7 +467,7 @@ void POA_Two_Objects_Test::Second::twoway_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -484,7 +484,7 @@ void POA_Two_Objects_Test::Second::twoway_method_skel (
 
 namespace POA_Two_Objects_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -503,7 +503,7 @@ namespace POA_Two_Objects_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Two_Objects_Test::Second * const servant_;
   };
@@ -528,7 +528,7 @@ void POA_Two_Objects_Test::Second::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Two_Objects_Test::Second * const impl =
@@ -541,7 +541,7 @@ void POA_Two_Objects_Test::Second::shutdown_skel (
 
   shutdown_Second command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -605,12 +605,12 @@ POA_Two_Objects_Test::Second::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -725,7 +725,7 @@ POA_Two_Objects_Test::Object_Factory::~Object_Factory (void)
 
 namespace POA_Two_Objects_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -750,11 +750,11 @@ namespace POA_Two_Objects_Test
         TAO::Portable_Server::get_ret_arg< ::Two_Objects_Test::First> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->create_first ();
     }
-  
+
   private:
     POA_Two_Objects_Test::Object_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -781,7 +781,7 @@ void POA_Two_Objects_Test::Object_Factory::create_first_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Two_Objects_Test::Object_Factory * const impl =
@@ -796,7 +796,7 @@ void POA_Two_Objects_Test::Object_Factory::create_first_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -813,7 +813,7 @@ void POA_Two_Objects_Test::Object_Factory::create_first_skel (
 
 namespace POA_Two_Objects_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -838,11 +838,11 @@ namespace POA_Two_Objects_Test
         TAO::Portable_Server::get_ret_arg< ::Two_Objects_Test::Second> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->create_second ();
     }
-  
+
   private:
     POA_Two_Objects_Test::Object_Factory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -869,7 +869,7 @@ void POA_Two_Objects_Test::Object_Factory::create_second_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Two_Objects_Test::Object_Factory * const impl =
@@ -884,7 +884,7 @@ void POA_Two_Objects_Test::Object_Factory::create_second_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -948,12 +948,12 @@ POA_Two_Objects_Test::Object_Factory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

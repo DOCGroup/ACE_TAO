@@ -179,13 +179,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< char *>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->add (
       arg_1
       , arg_2);
@@ -220,7 +220,7 @@ void POA_Broadcaster::add_skel (
       &_tao_receiver_,
       &_tao_nickname
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Broadcaster * const impl =
@@ -235,7 +235,7 @@ void POA_Broadcaster::add_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -275,7 +275,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->remove (
       arg_1);
   }
@@ -307,7 +307,7 @@ void POA_Broadcaster::remove_skel (
       &retval,
       &_tao_receiver_
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Broadcaster * const impl =
@@ -322,7 +322,7 @@ void POA_Broadcaster::remove_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -362,13 +362,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< char *>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->say (
       arg_1
       , arg_2);
@@ -403,7 +403,7 @@ void POA_Broadcaster::say_skel (
       &_tao_receiver_,
       &_tao_text
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Broadcaster * const impl =
@@ -418,7 +418,7 @@ void POA_Broadcaster::say_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -482,12 +482,12 @@ POA_Broadcaster::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

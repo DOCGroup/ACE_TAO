@@ -157,7 +157,7 @@ POA_Test::Oneway_Receiver::~Oneway_Receiver (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -176,7 +176,7 @@ namespace POA_Test
     {
       this->servant_->raise_no_permission ();
     }
-  
+
   private:
     POA_Test::Oneway_Receiver * const servant_;
   };
@@ -201,7 +201,7 @@ void POA_Test::Oneway_Receiver::raise_no_permission_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Oneway_Receiver * const impl =
@@ -214,7 +214,7 @@ void POA_Test::Oneway_Receiver::raise_no_permission_skel (
 
   raise_no_permission_Oneway_Receiver command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -231,7 +231,7 @@ void POA_Test::Oneway_Receiver::raise_no_permission_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -250,7 +250,7 @@ namespace POA_Test
     {
       this->servant_->destroy ();
     }
-  
+
   private:
     POA_Test::Oneway_Receiver * const servant_;
   };
@@ -275,7 +275,7 @@ void POA_Test::Oneway_Receiver::destroy_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Oneway_Receiver * const impl =
@@ -288,7 +288,7 @@ void POA_Test::Oneway_Receiver::destroy_skel (
 
   destroy_Oneway_Receiver command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -305,7 +305,7 @@ void POA_Test::Oneway_Receiver::destroy_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -330,11 +330,11 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::Shutdown_Helper> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->get_shutdown_helper ();
     }
-  
+
   private:
     POA_Test::Oneway_Receiver * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -361,7 +361,7 @@ void POA_Test::Oneway_Receiver::get_shutdown_helper_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Oneway_Receiver * const impl =
@@ -376,7 +376,7 @@ void POA_Test::Oneway_Receiver::get_shutdown_helper_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -440,12 +440,12 @@ POA_Test::Oneway_Receiver::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -559,7 +559,7 @@ POA_Test::Shutdown_Helper::~Shutdown_Helper (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -578,7 +578,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::Shutdown_Helper * const servant_;
   };
@@ -603,7 +603,7 @@ void POA_Test::Shutdown_Helper::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Shutdown_Helper * const impl =
@@ -616,7 +616,7 @@ void POA_Test::Shutdown_Helper::shutdown_skel (
 
   shutdown_Shutdown_Helper command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -680,12 +680,12 @@ POA_Test::Shutdown_Helper::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

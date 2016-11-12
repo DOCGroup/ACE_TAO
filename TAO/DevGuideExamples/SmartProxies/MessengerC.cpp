@@ -92,7 +92,7 @@ Messenger::send_message (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_user_name (user_name);
   TAO::Arg_Traits< char *>::in_arg_val _tao_subject (subject);
@@ -113,7 +113,7 @@ Messenger::send_message (
       "send_message",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -261,7 +261,7 @@ TAO_Messenger_Proxy_Factory_Adapter::register_proxy_factory (
           this->lock_
         )
     );
-  
+
   // Remove any existing <proxy_factory_> and replace with the new one.
   this->unregister_proxy_factory ();
   this->proxy_factory_ = df;
@@ -278,12 +278,12 @@ TAO_Messenger_Proxy_Factory_Adapter::unregister_proxy_factory (void)
           this->lock_
         )
     );
-  
+
   if (this->one_shot_factory_)
     {
       this->disable_factory_ = true;
     }
-  
+
   if (this->one_shot_factory_ == false && this->proxy_factory_ != 0)
     {
       delete this->proxy_factory_;
@@ -298,7 +298,7 @@ TAO_Messenger_Proxy_Factory_Adapter::create_proxy (
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon,
     this->lock_, 0));
-  
+
   // To take care of those <unchecked_narrow> methods where we
   // want to override the smart proxy factory if there exists one.
   if (this->disable_factory_)
@@ -306,14 +306,14 @@ TAO_Messenger_Proxy_Factory_Adapter::create_proxy (
       this->disable_factory_ = false;
       return proxy;
     }
-  
+
   // Verify that an <proxy_factory_> is available else make one.
   if (this->proxy_factory_ == 0)
     ACE_NEW_RETURN (this->proxy_factory_,
         TAO_Messenger_Default_Proxy_Factory (0),
          0);
-      
-    
+
+
   return this->proxy_factory_->create_proxy (proxy);
 }
 
@@ -352,7 +352,7 @@ TAO_Messenger_Smart_Proxy_Base::_stubobj (void)
 
 Messenger_ptr
 TAO_Messenger_Smart_Proxy_Base::get_proxy (void)
-  
+
 {
   // Obtain the real proxy stored in <base_proxy_>
   if (CORBA::is_nil (this->proxy_.in ()))
@@ -376,7 +376,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Messenger:1.0",
     "Messenger");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Messenger =
   &_tao_tc_Messenger;
 
@@ -468,13 +468,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Messenger RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

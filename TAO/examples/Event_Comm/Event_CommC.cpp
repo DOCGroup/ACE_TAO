@@ -83,7 +83,7 @@ Event_Comm::Consumer::push (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Event_Comm::Event>::in_arg_val _tao_event_instance (event_instance);
 
@@ -100,7 +100,7 @@ Event_Comm::Consumer::push (
       "push",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -117,7 +117,7 @@ Event_Comm::Consumer::disconnect (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_reason (reason);
 
@@ -134,7 +134,7 @@ Event_Comm::Consumer::disconnect (
       "disconnect",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -468,7 +468,7 @@ Event_Comm::Notifier::disconnect (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_reason (reason);
 
@@ -485,7 +485,7 @@ Event_Comm::Notifier::disconnect (
       "disconnect",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -502,7 +502,7 @@ Event_Comm::Notifier::push (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Event_Comm::Event>::in_arg_val _tao_event_instance (event_instance);
 
@@ -519,7 +519,7 @@ Event_Comm::Notifier::push (
       "push",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -537,7 +537,7 @@ Event_Comm::Notifier::subscribe (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Event_Comm::Consumer>::in_arg_val _tao_subscriber (subscriber);
   TAO::Arg_Traits< char *>::in_arg_val _tao_filtering_criteria (filtering_criteria);
@@ -550,7 +550,7 @@ Event_Comm::Notifier::subscribe (
     };
 
   static TAO::Exception_Data
-  _tao_Event_Comm_Notifier_subscribe_exceptiondata [] = 
+  _tao_Event_Comm_Notifier_subscribe_exceptiondata [] =
     {
       {
         "IDL:Event_Comm/Notifier/CannotSubscribe:1.0",
@@ -568,7 +568,7 @@ Event_Comm::Notifier::subscribe (
       "subscribe",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -589,7 +589,7 @@ Event_Comm::Notifier::unsubscribe (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Event_Comm::Consumer>::in_arg_val _tao_unsubscriber (unsubscriber);
   TAO::Arg_Traits< char *>::in_arg_val _tao_filtering_criteria (filtering_criteria);
@@ -602,7 +602,7 @@ Event_Comm::Notifier::unsubscribe (
     };
 
   static TAO::Exception_Data
-  _tao_Event_Comm_Notifier_unsubscribe_exceptiondata [] = 
+  _tao_Event_Comm_Notifier_unsubscribe_exceptiondata [] =
     {
       {
         "IDL:Event_Comm/Notifier/CannotUnsubscribe:1.0",
@@ -620,7 +620,7 @@ Event_Comm::Notifier::unsubscribe (
       "unsubscribe",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -763,13 +763,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Event_Comm::Consumer RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -880,13 +880,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Event_Comm::Notifier RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

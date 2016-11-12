@@ -167,7 +167,7 @@ Sender::receiver_object (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Receiver>::in_arg_val _tao_recv (recv);
 
@@ -178,7 +178,7 @@ Sender::receiver_object (
     };
 
   static TAO::Exception_Data
-  _tao_Sender_receiver_object_exceptiondata [] = 
+  _tao_Sender_receiver_object_exceptiondata [] =
     {
       {
         "IDL:Sender/Table_Full:1.0",
@@ -196,7 +196,7 @@ Sender::receiver_object (
       "receiver_object",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -339,13 +339,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Sender RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

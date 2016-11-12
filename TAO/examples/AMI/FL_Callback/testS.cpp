@@ -179,13 +179,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->request (
         arg_1);
@@ -218,7 +218,7 @@ void POA_Peer::request_skel (
       &retval,
       &_tao_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Peer * const impl =
@@ -233,7 +233,7 @@ void POA_Peer::request_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -273,13 +273,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->start (
       arg_1
       , arg_2);
@@ -314,7 +314,7 @@ void POA_Peer::start_skel (
       &_tao_the_peers,
       &_tao_iterations
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Peer * const impl =
@@ -329,7 +329,7 @@ void POA_Peer::start_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -386,7 +386,7 @@ void POA_Peer::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Peer * const impl =
@@ -399,7 +399,7 @@ void POA_Peer::shutdown_skel (
 
   shutdown_Peer command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -463,12 +463,12 @@ POA_Peer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -608,7 +608,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->request (
       arg_1);
   }
@@ -640,7 +640,7 @@ void POA_AMI_PeerHandler::request_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_PeerHandler * const impl =
@@ -655,7 +655,7 @@ void POA_AMI_PeerHandler::request_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -695,7 +695,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->request_excep (
       arg_1);
   }
@@ -727,7 +727,7 @@ void POA_AMI_PeerHandler::request_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_PeerHandler * const impl =
@@ -742,7 +742,7 @@ void POA_AMI_PeerHandler::request_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -810,12 +810,12 @@ POA_AMI_PeerHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -954,7 +954,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->sent_request (
       arg_1);
   }
@@ -986,7 +986,7 @@ void POA_Progress::sent_request_skel (
       &retval,
       &_tao_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Progress * const impl =
@@ -1001,7 +1001,7 @@ void POA_Progress::sent_request_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1041,7 +1041,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->recv_reply (
       arg_1);
   }
@@ -1073,7 +1073,7 @@ void POA_Progress::recv_reply_skel (
       &retval,
       &_tao_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Progress * const impl =
@@ -1088,7 +1088,7 @@ void POA_Progress::recv_reply_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1127,13 +1127,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Peer>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Peer> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->bind (
         arg_1);
@@ -1166,7 +1166,7 @@ void POA_Progress::bind_skel (
       &retval,
       &_tao_a_peer
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Progress * const impl =
@@ -1181,7 +1181,7 @@ void POA_Progress::bind_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1245,12 +1245,12 @@ POA_Progress::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1388,7 +1388,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->bind (
       arg_1);
   }
@@ -1420,7 +1420,7 @@ void POA_AMI_ProgressHandler::bind_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_ProgressHandler * const impl =
@@ -1435,7 +1435,7 @@ void POA_AMI_ProgressHandler::bind_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1475,7 +1475,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->bind_excep (
       arg_1);
   }
@@ -1507,7 +1507,7 @@ void POA_AMI_ProgressHandler::bind_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_ProgressHandler * const impl =
@@ -1522,7 +1522,7 @@ void POA_AMI_ProgressHandler::bind_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1590,12 +1590,12 @@ POA_AMI_ProgressHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

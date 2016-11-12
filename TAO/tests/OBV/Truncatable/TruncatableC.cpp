@@ -54,7 +54,7 @@
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_OBV_TruncatableTest_BaseValue[] =
   {
     { "basic_data", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -68,7 +68,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_OBV_TruncatableTest_BaseValue,
     1);
-  
+
 
 namespace OBV_TruncatableTest
 {
@@ -172,27 +172,27 @@ OBV_TruncatableTest::BaseValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = BaseValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -238,7 +238,7 @@ OBV_TruncatableTest::BaseValue_init::create_for_unmarshal (void)
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_OBV_TruncatableTest_TValue1[] =
   {
     { "data1", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -252,7 +252,7 @@ static TAO::TypeCode::Value<char const *,
     &OBV_TruncatableTest::_tc_BaseValue,
     _tao_fields_OBV_TruncatableTest_TValue1,
     1);
-  
+
 
 namespace OBV_TruncatableTest
 {
@@ -357,27 +357,27 @@ OBV_TruncatableTest::TValue1::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = TValue1::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -423,7 +423,7 @@ OBV_TruncatableTest::TValue1_init::create_for_unmarshal (void)
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_OBV_TruncatableTest_TValue2[] =
   {
     { "data2", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -437,7 +437,7 @@ static TAO::TypeCode::Value<char const *,
     &OBV_TruncatableTest::_tc_TValue1,
     _tao_fields_OBV_TruncatableTest_TValue2,
     1);
-  
+
 
 namespace OBV_TruncatableTest
 {
@@ -542,27 +542,27 @@ OBV_TruncatableTest::TValue2::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = TValue2::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -608,7 +608,7 @@ OBV_TruncatableTest::TValue2_init::create_for_unmarshal (void)
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_OBV_TruncatableTest_TValue3[] =
   {
     { "data3", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -622,7 +622,7 @@ static TAO::TypeCode::Value<char const *,
     &OBV_TruncatableTest::_tc_TValue1,
     _tao_fields_OBV_TruncatableTest_TValue3,
     1);
-  
+
 
 namespace OBV_TruncatableTest
 {
@@ -726,27 +726,27 @@ OBV_TruncatableTest::TValue3::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = TValue3::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -792,7 +792,7 @@ OBV_TruncatableTest::TValue3_init::create_for_unmarshal (void)
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_OBV_TruncatableTest_NestedValue[] =
   {
     { "data", &CORBA::_tc_long, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -806,7 +806,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_OBV_TruncatableTest_NestedValue,
     1);
-  
+
 
 namespace OBV_TruncatableTest
 {
@@ -910,27 +910,27 @@ OBV_TruncatableTest::NestedValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = NestedValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -977,7 +977,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "nv4", &OBV_TruncatableTest::_tc_NestedValue, ::CORBA::PUBLIC_MEMBER },
     { "data4", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -991,7 +991,7 @@ static TAO::TypeCode::Value<char const *,
     &OBV_TruncatableTest::_tc_BaseValue,
     _tao_fields_OBV_TruncatableTest_TValue4,
     2);
-  
+
 
 namespace OBV_TruncatableTest
 {
@@ -1096,27 +1096,27 @@ OBV_TruncatableTest::TValue4::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = TValue4::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1165,7 +1165,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
     { "data5", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER },
     { "nv5", &OBV_TruncatableTest::_tc_NestedValue, ::CORBA::PUBLIC_MEMBER },
     { "str2", &CORBA::_tc_string, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -1179,7 +1179,7 @@ static TAO::TypeCode::Value<char const *,
     &OBV_TruncatableTest::_tc_TValue4,
     _tao_fields_OBV_TruncatableTest_TValue5,
     4);
-  
+
 
 namespace OBV_TruncatableTest
 {
@@ -1284,27 +1284,27 @@ OBV_TruncatableTest::TValue5::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = TValue5::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1360,7 +1360,7 @@ static TAO::TypeCode::Value<char const *,
     &OBV_TruncatableTest::_tc_BaseValue,
     _tao_fields_OBV_TruncatableTest_TValue6,
     0);
-  
+
 
 namespace OBV_TruncatableTest
 {
@@ -1465,27 +1465,27 @@ OBV_TruncatableTest::TValue6::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = TValue6::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1572,7 +1572,7 @@ OBV_TruncatableTest::Test::op1 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
   TAO::Arg_Traits< ::OBV_TruncatableTest::BaseValue>::in_arg_val _tao_iv (iv);
@@ -1595,7 +1595,7 @@ OBV_TruncatableTest::Test::op1 (
       "op1",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1615,7 +1615,7 @@ OBV_TruncatableTest::Test::op2 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::OBV_TruncatableTest::TValue1>::in_arg_val _tao_iv (iv);
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
@@ -1638,7 +1638,7 @@ OBV_TruncatableTest::Test::op2 (
       "op2",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1658,7 +1658,7 @@ OBV_TruncatableTest::Test::op3 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
   TAO::Arg_Traits< ::OBV_TruncatableTest::TValue4>::in_arg_val _tao_iv (iv);
@@ -1681,7 +1681,7 @@ OBV_TruncatableTest::Test::op3 (
       "op3",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1704,7 +1704,7 @@ OBV_TruncatableTest::Test::op4 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::OBV_TruncatableTest::BaseValue>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
   TAO::Arg_Traits< ::OBV_TruncatableTest::TValue1>::in_arg_val _tao_iv1 (iv1);
@@ -1733,7 +1733,7 @@ OBV_TruncatableTest::Test::op4 (
       "op4",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1755,7 +1755,7 @@ OBV_TruncatableTest::Test::op5 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_val (val);
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
@@ -1778,7 +1778,7 @@ OBV_TruncatableTest::Test::op5 (
       "op5",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1795,7 +1795,7 @@ OBV_TruncatableTest::Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1917,7 +1917,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:OBV_TruncatableTest/Test:1.0",
     "Test");
-  
+
 
 namespace OBV_TruncatableTest
 {
@@ -2515,7 +2515,7 @@ namespace OBV_TruncatableTest
         );
   }
 
-  
+
 }
 
 #else
@@ -2657,7 +2657,7 @@ namespace OBV_TruncatableTest
         );
   }
 
-  
+
 }
 
 #else
@@ -2799,7 +2799,7 @@ namespace OBV_TruncatableTest
         );
   }
 
-  
+
 }
 
 #else
@@ -2941,7 +2941,7 @@ namespace OBV_TruncatableTest
         );
   }
 
-  
+
 }
 
 #else
@@ -3083,7 +3083,7 @@ namespace OBV_TruncatableTest
         );
   }
 
-  
+
 }
 
 #else
@@ -3225,7 +3225,7 @@ namespace OBV_TruncatableTest
         );
   }
 
-  
+
 }
 
 #else
@@ -3367,7 +3367,7 @@ namespace OBV_TruncatableTest
         );
   }
 
-  
+
 }
 
 #else
@@ -3509,7 +3509,7 @@ namespace OBV_TruncatableTest
         );
   }
 
-  
+
 }
 
 #else
@@ -3598,7 +3598,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace OBV_TruncatableTest
 {
-  
+
 
   /// Copying insertion.
   void
@@ -3748,15 +3748,15 @@ OBV_OBV_TruncatableTest::BaseValue::_tao_marshal_state (TAO_OutputCDR &strm, TAO
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_basic_data);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3765,19 +3765,19 @@ OBV_OBV_TruncatableTest::BaseValue::_tao_unmarshal_state (TAO_InputCDR &strm, TA
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_basic_data);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -3849,26 +3849,26 @@ OBV_OBV_TruncatableTest::TValue1::_tao_marshal_state (TAO_OutputCDR &strm, TAO_C
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__OBV_TruncatableTest_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_data1);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3877,27 +3877,27 @@ OBV_OBV_TruncatableTest::TValue1::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__OBV_TruncatableTest_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_data1);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -3969,26 +3969,26 @@ OBV_OBV_TruncatableTest::TValue2::_tao_marshal_state (TAO_OutputCDR &strm, TAO_C
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__OBV_TruncatableTest_TValue1 (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_data2);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3997,27 +3997,27 @@ OBV_OBV_TruncatableTest::TValue2::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__OBV_TruncatableTest_TValue1 (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_data2);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -4089,26 +4089,26 @@ OBV_OBV_TruncatableTest::TValue3::_tao_marshal_state (TAO_OutputCDR &strm, TAO_C
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__OBV_TruncatableTest_TValue1 (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_data3);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -4117,27 +4117,27 @@ OBV_OBV_TruncatableTest::TValue3::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__OBV_TruncatableTest_TValue1 (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_data3);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -4209,15 +4209,15 @@ OBV_OBV_TruncatableTest::NestedValue::_tao_marshal_state (TAO_OutputCDR &strm, T
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_data);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -4226,19 +4226,19 @@ OBV_OBV_TruncatableTest::NestedValue::_tao_unmarshal_state (TAO_InputCDR &strm, 
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_data);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -4310,27 +4310,27 @@ OBV_OBV_TruncatableTest::TValue4::_tao_marshal_state (TAO_OutputCDR &strm, TAO_C
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__OBV_TruncatableTest_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_nv4.in ()) &&
       (strm << _pd_data4);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -4339,28 +4339,28 @@ OBV_OBV_TruncatableTest::TValue4::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__OBV_TruncatableTest_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_nv4.out ()) &&
       (strm >> _pd_data4);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -4432,29 +4432,29 @@ OBV_OBV_TruncatableTest::TValue5::_tao_marshal_state (TAO_OutputCDR &strm, TAO_C
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__OBV_TruncatableTest_TValue4 (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_str1.in ()) &&
       (strm << _pd_data5) &&
       (strm << _pd_nv5.in ()) &&
       (strm << _pd_str2.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -4463,30 +4463,30 @@ OBV_OBV_TruncatableTest::TValue5::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__OBV_TruncatableTest_TValue4 (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_str1.out ()) &&
       (strm >> _pd_data5) &&
       (strm >> _pd_nv5.out ()) &&
       (strm >> _pd_str2.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -4558,15 +4558,15 @@ OBV_OBV_TruncatableTest::TValue6::_tao_marshal_state (TAO_OutputCDR &strm, TAO_C
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__OBV_TruncatableTest_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -4575,12 +4575,12 @@ OBV_OBV_TruncatableTest::TValue6::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__OBV_TruncatableTest_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   return true;
 }
 
@@ -4615,13 +4615,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::OBV_TruncatableTest::Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

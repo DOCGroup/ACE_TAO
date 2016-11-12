@@ -56,7 +56,7 @@
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_OBV_FactoryTest_BaseValue[] =
   {
     { "some_data", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -70,7 +70,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_OBV_FactoryTest_BaseValue,
     1);
-  
+
 
 namespace OBV_FactoryTest
 {
@@ -174,27 +174,27 @@ OBV_FactoryTest::BaseValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = BaseValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -204,12 +204,12 @@ OBV_FactoryTest::BaseValue::_tao_unmarshal (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_OBV_FactoryTest_BaseValue_BV_Data[] =
       {
         { "value", &CORBA::_tc_ulong }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -280,7 +280,7 @@ OBV_FactoryTest::BaseValue_init::create_for_unmarshal (void)
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_OBV_FactoryTest_Value1[] =
   {
     { "id", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -294,7 +294,7 @@ static TAO::TypeCode::Value<char const *,
     &OBV_FactoryTest::_tc_BaseValue,
     _tao_fields_OBV_FactoryTest_Value1,
     1);
-  
+
 
 namespace OBV_FactoryTest
 {
@@ -398,27 +398,27 @@ OBV_FactoryTest::Value1::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Value1::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -465,7 +465,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "id", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER },
     { "data", &OBV_FactoryTest::BaseValue::_tc_BV_Data, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -479,7 +479,7 @@ static TAO::TypeCode::Value<char const *,
     &OBV_FactoryTest::_tc_BaseValue,
     _tao_fields_OBV_FactoryTest_Value2,
     2);
-  
+
 
 namespace OBV_FactoryTest
 {
@@ -583,27 +583,27 @@ OBV_FactoryTest::Value2::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Value2::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -675,7 +675,7 @@ OBV_FactoryTest::Test::get_base_value (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::OBV_FactoryTest::BaseValue>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -712,7 +712,7 @@ OBV_FactoryTest::Test::get_value1 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::OBV_FactoryTest::Value1>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -749,7 +749,7 @@ OBV_FactoryTest::Test::get_value2 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::OBV_FactoryTest::Value2>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -786,7 +786,7 @@ OBV_FactoryTest::Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -908,7 +908,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:OBV_FactoryTest/Test:1.0",
     "Test");
-  
+
 
 namespace OBV_FactoryTest
 {
@@ -1177,7 +1177,7 @@ namespace OBV_FactoryTest
         );
   }
 
-  
+
 }
 
 #else
@@ -1319,7 +1319,7 @@ namespace OBV_FactoryTest
         );
   }
 
-  
+
 }
 
 #else
@@ -1461,7 +1461,7 @@ namespace OBV_FactoryTest
         );
   }
 
-  
+
 }
 
 #else
@@ -1550,7 +1550,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace OBV_FactoryTest
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1725,15 +1725,15 @@ OBV_OBV_FactoryTest::BaseValue::_tao_marshal_state (TAO_OutputCDR &strm, TAO_Chu
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_some_data);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -1742,19 +1742,19 @@ OBV_OBV_FactoryTest::BaseValue::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_Ch
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_some_data);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -1826,26 +1826,26 @@ OBV_OBV_FactoryTest::Value1::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkI
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__OBV_FactoryTest_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_id);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -1854,27 +1854,27 @@ OBV_OBV_FactoryTest::Value1::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_Chunk
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__OBV_FactoryTest_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_id);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -1946,27 +1946,27 @@ OBV_OBV_FactoryTest::Value2::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkI
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__OBV_FactoryTest_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_id) &&
       (strm << _pd_data);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -1975,28 +1975,28 @@ OBV_OBV_FactoryTest::Value2::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_Chunk
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__OBV_FactoryTest_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_id) &&
       (strm >> _pd_data);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -2030,13 +2030,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::OBV_FactoryTest::Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

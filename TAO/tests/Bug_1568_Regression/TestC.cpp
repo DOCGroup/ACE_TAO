@@ -92,7 +92,7 @@ Foo::Bar::A::op1 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -127,7 +127,7 @@ Foo::Bar::A::op2 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -250,11 +250,11 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Foo/Bar/A:1.0",
     "A");
-  
+
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
     ::CORBA::TypeCode_ptr const _tc_A =
@@ -278,11 +278,11 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Foo_Bar_AMH_AExceptionHolder,
     0);
-  
+
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
     ::CORBA::TypeCode_ptr const _tc_AMH_AExceptionHolder =
@@ -408,27 +408,27 @@ Foo::Bar::AMH_AExceptionHolder::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = AMH_AExceptionHolder::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -589,11 +589,11 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:Foo/Bar/AMH_AResponseHandler:1.0",
     "AMH_AResponseHandler");
-  
+
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
     ::CORBA::TypeCode_ptr const _tc_AMH_AResponseHandler =
@@ -645,7 +645,7 @@ Foo::Bar::B::op3 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -768,11 +768,11 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Foo/Bar/B:1.0",
     "B");
-  
+
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
     ::CORBA::TypeCode_ptr const _tc_B =
@@ -796,11 +796,11 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Foo_Bar_AMH_BExceptionHolder,
     0);
-  
+
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
     ::CORBA::TypeCode_ptr const _tc_AMH_BExceptionHolder =
@@ -926,27 +926,27 @@ Foo::Bar::AMH_BExceptionHolder::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = AMH_BExceptionHolder::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1096,11 +1096,11 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:Foo/Bar/AMH_BResponseHandler:1.0",
     "AMH_BResponseHandler");
-  
+
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
     ::CORBA::TypeCode_ptr const _tc_AMH_BResponseHandler =
@@ -1152,7 +1152,7 @@ Baz::C::op4 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1187,7 +1187,7 @@ Baz::C::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1317,7 +1317,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Baz/C:1.0",
     "C");
-  
+
 
 namespace Baz
 {
@@ -1341,7 +1341,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Baz_AMH_CExceptionHolder,
     0);
-  
+
 
 namespace Baz
 {
@@ -1467,27 +1467,27 @@ Baz::AMH_CExceptionHolder::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = AMH_CExceptionHolder::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1648,7 +1648,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:Baz/AMH_CResponseHandler:1.0",
     "AMH_CResponseHandler");
-  
+
 
 namespace Baz
 {
@@ -1747,10 +1747,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
-    
+
 
     /// Copying insertion.
     void
@@ -1869,7 +1869,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
     // Copying insertion.
@@ -1921,7 +1921,7 @@ namespace Foo
           );
     }
 
-    
+
   }
 }
 
@@ -2028,10 +2028,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
-    
+
 
     /// Copying insertion.
     void
@@ -2146,10 +2146,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
-    
+
 
     /// Copying insertion.
     void
@@ -2268,7 +2268,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
     // Copying insertion.
@@ -2320,7 +2320,7 @@ namespace Foo
           );
     }
 
-    
+
   }
 }
 
@@ -2427,10 +2427,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
-    
+
 
     /// Copying insertion.
     void
@@ -2545,7 +2545,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Baz
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2712,7 +2712,7 @@ namespace Baz
         );
   }
 
-  
+
 }
 
 #else
@@ -2818,7 +2818,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Baz
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2930,13 +2930,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Foo::Bar::A RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3043,13 +3043,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Foo::Bar::B RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3156,13 +3156,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Baz::C RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

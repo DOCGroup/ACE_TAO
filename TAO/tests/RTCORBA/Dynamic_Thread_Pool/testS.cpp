@@ -176,25 +176,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->method (
         arg_1
@@ -233,7 +233,7 @@ void POA_test::method_skel (
       &_tao_iteration,
       &_tao_thread_count
     };
-  
+
   static size_t const nargs = 4;
 
   POA_test * const impl =
@@ -248,7 +248,7 @@ void POA_test::method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -305,7 +305,7 @@ void POA_test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -318,7 +318,7 @@ void POA_test::shutdown_skel (
 
   shutdown_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -382,12 +382,12 @@ POA_test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

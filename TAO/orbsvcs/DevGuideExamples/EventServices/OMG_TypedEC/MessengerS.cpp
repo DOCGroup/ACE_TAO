@@ -176,19 +176,19 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< char *>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< char *>::in_arg_type arg_3 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     this->servant_->send_message (
       arg_1
       , arg_2
@@ -226,7 +226,7 @@ void POA_Messenger::send_message_skel (
       &_tao_subject,
       &_tao_message
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Messenger * const impl =
@@ -241,7 +241,7 @@ void POA_Messenger::send_message_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -305,12 +305,12 @@ POA_Messenger::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

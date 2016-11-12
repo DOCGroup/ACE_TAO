@@ -83,7 +83,7 @@ CCS::Thermometer::model (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -120,7 +120,7 @@ CCS::Thermometer::asset_num (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -157,7 +157,7 @@ CCS::Thermometer::temperature (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Short>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -194,7 +194,7 @@ CCS::Thermometer::location (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -231,7 +231,7 @@ CCS::Thermometer::location (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_location (location);
 
@@ -248,7 +248,7 @@ CCS::Thermometer::location (
       "_set_location",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -265,7 +265,7 @@ CCS::Thermometer::remove (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -516,7 +516,7 @@ CCS::Thermostat::get_nominal (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Short>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -553,7 +553,7 @@ CCS::Thermostat::set_nominal (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Short>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_new_temp (new_temp);
 
@@ -564,7 +564,7 @@ CCS::Thermostat::set_nominal (
     };
 
   static TAO::Exception_Data
-  _tao_CCS_Thermostat_set_nominal_exceptiondata [] = 
+  _tao_CCS_Thermostat_set_nominal_exceptiondata [] =
     {
       {
         "IDL:acme.com/CCS/Thermostat/BadTemp:1.0",
@@ -582,7 +582,7 @@ CCS::Thermostat::set_nominal (
       "set_nominal",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -808,7 +808,7 @@ CCS::Controller::create_thermometer (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CCS::Thermometer>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_anum (anum);
   TAO::Arg_Traits< char *>::in_arg_val _tao_loc (loc);
@@ -821,7 +821,7 @@ CCS::Controller::create_thermometer (
     };
 
   static TAO::Exception_Data
-  _tao_CCS_Controller_create_thermometer_exceptiondata [] = 
+  _tao_CCS_Controller_create_thermometer_exceptiondata [] =
     {
       {
         "IDL:acme.com/CCS/Controller/DuplicateAsset:1.0",
@@ -839,7 +839,7 @@ CCS::Controller::create_thermometer (
       "create_thermometer",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -863,7 +863,7 @@ CCS::Controller::create_thermostat (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CCS::Thermostat>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_anum (anum);
   TAO::Arg_Traits< char *>::in_arg_val _tao_loc (loc);
@@ -878,7 +878,7 @@ CCS::Controller::create_thermostat (
     };
 
   static TAO::Exception_Data
-  _tao_CCS_Controller_create_thermostat_exceptiondata [] = 
+  _tao_CCS_Controller_create_thermostat_exceptiondata [] =
     {
       {
         "IDL:acme.com/CCS/Controller/DuplicateAsset:1.0",
@@ -904,7 +904,7 @@ CCS::Controller::create_thermostat (
       "create_thermostat",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1048,7 +1048,7 @@ CCS::Controller::KeyType::operator= (const ::CCS::Controller::KeyType &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -1072,7 +1072,7 @@ CCS::Controller::KeyType::operator= (const ::CCS::Controller::KeyType &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -1081,23 +1081,23 @@ void CCS::Controller::KeyType::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case CCS::Controller::ASSET:
-      
+
     break;
-    
+
     case CCS::Controller::LOCATION:
       ::CORBA::string_free (this->u_.loc_);
       this->u_.loc_ = 0;
-      
+
     break;
-    
+
     case CCS::Controller::MODEL:
       ::CORBA::string_free (this->u_.model_desc_);
       this->u_.model_desc_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -1295,7 +1295,7 @@ CCS::Controller::list (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CCS::Controller::ThermometerSeq>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1332,7 +1332,7 @@ CCS::Controller::find (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CCS::Controller::SearchSeq>::inout_arg_val _tao_slist (slist);
 
@@ -1349,7 +1349,7 @@ CCS::Controller::find (
       "find",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1367,7 +1367,7 @@ CCS::Controller::change (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CCS::Controller::ThermostatSeq>::in_arg_val _tao_tlist (tlist);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_delta (delta);
@@ -1380,7 +1380,7 @@ CCS::Controller::change (
     };
 
   static TAO::Exception_Data
-  _tao_CCS_Controller_change_exceptiondata [] = 
+  _tao_CCS_Controller_change_exceptiondata [] =
     {
       {
         "IDL:acme.com/CCS/Controller/EChange:1.0",
@@ -1398,7 +1398,7 @@ CCS::Controller::change (
       "change",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1512,13 +1512,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::CCS::Thermometer RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1620,13 +1620,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::CCS::Thermostat RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1728,12 +1728,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<CCS::Controller::SearchCriterion> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -1756,7 +1756,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -1793,7 +1793,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2023,13 +2023,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::CCS::Controller RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

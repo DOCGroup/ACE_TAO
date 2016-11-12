@@ -82,7 +82,7 @@ test::UnionAllCovered_EnumerationDiscriminant::operator= (const ::test::UnionAll
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -106,7 +106,7 @@ test::UnionAllCovered_EnumerationDiscriminant::operator= (const ::test::UnionAll
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -115,19 +115,19 @@ void test::UnionAllCovered_EnumerationDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case test::Enum1:
-      
+
     break;
-    
+
     case test::Enum2:
-      
+
     break;
-    
+
     case test::Enum3:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -179,7 +179,7 @@ test::UnionAllCoveredWithDefault_EnumerationDiscriminant::operator= (const ::tes
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -202,7 +202,7 @@ test::UnionAllCoveredWithDefault_EnumerationDiscriminant::operator= (const ::tes
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -211,20 +211,20 @@ void test::UnionAllCoveredWithDefault_EnumerationDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case test::Enum1:
-      
+
     break;
-    
+
     case test::Enum2:
-      
+
     break;
-    
+
     case test::Enum3:
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -273,7 +273,7 @@ test::UnionWithDefault_EnumerationDiscriminant::operator= (const ::test::UnionWi
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -295,7 +295,7 @@ test::UnionWithDefault_EnumerationDiscriminant::operator= (const ::test::UnionWi
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -304,19 +304,19 @@ void test::UnionWithDefault_EnumerationDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case test::Enum1:
-      
+
     break;
-    
+
     case test::Enum2:
-      
+
     break;
-    
+
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -362,7 +362,7 @@ test::UnionWithImplicitDefault_EnumerationDiscriminant::operator= (const ::test:
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -381,7 +381,7 @@ test::UnionWithImplicitDefault_EnumerationDiscriminant::operator= (const ::test:
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -390,15 +390,15 @@ void test::UnionWithImplicitDefault_EnumerationDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case test::Enum1:
-      
+
     break;
-    
+
     case test::Enum2:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -451,7 +451,7 @@ test::UnionAllCovered_TypedefedEnumerationDiscriminant::operator= (const ::test:
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -475,7 +475,7 @@ test::UnionAllCovered_TypedefedEnumerationDiscriminant::operator= (const ::test:
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -484,19 +484,19 @@ void test::UnionAllCovered_TypedefedEnumerationDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case test::Enum1:
-      
+
     break;
-    
+
     case test::Enum2:
-      
+
     break;
-    
+
     case test::Enum3:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -548,7 +548,7 @@ test::UnionAllCoveredWithDefault_TypedefedEnumerationDiscriminant::operator= (co
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -571,7 +571,7 @@ test::UnionAllCoveredWithDefault_TypedefedEnumerationDiscriminant::operator= (co
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -580,20 +580,20 @@ void test::UnionAllCoveredWithDefault_TypedefedEnumerationDiscriminant::_reset (
 {
   switch (this->disc_)
   {
-    
+
     case test::Enum1:
-      
+
     break;
-    
+
     case test::Enum2:
-      
+
     break;
-    
+
     case test::Enum3:
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -642,7 +642,7 @@ test::UnionWithDefault_TypedefedEnumerationDiscriminant::operator= (const ::test
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -664,7 +664,7 @@ test::UnionWithDefault_TypedefedEnumerationDiscriminant::operator= (const ::test
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -673,19 +673,19 @@ void test::UnionWithDefault_TypedefedEnumerationDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case test::Enum1:
-      
+
     break;
-    
+
     case test::Enum2:
-      
+
     break;
-    
+
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -731,7 +731,7 @@ test::UnionWithImplicitDefault_TypedefedEnumerationDiscriminant::operator= (cons
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -750,7 +750,7 @@ test::UnionWithImplicitDefault_TypedefedEnumerationDiscriminant::operator= (cons
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -759,15 +759,15 @@ void test::UnionWithImplicitDefault_TypedefedEnumerationDiscriminant::_reset (vo
 {
   switch (this->disc_)
   {
-    
+
     case test::Enum1:
-      
+
     break;
-    
+
     case test::Enum2:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -780,23 +780,23 @@ test::UnionAllCovered_BooleanDiscriminant::UnionAllCovered_BooleanDiscriminant (
 {
   ACE_OS::memset (&this->u_, 0, sizeof (this->u_));
   this->disc_ = true;
-  
+
 }
 
 test::UnionAllCovered_BooleanDiscriminant::UnionAllCovered_BooleanDiscriminant (const ::test::UnionAllCovered_BooleanDiscriminant &u)
 {
   this->disc_ = u.disc_;
-  
+
   if (this->disc_)
     {
       this->u_.e_true_ = u.u_.e_true_;
     }
-  
+
   if (!this->disc_)
     {
       this->u_.e_false_ = u.u_.e_false_;
     }
-  
+
 }
 
 test::UnionAllCovered_BooleanDiscriminant::~UnionAllCovered_BooleanDiscriminant (void)
@@ -812,38 +812,38 @@ test::UnionAllCovered_BooleanDiscriminant::operator= (const ::test::UnionAllCove
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
-  
+
   if (this->disc_)
     {
       this->u_.e_true_ = u.u_.e_true_;
     }
-  
+
   if (!this->disc_)
     {
       this->u_.e_false_ = u.u_.e_false_;
     }
-  
+
   return *this;
 }
 
 /// Reset method to reset old values of a union.
 void test::UnionAllCovered_BooleanDiscriminant::_reset (void)
 {
-  
+
   if (this->disc_)
     {
-      
+
     }
-  
+
   if (!this->disc_)
     {
-      
+
     }
-  
+
 }
 
 // TAO_IDL - Generated from
@@ -858,17 +858,17 @@ test::UnionWithDefault_BooleanDiscriminant::UnionWithDefault_BooleanDiscriminant
 test::UnionWithDefault_BooleanDiscriminant::UnionWithDefault_BooleanDiscriminant (const ::test::UnionWithDefault_BooleanDiscriminant &u)
 {
   this->disc_ = u.disc_;
-  
+
   if (this->disc_)
     {
       this->u_.e_true_ = u.u_.e_true_;
     }
-  
+
   if (!this->disc_)
     {
       this->u_.e_def_ = u.u_.e_def_;
     }
-  
+
 }
 
 test::UnionWithDefault_BooleanDiscriminant::~UnionWithDefault_BooleanDiscriminant (void)
@@ -884,38 +884,38 @@ test::UnionWithDefault_BooleanDiscriminant::operator= (const ::test::UnionWithDe
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
-  
+
   if (this->disc_)
     {
       this->u_.e_true_ = u.u_.e_true_;
     }
-  
+
   if (!this->disc_)
     {
       this->u_.e_def_ = u.u_.e_def_;
     }
-  
+
   return *this;
 }
 
 /// Reset method to reset old values of a union.
 void test::UnionWithDefault_BooleanDiscriminant::_reset (void)
 {
-  
+
   if (this->disc_)
     {
-      
+
     }
-  
+
   if (!this->disc_)
     {
-      
+
     }
-  
+
 }
 
 // TAO_IDL - Generated from
@@ -930,12 +930,12 @@ test::UnionWithImplicitDefault_BooleanDiscriminant::UnionWithImplicitDefault_Boo
 test::UnionWithImplicitDefault_BooleanDiscriminant::UnionWithImplicitDefault_BooleanDiscriminant (const ::test::UnionWithImplicitDefault_BooleanDiscriminant &u)
 {
   this->disc_ = u.disc_;
-  
+
   if (this->disc_)
     {
       this->u_.e_true_ = u.u_.e_true_;
     }
-  
+
 }
 
 test::UnionWithImplicitDefault_BooleanDiscriminant::~UnionWithImplicitDefault_BooleanDiscriminant (void)
@@ -951,28 +951,28 @@ test::UnionWithImplicitDefault_BooleanDiscriminant::operator= (const ::test::Uni
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
-  
+
   if (this->disc_)
     {
       this->u_.e_true_ = u.u_.e_true_;
     }
-  
+
   return *this;
 }
 
 /// Reset method to reset old values of a union.
 void test::UnionWithImplicitDefault_BooleanDiscriminant::_reset (void)
 {
-  
+
   if (this->disc_)
     {
-      
+
     }
-  
+
 }
 
 // TAO_IDL - Generated from
@@ -982,7 +982,7 @@ test::UnionAllCovered_CharDiscriminant::UnionAllCovered_CharDiscriminant (void)
 {
   ACE_OS::memset (&this->u_, 0, sizeof (this->u_));
   this->disc_ = '\x0';
-  
+
 }
 
 test::UnionAllCovered_CharDiscriminant::UnionAllCovered_CharDiscriminant (const ::test::UnionAllCovered_CharDiscriminant &u)
@@ -1266,7 +1266,7 @@ test::UnionAllCovered_CharDiscriminant::operator= (const ::test::UnionAllCovered
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -1533,7 +1533,7 @@ test::UnionAllCovered_CharDiscriminant::operator= (const ::test::UnionAllCovered
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -1542,7 +1542,7 @@ void test::UnionAllCovered_CharDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case '\x0':
     case '\x1':
     case '\x2':
@@ -1799,9 +1799,9 @@ void test::UnionAllCovered_CharDiscriminant::_reset (void)
     case '\xfd':
     case '\xfe':
     case '\xff':
-      
+
     break;
-    
+
   }
 }
 
@@ -1852,7 +1852,7 @@ test::UnionWithDefault_CharDiscriminant::operator= (const ::test::UnionWithDefau
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -1876,7 +1876,7 @@ test::UnionWithDefault_CharDiscriminant::operator= (const ::test::UnionWithDefau
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -1885,7 +1885,7 @@ void test::UnionWithDefault_CharDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case '\x0':
     case '\x1':
     case '\x2':
@@ -1894,13 +1894,13 @@ void test::UnionWithDefault_CharDiscriminant::_reset (void)
     case '\x5':
     case '\x6':
     case '\a':
-      
+
     break;
-    
+
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -1948,7 +1948,7 @@ test::UnionWithImplicitDefault_CharDiscriminant::operator= (const ::test::UnionW
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -1969,7 +1969,7 @@ test::UnionWithImplicitDefault_CharDiscriminant::operator= (const ::test::UnionW
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -1978,7 +1978,7 @@ void test::UnionWithImplicitDefault_CharDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case '\x0':
     case '\x1':
     case '\x2':
@@ -1987,9 +1987,9 @@ void test::UnionWithImplicitDefault_CharDiscriminant::_reset (void)
     case '\x5':
     case '\x6':
     case '\a':
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -2045,7 +2045,7 @@ test::UnionWithDefault_LongDiscriminant::operator= (const ::test::UnionWithDefau
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -2072,7 +2072,7 @@ test::UnionWithDefault_LongDiscriminant::operator= (const ::test::UnionWithDefau
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -2081,23 +2081,23 @@ void test::UnionWithDefault_LongDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 1:
-      
+
     break;
-    
+
     case 2:
-      
+
     break;
-    
+
     case 3:
-      
+
     break;
-    
+
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -2148,7 +2148,7 @@ test::UnionWithImplicitDefault_LongDiscriminant::operator= (const ::test::UnionW
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -2172,7 +2172,7 @@ test::UnionWithImplicitDefault_LongDiscriminant::operator= (const ::test::UnionW
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -2181,19 +2181,19 @@ void test::UnionWithImplicitDefault_LongDiscriminant::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 1:
-      
+
     break;
-    
+
     case 2:
-      
+
     break;
-    
+
     case 3:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -2214,12 +2214,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<test::Enumeration> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2242,7 +2242,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2279,7 +2279,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2349,7 +2349,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2385,7 +2385,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2451,7 +2451,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2486,7 +2486,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2551,7 +2551,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2583,7 +2583,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2641,7 +2641,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2678,7 +2678,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2748,7 +2748,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2784,7 +2784,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2850,7 +2850,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2885,7 +2885,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2950,7 +2950,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2982,7 +2982,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -3041,19 +3041,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_union._d ())
     {
       result = strm << _tao_union.e_true ();
     }
-  
+
   if (!_tao_union._d ())
     {
       result = strm << _tao_union.e_false ();
     }
-  
+
   return result;
 }
 
@@ -3068,7 +3068,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_discriminant)
@@ -3082,7 +3082,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   if (!_tao_discriminant)
     {
       CORBA::Long _tao_union_tmp;
@@ -3094,7 +3094,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   return result;
 }
 
@@ -3118,19 +3118,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_union._d ())
     {
       result = strm << _tao_union.e_true ();
     }
-  
+
   if (!_tao_union._d ())
     {
       result = strm << _tao_union.e_def ();
     }
-  
+
   return result;
 }
 
@@ -3145,7 +3145,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_discriminant)
@@ -3159,7 +3159,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   if (!_tao_discriminant)
     {
       CORBA::Long _tao_union_tmp;
@@ -3171,7 +3171,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   return result;
 }
 
@@ -3195,14 +3195,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_union._d ())
     {
       result = strm << _tao_union.e_true ();
     }
-  
+
   return result;
 }
 
@@ -3217,7 +3217,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   _tao_union._default ();
@@ -3233,7 +3233,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   return result;
 }
 
@@ -3257,7 +3257,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -3538,7 +3538,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -3835,7 +3835,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -3873,7 +3873,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -3934,7 +3934,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -3969,7 +3969,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -4022,7 +4022,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -4062,7 +4062,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -4139,7 +4139,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -4176,7 +4176,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)

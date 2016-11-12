@@ -155,9 +155,9 @@ void Test::Recursive_Type_In_Any_Test_Failed::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Test_Recursive_Type_In_Any_Test_Failed = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -279,9 +279,9 @@ void Test::Demarshaling_From_Any_Failed::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Test_Demarshaling_From_Any_Failed = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -309,7 +309,7 @@ static char const * const _tao_enumerators_Test_ValueSort3[] =
   {
     "SYMBOL_TYPE",
     "SYMBOL_SEQ_TYPE"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -320,7 +320,7 @@ static TAO::TypeCode::Enum<char const *,
     "ValueSort3",
     _tao_enumerators_Test_ValueSort3,
     2);
-  
+
 
 namespace Test
 {
@@ -402,7 +402,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Test::_tc_Symbol,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_SymbolSeq_0 =
         &Test_SymbolSeq_0;
     }
@@ -421,7 +421,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/SymbolSeq:1.0",
     "SymbolSeq",
     &TAO::TypeCode::tc_Test_SymbolSeq_0);
-  
+
 
 namespace Test
 {
@@ -439,12 +439,12 @@ namespace Test
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Test_Symbol[] =
       {
         { "args", &Test::_tc_SymbolSeq }
       };
-  
+
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Struct<
     char const *,
@@ -552,7 +552,7 @@ Test::NonRecursiveUnionWithStringStruct3::operator= (const ::Test::NonRecursiveU
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -593,7 +593,7 @@ Test::NonRecursiveUnionWithStringStruct3::operator= (const ::Test::NonRecursiveU
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -602,19 +602,19 @@ void Test::NonRecursiveUnionWithStringStruct3::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case Test::SYMBOL_TYPE:
       delete this->u_.symbol_val_;
       this->u_.symbol_val_ = 0;
-      
+
     break;
-    
+
     case Test::SYMBOL_SEQ_TYPE:
       delete this->u_.symbol_seq_val_;
       this->u_.symbol_seq_val_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -648,7 +648,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Test_NonRecursiveUnionWithStringStruct3,
     sizeof (_tao_cases_Test_NonRecursiveUnionWithStringStruct3)/sizeof (_tao_cases_Test_NonRecursiveUnionWithStringStruct3[0]),
     -1);
-  
+
 
 namespace Test
 {
@@ -700,7 +700,7 @@ Test::Hello::get_any (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Any>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_the_any (the_any);
 
@@ -717,7 +717,7 @@ Test::Hello::get_any (
       "get_any",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -736,7 +736,7 @@ Test::Hello::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -858,7 +858,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/Hello:1.0",
     "Hello");
-  
+
 
 namespace Test
 {
@@ -884,7 +884,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -905,7 +905,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -1034,7 +1034,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -1055,7 +1055,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -1201,7 +1201,7 @@ namespace Test
       TAO::Any_Basic_Impl_T< ::Test::ValueSort3>::extract (
           _tao_any,
           ::Test::_tc_ValueSort3,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1231,7 +1231,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<Test::ValueSort3>::extract (
         _tao_any,
         Test::_tc_ValueSort3,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1255,7 +1255,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1644,7 +1644,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1802,12 +1802,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Test::ValueSort3> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -1881,7 +1881,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -1913,7 +1913,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -1979,13 +1979,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Hello RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

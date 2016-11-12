@@ -155,7 +155,7 @@ POA_ObjectReferenceTemplate::ORT_test::~ORT_test (void)
 
 namespace POA_ObjectReferenceTemplate
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -180,11 +180,11 @@ namespace POA_ObjectReferenceTemplate
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->request_server ();
     }
-  
+
   private:
     POA_ObjectReferenceTemplate::ORT_test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -211,7 +211,7 @@ void POA_ObjectReferenceTemplate::ORT_test::request_server_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ObjectReferenceTemplate::ORT_test * const impl =
@@ -226,7 +226,7 @@ void POA_ObjectReferenceTemplate::ORT_test::request_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -243,7 +243,7 @@ void POA_ObjectReferenceTemplate::ORT_test::request_server_skel (
 
 namespace POA_ObjectReferenceTemplate
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -262,7 +262,7 @@ namespace POA_ObjectReferenceTemplate
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_ObjectReferenceTemplate::ORT_test * const servant_;
   };
@@ -287,7 +287,7 @@ void POA_ObjectReferenceTemplate::ORT_test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_ObjectReferenceTemplate::ORT_test * const impl =
@@ -300,7 +300,7 @@ void POA_ObjectReferenceTemplate::ORT_test::shutdown_skel (
 
   shutdown_ORT_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -364,12 +364,12 @@ POA_ObjectReferenceTemplate::ORT_test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

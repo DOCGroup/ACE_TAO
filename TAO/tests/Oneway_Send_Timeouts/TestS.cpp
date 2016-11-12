@@ -118,8 +118,8 @@ TAO_Test_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,   5,  -1,   6,   7,  -1,   8,  -9,  -2, -25, 
-       11,  12,  -1,  -1,  -1,  -1,  13,  -1,  -1,  14, 
+       -1,  -1,  -1,  -1,  -1,   5,  -1,   6,   7,  -1,   8,  -9,  -2, -25,
+       11,  12,  -1,  -1,  -1,  -1,  13,  -1,  -1,  14,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -200,13 +200,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->sleep (
       arg_1
       , arg_2);
@@ -241,7 +241,7 @@ void POA_Test::sleep_skel (
       &_tao_sec,
       &_tao_msec
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Test * const impl =
@@ -256,7 +256,7 @@ void POA_Test::sleep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -313,7 +313,7 @@ void POA_Test::unsleep_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test * const impl =
@@ -326,7 +326,7 @@ void POA_Test::unsleep_skel (
 
   unsleep_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -366,7 +366,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->dummy_one_way (
       arg_1);
   }
@@ -398,7 +398,7 @@ void POA_Test::dummy_one_way_skel (
       &retval,
       &_tao_msg
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test * const impl =
@@ -413,7 +413,7 @@ void POA_Test::dummy_one_way_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -470,7 +470,7 @@ void POA_Test::dummy_two_way_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test * const impl =
@@ -483,7 +483,7 @@ void POA_Test::dummy_two_way_skel (
 
   dummy_two_way_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -540,7 +540,7 @@ void POA_Test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test * const impl =
@@ -553,7 +553,7 @@ void POA_Test::shutdown_skel (
 
   shutdown_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -617,12 +617,12 @@ POA_Test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

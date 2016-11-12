@@ -61,7 +61,7 @@ static char const * const _tao_enumerators_Color[] =
     "blue",
     "indigo",
     "violet"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -72,7 +72,7 @@ static TAO::TypeCode::Enum<char const *,
     "Color",
     _tao_enumerators_Color,
     7);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Color =
   &_tao_tc_Color;
 
@@ -87,7 +87,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBshort:1.0",
     "VBshort",
     &CORBA::_tc_short);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBshort =
   &_tao_tc_VBshort;
 
@@ -132,7 +132,7 @@ VBshort::_copy_value (void)
     result,
     VBshort (*this),
     0);
-    
+
   return result;
 }
 
@@ -185,24 +185,24 @@ VBshort::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBshort::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBshort,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -240,7 +240,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBlong:1.0",
     "VBlong",
     &CORBA::_tc_long);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBlong =
   &_tao_tc_VBlong;
 
@@ -285,7 +285,7 @@ VBlong::_copy_value (void)
     result,
     VBlong (*this),
     0);
-    
+
   return result;
 }
 
@@ -338,24 +338,24 @@ VBlong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBlong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBlong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -393,7 +393,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBlonglong:1.0",
     "VBlonglong",
     &CORBA::_tc_longlong);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBlonglong =
   &_tao_tc_VBlonglong;
 
@@ -438,7 +438,7 @@ VBlonglong::_copy_value (void)
     result,
     VBlonglong (*this),
     0);
-    
+
   return result;
 }
 
@@ -491,24 +491,24 @@ VBlonglong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBlonglong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBlonglong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -546,7 +546,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBushort:1.0",
     "VBushort",
     &CORBA::_tc_ushort);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBushort =
   &_tao_tc_VBushort;
 
@@ -591,7 +591,7 @@ VBushort::_copy_value (void)
     result,
     VBushort (*this),
     0);
-    
+
   return result;
 }
 
@@ -644,24 +644,24 @@ VBushort::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBushort::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBushort,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -699,7 +699,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBulong:1.0",
     "VBulong",
     &CORBA::_tc_ulong);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBulong =
   &_tao_tc_VBulong;
 
@@ -744,7 +744,7 @@ VBulong::_copy_value (void)
     result,
     VBulong (*this),
     0);
-    
+
   return result;
 }
 
@@ -797,24 +797,24 @@ VBulong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBulong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBulong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -852,7 +852,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBulonglong:1.0",
     "VBulonglong",
     &CORBA::_tc_ulonglong);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBulonglong =
   &_tao_tc_VBulonglong;
 
@@ -897,7 +897,7 @@ VBulonglong::_copy_value (void)
     result,
     VBulonglong (*this),
     0);
-    
+
   return result;
 }
 
@@ -950,24 +950,24 @@ VBulonglong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBulonglong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBulonglong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -1005,7 +1005,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBchar:1.0",
     "VBchar",
     &CORBA::_tc_char);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBchar =
   &_tao_tc_VBchar;
 
@@ -1050,7 +1050,7 @@ VBchar::_copy_value (void)
     result,
     VBchar (*this),
     0);
-    
+
   return result;
 }
 
@@ -1103,24 +1103,24 @@ VBchar::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBchar::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBchar,
     false);
-  
+
   return (strm >> ::ACE_InputCDR::to_char (vb_object->_pd_value));
 }
 
@@ -1158,7 +1158,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBwchar:1.0",
     "VBwchar",
     &CORBA::_tc_wchar);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBwchar =
   &_tao_tc_VBwchar;
 
@@ -1203,7 +1203,7 @@ VBwchar::_copy_value (void)
     result,
     VBwchar (*this),
     0);
-    
+
   return result;
 }
 
@@ -1256,24 +1256,24 @@ VBwchar::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBwchar::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBwchar,
     false);
-  
+
   return (strm >> ::ACE_InputCDR::to_wchar (vb_object->_pd_value));
 }
 
@@ -1311,7 +1311,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBboolean:1.0",
     "VBboolean",
     &CORBA::_tc_boolean);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBboolean =
   &_tao_tc_VBboolean;
 
@@ -1356,7 +1356,7 @@ VBboolean::_copy_value (void)
     result,
     VBboolean (*this),
     0);
-    
+
   return result;
 }
 
@@ -1409,24 +1409,24 @@ VBboolean::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBboolean::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBboolean,
     false);
-  
+
   return (strm >> ::ACE_InputCDR::to_boolean (vb_object->_pd_value));
 }
 
@@ -1464,7 +1464,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBoctet:1.0",
     "VBoctet",
     &CORBA::_tc_octet);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBoctet =
   &_tao_tc_VBoctet;
 
@@ -1509,7 +1509,7 @@ VBoctet::_copy_value (void)
     result,
     VBoctet (*this),
     0);
-    
+
   return result;
 }
 
@@ -1562,24 +1562,24 @@ VBoctet::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBoctet::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBoctet,
     false);
-  
+
   return (strm >> ::ACE_InputCDR::to_octet (vb_object->_pd_value));
 }
 
@@ -1617,7 +1617,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBfloat:1.0",
     "VBfloat",
     &CORBA::_tc_float);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBfloat =
   &_tao_tc_VBfloat;
 
@@ -1662,7 +1662,7 @@ VBfloat::_copy_value (void)
     result,
     VBfloat (*this),
     0);
-    
+
   return result;
 }
 
@@ -1715,24 +1715,24 @@ VBfloat::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBfloat::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBfloat,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -1770,7 +1770,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBdouble:1.0",
     "VBdouble",
     &CORBA::_tc_double);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBdouble =
   &_tao_tc_VBdouble;
 
@@ -1815,7 +1815,7 @@ VBdouble::_copy_value (void)
     result,
     VBdouble (*this),
     0);
-    
+
   return result;
 }
 
@@ -1868,24 +1868,24 @@ VBdouble::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBdouble::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBdouble,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -1923,7 +1923,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBlongdouble:1.0",
     "VBlongdouble",
     &CORBA::_tc_longdouble);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBlongdouble =
   &_tao_tc_VBlongdouble;
 
@@ -1968,7 +1968,7 @@ VBlongdouble::_copy_value (void)
     result,
     VBlongdouble (*this),
     0);
-    
+
   return result;
 }
 
@@ -2021,24 +2021,24 @@ VBlongdouble::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBlongdouble::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBlongdouble,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -2076,7 +2076,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBenum:1.0",
     "VBenum",
     &_tc_Color);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBenum =
   &_tao_tc_VBenum;
 
@@ -2121,7 +2121,7 @@ VBenum::_copy_value (void)
     result,
     VBenum (*this),
     0);
-    
+
   return result;
 }
 
@@ -2174,24 +2174,24 @@ VBenum::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBenum::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBenum,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -2229,7 +2229,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDshort:1.0",
     "TDshort",
     &CORBA::_tc_short);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDshort =
   &_tao_tc_TDshort;
 
@@ -2244,7 +2244,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDlong:1.0",
     "TDlong",
     &CORBA::_tc_long);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDlong =
   &_tao_tc_TDlong;
 
@@ -2259,7 +2259,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDlonglong:1.0",
     "TDlonglong",
     &CORBA::_tc_longlong);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDlonglong =
   &_tao_tc_TDlonglong;
 
@@ -2274,7 +2274,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDushort:1.0",
     "TDushort",
     &CORBA::_tc_ushort);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDushort =
   &_tao_tc_TDushort;
 
@@ -2289,7 +2289,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDulong:1.0",
     "TDulong",
     &CORBA::_tc_ulong);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDulong =
   &_tao_tc_TDulong;
 
@@ -2304,7 +2304,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDulonglong:1.0",
     "TDulonglong",
     &CORBA::_tc_ulonglong);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDulonglong =
   &_tao_tc_TDulonglong;
 
@@ -2319,7 +2319,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDchar:1.0",
     "TDchar",
     &CORBA::_tc_char);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDchar =
   &_tao_tc_TDchar;
 
@@ -2334,7 +2334,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDwchar:1.0",
     "TDwchar",
     &CORBA::_tc_wchar);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDwchar =
   &_tao_tc_TDwchar;
 
@@ -2349,7 +2349,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDboolean:1.0",
     "TDboolean",
     &CORBA::_tc_boolean);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDboolean =
   &_tao_tc_TDboolean;
 
@@ -2364,7 +2364,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDoctet:1.0",
     "TDoctet",
     &CORBA::_tc_octet);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDoctet =
   &_tao_tc_TDoctet;
 
@@ -2379,7 +2379,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDfloat:1.0",
     "TDfloat",
     &CORBA::_tc_float);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDfloat =
   &_tao_tc_TDfloat;
 
@@ -2394,7 +2394,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDdouble:1.0",
     "TDdouble",
     &CORBA::_tc_double);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDdouble =
   &_tao_tc_TDdouble;
 
@@ -2409,7 +2409,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDlongdouble:1.0",
     "TDlongdouble",
     &CORBA::_tc_longdouble);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDlongdouble =
   &_tao_tc_TDlongdouble;
 
@@ -2424,7 +2424,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDenum:1.0",
     "TDenum",
     &_tc_Color);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDenum =
   &_tao_tc_TDenum;
 
@@ -2439,7 +2439,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDshort:1.0",
     "VBTDshort",
     &CORBA::_tc_short);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDshort =
   &_tao_tc_VBTDshort;
 
@@ -2484,7 +2484,7 @@ VBTDshort::_copy_value (void)
     result,
     VBTDshort (*this),
     0);
-    
+
   return result;
 }
 
@@ -2537,24 +2537,24 @@ VBTDshort::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDshort::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDshort,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -2592,7 +2592,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDlong:1.0",
     "VBTDlong",
     &CORBA::_tc_long);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDlong =
   &_tao_tc_VBTDlong;
 
@@ -2637,7 +2637,7 @@ VBTDlong::_copy_value (void)
     result,
     VBTDlong (*this),
     0);
-    
+
   return result;
 }
 
@@ -2690,24 +2690,24 @@ VBTDlong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDlong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDlong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -2745,7 +2745,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDlonglong:1.0",
     "VBTDlonglong",
     &CORBA::_tc_longlong);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDlonglong =
   &_tao_tc_VBTDlonglong;
 
@@ -2790,7 +2790,7 @@ VBTDlonglong::_copy_value (void)
     result,
     VBTDlonglong (*this),
     0);
-    
+
   return result;
 }
 
@@ -2843,24 +2843,24 @@ VBTDlonglong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDlonglong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDlonglong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -2898,7 +2898,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDushort:1.0",
     "VBTDushort",
     &CORBA::_tc_ushort);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDushort =
   &_tao_tc_VBTDushort;
 
@@ -2943,7 +2943,7 @@ VBTDushort::_copy_value (void)
     result,
     VBTDushort (*this),
     0);
-    
+
   return result;
 }
 
@@ -2996,24 +2996,24 @@ VBTDushort::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDushort::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDushort,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -3051,7 +3051,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDulong:1.0",
     "VBTDulong",
     &CORBA::_tc_ulong);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDulong =
   &_tao_tc_VBTDulong;
 
@@ -3096,7 +3096,7 @@ VBTDulong::_copy_value (void)
     result,
     VBTDulong (*this),
     0);
-    
+
   return result;
 }
 
@@ -3149,24 +3149,24 @@ VBTDulong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDulong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDulong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -3204,7 +3204,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDulonglong:1.0",
     "VBTDulonglong",
     &CORBA::_tc_ulonglong);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDulonglong =
   &_tao_tc_VBTDulonglong;
 
@@ -3249,7 +3249,7 @@ VBTDulonglong::_copy_value (void)
     result,
     VBTDulonglong (*this),
     0);
-    
+
   return result;
 }
 
@@ -3302,24 +3302,24 @@ VBTDulonglong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDulonglong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDulonglong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -3357,7 +3357,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDchar:1.0",
     "VBTDchar",
     &CORBA::_tc_char);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDchar =
   &_tao_tc_VBTDchar;
 
@@ -3402,7 +3402,7 @@ VBTDchar::_copy_value (void)
     result,
     VBTDchar (*this),
     0);
-    
+
   return result;
 }
 
@@ -3455,24 +3455,24 @@ VBTDchar::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDchar::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDchar,
     false);
-  
+
   return (strm >> ::ACE_InputCDR::to_char (vb_object->_pd_value));
 }
 
@@ -3510,7 +3510,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDwchar:1.0",
     "VBTDwchar",
     &CORBA::_tc_wchar);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDwchar =
   &_tao_tc_VBTDwchar;
 
@@ -3555,7 +3555,7 @@ VBTDwchar::_copy_value (void)
     result,
     VBTDwchar (*this),
     0);
-    
+
   return result;
 }
 
@@ -3608,24 +3608,24 @@ VBTDwchar::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDwchar::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDwchar,
     false);
-  
+
   return (strm >> ::ACE_InputCDR::to_wchar (vb_object->_pd_value));
 }
 
@@ -3663,7 +3663,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDboolean:1.0",
     "VBTDboolean",
     &CORBA::_tc_boolean);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDboolean =
   &_tao_tc_VBTDboolean;
 
@@ -3708,7 +3708,7 @@ VBTDboolean::_copy_value (void)
     result,
     VBTDboolean (*this),
     0);
-    
+
   return result;
 }
 
@@ -3761,24 +3761,24 @@ VBTDboolean::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDboolean::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDboolean,
     false);
-  
+
   return (strm >> ::ACE_InputCDR::to_boolean (vb_object->_pd_value));
 }
 
@@ -3816,7 +3816,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDoctet:1.0",
     "VBTDoctet",
     &CORBA::_tc_octet);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDoctet =
   &_tao_tc_VBTDoctet;
 
@@ -3861,7 +3861,7 @@ VBTDoctet::_copy_value (void)
     result,
     VBTDoctet (*this),
     0);
-    
+
   return result;
 }
 
@@ -3914,24 +3914,24 @@ VBTDoctet::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDoctet::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDoctet,
     false);
-  
+
   return (strm >> ::ACE_InputCDR::to_octet (vb_object->_pd_value));
 }
 
@@ -3969,7 +3969,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDfloat:1.0",
     "VBTDfloat",
     &CORBA::_tc_float);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDfloat =
   &_tao_tc_VBTDfloat;
 
@@ -4014,7 +4014,7 @@ VBTDfloat::_copy_value (void)
     result,
     VBTDfloat (*this),
     0);
-    
+
   return result;
 }
 
@@ -4067,24 +4067,24 @@ VBTDfloat::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDfloat::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDfloat,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -4122,7 +4122,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDdouble:1.0",
     "VBTDdouble",
     &CORBA::_tc_double);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDdouble =
   &_tao_tc_VBTDdouble;
 
@@ -4167,7 +4167,7 @@ VBTDdouble::_copy_value (void)
     result,
     VBTDdouble (*this),
     0);
-    
+
   return result;
 }
 
@@ -4220,24 +4220,24 @@ VBTDdouble::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDdouble::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDdouble,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -4275,7 +4275,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDlongdouble:1.0",
     "VBTDlongdouble",
     &CORBA::_tc_longdouble);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDlongdouble =
   &_tao_tc_VBTDlongdouble;
 
@@ -4320,7 +4320,7 @@ VBTDlongdouble::_copy_value (void)
     result,
     VBTDlongdouble (*this),
     0);
-    
+
   return result;
 }
 
@@ -4373,24 +4373,24 @@ VBTDlongdouble::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDlongdouble::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDlongdouble,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -4428,7 +4428,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDenum:1.0",
     "VBTDenum",
     &_tc_Color);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDenum =
   &_tao_tc_VBTDenum;
 
@@ -4473,7 +4473,7 @@ VBTDenum::_copy_value (void)
     result,
     VBTDenum (*this),
     0);
-    
+
   return result;
 }
 
@@ -4526,24 +4526,24 @@ VBTDenum::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDenum::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDenum,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -4581,7 +4581,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBany:1.0",
     "VBany",
     &CORBA::_tc_any);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBany =
   &_tao_tc_VBany;
 
@@ -4626,7 +4626,7 @@ VBany::_copy_value (void)
     result,
     VBany (*this),
     0);
-    
+
   return result;
 }
 
@@ -4679,24 +4679,24 @@ VBany::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBany::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBany,
     false);
-  
+
   return (strm >> vb_object->_pd_value.inout ());
 }
 
@@ -4734,7 +4734,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TDany:1.0",
     "TDany",
     &CORBA::_tc_any);
-  
+
 ::CORBA::TypeCode_ptr const _tc_TDany =
   &_tao_tc_TDany;
 
@@ -4749,7 +4749,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBTDany:1.0",
     "VBTDany",
     &CORBA::_tc_any);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBTDany =
   &_tao_tc_VBTDany;
 
@@ -4794,7 +4794,7 @@ VBTDany::_copy_value (void)
     result,
     VBTDany (*this),
     0);
-    
+
   return result;
 }
 
@@ -4847,24 +4847,24 @@ VBTDany::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBTDany::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBTDany,
     false);
-  
+
   return (strm >> vb_object->_pd_value.inout ());
 }
 
@@ -4902,7 +4902,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:vb_basic/M_VBlong:1.0",
     "M_VBlong",
     &CORBA::_tc_long);
-  
+
 
 namespace vb_basic
 {
@@ -4951,7 +4951,7 @@ vb_basic::M_VBlong::_copy_value (void)
     result,
     M_VBlong (*this),
     0);
-    
+
   return result;
 }
 
@@ -5004,24 +5004,24 @@ vb_basic::M_VBlong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return vb_basic::M_VBlong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     M_VBlong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -5094,7 +5094,7 @@ vb_basic::Test::basic_op1 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::vb_basic::M_VBlong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::vb_basic::M_VBlong>::in_arg_val _tao_p1 (p1);
   TAO::Arg_Traits< ::vb_basic::M_VBlong>::inout_arg_val _tao_p2 (p2);
@@ -5115,7 +5115,7 @@ vb_basic::Test::basic_op1 (
       "basic_op1",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -5222,7 +5222,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:vb_basic/Test:1.0",
     "Test");
-  
+
 
 namespace vb_basic
 {
@@ -5241,7 +5241,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:VBinterface:1.0",
     "VBinterface",
     &vb_basic::_tc_Test);
-  
+
 ::CORBA::TypeCode_ptr const _tc_VBinterface =
   &_tao_tc_VBinterface;
 
@@ -5286,7 +5286,7 @@ VBinterface::_copy_value (void)
     result,
     VBinterface (*this),
     0);
-    
+
   return result;
 }
 
@@ -5339,24 +5339,24 @@ VBinterface::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return VBinterface::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     VBinterface,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -5415,7 +5415,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<Color>::extract (
         _tao_any,
         _tc_Color,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -7649,7 +7649,7 @@ namespace vb_basic
         );
   }
 
-  
+
 }
 
 #else
@@ -7730,7 +7730,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace vb_basic
 {
-  
+
 
   /// Copying insertion.
   void
@@ -7906,12 +7906,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Color> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -8996,13 +8996,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::vb_basic::Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

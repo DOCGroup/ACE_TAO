@@ -154,7 +154,7 @@ POA_MasterClient::Server::~Server (void)
 
 namespace POA_MasterClient
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -173,7 +173,7 @@ namespace POA_MasterClient
     {
       this->servant_->ping ();
     }
-  
+
   private:
     POA_MasterClient::Server * const servant_;
   };
@@ -198,7 +198,7 @@ void POA_MasterClient::Server::ping_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_MasterClient::Server * const impl =
@@ -211,7 +211,7 @@ void POA_MasterClient::Server::ping_skel (
 
   ping_Server command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -228,7 +228,7 @@ void POA_MasterClient::Server::ping_skel (
 
 namespace POA_MasterClient
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -247,7 +247,7 @@ namespace POA_MasterClient
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_MasterClient::Server * const servant_;
   };
@@ -272,7 +272,7 @@ void POA_MasterClient::Server::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_MasterClient::Server * const impl =
@@ -285,7 +285,7 @@ void POA_MasterClient::Server::shutdown_skel (
 
   shutdown_Server command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -349,12 +349,12 @@ POA_MasterClient::Server::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -468,7 +468,7 @@ POA_MasterClient::Master::~Master (void)
 
 namespace POA_MasterClient
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -489,11 +489,11 @@ namespace POA_MasterClient
     {
       TAO::SArg_Traits< ::MasterClient::Server>::in_arg_type arg_1 =
         static_cast<TAO::SArg_Traits< ::MasterClient::Server>::in_arg_val *> (this->args_[1])->arg ();
-        
+
       this->servant_->registerServer (
         arg_1);
     }
-  
+
   private:
     POA_MasterClient::Master * const servant_;
     TAO::Argument * const * const args_;
@@ -521,7 +521,7 @@ void POA_MasterClient::Master::registerServer_skel (
       &retval,
       &_tao_c
     };
-  
+
   static size_t const nargs = 2;
 
   POA_MasterClient::Master * const impl =
@@ -535,7 +535,7 @@ void POA_MasterClient::Master::registerServer_skel (
   registerServer_Master command (
     impl,
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -599,12 +599,12 @@ POA_MasterClient::Master::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

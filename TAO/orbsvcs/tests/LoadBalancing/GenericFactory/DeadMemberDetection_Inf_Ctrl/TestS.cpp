@@ -154,7 +154,7 @@ POA_Test::Simple::~Simple (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -179,11 +179,11 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->get_string ();
     }
-  
+
   private:
     POA_Test::Simple * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -210,7 +210,7 @@ void POA_Test::Simple::get_string_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Simple * const impl =
@@ -225,7 +225,7 @@ void POA_Test::Simple::get_string_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -242,7 +242,7 @@ void POA_Test::Simple::get_string_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -261,7 +261,7 @@ namespace POA_Test
     {
       this->servant_->exit ();
     }
-  
+
   private:
     POA_Test::Simple * const servant_;
   };
@@ -286,7 +286,7 @@ void POA_Test::Simple::exit_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Simple * const impl =
@@ -299,7 +299,7 @@ void POA_Test::Simple::exit_skel (
 
   exit_Simple command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -363,12 +363,12 @@ POA_Test::Simple::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

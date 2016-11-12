@@ -174,13 +174,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->getval (
         arg_1);
@@ -213,7 +213,7 @@ void POA_Interface1::getval_skel (
       &retval,
       &_tao_s
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Interface1 * const impl =
@@ -228,7 +228,7 @@ void POA_Interface1::getval_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -292,12 +292,12 @@ POA_Interface1::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -432,13 +432,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->getval (
         arg_1);
@@ -471,7 +471,7 @@ void POA_InterfaceFwd::getval_skel (
       &retval,
       &_tao_s
     };
-  
+
   static size_t const nargs = 2;
 
   POA_InterfaceFwd * const impl =
@@ -486,7 +486,7 @@ void POA_InterfaceFwd::getval_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -550,12 +550,12 @@ POA_InterfaceFwd::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

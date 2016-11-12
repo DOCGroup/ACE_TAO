@@ -123,7 +123,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_any,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_AnySeq_0 =
         &AnySeq_0;
     }
@@ -142,7 +142,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:AnySeq:1.0",
     "AnySeq",
     &TAO::TypeCode::tc_AnySeq_0);
-  
+
 ::CORBA::TypeCode_ptr const _tc_AnySeq =
   &_tao_tc_AnySeq;
 
@@ -151,12 +151,12 @@ static TAO::TypeCode::Alias<char const *,
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Container[] =
       {
         { "contents", &CORBA::_tc_any }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -191,7 +191,7 @@ Container::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Inner[] =
       {
         { "value1", &CORBA::_tc_long },
@@ -200,7 +200,7 @@ static TAO::TypeCode::Struct_Field<
         { "value4", &CORBA::_tc_long },
         { "value5", &CORBA::_tc_long }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -274,7 +274,7 @@ Test::RunTest (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::AnySeq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::AnySeq>::in_arg_val _tao_params (params);
 
@@ -291,7 +291,7 @@ Test::RunTest (
       "RunTest",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -310,7 +310,7 @@ Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -433,7 +433,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test:1.0",
     "Test");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Test =
   &_tao_tc_Test;
 
@@ -787,13 +787,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

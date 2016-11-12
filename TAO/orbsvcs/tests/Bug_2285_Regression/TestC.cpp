@@ -167,7 +167,7 @@ Test::Hello::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -201,7 +201,7 @@ Test::Hello::throw_exception (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -210,7 +210,7 @@ Test::Hello::throw_exception (
     };
 
   static TAO::Exception_Data
-  _tao_Test_Hello_throw_exception_exceptiondata [] = 
+  _tao_Test_Hello_throw_exception_exceptiondata [] =
     {
       {
         "IDL:Test/MyException:1.0",
@@ -251,7 +251,7 @@ Test::Hello::call_me_back (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::Hello>::in_arg_val _tao_me (me);
 
@@ -268,7 +268,7 @@ Test::Hello::call_me_back (
       "call_me_back",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -287,7 +287,7 @@ Test::Hello::call_back (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -324,7 +324,7 @@ Test::Hello::check_request_id (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -361,7 +361,7 @@ Test::Hello::drop_down_dead (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -519,13 +519,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Hello RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

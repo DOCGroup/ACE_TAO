@@ -153,7 +153,7 @@ POA_MCast::Server::~Server (void)
 
 namespace POA_MCast
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -178,11 +178,11 @@ namespace POA_MCast
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->connect_server ();
     }
-  
+
   private:
     POA_MCast::Server * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -209,7 +209,7 @@ void POA_MCast::Server::connect_server_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_MCast::Server * const impl =
@@ -224,7 +224,7 @@ void POA_MCast::Server::connect_server_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -288,12 +288,12 @@ POA_MCast::Server::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

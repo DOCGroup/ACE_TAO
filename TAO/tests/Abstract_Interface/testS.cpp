@@ -175,13 +175,13 @@ public:
       TAO::Portable_Server::get_ret_arg< char *> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< char *>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->foo_op (
         arg_1);
@@ -202,7 +202,7 @@ void POA_foo::foo_op_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       _tc_BadInput
     };
@@ -217,7 +217,7 @@ void POA_foo::foo_op_skel (
       &retval,
       &_tao_inarg
     };
-  
+
   static size_t const nargs = 2;
 
   POA_foo * const impl =
@@ -232,7 +232,7 @@ void POA_foo::foo_op_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -271,13 +271,13 @@ public:
       TAO::Portable_Server::get_ret_arg< char *> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< char *>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->base_op (
         arg_1);
@@ -298,7 +298,7 @@ void POA_foo::base_op_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       _tc_BadInput
     };
@@ -313,7 +313,7 @@ void POA_foo::base_op_skel (
       &retval,
       &_tao_inarg
     };
-  
+
   static size_t const nargs = 2;
 
   POA_foo * const impl =
@@ -328,7 +328,7 @@ void POA_foo::base_op_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -400,12 +400,12 @@ POA_foo::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -548,7 +548,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->pass_ops (
       arg_1);
   }
@@ -580,7 +580,7 @@ void POA_passer::pass_ops_skel (
       &retval,
       &_tao_outarg
     };
-  
+
   static size_t const nargs = 2;
 
   POA_passer * const impl =
@@ -595,7 +595,7 @@ void POA_passer::pass_ops_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -635,7 +635,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->pass_state (
       arg_1);
   }
@@ -667,7 +667,7 @@ void POA_passer::pass_state_skel (
       &retval,
       &_tao_outarg
     };
-  
+
   static size_t const nargs = 2;
 
   POA_passer * const impl =
@@ -682,7 +682,7 @@ void POA_passer::pass_state_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -722,7 +722,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->pass_nil (
       arg_1);
   }
@@ -754,7 +754,7 @@ void POA_passer::pass_nil_skel (
       &retval,
       &_tao_outarg
     };
-  
+
   static size_t const nargs = 2;
 
   POA_passer * const impl =
@@ -769,7 +769,7 @@ void POA_passer::pass_nil_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -826,7 +826,7 @@ void POA_passer::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_passer * const impl =
@@ -839,7 +839,7 @@ void POA_passer::shutdown_skel (
 
   shutdown_passer command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -903,12 +903,12 @@ POA_passer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

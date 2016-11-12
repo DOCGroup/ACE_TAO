@@ -158,7 +158,7 @@ POA_Test_Interceptors::Secure_Vault::~Secure_Vault (void)
 
 namespace POA_Test_Interceptors
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -183,11 +183,11 @@ namespace POA_Test_Interceptors
         TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->ready ();
     }
-  
+
   private:
     POA_Test_Interceptors::Secure_Vault * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -214,7 +214,7 @@ void POA_Test_Interceptors::Secure_Vault::ready_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test_Interceptors::Secure_Vault * const impl =
@@ -229,7 +229,7 @@ void POA_Test_Interceptors::Secure_Vault::ready_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -246,7 +246,7 @@ void POA_Test_Interceptors::Secure_Vault::ready_skel (
 
 namespace POA_Test_Interceptors
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -272,11 +272,11 @@ namespace POA_Test_Interceptors
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->authenticate (
         arg_1);
     }
-  
+
   private:
     POA_Test_Interceptors::Secure_Vault * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -293,7 +293,7 @@ void POA_Test_Interceptors::Secure_Vault::authenticate_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Test_Interceptors::_tc_Invalid
     };
@@ -308,7 +308,7 @@ void POA_Test_Interceptors::Secure_Vault::authenticate_skel (
       &retval,
       &_tao_user
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test_Interceptors::Secure_Vault * const impl =
@@ -323,7 +323,7 @@ void POA_Test_Interceptors::Secure_Vault::authenticate_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -340,7 +340,7 @@ void POA_Test_Interceptors::Secure_Vault::authenticate_skel (
 
 namespace POA_Test_Interceptors
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -365,25 +365,25 @@ namespace POA_Test_Interceptors
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::Test_Interceptors::Secure_Vault::Record>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::Test_Interceptors::Secure_Vault::Record> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->update_records (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_Test_Interceptors::Secure_Vault * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -414,7 +414,7 @@ void POA_Test_Interceptors::Secure_Vault::update_records_skel (
       &_tao_id,
       &_tao_val
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Test_Interceptors::Secure_Vault * const impl =
@@ -429,7 +429,7 @@ void POA_Test_Interceptors::Secure_Vault::update_records_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -446,7 +446,7 @@ void POA_Test_Interceptors::Secure_Vault::update_records_skel (
 
 namespace POA_Test_Interceptors
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -465,7 +465,7 @@ namespace POA_Test_Interceptors
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test_Interceptors::Secure_Vault * const servant_;
   };
@@ -490,7 +490,7 @@ void POA_Test_Interceptors::Secure_Vault::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test_Interceptors::Secure_Vault * const impl =
@@ -503,7 +503,7 @@ void POA_Test_Interceptors::Secure_Vault::shutdown_skel (
 
   shutdown_Secure_Vault command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -567,12 +567,12 @@ POA_Test_Interceptors::Secure_Vault::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -129,7 +129,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &_tc_Peer,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_PeerSet_0 =
         &PeerSet_0;
     }
@@ -148,7 +148,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:PeerSet:1.0",
     "PeerSet",
     &TAO::TypeCode::tc_PeerSet_0);
-  
+
 ::CORBA::TypeCode_ptr const _tc_PeerSet =
   &_tao_tc_PeerSet;
 
@@ -196,7 +196,7 @@ Peer::request (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_id (id);
 
@@ -213,7 +213,7 @@ Peer::request (
       "request",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -233,7 +233,7 @@ Peer::start (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::PeerSet>::in_arg_val _tao_the_peers (the_peers);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_iterations (iterations);
@@ -253,7 +253,7 @@ Peer::start (
       5,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -270,7 +270,7 @@ Peer::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -305,9 +305,9 @@ Peer::sendc_request (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_id (id);
 
@@ -431,7 +431,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Peer:1.0",
     "Peer");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Peer =
   &_tao_tc_Peer;
 
@@ -479,7 +479,7 @@ AMI_PeerHandler::request (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -496,7 +496,7 @@ AMI_PeerHandler::request (
       "request",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -524,10 +524,10 @@ AMI_PeerHandler::request_reply_stub (
             (_tao_in >> ami_return_val)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->request (
-          
+
           ami_return_val
         );
       break;
@@ -554,7 +554,7 @@ AMI_PeerHandler::request_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->request_excep (
           exception_holder_var
@@ -579,7 +579,7 @@ AMI_PeerHandler::request_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -596,7 +596,7 @@ AMI_PeerHandler::request_excep (
       "request_excep",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -705,7 +705,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:AMI_PeerHandler:1.0",
     "AMI_PeerHandler");
-  
+
 ::CORBA::TypeCode_ptr const _tc_AMI_PeerHandler =
   &_tao_tc_AMI_PeerHandler;
 
@@ -753,7 +753,7 @@ Progress::sent_request (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_id (id);
 
@@ -771,7 +771,7 @@ Progress::sent_request (
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -788,7 +788,7 @@ Progress::recv_reply (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_id (id);
 
@@ -806,7 +806,7 @@ Progress::recv_reply (
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -823,7 +823,7 @@ Progress::bind (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Peer>::in_arg_val _tao_a_peer (a_peer);
 
@@ -840,7 +840,7 @@ Progress::bind (
       "bind",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -860,9 +860,9 @@ Progress::sendc_bind (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Peer>::in_arg_val _tao_a_peer (a_peer);
 
@@ -986,7 +986,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Progress:1.0",
     "Progress");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Progress =
   &_tao_tc_Progress;
 
@@ -1034,7 +1034,7 @@ AMI_ProgressHandler::bind (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -1051,7 +1051,7 @@ AMI_ProgressHandler::bind (
       "bind",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1079,10 +1079,10 @@ AMI_ProgressHandler::bind_reply_stub (
             (_tao_in >> ami_return_val)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->bind (
-          
+
           ami_return_val
         );
       break;
@@ -1109,7 +1109,7 @@ AMI_ProgressHandler::bind_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->bind_excep (
           exception_holder_var
@@ -1134,7 +1134,7 @@ AMI_ProgressHandler::bind_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1151,7 +1151,7 @@ AMI_ProgressHandler::bind_excep (
       "bind_excep",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1260,7 +1260,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:AMI_ProgressHandler:1.0",
     "AMI_ProgressHandler");
-  
+
 ::CORBA::TypeCode_ptr const _tc_AMI_ProgressHandler =
   &_tao_tc_AMI_ProgressHandler;
 
@@ -1639,13 +1639,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Peer RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1676,13 +1676,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::AMI_PeerHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1713,13 +1713,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Progress RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1750,13 +1750,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::AMI_ProgressHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

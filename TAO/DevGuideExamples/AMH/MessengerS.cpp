@@ -170,7 +170,7 @@ POA_DevGuide::AMH_Messenger::send_message_skel (
     dynamic_cast<POA_DevGuide::AMH_Messenger *> (_tao_servant);
   if (!_tao_impl)
     throw ::CORBA::INTERNAL ();
-  
+
   ::CORBA::String_var user_name;
   ::CORBA::String_var subject;
   ::CORBA::String_var message;
@@ -182,28 +182,28 @@ POA_DevGuide::AMH_Messenger::send_message_skel (
       (_tao_in >> message.out ())
     ))
     throw ::CORBA::MARSHAL();
-  
+
   TAO_ORB_Core *orb_core =
     _tao_server_request.orb ()->orb_core ();
-  
+
   TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
     orb_core->lane_resources ().amh_response_handler_allocator ();
-  
+
   TAO::TAO_Buffer_Allocator<
       POA_DevGuide::TAO_AMH_MessengerResponseHandler,
       TAO_AMH_BUFFER_ALLOCATOR
     > buffer_allocator (amh_allocator);
-  
-  POA_DevGuide::TAO_AMH_MessengerResponseHandler_ptr _tao_rh_ptr = 
+
+  POA_DevGuide::TAO_AMH_MessengerResponseHandler_ptr _tao_rh_ptr =
     buffer_allocator.allocate();
-  
-  if (!_tao_rh_ptr) 
+
+  if (!_tao_rh_ptr)
     throw ::CORBA::NO_MEMORY ();
-  
+
   _tao_rh_ptr->init (_tao_server_request, amh_allocator);
-  
+
   ACE_Utils::Auto_Functor <POA_DevGuide::TAO_AMH_MessengerResponseHandler, TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);
-  
+
   _tao_impl->send_message (
       safe_rd_.get (),
       user_name.in (),
@@ -258,23 +258,23 @@ POA_DevGuide::AMH_Messenger::_this (void)
 
   TAO_Stub_Auto_Ptr safe_stub (stub);
   ::CORBA::Object_ptr tmp = CORBA::Object_ptr ();
-  
+
   ::CORBA::Boolean _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0
     );
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
   typedef ::DevGuide::Messenger STUB_SCOPED_NAME;
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
 }
 
 // TAO_IDL - Generated from
@@ -381,7 +381,7 @@ POA_DevGuide::Messenger::~Messenger (void)
 
 namespace POA_DevGuide
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -406,32 +406,32 @@ namespace POA_DevGuide
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< char *>::inout_arg_type arg_3 =
         TAO::Portable_Server::get_inout_arg< char *> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       retval =
         this->servant_->send_message (
           arg_1
           , arg_2
           , arg_3);
     }
-  
+
   private:
     POA_DevGuide::Messenger * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -464,7 +464,7 @@ void POA_DevGuide::Messenger::send_message_skel (
       &_tao_subject,
       &_tao_message
     };
-  
+
   static size_t const nargs = 4;
 
   POA_DevGuide::Messenger * const impl =
@@ -479,7 +479,7 @@ void POA_DevGuide::Messenger::send_message_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -543,12 +543,12 @@ POA_DevGuide::Messenger::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -588,7 +588,7 @@ POA_DevGuide::TAO_AMH_MessengerResponseHandler::send_message (
     {
       throw ::CORBA::MARSHAL();
     }
-  
+
   this->_tao_rh_send_reply ();
 }
 

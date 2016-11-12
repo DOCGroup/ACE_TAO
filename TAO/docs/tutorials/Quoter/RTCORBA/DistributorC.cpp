@@ -149,9 +149,9 @@ void Stock::Invalid_Subscription::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Stock_Invalid_Subscription = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -218,7 +218,7 @@ Stock::StockDistributor::subscribe_notifier (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::Cookie>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Stock::StockNameConsumer>::in_arg_val _tao_c (c);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_priority (priority);
@@ -237,7 +237,7 @@ Stock::StockDistributor::subscribe_notifier (
       "subscribe_notifier",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -256,7 +256,7 @@ Stock::StockDistributor::unsubscribe_notifier (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::StockNameConsumer>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Stock::Cookie>::in_arg_val _tao_ck (ck);
 
@@ -267,7 +267,7 @@ Stock::StockDistributor::unsubscribe_notifier (
     };
 
   static TAO::Exception_Data
-  _tao_Stock_StockDistributor_unsubscribe_notifier_exceptiondata [] = 
+  _tao_Stock_StockDistributor_unsubscribe_notifier_exceptiondata [] =
     {
       {
         "IDL:Stock/Invalid_Subscription:1.0",
@@ -285,7 +285,7 @@ Stock::StockDistributor::unsubscribe_notifier (
       "unsubscribe_notifier",
       20,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -307,7 +307,7 @@ Stock::StockDistributor::provide_quoter_info (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::StockQuoter>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Stock::Cookie>::in_arg_val _tao_ck (ck);
 
@@ -318,7 +318,7 @@ Stock::StockDistributor::provide_quoter_info (
     };
 
   static TAO::Exception_Data
-  _tao_Stock_StockDistributor_provide_quoter_info_exceptiondata [] = 
+  _tao_Stock_StockDistributor_provide_quoter_info_exceptiondata [] =
     {
       {
         "IDL:Stock/Invalid_Subscription:1.0",
@@ -336,7 +336,7 @@ Stock::StockDistributor::provide_quoter_info (
       "provide_quoter_info",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -358,7 +358,7 @@ Stock::StockDistributor::notification_rate (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -395,7 +395,7 @@ Stock::StockDistributor::notification_rate (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_notification_rate (notification_rate);
 
@@ -412,7 +412,7 @@ Stock::StockDistributor::notification_rate (
       "_set_notification_rate",
       22,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -429,7 +429,7 @@ Stock::StockDistributor::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -555,7 +555,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Stock/StockDistributor:1.0",
     "StockDistributor");
-  
+
 
 namespace Stock
 {
@@ -607,7 +607,7 @@ Stock::StockDistributorHome::create (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Stock::StockDistributor>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -732,7 +732,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Stock/StockDistributorHome:1.0",
     "StockDistributorHome");
-  
+
 
 namespace Stock
 {
@@ -758,7 +758,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -779,7 +779,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -915,7 +915,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1029,7 +1029,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1168,13 +1168,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::StockDistributor RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1205,13 +1205,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock::StockDistributorHome RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

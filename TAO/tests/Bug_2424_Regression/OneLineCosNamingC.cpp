@@ -626,7 +626,7 @@ CosNaming::NamingContext::bind (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CosNaming::Name>::in_arg_val _tao_n (n);
   TAO::Arg_Traits< ::CORBA::Object>::in_arg_val _tao_obj (obj);
@@ -639,7 +639,7 @@ CosNaming::NamingContext::bind (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContext_bind_exceptiondata [] = 
+  _tao_CosNaming_NamingContext_bind_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/NotFound:1.0",
@@ -681,7 +681,7 @@ CosNaming::NamingContext::bind (
       "bind",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -702,7 +702,7 @@ CosNaming::NamingContext::rebind (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CosNaming::Name>::in_arg_val _tao_n (n);
   TAO::Arg_Traits< ::CORBA::Object>::in_arg_val _tao_obj (obj);
@@ -715,7 +715,7 @@ CosNaming::NamingContext::rebind (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContext_rebind_exceptiondata [] = 
+  _tao_CosNaming_NamingContext_rebind_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/NotFound:1.0",
@@ -749,7 +749,7 @@ CosNaming::NamingContext::rebind (
       "rebind",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -770,7 +770,7 @@ CosNaming::NamingContext::bind_context (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CosNaming::Name>::in_arg_val _tao_n (n);
   TAO::Arg_Traits< ::CosNaming::NamingContext>::in_arg_val _tao_nc (nc);
@@ -783,7 +783,7 @@ CosNaming::NamingContext::bind_context (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContext_bind_context_exceptiondata [] = 
+  _tao_CosNaming_NamingContext_bind_context_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/NotFound:1.0",
@@ -825,7 +825,7 @@ CosNaming::NamingContext::bind_context (
       "bind_context",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -846,7 +846,7 @@ CosNaming::NamingContext::rebind_context (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CosNaming::Name>::in_arg_val _tao_n (n);
   TAO::Arg_Traits< ::CosNaming::NamingContext>::in_arg_val _tao_nc (nc);
@@ -859,7 +859,7 @@ CosNaming::NamingContext::rebind_context (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContext_rebind_context_exceptiondata [] = 
+  _tao_CosNaming_NamingContext_rebind_context_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/NotFound:1.0",
@@ -893,7 +893,7 @@ CosNaming::NamingContext::rebind_context (
       "rebind_context",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -913,7 +913,7 @@ CosNaming::NamingContext::resolve (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Object>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CosNaming::Name>::in_arg_val _tao_n (n);
 
@@ -924,7 +924,7 @@ CosNaming::NamingContext::resolve (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContext_resolve_exceptiondata [] = 
+  _tao_CosNaming_NamingContext_resolve_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/NotFound:1.0",
@@ -958,7 +958,7 @@ CosNaming::NamingContext::resolve (
       "resolve",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -980,7 +980,7 @@ CosNaming::NamingContext::unbind (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CosNaming::Name>::in_arg_val _tao_n (n);
 
@@ -991,7 +991,7 @@ CosNaming::NamingContext::unbind (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContext_unbind_exceptiondata [] = 
+  _tao_CosNaming_NamingContext_unbind_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/NotFound:1.0",
@@ -1025,7 +1025,7 @@ CosNaming::NamingContext::unbind (
       "unbind",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1045,7 +1045,7 @@ CosNaming::NamingContext::new_context (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CosNaming::NamingContext>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1082,7 +1082,7 @@ CosNaming::NamingContext::bind_new_context (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CosNaming::NamingContext>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CosNaming::Name>::in_arg_val _tao_n (n);
 
@@ -1093,7 +1093,7 @@ CosNaming::NamingContext::bind_new_context (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContext_bind_new_context_exceptiondata [] = 
+  _tao_CosNaming_NamingContext_bind_new_context_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/NotFound:1.0",
@@ -1135,7 +1135,7 @@ CosNaming::NamingContext::bind_new_context (
       "bind_new_context",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1157,7 +1157,7 @@ CosNaming::NamingContext::destroy (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1166,7 +1166,7 @@ CosNaming::NamingContext::destroy (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContext_destroy_exceptiondata [] = 
+  _tao_CosNaming_NamingContext_destroy_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/NotEmpty:1.0",
@@ -1209,7 +1209,7 @@ CosNaming::NamingContext::list (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_how_many (how_many);
   TAO::Arg_Traits< ::CosNaming::BindingList>::out_arg_val _tao_bl (bl);
@@ -1230,7 +1230,7 @@ CosNaming::NamingContext::list (
       "list",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1362,7 +1362,7 @@ CosNaming::BindingIterator::next_one (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CosNaming::Binding>::out_arg_val _tao_b (b);
 
@@ -1402,7 +1402,7 @@ CosNaming::BindingIterator::next_n (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_how_many (how_many);
   TAO::Arg_Traits< ::CosNaming::BindingList>::out_arg_val _tao_bl (bl);
@@ -1421,7 +1421,7 @@ CosNaming::BindingIterator::next_n (
       "next_n",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1440,7 +1440,7 @@ CosNaming::BindingIterator::destroy (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1590,7 +1590,7 @@ CosNaming::NamingContextExt::to_string (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CosNaming::Name>::in_arg_val _tao_n (n);
 
@@ -1601,7 +1601,7 @@ CosNaming::NamingContextExt::to_string (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContextExt_to_string_exceptiondata [] = 
+  _tao_CosNaming_NamingContextExt_to_string_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/InvalidName:1.0",
@@ -1619,7 +1619,7 @@ CosNaming::NamingContextExt::to_string (
       "to_string",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1641,7 +1641,7 @@ CosNaming::NamingContextExt::to_name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CosNaming::Name>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_sn (sn);
 
@@ -1652,7 +1652,7 @@ CosNaming::NamingContextExt::to_name (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContextExt_to_name_exceptiondata [] = 
+  _tao_CosNaming_NamingContextExt_to_name_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/InvalidName:1.0",
@@ -1670,7 +1670,7 @@ CosNaming::NamingContextExt::to_name (
       "to_name",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1777,7 +1777,7 @@ CosNaming::NamingContextExt::to_url (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_addr (addr);
   TAO::Arg_Traits< char *>::in_arg_val _tao_sn (sn);
@@ -1790,7 +1790,7 @@ CosNaming::NamingContextExt::to_url (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContextExt_to_url_exceptiondata [] = 
+  _tao_CosNaming_NamingContextExt_to_url_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContextExt/InvalidAddress:1.0",
@@ -1816,7 +1816,7 @@ CosNaming::NamingContextExt::to_url (
       "to_url",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1838,7 +1838,7 @@ CosNaming::NamingContextExt::resolve_str (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Object>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_n (n);
 
@@ -1849,7 +1849,7 @@ CosNaming::NamingContextExt::resolve_str (
     };
 
   static TAO::Exception_Data
-  _tao_CosNaming_NamingContextExt_resolve_str_exceptiondata [] = 
+  _tao_CosNaming_NamingContextExt_resolve_str_exceptiondata [] =
     {
       {
         "IDL:CosNaming/NamingContext/NotFound:1.0",
@@ -1883,7 +1883,7 @@ CosNaming::NamingContextExt::resolve_str (
       "resolve_str",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -2048,12 +2048,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<CosNaming::BindingType> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2129,12 +2129,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<CosNaming::NamingContext::NotFoundReason> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2333,13 +2333,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::CosNaming::NamingContext RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -2370,13 +2370,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::CosNaming::BindingIterator RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -2434,13 +2434,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::CosNaming::NamingContextExt RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

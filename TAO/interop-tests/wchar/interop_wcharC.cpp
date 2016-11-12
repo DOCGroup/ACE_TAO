@@ -64,12 +64,12 @@ interop::warray_dup (const interop::warray_slice *_tao_src_array)
 {
   interop::warray_slice *_tao_dup_array =
     interop::warray_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <interop::warray_slice *> (0);
     }
-  
+
   interop::warray_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -127,7 +127,7 @@ namespace TAO
           ::CORBA::tk_array,
           &CORBA::_tc_wchar,
           10U);
-        
+
       ::CORBA::TypeCode_ptr const tc_interop_warray =
         &interop_warray_10;
     }
@@ -145,7 +145,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:interop/warray:1.0",
     "warray",
     &TAO::TypeCode::tc_interop_warray);
-  
+
 
 namespace interop
 {
@@ -163,7 +163,7 @@ namespace interop
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_interop_wstruct[] =
       {
         { "st_char", &CORBA::_tc_wchar },
@@ -171,7 +171,7 @@ static TAO::TypeCode::Struct_Field<
         { "st_array", &interop::_tc_warray },
         { "st_any", &CORBA::_tc_any }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -279,7 +279,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &interop::_tc_wstruct,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_interop_wstructseq_0 =
         &interop_wstructseq_0;
     }
@@ -298,7 +298,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:interop/wstructseq:1.0",
     "wstructseq",
     &TAO::TypeCode::tc_interop_wstructseq_0);
-  
+
 
 namespace interop
 {
@@ -313,7 +313,7 @@ static char const * const _tao_enumerators_interop_wchar_types[] =
     "is_wchar",
     "is_wstring",
     "is_warray"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -324,7 +324,7 @@ static TAO::TypeCode::Enum<char const *,
     "wchar_types",
     _tao_enumerators_interop_wchar_types,
     3);
-  
+
 
 namespace interop
 {
@@ -359,7 +359,7 @@ interop::wunion::wunion (const ::interop::wunion &u)
     case interop::is_warray:
     {
       // Make a deep copy.
-      this->u_.u_array_ = 
+      this->u_.u_array_ =
         interop::warray_dup (u.u_.u_array_);
     }
     break;
@@ -388,7 +388,7 @@ interop::wunion::operator= (const ::interop::wunion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -407,14 +407,14 @@ interop::wunion::operator= (const ::interop::wunion &u)
     case interop::is_warray:
     {
       // Make a deep copy.
-      this->u_.u_array_ = 
+      this->u_.u_array_ =
         interop::warray_dup (u.u_.u_array_);
     }
     break;
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -423,23 +423,23 @@ void interop::wunion::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case interop::is_wchar:
-      
+
     break;
-    
+
     case interop::is_wstring:
       ::CORBA::wstring_free (this->u_.u_string_);
       this->u_.u_string_ = 0;
-      
+
     break;
-    
+
     case interop::is_warray:
       interop::warray_free (this->u_.u_array_);
       this->u_.u_array_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -475,7 +475,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_interop_wunion,
     sizeof (_tao_cases_interop_wunion)/sizeof (_tao_cases_interop_wunion[0]),
     -1);
-  
+
 
 namespace interop
 {
@@ -527,7 +527,7 @@ interop::WChar_Passer::orb_name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -565,7 +565,7 @@ interop::WChar_Passer::wchar_to_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ACE_InputCDR::to_wchar>::in_arg_val _tao_test (test);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
@@ -584,7 +584,7 @@ interop::WChar_Passer::wchar_to_server (
       "wchar_to_server",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -603,7 +603,7 @@ interop::WChar_Passer::wchar_from_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_wchar>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
 
@@ -620,7 +620,7 @@ interop::WChar_Passer::wchar_from_server (
       "wchar_from_server",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -640,7 +640,7 @@ interop::WChar_Passer::wstring_to_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::WChar *>::in_arg_val _tao_test (test);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
@@ -659,7 +659,7 @@ interop::WChar_Passer::wstring_to_server (
       "wstring_to_server",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -678,7 +678,7 @@ interop::WChar_Passer::wstring_from_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::WChar *>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
 
@@ -695,7 +695,7 @@ interop::WChar_Passer::wstring_from_server (
       "wstring_from_server",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -715,7 +715,7 @@ interop::WChar_Passer::warray_to_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::interop::warray_tag>::in_arg_val _tao_test (test);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
@@ -734,7 +734,7 @@ interop::WChar_Passer::warray_to_server (
       "warray_to_server",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -753,7 +753,7 @@ interop::WChar_Passer::warray_from_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::interop::warray_tag>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
 
@@ -770,7 +770,7 @@ interop::WChar_Passer::warray_from_server (
       "warray_from_server",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -790,7 +790,7 @@ interop::WChar_Passer::wstruct_to_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::interop::wstruct>::in_arg_val _tao_test (test);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
@@ -809,7 +809,7 @@ interop::WChar_Passer::wstruct_to_server (
       "wstruct_to_server",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -828,7 +828,7 @@ interop::WChar_Passer::wstruct_from_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::interop::wstruct>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
 
@@ -845,7 +845,7 @@ interop::WChar_Passer::wstruct_from_server (
       "wstruct_from_server",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -865,7 +865,7 @@ interop::WChar_Passer::wstructseq_to_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::interop::wstructseq>::in_arg_val _tao_test (test);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
@@ -884,7 +884,7 @@ interop::WChar_Passer::wstructseq_to_server (
       "wstructseq_to_server",
       20,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -903,7 +903,7 @@ interop::WChar_Passer::wstructseq_from_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::interop::wstructseq>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
 
@@ -920,7 +920,7 @@ interop::WChar_Passer::wstructseq_from_server (
       "wstructseq_from_server",
       22,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -940,7 +940,7 @@ interop::WChar_Passer::wunion_to_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::interop::wunion>::in_arg_val _tao_test (test);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
@@ -959,7 +959,7 @@ interop::WChar_Passer::wunion_to_server (
       "wunion_to_server",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -979,7 +979,7 @@ interop::WChar_Passer::wunion_from_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::interop::wunion>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
   TAO::Arg_Traits< ::interop::wchar_types>::in_arg_val _tao_type (type);
@@ -998,7 +998,7 @@ interop::WChar_Passer::wunion_from_server (
       "wunion_from_server",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1018,7 +1018,7 @@ interop::WChar_Passer::any_to_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_test (test);
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
@@ -1037,7 +1037,7 @@ interop::WChar_Passer::any_to_server (
       "any_to_server",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1057,7 +1057,7 @@ interop::WChar_Passer::any_from_server (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Any>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
   TAO::Arg_Traits< ::interop::wchar_types>::in_arg_val _tao_type (type);
@@ -1076,7 +1076,7 @@ interop::WChar_Passer::any_from_server (
       "any_from_server",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1095,7 +1095,7 @@ interop::WChar_Passer::any_echo (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Any>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_test (test);
 
@@ -1112,7 +1112,7 @@ interop::WChar_Passer::any_echo (
       "any_echo",
       8,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1241,13 +1241,13 @@ void interop::WChar_Passer::WStringException::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_interop_WChar_Passer_WStringException[] =
       {
         { "why", &CORBA::_tc_wstring },
         { "whynot", &CORBA::_tc_wchar }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1276,7 +1276,7 @@ interop::WChar_Passer::exception_test (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_key (key);
 
@@ -1287,7 +1287,7 @@ interop::WChar_Passer::exception_test (
     };
 
   static TAO::Exception_Data
-  _tao_interop_WChar_Passer_exception_test_exceptiondata [] = 
+  _tao_interop_WChar_Passer_exception_test_exceptiondata [] =
     {
       {
         "IDL:interop/WChar_Passer/WStringException:1.0",
@@ -1305,7 +1305,7 @@ interop::WChar_Passer::exception_test (
       "exception_test",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1325,7 +1325,7 @@ interop::WChar_Passer::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1447,7 +1447,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:interop/WChar_Passer:1.0",
     "WChar_Passer");
-  
+
 
 namespace interop
 {
@@ -1628,7 +1628,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace interop
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1778,7 +1778,7 @@ namespace interop
       TAO::Any_Basic_Impl_T< ::interop::wchar_types>::extract (
           _tao_any,
           ::interop::_tc_wchar_types,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1808,7 +1808,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<interop::wchar_types>::extract (
         _tao_any,
         interop::_tc_wchar_types,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1977,7 +1977,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace interop
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2084,7 +2084,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -2105,7 +2105,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace interop
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -2338,12 +2338,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<interop::wchar_types> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2366,7 +2366,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2406,7 +2406,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2530,13 +2530,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::interop::WChar_Passer RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

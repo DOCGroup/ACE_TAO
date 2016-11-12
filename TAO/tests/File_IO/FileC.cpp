@@ -225,7 +225,7 @@ File::Descriptor::write (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::File::Descriptor::DataBuffer>::in_arg_val _tao_buffer (buffer);
 
@@ -236,7 +236,7 @@ File::Descriptor::write (
     };
 
   static TAO::Exception_Data
-  _tao_File_Descriptor_write_exceptiondata [] = 
+  _tao_File_Descriptor_write_exceptiondata [] =
     {
       {
         "IDL:File/IOError:1.0",
@@ -254,7 +254,7 @@ File::Descriptor::write (
       "write",
       5,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -276,7 +276,7 @@ File::Descriptor::read (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::File::Descriptor::DataBuffer>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_num_bytes (num_bytes);
 
@@ -287,7 +287,7 @@ File::Descriptor::read (
     };
 
   static TAO::Exception_Data
-  _tao_File_Descriptor_read_exceptiondata [] = 
+  _tao_File_Descriptor_read_exceptiondata [] =
     {
       {
         "IDL:File/IOError:1.0",
@@ -305,7 +305,7 @@ File::Descriptor::read (
       "read",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -328,7 +328,7 @@ File::Descriptor::lseek (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_offset (offset);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_whence (whence);
@@ -341,7 +341,7 @@ File::Descriptor::lseek (
     };
 
   static TAO::Exception_Data
-  _tao_File_Descriptor_lseek_exceptiondata [] = 
+  _tao_File_Descriptor_lseek_exceptiondata [] =
     {
       {
         "IDL:File/IOError:1.0",
@@ -359,7 +359,7 @@ File::Descriptor::lseek (
       "lseek",
       5,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -381,7 +381,7 @@ File::Descriptor::destroy (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -532,7 +532,7 @@ File::System::open (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::File::Descriptor>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_file_name (file_name);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_flags (flags);
@@ -545,7 +545,7 @@ File::System::open (
     };
 
   static TAO::Exception_Data
-  _tao_File_System_open_exceptiondata [] = 
+  _tao_File_System_open_exceptiondata [] =
     {
       {
         "IDL:File/IOError:1.0",
@@ -563,7 +563,7 @@ File::System::open (
       "open",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -745,13 +745,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::File::Descriptor RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -782,13 +782,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::File::System RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

@@ -131,7 +131,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_octet,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Web_Server_Chunk_Type_0 =
         &Web_Server_Chunk_Type_0;
     }
@@ -150,7 +150,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Web_Server/Chunk_Type:1.0",
     "Chunk_Type",
     &TAO::TypeCode::tc_Web_Server_Chunk_Type_0);
-  
+
 
 namespace Web_Server
 {
@@ -203,7 +203,7 @@ Web_Server::Content_Iterator::next_chunk (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_offset (offset);
   TAO::Arg_Traits< ::Web_Server::Chunk_Type>::out_arg_val _tao_chunk (chunk);
@@ -222,7 +222,7 @@ Web_Server::Content_Iterator::next_chunk (
       "next_chunk",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -241,7 +241,7 @@ Web_Server::Content_Iterator::destroy (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -277,9 +277,9 @@ Web_Server::Content_Iterator::sendc_next_chunk (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_offset (offset);
 
@@ -315,8 +315,8 @@ Web_Server::Content_Iterator::sendc_destroy (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
+
+
 
   TAO::Argument ** _the_tao_operation_signature = 0;
 
@@ -434,7 +434,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Web_Server/Content_Iterator:1.0",
     "Content_Iterator");
-  
+
 
 namespace Web_Server
 {
@@ -487,7 +487,7 @@ Web_Server::AMI_Content_IteratorHandler::next_chunk (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_val _tao_ami_return_val (ami_return_val);
   TAO::Arg_Traits< ::Web_Server::Chunk_Type>::in_arg_val _tao_chunk (chunk);
@@ -506,7 +506,7 @@ Web_Server::AMI_Content_IteratorHandler::next_chunk (
       "next_chunk",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -536,12 +536,12 @@ Web_Server::AMI_Content_IteratorHandler::next_chunk_reply_stub (
             (_tao_in >> chunk)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->next_chunk (
-          
+
           ami_return_val,
-          
+
           chunk
         );
       break;
@@ -568,7 +568,7 @@ Web_Server::AMI_Content_IteratorHandler::next_chunk_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->next_chunk_excep (
           exception_holder_var
@@ -593,7 +593,7 @@ Web_Server::AMI_Content_IteratorHandler::next_chunk_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -610,7 +610,7 @@ Web_Server::AMI_Content_IteratorHandler::next_chunk_excep (
       "next_chunk_excep",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -627,7 +627,7 @@ Web_Server::AMI_Content_IteratorHandler::destroy (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -669,7 +669,7 @@ Web_Server::AMI_Content_IteratorHandler::destroy_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->destroy (
-          
+
         );
       break;
     }
@@ -695,7 +695,7 @@ Web_Server::AMI_Content_IteratorHandler::destroy_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->destroy_excep (
           exception_holder_var
@@ -720,7 +720,7 @@ Web_Server::AMI_Content_IteratorHandler::destroy_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -737,7 +737,7 @@ Web_Server::AMI_Content_IteratorHandler::destroy_excep (
       "destroy_excep",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -846,7 +846,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Web_Server/AMI_Content_IteratorHandler:1.0",
     "AMI_Content_IteratorHandler");
-  
+
 
 namespace Web_Server
 {
@@ -971,12 +971,12 @@ void Web_Server::Error_Result::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Web_Server_Error_Result[] =
       {
         { "status", &CORBA::_tc_short }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1003,13 +1003,13 @@ namespace Web_Server
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Web_Server_Metadata_Type[] =
       {
         { "modification_date", &CORBA::_tc_string },
         { "content_type", &CORBA::_tc_string }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1089,7 +1089,7 @@ Web_Server::Iterator_Factory::get_iterator (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_pathname (pathname);
   TAO::Arg_Traits< ::Web_Server::Content_Iterator>::out_arg_val _tao_contents (contents);
@@ -1104,7 +1104,7 @@ Web_Server::Iterator_Factory::get_iterator (
     };
 
   static TAO::Exception_Data
-  _tao_Web_Server_Iterator_Factory_get_iterator_exceptiondata [] = 
+  _tao_Web_Server_Iterator_Factory_get_iterator_exceptiondata [] =
     {
       {
         "IDL:Web_Server/Error_Result:1.0",
@@ -1122,7 +1122,7 @@ Web_Server::Iterator_Factory::get_iterator (
       "get_iterator",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1143,9 +1143,9 @@ Web_Server::Iterator_Factory::sendc_get_iterator (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_pathname (pathname);
 
@@ -1269,7 +1269,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Web_Server/Iterator_Factory:1.0",
     "Iterator_Factory");
-  
+
 
 namespace Web_Server
 {
@@ -1322,7 +1322,7 @@ Web_Server::AMI_Iterator_FactoryHandler::get_iterator (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Web_Server::Content_Iterator>::in_arg_val _tao_contents (contents);
   TAO::Arg_Traits< ::Web_Server::Metadata_Type>::in_arg_val _tao_metadata (metadata);
@@ -1335,7 +1335,7 @@ Web_Server::AMI_Iterator_FactoryHandler::get_iterator (
     };
 
   static TAO::Exception_Data
-  _tao_Web_Server_AMI_Iterator_FactoryHandler_get_iterator_exceptiondata [] = 
+  _tao_Web_Server_AMI_Iterator_FactoryHandler_get_iterator_exceptiondata [] =
     {
       {
         "IDL:Web_Server/Error_Result:1.0",
@@ -1353,7 +1353,7 @@ Web_Server::AMI_Iterator_FactoryHandler::get_iterator (
       "get_iterator",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1386,12 +1386,12 @@ Web_Server::AMI_Iterator_FactoryHandler::get_iterator_reply_stub (
             (_tao_in >> metadata)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->get_iterator (
-          
+
           contents.in (),
-          
+
           metadata
         );
       break;
@@ -1400,7 +1400,7 @@ Web_Server::AMI_Iterator_FactoryHandler::get_iterator_reply_stub (
     case TAO_AMI_REPLY_SYSTEM_EXCEPTION:
     {
       const ACE_Message_Block* cdr = _tao_in.start ();
-      
+
       static TAO::Exception_Data exceptions_data [] =
       {
         {
@@ -1432,7 +1432,7 @@ Web_Server::AMI_Iterator_FactoryHandler::get_iterator_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->get_iterator_excep (
           exception_holder_var
@@ -1457,7 +1457,7 @@ Web_Server::AMI_Iterator_FactoryHandler::get_iterator_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -1468,7 +1468,7 @@ Web_Server::AMI_Iterator_FactoryHandler::get_iterator_excep (
     };
 
   static TAO::Exception_Data
-  _tao_Web_Server_AMI_Iterator_FactoryHandler_get_iterator_excep_exceptiondata [] = 
+  _tao_Web_Server_AMI_Iterator_FactoryHandler_get_iterator_excep_exceptiondata [] =
     {
       {
         "IDL:Web_Server/Error_Result:1.0",
@@ -1486,7 +1486,7 @@ Web_Server::AMI_Iterator_FactoryHandler::get_iterator_excep (
       "get_iterator_excep",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1598,7 +1598,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Web_Server/AMI_Iterator_FactoryHandler:1.0",
     "AMI_Iterator_FactoryHandler");
-  
+
 
 namespace Web_Server
 {
@@ -1621,7 +1621,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Web_Server
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1761,7 +1761,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Web_Server
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1875,7 +1875,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Web_Server
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1982,7 +1982,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -2003,7 +2003,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Web_Server
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -2253,7 +2253,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Web_Server
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2367,7 +2367,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Web_Server
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2505,13 +2505,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Web_Server::Content_Iterator RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -2542,13 +2542,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Web_Server::AMI_Content_IteratorHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -2646,13 +2646,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Web_Server::Iterator_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -2683,13 +2683,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Web_Server::AMI_Iterator_FactoryHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

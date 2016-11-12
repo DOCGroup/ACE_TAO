@@ -160,7 +160,7 @@ POA_Stock::StockBroker::~StockBroker (void)
 
 namespace POA_Stock
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -185,11 +185,11 @@ namespace POA_Stock
         TAO::Portable_Server::get_ret_arg< ::Stock::StockNameConsumer> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->get_consumer_notifier ();
     }
-  
+
   private:
     POA_Stock::StockBroker * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -216,7 +216,7 @@ void POA_Stock::StockBroker::get_consumer_notifier_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Stock::StockBroker * const impl =
@@ -231,7 +231,7 @@ void POA_Stock::StockBroker::get_consumer_notifier_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -248,7 +248,7 @@ void POA_Stock::StockBroker::get_consumer_notifier_skel (
 
 namespace POA_Stock
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -274,11 +274,11 @@ namespace POA_Stock
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->connect_quoter_info (
         arg_1);
     }
-  
+
   private:
     POA_Stock::StockBroker * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -307,7 +307,7 @@ void POA_Stock::StockBroker::connect_quoter_info_skel (
       &retval,
       &_tao_c
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Stock::StockBroker * const impl =
@@ -322,7 +322,7 @@ void POA_Stock::StockBroker::connect_quoter_info_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -339,7 +339,7 @@ void POA_Stock::StockBroker::connect_quoter_info_skel (
 
 namespace POA_Stock
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -364,11 +364,11 @@ namespace POA_Stock
         TAO::Portable_Server::get_ret_arg< ::Stock::StockQuoter> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->disconnect_quoter_info ();
     }
-  
+
   private:
     POA_Stock::StockBroker * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -395,7 +395,7 @@ void POA_Stock::StockBroker::disconnect_quoter_info_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Stock::StockBroker * const impl =
@@ -410,7 +410,7 @@ void POA_Stock::StockBroker::disconnect_quoter_info_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -427,7 +427,7 @@ void POA_Stock::StockBroker::disconnect_quoter_info_skel (
 
 namespace POA_Stock
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -452,11 +452,11 @@ namespace POA_Stock
         TAO::Portable_Server::get_ret_arg< ::Stock::StockQuoter> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->get_connection_quoter_info ();
     }
-  
+
   private:
     POA_Stock::StockBroker * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -483,7 +483,7 @@ void POA_Stock::StockBroker::get_connection_quoter_info_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Stock::StockBroker * const impl =
@@ -498,7 +498,7 @@ void POA_Stock::StockBroker::get_connection_quoter_info_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -515,7 +515,7 @@ void POA_Stock::StockBroker::get_connection_quoter_info_skel (
 
 namespace POA_Stock
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -534,7 +534,7 @@ namespace POA_Stock
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Stock::StockBroker * const servant_;
   };
@@ -559,7 +559,7 @@ void POA_Stock::StockBroker::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Stock::StockBroker * const impl =
@@ -572,7 +572,7 @@ void POA_Stock::StockBroker::shutdown_skel (
 
   shutdown_StockBroker command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -636,12 +636,12 @@ POA_Stock::StockBroker::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -754,7 +754,7 @@ POA_Stock::StockBrokerHome::~StockBrokerHome (void)
 
 namespace POA_Stock
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -779,25 +779,25 @@ namespace POA_Stock
         TAO::Portable_Server::get_ret_arg< ::Stock::StockBroker> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Stock::StockDistributor>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Stock::StockDistributor> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->create (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_Stock::StockBrokerHome * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -828,7 +828,7 @@ void POA_Stock::StockBrokerHome::create_skel (
       &_tao_dist,
       &_tao_stock_name
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Stock::StockBrokerHome * const impl =
@@ -843,7 +843,7 @@ void POA_Stock::StockBrokerHome::create_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -907,12 +907,12 @@ POA_Stock::StockBrokerHome::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

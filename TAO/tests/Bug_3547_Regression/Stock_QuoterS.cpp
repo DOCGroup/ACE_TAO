@@ -173,10 +173,10 @@ public:
   {
     TAO::SArg_Traits< ::CORBA::Float>::ret_arg_type retval =
       static_cast<TAO::SArg_Traits< ::CORBA::Float>::ret_val *> (this->args_[0])->arg ();
-    
+
     TAO::SArg_Traits< char *>::in_arg_type arg_1 =
       static_cast<TAO::SArg_Traits< char *>::in_arg_val *> (this->args_[1])->arg ();
-      
+
     retval =
       this->servant_->get_quote (
         arg_1);
@@ -208,7 +208,7 @@ void POA_Stock_Quoter::get_quote_skel (
       &retval,
       &_tao_stock_id
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Stock_Quoter * const impl =
@@ -222,7 +222,7 @@ void POA_Stock_Quoter::get_quote_skel (
   get_quote_Stock_Quoter command (
     impl,
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -279,7 +279,7 @@ void POA_Stock_Quoter::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Stock_Quoter * const impl =
@@ -292,7 +292,7 @@ void POA_Stock_Quoter::shutdown_skel (
 
   shutdown_Stock_Quoter command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -356,12 +356,12 @@ POA_Stock_Quoter::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

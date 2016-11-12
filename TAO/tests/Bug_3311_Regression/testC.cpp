@@ -75,7 +75,7 @@ CityBlue::operator= (const ::CityBlue &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -92,7 +92,7 @@ CityBlue::operator= (const ::CityBlue &u)
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -101,15 +101,15 @@ void CityBlue::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case ACE_UINT64_LITERAL (1):
-      
+
     break;
-    
+
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -153,7 +153,7 @@ CityMan::operator= (const ::CityMan &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -170,7 +170,7 @@ CityMan::operator= (const ::CityMan &u)
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -179,15 +179,15 @@ void CityMan::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case ACE_INT64_LITERAL (1):
-      
+
     break;
-    
+
     default:
-      
+
     break;
-    
+
   }
 }
 
@@ -206,7 +206,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -236,7 +236,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -289,7 +289,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -319,7 +319,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)

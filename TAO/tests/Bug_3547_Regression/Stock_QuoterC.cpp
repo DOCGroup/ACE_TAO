@@ -184,7 +184,7 @@ Stock_Quoter::get_quote (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Float>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_id (stock_id);
 
@@ -195,7 +195,7 @@ Stock_Quoter::get_quote (
     };
 
   static TAO::Exception_Data
-  _tao_Stock_Quoter_get_quote_exceptiondata [] = 
+  _tao_Stock_Quoter_get_quote_exceptiondata [] =
     {
       {
         "IDL:Bad_Ticker_Symbol:1.0",
@@ -213,7 +213,7 @@ Stock_Quoter::get_quote (
       "get_quote",
       9,
       TAO::TAO_CO_NONE
-      
+
     );
 
   _tao_call.invoke (
@@ -235,7 +235,7 @@ Stock_Quoter::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -403,13 +403,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Stock_Quoter RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

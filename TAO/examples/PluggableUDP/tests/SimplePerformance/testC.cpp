@@ -163,7 +163,7 @@ Simple_Server::sendCharSeq (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Char_Seq>::in_arg_val _tao_charSeq (charSeq);
 
@@ -181,7 +181,7 @@ Simple_Server::sendCharSeq (
       11,
       TAO::TAO_CO_NONE,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -198,7 +198,7 @@ Simple_Server::sendOctetSeq (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Octet_Seq>::in_arg_val _tao_charSeq (charSeq);
 
@@ -216,7 +216,7 @@ Simple_Server::sendOctetSeq (
       12,
       TAO::TAO_CO_NONE,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -233,7 +233,7 @@ Simple_Server::get_number (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_num (num);
 
@@ -250,7 +250,7 @@ Simple_Server::get_number (
       "get_number",
       10,
       TAO::TAO_CO_NONE
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -269,7 +269,7 @@ Simple_Server::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -449,13 +449,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Simple_Server RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

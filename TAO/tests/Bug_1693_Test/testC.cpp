@@ -49,7 +49,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Foo/type_ulong:1.0",
     "type_ulong",
     &CORBA::_tc_ulong);
-  
+
 
 namespace Foo
 {

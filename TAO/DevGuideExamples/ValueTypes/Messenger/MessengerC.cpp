@@ -65,7 +65,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
     { "user_", &CORBA::_tc_string, ::CORBA::PRIVATE_MEMBER },
     { "subject_", &CORBA::_tc_string, ::CORBA::PRIVATE_MEMBER },
     { "text_", &CORBA::_tc_string, ::CORBA::PRIVATE_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -79,7 +79,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Message,
     4);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Message =
   &_tao_tc_Message;
 
@@ -179,27 +179,27 @@ Message::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Message::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -272,7 +272,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_string,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Message_AddrList_0 =
         &Message_AddrList_0;
     }
@@ -291,7 +291,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Message/AddrList:1.0",
     "AddrList",
     &TAO::TypeCode::tc_Message_AddrList_0);
-  
+
 ::CORBA::TypeCode_ptr const Message::_tc_AddrList =
   &_tao_tc_Message_AddrList;
 
@@ -339,7 +339,7 @@ Messenger::send_message (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Message>::inout_arg_val _tao_msg (msg);
 
@@ -356,7 +356,7 @@ Messenger::send_message (
       "send_message",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -463,7 +463,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Messenger:1.0",
     "Messenger");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Messenger =
   &_tao_tc_Messenger;
 
@@ -854,18 +854,18 @@ OBV_Message::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) const
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_addrs_) &&
       (strm << _pd_user_.in ()) &&
       (strm << _pd_subject_.in ()) &&
       (strm << _pd_text_.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -874,22 +874,22 @@ OBV_Message::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_addrs_) &&
       (strm >> _pd_user_.out ()) &&
       (strm >> _pd_subject_.out ()) &&
       (strm >> _pd_text_.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -923,13 +923,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Messenger RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

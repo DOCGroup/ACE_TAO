@@ -126,10 +126,10 @@ TAO_FT_TEST_TestReplica_Perfect_Hash_OpTable::lookup (const char *str, unsigned 
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,   5,  -8,  -2,   6,  -1,   7,  -1, -50,  -1, 
-       10,  11,  -1,  -1,  12,  -1,  -1,  -1,  -1,  13,  14,  15,  -1,  -1, 
-       16,  17,  18,  -1,  -1,  19,  -1,  -1,  -1,  -1,  20,  -1,  -1,  -1, 
-       -1,  21,  22, 
+       -1,  -1,  -1,  -1,  -1,   5,  -8,  -2,   6,  -1,   7,  -1, -50,  -1,
+       10,  11,  -1,  -1,  12,  -1,  -1,  -1,  -1,  13,  14,  15,  -1,  -1,
+       16,  17,  18,  -1,  -1,  19,  -1,  -1,  -1,  -1,  20,  -1,  -1,  -1,
+       -1,  21,  22,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -191,7 +191,7 @@ POA_FT_TEST::TestReplica::~TestReplica (void)
 
 namespace POA_FT_TEST
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -217,11 +217,11 @@ namespace POA_FT_TEST
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->set (
         arg_1);
     }
-  
+
   private:
     POA_FT_TEST::TestReplica * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -250,7 +250,7 @@ void POA_FT_TEST::TestReplica::set_skel (
       &retval,
       &_tao_value
     };
-  
+
   static size_t const nargs = 2;
 
   POA_FT_TEST::TestReplica * const impl =
@@ -265,7 +265,7 @@ void POA_FT_TEST::TestReplica::set_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -282,7 +282,7 @@ void POA_FT_TEST::TestReplica::set_skel (
 
 namespace POA_FT_TEST
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -307,18 +307,18 @@ namespace POA_FT_TEST
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->increment (
           arg_1);
     }
-  
+
   private:
     POA_FT_TEST::TestReplica * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -347,7 +347,7 @@ void POA_FT_TEST::TestReplica::increment_skel (
       &retval,
       &_tao_delta
     };
-  
+
   static size_t const nargs = 2;
 
   POA_FT_TEST::TestReplica * const impl =
@@ -362,7 +362,7 @@ void POA_FT_TEST::TestReplica::increment_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -379,7 +379,7 @@ void POA_FT_TEST::TestReplica::increment_skel (
 
 namespace POA_FT_TEST
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -404,11 +404,11 @@ namespace POA_FT_TEST
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->get ();
     }
-  
+
   private:
     POA_FT_TEST::TestReplica * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -435,7 +435,7 @@ void POA_FT_TEST::TestReplica::get_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_FT_TEST::TestReplica * const impl =
@@ -450,7 +450,7 @@ void POA_FT_TEST::TestReplica::get_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -467,7 +467,7 @@ void POA_FT_TEST::TestReplica::get_skel (
 
 namespace POA_FT_TEST
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -493,11 +493,11 @@ namespace POA_FT_TEST
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->die (
         arg_1);
     }
-  
+
   private:
     POA_FT_TEST::TestReplica * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -526,7 +526,7 @@ void POA_FT_TEST::TestReplica::die_skel (
       &retval,
       &_tao_when
     };
-  
+
   static size_t const nargs = 2;
 
   POA_FT_TEST::TestReplica * const impl =
@@ -541,7 +541,7 @@ void POA_FT_TEST::TestReplica::die_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -558,7 +558,7 @@ void POA_FT_TEST::TestReplica::die_skel (
 
 namespace POA_FT_TEST
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -577,7 +577,7 @@ namespace POA_FT_TEST
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_FT_TEST::TestReplica * const servant_;
   };
@@ -602,7 +602,7 @@ void POA_FT_TEST::TestReplica::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_FT_TEST::TestReplica * const impl =
@@ -615,7 +615,7 @@ void POA_FT_TEST::TestReplica::shutdown_skel (
 
   shutdown_TestReplica command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -632,7 +632,7 @@ void POA_FT_TEST::TestReplica::shutdown_skel (
 
 namespace POA_FT_TEST
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -657,11 +657,11 @@ namespace POA_FT_TEST
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->counter ();
     }
-  
+
   private:
     POA_FT_TEST::TestReplica * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -688,7 +688,7 @@ void POA_FT_TEST::TestReplica::_get_counter_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_FT_TEST::TestReplica * const impl =
@@ -703,7 +703,7 @@ void POA_FT_TEST::TestReplica::_get_counter_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -720,7 +720,7 @@ void POA_FT_TEST::TestReplica::_get_counter_skel (
 
 namespace POA_FT_TEST
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -746,11 +746,11 @@ namespace POA_FT_TEST
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->counter (
         arg_1);
     }
-  
+
   private:
     POA_FT_TEST::TestReplica * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -779,7 +779,7 @@ void POA_FT_TEST::TestReplica::_set_counter_skel (
       &retval,
       &_tao_counter
     };
-  
+
   static size_t const nargs = 2;
 
   POA_FT_TEST::TestReplica * const impl =
@@ -794,7 +794,7 @@ void POA_FT_TEST::TestReplica::_set_counter_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -874,12 +874,12 @@ POA_FT_TEST::TestReplica::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1002,7 +1002,7 @@ POA_FT_TEST::ReplicaFactory::~ReplicaFactory (void)
 
 namespace POA_FT_TEST
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1021,7 +1021,7 @@ namespace POA_FT_TEST
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_FT_TEST::ReplicaFactory * const servant_;
   };
@@ -1046,7 +1046,7 @@ void POA_FT_TEST::ReplicaFactory::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_FT_TEST::ReplicaFactory * const impl =
@@ -1059,7 +1059,7 @@ void POA_FT_TEST::ReplicaFactory::shutdown_skel (
 
   shutdown_ReplicaFactory command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1131,12 +1131,12 @@ POA_FT_TEST::ReplicaFactory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

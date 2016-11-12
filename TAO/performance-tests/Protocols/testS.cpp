@@ -187,31 +187,31 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< char *>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< char *> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_3 =
       TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_4 =
       TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_,
         4);
-      
+
     TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_5 =
       TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_,
         5);
-      
+
     this->servant_->start_test (
       arg_1
       , arg_2
@@ -255,7 +255,7 @@ void POA_test::start_test_skel (
       &_tao_message_size,
       &_tao_iterations
     };
-  
+
   static size_t const nargs = 6;
 
   POA_test * const impl =
@@ -270,7 +270,7 @@ void POA_test::start_test_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -327,7 +327,7 @@ void POA_test::end_test_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -340,7 +340,7 @@ void POA_test::end_test_skel (
 
   end_test_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -397,7 +397,7 @@ void POA_test::oneway_sync_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -410,7 +410,7 @@ void POA_test::oneway_sync_skel (
 
   oneway_sync_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -467,7 +467,7 @@ void POA_test::twoway_sync_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -480,7 +480,7 @@ void POA_test::twoway_sync_skel (
 
   twoway_sync_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -537,7 +537,7 @@ void POA_test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_test * const impl =
@@ -550,7 +550,7 @@ void POA_test::shutdown_skel (
 
   shutdown_test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -590,19 +590,19 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::test::octets>::in_arg_type arg_3 =
       TAO::Portable_Server::get_in_arg< ::test::octets> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     this->servant_->oneway_method (
       arg_1
       , arg_2
@@ -640,7 +640,7 @@ void POA_test::oneway_method_skel (
       &_tao_iteration,
       &_tao_payload
     };
-  
+
   static size_t const nargs = 4;
 
   POA_test * const impl =
@@ -655,7 +655,7 @@ void POA_test::oneway_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -695,19 +695,19 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::CORBA::ULong>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::CORBA::ULong> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::test::octets>::inout_arg_type arg_3 =
       TAO::Portable_Server::get_inout_arg< ::test::octets> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     this->servant_->twoway_method (
       arg_1
       , arg_2
@@ -745,7 +745,7 @@ void POA_test::twoway_method_skel (
       &_tao_iteration,
       &_tao_payload
     };
-  
+
   static size_t const nargs = 4;
 
   POA_test * const impl =
@@ -760,7 +760,7 @@ void POA_test::twoway_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -824,12 +824,12 @@ POA_test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

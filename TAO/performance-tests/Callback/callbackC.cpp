@@ -59,7 +59,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/TimeStamp:1.0",
     "TimeStamp",
     &CORBA::_tc_ulonglong);
-  
+
 
 namespace Test
 {
@@ -141,7 +141,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_octet,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_Payload_0 =
         &Test_Payload_0;
     }
@@ -160,7 +160,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/Payload:1.0",
     "Payload",
     &TAO::TypeCode::tc_Test_Payload_0);
-  
+
 
 namespace Test
 {
@@ -213,7 +213,7 @@ Test::Callback::response (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_time_stamp (time_stamp);
   TAO::Arg_Traits< ::Test::Payload>::in_arg_val _tao_message_payload (message_payload);
@@ -233,7 +233,7 @@ Test::Callback::response (
       8,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -338,7 +338,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/Callback:1.0",
     "Callback");
-  
+
 
 namespace Test
 {
@@ -390,7 +390,7 @@ Test::Server::set_callback (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::Callback>::in_arg_val _tao_callback_object (callback_object);
 
@@ -407,7 +407,7 @@ Test::Server::set_callback (
       "set_callback",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -425,7 +425,7 @@ Test::Server::request (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_time_stamp (time_stamp);
   TAO::Arg_Traits< ::Test::Payload>::in_arg_val _tao_message_payload (message_payload);
@@ -445,7 +445,7 @@ Test::Server::request (
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY,
       TAO::TAO_ONEWAY_INVOCATION
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -462,7 +462,7 @@ Test::Server::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -584,7 +584,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/Server:1.0",
     "Server");
-  
+
 
 namespace Test
 {
@@ -607,7 +607,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -747,7 +747,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -861,7 +861,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -999,13 +999,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Callback RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1036,13 +1036,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Server RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

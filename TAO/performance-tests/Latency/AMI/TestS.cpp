@@ -156,7 +156,7 @@ POA_Test::Roundtrip::~Roundtrip (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -181,18 +181,18 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::CORBA::ULongLong> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::ULongLong>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULongLong> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->test_method (
           arg_1);
     }
-  
+
   private:
     POA_Test::Roundtrip * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -221,7 +221,7 @@ void POA_Test::Roundtrip::test_method_skel (
       &retval,
       &_tao_send_time
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Roundtrip * const impl =
@@ -236,7 +236,7 @@ void POA_Test::Roundtrip::test_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -253,7 +253,7 @@ void POA_Test::Roundtrip::test_method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -272,7 +272,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::Roundtrip * const servant_;
   };
@@ -297,7 +297,7 @@ void POA_Test::Roundtrip::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Roundtrip * const impl =
@@ -310,7 +310,7 @@ void POA_Test::Roundtrip::shutdown_skel (
 
   shutdown_Roundtrip command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -374,12 +374,12 @@ POA_Test::Roundtrip::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -498,7 +498,7 @@ POA_Test::AMI_RoundtripHandler::~AMI_RoundtripHandler (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -524,11 +524,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->test_method (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_RoundtripHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -557,7 +557,7 @@ void POA_Test::AMI_RoundtripHandler::test_method_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_RoundtripHandler * const impl =
@@ -572,7 +572,7 @@ void POA_Test::AMI_RoundtripHandler::test_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -589,7 +589,7 @@ void POA_Test::AMI_RoundtripHandler::test_method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -615,11 +615,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->test_method_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_RoundtripHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -648,7 +648,7 @@ void POA_Test::AMI_RoundtripHandler::test_method_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_RoundtripHandler * const impl =
@@ -663,7 +663,7 @@ void POA_Test::AMI_RoundtripHandler::test_method_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -680,7 +680,7 @@ void POA_Test::AMI_RoundtripHandler::test_method_excep_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -699,7 +699,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::AMI_RoundtripHandler * const servant_;
   };
@@ -724,7 +724,7 @@ void POA_Test::AMI_RoundtripHandler::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_RoundtripHandler * const impl =
@@ -737,7 +737,7 @@ void POA_Test::AMI_RoundtripHandler::shutdown_skel (
 
   shutdown_AMI_RoundtripHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -754,7 +754,7 @@ void POA_Test::AMI_RoundtripHandler::shutdown_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -780,11 +780,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->shutdown_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_RoundtripHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -813,7 +813,7 @@ void POA_Test::AMI_RoundtripHandler::shutdown_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_RoundtripHandler * const impl =
@@ -828,7 +828,7 @@ void POA_Test::AMI_RoundtripHandler::shutdown_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -896,12 +896,12 @@ POA_Test::AMI_RoundtripHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

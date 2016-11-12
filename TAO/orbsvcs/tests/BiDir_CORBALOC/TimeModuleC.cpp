@@ -53,14 +53,14 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_TimeModule_TimeOfDay[] =
       {
         { "hour", &CORBA::_tc_short },
         { "minute", &CORBA::_tc_short },
         { "second", &CORBA::_tc_short }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -138,7 +138,7 @@ TimeModule::Time::get_gmt (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::TimeModule::TimeOfDay>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -175,7 +175,7 @@ TimeModule::Time::Shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -297,7 +297,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:TimeModule/Time:1.0",
     "Time");
-  
+
 
 namespace TimeModule
 {
@@ -444,7 +444,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TimeModule
 {
-  
+
 
   /// Copying insertion.
   void
@@ -585,13 +585,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::TimeModule::Time RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

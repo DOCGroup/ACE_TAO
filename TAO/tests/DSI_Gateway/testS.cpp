@@ -119,8 +119,8 @@ TAO_Simple_Server_Perfect_Hash_OpTable::lookup (const char *str, unsigned int le
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,   6,  -1,   7,   8,  -1,   9, 
-       10,  11, -12,  -2, -24,  -1,  14,  -1,  15, 
+       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1,   6,  -1,   7,   8,  -1,   9,
+       10,  11, -12,  -2, -24,  -1,  14,  -1,  15,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -200,7 +200,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->test_val ();
   }
@@ -230,7 +230,7 @@ void POA_Simple_Server::_get_test_val_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Simple_Server * const impl =
@@ -245,7 +245,7 @@ void POA_Simple_Server::_get_test_val_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -285,7 +285,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->test_val (
       arg_1);
   }
@@ -317,7 +317,7 @@ void POA_Simple_Server::_set_test_val_skel (
       &retval,
       &_tao_test_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Simple_Server * const impl =
@@ -332,7 +332,7 @@ void POA_Simple_Server::_set_test_val_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -371,31 +371,31 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Structure>::in_arg_type arg_2 =
       TAO::Portable_Server::get_in_arg< ::Structure> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Structure>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Structure> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     TAO::SArg_Traits< char *>::inout_arg_type arg_4 =
       TAO::Portable_Server::get_inout_arg< char *> (
         this->operation_details_,
         this->args_,
         4);
-      
+
     retval =
       this->servant_->test_method (
         arg_1
@@ -437,7 +437,7 @@ void POA_Simple_Server::test_method_skel (
       &_tao_the_out_structure,
       &_tao_name
     };
-  
+
   static size_t const nargs = 5;
 
   POA_Simple_Server * const impl =
@@ -452,7 +452,7 @@ void POA_Simple_Server::test_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -509,7 +509,7 @@ void POA_Simple_Server::raise_user_exception_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Simple_Server * const impl =
@@ -522,7 +522,7 @@ void POA_Simple_Server::raise_user_exception_skel (
 
   raise_user_exception_Simple_Server command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -579,7 +579,7 @@ void POA_Simple_Server::raise_system_exception_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Simple_Server * const impl =
@@ -592,7 +592,7 @@ void POA_Simple_Server::raise_system_exception_skel (
 
   raise_system_exception_Simple_Server command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -649,7 +649,7 @@ void POA_Simple_Server::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Simple_Server * const impl =
@@ -662,7 +662,7 @@ void POA_Simple_Server::shutdown_skel (
 
   shutdown_Simple_Server command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -726,12 +726,12 @@ POA_Simple_Server::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -155,7 +155,7 @@ POA_Test::Blocking_Sync_None::~Blocking_Sync_None (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -181,18 +181,18 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       this->servant_->slow_operation (
         arg_1
         , arg_2);
     }
-  
+
   private:
     POA_Test::Blocking_Sync_None * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -223,7 +223,7 @@ void POA_Test::Blocking_Sync_None::slow_operation_skel (
       &_tao_the_payload,
       &_tao_sleep_microseconds
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Test::Blocking_Sync_None * const impl =
@@ -238,7 +238,7 @@ void POA_Test::Blocking_Sync_None::slow_operation_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -255,7 +255,7 @@ void POA_Test::Blocking_Sync_None::slow_operation_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -274,7 +274,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::Blocking_Sync_None * const servant_;
   };
@@ -299,7 +299,7 @@ void POA_Test::Blocking_Sync_None::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Blocking_Sync_None * const impl =
@@ -312,7 +312,7 @@ void POA_Test::Blocking_Sync_None::shutdown_skel (
 
   shutdown_Blocking_Sync_None command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -376,12 +376,12 @@ POA_Test::Blocking_Sync_None::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

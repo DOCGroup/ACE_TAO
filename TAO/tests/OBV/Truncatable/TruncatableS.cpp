@@ -160,7 +160,7 @@ POA_OBV_TruncatableTest::Test::~Test (void)
 
 namespace POA_OBV_TruncatableTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -186,32 +186,32 @@ namespace POA_OBV_TruncatableTest
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::OBV_TruncatableTest::BaseValue>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::OBV_TruncatableTest::BaseValue> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::OBV_TruncatableTest::BaseValue>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::OBV_TruncatableTest::BaseValue> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< char *>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< char *> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       this->servant_->op1 (
         arg_1
         , arg_2
         , arg_3
         , arg_4);
     }
-  
+
   private:
     POA_OBV_TruncatableTest::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -246,7 +246,7 @@ void POA_OBV_TruncatableTest::Test::op1_skel (
       &_tao_ov,
       &_tao_desc
     };
-  
+
   static size_t const nargs = 5;
 
   POA_OBV_TruncatableTest::Test * const impl =
@@ -261,7 +261,7 @@ void POA_OBV_TruncatableTest::Test::op1_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -278,7 +278,7 @@ void POA_OBV_TruncatableTest::Test::op1_skel (
 
 namespace POA_OBV_TruncatableTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -304,32 +304,32 @@ namespace POA_OBV_TruncatableTest
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::OBV_TruncatableTest::TValue1>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::OBV_TruncatableTest::TValue1> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< char *>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< char *> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       this->servant_->op2 (
         arg_1
         , arg_2
         , arg_3
         , arg_4);
     }
-  
+
   private:
     POA_OBV_TruncatableTest::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -364,7 +364,7 @@ void POA_OBV_TruncatableTest::Test::op2_skel (
       &_tao_ov,
       &_tao_desc
     };
-  
+
   static size_t const nargs = 5;
 
   POA_OBV_TruncatableTest::Test * const impl =
@@ -379,7 +379,7 @@ void POA_OBV_TruncatableTest::Test::op2_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -396,7 +396,7 @@ void POA_OBV_TruncatableTest::Test::op2_skel (
 
 namespace POA_OBV_TruncatableTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -422,32 +422,32 @@ namespace POA_OBV_TruncatableTest
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::OBV_TruncatableTest::TValue4>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::OBV_TruncatableTest::TValue4> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::OBV_TruncatableTest::TValue4>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::OBV_TruncatableTest::TValue4> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< char *>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< char *> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       this->servant_->op3 (
         arg_1
         , arg_2
         , arg_3
         , arg_4);
     }
-  
+
   private:
     POA_OBV_TruncatableTest::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -482,7 +482,7 @@ void POA_OBV_TruncatableTest::Test::op3_skel (
       &_tao_ov,
       &_tao_desc
     };
-  
+
   static size_t const nargs = 5;
 
   POA_OBV_TruncatableTest::Test * const impl =
@@ -497,7 +497,7 @@ void POA_OBV_TruncatableTest::Test::op3_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -514,7 +514,7 @@ void POA_OBV_TruncatableTest::Test::op3_skel (
 
 namespace POA_OBV_TruncatableTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -539,49 +539,49 @@ namespace POA_OBV_TruncatableTest
         TAO::Portable_Server::get_ret_arg< ::OBV_TruncatableTest::BaseValue> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::OBV_TruncatableTest::TValue1>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::OBV_TruncatableTest::TValue1> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_3 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< ::OBV_TruncatableTest::TValue4>::in_arg_type arg_4 =
         TAO::Portable_Server::get_in_arg< ::OBV_TruncatableTest::TValue4> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       TAO::SArg_Traits< ::OBV_TruncatableTest::TValue4>::in_arg_type arg_5 =
         TAO::Portable_Server::get_in_arg< ::OBV_TruncatableTest::TValue4> (
           this->operation_details_,
           this->args_,
           5);
-        
+
       TAO::SArg_Traits< ::OBV_TruncatableTest::TValue1>::in_arg_type arg_6 =
         TAO::Portable_Server::get_in_arg< ::OBV_TruncatableTest::TValue1> (
           this->operation_details_,
           this->args_,
           6);
-        
+
       TAO::SArg_Traits< char *>::inout_arg_type arg_7 =
         TAO::Portable_Server::get_inout_arg< char *> (
           this->operation_details_,
           this->args_,
           7);
-        
+
       retval =
         this->servant_->op4 (
           arg_1
@@ -592,7 +592,7 @@ namespace POA_OBV_TruncatableTest
           , arg_6
           , arg_7);
     }
-  
+
   private:
     POA_OBV_TruncatableTest::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -633,7 +633,7 @@ void POA_OBV_TruncatableTest::Test::op4_skel (
       &_tao_iv4,
       &_tao_desc
     };
-  
+
   static size_t const nargs = 8;
 
   POA_OBV_TruncatableTest::Test * const impl =
@@ -648,7 +648,7 @@ void POA_OBV_TruncatableTest::Test::op4_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -665,7 +665,7 @@ void POA_OBV_TruncatableTest::Test::op4_skel (
 
 namespace POA_OBV_TruncatableTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -691,32 +691,32 @@ namespace POA_OBV_TruncatableTest
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< char *>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::OBV_TruncatableTest::TValue1>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::OBV_TruncatableTest::TValue1> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       TAO::SArg_Traits< char *>::inout_arg_type arg_4 =
         TAO::Portable_Server::get_inout_arg< char *> (
           this->operation_details_,
           this->args_,
           4);
-        
+
       this->servant_->op5 (
         arg_1
         , arg_2
         , arg_3
         , arg_4);
     }
-  
+
   private:
     POA_OBV_TruncatableTest::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -751,7 +751,7 @@ void POA_OBV_TruncatableTest::Test::op5_skel (
       &_tao_ov,
       &_tao_desc
     };
-  
+
   static size_t const nargs = 5;
 
   POA_OBV_TruncatableTest::Test * const impl =
@@ -766,7 +766,7 @@ void POA_OBV_TruncatableTest::Test::op5_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -783,7 +783,7 @@ void POA_OBV_TruncatableTest::Test::op5_skel (
 
 namespace POA_OBV_TruncatableTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -802,7 +802,7 @@ namespace POA_OBV_TruncatableTest
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_OBV_TruncatableTest::Test * const servant_;
   };
@@ -827,7 +827,7 @@ void POA_OBV_TruncatableTest::Test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_OBV_TruncatableTest::Test * const impl =
@@ -840,7 +840,7 @@ void POA_OBV_TruncatableTest::Test::shutdown_skel (
 
   shutdown_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -904,12 +904,12 @@ POA_OBV_TruncatableTest::Test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

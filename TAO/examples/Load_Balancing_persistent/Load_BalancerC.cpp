@@ -487,7 +487,7 @@ Load_Balancer::Object_Group_Factory::make_round_robin (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Load_Balancer::Object_Group>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
 
@@ -498,7 +498,7 @@ Load_Balancer::Object_Group_Factory::make_round_robin (
     };
 
   static TAO::Exception_Data
-  _tao_Load_Balancer_Object_Group_Factory_make_round_robin_exceptiondata [] = 
+  _tao_Load_Balancer_Object_Group_Factory_make_round_robin_exceptiondata [] =
     {
       {
         "IDL:Load_Balancer/duplicate_group:1.0",
@@ -516,7 +516,7 @@ Load_Balancer::Object_Group_Factory::make_round_robin (
       "make_round_robin",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -538,7 +538,7 @@ Load_Balancer::Object_Group_Factory::unbind_round_robin (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
 
@@ -549,7 +549,7 @@ Load_Balancer::Object_Group_Factory::unbind_round_robin (
     };
 
   static TAO::Exception_Data
-  _tao_Load_Balancer_Object_Group_Factory_unbind_round_robin_exceptiondata [] = 
+  _tao_Load_Balancer_Object_Group_Factory_unbind_round_robin_exceptiondata [] =
     {
       {
         "IDL:Load_Balancer/no_such_group:1.0",
@@ -567,7 +567,7 @@ Load_Balancer::Object_Group_Factory::unbind_round_robin (
       "unbind_round_robin",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -587,7 +587,7 @@ Load_Balancer::Object_Group_Factory::make_random (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Load_Balancer::Object_Group>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
 
@@ -598,7 +598,7 @@ Load_Balancer::Object_Group_Factory::make_random (
     };
 
   static TAO::Exception_Data
-  _tao_Load_Balancer_Object_Group_Factory_make_random_exceptiondata [] = 
+  _tao_Load_Balancer_Object_Group_Factory_make_random_exceptiondata [] =
     {
       {
         "IDL:Load_Balancer/duplicate_group:1.0",
@@ -616,7 +616,7 @@ Load_Balancer::Object_Group_Factory::make_random (
       "make_random",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -638,7 +638,7 @@ Load_Balancer::Object_Group_Factory::unbind_random (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
 
@@ -649,7 +649,7 @@ Load_Balancer::Object_Group_Factory::unbind_random (
     };
 
   static TAO::Exception_Data
-  _tao_Load_Balancer_Object_Group_Factory_unbind_random_exceptiondata [] = 
+  _tao_Load_Balancer_Object_Group_Factory_unbind_random_exceptiondata [] =
     {
       {
         "IDL:Load_Balancer/no_such_group:1.0",
@@ -667,7 +667,7 @@ Load_Balancer::Object_Group_Factory::unbind_random (
       "unbind_random",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -687,7 +687,7 @@ Load_Balancer::Object_Group_Factory::resolve (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Load_Balancer::Object_Group>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
 
@@ -698,7 +698,7 @@ Load_Balancer::Object_Group_Factory::resolve (
     };
 
   static TAO::Exception_Data
-  _tao_Load_Balancer_Object_Group_Factory_resolve_exceptiondata [] = 
+  _tao_Load_Balancer_Object_Group_Factory_resolve_exceptiondata [] =
     {
       {
         "IDL:Load_Balancer/no_such_group:1.0",
@@ -716,7 +716,7 @@ Load_Balancer::Object_Group_Factory::resolve (
       "resolve",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -738,7 +738,7 @@ Load_Balancer::Object_Group_Factory::round_robin_groups (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Load_Balancer::Group_List>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -775,7 +775,7 @@ Load_Balancer::Object_Group_Factory::random_groups (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Load_Balancer::Group_List>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -927,7 +927,7 @@ Load_Balancer::Object_Group::id (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -964,7 +964,7 @@ Load_Balancer::Object_Group::bind (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Load_Balancer::Member>::in_arg_val _tao_mem (mem);
 
@@ -975,7 +975,7 @@ Load_Balancer::Object_Group::bind (
     };
 
   static TAO::Exception_Data
-  _tao_Load_Balancer_Object_Group_bind_exceptiondata [] = 
+  _tao_Load_Balancer_Object_Group_bind_exceptiondata [] =
     {
       {
         "IDL:Load_Balancer/duplicate_member:1.0",
@@ -993,7 +993,7 @@ Load_Balancer::Object_Group::bind (
       "bind",
       4,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1013,7 +1013,7 @@ Load_Balancer::Object_Group::unbind (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
 
@@ -1024,7 +1024,7 @@ Load_Balancer::Object_Group::unbind (
     };
 
   static TAO::Exception_Data
-  _tao_Load_Balancer_Object_Group_unbind_exceptiondata [] = 
+  _tao_Load_Balancer_Object_Group_unbind_exceptiondata [] =
     {
       {
         "IDL:Load_Balancer/no_such_member:1.0",
@@ -1042,7 +1042,7 @@ Load_Balancer::Object_Group::unbind (
       "unbind",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1062,7 +1062,7 @@ Load_Balancer::Object_Group::resolve (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1071,7 +1071,7 @@ Load_Balancer::Object_Group::resolve (
     };
 
   static TAO::Exception_Data
-  _tao_Load_Balancer_Object_Group_resolve_exceptiondata [] = 
+  _tao_Load_Balancer_Object_Group_resolve_exceptiondata [] =
     {
       {
         "IDL:Load_Balancer/no_such_member:1.0",
@@ -1114,7 +1114,7 @@ Load_Balancer::Object_Group::resolve_with_id (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_id (id);
 
@@ -1125,7 +1125,7 @@ Load_Balancer::Object_Group::resolve_with_id (
     };
 
   static TAO::Exception_Data
-  _tao_Load_Balancer_Object_Group_resolve_with_id_exceptiondata [] = 
+  _tao_Load_Balancer_Object_Group_resolve_with_id_exceptiondata [] =
     {
       {
         "IDL:Load_Balancer/no_such_member:1.0",
@@ -1143,7 +1143,7 @@ Load_Balancer::Object_Group::resolve_with_id (
       "resolve_with_id",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -1165,7 +1165,7 @@ Load_Balancer::Object_Group::members (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Load_Balancer::Member_ID_List>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1202,7 +1202,7 @@ Load_Balancer::Object_Group::destroy (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1518,13 +1518,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Load_Balancer::Object_Group_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1555,13 +1555,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Load_Balancer::Object_Group RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

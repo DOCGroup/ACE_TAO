@@ -155,9 +155,9 @@ void MessengerUnableToSendMessage::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_MessengerUnableToSendMessage = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -222,7 +222,7 @@ Messenger::send_message (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_user_name (user_name);
   TAO::Arg_Traits< char *>::in_arg_val _tao_subject (subject);
@@ -239,7 +239,7 @@ Messenger::send_message (
     };
 
   static TAO::Exception_Data
-  _tao_Messenger_send_message_exceptiondata [] = 
+  _tao_Messenger_send_message_exceptiondata [] =
     {
       {
         "IDL:MessengerUnableToSendMessage:1.0",
@@ -257,7 +257,7 @@ Messenger::send_message (
       "send_message",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -282,9 +282,9 @@ Messenger::sendc_send_message (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_user_name (user_name);
   TAO::Arg_Traits< char *>::in_arg_val _tao_subject (subject);
@@ -412,7 +412,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Messenger:1.0",
     "Messenger");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Messenger =
   &_tao_tc_Messenger;
 
@@ -462,7 +462,7 @@ AMI_MessengerHandler::send_message (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_val _tao_ami_return_val (ami_return_val);
   TAO::Arg_Traits< char *>::in_arg_val _tao_message (message);
@@ -477,7 +477,7 @@ AMI_MessengerHandler::send_message (
     };
 
   static TAO::Exception_Data
-  _tao_AMI_MessengerHandler_send_message_exceptiondata [] = 
+  _tao_AMI_MessengerHandler_send_message_exceptiondata [] =
     {
       {
         "IDL:MessengerUnableToSendMessage:1.0",
@@ -495,7 +495,7 @@ AMI_MessengerHandler::send_message (
       "send_message",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -530,14 +530,14 @@ AMI_MessengerHandler::send_message_reply_stub (
             (_tao_in >> time_sent)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->send_message (
-          
+
           ami_return_val,
-          
+
           message.in (),
-          
+
           time_sent
         );
       break;
@@ -546,7 +546,7 @@ AMI_MessengerHandler::send_message_reply_stub (
     case TAO_AMI_REPLY_SYSTEM_EXCEPTION:
     {
       const ACE_Message_Block* cdr = _tao_in.start ();
-      
+
       static TAO::Exception_Data exceptions_data [] =
       {
         {
@@ -578,7 +578,7 @@ AMI_MessengerHandler::send_message_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->send_message_excep (
           exception_holder_var
@@ -603,7 +603,7 @@ AMI_MessengerHandler::send_message_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -614,7 +614,7 @@ AMI_MessengerHandler::send_message_excep (
     };
 
   static TAO::Exception_Data
-  _tao_AMI_MessengerHandler_send_message_excep_exceptiondata [] = 
+  _tao_AMI_MessengerHandler_send_message_excep_exceptiondata [] =
     {
       {
         "IDL:MessengerUnableToSendMessage:1.0",
@@ -632,7 +632,7 @@ AMI_MessengerHandler::send_message_excep (
       "send_message_excep",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -744,7 +744,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:AMI_MessengerHandler:1.0",
     "AMI_MessengerHandler");
-  
+
 ::CORBA::TypeCode_ptr const _tc_AMI_MessengerHandler =
   &_tao_tc_AMI_MessengerHandler;
 
@@ -766,7 +766,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -1019,13 +1019,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Messenger RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1056,13 +1056,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::AMI_MessengerHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

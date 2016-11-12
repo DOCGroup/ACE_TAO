@@ -159,7 +159,7 @@ POA_Test::AMI_Buffering::~AMI_Buffering (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -185,11 +185,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->receive_data (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_Buffering * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -218,7 +218,7 @@ void POA_Test::AMI_Buffering::receive_data_skel (
       &retval,
       &_tao_the_payload
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_Buffering * const impl =
@@ -233,7 +233,7 @@ void POA_Test::AMI_Buffering::receive_data_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -250,7 +250,7 @@ void POA_Test::AMI_Buffering::receive_data_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -269,7 +269,7 @@ namespace POA_Test
     {
       this->servant_->flush ();
     }
-  
+
   private:
     POA_Test::AMI_Buffering * const servant_;
   };
@@ -294,7 +294,7 @@ void POA_Test::AMI_Buffering::flush_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_Buffering * const impl =
@@ -307,7 +307,7 @@ void POA_Test::AMI_Buffering::flush_skel (
 
   flush_AMI_Buffering command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -324,7 +324,7 @@ void POA_Test::AMI_Buffering::flush_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -343,7 +343,7 @@ namespace POA_Test
     {
       this->servant_->sync ();
     }
-  
+
   private:
     POA_Test::AMI_Buffering * const servant_;
   };
@@ -368,7 +368,7 @@ void POA_Test::AMI_Buffering::sync_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_Buffering * const impl =
@@ -381,7 +381,7 @@ void POA_Test::AMI_Buffering::sync_skel (
 
   sync_AMI_Buffering command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -398,7 +398,7 @@ void POA_Test::AMI_Buffering::sync_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -417,7 +417,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::AMI_Buffering * const servant_;
   };
@@ -442,7 +442,7 @@ void POA_Test::AMI_Buffering::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_Buffering * const impl =
@@ -455,7 +455,7 @@ void POA_Test::AMI_Buffering::shutdown_skel (
 
   shutdown_AMI_Buffering command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -519,12 +519,12 @@ POA_Test::AMI_Buffering::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -646,7 +646,7 @@ POA_Test::AMI_AMI_BufferingHandler::~AMI_AMI_BufferingHandler (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -665,7 +665,7 @@ namespace POA_Test
     {
       this->servant_->receive_data ();
     }
-  
+
   private:
     POA_Test::AMI_AMI_BufferingHandler * const servant_;
   };
@@ -690,7 +690,7 @@ void POA_Test::AMI_AMI_BufferingHandler::receive_data_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_AMI_BufferingHandler * const impl =
@@ -703,7 +703,7 @@ void POA_Test::AMI_AMI_BufferingHandler::receive_data_skel (
 
   receive_data_AMI_AMI_BufferingHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -720,7 +720,7 @@ void POA_Test::AMI_AMI_BufferingHandler::receive_data_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -746,11 +746,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->receive_data_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_AMI_BufferingHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -779,7 +779,7 @@ void POA_Test::AMI_AMI_BufferingHandler::receive_data_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_AMI_BufferingHandler * const impl =
@@ -794,7 +794,7 @@ void POA_Test::AMI_AMI_BufferingHandler::receive_data_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -811,7 +811,7 @@ void POA_Test::AMI_AMI_BufferingHandler::receive_data_excep_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -830,7 +830,7 @@ namespace POA_Test
     {
       this->servant_->sync ();
     }
-  
+
   private:
     POA_Test::AMI_AMI_BufferingHandler * const servant_;
   };
@@ -855,7 +855,7 @@ void POA_Test::AMI_AMI_BufferingHandler::sync_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_AMI_BufferingHandler * const impl =
@@ -868,7 +868,7 @@ void POA_Test::AMI_AMI_BufferingHandler::sync_skel (
 
   sync_AMI_AMI_BufferingHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -885,7 +885,7 @@ void POA_Test::AMI_AMI_BufferingHandler::sync_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -911,11 +911,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->sync_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_AMI_BufferingHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -944,7 +944,7 @@ void POA_Test::AMI_AMI_BufferingHandler::sync_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_AMI_BufferingHandler * const impl =
@@ -959,7 +959,7 @@ void POA_Test::AMI_AMI_BufferingHandler::sync_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -976,7 +976,7 @@ void POA_Test::AMI_AMI_BufferingHandler::sync_excep_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -995,7 +995,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::AMI_AMI_BufferingHandler * const servant_;
   };
@@ -1020,7 +1020,7 @@ void POA_Test::AMI_AMI_BufferingHandler::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_AMI_BufferingHandler * const impl =
@@ -1033,7 +1033,7 @@ void POA_Test::AMI_AMI_BufferingHandler::shutdown_skel (
 
   shutdown_AMI_AMI_BufferingHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1050,7 +1050,7 @@ void POA_Test::AMI_AMI_BufferingHandler::shutdown_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1076,11 +1076,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->shutdown_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_AMI_BufferingHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1109,7 +1109,7 @@ void POA_Test::AMI_AMI_BufferingHandler::shutdown_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_AMI_BufferingHandler * const impl =
@@ -1124,7 +1124,7 @@ void POA_Test::AMI_AMI_BufferingHandler::shutdown_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1192,12 +1192,12 @@ POA_Test::AMI_AMI_BufferingHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1316,7 +1316,7 @@ POA_Test::AMI_Buffering_Admin::~AMI_Buffering_Admin (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1341,11 +1341,11 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->request_count ();
     }
-  
+
   private:
     POA_Test::AMI_Buffering_Admin * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1372,7 +1372,7 @@ void POA_Test::AMI_Buffering_Admin::request_count_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_Buffering_Admin * const impl =
@@ -1387,7 +1387,7 @@ void POA_Test::AMI_Buffering_Admin::request_count_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1404,7 +1404,7 @@ void POA_Test::AMI_Buffering_Admin::request_count_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1429,11 +1429,11 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->bytes_received_count ();
     }
-  
+
   private:
     POA_Test::AMI_Buffering_Admin * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1460,7 +1460,7 @@ void POA_Test::AMI_Buffering_Admin::bytes_received_count_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_Buffering_Admin * const impl =
@@ -1475,7 +1475,7 @@ void POA_Test::AMI_Buffering_Admin::bytes_received_count_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1492,7 +1492,7 @@ void POA_Test::AMI_Buffering_Admin::bytes_received_count_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1518,11 +1518,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->request_received (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_Buffering_Admin * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1551,7 +1551,7 @@ void POA_Test::AMI_Buffering_Admin::request_received_skel (
       &retval,
       &_tao_payload_length
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_Buffering_Admin * const impl =
@@ -1566,7 +1566,7 @@ void POA_Test::AMI_Buffering_Admin::request_received_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1583,7 +1583,7 @@ void POA_Test::AMI_Buffering_Admin::request_received_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1602,7 +1602,7 @@ namespace POA_Test
     {
       this->servant_->flush ();
     }
-  
+
   private:
     POA_Test::AMI_Buffering_Admin * const servant_;
   };
@@ -1627,7 +1627,7 @@ void POA_Test::AMI_Buffering_Admin::flush_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_Buffering_Admin * const impl =
@@ -1640,7 +1640,7 @@ void POA_Test::AMI_Buffering_Admin::flush_skel (
 
   flush_AMI_Buffering_Admin command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1657,7 +1657,7 @@ void POA_Test::AMI_Buffering_Admin::flush_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1676,7 +1676,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::AMI_Buffering_Admin * const servant_;
   };
@@ -1701,7 +1701,7 @@ void POA_Test::AMI_Buffering_Admin::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_Buffering_Admin * const impl =
@@ -1714,7 +1714,7 @@ void POA_Test::AMI_Buffering_Admin::shutdown_skel (
 
   shutdown_AMI_Buffering_Admin command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1778,12 +1778,12 @@ POA_Test::AMI_Buffering_Admin::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1912,7 +1912,7 @@ POA_Test::AMI_AMI_Buffering_AdminHandler::~AMI_AMI_Buffering_AdminHandler (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1938,11 +1938,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->request_count (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_AMI_Buffering_AdminHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1971,7 +1971,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_count_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_AMI_Buffering_AdminHandler * const impl =
@@ -1986,7 +1986,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_count_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2003,7 +2003,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_count_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2029,11 +2029,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->request_count_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_AMI_Buffering_AdminHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2062,7 +2062,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_count_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_AMI_Buffering_AdminHandler * const impl =
@@ -2077,7 +2077,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_count_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2094,7 +2094,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_count_excep_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2120,11 +2120,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->bytes_received_count (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_AMI_Buffering_AdminHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2153,7 +2153,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_AMI_Buffering_AdminHandler * const impl =
@@ -2168,7 +2168,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2185,7 +2185,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2211,11 +2211,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->bytes_received_count_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_AMI_Buffering_AdminHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2244,7 +2244,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_AMI_Buffering_AdminHandler * const impl =
@@ -2259,7 +2259,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2276,7 +2276,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::bytes_received_count_excep_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2295,7 +2295,7 @@ namespace POA_Test
     {
       this->servant_->request_received ();
     }
-  
+
   private:
     POA_Test::AMI_AMI_Buffering_AdminHandler * const servant_;
   };
@@ -2320,7 +2320,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_received_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_AMI_Buffering_AdminHandler * const impl =
@@ -2333,7 +2333,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_received_skel (
 
   request_received_AMI_AMI_Buffering_AdminHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2350,7 +2350,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_received_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2376,11 +2376,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->request_received_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_AMI_Buffering_AdminHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2409,7 +2409,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_received_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_AMI_Buffering_AdminHandler * const impl =
@@ -2424,7 +2424,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_received_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2441,7 +2441,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::request_received_excep_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2460,7 +2460,7 @@ namespace POA_Test
     {
       this->servant_->flush ();
     }
-  
+
   private:
     POA_Test::AMI_AMI_Buffering_AdminHandler * const servant_;
   };
@@ -2485,7 +2485,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::flush_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_AMI_Buffering_AdminHandler * const impl =
@@ -2498,7 +2498,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::flush_skel (
 
   flush_AMI_AMI_Buffering_AdminHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2515,7 +2515,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::flush_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2541,11 +2541,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->flush_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_AMI_Buffering_AdminHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2574,7 +2574,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::flush_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_AMI_Buffering_AdminHandler * const impl =
@@ -2589,7 +2589,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::flush_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2606,7 +2606,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::flush_excep_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2625,7 +2625,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::AMI_AMI_Buffering_AdminHandler * const servant_;
   };
@@ -2650,7 +2650,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_AMI_Buffering_AdminHandler * const impl =
@@ -2663,7 +2663,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::shutdown_skel (
 
   shutdown_AMI_AMI_Buffering_AdminHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2680,7 +2680,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::shutdown_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -2706,11 +2706,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->shutdown_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_AMI_Buffering_AdminHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -2739,7 +2739,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::shutdown_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_AMI_Buffering_AdminHandler * const impl =
@@ -2754,7 +2754,7 @@ void POA_Test::AMI_AMI_Buffering_AdminHandler::shutdown_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2822,12 +2822,12 @@ POA_Test::AMI_AMI_Buffering_AdminHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

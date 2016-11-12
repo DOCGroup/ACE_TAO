@@ -153,7 +153,7 @@ POA_Test::StockFactory::~StockFactory (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -178,18 +178,18 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::Stock> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->get_stock (
           arg_1);
     }
-  
+
   private:
     POA_Test::StockFactory * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -206,7 +206,7 @@ void POA_Test::StockFactory::get_stock_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Test::_tc_Invalid_Stock_Symbol
     };
@@ -221,7 +221,7 @@ void POA_Test::StockFactory::get_stock_skel (
       &retval,
       &_tao_stock_symbol
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::StockFactory * const impl =
@@ -236,7 +236,7 @@ void POA_Test::StockFactory::get_stock_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -253,7 +253,7 @@ void POA_Test::StockFactory::get_stock_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -272,7 +272,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::StockFactory * const servant_;
   };
@@ -297,7 +297,7 @@ void POA_Test::StockFactory::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::StockFactory * const impl =
@@ -310,7 +310,7 @@ void POA_Test::StockFactory::shutdown_skel (
 
   shutdown_StockFactory command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -374,12 +374,12 @@ POA_Test::StockFactory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -496,7 +496,7 @@ POA_Test::Stock::~Stock (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -521,11 +521,11 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->symbol ();
     }
-  
+
   private:
     POA_Test::Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -552,7 +552,7 @@ void POA_Test::Stock::_get_symbol_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Stock * const impl =
@@ -567,7 +567,7 @@ void POA_Test::Stock::_get_symbol_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -584,7 +584,7 @@ void POA_Test::Stock::_get_symbol_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -609,11 +609,11 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->full_name ();
     }
-  
+
   private:
     POA_Test::Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -640,7 +640,7 @@ void POA_Test::Stock::_get_full_name_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Stock * const impl =
@@ -655,7 +655,7 @@ void POA_Test::Stock::_get_full_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -672,7 +672,7 @@ void POA_Test::Stock::_get_full_name_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -697,11 +697,11 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::CORBA::Double> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->price ();
     }
-  
+
   private:
     POA_Test::Stock * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -728,7 +728,7 @@ void POA_Test::Stock::price_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Stock * const impl =
@@ -743,7 +743,7 @@ void POA_Test::Stock::price_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -807,12 +807,12 @@ POA_Test::Stock::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

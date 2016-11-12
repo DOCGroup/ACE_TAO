@@ -50,7 +50,7 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_EDF_Scheduling_SchedulingParameter[] =
       {
         { "deadline", &TimeBase::_tc_TimeT },
@@ -58,7 +58,7 @@ static TAO::TypeCode::Struct_Field<
         { "period", &TimeBase::_tc_TimeT },
         { "task_id", &CORBA::_tc_long }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -230,7 +230,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:EDF_Scheduling/SchedulingParameterPolicy:1.0",
     "SchedulingParameterPolicy");
-  
+
 
 namespace EDF_Scheduling
 {
@@ -376,7 +376,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_local_interface,
     "IDL:EDF_Scheduling/Scheduler:1.0",
     "Scheduler");
-  
+
 
 namespace EDF_Scheduling
 {
@@ -540,7 +540,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace EDF_Scheduling
 {
-  
+
 
   /// Copying insertion.
   void
@@ -671,7 +671,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace EDF_Scheduling
 {
-  
+
 
   /// Copying insertion.
   void

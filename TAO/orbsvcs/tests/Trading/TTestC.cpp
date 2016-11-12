@@ -92,7 +92,7 @@ TAO_Trader_Test::Remote_Output::confirm (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -215,7 +215,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:TAO_Trader_Test/Remote_Output:1.0",
     "Remote_Output");
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -359,7 +359,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:TAO_Trader_Test/Plotter:1.0",
     "Plotter");
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -503,7 +503,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:TAO_Trader_Test/Printer:1.0",
     "Printer");
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -647,7 +647,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:TAO_Trader_Test/File_System:1.0",
     "File_System");
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -791,7 +791,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:TAO_Trader_Test/PostScript_Printer:1.0",
     "PostScript_Printer");
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -873,7 +873,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_short,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_TAO_Trader_Test_ShortSeq_0 =
         &TAO_Trader_Test_ShortSeq_0;
     }
@@ -892,7 +892,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TAO_Trader_Test/ShortSeq:1.0",
     "ShortSeq",
     &TAO::TypeCode::tc_TAO_Trader_Test_ShortSeq_0);
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -974,7 +974,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_ushort,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_TAO_Trader_Test_UShortSeq_0 =
         &TAO_Trader_Test_UShortSeq_0;
     }
@@ -993,7 +993,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TAO_Trader_Test/UShortSeq:1.0",
     "UShortSeq",
     &TAO::TypeCode::tc_TAO_Trader_Test_UShortSeq_0);
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -1075,7 +1075,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_long,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_TAO_Trader_Test_LongSeq_0 =
         &TAO_Trader_Test_LongSeq_0;
     }
@@ -1094,7 +1094,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TAO_Trader_Test/LongSeq:1.0",
     "LongSeq",
     &TAO::TypeCode::tc_TAO_Trader_Test_LongSeq_0);
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -1176,7 +1176,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_ulong,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_TAO_Trader_Test_ULongSeq_0 =
         &TAO_Trader_Test_ULongSeq_0;
     }
@@ -1195,7 +1195,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TAO_Trader_Test/ULongSeq:1.0",
     "ULongSeq",
     &TAO::TypeCode::tc_TAO_Trader_Test_ULongSeq_0);
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -1277,7 +1277,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_boolean,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_TAO_Trader_Test_BooleanSeq_0 =
         &TAO_Trader_Test_BooleanSeq_0;
     }
@@ -1296,7 +1296,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TAO_Trader_Test/BooleanSeq:1.0",
     "BooleanSeq",
     &TAO::TypeCode::tc_TAO_Trader_Test_BooleanSeq_0);
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -1378,7 +1378,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_float,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_TAO_Trader_Test_FloatSeq_0 =
         &TAO_Trader_Test_FloatSeq_0;
     }
@@ -1397,7 +1397,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TAO_Trader_Test/FloatSeq:1.0",
     "FloatSeq",
     &TAO::TypeCode::tc_TAO_Trader_Test_FloatSeq_0);
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -1479,7 +1479,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_double,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_TAO_Trader_Test_DoubleSeq_0 =
         &TAO_Trader_Test_DoubleSeq_0;
     }
@@ -1498,7 +1498,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TAO_Trader_Test/DoubleSeq:1.0",
     "DoubleSeq",
     &TAO::TypeCode::tc_TAO_Trader_Test_DoubleSeq_0);
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -1574,7 +1574,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_string,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_TAO_Trader_Test_StringSeq_0 =
         &TAO_Trader_Test_StringSeq_0;
     }
@@ -1593,7 +1593,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:TAO_Trader_Test/StringSeq:1.0",
     "StringSeq",
     &TAO::TypeCode::tc_TAO_Trader_Test_StringSeq_0);
-  
+
 
 namespace TAO_Trader_Test
 {
@@ -1626,7 +1626,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1740,7 +1740,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1854,7 +1854,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1968,7 +1968,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2082,7 +2082,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2186,7 +2186,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -2316,7 +2316,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -2446,7 +2446,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -2576,7 +2576,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -2706,7 +2706,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -2836,7 +2836,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -2966,7 +2966,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -3096,7 +3096,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Trader_Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -3234,13 +3234,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::TAO_Trader_Test::Remote_Output RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3271,13 +3271,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::TAO_Trader_Test::Plotter RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3308,13 +3308,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::TAO_Trader_Test::Printer RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3345,13 +3345,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::TAO_Trader_Test::File_System RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3382,13 +3382,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::TAO_Trader_Test::PostScript_Printer RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

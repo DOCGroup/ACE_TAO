@@ -99,7 +99,7 @@ Cubit::cube_oneway (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -133,7 +133,7 @@ Cubit::cube_void (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -168,7 +168,7 @@ Cubit::cube_octet (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::ACE_InputCDR::to_octet>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ACE_InputCDR::to_octet>::in_arg_val _tao_o (o);
 
@@ -185,7 +185,7 @@ Cubit::cube_octet (
       "cube_octet",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -204,7 +204,7 @@ Cubit::cube_short (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Short>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Short>::in_arg_val _tao_s (s);
 
@@ -221,7 +221,7 @@ Cubit::cube_short (
       "cube_short",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -240,7 +240,7 @@ Cubit::cube_long (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_l (l);
 
@@ -257,7 +257,7 @@ Cubit::cube_long (
       "cube_long",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -270,14 +270,14 @@ Cubit::cube_long (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Cubit_Many[] =
       {
         { "o", &CORBA::_tc_octet },
         { "l", &CORBA::_tc_long },
         { "s", &CORBA::_tc_short }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -318,7 +318,7 @@ Cubit::cube_struct (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Cubit::Many>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Cubit::Many>::in_arg_val _tao_values (values);
 
@@ -335,7 +335,7 @@ Cubit::cube_struct (
       "cube_struct",
       11,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -354,7 +354,7 @@ Cubit::cube_any (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Any>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_value (value);
 
@@ -371,7 +371,7 @@ Cubit::cube_any (
       "cube_any",
       8,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -390,7 +390,7 @@ Cubit::cube_any_struct (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Any>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Any>::in_arg_val _tao_value (value);
 
@@ -407,7 +407,7 @@ Cubit::cube_any_struct (
       "cube_any_struct",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -423,7 +423,7 @@ static char const * const _tao_enumerators_Cubit_discrim[] =
     "e_1st",
     "e_2nd",
     "e_3rd"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -434,7 +434,7 @@ static TAO::TypeCode::Enum<char const *,
     "discrim",
     _tao_enumerators_Cubit_discrim,
     4);
-  
+
 ::CORBA::TypeCode_ptr const Cubit::_tc_discrim =
   &_tao_tc_Cubit_discrim;
 
@@ -497,7 +497,7 @@ Cubit::oneof::operator= (const ::Cubit::oneof &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -526,7 +526,7 @@ Cubit::oneof::operator= (const ::Cubit::oneof &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -535,23 +535,23 @@ void Cubit::oneof::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case Cubit::e_0th:
-      
+
     break;
-    
+
     case Cubit::e_1st:
-      
+
     break;
-    
+
     case Cubit::e_2nd:
-      
+
     break;
-    
+
     case Cubit::e_3rd:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -584,7 +584,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Cubit_oneof,
     sizeof (_tao_cases_Cubit_oneof)/sizeof (_tao_cases_Cubit_oneof[0]),
     -1);
-  
+
 ::CORBA::TypeCode_ptr const Cubit::_tc_oneof =
   &_tao_tc_Cubit_oneof;
 
@@ -599,7 +599,7 @@ Cubit::cube_union (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Cubit::oneof>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Cubit::oneof>::in_arg_val _tao_values (values);
 
@@ -616,7 +616,7 @@ Cubit::cube_union (
       "cube_union",
       10,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -698,7 +698,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_long,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Cubit_long_seq_0 =
         &Cubit_long_seq_0;
     }
@@ -717,7 +717,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Cubit/long_seq:1.0",
     "long_seq",
     &TAO::TypeCode::tc_Cubit_long_seq_0);
-  
+
 ::CORBA::TypeCode_ptr const Cubit::_tc_long_seq =
   &_tao_tc_Cubit_long_seq;
 
@@ -733,7 +733,7 @@ Cubit::cube_long_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Cubit::long_seq>::in_arg_val _tao_input (input);
   TAO::Arg_Traits< ::Cubit::long_seq>::out_arg_val _tao_output (output);
@@ -752,7 +752,7 @@ Cubit::cube_long_sequence (
       "cube_long_sequence",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -832,7 +832,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_octet,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Cubit_octet_seq_0 =
         &Cubit_octet_seq_0;
     }
@@ -851,7 +851,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Cubit/octet_seq:1.0",
     "octet_seq",
     &TAO::TypeCode::tc_Cubit_octet_seq_0);
-  
+
 ::CORBA::TypeCode_ptr const Cubit::_tc_octet_seq =
   &_tao_tc_Cubit_octet_seq;
 
@@ -867,7 +867,7 @@ Cubit::cube_octet_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Cubit::octet_seq>::in_arg_val _tao_input (input);
   TAO::Arg_Traits< ::Cubit::octet_seq>::out_arg_val _tao_output (output);
@@ -886,7 +886,7 @@ Cubit::cube_octet_sequence (
       "cube_octet_sequence",
       19,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -966,7 +966,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Cubit::_tc_Many,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Cubit_many_seq_0 =
         &Cubit_many_seq_0;
     }
@@ -985,7 +985,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Cubit/many_seq:1.0",
     "many_seq",
     &TAO::TypeCode::tc_Cubit_many_seq_0);
-  
+
 ::CORBA::TypeCode_ptr const Cubit::_tc_many_seq =
   &_tao_tc_Cubit_many_seq;
 
@@ -1001,7 +1001,7 @@ Cubit::cube_many_sequence (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Cubit::many_seq>::in_arg_val _tao_input (input);
   TAO::Arg_Traits< ::Cubit::many_seq>::out_arg_val _tao_output (output);
@@ -1020,7 +1020,7 @@ Cubit::cube_many_sequence (
       "cube_many_sequence",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1037,7 +1037,7 @@ Cubit::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1065,7 +1065,7 @@ Cubit::shutdown (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Cubit_RtiPacketHeader[] =
       {
         { "packetLength", &CORBA::_tc_ulong },
@@ -1073,7 +1073,7 @@ static TAO::TypeCode::Struct_Field<
         { "channelHandle", &CORBA::_tc_ulong },
         { "packetColor", &CORBA::_tc_ulong }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1113,13 +1113,13 @@ Cubit::RtiPacketHeader::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Cubit_HandleValuePair[] =
       {
         { "handle", &CORBA::_tc_ushort },
         { "data", &Cubit::_tc_octet_seq }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1155,7 +1155,7 @@ static char const * const _tao_enumerators_Cubit_MessageHeaderTypes[] =
   {
     "objectUpdate",
     "interaction"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -1166,7 +1166,7 @@ static TAO::TypeCode::Enum<char const *,
     "MessageHeaderTypes",
     _tao_enumerators_Cubit_MessageHeaderTypes,
     2);
-  
+
 ::CORBA::TypeCode_ptr const Cubit::_tc_MessageHeaderTypes =
   &_tao_tc_Cubit_MessageHeaderTypes;
 
@@ -1244,7 +1244,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Cubit::_tc_HandleValuePair,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Cubit_HandleValuePairSeq_0 =
         &Cubit_HandleValuePairSeq_0;
     }
@@ -1263,7 +1263,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Cubit/HandleValuePairSeq:1.0",
     "HandleValuePairSeq",
     &TAO::TypeCode::tc_Cubit_HandleValuePairSeq_0);
-  
+
 ::CORBA::TypeCode_ptr const Cubit::_tc_HandleValuePairSeq =
   &_tao_tc_Cubit_HandleValuePairSeq;
 
@@ -1282,7 +1282,7 @@ static TAO::TypeCode::Alias<char const *,
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Cubit_RtiObjectUpdateMessageHeader[] =
       {
         { "updateLength", &CORBA::_tc_ulong },
@@ -1298,7 +1298,7 @@ static TAO::TypeCode::Struct_Field<
         { "orderingHandle", &CORBA::_tc_octet },
         { "messagePayload", &Cubit::_tc_HandleValuePairSeq }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1333,12 +1333,12 @@ Cubit::RtiObjectUpdateMessageHeader::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Cubit_RtiInteractionMessageHeader[] =
       {
         { "updateLength", &CORBA::_tc_ulong }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1427,7 +1427,7 @@ Cubit::MessageUnion::operator= (const ::Cubit::MessageUnion &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -1457,7 +1457,7 @@ Cubit::MessageUnion::operator= (const ::Cubit::MessageUnion &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -1466,17 +1466,17 @@ void Cubit::MessageUnion::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case Cubit::objectUpdate:
       delete this->u_.oumh_;
       this->u_.oumh_ = 0;
-      
+
     break;
-    
+
     case Cubit::interaction:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -1505,7 +1505,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_Cubit_MessageUnion,
     sizeof (_tao_cases_Cubit_MessageUnion)/sizeof (_tao_cases_Cubit_MessageUnion[0]),
     -1);
-  
+
 ::CORBA::TypeCode_ptr const Cubit::_tc_MessageUnion =
   &_tao_tc_Cubit_MessageUnion;
 
@@ -1583,7 +1583,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &Cubit::_tc_MessageUnion,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Cubit_MessageUnionSeq_0 =
         &Cubit_MessageUnionSeq_0;
     }
@@ -1602,7 +1602,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Cubit/MessageUnionSeq:1.0",
     "MessageUnionSeq",
     &TAO::TypeCode::tc_Cubit_MessageUnionSeq_0);
-  
+
 ::CORBA::TypeCode_ptr const Cubit::_tc_MessageUnionSeq =
   &_tao_tc_Cubit_MessageUnionSeq;
 
@@ -1616,13 +1616,13 @@ static TAO::TypeCode::Alias<char const *,
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Cubit_RtiPacket[] =
       {
         { "packetHeader", &Cubit::_tc_RtiPacketHeader },
         { "msgs", &Cubit::_tc_MessageUnionSeq }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1664,7 +1664,7 @@ Cubit::cube_rti_data (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Cubit::RtiPacket>::in_arg_val _tao_input (input);
   TAO::Arg_Traits< ::Cubit::RtiPacket>::out_arg_val _tao_output (output);
@@ -1683,7 +1683,7 @@ Cubit::cube_rti_data (
       "cube_rti_data",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_DIRECT_STRATEGY | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1700,7 +1700,7 @@ Cubit::ping (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1823,7 +1823,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Cubit:1.0",
     "Cubit");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Cubit =
   &_tao_tc_Cubit;
 
@@ -1871,7 +1871,7 @@ Cubit_Factory::make_cubit (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Cubit>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1996,7 +1996,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Cubit_Factory:1.0",
     "Cubit_Factory");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Cubit_Factory =
   &_tao_tc_Cubit_Factory;
 
@@ -2153,7 +2153,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<Cubit::discrim>::extract (
         _tao_any,
         Cubit::_tc_discrim,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -2572,7 +2572,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<Cubit::MessageHeaderTypes>::extract (
         _tao_any,
         Cubit::_tc_MessageHeaderTypes,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -3058,12 +3058,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Cubit::discrim> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -3086,7 +3086,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -3128,7 +3128,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -3347,12 +3347,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<Cubit::MessageHeaderTypes> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -3473,7 +3473,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -3505,7 +3505,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -3624,13 +3624,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Cubit RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3661,13 +3661,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Cubit_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

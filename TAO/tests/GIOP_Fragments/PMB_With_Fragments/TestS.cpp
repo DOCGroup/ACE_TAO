@@ -153,7 +153,7 @@ POA_Test::Payload_Receiver::~Payload_Receiver (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -179,11 +179,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->more_data (
         arg_1);
     }
-  
+
   private:
     POA_Test::Payload_Receiver * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -212,7 +212,7 @@ void POA_Test::Payload_Receiver::more_data_skel (
       &retval,
       &_tao_the_payload
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Payload_Receiver * const impl =
@@ -227,7 +227,7 @@ void POA_Test::Payload_Receiver::more_data_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -244,7 +244,7 @@ void POA_Test::Payload_Receiver::more_data_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -263,7 +263,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::Payload_Receiver * const servant_;
   };
@@ -288,7 +288,7 @@ void POA_Test::Payload_Receiver::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Payload_Receiver * const impl =
@@ -301,7 +301,7 @@ void POA_Test::Payload_Receiver::shutdown_skel (
 
   shutdown_Payload_Receiver command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -365,12 +365,12 @@ POA_Test::Payload_Receiver::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

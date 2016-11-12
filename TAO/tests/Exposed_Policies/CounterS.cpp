@@ -196,7 +196,7 @@ void POA_Counter::increment_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Counter * const impl =
@@ -209,7 +209,7 @@ void POA_Counter::increment_skel (
 
   increment_Counter command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -248,7 +248,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->get_count ();
   }
@@ -278,7 +278,7 @@ void POA_Counter::get_count_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Counter * const impl =
@@ -293,7 +293,7 @@ void POA_Counter::get_count_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -350,7 +350,7 @@ void POA_Counter::reset_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Counter * const impl =
@@ -363,7 +363,7 @@ void POA_Counter::reset_skel (
 
   reset_Counter command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -420,7 +420,7 @@ void POA_Counter::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Counter * const impl =
@@ -433,7 +433,7 @@ void POA_Counter::shutdown_skel (
 
   shutdown_Counter command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -497,12 +497,12 @@ POA_Counter::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

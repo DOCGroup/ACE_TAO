@@ -119,8 +119,8 @@ TAO_Cubit_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,   4,   5,  -1,  -1,   6,  -1,   7, -10,  -2,   8, 
-        9, -24,  12,  -1,  -1,  13,  14, 
+       -1,  -1,  -1,  -1,   4,   5,  -1,  -1,   6,  -1,   7, -10,  -2,   8,
+        9, -24,  12,  -1,  -1,  13,  14,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -200,13 +200,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_octet> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::ACE_InputCDR::to_octet>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_octet> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_octet (
         arg_1);
@@ -239,7 +239,7 @@ void POA_Cubit::cube_octet_skel (
       &retval,
       &_tao_o
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -254,7 +254,7 @@ void POA_Cubit::cube_octet_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -293,13 +293,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_short (
         arg_1);
@@ -332,7 +332,7 @@ void POA_Cubit::cube_short_skel (
       &retval,
       &_tao_s
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -347,7 +347,7 @@ void POA_Cubit::cube_short_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -386,13 +386,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_long (
         arg_1);
@@ -425,7 +425,7 @@ void POA_Cubit::cube_long_skel (
       &retval,
       &_tao_l
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -440,7 +440,7 @@ void POA_Cubit::cube_long_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -479,13 +479,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Cubit::Many> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Cubit::Many>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Cubit::Many> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_struct (
         arg_1);
@@ -518,7 +518,7 @@ void POA_Cubit::cube_struct_skel (
       &retval,
       &_tao_values
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -533,7 +533,7 @@ void POA_Cubit::cube_struct_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -590,7 +590,7 @@ void POA_Cubit::noop_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Cubit * const impl =
@@ -603,7 +603,7 @@ void POA_Cubit::noop_skel (
 
   noop_Cubit command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -660,7 +660,7 @@ void POA_Cubit::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Cubit * const impl =
@@ -673,7 +673,7 @@ void POA_Cubit::shutdown_skel (
 
   shutdown_Cubit command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -737,12 +737,12 @@ POA_Cubit::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

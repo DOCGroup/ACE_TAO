@@ -174,7 +174,7 @@ public:
   {
     TAO::SArg_Traits< ::Char_Seq>::in_arg_type arg_1 =
       static_cast<TAO::SArg_Traits< ::Char_Seq>::in_arg_val *> (this->args_[1])->arg ();
-      
+
     this->servant_->sendCharSeq (
       arg_1);
   }
@@ -205,7 +205,7 @@ void POA_Simple_Server::sendCharSeq_skel (
       &retval,
       &_tao_charSeq
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Simple_Server * const impl =
@@ -219,7 +219,7 @@ void POA_Simple_Server::sendCharSeq_skel (
   sendCharSeq_Simple_Server command (
     impl,
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -254,7 +254,7 @@ public:
   {
     TAO::SArg_Traits< ::Octet_Seq>::in_arg_type arg_1 =
       static_cast<TAO::SArg_Traits< ::Octet_Seq>::in_arg_val *> (this->args_[1])->arg ();
-      
+
     this->servant_->sendOctetSeq (
       arg_1);
   }
@@ -285,7 +285,7 @@ void POA_Simple_Server::sendOctetSeq_skel (
       &retval,
       &_tao_charSeq
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Simple_Server * const impl =
@@ -299,7 +299,7 @@ void POA_Simple_Server::sendOctetSeq_skel (
   sendOctetSeq_Simple_Server command (
     impl,
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -334,10 +334,10 @@ public:
   {
     TAO::SArg_Traits< ::CORBA::Long>::ret_arg_type retval =
       static_cast<TAO::SArg_Traits< ::CORBA::Long>::ret_val *> (this->args_[0])->arg ();
-    
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
       static_cast<TAO::SArg_Traits< ::CORBA::Long>::in_arg_val *> (this->args_[1])->arg ();
-      
+
     retval =
       this->servant_->get_number (
         arg_1);
@@ -369,7 +369,7 @@ void POA_Simple_Server::get_number_skel (
       &retval,
       &_tao_num
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Simple_Server * const impl =
@@ -383,7 +383,7 @@ void POA_Simple_Server::get_number_skel (
   get_number_Simple_Server command (
     impl,
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -440,7 +440,7 @@ void POA_Simple_Server::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Simple_Server * const impl =
@@ -453,7 +453,7 @@ void POA_Simple_Server::shutdown_skel (
 
   shutdown_Simple_Server command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -517,12 +517,12 @@ POA_Simple_Server::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

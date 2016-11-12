@@ -152,7 +152,7 @@ POA_vb_basic::Test::~Test (void)
 
 namespace POA_vb_basic
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -177,32 +177,32 @@ namespace POA_vb_basic
         TAO::Portable_Server::get_ret_arg< ::vb_basic::M_VBlong> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::vb_basic::M_VBlong>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::vb_basic::M_VBlong> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::vb_basic::M_VBlong>::inout_arg_type arg_2 =
         TAO::Portable_Server::get_inout_arg< ::vb_basic::M_VBlong> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       TAO::SArg_Traits< ::vb_basic::M_VBlong>::out_arg_type arg_3 =
         TAO::Portable_Server::get_out_arg< ::vb_basic::M_VBlong> (
           this->operation_details_,
           this->args_,
           3);
-        
+
       retval =
         this->servant_->basic_op1 (
           arg_1
           , arg_2
           , arg_3);
     }
-  
+
   private:
     POA_vb_basic::Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -235,7 +235,7 @@ void POA_vb_basic::Test::basic_op1_skel (
       &_tao_p2,
       &_tao_p3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_vb_basic::Test * const impl =
@@ -250,7 +250,7 @@ void POA_vb_basic::Test::basic_op1_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -314,12 +314,12 @@ POA_vb_basic::Test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -194,7 +194,7 @@ void POA_Pluggable_Test::send_oneway_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Pluggable_Test * const impl =
@@ -207,7 +207,7 @@ void POA_Pluggable_Test::send_oneway_skel (
 
   send_oneway_Pluggable_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -264,7 +264,7 @@ void POA_Pluggable_Test::send_void_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Pluggable_Test * const impl =
@@ -277,7 +277,7 @@ void POA_Pluggable_Test::send_void_skel (
 
   send_void_Pluggable_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -334,7 +334,7 @@ void POA_Pluggable_Test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Pluggable_Test * const impl =
@@ -347,7 +347,7 @@ void POA_Pluggable_Test::shutdown_skel (
 
   shutdown_Pluggable_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -411,12 +411,12 @@ POA_Pluggable_Test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -552,7 +552,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Pluggable_Test> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->make_pluggable_test ();
   }
@@ -582,7 +582,7 @@ void POA_Pluggable_Test_Factory::make_pluggable_test_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Pluggable_Test_Factory * const impl =
@@ -597,7 +597,7 @@ void POA_Pluggable_Test_Factory::make_pluggable_test_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -661,12 +661,12 @@ POA_Pluggable_Test_Factory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

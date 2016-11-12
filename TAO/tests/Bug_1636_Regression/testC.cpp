@@ -53,7 +53,7 @@ static char const * const _tao_enumerators_UnionIecs_E_type_num[] =
     "E_type_num_called_party_number",
     "E_type_num_calling_party_number",
     "E_type_num_inconnu"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -64,7 +64,7 @@ static TAO::TypeCode::Enum<char const *,
     "E_type_num",
     _tao_enumerators_UnionIecs_E_type_num,
     3);
-  
+
 
 namespace UnionIecs
 {
@@ -83,7 +83,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:UnionIecs/T_champ_num:1.0",
     "T_champ_num",
     &CORBA::_tc_octet);
-  
+
 
 namespace UnionIecs
 {
@@ -96,13 +96,13 @@ namespace UnionIecs
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_UnionIecs_S_i_num[] =
       {
         { "type_num", &UnionIecs::_tc_E_type_num },
         { "nature", &UnionIecs::_tc_T_champ_num }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -148,12 +148,12 @@ UnionIecs::S_num::S_num (void)
 UnionIecs::S_num::S_num (const ::UnionIecs::S_num &u)
 {
   this->disc_ = u.disc_;
-  
+
   if (this->disc_)
     {
       this->u_.num_ = u.u_.num_;
     }
-  
+
 }
 
 UnionIecs::S_num::~S_num (void)
@@ -176,28 +176,28 @@ UnionIecs::S_num::operator= (const ::UnionIecs::S_num &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
-  
+
   if (this->disc_)
     {
       this->u_.num_ = u.u_.num_;
     }
-  
+
   return *this;
 }
 
 /// Reset method to reset old values of a union.
 void UnionIecs::S_num::_reset (void)
 {
-  
+
   if (this->disc_)
     {
-      
+
     }
-  
+
 }
 
 // TAO_IDL - Generated from
@@ -221,7 +221,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_UnionIecs_S_num,
     sizeof (_tao_cases_UnionIecs_S_num)/sizeof (_tao_cases_UnionIecs_S_num[0]),
     -1);
-  
+
 
 namespace UnionIecs
 {
@@ -264,7 +264,7 @@ namespace UnionIecs
       TAO::Any_Basic_Impl_T< ::UnionIecs::E_type_num>::extract (
           _tao_any,
           ::UnionIecs::_tc_E_type_num,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -294,7 +294,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<UnionIecs::E_type_num>::extract (
         _tao_any,
         UnionIecs::_tc_E_type_num,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -567,12 +567,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<UnionIecs::E_type_num> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -623,14 +623,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_union._d ())
     {
       result = strm << _tao_union.num ();
     }
-  
+
   return result;
 }
 
@@ -645,7 +645,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   _tao_union._default ();
@@ -661,7 +661,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   return result;
 }
 

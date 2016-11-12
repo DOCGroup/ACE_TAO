@@ -129,10 +129,10 @@ TAO_Cubit_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len)
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,   4,  -1,  -1,  -6,  -2,   5, -53,   8,  -1,  -1, 
-       -1,   9,  -1,  -1,  10,  11,  12,  -1,  -1,  13,  -1,  -1,  14,  -1, 
-       15,  -1,  16,  -1,  -1,  17,  -1,  -1, -18,  -2, -52,  20,  21,  -1, 
-       -1,  -1,  22,  -1,  -1,  -1,  -1,  -1,  23, 
+       -1,  -1,  -1,  -1,   4,  -1,  -1,  -6,  -2,   5, -53,   8,  -1,  -1,
+       -1,   9,  -1,  -1,  10,  11,  12,  -1,  -1,  13,  -1,  -1,  14,  -1,
+       15,  -1,  16,  -1,  -1,  17,  -1,  -1, -18,  -2, -52,  20,  21,  -1,
+       -1,  -1,  22,  -1,  -1,  -1,  -1,  -1,  23,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -183,15 +183,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_oneway (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument **)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->cube_oneway (
       );
 }
@@ -202,15 +202,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_void (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument **)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->cube_void (
       );
 }
@@ -221,15 +221,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_octet (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::ACE_InputCDR::to_octet>::ret_val *) args[0])->arg () =
     _tao_ptr->cube_octet (
           ((TAO::Arg_Traits< ::ACE_InputCDR::to_octet>::in_arg_val *) args[1])->arg ()
@@ -242,15 +242,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_short (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::CORBA::Short>::ret_val *) args[0])->arg () =
     _tao_ptr->cube_short (
           ((TAO::Arg_Traits< ::CORBA::Short>::in_arg_val *) args[1])->arg ()
@@ -263,15 +263,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_long (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::CORBA::Long>::ret_val *) args[0])->arg () =
     _tao_ptr->cube_long (
           ((TAO::Arg_Traits< ::CORBA::Long>::in_arg_val *) args[1])->arg ()
@@ -284,15 +284,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_struct (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::Cubit::Many>::ret_val *) args[0])->arg () =
     _tao_ptr->cube_struct (
           ((TAO::Arg_Traits< ::Cubit::Many>::in_arg_val *) args[1])->arg ()
@@ -305,15 +305,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_any (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::CORBA::Any>::ret_val *) args[0])->arg () =
     _tao_ptr->cube_any (
           ((TAO::Arg_Traits< ::CORBA::Any>::in_arg_val *) args[1])->arg ()
@@ -326,15 +326,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_any_struct (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::CORBA::Any>::ret_val *) args[0])->arg () =
     _tao_ptr->cube_any_struct (
           ((TAO::Arg_Traits< ::CORBA::Any>::in_arg_val *) args[1])->arg ()
@@ -347,15 +347,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_union (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::Cubit::oneof>::ret_val *) args[0])->arg () =
     _tao_ptr->cube_union (
           ((TAO::Arg_Traits< ::Cubit::oneof>::in_arg_val *) args[1])->arg ()
@@ -368,15 +368,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_long_sequence (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->cube_long_sequence (
         ((TAO::Arg_Traits< ::Cubit::long_seq>::in_arg_val *) args[1])->arg (),
         ((TAO::Arg_Traits< ::Cubit::long_seq>::out_arg_val *) args[2])->arg ()
@@ -389,15 +389,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_octet_sequence (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->cube_octet_sequence (
         ((TAO::Arg_Traits< ::Cubit::octet_seq>::in_arg_val *) args[1])->arg (),
         ((TAO::Arg_Traits< ::Cubit::octet_seq>::out_arg_val *) args[2])->arg ()
@@ -410,15 +410,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_many_sequence (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->cube_many_sequence (
         ((TAO::Arg_Traits< ::Cubit::many_seq>::in_arg_val *) args[1])->arg (),
         ((TAO::Arg_Traits< ::Cubit::many_seq>::out_arg_val *) args[2])->arg ()
@@ -431,15 +431,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::shutdown (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument **)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->shutdown (
       );
 }
@@ -450,15 +450,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::cube_rti_data (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->cube_rti_data (
         ((TAO::Arg_Traits< ::Cubit::RtiPacket>::in_arg_val *) args[1])->arg (),
         ((TAO::Arg_Traits< ::Cubit::RtiPacket>::out_arg_val *) args[2])->arg ()
@@ -471,15 +471,15 @@ void
 _TAO_Cubit_Direct_Proxy_Impl::ping (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument **)
-  
+
 {
-  POA_Cubit_ptr _tao_ptr = 
+  POA_Cubit_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->ping (
       );
 }
@@ -551,7 +551,7 @@ void POA_Cubit::cube_oneway_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Cubit * const impl =
@@ -564,7 +564,7 @@ void POA_Cubit::cube_oneway_skel (
 
   cube_oneway_Cubit command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -621,7 +621,7 @@ void POA_Cubit::cube_void_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Cubit * const impl =
@@ -634,7 +634,7 @@ void POA_Cubit::cube_void_skel (
 
   cube_void_Cubit command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -673,13 +673,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_octet> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::ACE_InputCDR::to_octet>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::ACE_InputCDR::to_octet> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_octet (
         arg_1);
@@ -712,7 +712,7 @@ void POA_Cubit::cube_octet_skel (
       &retval,
       &_tao_o
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -727,7 +727,7 @@ void POA_Cubit::cube_octet_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -766,13 +766,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Short>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Short> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_short (
         arg_1);
@@ -805,7 +805,7 @@ void POA_Cubit::cube_short_skel (
       &retval,
       &_tao_s
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -820,7 +820,7 @@ void POA_Cubit::cube_short_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -859,13 +859,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_long (
         arg_1);
@@ -898,7 +898,7 @@ void POA_Cubit::cube_long_skel (
       &retval,
       &_tao_l
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -913,7 +913,7 @@ void POA_Cubit::cube_long_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -952,13 +952,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Cubit::Many> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Cubit::Many>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Cubit::Many> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_struct (
         arg_1);
@@ -991,7 +991,7 @@ void POA_Cubit::cube_struct_skel (
       &retval,
       &_tao_values
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -1006,7 +1006,7 @@ void POA_Cubit::cube_struct_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1045,13 +1045,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Any>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_any (
         arg_1);
@@ -1084,7 +1084,7 @@ void POA_Cubit::cube_any_skel (
       &retval,
       &_tao_value
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -1099,7 +1099,7 @@ void POA_Cubit::cube_any_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1138,13 +1138,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::CORBA::Any>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::CORBA::Any> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_any_struct (
         arg_1);
@@ -1177,7 +1177,7 @@ void POA_Cubit::cube_any_struct_skel (
       &retval,
       &_tao_value
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -1192,7 +1192,7 @@ void POA_Cubit::cube_any_struct_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1231,13 +1231,13 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Cubit::oneof> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Cubit::oneof>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Cubit::oneof> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     retval =
       this->servant_->cube_union (
         arg_1);
@@ -1270,7 +1270,7 @@ void POA_Cubit::cube_union_skel (
       &retval,
       &_tao_values
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Cubit * const impl =
@@ -1285,7 +1285,7 @@ void POA_Cubit::cube_union_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1325,13 +1325,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Cubit::long_seq>::out_arg_type arg_2 =
       TAO::Portable_Server::get_out_arg< ::Cubit::long_seq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->cube_long_sequence (
       arg_1
       , arg_2);
@@ -1366,7 +1366,7 @@ void POA_Cubit::cube_long_sequence_skel (
       &_tao_input,
       &_tao_output
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Cubit * const impl =
@@ -1381,7 +1381,7 @@ void POA_Cubit::cube_long_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1421,13 +1421,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Cubit::octet_seq>::out_arg_type arg_2 =
       TAO::Portable_Server::get_out_arg< ::Cubit::octet_seq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->cube_octet_sequence (
       arg_1
       , arg_2);
@@ -1462,7 +1462,7 @@ void POA_Cubit::cube_octet_sequence_skel (
       &_tao_input,
       &_tao_output
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Cubit * const impl =
@@ -1477,7 +1477,7 @@ void POA_Cubit::cube_octet_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1517,13 +1517,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Cubit::many_seq>::out_arg_type arg_2 =
       TAO::Portable_Server::get_out_arg< ::Cubit::many_seq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->cube_many_sequence (
       arg_1
       , arg_2);
@@ -1558,7 +1558,7 @@ void POA_Cubit::cube_many_sequence_skel (
       &_tao_input,
       &_tao_output
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Cubit * const impl =
@@ -1573,7 +1573,7 @@ void POA_Cubit::cube_many_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1630,7 +1630,7 @@ void POA_Cubit::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Cubit * const impl =
@@ -1643,7 +1643,7 @@ void POA_Cubit::shutdown_skel (
 
   shutdown_Cubit command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1683,13 +1683,13 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Cubit::RtiPacket>::out_arg_type arg_2 =
       TAO::Portable_Server::get_out_arg< ::Cubit::RtiPacket> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     this->servant_->cube_rti_data (
       arg_1
       , arg_2);
@@ -1724,7 +1724,7 @@ void POA_Cubit::cube_rti_data_skel (
       &_tao_input,
       &_tao_output
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Cubit * const impl =
@@ -1739,7 +1739,7 @@ void POA_Cubit::cube_rti_data_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1796,7 +1796,7 @@ void POA_Cubit::ping_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Cubit * const impl =
@@ -1809,7 +1809,7 @@ void POA_Cubit::ping_skel (
 
   ping_Cubit command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1873,12 +1873,12 @@ POA_Cubit::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1984,15 +1984,15 @@ void
 _TAO_Cubit_Factory_Direct_Proxy_Impl::make_cubit (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Cubit_Factory_ptr _tao_ptr = 
+  POA_Cubit_Factory_ptr _tao_ptr =
     dynamic_cast<POA_Cubit_Factory_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::Cubit>::ret_val *) args[0])->arg () =
     _tao_ptr->make_cubit (
         );
@@ -2047,7 +2047,7 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Cubit> (
         this->operation_details_,
         this->args_);
-    
+
     retval =
       this->servant_->make_cubit ();
   }
@@ -2077,7 +2077,7 @@ void POA_Cubit_Factory::make_cubit_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Cubit_Factory * const impl =
@@ -2092,7 +2092,7 @@ void POA_Cubit_Factory::make_cubit_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -2156,12 +2156,12 @@ POA_Cubit_Factory::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

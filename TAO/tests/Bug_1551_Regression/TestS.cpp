@@ -154,7 +154,7 @@ POA_Test::Hello::~Hello (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -173,7 +173,7 @@ namespace POA_Test
     {
       this->servant_->short_sleep ();
     }
-  
+
   private:
     POA_Test::Hello * const servant_;
   };
@@ -198,7 +198,7 @@ void POA_Test::Hello::short_sleep_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Hello * const impl =
@@ -211,7 +211,7 @@ void POA_Test::Hello::short_sleep_skel (
 
   short_sleep_Hello command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -275,12 +275,12 @@ POA_Test::Hello::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -396,7 +396,7 @@ POA_Test::AMI_HelloHandler::~AMI_HelloHandler (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -415,7 +415,7 @@ namespace POA_Test
     {
       this->servant_->short_sleep ();
     }
-  
+
   private:
     POA_Test::AMI_HelloHandler * const servant_;
   };
@@ -440,7 +440,7 @@ void POA_Test::AMI_HelloHandler::short_sleep_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::AMI_HelloHandler * const impl =
@@ -453,7 +453,7 @@ void POA_Test::AMI_HelloHandler::short_sleep_skel (
 
   short_sleep_AMI_HelloHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -470,7 +470,7 @@ void POA_Test::AMI_HelloHandler::short_sleep_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -496,11 +496,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->short_sleep_excep (
         arg_1);
     }
-  
+
   private:
     POA_Test::AMI_HelloHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -529,7 +529,7 @@ void POA_Test::AMI_HelloHandler::short_sleep_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::AMI_HelloHandler * const impl =
@@ -544,7 +544,7 @@ void POA_Test::AMI_HelloHandler::short_sleep_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -612,12 +612,12 @@ POA_Test::AMI_HelloHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

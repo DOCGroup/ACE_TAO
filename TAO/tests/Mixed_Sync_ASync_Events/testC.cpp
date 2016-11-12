@@ -59,7 +59,7 @@ static char const * const _tao_enumerators_A_RunMode[] =
   {
     "RM_SLAVE",
     "RM_MASTER"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -70,7 +70,7 @@ static TAO::TypeCode::Enum<char const *,
     "RunMode",
     _tao_enumerators_A_RunMode,
     2);
-  
+
 
 namespace A
 {
@@ -84,7 +84,7 @@ static char const * const _tao_enumerators_A_RequestMode[] =
   {
     "RQM_SYNCH",
     "RQM_ASYNCH"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -95,7 +95,7 @@ static TAO::TypeCode::Enum<char const *,
     "RequestMode",
     _tao_enumerators_A_RequestMode,
     2);
-  
+
 
 namespace A
 {
@@ -109,7 +109,7 @@ static char const * const _tao_enumerators_A_FollowUp[] =
   {
     "FU_TIMER",
     "FU_NOTIFICATION"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -120,7 +120,7 @@ static TAO::TypeCode::Enum<char const *,
     "FollowUp",
     _tao_enumerators_A_FollowUp,
     2);
-  
+
 
 namespace A
 {
@@ -174,7 +174,7 @@ A::Test::request (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::A::RequestMode>::in_arg_val _tao_mode (mode);
   TAO::Arg_Traits< ::CORBA::ULong>::inout_arg_val _tao_counter (counter);
@@ -195,7 +195,7 @@ A::Test::request (
       "request",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -212,7 +212,7 @@ A::Test::report (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_msg (msg);
 
@@ -229,7 +229,7 @@ A::Test::report (
       "report",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -246,7 +246,7 @@ A::Test::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -282,9 +282,9 @@ A::Test::sendc_request (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::A::RequestMode>::in_arg_val _tao_mode (mode);
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_counter (counter);
@@ -323,9 +323,9 @@ A::Test::sendc_report (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_msg (msg);
 
@@ -449,7 +449,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:A/Test:1.0",
     "Test");
-  
+
 
 namespace A
 {
@@ -502,7 +502,7 @@ A::AMI_TestHandler::request (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_counter (counter);
   TAO::Arg_Traits< ::A::FollowUp>::in_arg_val _tao_follow_up (follow_up);
@@ -521,7 +521,7 @@ A::AMI_TestHandler::request (
       "request",
       7,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -551,12 +551,12 @@ A::AMI_TestHandler::request_reply_stub (
             (_tao_in >> follow_up)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->request (
-          
+
           counter,
-          
+
           follow_up
         );
       break;
@@ -583,7 +583,7 @@ A::AMI_TestHandler::request_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->request_excep (
           exception_holder_var
@@ -608,7 +608,7 @@ A::AMI_TestHandler::request_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -625,7 +625,7 @@ A::AMI_TestHandler::request_excep (
       "request_excep",
       13,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -642,7 +642,7 @@ A::AMI_TestHandler::report (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -684,7 +684,7 @@ A::AMI_TestHandler::report_reply_stub (
       // Demarshall all the arguments.
       // Invoke the call back method.
       _tao_reply_handler_object->report (
-          
+
         );
       break;
     }
@@ -710,7 +710,7 @@ A::AMI_TestHandler::report_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->report_excep (
           exception_holder_var
@@ -735,7 +735,7 @@ A::AMI_TestHandler::report_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -752,7 +752,7 @@ A::AMI_TestHandler::report_excep (
       "report_excep",
       12,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -861,7 +861,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:A/AMI_TestHandler:1.0",
     "AMI_TestHandler");
-  
+
 
 namespace A
 {
@@ -904,7 +904,7 @@ namespace A
       TAO::Any_Basic_Impl_T< ::A::RunMode>::extract (
           _tao_any,
           ::A::_tc_RunMode,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -934,7 +934,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<A::RunMode>::extract (
         _tao_any,
         A::_tc_RunMode,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -978,7 +978,7 @@ namespace A
       TAO::Any_Basic_Impl_T< ::A::RequestMode>::extract (
           _tao_any,
           ::A::_tc_RequestMode,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1008,7 +1008,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<A::RequestMode>::extract (
         _tao_any,
         A::_tc_RequestMode,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1052,7 +1052,7 @@ namespace A
       TAO::Any_Basic_Impl_T< ::A::FollowUp>::extract (
           _tao_any,
           ::A::_tc_FollowUp,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1082,7 +1082,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<A::FollowUp>::extract (
         _tao_any,
         A::_tc_FollowUp,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -1116,7 +1116,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1230,7 +1230,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1334,12 +1334,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<A::RunMode> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -1362,12 +1362,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<A::RequestMode> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -1390,12 +1390,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<A::FollowUp> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -1426,13 +1426,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::A::Test RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1463,13 +1463,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::A::AMI_TestHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

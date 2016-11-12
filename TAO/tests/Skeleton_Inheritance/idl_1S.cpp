@@ -117,8 +117,8 @@ TAO_Skeleton_Inheritance_Interface_1_Perfect_Hash_OpTable::lookup (const char *s
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1, -11,  -2,   6,   7,  -1,   8, 
-        9,  10, -24, 
+       -1,  -1,  -1,  -1,  -1,   5,  -1,  -1, -11,  -2,   6,   7,  -1,   8,
+        9,  10, -24,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -169,15 +169,15 @@ void
 POA_Skeleton_Inheritance::_TAO_Interface_1_Direct_Proxy_Impl::operation_1 (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Skeleton_Inheritance::Interface_1_ptr _tao_ptr = 
+  POA_Skeleton_Inheritance::Interface_1_ptr _tao_ptr =
     dynamic_cast<POA_Skeleton_Inheritance::Interface_1_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< char *>::ret_val *) args[0])->arg () =
     _tao_ptr->operation_1 (
         );
@@ -189,15 +189,15 @@ void
 POA_Skeleton_Inheritance::_TAO_Interface_1_Direct_Proxy_Impl::_get_attribute_1 (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Skeleton_Inheritance::Interface_1_ptr _tao_ptr = 
+  POA_Skeleton_Inheritance::Interface_1_ptr _tao_ptr =
     dynamic_cast<POA_Skeleton_Inheritance::Interface_1_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::CORBA::Long>::ret_val *) args[0])->arg () =
     _tao_ptr->attribute_1 (
         );
@@ -209,15 +209,15 @@ void
 POA_Skeleton_Inheritance::_TAO_Interface_1_Direct_Proxy_Impl::_set_attribute_1 (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Skeleton_Inheritance::Interface_1_ptr _tao_ptr = 
+  POA_Skeleton_Inheritance::Interface_1_ptr _tao_ptr =
     dynamic_cast<POA_Skeleton_Inheritance::Interface_1_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   _tao_ptr->attribute_1 (
         ((TAO::Arg_Traits< ::CORBA::Long>::in_arg_val *) args[1])->arg ()
       );
@@ -250,7 +250,7 @@ POA_Skeleton_Inheritance::Interface_1::~Interface_1 (void)
 
 namespace POA_Skeleton_Inheritance
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -275,11 +275,11 @@ namespace POA_Skeleton_Inheritance
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->operation_1 ();
     }
-  
+
   private:
     POA_Skeleton_Inheritance::Interface_1 * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -306,7 +306,7 @@ void POA_Skeleton_Inheritance::Interface_1::operation_1_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Skeleton_Inheritance::Interface_1 * const impl =
@@ -321,7 +321,7 @@ void POA_Skeleton_Inheritance::Interface_1::operation_1_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -338,7 +338,7 @@ void POA_Skeleton_Inheritance::Interface_1::operation_1_skel (
 
 namespace POA_Skeleton_Inheritance
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -363,11 +363,11 @@ namespace POA_Skeleton_Inheritance
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->attribute_1 ();
     }
-  
+
   private:
     POA_Skeleton_Inheritance::Interface_1 * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -394,7 +394,7 @@ void POA_Skeleton_Inheritance::Interface_1::_get_attribute_1_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Skeleton_Inheritance::Interface_1 * const impl =
@@ -409,7 +409,7 @@ void POA_Skeleton_Inheritance::Interface_1::_get_attribute_1_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -426,7 +426,7 @@ void POA_Skeleton_Inheritance::Interface_1::_get_attribute_1_skel (
 
 namespace POA_Skeleton_Inheritance
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -452,11 +452,11 @@ namespace POA_Skeleton_Inheritance
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->attribute_1 (
         arg_1);
     }
-  
+
   private:
     POA_Skeleton_Inheritance::Interface_1 * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -485,7 +485,7 @@ void POA_Skeleton_Inheritance::Interface_1::_set_attribute_1_skel (
       &retval,
       &_tao_attribute_1
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Skeleton_Inheritance::Interface_1 * const impl =
@@ -500,7 +500,7 @@ void POA_Skeleton_Inheritance::Interface_1::_set_attribute_1_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -564,12 +564,12 @@ POA_Skeleton_Inheritance::Interface_1::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

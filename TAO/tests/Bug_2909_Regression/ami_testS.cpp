@@ -157,7 +157,7 @@ POA_A::AMI_Test::~AMI_Test (void)
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -183,11 +183,11 @@ namespace POA_A
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->foo (
         arg_1);
     }
-  
+
   private:
     POA_A::AMI_Test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -204,7 +204,7 @@ void POA_A::AMI_Test::foo_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       A::_tc_DidTheRightThing
     };
@@ -219,7 +219,7 @@ void POA_A::AMI_Test::foo_skel (
       &retval,
       &_tao_value
     };
-  
+
   static size_t const nargs = 2;
 
   POA_A::AMI_Test * const impl =
@@ -234,7 +234,7 @@ void POA_A::AMI_Test::foo_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -251,7 +251,7 @@ void POA_A::AMI_Test::foo_skel (
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -270,7 +270,7 @@ namespace POA_A
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_A::AMI_Test * const servant_;
   };
@@ -295,7 +295,7 @@ void POA_A::AMI_Test::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_A::AMI_Test * const impl =
@@ -308,7 +308,7 @@ void POA_A::AMI_Test::shutdown_skel (
 
   shutdown_AMI_Test command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -372,12 +372,12 @@ POA_A::AMI_Test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -493,7 +493,7 @@ POA_A::AMI_AMI_TestHandler::~AMI_AMI_TestHandler (void)
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -512,7 +512,7 @@ namespace POA_A
     {
       this->servant_->foo ();
     }
-  
+
   private:
     POA_A::AMI_AMI_TestHandler * const servant_;
   };
@@ -527,7 +527,7 @@ void POA_A::AMI_AMI_TestHandler::foo_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       A::_tc_DidTheRightThing
     };
@@ -540,7 +540,7 @@ void POA_A::AMI_AMI_TestHandler::foo_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_A::AMI_AMI_TestHandler * const impl =
@@ -553,7 +553,7 @@ void POA_A::AMI_AMI_TestHandler::foo_skel (
 
   foo_AMI_AMI_TestHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -570,7 +570,7 @@ void POA_A::AMI_AMI_TestHandler::foo_skel (
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -596,11 +596,11 @@ namespace POA_A
           this->operation_details_,
           this->args_,
           1);
-        
-      
+
+
 
       static TAO::Exception_Data
-      _tao_A_AMI_AMI_TestHandler_foo_excep_exceptiondata [] = 
+      _tao_A_AMI_AMI_TestHandler_foo_excep_exceptiondata [] =
         {
           {
             "IDL:A/DidTheRightThing:1.0",
@@ -610,17 +610,17 @@ namespace POA_A
 #endif /* TAO_HAS_INTERCEPTORS */
           }
         };
-      TAO::ExceptionHolder *tao_excepholder = 
+      TAO::ExceptionHolder *tao_excepholder =
         dynamic_cast<TAO::ExceptionHolder *> (arg_1);
       if (tao_excepholder != 0)
         {
           tao_excepholder->set_exception_data (_tao_A_AMI_AMI_TestHandler_foo_excep_exceptiondata, 1);
         }
-      
+
       this->servant_->foo_excep (
         arg_1);
     }
-  
+
   private:
     POA_A::AMI_AMI_TestHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -637,7 +637,7 @@ void POA_A::AMI_AMI_TestHandler::foo_excep_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       A::_tc_DidTheRightThing
     };
@@ -652,7 +652,7 @@ void POA_A::AMI_AMI_TestHandler::foo_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_A::AMI_AMI_TestHandler * const impl =
@@ -667,7 +667,7 @@ void POA_A::AMI_AMI_TestHandler::foo_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -735,12 +735,12 @@ POA_A::AMI_AMI_TestHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

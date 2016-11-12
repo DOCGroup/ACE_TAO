@@ -157,7 +157,7 @@ POA_Test::Oneway_Buffering::~Oneway_Buffering (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -183,11 +183,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->receive_data (
         arg_1);
     }
-  
+
   private:
     POA_Test::Oneway_Buffering * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -216,7 +216,7 @@ void POA_Test::Oneway_Buffering::receive_data_skel (
       &retval,
       &_tao_the_payload
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Oneway_Buffering * const impl =
@@ -231,7 +231,7 @@ void POA_Test::Oneway_Buffering::receive_data_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -248,7 +248,7 @@ void POA_Test::Oneway_Buffering::receive_data_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -267,7 +267,7 @@ namespace POA_Test
     {
       this->servant_->flush ();
     }
-  
+
   private:
     POA_Test::Oneway_Buffering * const servant_;
   };
@@ -292,7 +292,7 @@ void POA_Test::Oneway_Buffering::flush_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Oneway_Buffering * const impl =
@@ -305,7 +305,7 @@ void POA_Test::Oneway_Buffering::flush_skel (
 
   flush_Oneway_Buffering command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -322,7 +322,7 @@ void POA_Test::Oneway_Buffering::flush_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -341,7 +341,7 @@ namespace POA_Test
     {
       this->servant_->sync ();
     }
-  
+
   private:
     POA_Test::Oneway_Buffering * const servant_;
   };
@@ -366,7 +366,7 @@ void POA_Test::Oneway_Buffering::sync_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Oneway_Buffering * const impl =
@@ -379,7 +379,7 @@ void POA_Test::Oneway_Buffering::sync_skel (
 
   sync_Oneway_Buffering command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -396,7 +396,7 @@ void POA_Test::Oneway_Buffering::sync_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -415,7 +415,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::Oneway_Buffering * const servant_;
   };
@@ -440,7 +440,7 @@ void POA_Test::Oneway_Buffering::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Oneway_Buffering * const impl =
@@ -453,7 +453,7 @@ void POA_Test::Oneway_Buffering::shutdown_skel (
 
   shutdown_Oneway_Buffering command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -517,12 +517,12 @@ POA_Test::Oneway_Buffering::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -641,7 +641,7 @@ POA_Test::Oneway_Buffering_Admin::~Oneway_Buffering_Admin (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -666,18 +666,18 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->request_count (
           arg_1);
     }
-  
+
   private:
     POA_Test::Oneway_Buffering_Admin * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -706,7 +706,7 @@ void POA_Test::Oneway_Buffering_Admin::request_count_skel (
       &retval,
       &_tao_expected_count
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Oneway_Buffering_Admin * const impl =
@@ -721,7 +721,7 @@ void POA_Test::Oneway_Buffering_Admin::request_count_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -738,7 +738,7 @@ void POA_Test::Oneway_Buffering_Admin::request_count_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -763,18 +763,18 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::ULong>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULong> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->bytes_received_count (
           arg_1);
     }
-  
+
   private:
     POA_Test::Oneway_Buffering_Admin * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -803,7 +803,7 @@ void POA_Test::Oneway_Buffering_Admin::bytes_received_count_skel (
       &retval,
       &_tao_expected_count
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Oneway_Buffering_Admin * const impl =
@@ -818,7 +818,7 @@ void POA_Test::Oneway_Buffering_Admin::bytes_received_count_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -835,7 +835,7 @@ void POA_Test::Oneway_Buffering_Admin::bytes_received_count_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -861,11 +861,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->request_received (
         arg_1);
     }
-  
+
   private:
     POA_Test::Oneway_Buffering_Admin * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -894,7 +894,7 @@ void POA_Test::Oneway_Buffering_Admin::request_received_skel (
       &retval,
       &_tao_payload_length
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Oneway_Buffering_Admin * const impl =
@@ -909,7 +909,7 @@ void POA_Test::Oneway_Buffering_Admin::request_received_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -926,7 +926,7 @@ void POA_Test::Oneway_Buffering_Admin::request_received_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -945,7 +945,7 @@ namespace POA_Test
     {
       this->servant_->flush ();
     }
-  
+
   private:
     POA_Test::Oneway_Buffering_Admin * const servant_;
   };
@@ -970,7 +970,7 @@ void POA_Test::Oneway_Buffering_Admin::flush_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Oneway_Buffering_Admin * const impl =
@@ -983,7 +983,7 @@ void POA_Test::Oneway_Buffering_Admin::flush_skel (
 
   flush_Oneway_Buffering_Admin command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1000,7 +1000,7 @@ void POA_Test::Oneway_Buffering_Admin::flush_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1019,7 +1019,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::Oneway_Buffering_Admin * const servant_;
   };
@@ -1044,7 +1044,7 @@ void POA_Test::Oneway_Buffering_Admin::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Oneway_Buffering_Admin * const impl =
@@ -1057,7 +1057,7 @@ void POA_Test::Oneway_Buffering_Admin::shutdown_skel (
 
   shutdown_Oneway_Buffering_Admin command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1121,12 +1121,12 @@ POA_Test::Oneway_Buffering_Admin::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

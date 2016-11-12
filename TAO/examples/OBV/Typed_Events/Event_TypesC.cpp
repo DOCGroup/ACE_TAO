@@ -55,7 +55,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "time_", &CORBA::_tc_long, ::CORBA::PUBLIC_MEMBER },
     { "origin_id_", &CORBA::_tc_ulong, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -69,7 +69,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Event,
     2);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Event =
   &_tao_tc_Event;
 
@@ -161,27 +161,27 @@ Event::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Event::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -192,7 +192,7 @@ Event::_tao_unmarshal (
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Temperature[] =
   {
     { "temperature_", &CORBA::_tc_float, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -206,7 +206,7 @@ static TAO::TypeCode::Value<char const *,
     &_tc_Event,
     _tao_fields_Temperature,
     1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Temperature =
   &_tao_tc_Temperature;
 
@@ -298,27 +298,27 @@ Temperature::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Temperature::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -331,12 +331,12 @@ Point_dup (const Point_slice *_tao_src_array)
 {
   Point_slice *_tao_dup_array =
     Point_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <Point_slice *> (0);
     }
-  
+
   Point_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -394,7 +394,7 @@ namespace TAO
           ::CORBA::tk_array,
           &CORBA::_tc_float,
           3U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Point =
         &Point_3;
     }
@@ -412,7 +412,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Point:1.0",
     "Point",
     &TAO::TypeCode::tc_Point);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Point =
   &_tao_tc_Point;
 
@@ -427,7 +427,7 @@ static TAO::TypeCode::Alias<char const *,
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Position[] =
   {
     { "xyz", &_tc_Point, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -441,7 +441,7 @@ static TAO::TypeCode::Value<char const *,
     &_tc_Event,
     _tao_fields_Position,
     1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Position =
   &_tao_tc_Position;
 
@@ -533,27 +533,27 @@ Position::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Position::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -565,7 +565,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "urgency", &CORBA::_tc_short, ::CORBA::PUBLIC_MEMBER },
     { "message", &CORBA::_tc_string, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -579,7 +579,7 @@ static TAO::TypeCode::Value<char const *,
     &_tc_Event,
     _tao_fields_Log_Msg,
     2);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Log_Msg =
   &_tao_tc_Log_Msg;
 
@@ -671,27 +671,27 @@ Log_Msg::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Log_Msg::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -703,7 +703,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "my_event", &_tc_Event, ::CORBA::PRIVATE_MEMBER },
     { "next", &_tc_Event_List_Link, ::CORBA::PRIVATE_MEMBER }
-    
+
   };
 static TAO::TypeCode::Recursive_Type<
   TAO::TypeCode::Value<char const *,
@@ -721,7 +721,7 @@ static TAO::TypeCode::Recursive_Type<
     &::CORBA::_tc_null,
     _tao_fields_Event_List_Link,
     2);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Event_List_Link =
   &_tao_tc_Event_List_Link;
 
@@ -813,27 +813,27 @@ Event_List_Link::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Event_List_Link::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -844,7 +844,7 @@ Event_List_Link::_tao_unmarshal (
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Event_List[] =
   {
     { "first_link", &_tc_Event_List_Link, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -858,7 +858,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Event_List,
     1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Event_List =
   &_tao_tc_Event_List;
 
@@ -950,27 +950,27 @@ Event_List::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Event_List::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1019,7 +1019,7 @@ Checkpoint::put_event (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Event>::in_arg_val _tao_e (e);
 
@@ -1036,7 +1036,7 @@ Checkpoint::put_event (
       "put_event",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -1053,7 +1053,7 @@ Checkpoint::get_critical_events (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Event_List>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1090,7 +1090,7 @@ Checkpoint::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1204,7 +1204,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Checkpoint:1.0",
     "Checkpoint");
-  
+
 ::CORBA::TypeCode_ptr const _tc_Checkpoint =
   &_tao_tc_Checkpoint;
 
@@ -1224,7 +1224,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Criterion,
     0);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Criterion =
   &_tao_tc_Criterion;
 
@@ -1296,27 +1296,27 @@ Criterion::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Criterion::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1327,7 +1327,7 @@ Criterion::_tao_unmarshal (
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Temperature_Criterion[] =
   {
     { "meltingpoint", &_tc_Temperature, ::CORBA::PRIVATE_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -1341,7 +1341,7 @@ static TAO::TypeCode::Value<char const *,
     &_tc_Event,
     _tao_fields_Temperature_Criterion,
     1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Temperature_Criterion =
   &_tao_tc_Temperature_Criterion;
 
@@ -1433,27 +1433,27 @@ Temperature_Criterion::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Temperature_Criterion::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1465,7 +1465,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "leftbottom", &_tc_Position, ::CORBA::PRIVATE_MEMBER },
     { "topright", &_tc_Position, ::CORBA::PRIVATE_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -1479,7 +1479,7 @@ static TAO::TypeCode::Value<char const *,
     &_tc_Event,
     _tao_fields_Position_Criterion,
     2);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Position_Criterion =
   &_tao_tc_Position_Criterion;
 
@@ -1571,27 +1571,27 @@ Position_Criterion::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Position_Criterion::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1612,7 +1612,7 @@ static TAO::TypeCode::Value<char const *,
     &_tc_Event,
     _tao_fields_Log_Msg_Criterion,
     0);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Log_Msg_Criterion =
   &_tao_tc_Log_Msg_Criterion;
 
@@ -1704,27 +1704,27 @@ Log_Msg_Criterion::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Log_Msg_Criterion::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1735,7 +1735,7 @@ Log_Msg_Criterion::_tao_unmarshal (
 static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> const _tao_fields_Criterion_List[] =
   {
     { "my_list", &_tc_Event_List, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -1749,7 +1749,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_Criterion_List,
     1);
-  
+
 ::CORBA::TypeCode_ptr const _tc_Criterion_List =
   &_tao_tc_Criterion_List;
 
@@ -1841,27 +1841,27 @@ Criterion_List::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Criterion_List::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -2500,16 +2500,16 @@ OBV_Event::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) const
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_time_) &&
       (strm << _pd_origin_id_);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2518,20 +2518,20 @@ OBV_Event::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_time_) &&
       (strm >> _pd_origin_id_);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -2603,26 +2603,26 @@ OBV_Temperature::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) cons
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_temperature_);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2631,27 +2631,27 @@ OBV_Temperature::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_temperature_);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -2753,12 +2753,12 @@ OBV_Position::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) const
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   Point_forany _tao__pd_xyz
       (const_cast<
           Point_slice*> (
@@ -2767,18 +2767,18 @@ OBV_Position::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) const
     );
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _tao__pd_xyz);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2787,12 +2787,12 @@ OBV_Position::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   Point_forany _tao__pd_xyz
       (const_cast<
           Point_slice*> (
@@ -2801,19 +2801,19 @@ OBV_Position::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
     );
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _tao__pd_xyz);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -2885,27 +2885,27 @@ OBV_Log_Msg::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) const
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_urgency) &&
       (strm << _pd_message.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2914,28 +2914,28 @@ OBV_Log_Msg::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_urgency) &&
       (strm >> _pd_message.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -3007,16 +3007,16 @@ OBV_Event_List_Link::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) 
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_my_event.in ()) &&
       (strm << _pd_next.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3025,20 +3025,20 @@ OBV_Event_List_Link::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_my_event.out ()) &&
       (strm >> _pd_next.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -3110,15 +3110,15 @@ OBV_Event_List::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) const
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_first_link.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3127,19 +3127,19 @@ OBV_Event_List::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_first_link.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -3173,13 +3173,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Checkpoint RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -3303,26 +3303,26 @@ OBV_Temperature_Criterion::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInf
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_meltingpoint.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3331,27 +3331,27 @@ OBV_Temperature_Criterion::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkIn
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_meltingpoint.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -3423,27 +3423,27 @@ OBV_Position_Criterion::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&c
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_leftbottom.in ()) &&
       (strm << _pd_topright.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3452,28 +3452,28 @@ OBV_Position_Criterion::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_leftbottom.out ()) &&
       (strm >> _pd_topright.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -3545,15 +3545,15 @@ OBV_Log_Msg_Criterion::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3562,12 +3562,12 @@ OBV_Log_Msg_Criterion::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&c
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__Event (strm, ci))
     {
       return false;
     }
-  
+
   return true;
 }
 
@@ -3640,15 +3640,15 @@ OBV_Criterion_List::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo&ci) c
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_my_list.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -3657,19 +3657,19 @@ OBV_Criterion_List::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInfo&ci)
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_my_list.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void

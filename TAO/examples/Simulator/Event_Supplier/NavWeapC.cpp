@@ -54,7 +54,7 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Navigation[] =
       {
         { "position_latitude", &CORBA::_tc_long },
@@ -72,7 +72,7 @@ static TAO::TypeCode::Struct_Field<
         { "criticality", &CORBA::_tc_ulong },
         { "update_data", &CORBA::_tc_ulong }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -107,7 +107,7 @@ Navigation::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Weapons[] =
       {
         { "number_of_weapons", &CORBA::_tc_ulong },
@@ -130,7 +130,7 @@ static TAO::TypeCode::Struct_Field<
         { "criticality", &CORBA::_tc_ulong },
         { "update_data", &CORBA::_tc_ulong }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -204,7 +204,7 @@ NavWeapTerminator::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -327,7 +327,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:NavWeapTerminator:1.0",
     "NavWeapTerminator");
-  
+
 ::CORBA::TypeCode_ptr const _tc_NavWeapTerminator =
   &_tao_tc_NavWeapTerminator;
 
@@ -643,13 +643,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::NavWeapTerminator RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

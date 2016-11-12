@@ -95,7 +95,7 @@ AMI_test::adder::add (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Long>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_a (a);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_b (b);
@@ -114,7 +114,7 @@ AMI_test::adder::add (
       "add",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -135,9 +135,9 @@ AMI_test::adder::sendc_add (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
-  
-  
+
+
+
   TAO::Arg_Traits<void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_a (a);
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_b (b);
@@ -263,7 +263,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:AMI_test/adder:1.0",
     "adder");
-  
+
 
 namespace AMI_test
 {
@@ -315,7 +315,7 @@ AMI_test::AMI_adderHandler::add (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Long>::in_arg_val _tao_ami_return_val (ami_return_val);
 
@@ -332,7 +332,7 @@ AMI_test::AMI_adderHandler::add (
       "add",
       3,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -360,10 +360,10 @@ AMI_test::AMI_adderHandler::add_reply_stub (
             (_tao_in >> ami_return_val)
          ))
         throw ::CORBA::MARSHAL ();
-      
+
       // Invoke the call back method.
       _tao_reply_handler_object->add (
-          
+
           ami_return_val
         );
       break;
@@ -390,7 +390,7 @@ AMI_test::AMI_adderHandler::add_reply_stub (
             _tao_in.char_translator (),
             _tao_in.wchar_translator ())
           );
-        
+
       ::Messaging::ExceptionHolder_var exception_holder_var = exception_holder_ptr;
       _tao_reply_handler_object->add_excep (
           exception_holder_var
@@ -415,7 +415,7 @@ AMI_test::AMI_adderHandler::add_excep (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Messaging::ExceptionHolder>::in_arg_val _tao_excep_holder (excep_holder);
 
@@ -432,7 +432,7 @@ AMI_test::AMI_adderHandler::add_excep (
       "add_excep",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -541,7 +541,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:AMI_test/AMI_adderHandler:1.0",
     "AMI_adderHandler");
-  
+
 
 namespace AMI_test
 {
@@ -574,7 +574,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace AMI_test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -688,7 +688,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace AMI_test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -800,13 +800,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::AMI_test::adder RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -837,13 +837,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::AMI_test::AMI_adderHandler RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

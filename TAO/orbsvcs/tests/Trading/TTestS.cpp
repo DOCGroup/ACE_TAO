@@ -153,7 +153,7 @@ POA_TAO_Trader_Test::Remote_Output::~Remote_Output (void)
 
 namespace POA_TAO_Trader_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -172,7 +172,7 @@ namespace POA_TAO_Trader_Test
     {
       this->servant_->confirm ();
     }
-  
+
   private:
     POA_TAO_Trader_Test::Remote_Output * const servant_;
   };
@@ -197,7 +197,7 @@ void POA_TAO_Trader_Test::Remote_Output::confirm_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_TAO_Trader_Test::Remote_Output * const impl =
@@ -210,7 +210,7 @@ void POA_TAO_Trader_Test::Remote_Output::confirm_skel (
 
   confirm_Remote_Output command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -274,12 +274,12 @@ POA_TAO_Trader_Test::Remote_Output::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -445,12 +445,12 @@ POA_TAO_Trader_Test::Plotter::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -616,12 +616,12 @@ POA_TAO_Trader_Test::Printer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -787,12 +787,12 @@ POA_TAO_Trader_Test::File_System::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -958,12 +958,12 @@ POA_TAO_Trader_Test::PostScript_Printer::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

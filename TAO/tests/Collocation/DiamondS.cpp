@@ -146,15 +146,15 @@ void
 POA_Diamond::_TAO_Top_Direct_Proxy_Impl::shape (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Diamond::Top_ptr _tao_ptr = 
+  POA_Diamond::Top_ptr _tao_ptr =
     dynamic_cast<POA_Diamond::Top_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< char *>::ret_val *) args[0])->arg () =
     _tao_ptr->shape (
         );
@@ -187,7 +187,7 @@ POA_Diamond::Top::~Top (void)
 
 namespace POA_Diamond
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -212,11 +212,11 @@ namespace POA_Diamond
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->shape ();
     }
-  
+
   private:
     POA_Diamond::Top * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -243,7 +243,7 @@ void POA_Diamond::Top::shape_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Diamond::Top * const impl =
@@ -258,7 +258,7 @@ void POA_Diamond::Top::shape_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -322,12 +322,12 @@ POA_Diamond::Top::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -435,15 +435,15 @@ void
 POA_Diamond::_TAO_Left_Direct_Proxy_Impl::color (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Diamond::Left_ptr _tao_ptr = 
+  POA_Diamond::Left_ptr _tao_ptr =
     dynamic_cast<POA_Diamond::Left_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< char *>::ret_val *) args[0])->arg () =
     _tao_ptr->color (
         );
@@ -477,7 +477,7 @@ POA_Diamond::Left::~Left (void)
 
 namespace POA_Diamond
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -502,11 +502,11 @@ namespace POA_Diamond
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->color ();
     }
-  
+
   private:
     POA_Diamond::Left * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -533,7 +533,7 @@ void POA_Diamond::Left::color_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Diamond::Left * const impl =
@@ -548,7 +548,7 @@ void POA_Diamond::Left::color_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -616,12 +616,12 @@ POA_Diamond::Left::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -729,15 +729,15 @@ void
 POA_Diamond::_TAO_Right_Direct_Proxy_Impl::width (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Diamond::Right_ptr _tao_ptr = 
+  POA_Diamond::Right_ptr _tao_ptr =
     dynamic_cast<POA_Diamond::Right_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::CORBA::Long>::ret_val *) args[0])->arg () =
     _tao_ptr->width (
         );
@@ -771,7 +771,7 @@ POA_Diamond::Right::~Right (void)
 
 namespace POA_Diamond
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -796,11 +796,11 @@ namespace POA_Diamond
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->width ();
     }
-  
+
   private:
     POA_Diamond::Right * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -827,7 +827,7 @@ void POA_Diamond::Right::width_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Diamond::Right * const impl =
@@ -842,7 +842,7 @@ void POA_Diamond::Right::width_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -910,12 +910,12 @@ POA_Diamond::Right::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -1025,15 +1025,15 @@ void
 POA_Diamond::_TAO_Buttom_Direct_Proxy_Impl::name (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Diamond::Buttom_ptr _tao_ptr = 
+  POA_Diamond::Buttom_ptr _tao_ptr =
     dynamic_cast<POA_Diamond::Buttom_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< char *>::ret_val *) args[0])->arg () =
     _tao_ptr->name (
         );
@@ -1069,7 +1069,7 @@ POA_Diamond::Buttom::~Buttom (void)
 
 namespace POA_Diamond
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1094,11 +1094,11 @@ namespace POA_Diamond
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->name ();
     }
-  
+
   private:
     POA_Diamond::Buttom * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -1125,7 +1125,7 @@ void POA_Diamond::Buttom::name_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Diamond::Buttom * const impl =
@@ -1140,7 +1140,7 @@ void POA_Diamond::Buttom::name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1216,12 +1216,12 @@ POA_Diamond::Buttom::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

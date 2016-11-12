@@ -155,7 +155,7 @@ POA_AMI_test::adder::~adder (void)
 
 namespace POA_AMI_test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -180,25 +180,25 @@ namespace POA_AMI_test
         TAO::Portable_Server::get_ret_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Long>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Long> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->add (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_AMI_test::adder * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -229,7 +229,7 @@ void POA_AMI_test::adder::add_skel (
       &_tao_a,
       &_tao_b
     };
-  
+
   static size_t const nargs = 3;
 
   POA_AMI_test::adder * const impl =
@@ -244,7 +244,7 @@ void POA_AMI_test::adder::add_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -308,12 +308,12 @@ POA_AMI_test::adder::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -429,7 +429,7 @@ POA_AMI_test::AMI_adderHandler::~AMI_adderHandler (void)
 
 namespace POA_AMI_test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -455,11 +455,11 @@ namespace POA_AMI_test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->add (
         arg_1);
     }
-  
+
   private:
     POA_AMI_test::AMI_adderHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -488,7 +488,7 @@ void POA_AMI_test::AMI_adderHandler::add_skel (
       &retval,
       &_tao_ami_return_val
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_test::AMI_adderHandler * const impl =
@@ -503,7 +503,7 @@ void POA_AMI_test::AMI_adderHandler::add_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -520,7 +520,7 @@ void POA_AMI_test::AMI_adderHandler::add_skel (
 
 namespace POA_AMI_test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -546,11 +546,11 @@ namespace POA_AMI_test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->add_excep (
         arg_1);
     }
-  
+
   private:
     POA_AMI_test::AMI_adderHandler * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -579,7 +579,7 @@ void POA_AMI_test::AMI_adderHandler::add_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_test::AMI_adderHandler * const impl =
@@ -594,7 +594,7 @@ void POA_AMI_test::AMI_adderHandler::add_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -662,12 +662,12 @@ POA_AMI_test::AMI_adderHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

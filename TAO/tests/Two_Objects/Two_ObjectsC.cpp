@@ -123,7 +123,7 @@ Two_Objects_Test::First::oneway_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -272,7 +272,7 @@ Two_Objects_Test::Second::twoway_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Two_Objects_Test::Octet_Seq>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -309,7 +309,7 @@ Two_Objects_Test::Second::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -458,7 +458,7 @@ Two_Objects_Test::Object_Factory::create_first (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Two_Objects_Test::First>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -495,7 +495,7 @@ Two_Objects_Test::Object_Factory::create_second (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Two_Objects_Test::Second>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -652,13 +652,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Two_Objects_Test::First RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -689,13 +689,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Two_Objects_Test::Second RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -726,13 +726,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Two_Objects_Test::Object_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

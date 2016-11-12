@@ -54,13 +54,13 @@
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_DynAnyTests_enclosed_struct[] =
       {
         { "f", &CORBA::_tc_float },
         { "s", &CORBA::_tc_short }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -104,14 +104,14 @@ DynAnyTests::enclosed_struct::_tao_any_destructor (
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_DynAnyTests_test_struct[] =
       {
         { "c", &CORBA::_tc_char },
         { "ss", &CORBA::_tc_ShortSeq },
         { "es", &DynAnyTests::_tc_enclosed_struct }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -216,7 +216,7 @@ namespace TAO
         CORBA_STRING_8 (
           ::CORBA::tk_string,
           8U);
-        
+
       ::CORBA::TypeCode_ptr const tc_CORBA_STRING_8 =
         &CORBA_STRING_8;
     }
@@ -245,7 +245,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &TAO::TypeCode::tc_CORBA_STRING_8,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_DynAnyTests_test_seq_0 =
         &DynAnyTests_test_seq_0;
     }
@@ -264,7 +264,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:DynAnyTests/test_seq:1.0",
     "test_seq",
     &TAO::TypeCode::tc_DynAnyTests_test_seq_0);
-  
+
 
 namespace DynAnyTests
 {
@@ -346,7 +346,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_short,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_DynAnyTests_SeqShort_0 =
         &DynAnyTests_SeqShort_0;
     }
@@ -365,7 +365,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:DynAnyTests/SeqShort:1.0",
     "SeqShort",
     &TAO::TypeCode::tc_DynAnyTests_SeqShort_0);
-  
+
 
 namespace DynAnyTests
 {
@@ -447,7 +447,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_boolean,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_DynAnyTests_SeqBoolean_0 =
         &DynAnyTests_SeqBoolean_0;
     }
@@ -466,7 +466,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:DynAnyTests/SeqBoolean:1.0",
     "SeqBoolean",
     &TAO::TypeCode::tc_DynAnyTests_SeqBoolean_0);
-  
+
 
 namespace DynAnyTests
 {
@@ -482,12 +482,12 @@ DynAnyTests::test_array_dup (const DynAnyTests::test_array_slice *_tao_src_array
 {
   DynAnyTests::test_array_slice *_tao_dup_array =
     DynAnyTests::test_array_alloc ();
-  
+
   if (!_tao_dup_array)
     {
       return static_cast <DynAnyTests::test_array_slice *> (0);
     }
-  
+
   DynAnyTests::test_array_copy (_tao_dup_array, _tao_src_array);
   return _tao_dup_array;
 }
@@ -545,7 +545,7 @@ namespace TAO
           ::CORBA::tk_array,
           &CORBA::_tc_long,
           2U);
-        
+
       ::CORBA::TypeCode_ptr const tc_DynAnyTests_test_array =
         &DynAnyTests_test_array_2;
     }
@@ -563,7 +563,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:DynAnyTests/test_array:1.0",
     "test_array",
     &TAO::TypeCode::tc_DynAnyTests_test_array);
-  
+
 
 namespace DynAnyTests
 {
@@ -580,7 +580,7 @@ static char const * const _tao_enumerators_DynAnyTests_test_enum[] =
     "TE_SECOND",
     "TE_THIRD",
     "TE_FOURTH"
-    
+
   };
 
 static TAO::TypeCode::Enum<char const *,
@@ -591,7 +591,7 @@ static TAO::TypeCode::Enum<char const *,
     "test_enum",
     _tao_enumerators_DynAnyTests_test_enum,
     5);
-  
+
 
 namespace DynAnyTests
 {
@@ -610,7 +610,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:DynAnyTests/Enumerated_a:1.0",
     "Enumerated_a",
     &DynAnyTests::_tc_test_enum);
-  
+
 
 namespace DynAnyTests
 {
@@ -629,7 +629,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:DynAnyTests/Enumerated_b:1.0",
     "Enumerated_b",
     &DynAnyTests::_tc_test_enum);
-  
+
 
 namespace DynAnyTests
 {
@@ -648,7 +648,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:DynAnyTests/Enumerated_c:1.0",
     "Enumerated_c",
     &DynAnyTests::_tc_test_enum);
-  
+
 
 namespace DynAnyTests
 {
@@ -661,14 +661,14 @@ namespace DynAnyTests
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_DynAnyTests_StructTypedefEnum[] =
       {
         { "field_1", &DynAnyTests::_tc_Enumerated_a },
         { "field_2", &DynAnyTests::_tc_Enumerated_b },
         { "field_3", &DynAnyTests::_tc_Enumerated_c }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -723,7 +723,7 @@ DynAnyTests::test_union::test_union (const ::DynAnyTests::test_union &u)
     break;
     case DynAnyTests::TE_FOURTH:
     {
-      this->u_.te_ = 
+      this->u_.te_ =
         u.u_.te_;
     }
     break;
@@ -765,7 +765,7 @@ DynAnyTests::test_union::operator= (const ::DynAnyTests::test_union &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -778,7 +778,7 @@ DynAnyTests::test_union::operator= (const ::DynAnyTests::test_union &u)
     break;
     case DynAnyTests::TE_FOURTH:
     {
-      this->u_.te_ = 
+      this->u_.te_ =
         u.u_.te_;
     }
     break;
@@ -798,7 +798,7 @@ DynAnyTests::test_union::operator= (const ::DynAnyTests::test_union &u)
     }
     break;
   }
-  
+
   return *this;
 }
 
@@ -807,31 +807,31 @@ void DynAnyTests::test_union::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case DynAnyTests::TE_SECOND:
       ::CORBA::release (this->u_.tc_);
       this->u_.tc_ = 0;
-      
+
     break;
-    
+
     case DynAnyTests::TE_FOURTH:
-      
+
     break;
-    
+
     default:
-      
+
     break;
-    
+
     case DynAnyTests::TE_THIRD:
       ::CORBA::string_free (this->u_.str_);
       this->u_.str_ = 0;
-      
+
     break;
-    
+
     case DynAnyTests::TE_ZEROTH:
-      
+
     break;
-    
+
   }
 }
 
@@ -864,7 +864,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_DynAnyTests_test_union,
     sizeof (_tao_cases_DynAnyTests_test_union)/sizeof (_tao_cases_DynAnyTests_test_union[0]),
     2);
-  
+
 
 namespace DynAnyTests
 {
@@ -883,7 +883,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:DynAnyTests/test_struct_alias:1.0",
     "test_struct_alias",
     &DynAnyTests::_tc_test_struct);
-  
+
 
 namespace DynAnyTests
 {
@@ -902,7 +902,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:DynAnyTests/test_union_alias:1.0",
     "test_union_alias",
     &DynAnyTests::_tc_test_union);
-  
+
 
 namespace DynAnyTests
 {
@@ -922,13 +922,13 @@ DynAnyTests::test_implicit_def::test_implicit_def (void)
 DynAnyTests::test_implicit_def::test_implicit_def (const ::DynAnyTests::test_implicit_def &u)
 {
   this->disc_ = u.disc_;
-  
+
   if (this->disc_)
     {
-      this->u_.tenum_ = 
+      this->u_.tenum_ =
         u.u_.tenum_;
     }
-  
+
 }
 
 DynAnyTests::test_implicit_def::~test_implicit_def (void)
@@ -951,29 +951,29 @@ DynAnyTests::test_implicit_def::operator= (const ::DynAnyTests::test_implicit_de
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
-  
+
   if (this->disc_)
     {
-      this->u_.tenum_ = 
+      this->u_.tenum_ =
         u.u_.tenum_;
     }
-  
+
   return *this;
 }
 
 /// Reset method to reset old values of a union.
 void DynAnyTests::test_implicit_def::_reset (void)
 {
-  
+
   if (this->disc_)
     {
-      
+
     }
-  
+
 }
 
 // TAO_IDL - Generated from
@@ -997,7 +997,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_DynAnyTests_test_implicit_def,
     sizeof (_tao_cases_DynAnyTests_test_implicit_def)/sizeof (_tao_cases_DynAnyTests_test_implicit_def[0]),
     -1);
-  
+
 
 namespace DynAnyTests
 {
@@ -1054,7 +1054,7 @@ DynAnyTests::test_union_no_active_member::operator= (const ::DynAnyTests::test_u
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -1073,7 +1073,7 @@ DynAnyTests::test_union_no_active_member::operator= (const ::DynAnyTests::test_u
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -1082,17 +1082,17 @@ void DynAnyTests::test_union_no_active_member::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 1:
-      
+
     break;
-    
+
     case 2:
       ::CORBA::string_free (this->u_.field_string_);
       this->u_.field_string_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -1121,7 +1121,7 @@ static TAO::TypeCode::Union<char const *,
     _tao_cases_DynAnyTests_test_union_no_active_member,
     sizeof (_tao_cases_DynAnyTests_test_union_no_active_member)/sizeof (_tao_cases_DynAnyTests_test_union_no_active_member[0]),
     -1);
-  
+
 
 namespace DynAnyTests
 {
@@ -1134,12 +1134,12 @@ namespace DynAnyTests
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_DynAnyTests_test_struct_with_long_double[] =
       {
         { "field_longdouble", &CORBA::_tc_longdouble }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -1416,7 +1416,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace DynAnyTests
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1546,7 +1546,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace DynAnyTests
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1676,7 +1676,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace DynAnyTests
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1870,7 +1870,7 @@ namespace DynAnyTests
       TAO::Any_Basic_Impl_T< ::DynAnyTests::test_enum>::extract (
           _tao_any,
           ::DynAnyTests::_tc_test_enum,
-          _tao_elem 
+          _tao_elem
         );
   }
 }
@@ -1900,7 +1900,7 @@ void operator<<= (
     TAO::Any_Basic_Impl_T<DynAnyTests::test_enum>::extract (
         _tao_any,
         DynAnyTests::_tc_test_enum,
-        _tao_elem 
+        _tao_elem
       );
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -2721,12 +2721,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 {
   ::CORBA::ULong _tao_temp = 0;
   ::CORBA::Boolean const _tao_success = strm >> _tao_temp;
-  
+
   if (_tao_success)
     {
       _tao_enumerator = static_cast<DynAnyTests::test_enum> (_tao_temp);
     }
-  
+
   return _tao_success;
 }
 
@@ -2778,7 +2778,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -2823,7 +2823,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -2915,14 +2915,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   if (_tao_union._d ())
     {
       result = strm << _tao_union.tenum ();
     }
-  
+
   return result;
 }
 
@@ -2937,7 +2937,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   _tao_union._default ();
@@ -2954,7 +2954,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
           _tao_union._d (_tao_discriminant);
         }
     }
-  
+
   return result;
 }
 
@@ -2977,7 +2977,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -3009,7 +3009,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)

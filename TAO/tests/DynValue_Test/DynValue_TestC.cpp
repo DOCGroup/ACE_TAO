@@ -58,7 +58,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_DynValue_Test_avt,
     0);
-  
+
 
 namespace DynValue_Test
 {
@@ -142,27 +142,27 @@ DynValue_Test::avt::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = avt::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -174,7 +174,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "Base_us1", &CORBA::_tc_ushort, ::CORBA::PUBLIC_MEMBER },
     { "Base_us2", &CORBA::_tc_ushort, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -188,7 +188,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_DynValue_Test_BaseValue,
     2);
-  
+
 
 namespace DynValue_Test
 {
@@ -292,27 +292,27 @@ DynValue_Test::BaseValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = BaseValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -328,7 +328,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:DynValue_Test/BoxedLong:1.0",
     "BoxedLong",
     &CORBA::_tc_long);
-  
+
 
 namespace DynValue_Test
 {
@@ -377,7 +377,7 @@ DynValue_Test::BoxedLong::_copy_value (void)
     result,
     BoxedLong (*this),
     0);
-    
+
   return result;
 }
 
@@ -430,24 +430,24 @@ DynValue_Test::BoxedLong::_tao_unmarshal (
     {
       return false;
     }
-  
+
   vb_object = 0;
   if (is_null_object)
     {
       return true;
     }
-  
+
   if (is_indirected)
     {
       return DynValue_Test::BoxedLong::_tao_unmarshal (
              indrected_strm, vb_object);
     }
-  
+
   ACE_NEW_RETURN (
     vb_object,
     BoxedLong,
     false);
-  
+
   return (strm >> vb_object->_pd_value);
 }
 
@@ -481,7 +481,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
   {
     { "Nested_s1", &CORBA::_tc_short, ::CORBA::PUBLIC_MEMBER },
     { "Nested_s2", &CORBA::_tc_short, ::CORBA::PUBLIC_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -495,7 +495,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_DynValue_Test_NestedValue,
     2);
-  
+
 
 namespace DynValue_Test
 {
@@ -599,27 +599,27 @@ DynValue_Test::NestedValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = NestedValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -675,7 +675,7 @@ static TAO::TypeCode::Value<char const *,
     &::CORBA::_tc_null,
     _tao_fields_DynValue_Test_NullValue,
     0);
-  
+
 
 namespace DynValue_Test
 {
@@ -779,27 +779,27 @@ DynValue_Test::NullValue::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = NullValue::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -849,7 +849,7 @@ static TAO::TypeCode::Value_Field<char const *, ::CORBA::TypeCode_ptr const *> c
     { "Trunc_null1", &DynValue_Test::_tc_NullValue, ::CORBA::PRIVATE_MEMBER },
     { "Trunc_null2", &DynValue_Test::_tc_NullValue, ::CORBA::PRIVATE_MEMBER },
     { "Trunc_null3", &DynValue_Test::_tc_NullValue, ::CORBA::PRIVATE_MEMBER }
-    
+
   };
 static TAO::TypeCode::Value<char const *,
                      ::CORBA::TypeCode_ptr const *,
@@ -863,7 +863,7 @@ static TAO::TypeCode::Value<char const *,
     &DynValue_Test::_tc_BaseValue,
     _tao_fields_DynValue_Test_Trunc,
     5);
-  
+
 
 namespace DynValue_Test
 {
@@ -968,27 +968,27 @@ DynValue_Test::Trunc::_tao_unmarshal (
         is_null_object,
         is_indirected
       );
-  
+
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
     return false;
-  
+
   if (is_null_object)
     return true;
-  
+
   if (!is_indirected && !base->_tao_unmarshal_v (strm))
     return false;
-  
+
   // Now base must point to the unmarshaled object.
   // Align the pointer to the right subobject.
   new_object = Trunc::_downcast (base);
   if (0 == new_object)
     return false;
-  
+
   if (is_indirected)
     new_object->_add_ref ();
-  
+
   owner._retn ();
   return true;
 }
@@ -1385,7 +1385,7 @@ namespace DynValue_Test
         );
   }
 
-  
+
 }
 
 #else
@@ -1527,7 +1527,7 @@ namespace DynValue_Test
         );
   }
 
-  
+
 }
 
 #else
@@ -1658,7 +1658,7 @@ namespace DynValue_Test
         );
   }
 
-  
+
 }
 
 #else
@@ -1792,7 +1792,7 @@ namespace DynValue_Test
         );
   }
 
-  
+
 }
 
 #else
@@ -1934,7 +1934,7 @@ namespace DynValue_Test
         );
   }
 
-  
+
 }
 
 #else
@@ -2076,7 +2076,7 @@ namespace DynValue_Test
         );
   }
 
-  
+
 }
 
 #else
@@ -2256,16 +2256,16 @@ OBV_DynValue_Test::BaseValue::_tao_marshal_state (TAO_OutputCDR &strm, TAO_Chunk
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_Base_us1) &&
       (strm << _pd_Base_us2);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2274,20 +2274,20 @@ OBV_DynValue_Test::BaseValue::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_Chun
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_Base_us1) &&
       (strm >> _pd_Base_us2);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -2393,16 +2393,16 @@ OBV_DynValue_Test::NestedValue::_tao_marshal_state (TAO_OutputCDR &strm, TAO_Chu
 {
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_Nested_s1) &&
       (strm << _pd_Nested_s2);
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2411,20 +2411,20 @@ OBV_DynValue_Test::NestedValue::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_Ch
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_Nested_s1) &&
       (strm >> _pd_Nested_s2);
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void
@@ -2572,30 +2572,30 @@ OBV_DynValue_Test::Trunc::_tao_marshal_state (TAO_OutputCDR &strm, TAO_ChunkInfo
 {
   if (! ci.start_chunk (strm))
     return false;
-  
+
   if (! this->_tao_marshal__DynValue_Test_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (! ci.start_chunk (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm << _pd_Trunc_bl.in ()) &&
       (strm << _pd_Trunc_nested.in ()) &&
       (strm << _pd_Trunc_null1.in ()) &&
       (strm << _pd_Trunc_null2.in ()) &&
       (strm << _pd_Trunc_null3.in ());
-  if ( ! ret) 
-    return false; 
-  
+  if ( ! ret)
+    return false;
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   if (! ci.end_chunk (strm))
     return false;
-  
+
   return true;
 }
 
@@ -2604,31 +2604,31 @@ OBV_DynValue_Test::Trunc::_tao_unmarshal_state (TAO_InputCDR &strm, TAO_ChunkInf
 {
   if (!ci.handle_chunking (strm))
     return false;
-  
+
   if (!this->_tao_unmarshal__DynValue_Test_BaseValue (strm, ci))
     {
       return false;
     }
-  
+
   if (!ci.handle_chunking (strm))
     return false;
-  
-  CORBA::Boolean const ret = 
+
+  CORBA::Boolean const ret =
       (strm >> _pd_Trunc_bl.out ()) &&
       (strm >> _pd_Trunc_nested.out ()) &&
       (strm >> _pd_Trunc_null1.out ()) &&
       (strm >> _pd_Trunc_null2.out ()) &&
       (strm >> _pd_Trunc_null3.out ());
-  if (!ret) 
-    return false; 
-  
+  if (!ret)
+    return false;
+
   if (this->require_truncation_)
     return ci.skip_chunks (strm);
-  
+
   else
     return ci.handle_chunking (strm);
-  
-  
+
+
 }
 
 void

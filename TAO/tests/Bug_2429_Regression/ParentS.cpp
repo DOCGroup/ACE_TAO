@@ -196,7 +196,7 @@ void POA_Parent::parentMethod_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Parent * const impl =
@@ -209,7 +209,7 @@ void POA_Parent::parentMethod_skel (
 
   parentMethod_Parent command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -266,7 +266,7 @@ void POA_Parent::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Parent * const impl =
@@ -279,7 +279,7 @@ void POA_Parent::shutdown_skel (
 
   shutdown_Parent command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -343,12 +343,12 @@ POA_Parent::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -504,7 +504,7 @@ void POA_AMI_ParentHandler::parentMethod_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_AMI_ParentHandler * const impl =
@@ -517,7 +517,7 @@ void POA_AMI_ParentHandler::parentMethod_skel (
 
   parentMethod_AMI_ParentHandler command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -557,7 +557,7 @@ public:
         this->operation_details_,
         this->args_,
         1);
-      
+
     this->servant_->parentMethod_excep (
       arg_1);
   }
@@ -589,7 +589,7 @@ void POA_AMI_ParentHandler::parentMethod_excep_skel (
       &retval,
       &_tao_excep_holder
     };
-  
+
   static size_t const nargs = 2;
 
   POA_AMI_ParentHandler * const impl =
@@ -604,7 +604,7 @@ void POA_AMI_ParentHandler::parentMethod_excep_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -672,12 +672,12 @@ POA_AMI_ParentHandler::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

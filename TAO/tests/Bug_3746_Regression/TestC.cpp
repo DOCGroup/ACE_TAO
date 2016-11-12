@@ -117,7 +117,7 @@ Test::BoundSequences::SendSequenceOf10Long (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::ULong>::in_arg_val _tao_LengthSent (LengthSent);
   TAO::Arg_Traits< ::Test::BoundSequences::SequenceOf10Long>::in_arg_val _tao_inSeq (inSeq);
@@ -136,7 +136,7 @@ Test::BoundSequences::SendSequenceOf10Long (
       "SendSequenceOf10Long",
       20,
       TAO::TAO_CO_NONE
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -155,7 +155,7 @@ Test::BoundSequences::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -309,13 +309,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::BoundSequences RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

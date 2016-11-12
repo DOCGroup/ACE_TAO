@@ -116,7 +116,7 @@ Test::Hello::get_stringList (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Test::StringList>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -154,7 +154,7 @@ Test::Hello::get_stringList2 (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::ACE_InputCDR::to_boolean>::in_arg_val _tao_initialize (initialize);
   TAO::Arg_Traits< ::Test::StringList>::out_arg_val _tao_osl (osl);
@@ -173,7 +173,7 @@ Test::Hello::get_stringList2 (
       "get_stringList2",
       15,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -190,7 +190,7 @@ Test::Hello::mod_stringList (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::StringList>::inout_arg_val _tao_iosl (iosl);
 
@@ -207,7 +207,7 @@ Test::Hello::mod_stringList (
       "mod_stringList",
       14,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -224,7 +224,7 @@ Test::Hello::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -378,13 +378,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Hello RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

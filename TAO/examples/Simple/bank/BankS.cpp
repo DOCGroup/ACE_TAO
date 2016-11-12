@@ -118,8 +118,8 @@ TAO_Bank_Account_Perfect_Hash_OpTable::lookup (const char *str, unsigned int len
 
   static const signed char lookup[] =
     {
-       -1,  -1,  -1,  -1,  -1,   5,  -7,  -2,   6, -22,   9,  -1,  10,  -1, 
-       -1,  11,  -1,  12,  13,  14, 
+       -1,  -1,  -1,  -1,  -1,   5,  -7,  -2,   6, -22,   9,  -1,  10,  -1,
+       -1,  11,  -1,  12,  13,  14,
     };
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
@@ -177,7 +177,7 @@ POA_Bank::Account::~Account (void)
 
 namespace POA_Bank
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -202,11 +202,11 @@ namespace POA_Bank
         TAO::Portable_Server::get_ret_arg< ::CORBA::Float> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->balance ();
     }
-  
+
   private:
     POA_Bank::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -233,7 +233,7 @@ void POA_Bank::Account::_get_balance_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Bank::Account * const impl =
@@ -248,7 +248,7 @@ void POA_Bank::Account::_get_balance_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -265,7 +265,7 @@ void POA_Bank::Account::_get_balance_skel (
 
 namespace POA_Bank
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -291,11 +291,11 @@ namespace POA_Bank
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->deposit (
         arg_1);
     }
-  
+
   private:
     POA_Bank::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -324,7 +324,7 @@ void POA_Bank::Account::deposit_skel (
       &retval,
       &_tao_amount
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Bank::Account * const impl =
@@ -339,7 +339,7 @@ void POA_Bank::Account::deposit_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -356,7 +356,7 @@ void POA_Bank::Account::deposit_skel (
 
 namespace POA_Bank
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -382,11 +382,11 @@ namespace POA_Bank
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->withdraw (
         arg_1);
     }
-  
+
   private:
     POA_Bank::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -403,7 +403,7 @@ void POA_Bank::Account::withdraw_skel (
   TAO_ServantBase *servant)
 {
 #if TAO_HAS_INTERCEPTORS == 1
-  static ::CORBA::TypeCode_ptr const exceptions[] = 
+  static ::CORBA::TypeCode_ptr const exceptions[] =
     {
       Bank::Account::_tc_Overdraft
     };
@@ -418,7 +418,7 @@ void POA_Bank::Account::withdraw_skel (
       &retval,
       &_tao_amount
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Bank::Account * const impl =
@@ -433,7 +433,7 @@ void POA_Bank::Account::withdraw_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -450,7 +450,7 @@ void POA_Bank::Account::withdraw_skel (
 
 namespace POA_Bank
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -475,11 +475,11 @@ namespace POA_Bank
         TAO::Portable_Server::get_ret_arg< char *> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->name ();
     }
-  
+
   private:
     POA_Bank::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -506,7 +506,7 @@ void POA_Bank::Account::_get_name_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Bank::Account * const impl =
@@ -521,7 +521,7 @@ void POA_Bank::Account::_get_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -538,7 +538,7 @@ void POA_Bank::Account::_get_name_skel (
 
 namespace POA_Bank
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -564,11 +564,11 @@ namespace POA_Bank
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->name (
         arg_1);
     }
-  
+
   private:
     POA_Bank::Account * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -597,7 +597,7 @@ void POA_Bank::Account::_set_name_skel (
       &retval,
       &_tao_name
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Bank::Account * const impl =
@@ -612,7 +612,7 @@ void POA_Bank::Account::_set_name_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -676,12 +676,12 @@ POA_Bank::Account::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -797,7 +797,7 @@ POA_Bank::AccountManager::~AccountManager (void)
 
 namespace POA_Bank
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -822,25 +822,25 @@ namespace POA_Bank
         TAO::Portable_Server::get_ret_arg< ::Bank::Account> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< char *>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< char *> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       TAO::SArg_Traits< ::CORBA::Float>::in_arg_type arg_2 =
         TAO::Portable_Server::get_in_arg< ::CORBA::Float> (
           this->operation_details_,
           this->args_,
           2);
-        
+
       retval =
         this->servant_->open (
           arg_1
           , arg_2);
     }
-  
+
   private:
     POA_Bank::AccountManager * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -871,7 +871,7 @@ void POA_Bank::AccountManager::open_skel (
       &_tao_name,
       &_tao_initial_balance
     };
-  
+
   static size_t const nargs = 3;
 
   POA_Bank::AccountManager * const impl =
@@ -886,7 +886,7 @@ void POA_Bank::AccountManager::open_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -903,7 +903,7 @@ void POA_Bank::AccountManager::open_skel (
 
 namespace POA_Bank
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -929,11 +929,11 @@ namespace POA_Bank
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->close (
         arg_1);
     }
-  
+
   private:
     POA_Bank::AccountManager * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -962,7 +962,7 @@ void POA_Bank::AccountManager::close_skel (
       &retval,
       &_tao_account_
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Bank::AccountManager * const impl =
@@ -977,7 +977,7 @@ void POA_Bank::AccountManager::close_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -994,7 +994,7 @@ void POA_Bank::AccountManager::close_skel (
 
 namespace POA_Bank
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -1013,7 +1013,7 @@ namespace POA_Bank
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Bank::AccountManager * const servant_;
   };
@@ -1038,7 +1038,7 @@ void POA_Bank::AccountManager::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Bank::AccountManager * const impl =
@@ -1051,7 +1051,7 @@ void POA_Bank::AccountManager::shutdown_skel (
 
   shutdown_AccountManager command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -1115,12 +1115,12 @@ POA_Bank::AccountManager::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

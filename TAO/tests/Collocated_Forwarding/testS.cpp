@@ -147,15 +147,15 @@ void
 POA_Collocated_ForwardRequestTest::_TAO_test_Direct_Proxy_Impl::collocated_call (
     TAO_Abstract_ServantBase  *servant,
     TAO::Argument ** args)
-  
+
 {
-  POA_Collocated_ForwardRequestTest::test_ptr _tao_ptr = 
+  POA_Collocated_ForwardRequestTest::test_ptr _tao_ptr =
     dynamic_cast<POA_Collocated_ForwardRequestTest::test_ptr> (servant);
   if (!_tao_ptr)
     {
       throw ::CORBA::INTERNAL ();
     }
-  
+
   ((TAO::Arg_Traits< ::CORBA::Short>::ret_val *) args[0])->arg () =
     _tao_ptr->collocated_call (
         );
@@ -188,7 +188,7 @@ POA_Collocated_ForwardRequestTest::test::~test (void)
 
 namespace POA_Collocated_ForwardRequestTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -213,11 +213,11 @@ namespace POA_Collocated_ForwardRequestTest
         TAO::Portable_Server::get_ret_arg< ::CORBA::Short> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->collocated_call ();
     }
-  
+
   private:
     POA_Collocated_ForwardRequestTest::test * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -244,7 +244,7 @@ void POA_Collocated_ForwardRequestTest::test::collocated_call_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Collocated_ForwardRequestTest::test * const impl =
@@ -259,7 +259,7 @@ void POA_Collocated_ForwardRequestTest::test::collocated_call_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -323,12 +323,12 @@ POA_Collocated_ForwardRequestTest::test::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

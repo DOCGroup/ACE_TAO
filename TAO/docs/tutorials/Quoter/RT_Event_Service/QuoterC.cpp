@@ -150,9 +150,9 @@ void Quoter::Invalid_Stock_Symbol::_tao_decode (TAO_InputCDR &cdr)
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const * const 
+  ::CORBA::TypeCode_ptr const *> const * const
     _tao_fields_Quoter_Invalid_Stock_Symbol = 0;
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -218,7 +218,7 @@ Quoter::Stock_Factory::get_stock (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::Quoter::Stock>::ret_val _tao_retval;
   TAO::Arg_Traits< char *>::in_arg_val _tao_stock_symbol (stock_symbol);
 
@@ -229,7 +229,7 @@ Quoter::Stock_Factory::get_stock (
     };
 
   static TAO::Exception_Data
-  _tao_Quoter_Stock_Factory_get_stock_exceptiondata [] = 
+  _tao_Quoter_Stock_Factory_get_stock_exceptiondata [] =
     {
       {
         "IDL:Quoter/Invalid_Stock_Symbol:1.0",
@@ -247,7 +247,7 @@ Quoter::Stock_Factory::get_stock (
       "get_stock",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (
@@ -357,7 +357,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Quoter/Stock_Factory:1.0",
     "Stock_Factory");
-  
+
 
 namespace Quoter
 {
@@ -409,7 +409,7 @@ Quoter::Stock::symbol (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -446,7 +446,7 @@ Quoter::Stock::full_name (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< char *>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -483,7 +483,7 @@ Quoter::Stock::price (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::Double>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -608,7 +608,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Quoter/Stock:1.0",
     "Stock");
-  
+
 
 namespace Quoter
 {
@@ -621,14 +621,14 @@ namespace Quoter
 
 static TAO::TypeCode::Struct_Field<
   char const *,
-  ::CORBA::TypeCode_ptr const *> const 
+  ::CORBA::TypeCode_ptr const *> const
     _tao_fields_Quoter_Event[] =
       {
         { "price", &CORBA::_tc_double },
         { "symbol", &CORBA::_tc_string },
         { "full_name", &CORBA::_tc_string }
       };
-  
+
 static TAO::TypeCode::Struct<
   char const *,
   ::CORBA::TypeCode_ptr const *,
@@ -706,7 +706,7 @@ Quoter::Modify_Stock::set_price (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::CORBA::Double>::in_arg_val _tao_new_price (new_price);
 
@@ -723,7 +723,7 @@ Quoter::Modify_Stock::set_price (
       "set_price",
       9,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -832,7 +832,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Quoter/Modify_Stock:1.0",
     "Modify_Stock");
-  
+
 
 namespace Quoter
 {
@@ -858,7 +858,7 @@ namespace TAO
       {
         return false;
       }
-    
+
     try
       {
         this->value_->_tao_decode (cdr);
@@ -879,7 +879,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   // Copying insertion.
   void operator<<= (
@@ -1015,7 +1015,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1129,7 +1129,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1357,7 +1357,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
   /// Copying insertion.
   void
@@ -1496,13 +1496,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::Stock_Factory RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1533,13 +1533,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::Stock RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 
@@ -1599,13 +1599,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Quoter::Modify_Stock RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

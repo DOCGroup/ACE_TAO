@@ -153,7 +153,7 @@ POA_Test::Echo::~Echo (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -178,18 +178,18 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::Test::Payload> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::Test::Payload>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::Test::Payload> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->echo_payload (
           arg_1);
     }
-  
+
   private:
     POA_Test::Echo * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -218,7 +218,7 @@ void POA_Test::Echo::echo_payload_skel (
       &retval,
       &_tao_data
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Echo * const impl =
@@ -233,7 +233,7 @@ void POA_Test::Echo::echo_payload_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -297,12 +297,12 @@ POA_Test::Echo::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -415,7 +415,7 @@ POA_Test::Server::~Server (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -441,11 +441,11 @@ namespace POA_Test
           this->operation_details_,
           this->args_,
           1);
-        
+
       this->servant_->start_task (
         arg_1);
     }
-  
+
   private:
     POA_Test::Server * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -474,7 +474,7 @@ void POA_Test::Server::start_task_skel (
       &retval,
       &_tao_client
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Server * const impl =
@@ -489,7 +489,7 @@ void POA_Test::Server::start_task_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -553,12 +553,12 @@ POA_Test::Server::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

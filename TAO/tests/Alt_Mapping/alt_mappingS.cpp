@@ -179,25 +179,25 @@ public:
       TAO::Portable_Server::get_ret_arg< std::string> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< std::string>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< std::string> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< std::string>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< std::string> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< std::string>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< std::string> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_unbounded_string (
         arg_1
@@ -236,7 +236,7 @@ void POA_Alt_Mapping::test_unbounded_string_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Alt_Mapping * const impl =
@@ -251,7 +251,7 @@ void POA_Alt_Mapping::test_unbounded_string_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -290,25 +290,25 @@ public:
       TAO::Portable_Server::get_ret_arg< ::Alt_Mapping::StructSeq> (
         this->operation_details_,
         this->args_);
-    
+
     TAO::SArg_Traits< ::Alt_Mapping::StructSeq>::in_arg_type arg_1 =
       TAO::Portable_Server::get_in_arg< ::Alt_Mapping::StructSeq> (
         this->operation_details_,
         this->args_,
         1);
-      
+
     TAO::SArg_Traits< ::Alt_Mapping::StructSeq>::inout_arg_type arg_2 =
       TAO::Portable_Server::get_inout_arg< ::Alt_Mapping::StructSeq> (
         this->operation_details_,
         this->args_,
         2);
-      
+
     TAO::SArg_Traits< ::Alt_Mapping::StructSeq>::out_arg_type arg_3 =
       TAO::Portable_Server::get_out_arg< ::Alt_Mapping::StructSeq> (
         this->operation_details_,
         this->args_,
         3);
-      
+
     retval =
       this->servant_->test_struct_sequence (
         arg_1
@@ -347,7 +347,7 @@ void POA_Alt_Mapping::test_struct_sequence_skel (
       &_tao_s2,
       &_tao_s3
     };
-  
+
   static size_t const nargs = 4;
 
   POA_Alt_Mapping * const impl =
@@ -362,7 +362,7 @@ void POA_Alt_Mapping::test_struct_sequence_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -419,7 +419,7 @@ void POA_Alt_Mapping::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Alt_Mapping * const impl =
@@ -432,7 +432,7 @@ void POA_Alt_Mapping::shutdown_skel (
 
   shutdown_Alt_Mapping command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -496,12 +496,12 @@ POA_Alt_Mapping::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

@@ -59,7 +59,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/Timestamp:1.0",
     "Timestamp",
     &CORBA::_tc_ulonglong);
-  
+
 
 namespace Test
 {
@@ -141,7 +141,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_octet,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_octet_load_0 =
         &Test_octet_load_0;
     }
@@ -160,7 +160,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/octet_load:1.0",
     "octet_load",
     &TAO::TypeCode::tc_Test_octet_load_0);
-  
+
 
 namespace Test
 {
@@ -242,7 +242,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_long,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_long_load_0 =
         &Test_long_load_0;
     }
@@ -261,7 +261,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/long_load:1.0",
     "long_load",
     &TAO::TypeCode::tc_Test_long_load_0);
-  
+
 
 namespace Test
 {
@@ -343,7 +343,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_char,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_char_load_0 =
         &Test_char_load_0;
     }
@@ -362,7 +362,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/char_load:1.0",
     "char_load",
     &TAO::TypeCode::tc_Test_char_load_0);
-  
+
 
 namespace Test
 {
@@ -444,7 +444,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_short,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_short_load_0 =
         &Test_short_load_0;
     }
@@ -463,7 +463,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/short_load:1.0",
     "short_load",
     &TAO::TypeCode::tc_Test_short_load_0);
-  
+
 
 namespace Test
 {
@@ -545,7 +545,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_longlong,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_longlong_load_0 =
         &Test_longlong_load_0;
     }
@@ -564,7 +564,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/longlong_load:1.0",
     "longlong_load",
     &TAO::TypeCode::tc_Test_longlong_load_0);
-  
+
 
 namespace Test
 {
@@ -646,7 +646,7 @@ namespace TAO
           ::CORBA::tk_sequence,
           &CORBA::_tc_double,
           0U);
-        
+
       ::CORBA::TypeCode_ptr const tc_Test_double_load_0 =
         &Test_double_load_0;
     }
@@ -665,7 +665,7 @@ static TAO::TypeCode::Alias<char const *,
     "IDL:Test/double_load:1.0",
     "double_load",
     &TAO::TypeCode::tc_Test_double_load_0);
-  
+
 
 namespace Test
 {
@@ -718,7 +718,7 @@ Test::Roundtrip::test_octet_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULongLong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::octet_load>::in_arg_val _tao_ol (ol);
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_send_time (send_time);
@@ -737,7 +737,7 @@ Test::Roundtrip::test_octet_method (
       "test_octet_method",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -757,7 +757,7 @@ Test::Roundtrip::test_long_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULongLong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::long_load>::in_arg_val _tao_ol (ol);
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_send_time (send_time);
@@ -776,7 +776,7 @@ Test::Roundtrip::test_long_method (
       "test_long_method",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -796,7 +796,7 @@ Test::Roundtrip::test_short_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULongLong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::short_load>::in_arg_val _tao_ol (ol);
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_send_time (send_time);
@@ -815,7 +815,7 @@ Test::Roundtrip::test_short_method (
       "test_short_method",
       17,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -835,7 +835,7 @@ Test::Roundtrip::test_char_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULongLong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::char_load>::in_arg_val _tao_ol (ol);
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_send_time (send_time);
@@ -854,7 +854,7 @@ Test::Roundtrip::test_char_method (
       "test_char_method",
       16,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -874,7 +874,7 @@ Test::Roundtrip::test_longlong_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULongLong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::longlong_load>::in_arg_val _tao_ol (ol);
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_send_time (send_time);
@@ -893,7 +893,7 @@ Test::Roundtrip::test_longlong_method (
       "test_longlong_method",
       20,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -913,7 +913,7 @@ Test::Roundtrip::test_double_method (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< ::CORBA::ULongLong>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::double_load>::in_arg_val _tao_ol (ol);
   TAO::Arg_Traits< ::CORBA::ULongLong>::in_arg_val _tao_send_time (send_time);
@@ -932,7 +932,7 @@ Test::Roundtrip::test_double_method (
       "test_double_method",
       18,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -951,7 +951,7 @@ Test::Roundtrip::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -1074,7 +1074,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_objref,
     "IDL:Test/Roundtrip:1.0",
     "Roundtrip");
-  
+
 
 namespace Test
 {
@@ -1097,7 +1097,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1227,7 +1227,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1357,7 +1357,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1487,7 +1487,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1617,7 +1617,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1747,7 +1747,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
   // Copying insertion.
   void operator<<= (
       ::CORBA::Any &_tao_any,
@@ -1887,7 +1887,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
   /// Copying insertion.
   void
@@ -2155,13 +2155,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Roundtrip RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

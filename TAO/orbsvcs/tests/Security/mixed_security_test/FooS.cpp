@@ -155,7 +155,7 @@ POA_Foo::Bar::~Bar (void)
 
 namespace POA_Foo
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -174,7 +174,7 @@ namespace POA_Foo
     {
       this->servant_->baz ();
     }
-  
+
   private:
     POA_Foo::Bar * const servant_;
   };
@@ -199,7 +199,7 @@ void POA_Foo::Bar::baz_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Foo::Bar * const impl =
@@ -212,7 +212,7 @@ void POA_Foo::Bar::baz_skel (
 
   baz_Bar command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -229,7 +229,7 @@ void POA_Foo::Bar::baz_skel (
 
 namespace POA_Foo
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -248,7 +248,7 @@ namespace POA_Foo
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Foo::Bar * const servant_;
   };
@@ -273,7 +273,7 @@ void POA_Foo::Bar::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Foo::Bar * const impl =
@@ -286,7 +286,7 @@ void POA_Foo::Bar::shutdown_skel (
 
   shutdown_Bar command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -350,12 +350,12 @@ POA_Foo::Bar::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

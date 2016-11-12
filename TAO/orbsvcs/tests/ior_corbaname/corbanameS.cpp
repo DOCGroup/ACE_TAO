@@ -152,7 +152,7 @@ POA_corbaname::Status::~Status (void)
 
 namespace POA_corbaname
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -177,11 +177,11 @@ namespace POA_corbaname
         TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
           this->operation_details_,
           this->args_);
-      
+
       retval =
         this->servant_->print_status ();
     }
-  
+
   private:
     POA_corbaname::Status * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -208,7 +208,7 @@ void POA_corbaname::Status::print_status_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_corbaname::Status * const impl =
@@ -223,7 +223,7 @@ void POA_corbaname::Status::print_status_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -287,12 +287,12 @@ POA_corbaname::Status::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 

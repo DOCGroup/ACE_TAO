@@ -167,7 +167,7 @@ Test::Hello::shutdown (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -201,7 +201,7 @@ Test::Hello::check_normal_context (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -210,7 +210,7 @@ Test::Hello::check_normal_context (
     };
 
   static TAO::Exception_Data
-  _tao_Test_Hello_check_normal_context_exceptiondata [] = 
+  _tao_Test_Hello_check_normal_context_exceptiondata [] =
     {
       {
         "IDL:Test/MyException:1.0",
@@ -251,7 +251,7 @@ Test::Hello::check_extended_context (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
 
   TAO::Argument *_the_tao_operation_signature [] =
@@ -260,7 +260,7 @@ Test::Hello::check_extended_context (
     };
 
   static TAO::Exception_Data
-  _tao_Test_Hello_check_extended_context_exceptiondata [] = 
+  _tao_Test_Hello_check_extended_context_exceptiondata [] =
     {
       {
         "IDL:Test/MyException:1.0",
@@ -422,13 +422,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::Hello RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

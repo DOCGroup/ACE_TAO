@@ -81,7 +81,7 @@ Test::structOne::ErrorInfo::operator= (const ::Test::structOne::ErrorInfo &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -100,7 +100,7 @@ Test::structOne::ErrorInfo::operator= (const ::Test::structOne::ErrorInfo &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -109,17 +109,17 @@ void Test::structOne::ErrorInfo::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 0:
       ::CORBA::string_free (this->u_.errorstring_);
       this->u_.errorstring_ = 0;
-      
+
     break;
-    
+
     case 10:
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -162,7 +162,7 @@ Test::structTwo::ErrorInfo::operator= (const ::Test::structTwo::ErrorInfo &u)
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -176,7 +176,7 @@ Test::structTwo::ErrorInfo::operator= (const ::Test::structTwo::ErrorInfo &u)
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -185,13 +185,13 @@ void Test::structTwo::ErrorInfo::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 100:
       ::CORBA::string_free (this->u_.failstring_);
       this->u_.failstring_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -234,7 +234,7 @@ Test::exceptionOne::ExceptionUnion::operator= (const ::Test::exceptionOne::Excep
     {
       return *this;
     }
-  
+
   this->_reset ();
   this->disc_ = u.disc_;
 
@@ -248,7 +248,7 @@ Test::exceptionOne::ExceptionUnion::operator= (const ::Test::exceptionOne::Excep
     default:
     break;
   }
-  
+
   return *this;
 }
 
@@ -257,13 +257,13 @@ void Test::exceptionOne::ExceptionUnion::_reset (void)
 {
   switch (this->disc_)
   {
-    
+
     case 100:
       ::CORBA::string_free (this->u_.failstring_);
       this->u_.failstring_ = 0;
-      
+
     break;
-    
+
     default:
     break;
   }
@@ -414,7 +414,7 @@ Test::interfaceOne::getstruct (
     {
       ::CORBA::Object::tao_object_initialize (this);
     }
-  
+
   TAO::Arg_Traits< void>::ret_val _tao_retval;
   TAO::Arg_Traits< ::Test::structOne>::out_arg_val _tao_tester (tester);
 
@@ -425,7 +425,7 @@ Test::interfaceOne::getstruct (
     };
 
   static TAO::Exception_Data
-  _tao_Test_interfaceOne_getstruct_exceptiondata [] = 
+  _tao_Test_interfaceOne_getstruct_exceptiondata [] =
     {
       {
         "IDL:Test/exceptionOne:1.0",
@@ -552,7 +552,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -584,7 +584,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -669,7 +669,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -696,7 +696,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -767,7 +767,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_union._d ())
@@ -794,7 +794,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   ::CORBA::Boolean result = true;
 
   switch (_tao_discriminant)
@@ -888,13 +888,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::Test::interfaceOne RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

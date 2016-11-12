@@ -106,7 +106,7 @@ abstract_parent::method (
       "method",
       6,
       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY
-      
+
     );
 
   _tao_call.invoke (0, 0);
@@ -207,7 +207,7 @@ static TAO::TypeCode::Objref<char const *,
     ::CORBA::tk_abstract_interface,
     "IDL:abstract_parent:1.0",
     "abstract_parent");
-  
+
 ::CORBA::TypeCode_ptr const _tc_abstract_parent =
   &_tao_tc_abstract_parent;
 
@@ -299,13 +299,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
     {
       return false;
     }
-  
+
   typedef ::abstract_parent RHS_SCOPED_NAME;
 
   // Narrow to the right type.
   _tao_objref =
     TAO::AbstractBase_Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
   return true;
 }
 

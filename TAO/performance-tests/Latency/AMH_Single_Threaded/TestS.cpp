@@ -170,7 +170,7 @@ POA_Test::AMH_Roundtrip::test_method_skel (
     dynamic_cast<POA_Test::AMH_Roundtrip *> (_tao_servant);
   if (!_tao_impl)
     throw ::CORBA::INTERNAL ();
-  
+
   ::Test::Timestamp send_time;
   TAO_InputCDR & _tao_in = *_tao_server_request.incoming ();
 
@@ -178,28 +178,28 @@ POA_Test::AMH_Roundtrip::test_method_skel (
       (_tao_in >> send_time)
     ))
     throw ::CORBA::MARSHAL();
-  
+
   TAO_ORB_Core *orb_core =
     _tao_server_request.orb ()->orb_core ();
-  
+
   TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
     orb_core->lane_resources ().amh_response_handler_allocator ();
-  
+
   TAO::TAO_Buffer_Allocator<
       POA_Test::TAO_AMH_RoundtripResponseHandler,
       TAO_AMH_BUFFER_ALLOCATOR
     > buffer_allocator (amh_allocator);
-  
-  POA_Test::TAO_AMH_RoundtripResponseHandler_ptr _tao_rh_ptr = 
+
+  POA_Test::TAO_AMH_RoundtripResponseHandler_ptr _tao_rh_ptr =
     buffer_allocator.allocate();
-  
-  if (!_tao_rh_ptr) 
+
+  if (!_tao_rh_ptr)
     throw ::CORBA::NO_MEMORY ();
-  
+
   _tao_rh_ptr->init (_tao_server_request, amh_allocator);
-  
+
   ACE_Utils::Auto_Functor <POA_Test::TAO_AMH_RoundtripResponseHandler, TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);
-  
+
   _tao_impl->test_method (
       safe_rd_.get (),
       send_time
@@ -219,28 +219,28 @@ POA_Test::AMH_Roundtrip::shutdown_skel (
     dynamic_cast<POA_Test::AMH_Roundtrip *> (_tao_servant);
   if (!_tao_impl)
     throw ::CORBA::INTERNAL ();
-  
+
   TAO_ORB_Core *orb_core =
     _tao_server_request.orb ()->orb_core ();
-  
+
   TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
     orb_core->lane_resources ().amh_response_handler_allocator ();
-  
+
   TAO::TAO_Buffer_Allocator<
       POA_Test::TAO_AMH_RoundtripResponseHandler,
       TAO_AMH_BUFFER_ALLOCATOR
     > buffer_allocator (amh_allocator);
-  
-  POA_Test::TAO_AMH_RoundtripResponseHandler_ptr _tao_rh_ptr = 
+
+  POA_Test::TAO_AMH_RoundtripResponseHandler_ptr _tao_rh_ptr =
     buffer_allocator.allocate();
-  
-  if (!_tao_rh_ptr) 
+
+  if (!_tao_rh_ptr)
     throw ::CORBA::NO_MEMORY ();
-  
+
   _tao_rh_ptr->init (_tao_server_request, amh_allocator);
-  
+
   ACE_Utils::Auto_Functor <POA_Test::TAO_AMH_RoundtripResponseHandler, TAO::ARH_Refcount_Functor> safe_rd_(_tao_rh_ptr);
-  
+
   _tao_impl->shutdown (
       safe_rd_.get ()
     );
@@ -292,23 +292,23 @@ POA_Test::AMH_Roundtrip::_this (void)
 
   TAO_Stub_Auto_Ptr safe_stub (stub);
   ::CORBA::Object_ptr tmp = CORBA::Object_ptr ();
-  
+
   ::CORBA::Boolean _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0
     );
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
   typedef ::Test::Roundtrip STUB_SCOPED_NAME;
   return
     TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (obj.in ());
-    
+
 }
 
 // TAO_IDL - Generated from
@@ -416,7 +416,7 @@ POA_Test::Roundtrip::~Roundtrip (void)
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -441,18 +441,18 @@ namespace POA_Test
         TAO::Portable_Server::get_ret_arg< ::CORBA::ULongLong> (
           this->operation_details_,
           this->args_);
-      
+
       TAO::SArg_Traits< ::CORBA::ULongLong>::in_arg_type arg_1 =
         TAO::Portable_Server::get_in_arg< ::CORBA::ULongLong> (
           this->operation_details_,
           this->args_,
           1);
-        
+
       retval =
         this->servant_->test_method (
           arg_1);
     }
-  
+
   private:
     POA_Test::Roundtrip * const servant_;
     TAO_Operation_Details const * const operation_details_;
@@ -481,7 +481,7 @@ void POA_Test::Roundtrip::test_method_skel (
       &retval,
       &_tao_send_time
     };
-  
+
   static size_t const nargs = 2;
 
   POA_Test::Roundtrip * const impl =
@@ -496,7 +496,7 @@ void POA_Test::Roundtrip::test_method_skel (
     impl,
     server_request.operation_details (),
     args);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -513,7 +513,7 @@ void POA_Test::Roundtrip::test_method_skel (
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/upcall_command_ss.cpp:80
@@ -532,7 +532,7 @@ namespace POA_Test
     {
       this->servant_->shutdown ();
     }
-  
+
   private:
     POA_Test::Roundtrip * const servant_;
   };
@@ -557,7 +557,7 @@ void POA_Test::Roundtrip::shutdown_skel (
     {
       &retval
     };
-  
+
   static size_t const nargs = 1;
 
   POA_Test::Roundtrip * const impl =
@@ -570,7 +570,7 @@ void POA_Test::Roundtrip::shutdown_skel (
 
   shutdown_Roundtrip command (
     impl);
-  
+
   TAO::Upcall_Wrapper upcall_wrapper;
   upcall_wrapper.upcall (server_request
                          , args
@@ -634,12 +634,12 @@ POA_Test::Roundtrip::_this (void)
 
   ::CORBA::Boolean const _tao_opt_colloc =
     stub->servant_orb_var ()->orb_core ()->optimize_collocation_objects ();
-  
+
   ACE_NEW_RETURN (
       tmp,
       ::CORBA::Object (stub, _tao_opt_colloc, this),
       0);
-  
+
   ::CORBA::Object_var obj = tmp;
   (void) safe_stub.release ();
 
@@ -677,7 +677,7 @@ POA_Test::TAO_AMH_RoundtripResponseHandler::test_method (
     {
       throw ::CORBA::MARSHAL();
     }
-  
+
   this->_tao_rh_send_reply ();
 }
 
@@ -707,7 +707,7 @@ POA_Test::TAO_AMH_RoundtripResponseHandler::shutdown (
 {
   this->_tao_rh_init_reply ();
 
-  
+
   this->_tao_rh_send_reply ();
 }
 
