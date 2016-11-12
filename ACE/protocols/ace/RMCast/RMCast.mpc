@@ -8,14 +8,13 @@ project(RMCast) : acelib, ace_output, install, threads {
     install_dir = ace/RMCast
   }
 
-  // *TODO*: this is essentially a workaround to be removed ASAP. On modern
+  // *TODO*: essentially, this is a workaround to be removed ASAP. On current
   //         systems, the correct solution is to use (C++11) 'extern templates'
-  //         in all ACE headers and instantiate the templates in the application
-  //         translation units only (instead of (multiple) DLLs).
-  //         Note that previous MSVC do not support this feature, so
-  //         alternatives may need to be found (i.e. 'explicit' template
-  //         instantiation)
-  specific(vc6,vc8,vc9,vc10,vc11,vc12,vc14) {
+  //         in all ACE headers and instantiate any templates in the application
+  //         translation units only, where these linkage issues occur).
+  // *TODO*: note how MPC probably needs to stop adopting each new MSVC release
+  //         separately; this patch doesn't scale at all
+  specific(nmake,vc6,vc7,vc71,vc8,vc9,vc10,vc11,vc12,vc14) {
     linkflags += /force:multiple
   }
 
