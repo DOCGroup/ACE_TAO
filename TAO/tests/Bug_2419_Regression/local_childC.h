@@ -67,7 +67,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_interface.cpp:748
@@ -135,7 +135,7 @@ protected:
   // Abstract or local interface only.
   local_child (void);
 
-  
+
 
   virtual ~local_child (void);
 

@@ -80,7 +80,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -121,7 +121,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef VBstring_var _var_type;
   typedef VBstring_out _out_type;
 
@@ -140,10 +140,10 @@ public:
       TAO_InputCDR &,
       VBstring *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:406
@@ -178,10 +178,10 @@ public:
 
   // Allows only accessing thru a slot.
   char operator[] ( ::CORBA::ULong slot) const;
-  
+
 private:
   ::CORBA::String_var _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -191,10 +191,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const VBstring & val);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -227,7 +227,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef VBwstring_var _var_type;
   typedef VBwstring_out _out_type;
 
@@ -246,10 +246,10 @@ public:
       TAO_InputCDR &,
       VBwstring *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:406
@@ -284,10 +284,10 @@ public:
 
   // Allows only accessing thru a slot.
   ::CORBA::WChar operator[] ( ::CORBA::ULong slot) const;
-  
+
 private:
   ::CORBA::WString_var _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -297,10 +297,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const VBwstring & val);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -344,12 +344,12 @@ public:
     ::CORBA::Boolean release = false);
   TDseqlong (const TDseqlong &);
   virtual ~TDseqlong (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef TDseqlong_var _var_type;
   typedef TDseqlong_out _out_type;
 
@@ -388,7 +388,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef VBseqlong_var _var_type;
   typedef VBseqlong_out _out_type;
 
@@ -407,10 +407,10 @@ public:
       TAO_InputCDR &,
       VBseqlong *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:286
@@ -426,7 +426,7 @@ public:
     );
   VBseqlong (const TDseqlong& val);
   VBseqlong (const VBseqlong& val);
-  
+
   // assignment operator
   VBseqlong& operator= (const TDseqlong& val);
 
@@ -446,10 +446,10 @@ public:
   ::CORBA::ULong length (void) const;
   void length ( ::CORBA::ULong len);
 
-  
+
 private:
   TDseqlong_var _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -459,10 +459,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const VBseqlong & val);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -544,7 +544,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef VBlongarray_var _var_type;
   typedef VBlongarray_out _out_type;
 
@@ -563,20 +563,20 @@ public:
       TAO_InputCDR &,
       VBlongarray *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:167
-  
+
 
   // Constructors
   VBlongarray (void);
   VBlongarray (const LongArray val);
   VBlongarray (const VBlongarray& val);
-  
+
   // assignment operator
   VBlongarray& operator= (const LongArray val);
 
@@ -591,11 +591,11 @@ public:
   const LongArray_slice * _boxed_in (void) const;
   LongArray_slice * _boxed_inout (void);
   LongArray_slice * _boxed_out (void);
-  
-  
+
+
 private:
   LongArray_var _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -605,10 +605,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const VBlongarray & val);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -695,7 +695,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef VBstringarray_var _var_type;
   typedef VBstringarray_out _out_type;
 
@@ -714,20 +714,20 @@ public:
       TAO_InputCDR &,
       VBstringarray *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:167
-  
+
 
   // Constructors
   VBstringarray (void);
   VBstringarray (const StringArray val);
   VBstringarray (const VBstringarray& val);
-  
+
   // assignment operator
   VBstringarray& operator= (const StringArray val);
 
@@ -742,11 +742,11 @@ public:
   const StringArray_slice * _boxed_in (void) const;
   StringArray_slice * _boxed_inout (void);
   StringArray_slice * _boxed_out (void);
-  
-  
+
+
 private:
   StringArray_var _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -756,10 +756,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const VBstringarray & val);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -930,7 +930,7 @@ protected:
   Test (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Test (
       TAO_Stub *objref,

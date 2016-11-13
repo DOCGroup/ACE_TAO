@@ -62,7 +62,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -98,7 +98,7 @@ namespace Test
         Shutdown_Helper
       >
     Shutdown_Helper_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Shutdown_Helper
@@ -121,7 +121,7 @@ namespace Test
         Oneway_Receiver
       >
     Oneway_Receiver_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Oneway_Receiver
@@ -170,7 +170,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Oneway_Receiver (void);
@@ -179,7 +179,7 @@ namespace Test
     Oneway_Receiver (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Oneway_Receiver (
         TAO_Stub *objref,
@@ -188,7 +188,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Oneway_Receiver (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Oneway_Receiver (const Oneway_Receiver &);
@@ -230,7 +230,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Shutdown_Helper (void);
@@ -239,7 +239,7 @@ namespace Test
     Shutdown_Helper (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Shutdown_Helper (
         TAO_Stub *objref,
@@ -248,7 +248,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Shutdown_Helper (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Shutdown_Helper (const Shutdown_Helper &);

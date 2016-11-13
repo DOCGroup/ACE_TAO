@@ -121,7 +121,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -153,12 +153,12 @@ namespace DynAnyTests
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef enclosed_struct_var _var_type;
     typedef enclosed_struct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Float f;
     ::CORBA::Short s;
   };
@@ -194,12 +194,12 @@ namespace DynAnyTests
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef test_struct_var _var_type;
     typedef test_struct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Char c;
     CORBA::ShortSeq ss;
     DynAnyTests::enclosed_struct es;
@@ -244,12 +244,12 @@ namespace DynAnyTests
       ::CORBA::Boolean release = false);
     test_seq (const test_seq &);
     virtual ~test_seq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef test_seq_var _var_type;
     typedef test_seq_out _out_type;
 
@@ -299,12 +299,12 @@ namespace DynAnyTests
       ::CORBA::Boolean release = false);
     SeqShort (const SeqShort &);
     virtual ~SeqShort (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef SeqShort_var _var_type;
     typedef SeqShort_out _out_type;
 
@@ -354,12 +354,12 @@ namespace DynAnyTests
       ::CORBA::Boolean release = false);
     SeqBoolean (const SeqBoolean &);
     virtual ~SeqBoolean (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef SeqBoolean_var _var_type;
     typedef SeqBoolean_out _out_type;
 
@@ -384,7 +384,7 @@ namespace DynAnyTests
   typedef ::CORBA::Long test_array[2];
   typedef ::CORBA::Long test_array_slice;
   struct test_array_tag {};
-  
+
 
   typedef
     TAO_FixedArray_Var_T<
@@ -412,11 +412,11 @@ namespace DynAnyTests
   TAO_NAMESPACE_STORAGE_CLASS void
   test_array_free (
       test_array_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS test_array_slice *
   test_array_dup (
       const test_array_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS void
   test_array_copy (
       test_array_slice *_tao_to,
@@ -503,12 +503,12 @@ namespace DynAnyTests
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef StructTypedefEnum_var _var_type;
     typedef StructTypedefEnum_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     DynAnyTests::Enumerated_a field_1;
     DynAnyTests::Enumerated_b field_2;
     DynAnyTests::Enumerated_c field_3;
@@ -554,7 +554,7 @@ namespace DynAnyTests
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef test_union_var _var_type;
     typedef test_union_out _out_type;
 
@@ -679,7 +679,7 @@ namespace DynAnyTests
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef test_implicit_def_var _var_type;
     typedef test_implicit_def_out _out_type;
 
@@ -749,7 +749,7 @@ namespace DynAnyTests
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef test_union_no_active_member_var _var_type;
     typedef test_union_no_active_member_out _out_type;
 
@@ -819,12 +819,12 @@ namespace DynAnyTests
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef test_struct_with_long_double_var _var_type;
     typedef test_struct_with_long_double_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::LongDouble field_longdouble;
   };
 
@@ -1205,7 +1205,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace DynAnyTests
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::DynAnyTests::test_enum);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::DynAnyTests::test_enum &);

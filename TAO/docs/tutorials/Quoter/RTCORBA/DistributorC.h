@@ -143,7 +143,7 @@ namespace Stock
         StockDistributor
       >
     StockDistributor_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         StockDistributor
@@ -157,7 +157,7 @@ namespace Stock
 
   class RTCORBA_Quoter_Common_Export StockDistributor
     : public virtual ::Stock::Trigger
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<StockDistributor>;
@@ -205,7 +205,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     StockDistributor (void);
@@ -214,7 +214,7 @@ namespace Stock
     StockDistributor (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     StockDistributor (
         TAO_Stub *objref,
@@ -223,7 +223,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~StockDistributor (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     StockDistributor (const StockDistributor &);
@@ -250,7 +250,7 @@ namespace Stock
         StockDistributorHome
       >
     StockDistributorHome_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         StockDistributorHome
@@ -295,7 +295,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     StockDistributorHome (void);
@@ -304,7 +304,7 @@ namespace Stock
     StockDistributorHome (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     StockDistributorHome (
         TAO_Stub *objref,
@@ -313,7 +313,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~StockDistributorHome (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     StockDistributorHome (const StockDistributorHome &);
@@ -444,7 +444,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   RTCORBA_Quoter_Common_Export void operator<<= (::CORBA::Any &, const ::Stock::Invalid_Subscription &); // copying version
   RTCORBA_Quoter_Common_Export void operator<<= (::CORBA::Any &, ::Stock::Invalid_Subscription*); // noncopying version

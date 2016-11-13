@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -99,7 +99,7 @@ namespace Multiple
         Top
       >
     Top_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Top
@@ -145,7 +145,7 @@ namespace Multiple
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Top (void);
@@ -154,7 +154,7 @@ namespace Multiple
     Top (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Top (
         TAO_Stub *objref,
@@ -163,7 +163,7 @@ namespace Multiple
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Top (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Top (const Top &);
@@ -185,7 +185,7 @@ namespace Multiple
         Left
       >
     Left_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Left
@@ -199,7 +199,7 @@ namespace Multiple
 
   class  Left
     : public virtual ::Multiple::Top
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Left>;
@@ -229,7 +229,7 @@ namespace Multiple
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Left (void);
@@ -238,7 +238,7 @@ namespace Multiple
     Left (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Left (
         TAO_Stub *objref,
@@ -247,7 +247,7 @@ namespace Multiple
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Left (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Left (const Left &);
@@ -269,7 +269,7 @@ namespace Multiple
         Right
       >
     Right_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Right
@@ -283,7 +283,7 @@ namespace Multiple
 
   class  Right
     : public virtual ::Multiple::Top
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Right>;
@@ -313,7 +313,7 @@ namespace Multiple
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Right (void);
@@ -322,7 +322,7 @@ namespace Multiple
     Right (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Right (
         TAO_Stub *objref,
@@ -331,7 +331,7 @@ namespace Multiple
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Right (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Right (const Right &);
@@ -353,7 +353,7 @@ namespace Multiple
         Bottom
       >
     Bottom_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Bottom
@@ -368,7 +368,7 @@ namespace Multiple
   class  Bottom
     : public virtual ::Multiple::Left,
       public virtual ::Multiple::Right
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Bottom>;
@@ -398,7 +398,7 @@ namespace Multiple
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Bottom (void);
@@ -407,7 +407,7 @@ namespace Multiple
     Bottom (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Bottom (
         TAO_Stub *objref,
@@ -416,7 +416,7 @@ namespace Multiple
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Bottom (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Bottom (const Bottom &);

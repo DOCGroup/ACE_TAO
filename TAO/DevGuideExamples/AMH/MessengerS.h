@@ -112,7 +112,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_DevGuide
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/amh_sh.cpp:46
@@ -125,7 +125,7 @@ namespace POA_DevGuide
   {
   protected:
     AMH_Messenger (void);
-  
+
   public:
     AMH_Messenger (const AMH_Messenger& rhs);
     virtual ~AMH_Messenger (void);
@@ -136,7 +136,7 @@ namespace POA_DevGuide
     virtual void _dispatch (
         TAO_ServerRequest &req,
         TAO::Portable_Server::Servant_Upcall *_servant_upcall);
-    
+
     DevGuide::Messenger *_this (void);
 
   virtual const char* _interface_repository_id (void) const;
@@ -148,14 +148,14 @@ namespace POA_DevGuide
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void send_message (
       DevGuide::AMH_MessengerResponseHandler_ptr _tao_rh,
       const char * user_name,
       const char * subject,
       const char * message
     ) = 0;
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -184,9 +184,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::DevGuide::Messenger *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from

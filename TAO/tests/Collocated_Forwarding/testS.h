@@ -92,7 +92,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Collocated_ForwardRequestTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -107,7 +107,7 @@ namespace POA_Collocated_ForwardRequestTest
   {
   protected:
     test (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Collocated_ForwardRequestTest::test _stub_type;
@@ -122,9 +122,9 @@ namespace POA_Collocated_ForwardRequestTest
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Collocated_ForwardRequestTest::test *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -157,14 +157,14 @@ namespace POA_Collocated_ForwardRequestTest
     static void
     collocated_call (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:66

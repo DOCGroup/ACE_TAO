@@ -62,7 +62,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -98,7 +98,7 @@ namespace Test
         Sleep_Service
       >
     Sleep_Service_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Sleep_Service
@@ -144,7 +144,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Sleep_Service (void);
@@ -153,7 +153,7 @@ namespace Test
     Sleep_Service (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Sleep_Service (
         TAO_Stub *objref,
@@ -162,7 +162,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Sleep_Service (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Sleep_Service (const Sleep_Service &);

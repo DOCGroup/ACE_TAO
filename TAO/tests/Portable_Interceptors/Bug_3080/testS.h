@@ -89,7 +89,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_RedirectionTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -102,7 +102,7 @@ namespace POA_RedirectionTest
   {
   protected:
     test (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::RedirectionTest::test _stub_type;
@@ -117,9 +117,9 @@ namespace POA_RedirectionTest
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::RedirectionTest::test *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

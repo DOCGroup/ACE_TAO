@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -147,7 +147,7 @@ protected:
   ParentInterface (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   ParentInterface (
       TAO_Stub *objref,
@@ -235,7 +235,7 @@ protected:
   AMI_ParentInterfaceHandler (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   AMI_ParentInterfaceHandler (
       TAO_Stub *objref,
@@ -280,7 +280,7 @@ namespace ParentModule
         ParentInterface
       >
     ParentInterface_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ParentInterface
@@ -322,7 +322,7 @@ namespace ParentModule
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     ParentInterface (void);
@@ -331,7 +331,7 @@ namespace ParentModule
     ParentInterface (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     ParentInterface (
         TAO_Stub *objref,
@@ -340,7 +340,7 @@ namespace ParentModule
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~ParentInterface (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     ParentInterface (const ParentInterface &);
@@ -367,7 +367,7 @@ namespace ParentModule
         AMI_ParentInterfaceHandler
       >
     AMI_ParentInterfaceHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_ParentInterfaceHandler
@@ -381,7 +381,7 @@ namespace ParentModule
 
   class  AMI_ParentInterfaceHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_ParentInterfaceHandler>;
@@ -410,7 +410,7 @@ namespace ParentModule
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_ParentInterfaceHandler (void);
@@ -419,7 +419,7 @@ namespace ParentModule
     AMI_ParentInterfaceHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_ParentInterfaceHandler (
         TAO_Stub *objref,
@@ -428,7 +428,7 @@ namespace ParentModule
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_ParentInterfaceHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_ParentInterfaceHandler (const AMI_ParentInterfaceHandler &);

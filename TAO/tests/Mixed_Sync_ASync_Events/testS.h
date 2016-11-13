@@ -170,7 +170,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_A
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -183,7 +183,7 @@ namespace POA_A
   {
   protected:
     Test (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::A::Test _stub_type;
@@ -198,9 +198,9 @@ namespace POA_A
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::A::Test *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -250,7 +250,7 @@ namespace POA_A
   {
   protected:
     AMI_TestHandler (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::A::AMI_TestHandler _stub_type;
@@ -265,9 +265,9 @@ namespace POA_A
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::A::AMI_TestHandler *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

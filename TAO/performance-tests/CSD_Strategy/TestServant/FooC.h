@@ -166,7 +166,7 @@ protected:
   Foo (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Foo (
       TAO_Stub *objref,

@@ -71,7 +71,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -126,10 +126,10 @@ namespace CosNaming
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NameComponent_var _var_type;
     typedef NameComponent_out _out_type;
-    
+
     ::TAO::String_Manager id;
     ::TAO::String_Manager kind;
   };
@@ -170,12 +170,12 @@ namespace CosNaming
       ::CORBA::Boolean release = false);
     Name (const Name &);
     virtual ~Name (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Name_var _var_type;
     typedef Name_out _out_type;
   };
@@ -219,10 +219,10 @@ namespace CosNaming
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Binding_var _var_type;
     typedef Binding_out _out_type;
-    
+
     CosNaming::Name binding_name;
     CosNaming::BindingType binding_type;
   };
@@ -263,12 +263,12 @@ namespace CosNaming
       ::CORBA::Boolean release = false);
     BindingList (const BindingList &);
     virtual ~BindingList (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef BindingList_var _var_type;
     typedef BindingList_out _out_type;
   };
@@ -289,7 +289,7 @@ namespace CosNaming
         BindingIterator
       >
     BindingIterator_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         BindingIterator
@@ -312,7 +312,7 @@ namespace CosNaming
         NamingContext
       >
     NamingContext_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         NamingContext
@@ -548,7 +548,7 @@ namespace CosNaming
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     NamingContext (void);
@@ -557,7 +557,7 @@ namespace CosNaming
     NamingContext (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     NamingContext (
         TAO_Stub *objref,
@@ -566,7 +566,7 @@ namespace CosNaming
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~NamingContext (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     NamingContext (const NamingContext &);
@@ -615,7 +615,7 @@ namespace CosNaming
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     BindingIterator (void);
@@ -624,7 +624,7 @@ namespace CosNaming
     BindingIterator (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     BindingIterator (
         TAO_Stub *objref,
@@ -633,7 +633,7 @@ namespace CosNaming
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~BindingIterator (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     BindingIterator (const BindingIterator &);
@@ -655,7 +655,7 @@ namespace CosNaming
         NamingContextExt
       >
     NamingContextExt_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         NamingContextExt
@@ -669,7 +669,7 @@ namespace CosNaming
 
   class  NamingContextExt
     : public virtual ::CosNaming::NamingContext
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<NamingContextExt>;
@@ -756,7 +756,7 @@ namespace CosNaming
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     NamingContextExt (void);
@@ -765,7 +765,7 @@ namespace CosNaming
     NamingContextExt (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     NamingContextExt (
         TAO_Stub *objref,
@@ -774,7 +774,7 @@ namespace CosNaming
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~NamingContextExt (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     NamingContextExt (const NamingContextExt &);

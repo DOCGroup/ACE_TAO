@@ -112,9 +112,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::test *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from
@@ -158,7 +158,7 @@ public:
   static void
   get_string (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -166,7 +166,7 @@ public:
   static void
   method (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 };
 
 //

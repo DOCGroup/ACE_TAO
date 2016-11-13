@@ -74,7 +74,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -99,7 +99,7 @@ namespace OBV_TruncatableTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_TRUNCATABLETEST_BASEVALUE__VAR_OUT_CH_)
 #define _OBV_TRUNCATABLETEST_BASEVALUE__VAR_OUT_CH_
@@ -110,7 +110,7 @@ namespace OBV_TruncatableTest
         BaseValue
       >
     BaseValue_var;
-  
+
   typedef
     TAO_Value_Out_T<
         BaseValue
@@ -137,12 +137,12 @@ namespace OBV_TruncatableTest
     static void _tao_any_destructor (void *);
 
     static BaseValue* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         BaseValue *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -150,7 +150,7 @@ namespace OBV_TruncatableTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -161,7 +161,7 @@ namespace OBV_TruncatableTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     BaseValue (void);
     virtual ~BaseValue (void);
@@ -169,11 +169,11 @@ namespace OBV_TruncatableTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     BaseValue (const BaseValue &);
     void operator= (const BaseValue &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_TruncatableTest_BaseValue (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -199,7 +199,7 @@ namespace OBV_TruncatableTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~BaseValue_init (void);
   };
@@ -212,7 +212,7 @@ namespace OBV_TruncatableTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_TRUNCATABLETEST_TVALUE1__VAR_OUT_CH_)
 #define _OBV_TRUNCATABLETEST_TVALUE1__VAR_OUT_CH_
@@ -223,7 +223,7 @@ namespace OBV_TruncatableTest
         TValue1
       >
     TValue1_var;
-  
+
   typedef
     TAO_Value_Out_T<
         TValue1
@@ -250,12 +250,12 @@ namespace OBV_TruncatableTest
     static void _tao_any_destructor (void *);
 
     static TValue1* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         TValue1 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -263,7 +263,7 @@ namespace OBV_TruncatableTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -274,7 +274,7 @@ namespace OBV_TruncatableTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     TValue1 (void);
     virtual ~TValue1 (void);
@@ -282,11 +282,11 @@ namespace OBV_TruncatableTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     TValue1 (const TValue1 &);
     void operator= (const TValue1 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_TruncatableTest_TValue1 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -312,7 +312,7 @@ namespace OBV_TruncatableTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~TValue1_init (void);
   };
@@ -325,7 +325,7 @@ namespace OBV_TruncatableTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_TRUNCATABLETEST_TVALUE2__VAR_OUT_CH_)
 #define _OBV_TRUNCATABLETEST_TVALUE2__VAR_OUT_CH_
@@ -336,7 +336,7 @@ namespace OBV_TruncatableTest
         TValue2
       >
     TValue2_var;
-  
+
   typedef
     TAO_Value_Out_T<
         TValue2
@@ -363,12 +363,12 @@ namespace OBV_TruncatableTest
     static void _tao_any_destructor (void *);
 
     static TValue2* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         TValue2 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -376,7 +376,7 @@ namespace OBV_TruncatableTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -387,7 +387,7 @@ namespace OBV_TruncatableTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     TValue2 (void);
     virtual ~TValue2 (void);
@@ -395,11 +395,11 @@ namespace OBV_TruncatableTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     TValue2 (const TValue2 &);
     void operator= (const TValue2 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_TruncatableTest_TValue2 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -425,7 +425,7 @@ namespace OBV_TruncatableTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~TValue2_init (void);
   };
@@ -438,7 +438,7 @@ namespace OBV_TruncatableTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_TRUNCATABLETEST_TVALUE3__VAR_OUT_CH_)
 #define _OBV_TRUNCATABLETEST_TVALUE3__VAR_OUT_CH_
@@ -449,7 +449,7 @@ namespace OBV_TruncatableTest
         TValue3
       >
     TValue3_var;
-  
+
   typedef
     TAO_Value_Out_T<
         TValue3
@@ -476,12 +476,12 @@ namespace OBV_TruncatableTest
     static void _tao_any_destructor (void *);
 
     static TValue3* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         TValue3 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -489,7 +489,7 @@ namespace OBV_TruncatableTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -500,7 +500,7 @@ namespace OBV_TruncatableTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     TValue3 (void);
     virtual ~TValue3 (void);
@@ -508,11 +508,11 @@ namespace OBV_TruncatableTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     TValue3 (const TValue3 &);
     void operator= (const TValue3 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_TruncatableTest_TValue3 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -538,7 +538,7 @@ namespace OBV_TruncatableTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~TValue3_init (void);
   };
@@ -551,7 +551,7 @@ namespace OBV_TruncatableTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_TRUNCATABLETEST_NESTEDVALUE__VAR_OUT_CH_)
 #define _OBV_TRUNCATABLETEST_NESTEDVALUE__VAR_OUT_CH_
@@ -562,7 +562,7 @@ namespace OBV_TruncatableTest
         NestedValue
       >
     NestedValue_var;
-  
+
   typedef
     TAO_Value_Out_T<
         NestedValue
@@ -589,12 +589,12 @@ namespace OBV_TruncatableTest
     static void _tao_any_destructor (void *);
 
     static NestedValue* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         NestedValue *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -602,7 +602,7 @@ namespace OBV_TruncatableTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -613,7 +613,7 @@ namespace OBV_TruncatableTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     NestedValue (void);
     virtual ~NestedValue (void);
@@ -621,11 +621,11 @@ namespace OBV_TruncatableTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     NestedValue (const NestedValue &);
     void operator= (const NestedValue &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_TruncatableTest_NestedValue (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -651,7 +651,7 @@ namespace OBV_TruncatableTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~NestedValue_init (void);
   };
@@ -664,7 +664,7 @@ namespace OBV_TruncatableTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_TRUNCATABLETEST_TVALUE4__VAR_OUT_CH_)
 #define _OBV_TRUNCATABLETEST_TVALUE4__VAR_OUT_CH_
@@ -675,7 +675,7 @@ namespace OBV_TruncatableTest
         TValue4
       >
     TValue4_var;
-  
+
   typedef
     TAO_Value_Out_T<
         TValue4
@@ -702,12 +702,12 @@ namespace OBV_TruncatableTest
     static void _tao_any_destructor (void *);
 
     static TValue4* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         TValue4 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -715,7 +715,7 @@ namespace OBV_TruncatableTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -723,7 +723,7 @@ namespace OBV_TruncatableTest
 
     virtual void nv4 (OBV_TruncatableTest::NestedValue *) = 0;
     virtual OBV_TruncatableTest::NestedValue *nv4 (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -734,7 +734,7 @@ namespace OBV_TruncatableTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     TValue4 (void);
     virtual ~TValue4 (void);
@@ -742,11 +742,11 @@ namespace OBV_TruncatableTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     TValue4 (const TValue4 &);
     void operator= (const TValue4 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_TruncatableTest_TValue4 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -772,7 +772,7 @@ namespace OBV_TruncatableTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~TValue4_init (void);
   };
@@ -785,7 +785,7 @@ namespace OBV_TruncatableTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_TRUNCATABLETEST_TVALUE5__VAR_OUT_CH_)
 #define _OBV_TRUNCATABLETEST_TVALUE5__VAR_OUT_CH_
@@ -796,7 +796,7 @@ namespace OBV_TruncatableTest
         TValue5
       >
     TValue5_var;
-  
+
   typedef
     TAO_Value_Out_T<
         TValue5
@@ -823,12 +823,12 @@ namespace OBV_TruncatableTest
     static void _tao_any_destructor (void *);
 
     static TValue5* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         TValue5 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -836,7 +836,7 @@ namespace OBV_TruncatableTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -846,7 +846,7 @@ namespace OBV_TruncatableTest
     virtual void str1 (const char *val) = 0;
     virtual void str1 (const ::CORBA::String_var &val) = 0;
     virtual const char *str1 (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -854,7 +854,7 @@ namespace OBV_TruncatableTest
 
     virtual void data5 (const ::CORBA::ULong) = 0;
     virtual ::CORBA::ULong data5 (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -862,7 +862,7 @@ namespace OBV_TruncatableTest
 
     virtual void nv5 (OBV_TruncatableTest::NestedValue *) = 0;
     virtual OBV_TruncatableTest::NestedValue *nv5 (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -875,7 +875,7 @@ namespace OBV_TruncatableTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     TValue5 (void);
     virtual ~TValue5 (void);
@@ -883,11 +883,11 @@ namespace OBV_TruncatableTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     TValue5 (const TValue5 &);
     void operator= (const TValue5 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_TruncatableTest_TValue5 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -913,7 +913,7 @@ namespace OBV_TruncatableTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~TValue5_init (void);
   };
@@ -926,7 +926,7 @@ namespace OBV_TruncatableTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_TRUNCATABLETEST_TVALUE6__VAR_OUT_CH_)
 #define _OBV_TRUNCATABLETEST_TVALUE6__VAR_OUT_CH_
@@ -937,7 +937,7 @@ namespace OBV_TruncatableTest
         TValue6
       >
     TValue6_var;
-  
+
   typedef
     TAO_Value_Out_T<
         TValue6
@@ -964,12 +964,12 @@ namespace OBV_TruncatableTest
     static void _tao_any_destructor (void *);
 
     static TValue6* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         TValue6 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -980,7 +980,7 @@ namespace OBV_TruncatableTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     TValue6 (void);
     virtual ~TValue6 (void);
@@ -988,11 +988,11 @@ namespace OBV_TruncatableTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     TValue6 (const TValue6 &);
     void operator= (const TValue6 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_TruncatableTest_TValue6 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -1018,7 +1018,7 @@ namespace OBV_TruncatableTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~TValue6_init (void);
   };
@@ -1042,7 +1042,7 @@ namespace OBV_TruncatableTest
         Test
       >
     Test_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Test
@@ -1120,7 +1120,7 @@ namespace OBV_TruncatableTest
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Test (void);
@@ -1129,7 +1129,7 @@ namespace OBV_TruncatableTest
     Test (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Test (
         TAO_Stub *objref,
@@ -1138,7 +1138,7 @@ namespace OBV_TruncatableTest
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Test (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Test (const Test &);
@@ -1392,7 +1392,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_TruncatableTest_BaseValue (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1433,7 +1433,7 @@ public:
       ::CORBA::ULong _tao_init_data1
     );
   virtual ~TValue1 (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_TruncatableTest_TValue1 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1475,7 +1475,7 @@ public:
       ::CORBA::ULong _tao_init_data2
     );
   virtual ~TValue2 (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_TruncatableTest_TValue2 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1517,7 +1517,7 @@ public:
       ::CORBA::ULong _tao_init_data3
     );
   virtual ~TValue3 (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_TruncatableTest_TValue3 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1560,7 +1560,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_TruncatableTest_NestedValue (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1610,7 +1610,7 @@ public:
       ::CORBA::ULong _tao_init_data4
     );
   virtual ~TValue4 (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_TruncatableTest_TValue4 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1685,7 +1685,7 @@ public:
       const char * _tao_init_str2
     );
   virtual ~TValue5 (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_TruncatableTest_TValue5 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1720,7 +1720,7 @@ public:
       ::CORBA::ULong _tao_init_basic_data
     );
   virtual ~TValue6 (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_TruncatableTest_TValue6 (TAO_OutputCDR &, TAO_ChunkInfo &) const;

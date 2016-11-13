@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -124,12 +124,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     RecursiveStructSeq3 (const RecursiveStructSeq3 &);
     virtual ~RecursiveStructSeq3 (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveStructSeq3_var _var_type;
     typedef RecursiveStructSeq3_out _out_type;
 
@@ -178,7 +178,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveUnion3_var _var_type;
     typedef RecursiveUnion3_out _out_type;
 
@@ -242,13 +242,13 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveStruct3_var _var_type;
     typedef RecursiveStruct3_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
-    
+
+
 
     Test::RecursiveUnion3 uni;
   };

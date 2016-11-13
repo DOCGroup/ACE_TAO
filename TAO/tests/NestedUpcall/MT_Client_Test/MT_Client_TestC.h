@@ -62,7 +62,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -144,7 +144,7 @@ protected:
   Object_A (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Object_A (
       TAO_Stub *objref,
@@ -228,7 +228,7 @@ protected:
   MT_Object (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   MT_Object (
       TAO_Stub *objref,

@@ -70,7 +70,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_valuetype.cpp:564
@@ -113,12 +113,12 @@ public:
   static void _tao_any_destructor (void *);
 
   static StringNode* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       StringNode *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -147,11 +147,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   StringNode (const StringNode &);
   void operator= (const StringNode &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__StringNode (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -250,7 +250,7 @@ public:
       const char * _tao_init_name
     );
   virtual ~OBV_StringNode (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__StringNode (TAO_OutputCDR &, TAO_ChunkInfo &) const;

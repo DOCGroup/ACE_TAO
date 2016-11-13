@@ -70,7 +70,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_valuetype.cpp:564
@@ -132,12 +132,12 @@ public:
     ::CORBA::Boolean release = false);
   MyValueType_Seq (const MyValueType_Seq &);
   virtual ~MyValueType_Seq (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef MyValueType_Seq_var _var_type;
   typedef MyValueType_Seq_out _out_type;
 
@@ -169,12 +169,12 @@ public:
   static void _tao_any_destructor (void *);
 
   static MyValueType* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       MyValueType *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -202,11 +202,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   MyValueType (const MyValueType &);
   void operator= (const MyValueType &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__MyValueType (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -318,7 +318,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__MyValueType (TAO_OutputCDR &, TAO_ChunkInfo &) const;

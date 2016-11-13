@@ -198,7 +198,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Web_Server
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -211,7 +211,7 @@ namespace POA_Web_Server
   {
   protected:
     Content_Iterator (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Web_Server::Content_Iterator _stub_type;
@@ -226,9 +226,9 @@ namespace POA_Web_Server
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Web_Server::Content_Iterator *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -266,7 +266,7 @@ namespace POA_Web_Server
   {
   protected:
     AMI_Content_IteratorHandler (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Web_Server::AMI_Content_IteratorHandler _stub_type;
@@ -281,9 +281,9 @@ namespace POA_Web_Server
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Web_Server::AMI_Content_IteratorHandler *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -343,7 +343,7 @@ namespace POA_Web_Server
   {
   protected:
     Iterator_Factory (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Web_Server::Iterator_Factory _stub_type;
@@ -358,9 +358,9 @@ namespace POA_Web_Server
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Web_Server::Iterator_Factory *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -388,7 +388,7 @@ namespace POA_Web_Server
   {
   protected:
     AMI_Iterator_FactoryHandler (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Web_Server::AMI_Iterator_FactoryHandler _stub_type;
@@ -403,9 +403,9 @@ namespace POA_Web_Server
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Web_Server::AMI_Iterator_FactoryHandler *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

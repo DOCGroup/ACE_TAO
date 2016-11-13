@@ -67,7 +67,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -185,7 +185,7 @@ protected:
   Test (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Test (
       TAO_Stub *objref,
@@ -210,16 +210,16 @@ private:
 class  TAO_Test_Default_Proxy_Factory
 {
 public:
-  
+
   TAO_Test_Default_Proxy_Factory (int permanent = 1);
   // <permanent> signifies that the proxy factory will remain
   // registered with the Proxy Factory Adapter until the program
-  // terminates. That is, it will be a one-shot factory for the 
+  // terminates. That is, it will be a one-shot factory for the
   // interface.  If this value is set to 0, then the factory will
-  // be unregistered after the first invocation providing the 
-  // flexibility of having a different smart proxy per object 
+  // be unregistered after the first invocation providing the
+  // flexibility of having a different smart proxy per object
   // instead of per interface.
-  
+
   virtual ~TAO_Test_Default_Proxy_Factory (void);
 
   virtual Test_ptr create_proxy (
@@ -230,14 +230,14 @@ public:
 class  TAO_Test_Proxy_Factory_Adapter
 {
 public:
-  
+
   friend class TAO_Singleton<TAO_Test_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
 
   void register_proxy_factory (
       TAO_Test_Default_Proxy_Factory *df,
       bool one_shot_factory = true
     );
-  
+
   void unregister_proxy_factory (void);
 
   Test_ptr create_proxy (

@@ -64,7 +64,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -100,7 +100,7 @@ namespace Test
         Process
       >
     Process_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Process
@@ -149,7 +149,7 @@ namespace Test
         Process_Factory
       >
     Process_Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Process_Factory
@@ -198,7 +198,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Process_Factory (void);
@@ -207,7 +207,7 @@ namespace Test
     Process_Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Process_Factory (
         TAO_Stub *objref,
@@ -216,7 +216,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Process_Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Process_Factory (const Process_Factory &);
@@ -261,7 +261,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Process (void);
@@ -270,7 +270,7 @@ namespace Test
     Process (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Process (
         TAO_Stub *objref,
@@ -279,7 +279,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Process (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Process (const Process &);
@@ -301,7 +301,7 @@ namespace Test
         Startup_Callback
       >
     Startup_Callback_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Startup_Callback
@@ -344,7 +344,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Startup_Callback (void);
@@ -353,7 +353,7 @@ namespace Test
     Startup_Callback (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Startup_Callback (
         TAO_Stub *objref,
@@ -362,7 +362,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Startup_Callback (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Startup_Callback (const Startup_Callback &);

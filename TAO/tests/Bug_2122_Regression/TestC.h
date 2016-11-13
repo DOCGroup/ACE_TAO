@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -113,7 +113,7 @@ namespace Test
         Foo
       >
     Foo_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Foo
@@ -159,7 +159,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Foo (void);
@@ -168,7 +168,7 @@ namespace Test
     Foo (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Foo (
         TAO_Stub *objref,
@@ -177,7 +177,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Foo (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Foo (const Foo &);
@@ -223,7 +223,7 @@ namespace Foo
           Whatever
         >
       Whatever_var;
-    
+
     typedef
       TAO_Objref_Out_T<
           Whatever
@@ -266,7 +266,7 @@ namespace Foo
       virtual ::CORBA::Boolean _is_a (const char *type_id);
       virtual const char* _interface_repository_id (void) const;
       virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    
+
     protected:
       // Concrete interface only.
       Whatever (void);
@@ -275,7 +275,7 @@ namespace Foo
       Whatever (
           ::IOP::IOR *ior,
           TAO_ORB_Core *orb_core);
-      
+
       // Non-local interface only.
       Whatever (
           TAO_Stub *objref,
@@ -284,17 +284,17 @@ namespace Foo
           TAO_ORB_Core *orb_core = 0);
 
       virtual ~Whatever (void);
-    
+
     private:
       // Private and unimplemented for concrete interfaces.
       Whatever (const Whatever &);
 
       void operator= (const Whatever &);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_ch.cpp:64
-  
+
   } // module Foo::One
 
   // TAO_IDL - Generated from
@@ -324,7 +324,7 @@ namespace Foo
           WhoCares
         >
       WhoCares_var;
-    
+
     typedef
       TAO_Objref_Out_T<
           WhoCares
@@ -367,7 +367,7 @@ namespace Foo
       virtual ::CORBA::Boolean _is_a (const char *type_id);
       virtual const char* _interface_repository_id (void) const;
       virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    
+
     protected:
       // Concrete interface only.
       WhoCares (void);
@@ -376,7 +376,7 @@ namespace Foo
       WhoCares (
           ::IOP::IOR *ior,
           TAO_ORB_Core *orb_core);
-      
+
       // Non-local interface only.
       WhoCares (
           TAO_Stub *objref,
@@ -385,17 +385,17 @@ namespace Foo
           TAO_ORB_Core *orb_core = 0);
 
       virtual ~WhoCares (void);
-    
+
     private:
       // Private and unimplemented for concrete interfaces.
       WhoCares (const WhoCares &);
 
       void operator= (const WhoCares &);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_ch.cpp:64
-  
+
   } // module Foo::Two
 
   // TAO_IDL - Generated from
@@ -425,7 +425,7 @@ namespace Foo
           WhoCares
         >
       WhoCares_var;
-    
+
     typedef
       TAO_Objref_Out_T<
           WhoCares
@@ -468,7 +468,7 @@ namespace Foo
       virtual ::CORBA::Boolean _is_a (const char *type_id);
       virtual const char* _interface_repository_id (void) const;
       virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    
+
     protected:
       // Concrete interface only.
       WhoCares (void);
@@ -477,7 +477,7 @@ namespace Foo
       WhoCares (
           ::IOP::IOR *ior,
           TAO_ORB_Core *orb_core);
-      
+
       // Non-local interface only.
       WhoCares (
           TAO_Stub *objref,
@@ -486,17 +486,17 @@ namespace Foo
           TAO_ORB_Core *orb_core = 0);
 
       virtual ~WhoCares (void);
-    
+
     private:
       // Private and unimplemented for concrete interfaces.
       WhoCares (const WhoCares &);
 
       void operator= (const WhoCares &);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_ch.cpp:64
-  
+
   } // module Foo::Three
 
 // TAO_IDL - Generated from

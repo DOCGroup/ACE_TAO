@@ -70,7 +70,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -106,7 +106,7 @@ namespace DevGuide
         Messenger
       >
     Messenger_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Messenger
@@ -153,7 +153,7 @@ namespace DevGuide
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Messenger (void);
@@ -162,7 +162,7 @@ namespace DevGuide
     Messenger (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Messenger (
         TAO_Stub *objref,
@@ -171,7 +171,7 @@ namespace DevGuide
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Messenger (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Messenger (const Messenger &);
@@ -187,7 +187,7 @@ namespace DevGuide
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_DEVGUIDE_AMH_MESSENGEREXCEPTIONHOLDER__VAR_OUT_CH_)
 #define _DEVGUIDE_AMH_MESSENGEREXCEPTIONHOLDER__VAR_OUT_CH_
@@ -198,7 +198,7 @@ namespace DevGuide
         AMH_MessengerExceptionHolder
       >
     AMH_MessengerExceptionHolder_var;
-  
+
   typedef
     TAO_Value_Out_T<
         AMH_MessengerExceptionHolder
@@ -232,12 +232,12 @@ namespace DevGuide
     virtual ::CORBA::ValueBase *_copy_value (void);
 
     static AMH_MessengerExceptionHolder* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         AMH_MessengerExceptionHolder *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -245,12 +245,12 @@ namespace DevGuide
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:396
-    
+
   public:
     virtual void raise_send_message (void);
 
@@ -262,13 +262,13 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   AMH_MessengerExceptionHolder (const AMH_MessengerExceptionHolder &);
   void operator= (const AMH_MessengerExceptionHolder &);
-  
+
   ::CORBA::Exception *exception;
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__DevGuide_AMH_MessengerExceptionHolder (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -349,7 +349,7 @@ protected:
   // Abstract or local interface only.
   AMH_MessengerResponseHandler (void);
 
-  
+
 
   virtual ~AMH_MessengerResponseHandler (void);
 
@@ -444,7 +444,7 @@ namespace OBV_DevGuide
 protected:
   AMH_MessengerExceptionHolder (void);
   virtual ~AMH_MessengerExceptionHolder (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__DevGuide_AMH_MessengerExceptionHolder (TAO_OutputCDR &, TAO_ChunkInfo &) const;

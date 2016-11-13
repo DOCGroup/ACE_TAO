@@ -311,7 +311,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_IF_EXE_M_R
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -324,7 +324,7 @@ namespace POA_IF_EXE_M_R
   {
   protected:
     IF_ExeCtrlData (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::IF_EXE_M_R::IF_ExeCtrlData _stub_type;
@@ -339,9 +339,9 @@ namespace POA_IF_EXE_M_R
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::IF_EXE_M_R::IF_ExeCtrlData *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

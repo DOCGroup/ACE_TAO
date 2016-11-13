@@ -66,7 +66,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_valuebox/valuebox_ch.cpp:41
@@ -93,7 +93,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef LongValue_var _var_type;
   typedef LongValue_out _out_type;
 
@@ -112,10 +112,10 @@ public:
       TAO_InputCDR &,
       LongValue *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:690
@@ -124,7 +124,7 @@ public:
   LongValue (void);
   LongValue (CORBA::Long val);
   LongValue (const LongValue& val);
-  
+
   // Assignment operator
   LongValue& operator= (CORBA::Long val);
 
@@ -136,10 +136,10 @@ public:
   CORBA::Long _boxed_in (void) const;
   CORBA::Long& _boxed_inout (void);
   CORBA::Long& _boxed_out (void);
-  
+
 private:
   CORBA::Long _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -149,10 +149,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const LongValue & val);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -201,12 +201,12 @@ public:
   static void _tao_any_destructor (void *);
 
   static Value* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Value *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -233,11 +233,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Value (const Value &);
   void operator= (const Value &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Value (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -351,7 +351,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Value (TAO_OutputCDR &, TAO_ChunkInfo &) const;

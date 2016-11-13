@@ -192,9 +192,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::ChildInterface *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 };
 
@@ -224,9 +224,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::AMI_ChildInterfaceHandler *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 };
 
@@ -235,7 +235,7 @@ public:
 
 namespace POA_ChildModule
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -248,7 +248,7 @@ namespace POA_ChildModule
   {
   protected:
     ChildInterface (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::ChildModule::ChildInterface _stub_type;
@@ -263,9 +263,9 @@ namespace POA_ChildModule
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::ChildModule::ChildInterface *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
   };
 
@@ -280,7 +280,7 @@ namespace POA_ChildModule
   {
   protected:
     AMI_ChildInterfaceHandler (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::ChildModule::AMI_ChildInterfaceHandler _stub_type;
@@ -295,9 +295,9 @@ namespace POA_ChildModule
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::ChildModule::AMI_ChildInterfaceHandler *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
   };
 

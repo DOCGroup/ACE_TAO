@@ -170,7 +170,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_obvmod
 {
-  
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:66
@@ -203,9 +203,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::test *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from

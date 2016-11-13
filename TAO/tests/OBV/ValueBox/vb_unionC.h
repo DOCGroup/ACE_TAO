@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_type.cpp:258
@@ -103,7 +103,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Fixed_Union1_var _var_type;
   typedef Fixed_Union1_out _out_type;
 
@@ -182,7 +182,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Variable_Union1_var _var_type;
   typedef Variable_Union1_out _out_type;
 
@@ -253,7 +253,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef VBfixed_union1_var _var_type;
   typedef VBfixed_union1_out _out_type;
 
@@ -272,10 +272,10 @@ public:
       TAO_InputCDR &,
       VBfixed_union1 *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:580
@@ -284,7 +284,7 @@ public:
   VBfixed_union1 (void);
   VBfixed_union1 (const Fixed_Union1& val);
   VBfixed_union1 (const VBfixed_union1& val);
-  
+
   // Assignment operator
   VBfixed_union1& operator= (const Fixed_Union1& val);
 
@@ -297,21 +297,21 @@ public:
   const Fixed_Union1& _boxed_in (void) const;
   Fixed_Union1& _boxed_inout (void);
   Fixed_Union1& _boxed_out (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:286
 
   void m1 ( ::CORBA::Long);
    ::CORBA::Long m1 (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:286
 
   void m2 ( ::CORBA::Short);
    ::CORBA::Short m2 (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_union/discriminant_ch.cpp:100
@@ -323,7 +323,7 @@ public:
   // be/be_visitor_valuebox/valuebox_ch.cpp:672
 private:
   Fixed_Union1_var _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -333,10 +333,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const VBfixed_union1 & val);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -369,7 +369,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef VBvariable_union1_var _var_type;
   typedef VBvariable_union1_out _out_type;
 
@@ -388,10 +388,10 @@ public:
       TAO_InputCDR &,
       VBvariable_union1 *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:580
@@ -400,7 +400,7 @@ public:
   VBvariable_union1 (void);
   VBvariable_union1 (const Variable_Union1& val);
   VBvariable_union1 (const VBvariable_union1& val);
-  
+
   // Assignment operator
   VBvariable_union1& operator= (const Variable_Union1& val);
 
@@ -413,14 +413,14 @@ public:
   const Variable_Union1& _boxed_in (void) const;
   Variable_Union1& _boxed_inout (void);
   Variable_Union1*& _boxed_out (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:286
 
   void m1 ( ::CORBA::Long);
    ::CORBA::Long m1 (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:377
@@ -429,7 +429,7 @@ public:
   void m2 (const char *);
   void m2 (const ::CORBA::String_var &);
   const char * m2 (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_union/discriminant_ch.cpp:100
@@ -441,7 +441,7 @@ public:
   // be/be_visitor_valuebox/valuebox_ch.cpp:672
 private:
   Variable_Union1_var _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -451,10 +451,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const VBvariable_union1 & val);
-  
+
 };
 
 // TAO_IDL - Generated from

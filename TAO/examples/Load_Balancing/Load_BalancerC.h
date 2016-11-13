@@ -69,7 +69,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -236,12 +236,12 @@ namespace Load_Balancer
       ::CORBA::Boolean release = false);
     Member_ID_List (const Member_ID_List &);
     virtual ~Member_ID_List (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Member_ID_List_var _var_type;
     typedef Member_ID_List_out _out_type;
   };
@@ -274,10 +274,10 @@ namespace Load_Balancer
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Member_var _var_type;
     typedef Member_out _out_type;
-    
+
     ::CORBA::Object_var obj;
     ::TAO::String_Manager id;
   };
@@ -323,12 +323,12 @@ namespace Load_Balancer
       ::CORBA::Boolean release = false);
     Group_List (const Group_List &);
     virtual ~Group_List (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Group_List_var _var_type;
     typedef Group_List_out _out_type;
   };
@@ -349,7 +349,7 @@ namespace Load_Balancer
         Object_Group
       >
     Object_Group_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Object_Group
@@ -372,7 +372,7 @@ namespace Load_Balancer
         Object_Group_Factory
       >
     Object_Group_Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Object_Group_Factory
@@ -427,7 +427,7 @@ namespace Load_Balancer
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Object_Group_Factory (void);
@@ -436,7 +436,7 @@ namespace Load_Balancer
     Object_Group_Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Object_Group_Factory (
         TAO_Stub *objref,
@@ -445,7 +445,7 @@ namespace Load_Balancer
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Object_Group_Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Object_Group_Factory (const Object_Group_Factory &);
@@ -505,7 +505,7 @@ namespace Load_Balancer
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Object_Group (void);
@@ -514,7 +514,7 @@ namespace Load_Balancer
     Object_Group (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Object_Group (
         TAO_Stub *objref,
@@ -523,7 +523,7 @@ namespace Load_Balancer
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Object_Group (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Object_Group (const Object_Group &);

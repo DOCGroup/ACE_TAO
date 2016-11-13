@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -158,10 +158,10 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef LongStruct_var _var_type;
     typedef LongStruct_out _out_type;
-    
+
     ::CORBA::Long x;
     ::TAO::String_Manager str;
   };
@@ -202,12 +202,12 @@ public:
       ::CORBA::Boolean release = false);
     LongSeq (const LongSeq &);
     virtual ~LongSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef LongSeq_var _var_type;
     typedef LongSeq_out _out_type;
   };
@@ -242,7 +242,7 @@ protected:
   UDP (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   UDP (
       TAO_Stub *objref,

@@ -110,7 +110,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Bank
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -123,7 +123,7 @@ namespace POA_Bank
   {
   protected:
     Account (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Bank::Account _stub_type;
@@ -138,9 +138,9 @@ namespace POA_Bank
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Bank::Account *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -210,7 +210,7 @@ namespace POA_Bank
   {
   protected:
     AccountManager (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Bank::AccountManager _stub_type;
@@ -225,9 +225,9 @@ namespace POA_Bank
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Bank::AccountManager *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

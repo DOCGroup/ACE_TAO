@@ -234,21 +234,21 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_demo
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_sh.cpp:35
 
   namespace value
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_module/module_sh.cpp:35
 
     namespace idl
     {
-      
+
 
       // TAO_IDL - Generated from
       // be/be_visitor_interface/interface_sh.cpp:73
@@ -261,7 +261,7 @@ namespace POA_demo
       {
       protected:
         ValueServer (void);
-      
+
       public:
         /// Useful for template programming.
         typedef ::demo::value::idl::ValueServer _stub_type;
@@ -276,9 +276,9 @@ namespace POA_demo
         virtual void _dispatch (
             TAO_ServerRequest & req,
             TAO::Portable_Server::Servant_Upcall *servant_upcall);
-        
+
         ::demo::value::idl::ValueServer *_this (void);
-        
+
         virtual const char* _interface_repository_id (void) const;
 
         // TAO_IDL - Generated from
@@ -349,12 +349,12 @@ namespace POA_demo
             TAO::Portable_Server::Servant_Upcall *servant_upcall,
             TAO_ServantBase *servant);
       };
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_module/module_sh.cpp:66
 
     } // module demo::value::idl
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_sh.cpp:66
 

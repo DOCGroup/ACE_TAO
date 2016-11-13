@@ -92,7 +92,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_CosEventChannelFactory
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -105,7 +105,7 @@ namespace POA_CosEventChannelFactory
   {
   protected:
     ChannelFactory (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::CosEventChannelFactory::ChannelFactory _stub_type;
@@ -120,9 +120,9 @@ namespace POA_CosEventChannelFactory
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::CosEventChannelFactory::ChannelFactory *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

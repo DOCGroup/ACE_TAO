@@ -59,7 +59,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -112,7 +112,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionAllCovered_EnumerationDiscriminant_var _var_type;
     typedef UnionAllCovered_EnumerationDiscriminant_out _out_type;
 
@@ -191,7 +191,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionAllCoveredWithDefault_EnumerationDiscriminant_var _var_type;
     typedef UnionAllCoveredWithDefault_EnumerationDiscriminant_out _out_type;
 
@@ -265,7 +265,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionWithDefault_EnumerationDiscriminant_var _var_type;
     typedef UnionWithDefault_EnumerationDiscriminant_out _out_type;
 
@@ -339,7 +339,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionWithImplicitDefault_EnumerationDiscriminant_var _var_type;
     typedef UnionWithImplicitDefault_EnumerationDiscriminant_out _out_type;
 
@@ -415,7 +415,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionAllCovered_TypedefedEnumerationDiscriminant_var _var_type;
     typedef UnionAllCovered_TypedefedEnumerationDiscriminant_out _out_type;
 
@@ -494,7 +494,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionAllCoveredWithDefault_TypedefedEnumerationDiscriminant_var _var_type;
     typedef UnionAllCoveredWithDefault_TypedefedEnumerationDiscriminant_out _out_type;
 
@@ -568,7 +568,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionWithDefault_TypedefedEnumerationDiscriminant_var _var_type;
     typedef UnionWithDefault_TypedefedEnumerationDiscriminant_out _out_type;
 
@@ -642,7 +642,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionWithImplicitDefault_TypedefedEnumerationDiscriminant_var _var_type;
     typedef UnionWithImplicitDefault_TypedefedEnumerationDiscriminant_out _out_type;
 
@@ -712,7 +712,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionAllCovered_BooleanDiscriminant_var _var_type;
     typedef UnionAllCovered_BooleanDiscriminant_out _out_type;
 
@@ -777,7 +777,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionWithDefault_BooleanDiscriminant_var _var_type;
     typedef UnionWithDefault_BooleanDiscriminant_out _out_type;
 
@@ -842,7 +842,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionWithImplicitDefault_BooleanDiscriminant_var _var_type;
     typedef UnionWithImplicitDefault_BooleanDiscriminant_out _out_type;
 
@@ -903,7 +903,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionAllCovered_CharDiscriminant_var _var_type;
     typedef UnionAllCovered_CharDiscriminant_out _out_type;
 
@@ -959,7 +959,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionWithDefault_CharDiscriminant_var _var_type;
     typedef UnionWithDefault_CharDiscriminant_out _out_type;
 
@@ -1024,7 +1024,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionWithImplicitDefault_CharDiscriminant_var _var_type;
     typedef UnionWithImplicitDefault_CharDiscriminant_out _out_type;
 
@@ -1085,7 +1085,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionWithDefault_LongDiscriminant_var _var_type;
     typedef UnionWithDefault_LongDiscriminant_out _out_type;
 
@@ -1168,7 +1168,7 @@ namespace test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UnionWithImplicitDefault_LongDiscriminant_var _var_type;
     typedef UnionWithImplicitDefault_LongDiscriminant_out _out_type;
 

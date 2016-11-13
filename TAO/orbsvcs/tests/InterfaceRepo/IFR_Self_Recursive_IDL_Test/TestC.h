@@ -67,7 +67,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -142,12 +142,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     SeqBadDay (const SeqBadDay &);
     virtual ~SeqBadDay (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef SeqBadDay_var _var_type;
     typedef SeqBadDay_out _out_type;
   };
@@ -163,10 +163,10 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef BadDay_var _var_type;
     typedef BadDay_out _out_type;
-    
+
     Test::SeqBadDay the_seq;
   };
 
@@ -184,7 +184,7 @@ namespace Test
         GoodDay
       >
     GoodDay_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         GoodDay
@@ -250,10 +250,10 @@ namespace Test
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef RoughWeek_var _var_type;
       typedef RoughWeek_out _out_type;
-      
+
       Test::BadDay isitok;
       Test::SeqBadDay bad;
     };
@@ -267,7 +267,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     GoodDay (void);
@@ -276,7 +276,7 @@ namespace Test
     GoodDay (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     GoodDay (
         TAO_Stub *objref,
@@ -285,7 +285,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~GoodDay (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     GoodDay (const GoodDay &);

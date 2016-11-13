@@ -65,7 +65,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -97,12 +97,12 @@ namespace ECM_IDLData
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Point_var _var_type;
     typedef Point_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Double x;
     ::CORBA::Double y;
   };
@@ -148,12 +148,12 @@ namespace ECM_IDLData
       ::CORBA::Boolean release = false);
     Vector (const Vector &);
     virtual ~Vector (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Vector_var _var_type;
     typedef Vector_out _out_type;
 
@@ -193,12 +193,12 @@ namespace ECM_IDLData
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Info_var _var_type;
     typedef Info_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager mobile_name;
     ::CORBA::Double mobile_speed;
     ECM_IDLData::Vector trajectory;

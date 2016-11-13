@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -107,7 +107,7 @@ namespace Test_Idl
         SharedIntf
       >
     SharedIntf_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         SharedIntf
@@ -164,7 +164,7 @@ namespace Test_Idl
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     SharedIntf (void);
@@ -173,7 +173,7 @@ namespace Test_Idl
     SharedIntf (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     SharedIntf (
         TAO_Stub *objref,
@@ -182,7 +182,7 @@ namespace Test_Idl
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~SharedIntf (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     SharedIntf (const SharedIntf &);
@@ -209,7 +209,7 @@ namespace Test_Idl
         AMI_SharedIntfHandler
       >
     AMI_SharedIntfHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_SharedIntfHandler
@@ -223,7 +223,7 @@ namespace Test_Idl
 
   class  AMI_SharedIntfHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_SharedIntfHandler>;
@@ -276,7 +276,7 @@ namespace Test_Idl
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_SharedIntfHandler (void);
@@ -285,7 +285,7 @@ namespace Test_Idl
     AMI_SharedIntfHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_SharedIntfHandler (
         TAO_Stub *objref,
@@ -294,7 +294,7 @@ namespace Test_Idl
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_SharedIntfHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_SharedIntfHandler (const AMI_SharedIntfHandler &);

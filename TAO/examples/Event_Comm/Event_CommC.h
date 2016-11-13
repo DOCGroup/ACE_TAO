@@ -69,7 +69,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -117,10 +117,10 @@ namespace Event_Comm
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Event_var _var_type;
     typedef Event_out _out_type;
-    
+
     ::TAO::String_Manager tag_;
     ::CORBA::Any value_;
     ::CORBA::Object_var object_ref_;
@@ -140,7 +140,7 @@ namespace Event_Comm
         Consumer
       >
     Consumer_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Consumer
@@ -186,7 +186,7 @@ namespace Event_Comm
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Consumer (void);
@@ -195,7 +195,7 @@ namespace Event_Comm
     Consumer (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Consumer (
         TAO_Stub *objref,
@@ -204,7 +204,7 @@ namespace Event_Comm
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Consumer (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Consumer (const Consumer &);
@@ -226,7 +226,7 @@ namespace Event_Comm
         Notifier
       >
     Notifier_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Notifier
@@ -346,7 +346,7 @@ namespace Event_Comm
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Notifier (void);
@@ -355,7 +355,7 @@ namespace Event_Comm
     Notifier (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Notifier (
         TAO_Stub *objref,
@@ -364,7 +364,7 @@ namespace Event_Comm
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Notifier (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Notifier (const Notifier &);

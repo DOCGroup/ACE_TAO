@@ -106,12 +106,12 @@ namespace FP_Scheduling
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef SegmentSchedulingParameter_var _var_type;
     typedef SegmentSchedulingParameter_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     RTCORBA::Priority base_priority;
   };
 
@@ -134,7 +134,7 @@ namespace FP_Scheduling
         SegmentSchedulingParameterPolicy
       >
     SegmentSchedulingParameterPolicy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         SegmentSchedulingParameterPolicy
@@ -148,7 +148,7 @@ namespace FP_Scheduling
 
   class Kokyu_DSRT_Schedulers_Export SegmentSchedulingParameterPolicy
     : public virtual ::CORBA::Policy
-  
+
   {
   public:
 
@@ -188,15 +188,15 @@ namespace FP_Scheduling
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     SegmentSchedulingParameterPolicy (void);
 
-    
+
 
     virtual ~SegmentSchedulingParameterPolicy (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     SegmentSchedulingParameterPolicy (const SegmentSchedulingParameterPolicy &);
@@ -223,7 +223,7 @@ namespace FP_Scheduling
         FP_Scheduler
       >
     FP_Scheduler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         FP_Scheduler
@@ -237,7 +237,7 @@ namespace FP_Scheduling
 
   class Kokyu_DSRT_Schedulers_Export FP_Scheduler
     : public virtual ::RTScheduling::Scheduler
-  
+
   {
   public:
 
@@ -268,15 +268,15 @@ namespace FP_Scheduling
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     FP_Scheduler (void);
 
-    
+
 
     virtual ~FP_Scheduler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     FP_Scheduler (const FP_Scheduler &);

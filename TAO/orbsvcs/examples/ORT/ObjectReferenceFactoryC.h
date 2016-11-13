@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -74,7 +74,7 @@ namespace ORT
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_ORT_OBJECTREFERENCEFACTORY__VAR_OUT_CH_)
 #define _ORT_OBJECTREFERENCEFACTORY__VAR_OUT_CH_
@@ -85,7 +85,7 @@ namespace ORT
         ObjectReferenceFactory
       >
     ObjectReferenceFactory_var;
-  
+
   typedef
     TAO_Value_Out_T<
         ObjectReferenceFactory
@@ -110,12 +110,12 @@ namespace ORT
     typedef ObjectReferenceFactory_out _out_type;
 
     static ObjectReferenceFactory* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         ObjectReferenceFactory *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -124,7 +124,7 @@ namespace ORT
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     ObjectReferenceFactory (void);
     virtual ~ObjectReferenceFactory (void);
@@ -132,11 +132,11 @@ namespace ORT
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     ObjectReferenceFactory (const ObjectReferenceFactory &);
     void operator= (const ObjectReferenceFactory &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__ORT_ObjectReferenceFactory (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -203,7 +203,7 @@ namespace OBV_ORT
 protected:
   ObjectReferenceFactory (void);
   virtual ~ObjectReferenceFactory (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__ORT_ObjectReferenceFactory (TAO_OutputCDR &, TAO_ChunkInfo &) const;

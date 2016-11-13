@@ -105,7 +105,7 @@ namespace Test
           CurrentTest
         >
       CurrentTest_var;
-    
+
     typedef
       TAO_Objref_Out_T<
           CurrentTest
@@ -162,7 +162,7 @@ namespace Test
       virtual ::CORBA::Boolean _is_a (const char *type_id);
       virtual const char* _interface_repository_id (void) const;
       virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    
+
     protected:
       // Concrete interface only.
       CurrentTest (void);
@@ -171,7 +171,7 @@ namespace Test
       CurrentTest (
           ::IOP::IOR *ior,
           TAO_ORB_Core *orb_core);
-      
+
       // Non-local interface only.
       CurrentTest (
           TAO_Stub *objref,
@@ -180,17 +180,17 @@ namespace Test
           TAO_ORB_Core *orb_core = 0);
 
       virtual ~CurrentTest (void);
-    
+
     private:
       // Private and unimplemented for concrete interfaces.
       CurrentTest (const CurrentTest &);
 
       void operator= (const CurrentTest &);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_ch.cpp:64
-  
+
   } // module Test::Transport
 
 // TAO_IDL - Generated from

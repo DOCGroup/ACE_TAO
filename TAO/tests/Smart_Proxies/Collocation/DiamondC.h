@@ -101,7 +101,7 @@ namespace Diamond
         Top
       >
     Top_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Top
@@ -144,7 +144,7 @@ namespace Diamond
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Top (void);
@@ -153,7 +153,7 @@ namespace Diamond
     Top (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Top (
         TAO_Stub *objref,
@@ -162,7 +162,7 @@ namespace Diamond
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Top (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Top (const Top &);
@@ -170,7 +170,7 @@ namespace Diamond
     void operator= (const Top &);
   };
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/smart_proxy_ch.cpp:39
@@ -178,16 +178,16 @@ namespace Diamond
   class MY_Stub_Export TAO_Diamond_Top_Default_Proxy_Factory
   {
   public:
-    
+
     TAO_Diamond_Top_Default_Proxy_Factory (int permanent = 1);
     // <permanent> signifies that the proxy factory will remain
     // registered with the Proxy Factory Adapter until the program
-    // terminates. That is, it will be a one-shot factory for the 
+    // terminates. That is, it will be a one-shot factory for the
     // interface.  If this value is set to 0, then the factory will
-    // be unregistered after the first invocation providing the 
-    // flexibility of having a different smart proxy per object 
+    // be unregistered after the first invocation providing the
+    // flexibility of having a different smart proxy per object
     // instead of per interface.
-    
+
     virtual ~TAO_Diamond_Top_Default_Proxy_Factory (void);
 
     virtual Top_ptr create_proxy (
@@ -198,20 +198,20 @@ namespace Diamond
 class MY_Stub_Export TAO_Diamond_Top_Proxy_Factory_Adapter
   {
   public:
-    
+
     friend class TAO_Singleton<TAO_Diamond_Top_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
 
     void register_proxy_factory (
         TAO_Diamond_Top_Default_Proxy_Factory *df,
         bool one_shot_factory = true
       );
-    
+
     void unregister_proxy_factory (void);
 
     Top_ptr create_proxy (
         Top_ptr proxy
       );
-  
+
   protected:
     TAO_Diamond_Top_Proxy_Factory_Adapter (void);
     ~TAO_Diamond_Top_Proxy_Factory_Adapter (void);
@@ -257,7 +257,7 @@ class MY_Stub_Export TAO_Diamond_Top_Proxy_Factory_Adapter
         Left
       >
     Left_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Left
@@ -271,7 +271,7 @@ class MY_Stub_Export TAO_Diamond_Top_Proxy_Factory_Adapter
 
   class MY_Stub_Export Left
     : public virtual ::Diamond::Top
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Left>;
@@ -301,7 +301,7 @@ class MY_Stub_Export TAO_Diamond_Top_Proxy_Factory_Adapter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Left (void);
@@ -310,7 +310,7 @@ class MY_Stub_Export TAO_Diamond_Top_Proxy_Factory_Adapter
     Left (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Left (
         TAO_Stub *objref,
@@ -319,7 +319,7 @@ class MY_Stub_Export TAO_Diamond_Top_Proxy_Factory_Adapter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Left (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Left (const Left &);
@@ -327,7 +327,7 @@ class MY_Stub_Export TAO_Diamond_Top_Proxy_Factory_Adapter
     void operator= (const Left &);
   };
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/smart_proxy_ch.cpp:39
@@ -335,16 +335,16 @@ class MY_Stub_Export TAO_Diamond_Top_Proxy_Factory_Adapter
   class MY_Stub_Export TAO_Diamond_Left_Default_Proxy_Factory
   {
   public:
-    
+
     TAO_Diamond_Left_Default_Proxy_Factory (int permanent = 1);
     // <permanent> signifies that the proxy factory will remain
     // registered with the Proxy Factory Adapter until the program
-    // terminates. That is, it will be a one-shot factory for the 
+    // terminates. That is, it will be a one-shot factory for the
     // interface.  If this value is set to 0, then the factory will
-    // be unregistered after the first invocation providing the 
-    // flexibility of having a different smart proxy per object 
+    // be unregistered after the first invocation providing the
+    // flexibility of having a different smart proxy per object
     // instead of per interface.
-    
+
     virtual ~TAO_Diamond_Left_Default_Proxy_Factory (void);
 
     virtual Left_ptr create_proxy (
@@ -355,20 +355,20 @@ class MY_Stub_Export TAO_Diamond_Top_Proxy_Factory_Adapter
 class MY_Stub_Export TAO_Diamond_Left_Proxy_Factory_Adapter
   {
   public:
-    
+
     friend class TAO_Singleton<TAO_Diamond_Left_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
 
     void register_proxy_factory (
         TAO_Diamond_Left_Default_Proxy_Factory *df,
         bool one_shot_factory = true
       );
-    
+
     void unregister_proxy_factory (void);
 
     Left_ptr create_proxy (
         Left_ptr proxy
       );
-  
+
   protected:
     TAO_Diamond_Left_Proxy_Factory_Adapter (void);
     ~TAO_Diamond_Left_Proxy_Factory_Adapter (void);
@@ -414,7 +414,7 @@ class MY_Stub_Export TAO_Diamond_Left_Proxy_Factory_Adapter
         Right
       >
     Right_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Right
@@ -428,7 +428,7 @@ class MY_Stub_Export TAO_Diamond_Left_Proxy_Factory_Adapter
 
   class MY_Stub_Export Right
     : public virtual ::Diamond::Top
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Right>;
@@ -458,7 +458,7 @@ class MY_Stub_Export TAO_Diamond_Left_Proxy_Factory_Adapter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Right (void);
@@ -467,7 +467,7 @@ class MY_Stub_Export TAO_Diamond_Left_Proxy_Factory_Adapter
     Right (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Right (
         TAO_Stub *objref,
@@ -476,7 +476,7 @@ class MY_Stub_Export TAO_Diamond_Left_Proxy_Factory_Adapter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Right (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Right (const Right &);
@@ -484,7 +484,7 @@ class MY_Stub_Export TAO_Diamond_Left_Proxy_Factory_Adapter
     void operator= (const Right &);
   };
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/smart_proxy_ch.cpp:39
@@ -492,16 +492,16 @@ class MY_Stub_Export TAO_Diamond_Left_Proxy_Factory_Adapter
   class MY_Stub_Export TAO_Diamond_Right_Default_Proxy_Factory
   {
   public:
-    
+
     TAO_Diamond_Right_Default_Proxy_Factory (int permanent = 1);
     // <permanent> signifies that the proxy factory will remain
     // registered with the Proxy Factory Adapter until the program
-    // terminates. That is, it will be a one-shot factory for the 
+    // terminates. That is, it will be a one-shot factory for the
     // interface.  If this value is set to 0, then the factory will
-    // be unregistered after the first invocation providing the 
-    // flexibility of having a different smart proxy per object 
+    // be unregistered after the first invocation providing the
+    // flexibility of having a different smart proxy per object
     // instead of per interface.
-    
+
     virtual ~TAO_Diamond_Right_Default_Proxy_Factory (void);
 
     virtual Right_ptr create_proxy (
@@ -512,20 +512,20 @@ class MY_Stub_Export TAO_Diamond_Left_Proxy_Factory_Adapter
 class MY_Stub_Export TAO_Diamond_Right_Proxy_Factory_Adapter
   {
   public:
-    
+
     friend class TAO_Singleton<TAO_Diamond_Right_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
 
     void register_proxy_factory (
         TAO_Diamond_Right_Default_Proxy_Factory *df,
         bool one_shot_factory = true
       );
-    
+
     void unregister_proxy_factory (void);
 
     Right_ptr create_proxy (
         Right_ptr proxy
       );
-  
+
   protected:
     TAO_Diamond_Right_Proxy_Factory_Adapter (void);
     ~TAO_Diamond_Right_Proxy_Factory_Adapter (void);
@@ -571,7 +571,7 @@ class MY_Stub_Export TAO_Diamond_Right_Proxy_Factory_Adapter
         Buttom
       >
     Buttom_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Buttom
@@ -586,7 +586,7 @@ class MY_Stub_Export TAO_Diamond_Right_Proxy_Factory_Adapter
   class MY_Stub_Export Buttom
     : public virtual ::Diamond::Left,
       public virtual ::Diamond::Right
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Buttom>;
@@ -616,7 +616,7 @@ class MY_Stub_Export TAO_Diamond_Right_Proxy_Factory_Adapter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Buttom (void);
@@ -625,7 +625,7 @@ class MY_Stub_Export TAO_Diamond_Right_Proxy_Factory_Adapter
     Buttom (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Buttom (
         TAO_Stub *objref,
@@ -634,7 +634,7 @@ class MY_Stub_Export TAO_Diamond_Right_Proxy_Factory_Adapter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Buttom (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Buttom (const Buttom &);
@@ -642,7 +642,7 @@ class MY_Stub_Export TAO_Diamond_Right_Proxy_Factory_Adapter
     void operator= (const Buttom &);
   };
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/smart_proxy_ch.cpp:39
@@ -650,16 +650,16 @@ class MY_Stub_Export TAO_Diamond_Right_Proxy_Factory_Adapter
   class MY_Stub_Export TAO_Diamond_Buttom_Default_Proxy_Factory
   {
   public:
-    
+
     TAO_Diamond_Buttom_Default_Proxy_Factory (int permanent = 1);
     // <permanent> signifies that the proxy factory will remain
     // registered with the Proxy Factory Adapter until the program
-    // terminates. That is, it will be a one-shot factory for the 
+    // terminates. That is, it will be a one-shot factory for the
     // interface.  If this value is set to 0, then the factory will
-    // be unregistered after the first invocation providing the 
-    // flexibility of having a different smart proxy per object 
+    // be unregistered after the first invocation providing the
+    // flexibility of having a different smart proxy per object
     // instead of per interface.
-    
+
     virtual ~TAO_Diamond_Buttom_Default_Proxy_Factory (void);
 
     virtual Buttom_ptr create_proxy (
@@ -670,20 +670,20 @@ class MY_Stub_Export TAO_Diamond_Right_Proxy_Factory_Adapter
 class MY_Stub_Export TAO_Diamond_Buttom_Proxy_Factory_Adapter
   {
   public:
-    
+
     friend class TAO_Singleton<TAO_Diamond_Buttom_Proxy_Factory_Adapter, TAO_SYNCH_RECURSIVE_MUTEX>;
 
     void register_proxy_factory (
         TAO_Diamond_Buttom_Default_Proxy_Factory *df,
         bool one_shot_factory = true
       );
-    
+
     void unregister_proxy_factory (void);
 
     Buttom_ptr create_proxy (
         Buttom_ptr proxy
       );
-  
+
   protected:
     TAO_Diamond_Buttom_Proxy_Factory_Adapter (void);
     ~TAO_Diamond_Buttom_Proxy_Factory_Adapter (void);

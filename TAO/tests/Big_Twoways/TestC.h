@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -126,16 +126,16 @@ namespace Test
       ::CORBA::Boolean release = false);
     Payload (const Payload &);
     virtual ~Payload (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Payload_var _var_type;
     typedef Payload_out _out_type;
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     Payload (
@@ -162,7 +162,7 @@ namespace Test
         Session
       >
     Session_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Session
@@ -208,12 +208,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     Session_List (const Session_List &);
     virtual ~Session_List (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Session_List_var _var_type;
     typedef Session_List_out _out_type;
   };
@@ -234,7 +234,7 @@ namespace Test
         Session_Control
       >
     Session_Control_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Session_Control
@@ -277,7 +277,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Session_Control (void);
@@ -286,7 +286,7 @@ namespace Test
     Session_Control (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Session_Control (
         TAO_Stub *objref,
@@ -295,7 +295,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Session_Control (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Session_Control (const Session_Control &);
@@ -317,7 +317,7 @@ namespace Test
         Peer
       >
     Peer_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Peer
@@ -367,7 +367,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Peer (void);
@@ -376,7 +376,7 @@ namespace Test
     Peer (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Peer (
         TAO_Stub *objref,
@@ -385,7 +385,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Peer (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Peer (const Peer &);
@@ -485,7 +485,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Session (void);
@@ -494,7 +494,7 @@ namespace Test
     Session (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Session (
         TAO_Stub *objref,
@@ -503,7 +503,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Session (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Session (const Session &);
@@ -525,7 +525,7 @@ namespace Test
         Coordinator
       >
     Coordinator_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Coordinator
@@ -568,7 +568,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Coordinator (void);
@@ -577,7 +577,7 @@ namespace Test
     Coordinator (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Coordinator (
         TAO_Stub *objref,
@@ -586,7 +586,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Coordinator (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Coordinator (const Coordinator &);

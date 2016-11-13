@@ -112,7 +112,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Stock
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -125,7 +125,7 @@ namespace POA_Stock
   {
   protected:
     StockBroker (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::StockBroker _stub_type;
@@ -140,9 +140,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::StockBroker *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -212,7 +212,7 @@ namespace POA_Stock
   {
   protected:
     StockBrokerHome (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::StockBrokerHome _stub_type;
@@ -227,9 +227,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::StockBrokerHome *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

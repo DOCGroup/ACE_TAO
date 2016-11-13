@@ -71,7 +71,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -150,12 +150,12 @@ public:
     ::CORBA::Boolean release = false);
   PeerSet (const PeerSet &);
   virtual ~PeerSet (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef PeerSet_var _var_type;
   typedef PeerSet_out _out_type;
 
@@ -225,7 +225,7 @@ protected:
   Peer (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Peer (
       TAO_Stub *objref,
@@ -325,7 +325,7 @@ protected:
   AMI_PeerHandler (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   AMI_PeerHandler (
       TAO_Stub *objref,
@@ -428,7 +428,7 @@ protected:
   Progress (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Progress (
       TAO_Stub *objref,
@@ -528,7 +528,7 @@ protected:
   AMI_ProgressHandler (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   AMI_ProgressHandler (
       TAO_Stub *objref,

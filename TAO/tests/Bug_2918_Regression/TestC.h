@@ -70,7 +70,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -127,12 +127,12 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef FooStruct_var _var_type;
     typedef FooStruct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     Test::FooType Foo1;
     Test::FooType Foo2;
   };
@@ -226,7 +226,7 @@ namespace Test
         Hello
       >
     Hello_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Hello
@@ -274,7 +274,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Hello (void);
@@ -283,7 +283,7 @@ namespace Test
     Hello (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Hello (
         TAO_Stub *objref,
@@ -292,7 +292,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Hello (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Hello (const Hello &);
@@ -427,7 +427,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::Test::Demarshaling_From_Any_Failed &); // copying version
    void operator<<= (::CORBA::Any &, ::Test::Demarshaling_From_Any_Failed*); // noncopying version
@@ -459,7 +459,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::Test::Repeated_Type_In_Any_Test_Failed &); // copying version
    void operator<<= (::CORBA::Any &, ::Test::Repeated_Type_In_Any_Test_Failed*); // noncopying version

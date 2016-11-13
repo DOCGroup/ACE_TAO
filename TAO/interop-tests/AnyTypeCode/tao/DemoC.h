@@ -78,7 +78,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -126,12 +126,12 @@ namespace Demo
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef BaseStruct_var _var_type;
     typedef BaseStruct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager str;
   };
 
@@ -193,12 +193,12 @@ namespace Demo
       ::CORBA::Boolean release = false);
     NestedSeq (const NestedSeq &);
     virtual ~NestedSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NestedSeq_var _var_type;
     typedef NestedSeq_out _out_type;
 
@@ -221,12 +221,12 @@ namespace Demo
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NestedStruct_var _var_type;
     typedef NestedStruct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     Demo::BaseStruct foo1;
     Demo::BaseStruct foo2;
     Demo::BaseStruct foo3;
@@ -273,7 +273,7 @@ namespace Demo
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef BaseUnion_var _var_type;
     typedef BaseUnion_out _out_type;
 
@@ -358,7 +358,7 @@ namespace Demo
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NestedUnion_var _var_type;
     typedef NestedUnion_out _out_type;
 
@@ -412,7 +412,7 @@ namespace Demo
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_DEMO_BASEVALUE__VAR_OUT_CH_)
 #define _DEMO_BASEVALUE__VAR_OUT_CH_
@@ -423,7 +423,7 @@ namespace Demo
         BaseValue
       >
     BaseValue_var;
-  
+
   typedef
     TAO_Value_Out_T<
         BaseValue
@@ -450,12 +450,12 @@ namespace Demo
     static void _tao_any_destructor (void *);
 
     static BaseValue* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         BaseValue *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -463,7 +463,7 @@ namespace Demo
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -473,12 +473,12 @@ namespace Demo
     virtual void str (const char *val) = 0;
     virtual void str (const ::CORBA::String_var &val) = 0;
     virtual const char *str (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     BaseValue (void);
     virtual ~BaseValue (void);
@@ -486,11 +486,11 @@ namespace Demo
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     BaseValue (const BaseValue &);
     void operator= (const BaseValue &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Demo_BaseValue (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -515,10 +515,10 @@ namespace Demo
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     BaseValue_init (void);
-  
+
   protected:
     virtual ~BaseValue_init (void);
   };
@@ -531,7 +531,7 @@ namespace Demo
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_DEMO_NESTEDVALUE__VAR_OUT_CH_)
 #define _DEMO_NESTEDVALUE__VAR_OUT_CH_
@@ -542,7 +542,7 @@ namespace Demo
         NestedValue
       >
     NestedValue_var;
-  
+
   typedef
     TAO_Value_Out_T<
         NestedValue
@@ -569,12 +569,12 @@ namespace Demo
     static void _tao_any_destructor (void *);
 
     static NestedValue* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         NestedValue *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -582,7 +582,7 @@ namespace Demo
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -590,7 +590,7 @@ namespace Demo
 
     virtual void foo1 (Demo::BaseValue *) = 0;
     virtual Demo::BaseValue *foo1 (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -601,7 +601,7 @@ namespace Demo
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     NestedValue (void);
     virtual ~NestedValue (void);
@@ -609,11 +609,11 @@ namespace Demo
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     NestedValue (const NestedValue &);
     void operator= (const NestedValue &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Demo_NestedValue (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -639,7 +639,7 @@ namespace Demo
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~NestedValue_init (void);
   };
@@ -663,7 +663,7 @@ namespace Demo
         ATC_Test
       >
     ATC_Test_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ATC_Test
@@ -717,7 +717,7 @@ namespace Demo
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     ATC_Test (void);
@@ -726,7 +726,7 @@ namespace Demo
     ATC_Test (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     ATC_Test (
         TAO_Stub *objref,
@@ -735,7 +735,7 @@ namespace Demo
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~ATC_Test (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     ATC_Test (const ATC_Test &);
@@ -928,7 +928,7 @@ public:
       const char * _tao_init_str
     );
   virtual ~BaseValue (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Demo_BaseValue (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -980,7 +980,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Demo_NestedValue (TAO_OutputCDR &, TAO_ChunkInfo &) const;

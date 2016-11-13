@@ -106,7 +106,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -121,7 +121,7 @@ namespace POA_Test
   {
   protected:
     Hello (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::Hello _stub_type;
@@ -136,9 +136,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::Hello *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -182,7 +182,7 @@ namespace POA_Test
     static void
     get_string (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -190,14 +190,14 @@ namespace POA_Test
     static void
     shutdown (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -212,7 +212,7 @@ namespace POA_Test
   {
   protected:
     HelloAgain (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::HelloAgain _stub_type;
@@ -227,9 +227,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::HelloAgain *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -263,14 +263,14 @@ namespace POA_Test
     static void
     get_string_again (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:66

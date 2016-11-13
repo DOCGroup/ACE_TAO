@@ -86,7 +86,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -231,12 +231,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     RecursiveStructSeq (const RecursiveStructSeq &);
     virtual ~RecursiveStructSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveStructSeq_var _var_type;
     typedef RecursiveStructSeq_out _out_type;
 
@@ -259,12 +259,12 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveStruct_var _var_type;
     typedef RecursiveStruct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     Test::RecursiveStructSeq recursive_structs;
     ::CORBA::Long i;
     Test::RecursiveStructSeq recursive_structs_second;
@@ -328,12 +328,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     NestedRecursiveStructSeq (const NestedRecursiveStructSeq &);
     virtual ~NestedRecursiveStructSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NestedRecursiveStructSeq_var _var_type;
     typedef NestedRecursiveStructSeq_out _out_type;
 
@@ -356,13 +356,13 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NestedRecursiveStruct_var _var_type;
     typedef NestedRecursiveStruct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
-    
+
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:258
@@ -390,12 +390,12 @@ namespace Test
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef InnerStruct_var _var_type;
       typedef InnerStruct_out _out_type;
 
       static void _tao_any_destructor (void *);
-      
+
       Test::NestedRecursiveStructSeq recursive_structs;
     };
 
@@ -464,12 +464,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     RecursiveUnionSeq (const RecursiveUnionSeq &);
     virtual ~RecursiveUnionSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveUnionSeq_var _var_type;
     typedef RecursiveUnionSeq_out _out_type;
 
@@ -501,7 +501,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveUnion_var _var_type;
     typedef RecursiveUnion_out _out_type;
 
@@ -613,12 +613,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     RecursiveUnionSeq2 (const RecursiveUnionSeq2 &);
     virtual ~RecursiveUnionSeq2 (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveUnionSeq2_var _var_type;
     typedef RecursiveUnionSeq2_out _out_type;
 
@@ -650,7 +650,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveUnion2_var _var_type;
     typedef RecursiveUnion2_out _out_type;
 
@@ -682,12 +682,12 @@ namespace Test
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef Innerstruct3a_var _var_type;
       typedef Innerstruct3a_out _out_type;
 
       static void _tao_any_destructor (void *);
-      
+
       Test::RecursiveUnionSeq2 recursive_unions;
     };
 
@@ -735,12 +735,12 @@ namespace Test
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef Innerstruct3b_var _var_type;
       typedef Innerstruct3b_out _out_type;
 
       static void _tao_any_destructor (void *);
-      
+
       Test::RecursiveUnionSeq2 recursive_unions_second;
     };
 
@@ -842,12 +842,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     RecursiveStructSeq3 (const RecursiveStructSeq3 &);
     virtual ~RecursiveStructSeq3 (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveStructSeq3_var _var_type;
     typedef RecursiveStructSeq3_out _out_type;
 
@@ -896,7 +896,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveUnion3_var _var_type;
     typedef RecursiveUnion3_out _out_type;
 
@@ -960,13 +960,13 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveStruct3_var _var_type;
     typedef RecursiveStruct3_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
-    
+
+
 
     Test::RecursiveUnion3 uni;
   };
@@ -1029,12 +1029,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     RecursiveUnionSeqNoDefault (const RecursiveUnionSeqNoDefault &);
     virtual ~RecursiveUnionSeqNoDefault (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveUnionSeqNoDefault_var _var_type;
     typedef RecursiveUnionSeqNoDefault_out _out_type;
 
@@ -1066,7 +1066,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveUnionNoDefault_var _var_type;
     typedef RecursiveUnionNoDefault_out _out_type;
 
@@ -1192,12 +1192,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     VSortRecursiveUnionSeq (const VSortRecursiveUnionSeq &);
     virtual ~VSortRecursiveUnionSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef VSortRecursiveUnionSeq_var _var_type;
     typedef VSortRecursiveUnionSeq_out _out_type;
 
@@ -1229,7 +1229,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef VSortRecursiveUnion_var _var_type;
     typedef VSortRecursiveUnion_out _out_type;
 
@@ -1307,7 +1307,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef EnumUnion_var _var_type;
     typedef EnumUnion_out _out_type;
 
@@ -1354,7 +1354,7 @@ namespace Test
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_TEST_INDIRECTLYRECURSIVEVALUETYPE__VAR_OUT_CH_)
 #define _TEST_INDIRECTLYRECURSIVEVALUETYPE__VAR_OUT_CH_
@@ -1365,7 +1365,7 @@ namespace Test
         IndirectlyRecursiveValuetype
       >
     IndirectlyRecursiveValuetype_var;
-  
+
   typedef
     TAO_Value_Out_T<
         IndirectlyRecursiveValuetype
@@ -1411,12 +1411,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     IndirectlyRecursiveValuetypeSeq (const IndirectlyRecursiveValuetypeSeq &);
     virtual ~IndirectlyRecursiveValuetypeSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef IndirectlyRecursiveValuetypeSeq_var _var_type;
     typedef IndirectlyRecursiveValuetypeSeq_out _out_type;
 
@@ -1448,12 +1448,12 @@ namespace Test
     static void _tao_any_destructor (void *);
 
     static IndirectlyRecursiveValuetype* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         IndirectlyRecursiveValuetype *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -1461,7 +1461,7 @@ namespace Test
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -1473,7 +1473,7 @@ namespace Test
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     IndirectlyRecursiveValuetype (void);
     virtual ~IndirectlyRecursiveValuetype (void);
@@ -1481,11 +1481,11 @@ namespace Test
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     IndirectlyRecursiveValuetype (const IndirectlyRecursiveValuetype &);
     void operator= (const IndirectlyRecursiveValuetype &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Test_IndirectlyRecursiveValuetype (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -1511,7 +1511,7 @@ namespace Test
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~IndirectlyRecursiveValuetype_init (void);
   };
@@ -1524,7 +1524,7 @@ namespace Test
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_TEST_DIRECTLYRECURSIVEVALUETYPE__VAR_OUT_CH_)
 #define _TEST_DIRECTLYRECURSIVEVALUETYPE__VAR_OUT_CH_
@@ -1535,7 +1535,7 @@ namespace Test
         DirectlyRecursiveValuetype
       >
     DirectlyRecursiveValuetype_var;
-  
+
   typedef
     TAO_Value_Out_T<
         DirectlyRecursiveValuetype
@@ -1562,12 +1562,12 @@ namespace Test
     static void _tao_any_destructor (void *);
 
     static DirectlyRecursiveValuetype* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         DirectlyRecursiveValuetype *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -1575,7 +1575,7 @@ namespace Test
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -1583,7 +1583,7 @@ namespace Test
 
     virtual void recursive_valuetype (Test::DirectlyRecursiveValuetype *) = 0;
     virtual Test::DirectlyRecursiveValuetype *recursive_valuetype (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -1594,7 +1594,7 @@ namespace Test
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     DirectlyRecursiveValuetype (void);
     virtual ~DirectlyRecursiveValuetype (void);
@@ -1602,11 +1602,11 @@ namespace Test
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     DirectlyRecursiveValuetype (const DirectlyRecursiveValuetype &);
     void operator= (const DirectlyRecursiveValuetype &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Test_DirectlyRecursiveValuetype (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -1632,7 +1632,7 @@ namespace Test
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~DirectlyRecursiveValuetype_init (void);
   };
@@ -1681,12 +1681,12 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Position_var _var_type;
     typedef Position_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     Test::PositionEnum type;
   };
 
@@ -1758,7 +1758,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NonRecursiveUnionWithEnum_var _var_type;
     typedef NonRecursiveUnionWithEnum_out _out_type;
 
@@ -1845,12 +1845,12 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Symbol2_var _var_type;
     typedef Symbol2_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager name;
   };
 
@@ -1894,7 +1894,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NonRecursiveUnionWithStringStruct_var _var_type;
     typedef NonRecursiveUnionWithStringStruct_out _out_type;
 
@@ -1944,7 +1944,7 @@ namespace Test
         Hello
       >
     Hello_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Hello
@@ -1992,7 +1992,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Hello (void);
@@ -2001,7 +2001,7 @@ namespace Test
     Hello (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Hello (
         TAO_Stub *objref,
@@ -2010,7 +2010,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Hello (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Hello (const Hello &);
@@ -2026,7 +2026,7 @@ namespace Test
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_TEST_RECURSIVE2__VAR_OUT_CH_)
 #define _TEST_RECURSIVE2__VAR_OUT_CH_
@@ -2037,7 +2037,7 @@ namespace Test
         Recursive2
       >
     Recursive2_var;
-  
+
   typedef
     TAO_Value_Out_T<
         Recursive2
@@ -2083,12 +2083,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     Recursive2Seq2 (const Recursive2Seq2 &);
     virtual ~Recursive2Seq2 (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Recursive2Seq2_var _var_type;
     typedef Recursive2Seq2_out _out_type;
 
@@ -2120,12 +2120,12 @@ namespace Test
     static void _tao_any_destructor (void *);
 
     static Recursive2* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         Recursive2 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -2133,7 +2133,7 @@ namespace Test
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -2162,12 +2162,12 @@ namespace Test
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef Innerstruct3a_var _var_type;
       typedef Innerstruct3a_out _out_type;
 
       static void _tao_any_destructor (void *);
-      
+
       Test::Recursive2Seq2 recursive_unions;
     };
 
@@ -2175,7 +2175,7 @@ namespace Test
     // be/be_visitor_typecode/typecode_decl.cpp:34
 
     static ::CORBA::TypeCode_ptr const _tc_Innerstruct3a;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -2184,7 +2184,7 @@ namespace Test
     virtual void insa (const Test::Recursive2::Innerstruct3a &) = 0;
     virtual const Test::Recursive2::Innerstruct3a &insa (void) const = 0;
     virtual Test::Recursive2::Innerstruct3a &insa (void) = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -2192,7 +2192,7 @@ namespace Test
 
     virtual void a (const ::CORBA::Short) = 0;
     virtual ::CORBA::Short a (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -2221,12 +2221,12 @@ namespace Test
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef Innerstruct3b_var _var_type;
       typedef Innerstruct3b_out _out_type;
 
       static void _tao_any_destructor (void *);
-      
+
       Test::Recursive2Seq2 recursive_second;
     };
 
@@ -2234,7 +2234,7 @@ namespace Test
     // be/be_visitor_typecode/typecode_decl.cpp:34
 
     static ::CORBA::TypeCode_ptr const _tc_Innerstruct3b;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -2246,7 +2246,7 @@ namespace Test
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     Recursive2 (void);
     virtual ~Recursive2 (void);
@@ -2254,11 +2254,11 @@ namespace Test
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     Recursive2 (const Recursive2 &);
     void operator= (const Recursive2 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Test_Recursive2 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -2284,7 +2284,7 @@ namespace Test
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~Recursive2_init (void);
   };
@@ -2297,7 +2297,7 @@ namespace Test
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_TEST_RECURSIVE3__VAR_OUT_CH_)
 #define _TEST_RECURSIVE3__VAR_OUT_CH_
@@ -2308,7 +2308,7 @@ namespace Test
         Recursive3
       >
     Recursive3_var;
-  
+
   typedef
     TAO_Value_Out_T<
         Recursive3
@@ -2354,12 +2354,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     RecursiveSeq3 (const RecursiveSeq3 &);
     virtual ~RecursiveSeq3 (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecursiveSeq3_var _var_type;
     typedef RecursiveSeq3_out _out_type;
 
@@ -2391,12 +2391,12 @@ namespace Test
     static void _tao_any_destructor (void *);
 
     static Recursive3* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         Recursive3 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -2404,7 +2404,7 @@ namespace Test
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -2413,7 +2413,7 @@ namespace Test
     virtual void seq1 (const Test::RecursiveSeq3 &) = 0;
     virtual const Test::RecursiveSeq3 &seq1 (void) const = 0;
     virtual Test::RecursiveSeq3 &seq1 (void) = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -2421,7 +2421,7 @@ namespace Test
 
     virtual void a (const ::CORBA::Short) = 0;
     virtual ::CORBA::Short a (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -2433,7 +2433,7 @@ namespace Test
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     Recursive3 (void);
     virtual ~Recursive3 (void);
@@ -2441,11 +2441,11 @@ namespace Test
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     Recursive3 (const Recursive3 &);
     void operator= (const Recursive3 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Test_Recursive3 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -2471,7 +2471,7 @@ namespace Test
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~Recursive3_init (void);
   };
@@ -3055,7 +3055,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Test_IndirectlyRecursiveValuetype (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -3107,7 +3107,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Test_DirectlyRecursiveValuetype (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -3175,7 +3175,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Test_Recursive2 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -3240,7 +3240,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Test_Recursive3 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -3350,7 +3350,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::Test::Recursive_Type_In_Any_Test_Failed &); // copying version
    void operator<<= (::CORBA::Any &, ::Test::Recursive_Type_In_Any_Test_Failed*); // noncopying version
@@ -3382,7 +3382,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::Test::Demarshaling_From_Any_Failed &); // copying version
    void operator<<= (::CORBA::Any &, ::Test::Demarshaling_From_Any_Failed*); // noncopying version
@@ -3894,7 +3894,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::Test::VSort);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::Test::VSort &);
@@ -4098,7 +4098,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::Test::PositionEnum);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::Test::PositionEnum &);
@@ -4156,7 +4156,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::Test::ValueSort);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::Test::ValueSort &);
@@ -4214,7 +4214,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::Test::ValueSort2);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::Test::ValueSort2 &);

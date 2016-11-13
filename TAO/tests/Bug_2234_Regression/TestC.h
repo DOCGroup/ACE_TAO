@@ -77,7 +77,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -123,12 +123,12 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef MyNonVarStruct_var _var_type;
     typedef MyNonVarStruct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Long val;
   };
 
@@ -163,12 +163,12 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef MyVarStruct_var _var_type;
     typedef MyVarStruct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager val;
   };
 
@@ -210,7 +210,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef MyNonVarUnion_var _var_type;
     typedef MyNonVarUnion_out _out_type;
 
@@ -289,7 +289,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef MyVarUnion_var _var_type;
     typedef MyVarUnion_out _out_type;
 
@@ -371,12 +371,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     MySeqOfLong (const MySeqOfLong &);
     virtual ~MySeqOfLong (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef MySeqOfLong_var _var_type;
     typedef MySeqOfLong_out _out_type;
 
@@ -396,7 +396,7 @@ namespace Test
   typedef MySeqOfLong MyArray[2];
   typedef MySeqOfLong MyArray_slice;
   struct MyArray_tag {};
-  
+
 
   typedef
     TAO_VarArray_Var_T<
@@ -429,11 +429,11 @@ namespace Test
   TAO_NAMESPACE_STORAGE_CLASS void
   MyArray_free (
       MyArray_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS MyArray_slice *
   MyArray_dup (
       const MyArray_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS void
   MyArray_copy (
       MyArray_slice *_tao_to,
@@ -458,7 +458,7 @@ namespace Test
         Foo
       >
     Foo_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Foo
@@ -553,7 +553,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Foo (void);
@@ -562,7 +562,7 @@ namespace Test
     Foo (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Foo (
         TAO_Stub *objref,
@@ -571,7 +571,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Foo (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Foo (const Foo &);

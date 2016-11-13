@@ -90,7 +90,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_ObjectReferenceTemplate
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -103,7 +103,7 @@ namespace POA_ObjectReferenceTemplate
   {
   protected:
     ORT_test (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::ObjectReferenceTemplate::ORT_test _stub_type;
@@ -118,9 +118,9 @@ namespace POA_ObjectReferenceTemplate
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::ObjectReferenceTemplate::ORT_test *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

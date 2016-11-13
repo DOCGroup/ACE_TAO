@@ -88,7 +88,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Foo
 {
-  
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:66
@@ -100,7 +100,7 @@ namespace POA_Foo
 
 namespace POA_Bar
 {
-  
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:66

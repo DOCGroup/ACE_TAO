@@ -72,7 +72,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -127,12 +127,12 @@ public:
   typedef Event_out _out_type;
 
   static Event* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Event *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -145,7 +145,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual void do_print (void) = 0;
 
@@ -175,11 +175,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Event (const Event &);
   void operator= (const Event &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Event (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -232,12 +232,12 @@ public:
   typedef Temperature_out _out_type;
 
   static Temperature* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Temperature *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -264,11 +264,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Temperature (const Temperature &);
   void operator= (const Temperature &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Temperature (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -370,12 +370,12 @@ public:
   typedef Position_out _out_type;
 
   static Position* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Position *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -388,7 +388,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual ::CORBA::Float x (void) = 0;
 
@@ -404,7 +404,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual ::CORBA::Float y (void) = 0;
 
@@ -420,7 +420,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual ::CORBA::Float z (void) = 0;
 
@@ -451,11 +451,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Position (const Position &);
   void operator= (const Position &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Position (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -508,12 +508,12 @@ public:
   typedef Log_Msg_out _out_type;
 
   static Log_Msg* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Log_Msg *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -550,11 +550,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Log_Msg (const Log_Msg &);
   void operator= (const Log_Msg &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Log_Msg (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -607,12 +607,12 @@ public:
   typedef Event_List_Link_out _out_type;
 
   static Event_List_Link* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Event_List_Link *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -625,7 +625,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual ::Event * get_event (void) = 0;
 
@@ -633,7 +633,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual ::Event_List_Link * get_next_link (void) = 0;
 
@@ -641,7 +641,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual void attach_next_link (
       ::Event_List_Link *
@@ -673,11 +673,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Event_List_Link (const Event_List_Link &);
   void operator= (const Event_List_Link &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Event_List_Link (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -730,12 +730,12 @@ public:
   typedef Event_List_out _out_type;
 
   static Event_List* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Event_List *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -748,7 +748,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual void store_event (
       ::Event *
@@ -772,11 +772,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Event_List (const Event_List &);
   void operator= (const Event_List &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Event_List (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -862,7 +862,7 @@ protected:
   Checkpoint (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Checkpoint (
       TAO_Stub *objref,
@@ -923,12 +923,12 @@ public:
   typedef Criterion_out _out_type;
 
   static Criterion* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Criterion *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -941,7 +941,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual ::CORBA::Boolean is_critical (
       ::Event *
@@ -954,11 +954,11 @@ protected:
   Criterion (void);
   virtual ~Criterion (void);
 
-  
+
 private:
   Criterion (const Criterion &);
   void operator= (const Criterion &);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -1006,12 +1006,12 @@ public:
   typedef Temperature_Criterion_out _out_type;
 
   static Temperature_Criterion* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Temperature_Criterion *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -1038,11 +1038,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Temperature_Criterion (const Temperature_Criterion &);
   void operator= (const Temperature_Criterion &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Temperature_Criterion (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -1096,12 +1096,12 @@ public:
   typedef Position_Criterion_out _out_type;
 
   static Position_Criterion* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Position_Criterion *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -1136,11 +1136,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Position_Criterion (const Position_Criterion &);
   void operator= (const Position_Criterion &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Position_Criterion (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -1194,12 +1194,12 @@ public:
   typedef Log_Msg_Criterion_out _out_type;
 
   static Log_Msg_Criterion* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Log_Msg_Criterion *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -1218,11 +1218,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Log_Msg_Criterion (const Log_Msg_Criterion &);
   void operator= (const Log_Msg_Criterion &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Log_Msg_Criterion (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -1275,12 +1275,12 @@ public:
   typedef Criterion_List_out _out_type;
 
   static Criterion_List* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       Criterion_List *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -1293,7 +1293,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual void store_criterion (
       ::Criterion *
@@ -1303,7 +1303,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual ::CORBA::Boolean is_critical (
       ::Event *
@@ -1327,11 +1327,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   Criterion_List (const Criterion_List &);
   void operator= (const Criterion_List &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Criterion_List (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -1654,7 +1654,7 @@ protected:
       ::CORBA::ULong _tao_init_origin_id_
     );
   virtual ~OBV_Event (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Event (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1697,7 +1697,7 @@ protected:
       ::CORBA::Float _tao_init_temperature_
     );
   virtual ~OBV_Temperature (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Temperature (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1740,7 +1740,7 @@ protected:
       const ::Point _tao_init_xyz
     );
   virtual ~OBV_Position (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Position (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1793,7 +1793,7 @@ protected:
       const char * _tao_init_message
     );
   virtual ~OBV_Log_Msg (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Log_Msg (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1842,7 +1842,7 @@ protected:
       ::Event_List_Link * _tao_init_next
     );
   virtual ~OBV_Event_List_Link (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Event_List_Link (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1882,7 +1882,7 @@ protected:
       ::Event_List_Link * _tao_init_first_link
     );
   virtual ~OBV_Event_List (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Event_List (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1924,7 +1924,7 @@ protected:
       ::Temperature * _tao_init_meltingpoint
     );
   virtual ~OBV_Temperature_Criterion (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Temperature_Criterion (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1975,7 +1975,7 @@ protected:
       ::Position * _tao_init_topright
     );
   virtual ~OBV_Position_Criterion (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Position_Criterion (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -2009,7 +2009,7 @@ protected:
       ::CORBA::ULong _tao_init_origin_id_
     );
   virtual ~OBV_Log_Msg_Criterion (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Log_Msg_Criterion (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -2047,7 +2047,7 @@ protected:
       ::Event_List * _tao_init_my_list
     );
   virtual ~OBV_Criterion_List (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Criterion_List (TAO_OutputCDR &, TAO_ChunkInfo &) const;

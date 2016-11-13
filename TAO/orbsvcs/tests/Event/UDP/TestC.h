@@ -67,7 +67,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -78,7 +78,7 @@ namespace Components
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_COMPONENTS_EVENTBASE__VAR_OUT_CH_)
 #define _COMPONENTS_EVENTBASE__VAR_OUT_CH_
@@ -89,7 +89,7 @@ namespace Components
         EventBase
       >
     EventBase_var;
-  
+
   typedef
     TAO_Value_Out_T<
         EventBase
@@ -116,12 +116,12 @@ namespace Components
     static void _tao_any_destructor (void *);
 
     static EventBase* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         EventBase *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -132,16 +132,16 @@ namespace Components
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     EventBase (void);
     virtual ~EventBase (void);
 
-    
+
   private:
     EventBase (const EventBase &);
     void operator= (const EventBase &);
-    
+
   };
 
   // TAO_IDL - Generated from
@@ -163,7 +163,7 @@ namespace Hello
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_HELLO_VALUETYPEDATA__VAR_OUT_CH_)
 #define _HELLO_VALUETYPEDATA__VAR_OUT_CH_
@@ -174,7 +174,7 @@ namespace Hello
         ValueTypeData
       >
     ValueTypeData_var;
-  
+
   typedef
     TAO_Value_Out_T<
         ValueTypeData
@@ -201,12 +201,12 @@ namespace Hello
     static void _tao_any_destructor (void *);
 
     static ValueTypeData* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         ValueTypeData *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -214,7 +214,7 @@ namespace Hello
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -227,7 +227,7 @@ namespace Hello
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     ValueTypeData (void);
     virtual ~ValueTypeData (void);
@@ -235,11 +235,11 @@ namespace Hello
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     ValueTypeData (const ValueTypeData &);
     void operator= (const ValueTypeData &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Hello_ValueTypeData (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -265,7 +265,7 @@ namespace Hello
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~ValueTypeData_init (void);
   };
@@ -378,7 +378,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Hello_ValueTypeData (TAO_OutputCDR &, TAO_ChunkInfo &) const;

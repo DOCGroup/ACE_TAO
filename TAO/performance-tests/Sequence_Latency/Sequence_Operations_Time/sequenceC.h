@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_type.cpp:258
@@ -91,10 +91,10 @@ struct  Str_Sequences
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Str_Sequences_var _var_type;
   typedef Str_Sequences_out _out_type;
-  
+
   CORBA::StringSeq first_str;
   CORBA::StringSeq second_str;
 };
@@ -135,12 +135,12 @@ public:
     ::CORBA::Boolean release = false);
   StrSeqSeq (const StrSeqSeq &);
   virtual ~StrSeqSeq (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef StrSeqSeq_var _var_type;
   typedef StrSeqSeq_out _out_type;
 };
@@ -173,10 +173,10 @@ struct  Sequence_Str_Sequences
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Sequence_Str_Sequences_var _var_type;
   typedef Sequence_Str_Sequences_out _out_type;
-  
+
   StrSeqSeq seq_str_seq;
 };
 
@@ -216,12 +216,12 @@ public:
     ::CORBA::Boolean release = false);
   Redundant_Sequences (const Redundant_Sequences &);
   virtual ~Redundant_Sequences (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Redundant_Sequences_var _var_type;
   typedef Redundant_Sequences_out _out_type;
 };
@@ -254,10 +254,10 @@ struct  Biglist_Struct
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Biglist_Struct_var _var_type;
   typedef Biglist_Struct_out _out_type;
-  
+
   Str_Sequences strs;
   Redundant_Sequences red_seqs;
 };
@@ -298,12 +298,12 @@ public:
     ::CORBA::Boolean release = false);
   BigListSeq (const BigListSeq &);
   virtual ~BigListSeq (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef BigListSeq_var _var_type;
   typedef BigListSeq_out _out_type;
 };
@@ -336,10 +336,10 @@ struct  Seq_Structs
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Seq_Structs_var _var_type;
   typedef Seq_Structs_out _out_type;
-  
+
   BigListSeq seq;
 };
 

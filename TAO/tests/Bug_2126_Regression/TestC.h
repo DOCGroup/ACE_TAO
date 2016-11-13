@@ -61,7 +61,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_type.cpp:258
@@ -96,7 +96,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef FirstUnion_var _var_type;
   typedef FirstUnion_out _out_type;
 
@@ -196,10 +196,10 @@ struct  MyStruct
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef MyStruct_var _var_type;
   typedef MyStruct_out _out_type;
-  
+
   FirstUnionArray my_struct_foo;
 };
 
@@ -236,7 +236,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef SecondUnion_var _var_type;
   typedef SecondUnion_out _out_type;
 

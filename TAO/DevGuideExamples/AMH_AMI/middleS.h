@@ -169,7 +169,7 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest &req,
       TAO::Portable_Server::Servant_Upcall *_servant_upcall);
-  
+
   Middle *_this (void);
 
 virtual const char* _interface_repository_id (void) const;
@@ -181,7 +181,7 @@ static void get_the_answer_skel (
     TAO_ServerRequest &_tao_req,
     TAO::Portable_Server::Servant_Upcall *_tao_obj,
     TAO_ServantBase *_tao_servant_upcall);
-  
+
 virtual void get_the_answer (
     AMH_MiddleResponseHandler_ptr _tao_rh,
     const char * question
@@ -215,9 +215,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::Middle *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from
@@ -285,9 +285,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::AMI_MiddleHandler *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from

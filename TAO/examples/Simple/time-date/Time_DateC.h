@@ -152,7 +152,7 @@ protected:
   Time_Date (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Time_Date (
       TAO_Stub *objref,

@@ -61,7 +61,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -105,12 +105,12 @@ namespace SeqTest
       ::CORBA::Boolean release = false);
     LongSeq (const LongSeq &);
     virtual ~LongSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef LongSeq_var _var_type;
     typedef LongSeq_out _out_type;
   };
@@ -143,10 +143,10 @@ namespace SeqTest
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Node_var _var_type;
     typedef Node_out _out_type;
-    
+
     SeqTest::LongSeq ls;
   };
 
@@ -186,12 +186,12 @@ namespace SeqTest
       ::CORBA::Boolean release = false);
     NodeSeq (const NodeSeq &);
     virtual ~NodeSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NodeSeq_var _var_type;
     typedef NodeSeq_out _out_type;
   };

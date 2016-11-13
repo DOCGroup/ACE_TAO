@@ -70,7 +70,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -106,7 +106,7 @@ namespace FT_TEST
         TestReplica
       >
     TestReplica_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         TestReplica
@@ -122,7 +122,7 @@ namespace FT_TEST
     : public virtual ::FT::Updateable,
       public virtual ::FT::PullMonitorable,
       public virtual ::PortableGroup::TAO_UpdateObjectGroup
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<TestReplica>;
@@ -201,7 +201,7 @@ namespace FT_TEST
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     TestReplica (void);
@@ -210,7 +210,7 @@ namespace FT_TEST
     TestReplica (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     TestReplica (
         TAO_Stub *objref,
@@ -219,7 +219,7 @@ namespace FT_TEST
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~TestReplica (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     TestReplica (const TestReplica &);
@@ -246,7 +246,7 @@ namespace FT_TEST
         ReplicaFactory
       >
     ReplicaFactory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ReplicaFactory
@@ -261,7 +261,7 @@ namespace FT_TEST
   class  ReplicaFactory
     : public virtual ::PortableGroup::GenericFactory,
       public virtual ::FT::PullMonitorable
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<ReplicaFactory>;
@@ -293,7 +293,7 @@ namespace FT_TEST
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     ReplicaFactory (void);
@@ -302,7 +302,7 @@ namespace FT_TEST
     ReplicaFactory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     ReplicaFactory (
         TAO_Stub *objref,
@@ -311,7 +311,7 @@ namespace FT_TEST
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~ReplicaFactory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     ReplicaFactory (const ReplicaFactory &);
@@ -483,7 +483,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace FT_TEST
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::FT_TEST::TestReplica::Bane);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::FT_TEST::TestReplica::Bane &);

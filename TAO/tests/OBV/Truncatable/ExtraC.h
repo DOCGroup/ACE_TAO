@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -79,7 +79,7 @@ namespace OBV_TruncatableTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_TRUNCATABLETEST_EXTRA1__VAR_OUT_CH_)
 #define _OBV_TRUNCATABLETEST_EXTRA1__VAR_OUT_CH_
@@ -90,7 +90,7 @@ namespace OBV_TruncatableTest
         Extra1
       >
     Extra1_var;
-  
+
   typedef
     TAO_Value_Out_T<
         Extra1
@@ -117,12 +117,12 @@ namespace OBV_TruncatableTest
     static void _tao_any_destructor (void *);
 
     static Extra1* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         Extra1 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -130,7 +130,7 @@ namespace OBV_TruncatableTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -141,7 +141,7 @@ namespace OBV_TruncatableTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     Extra1 (void);
     virtual ~Extra1 (void);
@@ -149,11 +149,11 @@ namespace OBV_TruncatableTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     Extra1 (const Extra1 &);
     void operator= (const Extra1 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_TruncatableTest_Extra1 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -179,7 +179,7 @@ namespace OBV_TruncatableTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~Extra1_init (void);
   };
@@ -261,7 +261,7 @@ public:
       ::CORBA::ULong _tao_init_edata1
     );
   virtual ~Extra1 (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_TruncatableTest_Extra1 (TAO_OutputCDR &, TAO_ChunkInfo &) const;

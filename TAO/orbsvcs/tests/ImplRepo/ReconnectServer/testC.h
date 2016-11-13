@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -105,7 +105,7 @@ namespace taoimrtest
           Dummy
         >
       Dummy_var;
-    
+
     typedef
       TAO_Objref_Out_T<
           Dummy
@@ -148,7 +148,7 @@ namespace taoimrtest
       virtual ::CORBA::Boolean _is_a (const char *type_id);
       virtual const char* _interface_repository_id (void) const;
       virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    
+
     protected:
       // Concrete interface only.
       Dummy (void);
@@ -157,7 +157,7 @@ namespace taoimrtest
       Dummy (
           ::IOP::IOR *ior,
           TAO_ORB_Core *orb_core);
-      
+
       // Non-local interface only.
       Dummy (
           TAO_Stub *objref,
@@ -166,7 +166,7 @@ namespace taoimrtest
           TAO_ORB_Core *orb_core = 0);
 
       virtual ~Dummy (void);
-    
+
     private:
       // Private and unimplemented for concrete interfaces.
       Dummy (const Dummy &);
@@ -188,7 +188,7 @@ namespace taoimrtest
           TimeSrv
         >
       TimeSrv_var;
-    
+
     typedef
       TAO_Objref_Out_T<
           TimeSrv
@@ -234,7 +234,7 @@ namespace taoimrtest
       virtual ::CORBA::Boolean _is_a (const char *type_id);
       virtual const char* _interface_repository_id (void) const;
       virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    
+
     protected:
       // Concrete interface only.
       TimeSrv (void);
@@ -243,7 +243,7 @@ namespace taoimrtest
       TimeSrv (
           ::IOP::IOR *ior,
           TAO_ORB_Core *orb_core);
-      
+
       // Non-local interface only.
       TimeSrv (
           TAO_Stub *objref,
@@ -252,17 +252,17 @@ namespace taoimrtest
           TAO_ORB_Core *orb_core = 0);
 
       virtual ~TimeSrv (void);
-    
+
     private:
       // Private and unimplemented for concrete interfaces.
       TimeSrv (const TimeSrv &);
 
       void operator= (const TimeSrv &);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_ch.cpp:64
-  
+
   } // module taoimrtest::reconnectserver
 
 // TAO_IDL - Generated from

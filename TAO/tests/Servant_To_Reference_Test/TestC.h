@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -99,7 +99,7 @@ namespace Test
         One
       >
     One_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         One
@@ -142,7 +142,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     One (void);
@@ -151,7 +151,7 @@ namespace Test
     One (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     One (
         TAO_Stub *objref,
@@ -160,7 +160,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~One (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     One (const One &);
@@ -182,7 +182,7 @@ namespace Test
         Two
       >
     Two_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Two
@@ -225,7 +225,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Two (void);
@@ -234,7 +234,7 @@ namespace Test
     Two (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Two (
         TAO_Stub *objref,
@@ -243,7 +243,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Two (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Two (const Two &);
@@ -265,7 +265,7 @@ namespace Test
         Three
       >
     Three_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Three
@@ -308,7 +308,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Three (void);
@@ -317,7 +317,7 @@ namespace Test
     Three (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Three (
         TAO_Stub *objref,
@@ -326,7 +326,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Three (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Three (const Three &);

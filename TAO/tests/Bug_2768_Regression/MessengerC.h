@@ -62,7 +62,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -98,7 +98,7 @@ namespace SimpleMessenger
         Messenger
       >
     Messenger_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Messenger
@@ -141,7 +141,7 @@ namespace SimpleMessenger
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Messenger (void);
@@ -150,7 +150,7 @@ namespace SimpleMessenger
     Messenger (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Messenger (
         TAO_Stub *objref,
@@ -159,7 +159,7 @@ namespace SimpleMessenger
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Messenger (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Messenger (const Messenger &);

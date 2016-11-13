@@ -78,7 +78,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -115,7 +115,7 @@ namespace demo
       // TAO_IDL - Generated from
       // be/be_valuetype.cpp:564
 
-      
+
 
 #if !defined (_DEMO_VALUE_IDL_CONFIGVALUE__VAR_OUT_CH_)
 #define _DEMO_VALUE_IDL_CONFIGVALUE__VAR_OUT_CH_
@@ -126,7 +126,7 @@ namespace demo
             ConfigValue
           >
         ConfigValue_var;
-      
+
       typedef
         TAO_Value_Out_T<
             ConfigValue
@@ -153,12 +153,12 @@ namespace demo
         static void _tao_any_destructor (void *);
 
         static ConfigValue* _downcast ( ::CORBA::ValueBase *v);
-        
+
         /// TAO extensions or internals
         static ::CORBA::Boolean _tao_unmarshal (
             TAO_InputCDR &strm,
             ConfigValue *&new_object);
-        
+
         virtual const char* _tao_obv_repository_id (void) const;
 
         virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -166,7 +166,7 @@ namespace demo
         static const char* _tao_obv_static_repository_id (void);
 
         virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-      
+
       public:
 
         // TAO_IDL - Generated from
@@ -176,7 +176,7 @@ namespace demo
         virtual void name (const char *val) = 0;
         virtual void name (const ::CORBA::String_var &val) = 0;
         virtual const char *name (void) const = 0;
-      
+
       public:
 
         // TAO_IDL - Generated from
@@ -188,7 +188,7 @@ namespace demo
 
         // TAO_IDL - Generated from
         // be/be_visitor_valuetype/valuetype_ch.cpp:238
-      
+
       protected:
         ConfigValue (void);
         virtual ~ConfigValue (void);
@@ -196,11 +196,11 @@ namespace demo
         virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
         virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
         virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-        
+
       private:
         ConfigValue (const ConfigValue &);
         void operator= (const ConfigValue &);
-        
+
       protected:
         virtual ::CORBA::Boolean
         _tao_marshal__demo_value_idl_ConfigValue (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -226,7 +226,7 @@ namespace demo
         // TAO-specific extensions
       public:
         virtual const char* tao_repository_id (void);
-      
+
       protected:
         virtual ~ConfigValue_init (void);
       };
@@ -273,12 +273,12 @@ namespace demo
           ::CORBA::Boolean release = false);
         ConfigValues (const ConfigValues &);
         virtual ~ConfigValues (void);
-        
+
 
         // TAO_IDL - Generated from
         // be/be_type.cpp:304
 
-        
+
         typedef ConfigValues_var _var_type;
         typedef ConfigValues_out _out_type;
 
@@ -295,7 +295,7 @@ namespace demo
       // TAO_IDL - Generated from
       // be/be_valuetype.cpp:564
 
-      
+
 
 #if !defined (_DEMO_VALUE_IDL_BASEVALUE__VAR_OUT_CH_)
 #define _DEMO_VALUE_IDL_BASEVALUE__VAR_OUT_CH_
@@ -306,7 +306,7 @@ namespace demo
             BaseValue
           >
         BaseValue_var;
-      
+
       typedef
         TAO_Value_Out_T<
             BaseValue
@@ -333,12 +333,12 @@ namespace demo
         static void _tao_any_destructor (void *);
 
         static BaseValue* _downcast ( ::CORBA::ValueBase *v);
-        
+
         /// TAO extensions or internals
         static ::CORBA::Boolean _tao_unmarshal (
             TAO_InputCDR &strm,
             BaseValue *&new_object);
-        
+
         virtual const char* _tao_obv_repository_id (void) const;
 
         virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -346,7 +346,7 @@ namespace demo
         static const char* _tao_obv_static_repository_id (void);
 
         virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-      
+
       public:
 
         // TAO_IDL - Generated from
@@ -357,7 +357,7 @@ namespace demo
 
         // TAO_IDL - Generated from
         // be/be_visitor_valuetype/valuetype_ch.cpp:238
-      
+
       protected:
         BaseValue (void);
         virtual ~BaseValue (void);
@@ -365,11 +365,11 @@ namespace demo
         virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
         virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
         virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-        
+
       private:
         BaseValue (const BaseValue &);
         void operator= (const BaseValue &);
-        
+
       protected:
         virtual ::CORBA::Boolean
         _tao_marshal__demo_value_idl_BaseValue (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -395,7 +395,7 @@ namespace demo
         // TAO-specific extensions
       public:
         virtual const char* tao_repository_id (void);
-      
+
       protected:
         virtual ~BaseValue_init (void);
       };
@@ -408,7 +408,7 @@ namespace demo
       // TAO_IDL - Generated from
       // be/be_valuetype.cpp:564
 
-      
+
 
 #if !defined (_DEMO_VALUE_IDL_TVALUE__VAR_OUT_CH_)
 #define _DEMO_VALUE_IDL_TVALUE__VAR_OUT_CH_
@@ -419,7 +419,7 @@ namespace demo
             TValue
           >
         TValue_var;
-      
+
       typedef
         TAO_Value_Out_T<
             TValue
@@ -446,12 +446,12 @@ namespace demo
         static void _tao_any_destructor (void *);
 
         static TValue* _downcast ( ::CORBA::ValueBase *v);
-        
+
         /// TAO extensions or internals
         static ::CORBA::Boolean _tao_unmarshal (
             TAO_InputCDR &strm,
             TValue *&new_object);
-        
+
         virtual const char* _tao_obv_repository_id (void) const;
 
         virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -459,7 +459,7 @@ namespace demo
         static const char* _tao_obv_static_repository_id (void);
 
         virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-      
+
       public:
 
         // TAO_IDL - Generated from
@@ -470,7 +470,7 @@ namespace demo
 
         // TAO_IDL - Generated from
         // be/be_visitor_valuetype/valuetype_ch.cpp:238
-      
+
       protected:
         TValue (void);
         virtual ~TValue (void);
@@ -478,11 +478,11 @@ namespace demo
         virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
         virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
         virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-        
+
       private:
         TValue (const TValue &);
         void operator= (const TValue &);
-        
+
       protected:
         virtual ::CORBA::Boolean
         _tao_marshal__demo_value_idl_TValue (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -508,7 +508,7 @@ namespace demo
         // TAO-specific extensions
       public:
         virtual const char* tao_repository_id (void);
-      
+
       protected:
         virtual ~TValue_init (void);
       };
@@ -528,7 +528,7 @@ namespace demo
             boxedLong
           >
         boxedLong_var;
-      
+
       typedef
         TAO_Value_Out_T<
             boxedLong
@@ -543,7 +543,7 @@ namespace demo
         // TAO_IDL - Generated from
         // be/be_type.cpp:304
 
-        
+
         typedef boxedLong_var _var_type;
         typedef boxedLong_out _out_type;
 
@@ -562,10 +562,10 @@ namespace demo
             TAO_InputCDR &,
             boxedLong *&
           );
-        
+
         virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-        
+
 
         // TAO_IDL - Generated from
         // be/be_visitor_valuebox/valuebox_ch.cpp:690
@@ -574,7 +574,7 @@ namespace demo
         boxedLong (void);
         boxedLong (CORBA::Long val);
         boxedLong (const boxedLong& val);
-        
+
         // Assignment operator
         boxedLong& operator= (CORBA::Long val);
 
@@ -586,23 +586,23 @@ namespace demo
         CORBA::Long _boxed_in (void) const;
         CORBA::Long& _boxed_inout (void);
         CORBA::Long& _boxed_out (void);
-        
+
       private:
         CORBA::Long _pd_value;
-        
+
 
         // TAO_IDL - Generated from
         // be/be_visitor_valuebox/valuebox_ch.cpp:114
-      
+
       protected:
         virtual ~boxedLong (void);
         virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
         virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
         virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-        
+
       private:
         void operator= (const boxedLong & val);
-        
+
       };
 
       // TAO_IDL - Generated from
@@ -620,7 +620,7 @@ namespace demo
             boxedString
           >
         boxedString_var;
-      
+
       typedef
         TAO_Value_Out_T<
             boxedString
@@ -635,7 +635,7 @@ namespace demo
         // TAO_IDL - Generated from
         // be/be_type.cpp:304
 
-        
+
         typedef boxedString_var _var_type;
         typedef boxedString_out _out_type;
 
@@ -654,10 +654,10 @@ namespace demo
             TAO_InputCDR &,
             boxedString *&
           );
-        
+
         virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-        
+
 
         // TAO_IDL - Generated from
         // be/be_visitor_valuebox/valuebox_ch.cpp:406
@@ -692,23 +692,23 @@ namespace demo
 
         // Allows only accessing thru a slot.
         char operator[] ( ::CORBA::ULong slot) const;
-        
+
       private:
         ::CORBA::String_var _pd_value;
-        
+
 
         // TAO_IDL - Generated from
         // be/be_visitor_valuebox/valuebox_ch.cpp:114
-      
+
       protected:
         virtual ~boxedString (void);
         virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
         virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
         virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-        
+
       private:
         void operator= (const boxedString & val);
-        
+
       };
 
       // TAO_IDL - Generated from
@@ -719,7 +719,7 @@ namespace demo
       // TAO_IDL - Generated from
       // be/be_valuetype.cpp:564
 
-      
+
 
 #if !defined (_DEMO_VALUE_IDL_BOXEDVALUE__VAR_OUT_CH_)
 #define _DEMO_VALUE_IDL_BOXEDVALUE__VAR_OUT_CH_
@@ -730,7 +730,7 @@ namespace demo
             boxedValue
           >
         boxedValue_var;
-      
+
       typedef
         TAO_Value_Out_T<
             boxedValue
@@ -757,12 +757,12 @@ namespace demo
         static void _tao_any_destructor (void *);
 
         static boxedValue* _downcast ( ::CORBA::ValueBase *v);
-        
+
         /// TAO extensions or internals
         static ::CORBA::Boolean _tao_unmarshal (
             TAO_InputCDR &strm,
             boxedValue *&new_object);
-        
+
         virtual const char* _tao_obv_repository_id (void) const;
 
         virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -770,7 +770,7 @@ namespace demo
         static const char* _tao_obv_static_repository_id (void);
 
         virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-      
+
       public:
 
         // TAO_IDL - Generated from
@@ -778,7 +778,7 @@ namespace demo
 
         virtual void b1 (demo::value::idl::boxedLong *) = 0;
         virtual demo::value::idl::boxedLong *b1 (void) const = 0;
-      
+
       public:
 
         // TAO_IDL - Generated from
@@ -789,7 +789,7 @@ namespace demo
 
         // TAO_IDL - Generated from
         // be/be_visitor_valuetype/valuetype_ch.cpp:238
-      
+
       protected:
         boxedValue (void);
         virtual ~boxedValue (void);
@@ -797,11 +797,11 @@ namespace demo
         virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
         virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
         virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-        
+
       private:
         boxedValue (const boxedValue &);
         void operator= (const boxedValue &);
-        
+
       protected:
         virtual ::CORBA::Boolean
         _tao_marshal__demo_value_idl_boxedValue (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -827,7 +827,7 @@ namespace demo
         // TAO-specific extensions
       public:
         virtual const char* tao_repository_id (void);
-      
+
       protected:
         virtual ~boxedValue_init (void);
       };
@@ -840,7 +840,7 @@ namespace demo
       // TAO_IDL - Generated from
       // be/be_valuetype.cpp:564
 
-      
+
 
 #if !defined (_DEMO_VALUE_IDL_NODE__VAR_OUT_CH_)
 #define _DEMO_VALUE_IDL_NODE__VAR_OUT_CH_
@@ -851,7 +851,7 @@ namespace demo
             Node
           >
         Node_var;
-      
+
       typedef
         TAO_Value_Out_T<
             Node
@@ -878,12 +878,12 @@ namespace demo
         static void _tao_any_destructor (void *);
 
         static Node* _downcast ( ::CORBA::ValueBase *v);
-        
+
         /// TAO extensions or internals
         static ::CORBA::Boolean _tao_unmarshal (
             TAO_InputCDR &strm,
             Node *&new_object);
-        
+
         virtual const char* _tao_obv_repository_id (void) const;
 
         virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -891,7 +891,7 @@ namespace demo
         static const char* _tao_obv_static_repository_id (void);
 
         virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-      
+
       public:
 
         // TAO_IDL - Generated from
@@ -899,7 +899,7 @@ namespace demo
 
         virtual void id (const ::CORBA::Long) = 0;
         virtual ::CORBA::Long id (void) const = 0;
-      
+
       public:
 
         // TAO_IDL - Generated from
@@ -910,7 +910,7 @@ namespace demo
 
         // TAO_IDL - Generated from
         // be/be_visitor_valuetype/valuetype_ch.cpp:238
-      
+
       protected:
         Node (void);
         virtual ~Node (void);
@@ -918,11 +918,11 @@ namespace demo
         virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
         virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
         virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-        
+
       private:
         Node (const Node &);
         void operator= (const Node &);
-        
+
       protected:
         virtual ::CORBA::Boolean
         _tao_marshal__demo_value_idl_Node (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -948,7 +948,7 @@ namespace demo
         // TAO-specific extensions
       public:
         virtual const char* tao_repository_id (void);
-      
+
       protected:
         virtual ~Node_init (void);
       };
@@ -972,7 +972,7 @@ namespace demo
             ValueServer
           >
         ValueServer_var;
-      
+
       typedef
         TAO_Objref_Out_T<
             ValueServer
@@ -1034,7 +1034,7 @@ namespace demo
         virtual ::CORBA::Boolean _is_a (const char *type_id);
         virtual const char* _interface_repository_id (void) const;
         virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-      
+
       protected:
         // Concrete interface only.
         ValueServer (void);
@@ -1043,7 +1043,7 @@ namespace demo
         ValueServer (
             ::IOP::IOR *ior,
             TAO_ORB_Core *orb_core);
-        
+
         // Non-local interface only.
         ValueServer (
             TAO_Stub *objref,
@@ -1052,7 +1052,7 @@ namespace demo
             TAO_ORB_Core *orb_core = 0);
 
         virtual ~ValueServer (void);
-      
+
       private:
         // Private and unimplemented for concrete interfaces.
         ValueServer (const ValueServer &);
@@ -1064,15 +1064,15 @@ namespace demo
       // be/be_visitor_typecode/typecode_decl.cpp:34
 
       extern  ::CORBA::TypeCode_ptr const _tc_ValueServer;
-    
+
     // TAO_IDL - Generated from
     // be/be_visitor_module/module_ch.cpp:64
-    
+
     } // module demo::value::idl
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_ch.cpp:64
-  
+
   } // module demo::value
 
 // TAO_IDL - Generated from
@@ -1292,7 +1292,7 @@ namespace OBV_demo
         : public virtual demo::value::idl::ConfigValue,
           public virtual ::CORBA::DefaultValueRefCountBase
       {
-    
+
     public:
 
       // TAO_IDL - Generated from
@@ -1302,7 +1302,7 @@ namespace OBV_demo
       virtual void name (const char *val);
       virtual void name (const ::CORBA::String_var &val);
       virtual const char *name (void) const;
-    
+
     public:
 
       // TAO_IDL - Generated from
@@ -1311,7 +1311,7 @@ namespace OBV_demo
       virtual void value (const ::CORBA::Any &);
       virtual const ::CORBA::Any &value (void) const;
       virtual ::CORBA::Any &value (void);
-    
+
     public:
       ConfigValue (void);
       ConfigValue (
@@ -1319,10 +1319,10 @@ namespace OBV_demo
           const ::CORBA::Any & _tao_init_value
         );
       virtual ~ConfigValue (void);
-    
+
     public:
       virtual ::CORBA::ValueBase *_copy_value (void);
-      
+
     protected:
       virtual ::CORBA::Boolean
       _tao_marshal__demo_value_idl_ConfigValue (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1333,7 +1333,7 @@ namespace OBV_demo
       ::CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;
       ::CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);
       virtual void truncation_hook (void);
-    
+
     private:
       ::TAO::String_Manager _pd_name;
       ::CORBA::Any _pd_value;
@@ -1348,7 +1348,7 @@ namespace OBV_demo
       : public virtual demo::value::idl::BaseValue,
         public virtual ::CORBA::DefaultValueRefCountBase
     {
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -1356,17 +1356,17 @@ namespace OBV_demo
 
     virtual void basic_data (const ::CORBA::ULong);
     virtual ::CORBA::ULong basic_data (void) const;
-  
+
   public:
     BaseValue (void);
     BaseValue (
         ::CORBA::ULong _tao_init_basic_data
       );
     virtual ~BaseValue (void);
-  
+
   public:
     virtual ::CORBA::ValueBase *_copy_value (void);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__demo_value_idl_BaseValue (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1377,7 +1377,7 @@ namespace OBV_demo
     ::CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;
     ::CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);
     virtual void truncation_hook (void);
-  
+
   private:
     ::CORBA::ULong _pd_basic_data;
     CORBA::Boolean require_truncation_;
@@ -1407,7 +1407,7 @@ public:
       ::CORBA::ULong _tao_init_data
     );
   virtual ~TValue (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__demo_value_idl_TValue (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1459,7 +1459,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__demo_value_idl_boxedValue (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1512,7 +1512,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__demo_value_idl_Node (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1664,10 +1664,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
        void operator<<= ( ::CORBA::Any &, ConfigValue *); // copying
@@ -1700,10 +1700,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
        void operator<<= ( ::CORBA::Any &, const ::demo::value::idl::ConfigValues &); // copying version
@@ -1738,10 +1738,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
        void operator<<= ( ::CORBA::Any &, BaseValue *); // copying
@@ -1774,10 +1774,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
        void operator<<= ( ::CORBA::Any &, TValue *); // copying
@@ -1810,10 +1810,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
        void operator<<= ( ::CORBA::Any &, boxedLong *); // copying
@@ -1846,10 +1846,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
        void operator<<= ( ::CORBA::Any &, boxedString *); // copying
@@ -1882,10 +1882,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
        void operator<<= ( ::CORBA::Any &, boxedValue *); // copying
@@ -1918,10 +1918,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
        void operator<<= ( ::CORBA::Any &, Node *); // copying
@@ -1954,10 +1954,10 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace demo
 {
-  
+
   namespace value
   {
-    
+
     namespace idl
     {
        void operator<<= ( ::CORBA::Any &, ValueServer_ptr); // copying

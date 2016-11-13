@@ -62,7 +62,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -98,7 +98,7 @@ namespace Web_Server
         Iterator_Factory
       >
     Iterator_Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Iterator_Factory
@@ -140,7 +140,7 @@ namespace Web_Server
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Iterator_Factory (void);
@@ -149,7 +149,7 @@ namespace Web_Server
     Iterator_Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Iterator_Factory (
         TAO_Stub *objref,
@@ -158,7 +158,7 @@ namespace Web_Server
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Iterator_Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Iterator_Factory (const Iterator_Factory &);

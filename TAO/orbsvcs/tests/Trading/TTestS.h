@@ -296,7 +296,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_TAO_Trader_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -309,7 +309,7 @@ namespace POA_TAO_Trader_Test
   {
   protected:
     Remote_Output (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::TAO_Trader_Test::Remote_Output _stub_type;
@@ -324,9 +324,9 @@ namespace POA_TAO_Trader_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::TAO_Trader_Test::Remote_Output *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -352,7 +352,7 @@ namespace POA_TAO_Trader_Test
   {
   protected:
     Plotter (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::TAO_Trader_Test::Plotter _stub_type;
@@ -367,9 +367,9 @@ namespace POA_TAO_Trader_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::TAO_Trader_Test::Plotter *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
   };
 
@@ -384,7 +384,7 @@ namespace POA_TAO_Trader_Test
   {
   protected:
     Printer (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::TAO_Trader_Test::Printer _stub_type;
@@ -399,9 +399,9 @@ namespace POA_TAO_Trader_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::TAO_Trader_Test::Printer *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
   };
 
@@ -416,7 +416,7 @@ namespace POA_TAO_Trader_Test
   {
   protected:
     File_System (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::TAO_Trader_Test::File_System _stub_type;
@@ -431,9 +431,9 @@ namespace POA_TAO_Trader_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::TAO_Trader_Test::File_System *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
   };
 
@@ -448,7 +448,7 @@ namespace POA_TAO_Trader_Test
   {
   protected:
     PostScript_Printer (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::TAO_Trader_Test::PostScript_Printer _stub_type;
@@ -463,9 +463,9 @@ namespace POA_TAO_Trader_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::TAO_Trader_Test::PostScript_Printer *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
   };
 

@@ -67,7 +67,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -125,18 +125,18 @@ namespace Bug_3647_Regression
       ::CORBA::Boolean release = false);
     Payload (const Payload &);
     virtual ~Payload (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Payload_var _var_type;
     typedef Payload_out _out_type;
 
     static void _tao_any_destructor (void *);
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     Payload (
@@ -168,7 +168,7 @@ namespace Bug_3647_Regression
         Backend
       >
     Backend_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Backend
@@ -222,7 +222,7 @@ namespace Bug_3647_Regression
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Backend (void);
@@ -231,7 +231,7 @@ namespace Bug_3647_Regression
     Backend (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Backend (
         TAO_Stub *objref,
@@ -240,7 +240,7 @@ namespace Bug_3647_Regression
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Backend (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Backend (const Backend &);
@@ -267,7 +267,7 @@ namespace Bug_3647_Regression
         Middle
       >
     Middle_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Middle
@@ -318,7 +318,7 @@ namespace Bug_3647_Regression
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Middle (void);
@@ -327,7 +327,7 @@ namespace Bug_3647_Regression
     Middle (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Middle (
         TAO_Stub *objref,
@@ -336,7 +336,7 @@ namespace Bug_3647_Regression
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Middle (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Middle (const Middle &);

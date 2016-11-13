@@ -72,7 +72,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -155,7 +155,7 @@ namespace A
         AMI_Test
       >
     AMI_Test_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_Test
@@ -230,7 +230,7 @@ namespace A
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_Test (void);
@@ -239,7 +239,7 @@ namespace A
     AMI_Test (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_Test (
         TAO_Stub *objref,
@@ -248,7 +248,7 @@ namespace A
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_Test (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_Test (const AMI_Test &);
@@ -275,7 +275,7 @@ namespace A
         AMI_AMI_TestHandler
       >
     AMI_AMI_TestHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_AMI_TestHandler
@@ -289,7 +289,7 @@ namespace A
 
   class  AMI_AMI_TestHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_AMI_TestHandler>;
@@ -367,7 +367,7 @@ namespace A
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_AMI_TestHandler (void);
@@ -376,7 +376,7 @@ namespace A
     AMI_AMI_TestHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_AMI_TestHandler (
         TAO_Stub *objref,
@@ -385,7 +385,7 @@ namespace A
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_AMI_TestHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_AMI_TestHandler (const AMI_AMI_TestHandler &);
@@ -415,7 +415,7 @@ namespace A
         Test_Child
       >
     Test_Child_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Test_Child
@@ -429,7 +429,7 @@ namespace A
 
   class  Test_Child
     : public virtual ::A::AMI_Test
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Test_Child>;
@@ -464,7 +464,7 @@ namespace A
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Test_Child (void);
@@ -473,7 +473,7 @@ namespace A
     Test_Child (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Test_Child (
         TAO_Stub *objref,
@@ -482,7 +482,7 @@ namespace A
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Test_Child (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Test_Child (const Test_Child &);
@@ -509,7 +509,7 @@ namespace A
         AMI_Test_ChildHandler
       >
     AMI_Test_ChildHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_Test_ChildHandler
@@ -523,7 +523,7 @@ namespace A
 
   class  AMI_Test_ChildHandler
     : public virtual ::A::AMI_AMI_TestHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_Test_ChildHandler>;
@@ -564,7 +564,7 @@ namespace A
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_Test_ChildHandler (void);
@@ -573,7 +573,7 @@ namespace A
     AMI_Test_ChildHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_Test_ChildHandler (
         TAO_Stub *objref,
@@ -582,7 +582,7 @@ namespace A
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_Test_ChildHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_Test_ChildHandler (const AMI_Test_ChildHandler &);
@@ -819,7 +819,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::A::DidTheRightThing &); // copying version
    void operator<<= (::CORBA::Any &, ::A::DidTheRightThing*); // noncopying version

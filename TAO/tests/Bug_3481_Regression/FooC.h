@@ -62,7 +62,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_interface.cpp:748
@@ -122,7 +122,7 @@ protected:
   // Abstract or local interface only.
   Foo (void);
 
-  
+
 
   virtual ~Foo (void);
 
@@ -170,12 +170,12 @@ public:
     ::CORBA::Boolean release = false);
   FooSeq (const FooSeq &);
   virtual ~FooSeq (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef FooSeq_var _var_type;
   typedef FooSeq_out _out_type;
 };

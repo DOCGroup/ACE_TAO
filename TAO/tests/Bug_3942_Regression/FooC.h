@@ -65,7 +65,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_interface.cpp:748
@@ -128,7 +128,7 @@ protected:
   // Abstract or local interface only.
   X (void);
 
-  
+
 
   virtual ~X (void);
 
@@ -165,10 +165,10 @@ struct  Y
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Y_var _var_type;
   typedef Y_out _out_type;
-  
+
   X_var theX;
 };
 
@@ -209,12 +209,12 @@ public:
     ::CORBA::Boolean release = false);
   XSeq (const XSeq &);
   virtual ~XSeq (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef XSeq_var _var_type;
   typedef XSeq_out _out_type;
 };

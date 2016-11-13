@@ -62,7 +62,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -104,7 +104,7 @@ namespace Outer
           Base
         >
       Base_var;
-    
+
     typedef
       TAO_Objref_Out_T<
           Base
@@ -147,7 +147,7 @@ namespace Outer
       virtual ::CORBA::Boolean _is_a (const char *type_id);
       virtual const char* _interface_repository_id (void) const;
       virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    
+
     protected:
       // Concrete interface only.
       Base (void);
@@ -156,7 +156,7 @@ namespace Outer
       Base (
           ::IOP::IOR *ior,
           TAO_ORB_Core *orb_core);
-      
+
       // Non-local interface only.
       Base (
           TAO_Stub *objref,
@@ -165,17 +165,17 @@ namespace Outer
           TAO_ORB_Core *orb_core = 0);
 
       virtual ~Base (void);
-    
+
     private:
       // Private and unimplemented for concrete interfaces.
       Base (const Base &);
 
       void operator= (const Base &);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_ch.cpp:64
-  
+
   } // module Outer::Inner
 
 // TAO_IDL - Generated from
@@ -194,10 +194,10 @@ namespace Outer
 
   namespace Inner
   {
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_ch.cpp:64
-  
+
   } // module Outer::Inner
 
 // TAO_IDL - Generated from
@@ -225,7 +225,7 @@ namespace Outer
         Derived
       >
     Derived_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Derived
@@ -239,7 +239,7 @@ namespace Outer
 
   class  Derived
     : public virtual ::Outer::Inner::Base
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Derived>;
@@ -269,7 +269,7 @@ namespace Outer
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Derived (void);
@@ -278,7 +278,7 @@ namespace Outer
     Derived (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Derived (
         TAO_Stub *objref,
@@ -287,7 +287,7 @@ namespace Outer
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Derived (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Derived (const Derived &);

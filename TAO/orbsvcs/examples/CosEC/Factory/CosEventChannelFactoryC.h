@@ -70,7 +70,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -211,7 +211,7 @@ namespace CosEventChannelFactory
         ChannelFactory
       >
     ChannelFactory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ChannelFactory
@@ -267,7 +267,7 @@ namespace CosEventChannelFactory
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     ChannelFactory (void);
@@ -276,7 +276,7 @@ namespace CosEventChannelFactory
     ChannelFactory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     ChannelFactory (
         TAO_Stub *objref,
@@ -285,7 +285,7 @@ namespace CosEventChannelFactory
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~ChannelFactory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     ChannelFactory (const ChannelFactory &);
@@ -377,7 +377,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace CosEventChannelFactory
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::CosEventChannelFactory::DuplicateChannel &); // copying version
    void operator<<= (::CORBA::Any &, ::CosEventChannelFactory::DuplicateChannel*); // noncopying version
@@ -409,7 +409,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace CosEventChannelFactory
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::CosEventChannelFactory::NoSuchChannel &); // copying version
    void operator<<= (::CORBA::Any &, ::CosEventChannelFactory::NoSuchChannel*); // noncopying version
@@ -441,7 +441,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace CosEventChannelFactory
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::CosEventChannelFactory::BindFailed &); // copying version
    void operator<<= (::CORBA::Any &, ::CosEventChannelFactory::BindFailed*); // noncopying version

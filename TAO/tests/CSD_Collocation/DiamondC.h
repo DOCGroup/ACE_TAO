@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -99,7 +99,7 @@ namespace Diamond
         Top
       >
     Top_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Top
@@ -142,7 +142,7 @@ namespace Diamond
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Top (void);
@@ -151,7 +151,7 @@ namespace Diamond
     Top (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Top (
         TAO_Stub *objref,
@@ -160,7 +160,7 @@ namespace Diamond
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Top (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Top (const Top &);
@@ -182,7 +182,7 @@ namespace Diamond
         Left
       >
     Left_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Left
@@ -196,7 +196,7 @@ namespace Diamond
 
   class  Left
     : public virtual ::Diamond::Top
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Left>;
@@ -226,7 +226,7 @@ namespace Diamond
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Left (void);
@@ -235,7 +235,7 @@ namespace Diamond
     Left (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Left (
         TAO_Stub *objref,
@@ -244,7 +244,7 @@ namespace Diamond
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Left (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Left (const Left &);
@@ -266,7 +266,7 @@ namespace Diamond
         Right
       >
     Right_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Right
@@ -280,7 +280,7 @@ namespace Diamond
 
   class  Right
     : public virtual ::Diamond::Top
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Right>;
@@ -310,7 +310,7 @@ namespace Diamond
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Right (void);
@@ -319,7 +319,7 @@ namespace Diamond
     Right (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Right (
         TAO_Stub *objref,
@@ -328,7 +328,7 @@ namespace Diamond
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Right (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Right (const Right &);
@@ -350,7 +350,7 @@ namespace Diamond
         Buttom
       >
     Buttom_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Buttom
@@ -365,7 +365,7 @@ namespace Diamond
   class  Buttom
     : public virtual ::Diamond::Left,
       public virtual ::Diamond::Right
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Buttom>;
@@ -395,7 +395,7 @@ namespace Diamond
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Buttom (void);
@@ -404,7 +404,7 @@ namespace Diamond
     Buttom (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Buttom (
         TAO_Stub *objref,
@@ -413,7 +413,7 @@ namespace Diamond
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Buttom (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Buttom (const Buttom &);

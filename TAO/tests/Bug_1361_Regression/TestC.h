@@ -65,7 +65,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -123,16 +123,16 @@ namespace Test
       ::CORBA::Boolean release = false);
     Payload (const Payload &);
     virtual ~Payload (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Payload_var _var_type;
     typedef Payload_out _out_type;
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     Payload (
@@ -159,7 +159,7 @@ namespace Test
         Echo
       >
     Echo_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Echo
@@ -205,7 +205,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Echo (void);
@@ -214,7 +214,7 @@ namespace Test
     Echo (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Echo (
         TAO_Stub *objref,
@@ -223,7 +223,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Echo (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Echo (const Echo &);
@@ -245,7 +245,7 @@ namespace Test
         Echo_Caller
       >
     Echo_Caller_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Echo_Caller
@@ -291,7 +291,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Echo_Caller (void);
@@ -300,7 +300,7 @@ namespace Test
     Echo_Caller (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Echo_Caller (
         TAO_Stub *objref,
@@ -309,7 +309,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Echo_Caller (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Echo_Caller (const Echo_Caller &);

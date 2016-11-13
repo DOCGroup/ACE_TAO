@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -110,7 +110,7 @@ namespace Foo
           A
         >
       A_var;
-    
+
     typedef
       TAO_Objref_Out_T<
           A
@@ -158,7 +158,7 @@ namespace Foo
       virtual ::CORBA::Boolean _is_a (const char *type_id);
       virtual const char* _interface_repository_id (void) const;
       virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    
+
     protected:
       // Concrete interface only.
       A (void);
@@ -167,7 +167,7 @@ namespace Foo
       A (
           ::IOP::IOR *ior,
           TAO_ORB_Core *orb_core);
-      
+
       // Non-local interface only.
       A (
           TAO_Stub *objref,
@@ -176,7 +176,7 @@ namespace Foo
           TAO_ORB_Core *orb_core = 0);
 
       virtual ~A (void);
-    
+
     private:
       // Private and unimplemented for concrete interfaces.
       A (const A &);
@@ -192,7 +192,7 @@ namespace Foo
     // TAO_IDL - Generated from
     // be/be_valuetype.cpp:564
 
-    
+
 
 #if !defined (_FOO_BAR_AMH_AEXCEPTIONHOLDER__VAR_OUT_CH_)
 #define _FOO_BAR_AMH_AEXCEPTIONHOLDER__VAR_OUT_CH_
@@ -203,7 +203,7 @@ namespace Foo
           AMH_AExceptionHolder
         >
       AMH_AExceptionHolder_var;
-    
+
     typedef
       TAO_Value_Out_T<
           AMH_AExceptionHolder
@@ -237,12 +237,12 @@ namespace Foo
       virtual ::CORBA::ValueBase *_copy_value (void);
 
       static AMH_AExceptionHolder* _downcast ( ::CORBA::ValueBase *v);
-      
+
       /// TAO extensions or internals
       static ::CORBA::Boolean _tao_unmarshal (
           TAO_InputCDR &strm,
           AMH_AExceptionHolder *&new_object);
-      
+
       virtual const char* _tao_obv_repository_id (void) const;
 
       virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -250,20 +250,20 @@ namespace Foo
       static const char* _tao_obv_static_repository_id (void);
 
       virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-    
+
     public:
 
       // TAO_IDL - Generated from
       // be/be_visitor_valuetype/valuetype_ch.cpp:396
-      
+
     public:
       virtual void raise_op1 (void);
-  
+
   public:
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:396
-    
+
   public:
     virtual void raise_op2 (void);
 
@@ -275,13 +275,13 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   AMH_AExceptionHolder (const AMH_AExceptionHolder &);
   void operator= (const AMH_AExceptionHolder &);
-  
+
   ::CORBA::Exception *exception;
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Foo_Bar_AMH_AExceptionHolder (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -367,7 +367,7 @@ protected:
   // Abstract or local interface only.
   AMH_AResponseHandler (void);
 
-  
+
 
   virtual ~AMH_AResponseHandler (void);
 
@@ -451,7 +451,7 @@ protected:
   B (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   B (
       TAO_Stub *objref,
@@ -521,12 +521,12 @@ public:
   virtual ::CORBA::ValueBase *_copy_value (void);
 
   static AMH_BExceptionHolder* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       AMH_BExceptionHolder *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -539,7 +539,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual void raise_op3 (void);
 
@@ -551,13 +551,13 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   AMH_BExceptionHolder (const AMH_BExceptionHolder &);
   void operator= (const AMH_BExceptionHolder &);
-  
+
   ::CORBA::Exception *exception;
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Foo_Bar_AMH_BExceptionHolder (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -637,7 +637,7 @@ protected:
   // Abstract or local interface only.
   AMH_BResponseHandler (void);
 
-  
+
 
   virtual ~AMH_BResponseHandler (void);
 
@@ -683,7 +683,7 @@ namespace Baz
         C
       >
     C_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         C
@@ -698,7 +698,7 @@ namespace Baz
   class  C
     : public virtual ::Foo::Bar::A,
       public virtual ::Foo::Bar::B
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<C>;
@@ -733,7 +733,7 @@ namespace Baz
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     C (void);
@@ -742,7 +742,7 @@ namespace Baz
     C (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     C (
         TAO_Stub *objref,
@@ -751,7 +751,7 @@ namespace Baz
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~C (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     C (const C &);
@@ -767,7 +767,7 @@ namespace Baz
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_BAZ_AMH_CEXCEPTIONHOLDER__VAR_OUT_CH_)
 #define _BAZ_AMH_CEXCEPTIONHOLDER__VAR_OUT_CH_
@@ -778,7 +778,7 @@ namespace Baz
         AMH_CExceptionHolder
       >
     AMH_CExceptionHolder_var;
-  
+
   typedef
     TAO_Value_Out_T<
         AMH_CExceptionHolder
@@ -812,12 +812,12 @@ namespace Baz
     virtual ::CORBA::ValueBase *_copy_value (void);
 
     static AMH_CExceptionHolder* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         AMH_CExceptionHolder *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -825,12 +825,12 @@ namespace Baz
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:396
-    
+
   public:
     virtual void raise_op4 (void);
 
@@ -838,7 +838,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual void raise_shutdown (void);
 
@@ -850,13 +850,13 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   AMH_CExceptionHolder (const AMH_CExceptionHolder &);
   void operator= (const AMH_CExceptionHolder &);
-  
+
   ::CORBA::Exception *exception;
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Baz_AMH_CExceptionHolder (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -942,7 +942,7 @@ protected:
   // Abstract or local interface only.
   AMH_CResponseHandler (void);
 
-  
+
 
   virtual ~AMH_CResponseHandler (void);
 
@@ -1123,11 +1123,11 @@ namespace OBV_Foo
     class  AMH_AExceptionHolder
       : public virtual Foo::Bar::AMH_AExceptionHolder
     {
-  
+
   protected:
     AMH_AExceptionHolder (void);
     virtual ~AMH_AExceptionHolder (void);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Foo_Bar_AMH_AExceptionHolder (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1138,7 +1138,7 @@ namespace OBV_Foo
     ::CORBA::Boolean _tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;
     ::CORBA::Boolean _tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);
     virtual void truncation_hook (void);
-  
+
   private:
     CORBA::Boolean require_truncation_;
   };
@@ -1154,7 +1154,7 @@ namespace OBV_Foo
 protected:
   AMH_BExceptionHolder (void);
   virtual ~AMH_BExceptionHolder (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Foo_Bar_AMH_BExceptionHolder (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1189,7 +1189,7 @@ namespace OBV_Baz
 protected:
   AMH_CExceptionHolder (void);
   virtual ~AMH_CExceptionHolder (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Baz_AMH_CExceptionHolder (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1375,7 +1375,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
      void operator<<= ( ::CORBA::Any &, A_ptr); // copying
@@ -1407,7 +1407,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
      void operator<<= ( ::CORBA::Any &, AMH_AExceptionHolder *); // copying
@@ -1439,7 +1439,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
      void operator<<= ( ::CORBA::Any &, AMH_AResponseHandler_ptr); // copying
@@ -1471,7 +1471,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
      void operator<<= ( ::CORBA::Any &, B_ptr); // copying
@@ -1503,7 +1503,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
      void operator<<= ( ::CORBA::Any &, AMH_BExceptionHolder *); // copying
@@ -1535,7 +1535,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Foo
 {
-  
+
   namespace Bar
   {
      void operator<<= ( ::CORBA::Any &, AMH_BResponseHandler_ptr); // copying

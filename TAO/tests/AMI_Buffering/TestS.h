@@ -184,7 +184,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -197,7 +197,7 @@ namespace POA_Test
   {
   protected:
     AMI_Buffering (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::AMI_Buffering _stub_type;
@@ -212,9 +212,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::AMI_Buffering *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -273,7 +273,7 @@ namespace POA_Test
   {
   protected:
     AMI_AMI_BufferingHandler (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::AMI_AMI_BufferingHandler _stub_type;
@@ -288,9 +288,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::AMI_AMI_BufferingHandler *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -371,7 +371,7 @@ namespace POA_Test
   {
   protected:
     AMI_Buffering_Admin (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::AMI_Buffering_Admin _stub_type;
@@ -386,9 +386,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::AMI_Buffering_Admin *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -458,7 +458,7 @@ namespace POA_Test
   {
   protected:
     AMI_AMI_Buffering_AdminHandler (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::AMI_AMI_Buffering_AdminHandler _stub_type;
@@ -473,9 +473,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::AMI_AMI_Buffering_AdminHandler *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

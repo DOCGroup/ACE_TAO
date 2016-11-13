@@ -72,7 +72,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -146,7 +146,7 @@ namespace Quoter
         Stock
       >
     Stock_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Stock
@@ -172,7 +172,7 @@ namespace Quoter
         Stock_Factory
       >
     Stock_Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Stock_Factory
@@ -221,7 +221,7 @@ namespace Quoter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Stock_Factory (void);
@@ -230,7 +230,7 @@ namespace Quoter
     Stock_Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Stock_Factory (
         TAO_Stub *objref,
@@ -239,7 +239,7 @@ namespace Quoter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Stock_Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Stock_Factory (const Stock_Factory &);
@@ -266,7 +266,7 @@ namespace Quoter
         AMI_Stock_FactoryHandler
       >
     AMI_Stock_FactoryHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_Stock_FactoryHandler
@@ -280,7 +280,7 @@ namespace Quoter
 
   class  AMI_Stock_FactoryHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_Stock_FactoryHandler>;
@@ -321,7 +321,7 @@ namespace Quoter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_Stock_FactoryHandler (void);
@@ -330,7 +330,7 @@ namespace Quoter
     AMI_Stock_FactoryHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_Stock_FactoryHandler (
         TAO_Stub *objref,
@@ -339,7 +339,7 @@ namespace Quoter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_Stock_FactoryHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_Stock_FactoryHandler (const AMI_Stock_FactoryHandler &);
@@ -403,7 +403,7 @@ namespace Quoter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Stock (void);
@@ -412,7 +412,7 @@ namespace Quoter
     Stock (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Stock (
         TAO_Stub *objref,
@@ -421,7 +421,7 @@ namespace Quoter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Stock (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Stock (const Stock &);
@@ -448,7 +448,7 @@ namespace Quoter
         AMI_StockHandler
       >
     AMI_StockHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_StockHandler
@@ -462,7 +462,7 @@ namespace Quoter
 
   class  AMI_StockHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_StockHandler>;
@@ -527,7 +527,7 @@ namespace Quoter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_StockHandler (void);
@@ -536,7 +536,7 @@ namespace Quoter
     AMI_StockHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_StockHandler (
         TAO_Stub *objref,
@@ -545,7 +545,7 @@ namespace Quoter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_StockHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_StockHandler (const AMI_StockHandler &);
@@ -575,7 +575,7 @@ namespace Quoter
         Single_Query_Stock
       >
     Single_Query_Stock_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Single_Query_Stock
@@ -589,7 +589,7 @@ namespace Quoter
 
   class  Single_Query_Stock
     : public virtual ::Quoter::Stock
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Single_Query_Stock>;
@@ -625,7 +625,7 @@ namespace Quoter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Single_Query_Stock (void);
@@ -634,7 +634,7 @@ namespace Quoter
     Single_Query_Stock (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Single_Query_Stock (
         TAO_Stub *objref,
@@ -643,7 +643,7 @@ namespace Quoter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Single_Query_Stock (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Single_Query_Stock (const Single_Query_Stock &);
@@ -670,7 +670,7 @@ namespace Quoter
         AMI_Single_Query_StockHandler
       >
     AMI_Single_Query_StockHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_Single_Query_StockHandler
@@ -684,7 +684,7 @@ namespace Quoter
 
   class  AMI_Single_Query_StockHandler
     : public virtual ::Quoter::AMI_StockHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_Single_Query_StockHandler>;
@@ -727,7 +727,7 @@ namespace Quoter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_Single_Query_StockHandler (void);
@@ -736,7 +736,7 @@ namespace Quoter
     AMI_Single_Query_StockHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_Single_Query_StockHandler (
         TAO_Stub *objref,
@@ -745,7 +745,7 @@ namespace Quoter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_Single_Query_StockHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_Single_Query_StockHandler (const AMI_Single_Query_StockHandler &);
@@ -1060,7 +1060,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Quoter
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::Quoter::Invalid_Stock_Symbol &); // copying version
    void operator<<= (::CORBA::Any &, ::Quoter::Invalid_Stock_Symbol*); // noncopying version

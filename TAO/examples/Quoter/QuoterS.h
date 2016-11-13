@@ -204,7 +204,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Stock
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -217,7 +217,7 @@ namespace POA_Stock
   {
   protected:
     Quoter (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::Quoter _stub_type;
@@ -232,9 +232,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::Quoter *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -260,7 +260,7 @@ namespace POA_Stock
   {
   protected:
     Quoter_Factory (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::Quoter_Factory _stub_type;
@@ -275,9 +275,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::Quoter_Factory *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -303,7 +303,7 @@ namespace POA_Stock
   {
   protected:
     Quoter_Factory_Finder (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::Quoter_Factory_Finder _stub_type;
@@ -318,9 +318,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::Quoter_Factory_Finder *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
   };
 
@@ -335,7 +335,7 @@ namespace POA_Stock
   {
   protected:
     Quoter_Generic_Factory (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::Quoter_Generic_Factory _stub_type;
@@ -350,9 +350,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::Quoter_Generic_Factory *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
   };
 
@@ -367,7 +367,7 @@ namespace POA_Stock
   {
   protected:
     Quoter_Life_Cycle_Service (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::Quoter_Life_Cycle_Service _stub_type;
@@ -382,9 +382,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::Quoter_Life_Cycle_Service *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -413,7 +413,7 @@ namespace POA_Stock
   {
   protected:
     Criteria_Evaluator (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::Criteria_Evaluator _stub_type;
@@ -428,9 +428,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::Criteria_Evaluator *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

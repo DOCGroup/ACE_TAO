@@ -89,7 +89,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Arch_Idl
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -102,7 +102,7 @@ namespace POA_Arch_Idl
   {
   protected:
     Monitorable (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Arch_Idl::Monitorable _stub_type;
@@ -117,9 +117,9 @@ namespace POA_Arch_Idl
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Arch_Idl::Monitorable *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
   };
 

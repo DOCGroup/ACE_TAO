@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -139,7 +139,7 @@ namespace Test
         Stock
       >
     Stock_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Stock
@@ -162,7 +162,7 @@ namespace Test
         StockFactory
       >
     StockFactory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         StockFactory
@@ -210,7 +210,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     StockFactory (void);
@@ -219,7 +219,7 @@ namespace Test
     StockFactory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     StockFactory (
         TAO_Stub *objref,
@@ -228,7 +228,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~StockFactory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     StockFactory (const StockFactory &);
@@ -283,7 +283,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Stock (void);
@@ -292,7 +292,7 @@ namespace Test
     Stock (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Stock (
         TAO_Stub *objref,
@@ -301,7 +301,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Stock (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Stock (const Stock &);
@@ -432,7 +432,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::Test::Invalid_Stock_Symbol &); // copying version
    void operator<<= (::CORBA::Any &, ::Test::Invalid_Stock_Symbol*); // noncopying version

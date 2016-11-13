@@ -62,7 +62,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -144,7 +144,7 @@ protected:
   A (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   A (
       TAO_Stub *objref,
@@ -181,7 +181,7 @@ namespace Outer
         B
       >
     B_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         B
@@ -224,7 +224,7 @@ namespace Outer
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     B (void);
@@ -233,7 +233,7 @@ namespace Outer
     B (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     B (
         TAO_Stub *objref,
@@ -242,7 +242,7 @@ namespace Outer
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~B (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     B (const B &);
@@ -270,7 +270,7 @@ namespace Outer
           C
         >
       C_var;
-    
+
     typedef
       TAO_Objref_Out_T<
           C
@@ -313,7 +313,7 @@ namespace Outer
       virtual ::CORBA::Boolean _is_a (const char *type_id);
       virtual const char* _interface_repository_id (void) const;
       virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-    
+
     protected:
       // Concrete interface only.
       C (void);
@@ -322,7 +322,7 @@ namespace Outer
       C (
           ::IOP::IOR *ior,
           TAO_ORB_Core *orb_core);
-      
+
       // Non-local interface only.
       C (
           TAO_Stub *objref,
@@ -331,17 +331,17 @@ namespace Outer
           TAO_ORB_Core *orb_core = 0);
 
       virtual ~C (void);
-    
+
     private:
       // Private and unimplemented for concrete interfaces.
       C (const C &);
 
       void operator= (const C &);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_ch.cpp:64
-  
+
   } // module Outer::Inner
 
 // TAO_IDL - Generated from

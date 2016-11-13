@@ -143,7 +143,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Two_Objects_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -156,7 +156,7 @@ namespace POA_Two_Objects_Test
   {
   protected:
     First (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Two_Objects_Test::First _stub_type;
@@ -171,9 +171,9 @@ namespace POA_Two_Objects_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Two_Objects_Test::First *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -199,7 +199,7 @@ namespace POA_Two_Objects_Test
   {
   protected:
     Second (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Two_Objects_Test::Second _stub_type;
@@ -214,9 +214,9 @@ namespace POA_Two_Objects_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Two_Objects_Test::Second *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -253,7 +253,7 @@ namespace POA_Two_Objects_Test
   {
   protected:
     Object_Factory (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Two_Objects_Test::Object_Factory _stub_type;
@@ -268,9 +268,9 @@ namespace POA_Two_Objects_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Two_Objects_Test::Object_Factory *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

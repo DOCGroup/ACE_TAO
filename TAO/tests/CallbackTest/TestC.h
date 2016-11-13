@@ -64,7 +64,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -100,7 +100,7 @@ namespace Test
         Callback
       >
     Callback_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Callback
@@ -149,7 +149,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Callback (void);
@@ -158,7 +158,7 @@ namespace Test
     Callback (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Callback (
         TAO_Stub *objref,
@@ -167,7 +167,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Callback (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Callback (const Callback &);
@@ -189,7 +189,7 @@ namespace Test
         Service
       >
     Service_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Service
@@ -232,7 +232,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Service (void);
@@ -241,7 +241,7 @@ namespace Test
     Service (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Service (
         TAO_Stub *objref,
@@ -250,7 +250,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Service (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Service (const Service &);

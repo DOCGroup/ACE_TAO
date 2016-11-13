@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -99,7 +99,7 @@ namespace Gateway
         Object_Factory
       >
     Object_Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Object_Factory
@@ -143,7 +143,7 @@ namespace Gateway
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Object_Factory (void);
@@ -152,7 +152,7 @@ namespace Gateway
     Object_Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Object_Factory (
         TAO_Stub *objref,
@@ -161,7 +161,7 @@ namespace Gateway
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Object_Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Object_Factory (const Object_Factory &);

@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -107,7 +107,7 @@ namespace Test
         Controller
       >
     Controller_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Controller
@@ -161,7 +161,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Controller (void);
@@ -170,7 +170,7 @@ namespace Test
     Controller (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Controller (
         TAO_Stub *objref,
@@ -179,7 +179,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Controller (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Controller (const Controller &);
@@ -206,7 +206,7 @@ namespace Test
         AMI_ControllerHandler
       >
     AMI_ControllerHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_ControllerHandler
@@ -220,7 +220,7 @@ namespace Test
 
   class  AMI_ControllerHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_ControllerHandler>;
@@ -273,7 +273,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_ControllerHandler (void);
@@ -282,7 +282,7 @@ namespace Test
     AMI_ControllerHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_ControllerHandler (
         TAO_Stub *objref,
@@ -291,7 +291,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_ControllerHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_ControllerHandler (const AMI_ControllerHandler &);
@@ -321,7 +321,7 @@ namespace Test
         Manager
       >
     Manager_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Manager
@@ -377,7 +377,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Manager (void);
@@ -386,7 +386,7 @@ namespace Test
     Manager (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Manager (
         TAO_Stub *objref,
@@ -395,7 +395,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Manager (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Manager (const Manager &);
@@ -422,7 +422,7 @@ namespace Test
         AMI_ManagerHandler
       >
     AMI_ManagerHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_ManagerHandler
@@ -436,7 +436,7 @@ namespace Test
 
   class  AMI_ManagerHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_ManagerHandler>;
@@ -477,7 +477,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_ManagerHandler (void);
@@ -486,7 +486,7 @@ namespace Test
     AMI_ManagerHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_ManagerHandler (
         TAO_Stub *objref,
@@ -495,7 +495,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_ManagerHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_ManagerHandler (const AMI_ManagerHandler &);

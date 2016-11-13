@@ -62,7 +62,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -104,7 +104,7 @@ namespace Bug1495_Regression
         Bug1495
       >
     Bug1495_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Bug1495
@@ -150,7 +150,7 @@ namespace Bug1495_Regression
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Bug1495 (void);
@@ -159,7 +159,7 @@ namespace Bug1495_Regression
     Bug1495 (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Bug1495 (
         TAO_Stub *objref,
@@ -168,7 +168,7 @@ namespace Bug1495_Regression
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Bug1495 (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Bug1495 (const Bug1495 &);

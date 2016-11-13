@@ -64,7 +64,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -122,7 +122,7 @@ namespace Test
         Roundtrip
       >
     Roundtrip_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Roundtrip
@@ -171,7 +171,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Roundtrip (void);
@@ -180,7 +180,7 @@ namespace Test
     Roundtrip (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Roundtrip (
         TAO_Stub *objref,
@@ -189,7 +189,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Roundtrip (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Roundtrip (const Roundtrip &);

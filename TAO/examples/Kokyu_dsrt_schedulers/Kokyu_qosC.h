@@ -115,18 +115,18 @@ namespace Kokyu
       ::CORBA::Boolean release = false);
     GuidType (const GuidType &);
     virtual ~GuidType (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef GuidType_var _var_type;
     typedef GuidType_out _out_type;
 
     static void _tao_any_destructor (void *);
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     GuidType (
@@ -170,12 +170,12 @@ namespace Kokyu
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Svc_Ctxt_DSRT_QoS_var _var_type;
     typedef Svc_Ctxt_DSRT_QoS_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     Kokyu::GuidType guid;
     ::CORBA::Long importance;
     ::CORBA::Long criticality;

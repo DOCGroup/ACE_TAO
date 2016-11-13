@@ -156,7 +156,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Database
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -169,7 +169,7 @@ namespace POA_Database
   {
   protected:
     Entry (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Database::Entry _stub_type;
@@ -184,9 +184,9 @@ namespace POA_Database
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Database::Entry *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -212,7 +212,7 @@ namespace POA_Database
   {
   protected:
     Employee (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Database::Employee _stub_type;
@@ -227,9 +227,9 @@ namespace POA_Database
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Database::Employee *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -266,7 +266,7 @@ namespace POA_Database
   {
   protected:
     Agent (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Database::Agent _stub_type;
@@ -281,9 +281,9 @@ namespace POA_Database
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Database::Agent *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

@@ -149,7 +149,7 @@ protected:
   Job (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Job (
       TAO_Stub *objref,

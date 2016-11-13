@@ -72,7 +72,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -253,7 +253,7 @@ namespace Database
         Entry
       >
     Entry_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Entry
@@ -296,7 +296,7 @@ namespace Database
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Entry (void);
@@ -305,7 +305,7 @@ namespace Database
     Entry (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Entry (
         TAO_Stub *objref,
@@ -314,7 +314,7 @@ namespace Database
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Entry (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Entry (const Entry &);
@@ -336,7 +336,7 @@ namespace Database
         Employee
       >
     Employee_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Employee
@@ -350,7 +350,7 @@ namespace Database
 
   class  Employee
     : public virtual ::Database::Entry
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Employee>;
@@ -383,7 +383,7 @@ namespace Database
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Employee (void);
@@ -392,7 +392,7 @@ namespace Database
     Employee (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Employee (
         TAO_Stub *objref,
@@ -401,7 +401,7 @@ namespace Database
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Employee (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Employee (const Employee &);
@@ -435,10 +435,10 @@ namespace Database
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NamedValue_var _var_type;
     typedef NamedValue_out _out_type;
-    
+
     ::TAO::String_Manager name;
     ::CORBA::Any value;
     Database::Flags options;
@@ -480,12 +480,12 @@ namespace Database
       ::CORBA::Boolean release = false);
     NVPairSequence (const NVPairSequence &);
     virtual ~NVPairSequence (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NVPairSequence_var _var_type;
     typedef NVPairSequence_out _out_type;
   };
@@ -506,7 +506,7 @@ namespace Database
         Agent
       >
     Agent_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Agent
@@ -562,7 +562,7 @@ namespace Database
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Agent (void);
@@ -571,7 +571,7 @@ namespace Database
     Agent (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Agent (
         TAO_Stub *objref,
@@ -580,7 +580,7 @@ namespace Database
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Agent (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Agent (const Agent &);

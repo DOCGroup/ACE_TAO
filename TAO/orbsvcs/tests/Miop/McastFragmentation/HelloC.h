@@ -66,7 +66,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -124,16 +124,16 @@ namespace Test
       ::CORBA::Boolean release = false);
     Octets (const Octets &);
     virtual ~Octets (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Octets_var _var_type;
     typedef Octets_out _out_type;
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     Octets (
@@ -165,7 +165,7 @@ namespace Test
         UIPMC_Object
       >
     UIPMC_Object_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         UIPMC_Object
@@ -208,7 +208,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     UIPMC_Object (void);
@@ -217,7 +217,7 @@ namespace Test
     UIPMC_Object (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     UIPMC_Object (
         TAO_Stub *objref,
@@ -226,7 +226,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~UIPMC_Object (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     UIPMC_Object (const UIPMC_Object &);
@@ -248,7 +248,7 @@ namespace Test
         Hello
       >
     Hello_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Hello
@@ -294,7 +294,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Hello (void);
@@ -303,7 +303,7 @@ namespace Test
     Hello (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Hello (
         TAO_Stub *objref,
@@ -312,7 +312,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Hello (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Hello (const Hello &);

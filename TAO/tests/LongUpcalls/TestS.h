@@ -171,7 +171,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -184,7 +184,7 @@ namespace POA_Test
   {
   protected:
     Controller (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::Controller _stub_type;
@@ -199,9 +199,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::Controller *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -238,7 +238,7 @@ namespace POA_Test
   {
   protected:
     AMI_ControllerHandler (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::AMI_ControllerHandler _stub_type;
@@ -253,9 +253,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::AMI_ControllerHandler *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -314,7 +314,7 @@ namespace POA_Test
   {
   protected:
     Manager (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::Manager _stub_type;
@@ -329,9 +329,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::Manager *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -370,7 +370,7 @@ namespace POA_Test
   {
   protected:
     AMI_ManagerHandler (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::AMI_ManagerHandler _stub_type;
@@ -385,9 +385,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::AMI_ManagerHandler *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

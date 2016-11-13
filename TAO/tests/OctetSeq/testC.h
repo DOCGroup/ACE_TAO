@@ -67,7 +67,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -125,16 +125,16 @@ namespace Test
       ::CORBA::Boolean release = false);
     OctetSeq (const OctetSeq &);
     virtual ~OctetSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef OctetSeq_var _var_type;
     typedef OctetSeq_out _out_type;
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     OctetSeq (
@@ -183,12 +183,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     CharSeq (const CharSeq &);
     virtual ~CharSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CharSeq_var _var_type;
     typedef CharSeq_out _out_type;
   };
@@ -250,7 +250,7 @@ namespace Test
         Database
       >
     Database_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Database
@@ -305,7 +305,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Database (void);
@@ -314,7 +314,7 @@ namespace Test
     Database (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Database (
         TAO_Stub *objref,
@@ -323,7 +323,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Database (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Database (const Database &);

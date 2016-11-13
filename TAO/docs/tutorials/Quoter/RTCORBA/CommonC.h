@@ -159,12 +159,12 @@ namespace Stock
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef StockInfo_var _var_type;
     typedef StockInfo_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager name;
     ::CORBA::Long high;
     ::CORBA::Long low;
@@ -179,7 +179,7 @@ namespace Stock
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_STOCK_STOCKNAMES__VAR_OUT_CH_)
 #define _STOCK_STOCKNAMES__VAR_OUT_CH_
@@ -190,7 +190,7 @@ namespace Stock
         StockNames
       >
     StockNames_var;
-  
+
   typedef
     TAO_Value_Out_T<
         StockNames
@@ -217,12 +217,12 @@ namespace Stock
     static void _tao_any_destructor (void *);
 
     static StockNames* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         StockNames *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -230,7 +230,7 @@ namespace Stock
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -242,7 +242,7 @@ namespace Stock
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     StockNames (void);
     virtual ~StockNames (void);
@@ -250,11 +250,11 @@ namespace Stock
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     StockNames (const StockNames &);
     void operator= (const StockNames &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Stock_StockNames (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -280,7 +280,7 @@ namespace Stock
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~StockNames_init (void);
   };
@@ -293,7 +293,7 @@ namespace Stock
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_STOCK_COOKIE__VAR_OUT_CH_)
 #define _STOCK_COOKIE__VAR_OUT_CH_
@@ -304,7 +304,7 @@ namespace Stock
         Cookie
       >
     Cookie_var;
-  
+
   typedef
     TAO_Value_Out_T<
         Cookie
@@ -331,12 +331,12 @@ namespace Stock
     static void _tao_any_destructor (void *);
 
     static Cookie* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         Cookie *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -344,7 +344,7 @@ namespace Stock
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -357,7 +357,7 @@ namespace Stock
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     Cookie (void);
     virtual ~Cookie (void);
@@ -365,11 +365,11 @@ namespace Stock
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     Cookie (const Cookie &);
     void operator= (const Cookie &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Stock_Cookie (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -395,7 +395,7 @@ namespace Stock
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~Cookie_init (void);
   };
@@ -419,7 +419,7 @@ namespace Stock
         Trigger
       >
     Trigger_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Trigger
@@ -467,7 +467,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Trigger (void);
@@ -476,7 +476,7 @@ namespace Stock
     Trigger (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Trigger (
         TAO_Stub *objref,
@@ -485,7 +485,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Trigger (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Trigger (const Trigger &);
@@ -512,7 +512,7 @@ namespace Stock
         StockNameConsumer
       >
     StockNameConsumer_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         StockNameConsumer
@@ -563,7 +563,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     StockNameConsumer (void);
@@ -572,7 +572,7 @@ namespace Stock
     StockNameConsumer (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     StockNameConsumer (
         TAO_Stub *objref,
@@ -581,7 +581,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~StockNameConsumer (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     StockNameConsumer (const StockNameConsumer &);
@@ -608,7 +608,7 @@ namespace Stock
         StockQuoter
       >
     StockQuoter_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         StockQuoter
@@ -653,7 +653,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     StockQuoter (void);
@@ -662,7 +662,7 @@ namespace Stock
     StockQuoter (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     StockQuoter (
         TAO_Stub *objref,
@@ -671,7 +671,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~StockQuoter (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     StockQuoter (const StockQuoter &);
@@ -855,7 +855,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Stock_StockNames (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -900,7 +900,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Stock_Cookie (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1018,7 +1018,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Stock
 {
-  
+
 
   RTCORBA_Quoter_Common_Export void operator<<= (::CORBA::Any &, const ::Stock::Invalid_Stock &); // copying version
   RTCORBA_Quoter_Common_Export void operator<<= (::CORBA::Any &, ::Stock::Invalid_Stock*); // noncopying version

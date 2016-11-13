@@ -184,7 +184,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Stock
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -197,7 +197,7 @@ namespace POA_Stock
   {
   protected:
     Trigger (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::Trigger _stub_type;
@@ -212,9 +212,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::Trigger *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -251,7 +251,7 @@ namespace POA_Stock
   {
   protected:
     StockNameConsumer (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::StockNameConsumer _stub_type;
@@ -266,9 +266,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::StockNameConsumer *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -316,7 +316,7 @@ namespace POA_Stock
   {
   protected:
     StockQuoter (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Stock::StockQuoter _stub_type;
@@ -331,9 +331,9 @@ namespace POA_Stock
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Stock::StockQuoter *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

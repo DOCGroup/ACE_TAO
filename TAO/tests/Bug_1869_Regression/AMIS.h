@@ -131,7 +131,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_AMI_test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -144,7 +144,7 @@ namespace POA_AMI_test
   {
   protected:
     adder (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::AMI_test::adder _stub_type;
@@ -159,9 +159,9 @@ namespace POA_AMI_test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::AMI_test::adder *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -188,7 +188,7 @@ namespace POA_AMI_test
   {
   protected:
     AMI_adderHandler (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::AMI_test::AMI_adderHandler _stub_type;
@@ -203,9 +203,9 @@ namespace POA_AMI_test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::AMI_test::AMI_adderHandler *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

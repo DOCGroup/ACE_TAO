@@ -67,7 +67,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -103,7 +103,7 @@ namespace ForwardRequestTest
         test
       >
     test_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         test
@@ -149,7 +149,7 @@ namespace ForwardRequestTest
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     test (void);
@@ -158,7 +158,7 @@ namespace ForwardRequestTest
     test (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     test (
         TAO_Stub *objref,
@@ -167,7 +167,7 @@ namespace ForwardRequestTest
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~test (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     test (const test &);
@@ -189,7 +189,7 @@ namespace ForwardRequestTest
         ServerRequestInterceptor
       >
     ServerRequestInterceptor_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         ServerRequestInterceptor
@@ -203,7 +203,7 @@ namespace ForwardRequestTest
 
   class  ServerRequestInterceptor
     : public virtual ::PortableInterceptor::ServerRequestInterceptor
-  
+
   {
   public:
 
@@ -233,15 +233,15 @@ namespace ForwardRequestTest
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     ServerRequestInterceptor (void);
 
-    
+
 
     virtual ~ServerRequestInterceptor (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     ServerRequestInterceptor (const ServerRequestInterceptor &);

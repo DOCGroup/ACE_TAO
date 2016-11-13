@@ -66,7 +66,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -135,7 +135,7 @@ namespace Test_Interceptors
         Visual
       >
     Visual_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Visual
@@ -191,7 +191,7 @@ namespace Test_Interceptors
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Visual (void);
@@ -200,7 +200,7 @@ namespace Test_Interceptors
     Visual (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Visual (
         TAO_Stub *objref,
@@ -209,7 +209,7 @@ namespace Test_Interceptors
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Visual (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Visual (const Visual &);

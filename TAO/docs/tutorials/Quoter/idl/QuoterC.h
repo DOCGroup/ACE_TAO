@@ -129,7 +129,7 @@ namespace Quoter
         Stock
       >
     Stock_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Stock
@@ -152,7 +152,7 @@ namespace Quoter
         Stock_Factory
       >
     Stock_Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Stock_Factory
@@ -195,7 +195,7 @@ namespace Quoter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Stock_Factory (void);
@@ -204,7 +204,7 @@ namespace Quoter
     Stock_Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Stock_Factory (
         TAO_Stub *objref,
@@ -213,7 +213,7 @@ namespace Quoter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Stock_Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Stock_Factory (const Stock_Factory &);
@@ -261,7 +261,7 @@ namespace Quoter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Stock (void);
@@ -270,7 +270,7 @@ namespace Quoter
     Stock (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Stock (
         TAO_Stub *objref,
@@ -279,7 +279,7 @@ namespace Quoter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Stock (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Stock (const Stock &);
@@ -313,10 +313,10 @@ namespace Quoter
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Event_var _var_type;
     typedef Event_out _out_type;
-    
+
     ::CORBA::Double price;
     ::TAO::String_Manager symbol;
     ::TAO::String_Manager full_name;
@@ -336,7 +336,7 @@ namespace Quoter
         Modify_Stock
       >
     Modify_Stock_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Modify_Stock
@@ -350,7 +350,7 @@ namespace Quoter
 
   class QUOTER_COMMON_Export Modify_Stock
     : public virtual ::Quoter::Stock
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Modify_Stock>;
@@ -380,7 +380,7 @@ namespace Quoter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Modify_Stock (void);
@@ -389,7 +389,7 @@ namespace Quoter
     Modify_Stock (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Modify_Stock (
         TAO_Stub *objref,
@@ -398,7 +398,7 @@ namespace Quoter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Modify_Stock (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Modify_Stock (const Modify_Stock &);

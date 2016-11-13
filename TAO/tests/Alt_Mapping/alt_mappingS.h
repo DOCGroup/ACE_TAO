@@ -137,9 +137,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::Alt_Mapping *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from

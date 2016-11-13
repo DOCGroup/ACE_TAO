@@ -76,7 +76,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -153,12 +153,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     Bounded_Var_Size_Arg (const Bounded_Var_Size_Arg &);
     virtual ~Bounded_Var_Size_Arg (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Bounded_Var_Size_Arg_var _var_type;
     typedef Bounded_Var_Size_Arg_out _out_type;
 
@@ -208,12 +208,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     Unbounded_Var_Size_Arg (const Unbounded_Var_Size_Arg &);
     virtual ~Unbounded_Var_Size_Arg (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Unbounded_Var_Size_Arg_var _var_type;
     typedef Unbounded_Var_Size_Arg_out _out_type;
 
@@ -233,7 +233,7 @@ namespace Test
   typedef ::CORBA::Long Fixed_Array[10];
   typedef ::CORBA::Long Fixed_Array_slice;
   struct Fixed_Array_tag {};
-  
+
 
   typedef
     TAO_FixedArray_Var_T<
@@ -261,11 +261,11 @@ namespace Test
   TAO_NAMESPACE_STORAGE_CLASS void
   Fixed_Array_free (
       Fixed_Array_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS Fixed_Array_slice *
   Fixed_Array_dup (
       const Fixed_Array_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS void
   Fixed_Array_copy (
       Fixed_Array_slice *_tao_to,
@@ -282,7 +282,7 @@ namespace Test
   typedef ::TAO::String_Manager Var_Array[3];
   typedef ::TAO::String_Manager Var_Array_slice;
   struct Var_Array_tag {};
-  
+
 
   typedef
     TAO_VarArray_Var_T<
@@ -315,11 +315,11 @@ namespace Test
   TAO_NAMESPACE_STORAGE_CLASS void
   Var_Array_free (
       Var_Array_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS Var_Array_slice *
   Var_Array_dup (
       const Var_Array_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS void
   Var_Array_copy (
       Var_Array_slice *_tao_to,
@@ -366,12 +366,12 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef TimeOfDay_var _var_type;
     typedef TimeOfDay_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Short hour;
     ::CORBA::Short minute;
     ::CORBA::Short second;
@@ -396,7 +396,7 @@ namespace Test
         Simple_Test
       >
     Simple_Test_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Simple_Test
@@ -441,7 +441,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Simple_Test (void);
@@ -450,7 +450,7 @@ namespace Test
     Simple_Test (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Simple_Test (
         TAO_Stub *objref,
@@ -459,7 +459,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Simple_Test (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Simple_Test (const Simple_Test &);
@@ -486,7 +486,7 @@ namespace Test
         Hello
       >
     Hello_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Hello
@@ -588,7 +588,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Hello (void);
@@ -597,7 +597,7 @@ namespace Test
     Hello (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Hello (
         TAO_Stub *objref,
@@ -606,7 +606,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Hello (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Hello (const Hello &);

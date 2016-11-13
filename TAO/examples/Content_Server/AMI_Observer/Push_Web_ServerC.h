@@ -76,7 +76,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -134,18 +134,18 @@ namespace Web_Server
       ::CORBA::Boolean release = false);
     Chunk_Type (const Chunk_Type &);
     virtual ~Chunk_Type (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Chunk_Type_var _var_type;
     typedef Chunk_Type_out _out_type;
 
     static void _tao_any_destructor (void *);
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     Chunk_Type (
@@ -180,7 +180,7 @@ namespace Web_Server
         Callback
       >
     Callback_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Callback
@@ -231,7 +231,7 @@ namespace Web_Server
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Callback (void);
@@ -240,7 +240,7 @@ namespace Web_Server
     Callback (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Callback (
         TAO_Stub *objref,
@@ -249,7 +249,7 @@ namespace Web_Server
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Callback (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Callback (const Callback &);
@@ -276,7 +276,7 @@ namespace Web_Server
         AMI_CallbackHandler
       >
     AMI_CallbackHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_CallbackHandler
@@ -290,7 +290,7 @@ namespace Web_Server
 
   class  AMI_CallbackHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_CallbackHandler>;
@@ -331,7 +331,7 @@ namespace Web_Server
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_CallbackHandler (void);
@@ -340,7 +340,7 @@ namespace Web_Server
     AMI_CallbackHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_CallbackHandler (
         TAO_Stub *objref,
@@ -349,7 +349,7 @@ namespace Web_Server
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_CallbackHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_CallbackHandler (const AMI_CallbackHandler &);
@@ -430,12 +430,12 @@ namespace Web_Server
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Metadata_Type_var _var_type;
     typedef Metadata_Type_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager modification_date;
     ::TAO::String_Manager content_type;
   };
@@ -462,7 +462,7 @@ namespace Web_Server
         Iterator_Factory
       >
     Iterator_Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Iterator_Factory
@@ -513,7 +513,7 @@ namespace Web_Server
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Iterator_Factory (void);
@@ -522,7 +522,7 @@ namespace Web_Server
     Iterator_Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Iterator_Factory (
         TAO_Stub *objref,
@@ -531,7 +531,7 @@ namespace Web_Server
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Iterator_Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Iterator_Factory (const Iterator_Factory &);
@@ -558,7 +558,7 @@ namespace Web_Server
         AMI_Iterator_FactoryHandler
       >
     AMI_Iterator_FactoryHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_Iterator_FactoryHandler
@@ -572,7 +572,7 @@ namespace Web_Server
 
   class  AMI_Iterator_FactoryHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_Iterator_FactoryHandler>;
@@ -613,7 +613,7 @@ namespace Web_Server
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_Iterator_FactoryHandler (void);
@@ -622,7 +622,7 @@ namespace Web_Server
     AMI_Iterator_FactoryHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_Iterator_FactoryHandler (
         TAO_Stub *objref,
@@ -631,7 +631,7 @@ namespace Web_Server
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_Iterator_FactoryHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_Iterator_FactoryHandler (const AMI_Iterator_FactoryHandler &);
@@ -980,7 +980,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Web_Server
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::Web_Server::Error_Result &); // copying version
    void operator<<= (::CORBA::Any &, ::Web_Server::Error_Result*); // noncopying version

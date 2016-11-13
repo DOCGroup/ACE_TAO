@@ -72,7 +72,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -97,7 +97,7 @@ namespace obvmod
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBVMOD_TCOFFSET1__VAR_OUT_CH_)
 #define _OBVMOD_TCOFFSET1__VAR_OUT_CH_
@@ -108,7 +108,7 @@ namespace obvmod
         tcOffset1
       >
     tcOffset1_var;
-  
+
   typedef
     TAO_Value_Out_T<
         tcOffset1
@@ -135,12 +135,12 @@ namespace obvmod
     static void _tao_any_destructor (void *);
 
     static tcOffset1* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         tcOffset1 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -148,7 +148,7 @@ namespace obvmod
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -159,7 +159,7 @@ namespace obvmod
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     tcOffset1 (void);
     virtual ~tcOffset1 (void);
@@ -167,11 +167,11 @@ namespace obvmod
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     tcOffset1 (const tcOffset1 &);
     void operator= (const tcOffset1 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__obvmod_tcOffset1 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -197,7 +197,7 @@ namespace obvmod
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~tcOffset1_init (void);
   };
@@ -210,7 +210,7 @@ namespace obvmod
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBVMOD_TCOFFSET003__VAR_OUT_CH_)
 #define _OBVMOD_TCOFFSET003__VAR_OUT_CH_
@@ -221,7 +221,7 @@ namespace obvmod
         tcOffset003
       >
     tcOffset003_var;
-  
+
   typedef
     TAO_Value_Out_T<
         tcOffset003
@@ -248,12 +248,12 @@ namespace obvmod
     static void _tao_any_destructor (void *);
 
     static tcOffset003* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         tcOffset003 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -261,7 +261,7 @@ namespace obvmod
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -272,7 +272,7 @@ namespace obvmod
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     tcOffset003 (void);
     virtual ~tcOffset003 (void);
@@ -280,11 +280,11 @@ namespace obvmod
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     tcOffset003 (const tcOffset003 &);
     void operator= (const tcOffset003 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__obvmod_tcOffset003 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -310,7 +310,7 @@ namespace obvmod
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~tcOffset003_init (void);
   };
@@ -323,7 +323,7 @@ namespace obvmod
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBVMOD_TCOFFSET00005__VAR_OUT_CH_)
 #define _OBVMOD_TCOFFSET00005__VAR_OUT_CH_
@@ -334,7 +334,7 @@ namespace obvmod
         tcOffset00005
       >
     tcOffset00005_var;
-  
+
   typedef
     TAO_Value_Out_T<
         tcOffset00005
@@ -361,12 +361,12 @@ namespace obvmod
     static void _tao_any_destructor (void *);
 
     static tcOffset00005* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         tcOffset00005 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -374,7 +374,7 @@ namespace obvmod
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -385,7 +385,7 @@ namespace obvmod
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     tcOffset00005 (void);
     virtual ~tcOffset00005 (void);
@@ -393,11 +393,11 @@ namespace obvmod
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     tcOffset00005 (const tcOffset00005 &);
     void operator= (const tcOffset00005 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__obvmod_tcOffset00005 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -423,7 +423,7 @@ namespace obvmod
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~tcOffset00005_init (void);
   };
@@ -436,7 +436,7 @@ namespace obvmod
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBVMOD_TCOFFSET0000007__VAR_OUT_CH_)
 #define _OBVMOD_TCOFFSET0000007__VAR_OUT_CH_
@@ -447,7 +447,7 @@ namespace obvmod
         tcOffset0000007
       >
     tcOffset0000007_var;
-  
+
   typedef
     TAO_Value_Out_T<
         tcOffset0000007
@@ -474,12 +474,12 @@ namespace obvmod
     static void _tao_any_destructor (void *);
 
     static tcOffset0000007* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         tcOffset0000007 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -487,7 +487,7 @@ namespace obvmod
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -498,7 +498,7 @@ namespace obvmod
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     tcOffset0000007 (void);
     virtual ~tcOffset0000007 (void);
@@ -506,11 +506,11 @@ namespace obvmod
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     tcOffset0000007 (const tcOffset0000007 &);
     void operator= (const tcOffset0000007 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__obvmod_tcOffset0000007 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -536,7 +536,7 @@ namespace obvmod
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~tcOffset0000007_init (void);
   };
@@ -622,7 +622,7 @@ protected:
   test (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   test (
       TAO_Stub *objref,
@@ -796,7 +796,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__obvmod_tcOffset1 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -839,7 +839,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__obvmod_tcOffset003 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -882,7 +882,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__obvmod_tcOffset00005 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -925,7 +925,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__obvmod_tcOffset0000007 (TAO_OutputCDR &, TAO_ChunkInfo &) const;

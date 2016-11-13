@@ -230,7 +230,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -243,7 +243,7 @@ namespace POA_Test
   {
   protected:
     Foo (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::Foo _stub_type;
@@ -258,9 +258,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::Foo *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -296,14 +296,14 @@ namespace POA_Test
 
 namespace POA_Foo
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_sh.cpp:35
 
   namespace One
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_interface/interface_sh.cpp:73
@@ -316,7 +316,7 @@ namespace POA_Foo
     {
     protected:
       Whatever (void);
-    
+
     public:
       /// Useful for template programming.
       typedef ::Foo::One::Whatever _stub_type;
@@ -331,9 +331,9 @@ namespace POA_Foo
       virtual void _dispatch (
           TAO_ServerRequest & req,
           TAO::Portable_Server::Servant_Upcall *servant_upcall);
-      
+
       ::Foo::One::Whatever *_this (void);
-      
+
       virtual const char* _interface_repository_id (void) const;
 
       // TAO_IDL - Generated from
@@ -347,7 +347,7 @@ namespace POA_Foo
           TAO::Portable_Server::Servant_Upcall *servant_upcall,
           TAO_ServantBase *servant);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_sh.cpp:66
 
@@ -358,7 +358,7 @@ namespace POA_Foo
 
   namespace Two
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_interface/interface_sh.cpp:73
@@ -371,7 +371,7 @@ namespace POA_Foo
     {
     protected:
       WhoCares (void);
-    
+
     public:
       /// Useful for template programming.
       typedef ::Foo::Two::WhoCares _stub_type;
@@ -386,9 +386,9 @@ namespace POA_Foo
       virtual void _dispatch (
           TAO_ServerRequest & req,
           TAO::Portable_Server::Servant_Upcall *servant_upcall);
-      
+
       ::Foo::Two::WhoCares *_this (void);
-      
+
       virtual const char* _interface_repository_id (void) const;
 
       // TAO_IDL - Generated from
@@ -402,7 +402,7 @@ namespace POA_Foo
           TAO::Portable_Server::Servant_Upcall *servant_upcall,
           TAO_ServantBase *servant);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_sh.cpp:66
 
@@ -413,7 +413,7 @@ namespace POA_Foo
 
   namespace Three
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_interface/interface_sh.cpp:73
@@ -426,7 +426,7 @@ namespace POA_Foo
     {
     protected:
       WhoCares (void);
-    
+
     public:
       /// Useful for template programming.
       typedef ::Foo::Three::WhoCares _stub_type;
@@ -441,9 +441,9 @@ namespace POA_Foo
       virtual void _dispatch (
           TAO_ServerRequest & req,
           TAO::Portable_Server::Servant_Upcall *servant_upcall);
-      
+
       ::Foo::Three::WhoCares *_this (void);
-      
+
       virtual const char* _interface_repository_id (void) const;
 
       // TAO_IDL - Generated from
@@ -457,7 +457,7 @@ namespace POA_Foo
           TAO::Portable_Server::Servant_Upcall *servant_upcall,
           TAO_ServantBase *servant);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_sh.cpp:66
 

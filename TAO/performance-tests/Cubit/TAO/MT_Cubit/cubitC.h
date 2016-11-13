@@ -66,7 +66,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -156,12 +156,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Many_var _var_type;
     typedef Many_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Octet o;
     ::CORBA::Long l;
     ::CORBA::Short s;
@@ -205,7 +205,7 @@ protected:
   Cubit (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Cubit (
       TAO_Stub *objref,

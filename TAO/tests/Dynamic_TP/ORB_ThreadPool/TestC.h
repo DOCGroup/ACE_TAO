@@ -62,7 +62,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -98,7 +98,7 @@ namespace Test
         Sleeper
       >
     Sleeper_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Sleeper
@@ -144,7 +144,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Sleeper (void);
@@ -153,7 +153,7 @@ namespace Test
     Sleeper (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Sleeper (
         TAO_Stub *objref,
@@ -162,7 +162,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Sleeper (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Sleeper (const Sleeper &);
@@ -184,7 +184,7 @@ namespace Test
         Middle
       >
     Middle_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Middle
@@ -230,7 +230,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Middle (void);
@@ -239,7 +239,7 @@ namespace Test
     Middle (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Middle (
         TAO_Stub *objref,
@@ -248,7 +248,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Middle (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Middle (const Middle &);

@@ -209,7 +209,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_CosNaming
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -222,7 +222,7 @@ namespace POA_CosNaming
   {
   protected:
     NamingContext (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::CosNaming::NamingContext _stub_type;
@@ -237,9 +237,9 @@ namespace POA_CosNaming
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::CosNaming::NamingContext *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -370,7 +370,7 @@ namespace POA_CosNaming
   {
   protected:
     BindingIterator (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::CosNaming::BindingIterator _stub_type;
@@ -385,9 +385,9 @@ namespace POA_CosNaming
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::CosNaming::BindingIterator *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -436,7 +436,7 @@ namespace POA_CosNaming
   {
   protected:
     NamingContextExt (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::CosNaming::NamingContextExt _stub_type;
@@ -451,9 +451,9 @@ namespace POA_CosNaming
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::CosNaming::NamingContextExt *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

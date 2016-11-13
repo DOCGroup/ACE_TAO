@@ -156,7 +156,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Diamond
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -171,7 +171,7 @@ namespace POA_Diamond
   {
   protected:
     Top (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Diamond::Top _stub_type;
@@ -186,9 +186,9 @@ namespace POA_Diamond
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Diamond::Top *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -221,14 +221,14 @@ namespace POA_Diamond
     static void
     shape (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -243,7 +243,7 @@ namespace POA_Diamond
   {
   protected:
     Left (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Diamond::Left _stub_type;
@@ -258,9 +258,9 @@ namespace POA_Diamond
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Diamond::Left *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -294,14 +294,14 @@ namespace POA_Diamond
     static void
     color (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -316,7 +316,7 @@ namespace POA_Diamond
   {
   protected:
     Right (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Diamond::Right _stub_type;
@@ -331,9 +331,9 @@ namespace POA_Diamond
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Diamond::Right *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -367,14 +367,14 @@ namespace POA_Diamond
     static void
     width (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -390,7 +390,7 @@ namespace POA_Diamond
   {
   protected:
     Buttom (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Diamond::Buttom _stub_type;
@@ -405,9 +405,9 @@ namespace POA_Diamond
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Diamond::Buttom *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -442,14 +442,14 @@ namespace POA_Diamond
     static void
     name (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:66

@@ -61,7 +61,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -121,12 +121,12 @@ namespace Foo
       ::CORBA::Boolean release = false);
     nodesequence (const nodesequence &);
     virtual ~nodesequence (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef nodesequence_var _var_type;
     typedef nodesequence_out _out_type;
   };
@@ -142,10 +142,10 @@ namespace Foo
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Node_var _var_type;
     typedef Node_out _out_type;
-    
+
     Foo::nodesequence nodes;
   };
 

@@ -157,7 +157,7 @@ protected:
   test (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   test (
       TAO_Stub *objref,

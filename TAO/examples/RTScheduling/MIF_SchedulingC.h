@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -90,7 +90,7 @@ namespace MIF_Scheduling
         SegmentSchedulingParameterPolicy
       >
     SegmentSchedulingParameterPolicy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         SegmentSchedulingParameterPolicy
@@ -104,7 +104,7 @@ namespace MIF_Scheduling
 
   class  SegmentSchedulingParameterPolicy
     : public virtual ::CORBA::Policy
-  
+
   {
   public:
 
@@ -142,15 +142,15 @@ namespace MIF_Scheduling
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     SegmentSchedulingParameterPolicy (void);
 
-    
+
 
     virtual ~SegmentSchedulingParameterPolicy (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     SegmentSchedulingParameterPolicy (const SegmentSchedulingParameterPolicy &);
@@ -172,7 +172,7 @@ namespace MIF_Scheduling
         MIF_Scheduler
       >
     MIF_Scheduler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         MIF_Scheduler
@@ -186,7 +186,7 @@ namespace MIF_Scheduling
 
   class  MIF_Scheduler
     : public virtual ::RTScheduling::Scheduler
-  
+
   {
   public:
 
@@ -215,15 +215,15 @@ namespace MIF_Scheduling
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     MIF_Scheduler (void);
 
-    
+
 
     virtual ~MIF_Scheduler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     MIF_Scheduler (const MIF_Scheduler &);

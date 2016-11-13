@@ -71,7 +71,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -159,21 +159,21 @@ typedef tmp1CharArray_out tmp2CharArray_out;
 typedef tmp1CharArray_tag tmp2CharArray_tag;
 typedef tmp1CharArray_forany tmp2CharArray_forany;
 
-ACE_INLINE 
+ACE_INLINE
 tmp2CharArray_slice *
 tmp2CharArray_alloc (void);
 
-ACE_INLINE 
+ACE_INLINE
 tmp2CharArray_slice *
 tmp2CharArray_dup (
     const tmp2CharArray_slice *_tao_slice);
 
-ACE_INLINE 
+ACE_INLINE
 void tmp2CharArray_copy (
     tmp2CharArray_slice *_tao_to,
     const tmp2CharArray_slice *_tao_from);
 
-ACE_INLINE 
+ACE_INLINE
 void tmp2CharArray_free (
     tmp2CharArray_slice *_tao_slice);
 
@@ -187,21 +187,21 @@ typedef tmp2CharArray_out CharArray_out;
 typedef tmp2CharArray_tag CharArray_tag;
 typedef tmp2CharArray_forany CharArray_forany;
 
-ACE_INLINE 
+ACE_INLINE
 CharArray_slice *
 CharArray_alloc (void);
 
-ACE_INLINE 
+ACE_INLINE
 CharArray_slice *
 CharArray_dup (
     const CharArray_slice *_tao_slice);
 
-ACE_INLINE 
+ACE_INLINE
 void CharArray_copy (
     CharArray_slice *_tao_to,
     const CharArray_slice *_tao_from);
 
-ACE_INLINE 
+ACE_INLINE
 void CharArray_free (
     CharArray_slice *_tao_slice);
 
@@ -815,7 +815,7 @@ namespace moola
         Account
       >
     Account_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Account
@@ -873,7 +873,7 @@ namespace moola
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Account (void);
@@ -882,7 +882,7 @@ namespace moola
     Account (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Account (
         TAO_Stub *objref,
@@ -891,7 +891,7 @@ namespace moola
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Account (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Account (const Account &);
@@ -930,10 +930,10 @@ struct  Bucket
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Bucket_var _var_type;
   typedef Bucket_out _out_type;
-  
+
   ::CORBA::Long a_long;
   ::TAO::String_Manager a_string;
   FloatArray a_floatArray;
@@ -1111,10 +1111,10 @@ struct  SimpleStruct
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef SimpleStruct_var _var_type;
   typedef SimpleStruct_out _out_type;
-  
+
   ::CORBA::Short simpleShort;
   ::CORBA::Long simpleLong;
 };
@@ -1307,7 +1307,7 @@ protected:
   ArrayTest (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   ArrayTest (
       TAO_Stub *objref,
@@ -1393,7 +1393,7 @@ protected:
   ServerAdmin (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   ServerAdmin (
       TAO_Stub *objref,

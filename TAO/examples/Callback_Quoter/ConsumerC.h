@@ -66,7 +66,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -180,10 +180,10 @@ namespace Callback_Quoter
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Info_var _var_type;
     typedef Info_out _out_type;
-    
+
     ::TAO::String_Manager stock_name;
     ::CORBA::Long value;
   };
@@ -202,7 +202,7 @@ namespace Callback_Quoter
         Consumer
       >
     Consumer_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Consumer
@@ -248,7 +248,7 @@ namespace Callback_Quoter
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Consumer (void);
@@ -257,7 +257,7 @@ namespace Callback_Quoter
     Consumer (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Consumer (
         TAO_Stub *objref,
@@ -266,7 +266,7 @@ namespace Callback_Quoter
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Consumer (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Consumer (const Consumer &);

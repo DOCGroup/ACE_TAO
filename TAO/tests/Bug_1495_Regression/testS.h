@@ -89,7 +89,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Bug1495_Regression
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -102,7 +102,7 @@ namespace POA_Bug1495_Regression
   {
   protected:
     Bug1495 (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Bug1495_Regression::Bug1495 _stub_type;
@@ -117,9 +117,9 @@ namespace POA_Bug1495_Regression
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Bug1495_Regression::Bug1495 *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

@@ -81,7 +81,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -121,14 +121,14 @@ struct  Fixed_Struct1
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Fixed_Struct1_var _var_type;
   typedef Fixed_Struct1_out _out_type;
 
   static void _tao_any_destructor (void *);
-  
+
   ::CORBA::Long l;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:258
@@ -154,12 +154,12 @@ struct  Fixed_Struct1
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Bstruct_var _var_type;
     typedef Bstruct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Short s1;
     ::CORBA::Short s2;
   };
@@ -201,12 +201,12 @@ struct  Variable_Struct1
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Variable_Struct1_var _var_type;
   typedef Variable_Struct1_out _out_type;
 
   static void _tao_any_destructor (void *);
-  
+
   ::CORBA::Long l;
   ::TAO::String_Manager str;
 };
@@ -319,7 +319,7 @@ protected:
   Interface1 (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Interface1 (
       TAO_Stub *objref,
@@ -441,7 +441,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Union1_var _var_type;
   typedef Union1_out _out_type;
 
@@ -521,12 +521,12 @@ public:
     ::CORBA::Boolean release = false);
   LongSeq (const LongSeq &);
   virtual ~LongSeq (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef LongSeq_var _var_type;
   typedef LongSeq_out _out_type;
 
@@ -625,12 +625,12 @@ public:
     ::CORBA::Boolean release = false);
   PetSeq (const PetSeq &);
   virtual ~PetSeq (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef PetSeq_var _var_type;
   typedef PetSeq_out _out_type;
 
@@ -670,12 +670,12 @@ struct  Variable_Struct2
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Variable_Struct2_var _var_type;
   typedef Variable_Struct2_out _out_type;
 
   static void _tao_any_destructor (void *);
-  
+
   ::CORBA::Long len;
   ::CORBA::Any whatever;
   Pet apet;
@@ -687,7 +687,7 @@ struct  Variable_Struct2
   ::TAO::WString_Manager wstr;
   LongSeq ls;
   PetSeq sqq;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:258
@@ -715,12 +715,12 @@ struct  Variable_Struct2
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NestedStruct1_var _var_type;
     typedef NestedStruct1_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Short s;
     ::TAO::String_Manager str2;
   };
@@ -731,7 +731,7 @@ struct  Variable_Struct2
   static ::CORBA::TypeCode_ptr const _tc_NestedStruct1;NestedStruct1 ns1;
   Variable_Struct1 NestedStruct2;
   TDvariable_struct1 NestedStruct3;
-  
+
 
   Union1 un;
 };
@@ -766,7 +766,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef VBfixed_struct1_var _var_type;
   typedef VBfixed_struct1_out _out_type;
 
@@ -785,10 +785,10 @@ public:
       TAO_InputCDR &,
       VBfixed_struct1 *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:478
@@ -797,7 +797,7 @@ public:
   VBfixed_struct1 (void);
   VBfixed_struct1 (const Fixed_Struct1& val);
   VBfixed_struct1 (const VBfixed_struct1& val);
-  
+
   // Assignment operator
   VBfixed_struct1& operator= (const Fixed_Struct1& val);
 
@@ -810,14 +810,14 @@ public:
   const Fixed_Struct1& _boxed_in (void) const;
   Fixed_Struct1& _boxed_inout (void);
   Fixed_Struct1& _boxed_out (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:286
 
   void l ( ::CORBA::Long);
    ::CORBA::Long l (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:428
@@ -825,13 +825,13 @@ public:
   void abstruct (const Fixed_Struct1::Bstruct &);
   const Fixed_Struct1::Bstruct & abstruct (void) const;
   Fixed_Struct1::Bstruct & abstruct (void) ;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:546
 private:
   Fixed_Struct1_var _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -841,10 +841,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const VBfixed_struct1 & val);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -877,7 +877,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef VBvariable_struct1_var _var_type;
   typedef VBvariable_struct1_out _out_type;
 
@@ -896,10 +896,10 @@ public:
       TAO_InputCDR &,
       VBvariable_struct1 *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:478
@@ -908,7 +908,7 @@ public:
   VBvariable_struct1 (void);
   VBvariable_struct1 (const Variable_Struct1& val);
   VBvariable_struct1 (const VBvariable_struct1& val);
-  
+
   // Assignment operator
   VBvariable_struct1& operator= (const Variable_Struct1& val);
 
@@ -921,14 +921,14 @@ public:
   const Variable_Struct1& _boxed_in (void) const;
   Variable_Struct1& _boxed_inout (void);
   Variable_Struct1*& _boxed_out (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:286
 
   void l ( ::CORBA::Long);
    ::CORBA::Long l (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:377
@@ -937,13 +937,13 @@ public:
   void str (const char *);
   void str (const ::CORBA::String_var &);
   const char * str (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:546
 private:
   Variable_Struct1_var _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -953,10 +953,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const VBvariable_struct1 & val);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -989,7 +989,7 @@ public:
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef VBvariable_struct2_var _var_type;
   typedef VBvariable_struct2_out _out_type;
 
@@ -1008,10 +1008,10 @@ public:
       TAO_InputCDR &,
       VBvariable_struct2 *&
     );
-  
+
   virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:478
@@ -1020,7 +1020,7 @@ public:
   VBvariable_struct2 (void);
   VBvariable_struct2 (const Variable_Struct2& val);
   VBvariable_struct2 (const VBvariable_struct2& val);
-  
+
   // Assignment operator
   VBvariable_struct2& operator= (const Variable_Struct2& val);
 
@@ -1033,14 +1033,14 @@ public:
   const Variable_Struct2& _boxed_in (void) const;
   Variable_Struct2& _boxed_inout (void);
   Variable_Struct2*& _boxed_out (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:286
 
   void len ( ::CORBA::Long);
    ::CORBA::Long len (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:286
@@ -1048,42 +1048,42 @@ public:
   void whatever (const ::CORBA::Any &);
   const ::CORBA::Any & whatever (void) const;
    ::CORBA::Any & whatever (void) ;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:164
 
   void apet (Pet);
   Pet apet (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:126
 
   void octet_array (oct_array);
   const oct_array_slice *octet_array (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:126
 
   void td_array (short_array);
   const short_array_slice *td_array (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:200
 
   void intf1 (Interface1_ptr);
   Interface1_ptr intf1 (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:200
 
   void intf2 (InterfaceFwd_ptr);
   InterfaceFwd_ptr intf2 (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:377
@@ -1092,7 +1092,7 @@ public:
   void str (const char *);
   void str (const ::CORBA::String_var &);
   const char * str (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:377
@@ -1101,7 +1101,7 @@ public:
   void wstr (const CORBA::WChar *);
   void wstr (const ::CORBA::WString_var &);
   const CORBA::WChar * wstr (void) const;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:339
@@ -1109,7 +1109,7 @@ public:
   void ls (const LongSeq &);
   const LongSeq & ls (void) const;
   LongSeq & ls (void) ;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:339
@@ -1117,7 +1117,7 @@ public:
   void sqq (const PetSeq &);
   const PetSeq & sqq (void) const;
   PetSeq & sqq (void) ;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:428
@@ -1125,7 +1125,7 @@ public:
   void ns1 (const Variable_Struct2::NestedStruct1 &);
   const Variable_Struct2::NestedStruct1 & ns1 (void) const;
   Variable_Struct2::NestedStruct1 & ns1 (void) ;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:428
@@ -1133,7 +1133,7 @@ public:
   void NestedStruct2 (const Variable_Struct1 &);
   const Variable_Struct1 & NestedStruct2 (void) const;
   Variable_Struct1 & NestedStruct2 (void) ;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:428
@@ -1141,7 +1141,7 @@ public:
   void NestedStruct3 (const TDvariable_struct1 &);
   const TDvariable_struct1 & NestedStruct3 (void) const;
   TDvariable_struct1 & NestedStruct3 (void) ;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/field_ch.cpp:488
@@ -1149,13 +1149,13 @@ public:
   void un (const Union1 &);
   const Union1 & un (void) const;
   Union1 & un (void) ;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:546
 private:
   Variable_Struct2_var _pd_value;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuebox/valuebox_ch.cpp:114
@@ -1165,10 +1165,10 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   void operator= (const VBvariable_struct2 & val);
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -1221,7 +1221,7 @@ protected:
   InterfaceFwd (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   InterfaceFwd (
       TAO_Stub *objref,

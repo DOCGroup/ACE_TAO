@@ -130,7 +130,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -143,7 +143,7 @@ namespace POA_Test
   {
   protected:
     Process_Factory (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::Process_Factory _stub_type;
@@ -158,9 +158,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::Process_Factory *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -208,7 +208,7 @@ namespace POA_Test
   {
   protected:
     Process (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::Process _stub_type;
@@ -223,9 +223,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::Process *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -262,7 +262,7 @@ namespace POA_Test
   {
   protected:
     Startup_Callback (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::Startup_Callback _stub_type;
@@ -277,9 +277,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::Startup_Callback *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

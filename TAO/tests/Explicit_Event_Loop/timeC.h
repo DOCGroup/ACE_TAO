@@ -63,7 +63,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -103,10 +103,10 @@ struct  TimeOfDay
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef TimeOfDay_var _var_type;
   typedef TimeOfDay_out _out_type;
-  
+
   ::CORBA::Short hour;
   ::CORBA::Short minute;
   ::CORBA::Short second;
@@ -178,7 +178,7 @@ protected:
   Time (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Time (
       TAO_Stub *objref,

@@ -103,7 +103,7 @@ namespace Skeleton_Inheritance
         Interface_3
       >
     Interface_3_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Interface_3
@@ -117,7 +117,7 @@ namespace Skeleton_Inheritance
 
   class SKELETON_INHERITANCE_STUB_3_Export Interface_3
     : public virtual ::Skeleton_Inheritance::Interface_2
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Interface_3>;
@@ -156,7 +156,7 @@ namespace Skeleton_Inheritance
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Interface_3 (void);
@@ -165,7 +165,7 @@ namespace Skeleton_Inheritance
     Interface_3 (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Interface_3 (
         TAO_Stub *objref,
@@ -174,7 +174,7 @@ namespace Skeleton_Inheritance
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Interface_3 (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Interface_3 (const Interface_3 &);

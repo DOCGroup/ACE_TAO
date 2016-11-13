@@ -70,7 +70,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -157,7 +157,7 @@ namespace A
         Test
       >
     Test_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Test
@@ -219,7 +219,7 @@ namespace A
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Test (void);
@@ -228,7 +228,7 @@ namespace A
     Test (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Test (
         TAO_Stub *objref,
@@ -237,7 +237,7 @@ namespace A
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Test (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Test (const Test &);
@@ -264,7 +264,7 @@ namespace A
         AMI_TestHandler
       >
     AMI_TestHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_TestHandler
@@ -278,7 +278,7 @@ namespace A
 
   class  AMI_TestHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_TestHandler>;
@@ -332,7 +332,7 @@ namespace A
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_TestHandler (void);
@@ -341,7 +341,7 @@ namespace A
     AMI_TestHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_TestHandler (
         TAO_Stub *objref,
@@ -350,7 +350,7 @@ namespace A
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_TestHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_TestHandler (const AMI_TestHandler &);
@@ -548,7 +548,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::A::RunMode);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::A::RunMode &);
@@ -576,7 +576,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::A::RequestMode);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::A::RequestMode &);
@@ -604,7 +604,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace A
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::A::FollowUp);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::A::FollowUp &);

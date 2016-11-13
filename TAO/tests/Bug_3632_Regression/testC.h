@@ -61,7 +61,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -101,12 +101,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     bounded_string_seq (const bounded_string_seq &);
     virtual ~bounded_string_seq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef bounded_string_seq_var _var_type;
     typedef bounded_string_seq_out _out_type;
   };

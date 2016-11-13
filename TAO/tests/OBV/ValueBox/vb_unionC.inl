@@ -250,7 +250,7 @@ VBfixed_union1::operator= (const Fixed_Union1& value)
     p,
     Fixed_Union1 (value),
     *this);
-  
+
   this->_pd_value = p;
   return *this;
 }
@@ -400,7 +400,7 @@ VBvariable_union1::operator= (const Variable_Union1& value)
     p,
     Variable_Union1 (value),
     *this);
-  
+
   this->_pd_value = p;
   return *this;
 }

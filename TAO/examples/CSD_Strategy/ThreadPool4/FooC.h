@@ -79,7 +79,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -200,12 +200,12 @@ public:
     ::CORBA::Boolean release = false);
   Bounded_Var_Size (const Bounded_Var_Size &);
   virtual ~Bounded_Var_Size (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Bounded_Var_Size_var _var_type;
   typedef Bounded_Var_Size_out _out_type;
 
@@ -255,12 +255,12 @@ public:
     ::CORBA::Boolean release = false);
   Unbounded_Var_Size (const Unbounded_Var_Size &);
   virtual ~Unbounded_Var_Size (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Unbounded_Var_Size_var _var_type;
   typedef Unbounded_Var_Size_out _out_type;
 
@@ -413,12 +413,12 @@ struct  TimeOfDay
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef TimeOfDay_var _var_type;
   typedef TimeOfDay_out _out_type;
 
   static void _tao_any_destructor (void *);
-  
+
   ::CORBA::Short hour;
   ::CORBA::Short minute;
   ::CORBA::Short second;
@@ -552,7 +552,7 @@ protected:
   Foo (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Foo (
       TAO_Stub *objref,

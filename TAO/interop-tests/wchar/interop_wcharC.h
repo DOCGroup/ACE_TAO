@@ -80,7 +80,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -108,7 +108,7 @@ namespace interop
   typedef ::CORBA::WChar warray[10];
   typedef ::CORBA::WChar warray_slice;
   struct warray_tag {};
-  
+
 
   typedef
     TAO_FixedArray_Var_T<
@@ -136,11 +136,11 @@ namespace interop
   TAO_NAMESPACE_STORAGE_CLASS void
   warray_free (
       warray_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS warray_slice *
   warray_dup (
       const warray_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS void
   warray_copy (
       warray_slice *_tao_to,
@@ -177,12 +177,12 @@ namespace interop
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef wstruct_var _var_type;
     typedef wstruct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::WChar st_char;
     ::TAO::WString_Manager st_string;
     interop::warray st_array;
@@ -230,12 +230,12 @@ namespace interop
       ::CORBA::Boolean release = false);
     wstructseq (const wstructseq &);
     virtual ~wstructseq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef wstructseq_var _var_type;
     typedef wstructseq_out _out_type;
 
@@ -301,7 +301,7 @@ namespace interop
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef wunion_var _var_type;
     typedef wunion_out _out_type;
 
@@ -370,7 +370,7 @@ namespace interop
         WChar_Passer
       >
     WChar_Passer_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         WChar_Passer
@@ -519,7 +519,7 @@ namespace interop
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     WChar_Passer (void);
@@ -528,7 +528,7 @@ namespace interop
     WChar_Passer (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     WChar_Passer (
         TAO_Stub *objref,
@@ -537,7 +537,7 @@ namespace interop
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~WChar_Passer (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     WChar_Passer (const WChar_Passer &);
@@ -780,7 +780,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace interop
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::interop::wchar_types);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::interop::wchar_types &);
@@ -866,7 +866,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace interop
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::interop::WChar_Passer::WStringException &); // copying version
    void operator<<= (::CORBA::Any &, ::interop::WChar_Passer::WStringException*); // noncopying version

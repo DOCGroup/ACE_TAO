@@ -130,7 +130,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -222,12 +222,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Desc_var _var_type;
     typedef Desc_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager name;
   };
 
@@ -257,7 +257,7 @@ protected:
   Coffee (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Coffee (
       TAO_Stub *objref,
@@ -407,12 +407,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Fixed_Struct_var _var_type;
     typedef Fixed_Struct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Long l;
     ::CORBA::Char c;
     ::CORBA::Short s;
@@ -458,12 +458,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NameComponent_var _var_type;
     typedef NameComponent_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager id;
     ::TAO::String_Manager kind;
   };
@@ -499,12 +499,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Step_var _var_type;
     typedef Step_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     Param_Test::NameComponent name;
     ::CORBA::Boolean process;
   };
@@ -550,12 +550,12 @@ public:
       ::CORBA::Boolean release = false);
     PathSpec (const PathSpec &);
     virtual ~PathSpec (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef PathSpec_var _var_type;
     typedef PathSpec_out _out_type;
 
@@ -614,12 +614,12 @@ public:
       ::CORBA::Boolean release = false);
     Bounded_Short_Seq (const Bounded_Short_Seq &);
     virtual ~Bounded_Short_Seq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Bounded_Short_Seq_var _var_type;
     typedef Bounded_Short_Seq_out _out_type;
 
@@ -678,12 +678,12 @@ public:
       ::CORBA::Boolean release = false);
     Bounded_Long_Seq (const Bounded_Long_Seq &);
     virtual ~Bounded_Long_Seq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Bounded_Long_Seq_var _var_type;
     typedef Bounded_Long_Seq_out _out_type;
 
@@ -739,12 +739,12 @@ public:
       ::CORBA::Boolean release = false);
     Bounded_StrSeq (const Bounded_StrSeq &);
     virtual ~Bounded_StrSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Bounded_StrSeq_var _var_type;
     typedef Bounded_StrSeq_out _out_type;
 
@@ -800,12 +800,12 @@ public:
       ::CORBA::Boolean release = false);
     Bounded_WStrSeq (const Bounded_WStrSeq &);
     virtual ~Bounded_WStrSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Bounded_WStrSeq_var _var_type;
     typedef Bounded_WStrSeq_out _out_type;
 
@@ -860,12 +860,12 @@ public:
       ::CORBA::Boolean release = false);
     StructSeq (const StructSeq &);
     virtual ~StructSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef StructSeq_var _var_type;
     typedef StructSeq_out _out_type;
 
@@ -919,12 +919,12 @@ public:
       ::CORBA::Boolean release = false);
     Bounded_StructSeq (const Bounded_StructSeq &);
     virtual ~Bounded_StructSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Bounded_StructSeq_var _var_type;
     typedef Bounded_StructSeq_out _out_type;
 
@@ -980,12 +980,12 @@ public:
       ::CORBA::Boolean release = false);
     Coffee_Mix (const Coffee_Mix &);
     virtual ~Coffee_Mix (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Coffee_Mix_var _var_type;
     typedef Coffee_Mix_out _out_type;
 
@@ -1040,12 +1040,12 @@ public:
       ::CORBA::Boolean release = false);
     Bounded_Coffee_Mix (const Bounded_Coffee_Mix &);
     virtual ~Bounded_Coffee_Mix (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Bounded_Coffee_Mix_var _var_type;
     typedef Bounded_Coffee_Mix_out _out_type;
 
@@ -1107,12 +1107,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Var_Struct_var _var_type;
     typedef Var_Struct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Double dbl;
     ::TAO::String_Manager dummy1;
     ::CORBA::Boolean boole;
@@ -1157,12 +1157,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Nested_Struct_var _var_type;
     typedef Nested_Struct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     Param_Test::Var_Struct vs;
   };
 
@@ -1220,12 +1220,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Objref_Struct_var _var_type;
     typedef Objref_Struct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Long x;
     Coffee_var y;
   };
@@ -1251,7 +1251,7 @@ public:
   typedef ::CORBA::Long Fixed_Array[10];
   typedef ::CORBA::Long Fixed_Array_slice;
   struct Fixed_Array_tag {};
-  
+
 
   typedef
     TAO_FixedArray_Var_T<
@@ -1279,11 +1279,11 @@ public:
   static void
   Fixed_Array_free (
       Fixed_Array_slice *_tao_slice);
-  
+
   static Fixed_Array_slice *
   Fixed_Array_dup (
       const Fixed_Array_slice *_tao_slice);
-  
+
   static void
   Fixed_Array_copy (
       Fixed_Array_slice *_tao_to,
@@ -1310,7 +1310,7 @@ public:
   typedef ::TAO::String_Manager Var_Array[5];
   typedef ::TAO::String_Manager Var_Array_slice;
   struct Var_Array_tag {};
-  
+
 
   typedef
     TAO_VarArray_Var_T<
@@ -1343,11 +1343,11 @@ public:
   static void
   Var_Array_free (
       Var_Array_slice *_tao_slice);
-  
+
   static Var_Array_slice *
   Var_Array_dup (
       const Var_Array_slice *_tao_slice);
-  
+
   static void
   Var_Array_copy (
       Var_Array_slice *_tao_to,
@@ -1401,12 +1401,12 @@ public:
       ::CORBA::Boolean release = false);
     ArraySeq (const ArraySeq &);
     virtual ~ArraySeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef ArraySeq_var _var_type;
     typedef ArraySeq_out _out_type;
 
@@ -1462,12 +1462,12 @@ public:
       ::CORBA::Boolean release = false);
     Bounded_ArraySeq (const Bounded_ArraySeq &);
     virtual ~Bounded_ArraySeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Bounded_ArraySeq_var _var_type;
     typedef Bounded_ArraySeq_out _out_type;
 
@@ -1576,7 +1576,7 @@ public:
   typedef ::CORBA::Short short_array[32];
   typedef ::CORBA::Short short_array_slice;
   struct short_array_tag {};
-  
+
 
   typedef
     TAO_FixedArray_Var_T<
@@ -1604,11 +1604,11 @@ public:
   static void
   short_array_free (
       short_array_slice *_tao_slice);
-  
+
   static short_array_slice *
   short_array_dup (
       const short_array_slice *_tao_slice);
-  
+
   static void
   short_array_copy (
       short_array_slice *_tao_to,
@@ -1654,7 +1654,7 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Big_Union_var _var_type;
     typedef Big_Union_out _out_type;
 
@@ -1848,7 +1848,7 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Small_Union_var _var_type;
     typedef Small_Union_out _out_type;
 
@@ -1923,12 +1923,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef level4_var _var_type;
     typedef level4_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager level5_string;
     ::CORBA::Any level5_any;
   };
@@ -1964,12 +1964,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef level8_var _var_type;
     typedef level8_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager level9_string;
     ::CORBA::Boolean level9_boolean;
     ::CORBA::Short level9_short;
@@ -2038,12 +2038,12 @@ public:
       ::CORBA::Boolean release = false);
     RecStructSeq (const RecStructSeq &);
     virtual ~RecStructSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecStructSeq_var _var_type;
     typedef RecStructSeq_out _out_type;
 
@@ -2066,12 +2066,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Recursive_Struct_var _var_type;
     typedef Recursive_Struct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Long x;
     Param_Test::RecStructSeq children;
   };
@@ -2139,12 +2139,12 @@ public:
       ::CORBA::Boolean release = false);
     NestedSeq (const NestedSeq &);
     virtual ~NestedSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef NestedSeq_var _var_type;
     typedef NestedSeq_out _out_type;
 
@@ -2176,7 +2176,7 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef nested_rec_union_var _var_type;
     typedef nested_rec_union_out _out_type;
 
@@ -2274,12 +2274,12 @@ public:
       ::CORBA::Boolean release = false);
     RecUnionSeq (const RecUnionSeq &);
     virtual ~RecUnionSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RecUnionSeq_var _var_type;
     typedef RecUnionSeq_out _out_type;
 
@@ -2311,7 +2311,7 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Recursive_Union_var _var_type;
     typedef Recursive_Union_out _out_type;
 
@@ -2373,7 +2373,7 @@ public:
   typedef Fixed_Array Multdim_Array[5][3];
   typedef Fixed_Array Multdim_Array_slice[3];
   struct Multdim_Array_tag {};
-  
+
 
   typedef
     TAO_FixedArray_Var_T<
@@ -2401,11 +2401,11 @@ public:
   static void
   Multdim_Array_free (
       Multdim_Array_slice *_tao_slice);
-  
+
   static Multdim_Array_slice *
   Multdim_Array_dup (
       const Multdim_Array_slice *_tao_slice);
-  
+
   static void
   Multdim_Array_copy (
       Multdim_Array_slice *_tao_to,
@@ -2439,7 +2439,7 @@ protected:
   Param_Test (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Param_Test (
       TAO_Stub *objref,

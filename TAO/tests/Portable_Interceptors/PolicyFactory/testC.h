@@ -65,7 +65,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -92,7 +92,7 @@ namespace Test
         Policy
       >
     Policy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Policy
@@ -106,7 +106,7 @@ namespace Test
 
   class  Policy
     : public virtual ::CORBA::Policy
-  
+
   {
   public:
 
@@ -143,15 +143,15 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     Policy (void);
 
-    
+
 
     virtual ~Policy (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Policy (const Policy &);

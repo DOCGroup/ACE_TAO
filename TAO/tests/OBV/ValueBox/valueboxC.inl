@@ -307,7 +307,7 @@ VBseqlong::operator= (const TDseqlong& value)
     p,
     TDseqlong (value),
     *this);
-  
+
   this->_pd_value = p;
   return *this;
 }

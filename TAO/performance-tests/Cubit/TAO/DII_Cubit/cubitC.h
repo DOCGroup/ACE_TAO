@@ -76,7 +76,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -181,12 +181,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Many_var _var_type;
     typedef Many_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Octet o;
     ::CORBA::Long l;
     ::CORBA::Short s;
@@ -257,7 +257,7 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef oneof_var _var_type;
     typedef oneof_out _out_type;
 
@@ -359,12 +359,12 @@ public:
       ::CORBA::Boolean release = false);
     long_seq (const long_seq &);
     virtual ~long_seq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef long_seq_var _var_type;
     typedef long_seq_out _out_type;
 
@@ -418,18 +418,18 @@ public:
       ::CORBA::Boolean release = false);
     octet_seq (const octet_seq &);
     virtual ~octet_seq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef octet_seq_var _var_type;
     typedef octet_seq_out _out_type;
 
     static void _tao_any_destructor (void *);
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     octet_seq (
@@ -487,12 +487,12 @@ public:
       ::CORBA::Boolean release = false);
     many_seq (const many_seq &);
     virtual ~many_seq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef many_seq_var _var_type;
     typedef many_seq_out _out_type;
 
@@ -537,12 +537,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RtiPacketHeader_var _var_type;
     typedef RtiPacketHeader_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::ULong packetLength;
     ::CORBA::UShort federationHandle;
     ::CORBA::ULong channelHandle;
@@ -580,12 +580,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef HandleValuePair_var _var_type;
     typedef HandleValuePair_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::UShort handle;
     Cubit::octet_seq data;
   };
@@ -647,12 +647,12 @@ public:
       ::CORBA::Boolean release = false);
     HandleValuePairSeq (const HandleValuePairSeq &);
     virtual ~HandleValuePairSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef HandleValuePairSeq_var _var_type;
     typedef HandleValuePairSeq_out _out_type;
 
@@ -692,12 +692,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RtiObjectUpdateMessageHeader_var _var_type;
     typedef RtiObjectUpdateMessageHeader_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::ULong updateLength;
     ::CORBA::ULong updateTag;
     ::CORBA::ULong objectHandle;
@@ -741,12 +741,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RtiInteractionMessageHeader_var _var_type;
     typedef RtiInteractionMessageHeader_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::ULong updateLength;
   };
 
@@ -790,7 +790,7 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef MessageUnion_var _var_type;
     typedef MessageUnion_out _out_type;
 
@@ -872,12 +872,12 @@ public:
       ::CORBA::Boolean release = false);
     MessageUnionSeq (const MessageUnionSeq &);
     virtual ~MessageUnionSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef MessageUnionSeq_var _var_type;
     typedef MessageUnionSeq_out _out_type;
 
@@ -917,12 +917,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef RtiPacket_var _var_type;
     typedef RtiPacket_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     Cubit::RtiPacketHeader packetHeader;
     Cubit::MessageUnionSeq msgs;
   };
@@ -954,7 +954,7 @@ protected:
   Cubit (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Cubit (
       TAO_Stub *objref,
@@ -1044,7 +1044,7 @@ protected:
   Cubit_Factory (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Cubit_Factory (
       TAO_Stub *objref,

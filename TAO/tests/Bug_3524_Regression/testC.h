@@ -82,7 +82,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -160,12 +160,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     seq_bd_str (const seq_bd_str &);
     virtual ~seq_bd_str (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef seq_bd_str_var _var_type;
     typedef seq_bd_str_out _out_type;
 
@@ -213,12 +213,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     seq_bds_str (const seq_bds_str &);
     virtual ~seq_bds_str (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef seq_bds_str_var _var_type;
     typedef seq_bds_str_out _out_type;
 
@@ -238,7 +238,7 @@ namespace Test
   typedef ::TAO::String_Manager arr_bd_str[1];
   typedef ::TAO::String_Manager arr_bd_str_slice;
   struct arr_bd_str_tag {};
-  
+
 
   typedef
     TAO_VarArray_Var_T<
@@ -271,11 +271,11 @@ namespace Test
   TAO_NAMESPACE_STORAGE_CLASS void
   arr_bd_str_free (
       arr_bd_str_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS arr_bd_str_slice *
   arr_bd_str_dup (
       const arr_bd_str_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS void
   arr_bd_str_copy (
       arr_bd_str_slice *_tao_to,
@@ -292,7 +292,7 @@ namespace Test
   typedef ::TAO::String_Manager arr_bds_str[1];
   typedef ::TAO::String_Manager arr_bds_str_slice;
   struct arr_bds_str_tag {};
-  
+
 
   typedef
     TAO_VarArray_Var_T<
@@ -325,11 +325,11 @@ namespace Test
   TAO_NAMESPACE_STORAGE_CLASS void
   arr_bds_str_free (
       arr_bds_str_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS arr_bds_str_slice *
   arr_bds_str_dup (
       const arr_bds_str_slice *_tao_slice);
-  
+
   TAO_NAMESPACE_STORAGE_CLASS void
   arr_bds_str_copy (
       arr_bds_str_slice *_tao_to,
@@ -366,12 +366,12 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef sct_var _var_type;
     typedef sct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager a;
     ::TAO::String_Manager b;
     ::TAO::String_Manager c;
@@ -434,7 +434,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef unn_var _var_type;
     typedef unn_out _out_type;
 
@@ -544,7 +544,7 @@ namespace Test
         val_bd_str
       >
     val_bd_str_var;
-  
+
   typedef
     TAO_Value_Out_T<
         val_bd_str
@@ -559,7 +559,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef val_bd_str_var _var_type;
     typedef val_bd_str_out _out_type;
 
@@ -578,10 +578,10 @@ namespace Test
         TAO_InputCDR &,
         val_bd_str *&
       );
-    
+
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuebox/valuebox_ch.cpp:406
@@ -616,23 +616,23 @@ namespace Test
 
     // Allows only accessing thru a slot.
     char operator[] ( ::CORBA::ULong slot) const;
-    
+
   private:
     ::CORBA::String_var _pd_value;
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuebox/valuebox_ch.cpp:114
-  
+
   protected:
     virtual ~val_bd_str (void);
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     void operator= (const val_bd_str & val);
-    
+
   };
 
   // TAO_IDL - Generated from
@@ -650,7 +650,7 @@ namespace Test
         val_bds_str
       >
     val_bds_str_var;
-  
+
   typedef
     TAO_Value_Out_T<
         val_bds_str
@@ -665,7 +665,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef val_bds_str_var _var_type;
     typedef val_bds_str_out _out_type;
 
@@ -684,10 +684,10 @@ namespace Test
         TAO_InputCDR &,
         val_bds_str *&
       );
-    
+
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuebox/valuebox_ch.cpp:406
@@ -722,23 +722,23 @@ namespace Test
 
     // Allows only accessing thru a slot.
     char operator[] ( ::CORBA::ULong slot) const;
-    
+
   private:
     ::CORBA::String_var _pd_value;
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuebox/valuebox_ch.cpp:114
-  
+
   protected:
     virtual ~val_bds_str (void);
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     void operator= (const val_bds_str & val);
-    
+
   };
 
   // TAO_IDL - Generated from
@@ -756,7 +756,7 @@ namespace Test
         val_arr_bd_str
       >
     val_arr_bd_str_var;
-  
+
   typedef
     TAO_Value_Out_T<
         val_arr_bd_str
@@ -771,7 +771,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef val_arr_bd_str_var _var_type;
     typedef val_arr_bd_str_out _out_type;
 
@@ -790,20 +790,20 @@ namespace Test
         TAO_InputCDR &,
         val_arr_bd_str *&
       );
-    
+
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
 
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuebox/valuebox_ch.cpp:167
-    
+
 
     // Constructors
     val_arr_bd_str (void);
     val_arr_bd_str (const Test::arr_bds_str val);
     val_arr_bd_str (const val_arr_bd_str& val);
-    
+
     // assignment operator
     val_arr_bd_str& operator= (const Test::arr_bds_str val);
 
@@ -818,24 +818,24 @@ namespace Test
     const Test::arr_bds_str_slice * _boxed_in (void) const;
     Test::arr_bds_str_slice * _boxed_inout (void);
     Test::arr_bds_str_slice * _boxed_out (void);
-    
-    
+
+
   private:
     Test::arr_bds_str_var _pd_value;
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuebox/valuebox_ch.cpp:114
-  
+
   protected:
     virtual ~val_arr_bd_str (void);
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     void operator= (const val_arr_bd_str & val);
-    
+
   };
 
   // TAO_IDL - Generated from
@@ -846,7 +846,7 @@ namespace Test
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_TEST_VTP__VAR_OUT_CH_)
 #define _TEST_VTP__VAR_OUT_CH_
@@ -857,7 +857,7 @@ namespace Test
         vtp
       >
     vtp_var;
-  
+
   typedef
     TAO_Value_Out_T<
         vtp
@@ -884,12 +884,12 @@ namespace Test
     static void _tao_any_destructor (void *);
 
     static vtp* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         vtp *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -897,7 +897,7 @@ namespace Test
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -907,7 +907,7 @@ namespace Test
     virtual void a (const char *val) = 0;
     virtual void a (const ::CORBA::String_var &val) = 0;
     virtual const char *a (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -917,7 +917,7 @@ namespace Test
     virtual void b (const char *val) = 0;
     virtual void b (const ::CORBA::String_var &val) = 0;
     virtual const char *b (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -930,7 +930,7 @@ namespace Test
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     vtp (void);
     virtual ~vtp (void);
@@ -938,11 +938,11 @@ namespace Test
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     vtp (const vtp &);
     void operator= (const vtp &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Test_vtp (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -968,7 +968,7 @@ namespace Test
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~vtp_init (void);
   };
@@ -992,7 +992,7 @@ namespace Test
         A
       >
     A_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         A
@@ -1124,7 +1124,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     A (void);
@@ -1133,7 +1133,7 @@ namespace Test
     A (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     A (
         TAO_Stub *objref,
@@ -1142,7 +1142,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~A (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     A (const A &);
@@ -1439,7 +1439,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Test_vtp (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -1695,7 +1695,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::Test::string_field);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::Test::string_field &);
@@ -1753,7 +1753,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::Test::exc &); // copying version
    void operator<<= (::CORBA::Any &, ::Test::exc*); // noncopying version
@@ -1925,7 +1925,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::Test::A::FailOn);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::Test::A::FailOn &);

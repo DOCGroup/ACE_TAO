@@ -149,7 +149,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Multiple
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -164,7 +164,7 @@ namespace POA_Multiple
   {
   protected:
     Top (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Multiple::Top _stub_type;
@@ -179,9 +179,9 @@ namespace POA_Multiple
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Multiple::Top *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -225,7 +225,7 @@ namespace POA_Multiple
     static void
     top_quote (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -233,14 +233,14 @@ namespace POA_Multiple
     static void
     shutdown (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -255,7 +255,7 @@ namespace POA_Multiple
   {
   protected:
     Left (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Multiple::Left _stub_type;
@@ -270,9 +270,9 @@ namespace POA_Multiple
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Multiple::Left *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -306,14 +306,14 @@ namespace POA_Multiple
     static void
     left_quote (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -328,7 +328,7 @@ namespace POA_Multiple
   {
   protected:
     Right (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Multiple::Right _stub_type;
@@ -343,9 +343,9 @@ namespace POA_Multiple
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Multiple::Right *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -379,14 +379,14 @@ namespace POA_Multiple
     static void
     right_quote (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -402,7 +402,7 @@ namespace POA_Multiple
   {
   protected:
     Bottom (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Multiple::Bottom _stub_type;
@@ -417,9 +417,9 @@ namespace POA_Multiple
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Multiple::Bottom *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -454,14 +454,14 @@ namespace POA_Multiple
     static void
     bottom_quote (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:66

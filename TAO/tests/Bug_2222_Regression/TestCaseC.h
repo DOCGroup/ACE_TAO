@@ -59,7 +59,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_typedef/typedef_ch.cpp:179
@@ -71,21 +71,21 @@ typedef Array_Typedef_out Typedef_Of_Imported_Array_Typedef_out;
 typedef Array_Typedef_tag Typedef_Of_Imported_Array_Typedef_tag;
 typedef Array_Typedef_forany Typedef_Of_Imported_Array_Typedef_forany;
 
-ACE_INLINE 
+ACE_INLINE
 Typedef_Of_Imported_Array_Typedef_slice *
 Typedef_Of_Imported_Array_Typedef_alloc (void);
 
-ACE_INLINE 
+ACE_INLINE
 Typedef_Of_Imported_Array_Typedef_slice *
 Typedef_Of_Imported_Array_Typedef_dup (
     const Typedef_Of_Imported_Array_Typedef_slice *_tao_slice);
 
-ACE_INLINE 
+ACE_INLINE
 void Typedef_Of_Imported_Array_Typedef_copy (
     Typedef_Of_Imported_Array_Typedef_slice *_tao_to,
     const Typedef_Of_Imported_Array_Typedef_slice *_tao_from);
 
-ACE_INLINE 
+ACE_INLINE
 void Typedef_Of_Imported_Array_Typedef_free (
     Typedef_Of_Imported_Array_Typedef_slice *_tao_slice);
 

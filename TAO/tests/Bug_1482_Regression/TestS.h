@@ -152,7 +152,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/amh_sh.cpp:46
@@ -165,7 +165,7 @@ namespace POA_Test
   {
   protected:
     AMH_Hello (void);
-  
+
   public:
     AMH_Hello (const AMH_Hello& rhs);
     virtual ~AMH_Hello (void);
@@ -176,7 +176,7 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest &req,
         TAO::Portable_Server::Servant_Upcall *_servant_upcall);
-    
+
     Test::Hello *_this (void);
 
   virtual const char* _interface_repository_id (void) const;
@@ -188,11 +188,11 @@ namespace POA_Test
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void next_prime (
       Test::AMH_HelloResponseHandler_ptr _tao_rh
     ) = 0;
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -221,9 +221,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::Test::Hello *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from
@@ -291,9 +291,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::Test::AMI_HelloHandler *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from

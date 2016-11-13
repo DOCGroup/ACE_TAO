@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -104,7 +104,7 @@ namespace Bank
         Account
       >
     Account_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Account
@@ -203,7 +203,7 @@ namespace Bank
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Account (void);
@@ -212,7 +212,7 @@ namespace Bank
     Account (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Account (
         TAO_Stub *objref,
@@ -221,7 +221,7 @@ namespace Bank
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Account (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Account (const Account &);
@@ -248,7 +248,7 @@ namespace Bank
         AccountManager
       >
     AccountManager_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AccountManager
@@ -300,7 +300,7 @@ namespace Bank
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AccountManager (void);
@@ -309,7 +309,7 @@ namespace Bank
     AccountManager (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AccountManager (
         TAO_Stub *objref,
@@ -318,7 +318,7 @@ namespace Bank
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AccountManager (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AccountManager (const AccountManager &);
@@ -477,7 +477,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Bank
 {
-  
+
 
    void operator<<= (::CORBA::Any &, const ::Bank::Account::Overdraft &); // copying version
    void operator<<= (::CORBA::Any &, ::Bank::Account::Overdraft*); // noncopying version

@@ -150,9 +150,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::A *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from
@@ -172,7 +172,7 @@ public:
 
 namespace POA_Outer
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -185,7 +185,7 @@ namespace POA_Outer
   {
   protected:
     B (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Outer::B _stub_type;
@@ -200,9 +200,9 @@ namespace POA_Outer
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Outer::B *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -222,7 +222,7 @@ namespace POA_Outer
 
   namespace Inner
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_interface/interface_sh.cpp:73
@@ -235,7 +235,7 @@ namespace POA_Outer
     {
     protected:
       C (void);
-    
+
     public:
       /// Useful for template programming.
       typedef ::Outer::Inner::C _stub_type;
@@ -250,9 +250,9 @@ namespace POA_Outer
       virtual void _dispatch (
           TAO_ServerRequest & req,
           TAO::Portable_Server::Servant_Upcall *servant_upcall);
-      
+
       ::Outer::Inner::C *_this (void);
-      
+
       virtual const char* _interface_repository_id (void) const;
 
       // TAO_IDL - Generated from
@@ -266,7 +266,7 @@ namespace POA_Outer
           TAO::Portable_Server::Servant_Upcall *servant_upcall,
           TAO_ServantBase *servant);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_sh.cpp:66
 

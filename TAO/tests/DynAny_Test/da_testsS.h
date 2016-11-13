@@ -246,7 +246,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_DynAnyTests
 {
-  
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:66

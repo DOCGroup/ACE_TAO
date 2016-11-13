@@ -73,7 +73,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -168,12 +168,12 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Fixed_Struct_var _var_type;
     typedef Fixed_Struct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Long l;
     ::CORBA::Char c;
     ::CORBA::Short s;
@@ -226,7 +226,7 @@ protected:
   Alt_Mapping (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Alt_Mapping (
       TAO_Stub *objref,

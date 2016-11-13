@@ -60,7 +60,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -698,7 +698,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::FOOAMode_E);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::FOOAMode_E &);
@@ -726,7 +726,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::FOOBMode_E);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::FOOBMode_E &);
@@ -754,7 +754,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::FOOCMode_E);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::FOOCMode_E &);
@@ -782,7 +782,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_Selection);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_Selection &);
@@ -810,7 +810,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOD);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOD &);
@@ -838,7 +838,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOE);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOE &);
@@ -866,7 +866,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOF);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOF &);
@@ -894,7 +894,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_ControlMode);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_ControlMode &);
@@ -922,7 +922,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOPDirection);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOPDirection &);
@@ -950,7 +950,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_QFOOODirection);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_QFOOODirection &);
@@ -978,7 +978,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOONDirection);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOONDirection &);
@@ -1006,7 +1006,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOMMode);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOMMode &);
@@ -1034,7 +1034,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_TransitionStatus);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_TransitionStatus &);
@@ -1062,7 +1062,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_ParameterType);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_ParameterType &);
@@ -1090,7 +1090,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOHType);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOHType &);
@@ -1118,7 +1118,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOKType);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOKType &);
@@ -1146,7 +1146,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_CL_FOOSMode);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_CL_FOOSMode &);
@@ -1174,7 +1174,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOLSide);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOLSide &);
@@ -1202,7 +1202,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace IF_EXE_M_R
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOJType);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::IF_EXE_M_R::ENUM_FOOJType &);

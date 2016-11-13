@@ -189,7 +189,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/amh_sh.cpp:46
@@ -202,7 +202,7 @@ namespace POA_Test
   {
   protected:
     AMH_Roundtrip (void);
-  
+
   public:
     AMH_Roundtrip (const AMH_Roundtrip& rhs);
     virtual ~AMH_Roundtrip (void);
@@ -213,7 +213,7 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest &req,
         TAO::Portable_Server::Servant_Upcall *_servant_upcall);
-    
+
     Test::Roundtrip *_this (void);
 
   virtual const char* _interface_repository_id (void) const;
@@ -225,13 +225,13 @@ namespace POA_Test
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void test_octet_method (
       Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       const ::Test::octet_load & ol,
       ::Test::Timestamp send_time
     ) = 0;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/amh_sh.cpp:127
@@ -240,13 +240,13 @@ namespace POA_Test
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void test_long_method (
       Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       const ::Test::long_load & ol,
       ::Test::Timestamp send_time
     ) = 0;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/amh_sh.cpp:127
@@ -255,13 +255,13 @@ namespace POA_Test
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void test_short_method (
       Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       const ::Test::short_load & ol,
       ::Test::Timestamp send_time
     ) = 0;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/amh_sh.cpp:127
@@ -270,13 +270,13 @@ namespace POA_Test
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void test_char_method (
       Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       const ::Test::char_load & ol,
       ::Test::Timestamp send_time
     ) = 0;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/amh_sh.cpp:127
@@ -285,13 +285,13 @@ namespace POA_Test
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void test_longlong_method (
       Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       const ::Test::longlong_load & ol,
       ::Test::Timestamp send_time
     ) = 0;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/amh_sh.cpp:127
@@ -300,13 +300,13 @@ namespace POA_Test
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void test_double_method (
       Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
       const ::Test::double_load & ol,
       ::Test::Timestamp send_time
     ) = 0;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/amh_sh.cpp:127
@@ -315,11 +315,11 @@ namespace POA_Test
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void shutdown (
       Test::AMH_RoundtripResponseHandler_ptr _tao_rh
     ) = 0;
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -348,9 +348,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::Test::Roundtrip *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from

@@ -153,7 +153,7 @@ namespace TAO_Trader_Test
         Remote_Output
       >
     Remote_Output_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Remote_Output
@@ -198,7 +198,7 @@ namespace TAO_Trader_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Remote_Output (void);
@@ -207,7 +207,7 @@ namespace TAO_Trader_Test
     Remote_Output (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Remote_Output (
         TAO_Stub *objref,
@@ -216,7 +216,7 @@ namespace TAO_Trader_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Remote_Output (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Remote_Output (const Remote_Output &);
@@ -243,7 +243,7 @@ namespace TAO_Trader_Test
         Plotter
       >
     Plotter_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Plotter
@@ -257,7 +257,7 @@ namespace TAO_Trader_Test
 
   class TAO_TTest_Export Plotter
     : public virtual ::TAO_Trader_Test::Remote_Output
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Plotter>;
@@ -286,7 +286,7 @@ namespace TAO_Trader_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Plotter (void);
@@ -295,7 +295,7 @@ namespace TAO_Trader_Test
     Plotter (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Plotter (
         TAO_Stub *objref,
@@ -304,7 +304,7 @@ namespace TAO_Trader_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Plotter (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Plotter (const Plotter &);
@@ -331,7 +331,7 @@ namespace TAO_Trader_Test
         Printer
       >
     Printer_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Printer
@@ -345,7 +345,7 @@ namespace TAO_Trader_Test
 
   class TAO_TTest_Export Printer
     : public virtual ::TAO_Trader_Test::Remote_Output
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Printer>;
@@ -374,7 +374,7 @@ namespace TAO_Trader_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Printer (void);
@@ -383,7 +383,7 @@ namespace TAO_Trader_Test
     Printer (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Printer (
         TAO_Stub *objref,
@@ -392,7 +392,7 @@ namespace TAO_Trader_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Printer (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Printer (const Printer &);
@@ -419,7 +419,7 @@ namespace TAO_Trader_Test
         File_System
       >
     File_System_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         File_System
@@ -433,7 +433,7 @@ namespace TAO_Trader_Test
 
   class TAO_TTest_Export File_System
     : public virtual ::TAO_Trader_Test::Remote_Output
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<File_System>;
@@ -462,7 +462,7 @@ namespace TAO_Trader_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     File_System (void);
@@ -471,7 +471,7 @@ namespace TAO_Trader_Test
     File_System (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     File_System (
         TAO_Stub *objref,
@@ -480,7 +480,7 @@ namespace TAO_Trader_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~File_System (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     File_System (const File_System &);
@@ -507,7 +507,7 @@ namespace TAO_Trader_Test
         PostScript_Printer
       >
     PostScript_Printer_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         PostScript_Printer
@@ -521,7 +521,7 @@ namespace TAO_Trader_Test
 
   class TAO_TTest_Export PostScript_Printer
     : public virtual ::TAO_Trader_Test::Remote_Output
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<PostScript_Printer>;
@@ -550,7 +550,7 @@ namespace TAO_Trader_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     PostScript_Printer (void);
@@ -559,7 +559,7 @@ namespace TAO_Trader_Test
     PostScript_Printer (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     PostScript_Printer (
         TAO_Stub *objref,
@@ -568,7 +568,7 @@ namespace TAO_Trader_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~PostScript_Printer (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     PostScript_Printer (const PostScript_Printer &);
@@ -617,12 +617,12 @@ namespace TAO_Trader_Test
       ::CORBA::Boolean release = false);
     ShortSeq (const ShortSeq &);
     virtual ~ShortSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef ShortSeq_var _var_type;
     typedef ShortSeq_out _out_type;
 
@@ -672,12 +672,12 @@ namespace TAO_Trader_Test
       ::CORBA::Boolean release = false);
     UShortSeq (const UShortSeq &);
     virtual ~UShortSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef UShortSeq_var _var_type;
     typedef UShortSeq_out _out_type;
 
@@ -727,12 +727,12 @@ namespace TAO_Trader_Test
       ::CORBA::Boolean release = false);
     LongSeq (const LongSeq &);
     virtual ~LongSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef LongSeq_var _var_type;
     typedef LongSeq_out _out_type;
 
@@ -782,12 +782,12 @@ namespace TAO_Trader_Test
       ::CORBA::Boolean release = false);
     ULongSeq (const ULongSeq &);
     virtual ~ULongSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef ULongSeq_var _var_type;
     typedef ULongSeq_out _out_type;
 
@@ -837,12 +837,12 @@ namespace TAO_Trader_Test
       ::CORBA::Boolean release = false);
     BooleanSeq (const BooleanSeq &);
     virtual ~BooleanSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef BooleanSeq_var _var_type;
     typedef BooleanSeq_out _out_type;
 
@@ -892,12 +892,12 @@ namespace TAO_Trader_Test
       ::CORBA::Boolean release = false);
     FloatSeq (const FloatSeq &);
     virtual ~FloatSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef FloatSeq_var _var_type;
     typedef FloatSeq_out _out_type;
 
@@ -947,12 +947,12 @@ namespace TAO_Trader_Test
       ::CORBA::Boolean release = false);
     DoubleSeq (const DoubleSeq &);
     virtual ~DoubleSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef DoubleSeq_var _var_type;
     typedef DoubleSeq_out _out_type;
 
@@ -1000,12 +1000,12 @@ namespace TAO_Trader_Test
       ::CORBA::Boolean release = false);
     StringSeq (const StringSeq &);
     virtual ~StringSeq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef StringSeq_var _var_type;
     typedef StringSeq_out _out_type;
 

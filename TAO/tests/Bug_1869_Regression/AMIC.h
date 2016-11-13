@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -107,7 +107,7 @@ namespace AMI_test
         adder
       >
     adder_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         adder
@@ -158,7 +158,7 @@ namespace AMI_test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     adder (void);
@@ -167,7 +167,7 @@ namespace AMI_test
     adder (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     adder (
         TAO_Stub *objref,
@@ -176,7 +176,7 @@ namespace AMI_test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~adder (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     adder (const adder &);
@@ -203,7 +203,7 @@ namespace AMI_test
         AMI_adderHandler
       >
     AMI_adderHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_adderHandler
@@ -217,7 +217,7 @@ namespace AMI_test
 
   class  AMI_adderHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_adderHandler>;
@@ -258,7 +258,7 @@ namespace AMI_test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_adderHandler (void);
@@ -267,7 +267,7 @@ namespace AMI_test
     AMI_adderHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_adderHandler (
         TAO_Stub *objref,
@@ -276,7 +276,7 @@ namespace AMI_test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_adderHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_adderHandler (const AMI_adderHandler &);

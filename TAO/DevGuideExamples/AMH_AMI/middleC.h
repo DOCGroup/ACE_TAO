@@ -70,7 +70,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -161,7 +161,7 @@ protected:
   Middle (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Middle (
       TAO_Stub *objref,
@@ -231,12 +231,12 @@ public:
   virtual ::CORBA::ValueBase *_copy_value (void);
 
   static AMH_MiddleExceptionHolder* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       AMH_MiddleExceptionHolder *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -249,7 +249,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual void raise_get_the_answer (void);
 
@@ -257,7 +257,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual void raise_sendc_get_the_answer (void);
 
@@ -269,13 +269,13 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   AMH_MiddleExceptionHolder (const AMH_MiddleExceptionHolder &);
   void operator= (const AMH_MiddleExceptionHolder &);
-  
+
   ::CORBA::Exception *exception;
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__AMH_MiddleExceptionHolder (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -358,7 +358,7 @@ protected:
   // Abstract or local interface only.
   AMH_MiddleResponseHandler (void);
 
-  
+
 
   virtual ~AMH_MiddleResponseHandler (void);
 
@@ -452,7 +452,7 @@ protected:
   AMI_MiddleHandler (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   AMI_MiddleHandler (
       TAO_Stub *objref,
@@ -584,7 +584,7 @@ class  OBV_AMH_MiddleExceptionHolder
 protected:
   OBV_AMH_MiddleExceptionHolder (void);
   virtual ~OBV_AMH_MiddleExceptionHolder (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__AMH_MiddleExceptionHolder (TAO_OutputCDR &, TAO_ChunkInfo &) const;

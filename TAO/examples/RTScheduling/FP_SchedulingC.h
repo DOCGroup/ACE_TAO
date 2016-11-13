@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -90,7 +90,7 @@ namespace FP_Scheduling
         SegmentSchedulingParameterPolicy
       >
     SegmentSchedulingParameterPolicy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         SegmentSchedulingParameterPolicy
@@ -104,7 +104,7 @@ namespace FP_Scheduling
 
   class  SegmentSchedulingParameterPolicy
     : public virtual ::CORBA::Policy
-  
+
   {
   public:
 
@@ -142,15 +142,15 @@ namespace FP_Scheduling
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     SegmentSchedulingParameterPolicy (void);
 
-    
+
 
     virtual ~SegmentSchedulingParameterPolicy (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     SegmentSchedulingParameterPolicy (const SegmentSchedulingParameterPolicy &);
@@ -172,7 +172,7 @@ namespace FP_Scheduling
         FP_Scheduler
       >
     FP_Scheduler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         FP_Scheduler
@@ -186,7 +186,7 @@ namespace FP_Scheduling
 
   class  FP_Scheduler
     : public virtual ::RTScheduling::Scheduler
-  
+
   {
   public:
 
@@ -215,15 +215,15 @@ namespace FP_Scheduling
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     FP_Scheduler (void);
 
-    
+
 
     virtual ~FP_Scheduler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     FP_Scheduler (const FP_Scheduler &);

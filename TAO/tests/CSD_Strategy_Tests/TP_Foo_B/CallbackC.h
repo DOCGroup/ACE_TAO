@@ -149,7 +149,7 @@ protected:
   Callback (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Callback (
       TAO_Stub *objref,

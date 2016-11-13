@@ -247,7 +247,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_CCS
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -260,7 +260,7 @@ namespace POA_CCS
   {
   protected:
     Thermometer (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::CCS::Thermometer _stub_type;
@@ -275,9 +275,9 @@ namespace POA_CCS
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::CCS::Thermometer *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -358,7 +358,7 @@ namespace POA_CCS
   {
   protected:
     Thermostat (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::CCS::Thermostat _stub_type;
@@ -373,9 +373,9 @@ namespace POA_CCS
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::CCS::Thermostat *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -412,7 +412,7 @@ namespace POA_CCS
   {
   protected:
     Controller (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::CCS::Controller _stub_type;
@@ -427,9 +427,9 @@ namespace POA_CCS
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::CCS::Controller *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

@@ -65,7 +65,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -123,16 +123,16 @@ namespace Two_Objects_Test
       ::CORBA::Boolean release = false);
     Octet_Seq (const Octet_Seq &);
     virtual ~Octet_Seq (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Octet_Seq_var _var_type;
     typedef Octet_Seq_out _out_type;
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     Octet_Seq (
@@ -159,7 +159,7 @@ namespace Two_Objects_Test
         First
       >
     First_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         First
@@ -202,7 +202,7 @@ namespace Two_Objects_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     First (void);
@@ -211,7 +211,7 @@ namespace Two_Objects_Test
     First (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     First (
         TAO_Stub *objref,
@@ -220,7 +220,7 @@ namespace Two_Objects_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~First (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     First (const First &);
@@ -242,7 +242,7 @@ namespace Two_Objects_Test
         Second
       >
     Second_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Second
@@ -288,7 +288,7 @@ namespace Two_Objects_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Second (void);
@@ -297,7 +297,7 @@ namespace Two_Objects_Test
     Second (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Second (
         TAO_Stub *objref,
@@ -306,7 +306,7 @@ namespace Two_Objects_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Second (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Second (const Second &);
@@ -328,7 +328,7 @@ namespace Two_Objects_Test
         Object_Factory
       >
     Object_Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Object_Factory
@@ -374,7 +374,7 @@ namespace Two_Objects_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Object_Factory (void);
@@ -383,7 +383,7 @@ namespace Two_Objects_Test
     Object_Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Object_Factory (
         TAO_Stub *objref,
@@ -392,7 +392,7 @@ namespace Two_Objects_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Object_Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Object_Factory (const Object_Factory &);

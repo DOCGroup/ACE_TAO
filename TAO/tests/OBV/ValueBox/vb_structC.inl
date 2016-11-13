@@ -276,7 +276,7 @@ VBfixed_struct1::operator= (const Fixed_Struct1& value)
     p,
     Fixed_Struct1 (value),
     *this);
-  
+
   this->_pd_value = p;
   return *this;
 }
@@ -361,7 +361,7 @@ VBfixed_struct1::abstruct (void) const
 
 /// Accessor to retrieve the member.
 ACE_INLINE Fixed_Struct1::Bstruct &
-VBfixed_struct1::abstruct (void) 
+VBfixed_struct1::abstruct (void)
 {
   return this->_pd_value->abstruct;
 }
@@ -421,7 +421,7 @@ VBvariable_struct1::operator= (const Variable_Struct1& value)
     p,
     Variable_Struct1 (value),
     *this);
-  
+
   this->_pd_value = p;
   return *this;
 }
@@ -573,7 +573,7 @@ VBvariable_struct2::operator= (const Variable_Struct2& value)
     p,
     Variable_Struct2 (value),
     *this);
-  
+
   this->_pd_value = p;
   return *this;
 }
@@ -658,7 +658,7 @@ VBvariable_struct2::whatever (void) const
 
 /// Accessor to retrieve the member.
 ACE_INLINE  ::CORBA::Any &
-VBvariable_struct2::whatever (void) 
+VBvariable_struct2::whatever (void)
 {
   return this->_pd_value->whatever;
 }
@@ -845,7 +845,7 @@ VBvariable_struct2::ls (void) const
 
 /// Accessor to retrieve the member.
 ACE_INLINE LongSeq &
-VBvariable_struct2::ls (void) 
+VBvariable_struct2::ls (void)
 {
   return this->_pd_value->ls;
 }
@@ -871,7 +871,7 @@ VBvariable_struct2::sqq (void) const
 
 /// Accessor to retrieve the member.
 ACE_INLINE PetSeq &
-VBvariable_struct2::sqq (void) 
+VBvariable_struct2::sqq (void)
 {
   return this->_pd_value->sqq;
 }
@@ -897,7 +897,7 @@ VBvariable_struct2::ns1 (void) const
 
 /// Accessor to retrieve the member.
 ACE_INLINE Variable_Struct2::NestedStruct1 &
-VBvariable_struct2::ns1 (void) 
+VBvariable_struct2::ns1 (void)
 {
   return this->_pd_value->ns1;
 }
@@ -923,7 +923,7 @@ VBvariable_struct2::NestedStruct2 (void) const
 
 /// Accessor to retrieve the member.
 ACE_INLINE Variable_Struct1 &
-VBvariable_struct2::NestedStruct2 (void) 
+VBvariable_struct2::NestedStruct2 (void)
 {
   return this->_pd_value->NestedStruct2;
 }
@@ -949,7 +949,7 @@ VBvariable_struct2::NestedStruct3 (void) const
 
 /// Accessor to retrieve the member.
 ACE_INLINE TDvariable_struct1 &
-VBvariable_struct2::NestedStruct3 (void) 
+VBvariable_struct2::NestedStruct3 (void)
 {
   return this->_pd_value->NestedStruct3;
 }
@@ -975,7 +975,7 @@ VBvariable_struct2::un (void) const
 
 /// Accessor to retrieve the member.
 ACE_INLINE Union1 &
-VBvariable_struct2::un (void) 
+VBvariable_struct2::un (void)
 {
   return this->_pd_value->un;
 }

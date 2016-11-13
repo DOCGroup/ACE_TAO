@@ -2027,7 +2027,7 @@ VBany::operator= (const CORBA::Any& value)
     p,
     CORBA::Any (value),
     *this);
-  
+
   this->_pd_value = p;
   return *this;
 }
@@ -2127,7 +2127,7 @@ VBTDany::operator= (const CORBA::Any& value)
     p,
     CORBA::Any (value),
     *this);
-  
+
   this->_pd_value = p;
   return *this;
 }

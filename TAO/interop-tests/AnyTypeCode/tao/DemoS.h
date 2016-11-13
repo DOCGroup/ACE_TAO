@@ -196,7 +196,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Demo
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -209,7 +209,7 @@ namespace POA_Demo
   {
   protected:
     ATC_Test (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Demo::ATC_Test _stub_type;
@@ -224,9 +224,9 @@ namespace POA_Demo
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Demo::ATC_Test *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

@@ -75,7 +75,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -121,12 +121,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_LatLongFOOB_var _var_type;
     typedef CORBA_LatLongFOOB_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Double latitude;
     ::CORBA::Double longitude;
     ::CORBA::Double FOOB;
@@ -161,12 +161,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_PositionXYZ_var _var_type;
     typedef CORBA_PositionXYZ_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Double x;
     ::CORBA::Double y;
     ::CORBA::Double z;
@@ -203,12 +203,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_FOOGIMCMS_var _var_type;
     typedef CORBA_FOOGIMCMS_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     IF_EXE_M_R::FOOBMode_E FOOBReference;
     ::TAO::String_Manager FOOIID;
     IF_EXE_M_R::FOOAMode_E FOOAReference;
@@ -256,12 +256,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_FOOMControl_var _var_type;
     typedef CORBA_FOOMControl_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager ecName;
     IF_EXE_M_R::ENUM_FOOMMode ecMode;
     ::CORBA::Double ecParameter;
@@ -310,12 +310,12 @@ namespace IF_EXE_M_R
       ::CORBA::Boolean release = false);
     CORBA_FOOMList (const CORBA_FOOMList &);
     virtual ~CORBA_FOOMList (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_FOOMList_var _var_type;
     typedef CORBA_FOOMList_out _out_type;
 
@@ -355,12 +355,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_BaseArc_var _var_type;
     typedef CORBA_BaseArc_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     IF_EXE_M_R::ENUM_FOOD FOOD;
     ::TAO::String_Manager FOOIID;
     IF_EXE_M_R::CORBA_LatLongFOOB startPosition;
@@ -418,12 +418,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_BaseCircle_var _var_type;
     typedef CORBA_BaseCircle_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     IF_EXE_M_R::ENUM_FOOD FOOD;
     ::TAO::String_Manager FOOIID;
     ::CORBA::ULong maxHorizontalFOOU;
@@ -479,12 +479,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_BaseCross_var _var_type;
     typedef CORBA_BaseCross_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::TAO::String_Manager FOOIID;
     IF_EXE_M_R::ENUM_FOOD FOOD;
     ::CORBA::ULong maxHorizontalFOOU;
@@ -547,12 +547,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_BaseFOOG_var _var_type;
     typedef CORBA_BaseFOOG_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     IF_EXE_M_R::ENUM_FOOD FOOD;
     ::TAO::String_Manager FOOIID;
     IF_EXE_M_R::CORBA_LatLongFOOB startPosition;
@@ -619,7 +619,7 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_FOOIData_var _var_type;
     typedef CORBA_FOOIData_out _out_type;
 
@@ -721,14 +721,14 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_FOOIInPlan_var _var_type;
     typedef CORBA_FOOIInPlan_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     IF_EXE_M_R::ENUM_FOOD type;
-    
+
 
     IF_EXE_M_R::CORBA_FOOIData data;
   };
@@ -774,12 +774,12 @@ namespace IF_EXE_M_R
       ::CORBA::Boolean release = false);
     CORBA_FOOIList (const CORBA_FOOIList &);
     virtual ~CORBA_FOOIList (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_FOOIList_var _var_type;
     typedef CORBA_FOOIList_out _out_type;
 
@@ -819,12 +819,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_FOOJPosition_var _var_type;
     typedef CORBA_FOOJPosition_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Double FOOB;
     ::CORBA::Double longitude;
     ::CORBA::Double latitude;
@@ -873,12 +873,12 @@ namespace IF_EXE_M_R
       ::CORBA::Boolean release = false);
     CORBA_FOOJPosList (const CORBA_FOOJPosList &);
     virtual ~CORBA_FOOJPosList (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_FOOJPosList_var _var_type;
     typedef CORBA_FOOJPosList_out _out_type;
 
@@ -928,12 +928,12 @@ namespace IF_EXE_M_R
       ::CORBA::Boolean release = false);
     long_sequence (const long_sequence &);
     virtual ~long_sequence (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef long_sequence_var _var_type;
     typedef long_sequence_out _out_type;
 
@@ -973,12 +973,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef CORBA_FOOHPlanHeader_var _var_type;
     typedef CORBA_FOOHPlanHeader_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Long FOOHOffset;
     ::CORBA::Double FOOHFOOA;
     IF_EXE_M_R::FOOAMode_E FOOAReference;
@@ -1021,12 +1021,12 @@ namespace IF_EXE_M_R
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Test_Struct_var _var_type;
     typedef Test_Struct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Long l;
     ::CORBA::Any whatEver;
   };
@@ -1050,7 +1050,7 @@ namespace IF_EXE_M_R
         IF_ExeCtrlData
       >
     IF_ExeCtrlData_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         IF_ExeCtrlData
@@ -1098,7 +1098,7 @@ namespace IF_EXE_M_R
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     IF_ExeCtrlData (void);
@@ -1107,7 +1107,7 @@ namespace IF_EXE_M_R
     IF_ExeCtrlData (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     IF_ExeCtrlData (
         TAO_Stub *objref,
@@ -1116,7 +1116,7 @@ namespace IF_EXE_M_R
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~IF_ExeCtrlData (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     IF_ExeCtrlData (const IF_ExeCtrlData &);

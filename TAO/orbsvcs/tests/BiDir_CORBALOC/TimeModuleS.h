@@ -102,7 +102,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_TimeModule
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -115,7 +115,7 @@ namespace POA_TimeModule
   {
   protected:
     Time (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::TimeModule::Time _stub_type;
@@ -130,9 +130,9 @@ namespace POA_TimeModule
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::TimeModule::Time *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

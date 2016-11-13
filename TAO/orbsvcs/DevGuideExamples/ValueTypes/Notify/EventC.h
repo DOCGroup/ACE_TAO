@@ -69,7 +69,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_valuetype.cpp:564
@@ -112,12 +112,12 @@ public:
   static void _tao_any_destructor (void *);
 
   static MyEvent* _downcast ( ::CORBA::ValueBase *v);
-  
+
   /// TAO extensions or internals
   static ::CORBA::Boolean _tao_unmarshal (
       TAO_InputCDR &strm,
       MyEvent *&new_object);
-  
+
   virtual const char* _tao_obv_repository_id (void) const;
 
   virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -157,7 +157,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual void dump (void) = 0;
 
@@ -165,7 +165,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual ::CORBA::Long size (void) = 0;
 
@@ -173,7 +173,7 @@ public:
 
   // TAO_IDL - Generated from
   // be/be_visitor_valuetype/valuetype_ch.cpp:396
-  
+
 public:
   virtual void add_long (
       ::CORBA::Long
@@ -189,11 +189,11 @@ protected:
   virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
   virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
   virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-  
+
 private:
   MyEvent (const MyEvent &);
   void operator= (const MyEvent &);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__MyEvent (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -286,7 +286,7 @@ protected:
       const ::CORBA::LongSeq & _tao_init_payload
     );
   virtual ~OBV_MyEvent (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__MyEvent (TAO_OutputCDR &, TAO_ChunkInfo &) const;

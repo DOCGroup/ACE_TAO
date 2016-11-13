@@ -65,7 +65,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -111,12 +111,12 @@ namespace TimeModule
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef TimeOfDay_var _var_type;
     typedef TimeOfDay_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Short hour;
     ::CORBA::Short minute;
     ::CORBA::Short second;
@@ -141,7 +141,7 @@ namespace TimeModule
         Time
       >
     Time_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Time
@@ -189,7 +189,7 @@ namespace TimeModule
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Time (void);
@@ -198,7 +198,7 @@ namespace TimeModule
     Time (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Time (
         TAO_Stub *objref,
@@ -207,7 +207,7 @@ namespace TimeModule
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Time (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Time (const Time &);

@@ -109,14 +109,14 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_taoimrtest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_sh.cpp:35
 
   namespace reconnectserver
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_interface/interface_sh.cpp:73
@@ -129,7 +129,7 @@ namespace POA_taoimrtest
     {
     protected:
       Dummy (void);
-    
+
     public:
       /// Useful for template programming.
       typedef ::taoimrtest::reconnectserver::Dummy _stub_type;
@@ -144,9 +144,9 @@ namespace POA_taoimrtest
       virtual void _dispatch (
           TAO_ServerRequest & req,
           TAO::Portable_Server::Servant_Upcall *servant_upcall);
-      
+
       ::taoimrtest::reconnectserver::Dummy *_this (void);
-      
+
       virtual const char* _interface_repository_id (void) const;
 
       // TAO_IDL - Generated from
@@ -172,7 +172,7 @@ namespace POA_taoimrtest
     {
     protected:
       TimeSrv (void);
-    
+
     public:
       /// Useful for template programming.
       typedef ::taoimrtest::reconnectserver::TimeSrv _stub_type;
@@ -187,9 +187,9 @@ namespace POA_taoimrtest
       virtual void _dispatch (
           TAO_ServerRequest & req,
           TAO::Portable_Server::Servant_Upcall *servant_upcall);
-      
+
       ::taoimrtest::reconnectserver::TimeSrv *_this (void);
-      
+
       virtual const char* _interface_repository_id (void) const;
 
       // TAO_IDL - Generated from
@@ -214,7 +214,7 @@ namespace POA_taoimrtest
           TAO::Portable_Server::Servant_Upcall *servant_upcall,
           TAO_ServantBase *servant);
     };
-  
+
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_sh.cpp:66
 

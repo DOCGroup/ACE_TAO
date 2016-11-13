@@ -69,7 +69,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -94,7 +94,7 @@ namespace OBV_FactoryTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_FACTORYTEST_BASEVALUE__VAR_OUT_CH_)
 #define _OBV_FACTORYTEST_BASEVALUE__VAR_OUT_CH_
@@ -105,7 +105,7 @@ namespace OBV_FactoryTest
         BaseValue
       >
     BaseValue_var;
-  
+
   typedef
     TAO_Value_Out_T<
         BaseValue
@@ -132,12 +132,12 @@ namespace OBV_FactoryTest
     static void _tao_any_destructor (void *);
 
     static BaseValue* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         BaseValue *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -145,7 +145,7 @@ namespace OBV_FactoryTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -172,12 +172,12 @@ namespace OBV_FactoryTest
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef BV_Data_var _var_type;
       typedef BV_Data_out _out_type;
 
       static void _tao_any_destructor (void *);
-      
+
       ::CORBA::ULong value;
     };
 
@@ -185,7 +185,7 @@ namespace OBV_FactoryTest
     // be/be_visitor_typecode/typecode_decl.cpp:34
 
     static ::CORBA::TypeCode_ptr const _tc_BV_Data;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -196,7 +196,7 @@ namespace OBV_FactoryTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     BaseValue (void);
     virtual ~BaseValue (void);
@@ -204,11 +204,11 @@ namespace OBV_FactoryTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     BaseValue (const BaseValue &);
     void operator= (const BaseValue &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_FactoryTest_BaseValue (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -234,7 +234,7 @@ namespace OBV_FactoryTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~BaseValue_init (void);
   };
@@ -247,7 +247,7 @@ namespace OBV_FactoryTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_FACTORYTEST_VALUE1__VAR_OUT_CH_)
 #define _OBV_FACTORYTEST_VALUE1__VAR_OUT_CH_
@@ -258,7 +258,7 @@ namespace OBV_FactoryTest
         Value1
       >
     Value1_var;
-  
+
   typedef
     TAO_Value_Out_T<
         Value1
@@ -285,12 +285,12 @@ namespace OBV_FactoryTest
     static void _tao_any_destructor (void *);
 
     static Value1* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         Value1 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -298,7 +298,7 @@ namespace OBV_FactoryTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -309,7 +309,7 @@ namespace OBV_FactoryTest
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     Value1 (void);
     virtual ~Value1 (void);
@@ -317,11 +317,11 @@ namespace OBV_FactoryTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     Value1 (const Value1 &);
     void operator= (const Value1 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_FactoryTest_Value1 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -347,7 +347,7 @@ namespace OBV_FactoryTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~Value1_init (void);
   };
@@ -360,7 +360,7 @@ namespace OBV_FactoryTest
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_OBV_FACTORYTEST_VALUE2__VAR_OUT_CH_)
 #define _OBV_FACTORYTEST_VALUE2__VAR_OUT_CH_
@@ -371,7 +371,7 @@ namespace OBV_FactoryTest
         Value2
       >
     Value2_var;
-  
+
   typedef
     TAO_Value_Out_T<
         Value2
@@ -398,12 +398,12 @@ namespace OBV_FactoryTest
     static void _tao_any_destructor (void *);
 
     static Value2* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         Value2 *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -411,7 +411,7 @@ namespace OBV_FactoryTest
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -419,7 +419,7 @@ namespace OBV_FactoryTest
 
     virtual void id (const ::CORBA::ULong) = 0;
     virtual ::CORBA::ULong id (void) const = 0;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -428,14 +428,14 @@ namespace OBV_FactoryTest
     virtual void data (const OBV_FactoryTest::BaseValue::BV_Data &) = 0;
     virtual const OBV_FactoryTest::BaseValue::BV_Data &data (void) const = 0;
     virtual OBV_FactoryTest::BaseValue::BV_Data &data (void) = 0;
-  
+
   public:
-  
+
   public:
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     Value2 (void);
     virtual ~Value2 (void);
@@ -443,11 +443,11 @@ namespace OBV_FactoryTest
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     Value2 (const Value2 &);
     void operator= (const Value2 &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__OBV_FactoryTest_Value2 (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -476,10 +476,10 @@ namespace OBV_FactoryTest
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     Value2_init (void);
-  
+
   protected:
     virtual ~Value2_init (void);
   };
@@ -503,7 +503,7 @@ namespace OBV_FactoryTest
         Test
       >
     Test_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Test
@@ -557,7 +557,7 @@ namespace OBV_FactoryTest
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Test (void);
@@ -566,7 +566,7 @@ namespace OBV_FactoryTest
     Test (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Test (
         TAO_Stub *objref,
@@ -575,7 +575,7 @@ namespace OBV_FactoryTest
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Test (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Test (const Test &);
@@ -739,7 +739,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_FactoryTest_BaseValue (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -780,7 +780,7 @@ public:
       ::CORBA::ULong _tao_init_id
     );
   virtual ~Value1 (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_FactoryTest_Value1 (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -835,7 +835,7 @@ public:
       const ::OBV_FactoryTest::BaseValue::BV_Data & _tao_init_data
     );
   virtual ~Value2 (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__OBV_FactoryTest_Value2 (TAO_OutputCDR &, TAO_ChunkInfo &) const;

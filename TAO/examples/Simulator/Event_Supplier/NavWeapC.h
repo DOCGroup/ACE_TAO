@@ -70,7 +70,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -110,12 +110,12 @@ struct  Navigation
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Navigation_var _var_type;
   typedef Navigation_out _out_type;
 
   static void _tao_any_destructor (void *);
-  
+
   ::CORBA::Long position_latitude;
   ::CORBA::Long position_longitude;
   ::CORBA::ULong altitude;
@@ -163,12 +163,12 @@ struct  Weapons
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Weapons_var _var_type;
   typedef Weapons_out _out_type;
 
   static void _tao_any_destructor (void *);
-  
+
   ::CORBA::ULong number_of_weapons;
   ::TAO::String_Manager weapon1_identifier;
   ::CORBA::ULong weapon1_status;
@@ -263,7 +263,7 @@ protected:
   NavWeapTerminator (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   NavWeapTerminator (
       TAO_Stub *objref,

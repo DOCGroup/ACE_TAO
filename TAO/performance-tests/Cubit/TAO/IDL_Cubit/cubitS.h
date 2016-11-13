@@ -330,9 +330,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::Cubit *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from
@@ -523,7 +523,7 @@ public:
   static void
   cube_oneway (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -531,7 +531,7 @@ public:
   static void
   cube_void (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -539,7 +539,7 @@ public:
   static void
   cube_octet (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -547,7 +547,7 @@ public:
   static void
   cube_short (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -555,7 +555,7 @@ public:
   static void
   cube_long (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -563,7 +563,7 @@ public:
   static void
   cube_struct (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -571,7 +571,7 @@ public:
   static void
   cube_any (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -579,7 +579,7 @@ public:
   static void
   cube_any_struct (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -587,7 +587,7 @@ public:
   static void
   cube_union (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -595,7 +595,7 @@ public:
   static void
   cube_long_sequence (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -603,7 +603,7 @@ public:
   static void
   cube_octet_sequence (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -611,7 +611,7 @@ public:
   static void
   cube_many_sequence (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -619,7 +619,7 @@ public:
   static void
   shutdown (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -627,7 +627,7 @@ public:
   static void
   cube_rti_data (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -635,7 +635,7 @@ public:
   static void
   ping (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 };
 
 //
@@ -672,9 +672,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::Cubit_Factory *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from
@@ -707,7 +707,7 @@ public:
   static void
   make_cubit (
     TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-  
+
 };
 
 //

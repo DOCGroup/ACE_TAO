@@ -104,7 +104,7 @@ namespace Federated_Test
         Peer
       >
     Peer_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Peer
@@ -127,7 +127,7 @@ namespace Federated_Test
         Loopback
       >
     Loopback_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Loopback
@@ -150,7 +150,7 @@ namespace Federated_Test
         Control
       >
     Control_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Control
@@ -195,7 +195,7 @@ namespace Federated_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Control (void);
@@ -204,7 +204,7 @@ namespace Federated_Test
     Control (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Control (
         TAO_Stub *objref,
@@ -213,7 +213,7 @@ namespace Federated_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Control (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Control (const Control &);
@@ -288,7 +288,7 @@ namespace Federated_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Peer (void);
@@ -297,7 +297,7 @@ namespace Federated_Test
     Peer (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Peer (
         TAO_Stub *objref,
@@ -306,7 +306,7 @@ namespace Federated_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Peer (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Peer (const Peer &);
@@ -355,7 +355,7 @@ namespace Federated_Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Loopback (void);
@@ -364,7 +364,7 @@ namespace Federated_Test
     Loopback (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Loopback (
         TAO_Stub *objref,
@@ -373,7 +373,7 @@ namespace Federated_Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Loopback (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Loopback (const Loopback &);

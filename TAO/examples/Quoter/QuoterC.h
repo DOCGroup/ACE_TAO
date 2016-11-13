@@ -71,7 +71,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -159,7 +159,7 @@ namespace Stock
         Quoter
       >
     Quoter_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Quoter
@@ -173,7 +173,7 @@ namespace Stock
 
   class  Quoter
     : public virtual ::CosLifeCycle::LifeCycleObject
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Quoter>;
@@ -203,7 +203,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Quoter (void);
@@ -212,7 +212,7 @@ namespace Stock
     Quoter (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Quoter (
         TAO_Stub *objref,
@@ -221,7 +221,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Quoter (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Quoter (const Quoter &);
@@ -243,7 +243,7 @@ namespace Stock
         Quoter_Factory
       >
     Quoter_Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Quoter_Factory
@@ -286,7 +286,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Quoter_Factory (void);
@@ -295,7 +295,7 @@ namespace Stock
     Quoter_Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Quoter_Factory (
         TAO_Stub *objref,
@@ -304,7 +304,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Quoter_Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Quoter_Factory (const Quoter_Factory &);
@@ -326,7 +326,7 @@ namespace Stock
         Quoter_Factory_Finder
       >
     Quoter_Factory_Finder_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Quoter_Factory_Finder
@@ -340,7 +340,7 @@ namespace Stock
 
   class  Quoter_Factory_Finder
     : public virtual ::CosLifeCycle::FactoryFinder
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Quoter_Factory_Finder>;
@@ -367,7 +367,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Quoter_Factory_Finder (void);
@@ -376,7 +376,7 @@ namespace Stock
     Quoter_Factory_Finder (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Quoter_Factory_Finder (
         TAO_Stub *objref,
@@ -385,7 +385,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Quoter_Factory_Finder (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Quoter_Factory_Finder (const Quoter_Factory_Finder &);
@@ -407,7 +407,7 @@ namespace Stock
         Quoter_Generic_Factory
       >
     Quoter_Generic_Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Quoter_Generic_Factory
@@ -421,7 +421,7 @@ namespace Stock
 
   class  Quoter_Generic_Factory
     : public virtual ::CosLifeCycle::GenericFactory
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Quoter_Generic_Factory>;
@@ -448,7 +448,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Quoter_Generic_Factory (void);
@@ -457,7 +457,7 @@ namespace Stock
     Quoter_Generic_Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Quoter_Generic_Factory (
         TAO_Stub *objref,
@@ -466,7 +466,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Quoter_Generic_Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Quoter_Generic_Factory (const Quoter_Generic_Factory &);
@@ -488,7 +488,7 @@ namespace Stock
         Quoter_Life_Cycle_Service
       >
     Quoter_Life_Cycle_Service_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Quoter_Life_Cycle_Service
@@ -502,7 +502,7 @@ namespace Stock
 
   class  Quoter_Life_Cycle_Service
     : public virtual ::CosLifeCycle::GenericFactory
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Quoter_Life_Cycle_Service>;
@@ -535,7 +535,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Quoter_Life_Cycle_Service (void);
@@ -544,7 +544,7 @@ namespace Stock
     Quoter_Life_Cycle_Service (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Quoter_Life_Cycle_Service (
         TAO_Stub *objref,
@@ -553,7 +553,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Quoter_Life_Cycle_Service (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Quoter_Life_Cycle_Service (const Quoter_Life_Cycle_Service &);
@@ -575,7 +575,7 @@ namespace Stock
         Criteria_Evaluator
       >
     Criteria_Evaluator_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Criteria_Evaluator
@@ -645,12 +645,12 @@ namespace Stock
         ::CORBA::Boolean release = false);
       SeqNamedValuePair (const SeqNamedValuePair &);
       virtual ~SeqNamedValuePair (void);
-      
+
 
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef SeqNamedValuePair_var _var_type;
       typedef SeqNamedValuePair_out _out_type;
     };
@@ -718,7 +718,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Criteria_Evaluator (void);
@@ -727,7 +727,7 @@ namespace Stock
     Criteria_Evaluator (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Criteria_Evaluator (
         TAO_Stub *objref,
@@ -736,7 +736,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Criteria_Evaluator (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Criteria_Evaluator (const Criteria_Evaluator &);

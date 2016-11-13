@@ -66,7 +66,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -102,7 +102,7 @@ namespace warehouse
         inventory
       >
     inventory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         inventory
@@ -149,7 +149,7 @@ namespace warehouse
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     inventory (void);
@@ -158,7 +158,7 @@ namespace warehouse
     inventory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     inventory (
         TAO_Stub *objref,
@@ -167,7 +167,7 @@ namespace warehouse
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~inventory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     inventory (const inventory &);

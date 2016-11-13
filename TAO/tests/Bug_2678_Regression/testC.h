@@ -71,7 +71,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -123,12 +123,12 @@ public:
     ::CORBA::Boolean release = false);
   AnySeq (const AnySeq &);
   virtual ~AnySeq (void);
-  
+
 
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef AnySeq_var _var_type;
   typedef AnySeq_out _out_type;
 
@@ -168,12 +168,12 @@ struct  Container
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Container_var _var_type;
   typedef Container_out _out_type;
 
   static void _tao_any_destructor (void *);
-  
+
   ::CORBA::Any contents;
 };
 
@@ -206,12 +206,12 @@ struct  Inner
   // TAO_IDL - Generated from
   // be/be_type.cpp:304
 
-  
+
   typedef Inner_var _var_type;
   typedef Inner_out _out_type;
 
   static void _tao_any_destructor (void *);
-  
+
   ::CORBA::Long value1;
   ::CORBA::Long value2;
   ::CORBA::Long value3;
@@ -295,7 +295,7 @@ protected:
   Test (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Test (
       TAO_Stub *objref,

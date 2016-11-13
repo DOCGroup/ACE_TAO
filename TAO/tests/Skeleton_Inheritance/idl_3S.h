@@ -97,7 +97,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Skeleton_Inheritance
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -112,7 +112,7 @@ namespace POA_Skeleton_Inheritance
   {
   protected:
     Interface_3 (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Skeleton_Inheritance::Interface_3 _stub_type;
@@ -127,9 +127,9 @@ namespace POA_Skeleton_Inheritance
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Skeleton_Inheritance::Interface_3 *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -196,7 +196,7 @@ namespace POA_Skeleton_Inheritance
     static void
     operation_3 (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -204,7 +204,7 @@ namespace POA_Skeleton_Inheritance
     static void
     shutdown (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -212,7 +212,7 @@ namespace POA_Skeleton_Inheritance
     static void
     _get_attribute_3 (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/proxy_impl_xh.cpp:26
@@ -220,14 +220,14 @@ namespace POA_Skeleton_Inheritance
     static void
     _set_attribute_3 (
       TAO_Abstract_ServantBase *servant, TAO::Argument **args);
-    
+
   };
 
   //
   //                Direct  Proxy Impl. Declaration
   ///////////////////////////////////////////////////////////////////////
 
-  
+
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_sh.cpp:66

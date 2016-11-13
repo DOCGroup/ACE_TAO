@@ -67,7 +67,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -197,10 +197,10 @@ public:
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Log_Record_var _var_type;
     typedef Log_Record_out _out_type;
-    
+
     Logger::Log_Priority type;
     ::CORBA::Long time;
     ::CORBA::Long app_id;
@@ -240,7 +240,7 @@ protected:
   Logger (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Logger (
       TAO_Stub *objref,
@@ -323,7 +323,7 @@ protected:
   Logger_Factory (
       ::IOP::IOR *ior,
       TAO_ORB_Core *orb_core);
-  
+
   // Non-local interface only.
   Logger_Factory (
       TAO_Stub *objref,

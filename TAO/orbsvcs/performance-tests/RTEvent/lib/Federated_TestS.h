@@ -131,7 +131,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Federated_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -144,7 +144,7 @@ namespace POA_Federated_Test
   {
   protected:
     Control (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Federated_Test::Control _stub_type;
@@ -159,9 +159,9 @@ namespace POA_Federated_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Federated_Test::Control *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -187,7 +187,7 @@ namespace POA_Federated_Test
   {
   protected:
     Peer (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Federated_Test::Peer _stub_type;
@@ -202,9 +202,9 @@ namespace POA_Federated_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Federated_Test::Peer *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -276,7 +276,7 @@ namespace POA_Federated_Test
   {
   protected:
     Loopback (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Federated_Test::Loopback _stub_type;
@@ -291,9 +291,9 @@ namespace POA_Federated_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Federated_Test::Loopback *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

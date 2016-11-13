@@ -61,7 +61,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -121,12 +121,12 @@ namespace UnionIecs
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef S_i_num_var _var_type;
     typedef S_i_num_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     UnionIecs::E_type_num type_num;
     UnionIecs::T_champ_num nature;
   };
@@ -169,7 +169,7 @@ namespace UnionIecs
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef S_num_var _var_type;
     typedef S_num_out _out_type;
 
@@ -284,7 +284,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace UnionIecs
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::UnionIecs::E_type_num);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::UnionIecs::E_type_num &);

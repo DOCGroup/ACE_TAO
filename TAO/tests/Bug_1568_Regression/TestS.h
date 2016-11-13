@@ -191,14 +191,14 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Foo
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_module/module_sh.cpp:35
 
   namespace Bar
   {
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_interface/amh_sh.cpp:46
@@ -211,7 +211,7 @@ namespace POA_Foo
     {
     protected:
       AMH_A (void);
-    
+
     public:
       AMH_A (const AMH_A& rhs);
       virtual ~AMH_A (void);
@@ -222,7 +222,7 @@ namespace POA_Foo
       virtual void _dispatch (
           TAO_ServerRequest &req,
           TAO::Portable_Server::Servant_Upcall *_servant_upcall);
-      
+
       Foo::Bar::A *_this (void);
 
     virtual const char* _interface_repository_id (void) const;
@@ -234,11 +234,11 @@ namespace POA_Foo
         TAO_ServerRequest &_tao_req,
         TAO::Portable_Server::Servant_Upcall *_tao_obj,
         TAO_ServantBase *_tao_servant_upcall);
-      
+
     virtual void op1 (
         Foo::Bar::AMH_AResponseHandler_ptr _tao_rh
       ) = 0;
-    
+
 
     // TAO_IDL - Generated from
     // be/be_visitor_operation/amh_sh.cpp:127
@@ -247,11 +247,11 @@ namespace POA_Foo
         TAO_ServerRequest &_tao_req,
         TAO::Portable_Server::Servant_Upcall *_tao_obj,
         TAO_ServantBase *_tao_servant_upcall);
-      
+
     virtual void op2 (
         Foo::Bar::AMH_AResponseHandler_ptr _tao_rh
       ) = 0;
-    
+
   };
 
   // TAO_IDL - Generated from
@@ -265,7 +265,7 @@ namespace POA_Foo
   {
   protected:
     A (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Foo::Bar::A _stub_type;
@@ -280,9 +280,9 @@ namespace POA_Foo
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Foo::Bar::A *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -358,7 +358,7 @@ namespace POA_Foo
   {
   protected:
     AMH_B (void);
-  
+
   public:
     AMH_B (const AMH_B& rhs);
     virtual ~AMH_B (void);
@@ -369,7 +369,7 @@ namespace POA_Foo
     virtual void _dispatch (
         TAO_ServerRequest &req,
         TAO::Portable_Server::Servant_Upcall *_servant_upcall);
-    
+
     Foo::Bar::B *_this (void);
 
   virtual const char* _interface_repository_id (void) const;
@@ -381,11 +381,11 @@ namespace POA_Foo
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void op3 (
       Foo::Bar::AMH_BResponseHandler_ptr _tao_rh
     ) = 0;
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -414,9 +414,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::Foo::Bar::B *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from
@@ -473,7 +473,7 @@ public:
 
 namespace POA_Baz
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/amh_sh.cpp:46
@@ -484,11 +484,11 @@ namespace POA_Baz
   class  AMH_C
     : public virtual POA_Foo::Bar::AMH_A
       , public virtual POA_Foo::Bar::AMH_B
-      
+
   {
   protected:
     AMH_C (void);
-  
+
   public:
     AMH_C (const AMH_C& rhs);
     virtual ~AMH_C (void);
@@ -499,7 +499,7 @@ namespace POA_Baz
     virtual void _dispatch (
         TAO_ServerRequest &req,
         TAO::Portable_Server::Servant_Upcall *_servant_upcall);
-    
+
     Baz::C *_this (void);
 
   virtual const char* _interface_repository_id (void) const;
@@ -511,11 +511,11 @@ namespace POA_Baz
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void op4 (
       Baz::AMH_CResponseHandler_ptr _tao_rh
     ) = 0;
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_operation/amh_sh.cpp:127
@@ -524,11 +524,11 @@ namespace POA_Baz
       TAO_ServerRequest &_tao_req,
       TAO::Portable_Server::Servant_Upcall *_tao_obj,
       TAO_ServantBase *_tao_servant_upcall);
-    
+
   virtual void shutdown (
       Baz::AMH_CResponseHandler_ptr _tao_rh
     ) = 0;
-  
+
 };
 
 // TAO_IDL - Generated from
@@ -558,9 +558,9 @@ public:
   virtual void _dispatch (
       TAO_ServerRequest & req,
       TAO::Portable_Server::Servant_Upcall *servant_upcall);
-  
+
   ::Baz::C *_this (void);
-  
+
   virtual const char* _interface_repository_id (void) const;
 
   // TAO_IDL - Generated from

@@ -60,7 +60,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -92,12 +92,12 @@ namespace StructTest
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef MyStruct_var _var_type;
     typedef MyStruct_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Octet MyOctet;
     ::CORBA::ULong MyLong;
   };
@@ -152,7 +152,7 @@ namespace StructTest
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef MyUnion_var _var_type;
     typedef MyUnion_out _out_type;
 

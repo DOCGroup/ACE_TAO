@@ -106,7 +106,7 @@ namespace Stock
         StockBroker
       >
     StockBroker_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         StockBroker
@@ -163,7 +163,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     StockBroker (void);
@@ -172,7 +172,7 @@ namespace Stock
     StockBroker (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     StockBroker (
         TAO_Stub *objref,
@@ -181,7 +181,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~StockBroker (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     StockBroker (const StockBroker &);
@@ -208,7 +208,7 @@ namespace Stock
         StockBrokerHome
       >
     StockBrokerHome_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         StockBrokerHome
@@ -254,7 +254,7 @@ namespace Stock
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     StockBrokerHome (void);
@@ -263,7 +263,7 @@ namespace Stock
     StockBrokerHome (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     StockBrokerHome (
         TAO_Stub *objref,
@@ -272,7 +272,7 @@ namespace Stock
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~StockBrokerHome (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     StockBrokerHome (const StockBrokerHome &);

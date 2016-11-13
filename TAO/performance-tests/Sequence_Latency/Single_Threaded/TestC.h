@@ -67,7 +67,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -136,18 +136,18 @@ namespace Test
       ::CORBA::Boolean release = false);
     octet_load (const octet_load &);
     virtual ~octet_load (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef octet_load_var _var_type;
     typedef octet_load_out _out_type;
 
     static void _tao_any_destructor (void *);
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     octet_load (
@@ -201,12 +201,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     long_load (const long_load &);
     virtual ~long_load (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef long_load_var _var_type;
     typedef long_load_out _out_type;
 
@@ -256,12 +256,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     char_load (const char_load &);
     virtual ~char_load (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef char_load_var _var_type;
     typedef char_load_out _out_type;
 
@@ -311,12 +311,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     short_load (const short_load &);
     virtual ~short_load (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef short_load_var _var_type;
     typedef short_load_out _out_type;
 
@@ -366,12 +366,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     longlong_load (const longlong_load &);
     virtual ~longlong_load (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef longlong_load_var _var_type;
     typedef longlong_load_out _out_type;
 
@@ -421,12 +421,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     double_load (const double_load &);
     virtual ~double_load (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef double_load_var _var_type;
     typedef double_load_out _out_type;
 
@@ -454,7 +454,7 @@ namespace Test
         Roundtrip
       >
     Roundtrip_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Roundtrip
@@ -523,7 +523,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Roundtrip (void);
@@ -532,7 +532,7 @@ namespace Test
     Roundtrip (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Roundtrip (
         TAO_Stub *objref,
@@ -541,7 +541,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Roundtrip (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Roundtrip (const Roundtrip &);

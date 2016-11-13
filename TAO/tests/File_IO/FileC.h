@@ -68,7 +68,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -137,7 +137,7 @@ namespace File
         Descriptor
       >
     Descriptor_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Descriptor
@@ -207,16 +207,16 @@ namespace File
         ::CORBA::Boolean release = false);
       DataBuffer (const DataBuffer &);
       virtual ~DataBuffer (void);
-      
+
 
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef DataBuffer_var _var_type;
       typedef DataBuffer_out _out_type;
 
-      
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
       DataBuffer (
@@ -248,7 +248,7 @@ namespace File
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Descriptor (void);
@@ -257,7 +257,7 @@ namespace File
     Descriptor (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Descriptor (
         TAO_Stub *objref,
@@ -266,7 +266,7 @@ namespace File
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Descriptor (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Descriptor (const Descriptor &);
@@ -288,7 +288,7 @@ namespace File
         System
       >
     System_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         System
@@ -332,7 +332,7 @@ namespace File
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     System (void);
@@ -341,7 +341,7 @@ namespace File
     System (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     System (
         TAO_Stub *objref,
@@ -350,7 +350,7 @@ namespace File
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~System (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     System (const System &);

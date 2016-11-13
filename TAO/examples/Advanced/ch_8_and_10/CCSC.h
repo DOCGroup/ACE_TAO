@@ -70,7 +70,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -132,7 +132,7 @@ namespace CCS
         Thermometer
       >
     Thermometer_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Thermometer
@@ -187,7 +187,7 @@ namespace CCS
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Thermometer (void);
@@ -196,7 +196,7 @@ namespace CCS
     Thermometer (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Thermometer (
         TAO_Stub *objref,
@@ -205,7 +205,7 @@ namespace CCS
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Thermometer (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Thermometer (const Thermometer &);
@@ -227,7 +227,7 @@ namespace CCS
         Thermostat
       >
     Thermostat_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Thermostat
@@ -241,7 +241,7 @@ namespace CCS
 
   class  Thermostat
     : public virtual ::CCS::Thermometer
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<Thermostat>;
@@ -288,10 +288,10 @@ namespace CCS
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef BtData_var _var_type;
       typedef BtData_out _out_type;
-      
+
       CCS::TempType requested;
       CCS::TempType min_permitted;
       CCS::TempType max_permitted;
@@ -343,7 +343,7 @@ namespace CCS
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Thermostat (void);
@@ -352,7 +352,7 @@ namespace CCS
     Thermostat (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Thermostat (
         TAO_Stub *objref,
@@ -361,7 +361,7 @@ namespace CCS
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Thermostat (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Thermostat (const Thermostat &);
@@ -383,7 +383,7 @@ namespace CCS
         Controller
       >
     Controller_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Controller
@@ -454,12 +454,12 @@ namespace CCS
         ::CORBA::Boolean release = false);
       ThermometerSeq (const ThermometerSeq &);
       virtual ~ThermometerSeq (void);
-      
+
 
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef ThermometerSeq_var _var_type;
       typedef ThermometerSeq_out _out_type;
     };
@@ -503,12 +503,12 @@ namespace CCS
         ::CORBA::Boolean release = false);
       ThermostatSeq (const ThermostatSeq &);
       virtual ~ThermostatSeq (void);
-      
+
 
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef ThermostatSeq_var _var_type;
       typedef ThermostatSeq_out _out_type;
     };
@@ -562,7 +562,7 @@ namespace CCS
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef KeyType_var _var_type;
       typedef KeyType_out _out_type;
 
@@ -638,11 +638,11 @@ namespace CCS
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef SearchType_var _var_type;
       typedef SearchType_out _out_type;
-      
-      
+
+
 
       CCS::Controller::KeyType key;
       CCS::Thermometer_var device;
@@ -684,12 +684,12 @@ namespace CCS
         ::CORBA::Boolean release = false);
       SearchSeq (const SearchSeq &);
       virtual ~SearchSeq (void);
-      
+
 
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef SearchSeq_var _var_type;
       typedef SearchSeq_out _out_type;
     };
@@ -722,10 +722,10 @@ namespace CCS
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef ErrorDetails_var _var_type;
       typedef ErrorDetails_out _out_type;
-      
+
       CCS::Thermostat_var tmstat_ref;
       CCS::Thermostat::BtData info;
     };
@@ -766,12 +766,12 @@ namespace CCS
         ::CORBA::Boolean release = false);
       ErrSeq (const ErrSeq &);
       virtual ~ErrSeq (void);
-      
+
 
       // TAO_IDL - Generated from
       // be/be_type.cpp:304
 
-      
+
       typedef ErrSeq_var _var_type;
       typedef ErrSeq_out _out_type;
     };
@@ -827,7 +827,7 @@ namespace CCS
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Controller (void);
@@ -836,7 +836,7 @@ namespace CCS
     Controller (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Controller (
         TAO_Stub *objref,
@@ -845,7 +845,7 @@ namespace CCS
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Controller (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Controller (const Controller &);

@@ -110,7 +110,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_Test
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -123,7 +123,7 @@ namespace POA_Test
   {
   protected:
     StockFactory (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::StockFactory _stub_type;
@@ -138,9 +138,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::StockFactory *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
@@ -177,7 +177,7 @@ namespace POA_Test
   {
   protected:
     Stock (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::Test::Stock _stub_type;
@@ -192,9 +192,9 @@ namespace POA_Test
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::Test::Stock *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from

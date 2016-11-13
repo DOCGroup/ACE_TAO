@@ -106,12 +106,12 @@ namespace MIF_Scheduling
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef SchedulingParameter_var _var_type;
     typedef SchedulingParameter_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Long importance;
   };
 
@@ -134,7 +134,7 @@ namespace MIF_Scheduling
         SchedulingParameterPolicy
       >
     SchedulingParameterPolicy_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         SchedulingParameterPolicy
@@ -148,7 +148,7 @@ namespace MIF_Scheduling
 
   class Kokyu_DSRT_Schedulers_Export SchedulingParameterPolicy
     : public virtual ::CORBA::Policy
-  
+
   {
   public:
 
@@ -188,15 +188,15 @@ namespace MIF_Scheduling
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     SchedulingParameterPolicy (void);
 
-    
+
 
     virtual ~SchedulingParameterPolicy (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     SchedulingParameterPolicy (const SchedulingParameterPolicy &);
@@ -223,7 +223,7 @@ namespace MIF_Scheduling
         Scheduler
       >
     Scheduler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Scheduler
@@ -237,7 +237,7 @@ namespace MIF_Scheduling
 
   class Kokyu_DSRT_Schedulers_Export Scheduler
     : public virtual ::RTScheduling::Scheduler
-  
+
   {
   public:
 
@@ -268,15 +268,15 @@ namespace MIF_Scheduling
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Abstract or local interface only.
     Scheduler (void);
 
-    
+
 
     virtual ~Scheduler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Scheduler (const Scheduler &);

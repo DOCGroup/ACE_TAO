@@ -71,7 +71,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -129,18 +129,18 @@ namespace Test
       ::CORBA::Boolean release = false);
     Payload (const Payload &);
     virtual ~Payload (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Payload_var _var_type;
     typedef Payload_out _out_type;
 
     static void _tao_any_destructor (void *);
 
-    
+
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
     Payload (
@@ -175,7 +175,7 @@ namespace Test
         AMI_Buffering
       >
     AMI_Buffering_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_Buffering
@@ -239,7 +239,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_Buffering (void);
@@ -248,7 +248,7 @@ namespace Test
     AMI_Buffering (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_Buffering (
         TAO_Stub *objref,
@@ -257,7 +257,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_Buffering (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_Buffering (const AMI_Buffering &);
@@ -284,7 +284,7 @@ namespace Test
         AMI_AMI_BufferingHandler
       >
     AMI_AMI_BufferingHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_AMI_BufferingHandler
@@ -298,7 +298,7 @@ namespace Test
 
   class  AMI_AMI_BufferingHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_AMI_BufferingHandler>;
@@ -363,7 +363,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_AMI_BufferingHandler (void);
@@ -372,7 +372,7 @@ namespace Test
     AMI_AMI_BufferingHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_AMI_BufferingHandler (
         TAO_Stub *objref,
@@ -381,7 +381,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_AMI_BufferingHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_AMI_BufferingHandler (const AMI_AMI_BufferingHandler &);
@@ -411,7 +411,7 @@ namespace Test
         AMI_Buffering_Admin
       >
     AMI_Buffering_Admin_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_Buffering_Admin
@@ -484,7 +484,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_Buffering_Admin (void);
@@ -493,7 +493,7 @@ namespace Test
     AMI_Buffering_Admin (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_Buffering_Admin (
         TAO_Stub *objref,
@@ -502,7 +502,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_Buffering_Admin (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_Buffering_Admin (const AMI_Buffering_Admin &);
@@ -529,7 +529,7 @@ namespace Test
         AMI_AMI_Buffering_AdminHandler
       >
     AMI_AMI_Buffering_AdminHandler_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         AMI_AMI_Buffering_AdminHandler
@@ -543,7 +543,7 @@ namespace Test
 
   class  AMI_AMI_Buffering_AdminHandler
     : public virtual ::Messaging::ReplyHandler
-  
+
   {
   public:
     friend class TAO::Narrow_Utils<AMI_AMI_Buffering_AdminHandler>;
@@ -632,7 +632,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     AMI_AMI_Buffering_AdminHandler (void);
@@ -641,7 +641,7 @@ namespace Test
     AMI_AMI_Buffering_AdminHandler (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     AMI_AMI_Buffering_AdminHandler (
         TAO_Stub *objref,
@@ -650,7 +650,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~AMI_AMI_Buffering_AdminHandler (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     AMI_AMI_Buffering_AdminHandler (const AMI_AMI_Buffering_AdminHandler &);

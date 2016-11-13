@@ -65,7 +65,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_root/root_ch.cpp:157
@@ -101,7 +101,7 @@ namespace Test
         Simple
       >
     Simple_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Simple
@@ -144,7 +144,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Simple (void);
@@ -153,7 +153,7 @@ namespace Test
     Simple (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Simple (
         TAO_Stub *objref,
@@ -162,7 +162,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Simple (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Simple (const Simple &);
@@ -184,7 +184,7 @@ namespace Test
         Factory
       >
     Factory_var;
-  
+
   typedef
     TAO_Objref_Out_T<
         Factory
@@ -230,7 +230,7 @@ namespace Test
     virtual ::CORBA::Boolean _is_a (const char *type_id);
     virtual const char* _interface_repository_id (void) const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
-  
+
   protected:
     // Concrete interface only.
     Factory (void);
@@ -239,7 +239,7 @@ namespace Test
     Factory (
         ::IOP::IOR *ior,
         TAO_ORB_Core *orb_core);
-    
+
     // Non-local interface only.
     Factory (
         TAO_Stub *objref,
@@ -248,7 +248,7 @@ namespace Test
         TAO_ORB_Core *orb_core = 0);
 
     virtual ~Factory (void);
-  
+
   private:
     // Private and unimplemented for concrete interfaces.
     Factory (const Factory &);
@@ -293,12 +293,12 @@ namespace Test
       ::CORBA::Boolean release = false);
     Simple_Sequence (const Simple_Sequence &);
     virtual ~Simple_Sequence (void);
-    
+
 
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Simple_Sequence_var _var_type;
     typedef Simple_Sequence_out _out_type;
   };

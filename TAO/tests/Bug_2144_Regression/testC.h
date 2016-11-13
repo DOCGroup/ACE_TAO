@@ -67,7 +67,7 @@
 #if defined (TAO_EXPORT_MACRO)
 #undef TAO_EXPORT_MACRO
 #endif
-#define TAO_EXPORT_MACRO 
+#define TAO_EXPORT_MACRO
 
 // TAO_IDL - Generated from
 // be/be_visitor_module/module_ch.cpp:35
@@ -115,12 +115,12 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef Foo_var _var_type;
     typedef Foo_out _out_type;
 
     static void _tao_any_destructor (void *);
-    
+
     ::CORBA::Long l;
   };
 
@@ -132,7 +132,7 @@ namespace Test
   // TAO_IDL - Generated from
   // be/be_valuetype.cpp:564
 
-  
+
 
 #if !defined (_TEST_BAR__VAR_OUT_CH_)
 #define _TEST_BAR__VAR_OUT_CH_
@@ -143,7 +143,7 @@ namespace Test
         Bar
       >
     Bar_var;
-  
+
   typedef
     TAO_Value_Out_T<
         Bar
@@ -170,12 +170,12 @@ namespace Test
     static void _tao_any_destructor (void *);
 
     static Bar* _downcast ( ::CORBA::ValueBase *v);
-    
+
     /// TAO extensions or internals
     static ::CORBA::Boolean _tao_unmarshal (
         TAO_InputCDR &strm,
         Bar *&new_object);
-    
+
     virtual const char* _tao_obv_repository_id (void) const;
 
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
@@ -183,7 +183,7 @@ namespace Test
     static const char* _tao_obv_static_repository_id (void);
 
     virtual ::CORBA::TypeCode_ptr _tao_type (void) const;
-  
+
   public:
 
     // TAO_IDL - Generated from
@@ -194,7 +194,7 @@ namespace Test
 
     // TAO_IDL - Generated from
     // be/be_visitor_valuetype/valuetype_ch.cpp:238
-  
+
   protected:
     Bar (void);
     virtual ~Bar (void);
@@ -202,11 +202,11 @@ namespace Test
     virtual ::CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual ::CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual ::CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
-    
+
   private:
     Bar (const Bar &);
     void operator= (const Bar &);
-    
+
   protected:
     virtual ::CORBA::Boolean
     _tao_marshal__Test_Bar (TAO_OutputCDR &, TAO_ChunkInfo &) const = 0;
@@ -232,7 +232,7 @@ namespace Test
     // TAO-specific extensions
   public:
     virtual const char* tao_repository_id (void);
-  
+
   protected:
     virtual ~Bar_init (void);
   };
@@ -277,7 +277,7 @@ namespace Test
     // TAO_IDL - Generated from
     // be/be_type.cpp:304
 
-    
+
     typedef MyUnion_var _var_type;
     typedef MyUnion_out _out_type;
 
@@ -434,7 +434,7 @@ public:
 
 public:
   virtual ::CORBA::ValueBase *_copy_value (void);
-  
+
 protected:
   virtual ::CORBA::Boolean
   _tao_marshal__Test_Bar (TAO_OutputCDR &, TAO_ChunkInfo &) const;
@@ -485,7 +485,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace Test
 {
-  
+
 
    void operator<<= (::CORBA::Any &, ::Test::Selector);
    ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::Test::Selector &);

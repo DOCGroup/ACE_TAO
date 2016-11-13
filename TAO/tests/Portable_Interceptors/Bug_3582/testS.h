@@ -91,7 +91,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace POA_RTTest
 {
-  
+
 
   // TAO_IDL - Generated from
   // be/be_visitor_interface/interface_sh.cpp:73
@@ -104,7 +104,7 @@ namespace POA_RTTest
   {
   protected:
     test (void);
-  
+
   public:
     /// Useful for template programming.
     typedef ::RTTest::test _stub_type;
@@ -119,9 +119,9 @@ namespace POA_RTTest
     virtual void _dispatch (
         TAO_ServerRequest & req,
         TAO::Portable_Server::Servant_Upcall *servant_upcall);
-    
+
     ::RTTest::test *_this (void);
-    
+
     virtual const char* _interface_repository_id (void) const;
 
     // TAO_IDL - Generated from
