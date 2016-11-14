@@ -138,8 +138,8 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
         }
 
       *os << " * buffer," << be_nl
-          << "::CORBA::Boolean release" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << "::CORBA::Boolean release)" << be_uidt
+          << be_uidt_nl
           << "  : " << be_idt << be_idt;
 
       // Pass it to the base constructor.
