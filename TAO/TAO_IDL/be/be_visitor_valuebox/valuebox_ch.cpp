@@ -316,7 +316,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
     }
 
   *os << " * buf," << be_nl
-      << "::CORBA::Boolean release = false" << be_uidt_nl << ");"
+      << "::CORBA::Boolean release = false);" << be_uidt
       << be_uidt_nl;
 
   // Public constructor with single argument of type const T&
