@@ -790,17 +790,15 @@ be_interface:: gen_var_out_seq_decls (void)
       << "class " << lname << ";" << be_nl
       << "typedef " << lname << " *" << lname << "_ptr;";
 
-  *os << be_nl_2
-      << "typedef" << be_idt_nl
-      << "TAO_Objref_Var_T<" << be_idt << be_idt_nl
-      << lname << be_uidt_nl
-      << ">" << be_uidt_nl
-      << lname << "_var;" << be_uidt_nl << be_nl
-      << "typedef" << be_idt_nl
-      << "TAO_Objref_Out_T<" << be_idt << be_idt_nl
-      << lname << be_uidt_nl
-      << ">" << be_uidt_nl
-      << lname << "_out;" << be_uidt;
+  *os << be_nl
+      << "typedef TAO_Objref_Var_T<"
+      << lname
+      << "> "
+      << lname << "_var;" << be_nl
+      << "typedef TAO_Objref_Out_T<"
+      << lname
+      << "> "
+      << lname << "_out;" << be_nl;
 
   os->gen_endif ();
 
