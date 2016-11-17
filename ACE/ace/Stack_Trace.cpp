@@ -28,6 +28,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*
   This is ugly, simply because it's very platform-specific.
 */
@@ -732,3 +734,5 @@ ACE_Stack_Trace::generate_trace (ssize_t, size_t)
   ACE_OS::strcpy (&this->buf_[0], UNSUPPORTED);
 }
 #endif
+
+ACE_END_VERSIONED_NAMESPACE_DECL
