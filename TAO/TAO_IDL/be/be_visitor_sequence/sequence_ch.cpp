@@ -311,24 +311,19 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2;
+  *os << be_nl;
 
-    AST_Type::SIZE_TYPE st = elem->size_type ();
+  AST_Type::SIZE_TYPE st = elem->size_type ();
 
-    *os << "typedef" << be_idt_nl
-        << (st == AST_Type::FIXED ? "::TAO_FixedSeq_Var_T<"
-                                  : "::TAO_VarSeq_Var_T<")
-        << be_idt << be_idt_nl
-        << node->local_name ();
+  *os << "typedef "
+      << (st == AST_Type::FIXED ? "::TAO_FixedSeq_Var_T<"
+                                : "::TAO_VarSeq_Var_T<")
+      << node->local_name ();
 
-    *os << be_uidt_nl
-        << ">" << be_uidt_nl
-        << node->local_name () << "_var;" << be_uidt;
+  *os << "> "
+      << node->local_name () << "_var;" << be_nl;
 
-    *os << be_nl_2
-        << "typedef" << be_idt_nl
-        << "::TAO_Seq_Out_T<" << be_idt << be_idt_nl
-        << node->local_name () << be_uidt_nl
-        << ">" << be_uidt_nl
-        << node->local_name () << "_out;" << be_uidt;
+  *os << "typedef ::TAO_Seq_Out_T<"
+      << node->local_name ()
+      << "> " << node->local_name () << "_out;" << be_nl;
 }

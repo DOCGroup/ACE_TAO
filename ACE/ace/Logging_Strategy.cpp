@@ -614,8 +614,6 @@ ACE_Logging_Strategy::log_msg (ACE_Log_Msg *log_msg)
   this->log_msg_  = log_msg;
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 // The following is a "Factory" used by the ACE_Service_Config and
 // svc.conf file to dynamically initialize the state of the
 // Logging_Strategy.
@@ -628,6 +626,8 @@ ACE_STATIC_SVC_DEFINE (ACE_Logging_Strategy,
                        0)
 
 ACE_FACTORY_DEFINE (ACE, ACE_Logging_Strategy)
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 // _get_dll_unload_policy() prevents ACE from being unloaded and having its
 // framework components run down if/when the Logging Strategy is unloaded.
