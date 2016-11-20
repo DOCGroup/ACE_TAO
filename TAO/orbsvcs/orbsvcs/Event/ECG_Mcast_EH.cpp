@@ -97,18 +97,20 @@ TAO_ECG_Mcast_EH::shutdown (void)
   // Indicates that we are in a shutdown state.
   this->receiver_ = 0;
 
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
-  // Deregister from reactor, close and clean up sockets.
-  size_t const subscriptions_size = this->subscriptions_.size ();
-  for (size_t i = 0; i != subscriptions_size; ++i)
-    {
-      (void) this->reactor ()->remove_handler (
-                               this->subscriptions_[i].dgram->get_handle (),
-                               ACE_Event_Handler::READ_MASK);
-      (void) this->subscriptions_[i].dgram->close();
-      delete this->subscriptions_[i].dgram;
-    }
-  this->subscriptions_.size (0);
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+    // Deregister from reactor, close and clean up sockets.
+    size_t const subscriptions_size = this->subscriptions_.size ();
+    for (size_t i = 0; i != subscriptions_size; ++i)
+      {
+        (void) this->reactor ()->remove_handler (
+                                 this->subscriptions_[i].dgram->get_handle (),
+                                 ACE_Event_Handler::READ_MASK);
+        (void) this->subscriptions_[i].dgram->close();
+        delete this->subscriptions_[i].dgram;
+      }
+    this->subscriptions_.size (0);
+  }
 
   return 0;
 }
@@ -123,7 +125,6 @@ TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
       ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_[i].dgram;
       if (socket->get_handle () == fd)
         {
-          this->lock_.release ();
           return this->receiver_->handle_input (*socket);
         }
     }
@@ -227,7 +228,7 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
       --i;
     }
 
-    return 0;
+  return 0;
 }
 
 void
