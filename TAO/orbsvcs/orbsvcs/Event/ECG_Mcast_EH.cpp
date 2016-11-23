@@ -7,6 +7,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/os_fcntl.h"
+#include <list>
 
 #if !defined(__ACE_INLINE__)
 #include "orbsvcs/Event/ECG_Mcast_EH.inl"
@@ -97,17 +98,20 @@ TAO_ECG_Mcast_EH::shutdown (void)
   // Indicates that we are in a shutdown state.
   this->receiver_ = 0;
 
-  // Deregister from reactor, close and clean up sockets.
-  size_t const subscriptions_size = this->subscriptions_.size ();
-  for (size_t i = 0; i != subscriptions_size; ++i)
-    {
-      (void) this->reactor ()->remove_handler (
-                               this->subscriptions_[i].dgram->get_handle (),
-                               ACE_Event_Handler::READ_MASK);
-      (void) this->subscriptions_[i].dgram->close();
-      delete this->subscriptions_[i].dgram;
-    }
-  this->subscriptions_.size (0);
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+    // Deregister from reactor, close and clean up sockets.
+    size_t const subscriptions_size = this->subscriptions_.size ();
+    for (size_t i = 0; i != subscriptions_size; ++i)
+      {
+        (void) this->reactor ()->remove_handler (
+                                 this->subscriptions_[i].dgram->get_handle (),
+                                 ACE_Event_Handler::READ_MASK);
+        (void) this->subscriptions_[i].dgram->close();
+        delete this->subscriptions_[i].dgram;
+      }
+    this->subscriptions_.size (0);
+  }
 
   return 0;
 }
@@ -115,12 +119,14 @@ TAO_ECG_Mcast_EH::shutdown (void)
 int
 TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i = 0; i != subscriptions_size; ++i)
     {
       ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_[i].dgram;
       if (socket->get_handle () == fd)
         {
+          this->lock_.release ();
           return this->receiver_->handle_input (*socket);
         }
     }
@@ -181,7 +187,7 @@ TAO_ECG_Mcast_EH::compute_required_subscriptions (
       catch (const ::CORBA::BAD_OPERATION &)
         {
           // server only supports IPv4
-           // Grab the right mcast group for this event...
+          // Grab the right mcast group for this event...
           RtecUDPAdmin::UDP_Addr udp_addr;
           this->receiver_->get_addr (header, udp_addr);
           inet_addr.set (udp_addr.port, udp_addr.ipaddr);
@@ -197,33 +203,47 @@ int
 TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
     Address_Set& multicast_addresses)
 {
-  for (size_t i = 0; i < this->subscriptions_.size (); ++i)
-    {
-      ACE_INET_Addr multicast_group = this->subscriptions_[i].mcast_addr;
-      if (multicast_addresses.find (multicast_group))
-        {
-          // Remove from the list of subscriptions to be added,
-          // because we already subscribe to it...
-          (void) multicast_addresses.remove (multicast_group);
-          continue;
-        }
+  // List of sockets which will be cleaned up after the lock is released
+  std::list<ACE_SOCK_Dgram_Mcast *> sockets;
 
-      // This subscription is no longer needed - remove from reactor,
-      // close and delete the socket.
-      ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_[i].dgram;
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+    for (size_t i = 0; i < this->subscriptions_.size (); ++i)
+      {
+        ACE_INET_Addr multicast_group = this->subscriptions_[i].mcast_addr;
+        if (multicast_addresses.find (multicast_group))
+          {
+            // Remove from the list of subscriptions to be added,
+            // because we already subscribe to it...
+            (void) multicast_addresses.remove (multicast_group);
+            continue;
+          }
+
+        // This subscription is no longer needed. Save the socket
+        // for later clean up
+        sockets.push_back (this->subscriptions_[i].dgram);
+        // Move the deleted subscription out of the <subscriptions_>
+        // array by moving the last subscription in array into its place.
+        this->subscriptions_[i] =
+          this->subscriptions_[this->subscriptions_.size () - 1];
+        this->subscriptions_.size (this->subscriptions_.size () - 1);
+        --i;
+      }
+  }
+
+  // Close and clean up sockets which are no longer needed.
+  for (std::list<ACE_SOCK_Dgram_Mcast *>::iterator it = sockets.begin();
+       it != sockets.end();
+       ++it)
+    {
+      ACE_SOCK_Dgram_Mcast *socket = *it;
       (void) this->reactor ()->remove_handler (socket->get_handle (),
                                                ACE_Event_Handler::READ_MASK);
       (void) socket->close();
       delete socket;
-      // Move the deleted subscription out of the <subscriptions_>
-      // array by moving the last subscription in array into its place.
-      this->subscriptions_[i] =
-        this->subscriptions_[this->subscriptions_.size () - 1];
-      this->subscriptions_.size (this->subscriptions_.size () - 1);
-      --i;
     }
 
-    return 0;
+  return 0;
 }
 
 void
@@ -237,11 +257,12 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
       Subscription new_subscription;
       new_subscription.mcast_addr = *k;
       ACE_NEW (new_subscription.dgram, ACE_SOCK_Dgram_Mcast);
-
-      size_t const subscriptions_size = this->subscriptions_.size ();
-      this->subscriptions_.size (subscriptions_size + 1);
-      this->subscriptions_[subscriptions_size] = new_subscription;
-
+      {
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+        size_t const subscriptions_size = this->subscriptions_.size ();
+        this->subscriptions_.size (subscriptions_size + 1);
+        this->subscriptions_[subscriptions_size] = new_subscription;
+      }
       ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
 
       if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
