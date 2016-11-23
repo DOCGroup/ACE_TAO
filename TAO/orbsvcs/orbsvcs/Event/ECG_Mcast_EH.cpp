@@ -126,7 +126,7 @@ TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
       ACE_SOCK_Dgram_Mcast *socket = this->subscriptions_[i].dgram;
       if (socket->get_handle () == fd)
         {
-          this->lock_.release ();
+          ace_mon.release ();
           return this->receiver_->handle_input (*socket);
         }
     }
