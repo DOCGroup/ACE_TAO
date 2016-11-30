@@ -347,7 +347,7 @@ DII_Cubit_Client::print_stats (const char *call_name,
   else
     ACE_ERROR ((LM_ERROR,
                 "\tNo time stats printed.  "
-                "Call count zero or error ocurred.\n"));
+                "Call count zero or error occurred.\n"));
 
   ACE_DEBUG ((LM_DEBUG,
               "\t%d calls, %d errors\n",
