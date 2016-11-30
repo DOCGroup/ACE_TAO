@@ -55,7 +55,6 @@ public:
    * @return Encoded Base64 data in byte stream or NULL if input data cannot
    *         be encoded.
    */
-
   static ACE_Byte* encode (const ACE_Byte* input,
                            const size_t input_len,
                            size_t* output_len,
