@@ -1253,7 +1253,7 @@ sub check_for_empty_files ()
     return if is_suppressed ();
 
     print "Running empty file test\n";
-    foreach $file (@files_inl, @files_cpp) {
+    foreach $file (@files_inl, @files_cpp, @files_rb) {
         my $found_non_empty_line = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
