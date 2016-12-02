@@ -935,7 +935,7 @@ namespace
         ACE_CString fixed_name ("tao/");
         fixed_name += incl_file;
 
-        idl_global->add_to_included_idl_files (fixed_name.rep ());
+        idl_global->add_to_included_idl_files (fixed_name.c_str ());
       }
     else
       {
