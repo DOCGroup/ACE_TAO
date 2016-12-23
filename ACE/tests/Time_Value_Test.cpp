@@ -138,6 +138,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_Time_Value d5;
   d5.set(DBL_MAX);
   ACE_TEST_ASSERT (d5 == ACE_Time_Value::max_time);
+  ACE_TEST_ASSERT (ACE_Time_Value::max_time.sec () != 0);
+  ACE_TEST_ASSERT (ACE_Time_Value::max_time.usec () != -1);
 
   // Test performance of normalize()
   ACE_Time_Value v1(ACE_Numeric_Limits<time_t>::max(),
