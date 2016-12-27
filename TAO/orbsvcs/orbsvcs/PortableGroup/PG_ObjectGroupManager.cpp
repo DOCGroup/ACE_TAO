@@ -387,7 +387,7 @@ TAO_PG_ObjectGroupManager::get_object_group_ref (
   if (entry == 0)
     throw CORBA::INTERNAL ();
 
-  // This implemenation does not change the object group reference.
+  // This implementation does not change the object group reference.
   return PortableGroup::ObjectGroup::_duplicate (object_group);
 }
 
