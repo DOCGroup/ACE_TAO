@@ -115,7 +115,7 @@ public:
   virtual bool error_detected (void) const = 0;
 
   /// Check if we should keep waiting.
-  bool keep_waiting (void);
+  bool keep_waiting (void) const;
   //@}
 
   /// Reset the state, irrespective of the previous states
