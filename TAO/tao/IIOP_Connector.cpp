@@ -529,7 +529,7 @@ TAO_IIOP_Connector::complete_connection (int result,
   // closing the connection.  However the remainder of this method
   // only checked to see if the keep_waiting status was true, and bump
   // the refcount then. However if the status was really
-  // error_detected, then no bump in refcount occured allowing the
+  // error_detected, then no bump in refcount occurred allowing the
   // connection_handler's close_handler method to effectively steal
   // the reference to be handed back to the caller. That would then
   // trigger an abort as the profile_transport_resolver (our caller)

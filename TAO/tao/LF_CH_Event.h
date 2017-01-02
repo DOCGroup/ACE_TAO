@@ -89,7 +89,7 @@ private:
    * LFS_TIMEOUT               - The event has timed out.
    *
    * LFS_CONNECTION_CLOSED     - The connection was closed since
-   *                             an error occured while trying to
+   *                             an error occurred while trying to
    *                             establish connection
    *
    *  Event State Diagram

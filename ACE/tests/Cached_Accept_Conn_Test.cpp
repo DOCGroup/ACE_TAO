@@ -59,7 +59,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR
   if (result == 0)
     return result;
 
-  // If the error occured due to the fact that the file descriptor
+  // If the error occurred due to the fact that the file descriptor
   // limit was exhausted, then purge the connection cache of some
   // entries.
   result = this->out_of_sockets_handler ();
@@ -98,7 +98,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
       return result;
     }
 
-  // If the error occured due to the fact that the file descriptor
+  // If the error occurred due to the fact that the file descriptor
   // limit was exhausted, then purge the connection cache of some
   // entries.
   if (0 != this->out_of_sockets_handler ())

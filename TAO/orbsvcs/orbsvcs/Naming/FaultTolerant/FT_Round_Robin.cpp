@@ -64,7 +64,7 @@ TAO_FT_Round_Robin::next_location (
   CORBA::ULong start = 0;
   location = locations[start++];
   if (this->location_index_map_.bind (id, start) != 0)
-  { // The location was already bound or some failure occured. Should not happen.
+  { // The location was already bound or some failure occurred. Should not happen.
     throw CORBA::INTERNAL ();
   }
   return true;

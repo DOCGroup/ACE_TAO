@@ -7,7 +7,7 @@
 
 const ACE_TCHAR *output = ACE_TEXT("test.ior");
 const ACE_TCHAR *input = ACE_TEXT("file://test.ior");
-CORBA::Boolean exception_occured = false;
+CORBA::Boolean exception_occurred = false;
 ACE_CString server_orb;
 ACE_CString client_orb;
 
@@ -28,11 +28,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 't':
         // no exception expected
-        exception_occured = false;
+        exception_occurred = false;
         break;
       case 'd':
         // exception expected
-        exception_occured = true;
+        exception_occurred = true;
         break;
       case '?':
       default:
@@ -83,7 +83,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Client_Task client_task (input,
                                corb.in (),
                                ACE_Thread_Manager::instance (),
-                               exception_occured);
+                               exception_occurred);
 
       if (client_task.activate (THR_NEW_LWP | THR_JOINABLE,
                                 1,

@@ -1211,7 +1211,7 @@ private:
   TAO_Codeset_Translator_Base *char_translator_;
   TAO_Codeset_Translator_Base *wchar_translator_;
 
-  /// The tcs_set_ flag indicates that negotiation has occured and so the
+  /// The tcs_set_ flag indicates that negotiation has occurred and so the
   /// translators are correct, since a null translator is valid if both ends
   /// are using the same codeset, whatever that codeset might be.
   CORBA::Boolean tcs_set_;
