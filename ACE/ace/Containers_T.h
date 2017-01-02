@@ -963,7 +963,7 @@ protected:
   /**
    * Insert a @a new_item into the list.  It will be added before
    * or after @a old_item.  Default is to insert the new item *after*
-   * {head_}.  Return 0 if succeed, -1 if error occured.
+   * {head_}.  Return 0 if succeed, -1 if error occurred.
    */
   int insert_element (T *new_item,
                       int before = 0,

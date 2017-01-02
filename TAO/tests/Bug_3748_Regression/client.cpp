@@ -73,7 +73,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (encountered_failures == 0)
         ACE_ERROR ((LM_ERROR,
-                    "ERROR: No expected exceptions occured.\n"));
+                    "ERROR: No expected exceptions occurred.\n"));
 
       // By this time the server should accept the connection and
       // must handle shutdown gracefully.

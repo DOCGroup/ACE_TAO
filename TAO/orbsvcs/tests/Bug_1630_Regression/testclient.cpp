@@ -218,7 +218,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
    }
    catch (...)
    {
-     ACE_DEBUG((LM_DEBUG, "An unknown exception occured - test failed\n"));
+     ACE_DEBUG((LM_DEBUG, "An unknown exception occurred - test failed\n"));
      return 1;
    }
 

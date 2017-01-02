@@ -145,7 +145,7 @@ public:
   /// Obtain a pointer to the forwarded profile set
   TAO_MProfile *forward_profiles (void);
 
-  /// True if permanent location forward occured, in this case the lock must be set and the
+  /// True if permanent location forward occurred, in this case the lock must be set and the
 
   // Manage forward and base profiles.
   /**

@@ -315,7 +315,7 @@ int
 ACE_TP_Reactor::handle_notify_events (int & /*event_count*/,
                                       ACE_TP_Token_Guard &guard)
 {
-  // Get the handle on which notify calls could have occured
+  // Get the handle on which notify calls could have occurred
   ACE_HANDLE notify_handle = this->get_notify_handle ();
 
   int result = 0;

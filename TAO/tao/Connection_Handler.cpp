@@ -131,7 +131,7 @@ TAO_Connection_Handler::svc_i (void)
   // We exit of the loop if
   // - If the ORB core is shutdown by another thread
   // - Or if the transport is null. This could happen if an error
-  // occured.
+  // occurred.
   // - Or if during processing a return value of -1 is received.
   while (!this->orb_core_->has_shutdown () && result >= 0)
     {

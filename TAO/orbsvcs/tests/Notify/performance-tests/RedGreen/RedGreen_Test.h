@@ -83,7 +83,7 @@ class RedGreen_Test
   /// Run the demo.
   void run (void);
 
-  /// Called when all events we are waiting for have occured.
+  /// Called when all events we are waiting for have occurred.
   void done (void);
 
   /// Destroy from the EC
