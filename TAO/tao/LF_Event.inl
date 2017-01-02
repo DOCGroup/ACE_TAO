@@ -25,7 +25,7 @@ TAO_LF_Event::reset_state (int new_state)
   this->state_ = new_state;
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_LF_Event::keep_waiting (void)
 {
   return (this->successful () == 0) && (this->error_detected () == 0);

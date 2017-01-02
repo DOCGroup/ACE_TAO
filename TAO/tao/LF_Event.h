@@ -99,13 +99,13 @@ public:
     LFS_CONNECTION_CLOSED
   };
 
-  /**
-   * Virtual methods for this class hierarchy..
-   */
   /// Accessor to change the state. The state isn't changed unless
   /// certain conditions are satisfied.
   void state_changed (int new_state, TAO_Leader_Follower &lf);
 
+  /**
+   * Virtual methods for this class hierarchy..
+   */
   /// Return 1 if the condition was satisfied successfully, 0 if it
   /// has not
   virtual int successful (void) const = 0 ;
@@ -115,7 +115,7 @@ public:
   virtual int error_detected (void) const = 0;
 
   /// Check if we should keep waiting.
-  int keep_waiting (void);
+  bool keep_waiting (void);
   //@}
 
   /// Reset the state, irrespective of the previous states
