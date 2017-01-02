@@ -42,13 +42,13 @@ public:
   /// Destructor
   virtual ~TAO_LF_Invocation_Event (void);
 
-  /// Return 1 if the condition was satisfied successfully, 0 if it
+  /// Return true if the condition was satisfied successfully, false if it
   /// has not
-  int successful (void) const;
+  bool successful (void) const;
 
-  /// Return 1 if an error was detected while waiting for the
+  /// Return true if an error was detected while waiting for the
   /// event
-  int error_detected (void) const;
+  bool error_detected (void) const;
   //@}
 
 protected:
@@ -72,7 +72,7 @@ protected:
 
 private:
   /// Check whether we have reached the final state..
-  int is_state_final (void);
+  bool is_state_final (void) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

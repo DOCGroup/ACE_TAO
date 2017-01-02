@@ -61,13 +61,13 @@ TAO_LF_Invocation_Event::state_changed_i (int new_state)
 
 }
 
-int
+bool
 TAO_LF_Invocation_Event::successful (void) const
 {
   return this->state_ == TAO_LF_Event::LFS_SUCCESS;
 }
 
-int
+bool
 TAO_LF_Invocation_Event::error_detected (void) const
 {
   return (this->state_ == TAO_LF_Event::LFS_FAILURE
@@ -75,14 +75,14 @@ TAO_LF_Invocation_Event::error_detected (void) const
           || this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED);
 }
 
-int
-TAO_LF_Invocation_Event::is_state_final (void)
+bool
+TAO_LF_Invocation_Event::is_state_final (void) const
 {
   if (this->state_ == TAO_LF_Event::LFS_TIMEOUT ||
       this->state_ == TAO_LF_Event::LFS_FAILURE)
-    return 1;
+    return true;
 
-  return 0;
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

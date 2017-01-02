@@ -60,15 +60,15 @@ public:
   TAO_Transport *base_transport(void);
 
   //@{
-  /// Return 1 if the condition was satisfied successfully, 0 if it
+  /// Return true if the condition was satisfied successfully, false if it
   /// has not - This iterates over the list of attached events and
-  /// returns 1 if any of them return 1 from successful.
-  int successful (void) const;
+  /// returns true if any of them return true from successful.
+  bool successful (void) const;
 
-  /// Return 1 if an error was detected while waiting for the
+  /// Return true if an error was detected while waiting for the
   /// event - This iterates over the list of events and returns
-  /// 1 only if all of them return 1 from error_detected().
-  int error_detected (void) const;
+  /// true only if all of them return true from error_detected().
+  bool error_detected (void) const;
 
   //@}
 private:
@@ -81,7 +81,7 @@ protected:
   virtual void state_changed_i (int new_state);
 
   /// Check whether we have reached the final state..
-  virtual int is_state_final (void);
+  virtual bool is_state_final (void) const;
 
 private:
 

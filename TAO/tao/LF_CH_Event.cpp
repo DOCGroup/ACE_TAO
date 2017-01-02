@@ -109,7 +109,7 @@ TAO_LF_CH_Event::validate_state_change (int new_state)
 }
 
 
-int
+bool
 TAO_LF_CH_Event::successful (void) const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
@@ -118,7 +118,7 @@ TAO_LF_CH_Event::successful (void) const
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }
 
-int
+bool
 TAO_LF_CH_Event::error_detected (void) const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
@@ -131,7 +131,7 @@ void
 TAO_LF_CH_Event::set_state (int new_state)
 {
   // @@ NOTE: Is this still required?
-  if (this->is_state_final () == 0
+  if (!this->is_state_final ()
       && new_state == TAO_LF_Event::LFS_TIMEOUT)
     {
       this->state_ = new_state;
@@ -150,8 +150,8 @@ TAO_LF_CH_Event::set_state (int new_state)
     }
 }
 
-int
-TAO_LF_CH_Event::is_state_final (void)
+bool
+TAO_LF_CH_Event::is_state_final (void) const
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }

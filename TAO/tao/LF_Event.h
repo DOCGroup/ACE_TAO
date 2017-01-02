@@ -106,13 +106,13 @@ public:
   /**
    * Virtual methods for this class hierarchy..
    */
-  /// Return 1 if the condition was satisfied successfully, 0 if it
+  /// Return true if the condition was satisfied successfully, false if it
   /// has not
-  virtual int successful (void) const = 0 ;
+  virtual bool successful (void) const = 0 ;
 
-  /// Return 1 if an error was detected while waiting for the
+  /// Return true if an error was detected while waiting for the
   /// event
-  virtual int error_detected (void) const = 0;
+  virtual bool error_detected (void) const = 0;
 
   /// Check if we should keep waiting.
   bool keep_waiting (void);
@@ -129,7 +129,7 @@ protected:
   virtual void state_changed_i (int new_state) = 0;
 
   /// Check whether we have reached the final state..
-  virtual int is_state_final (void) = 0;
+  virtual bool is_state_final (void) const = 0;
 
 private:
 

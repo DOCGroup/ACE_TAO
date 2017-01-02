@@ -78,26 +78,29 @@ TAO_LF_Multi_Event::base_transport (void)
   return (this->events_ == 0) ? 0 : this->events_->ptr_->transport();
 }
 
-int
+bool
 TAO_LF_Multi_Event::successful (void) const
 {
   for (Event_Node *n = this->events_; n != 0; n = n->next_)
-    if (n->ptr_->successful() == 1)
+    if (n->ptr_->successful())
       {
         this->winner_ = n->ptr_;
-        return 1;
+        return true;
       }
-  return 0;
+  return false;
 }
 
-int
+bool
 TAO_LF_Multi_Event::error_detected (void) const
 {
-  int result = 1;
   for (Event_Node *n = this->events_; n != 0; n = n->next_)
-    if (n->ptr_->error_detected () == 0)
-      result = 0;
-  return result;
+    {
+      if (!n->ptr_->error_detected ())
+        {
+          return false;
+        }
+    }
+  return true;
 }
 
 void
@@ -106,14 +109,17 @@ TAO_LF_Multi_Event::state_changed_i (int )
   // no-op
 }
 
-int
-TAO_LF_Multi_Event::is_state_final (void)
+bool
+TAO_LF_Multi_Event::is_state_final (void) const
 {
-  int result = 1;
   for (Event_Node *n = this->events_; n != 0; n = n->next_)
-    if (n->ptr_->is_state_final () == 0)
-      result = 0;
-  return result;
+    {
+      if (!n->ptr_->is_state_final ())
+        {
+          return false;
+        }
+    }
+  return true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
