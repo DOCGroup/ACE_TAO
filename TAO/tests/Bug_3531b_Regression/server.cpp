@@ -251,12 +251,12 @@ public:
     this->state_changed (TAO_LF_Event::LFS_SUCCESS, lf);
   }
 
-  virtual int successful (void) const
+  virtual bool successful (void) const
   {
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
   }
 
-  virtual int error_detected (void) const
+  virtual bool error_detected (void) const
   {
     return (this->state_ == TAO_LF_Event::LFS_FAILURE
             || this->state_ == TAO_LF_Event::LFS_TIMEOUT
@@ -269,12 +269,12 @@ protected:
     return;
   }
 
-  virtual int is_state_final (void)
+  virtual bool is_state_final (void) const
   {
     if (this->state_ == TAO_LF_Event::LFS_TIMEOUT ||
         this->state_ == TAO_LF_Event::LFS_FAILURE)
-      return 1;
-    return 0;
+      return true;
+    return false;
   }
 };
 
