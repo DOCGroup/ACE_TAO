@@ -254,10 +254,10 @@ ACE_END_VERSIONED_NAMESPACE_DECL
       } \
    while (0)
 
-# define ACE_DES_FREE_THIS(POINTER,DEALLOCATOR,CLASS) \
+# define ACE_DES_FREE_THIS(DEALLOCATOR,CLASS) \
    do { \
-        (POINTER)->~CLASS (); \
-        DEALLOCATOR (POINTER); \
+        this->~CLASS (); \
+        DEALLOCATOR (this); \
       } \
    while (0)
 
