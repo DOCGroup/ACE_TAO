@@ -254,6 +254,13 @@ ACE_END_VERSIONED_NAMESPACE_DECL
       } \
    while (0)
 
+# define ACE_DES_FREE_THIS(POINTER,DEALLOCATOR,CLASS) \
+   do { \
+        (POINTER)->~CLASS (); \
+        DEALLOCATOR (POINTER); \
+      } \
+   while (0)
+
 # define ACE_DES_ARRAY_FREE(POINTER,SIZE,DEALLOCATOR,CLASS) \
    do { \
         if (POINTER) \
