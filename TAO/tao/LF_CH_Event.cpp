@@ -110,7 +110,7 @@ TAO_LF_CH_Event::validate_state_change (int new_state)
 
 
 bool
-TAO_LF_CH_Event::successful (void) const
+TAO_LF_CH_Event::successful_i (void) const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
@@ -119,7 +119,7 @@ TAO_LF_CH_Event::successful (void) const
 }
 
 bool
-TAO_LF_CH_Event::error_detected (void) const
+TAO_LF_CH_Event::error_detected_i (void) const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
     return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;

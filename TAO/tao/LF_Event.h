@@ -108,14 +108,14 @@ public:
    */
   /// Return true if the condition was satisfied successfully, false if it
   /// has not
-  virtual bool successful (void) const = 0 ;
+  bool successful (TAO_Leader_Follower &lf) const;
 
   /// Return true if an error was detected while waiting for the
   /// event
-  virtual bool error_detected (void) const = 0;
+  bool error_detected (TAO_Leader_Follower &lf) const;
 
   /// Check if we should keep waiting.
-  bool keep_waiting (void) const;
+  bool keep_waiting (TAO_Leader_Follower &lf) const;
   //@}
 
   /// Reset the state, irrespective of the previous states
@@ -127,6 +127,17 @@ protected:
 
   /// Validate the state change
   virtual void state_changed_i (int new_state) = 0;
+
+  /// Check if we should keep waiting.
+  bool keep_waiting_i (void) const;
+
+  /// Return true if the condition was satisfied successfully, false if it
+  /// has not
+  virtual bool successful_i (void) const = 0 ;
+
+  /// Return true if an error was detected while waiting for the
+  /// event
+  virtual bool error_detected_i (void) const = 0;
 
   /// Check whether we have reached the final state..
   virtual bool is_state_final (void) const = 0;

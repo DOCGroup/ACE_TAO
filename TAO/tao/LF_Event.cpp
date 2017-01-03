@@ -35,6 +35,30 @@ TAO_LF_Event::state_changed (int new_state, TAO_Leader_Follower &lf)
     }
 }
 
+bool
+TAO_LF_Event::keep_waiting (TAO_Leader_Follower &lf) const
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, lf.lock (), false);
+
+  return this->keep_waiting_i ();
+}
+
+bool
+TAO_LF_Event::successful (TAO_Leader_Follower &lf) const
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, lf.lock (), false);
+
+  return this->successful_i ();
+}
+
+bool
+TAO_LF_Event::error_detected (TAO_Leader_Follower &lf) const
+{
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, lf.lock (), false);
+
+  return this->error_detected_i ();
+}
+
 void
 TAO_LF_Event::set_state (int new_state)
 {

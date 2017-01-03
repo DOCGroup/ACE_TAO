@@ -42,15 +42,6 @@ public:
   /// Destructor
   virtual ~TAO_LF_Invocation_Event (void);
 
-  /// Return true if the condition was satisfied successfully, false if it
-  /// has not
-  bool successful (void) const;
-
-  /// Return true if an error was detected while waiting for the
-  /// event
-  bool error_detected (void) const;
-  //@}
-
 protected:
 
   /// Validate and perform the state change
@@ -69,6 +60,14 @@ protected:
    *                         was active.
    */
   virtual void state_changed_i (int new_state);
+
+  /// Return true if the condition was satisfied successfully, false if it
+  /// has not
+  virtual bool successful_i (void) const;
+
+  /// Return true if an error was detected while waiting for the
+  /// event
+  virtual bool error_detected_i (void) const;
 
 private:
   /// Check whether we have reached the final state..

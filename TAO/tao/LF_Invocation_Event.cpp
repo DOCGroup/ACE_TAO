@@ -62,13 +62,13 @@ TAO_LF_Invocation_Event::state_changed_i (int new_state)
 }
 
 bool
-TAO_LF_Invocation_Event::successful (void) const
+TAO_LF_Invocation_Event::successful_i (void) const
 {
   return this->state_ == TAO_LF_Event::LFS_SUCCESS;
 }
 
 bool
-TAO_LF_Invocation_Event::error_detected (void) const
+TAO_LF_Invocation_Event::error_detected_i (void) const
 {
   return (this->state_ == TAO_LF_Event::LFS_FAILURE
           || this->state_ == TAO_LF_Event::LFS_TIMEOUT

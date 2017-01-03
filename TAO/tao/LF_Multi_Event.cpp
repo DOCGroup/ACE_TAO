@@ -79,10 +79,10 @@ TAO_LF_Multi_Event::base_transport (void)
 }
 
 bool
-TAO_LF_Multi_Event::successful (void) const
+TAO_LF_Multi_Event::successful_i (void) const
 {
   for (Event_Node *n = this->events_; n != 0; n = n->next_)
-    if (n->ptr_->successful())
+    if (n->ptr_->successful_i())
       {
         this->winner_ = n->ptr_;
         return true;
@@ -91,11 +91,11 @@ TAO_LF_Multi_Event::successful (void) const
 }
 
 bool
-TAO_LF_Multi_Event::error_detected (void) const
+TAO_LF_Multi_Event::error_detected_i (void) const
 {
   for (Event_Node *n = this->events_; n != 0; n = n->next_)
     {
-      if (!n->ptr_->error_detected ())
+      if (!n->ptr_->error_detected_i ())
         {
           return false;
         }

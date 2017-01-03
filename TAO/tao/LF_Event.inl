@@ -26,9 +26,9 @@ TAO_LF_Event::reset_state (int new_state)
 }
 
 ACE_INLINE bool
-TAO_LF_Event::keep_waiting (void) const
+TAO_LF_Event::keep_waiting_i (void) const
 {
-  return (!this->successful ()) && (!this->error_detected ());
+  return (!this->successful_i ()) && (!this->error_detected_i ());
 }
 
 ACE_INLINE const char *

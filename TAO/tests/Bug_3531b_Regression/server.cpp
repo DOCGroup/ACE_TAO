@@ -251,22 +251,21 @@ public:
     this->state_changed (TAO_LF_Event::LFS_SUCCESS, lf);
   }
 
-  virtual bool successful (void) const
+protected:
+  virtual bool successful_i (void) const
   {
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
   }
 
-  virtual bool error_detected (void) const
+  virtual bool error_detected_i (void) const
   {
     return (this->state_ == TAO_LF_Event::LFS_FAILURE
             || this->state_ == TAO_LF_Event::LFS_TIMEOUT
             || this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED);
   }
-protected:
   virtual void state_changed_i (int new_state)
   {
     this->state_ = new_state;
-    return;
   }
 
   virtual bool is_state_final (void) const
