@@ -31,11 +31,11 @@ endif
 
 %.subdir: %
 ifneq ($(timed),)
-	echo -n "START: $< " && date
+	@date=`date`; echo "START: $< $$date"
 endif
 	cd $< && $(MAKE) -f $(SUBDIR_MAKEFILE) $(SUBDIR_TARGET)
 ifneq ($(timed),)
-	echo -n "FINISH: $< " && date
+	@date=`date`;echo "FINISH: $< $$date"
 endif
 
 # Build FOO.nested by calling MAKE again, this time with DIRS (with
