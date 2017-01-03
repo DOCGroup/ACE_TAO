@@ -59,7 +59,7 @@ protected:
    * LFS_CONNECTION_CLOSED - The connection was closed when the state
    *                         was active.
    */
-  virtual void state_changed_i (int new_state);
+  virtual void state_changed_i (LFS_STATE new_state);
 
   /// Return true if the condition was satisfied successfully, false if it
   /// has not

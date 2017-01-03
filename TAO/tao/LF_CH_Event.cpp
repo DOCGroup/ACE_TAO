@@ -30,7 +30,7 @@ TAO_LF_CH_Event::unbind (TAO_LF_Follower *follower)
 }
 
 void
-TAO_LF_CH_Event::state_changed_i (int new_state)
+TAO_LF_CH_Event::state_changed_i (LFS_STATE new_state)
 {
   if (this->state_ != new_state)
     {
@@ -64,7 +64,7 @@ TAO_LF_CH_Event::state_changed_i (int new_state)
 }
 
 void
-TAO_LF_CH_Event::validate_state_change (int new_state)
+TAO_LF_CH_Event::validate_state_change (LFS_STATE new_state)
 {
   if (this->state_ == TAO_LF_Event::LFS_IDLE)
     {
@@ -128,7 +128,7 @@ TAO_LF_CH_Event::error_detected_i (void) const
 }
 
 void
-TAO_LF_CH_Event::set_state (int new_state)
+TAO_LF_CH_Event::set_state (LFS_STATE new_state)
 {
   // @@ NOTE: Is this still required?
   if (!this->is_state_final ()

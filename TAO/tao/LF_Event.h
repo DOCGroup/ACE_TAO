@@ -82,7 +82,7 @@ public:
    * FSM. The possible sequence of states through which the FSM
    * migrates is defined in the concrete classes.
    */
-  enum {
+  enum LFS_STATE {
     /// The event is created, and is in initial state
     LFS_IDLE = 0,
     /// The event is active
@@ -97,11 +97,11 @@ public:
     LFS_TIMEOUT,
     /// The connection was closed.
     LFS_CONNECTION_CLOSED
-  };
+  } ;
 
   /// Accessor to change the state. The state isn't changed unless
   /// certain conditions are satisfied.
-  void state_changed (int new_state, TAO_Leader_Follower &lf);
+  void state_changed (LFS_STATE new_state, TAO_Leader_Follower &lf);
 
   /**
    * Virtual methods for this class hierarchy..
@@ -119,14 +119,14 @@ public:
   //@}
 
   /// Reset the state, irrespective of the previous states
-  void reset_state (int new_state);
+  void reset_state (LFS_STATE new_state);
 
-  static const char *state_name (int st);
+  static const char *state_name (LFS_STATE st);
 
 protected:
 
   /// Validate the state change
-  virtual void state_changed_i (int new_state) = 0;
+  virtual void state_changed_i (LFS_STATE new_state) = 0;
 
   /// Check if we should keep waiting.
   bool keep_waiting_i (void) const;
@@ -145,11 +145,11 @@ protected:
 private:
 
   /// Set the state irrespective of anything.
-  virtual void set_state (int new_state);
+  virtual void set_state (LFS_STATE new_state);
 
 protected:
   /// The current state
-  int state_;
+  LFS_STATE state_;
 
   /// The bounded follower
   TAO_LF_Follower *follower_;

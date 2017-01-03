@@ -263,7 +263,7 @@ protected:
             || this->state_ == TAO_LF_Event::LFS_TIMEOUT
             || this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED);
   }
-  virtual void state_changed_i (int new_state)
+  virtual void state_changed_i (LFS_STATE new_state)
   {
     this->state_ = new_state;
   }

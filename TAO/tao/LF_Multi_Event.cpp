@@ -104,7 +104,7 @@ TAO_LF_Multi_Event::error_detected_i (void) const
 }
 
 void
-TAO_LF_Multi_Event::state_changed_i (int )
+TAO_LF_Multi_Event::state_changed_i (LFS_STATE )
 {
   // no-op
 }

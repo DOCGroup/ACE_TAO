@@ -66,7 +66,7 @@ private:
 protected:
 
   /// Validate the state change
-  virtual void state_changed_i (int new_state);
+  virtual void state_changed_i (LFS_STATE new_state);
 
   /// Check whether we have reached the final state..
   virtual bool is_state_final (void) const;
@@ -91,7 +91,6 @@ private:
   struct Event_Node *events_;
 
   mutable TAO_Connection_Handler * winner_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

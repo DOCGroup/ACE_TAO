@@ -97,7 +97,7 @@ private:
    * Timeouts can occur while waiting for connections.
    *
    */
-  virtual void state_changed_i (int new_state);
+  virtual void state_changed_i (LFS_STATE new_state);
 
   /// Return true if the condition was satisfied successfully, false if it
   /// has not
@@ -108,7 +108,7 @@ private:
   virtual bool error_detected_i (void) const;
 
   /// Set the state irrespective of anything.
-  virtual void set_state (int new_state);
+  virtual void set_state (LFS_STATE new_state);
 
   virtual int bind (TAO_LF_Follower *follower);
   virtual int unbind (TAO_LF_Follower *follower);
@@ -116,9 +116,9 @@ private:
 private:
 
   /// The previous state that the LF_CH_Event was in
-  int prev_state_;
+  LFS_STATE prev_state_;
 
-  void validate_state_change (int new_state);
+  void validate_state_change (LFS_STATE new_state);
 
   typedef ACE_Hash_Map_Manager_Ex <TAO_LF_Follower *, int,
                                    ACE_Hash<void *>,

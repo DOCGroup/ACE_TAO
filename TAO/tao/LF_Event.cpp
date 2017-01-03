@@ -21,7 +21,7 @@ TAO_LF_Event::~TAO_LF_Event (void)
 }
 
 void
-TAO_LF_Event::state_changed (int new_state, TAO_Leader_Follower &lf)
+TAO_LF_Event::state_changed (LFS_STATE new_state, TAO_Leader_Follower &lf)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, lf.lock ());
 
@@ -60,7 +60,7 @@ TAO_LF_Event::error_detected (TAO_Leader_Follower &lf) const
 }
 
 void
-TAO_LF_Event::set_state (int new_state)
+TAO_LF_Event::set_state (LFS_STATE new_state)
 {
   this->state_ = new_state;
 }

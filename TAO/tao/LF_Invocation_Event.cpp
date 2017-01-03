@@ -13,7 +13,7 @@ TAO_LF_Invocation_Event::~TAO_LF_Invocation_Event (void)
 }
 
 void
-TAO_LF_Invocation_Event::state_changed_i (int new_state)
+TAO_LF_Invocation_Event::state_changed_i (LFS_STATE new_state)
 {
   if (this->state_ == new_state)
     return;
