@@ -103,9 +103,6 @@ public:
   /// certain conditions are satisfied.
   void state_changed (LFS_STATE new_state, TAO_Leader_Follower &lf);
 
-  /**
-   * Virtual methods for this class hierarchy..
-   */
   /// Return true if the condition was satisfied successfully, false if it
   /// has not
   bool successful (TAO_Leader_Follower &lf) const;
