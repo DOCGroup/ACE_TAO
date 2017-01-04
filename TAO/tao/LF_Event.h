@@ -97,7 +97,7 @@ public:
     LFS_TIMEOUT,
     /// The connection was closed.
     LFS_CONNECTION_CLOSED
-  } ;
+  };
 
   /// Accessor to change the state. The state isn't changed unless
   /// certain conditions are satisfied.
