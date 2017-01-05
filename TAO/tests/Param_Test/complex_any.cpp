@@ -174,8 +174,8 @@ Test_Complex_Any::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Complex_Any::check_validity (void)
 {
-  CORBA::AnySeq *level2_in_seq;
-  CORBA::AnySeq *level2_test_seq;
+  const CORBA::AnySeq *level2_in_seq = 0;
+  const CORBA::AnySeq *level2_test_seq = 0;
 
   if (!(this->in_ >>= level2_in_seq))
     return 0;

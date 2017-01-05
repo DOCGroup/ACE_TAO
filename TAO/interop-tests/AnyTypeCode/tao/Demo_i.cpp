@@ -44,7 +44,7 @@ ATC_Test_i::~ATC_Test_i (void)
 char *
 ATC_Test_i::do_union (const ::CORBA::Any & a)
 {
-  Demo::NestedUnion *any_union;
+  const Demo::NestedUnion *any_union = 0;
   const char *result = "do_union called";
   if (a >>= any_union)
     {
@@ -104,7 +104,7 @@ ATC_Test_i::do_union (const ::CORBA::Any & a)
 char *
 ATC_Test_i::do_struct (const ::CORBA::Any & a)
 {
-  Demo::NestedStruct *bar;
+  const Demo::NestedStruct *bar = 0;
   const char *result = "do_struct called";
   if (a >>= bar)
     {

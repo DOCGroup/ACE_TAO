@@ -95,7 +95,7 @@ test_codec (IOP::Codec_ptr codec)
 
   CORBA::OctetSeq_var encoded_data;
   CORBA::Any_var decoded_data;
-  Foo::Bar *extracted_value = 0;
+  const Foo::Bar *extracted_value = 0;
 
   // Encode the structure into an octet sequence using the CDR
   // enscapsulation Codec.

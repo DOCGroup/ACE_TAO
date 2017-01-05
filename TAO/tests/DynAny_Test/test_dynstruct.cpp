@@ -183,7 +183,7 @@ Test_DynStruct::run_test (void)
       CORBA::Any_var out_any1 =
         ftc1->to_any ();
 
-      DynAnyTests::test_struct* ts_out;
+      const DynAnyTests::test_struct* ts_out = 0;
       out_any1.in () >>= ts_out;
 
       if (ts_out->es.s == data.m_short1)

@@ -49,7 +49,7 @@ TAO::Security::PolicyFactory::create_policy (
 
   else if (type == ::Security::SecEstablishTrustPolicy)
     {
-      ::Security::EstablishTrust *trust = 0;
+      const ::Security::EstablishTrust *trust = 0;
 
       // Extract the desired establishing of trust value from the
       // given Any.
@@ -74,7 +74,7 @@ TAO::Security::PolicyFactory::create_policy (
 
   else if (type == SecurityLevel3::ContextEstablishmentPolicyType)
     {
-      SecurityLevel3::ContextEstablishmentPolicyArgument * args = 0;
+      const SecurityLevel3::ContextEstablishmentPolicyArgument * args = 0;
 
       // Extract the desired establishing of trust value from the
       // given Any.
@@ -105,7 +105,7 @@ TAO::Security::PolicyFactory::create_policy (
 
   else if (type == SecurityLevel3::ObjectCredentialsPolicyType)
     {
-      SecurityLevel3::OwnCredentialsList * creds = 0;
+      const SecurityLevel3::OwnCredentialsList * creds = 0;
 
       // Extract the desired establishing of trust value from the
       // given Any.

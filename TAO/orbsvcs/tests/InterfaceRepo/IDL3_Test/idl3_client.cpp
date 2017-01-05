@@ -555,7 +555,7 @@ IDL3_Client::home_test (void)
   CORBA::Contained::Description_var desc =
     home->describe ();
 
-  CORBA::ComponentIR::HomeDescription *home_desc = 0;
+  const CORBA::ComponentIR::HomeDescription *home_desc = 0;
 
   if ((desc->value >>= home_desc) == 0)
     {
@@ -654,8 +654,7 @@ IDL3_Client::valuetype_test (const char *repo_id,
       return -1;
     }
 
-  status = this->valuetype_factory_test (desc,
-                                         prefix);
+  status = this->valuetype_factory_test (desc, prefix);
 
   if (status != 0)
     {
@@ -667,8 +666,7 @@ IDL3_Client::valuetype_test (const char *repo_id,
 
 int
 IDL3_Client::component_attribute_test (
-    CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &desc
-  )
+    CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &desc)
 {
   if (desc->attributes.length () != ATTRS_LEN)
     {
@@ -750,8 +748,7 @@ IDL3_Client::component_attribute_test (
 
 int
 IDL3_Client::component_inheritance_test (
-    CORBA::ComponentIR::ComponentDef_var &comp_def
-  )
+    CORBA::ComponentIR::ComponentDef_var &comp_def)
 {
   CORBA::ComponentIR::ComponentDef_var comp_base =
     comp_def->base_component ();
@@ -823,13 +820,12 @@ IDL3_Client::component_inheritance_test (
 
 int
 IDL3_Client::component_port_test (
-    CORBA::ComponentIR::ComponentDef_var &comp_def
-  )
+    CORBA::ComponentIR::ComponentDef_var &comp_def)
 {
   CORBA::Contained::Description_var desc =
     comp_def->describe ();
 
-  CORBA::ComponentIR::ComponentDescription *cd = 0;
+  const CORBA::ComponentIR::ComponentDescription *cd = 0;
 
   if ((desc->value >>= cd) == 0)
     {
@@ -1153,8 +1149,7 @@ IDL3_Client::valuetype_inheritance_test (CORBA::ExtValueDef_var &vd,
 int
 IDL3_Client::valuetype_attribute_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
-    const char *prefix
-  )
+    const char *prefix)
 {
   if (desc->attributes.length () != ATTRS_LEN)
     {
@@ -1358,8 +1353,7 @@ IDL3_Client::valuetype_operation_test (
 int
 IDL3_Client::valuetype_member_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
-    const char *prefix
-  )
+    const char *prefix)
 {
   CORBA::ULong length = desc->members.length ();
 
@@ -1417,8 +1411,7 @@ IDL3_Client::valuetype_member_test (
 int
 IDL3_Client::valuetype_factory_test (
     CORBA::ExtValueDef::ExtFullValueDescription_var &desc,
-    const char *prefix
-  )
+    const char *prefix)
 {
   CORBA::ULong length = desc->initializers.length ();
 

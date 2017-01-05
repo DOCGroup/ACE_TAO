@@ -925,7 +925,7 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
 
       else if (property.nam == this->built_in_balancing_strategy_info_name_)
         {
-          CosLoadBalancing::StrategyInfo * info;
+          const CosLoadBalancing::StrategyInfo * info = 0;
 
           if (property.val >>= info)
             {

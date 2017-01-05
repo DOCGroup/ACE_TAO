@@ -37,7 +37,7 @@ AnySeq *Test_impl::RunTest(const AnySeq &params)
     }
     else
     {
-      Inner* inner = 0;
+      const Inner* inner = 0;
       if (!(container->contents >>= inner))
       {
         ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));
