@@ -108,12 +108,6 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
                   << " operator<<= ( ::CORBA::Any &, ::"
                   << name.c_str ()
                   << "*); // noncopying version" << be_nl;
-
-              *os << macro
-                  << " ::CORBA::Boolean"
-                  << " operator>>= (const ::CORBA::Any &, ::"
-                  << name.c_str ()
-                  << " *&); // deprecated" << be_nl;
             }
 
           *os << macro
@@ -146,12 +140,6 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
           << " operator<<= ( ::CORBA::Any &, "
           << name.c_str ()
           << "*); // noncopying version" << be_nl;
-
-      *os << macro
-          << " ::CORBA::Boolean"
-          << " operator>>= (const ::CORBA::Any &, "
-          << name.c_str ()
-          << " *&); // deprecated" << be_nl;
     }
 
   *os << macro
