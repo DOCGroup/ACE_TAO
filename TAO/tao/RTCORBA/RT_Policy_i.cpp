@@ -315,7 +315,7 @@ TAO_PriorityBandedConnectionPolicy::~TAO_PriorityBandedConnectionPolicy (void)
 CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val)
 {
-  RTCORBA::PriorityBands *value = 0;
+  const RTCORBA::PriorityBands *value = 0;
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
@@ -421,7 +421,7 @@ TAO_ServerProtocolPolicy::~TAO_ServerProtocolPolicy (void)
 CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::create (const CORBA::Any &val)
 {
-  RTCORBA::ProtocolList *value = 0;
+  const RTCORBA::ProtocolList *value = 0;
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
@@ -520,7 +520,7 @@ TAO_ClientProtocolPolicy::~TAO_ClientProtocolPolicy ()
 CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::create (const CORBA::Any &val)
 {
-  RTCORBA::ProtocolList *value = 0;
+  const RTCORBA::ProtocolList *value = 0;
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
