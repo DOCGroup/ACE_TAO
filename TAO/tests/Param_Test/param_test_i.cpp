@@ -701,10 +701,10 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   Coffee_ptr coffee;
   Param_Test::Fixed_Array_forany array;
   CORBA::ShortSeq *ub_short_sequence;
-  Param_Test::Bounded_Short_Seq *bd_short_sequence;
-  Param_Test::Fixed_Struct *fixed_structure;
-  Param_Test::Big_Union *big_union;
-  Param_Test::Small_Union *small_union;
+  const Param_Test::Bounded_Short_Seq *bd_short_sequence;
+  const Param_Test::Fixed_Struct *fixed_structure;
+  const Param_Test::Big_Union *big_union;
+  const Param_Test::Small_Union *small_union;
 
   a2 = a1;
   a3 = new CORBA::Any (a1);
@@ -795,7 +795,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
     }
   else if (a1 >>= big_union)
     {
-      Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
+      const Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
       a1 >>= bu_in;
 
       // Insert copies....
@@ -821,7 +821,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
     }
   else if (a1 >>= small_union)
     {
-      Param_Test::Small_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
+      const Param_Test::Small_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
       a1 >>= bu_in;
 
       // Insert copies....

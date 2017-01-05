@@ -958,7 +958,7 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
 }
 
 CosLoadBalancing::Strategy_ptr
-TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo * info)
+TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
 {
   /**
    * @todo We need a strategy factory.  This is just too messy.

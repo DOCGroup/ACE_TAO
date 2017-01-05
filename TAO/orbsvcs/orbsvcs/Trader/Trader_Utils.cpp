@@ -283,7 +283,7 @@ TAO_Property_Evaluator::property_value (int index)
       else
         {
           CORBA::TypeCode* type = dp_struct->returned_type.in ();
-          CORBA::Any& info = dp_struct->extra_info;
+          const CORBA::Any& info = dp_struct->extra_info;
 
           try
             {
@@ -703,7 +703,7 @@ TAO_Policies::exact_type_match (void) const
 }
 
 
-CosTrading::TraderName*
+const CosTrading::TraderName*
 TAO_Policies::starting_trader (void) const
 {
   const CosTrading::TraderName* trader_name = 0;
@@ -788,7 +788,7 @@ TAO_Policies::hop_count (void) const
   return this->ulong_prop (HOP_COUNT);
 }
 
-CosTrading::Admin::OctetSeq*
+const CosTrading::Admin::OctetSeq*
 TAO_Policies::request_id (void) const
 {
   const CosTrading::Admin::OctetSeq* request_id = 0;

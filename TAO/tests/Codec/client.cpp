@@ -29,7 +29,7 @@ gen_wstring (CORBA::ULong max_length)
 }
 
 int
-verify_data (Foo::Bar *original, Foo::Bar *extracted)
+verify_data (Foo::Bar *original, const Foo::Bar *extracted)
 {
   if (!original || !extracted)
     return -1;

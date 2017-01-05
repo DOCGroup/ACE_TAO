@@ -73,7 +73,7 @@ get_object_id(CORBA::Any_var a)
                    FtRtecEventChannelAdmin::ObjectId(*object_id),
                    CORBA::NO_MEMORY());
 
-  result = r;
+  result = *r;
   return result;
 }
 

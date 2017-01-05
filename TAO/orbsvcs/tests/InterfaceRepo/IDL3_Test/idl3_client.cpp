@@ -890,7 +890,7 @@ IDL3_Client::component_port_test (
 }
 
 int
-IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &pds)
+IDL3_Client::provides_test (const CORBA::ComponentIR::ProvidesDescriptionSeq &pds)
 {
   if (pds.length () != PROVIDES_LEN)
     {
@@ -943,7 +943,7 @@ IDL3_Client::provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &pds)
 }
 
 int
-IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq &uds)
+IDL3_Client::uses_test (const CORBA::ComponentIR::UsesDescriptionSeq &uds)
 {
   if (uds.length () != USES_LEN)
     {
@@ -1012,7 +1012,7 @@ IDL3_Client::uses_test (CORBA::ComponentIR::UsesDescriptionSeq &uds)
 }
 
 int
-IDL3_Client::event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &eds,
+IDL3_Client::event_port_test (const CORBA::ComponentIR::EventPortDescriptionSeq &eds,
                               CORBA::ULong seq_length,
                               const char *port_type,
                               const char **names,
@@ -1585,7 +1585,7 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var &hd)
 }
 
 int
-IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription *hd)
+IDL3_Client::home_factory_test (const CORBA::ComponentIR::HomeDescription *hd)
 {
   CORBA::ULong length = hd->factories.length ();
 
@@ -1682,7 +1682,7 @@ IDL3_Client::home_factory_test (CORBA::ComponentIR::HomeDescription *hd)
 }
 
 int
-IDL3_Client::home_finder_test (CORBA::ComponentIR::HomeDescription *hd)
+IDL3_Client::home_finder_test (const CORBA::ComponentIR::HomeDescription *hd)
 {
   CORBA::ULong length = hd->finders.length ();
 

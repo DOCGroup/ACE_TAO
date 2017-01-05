@@ -371,7 +371,7 @@ public:
    * "starting_trader" policy with the first component removed.
    * END SPEC
    */
-  CosTrading::TraderName* starting_trader (void) const;
+  const CosTrading::TraderName* starting_trader (void) const;
 
   /// Determine the link follow policy for this query overall.
   CosTrading::FollowOption link_follow_rule (void) const;
@@ -411,7 +411,7 @@ public:
 
   /// Return the request_id passed to the query method across a link to
   /// another trader.
-  CosTrading::Admin::OctetSeq* request_id (void) const;
+  const CosTrading::Admin::OctetSeq* request_id (void) const;
 
   /// Policies to forward to the next trader in a federated query.
   void copy_to_pass (CosTrading::PolicySeq& policy_seq,
