@@ -344,7 +344,7 @@ void
 TAO_Codeset_Manager_i::open(TAO_ORB_Core& core)
 {
 #if 0
-  // These translators help comply with the CORBA 3.0.2 specifcation
+  // These translators help comply with the CORBA 3.0.2 specification
   TAO_Codeset_Translator_Factory *fact =
     ACE_Dynamic_Service<TAO_Codeset_Translator_Factory>::
     instance ("UTF8_Latin1_Factory");
