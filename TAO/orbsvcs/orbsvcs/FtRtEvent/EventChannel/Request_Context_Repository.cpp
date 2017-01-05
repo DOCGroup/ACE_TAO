@@ -63,7 +63,7 @@ Request_Context_Repository::set_object_id(
 FtRtecEventChannelAdmin::ObjectId_var
 get_object_id(CORBA::Any_var a)
 {
-  FtRtecEventChannelAdmin::ObjectId *object_id, *r;
+  const FtRtecEventChannelAdmin::ObjectId *object_id, *r;
   FtRtecEventChannelAdmin::ObjectId_var result;
 
   if ((a.in() >>= object_id) ==0)

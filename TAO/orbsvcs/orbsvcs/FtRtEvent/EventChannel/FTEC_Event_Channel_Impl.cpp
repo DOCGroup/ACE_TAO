@@ -254,7 +254,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
   CORBA::Any_var any
     = Request_Context_Repository().get_cached_result();
 
-  FtRtecEventChannelAdmin::ObjectId *oid;
+  const FtRtecEventChannelAdmin::ObjectId *oid = 0;
 
   if (any.in() >>= oid) {
     FtRtecEventChannelAdmin::ObjectId* result;
@@ -290,7 +290,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
   CORBA::Any_var any
     = Request_Context_Repository().get_cached_result();
 
-  FtRtecEventChannelAdmin::ObjectId *oid;
+  const FtRtecEventChannelAdmin::ObjectId *oid = 0;
 
   if (any.in() >>= oid) {
     FtRtecEventChannelAdmin::ObjectId* result;
