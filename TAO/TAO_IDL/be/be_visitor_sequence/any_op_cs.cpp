@@ -217,8 +217,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << "/// Copying insertion." << be_nl
               << "void operator<<= (" << be_idt << be_idt_nl
               << "::CORBA::Any &_tao_any," << be_nl
-              << "const ::" << node->name () << " &_tao_elem" << be_uidt_nl
-              << ")" << be_uidt_nl
+              << "const ::" << node->name () << " &_tao_elem)" << be_uidt
+              << be_uidt_nl
               << "{" << be_idt_nl
 
               << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert_copy ("
@@ -227,7 +227,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << "::" << node->name () << "::_tao_any_destructor," << be_nl
               << "::" << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
               << "_tao_elem);" << be_uidt
-              << be_uidt << be_uidt << be_uidt_nl
+              << be_uidt << be_uidt_nl
               << "}" << be_nl_2;
 
           // Non-copying insertion.
