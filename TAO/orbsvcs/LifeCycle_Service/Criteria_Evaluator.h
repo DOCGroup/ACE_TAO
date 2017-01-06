@@ -26,7 +26,7 @@ public:
   Criteria_Evaluator (const CosLifeCycle::Criteria &criteria);
   ~Criteria_Evaluator (void);
 
-  LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getInitialization (void);
+  const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair * getInitialization (void);
 
   char * getFilter (void);
 
