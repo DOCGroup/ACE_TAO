@@ -769,10 +769,11 @@ Param_Test_i::test_any (const CORBA::Any &a1,
             ACE_DEBUG ((LM_DEBUG, " %d", (*ub_short_sequence)[i]));
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
+      CORBA::ShortSeq newseq (*ub_short_sequence);
       for (size_t i = 0; i < ub_short_sequence->length (); i++)
-        (*ub_short_sequence)[i] = (CORBA::Short) (i * i);
-      a2   <<= *ub_short_sequence;
-      *ret <<= *ub_short_sequence;
+        newseq[i] = (CORBA::Short) (i * i);
+      a2   <<= newseq;
+      *ret <<= newseq;
     }
   else if (a1 >>= bd_short_sequence)
     {
@@ -783,10 +784,11 @@ Param_Test_i::test_any (const CORBA::Any &a1,
             ACE_DEBUG ((LM_DEBUG, " %d", (*bd_short_sequence)[i]));
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
+      Param_Test::Bounded_Short_Seq newseq (*bd_short_sequence);
       for (size_t i = 0; i < bd_short_sequence->length (); i++)
-        (*bd_short_sequence)[i] = (CORBA::Short) (i * i);
-      a2 <<= *bd_short_sequence;
-      *ret <<= *bd_short_sequence;
+        newseq[i] = (CORBA::Short) (i * i);
+      a2 <<= newseq;
+      *ret <<= newseq;
     }
   else if (a1 >>= fixed_structure)
     {

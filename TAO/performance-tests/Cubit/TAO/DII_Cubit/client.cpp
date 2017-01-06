@@ -535,7 +535,8 @@ DII_Cubit_Client::cube_struct_dii (void)
       // Create the request ...
       CORBA::Request_var req (this->obj_var_->_request ("cube_struct"));
 
-      const Cubit::Many arg_struct, *ret_struct_ptr;
+      Cubit::Many arg_struct;
+      const Cubit::Many*ret_struct_ptr;
 
       arg_struct.l = 5;
       arg_struct.s = -7;
