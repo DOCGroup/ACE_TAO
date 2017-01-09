@@ -27,6 +27,7 @@
 
 #ifdef ACE_VXWORKS
 # include "ace/os_include/sys/os_sysctl.h"
+# include <net/route.h>
 #endif
 
 #ifdef ACE_HAS_ALLOC_HOOKS
