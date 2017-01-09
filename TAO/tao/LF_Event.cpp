@@ -54,7 +54,7 @@ TAO_LF_Event::successful (TAO_Leader_Follower &lf) const
 bool
 TAO_LF_Event::error_detected (TAO_Leader_Follower &lf) const
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, lf.lock (), false);
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, lf.lock (), true);
 
   return this->error_detected_i ();
 }
