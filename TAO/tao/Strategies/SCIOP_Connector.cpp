@@ -238,7 +238,6 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
 
   TAO_Leader_Follower &leader_follower = this->orb_core ()->leader_follower ();
 
-
   if (svc_handler->keep_waiting (leader_follower))
     {
       svc_handler->connection_pending ();
