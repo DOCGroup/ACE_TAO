@@ -233,6 +233,12 @@ ifeq ($(address-sanitizer),1)
   LDFLAGS += -fsanitize=address
 endif
 
+thread-sanitizer ?= 0
+ifeq ($(thread-sanitizer),1)
+  CPPFLAGS += -fsanitize=thread
+  LDFLAGS += -fsanitize=thread
+endif
+
 pipes ?= 1
 
 FLAGS_C_CC += -Wall -W -Wpointer-arith

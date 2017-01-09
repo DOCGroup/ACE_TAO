@@ -81,8 +81,10 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
   // method.
   TAO::ORB_Countdown_Time countdown (max_wait_time);
 
-  rd.state_changed (TAO_LF_Event::LFS_ACTIVE,
-                    this->transport_->orb_core ()->leader_follower ());
+  TAO_Leader_Follower &leader_follower =
+    this->transport_->orb_core ()->leader_follower ();
+
+  rd.state_changed (TAO_LF_Event::LFS_ACTIVE, leader_follower);
 
   // Do the same sort of looping that is done in other wait
   // strategies.
@@ -94,7 +96,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
 
       // If we got our reply, no need to run the loop any
       // further.
-      if (!rd.keep_waiting ())
+      if (!rd.keep_waiting (leader_follower))
         break;
 
       // @@ We are not checking for timeouts here...
@@ -104,12 +106,12 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
         break;
     }
 
-  if (rd.error_detected () == -1 || retval == -1)
+  if (rd.error_detected (leader_follower) || retval == -1)
     {
       this->transport_->close_connection ();
     }
 
-  if (rd.successful ())
+  if (rd.successful (leader_follower))
      {
        TAO_ORB_Core * const oc =
          this->transport_->orb_core ();
@@ -147,7 +149,7 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
        return 0;
      }
 
-  if (rd.error_detected ())
+  if (rd.error_detected (leader_follower))
     return -1;
 
   return 1;

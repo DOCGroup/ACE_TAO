@@ -20,19 +20,19 @@ TAO_LF_Event::unbind (TAO_LF_Follower *)
 }
 
 ACE_INLINE void
-TAO_LF_Event::reset_state (int new_state)
+TAO_LF_Event::reset_state (LFS_STATE new_state)
 {
   this->state_ = new_state;
 }
 
-ACE_INLINE int
-TAO_LF_Event::keep_waiting (void)
+ACE_INLINE bool
+TAO_LF_Event::keep_waiting_i (void) const
 {
-  return (this->successful () == 0) && (this->error_detected () == 0);
+  return (!this->successful_i ()) && (!this->error_detected_i ());
 }
 
 ACE_INLINE const char *
-TAO_LF_Event::state_name (int st)
+TAO_LF_Event::state_name (LFS_STATE st)
 {
 #define TAO_LF_EVENT_ENTRY(X) case X: return #X
   switch (st)
