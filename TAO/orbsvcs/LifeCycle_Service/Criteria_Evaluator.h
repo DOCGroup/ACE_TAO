@@ -9,8 +9,6 @@
  */
 //=============================================================================
 
-
-
 #include "orbsvcs/CosLifeCycleC.h"
 #include "orbsvcs/LifeCycleServiceC.h"
 
@@ -18,7 +16,7 @@
 #define CRITERIA_EVALUATOR_H_H
 
 /**
- * @class Criteria_Evaluator//
+ * @class Criteria_Evaluator
  */
 class Criteria_Evaluator// : public LifeCycleService::Criteria_Evaluator
 {
