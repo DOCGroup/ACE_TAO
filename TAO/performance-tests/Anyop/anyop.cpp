@@ -383,7 +383,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 ACE_hrtime_t now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                Param_Test::Fixed_Struct *o;
+                const Param_Test::Fixed_Struct *o = 0;
 
                 result = any >>= o;
               }
@@ -391,7 +391,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               {
                 any <<= i;
 
-                Param_Test::Fixed_Struct *o;
+                const Param_Test::Fixed_Struct *o = 0;
 
                 ACE_hrtime_t start = ACE_OS::gethrtime ();
 
@@ -461,7 +461,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 ACE_hrtime_t now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                Param_Test::Fixed_Struct *o;
+                const Param_Test::Fixed_Struct *o = 0;
 
                 result = any >>= o;
               }
@@ -469,7 +469,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               {
                 any <<= i;
 
-                Param_Test::Fixed_Struct *o;
+                const Param_Test::Fixed_Struct *o = 0;
 
                 ACE_hrtime_t start = ACE_OS::gethrtime ();
 
@@ -538,7 +538,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 ACE_hrtime_t now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                Param_Test::Long_Seq *o;
+                const Param_Test::Long_Seq *o = 0;
 
                 result = any >>= o;
               }
@@ -546,7 +546,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               {
                 any <<= i;
 
-                Param_Test::Long_Seq *o;
+                const Param_Test::Long_Seq *o = 0;
 
                 ACE_hrtime_t start = ACE_OS::gethrtime ();
 
@@ -616,7 +616,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 ACE_hrtime_t now = ACE_OS::gethrtime ();
                 history.sample (now - start);
 
-                Param_Test::Long_Seq *o;
+                const Param_Test::Long_Seq *o = 0;
 
                 result = any >>= o;
               }
@@ -624,7 +624,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               {
                 any <<= i;
 
-                Param_Test::Long_Seq *o;
+                const Param_Test::Long_Seq *o = 0;
 
                 ACE_hrtime_t start = ACE_OS::gethrtime ();
 

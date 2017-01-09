@@ -30,7 +30,7 @@ Stock_Consumer::disconnect ()
 void
 Stock_Consumer::push (const CORBA::Any& data)
 {
-  Quoter::Event *event;
+  const Quoter::Event *event = 0;
   if ((data >>= event) == 0)
     return; // Invalid event
 

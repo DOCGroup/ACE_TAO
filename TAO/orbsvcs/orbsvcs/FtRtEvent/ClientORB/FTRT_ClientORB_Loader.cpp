@@ -35,17 +35,18 @@ namespace TAO_FTRT {
 
     // Parse any service configurator parameters.
     for (curarg = 0; curarg < argc; curarg++)
-      if (ACE_OS::strcasecmp (argv[curarg],
-        ACE_TEXT("-ORBTransactionDepth")) == 0)
       {
-        curarg++;
-        if (curarg < argc)
-          transaction_depth = ACE_OS::atoi(argv[curarg]);
+        if (ACE_OS::strcasecmp (argv[curarg],
+          ACE_TEXT("-ORBTransactionDepth")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            transaction_depth = ACE_OS::atoi(argv[curarg]);
+        }
       }
 
-
-      // Register the ORB initializer.
-      try
+    // Register the ORB initializer.
+    try
       {
         PortableInterceptor::ORBInitializer_ptr temp_orb_initializer =
           PortableInterceptor::ORBInitializer::_nil ();
@@ -63,14 +64,14 @@ namespace TAO_FTRT {
 
         PortableInterceptor::register_orb_initializer (orb_initializer.in ());
       }
-      catch (const CORBA::Exception& ex)
+    catch (const CORBA::Exception& ex)
       {
         ex._tao_print_exception (
           "Unexpected exception caught while ""initializing the TransactionDepth");
         return 1;
       }
 
-      return 0;
+    return 0;
   }
 }
 

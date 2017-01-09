@@ -337,7 +337,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       field.value._d (FTYPE_VARCHAR);
       CORBA::Any any1;
       any1 <<= field;
-      Field *outfield;
+      const Field *outfield = 0;
 
       if ((any1 >>= outfield) == 0)
         {

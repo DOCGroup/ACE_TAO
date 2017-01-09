@@ -134,19 +134,6 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
               << be_uidt << be_uidt_nl
               << "}" << be_nl_2;
 
-          // Extraction to non-const pointer (deprecated, just calls the other).
-          *os << "/// Extraction to non-const pointer (deprecated)." << be_nl
-              << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-              << "const ::CORBA::Any &_tao_any," << be_nl
-              << "::" << node->name () << " *&_tao_elem" << be_uidt_nl
-              << ")" << be_uidt_nl
-              << "{" << be_idt_nl
-              << "return _tao_any >>= const_cast<" << be_idt << be_idt_nl
-              << "const ::" << node->name () << " *&> (_tao_elem);"
-              << be_uidt
-              << be_uidt << be_uidt_nl
-              << "}" << be_nl_2;
-
           // Extraction to const pointer.
           *os << "/// Extraction to const pointer." << be_nl
               << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
@@ -204,19 +191,6 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << node->name () << "::_tao_any_destructor," << be_nl
       << node->tc_name () << "," << be_nl
       << "_tao_elem);" << be_uidt
-      << be_uidt << be_uidt_nl
-      << "}" << be_nl_2;
-
-  // Extraction to non-const pointer (deprecated, just calls the other).
-  *os << "/// Extraction to non-const pointer (deprecated)." << be_nl
-      << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
-      << "const ::CORBA::Any &_tao_any," << be_nl
-      << node->name () << " *&_tao_elem" << be_uidt_nl
-      << ")" << be_uidt_nl
-      << "{" << be_idt_nl
-      << "return _tao_any >>= const_cast<" << be_idt << be_idt_nl
-      << "const " << node->name () << " *&> (_tao_elem);"
-      << be_uidt
       << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
