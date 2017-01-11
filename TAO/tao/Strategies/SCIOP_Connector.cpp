@@ -280,7 +280,7 @@ TAO_SCIOP_Connector::make_connection_i (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  if (svc_handler->error_detected (leader_follower)
+  if (svc_handler->error_detected (leader_follower))
     {
       svc_handler->cancel_pending_connection ();
       transport->purge_entry();
