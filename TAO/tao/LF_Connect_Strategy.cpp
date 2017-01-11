@@ -52,7 +52,7 @@ TAO_LF_Connect_Strategy::wait_i (TAO_LF_Event *ev,
   int result =
     leader_follower.wait_for_event (ev, transport, max_wait_time);
 
-  if (ev->error_detected () && result != -1)
+  if (ev->error_detected (leader_follower) && result != -1)
     result = -1;
 
   return result;

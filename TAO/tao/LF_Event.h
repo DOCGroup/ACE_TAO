@@ -82,7 +82,7 @@ public:
    * FSM. The possible sequence of states through which the FSM
    * migrates is defined in the concrete classes.
    */
-  enum {
+  enum LFS_STATE {
     /// The event is created, and is in initial state
     LFS_IDLE = 0,
     /// The event is active
@@ -99,46 +99,54 @@ public:
     LFS_CONNECTION_CLOSED
   };
 
-  /**
-   * Virtual methods for this class hierarchy..
-   */
   /// Accessor to change the state. The state isn't changed unless
   /// certain conditions are satisfied.
-  void state_changed (int new_state, TAO_Leader_Follower &lf);
+  void state_changed (LFS_STATE new_state, TAO_Leader_Follower &lf);
 
-  /// Return 1 if the condition was satisfied successfully, 0 if it
+  /// Return true if the condition was satisfied successfully, false if it
   /// has not
-  virtual int successful (void) const = 0 ;
+  bool successful (TAO_Leader_Follower &lf) const;
 
-  /// Return 1 if an error was detected while waiting for the
+  /// Return true if an error was detected while waiting for the
   /// event
-  virtual int error_detected (void) const = 0;
+  bool error_detected (TAO_Leader_Follower &lf) const;
 
   /// Check if we should keep waiting.
-  int keep_waiting (void);
+  bool keep_waiting (TAO_Leader_Follower &lf) const;
   //@}
 
   /// Reset the state, irrespective of the previous states
-  void reset_state (int new_state);
+  void reset_state (LFS_STATE new_state);
 
-  static const char *state_name (int st);
+  static const char *state_name (LFS_STATE st);
 
 protected:
 
   /// Validate the state change
-  virtual void state_changed_i (int new_state) = 0;
+  virtual void state_changed_i (LFS_STATE new_state) = 0;
+
+  /// Check if we should keep waiting.
+  bool keep_waiting_i (void) const;
+
+  /// Return true if the condition was satisfied successfully, false if it
+  /// has not
+  virtual bool successful_i (void) const = 0 ;
+
+  /// Return true if an error was detected while waiting for the
+  /// event
+  virtual bool error_detected_i (void) const = 0;
 
   /// Check whether we have reached the final state..
-  virtual int is_state_final (void) = 0;
+  virtual bool is_state_final (void) const = 0;
 
 private:
 
   /// Set the state irrespective of anything.
-  virtual void set_state (int new_state);
+  virtual void set_state (LFS_STATE new_state);
 
 protected:
   /// The current state
-  int state_;
+  LFS_STATE state_;
 
   /// The bounded follower
   TAO_LF_Follower *follower_;
