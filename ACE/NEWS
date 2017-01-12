@@ -1,6 +1,11 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.4.1 and ACE-6.4.2
 ====================================================
 
+. Added support for Mac OS X on x86_64 to get the network adapter
+  address in ACE_OS::getmacaddress().
+
+. Added support for the December 2016 updates to VxWorks 7.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.0 and ACE-6.4.1
 ====================================================
 
