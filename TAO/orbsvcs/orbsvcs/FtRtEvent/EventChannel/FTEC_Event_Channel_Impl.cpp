@@ -266,9 +266,9 @@ TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
   FtRtecEventChannelAdmin::ObjectId* retval = 0;
   ACE_NEW_THROW_EX(retval, FtRtecEventChannelAdmin::ObjectId, CORBA::NO_MEMORY());
 
-  FtRtecEventChannelAdmin::ObjectId_var object_id = *retval;
+  FtRtecEventChannelAdmin::ObjectId_var object_id = retval;
 
-  Request_Context_Repository().generate_object_id(object_id.inout ());
+  Request_Context_Repository().generate_object_id(*retval);
 
   obtain_push_supplier_and_connect(this,
                                    object_id.in(),
@@ -300,9 +300,9 @@ TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
 
   FtRtecEventChannelAdmin::ObjectId* retval = 0;
   ACE_NEW_THROW_EX(retval, FtRtecEventChannelAdmin::ObjectId, CORBA::NO_MEMORY());
-  FtRtecEventChannelAdmin::ObjectId_var object_id = *retval;
+  FtRtecEventChannelAdmin::ObjectId_var object_id = retval;
 
-  Request_Context_Repository().generate_object_id(object_id.inout ());
+  Request_Context_Repository().generate_object_id(*retval);
 
   obtain_push_consumer_and_connect(this,
                                    object_id.in(),
