@@ -115,7 +115,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // noexcept(false) specification to specify that the operation can
 // throw an exception
-#if defined _MSC_VER && _MSC_VER >= 1900 || defined (ACE_HAS_CPP11)
+#if defined (ACE_HAS_CPP11)
 #define ACE_NOEXCEPT_FALSE noexcept(false)
 #else
 #define ACE_NOEXCEPT_FALSE
