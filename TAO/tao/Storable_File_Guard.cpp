@@ -24,7 +24,7 @@ Storable_File_Guard (bool redundant, bool use_backup)
 }
 
 TAO::Storable_File_Guard::
-~Storable_File_Guard ()
+~Storable_File_Guard () ACE_NOEXCEPT_FALSE
 {
   delete fl_;
 }
