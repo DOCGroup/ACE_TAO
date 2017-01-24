@@ -146,9 +146,6 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
-# ifdef __clang__
-#  undef ACE_HAS_GCC_ATOMIC_BUILTINS
-# endif
 #elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
 # include "ace/config-suncc-common.h"
 #elif defined (__PGI)
