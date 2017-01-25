@@ -5,15 +5,13 @@ os:
 
 compiler:
   - gcc
+
 env:
   matrix:
     - FUZZ=1
     - CORBAEMICRO=1 ACEFORTAO=0 TAO=1
     - CORBAECOMPACT=1 ACEFORTAO=0 TAO=1
     - ACEFORTAO=1 TAO=1
-    - CCMLW=0 ACEFORTAO=0 TAO=1
-    - CCMLW=1 ACEFORTAO=0 TAO=1
-    - CCMNOEVENT=1 ACEFORTAO=0 TAO=1
     - ACETESTS=1 ACEFORTAO=0 TAO=1
     - USES_WCHAR=1 TAO=1
     - VERSIONED=1 TAO=1
@@ -23,16 +21,38 @@ env:
     - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
     - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
     - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
+    - COMPILER=g++-6
+
+matrix:
+  include:
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.9
+          packages:
+            - libxerces-c-dev
+            - libssl-dev
+            - clang++-3.9
+      env: COMPILER=clang++-3.9 VERSIONED=1 TAO=1 ACETESTS=1
+
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
-    - libssl-dev
-    - libxerces-c-dev
+      - libssl-dev
+      - libxerces-c-dev
+      - g++-6
+
 before_install:
   - git clone --depth 1 git://github.com/DOCGroup/MPC.git
+
 branches:
   only:
     - master
+
 before_script:
   - export
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h; fi
@@ -56,12 +76,20 @@ before_script:
   - echo -e "xerces3=1\nssl=1\nipv6=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
   - echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features
   - echo -e "TAO/tests/Hello/run_test.pl" >> $TAO_ROOT/bin/travis-ci.lst
+  - if [ "$CXX" == "g++" ]; then echo -e "c++11=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_macosx.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
-  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      if [ "$CXX" == "g++" ]; then
+        echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU;
+      else
+        echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU;
+      fi
+    fi
   - cat $TRAVIS_BUILD_DIR/travis.mwc
   - cat $ACE_ROOT/bin/MakeProjectCreator/config/default.features
   - cat $ACE_ROOT/ace/config.h
   - cat $ACE_ROOT/include/makeinclude/platform_macros.GNU
+  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
 
 script:
   - if [ "$FUZZ" == "1" ]; then exec perl $ACE_ROOT/bin/fuzz.pl; fi
