@@ -12,9 +12,6 @@ env:
     - CORBAEMICRO=1 ACEFORTAO=0 TAO=1
     - CORBAECOMPACT=1 ACEFORTAO=0 TAO=1
     - ACEFORTAO=1 TAO=1
-    - CCMLW=0 ACEFORTAO=0 TAO=1
-    - CCMLW=1 ACEFORTAO=0 TAO=1
-    - CCMNOEVENT=1 ACEFORTAO=0 TAO=1
     - ACETESTS=1 ACEFORTAO=0 TAO=1
     - USES_WCHAR=1 TAO=1
     - VERSIONED=1 TAO=1
@@ -28,15 +25,6 @@ env:
 
 matrix:
   include:
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - libxerces-c-dev
-            - libssl-dev
-            - g++-6
     - compiler: clang
       addons:
         apt:
@@ -47,7 +35,7 @@ matrix:
             - libxerces-c-dev
             - libssl-dev
             - clang++-3.9
-      env: COMPILER=clang++-3.9
+      env: COMPILER=clang++-3.9 VERSIONED=1 TAO=1 ACETESTS=1
 
 addons:
   apt:
