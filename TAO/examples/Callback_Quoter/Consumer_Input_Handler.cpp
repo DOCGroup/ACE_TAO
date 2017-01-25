@@ -161,7 +161,7 @@ Consumer_Input_Handler::quit_consumer_process ()
       if (consumer_handler_->unregistered_ != 1 && consumer_handler_->registered_ == 1)
         {
           // If the notifier has exited and the consumer tries to call
-          // the unregister_callback method tehn an execption will be
+          // the unregister_callback method tehn an exception will be
           // raised. Hence check for this case using.
           this->consumer_handler_->server_->unregister_callback (this->consumer_handler_->consumer_var_.in ());
 
