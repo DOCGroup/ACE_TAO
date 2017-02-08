@@ -32,7 +32,7 @@ run_main(int, ACE_TCHAR *[])
     // Place the wait within a loop such that we don't just pass on account of a spurious wakeup
     while (!condition && !(result == -1))
     {
-        ACE_Guard<ACE_SYNCH_MUTEX> guard(mutex);
+        ACE_GUARD_REACTION(ACE_SYNCH_MUTEX, guard, mutex, break); // Failure to acquire the mutex will leave result = 0 (will fail the assertion)
         result = cond.wait(&timeout);
     }
 
