@@ -62,6 +62,7 @@
   case ERROR_FILE_EXISTS:       errno = EEXIST; break; \
   case ERROR_SHARING_VIOLATION: errno = EACCES; break; \
   case ERROR_PATH_NOT_FOUND:    errno = ENOENT; break; \
+  case ERROR_TIMEOUT:           errno = ETIME;  break; \
   } \
   return RESULT; } while (0)
 

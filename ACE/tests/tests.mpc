@@ -2236,3 +2236,12 @@ project(Missing_Svc_Conf_Test) : acetest {
     Missing_Svc_Conf_Test.cpp
   }
 }
+
+
+project(Native_Condition_Variable_Test) : acetest {
+  exename = *
+  Source_Files {
+    Native_Condition_Variable_Test.cpp
+  }
+}
+
