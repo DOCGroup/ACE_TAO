@@ -50,9 +50,9 @@
 // This is more consistent with the rest of ACE_OS and enables us to
 // use the ACE_OSCALL* macros.
 #elif defined (ACE_VXWORKS)
-# define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != OK ? ACE_FAIL_RETVAL(-1) : 0)
+# define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != OK ? (ACE_OS::last_error(RESULT), -1) : 0)
 #else
-# define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0  ? ACE_FAIL_RETVAL(-1) : 0)
+# define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0  ? (ACE_OS::last_error(RESULT), -1) : 0)
 #endif /* ACE_WIN32 */
 
 // Helper functions to split large intergers into smaller high-order
