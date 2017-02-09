@@ -110,6 +110,7 @@ Compiler_Features_33_Test
 Compiler_Features_34_Test
 Compiler_Features_35_Test
 Compiler_Features_36_Test
+Condition_Variable_Timeout_Test
 Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
 Conn_Test: !ACE_FOR_TAO
 DLL_Test: !STATIC Linux
@@ -170,7 +171,6 @@ Monotonic_Task_Test: !ACE_FOR_TAO
 Multicast_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT
 Multihomed_INET_Addr_Test: !ACE_FOR_TAO
 Naming_Test: !NO_OTHER !LynxOS !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
-Native_Condition_Variable_Test
 Network_Adapters_Test: !ACE_FOR_TAO
 New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test

@@ -2237,11 +2237,9 @@ project(Missing_Svc_Conf_Test) : acetest {
   }
 }
 
-
-project(Native_Condition_Variable_Test) : acetest {
+project(Condition_Variable_Timeout_Test) : acetest {
   exename = *
   Source_Files {
-    Native_Condition_Variable_Test.cpp
+    Condition_Variable_Timeout_Test.cpp
   }
 }
-

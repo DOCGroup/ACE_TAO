@@ -1,12 +1,14 @@
 
 //=============================================================================
 /**
- *  @file    Native_Condition_Variable_Test.cpp
+ *  @file    Condition_Variable_Timeout_Test.cpp
  *
- *    This program tests the support of Native Condition Variables on
- *    Microsoft Windows. It checks that errno is correctly mutated to
- *    ensure return and errno values are consistent across implementations
- *    using ACE_Condition.
+ *    This program tests the return value and setting of errno when a wait on
+ *    a condition variable times out. This was originally noteworthy in the
+ *    case of support for using native condition variables on Microsoft
+ *    Windows. The test checks that errno is correctly mutated to ensure
+ *    return and errno values are consistent across implementations when using
+ *    ACE_Condition.
  *
  *  @author Michael Mathers <michael.p.mathers@live.com>
  */
@@ -21,7 +23,7 @@
 int
 run_main(int, ACE_TCHAR *[])
 {
-    ACE_START_TEST(ACE_TEXT("Native_Condition_Variable_Test"));
+    ACE_START_TEST(ACE_TEXT("Condition_Variable_Timeout_Test"));
 
     ACE_SYNCH_MUTEX mutex;
     ACE_Condition<ACE_SYNCH_MUTEX> cond(mutex);
