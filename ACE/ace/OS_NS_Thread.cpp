@@ -1623,15 +1623,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   ACE_OSCALL (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, msec_timeout),
                                 result),
               int, -1, result);
-
-  // Make sure we mutate errno if required
-  if (result == -1)
-  {
-      ACE_FAIL_RETURN(result);
-  }
-
   return result;
-
 #else
   // Prevent race conditions on the <waiters_> count.
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)

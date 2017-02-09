@@ -39,13 +39,17 @@ namespace ACE_OS {
   int last_error (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void last_error (int error);
+  int last_error (int error);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int set_errno_to_last_error (void);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int set_errno_to_wsa_last_error (void);
+
+  // Perform a mapping of Win32 error numbers into POSIX errnos.
+  ACE_EXPORT_MACRO
+  int adapt_last_error (int error);
 
 } /* namespace ACE_OS */
 
