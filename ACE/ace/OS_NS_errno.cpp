@@ -26,7 +26,7 @@ ACE_OS::adapt_last_error(int error)
     case ERROR_TIMEOUT:             error = ETIME           ; break;
 //
 //  Reverse WSAGetLastError mappings that are not handled by
-//  the direct mappings in <ace/os_include/os_errno.h> 
+//  the direct mappings in <ace/os_include/os_errno.h>
 //
 #if defined(_CRT_NO_POSIX_ERROR_CODES) // see <errno.h>
     case WSAEWOULDBLOCK:            error = EWOULDBLOCK     ; break;
