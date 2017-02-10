@@ -20,6 +20,11 @@
 // NOTE: Please do not add anything besides #include's here.  Put other stuff
 //       (definitions, etc.) in the included headers
 
+// To enable proper version checking we should include the Window SDK version header
+// This must be included before ace/config-win32-common.h or else we'll default to
+// Windows XP
+#include <sdkddkver.h>
+
 // We need to ensure that for Borland vcl.h can be included before
 // windows.h.  So we will not include config-win32-common.h from here,
 // but instead let it be included at the appropriate place in
