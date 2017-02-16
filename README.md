@@ -70,6 +70,8 @@ An occasional contributor will only submit patches via a pull requests. The pull
 
 Occasional contributors should *always* fork the upstream project on GitHub and work off a clone of this fork
 
+:bulb: A GitHub pull request is the preferred method to submit a patch!
+
 #### Creating a pull request on GitHub
 
 ![Git Workflow 2](https://docs.jboss.org/author/download/attachments/4784485/git_wf_2.png)
@@ -140,7 +142,7 @@ git push -f origin BZ-12345
 
 7. Continue your work on your topic branch.
 
-:warning If you are sharing your forked ACE/TAO repo with others, then do not rebase! Use a merge instead.
+:warning: If you are sharing your forked ACE/TAO repo with others, then do not rebase! Use a merge instead.
 
 
 #### Multi-step coordination between developers using forked repositories
