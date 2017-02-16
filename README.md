@@ -26,17 +26,6 @@ Coverity Scan status
 
 master: [![Coverity Scan Build Status](https://scan.coverity.com/projects/1/badge.svg)](https://scan.coverity.com/projects/1)
 
-<!---
-GitHub does not support styles on HTML: https://github.com/github/markup/issues/57 so just
-use icons from...
-http://p.yusukekamiyamane.com/
-http://www.iconarchive.com/show/fugue-icons-by-yusuke-kamiyamane.html
---->
-
-[tip]: http://icons.iconarchive.com/icons/yusuke-kamiyamane/fugue/16/tick-circle-frame-icon.png "Tip"
-[warn]: http://icons.iconarchive.com/icons/yusuke-kamiyamane/fugue/16/exclamation-icon.png "Warning"
-[err]: http://icons.iconarchive.com/icons/yusuke-kamiyamane/fugue/16/minus-circle-icon.png "Error"
-
 # ACE/TAO #
 
 [ACE](http://www.dre.vanderbilt.edu/~schmidt/ACE.html) is a C++ framework for implementing distributed and
@@ -50,7 +39,7 @@ Bugzilla for issues is [here](http://bugzilla.dre.vanderbilt.edu/).
 
 These guidelines are for all developers, whether occasional or regular. They have been sourced from various 'best practice' documents but primarily [here](https://github.com/JacORB/JacORB).
 
-![Warning][warn] As a convention, <i>upstream</i> is used as the name of the <a href="http://github.com/DOCGroup/ACE_TAO">http://github.com/DOCGroup/ACE_TAO</a> repository. This repository is the canonical repository for ATCD. We usually name <i>origin</i> the fork on github of each contributor. So the exact meaning of <i>origin</i> is relative to the developer: you could think of <i>origin</i> as your own fork.
+:warning: As a convention, <i>upstream</i> is used as the name of the <a href="http://github.com/DOCGroup/ACE_TAO">http://github.com/DOCGroup/ACE_TAO</a> repository. This repository is the canonical repository for ATCD. We usually name <i>origin</i> the fork on github of each contributor. So the exact meaning of <i>origin</i> is relative to the developer: you could think of <i>origin</i> as your own fork.
 
 ## Pre-requisites
 
@@ -71,7 +60,7 @@ The project assumes one of 3 _roles_ an individual may assume when interacting w
 *  _Frequent Contributor_
 *  _Occasional Contributor_
 
-![Warning][warn] Typically, someone may be in more than one role at any given time, and puts on a different "hats" based on the task at hand
+:warning: Typically, someone may be in more than one role at any given time, and puts on a different "hats" based on the task at hand
 
 
 ### Occasional Contributor
@@ -81,13 +70,15 @@ An occasional contributor will only submit patches via a pull requests. The pull
 
 Occasional contributors should *always* fork the upstream project on GitHub and work off a clone of this fork
 
+:bulb: A GitHub pull request is the preferred method to submit a patch!
+
 #### Creating a pull request on GitHub
 
 ![Git Workflow 2](https://docs.jboss.org/author/download/attachments/4784485/git_wf_2.png)
 
 In this workflow, the contributor forks the ACE/TAO upstream repository on GitHub, clones their fork, and makes changes to this private fork. When changes have been tested and are ready to be contributed back to the project, a *pull request* is issued via GitHub so that one of the Project Administrators can pull in the change.
 
-![Warning][warn] It is desirable to work off a <i>topic branch</i>, even when using your own, forked repository. A topic branch is created for every feature or bug fix you do. Typically you would create one topic branch per issue, but if several patches are related it's acceptable to have several commits in the same branch; however different changes should always be identified by different commits.
+:warning: It is desirable to work off a <i>topic branch</i>, even when using your own, forked repository. A topic branch is created for every feature or bug fix you do. Typically you would create one topic branch per issue, but if several patches are related it's acceptable to have several commits in the same branch; however different changes should always be identified by different commits.
 
 
 Before you push your work onto your fork of the repository, it is often a good idea to review your commits. Consolidating them (squashing) or breaking them up as necessary and cleaning up commit messages should all be done while still working off your local clone. Also, prior to issuing a pull request, you should make sure you rebase your branch against the upstream branch you expect it to be merged into.  Also, only submit pull requests for your branch - not for your master!
@@ -151,7 +142,7 @@ git push -f origin BZ-12345
 
 7. Continue your work on your topic branch.
 
-![Warning][warn] If you are sharing your forked ACE/TAO repo with others, then do not rebase! Use a merge instead.
+:warning: If you are sharing your forked ACE/TAO repo with others, then do not rebase! Use a merge instead.
 
 
 #### Multi-step coordination between developers using forked repositories
@@ -196,7 +187,7 @@ A frequent contributor will only ever submit patches via a pull requests. The pu
 
 Frequent contributors should *always* fork the upstream project on GitHub and work off a clone of this fork. This is very similar to [Creating a pull request on GitHub](#creating-a-pull-request-on-github) workflow used by a [#Occasional Contributor](#occasional-contributor).
 
-![Warning][warn] All ACE/TAO core developers are considered frequent contributors and work off personal forks of the upstream repository. This allows for complex features to be developed in parallel without tripping up over one another. This process is certainly not restricted to just ACE/TAO core developers; any contributor is welcome to also participate in this manner.
+:warning: All ACE/TAO core developers are considered frequent contributors and work off personal forks of the upstream repository. This allows for complex features to be developed in parallel without tripping up over one another. This process is certainly not restricted to just ACE/TAO core developers; any contributor is welcome to also participate in this manner.
 
 
 
@@ -204,7 +195,7 @@ Frequent contributors should *always* fork the upstream project on GitHub and wo
 
 Project Admins have a very limited role. Only Project Admins are allowed to push to upstream, and Project Admins _never_ write any code directly on the upstream repository. All Project Admins do is pull in and merge changes from contributors (even if the "contributor" happens to be themselves) into upstream, perform code reviews and either commit or reject such changes.
 
-![Warning][warn] All Contributors who are also Project Admins are encouraged to not merge their own changes, to ensure that all changes are reviewed.
+:warning: All Contributors who are also Project Admins are encouraged to not merge their own changes, to ensure that all changes are reviewed.
 
 
 This approach ensures ACE/TAO maintains quality on the main code source tree, and allows for important code reviews to take place again ensuring quality. Further, it ensures clean and easily traceable code history and makes sure that more than one person knows about the changes being performed.
@@ -240,7 +231,7 @@ More information on pulling changes from remote, forked repos can be found in [C
 *  If you see "non-fast-forward updates were rejected" you shall never use "force" on upstream! It means that another patch was merged before you and you have to update your master again, and rebase again.
 *  "force" is allowed only in special maintenance circumstances. If you find you're needing it to handle a pull request, then you're doing it wrong, and the mistake might be a dangerous one! It's like the good rule of never commit when you're drunk (coding is allowed).
 
-![Error][err] __Never use force on git push__ Using _-f_ while pushing on a shared repository such as _upstream_ you could effectively erase other committed patches. No-one shall ever use this option unless unanimously approved on the public mailing list: the most dangerous aspect of it is that nobody gets any notification if this happens, and we might think issues are solved but you silently removed the fix and it's history from the repository.
+:x: __Never use force on git push__ Using _-f_ while pushing on a shared repository such as _upstream_ you could effectively erase other committed patches. No-one shall ever use this option unless unanimously approved on the public mailing list: the most dangerous aspect of it is that nobody gets any notification if this happens, and we might think issues are solved but you silently removed the fix and it's history from the repository.
 
 
 #### Cutting releases
@@ -385,16 +376,3 @@ There are many ways git usage may be enhanced:
 *  Coloring GIT Terminal output
 *  Visual tools such as gitk, qgit, Eclipse integration, etc.
 *  etc.
-
-
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<footer>
-<p><i>Some icons by <a href="http://p.yusukekamiyamane.com">Yusuke Kamiyamane</a></i></p>
-</footer>
