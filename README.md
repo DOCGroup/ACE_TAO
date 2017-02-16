@@ -78,7 +78,7 @@ Occasional contributors should *always* fork the upstream project on GitHub and 
 
 In this workflow, the contributor forks the ACE/TAO upstream repository on GitHub, clones their fork, and makes changes to this private fork. When changes have been tested and are ready to be contributed back to the project, a *pull request* is issued via GitHub so that one of the Project Administrators can pull in the change.
 
-:warning It is desirable to work off a <i>topic branch</i>, even when using your own, forked repository. A topic branch is created for every feature or bug fix you do. Typically you would create one topic branch per issue, but if several patches are related it's acceptable to have several commits in the same branch; however different changes should always be identified by different commits.
+:warning: It is desirable to work off a <i>topic branch</i>, even when using your own, forked repository. A topic branch is created for every feature or bug fix you do. Typically you would create one topic branch per issue, but if several patches are related it's acceptable to have several commits in the same branch; however different changes should always be identified by different commits.
 
 
 Before you push your work onto your fork of the repository, it is often a good idea to review your commits. Consolidating them (squashing) or breaking them up as necessary and cleaning up commit messages should all be done while still working off your local clone. Also, prior to issuing a pull request, you should make sure you rebase your branch against the upstream branch you expect it to be merged into.  Also, only submit pull requests for your branch - not for your master!
