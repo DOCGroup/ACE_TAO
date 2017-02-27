@@ -364,7 +364,6 @@ ACE_INET_Addr::set (u_short port_number,
     }
 
   this->reset_i ();
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof this->inet_addr_);
 
 #if defined ACE_HAS_IPV6 && defined ACE_USES_IPV4_IPV6_MIGRATION
   if (address_family == AF_UNSPEC && !ACE::ipv6_enabled ())
