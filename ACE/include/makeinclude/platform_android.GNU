@@ -123,11 +123,6 @@ AR      ?= ar
 ARFLAGS ?= rsuv
 RANLIB   = @true
 
-PIC      = -fPIC
-AR      ?= ar
-ARFLAGS ?= rsuv
-RANLIB   = @true
-
 # end of: include most of platform_linux_common.GNU
 
 #No rwho on Android
