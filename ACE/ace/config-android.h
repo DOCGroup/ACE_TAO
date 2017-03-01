@@ -46,7 +46,7 @@
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_SYS_SYSCTL_H
 
-#if __ANDROID_API__ < 24
+#if __ANDROID_API__ < 21
 # define ACE_LACKS_UCONTEXT_H
 #else
 # define ACE_HAS_UCONTEXT_T
@@ -131,7 +131,7 @@
 # define ACE_HAS_ISASTREAM_PROTOTYPE
 # define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 # define ACE_HAS_CPU_SET_T
-#elif __ANDROID_API__ >= 24
+#elif __ANDROID_API__ >= 21
 # define ACE_HAS_CPU_SET_T
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
