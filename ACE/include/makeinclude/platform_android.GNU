@@ -118,6 +118,9 @@ endif # ssl
 
 SYSARCH := $(shell uname -m)
 
+# as of API level 16 executables can be linked as Position Independent Executables
+# as of API level 21 PIE is mandatory
+PIE		?= -pie
 PIC      = -fPIC
 AR      ?= ar
 ARFLAGS ?= rsuv
@@ -199,7 +202,7 @@ CPPFLAGS += -D_GNU_SOURCE
 DCFLAGS  += -ggdb
 DCCFLAGS += -ggdb
 DLD      = $(CXX)
-LD       = $(CXX)
+LD       = $(CXX) $(PIE)
 # make sure to add the required libs for RTTI and exceptions (libsupc++)
 # and a shared STL lib (libgnustl_shared by default)
 static_libs_only ?=
