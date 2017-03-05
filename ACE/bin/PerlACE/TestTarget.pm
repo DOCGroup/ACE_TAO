@@ -47,7 +47,7 @@ sub create_target
     }
     my $config_os = $ENV{$envname};
     SWITCH: {
-      if ($config_os =~ m/local|remote/i) {
+      if ($config_os =~ m/local|remote|avd/i) {
         $target = new PerlACE::TestTarget ($config_name);
         last SWITCH;
       }
@@ -200,8 +200,8 @@ sub GetConfigSettings ($)
     }
 
     if ($fs_root ne $tgt_fs_root) {
-      $self->{HOST_FSROOT} = dirname ($fs_root);
-      $self->{TARGET_FSROOT} = dirname ($tgt_fs_root);
+      $self->{HOST_FSROOT} = $fs_root;
+      $self->{TARGET_FSROOT} = $tgt_fs_root;
     }
 
     $env_name = $env_prefix.'EXE_SUBDIR';
@@ -312,6 +312,14 @@ sub GetConfigSettings ($)
     $env_name = $env_prefix.'REMOTE_SHELL';
     if (exists $ENV{$env_name}) {
         $self->{REMOTE_SHELL} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'PUT_CMD';
+    if (exists $ENV{$env_name}) {
+        $self->{PUT_CMD} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'GET_CMD';
+    if (exists $ENV{$env_name}) {
+        $self->{GET_CMD} = $ENV{$env_name};
     }
     $env_name = $env_prefix.'LIBPATH';
     if (exists $ENV{$env_name}) {
@@ -547,7 +555,12 @@ sub GetFile ($)
         $local_file = $remote_file;
         $remote_file = $self->LocalFile($local_file);
     }
-    if (($remote_file ne $local_file) &&
+    if (defined $self->{GET_CMD}) {
+	    if (system ($self->{GET_CMD}.' '.$remote_file.' '.$local_file) != 0) {
+	    	print STDERR "ERROR executing [".$self->{GET_CMD}." $remote_file $local_file]\n";
+	    }
+    }
+    elsif (($remote_file ne $local_file) &&
         (File::Spec->rel2abs($remote_file) ne File::Spec->rel2abs($local_file))) {
         copy ($remote_file, $local_file);
     }
@@ -560,7 +573,12 @@ sub PutFile ($)
     my $self = shift;
     my $src = shift;
     my $dest = $self->LocalFile ($src);
-    if (($src ne $dest) &&
+    if (defined $self->{PUT_CMD}) {
+	    if (system ($self->{PUT_CMD}.' '.$src.' '.$dest) != 0) {
+	    	print STDERR "ERROR executing [".$self->{PUT_CMD}." $src $dest]\n";
+	    }
+    }
+    elsif (($src ne $dest) &&
         (File::Spec->rel2abs($src) ne File::Spec->rel2abs($dest))) {
         copy ($src, $dest);
     }
