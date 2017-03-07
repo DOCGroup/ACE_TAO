@@ -78,7 +78,7 @@ public:
    */
   ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
                      const ACE_INET_Addr &remote_sap,
-                     ACE_Time_Value *timeout = 0,
+                     const ACE_Time_Value *timeout = 0,
                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = 0,
@@ -127,7 +127,7 @@ public:
    */
   int connect (ACE_MEM_Stream &new_stream,
                const ACE_INET_Addr &remote_sap,
-               ACE_Time_Value *timeout = 0,
+               const ACE_Time_Value *timeout = 0,
                const ACE_Addr &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
