@@ -49,6 +49,7 @@
 #if __ANDROID_API__ < 21
 # define ACE_LACKS_UCONTEXT_H
 #else
+# define ACE_HAS_CLOCK_SETTIME
 # define ACE_HAS_UCONTEXT_T
 #endif
 

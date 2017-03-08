@@ -1,4 +1,3 @@
-// $Id$
 // The global features file contains the default feature settings.
 // By default, if a feature isn't listed here then it is enabled.
 // If it is listed, then the value assigned to the feature is interpreted
@@ -40,7 +39,7 @@ lzo2          = 0
 ipv6          = 0
 mfc           = 0
 rpc           = 0
-sctp 	      = 0
+sctp          = 0
 boost         = 0
 dummy_label   = 0
 wince         = 0
