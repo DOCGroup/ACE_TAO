@@ -329,6 +329,10 @@ sub GetConfigSettings ($)
     if (exists $ENV{$env_name}) {
         $self->{REMOTE_FILETEST} = $ENV{$env_name};
     }
+    $env_name = $env_prefix.'REMOTE_FILERM';
+    if (exists $ENV{$env_name}) {
+        $self->{REMOTE_FILERM} = $ENV{$env_name};
+    }
     $env_name = $env_prefix.'PS_CMD';
     if (exists $ENV{$env_name}) {
         $self->{PS_CMD} = $ENV{$env_name};
@@ -542,7 +546,22 @@ sub DeleteFile ($)
     my $self = shift;
     my $file = shift;
     my $newfile = $self->LocalFile($file);
-    unlink ($newfile);
+    my $remote_rm = (defined $self->{REMOTE_FILERM}) ? 1 : 0;
+    if ((($file eq $newfile) ||
+        (File::Spec->rel2abs($file) eq File::Spec->rel2abs($newfile))) &&
+        !(defined $self->{REMOTE_FILERM})) {
+        unlink ($newfile);
+    } else {
+        my $cmd;
+        if ($self->{REMOTE_FILERM} =~ /^\d*$/) {
+            $cmd = $self->{REMOTE_SHELL} . " 'test -e $newfile && rm $newfile'";
+        } else {
+            $cmd = $self->{REMOTE_FILERM} . ' ' . $newfile;
+        }
+        if (system ($cmd) != 0) {
+        	print STDERR "ERROR executing [".$cmd."]\n";
+        }
+    }
 }
 
 sub GetFile ($)
