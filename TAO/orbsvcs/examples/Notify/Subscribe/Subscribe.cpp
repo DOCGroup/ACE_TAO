@@ -324,7 +324,7 @@ Subscribe_StructuredPushConsumer::push_structured_event
     ACE_DEBUG ((LM_DEBUG, "Structured Subscribe Consumer %d received subscribed event, domain = %s, type =  %s\n",
                 this->proxy_supplier_id_, domain_name, type_name));
   else
-    ACE_ERROR ((LM_ERROR, "Error: Structured Subscribe Consumer %d received not subcribed event , domain = %s, type =  %s\n",
+    ACE_ERROR ((LM_ERROR, "Error: Structured Subscribe Consumer %d received not subscribed event , domain = %s, type =  %s\n",
                 this->proxy_supplier_id_, domain_name, type_name));
 
   if (++g_result_count == EVENT_COUNT)
