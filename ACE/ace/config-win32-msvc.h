@@ -39,7 +39,7 @@
 
 //FUZZ: disable check_for_msc_ver
 #if (_MSC_VER >= 1910)
-# include "ace/config-win32-msvc-15.h"
+# include "ace/config-win32-msvc-141.h"
 #elif (_MSC_VER >= 1900)
 # include "ace/config-win32-msvc-14.h"
 #elif (_MSC_VER >= 1800)
