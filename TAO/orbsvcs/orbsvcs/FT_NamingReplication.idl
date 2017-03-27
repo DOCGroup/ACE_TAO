@@ -3,6 +3,7 @@
 /**
  *  @file    FT_NamingReplication.idl
  *
+ *
  *  This file is part of Fault Tolerant Naming Service in support of
  *  replication between redundant servers.
  *
@@ -20,10 +21,15 @@
 module FT_Naming
 {
 
-  enum ChangeType { NEW, UPDATED, DELETED };
+  enum ChangeType { NEW, UPDATED, DELETED, NONE };
 
   exception NotAvailable
   {
+  };
+
+  exception InvalidPeer
+  {
+    string reason;
   };
 
   /*
@@ -39,6 +45,7 @@ module FT_Naming
 
   struct ReplicaInfo
   {
+    boolean combined;
     CosNaming::NamingContext root_context;
     FT_Naming::NamingManager naming_manager;
   };
@@ -53,6 +60,28 @@ module FT_Naming
     PortableGroup::ObjectGroupId id;
     /// The type of change that is being reported
     ChangeType change_type;
+  };
+
+  enum EntityKind {
+    ctx_name,
+    obj_grp
+  };
+
+  union UpdateInfo switch (EntityKind) {
+  case ctx_name : NamingContextUpdate ctx;
+  case obj_grp  : ObjectGroupUpdate grp;
+  };
+
+  typedef sequence<UpdateInfo> UpdateInfoSeq;
+
+  interface UpdatePushNotifier
+  {
+    oneway void register_peer (in UpdatePushNotifier peer,
+                               in ReplicaInfo info,
+                               in unsigned long long initial_seq_num);
+
+    void notify_update (in unsigned long long seq_num,
+                        inout UpdateInfoSeq info);
   };
 
   interface ReplicationManager

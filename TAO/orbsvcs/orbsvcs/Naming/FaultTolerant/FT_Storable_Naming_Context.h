@@ -4,6 +4,7 @@
 /**
  *  @file   FT_Storable_Naming_Context.h
  *
+ *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================
@@ -21,12 +22,15 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_FT_Naming_Replication_Manager;
+
 /**
  * @class FT_TAO_Storable_Naming_Context
  *
  * @brief This class specializes the TAO_Storable_Naming_Context
  * 'ConcreteImplementor' in the Bridge pattern architecture of the
  * CosNaming::NamingContext implementation.
+ *
  */
 class TAO_FtNaming_Export TAO_FT_Storable_Naming_Context :
       public TAO_Storable_Naming_Context
@@ -59,15 +63,13 @@ public:
   // naming context implementations.
   static void set_naming_manager (TAO_FT_Naming_Manager *mgr_impl);
 
-  CORBA::Boolean is_object_group (CORBA::Object_ptr obj) const;
+  bool is_object_group (const CORBA::Object_ptr obj) const;
 
  /**
-  * Tell the peer replica that this context has been updated.
-  * Returns 0 if successfully reported.  Returns 1 if no peer
-  * has been registered. Returns -1 on failure to communicate
-  * with the peer.
+  * Queues a request to update the peer replica instance of this
+  * context.
   */
-  int propagate_update_notification (FT_Naming::ChangeType change_type);
+  void propagate_update_notification (FT_Naming::ChangeType change_type);
 
  /**
   * Find the indicated context below this context.  Returns 0
@@ -100,6 +102,7 @@ protected:
 
   static TAO_FT_Naming_Manager *naming_manager_;
   bool stale_;
+  TAO_FT_Naming_Replication_Manager *replicator_;
 
 };
 
