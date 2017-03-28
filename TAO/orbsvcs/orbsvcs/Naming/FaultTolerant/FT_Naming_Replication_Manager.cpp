@@ -19,6 +19,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 FT_Update_Replicant_i::FT_Update_Replicant_i (TAO_FT_Naming_Replication_Manager &owner)
   :owner_ (owner)
 {
@@ -472,3 +474,5 @@ TAO_FT_Naming_Replication_Manager::init_peer (void)
 #endif /* ACE_USES_WCHAR */
   return true;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL

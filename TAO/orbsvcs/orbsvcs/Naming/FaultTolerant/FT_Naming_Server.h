@@ -197,8 +197,8 @@ protected:
 
   ACE_Unbounded_Queue<FT_Naming::ReplicaInfo> u_iors_;
   ACE_Unbounded_Queue<FT_Naming::UpdateInfoSeq*> u_infos_;
-  ACE_Thread_Mutex ior_lock_;
-  ACE_Thread_Mutex info_lock_;
+  TAO_SYNCH_MUTEX ior_lock_;
+  TAO_SYNCH_MUTEX info_lock_;
 
 
  };

@@ -100,7 +100,7 @@ TAO_FT_Naming_Server::update_info_i (void)
     {
       FT_Naming::UpdateInfoSeq_var block;
       {
-        ACE_GUARD(ACE_Thread_Mutex, guard, this->info_lock_);
+        ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->info_lock_);
         if (this->u_infos_.dequeue_head(block.out()) == -1)
           {
             break;
@@ -132,7 +132,7 @@ TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
   FT_Naming::UpdateInfoSeq* block = 0;
   ACE_NEW(block, FT_Naming::UpdateInfoSeq (count,count,guts,true));
   {
-    ACE_GUARD(ACE_Thread_Mutex, guard, this->info_lock_);
+    ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->info_lock_);
     this->u_infos_.enqueue_tail (block);
   }
 
@@ -146,7 +146,7 @@ TAO_FT_Naming_Server::update_iors_i (void)
     {
       FT_Naming::ReplicaInfo rep;
       {
-        ACE_GUARD(ACE_Thread_Mutex, guard, this->ior_lock_);
+        ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->ior_lock_);
         if (this->u_iors_.dequeue_head(rep) == -1)
           {
             break;
@@ -171,7 +171,7 @@ void
 TAO_FT_Naming_Server::update_iors (const FT_Naming::ReplicaInfo & iors )
 {
   {
-    ACE_GUARD(ACE_Thread_Mutex, guard, this->ior_lock_);
+    ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->ior_lock_);
     this->u_iors_.enqueue_tail(iors);
   }
   this->orb_->orb_core ()->reactor ()->notify (&this->ior_notifier_);

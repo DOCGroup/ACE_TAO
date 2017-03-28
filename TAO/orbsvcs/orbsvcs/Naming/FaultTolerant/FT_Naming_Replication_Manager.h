@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
-*  @file FT_Naming_Replication_Mang.h
+*  @file FT_Naming_Replication_Manager.h
 *
 *
 *  Based on the replicator class used in the ImR.
@@ -25,6 +25,8 @@
 #include "ace/Task.h"
 
 #include <set>
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FT_Naming_Replication_Manager;
 class TAO_FT_Naming_Server;
@@ -106,5 +108,7 @@ private:
   bool send_combos_;
   bool refresh_peer_;
 };
+
+TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* FT_REPLICATOR_H */
