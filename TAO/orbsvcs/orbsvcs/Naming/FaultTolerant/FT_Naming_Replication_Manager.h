@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
-*  @file Replicator.h
+*  @file FT_Naming_Replication_Mang.h
 *
 *
 *  Based on the replicator class used in the ImR.

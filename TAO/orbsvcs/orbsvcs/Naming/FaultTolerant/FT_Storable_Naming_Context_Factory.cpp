@@ -1,4 +1,3 @@
-
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h"

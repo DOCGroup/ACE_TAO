@@ -48,6 +48,8 @@
 
 #include "tao/AnyTypeCode/Any.h"
 
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
 const ACE_TCHAR* primary_replica_ior_filename =
   ACE_TEXT ("ns_replica_primary.ior");
 
@@ -98,19 +100,7 @@ TAO_FT_Naming_Server::update_info_i (void)
     {
       FT_Naming::UpdateInfoSeq_var block;
       {
-        ACE_Guard<ACE_Thread_Mutex> guard(this->info_lock_,false);
-        if (!guard.locked())
-          {
-            if (TAO_debug_level > 1)
-              {
-                ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) FT_Naming_Server update_info_i iterator waiting\n"));
-              }
-            guard.acquire();
-            if (TAO_debug_level > 1)
-              {
-                ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) FT_Naming_Server update_info_i iterator proceeding\n"));
-              }
-          }
+        ACE_GUARD(ACE_Thread_Mutex, guard, this->info_lock_);
         if (this->u_infos_.dequeue_head(block.out()) == -1)
           {
             break;
@@ -142,19 +132,7 @@ TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
   FT_Naming::UpdateInfoSeq* block = 0;
   ACE_NEW(block, FT_Naming::UpdateInfoSeq (count,count,guts,true));
   {
-    ACE_Guard<ACE_Thread_Mutex> guard(this->info_lock_,false);
-    if (!guard.locked())
-      {
-        if (TAO_debug_level > 1)
-          {
-            ORBSVCS_DEBUG((LM_DEBUG, "(TAO %P|%t) FT_Naming_Server update_info loader waiting\n"));
-          }
-        guard.acquire();
-        if (TAO_debug_level > 1)
-          {
-            ORBSVCS_DEBUG((LM_DEBUG, "(TAO %P|%t) FT_Naming_Server update_info loader proceeding\n"));
-          }
-      }
+    ACE_GUARD(ACE_Thread_Mutex, guard, this->info_lock_);
     this->u_infos_.enqueue_tail (block);
   }
 
@@ -168,19 +146,7 @@ TAO_FT_Naming_Server::update_iors_i (void)
     {
       FT_Naming::ReplicaInfo rep;
       {
-        ACE_Guard<ACE_Thread_Mutex> guard(this->info_lock_,false);
-        if (!guard.locked())
-          {
-            if (TAO_debug_level > 1)
-              {
-                ORBSVCS_DEBUG((LM_DEBUG, "(TAO %P|%t) FT_Naming_Server update_iors_1 iterator waiting\n"));
-              }
-            guard.acquire();
-            if (TAO_debug_level > 1)
-              {
-                ORBSVCS_DEBUG((LM_DEBUG, "(TAO %P|%t) FT_Naming_Server update_iors_i iterator proceeding\n"));
-              }
-          }
+        ACE_GUARD(ACE_Thread_Mutex, guard, this->ior_lock_);
         if (this->u_iors_.dequeue_head(rep) == -1)
           {
             break;
@@ -205,19 +171,7 @@ void
 TAO_FT_Naming_Server::update_iors (const FT_Naming::ReplicaInfo & iors )
 {
   {
-    ACE_Guard<ACE_Thread_Mutex> guard(this->info_lock_,false);
-    if (!guard.locked())
-      {
-        if (TAO_debug_level > 1)
-          {
-            ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) FT_Naming_Server update_iors loader waiting\n"));
-          }
-        guard.acquire();
-        if (TAO_debug_level > 1)
-          {
-            ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) FT_Naming_Server update_iors loader proceeding\n"));
-          }
-      }
+    ACE_GUARD(ACE_Thread_Mutex, guard, this->ior_lock_);
     this->u_iors_.enqueue_tail(iors);
   }
   this->orb_->orb_core ()->reactor ()->notify (&this->ior_notifier_);
@@ -1048,3 +1002,5 @@ TAO_FT_Naming_Server::recover_iors (void)
 
   return 0;
 }
+
+TAO_END_VERSIONED_NAMESPACE_DECL
