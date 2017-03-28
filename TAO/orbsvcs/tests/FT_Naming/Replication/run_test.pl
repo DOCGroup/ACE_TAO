@@ -24,8 +24,8 @@ my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed
 
 # Variables for command-line arguments to client and server
 # executables.
-# $hostname = $test->HostName ();
-$hostname = "127.0.0.1";
+$hostname = $test->HostName ();
+
 $ns_orb_port1 = 10001 + $test->RandomPort ();
 $ns_orb_port2 = 10002 + $test->RandomPort ();
 $ft_orb_port1 = 12001 + $test->RandomPort ();
