@@ -4,13 +4,16 @@
 /**
  *  @file    Naming_Server.h
  *
+ *
  *    Implement wrappers useful to Naming Service servers.
+ *
  *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu)
  *  @author Matt Braun <mjb2@cs.wustl.edu>
  *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>.
  */
 //=============================================================================
+
 
 #ifndef TAO_NAMING_SERVER_H
 #define TAO_NAMING_SERVER_H
@@ -28,6 +31,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward decl;
 class TAO_Persistent_Context_Index;
 class TAO_Storable_Naming_Context_Activator;
+
 #endif /* !CORBA_E_MICRO */
 
 class TAO_Storable_Naming_Context_Factory;
@@ -64,7 +68,7 @@ class TAO_Naming_Serv_Export TAO_Naming_Server
 {
 public:
   /// Default constructor.
-  TAO_Naming_Server (void);
+  TAO_Naming_Server (size_t bsize = 1);
 
   /**
    * Constructor.  Attempts to find an existing Naming Service if
@@ -90,7 +94,8 @@ public:
                      int enable_multicast = 1,
                      int use_storable_context = 0,
                      int round_trip_timeout = 0,
-                     int use_round_trip_timeout = 0);
+                     int use_round_trip_timeout = 0,
+                     size_t bsize = 1);
 
   /**
    * Initializer.  Attempts to find an existing Naming Service if
@@ -131,19 +136,32 @@ public:
   /// Returns the IOR of the naming service.
   char * naming_service_ior (void);
 
-  /// Returns a NamingContext_ptr for the root Naming Context.
+  /// Returns a <NamingContext_ptr> for the root Naming Context.
   CosNaming::NamingContext_ptr operator-> (void) const;
 
 protected:
+  struct IOR_Bundle {
+    CORBA::Object_var ref_;
+    ACE_CString ior_;
+    ACE_TString filename_;
+  };
+
+  void assign (size_t ndx, bool take, CORBA::Object_ptr obj);
+  int write (size_t ndx) const;
+
+  enum Base_IOR_Indexes {
+    ROOT = 0
+  };
+
   /**
    * Helper method: create Naming Service locally. Can be specialized to
    * refine how Naming Service components are created and initialized
    * Make the root context of size
    * @a context_size, register it under the @a root_poa, and make the Naming
-   * Service persistent if @a persistence_location is not 0.
-   * (@a persistence_location specifies name of the file to use for
+   * Service persistent if <persistence_location> is not 0.
+   * (<persistence_location> specifies name of the file to use for
    * persistent storage).
-   * If @a enable_multicast is not zero then the service will respond
+   * If <enable_multicast> is not zero then the service will respond
    * to multicast location queries.
    */
   virtual int init_new_naming (CORBA::ORB_ptr orb,
@@ -175,14 +193,8 @@ protected:
   virtual TAO_Persistent_Naming_Context_Factory *
     persistent_naming_context_factory (void);
 
-  /// Root NamingContext_ptr.
-  CosNaming::NamingContext_var naming_context_;
-
   /// The ior_multicast event handler.
   TAO_IOR_Multicast *ior_multicast_;
-
-  /// The IOR string of the root naming context.
-  CORBA::String_var naming_service_ior_;
 
   /// The ORB
   CORBA::ORB_var orb_;
@@ -193,11 +205,16 @@ protected:
   /// The Naming Service POA.
   PortableServer::POA_var ns_poa_;
 
-  /// File to output the Naming Service IOR.
-  const ACE_TCHAR *ior_file_name_;
-
   /// File to output the process id.
   const ACE_TCHAR *pid_file_name_;
+
+  /// Although this class only manages the root context info
+  /// the FT class adds primary/backup IORs for the root context
+  /// as well as IORs for LB groups as well.
+  IOR_Bundle *iors_;
+  size_t bundle_size_;
+  IOR_Bundle *bundle_at (size_t ndx);
+  const IOR_Bundle *bundle_at (size_t ndx) const;
 
   /**
    * Size of the hash_table allocated upon the creation of the Naming
@@ -220,7 +237,7 @@ protected:
 
   /// Path to the file to be used to store/read in Naming Service
   /// persistent state.
-  const ACE_TCHAR *persistence_file_name_;
+  const ACE_TCHAR *persistence_dir_;
 
   /// Address to be used for memory mapping Naming Service state file,
   /// identified by the <persistence_file_name_>.
