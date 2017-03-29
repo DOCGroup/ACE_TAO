@@ -1,4 +1,12 @@
-#include /**/ "ace/pre.h"
+// -*- C++ -*-
+
+//=============================================================================
+/**
+ * @file   FT_Storable_Naming_Context_Factory.cpp
+ *
+ * @author Kevin Stanley <stanleyk@ociweb.com>
+ */
+//=============================================================================
 
 #include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h"
