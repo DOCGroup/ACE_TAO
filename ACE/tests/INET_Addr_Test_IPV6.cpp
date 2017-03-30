@@ -81,25 +81,25 @@ static bool check_both_families()
 
   ACE_INET_Addr b;
   if (-1 == b.set(ACE_TEXT(""), ACE_TEXT("www.google.com"), ACE_TEXT("tcp6")))
-  {
-	  ACE_ERROR((LM_ERROR,
-		  ACE_TEXT("%p\n"),
-		  ACE_TEXT("both test 6, www.google.com")));
-	  good = false;
-  }
+    {
+      ACE_ERROR((LM_ERROR,
+                 ACE_TEXT("%p\n"),
+                 ACE_TEXT("both test 6, www.google.com")));
+      good = false;
+    }
   else
-  {
-	  ACE_TCHAR str[1000];
-	  b.addr_to_string(str, 1000, 1);
-	  ACE_DEBUG((LM_DEBUG, ACE_TEXT("got type %d, addr %s\n"), b.get_type(), str));
-	  // Should have selected IPv6.
-	  if (b.get_type() != AF_INET6)
-	  {
-		  ACE_ERROR((LM_ERROR,
-			  ACE_TEXT("Wrong address family, expecting IPv6\n")));
-		  good = false;
-	  }
-  }
+    {
+      ACE_TCHAR str[1000];
+      b.addr_to_string(str, 1000, 1);
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("got type %d, addr %s\n"), b.get_type(), str));
+      // Should have selected IPv6.
+      if (b.get_type() != AF_INET6)
+        {
+          ACE_ERROR((LM_ERROR,
+                     ACE_TEXT("Wrong address family, expecting IPv6\n")));
+          good = false;
+        }
+    }
   return good;
 }
 
