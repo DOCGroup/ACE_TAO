@@ -511,6 +511,9 @@ ACE_INET_Addr::set (const char port_name[],
     }
 
   int address_family = PF_UNSPEC;
+  if (ACE_OS::strcmp(protocol, "tcp") == 0)
+    address_family = AF_INET;
+
 #  if defined (ACE_HAS_IPV6)
   if (ACE_OS::strcmp (protocol, "tcp6") == 0)
     address_family = AF_INET6;
