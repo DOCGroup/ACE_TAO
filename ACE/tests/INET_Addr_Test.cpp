@@ -390,11 +390,11 @@ int run_main (int, ACE_TCHAR *[])
       {
          ACE_INET_Addr addr;
          int old_type = addr.get_type();
-         addr.set(12345);
+         addr.set(12345, ACE_TEXT ("localhost"));
          if (addr.get_type() != old_type) {
            ACE_ERROR ((LM_ERROR,
-                       ACE_TEXT ("IPv6 set failed: before addr.set(1234), addr.type() = %d\n")
-                       ACE_TEXT ("                 after  addr.set(1234), addr.type() = %d\n"),
+                       ACE_TEXT ("IPv6 set failed: before addr.set(12345), addr.type() = %d\n")
+                       ACE_TEXT ("                 after  addr.set(12345), addr.type() = %d\n"),
                        old_type,
                        addr.get_type ()));
            status = 1;
