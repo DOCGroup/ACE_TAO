@@ -28,8 +28,12 @@ $hostname = $test->HostName ();
 
 $ns_orb_port1 = 10001 + $test->RandomPort ();
 $ns_orb_port2 = 10002 + $test->RandomPort ();
+$ft_orb_port1 = 12001 + $test->RandomPort ();
+$ft_orb_port2 = 12002 + $test->RandomPort ();
 $ns_endpoint1 = "iiop://$hostname:$ns_orb_port1";
 $ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
+$ft_endpoint1 = "iiop://$hostname:$ft_orb_port1";
+$ft_endpoint2 = "iiop://$hostname:$ft_orb_port2";
 
 $naming_persistence_dir = "NameService";
 $groups_persistence_dir = "Groups";
@@ -95,7 +99,8 @@ sub init_persistence_directory($$)
 # Run two Naming Servers and one client.  Client uses iors
 # in files to find the individual copies of the Naming Servers.
 
-my $args = "-ORBEndPoint $ns_endpoint1 " .
+my $args = "-orbdebuglevel 1 -orbverboselogging 1 -ORBLogFile primary.log -ORBEndPoint $ns_endpoint1 " .
+           "-ftendpoint $ft_endpoint1 " .
            "-m 0 " .
            "-r $naming_persistence_dir " .
            "-v $groups_persistence_dir " .
@@ -122,17 +127,19 @@ if ($test->WaitForFileTimed ($primary_iorfile,
 }
 
 $args = "-ORBEndPoint $ns_endpoint2 " .
+        "-ftendpoint $ft_endpoint2 " .
         "-g $nm_iorfile " .
         "-c $combined_ns_iorfile " .
         "-m 0 " .
         "-n 100 " .
         "-r $naming_persistence_dir " .
         "-v $groups_persistence_dir " .
+        "-orbdebuglevel 1 -orbverboselogging 1  -ORBLogFile backup.log " .
         "--backup";
 
 $prog = "$startdir/../../../FT_Naming_Service/tao_ft_naming";
 
-print STDERR "Starting Backup: $prog $args\n";
+print STDERR "Starting Backup: $prog $args\n in $startdir\n";
 
 $NS2 = $test->CreateProcess ("$prog", "$args");
 

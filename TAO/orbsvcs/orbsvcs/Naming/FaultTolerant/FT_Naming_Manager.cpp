@@ -4,6 +4,7 @@
 /**
  * @file   FT_Naming_Manager.cpp
  *
+ *
  * @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================
@@ -66,7 +67,6 @@ TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
     global_strategy_ (::FT_Naming::ROUND_ROBIN),
     built_in_balancing_strategy_name_ (1),
     object_group_property_name_ (1)
-
 {
   // The name for the property which contains the load balancing strategy value
   this->built_in_balancing_strategy_name_.length (1);
@@ -857,6 +857,12 @@ void
 TAO_FT_Naming_Manager::set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info)
 {
   this->group_factory_.set_object_group_stale (group_info);
+}
+
+void
+TAO_FT_Naming_Manager::set_replicator (TAO_FT_Naming_Replication_Manager *repl)
+{
+  this->group_factory_.set_replicator (repl);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
