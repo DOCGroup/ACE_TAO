@@ -22,7 +22,7 @@
 
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
-int check_type_consistency (const ACE_INET_Addr &addr)
+static int check_type_consistency (const ACE_INET_Addr &addr)
 {
   int family = -1;
 
@@ -49,6 +49,56 @@ int check_type_consistency (const ACE_INET_Addr &addr)
       return 1;
     }
   return 0;
+}
+
+// A test to ensure ACE_INET_Addr can select the protocol family.
+static bool check_both_families()
+{
+  bool good = true;
+  ACE_INET_Addr a;
+  if (-1 == a.set(ACE_TEXT (""), ACE_TEXT ("www.google.com"), ACE_TEXT ("tcp")))
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("both test 4, www.google.com")));
+      good = false;
+    }
+  else
+    {
+      ACE_TCHAR str[1000];
+      a.addr_to_string (str, 1000, 1);
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("got type %d, addr %s\n"), a.get_type(), str));
+      // Should have selected IPv4.
+      if (a.get_type() != AF_INET)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Wrong address family, expecting IPv4\n")));
+          good = false;
+        }
+    }
+
+  ACE_INET_Addr b;
+  if (-1 == b.set(ACE_TEXT(""), ACE_TEXT("www.google.com"), ACE_TEXT("tcp6")))
+    {
+      ACE_ERROR((LM_ERROR,
+                 ACE_TEXT("%p\n"),
+                 ACE_TEXT("both test 6, www.google.com")));
+      good = false;
+    }
+  else
+    {
+      ACE_TCHAR str[1000];
+      b.addr_to_string(str, 1000, 1);
+      ACE_DEBUG((LM_DEBUG, ACE_TEXT("got type %d, addr %s\n"), b.get_type(), str));
+      // Should have selected IPv6.
+      if (b.get_type() != AF_INET6)
+        {
+          ACE_ERROR((LM_ERROR,
+                     ACE_TEXT("Wrong address family, expecting IPv6\n")));
+          good = false;
+        }
+    }
+  return good;
 }
 
 
@@ -153,6 +203,9 @@ int run_main (int, ACE_TCHAR *[])
         }
 #endif /* ACE_LINUX */
     }
+
+  if (!check_both_families())
+    status = 1;
 
 #endif /* ACE_HAS_IPV6 */
 
