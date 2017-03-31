@@ -39,7 +39,7 @@ void
 TAO_Container_i::destroy_i (void)
 {
   this->destroy_references_i();
-  this->destroy_defintions_i();
+  this->destroy_definitions_i();
 }
 
 void
@@ -119,7 +119,7 @@ TAO_Container_i::destroy_references_i (void)
 }
 
 void
-TAO_Container_i::destroy_defintions_i (void)
+TAO_Container_i::destroy_definitions_i (void)
 {
   int index = 0;
   int status;

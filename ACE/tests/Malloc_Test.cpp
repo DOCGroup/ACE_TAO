@@ -304,7 +304,7 @@ child (void)
 
 #if defined (ACE_WIN32)
 // On Win9x/Me, a shared address needs to be on the shared arena,
-// betweeen the second and third megabyte in the virtual address space
+// between the second and third megabyte in the virtual address space
 // of the process. Also, a mapped view of a file is shared on the same
 // virtual address on every 32 bit process.  On WinNT/2k, memory above
 // 2Gb is reserved for the system.  So, we need to check at runtime
