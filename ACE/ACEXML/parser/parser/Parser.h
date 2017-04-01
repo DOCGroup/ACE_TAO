@@ -710,7 +710,7 @@ private:
    * This constant string defines the name of "simple XML parsing"
    * feature.  When this feature is enabled, ACEXML parser is allowed
    * to parse a simple XML stream without mandated XML prolog
-   * and no DTD defintion.
+   * and no DTD definition.
    */
   static const ACEXML_Char simple_parsing_feature_[];
 
