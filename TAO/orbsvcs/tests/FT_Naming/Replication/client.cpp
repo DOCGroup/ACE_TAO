@@ -218,7 +218,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ex._tao_print_exception ("Unable to resolve object from replica.\n");
+          ACE_ERROR ((ACE_TEXT("Did not resolve object from replica on first.\n")));
 
           // Try again...
           try {
@@ -227,7 +227,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
             ACE_ERROR ((LM_ERROR,
-                        "Object appeared after a short wait.\n"));
+                        ACE_TEXT("Object appeared after a short wait.\n")));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
@@ -290,7 +290,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ex._tao_print_exception ("Unable to resolve wide context object from replica.\n");
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unable to resolve wide context object from replica.\n")));
 
           // Try again to see if it just was a race condition
           try {
@@ -298,12 +298,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               root_context_2->resolve (wide);
             // We did find the object on the replica, but only after a wait.
             // This would be caused by a race condition to access the variable.
-            ACE_ERROR ((LM_ERROR,
-                        "Object appeared after a short wait.\n"));
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT("Object appeared after a short wait.\n")));
           }
           catch (const CosNaming::NamingContext::NotFound& second_ex)
             {
-              second_ex._tao_print_exception ("It really is not there. Failing...\n");
+              second_ex._tao_print_exception (ACE_TEXT ("It really is not there. Failing...\n"));
               return -1;
             }
         }
@@ -411,7 +411,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         // Not on replica --- as it should be.
         if (retried)  // Was found on the retry
           ACE_ERROR ((LM_ERROR,
-                      "Was removed after short wait.\n"));
+                      ACE_TEXT("Was removed after short wait.\n")));
       }
   }
   catch (const CORBA::Exception& ex)
@@ -441,9 +441,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (
-      ACE_TEXT (
-        "Unable to resolve object from redundant server"));
+    ex._tao_print_exception (ACE_TEXT ("Unable to resolve object from redundant server"));
     return -1;
   }
 
@@ -499,8 +497,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (
-              ACE_TEXT ("Unexpected Exception received.\n"));
+    ex._tao_print_exception (ACE_TEXT ("Unexpected Exception received.\n"));
     return -1;
   }
 
@@ -524,8 +521,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   catch (const CORBA::Exception& ex)
   {
-    ex._tao_print_exception (
-              ACE_TEXT ("Unexpected Exception received.\n"));
+    ex._tao_print_exception (ACE_TEXT ("Unexpected Exception received.\n"));
     return -1;
   }
 
@@ -581,8 +577,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   catch (const CORBA::Exception& ex)
   {
     ex._tao_print_exception (
-      ACE_TEXT (
-        "Unable to resolve deep context from redundant server"));
+      ACE_TEXT ("Unable to resolve deep context from redundant server"));
     return -1;
   }
 
@@ -629,8 +624,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_UINT32 usecs = ACE_UINT32(elapsed_time / gsf);
     double secs = usecs / 1000000.0;
 
-    ACE_DEBUG ((LM_DEBUG,
-                "Bound %i objects in %.2f secs\n",
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Bound %i objects in %.2f secs\n"),
                 test_runs, secs));
 
     // Test how long it takes to resolve
@@ -650,7 +644,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     secs = ((ACE_INT32) usecs) / 1000000.0;
 
     ACE_DEBUG ((LM_DEBUG,
-                "Resolved %i objects in %.2f secs\n",
+                ACE_DEBUG ("Resolved %i objects in %.2f secs\n"),
                 test_runs, secs));
 
     // Test how long it takes to unbind
@@ -669,8 +663,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     usecs = ACE_UINT32(elapsed_time / gsf);
     secs = ((ACE_INT32) usecs) / 1000000.0;
 
-    ACE_DEBUG ((LM_DEBUG,
-                "Unbound %i objects in %.2f secs\n",
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unbound %i objects in %.2f secs\n"),
                 test_runs, secs));
 
 
