@@ -218,7 +218,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ACE_ERROR ((ACE_TEXT("Did not resolve object from replica on first.\n")));
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT("Did not resolve object from replica on first.\n")));
 
           // Try again...
           try {
@@ -644,7 +645,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     secs = ((ACE_INT32) usecs) / 1000000.0;
 
     ACE_DEBUG ((LM_DEBUG,
-                ACE_DEBUG ("Resolved %i objects in %.2f secs\n"),
+                ACE_TEXT ("Resolved %i objects in %.2f secs\n"),
                 test_runs, secs));
 
     // Test how long it takes to unbind
