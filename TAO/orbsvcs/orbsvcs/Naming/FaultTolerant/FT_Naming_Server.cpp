@@ -129,11 +129,11 @@ TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
 
   CORBA::ULong count = infos.length();
   FT_Naming::UpdateInfo* guts = infos.get_buffer(true);
-  FT_Naming::UpdateInfoSeq* block = 0;
+  FT_Naming::UpdateInfoSeq_var block = 0;
   ACE_NEW(block, FT_Naming::UpdateInfoSeq (count,count,guts,true));
   {
     ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->info_lock_);
-    this->u_infos_.enqueue_tail (block);
+    this->u_infos_.enqueue_tail (block._retn());
   }
 
   this->orb_->orb_core ()->reactor ()->notify (&this->info_notifier_);
