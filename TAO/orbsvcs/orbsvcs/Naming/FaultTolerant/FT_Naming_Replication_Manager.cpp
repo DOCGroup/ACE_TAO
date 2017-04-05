@@ -81,7 +81,9 @@ TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (TAO_FT_Nam
     to_send_ (10),
     endpoint_ (owner.ft_endpoint ()),
     update_delay_ (owner.ft_update_delay ()),
-    replica_ior_ ()
+    replica_ior_ (),
+    send_combos_ (false),
+    refresh_peer_ (false)
 {
 }
 
