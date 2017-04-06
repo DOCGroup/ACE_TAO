@@ -17,6 +17,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_arpa_inet.h"
 
+#if defined (ACE_HAS_IPV6)
+
 #define LINK_LOCAL_ADDR ACE_TEXT ("fe80::")
 #define THE_INTERFACE ("eth0")
 
@@ -31,13 +33,11 @@ static int check_type_consistency (const ACE_INET_Addr &addr)
       struct sockaddr_in *sa4 = (struct sockaddr_in *)addr.get_addr();
       family = sa4->sin_family;
     }
-#if defined (ACE_HAS_IPV6)
   else if (addr.get_type () == AF_INET6)
     {
       struct sockaddr_in6 *sa6 = (struct sockaddr_in6 *)addr.get_addr();
       family = sa6->sin6_family;
     }
-#endif
 
   if (addr.get_type () != family)
     {
@@ -100,6 +100,7 @@ static bool check_both_families()
     }
   return good;
 }
+#endif /* ACE_HAS_IPV6 */
 
 
 int run_main (int, ACE_TCHAR *[])
