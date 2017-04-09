@@ -216,7 +216,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::Object_var obj1_on_replica =
           root_context_2->resolve (level1);
       }
-      catch (const CosNaming::NamingContext::NotFound& ex)
+      catch (const CosNaming::NamingContext::NotFound&)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("Did not resolve object from replica on first.\n")));
@@ -289,7 +289,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CosNaming::NamingContext_var nc =
           CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
-      catch (const CosNaming::NamingContext::NotFound& ex)
+      catch (const CosNaming::NamingContext::NotFound&)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unable to resolve wide context object from replica.\n")));
 
