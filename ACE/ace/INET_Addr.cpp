@@ -413,10 +413,10 @@ ACE_INET_Addr::set (u_short port_number,
   // lookups from completing if there is no, or only a loopback, IPv6
   // interface configured. See Bugzilla 4211 for more info.
 
-  // Without AI_ALL, Windows machines exhibit inconsistent behaviors on
-  // difference machines we have tested.
   hints.ai_flags = AI_V4MAPPED;
 #if defined(ACE_HAS_IPV6) && defined(AI_ALL)
+  // Without AI_ALL, Windows machines exhibit inconsistent behaviors on
+  // difference machines we have tested.
   hints.ai_flags |= AI_ALL;
 #endif
 
