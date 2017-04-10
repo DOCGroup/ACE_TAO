@@ -415,7 +415,10 @@ ACE_INET_Addr::set (u_short port_number,
 
   // Without AI_ALL, Windows machines exhibit inconsistent behaviors on
   // difference machines we have tested.
-  hints.ai_flags = AI_V4MAPPED | AI_ALL;
+  hints.ai_flags = AI_V4MAPPED;
+#if defined(ACE_HAS_IPV6) && defined(AI_ALL)
+  hints.ai_flags |= AI_ALL;
+#endif
 
   // Note - specify the socktype here to avoid getting multiple entries
   // returned with the same address for different socket types or
