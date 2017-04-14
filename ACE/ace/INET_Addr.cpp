@@ -364,11 +364,7 @@ ACE_INET_Addr::set (u_short port_number,
     }
 
   this->reset_i ();
-
-#if defined ACE_HAS_IPV6 && defined ACE_USES_IPV4_IPV6_MIGRATION
-  if (address_family == AF_UNSPEC && !ACE::ipv6_enabled ())
-    address_family = AF_INET;
-#endif /* ACE_HAS_IPV6 && ACE_USES_IPV4_IPV6_MIGRATION */
+  ACE_OS::memset (&this->inet_addr_, 0, sizeof this->inet_addr_);
 
 #ifdef ACE_HAS_IPV6
   if (address_family == AF_UNSPEC && ACE::ipv6_enabled ())
@@ -413,6 +409,7 @@ ACE_INET_Addr::set (u_short port_number,
   // lookups from completing if there is no, or only a loopback, IPv6
   // interface configured. See Bugzilla 4211 for more info.
   hints.ai_flags = AI_V4MAPPED;
+
   // Note - specify the socktype here to avoid getting multiple entries
   // returned with the same address for different socket types or
   // protocols. If this causes a problem for some reason (an address that's
