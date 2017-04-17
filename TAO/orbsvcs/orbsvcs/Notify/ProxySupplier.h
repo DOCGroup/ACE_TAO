@@ -83,7 +83,7 @@ private:
   TAO_Notify_ConsumerAdmin::Ptr consumer_admin_;
 
   /// The Consumer that we're connect to.
-  TAO_Notify_Consumer::Ptr consumer_;
+  ACE_Auto_Ptr<TAO_Notify_Consumer> consumer_;
 
   /// Access our Peer.
   virtual TAO_Notify_Peer* peer (void);
