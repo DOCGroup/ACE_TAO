@@ -116,10 +116,19 @@ TAO_HTTP_Reader::receive_reply (void)
   // Note that we assume that the header will fit into MTU bytes.
   if (peer ().recv_n (buf, MTU, 0, &num_recvd) >= 0)
     {
+      // Zero terminate buf.
+      buf[num_recvd]=0;
+
       //Make sure that response type is 200 OK
-      if (ACE_OS::strstr (buf,"200 OK") == 0)
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
-                            "TAO (%P|%t) - HTTP_Reader::receive_reply, Response is not 200 OK\n" ), -1);
+      // It could be "IOR:" also!!!
+      if (*buf==0 || ACE_OS::strstr (buf,"200 OK") == 0)  // *buf==0 is here because strstr returns buf if buf is empty string
+      {
+        // If response is pure IOR string it should begin with "IOR:" without any white spaces before it
+        // This could be modified in future to skip leading white spaces if there is a possibility that there are white spaces before "IOR:" string
+        if (*buf==0 || ACE_OS::strstr (buf,"IOR:") != buf)  // *buf==0 is here because strstr returns buf if buf is empty string
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
+                              "TAO (%P|%t) - HTTP_Reader::receive_reply, Response is not 200 OK nor IOR:\n" ), -1);
+      }
 
       // Search for the header termination string "\r\n\r\n", or "\n\n". If
       // found, move past it to get to the data portion.
@@ -149,7 +158,7 @@ TAO_HTTP_Reader::receive_reply (void)
   ACE_Message_Block* curr = this->mb_;
 
   ACE_NEW_RETURN (temp,
-                  ACE_Message_Block (bytes_read),
+                  ACE_Message_Block (bytes_read + 1), // Added "+1" to make room for byte 0 to make 0 terminated string.
                   -1);
   curr->cont (temp);
   curr = curr->cont ();
@@ -160,6 +169,10 @@ TAO_HTTP_Reader::receive_reply (void)
       TAOLIB_ERROR_RETURN ((LM_ERROR, "TAO (%P|%t) - HTTP_Reader::receive_reply, error copying data into Message_Block\n"), -1);
     }
 
+  // 0 - terminate string
+  *curr->wr_ptr () = 0;
+  curr->wr_ptr (1);
+
   // read the rest of the data into a number of ACE_Message_Blocks and
   // chain them together in a link list fashion
   num_recvd = 0;
@@ -169,7 +182,7 @@ TAO_HTTP_Reader::receive_reply (void)
     if (curr->space () == 0)
     {
       ACE_NEW_RETURN (temp,
-                      ACE_Message_Block (MTU),
+                      ACE_Message_Block (MTU + 1),  // Added "+1" to make room for byte 0 to make 0 terminated string.
                       -1);
       curr->cont (temp);
       curr = curr->cont ();
@@ -179,6 +192,10 @@ TAO_HTTP_Reader::receive_reply (void)
     {
       // Move the write pointer
       curr->wr_ptr (num_recvd);
+
+      // 0 - terminate string
+      *curr->wr_ptr () = 0;
+      curr->wr_ptr (1);
 
       // Increment bytes_read
       bytes_read += num_recvd;
