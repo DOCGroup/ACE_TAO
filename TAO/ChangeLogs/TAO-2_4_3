@@ -1,0 +1,161 @@
+commit 89a47152ca31fc7ffb0b6b43d44378ac373aba9d
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Sat Apr 15 08:53:54 2017 -0500
+
+    Updating NEWS
+
+commit 5c3c3b56f40a7f4260d5568c6f39be8d7ea6eaf7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Apr 9 19:38:26 2017 +0200
+
+    Fixed warnings about unreference local variable
+    
+        * TAO/orbsvcs/tests/FT_Naming/Replication/client.cpp:
+
+commit 6279ee8966238eff19fac492d89f52ec9fe35b05
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Sun Apr 2 07:50:53 2017 -0500
+
+    Fixed typos in client.
+
+commit bbf57e200c60ae961a4ef8d15772c89d6a24b524
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Sun Apr 2 07:27:45 2017 -0500
+
+    Misc. fixes for coverity issues an test output.
+
+commit 09ac8a3f7ac83cac488913546187a8180e138db1
+Merge: bb4a031ea9f a65d9ccf57f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 31 14:16:51 2017 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit bb4a031ea9f1373dfd65ea52339608d09d9f588c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 31 14:14:03 2017 +0200
+
+    Fixed typos
+    
+        * ACE/ACEXML/parser/parser/Parser.cpp:
+        * ACE/ACEXML/parser/parser/Parser.h:
+        * ACE/ASNMP/asnmp/sagent.h:
+        * ACE/ASNMP/asnmp/snmp.h:
+        * ACE/ace/Service_Config.cpp:
+        * ACE/apps/gperf/src/Options.cpp:
+        * ACE/tests/Malloc_Test.cpp:
+        * TAO/TAO_IDL/be/be_interface.cpp:
+        * TAO/TAO_IDL/be_include/be_interface.h:
+        * TAO/examples/OBV/Simple_util.h:
+        * TAO/examples/Persistent_Grid/Simple_util.h:
+        * TAO/examples/Simple/Simple_util.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * TAO/tests/Bug_3683_Regression/Simple_util.h:
+        * TAO/tests/OBV/Simple/Simple_util.h:
+
+commit 0b6cb875410b1c868a20ea93bb8da3c8b00f7aec
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Mar 29 07:46:58 2017 -0500
+
+    Fixing the preamble for a .cpp file
+
+commit b34ed8469186160c230eb26e0a503df5edd68298
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Mar 28 10:39:14 2017 -0500
+
+    Fuzz and versioned build fixes
+
+commit 53fb3cceea5540b485729f082f738250536eddff
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Mar 28 03:42:25 2017 -0500
+
+    Restored the test hostname
+
+commit c8f54a13a0e5ea0eee4d16f631e72afbe50d1a0b
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Mar 28 03:37:41 2017 -0500
+
+    Correcting for fuzz and reviewer caught issues.
+
+commit 43491d665f8552b9457c876d6e6af8ab42430266
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Mon Mar 27 07:33:51 2017 -0500
+
+    Adding enhanced hot-standby feature to FT_Naming_Service based on code added to OCITAO 2.2a
+
+commit 2e72cd5a4d1dfcc0044bf874eb43ae7e9ebbee3b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 15 14:53:23 2017 +0100
+
+    Fixed typos
+    
+        * TAO/docs/orbsvcs.html:
+        * TAO/docs/pluggable_protocols/index.html:
+        * TAO/docs/releasenotes/ftrt_ec.html:
+        * TAO/docs/releasenotes/index.html:
+        * TAO/orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * TAO/tests/NestedUpcall/MT_Client_Test/client.cpp:
+
+commit 930679b1b06fd07092585c625e85277c0665c536
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 15 13:31:25 2017 +0100
+
+    Layout changes
+    
+        * TAO/orbsvcs/examples/Notify/ThreadPool/Consumer.cpp:
+
+commit ca38f8bc82d9e2a3365509b9e53e098e0e840fd0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 15 13:31:16 2017 +0100
+
+    Fixed typo
+    
+        * TAO/orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
+
+commit dc75284421f5709c4e0904a5c362f0a8065c719c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 10 12:16:39 2017 +0100
+
+    Add missing space
+    
+        * TAO/TAO_IDL/be/be_sequence.cpp:
+
+commit 4ce4f37f259673d909c415b5b86ad927e6916941
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 10 10:20:55 2017 +0100
+
+    Some more compact code generation
+    
+        * TAO/TAO_IDL/be/be_sequence.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+
+commit 056104fadb504bbc7d57134e16af440a5c02bab4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 22 14:51:01 2017 +0100
+
+    Fixed typos
+    
+        * TAO/orbsvcs/orbsvcs/HTIOP/README.txt:
+
+commit 4f2dd7c0edde6a9793a6b4ef11519be44e4adb14
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 25 12:26:24 2017 +0100
+
+    Fixed typo in comment
+    
+        * TAO/examples/Callback_Quoter/Consumer.idl:
+        * TAO/examples/Callback_Quoter/Consumer_Input_Handler.cpp:
+
+commit d959a2af160f8321642c734a15de342111efcae1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 17 10:09:28 2017 +0100
+
+    Make x.4.2 public and prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
