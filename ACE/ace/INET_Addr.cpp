@@ -371,8 +371,11 @@ ACE_INET_Addr::set (u_short port_number,
 #endif /* ACE_HAS_IPV6 && ACE_USES_IPV4_IPV6_MIGRATION */
 
 #ifdef ACE_HAS_IPV6
+
+#ifndef AIX
   if (address_family == AF_UNSPEC && ACE::ipv6_enabled ())
     address_family = AF_INET6;
+#endif /* AIX */
 
   if (address_family != AF_INET
       && ACE_OS::inet_pton (AF_INET6, host_name,
