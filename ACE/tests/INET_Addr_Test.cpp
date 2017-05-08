@@ -398,7 +398,7 @@ int run_main (int, ACE_TCHAR *[])
          if (addr.set(12345, local_names[i]) == 0) {
            if (addr.get_type() != old_type) {
              ACE_ERROR ((LM_ERROR,
-                         ACE_TEXT ("IPv6 set failed: addr.set(12345, \"%s\"), old addr.type() = %d, new addr_type()= %d\n"),
+                         ACE_TEXT ("IPv6 set failed: addr.set(12345, \"%C\"), old addr.type() = %d, new addr_type()= %d\n"),
                          local_names[i],
                          old_type,
                          addr.get_type ()));
@@ -406,7 +406,7 @@ int run_main (int, ACE_TCHAR *[])
            }
          }
          else {
-           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IPv6 set failed: addr.set(12345, \"%s\") returns nonzero\n", local_names[i])));
+           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IPv6 set failed: addr.set(12345, \"%C\") returns nonzero\n", local_names[i])));
          }
       }
 
