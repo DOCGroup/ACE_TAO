@@ -406,7 +406,7 @@ int run_main (int, ACE_TCHAR *[])
            }
          }
          else {
-           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IPv6 set failed: addr.set(12345, \"%C\") returns nonzero\n", local_names[i])));
+           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IPv6 set failed: addr.set(12345, \"%C\") returns nonzero\n"), local_names[i]));
          }
       }
 
