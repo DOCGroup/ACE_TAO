@@ -18,6 +18,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_arpa_inet.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_unistd.h"
 
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
