@@ -233,6 +233,15 @@ int run_main (int, ACE_TCHAR *[])
           if (addr_port != check)
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reset on iter %d failed\n"), i));
+
+              if (addr_port.get_type() != check.get_type()) {
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("  addr_port.get_type()= %d, check.get_type()=%d\n")
+                  , addr_port.get_type(), check.get_type()));
+              }
+              if (addr_port.get_size() != check.get_size()) {
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("  addr_port.get_size()= %d, check.get_size()=%d\n")
+                  , addr_port.get_size(), check.get_size()));
+              }
               status = 1;
             }
         }
