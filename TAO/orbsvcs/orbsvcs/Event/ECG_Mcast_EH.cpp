@@ -97,17 +97,20 @@ TAO_ECG_Mcast_EH::shutdown (void)
   // Indicates that we are in a shutdown state.
   this->receiver_ = 0;
 
-  // Deregister from reactor, close and clean up sockets.
-  size_t const subscriptions_size = this->subscriptions_.size ();
-  for (size_t i = 0; i != subscriptions_size; ++i)
-    {
-      (void) this->reactor ()->remove_handler (
-                               this->subscriptions_[i].dgram->get_handle (),
-                               ACE_Event_Handler::READ_MASK);
-      (void) this->subscriptions_[i].dgram->close();
-      delete this->subscriptions_[i].dgram;
-    }
-  this->subscriptions_.size (0);
+  {
+    ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
+    // Deregister from reactor, close and clean up sockets.
+    size_t const subscriptions_size = this->subscriptions_.size ();
+    for (size_t i = 0; i != subscriptions_size; ++i)
+      {
+        (void) this->reactor ()->remove_handler (
+                                 this->subscriptions_[i].dgram->get_handle (),
+                                 ACE_Event_Handler::READ_MASK);
+        (void) this->subscriptions_[i].dgram->close();
+        delete this->subscriptions_[i].dgram;
+      }
+    this->subscriptions_.size (0);
+  }
 
   return 0;
 }
@@ -115,6 +118,7 @@ TAO_ECG_Mcast_EH::shutdown (void)
 int
 TAO_ECG_Mcast_EH::handle_input (ACE_HANDLE fd)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   size_t const subscriptions_size = this->subscriptions_.size ();
   for (size_t i = 0; i != subscriptions_size; ++i)
     {
@@ -197,6 +201,7 @@ int
 TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
     Address_Set& multicast_addresses)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
   for (size_t i = 0; i < this->subscriptions_.size (); ++i)
     {
       ACE_INET_Addr multicast_group = this->subscriptions_[i].mcast_addr;
@@ -223,7 +228,7 @@ TAO_ECG_Mcast_EH::delete_unwanted_subscriptions (
       --i;
     }
 
-    return 0;
+  return 0;
 }
 
 void
@@ -238,10 +243,12 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
       new_subscription.mcast_addr = *k;
       ACE_NEW (new_subscription.dgram, ACE_SOCK_Dgram_Mcast);
 
-      size_t const subscriptions_size = this->subscriptions_.size ();
-      this->subscriptions_.size (subscriptions_size + 1);
-      this->subscriptions_[subscriptions_size] = new_subscription;
-
+      {
+        ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
+        size_t const subscriptions_size = this->subscriptions_.size ();
+        this->subscriptions_.size (subscriptions_size + 1);
+        this->subscriptions_[subscriptions_size] = new_subscription;
+      }
       ACE_SOCK_Dgram_Mcast *socket = new_subscription.dgram;
 
       if (socket->open (new_subscription.mcast_addr, this->net_if_, 1) == -1) {
