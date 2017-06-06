@@ -242,6 +242,38 @@ int run_main (int, ACE_TCHAR *[])
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("  addr_port.get_size()= %d, check.get_size()=%d\n")
                   , addr_port.get_size(), check.get_size()));
               }
+#if defined(ACE_HAS_IPV6)
+              if (addr_port.get_type() == check.get_type() && addr_port.get_size() == check.get_size()){
+                if (addr_port.get_type() == AF_INET6) {
+                  const struct sockaddr_in6 *addr_port_in6 =
+                    static_cast<const struct sockaddr_in6*> (addr_port.get_addr());
+                  const struct sockaddr_in6 *check_in6 =
+                    static_cast<const struct sockaddr_in6*> (check.get_addr());
+# if defined(AIX)
+
+                  ACE_ERROR((LM_ERROR, ACE_TEXT ("  addr_port_in6->sin6_len=%d, check_in6->sin6_len=%d\n")
+                    , (int)addr_port_in6->sin6_len, (int)check_in6->sin6_len));
+# endif
+
+                  ACE_ERROR((LM_ERROR, ACE_TEXT ("  addr_port_in6->sin6_family=%d, check_in6->sin6_family=%d\n")
+                    , (int)addr_port_in6->sin6_family, (int)check_in6->sin6_family));
+
+                  ACE_ERROR((LM_ERROR, ACE_TEXT ("  addr_port_in6->sin6_port=%d, check_in6->sin6_port=%d\n")
+                    , (int)addr_port_in6->sin6_port, (int)check_in6->sin6_port));
+
+                  ACE_ERROR((LM_ERROR, ACE_TEXT ("  addr_port_in6->sin6_flowinfo=%d, check_in6->sin6_flowinfo=%d\n")
+                    , (int)addr_port_in6->sin6_flowinfo, (int)check_in6->sin6_flowinfo));
+
+                  ACE_ERROR((LM_ERROR, ACE_TEXT ("  addr_port_in6->sin6_scope_id=%d, check_in6->sin6_scope_id=%d\n")
+                    , (int)addr_port_in6->sin6_scope_id, (int)check_in6->sin6_scope_id));
+
+                  ACE_ERROR((LM_DEBUG, ACE_TEXT ("  addr_port_in6->sin6_addr=")));
+                  ACE_HEX_DUMP((LM_DEBUG, reinterpret_cast<const char*>(&addr_port_in6->sin6_addr), sizeof(addr_port_in6->sin6_addr)));
+                  ACE_ERROR((LM_DEBUG, ACE_TEXT ("  check_in6->sin6_addr=")));
+                  ACE_HEX_DUMP((LM_DEBUG, reinterpret_cast<const char*>(&check_in6->sin6_addr), sizeof(check_in6->sin6_addr)));
+                }
+              }
+#endif
               status = 1;
             }
         }
