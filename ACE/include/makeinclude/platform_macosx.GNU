@@ -25,8 +25,8 @@ MACOS_CODENAME = $(MACOS_CODENAME_VER_$(MACOS_MAJOR_VERSION)_$(MACOS_MINOR_VERSI
 
 ifeq ($(MACOS_MAJOR_VERSION),10)
   ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 13; echo $$?),0)
-  ## if the detected version is greater than the latest know version,
-  ## just use the latest known version
+    ## if the detected version is greater than the latest know version,
+    ## just use the latest known version
     MACOS_CODENAME = $(MACOS_CODENAME_VER_latest)
   else ifeq ($(shell test $(MACOS_MINOR_VERSION) -lt 2; echo $$?),0)
     ## Unsupported minor version
