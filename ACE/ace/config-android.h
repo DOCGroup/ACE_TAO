@@ -54,7 +54,7 @@
 #endif
 
 
-#if __ANDROID_API__ == 24
+#if __ANDROID_API__ >= 24
 #define ACE_HAS_FD_MASK
 #else
 #define ACE_LACKS_FD_MASK
