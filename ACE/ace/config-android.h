@@ -53,8 +53,14 @@
 # define ACE_HAS_UCONTEXT_T
 #endif
 
-#define ACE_LACKS_CUSERID
+
+#if __ANDROID_API__ >= 24
+#define ACE_HAS_FD_MASK
+#else
 #define ACE_LACKS_FD_MASK
+#endif
+
+#define ACE_LACKS_CUSERID
 #define ACE_LACKS_GETHOSTENT
 #define ACE_LACKS_GETLOADAVG
 #define ACE_LACKS_ISCTYPE
