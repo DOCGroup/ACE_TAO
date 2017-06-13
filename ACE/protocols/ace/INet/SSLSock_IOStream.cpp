@@ -81,7 +81,7 @@ namespace ACE
     void SSLSock_OStreamBase<ACE_SYNCH_USE>::set_interceptor (
           typename buffer_type::interceptor_type& interceptor)
       {
-        this->rdbuf ()->set_interceptor (interceptor);
+        this->ios_base::rdbuf ()->set_interceptor (interceptor);
       }
 
     template <ACE_SYNCH_DECL>
@@ -99,7 +99,7 @@ namespace ACE
     void SSLSock_IStreamBase<ACE_SYNCH_USE>::set_interceptor (
           typename buffer_type::interceptor_type& interceptor)
       {
-        this->rdbuf ()->set_interceptor (interceptor);
+        this->ios_base::rdbuf ()->set_interceptor (interceptor);
       }
 
     template <ACE_SYNCH_DECL>
@@ -117,7 +117,7 @@ namespace ACE
     void SSLSock_IOStreamBase<ACE_SYNCH_USE>::set_interceptor (
           typename buffer_type::interceptor_type& interceptor)
       {
-        this->rdbuf ()->set_interceptor (interceptor);
+        this->ios_base::rdbuf ()->set_interceptor (interceptor);
       }
 
   }
