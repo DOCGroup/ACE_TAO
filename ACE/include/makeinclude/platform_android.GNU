@@ -164,8 +164,8 @@ pipes ?= 1
 
 # set architecture specific build flags
 ifeq (arm,$(findstring arm,$(ANDROID_ARCH)))
-  # NDK says required for working around a CPU bug in some Cortex-A8 
-  # implementations
+  # NDK says -Wl,--fix-cortex-a8 is required for working around a CPU bug 
+  # in some Cortex-A8 implementations
   
   # Set ABI specific flags
   ifeq ($(ANDROID_ABI),armeabi-v7a)
