@@ -144,7 +144,6 @@ rwho = 0
 #Toolchain defaults to arm architecture
 ANDROID_ARCH ?= arm
 
-
 #SYSROOT ?= $(NDK)/platforms/android-9/arch-$(ANDROID_ARCH)
 
 ifeq (,$(CROSS_COMPILE))
