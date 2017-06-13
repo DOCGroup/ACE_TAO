@@ -58,7 +58,7 @@
 #define ACE_HAS_FD_MASK
 #else
 #define ACE_LACKS_FD_MASK
-#endif 
+#endif
 
 #define ACE_LACKS_CUSERID
 #define ACE_LACKS_GETHOSTENT
