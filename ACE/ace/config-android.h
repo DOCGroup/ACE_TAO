@@ -46,20 +46,6 @@
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_SYS_SYSCTL_H
 
-#if __ANDROID_API__ < 21
-# define ACE_LACKS_UCONTEXT_H
-#else
-# define ACE_HAS_CLOCK_SETTIME
-# define ACE_HAS_UCONTEXT_T
-#endif
-
-
-#if __ANDROID_API__ >= 24
-#define ACE_HAS_FD_MASK
-#else
-#define ACE_LACKS_FD_MASK
-#endif
-
 #define ACE_LACKS_CUSERID
 #define ACE_LACKS_GETHOSTENT
 #define ACE_LACKS_GETLOADAVG
@@ -344,6 +330,19 @@
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_REENTRANT_FUNCTIONS
+
+#if __ANDROID_API__ < 21
+# define ACE_LACKS_UCONTEXT_H
+#else
+# define ACE_HAS_CLOCK_SETTIME
+# define ACE_HAS_UCONTEXT_T
+#endif
+
+#if __ANDROID_API__ >= 24
+# define ACE_HAS_FD_MASK
+#else
+# define ACE_LACKS_FD_MASK
+#endif
 
 #if __ANDROID_API__ >= 9
 # define ACE_HAS_TIMEZONE
