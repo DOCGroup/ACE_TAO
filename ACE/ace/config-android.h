@@ -338,7 +338,7 @@
 # define ACE_HAS_UCONTEXT_T
 #endif
 
-#if !defined ACE_HAS_FD_MASK
+#if __ANDROID_API__ < 24
 # define ACE_LACKS_FD_MASK
 #endif
 
