@@ -21,7 +21,7 @@ env:
     - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
     - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
     - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
-    - COMPILER=g++-6
+    - COMPILER=g++-7
 
 matrix:
   include:
@@ -30,12 +30,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.9
+            - llvm-toolchain-precise-4.0
           packages:
             - libxerces-c-dev
             - libssl-dev
-            - clang++-3.9
-      env: COMPILER=clang++-3.9 VERSIONED=1 TAO=1 ACETESTS=1
+            - clang++-4.0
+      env: COMPILER=clang++-4.0 VERSIONED=1 TAO=1 ACETESTS=1
 
 addons:
   apt:
@@ -44,7 +44,7 @@ addons:
     packages:
       - libssl-dev
       - libxerces-c-dev
-      - g++-6
+      - g++-7
 
 before_install:
   - git clone --depth 1 git://github.com/DOCGroup/MPC.git
