@@ -194,11 +194,11 @@ ifeq ($(shared_libs), 1)
         LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | egrep -i "(option|flag)" /dev/null; echo $$?')
       else
         LD_EXPORT_DEFINED := $(shell $(LD_FOR_VERSION_TEST) -E 2>&1 | grep -c -i -e '(option|flag)')
-      ifeq ($(LD_EXPORT_DEFINED),0)
-        LD_EXPORT_DEFINED:=1
-      else
-        LD_EXPORT_DEFINED:=0
-      endif
+        ifeq ($(LD_EXPORT_DEFINED),0)
+          LD_EXPORT_DEFINED:=1
+        else
+          LD_EXPORT_DEFINED:=0
+        endif
       endif # mingw32
       ifeq ($(LD_EXPORT_DEFINED),1)
         LDFLAGS += -Wl,-E
