@@ -106,13 +106,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   endif
 # endif /* ACE_NEEDS_FUNC_DEFINITIONS */
 
-// C++11 has deprecated the register keyword
-#if defined (ACE_HAS_CPP11)
-# define ACE_REGISTER
-#else
-# define ACE_REGISTER register
-#endif
-
 // noexcept(false) specification to specify that the operation can
 // throw an exception
 #if defined (ACE_HAS_CPP11)
