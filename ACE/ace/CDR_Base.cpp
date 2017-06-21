@@ -110,25 +110,22 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
           __asm mov 4[edx], ebx;
 #elif ACE_SIZEOF_LONG == 8
           // 64 bit architecture.
-          ACE_REGISTER unsigned long a =
-            * reinterpret_cast<const unsigned long*> (orig);
+          unsigned long a = * reinterpret_cast<const unsigned long*> (orig);
 
-          ACE_REGISTER unsigned long a1 = (a & 0x00ff00ff00ff00ffUL) << 8;
-          ACE_REGISTER unsigned long a2 = (a & 0xff00ff00ff00ff00UL) >> 8;
+          unsigned long a1 = (a & 0x00ff00ff00ff00ffUL) << 8;
+          unsigned long a2 = (a & 0xff00ff00ff00ff00UL) >> 8;
 
           a = (a1 | a2);
 
           * reinterpret_cast<unsigned long*> (target) = a;
 #else
-          ACE_REGISTER ACE_UINT32 a =
-            * reinterpret_cast<const ACE_UINT32*> (orig);
-          ACE_REGISTER ACE_UINT32 b =
-            * reinterpret_cast<const ACE_UINT32*> (orig + 4);
+          ACE_UINT32 a = * reinterpret_cast<const ACE_UINT32*> (orig);
+          ACE_UINT32 b = * reinterpret_cast<const ACE_UINT32*> (orig + 4);
 
-          ACE_REGISTER ACE_UINT32 a1 = (a & 0x00ff00ffU) << 8;
-          ACE_REGISTER ACE_UINT32 b1 = (b & 0x00ff00ffU) << 8;
-          ACE_REGISTER ACE_UINT32 a2 = (a & 0xff00ff00U) >> 8;
-          ACE_REGISTER ACE_UINT32 b2 = (b & 0xff00ff00U) >> 8;
+          ACE_UINT32 a1 = (a & 0x00ff00ffU) << 8;
+          ACE_UINT32 b1 = (b & 0x00ff00ffU) << 8;
+          ACE_UINT32 a2 = (a & 0xff00ff00U) >> 8;
+          ACE_UINT32 b2 = (b & 0xff00ff00U) >> 8;
 
           a = (a1 | a2);
           b = (b1 | b2);
@@ -181,18 +178,17 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
           __asm mov 4[edx], bx;
 #elif ACE_SIZEOF_LONG == 8
           // 64 bit architecture.
-          ACE_REGISTER unsigned long a =
-            * reinterpret_cast<const unsigned long*> (orig);
+          unsigned long a = * reinterpret_cast<const unsigned long*> (orig);
 
-          ACE_REGISTER unsigned long a1 = (a & 0x00ff00ff00ff00ffUL) << 8;
-          ACE_REGISTER unsigned long a2 = (a & 0xff00ff00ff00ff00UL) >> 8;
+          unsigned long a1 = (a & 0x00ff00ff00ff00ffUL) << 8;
+          unsigned long a2 = (a & 0xff00ff00ff00ff00UL) >> 8;
 
           a = (a1 | a2);
 
-          ACE_UINT16 b1 = static_cast<ACE_UINT16> (a >> 48);
-          ACE_UINT16 b2 = static_cast<ACE_UINT16> ((a >> 32) & 0xffff);
-          ACE_UINT16 b3 = static_cast<ACE_UINT16> ((a >> 16) & 0xffff);
-          ACE_UINT16 b4 = static_cast<ACE_UINT16> (a & 0xffff);
+          b1 = static_cast<ACE_UINT16> (a >> 48);
+          b2 = static_cast<ACE_UINT16> ((a >> 32) & 0xffff);
+          b3 = static_cast<ACE_UINT16> ((a >> 16) & 0xffff);
+          b4 = static_cast<ACE_UINT16> (a & 0xffff);
 
 #if defined(ACE_LITTLE_ENDIAN)
           * reinterpret_cast<ACE_UINT16*> (target) = b4;
@@ -206,23 +202,21 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
           * reinterpret_cast<ACE_UINT16*> (target + 6) = b4;
 #endif
 #else
-          ACE_REGISTER ACE_UINT32 a =
-            * reinterpret_cast<const ACE_UINT32*> (orig);
-          ACE_REGISTER ACE_UINT32 b =
-            * reinterpret_cast<const ACE_UINT32*> (orig + 4);
+          ACE_UINT32 a = * reinterpret_cast<const ACE_UINT32*> (orig);
+          ACE_UINT32 b = * reinterpret_cast<const ACE_UINT32*> (orig + 4);
 
-          ACE_REGISTER ACE_UINT32 a1 = (a & 0x00ff00ff) << 8;
-          ACE_REGISTER ACE_UINT32 b1 = (b & 0x00ff00ff) << 8;
-          ACE_REGISTER ACE_UINT32 a2 = (a & 0xff00ff00) >> 8;
-          ACE_REGISTER ACE_UINT32 b2 = (b & 0xff00ff00) >> 8;
+          ACE_UINT32 a1 = (a & 0x00ff00ff) << 8;
+          ACE_UINT32 b1 = (b & 0x00ff00ff) << 8;
+          ACE_UINT32 a2 = (a & 0xff00ff00) >> 8;
+          ACE_UINT32 b2 = (b & 0xff00ff00) >> 8;
 
           a = (a1 | a2);
           b = (b1 | b2);
 
-          ACE_UINT32 c1 = static_cast<ACE_UINT16> (a >> 16);
-          ACE_UINT32 c2 = static_cast<ACE_UINT16> (a & 0xffff);
-          ACE_UINT32 c3 = static_cast<ACE_UINT16> (b >> 16);
-          ACE_UINT32 c4 = static_cast<ACE_UINT16> (b & 0xffff);
+          c1 = static_cast<ACE_UINT16> (a >> 16);
+          c2 = static_cast<ACE_UINT16> (a & 0xffff);
+          c3 = static_cast<ACE_UINT16> (b >> 16);
+          c4 = static_cast<ACE_UINT16> (b & 0xffff);
 
 #if defined(ACE_LITTLE_ENDIAN)
           * reinterpret_cast<ACE_UINT16*> (target) = c2;
@@ -296,10 +290,8 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
     {
       while (orig < end)
         {
-          ACE_REGISTER unsigned long a =
-            * reinterpret_cast<const long*> (orig);
-          ACE_REGISTER unsigned long b =
-            * reinterpret_cast<const long*> (orig + 8);
+          unsigned long a = * reinterpret_cast<const long*> (orig);
+          unsigned long b = * reinterpret_cast<const long*> (orig + 8);
 
 #if defined(ACE_HAS_INTEL_ASSEMBLY)
           asm ("bswapq %1" : "=r" (a) : "0" (a));
@@ -307,14 +299,14 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
           asm ("rol $32, %1" : "=r" (a) : "0" (a));
           asm ("rol $32, %1" : "=r" (b) : "0" (b));
 #else
-          ACE_REGISTER unsigned long a84 = (a & 0x000000ff000000ffL) << 24;
-          ACE_REGISTER unsigned long b84 = (b & 0x000000ff000000ffL) << 24;
-          ACE_REGISTER unsigned long a73 = (a & 0x0000ff000000ff00L) << 8;
-          ACE_REGISTER unsigned long b73 = (b & 0x0000ff000000ff00L) << 8;
-          ACE_REGISTER unsigned long a62 = (a & 0x00ff000000ff0000L) >> 8;
-          ACE_REGISTER unsigned long b62 = (b & 0x00ff000000ff0000L) >> 8;
-          ACE_REGISTER unsigned long a51 = (a & 0xff000000ff000000L) >> 24;
-          ACE_REGISTER unsigned long b51 = (b & 0xff000000ff000000L) >> 24;
+          unsigned long a84 = (a & 0x000000ff000000ffL) << 24;
+          unsigned long b84 = (b & 0x000000ff000000ffL) << 24;
+          unsigned long a73 = (a & 0x0000ff000000ff00L) << 8;
+          unsigned long b73 = (b & 0x0000ff000000ff00L) << 8;
+          unsigned long a62 = (a & 0x00ff000000ff0000L) >> 8;
+          unsigned long b62 = (b & 0x00ff000000ff0000L) >> 8;
+          unsigned long a51 = (a & 0xff000000ff000000L) >> 24;
+          unsigned long b51 = (b & 0xff000000ff000000L) >> 24;
 
           a = (a84 | a73 | a62 | a51);
           b = (b84 | b73 | b62 | b51);
@@ -332,10 +324,8 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
       // We are out of luck, we have to write in 4 byte chunks.
       while (orig < end)
         {
-          ACE_REGISTER unsigned long a =
-            * reinterpret_cast<const long*> (orig);
-          ACE_REGISTER unsigned long b =
-            * reinterpret_cast<const long*> (orig + 8);
+          unsigned long a = * reinterpret_cast<const long*> (orig);
+          unsigned long b = * reinterpret_cast<const long*> (orig + 8);
 
 #if defined(ACE_HAS_INTEL_ASSEMBLY)
           asm ("bswapq %1" : "=r" (a) : "0" (a));
@@ -343,23 +333,23 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
           asm ("rol $32, %1" : "=r" (a) : "0" (a));
           asm ("rol $32, %1" : "=r" (b) : "0" (b));
 #else
-          ACE_REGISTER unsigned long a84 = (a & 0x000000ff000000ffL) << 24;
-          ACE_REGISTER unsigned long b84 = (b & 0x000000ff000000ffL) << 24;
-          ACE_REGISTER unsigned long a73 = (a & 0x0000ff000000ff00L) << 8;
-          ACE_REGISTER unsigned long b73 = (b & 0x0000ff000000ff00L) << 8;
-          ACE_REGISTER unsigned long a62 = (a & 0x00ff000000ff0000L) >> 8;
-          ACE_REGISTER unsigned long b62 = (b & 0x00ff000000ff0000L) >> 8;
-          ACE_REGISTER unsigned long a51 = (a & 0xff000000ff000000L) >> 24;
-          ACE_REGISTER unsigned long b51 = (b & 0xff000000ff000000L) >> 24;
+          unsigned long a84 = (a & 0x000000ff000000ffL) << 24;
+          unsigned long b84 = (b & 0x000000ff000000ffL) << 24;
+          unsigned long a73 = (a & 0x0000ff000000ff00L) << 8;
+          unsigned long b73 = (b & 0x0000ff000000ff00L) << 8;
+          unsigned long a62 = (a & 0x00ff000000ff0000L) >> 8;
+          unsigned long b62 = (b & 0x00ff000000ff0000L) >> 8;
+          unsigned long a51 = (a & 0xff000000ff000000L) >> 24;
+          unsigned long b51 = (b & 0xff000000ff000000L) >> 24;
 
           a = (a84 | a73 | a62 | a51);
           b = (b84 | b73 | b62 | b51);
 #endif
 
-          ACE_UINT32 c1 = static_cast<ACE_UINT32> (a >> 32);
-          ACE_UINT32 c2 = static_cast<ACE_UINT32> (a & 0xffffffff);
-          ACE_UINT32 c3 = static_cast<ACE_UINT32> (b >> 32);
-          ACE_UINT32 c4 = static_cast<ACE_UINT32> (b & 0xffffffff);
+          c1 = static_cast<ACE_UINT32> (a >> 32);
+          c2 = static_cast<ACE_UINT32> (a & 0xffffffff);
+          c3 = static_cast<ACE_UINT32> (b >> 32);
+          c4 = static_cast<ACE_UINT32> (b & 0xffffffff);
 
 #if defined (ACE_LITTLE_ENDIAN)
           * reinterpret_cast<ACE_UINT32*> (target + 0) = c2;
@@ -382,14 +372,10 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
   while (orig < end)
     {
 #if defined (ACE_HAS_PENTIUM) && defined (__GNUG__)
-      ACE_REGISTER unsigned int a =
-        *reinterpret_cast<const unsigned int*> (orig);
-      ACE_REGISTER unsigned int b =
-        *reinterpret_cast<const unsigned int*> (orig + 4);
-      ACE_REGISTER unsigned int c =
-        *reinterpret_cast<const unsigned int*> (orig + 8);
-      ACE_REGISTER unsigned int d =
-        *reinterpret_cast<const unsigned int*> (orig + 12);
+      unsigned int a = *reinterpret_cast<const unsigned int*> (orig);
+      unsigned int b = *reinterpret_cast<const unsigned int*> (orig + 4);
+      unsigned int c = *reinterpret_cast<const unsigned int*> (orig + 8);
+      unsigned int d = *reinterpret_cast<const unsigned int*> (orig + 12);
 
       asm ("bswap %1" : "=r" (a) : "0" (a));
       asm ("bswap %1" : "=r" (b) : "0" (b));
@@ -418,14 +404,10 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
       __asm mov 8[esi], ebx
       __asm mov 12[esi], eax
 #else
-      ACE_REGISTER ACE_UINT32 a =
-        * reinterpret_cast<const ACE_UINT32*> (orig);
-      ACE_REGISTER ACE_UINT32 b =
-        * reinterpret_cast<const ACE_UINT32*> (orig + 4);
-      ACE_REGISTER ACE_UINT32 c =
-        * reinterpret_cast<const ACE_UINT32*> (orig + 8);
-      ACE_REGISTER ACE_UINT32 d =
-        * reinterpret_cast<const ACE_UINT32*> (orig + 12);
+      ACE_UINT32 a = * reinterpret_cast<const ACE_UINT32*> (orig);
+      ACE_UINT32 b = * reinterpret_cast<const ACE_UINT32*> (orig + 4);
+      ACE_UINT32 c = * reinterpret_cast<const ACE_UINT32*> (orig + 8);
+      ACE_UINT32 d = * reinterpret_cast<const ACE_UINT32*> (orig + 12);
 
       // Expect the optimizer reordering this A LOT.
       // We leave it this way for clarity.
