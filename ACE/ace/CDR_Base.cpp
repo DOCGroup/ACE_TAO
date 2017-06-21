@@ -213,10 +213,10 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
           a = (a1 | a2);
           b = (b1 | b2);
 
-          c1 = static_cast<ACE_UINT16> (a >> 16);
-          c2 = static_cast<ACE_UINT16> (a & 0xffff);
-          c3 = static_cast<ACE_UINT16> (b >> 16);
-          c4 = static_cast<ACE_UINT16> (b & 0xffff);
+          ACE_UINT32 c1 = static_cast<ACE_UINT16> (a >> 16);
+          ACE_UINT32 c2 = static_cast<ACE_UINT16> (a & 0xffff);
+          ACE_UINT32 c3 = static_cast<ACE_UINT16> (b >> 16);
+          ACE_UINT32 c4 = static_cast<ACE_UINT16> (b & 0xffff);
 
 #if defined(ACE_LITTLE_ENDIAN)
           * reinterpret_cast<ACE_UINT16*> (target) = c2;
