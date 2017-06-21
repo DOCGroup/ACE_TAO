@@ -2,7 +2,6 @@ sudo: false
 language: cpp
 os:
   - linux
-  - osx
 
 compiler:
   - gcc
@@ -37,6 +36,7 @@ matrix:
             - libssl-dev
             - clang++-3.9
       env: COMPILER=clang++-3.9 VERSIONED=1 TAO=1 ACETESTS=1
+    - osx
 
 addons:
   apt:
