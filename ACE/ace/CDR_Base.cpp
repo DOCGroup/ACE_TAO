@@ -242,10 +242,12 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
     ACE_CDR::swap_2 (orig, target);
     orig += 2;
     target += 2;
+    // fallthrough
   case 2:
     ACE_CDR::swap_2 (orig, target);
     orig += 2;
     target += 2;
+    // fallthrough
   case 1:
     ACE_CDR::swap_2 (orig, target);
   }
@@ -346,10 +348,10 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
           b = (b84 | b73 | b62 | b51);
 #endif
 
-          c1 = static_cast<ACE_UINT32> (a >> 32);
-          c2 = static_cast<ACE_UINT32> (a & 0xffffffff);
-          c3 = static_cast<ACE_UINT32> (b >> 32);
-          c4 = static_cast<ACE_UINT32> (b & 0xffffffff);
+          ACE_UINT32 c1 = static_cast<ACE_UINT32> (a >> 32);
+          ACE_UINT32 c2 = static_cast<ACE_UINT32> (a & 0xffffffff);
+          ACE_UINT32 c3 = static_cast<ACE_UINT32> (b >> 32);
+          ACE_UINT32 c4 = static_cast<ACE_UINT32> (b & 0xffffffff);
 
 #if defined (ACE_LITTLE_ENDIAN)
           * reinterpret_cast<ACE_UINT32*> (target + 0) = c2;
@@ -434,10 +436,12 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
     ACE_CDR::swap_4 (orig, target);
     orig += 4;
     target += 4;
+    // fallthrough
   case 2:
     ACE_CDR::swap_4 (orig, target);
     orig += 4;
     target += 4;
+    // fallthrough
   case 1:
     ACE_CDR::swap_4 (orig, target);
   }
