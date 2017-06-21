@@ -37,7 +37,7 @@ matrix:
             - clang++-3.9
       env: COMPILER=clang++-3.9 VERSIONED=1 TAO=1 ACETESTS=1
     - os: osx
-      env: VERSIONED=1 TAO=1 ACETESTS=1
+      env: COMPILER=clang++-3.9 VERSIONED=1 TAO=1 ACETESTS=1
 
 addons:
   apt:
