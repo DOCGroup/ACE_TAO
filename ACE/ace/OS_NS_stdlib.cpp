@@ -969,7 +969,7 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
 ACE_UINT64
 ACE_OS::strtoull_emulation (const char *nptr,
                             char **endptr,
-                            ACE_REGISTER int base)
+                            int base)
 {
   const char *s = nptr;
   ACE_UINT64 acc;
