@@ -35,9 +35,9 @@ matrix:
             - libxerces-c-dev
             - libssl-dev
             - clang++-3.9
-      env: COMPILER=clang++-3.9 VERSIONED=1 TAO=1 ACETESTS=1
+      env: COMPILER=clang++ VERSIONED=1 TAO=1 ACETESTS=1
     - os: osx
-      env: COMPILER=clang++-3.9 VERSIONED=1 TAO=1 ACETESTS=1
+      env: COMPILER=clang++ VERSIONED=1 TAO=1 ACETESTS=1
 
 addons:
   apt:
@@ -76,7 +76,7 @@ before_script:
   - if [ "$USES_WCHAR" == "1" ]; then echo -e "uses_wchar=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$VERSIONED" == "1" ]; then echo -e "versioned_namespace=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
-  - echo -e "ipv6=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
+  - echo -e "inline=0\nipv6=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - echo -e "TAO/tests/Hello/run_test.pl" >> $TAO_ROOT/bin/travis-ci.lst
   - if [ "$CXX" == "g++" ]; then echo -e "c++11=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
