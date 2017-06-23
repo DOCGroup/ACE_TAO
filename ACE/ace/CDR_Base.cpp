@@ -185,10 +185,10 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
 
           a = (a1 | a2);
 
-          b1 = static_cast<ACE_UINT16> (a >> 48);
-          b2 = static_cast<ACE_UINT16> ((a >> 32) & 0xffff);
-          b3 = static_cast<ACE_UINT16> ((a >> 16) & 0xffff);
-          b4 = static_cast<ACE_UINT16> (a & 0xffff);
+          ACE_UINT16 b1 = static_cast<ACE_UINT16> (a >> 48);
+          ACE_UINT16 b2 = static_cast<ACE_UINT16> ((a >> 32) & 0xffff);
+          ACE_UINT16 b3 = static_cast<ACE_UINT16> ((a >> 16) & 0xffff);
+          ACE_UINT16 b4 = static_cast<ACE_UINT16> (a & 0xffff);
 
 #if defined(ACE_LITTLE_ENDIAN)
           * reinterpret_cast<ACE_UINT16*> (target) = b4;
