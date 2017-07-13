@@ -985,14 +985,13 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
 {
   ACE_TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
-  int status;
   // Start varargs.
   va_list argp;
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  status = ACE_OS::vsnprintf (stack_buf, DEFAULT_COMMAND_LINE_BUF_LEN,
-                              format, argp);
+  int status = ACE_OS::vsnprintf (stack_buf, DEFAULT_COMMAND_LINE_BUF_LEN,
+                                  format, argp);
   // End varargs.
   va_end (argp);
 
