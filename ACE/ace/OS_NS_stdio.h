@@ -559,7 +559,7 @@ namespace ACE_OS {
   int vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_list argptr);
 #endif /* ACE_HAS_WCHAR */
 
-#ifndef ACE_LACKS_VA_FUNCTIONS
+#if defined (ACE_HAS_VSNPRINTF_EMULATION)
   extern ACE_Export
   int vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap);
 #endif
