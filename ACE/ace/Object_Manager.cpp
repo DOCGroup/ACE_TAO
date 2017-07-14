@@ -167,7 +167,7 @@ ACE_Object_Manager::shutting_down (void)
 
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
 // Instead of popping up a window for exceptions, just print something out
-LONG _stdcall ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
+LONG WINAPI ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
 {
   DWORD dwExceptionCode = pExceptionInfo->ExceptionRecord->ExceptionCode;
 
