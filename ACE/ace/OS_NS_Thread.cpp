@@ -33,7 +33,7 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       CreateThread (0, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & (CREATE_SUSPENDED | STACK_SIZE_PARAM_IS_A_RESERVATION), (unsigned long *) THR_ID)
 #elif defined(ACE_HAS_WTHREADS)
-  // Green Hills compiler gets confused when __stdcall is imbedded in
+  // Green Hills compiler gets confused when __stdcall is embedded in
   // parameter list, so we define the type ACE_WIN32THRFUNC_T and use it
   // instead.
   typedef unsigned (__stdcall *ACE_WIN32THRFUNC_T)(void*);
