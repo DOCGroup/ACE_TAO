@@ -48,7 +48,7 @@
 #  include /**/ <vcl.h>
 # endif
 
-#if defined (__clang__)
+#if defined (_WIN64)
 # define ACE_HAS_BCC64
 #else
 # define ACE_HAS_BCC32
@@ -95,6 +95,7 @@
 #define ACE_LACKS_SYS_SEM_H
 #define ACE_LACKS_SYS_IOCTL_H
 #define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_WCSRTOMBS
 
 #undef ACE_LACKS_STRUCT_DIR
 #undef ACE_LACKS_CLOSEDIR
@@ -143,16 +144,16 @@
 # endif /* !__MT__ */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ <= 0x680)
+#if (__BORLANDC__ <= 0x730)
 # define ACE_LACKS_ISWCTYPE
 # define ACE_LACKS_ISCTYPE
 #endif
 
-#if (__BORLANDC__ >= 0x650) && (__BORLANDC__ <= 0x680)
+#if (__BORLANDC__ >= 0x650) && (__BORLANDC__ <= 0x730)
 # define ACE_LACKS_STRTOK_R
 #endif
 
-#if (__BORLANDC__ <= 0x680)
+#if (__BORLANDC__ <= 0x730)
 # define ACE_LACKS_LOCALTIME_R
 # define ACE_LACKS_GMTIME_R
 # define ACE_LACKS_ASCTIME_R
@@ -166,7 +167,7 @@
 #define ACE_HAS_ITOA 1
 
 #if defined (ACE_HAS_BCC64)
-# if (__BORLANDC__ < 0x680)
+# if (__BORLANDC__ <= 0x730)
 #  define ACE_LACKS_SWAB
 # endif
 #endif
@@ -175,6 +176,11 @@
 # define ACE_SIZEOF_LONG_DOUBLE 10
 # define ACE_NEEDS_DL_UNDERSCORE
 #endif
+
+#ifdef __clang__
+# define ACE_ANY_OPS_USE_NAMESPACE
+#endif /* __clang__ */
+
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */
