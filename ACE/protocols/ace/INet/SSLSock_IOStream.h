@@ -95,6 +95,9 @@ namespace ACE
 
               explicit SSLSock_OStreamBase(stream_type* stream);
 
+              buffer_type* rdbuf ()
+              { return ios_base::rdbuf (); }
+
               ~SSLSock_OStreamBase();
 
               void set_interceptor (typename buffer_type::interceptor_type& interceptor);
@@ -117,6 +120,9 @@ namespace ACE
 
               explicit SSLSock_IStreamBase(stream_type* stream);
 
+              buffer_type* rdbuf ()
+              { return ios_base::rdbuf (); }
+
               ~SSLSock_IStreamBase();
 
               void set_interceptor (typename buffer_type::interceptor_type& interceptor);
@@ -138,6 +144,9 @@ namespace ACE
               typedef SSLSock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
 
               explicit SSLSock_IOStreamBase(stream_type* stream);
+
+              buffer_type* rdbuf ()
+              { return ios_base::rdbuf (); }
 
               ~SSLSock_IOStreamBase();
 
