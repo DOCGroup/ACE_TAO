@@ -96,6 +96,9 @@ namespace ACE
 
               ~Sock_OStreamBase();
 
+              buffer_type* rdbuf ()
+              { return ios_base::rdbuf (); }
+
               void set_interceptor (typename buffer_type::interceptor_type& interceptor);
           };
 
@@ -115,6 +118,9 @@ namespace ACE
               typedef Sock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
 
               explicit Sock_IStreamBase(stream_type* stream);
+
+              buffer_type* rdbuf ()
+              { return ios_base::rdbuf (); }
 
               ~Sock_IStreamBase();
 
@@ -137,6 +143,9 @@ namespace ACE
               typedef Sock_StreamBufferBase<ACE_SYNCH_USE> buffer_type;
 
               explicit Sock_IOStreamBase(stream_type* stream);
+
+              buffer_type* rdbuf ()
+              { return ios_base::rdbuf (); }
 
               ~Sock_IOStreamBase();
 
