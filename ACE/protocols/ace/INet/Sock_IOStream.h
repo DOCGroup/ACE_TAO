@@ -145,7 +145,7 @@ namespace ACE
               explicit Sock_IOStreamBase(stream_type* stream);
 
               buffer_type* rdbuf ()
-              { return io_base::rdbuf (); }
+              { return ios_base::rdbuf (); }
 
               ~Sock_IOStreamBase();
 
