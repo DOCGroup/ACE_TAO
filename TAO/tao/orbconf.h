@@ -202,15 +202,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 
 #define TAO_HAS_EXCEPTIONS
 
-// BC++ seems to have a different convention for detecting Win32 than
-// VC++.
-
-#if defined (__WIN32__)
-# if !defined(_WIN32)
-#   define _WIN32
-# endif /* !defined(_WIN32) */
-#endif /* __WIN32__ */
-
 // Define if your processor does not store words with the most significant
 // byte first.
 
@@ -225,15 +216,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #  define TAO_ENCAP_BYTE_ORDER 0  /* big endian encapsulation byte order has
                                      the value = 0 */
 #endif /* ! ACE_LITTLE_ENDIAN */
-
-// Define as the return type of signal handlers (int or void).
-#define RETSIGTYPE void
-
-// Define if you don't have vprintf but do have _doprnt.
-/* #undef HAVE_DOPRNT */
-
-// Define if you have the vprintf function.
-#define HAVE_VPRINTF 1
 
 // Comment out to enable only ACE monitors...
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
