@@ -202,15 +202,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 
 #define TAO_HAS_EXCEPTIONS
 
-// BC++ seems to have a different convention for detecting Win32 than
-// VC++.
-
-#if defined (__WIN32__)
-# if !defined(_WIN32)
-#   define _WIN32
-# endif /* !defined(_WIN32) */
-#endif /* __WIN32__ */
-
 // Define if your processor does not store words with the most significant
 // byte first.
 
