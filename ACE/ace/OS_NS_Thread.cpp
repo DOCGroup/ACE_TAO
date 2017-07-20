@@ -367,7 +367,6 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
 }
 
 // Check for inequality.
-ACE_SPECIAL_INLINE
 bool
 ACE_TSS_Ref::operator != (const ACE_TSS_Ref &tss_ref) const
 {
@@ -441,7 +440,7 @@ ACE_TSS_Keys::ACE_TSS_Keys (void)
     }
 }
 
-ACE_SPECIAL_INLINE
+
 void
 ACE_TSS_Keys::find (const u_int key, u_int &word, u_int &bit)
 {
