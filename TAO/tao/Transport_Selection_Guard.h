@@ -159,6 +159,22 @@ namespace TAO
       return lhs != rhs.curr_;
     }
   };
+
+  TAO_Export bool
+  operator== (const Transport_Selection_Guard& lhs,
+              const TAO_Transport* rhs);
+
+  TAO_Export bool
+  operator== (const TAO_Transport* lhs,
+              const Transport_Selection_Guard& rhs);
+
+  TAO_Export bool
+  operator!= (const Transport_Selection_Guard& lhs,
+              const TAO_Transport* rhs);
+
+  TAO_Export bool
+  operator!= (const TAO_Transport* lhs,
+              const Transport_Selection_Guard& rhs);
 } /* namespace TAO */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
