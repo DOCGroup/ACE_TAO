@@ -35,11 +35,11 @@
 # define ACE_CC_PREPROCESSOR_ARGS "-q -Sl -o%s"
 #endif
 
-// Automatically define WIN32 macro if the compiler tells us it is our
-// target platform.
-# if defined (__WIN32__) && !defined (WIN32)
+#if !defined (WIN32)
+# if defined (__WIN32__) || defined (_WIN32)
 #  define WIN32 1
 # endif
+#endif
 
 // When building a VCL application, the main VCL header file should be
 // included before anything else. You can define ACE_HAS_VCL=1 in your

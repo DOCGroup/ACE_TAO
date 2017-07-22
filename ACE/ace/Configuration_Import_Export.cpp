@@ -365,11 +365,9 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
                 line += string_value + ACE_TEXT ("\"");
                 break;
               }
-#ifdef _WIN32
+#ifdef ACE_WIN32
             case ACE_Configuration::INVALID:
-              break;  // JDO added break.  Otherwise INVALID is processed
-              // like BINARY. If that's correct, please remove the
-              // break and these comments
+              break;
 #endif
             case ACE_Configuration::BINARY:
               {
