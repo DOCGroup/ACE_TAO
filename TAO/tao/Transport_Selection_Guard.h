@@ -115,19 +115,19 @@ namespace TAO
     /// The "real" Transport, i.e. the one selected at present
     TAO_Transport* curr_;
 
-    friend bool
+    friend TAO_Export bool
     operator== (const Transport_Selection_Guard& lhs,
                 const TAO_Transport* rhs);
 
-    friend bool
+    friend TAO_Export bool
     operator== (const TAO_Transport* lhs,
                 const Transport_Selection_Guard& rhs);
 
-    friend bool
+    friend TAO_Export bool
     operator!= (const Transport_Selection_Guard& lhs,
                 const TAO_Transport* rhs);
 
-    friend bool
+    friend TAO_Export bool
     operator!= (const TAO_Transport* lhs,
                 const Transport_Selection_Guard& rhs);
 
