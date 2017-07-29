@@ -16,6 +16,7 @@
 #include "repo_id_modC.h"
 #include "constantsC.h"
 #include "nested_scopeS.h"
+#include "typedefC.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -170,6 +171,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
                       "pragma prefix error in object 'sayonara'\n"));
         }
+
+      // Check whether the implementation of Dubble and Toil are generated
+      CommaList::Dubble dub;
+      CommaList::Toil toi;
+      dub.length(4);
+      toi.length(4);
 
       ciao_i c;
       id = root_poa->activate_object (&c);
