@@ -101,7 +101,7 @@ public:
   typedef Key                                    key_type;
   typedef Value                                  mapped_type;
   typedef Value                                  data_type;
-  typedef std::pair<key_type, mapped_type> value_type;
+  typedef std::pair<key_type, mapped_type>       value_type;
   typedef Alloc                                  allocator_type;
   typedef value_type &                           reference;
   typedef value_type const &                     const_reference;
