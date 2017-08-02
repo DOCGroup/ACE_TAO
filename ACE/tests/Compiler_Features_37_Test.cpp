@@ -39,6 +39,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT("Compiler_Features_37_Test"));
 
   my_map <size_t, Bar*> foo;
+  ACE_UNUSED_ARG(foo);
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("C++ support ok\n")));
