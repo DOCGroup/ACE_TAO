@@ -172,17 +172,15 @@ namespace ACE_TMCast
                 MessagePtr m (in_link_data_.front ());
                 in_link_data_.pop ();
 
-                std::type_info const* exp = &typeid (*m);
+                LinkData* data;
 
-                if (exp == typeid (LinkFailure))
+                if (dynamic_cast<LinkFailure*>(m.get()))
                 {
                   // cerr << "link failure" << endl;
                   throw false;
                 }
-                else if (exp == typeid (LinkData))
+                else if ((data = dynamic_cast<LinkData*> (m.get ())))
                 {
-
-                  LinkData* data = dynamic_cast<LinkData*> (m.get ());
 
                   // INSYNC, TL, CT
 
@@ -382,13 +380,11 @@ namespace ACE_TMCast
           MessagePtr m (in_send_data_.front ());
           in_send_data_.pop ();
 
-          std::type_info const* exp = &typeid (*m);
-
-          if (exp == typeid (ACE_TMCast::Aborted))
+          if (dynamic_cast<ACE_TMCast::Aborted*>(m.get()))
           {
             throw Group::Aborted ();
           }
-          else if (exp == typeid (Commited))
+          else if (dynamic_cast<Commited*>(m.get()))
           {
             return;
           }
@@ -424,9 +420,8 @@ namespace ACE_TMCast
           MessagePtr m (in_recv_data_.front ());
           in_recv_data_.pop ();
 
-          std::type_info const* exp = &typeid (*m);
-
-          if (exp == typeid (Recv))
+          Recv* data = dynamic_cast<Recv*> (m.get ());
+          if (data)
           {
             Recv* data = dynamic_cast<Recv*> (m.get ());
 
