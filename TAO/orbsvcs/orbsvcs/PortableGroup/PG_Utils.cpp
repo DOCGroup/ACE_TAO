@@ -14,7 +14,7 @@ namespace TAO
 {
   /*static*/ CORBA::Boolean
   PG_Utils::set_tagged_component (
-      PortableGroup::ObjectGroup *&ior,
+      PortableGroup::ObjectGroup *ior,
       PortableGroup::TagGroupTaggedComponent &tg)
   {
     if (ior->_stubobj () == 0)
@@ -80,7 +80,7 @@ namespace TAO
 
   /*static*/ CORBA::Boolean
   PG_Utils::get_tagged_component (
-      PortableGroup::ObjectGroup *&ior,
+      PortableGroup::ObjectGroup *ior,
       PortableGroup::TagGroupTaggedComponent &tg)
   {
     if (ior->_stubobj () == 0)
