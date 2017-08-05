@@ -344,12 +344,6 @@ RND_Consumer::push (const CORBA::Any &event)
 }
 
 void
-RND_Timer::push (const CORBA::Any &event)
-{
-   RND_Consumer::push(event);
-}
-
-void
 RND_Consumer::disconnect_push_consumer (void)
 {
 }
