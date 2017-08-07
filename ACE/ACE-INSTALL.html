@@ -646,11 +646,11 @@ to check <a href="#win32nonic">here</a> first. <p>
       create an
       ACE_wrappers directory containing the source.  The ACE_wrappers
       directory will be referred to as ACE_ROOT in the following steps -- so
-      ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the
+      <code>ACE_ROOT\ace</code> would be <code>C:\ACE_wrappers\ace</code> when you uncompressed into the
       root directory.<br>
       <br>
   </li><li>Create a file called <code>config.h</code> in the ACE_ROOT\ace
-      directory that contains: <br>
+      directory that contains at least: <br>
       <br>
       <code>#include "ace/config-win32.h"</code><br>
       <br>
@@ -685,6 +685,10 @@ to check <a href="#win32nonic">here</a> first. <p>
       Set the environment variable below to build a version of ACE with
       Codeguard support. Should only be used when DEBUG is also set<br>
       <code>set CODEGUARD=1</code><br>
+      <br>
+      By default we are using the clang based compilers. At the moment you
+      want to compile using the old bcc32 compiler set the CLASIC environment variable<br>
+      <code>set CLASSIC=1</code><br>
       <br>
       Set the environment variable below to build a version of ACE optimized
       for a certain CPU. For this there are special compiler flags
