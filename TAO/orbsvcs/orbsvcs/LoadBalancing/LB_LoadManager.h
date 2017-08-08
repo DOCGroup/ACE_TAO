@@ -312,7 +312,7 @@ private:
   /// Create a built-in load balancing strategy and return a reference
   /// to it.
   CosLoadBalancing::Strategy_ptr make_strategy (
-    CosLoadBalancing::StrategyInfo * info);
+    const CosLoadBalancing::StrategyInfo * info);
 
 private:
 

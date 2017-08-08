@@ -103,7 +103,7 @@ TAO_Stub::next_profile_i (void)
 {
   TAO_Profile *pfile_next = 0;
 
-  // First handle the case that a permanent forward occured
+  // First handle the case that a permanent forward occurred
   if (this->forward_profiles_perm_) // the permanent forward defined
                                     // at bottom of stack
                                     // forward_profiles_

@@ -50,7 +50,7 @@ Test_Var_Struct::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  Param_Test::Var_Struct *tmp;
+  const Param_Test::Var_Struct *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Var_Struct (*tmp);
 

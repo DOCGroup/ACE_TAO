@@ -158,9 +158,8 @@ TAO_Synch_Queued_Message::destroy (void)
       // pool.
       if (this->allocator_)
         {
-          ACE_DES_FREE (this,
-                        this->allocator_->free,
-                        TAO_Synch_Queued_Message);
+          ACE_DES_FREE_THIS (this->allocator_->free,
+                             TAO_Synch_Queued_Message);
 
         }
       else // global release..

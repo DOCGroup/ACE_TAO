@@ -15,35 +15,37 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'x':
-        do_shutdown = true;
-        break;
+    {
+      switch (c)
+        {
+        case 'x':
+          do_shutdown = true;
+          break;
 
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
 
-      case 'e':
-        expected_object_not_exist = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'e':
+          expected_object_not_exist = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> -x "
-                           "-e <expected_object_not_exist> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                            "usage:  %s "
+                            "-k <ior> -x "
+                            "-e <expected_object_not_exist> "
+                            "\n",
+                            argv [0]),
+                            -1);
+        }
+    }
 
-    if (ACE_OS::strncmp (ior,
-                          corbaloc_prefix,
-                          ACE_OS::strlen (corbaloc_prefix)) != 0)
-      return 1;
+  if (ACE_OS::strncmp (ior,
+                        corbaloc_prefix,
+                        ACE_OS::strlen (corbaloc_prefix)) != 0)
+    return 1;
 
   // Indicates successful parsing of the command line
   return 0;

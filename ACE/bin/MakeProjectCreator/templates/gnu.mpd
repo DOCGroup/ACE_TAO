@@ -65,7 +65,7 @@ DANCE_ROOT ?= $(TAO_ROOT)/DAnCE
 <%if(grouped_source_files)%>
 <%foreach(grouped_source_files)%>
 <%grouped_source_file%> = \
-<%foreach(grouped_source_file->files)%>
+<%foreach(uniq(grouped_source_file->files))%>
   <%grouped_source_file->file%><%fornotlast(" \\")%>
 <%endfor%>
 
@@ -77,7 +77,7 @@ FILES += \
 
 <%else%>
 FILES = \
-<%foreach(source_files)%>
+<%foreach(uniq(source_files))%>
   <%source_file%><%fornotlast(" \\")%>
 <%endfor%>
 

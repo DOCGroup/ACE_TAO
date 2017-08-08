@@ -2,7 +2,7 @@ branches:
   only:
     - master
 
-os: Visual Studio 2015
+os: Visual Studio 2017
 
 clone_depth: 15
 
@@ -16,8 +16,8 @@ install:
   - set PATH=%ACE_ROOT%\lib:%PATH%
   - ps: $CONTENT='#include "ace/config-win32.h"'
   - ps: $CONTENT > ACE\ace\config.h
-  - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" amd64
-  - call perl %CD%\ACE\bin\mwc.pl -type vc14 %CD%\TAO\TAO_ACE.mwc
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" amd64
+  - perl %CD%\ACE\bin\mwc.pl -type vs2017 %CD%\TAO\TAO_ACE.mwc
 
 platform:
   - x64

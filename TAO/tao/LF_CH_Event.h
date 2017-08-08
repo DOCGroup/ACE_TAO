@@ -55,18 +55,10 @@ public:
   virtual ~TAO_LF_CH_Event (void);
 
   //@{
-  /// Return 1 if the condition was satisfied successfully, 0 if it
-  /// has not
-  int successful (void) const;
-
-  /// Return 1 if an error was detected while waiting for the
-  /// event
-  int error_detected (void) const;
-
 protected:
 
   /// Check whether we have reached the final state..
-  virtual int is_state_final (void);
+  virtual bool is_state_final (void) const;
 
   //@}
 private:
@@ -89,7 +81,7 @@ private:
    * LFS_TIMEOUT               - The event has timed out.
    *
    * LFS_CONNECTION_CLOSED     - The connection was closed since
-   *                             an error occured while trying to
+   *                             an error occurred while trying to
    *                             establish connection
    *
    *  Event State Diagram
@@ -105,10 +97,18 @@ private:
    * Timeouts can occur while waiting for connections.
    *
    */
-  virtual void state_changed_i (int new_state);
+  virtual void state_changed_i (LFS_STATE new_state);
+
+  /// Return true if the condition was satisfied successfully, false if it
+  /// has not
+  virtual bool successful_i (void) const;
+
+  /// Return true if an error was detected while waiting for the
+  /// event
+  virtual bool error_detected_i (void) const;
 
   /// Set the state irrespective of anything.
-  virtual void set_state (int new_state);
+  virtual void set_state (LFS_STATE new_state);
 
   virtual int bind (TAO_LF_Follower *follower);
   virtual int unbind (TAO_LF_Follower *follower);
@@ -116,9 +116,9 @@ private:
 private:
 
   /// The previous state that the LF_CH_Event was in
-  int prev_state_;
+  LFS_STATE prev_state_;
 
-  void validate_state_change (int new_state);
+  void validate_state_change (LFS_STATE new_state);
 
   typedef ACE_Hash_Map_Manager_Ex <TAO_LF_Follower *, int,
                                    ACE_Hash<void *>,

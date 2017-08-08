@@ -29,6 +29,9 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
   ACE_Reactor *const reactor =
     this->transport_->orb_core ()->reactor ();
 
+  TAO_Leader_Follower &leader_follower =
+    this->transport_->orb_core ()->leader_follower ();
+
   // Do the event loop, till we fully receive a reply.
   int result = 0;
 
@@ -39,7 +42,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 
       // If we got our reply, no need to run the event loop any
       // further.
-      if (!rd.keep_waiting ())
+      if (!rd.keep_waiting (leader_follower))
         {
           break;
         }
@@ -61,7 +64,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
       // Otherwise, keep going...
     }
 
-  if (result == -1 || rd.error_detected ())
+  if (result == -1 || rd.error_detected (leader_follower))
     {
       return -1;
     }
@@ -69,7 +72,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
   // Return an error if there was a problem receiving the reply.
   if (max_wait_time != 0)
     {
-      if (rd.successful () && *max_wait_time == ACE_Time_Value::zero)
+      if (rd.successful (leader_follower) && *max_wait_time == ACE_Time_Value::zero)
         {
           result = -1;
           errno = ETIME;
@@ -79,7 +82,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
     {
       result = 0;
 
-      if (rd.error_detected ())
+      if (rd.error_detected (leader_follower))
         {
           result = -1;
         }

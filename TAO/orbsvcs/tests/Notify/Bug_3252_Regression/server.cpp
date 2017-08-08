@@ -10,7 +10,7 @@
 
 #include "DllOrb.h"
 
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x680)
+#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x730)
 #  pragma option push -w-8057
 #endif
 
@@ -231,6 +231,6 @@ ACE_TMAIN(int, ACE_TCHAR **argv)
   return 0;
 }
 
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x680)
+#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x730)
 # pragma option pop
 #endif

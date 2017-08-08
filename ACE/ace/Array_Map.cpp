@@ -43,8 +43,15 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::ACE_Array_Map (
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_Array_Map<Key, Value, EqualTo, Alloc>::~ACE_Array_Map (void)
 {
-  for (size_t idx = 0; idx != capacity_; ++idx) {
+  for (size_t idx = 0; idx != capacity_; ++idx)
+  {
+#if defined (ACE_HAS_BCC32)
+    using std::pair;
+    (nodes_ + idx)->~pair<key_type, mapped_type>();
+#else
     (nodes_ + idx)->~value_type();
+#endif
+
   }
 
   alloc_.deallocate(this->nodes_, capacity_);

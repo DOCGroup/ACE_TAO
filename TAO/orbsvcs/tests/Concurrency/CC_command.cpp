@@ -448,7 +448,7 @@ int
 CC_Excep_Cmd::execute(void)
 {
   ACE_OS::printf ("Executing excep command (expected: %s)\n", ex_);
-  // First we check to see if an exception has occured. If not we fail
+  // First we check to see if an exception has occurred. If not we fail
   // because we expected to see one
   if(excep_==0)
     return 0; // CC_FAIL

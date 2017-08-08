@@ -678,7 +678,9 @@ project(Compiler_Features_16_Test) : acetest {
   Source_Files {
     Compiler_Features_16_Test.cpp
   }
-  macros      += NOMINMAX // Don't #define min and max in Win32 headers
+  specific(prop:microsoft) {
+    macros      += NOMINMAX // Don't #define min and max in Win32 headers
+  }
 }
 
 project(Compiler_Features_17_Test) : acetest {
@@ -686,7 +688,9 @@ project(Compiler_Features_17_Test) : acetest {
   Source_Files {
     Compiler_Features_17_Test.cpp
   }
-  macros      += NOMINMAX // Don't #define min and max in Win32 headers
+  specific(prop:microsoft) {
+    macros      += NOMINMAX // Don't #define min and max in Win32 headers
+  }
 }
 
 project(Compiler_Features_18_Test) : acetest {
@@ -830,6 +834,13 @@ project(Compiler_Features_36_Test) : acetest {
   exename = Compiler_Features_36_Test
   Source_Files {
     Compiler_Features_36_Test.cpp
+  }
+}
+
+project(Compiler_Features_37_Test) : acetest {
+  exename = Compiler_Features_37_Test
+  Source_Files {
+    Compiler_Features_37_Test.cpp
   }
 }
 

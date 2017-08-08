@@ -1,7 +1,7 @@
 # -*- Makefile -*-
-# VxWorks 7.0
+# VxWorks 7
 
-# Building ACE for VxWorks 7.0
+# Building ACE for VxWorks 7
 #
 # Unlike earlier versions, VxWorks 7 requires a VSB before application code
 # can be compiled (either kernel mode or RTP).  See the VxWorks documentation
@@ -10,6 +10,7 @@
 # Create the file ace/config.h containing #include "ace/config-vxworks.h"
 # Create the file include/makeinclude/platform_macros.GNU containing...
 # VSB_DIR = <<absolute path to the VSB directory for the target system>>
+# TOOL = gnu
 # HOST_ROOT = <<location of host tools if using tao_idl, etc.>>
 # << add other build settings here (debug, optimize, inline, rtp) >>
 # include $(ACE_ROOT)/include/makeinclude/platform_vxworks.GNU
@@ -20,13 +21,7 @@
 #
 # Not all configurations supported on VxWorks 6.x have been brought forward
 # to this file.  If you are building a configuration that has not yet been
-# attempted on VxWorks 7, this file may need to be changed.  The following have
-# been tested:
-#   hosts: linux
-#   targets: itl_x86
-#   toolchains: gnu4.3
-#   rtp settings: 1, 0
-#   libraries: shared, static
+# attempted on VxWorks 7, this file may need to be changed.
 
 VXWORKS = 1
 CROSS-COMPILE = 1
@@ -95,10 +90,10 @@ ifeq ($(rtp),0)
 
   IFILE = $(VDIR)$(notdir $(basename $(1)))
   define LINK.cc.override
-$(LD) -r -nostdlib -Wl,-X $(LDFLAGS) -o $(call IFILE,$@)_partial.o $(filter %.o,$^) $(DKM_LIBS)
+$(LD) -r -nostdlib $(LDFLAGS) -o $(call IFILE,$@)_partial.o $(filter %.o,$^) $(DKM_LIBS)
 	$(NM) $(call IFILE,$@)_partial.o | $(MUNCH) > $(call IFILE,$@)_ctdt.c
 	$(COMPILE.cc) -o $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_ctdt.c
-	$(LD) -r -nostdlib -Wl,-X $(LD_SCRIPT_DOWNLOAD) -o $@ $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_partial.o
+	$(LD) -r -nostdlib -X $(LD_SCRIPT_DOWNLOAD) -o $@ $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_partial.o
   endef
 
   SOLINK.cc.override = $(LINK.cc.override)
@@ -123,7 +118,6 @@ endif
 DCFLAGS += -g
 DCCFLAGS += -g
 
-LD = $(CXX)
 DLD = $(LD)
 
 EXEEXT = $(if $(findstring 1,$(rtp)),.vxe,.out)
@@ -132,11 +126,12 @@ SO_NAME = $(SHLIB)
 SOFLAGS += $(C++_COMPILER) $(OPTION_SHARED_CODE) $(LD_SHARED_LIB) \
            $(LD_OPTION_SONAME)
 
-LDFLAGS := $(filter-out -X -N,$(LDFLAGS))
 ifeq ($(rtp),1)
+  LD = $(CXX)
+  LDFLAGS := $(filter-out -X -N,$(LDFLAGS))
   LDFLAGS += -L$(VSB_DIR)/usr/lib/common$(if $(filter library,$(PRJ_TYPE)),/PIC -L$(VSB_DIR)/usr/lib/common)
 endif
 LIBS += -lstdc++
 
 build_nonstatic = $(if $(findstring 1,$(shared_libs)$(shared_libs_only)),$(if $(filter 1,$(static_libs_only)),,1))
-LDFLAGS += $(if $(build_nonstatic),$(LD_OPTION_DYNAMIC),-static)
+LDFLAGS += $(if $(build_nonstatic),$(LDFLAGS_DYNAMIC),-static)

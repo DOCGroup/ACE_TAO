@@ -25,11 +25,6 @@
 #include "ace/SString.h"
 #include "ace/Functor_String.h"
 
-#if defined (ACE_IS_SPLITTING)
-# include "ace/OS_NS_ctype.h"
-#endif  /* ACE_IS_SPLITTING */
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -191,26 +186,6 @@ private:
   /// This is the set of ACE_CapEntry.
   CAPABILITIES_MAP caps_;
 };
-
-#if defined (ACE_IS_SPLITTING)
-int
-is_empty (const ACE_TCHAR *line)
-{
-  while (*line && ACE_OS::ace_isspace (*line))
-    ++line;
-
-  return *line == ACE_TEXT ('\0') || *line == ACE_TEXT ('#');
-}
-
-int
-is_line (const ACE_TCHAR *line)
-{
-  while (*line && ACE_OS::ace_isspace (*line))
-    ++line;
-
-  return *line != ACE_TEXT ('\0');
-}
-#endif /* ACE_IS_SPLITTING */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

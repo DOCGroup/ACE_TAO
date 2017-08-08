@@ -247,7 +247,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           *os << be_nl_2
               << "virtual ::CORBA::ULong length (void) const;"
               << be_nl
-              << "virtual void length ( ::CORBA::ULong);"
+              << "virtual void length (::CORBA::ULong);"
               << be_nl_2
               << "virtual ::CORBA::ULong maximum (void) const;";
         }
@@ -285,14 +285,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           && !be_global->alt_mapping ())
         {
           *os << be_nl_2
-              << "\n\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
-              << node->local_name () << " (" << be_idt << be_idt_nl
-              << "::CORBA::ULong length," << be_nl
-              << "const ACE_Message_Block* mb" << be_uidt_nl
-              << ")" << be_uidt_nl
-              << "  : ::TAO::unbounded_value_sequence< ::CORBA::Octet>"
-              << " (length, mb) {}" << "\n"
-              << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
+              << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
+              << node->local_name () << " (::CORBA::ULong length, const ACE_Message_Block* mb)"
+              << be_idt_nl
+              << ": ::TAO::unbounded_value_sequence< ::CORBA::Octet>"
+              << " (length, mb) {}" << be_uidt_nl
+              << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
         }
 
       *os << be_uidt_nl
@@ -311,24 +309,19 @@ be_visitor_sequence_ch::gen_varout_typedefs (be_sequence *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2;
+  *os << be_nl;
 
-    AST_Type::SIZE_TYPE st = elem->size_type ();
+  AST_Type::SIZE_TYPE st = elem->size_type ();
 
-    *os << "typedef" << be_idt_nl
-        << (st == AST_Type::FIXED ? "::TAO_FixedSeq_Var_T<"
-                                  : "::TAO_VarSeq_Var_T<")
-        << be_idt << be_idt_nl
-        << node->local_name ();
+  *os << "typedef "
+      << (st == AST_Type::FIXED ? "::TAO_FixedSeq_Var_T<"
+                                : "::TAO_VarSeq_Var_T<")
+      << node->local_name ();
 
-    *os << be_uidt_nl
-        << ">" << be_uidt_nl
-        << node->local_name () << "_var;" << be_uidt;
+  *os << "> "
+      << node->local_name () << "_var;" << be_nl;
 
-    *os << be_nl_2
-        << "typedef" << be_idt_nl
-        << "::TAO_Seq_Out_T<" << be_idt << be_idt_nl
-        << node->local_name () << be_uidt_nl
-        << ">" << be_uidt_nl
-        << node->local_name () << "_out;" << be_uidt;
+  *os << "typedef ::TAO_Seq_Out_T<"
+      << node->local_name ()
+      << "> " << node->local_name () << "_out;" << be_nl;
 }

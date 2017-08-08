@@ -502,7 +502,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
         {
           TAO_Connection_Handler *ch = base_transport->connection_handler ();
           // one last check before using the cached connection
-          if (ch->error_detected ())
+          if (ch->error_detected (this->orb_core ()->leader_follower ()))
             {
               if (TAO_debug_level > 0)
                 {

@@ -44,7 +44,7 @@ public:
   ACE_SizeCDR (ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
-  /// Returns @c false if an error has ocurred.
+  /// Returns @c false if an error has occurred.
   bool good_bit (void) const;
 
   /// Reset current size.

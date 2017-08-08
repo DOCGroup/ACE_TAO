@@ -529,7 +529,7 @@ TAO_IIOP_Connector::complete_connection (int result,
   // closing the connection.  However the remainder of this method
   // only checked to see if the keep_waiting status was true, and bump
   // the refcount then. However if the status was really
-  // error_detected, then no bump in refcount occured allowing the
+  // error_detected, then no bump in refcount occurred allowing the
   // connection_handler's close_handler method to effectively steal
   // the reference to be handed back to the caller. That would then
   // trigger an abort as the profile_transport_resolver (our caller)
@@ -575,7 +575,9 @@ TAO_IIOP_Connector::complete_connection (int result,
       return 0;
     }
 
-  if (svc_handler->keep_waiting())
+  TAO_Leader_Follower &leader_follower = this->orb_core ()->leader_follower ();
+
+  if (svc_handler->keep_waiting(leader_follower))
     {
       svc_handler->connection_pending();
     }
@@ -591,7 +593,7 @@ TAO_IIOP_Connector::complete_connection (int result,
 #endif // INDUCE_BUG_2654_B
 
   // Fix for bug 2654.
-  if (transport->connection_handler()->error_detected())
+  if (transport->connection_handler()->error_detected(leader_follower))
     {
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG((LM_DEBUG,
@@ -652,7 +654,7 @@ TAO_IIOP_Connector::complete_connection (int result,
   // before caching, the connection really failed, thus an invalid
   // connection is put into the cache. Thus we do one last status
   // check before handing the connection back to the caller.
-  if (svc_handler->error_detected())
+  if (svc_handler->error_detected(leader_follower))
     {
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG((LM_DEBUG,

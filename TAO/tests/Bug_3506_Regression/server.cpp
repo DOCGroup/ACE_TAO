@@ -45,7 +45,7 @@ public:
   virtual void
   foo (const ::IF_EXE_M_R::Test_Struct &ts)
   {
-    IF_EXE_M_R::CORBA_FOOIInPlan *anUnion_p = new IF_EXE_M_R::CORBA_FOOIInPlan;
+    const IF_EXE_M_R::CORBA_FOOIInPlan *anUnion_p = new IF_EXE_M_R::CORBA_FOOIInPlan;
     if (ts.whatEver >>= anUnion_p)
       {
         ACE_DEBUG((LM_DEBUG, "Any successfully marshalled\nAny is %@\nID: %C\nNAME: %C\nKIND: %d\n", &ts.whatEver,

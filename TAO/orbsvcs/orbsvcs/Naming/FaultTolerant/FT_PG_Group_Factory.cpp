@@ -4,6 +4,7 @@
 /**
  * @file  FT_PG_Group_Factory.cpp
  *
+ *
  * @author Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================
@@ -11,17 +12,25 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
 
 #include "orbsvcs/PortableGroup/PG_Group_List_Store.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::FT_PG_Group_Factory::FT_PG_Group_Factory()
+  : replicator_ (0)
 {
 }
 
 TAO::FT_PG_Group_Factory::~FT_PG_Group_Factory()
 {
+}
+
+void
+TAO::FT_PG_Group_Factory::set_replicator (TAO_FT_Naming_Replication_Manager *repl)
+{
+  this->replicator_ = repl;
 }
 
 void
@@ -65,7 +74,7 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - FT_PG_Group_Factory ")
                       ACE_TEXT ("In setting object group stale could not cast ")
-                      ACE_TEXT ("to FT_PG_Object_Group_Storable\n")));
+                          ACE_TEXT ("to FT_PG_Object_Group_Storable\n")));
           throw CORBA::INTERNAL ();
         }
 
@@ -109,7 +118,8 @@ TAO::FT_PG_Group_Factory::create_persistent_group (
     type_id,
     the_criteria,
     type_properties,
-    storable_factory
+    storable_factory,
+    this->replicator_
     ),
   CORBA::NO_MEMORY());
   return objectGroup;
@@ -131,7 +141,8 @@ TAO::FT_PG_Group_Factory::restore_persistent_group (
       orb,
       factory_registry,
       manipulator,
-      storable_factory
+      storable_factory,
+      this->replicator_
       ),
     CORBA::NO_MEMORY());
   return objectGroup;

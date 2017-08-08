@@ -1,7 +1,4 @@
 workspace {
-  exclude(automake) {
-    build
-  }
   exclude {
     TAO
   }

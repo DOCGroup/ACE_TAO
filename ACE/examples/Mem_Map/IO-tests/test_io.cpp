@@ -9,9 +9,7 @@
 #include "ace/Log_Msg.h"
 #include "IO_Test.h"
 
-
-
-#if !defined(_WIN32)
+#if !defined(ACE_WIN32)
 
 // Name of program.
 static const ACE_TCHAR *program_name;

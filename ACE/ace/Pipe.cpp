@@ -55,7 +55,7 @@ ACE_Pipe::open (int buffer_size)
     }
 
   sockaddr_un addr = {
-#ifdef ACE_VXWORKS
+#if defined(ACE_VXWORKS) || defined(__APPLE__)
     sizeof (sockaddr_un),
 #endif
     AF_LOCAL, {}};

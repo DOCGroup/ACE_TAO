@@ -165,7 +165,7 @@ sub test_body {
         return 1;
     }
 
-    # Use the client to ask the server to try and create a persitent POA
+    # Use the client to ask the server to try and create a persistent POA
     # We expect this to 'fail' as the IMR is dead
     $process_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 15);
 

@@ -19,7 +19,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
-#include "activity_export.h"
 #include "ace/Null_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -36,7 +35,7 @@ class Builder;
  * @brief Driver class that maintains the orb and collections of objects for
  * generating activity in this process.
  */
-class activity_Export Activity
+class Activity
 {
   friend class ACE_Singleton<Activity, ACE_Null_Mutex>;
 

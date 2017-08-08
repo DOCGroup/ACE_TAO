@@ -1995,7 +1995,7 @@ module SecurityLevel3 {
          * security context with a remote CSIv2 client.
          * If the <code>request_is_local<code> attribute is <code>FALSE</code>,
          * the current thread of execution is directly servicing a remote
-         * request for the target object within the target's implemenation.
+         * request for the target object within the target's implementation.
          * If the <code>request_is_local</code> attribute is <code>TRUE</code>,
          * the current thread of execution is servicing an ORB mediated call
          * on a collocated object.

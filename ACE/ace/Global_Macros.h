@@ -106,12 +106,14 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   endif
 # endif /* ACE_NEEDS_FUNC_DEFINITIONS */
 
-// C++11 has deprecated the register keyword
+// noexcept(false) specification to specify that the operation can
+// throw an exception
 #if defined (ACE_HAS_CPP11)
-# define ACE_REGISTER
+#define ACE_NOEXCEPT_FALSE noexcept(false)
 #else
-# define ACE_REGISTER register
+#define ACE_NOEXCEPT_FALSE
 #endif
+
 // ----------------------------------------------------------------
 
 // FUZZ: disable check_for_ACE_Guard
@@ -251,6 +253,13 @@ ACE_END_VERSIONED_NAMESPACE_DECL
             (POINTER)->~CLASS (); \
             DEALLOCATOR (POINTER); \
           } \
+      } \
+   while (0)
+
+# define ACE_DES_FREE_THIS(DEALLOCATOR,CLASS) \
+   do { \
+        this->~CLASS (); \
+        DEALLOCATOR (this); \
       } \
    while (0)
 
