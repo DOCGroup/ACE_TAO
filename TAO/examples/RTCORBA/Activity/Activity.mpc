@@ -1,9 +1,7 @@
 // -*- MPC -*-
 project : orbsvcslib, namingexe, rt_server {
   exename = activity
-  // We use macros instead of dynamicflags so that 
-  // the symbols will be exported from an exe. 
-  macros += ACTIVITY_BUILD_DLL
+
   Source_Files {
     Activity.cpp
     Builder.cpp
