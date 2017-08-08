@@ -181,4 +181,4 @@ ACE_STATIC_SVC_DEFINE(Builder,
                       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
                       0)
 
-ACE_FACTORY_DEFINE (activity, Builder)
+ACE_FACTORY_DEFINE (ACE_Local_Service, Builder)
