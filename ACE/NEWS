@@ -1,6 +1,15 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.4.3 and ACE-6.4.4
 ====================================================
 
+. Enhanced support for Embarcadero C++ Builder 10.2 (Tokyo).
+  Support for bcc32/bcc64/bcc32c has been enhanced and by
+  default the clang based versions are used. When the old
+  bcc32 has to be used set the CLASSIC environment variable
+  to 1. At this moment runtime test results for bcc64/bcc32c
+  show some structural problems
+
+. Add support for Oracle Studio 12.5
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.2 and ACE-6.4.3
 ====================================================
 
