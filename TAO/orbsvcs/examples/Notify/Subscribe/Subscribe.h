@@ -41,7 +41,7 @@ class Subscribe
   /// Run the demo.
   void run (void);
 
-  /// Called when all events we are waiting for have occured.
+  /// Called when all events we are waiting for have occurred.
   void done (void);
 
  protected:

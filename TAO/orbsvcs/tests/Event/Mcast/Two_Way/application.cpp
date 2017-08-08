@@ -520,7 +520,7 @@ Heartbeat_Application::shutdown (void)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        "The following exception occured in ""Heartbeat_Application::shutdown:\n");
+        "The following exception occurred in ""Heartbeat_Application::shutdown:\n");
     }
 }
 

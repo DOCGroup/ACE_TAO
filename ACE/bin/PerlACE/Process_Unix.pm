@@ -353,16 +353,10 @@ sub CommandLine ()
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "INFO: created run script [",$self->{SCRIPTFILE},"]\n", $run_script;
         }
-        if (defined $self->{TARGET} &&
-            (defined $self->{TARGET}->{TARGET_FSROOT} ||
-             defined $self->{TARGET}->{TEST_ROOT})) {
-           # Already written to proper dir
-        } else {
-          if ($self->{TARGET}->PutFile ($self->{SCRIPTFILE}) == -1) {
-            print STDERR "ERROR: Failed to copy <", $self->{SCRIPTFILE},
-                          "> to target \n";
-            return -1;
-          }
+        if ($self->{TARGET}->PutFile ($self->{SCRIPTFILE}) == -1) {
+          print STDERR "ERROR: Failed to copy <", $self->{SCRIPTFILE},
+                        "> to target \n";
+          return -1;
         }
 
         $commandline = "$shell \"source $tgt_exedir/".basename ($self->{SCRIPTFILE})."\"";

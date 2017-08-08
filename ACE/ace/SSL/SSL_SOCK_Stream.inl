@@ -59,7 +59,7 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
 
     case SSL_ERROR_SYSCALL:
       if (bytes_sent == 0)
-        // An EOF occured but the SSL "close_notify" message was not
+        // An EOF occurred but the SSL "close_notify" message was not
         // sent.  This is a protocol error, but we ignore it.
         return 0;
 
@@ -187,7 +187,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
         case SSL_ERROR_SYSCALL:
           if (bytes_read == 0)
-            // An EOF occured but the SSL "close_notify" message was not
+            // An EOF occurred but the SSL "close_notify" message was not
             // sent.  This is a protocol error, but we ignore it.
             break;
 

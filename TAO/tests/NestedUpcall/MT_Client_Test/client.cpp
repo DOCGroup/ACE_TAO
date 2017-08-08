@@ -3,8 +3,8 @@
 /**
  *  @file    client.cpp
  *
- *  Start one server thread calling a distant MT Object serveral times,
- *  also starting serveral client threads which call the MT Object too.
+ *  Start one server thread calling a distant MT Object several times,
+ *  also starting several client threads which call the MT Object too.
  *  The server does nested upcalls.
  *
  *  @author Michael Kircher

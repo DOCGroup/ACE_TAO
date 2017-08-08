@@ -1,5 +1,29 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.4.3 and ACE-6.4.4
+====================================================
+
+. Enhanced support for Embarcadero C++ Builder 10.2 (Tokyo).
+  Support for bcc32/bcc64/bcc32c has been enhanced and by
+  default the clang based versions are used. When the old
+  bcc32 has to be used set the CLASSIC environment variable
+  to 1. At this moment runtime test results for bcc64/bcc32c
+  show some structural problems
+
+. Add support for Oracle Studio 12.5
+
+USER VISIBLE CHANGES BETWEEN ACE-6.4.2 and ACE-6.4.3
+====================================================
+
+. Enhancements for Visual Studio 2017
+
+. Enhancements for Android
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.1 and ACE-6.4.2
 ====================================================
+
+. Added support for Mac OS X on x86_64 to get the network adapter
+  address in ACE_OS::getmacaddress().
+
+. Added support for the December 2016 updates to VxWorks 7.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.4.0 and ACE-6.4.1
 ====================================================

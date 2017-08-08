@@ -248,28 +248,27 @@ TAO_FTEC_Event_Channel_Impl::for_suppliers (void)
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
-        const RtecEventChannelAdmin::ConsumerQOS & qos
-      )
+        const RtecEventChannelAdmin::ConsumerQOS & qos)
 {
   CORBA::Any_var any
     = Request_Context_Repository().get_cached_result();
 
-  FtRtecEventChannelAdmin::ObjectId *oid;
+  const FtRtecEventChannelAdmin::ObjectId *oid = 0;
 
   if (any.in() >>= oid) {
-    FtRtecEventChannelAdmin::ObjectId* result;
+    FtRtecEventChannelAdmin::ObjectId* result = 0;
     ACE_NEW_THROW_EX(result,
                      FtRtecEventChannelAdmin::ObjectId(*oid),
                      CORBA::NO_MEMORY());
     return result;
   }
 
+  FtRtecEventChannelAdmin::ObjectId* retval = 0;
+  ACE_NEW_THROW_EX(retval, FtRtecEventChannelAdmin::ObjectId, CORBA::NO_MEMORY());
 
-  ACE_NEW_THROW_EX(oid, FtRtecEventChannelAdmin::ObjectId, CORBA::NO_MEMORY());
+  FtRtecEventChannelAdmin::ObjectId_var object_id = retval;
 
-  FtRtecEventChannelAdmin::ObjectId_var  object_id = oid;
-
-  Request_Context_Repository().generate_object_id(*oid);
+  Request_Context_Repository().generate_object_id(*retval);
 
   obtain_push_supplier_and_connect(this,
                                    object_id.in(),
@@ -284,41 +283,37 @@ TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
-        const RtecEventChannelAdmin::SupplierQOS & qos
-      )
+        const RtecEventChannelAdmin::SupplierQOS & qos)
 {
   CORBA::Any_var any
     = Request_Context_Repository().get_cached_result();
 
-  FtRtecEventChannelAdmin::ObjectId *oid;
+  const FtRtecEventChannelAdmin::ObjectId *oid = 0;
 
   if (any.in() >>= oid) {
-    FtRtecEventChannelAdmin::ObjectId* result;
+    FtRtecEventChannelAdmin::ObjectId* result = 0;
     ACE_NEW_THROW_EX(result,
                      FtRtecEventChannelAdmin::ObjectId(*oid),
                      CORBA::NO_MEMORY());
     return result;
   }
 
+  FtRtecEventChannelAdmin::ObjectId* retval = 0;
+  ACE_NEW_THROW_EX(retval, FtRtecEventChannelAdmin::ObjectId, CORBA::NO_MEMORY());
+  FtRtecEventChannelAdmin::ObjectId_var object_id = retval;
 
-  ACE_NEW_THROW_EX(oid, FtRtecEventChannelAdmin::ObjectId, CORBA::NO_MEMORY());
-  FtRtecEventChannelAdmin::ObjectId_var object_id = oid;
-
-  Request_Context_Repository().generate_object_id(*oid);
+  Request_Context_Repository().generate_object_id(*retval);
 
   obtain_push_consumer_and_connect(this,
                                    object_id.in(),
                                    push_supplier,
                                    qos);
 
-
   return object_id._retn();
-
 }
 
 void TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -332,8 +327,7 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier (
 }
 
 void TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -347,8 +341,7 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer (
 }
 
 void TAO_FTEC_Event_Channel_Impl::suspend_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -363,8 +356,7 @@ void TAO_FTEC_Event_Channel_Impl::suspend_push_supplier (
 
 
 void TAO_FTEC_Event_Channel_Impl::resume_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        const FtRtecEventChannelAdmin::ObjectId & oid)
 {
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -379,8 +371,7 @@ void TAO_FTEC_Event_Channel_Impl::resume_push_supplier (
 
 void TAO_FTEC_Event_Channel_Impl::push (
         const FtRtecEventChannelAdmin::ObjectId & oid,
-        const RtecEventComm::EventSet & data
-      )
+        const RtecEventComm::EventSet & data)
 {
   TAO_FTEC_ProxyPushConsumer* proxy = this->find_proxy_push_consumer(oid);
 
@@ -390,19 +381,13 @@ void TAO_FTEC_Event_Channel_Impl::push (
   proxy->push(data);
 }
 
-
-
-
 void TAO_FTEC_Event_Channel_Impl::get_state (
-                                        FtRtecEventChannelAdmin::EventChannelState & state
-                                        )
+                                        FtRtecEventChannelAdmin::EventChannelState & state)
 {
   FtEventServiceInterceptor::instance()->get_state(state.cached_operation_results);
   this->supplier_admin()->get_state(state.supplier_admin_state);
   this->consumer_admin()->get_state(state.consumer_admin_state);
 }
-
-
 
 void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat)
 {
@@ -415,7 +400,6 @@ void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat)
   this->supplier_admin()->set_state(state.supplier_admin_state);
   this->consumer_admin()->set_state(state.consumer_admin_state);
 }
-
 
 void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s)
 {

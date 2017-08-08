@@ -5,7 +5,7 @@
 /**
  *  @file    snmp.h
  *
- * SNMP class defintion. The Snmp class provides an object oriented
+ * SNMP class definition. The Snmp class provides an object oriented
  * approach to SNMP. The SNMP class is an encapsulation of SNMP
  * sessions, gets, sets, etc. The class manages all SNMP
  * resources and provides complete retry and timeout capability.

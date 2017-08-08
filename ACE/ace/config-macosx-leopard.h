@@ -53,6 +53,7 @@
 
 #define ACE_HAS_GPERF
 #define ACE_HAS_POSIX_SEM
+#define ACE_HAS_SIOCGIFCONF
 
 #define ACE_HAS_SUNOS4_GETTIMEOFDAY
 
@@ -228,6 +229,8 @@
 
 // gperf seems to need this
 //#define ACE_HAS_NONSTATIC_OBJECT_MANAGER
+
+#define ACE_IOCTL_TYPE_ARG2 unsigned long
 
 #if defined(__APPLE_CC__) && (__APPLE_CC__ < 1173)
 #error "Compiler must be upgraded, see http://developer.apple.com"

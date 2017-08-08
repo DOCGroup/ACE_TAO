@@ -2398,11 +2398,10 @@ ACE::format_hexdump (const char *buffer,
   return size;
 }
 
-// Returns the current timestamp in the form
-// "hour:minute:second:microsecond."  The month, day, and year are
-// also stored in the beginning of the date_and_time array
-// using ISO-8601 format.
-
+/// Returns the current timestamp in the form
+/// "hour:minute:second:microsecond."  The month, day, and year are
+/// also stored in the beginning of the date_and_time array
+/// using ISO-8601 format.
 ACE_TCHAR *
 ACE::timestamp (ACE_TCHAR date_and_time[],
                 size_t date_and_timelen,
@@ -2414,13 +2413,12 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
                          return_pointer_to_first_digit);
 }
 
-// Returns the given timestamp in the form
-// "hour:minute:second:microsecond."  The month, day, and year are
-// also stored in the beginning of the date_and_time array
-// using ISO-8601 format.
-// 012345678901234567890123456
-// 2010-12-02 12:56:00.123456<nul>
-
+/// Returns the given timestamp in the form
+/// "hour:minute:second:microsecond."  The month, day, and year are
+/// also stored in the beginning of the date_and_time array
+/// using ISO-8601 format.
+/// 012345678901234567890123456
+/// 2010-12-02 12:56:00.123456<nul>
 ACE_TCHAR *
 ACE::timestamp (const ACE_Time_Value& time_value,
                 ACE_TCHAR date_and_time[],
@@ -2457,8 +2455,7 @@ ACE::timestamp (const ACE_Time_Value& time_value,
   return &date_and_time[10 + (return_pointer_to_first_digit != 0)];
 }
 
-// This function rounds the request to a multiple of the page size.
-
+/// This function rounds the request to a multiple of the page size.
 size_t
 ACE::round_to_pagesize (size_t len)
 {
@@ -2640,8 +2637,7 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   return h;
 }
 
-// Wait up to <timeout> amount of time to accept a connection.
-
+/// Wait up to @a timeout amount of time to accept a connection.
 int
 ACE::handle_timed_accept (ACE_HANDLE listener,
                           ACE_Time_Value *timeout,
@@ -2710,9 +2706,8 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
     }
 }
 
-// Make the current process a UNIX daemon.  This is based on Stevens
-// code from APUE.
-
+/// Make the current process a UNIX daemon.  This is based on Stevens
+/// code from APUE.
 int
 ACE::daemonize (const ACE_TCHAR pathname[],
                 bool close_all_handles,
@@ -2916,7 +2911,7 @@ ACE::set_handle_limit (int new_limit,
   return 0;
 }
 
-// Euclid's greatest common divisor algorithm.
+/// Euclid's greatest common divisor algorithm.
 u_long
 ACE::gcd (u_long x, u_long y)
 {
@@ -2931,7 +2926,7 @@ ACE::gcd (u_long x, u_long y)
 }
 
 
-// Calculates the minimum enclosing frame size for the given values.
+/// Calculates the minimum enclosing frame size for the given values.
 u_long
 ACE::minimum_frame_size (u_long period1, u_long period2)
 {

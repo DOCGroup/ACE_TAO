@@ -30,7 +30,13 @@ endif
 # Triggered by the $(TARGETS_NESTED) target, below.
 
 %.subdir: %
+ifneq ($(timed),)
+	@date=`date`; echo "START: $< $$date"
+endif
 	cd $< && $(MAKE) -f $(SUBDIR_MAKEFILE) $(SUBDIR_TARGET)
+ifneq ($(timed),)
+	@date=`date`;echo "FINISH: $< $$date"
+endif
 
 # Build FOO.nested by calling MAKE again, this time with DIRS (with
 # ".subdir" appended to each) as the targets, and passing FOO as the

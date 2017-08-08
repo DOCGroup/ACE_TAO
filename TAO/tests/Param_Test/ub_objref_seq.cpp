@@ -59,7 +59,7 @@ Test_ObjRef_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  Param_Test::Coffee_Mix *tmp;
+  const Param_Test::Coffee_Mix *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Coffee_Mix (*tmp);
 

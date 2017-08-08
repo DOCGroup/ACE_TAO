@@ -572,11 +572,11 @@ const char *OctetStr::to_string_hex()
 
 // TODO: verify ACE_OS:: on NT works like this or not
 
-#if defined(_WIN32)
+#if defined(ACE_WIN32)
     const char *fmt = "   %s\r\n";
 #else
     const char *fmt = "   %s\n";
-#endif // _WIN32
+#endif // ACE_WIN32
 
     ACE_OS::sprintf(line_ptr, fmt, char_buf);
     line_ptr += 3 + ACE_OS::strlen(char_buf);

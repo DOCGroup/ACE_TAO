@@ -59,4 +59,9 @@
 
 #define ACE_HAS_SOLARIS_ATOMIC_LIB
 
+// Solaris Studio 12.4 implements symbol lookup correctly.
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC >= 0x5130)
+#define ACE_ANY_OPS_USE_NAMESPACE
+#endif
+
 #endif /* ACE_CONFIG_H */

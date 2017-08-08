@@ -17,7 +17,6 @@
 #include "ace/SString.h"
 #include "ace/Arg_Shifter.h"
 #include "JobC.h"
-#include "activity_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Barrier;
@@ -30,7 +29,7 @@ class Task_Stats;
  *
  * @brief Periodic_Task executes jobs.
  */
-class activity_Export Periodic_Task : public ACE_Task <ACE_SYNCH>
+class Periodic_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
   /// = Initialization and termination code.

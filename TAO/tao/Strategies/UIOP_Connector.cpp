@@ -210,12 +210,14 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  if (svc_handler->keep_waiting ())
+  TAO_Leader_Follower &leader_follower = this->orb_core ()->leader_follower ();
+
+  if (svc_handler->keep_waiting (leader_follower))
     {
       svc_handler->connection_pending ();
     }
 
-  if (svc_handler->error_detected ())
+  if (svc_handler->error_detected (leader_follower))
     {
       svc_handler->cancel_pending_connection ();
     }
@@ -250,7 +252,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
       return 0;
     }
 
-  if (svc_handler->error_detected ())
+  if (svc_handler->error_detected (leader_follower))
     {
       svc_handler->cancel_pending_connection ();
       transport->purge_entry();

@@ -24,7 +24,7 @@
  * if <exec_time_> is greater than the <period_>, the activity(s) for the
  * overlapped period(s) are considered "missed".
  */
-class activity_Export Thread_Task : public Periodic_Task
+class Thread_Task : public Periodic_Task
 {
  public:
   /// Constructor

@@ -25,7 +25,7 @@
     specializations of the ACE_Svc_Handler class.
     However, the original design considered the possibility of using
     protocols without any ACE abstractions, though in practice this
-    hasn't happenned so far,
+    hasn't happened so far,
     all changes to the framework should keep this possibility open.
 
     This is the main source of memory management problems in the

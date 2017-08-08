@@ -1183,7 +1183,7 @@ ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
   return result;
 #elif defined (ACE_HAS_TRIO)
   return trio_vsnprintf (buffer, maxlen, format, ap);
-#elif !defined ACE_LACKS_VA_FUNCTIONS
+#elif defined (ACE_HAS_VSNPRINTF_EMULATION)
   return vsnprintf_emulation (buffer, maxlen, format, ap);
 #else
   ACE_UNUSED_ARG (buffer);

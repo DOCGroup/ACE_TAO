@@ -1653,7 +1653,7 @@ ACEXML_Parser::parse_element_decl (void)
   count = this->check_for_PE_reference ();
   if (this->skip_whitespace () != '>')
     {
-      this->fatal_error (ACE_TEXT ("Expecting '>' after element defintion"));
+      this->fatal_error (ACE_TEXT ("Expecting '>' after element definition"));
     }
   return 0;
 }

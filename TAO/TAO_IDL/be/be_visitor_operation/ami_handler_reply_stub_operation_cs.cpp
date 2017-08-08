@@ -196,7 +196,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       *os << be_uidt_nl << "};" << be_nl_2;
 
       *os << "::CORBA::ULong const exceptions_count = "
-          << excep_count << ";\n" << be_nl;
+          << excep_count << ";" << be_nl;
 
       exception_data_arg = "exceptions_data";
       exception_count_arg = "exceptions_count";
@@ -207,8 +207,8 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "static_cast <CORBA::ULong> (cdr->length ())," << be_nl
       << "static_cast <CORBA::ULong> (cdr->length ())," << be_nl
       << "reinterpret_cast <unsigned char*> (cdr->rd_ptr ())," << be_nl
-      << "0" << be_uidt_nl
-      << ");" << be_uidt_nl;
+      << "0);" << be_uidt
+      << be_uidt_nl;
 
  *os  << "::Messaging::ExceptionHolder* exception_holder_ptr = 0;" << be_nl
       << "ACE_NEW (" << be_idt << be_idt_nl
@@ -220,17 +220,17 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << exception_data_arg << "," << be_nl
       << exception_count_arg  << "," << be_nl
       << "_tao_in.char_translator ()," << be_nl
-      << "_tao_in.wchar_translator ()" << ")" << be_uidt_nl
-      << ");" << be_uidt_nl << be_uidt_nl;
+      << "_tao_in.wchar_translator ()" << "));" << be_uidt
+      << be_uidt_nl << be_uidt_nl;
 
   *os << "::Messaging::ExceptionHolder_var exception_holder_var = "
       << "exception_holder_ptr;" << be_nl;
 
   *os << "_tao_reply_handler_object->"
       << node->local_name () << "_excep (" << be_idt << be_idt_nl
-      << "exception_holder_var";
+      << "exception_holder_var);";
 
-  *os << be_uidt_nl << ");" << be_uidt_nl;
+  *os << be_uidt << be_uidt_nl;
 
   *os << "break;" << be_uidt_nl
       << "}" << be_nl;

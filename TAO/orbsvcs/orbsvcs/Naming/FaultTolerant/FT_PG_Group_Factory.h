@@ -4,6 +4,7 @@
 /**
  * @file  FT_PG_Group_Factory.h
  *
+ *
  * @author Byron Harris <harrisb@ociweb.com>
  */
 //=============================================================================
@@ -28,6 +29,8 @@ namespace FT_Naming
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_FT_Naming_Replication_Manager;
+
 namespace TAO
 {
 
@@ -50,6 +53,8 @@ namespace TAO
      */
     void set_object_group_stale (const FT_Naming::ObjectGroupUpdate & group_info);
 
+    void set_replicator (TAO_FT_Naming_Replication_Manager *repl);
+
   protected:
 
     virtual PG_Object_Group_Storable * create_persistent_group (
@@ -70,6 +75,7 @@ namespace TAO
       TAO::PG_Object_Group_Manipulator & manipulator,
       TAO::Storable_Factory & storable_factory);
 
+    TAO_FT_Naming_Replication_Manager *replicator_;
   };
 } // namespace TAO
 

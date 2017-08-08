@@ -845,14 +845,13 @@ be_visitor_module::visit_connector (be_connector *node)
             {
               be_visitor_connector_ami_exh visitor (&ctx);
               status = node->accept (&visitor);
-              break;
             }
           else if (node->dds_connector ())
             {
               be_visitor_connector_dds_exh visitor (&ctx);
               status = node->accept (&visitor);
-              break;
             }
+          break;
         }
       case TAO_CodeGen::TAO_ROOT_CNS:
         {
@@ -860,14 +859,13 @@ be_visitor_module::visit_connector (be_connector *node)
             {
               be_visitor_connector_ami_exs visitor (&ctx);
               status = node->accept (&visitor);
-              break;
             }
           else if (node->dds_connector ())
             {
               be_visitor_connector_dds_exs visitor (&ctx);
               status = node->accept (&visitor);
-              break;
             }
+          break;
         }
       // Skip these contexts, the connector impl is
       // generated in a separate pass, using the context states

@@ -60,11 +60,11 @@ private:
 
   int component_port_test (CORBA::ComponentIR::ComponentDef_var &);
 
-  int provides_test (CORBA::ComponentIR::ProvidesDescriptionSeq &);
+  int provides_test (const CORBA::ComponentIR::ProvidesDescriptionSeq &);
 
-  int uses_test (CORBA::ComponentIR::UsesDescriptionSeq &);
+  int uses_test (const CORBA::ComponentIR::UsesDescriptionSeq &);
 
-  int event_port_test (CORBA::ComponentIR::EventPortDescriptionSeq &,
+  int event_port_test (const CORBA::ComponentIR::EventPortDescriptionSeq &,
                        CORBA::ULong seq_length,
                        const char *port_type,
                        const char **names,
@@ -95,9 +95,9 @@ private:
 
   int home_inheritance_test (CORBA::ComponentIR::HomeDef_var &);
 
-  int home_factory_test (CORBA::ComponentIR::HomeDescription *);
+  int home_factory_test (const CORBA::ComponentIR::HomeDescription *);
 
-  int home_finder_test (CORBA::ComponentIR::HomeDescription *);
+  int home_finder_test (const CORBA::ComponentIR::HomeDescription *);
 
 private:
   /// Flag to output detailed error messages.

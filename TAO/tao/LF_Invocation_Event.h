@@ -42,15 +42,6 @@ public:
   /// Destructor
   virtual ~TAO_LF_Invocation_Event (void);
 
-  /// Return 1 if the condition was satisfied successfully, 0 if it
-  /// has not
-  int successful (void) const;
-
-  /// Return 1 if an error was detected while waiting for the
-  /// event
-  int error_detected (void) const;
-  //@}
-
 protected:
 
   /// Validate and perform the state change
@@ -68,11 +59,19 @@ protected:
    * LFS_CONNECTION_CLOSED - The connection was closed when the state
    *                         was active.
    */
-  virtual void state_changed_i (int new_state);
+  virtual void state_changed_i (LFS_STATE new_state);
+
+  /// Return true if the condition was satisfied successfully, false if it
+  /// has not
+  virtual bool successful_i (void) const;
+
+  /// Return true if an error was detected while waiting for the
+  /// event
+  virtual bool error_detected_i (void) const;
 
 private:
   /// Check whether we have reached the final state..
-  int is_state_final (void);
+  bool is_state_final (void) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
