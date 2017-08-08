@@ -259,7 +259,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
         }
       else
         {
-          storage_class = "TAO_NAMESPACE_STORAGE_CLASS ";
+          storage_class = "extern TAO_EXPORT_MACRO ";
         }
     }
   else
