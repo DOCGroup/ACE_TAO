@@ -10,8 +10,9 @@
  */
 //=============================================================================
 
-
 #include "ace/Reactor.h"
+
+#include "ace/Synch.h"
 #include "ntsvc.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)

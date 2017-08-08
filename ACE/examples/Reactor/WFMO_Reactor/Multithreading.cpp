@@ -13,18 +13,16 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_WIN32)
 
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_time.h"
-
-
 
 static int concurrent_threads = 1;
 static int number_of_handles = static_cast<int> (ACE_Reactor::instance ()->size ());
