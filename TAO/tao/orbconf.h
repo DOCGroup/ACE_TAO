@@ -186,21 +186,15 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 # define TAO_CONNECTION_CACHE_MAXIMUM (ACE::max_handles () / 2)
 #endif /* TAO_CONNECTION_CACHE_MAXIMUM */
 
-// This definition theoretically is not required. Just leaving it here
-// for backward compatibility
-#define TAO_NAMESPACE_STORAGE_CLASS extern TAO_EXPORT_MACRO
-
-# if defined (_MSC_VER) && defined (__ACE_INLINE__)
+# if defined (__ACE_INLINE__)
 #   define TAO_NAMESPACE_INLINE_FUNCTION inline
 # else
-#   define TAO_NAMESPACE_INLINE_FUNCTION TAO_NAMESPACE_STORAGE_CLASS
+#   define TAO_NAMESPACE_INLINE_FUNCTION extern TAO_EXPORT_MACRO
 # endif
 
 #if !defined(TAO_NO_COPY_OCTET_SEQUENCES)
 # define TAO_NO_COPY_OCTET_SEQUENCES 1
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES */
-
-#define TAO_HAS_EXCEPTIONS
 
 // Define if your processor does not store words with the most significant
 // byte first.
@@ -236,15 +230,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #if defined (major)
 #undef major
 #endif /* major*/
-
-#if !defined (TAO_EXPORT_NESTED_CLASSES) \
-    && defined (ACE_EXPORT_NESTED_CLASSES)
-#define TAO_EXPORT_NESTED_CLASSES
-#endif /* !defined TAO_EXPORT_NESTED_CLASSES */
-
-#if !defined (TAO_EXPORT_NESTED_MACRO)
-#define TAO_EXPORT_NESTED_MACRO
-#endif /* !defined (TAO_EXPORT_NESTED_MACRO) */
 
 // Assume DOS/Windows if "configure" didn't get run.
 
