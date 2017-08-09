@@ -328,8 +328,8 @@ int be_visitor_array_ch::visit_array (be_array *node)
           << " *_tao_to," << be_nl
           << "const ";
       *os << node->nested_type_name (scope, "_slice", "_")
-          << " *_tao_from" << be_uidt_nl
-          << ");" << be_uidt;
+          << " *_tao_from);" << be_uidt
+          << be_uidt;
     }
 
   node->cli_hdr_gen (true);
