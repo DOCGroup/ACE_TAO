@@ -44,11 +44,6 @@
 #include "tao/Seq_Var_T.h"
 #include "tao/Seq_Out_T.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_Export
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
