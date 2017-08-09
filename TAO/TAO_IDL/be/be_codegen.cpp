@@ -535,13 +535,6 @@ TAO_CodeGen::start_server_header (const char *fname)
           *this->server_header_ << "\n\n#include /**/ \""
                                 << be_global->skel_export_include ()
                                 << "\"";
-
-          // Generate the TAO_EXPORT_MACRO macro.
-          *this->server_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
-          *this->server_header_ << "#undef TAO_EXPORT_MACRO\n";
-          *this->server_header_ << "#endif\n";
-          *this->server_header_ << "#define TAO_EXPORT_MACRO "
-                                << be_global->skel_export_macro ();
         }
     }
   else
