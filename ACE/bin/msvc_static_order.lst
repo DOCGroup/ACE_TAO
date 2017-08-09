@@ -1,5 +1,3 @@
-# $Id$
-#
 # This file lists the project files that must be build first in a static
 # build using msvc_static_compile.pl
 
