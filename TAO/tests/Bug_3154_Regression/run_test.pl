@@ -7,7 +7,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-$tao_idl = "$PerlACE::ACE_ROOT/bin/tao_idl";
+my $tao_idl = "$ENV{ACE_ROOT}/bin/tao_idl";
 if (exists $ENV{HOST_ROOT}) {
     $tao_idl = "$ENV{HOST_ROOT}/bin/tao_idl";
 }
