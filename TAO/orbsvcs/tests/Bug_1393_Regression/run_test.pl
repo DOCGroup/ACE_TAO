@@ -18,7 +18,10 @@ my $ifr_service_bin = "../../IFR_Service";
 my $tao_ifr_bin = "$ENV{ACE_ROOT}/bin";
 
 # The location of the tao_idl utility binary
-my $tao_idl_bin = "$ENV{ACE_ROOT}/bin";
+my $tao_idl = "$ENV{ACE_ROOT}/bin/tao_idl";
+if (exists $ENV{HOST_ROOT}) {
+    $tao_idl = "$ENV{HOST_ROOT}/bin/tao_idl";
+}
 
 my $service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -36,7 +39,7 @@ $service->DeleteFile ($ifr_ior);
 $client->DeleteFile ($ifr_ior);
 $taoifr->DeleteFile ($ifr_ior);
 
-$TAO_IDL     = $service->CreateProcess("$tao_idl_bin/tao_idl", "$service_test_idl");
+$TAO_IDL     = $service->CreateProcess("$tao_idl", "$service_test_idl");
 $IFR_SERVICE = $service->CreateProcess("$ifr_service_bin/tao_ifr_service", "-o $service_ifr_ior");
 $TAO_IFR     = $service->CreateProcess("$tao_ifr_bin/tao_ifr",
                                        "-ORBInitRef InterfaceRepository=file://$taoifr_ifr_ior ".
