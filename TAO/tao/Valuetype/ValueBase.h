@@ -34,11 +34,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Vector_T.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_Valuetype_Export
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #define DEFAULT_INDIRECTION_MAP_SIZE 10
