@@ -60,7 +60,7 @@ before_script:
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "#include \"ace/config-linux.h\"" >> $ACE_ROOT/ace/config.h; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo -e "#include \"ace/config-macosx.h\"" >> $ACE_ROOT/ace/config.h; fi
   - echo -e "workspace {\n" >> $TRAVIS_BUILD_DIR/travis.mwc
-  - if [ "$TAO" == "1" ]; then echo -e "\$(TAO_ROOT)/TAO_ACE.mwc\n\$(TAO_ROOT)/tests/Hello\n\$(TAO_ROOT)/tests/IDL_Test\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
+  - if [ "$TAO" == "1" ]; then echo -e "\$(TAO_ROOT)/TAO_ACE.mwc\n\$(TAO_ROOT)/tests/Hello\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
   - if [ "$ACE" == "1" ]; then echo -e "\$(ACE_ROOT)/ace/ace.mwc\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
   - if [ "$ACETESTS" == "1" ]; then echo -e "\$(ACE_ROOT)/tests\n" >> $TRAVIS_BUILD_DIR/travis.mwc; fi
   - echo -e "}\n" >> $TRAVIS_BUILD_DIR/travis.mwc
