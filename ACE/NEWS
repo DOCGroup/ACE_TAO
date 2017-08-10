@@ -10,6 +10,14 @@ USER VISIBLE CHANGES BETWEEN ACE-6.4.3 and ACE-6.4.4
 
 . Add support for Oracle Studio 12.5
 
+. Removed usage of ACE_REGISTER and register keyword because
+  they trigger deprecated warnings with newer gcc and clang
+  versions
+
+. Add support for gcc 7
+
+. Enhanced Android support
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.2 and ACE-6.4.3
 ====================================================
 
