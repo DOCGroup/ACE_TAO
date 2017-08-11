@@ -712,9 +712,9 @@ Log_Spec_Verify::result (void)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
                 this->fail_));
 
-  if (this->tests_ != 17)
+  if (this->tests_ != 19)
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 17!\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 19!\n"),
                 this->tests_));
     ++this->fail_;
   }
@@ -745,10 +745,6 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), ACE_TEXT("perror")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), SIGINT));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), ACE_NSIG));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D\n")));
-  ACE_Time_Value tv = ACE_OS::gettimeofday ();
-  tv += ACE_Time_Value (25*60*60); // + 25 hours
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#D\n"), &tv));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("thread id %t\n")));
 
   Log_Spec_Verify  verifier;
@@ -793,6 +789,11 @@ test_format_specs (void)
   ACE_DEBUG ((LM_CRITICAL, ACE_TEXT ("l5:%.1M")));
   ACE_DEBUG ((LM_ALERT, ACE_TEXT ("l5:%.1M")));
   ACE_DEBUG ((LM_EMERGENCY, ACE_TEXT ("l5:%.1M")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%D\n")));
+  ACE_Time_Value tv = ACE_OS::gettimeofday ();
+  tv += ACE_Time_Value (25*60*60); // + 25 hours
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#D\n"), &tv));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%T\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#T\n"), &tv));
