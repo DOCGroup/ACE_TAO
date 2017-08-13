@@ -144,13 +144,13 @@
           Set $DOC_ROOT to point to the new workspace you checked out.</li>
         <li>
           Set an environment variable SIGNATURE indicating your full name. This is used
-          to fill the ChangeLog entry.</li>
+          to fill the commit entry.</li>
         <ul>
           <li>
             For example,<tt>export SIGNATURE="Johnny Willemsen"</tt></li></ul>
         <li>
           Set an environment variable MAILID indicating your mail id. This is used to
-          fill the mail id portion of the ChangeLog entry.</li>
+          fill the mail id portion of the commit entry.</li>
         <ul>
           <li>
             For example,<tt>export MAILID="jwillemsen@remedy.nl"</tt></li></ul>
@@ -174,13 +174,9 @@
         <ul>
           <code>
             <li>
-              ACE/ChangeLog</li>
-            <li>
               ACE/PROBLEM-REPORT-FORM</li>
             <li>
               ACE/VERSION</li>
-            <li>
-              ACE/TAO/ChangeLog</li>
             <li>
               ACE/TAO/PROBLEM-REPORT-FORM</li>
             <li>
@@ -271,7 +267,7 @@
             Update the workspace with the right version tag (replace the X_Y_Z with the ACE
             version number being released e.g. 5_6_7)
             <br>
-            <code>git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_4_3 ACE_TAO</code><br>
+            <code>git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_4_4 ACE_TAO</code><br>
           </li>
           <li>Change to the ACE_TAO directory using <br>
           cd ACE_TAO</li>
@@ -302,7 +298,7 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_4_3 ACE_TAO<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_4_4 ACE_TAO<br>
         cd ACE_TAO<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
@@ -414,9 +410,9 @@
         correct version number.</li>
       <li>
         Update in the autobuild archive the file configs/scoreboard/releases.xml with
-        the made release (version number and release date). This is used by the integrated scoreboard on http://scoreboard.remedy.nl  Remember to do a changelog entry.</li>
+        the made release (version number and release date). This is used by the integrated scoreboard on http://scoreboard.remedy.nl.</li>
       <li>
-        Update the ACE_wrappers repo (remember to create a changelog entry, and possibly archive the old changelog to the changelog directory if this has become too long):<ul>
+        Update the ACE_wrappers repo:<ul>
         <li>docs/Download.html to show the new release. Make sure you refer to the
         previous_versions directory, that way we can exactly track how many people
         download a specific version.</li>
