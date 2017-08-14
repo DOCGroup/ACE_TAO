@@ -4,9 +4,9 @@
 
 #define TAO_MAJOR_VERSION 2
 #define TAO_MINOR_VERSION 4
-#define TAO_MICRO_VERSION 3
-#define TAO_BETA_VERSION 3
-#define TAO_VERSION "2.4.3"
-#define TAO_VERSION_CODE 132099
+#define TAO_MICRO_VERSION 4
+#define TAO_BETA_VERSION 4
+#define TAO_VERSION "2.4.4"
+#define TAO_VERSION_CODE 132100
 #define TAO_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))
 
