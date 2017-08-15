@@ -604,10 +604,10 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           //
           // Initialize Transient Naming Service.
           //
-          this->assign (size_t(ROOT), false,
-            TAO_Transient_Naming_Context::make_new_context (poa,
+          CosNaming::NamingContext_var new_context = TAO_Transient_Naming_Context::make_new_context (poa,
                                                             TAO_ROOT_NAMING_CONTEXT,
-                                                            context_size));
+                                                            context_size);
+          this->assign (size_t(ROOT), false, new_context.in());
 
         }
 
@@ -965,7 +965,8 @@ TAO_Naming_Server::assign (size_t ndx, bool take, CORBA::Object_ptr obj)
     return;
 
   b->ref_ = take ? obj : CORBA::Object::_duplicate (obj);
-  b->ior_ = this->orb_->object_to_string (b->ref_.in());
+  CORBA::String_var ior = this->orb_->object_to_string (b->ref_.in());
+  b->ior_ = ior.in();
 }
 
 
