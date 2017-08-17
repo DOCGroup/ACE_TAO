@@ -256,6 +256,7 @@
 /Tokens_Test
 /TP_Reactor_Test
 /TSS_Static_Test
+/TSS_Leak_Test
 /TSS_Test
 /Unbounded_Set_Test
 /Unbounded_Set_Test_Ex
