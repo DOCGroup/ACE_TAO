@@ -41,6 +41,7 @@ extern "C"
 
 #define BIO_TYPE_ACE  ( 21 | BIO_TYPE_SOURCE_SINK )
 
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
 static BIO_METHOD methods_ACE =
   {
     BIO_TYPE_ACE, // BIO_TYPE_PROXY_SERVER,
@@ -54,8 +55,6 @@ static BIO_METHOD methods_ACE =
     ACE_ASYNCH_BIO_FREE_NAME,
     0
   };
-
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
 # define BIO_set_init(b, val) b->init = val
 # define BIO_set_data(b, val) b->ptr = val
 # define BIO_set_num(b, val) b->num = val
@@ -64,6 +63,9 @@ static BIO_METHOD methods_ACE =
 # define BIO_get_init(b) b->init
 # define BIO_get_data(b) b->ptr
 # define BIO_get_shutdown(b) b->shutdown
+#else
+static BIO_METHOD* methods_ACE;
+# define BIO_set_num(b, val)
 #endif /* OPENSSL_VERSION_NUMBER < 0x10100000L */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -71,7 +73,24 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 BIO *
 ACE_SSL_make_BIO (void * ssl_asynch_stream)
 {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
   BIO * const pBIO = BIO_new (&methods_ACE);
+#else
+  if (!methods_ACE)
+  {
+    methods_ACE = BIO_meth_new(BIO_TYPE_ACE, "ACE_Asynch_BIO");
+    if (methods_ACE)
+    {
+      BIO_meth_set_write(methods_ACE, ACE_ASYNCH_BIO_WRITE_NAME);
+      BIO_meth_set_read(methods_ACE, ACE_ASYNCH_BIO_READ_NAME);
+      BIO_meth_set_puts(methods_ACE, ACE_ASYNCH_BIO_PUTS_NAME);
+      BIO_meth_set_ctrl(methods_ACE, ACE_ASYNCH_BIO_CTRL_NAME);
+      BIO_meth_set_create(methods_bufferevent, ACE_ASYNCH_BIO_NEW_NAME);
+      BIO_meth_set_destroy(methods_ACE, ACE_ASYNCH_BIO_FREE_NAME);
+    }
+  }
+  BIO * const pBIO = BIO_new (methods_ACE);
+#endif
 
   if (pBIO)
     BIO_ctrl (pBIO,
