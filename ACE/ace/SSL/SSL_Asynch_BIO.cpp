@@ -178,7 +178,7 @@ ACE_ASYNCH_BIO_WRITE_NAME (BIO * pBIO, const char * buf, int len)
   BIO_clear_retry_flags (pBIO);
 
   ACE_SSL_Asynch_Stream * p_stream =
-    static_cast<ACE_SSL_Asynch_Stream *> (pBIO->ptr);
+    static_cast<ACE_SSL_Asynch_Stream *> (BIO_get_data(pBIO));
 
   if (BIO_get_init(pBIO) == 0 || p_stream == 0 || buf == 0 || len <= 0)
     return -1;

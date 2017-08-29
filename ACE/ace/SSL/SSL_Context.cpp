@@ -48,7 +48,7 @@ namespace
 #endif /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
 }
 
-#ifdef ACE_HAS_THREADS
+#if defined (ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
 
 # if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 #  define ACE_SSL_LOCKING_CALLBACK_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_SSL_locking_callback)
@@ -57,8 +57,6 @@ namespace
 #  define ACE_SSL_LOCKING_CALLBACK_NAME ACE_SSL_locking_callback
 #  define ACE_SSL_THREAD_ID_NAME ACE_SSL_thread_id
 # endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
-
-
 
 extern "C"
 {
@@ -96,7 +94,7 @@ extern "C"
     return (unsigned long) ACE_VERSIONED_NAMESPACE_NAME::ACE_OS::thr_self ();
   }
 }
-#endif  /* ACE_HAS_THREADS */
+#endif  /* ACE_HAS_THREADS && (OPENSSL_VERSION_NUMBER < 0x10100000L) */
 
 
 // ****************************************************************
