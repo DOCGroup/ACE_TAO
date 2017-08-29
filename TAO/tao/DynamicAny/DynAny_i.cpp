@@ -71,6 +71,7 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc)
           // Otherwise fall through.
           break;
         }
+      // fallthrough
     default:
       throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
   }

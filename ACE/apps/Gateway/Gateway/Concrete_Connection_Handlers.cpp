@@ -412,16 +412,14 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
       if (errno == EWOULDBLOCK)
         // This might happen if only the header came through.
         return -1;
-      /* FALLTHROUGH */;
-
+      // fallthrough
     case 0: // Premature EOF.
       if (data_bytes_left_to_read)
         {
           this->msg_frag_ = this->msg_frag_->release ();
           return 0;
         }
-      /* FALLTHROUGH */;
-
+      // fallthrough
     default:
       // Set the write pointer at 1 past the end of the event.
       this->msg_frag_->wr_ptr (data_received);
