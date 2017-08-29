@@ -629,8 +629,9 @@ ACE_SSL_Context::random_seed (const char * seed)
 int
 ACE_SSL_Context::egd_file (const char * socket_file)
 {
-#if OPENSSL_VERSION_NUMBER < 0x00905100L
-  // OpenSSL < 0.9.5 doesn't have EGD support.
+#if OPENSSL_VERSION_NUMBER < 0x00905100L || defined (OPENSSL_NO_EGD)
+  // OpenSSL < 0.9.5 doesn't have EGD support. OpenSSL 1.1 and newer
+  // disable egd by default
   ACE_UNUSED_ARG (socket_file);
   ACE_NOTSUP_RETURN (-1);
 #else
@@ -641,7 +642,7 @@ ACE_SSL_Context::egd_file (const char * socket_file)
     return 0;
   else
     return -1;
-#endif  /* OPENSSL_VERSION_NUMBER >= 0x00905100L */
+#endif  /* OPENSSL_VERSION_NUMBER < 0x00905100L */
 }
 
 int
