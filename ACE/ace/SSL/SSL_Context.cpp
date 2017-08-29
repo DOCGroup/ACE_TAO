@@ -101,9 +101,9 @@ extern "C"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#ifdef ACE_HAS_THREADS
+#if defined (ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
 ACE_SSL_Context::lock_type * ACE_SSL_Context::locks_ = 0;
-#endif  /* ACE_HAS_THREADS */
+#endif  /* ACE_HAS_THREADS  && (OPENSSL_VERSION_NUMBER < 0x10100000L) */
 
 ACE_SSL_Context::ACE_SSL_Context (void)
   : context_ (0),
