@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.4.4 and ACE-6.4.5
 ====================================================
 
+. Add support for OpenSSL 1.1
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.3 and ACE-6.4.4
 ====================================================
 
