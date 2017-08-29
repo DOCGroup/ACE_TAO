@@ -15,7 +15,7 @@
 #include "ace/Based_Pointer_Repository.h"
 
 #if defined (ACE_OPENVMS)
-    // with OPENVMS symbol names > 31 cause us trouble with dlsym()
+// with OPENVMS symbol names > 31 cause us trouble with dlsym()
 extern "C" ACE_Svc_Export void *
 get_based_pointer_repo_inst (void)
 #else
