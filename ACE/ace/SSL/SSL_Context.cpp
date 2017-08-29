@@ -39,13 +39,13 @@ namespace
   // @@ This should also be done with a singleton, otherwise it is not
   //    thread safe and/or portable to some weird platforms...
 
-#ifdef ACE_HAS_THREADS
+#if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
   /// Array of mutexes used internally by OpenSSL when the SSL
   /// application is multithreaded.
   ACE_SSL_Context::lock_type * ssl_locks = 0;
 
   // @@ This should also be managed by a singleton.
-#endif
+#endif /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
 }
 
 #ifdef ACE_HAS_THREADS
@@ -151,7 +151,7 @@ ACE_SSL_Context::ssl_library_init (void)
     {
       // Initialize the locking callbacks before initializing anything
       // else.
-#ifdef ACE_HAS_THREADS
+#if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
       int const num_locks = ::CRYPTO_num_locks ();
 
       this->locks_ = new lock_type[num_locks];
@@ -163,7 +163,7 @@ ACE_SSL_Context::ssl_library_init (void)
       ::CRYPTO_set_id_callback (ACE_SSL_THREAD_ID_NAME);
 # endif  /* !WIN32 */
       ::CRYPTO_set_locking_callback (ACE_SSL_LOCKING_CALLBACK_NAME);
-#endif  /* ACE_HAS_THREADS */
+#endif  /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
 
       ::SSLeay_add_ssl_algorithms ();
       ::SSL_load_error_strings ();
@@ -211,6 +211,7 @@ ACE_SSL_Context::ssl_library_fini (void)
   --ssl_library_init_count;
   if (ssl_library_init_count == 0)
     {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
       ::ERR_free_strings ();
       ::EVP_cleanup ();
 
@@ -222,7 +223,8 @@ ACE_SSL_Context::ssl_library_fini (void)
 
       delete [] this->locks_;
       this->locks_ = 0;
-#endif  /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS &&  */
+#endif /* OPENSSL_VERSION_NUMBER < 0x10100000L */
     }
 }
 

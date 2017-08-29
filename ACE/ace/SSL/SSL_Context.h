@@ -394,11 +394,11 @@ private:
   /// count of successful CA load attempts
   int have_ca_;
 
-#ifdef ACE_HAS_THREADS
+#if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
   /// Array of mutexes used internally by OpenSSL when the SSL
   /// application is multithreaded.
   static lock_type * locks_;
-#endif  /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
