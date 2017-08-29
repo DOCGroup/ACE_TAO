@@ -37,9 +37,14 @@ namespace ACE
           ::X509_free (this->ssl_cert_);
 
         if (ssl_cert != 0)
-          CRYPTO_add (&(ssl_cert->references),
-                      1,
-                      CRYPTO_LOCK_X509);
+          {
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+            ::X509_up_ref(x509);
+#else
+            CRYPTO_add (&(ssl_cert->references),
+                        1,
+                        CRYPTO_LOCK_X509);
+          }
         this->ssl_cert_ = ssl_cert;
         return *this;
       }
