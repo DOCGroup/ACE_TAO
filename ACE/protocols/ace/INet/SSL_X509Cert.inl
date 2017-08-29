@@ -44,6 +44,7 @@ namespace ACE
             CRYPTO_add (&(ssl_cert->references),
                         1,
                         CRYPTO_LOCK_X509);
+#endif
           }
         this->ssl_cert_ = ssl_cert;
         return *this;
