@@ -85,7 +85,7 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
       BIO_meth_set_read(methods_ACE, ACE_ASYNCH_BIO_READ_NAME);
       BIO_meth_set_puts(methods_ACE, ACE_ASYNCH_BIO_PUTS_NAME);
       BIO_meth_set_ctrl(methods_ACE, ACE_ASYNCH_BIO_CTRL_NAME);
-      BIO_meth_set_create(methods_bufferevent, ACE_ASYNCH_BIO_NEW_NAME);
+      BIO_meth_set_create(methods_ACE, ACE_ASYNCH_BIO_NEW_NAME);
       BIO_meth_set_destroy(methods_ACE, ACE_ASYNCH_BIO_FREE_NAME);
     }
   }
