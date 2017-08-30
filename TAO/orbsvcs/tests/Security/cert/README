@@ -1,5 +1,3 @@
-
-
 This is a CA used for signing keys in the security tests.  The password for the CA key is DOCGroup
 
 The following steps were used to generate the cert used to test the checkhost and password features:
