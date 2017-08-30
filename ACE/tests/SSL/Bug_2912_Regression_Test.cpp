@@ -171,10 +171,23 @@ get_dh1024 ()
   DH *dh;
 
   if ((dh=DH_new()) == 0) return(0);
-  dh->p=BN_bin2bn(dh1024_p,sizeof(dh1024_p),0);
-  dh->g=BN_bin2bn(dh1024_g,sizeof(dh1024_g),0);
-  if ((dh->p == 0) || (dh->g == 0))
-    { DH_free(dh); return(0); }
+
+  BIGNUM* p = BN_bin2bn(dh1024_p,sizeof(dh1024_p),0)
+  BIGNUM* g = BN_bin2bn(dh1024_g,sizeof(dh1024_g),0)
+
+  if ((p == 0) || (g == 0))
+    {
+      DH_free(dh);
+      return(0);
+    }
+
+#if (OPENSSL_VERSION_NUMBER < 0x10100000L)
+  dh->p = p;
+  dh->g = g;
+#else
+  DH_set0_pqg(dh, p, 0, g);
+#endif
+
   return(dh);
 }
 
