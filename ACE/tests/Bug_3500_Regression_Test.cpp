@@ -2,7 +2,7 @@
  * @file Bug_3500_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 3500:
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=3500
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3500
  *
  * @author Bill Rizzi <rizzi@softserv.com>
  */

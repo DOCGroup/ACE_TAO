@@ -2,7 +2,7 @@
  * @file Bug_3911_Regression_Test.cpp
  *
  * Reproduces the problem reported in bug 3911
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=3911
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3911
  */
 
 #include "test_config.h"
