@@ -2,7 +2,7 @@
  * @file Bug_2540_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2540
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2540
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2540
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  * Based on Bug_1890_Regression_Test

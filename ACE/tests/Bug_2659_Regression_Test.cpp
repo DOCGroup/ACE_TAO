@@ -4,7 +4,7 @@
  *  @file    Bug_2659_Regression_Test.cpp
  *
  *     Reproduces the problems reported in bug 2659:
- *      http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2659
+ *      http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2659
  *
  *  @author Ciju John <johnc at ociweb>
  */
