@@ -55,7 +55,7 @@ namespace PortableServer
     /**
      * This destructor doesn't throw exceptions.
      */
-    ~Servant_var (void) /* throw () */;
+    ~Servant_var (void);
 
     /// Assignment operator.  Assumes ownership of @c p.
     Servant_var<T> & operator= (T * p);
@@ -105,7 +105,7 @@ namespace PortableServer
      * Non-throwing swap operation.
      * Often used to implement strong exception safety.
      */
-    void swap (Servant_var<T> & rhs) /* throw () */;
+    void swap (Servant_var<T> & rhs);
 
   private:
     T * ptr_;
