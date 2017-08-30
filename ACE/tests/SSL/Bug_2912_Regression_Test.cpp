@@ -2,7 +2,7 @@
  * @file Bug_2912_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2912:
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2912
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2912
  *
  * This test reproduces the following interactions:
  *
@@ -172,8 +172,8 @@ get_dh1024 ()
 
   if ((dh=DH_new()) == 0) return(0);
 
-  BIGNUM* p = BN_bin2bn(dh1024_p,sizeof(dh1024_p),0)
-  BIGNUM* g = BN_bin2bn(dh1024_g,sizeof(dh1024_g),0)
+  BIGNUM* p = BN_bin2bn(dh1024_p,sizeof(dh1024_p),0);
+  BIGNUM* g = BN_bin2bn(dh1024_g,sizeof(dh1024_g),0);
 
   if ((p == 0) || (g == 0))
     {
