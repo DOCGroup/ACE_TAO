@@ -35,10 +35,6 @@ namespace TAO
     template <>
     struct OpenSSL_traits< ::X509 >
     {
-      /// OpenSSL lock ID for use in OpenSSL CRYPTO_add() reference
-      /// count manipulation function.
-      enum { LOCK_ID = CRYPTO_LOCK_X509 };
-
       /// Increase the reference count on the given OpenSSL structure.
       /**
        * @note This used to be in a function template but MSVC++ 6
@@ -48,9 +44,15 @@ namespace TAO
       static ::X509 * _duplicate (::X509 * st)
       {
         if (st != 0)
+        {
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+          ::X509_up_ref(st);
+#else
           CRYPTO_add (&(st->references),
                       1,
-                      LOCK_ID);
+                      CRYPTO_LOCK_X509);
+#endif
+        }
 
         return st;
       }

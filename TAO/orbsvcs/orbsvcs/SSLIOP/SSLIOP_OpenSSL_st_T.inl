@@ -15,9 +15,9 @@ TAO::SSLIOP::_duplicate (T * st)
   // reference count on the structure it defines, so we do it
   // manually.
   if (st != 0)
-    CRYPTO_add (&(st->references),
-                1,
-                TAO::SSLIOP::OpenSSL_traits<T>::LOCK_ID);
+  {
+    TAO::SSLIOP::OpenSSL_traits<T>::_duplicate(st);
+  }
 
   return st;
 }
