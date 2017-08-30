@@ -39,7 +39,7 @@ namespace ACE
         if (ssl_cert != 0)
           {
 #if OPENSSL_VERSION_NUMBER >= 0x10100000L
-            ::X509_up_ref(x509);
+            ::X509_up_ref(ssl_cert);
 #else
             CRYPTO_add (&(ssl_cert->references),
                         1,
