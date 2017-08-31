@@ -1,7 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
  <!-- change SCHED_OTHER to SCHED_FIFO or SCHED_RR to run in Real time class -->
  <static id="EC_Factory" params="-ECProxyPushConsumerCollection mt:immediate:list -ECProxyPushSupplierCollection mt:immediate:list -ECdispatching kokyu SCHED_OTHER -ECscheduling kokyu -ECfiltering kokyu -ECproxyconsumerlock thread -ECproxysupplierlock thread -ECsupplierfiltering per-supplier"/>
 </ACE_Svc_Conf>

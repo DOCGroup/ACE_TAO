@@ -1,10 +1,7 @@
 <?xml version='1.0'?>
 <!-- Converted from ./performance-tests/Cubit/TAO/IDL_Cubit/collocation/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <!--  Please see $TAO_ROOT/docs/Options.html for details on these options. -->
- <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorType select_st -ORBConnectionCacheLock null"/>
  <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler ST"/>
  <static id="Server_Strategy_Factory" params="-ORBConcurrency reactive"/>
