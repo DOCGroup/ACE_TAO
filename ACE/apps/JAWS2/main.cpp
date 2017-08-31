@@ -39,7 +39,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // HTTP_Write.next (JAWS_Pipeline_Done_Task_Singleton::instance ());
 
   if (server.open (&HTTP_Read) == -1)
-    ACE_DEBUG ((LM_DEBUG, "JAWS: Error openning server\n"));
+    ACE_DEBUG ((LM_DEBUG, "JAWS: Error opening server\n"));
 
   return 0;
 }
