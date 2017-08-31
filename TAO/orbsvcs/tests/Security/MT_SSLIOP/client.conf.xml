@@ -5,7 +5,7 @@
  <!--   -->
  <!--  -->
  <dynamic id="SSLIOP_Factory" type="Service_Object">
-   <initializer path="TAO_SSLIOP" init="_make_TAO_SSLIOP_Protocol_Factory" params="-SSLCertificate PEM:selfsigncert.pem"/>
+   <initializer path="TAO_SSLIOP" init="_make_TAO_SSLIOP_Protocol_Factory" params="-SSLCertificate PEM:server_cert.pem"/>
  </dynamic>
  <static id="Resource_Factory" params="-ORBProtocolFactory SSLIOP_Factory"/>
 </ACE_Svc_Conf>
