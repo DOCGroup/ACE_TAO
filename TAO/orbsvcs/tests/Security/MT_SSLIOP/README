@@ -1,8 +1,6 @@
-
-
 Description:
 
-	This is a simple test for a thread-pool server that can
+This is a simple test for a thread-pool server that can
 service multithreaded clients with the same object reference.
 It creates a server process with a variable number of threads,
 multiple (multithreaded) clients can send requests to it, the
