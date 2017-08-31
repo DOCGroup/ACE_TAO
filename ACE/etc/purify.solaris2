@@ -1,5 +1,3 @@
-#### $Id$
-####
 #### To use:  create a symlink, named .purify, to this file in your home
 #### directory:
 ####   % ln -s $ACE_ROOT/env/purify.solaris2 ~/.purify

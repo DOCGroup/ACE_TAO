@@ -1,4 +1,3 @@
-# $Id$
 # mcknerney, 11/7/2013
 
 CXXLOCAL_DEFINES=

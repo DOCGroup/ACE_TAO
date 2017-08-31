@@ -1,6 +1,4 @@
 #! /bin/sh
-# $Id$
-
 # Allow each ACE component to be built in a simple way, as follows:
 #
 # $ACE_ROOT/bin/make-components "your flags"

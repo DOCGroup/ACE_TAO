@@ -1,7 +1,4 @@
 #!/bin/sh
-#
-# $Id$
-#
 
 #TESTS_SOURCES="X LCL RMT1 RMT2 RPT.X RPT.LCL RPT.RMT1 RPT.RMT2"
 TESTS_SOURCES="RPT.X RPT.LCL RPT.RMT1 RPT.RMT2"
@@ -72,7 +69,7 @@ for i in $TESTS; do
     *) LABEL="Test Number [unknown test]"
        ;;
   esac
-  
+
   gnuplot <<_EOF_
 set grid xtics ytics
 set xlabel "$LABEL"

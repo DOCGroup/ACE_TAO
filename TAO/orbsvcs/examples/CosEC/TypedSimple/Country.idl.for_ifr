@@ -1,13 +1,9 @@
-// $Id$
-
-//IDL
-
 #ifndef TAO_COUNTRY_IDL
 #define TAO_COUNTRY_IDL
 
 //#include "orbsvcs/CosEventComm.idl"
 
-interface Country //: ::CosTypedEventComm::TypedPushConsumer 
+interface Country //: ::CosTypedEventComm::TypedPushConsumer
 {
   void update_population (in string country,
                           in long population);

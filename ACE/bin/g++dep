@@ -1,6 +1,4 @@
 #! /bin/sh
-# $Id$
-
 # This utility is a lightly edited version of the freed Berkeley
 # script `mkdep'.  The current script is intended to work for GNU G++.
 
