@@ -1,9 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./performance-tests/Latency/Thread_Per_Connection/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--  -->
- <!--   -->
- <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorType select_mt -ORBReactorMaskSignals 0 -ORBFlushingStrategy blocking"/>
  <static id="Client_Strategy_Factory" params="-ORBTransportMuxStrategy EXCLUSIVE -ORBClientConnectionHandler RW"/>
  <static id="Server_Strategy_Factory" params="-ORBConcurrency thread-per-connection"/>

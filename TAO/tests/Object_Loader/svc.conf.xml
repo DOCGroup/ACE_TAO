@@ -1,9 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./tests/Object_Loader/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--  -->
- <!--   -->
- <!--  -->
  <dynamic id="TAO_POA" type="Service_Object">
    <initializer path="TAO_PortableServer" init="_make_TAO_Object_Adapter_Factory"/>
  </dynamic>

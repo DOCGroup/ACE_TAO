@@ -1,8 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./performance-tests/RTCorba/Multiple_Endpoints/Orb_Per_Priority/server.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorType select_st -ORBInputCDRAllocator null"/>
  <static id="Server_Strategy_Factory" params="-ORBAllowReactivationOfSystemids 0"/>
  <static id="RT_ORB_Loader" params="-ORBSchedPolicy SCHED_FIFO -ORBPriorityMapping direct"/>

@@ -1,7 +1,5 @@
 <?xml version='1.0'?>
 <!-- Converted from ./tests/Connection_Purging/client.lru.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBConnectionPurgingStrategy lru -ORBConnectionCacheMax 10 -ORBConnectionCachePurgePercentage 30"/>
 </ACE_Svc_Conf>
