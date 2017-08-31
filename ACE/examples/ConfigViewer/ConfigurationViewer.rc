@@ -1,6 +1,4 @@
 /* -*- C++ -*- */
-// $Id$
-
 #include "wx/msw/wx.rc"
 mondrian ICON "mondrian.ico"
 

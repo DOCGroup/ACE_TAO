@@ -1,7 +1,5 @@
 #!/bin/sh
 #
-# $Id$
-#
 # Usually cron setups a really miserable environment, this script
 # serves two purposes:
 # 1. Setup a good environment for auto_compile.

@@ -1,7 +1,5 @@
-$Id$
-
 This utility lists the current entries in the Naming Service in a
-nicely formatted manner.  To run it, just type 
+nicely formatted manner.  To run it, just type
 
 % nslist [[ --ior ][ --ctxior ] | --nsior ]
 
@@ -28,7 +26,7 @@ reference entry and the IOR of the NameService itself.
 
 % nslist --ctxior
 
-will additionally print the IORs of any subcontexts found within NameService. 
+will additionally print the IORs of any subcontexts found within NameService.
 
 % nslist --nsior
 

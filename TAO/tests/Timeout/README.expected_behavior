@@ -1,5 +1,3 @@
-# $Id$
-
 This note documents results of my attempts to very carefully examine
 behaviour of Timeouts in TAO on real-time OS (such as Linux with RT
 patches) and to obtain a precise understand of behavior of timeouts.

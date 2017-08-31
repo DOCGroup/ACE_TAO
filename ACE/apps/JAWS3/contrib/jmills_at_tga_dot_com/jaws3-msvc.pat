@@ -2,14 +2,11 @@ diff -u -r -N ./JAWS3/jaws3/Timer.cpp /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 --- ./JAWS3/jaws3/Timer.cpp	Tue Apr 25 16:24:21 2000
 +++ /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3/Timer.cpp	Wed May 03 10:13:27 2000
 @@ -1,11 +1,11 @@
--// $Id$
-+// $Id$
- 
  #define JAWS_BUILD_DLL
- 
+
  #include "jaws3/Timer.h"
  #include "jaws3/Task_Timer.h"
- 
+
 -JAWS_Timer::JAWS_Timer (JAWS_Timer_Impl *impl = 0)
 +JAWS_Timer::JAWS_Timer (JAWS_Timer_Impl *impl )
    : impl_ (impl)
@@ -105,7 +102,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Export.h"\
 +	".\IO.h"\
 +	".\Reactive_IO.h"\
-+	
++
 +
 +.\Concurrency.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -251,7 +248,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Protocol_Handler.h"\
 +	".\TPOOL_Concurrency.h"\
 +	".\TPR_Concurrency.h"\
-+	
++
 +
 +.\Config_File.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -371,7 +368,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Config_File.h"\
 +	".\Export.h"\
 +	".\Symbol_Table.h"\
-+	
++
 +
 +.\Event_Completer.cpp : \
 +	"..\..\..\ace\basic_types.h"\
@@ -403,7 +400,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Event_Completer.h"\
 +	".\Event_Result.h"\
 +	".\Export.h"\
-+	
++
 +
 +.\Event_Dispatcher.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -532,7 +529,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	"..\..\..\ace\ws2tcpip.h"\
 +	".\Event_Dispatcher.h"\
 +	".\Export.h"\
-+	
++
 +
 +.\FILE.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -594,7 +591,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	"..\..\..\ace\ws2tcpip.h"\
 +	".\Export.h"\
 +	".\FILE.h"\
-+	
++
 +
 +.\IO.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -681,7 +678,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Options.h"\
 +	".\Reactive_IO.h"\
 +	".\Synch_IO.h"\
-+	
++
 +
 +.\main.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -794,7 +791,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	"..\..\..\ace\ws2tcpip.h"\
 +	".\Event_Dispatcher.h"\
 +	".\Export.h"\
-+	
++
 +
 +.\Options.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -845,7 +842,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Config_File.h"\
 +	".\Export.h"\
 +	".\Options.h"\
-+	
++
 +
 +.\Protocol_Handler.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -987,7 +984,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Event_Result.h"\
 +	".\Export.h"\
 +	".\Protocol_Handler.h"\
-+	
++
 +
 +.\Reactive_IO.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -1079,7 +1076,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\IO.h"\
 +	".\Reactive_IO.h"\
 +	".\Reactive_IO_Helpers.h"\
-+	
++
 +
 +.\Symbol_Table.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -1181,7 +1178,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	"..\..\..\ace\ws2tcpip.h"\
 +	".\Export.h"\
 +	".\Symbol_Table.h"\
-+	
++
 +
 +.\Synch_IO.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -1263,7 +1260,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Export.h"\
 +	".\IO.h"\
 +	".\Synch_IO.h"\
-+	
++
 +
 +.\Task_Timer.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -1414,7 +1411,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Task_Timer.h"\
 +	".\Timer.h"\
 +	".\Timer_Helpers.h"\
-+	
++
 +
 +.\Templates.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -1621,7 +1618,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Timer.h"\
 +	".\TPOOL_Concurrency.h"\
 +	".\TPR_Concurrency.h"\
-+	
++
 +
 +.\Timer.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -1771,7 +1768,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Export.h"\
 +	".\Task_Timer.h"\
 +	".\Timer.h"\
-+	
++
 +
 +.\Timer_Helpers.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -1921,7 +1918,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Export.h"\
 +	".\Timer.h"\
 +	".\Timer_Helpers.h"\
-+	
++
 +
 +.\TPOOL_Concurrency.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -2066,7 +2063,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Options.h"\
 +	".\Protocol_Handler.h"\
 +	".\TPOOL_Concurrency.h"\
-+	
++
 +
 +.\TPR_Concurrency.cpp : \
 +	"..\..\..\ace\ace.h"\
@@ -2211,7 +2208,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dep /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +	".\Options.h"\
 +	".\Protocol_Handler.h"\
 +	".\TPR_Concurrency.h"\
-+	
++
 diff -u -r -N ./JAWS3/jaws3/jaws3.dsp /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3/jaws3.dsp
 --- ./JAWS3/jaws3/jaws3.dsp	Wed Dec 31 19:00:00 1969
 +++ /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3/jaws3.dsp	Wed May 03 14:22:09 2000
@@ -2225,19 +2222,19 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dsp /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +CFG=jaws3 - Win32 Debug
 +!MESSAGE This is not a valid makefile. To build this project using NMAKE,
 +!MESSAGE use the Export Makefile command and run
-+!MESSAGE 
++!MESSAGE
 +!MESSAGE NMAKE /f "jaws3.mak".
-+!MESSAGE 
++!MESSAGE
 +!MESSAGE You can specify a configuration when running NMAKE
 +!MESSAGE by defining the macro CFG on the command line. For example:
-+!MESSAGE 
++!MESSAGE
 +!MESSAGE NMAKE /f "jaws3.mak" CFG="jaws3 - Win32 Debug"
-+!MESSAGE 
++!MESSAGE
 +!MESSAGE Possible choices for configuration are:
-+!MESSAGE 
++!MESSAGE
 +!MESSAGE "jaws3 - Win32 Release" (based on "Win32 (x86) Console Application")
 +!MESSAGE "jaws3 - Win32 Debug" (based on "Win32 (x86) Console Application")
-+!MESSAGE 
++!MESSAGE
 +
 +# Begin Project
 +# PROP AllowPerConfigDependencies 0
@@ -2294,7 +2291,7 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.dsp /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +# ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
 +# ADD LINK32 aced.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept /libpath:"..\..\..\ace"
 +
-+!ENDIF 
++!ENDIF
 +
 +# Begin Target
 +
@@ -2515,28 +2512,28 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.mak /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +!IF "$(CFG)" == ""
 +CFG=jaws3 - Win32 Debug
 +!MESSAGE No configuration specified. Defaulting to jaws3 - Win32 Debug.
-+!ENDIF 
++!ENDIF
 +
 +!IF "$(CFG)" != "jaws3 - Win32 Release" && "$(CFG)" != "jaws3 - Win32 Debug"
 +!MESSAGE Invalid configuration "$(CFG)" specified.
 +!MESSAGE You can specify a configuration when running NMAKE
 +!MESSAGE by defining the macro CFG on the command line. For example:
-+!MESSAGE 
++!MESSAGE
 +!MESSAGE NMAKE /f "jaws3.mak" CFG="jaws3 - Win32 Debug"
-+!MESSAGE 
++!MESSAGE
 +!MESSAGE Possible choices for configuration are:
-+!MESSAGE 
++!MESSAGE
 +!MESSAGE "jaws3 - Win32 Release" (based on "Win32 (x86) Console Application")
 +!MESSAGE "jaws3 - Win32 Debug" (based on "Win32 (x86) Console Application")
-+!MESSAGE 
++!MESSAGE
 +!ERROR An invalid configuration is specified.
-+!ENDIF 
++!ENDIF
 +
 +!IF "$(OS)" == "Windows_NT"
 +NULL=
-+!ELSE 
++!ELSE
 +NULL=nul
-+!ENDIF 
++!ENDIF
 +
 +CPP=cl.exe
 +RSC=rc.exe
@@ -2578,13 +2575,13 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.mak /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +"$(INTDIR)" :
 +    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 +
-+CPP_PROJ=/nologo /MD /W3 /GX /O2 /I "..\..\.." /I ".." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\jaws3.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
++CPP_PROJ=/nologo /MD /W3 /GX /O2 /I "..\..\.." /I ".." /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\jaws3.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c
 +BSC32=bscmake.exe
-+BSC32_FLAGS=/nologo /o"$(OUTDIR)\jaws3.bsc" 
++BSC32_FLAGS=/nologo /o"$(OUTDIR)\jaws3.bsc"
 +BSC32_SBRS= \
-+	
++
 +LINK32=link.exe
-+LINK32_FLAGS=ace.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\jaws3-r.pdb" /machine:I386 /out:"$(OUTDIR)\jaws3-r.exe" /libpath:"..\..\..\ace" 
++LINK32_FLAGS=ace.lib /nologo /subsystem:console /incremental:no /pdb:"$(OUTDIR)\jaws3-r.pdb" /machine:I386 /out:"$(OUTDIR)\jaws3-r.exe" /libpath:"..\..\..\ace"
 +LINK32_OBJS= \
 +	"$(INTDIR)\Asynch_IO.obj" \
 +	"$(INTDIR)\Concurrency.obj" \
@@ -2651,13 +2648,13 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.mak /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +"$(INTDIR)" :
 +    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
 +
-+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\jaws3.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
++CPP_PROJ=/nologo /MDd /W3 /Gm /GX /Zi /Od /I "..\..\.." /I ".." /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"$(INTDIR)\jaws3.pch" /YX /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c
 +BSC32=bscmake.exe
-+BSC32_FLAGS=/nologo /o"$(OUTDIR)\jaws3.bsc" 
++BSC32_FLAGS=/nologo /o"$(OUTDIR)\jaws3.bsc"
 +BSC32_SBRS= \
-+	
++
 +LINK32=link.exe
-+LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\jaws3.pdb" /debug /machine:I386 /out:"$(OUTDIR)\jaws3.exe" /pdbtype:sept /libpath:"..\..\..\ace" 
++LINK32_FLAGS=aced.lib /nologo /subsystem:console /incremental:yes /pdb:"$(OUTDIR)\jaws3.pdb" /debug /machine:I386 /out:"$(OUTDIR)\jaws3.exe" /pdbtype:sept /libpath:"..\..\..\ace"
 +LINK32_OBJS= \
 +	"$(INTDIR)\Asynch_IO.obj" \
 +	"$(INTDIR)\Concurrency.obj" \
@@ -2684,46 +2681,46 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.mak /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +  $(LINK32_FLAGS) $(LINK32_OBJS)
 +<<
 +
-+!ENDIF 
++!ENDIF
 +
 +.c{$(INTDIR)}.obj::
 +   $(CPP) @<<
-+   $(CPP_PROJ) $< 
++   $(CPP_PROJ) $<
 +<<
 +
 +.cpp{$(INTDIR)}.obj::
 +   $(CPP) @<<
-+   $(CPP_PROJ) $< 
++   $(CPP_PROJ) $<
 +<<
 +
 +.cxx{$(INTDIR)}.obj::
 +   $(CPP) @<<
-+   $(CPP_PROJ) $< 
++   $(CPP_PROJ) $<
 +<<
 +
 +.c{$(INTDIR)}.sbr::
 +   $(CPP) @<<
-+   $(CPP_PROJ) $< 
++   $(CPP_PROJ) $<
 +<<
 +
 +.cpp{$(INTDIR)}.sbr::
 +   $(CPP) @<<
-+   $(CPP_PROJ) $< 
++   $(CPP_PROJ) $<
 +<<
 +
 +.cxx{$(INTDIR)}.sbr::
 +   $(CPP) @<<
-+   $(CPP_PROJ) $< 
++   $(CPP_PROJ) $<
 +<<
 +
 +
 +!IF "$(NO_EXTERNAL_DEPS)" != "1"
 +!IF EXISTS("jaws3.dep")
 +!INCLUDE "jaws3.dep"
-+!ELSE 
++!ELSE
 +!MESSAGE Warning: cannot find "jaws3.dep"
-+!ENDIF 
-+!ENDIF 
++!ENDIF
++!ENDIF
 +
 +
 +!IF "$(CFG)" == "jaws3 - Win32 Release" || "$(CFG)" == "jaws3 - Win32 Debug"
@@ -2823,5 +2820,5 @@ diff -u -r -N ./JAWS3/jaws3/jaws3.mak /c/dev/Win32/ACE_wrappers/apps/JAWS3/jaws3
 +
 +
 +
-+!ENDIF 
++!ENDIF
 +

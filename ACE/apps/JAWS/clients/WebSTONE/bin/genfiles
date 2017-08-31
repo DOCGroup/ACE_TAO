@@ -1,5 +1,4 @@
 #! /bin/sh
-# $Id$
 
 # get configuration
 . $WEBSTONEROOT/conf/testbed

@@ -3,8 +3,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     if 0;
 
 # -*- perl -*-
-# $Id$
-#
 # This script checkouts ACE from CVS, updates the "clone" directory,
 # compiles $ACE_ROOT/ace and $ACE_ROOT/tests and finally runs
 # $ACE_ROOT/tests/run_tests.sh.
