@@ -591,7 +591,7 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
       // since the base class has already iterated over the list once,
       // it has vound any ill-formed options. Therefore we don't need
       // to do that again here.
-      int slot = argv[i]->find ("=");
+      size_t const slot = argv[i]->find ("=");
       ACE_CString name = argv[i]->substring (0, slot);
       ACE_CString value = argv[i]->substring (slot + 1);
 
