@@ -1,7 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.4.4 and ACE-6.4.5
 ====================================================
 
-. Add support for OpenSSL 1.1
+. Add support for OpenSSL 1.1. ACE users on Windows have
+  to add openssl11=1 to their default.features file so
+  that the correct OpenSSL library names are used.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.4.3 and ACE-6.4.4
 ====================================================
