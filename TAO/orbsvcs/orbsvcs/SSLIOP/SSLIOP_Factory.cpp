@@ -128,7 +128,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
   int len = 0;
   if (the_passwd != 0)
     {
-      len = ACE_Utils::truncate_cast<size_t> (ACE_OS::strlen (passwd_str));
+      len = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (passwd_str));
     }
   else
     {
