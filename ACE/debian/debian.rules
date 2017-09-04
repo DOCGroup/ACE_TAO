@@ -9,7 +9,7 @@
 # Copyright © 2010-2014 Johnny Willemsen <jwillemsen@remedy.nl>
 
 #export DEB_BUILD_MAINT_OPTIONS = hardening=+all
-export DEB_BUILD_MAINT_OPTIONS = hardening=+format,+fortify,+stackprotector,+relro,+bindnow,-pie
+export DEB_BUILD_MAINT_OPTIONS = hardening=+format,+fortify,+stackprotector,+relro,+bindnow
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
 CFLAGS+=$(CPPFLAGS)

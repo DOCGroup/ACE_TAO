@@ -4,4 +4,3 @@ reduce-doxygen-doc.diff
 91-patch-dg-basedir.diff
 92-default-ACE_ROOT.diff
 93-no-sslv3.diff
-fix-kfreebsd-ftbfs
