@@ -1,0 +1,24 @@
+Description: remove Google AdSense scripts from HTML documentation
+Forwarded: no
+Author: Pau Garcia i Quiles <pgquiles@elpauer.org>
+Last-Update: 2014-06-29
+
+diff -rupd ACE_wrappers.orig/docs/Download.html ACE_wrappers/docs/Download.html
+--- ACE_wrappers.orig/docs/Download.html	2014-04-22 10:35:47.000000000 +0200
++++ ACE_wrappers/docs/Download.html	2014-06-29 17:25:13.719614000 +0200
+@@ -542,15 +542,5 @@ the links below to download it.
+       RPMs</A> for ACE and TAO.
+ </UL><P>
+ 
+-<script type="text/javascript">
+-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+-</script>
+-<script type="text/javascript">
+-try{
+-var pageTracker = _gat._getTracker("UA-7939436-1");
+-pageTracker._trackPageview();
+-} catch(err) {}
+-</script>
+ </BODY>
+ </HTML>

@@ -1,0 +1,18 @@
+Description: fix FTBFS in kfreebsd
+ These lines were apparently dropped somewhere between 6.2.8 and 6.3.2
+Author: Mattia Rizzolo <mattia@debian.org>
+Bug-Debian: https://bugs.debian.org/825709
+
+--- a/ace/OS_NS_stdlib.h
++++ b/ace/OS_NS_stdlib.h
+@@ -46,6 +46,10 @@
+ }
+ #endif /* ACE_WIN32 && _MSC_VER */
+ 
++#if defined (atop)
++# undef atop
++#endif
++
+ /*
+  * We inline and undef some functions that may be implemented
+  * as macros on some platforms. This way macro definitions will
