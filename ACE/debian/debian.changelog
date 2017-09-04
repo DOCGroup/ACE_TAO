@@ -1,80 +1,123 @@
-ace (6.3.0-1) experimental; urgency=low
+ace (6.4.4+dfsg-1) unstable; urgency=medium
 
-  * New upstream release.
+  [ Johnny Willemsen ]
+  * New upstream version
+  * Cleanup packaging
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Fri, 14 November 2014 19:01:01 +0200
+ -- Johnny Willemsen <jwillemsen@remedy.nl>  Mon, 4 Sep 2017 09:11:41 +0000
 
-ace (6.2.8-1) experimental; urgency=low
+ace (6.3.3+dfsg-1.2) unstable; urgency=medium
 
-  * New upstream release.
+  * Non-maintainer upload.
+  * Build against libssl1.0.2 (Closes: #828229).
+  * Merge build-indep rules into build-arch rules so it builds with -A as it
+    did before (Closes: #806602).
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Wed, 24 September 2014 19:01:01 +0200
+ -- Sebastian Andrzej Siewior <sebastian@breakpoint.cc>  Sat, 14 Jan 2017 13:47:41 +0000
 
-ace (6.2.7-1) experimental; urgency=low
+ace (6.3.3+dfsg-1.1) unstable; urgency=medium
 
-  * New upstream release.
+  * Non-maintainer upload.
+  * Fix FTBFS in kfreebsd.  Closes: #825709
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Mon, 23 June 2014 19:01:01 +0200
+ -- Mattia Rizzolo <mattia@debian.org>  Fri, 01 Jul 2016 05:43:35 +0000
 
-ace (6.2.6-1) experimental; urgency=low
+ace (6.3.3+dfsg-1) unstable; urgency=medium
 
-  * New upstream release.
+  [ Pau Garcia i Quiles ]
+  * New upstream version
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Tue, 22 April 2014 19:01:01 +0200
+  [ Peter Michael Green ]
+  * Add patch to remove use of sslv3 methods which are no longer provided by
+    the Debian openssl package.
 
-ace (6.2.5-1) experimental; urgency=low
+  [ Thomas Girard ]
+  * Integrate fix from Kurt Roeckx <kurt@roeckx.be> thru patch from
+    Peter Michael Green <plugwash@raspbian.org> to remove use of sslv3.
+    Thanks to both of them. Closes: #804326.
 
-  * New upstream release.
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sun, 15 Nov 2015 11:30:34 +0100
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Fri, 28 February 2014 19:01:01 +0200
+ace (6.3.2+dfsg-1) unstable; urgency=medium
 
-ace (6.2.3-1) experimental; urgency=low
+  * New upstream version
+  * Use new ChangeLog filename and location instead of the old
+    <root>/ChangeLog
+  * Update get-orig-source.sh to remove .gitignore files (reported upstream)
+  * Delete stale doxygen_sqlite3.db file left by recent versions of Doxygen
+  * Update standards to 3.9.6.1 (no changes needed)
 
-  * New upstream release.
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>  Thu, 02 Jul 2015 21:53:49 +0200
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Mon, 11 November 2013 19:01:01 +0200
+ace (6.3.0+dfsg-1) UNRELEASED; urgency=medium
 
-ace (6.2.2-1) experimental; urgency=low
+  * New upstream version
+  * Update standards to 3.9.6.0 (no changes needed)
 
-  * New upstream release.
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>  Sat, 15 Nov 2014 01:47:59 +0100
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Thu, 03 October 2013 19:01:01 +0200
+ace (6.2.8+dfsg-1) unstable; urgency=medium
 
-ace (6.2.1-1) experimental; urgency=low
+  * New upstream version
+  * Drop patch 25-versioned_so.diff (applied upstream)
+  * Drop patch 36-fix-typos.diff (applied upstream)
+  * Drop patch 38-fix-predictable-filename-in-tmp.diff (applied upstream)
+  * Drop patch largefile.diff (applied upstream)
 
-  * New upstream release.
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>  Wed, 01 Oct 2014 19:27:00 +0200
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Fri, 16 August 2013 19:01:01 +0200
+ace (6.2.7+dfsg-2) unstable; urgency=medium
 
-ace (6.2.0-1) experimental; urgency=low
+  * Add patch 38-fix-predictable-filename-in-tmp. Closes: #760709
 
-  * New upstream release.
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>  Sun, 07 Sep 2014 14:35:23 +0200
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Mon, 27 May 2013 19:01:01 +0200
+ace (6.2.7+dfsg-1) unstable; urgency=low
 
-ace (6.1.9-1) experimental; urgency=low
+  [ Johnny Willemsen ]
+  * New upstream release. Closes: #746825, #724774, #734393
 
-  * New upstream release.
+  [ Pau Garcia i Quiles ]
+  * Enable hardening
+  * Add Large File Support
+  * Add lintian overrides for safe-to-be-ignored issues
+  * Add patch 36-fix-typos (submitted upstream)
+  * Add patch 37-remove-google-tracking
+  * Update standards to 3.9.5.0
+  * Repack upstream source using get-orig-source.sh and add usage note to
+    README.source
+  * Remove all TAO-related stuff due to DFSG-incompatibility
+  * Remove deprecated DM-Upload-Allowed field
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Mon, 13 May 2013 19:01:01 +0200
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>  Sun, 29 Jun 2014 12:40:36 +0200
 
-ace (6.1.8-1) experimental; urgency=low
+ace (6.1.7-1) UNRELEASED; urgency=low
 
-  * New upstream release.
+  [ Pau Garcia i Quiles ]
+  * New upstream release
+  * Add new library ACE XML_Utils (packages: libace-xml-utils-{6.1.3,dev})
+    (adds a build-depenency on xerces3)
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Thu, 04 Apr 2013 19:01:01 +0200
+  [ Johnny Willemsen ]
+  * Integrate most Debian changes into upstream repo, hence drop no longer
+    relevant patches.
+  * Ship and use TAO_ACE.mwc; this simplify makefile generation, compilation,
+    and installation.
 
-ace (6.1.7-1) experimental; urgency=low
+  [ Thomas Girard ]
+  * debian/README.source: update instructions.
+  * debian/patches/15-use-lzo2.diff: rework this patch.
+  * debian/fix_doxygen.sh: adapt to latest changes.
+  * debian/patches/reduce-doxygen-doc.diff: regenerate.
+  * debian/control lintian fixes:
+    o Bump Standards-Version: to 3.9.4.
+    o Tighen dependency on debhelper to be on par with debian/compat.
+    o Drop obsolete DM-Upload-Allowed: section. For the record, details
+      on how to do this now is available from:
+      https://lists.debian.org/debian-devel-announce/2012/09/msg00008.html
+  * Add *_RLECompressor and ACE_Compressor libraries.
 
-  * New upstream release.
-
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Thu, 27 Dec 2012 11:16:01 +0200
-
-ace (6.1.6-1) experimental; urgency=low
-
-  * New upstream release.
-
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Wed, 28 Nov 2012 20:51:01 +0200
+ -- Thomas Girard <thomas.g.girard@free.fr>  Tue, 01 Jan 2013 14:53:42 +0100
 
 ace (6.1.2-1) experimental; urgency=low
 
@@ -88,6 +131,33 @@ ace (6.1.2-1) experimental; urgency=low
   * debian/patches/92-default-ACE_ROOT.diff: refreshed.
 
  -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 16 Jun 2012 20:51:01 +0200
+
+ace (6.0.3+dfsg-0.2) unstable; urgency=low
+
+  * NMU to rebuild with up-to-date tool chain (closes: #723856)
+
+ -- Barak A. Pearlmutter <bap@debian.org>  Tue, 08 Oct 2013 10:24:20 +0100
+
+ace (6.0.3+dfsg-0.1) unstable; urgency=low
+
+  * NMU with maintainers blessing.
+  * Remove upstream files with nonfree licence (closes: #697848) or
+    without source (closes: #697847):
+    - repack the orig tarball by removing:
+        bin/LabVIEW_RT/*.exe
+        examples/{C++NPv2,C++NPv1,APG}/
+        TAO/
+    - debian/control: drop all packages named *tao*
+    - debian/rules: drop everything related to tao
+    - remove all hunks applying to TAO files in patch
+    - reduce-doxygen-doc.diff
+    - drop patch 34-bts386713.diff since it applies only to TAO files.
+    - debian/copyright: remove copyright entries of TAO/, and of the
+      directories under examples/ that have been removed.
+  * Bump version in build-dependency on debhelper to >=9 since we are using
+    debhelper compatibility level 9.
+
+ -- Ralf Treinen <treinen@debian.org>  Wed, 23 Jan 2013 21:27:40 +0100
 
 ace (6.0.3-5) unstable; urgency=low
 
@@ -1239,3 +1309,4 @@ ace (4.6.3-1) unstable; urgency=low
   * Initial Release.
 
  -- Ossama Othman <othman@astrosun.tn.cornell.edu>  Thu, 12 Nov 1998 13:13:59 -0500
+
