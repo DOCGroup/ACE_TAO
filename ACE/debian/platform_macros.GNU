@@ -1,5 +1,3 @@
-# $Id$
-
 debug          = 0
 optimize       = 1
 inline         = 1
@@ -13,9 +11,6 @@ fox            = 1
 qt4            = 1
 ace_qt4reactor = 1
 
-bzip2          = 1
-lzo2           = 1
-zlib           = 1
 xerces3        = 1
 
 # Work-around #593225
