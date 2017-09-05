@@ -155,21 +155,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   if (be_global->gen_static_desc_operations ())
     {
-      *os << be_nl << "static const char* _desc_repository_id (void)"
-          << be_nl
-          << "{" << be_idt_nl
-          << "return \"" << node->repoID ()
-          << "\";" << be_uidt_nl
-          << "}"
-          << be_nl;
+      *os << be_nl << "static const char* _desc_repository_id (void);";
 
-      *os << be_nl << "static const char* _desc_interface_name (void)"
-          << be_nl
-          << "{" << be_idt_nl
-          << "return \"" << node->local_name()
-          << "\";" << be_uidt_nl
-          << "}"
-          << be_nl;
+      *os << be_nl << "static const char* _desc_interface_name (void);";
     }
 
   // The virtual marshal method, to prevent marshal of local interfaces.
