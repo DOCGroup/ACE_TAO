@@ -1,5 +1,32 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.4.4 and ACE-6.4.5
+====================================================
+
+. Add support for OpenSSL 1.1. ACE users on Windows have
+  to add openssl11=1 to their default.features file so
+  that the correct OpenSSL library names are used.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.3 and ACE-6.4.4
 ====================================================
+
+. Enhanced support for Embarcadero C++ Builder 10.2 (Tokyo).
+  Support for bcc32/bcc64/bcc32c has been enhanced and by
+  default the clang based versions are used. When the old
+  bcc32 has to be used set the CLASSIC environment variable
+  to 1. At this moment runtime test results for bcc64/bcc32c
+  show some structural problems
+
+. Add support for Oracle Studio 12.5
+
+. Removed usage of ACE_REGISTER and register keyword because
+  they trigger deprecated warnings with newer gcc and clang
+  versions
+
+. Add support for gcc 7
+
+. Enhanced Android support
+
+. Fix ACE_INET_Addr::set(domain_name, AF_UNSPEC) to be set to IPv4 address
+  when IPv6 is enabled and the domain_name could be resolved to IPv4 address.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.4.2 and ACE-6.4.3
 ====================================================

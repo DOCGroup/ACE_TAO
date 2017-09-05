@@ -67,8 +67,6 @@ class RND_Timer : public RND_Consumer
 {
 public:
   RND_Timer (RND_Driver *driver);
-
-  void push (const CORBA::Any &event);
 };
 
 inline

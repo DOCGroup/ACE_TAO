@@ -600,7 +600,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                       -1);
 
   // If naming context or object group persistence is being used then
-  // enable backup/restore compability of persitent files.
+  // enable backup/restore compatibility of persistent files.
   if (u_opt_used || v_opt_used || r_opt_used)
     {
       TAO::Storable_Base::use_backup_default = true;

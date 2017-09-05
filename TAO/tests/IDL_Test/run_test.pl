@@ -23,12 +23,9 @@ open (STDOUT, ">" . File::Spec->devnull());
 open (OLDERR, ">&STDERR");
 open (STDERR, ">&STDOUT");
 
-# The location of the tao_idl utility - depends on O/S
-if ($^O eq "MSWin32"){
-   $tao_idl = "../../../bin/tao_idl";
-}
-else{
-   $tao_idl = "../../TAO_IDL/tao_idl";
+my $tao_idl = "$ENV{ACE_ROOT}/bin/tao_idl";
+if (exists $ENV{HOST_ROOT}) {
+    $tao_idl = "$ENV{HOST_ROOT}/bin/tao_idl";
 }
 
 my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";

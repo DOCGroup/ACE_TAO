@@ -1,8 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./performance-tests/Callback/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorType select_mt"/>
  <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler RW"/>
 </ACE_Svc_Conf>

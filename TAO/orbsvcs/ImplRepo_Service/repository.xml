@@ -1,8 +1,5 @@
 <?xml version="1.0"?>
 <ImplementationRepository>
-  <!--  -->
-  <!--   -->
-  <!--  -->
   <Servers name="test" activator="MYHOST" command_line="mysrv" working_dir="mydir" activation_mode="NORMAL" start_limit="1" partial_ior="" ior="">
   </Servers>
   <Servers name="test2" activator="MYHOST" command_line="" working_dir="" activation_mode="NORMAL" start_limit="1" partial_ior="" ior="">

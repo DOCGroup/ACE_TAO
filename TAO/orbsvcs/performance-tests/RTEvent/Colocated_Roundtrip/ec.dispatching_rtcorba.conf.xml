@@ -1,7 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/ec.dispatching_rtcorba.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
  <static id="RT_ORB_Loader" params="-ORBSchedPolicy SCHED_FIFO -ORBPriorityMapping continuous"/>
  <static id="EC_Factory" params="-ECProxyPushConsumerCollection mt:copy_on_write:list -ECProxyPushSupplierCollection mt:copy_on_write:list -ECSupplierFilter null -ECDispatching reactive"/>
 </ACE_Svc_Conf>

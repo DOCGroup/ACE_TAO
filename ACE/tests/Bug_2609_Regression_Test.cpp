@@ -2,7 +2,7 @@
  * @file Bug_2609_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2609:
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2609
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2609
  *
  * @author Milan Cvetkovic <milan.cvetkovic@mpathix.com>
  */

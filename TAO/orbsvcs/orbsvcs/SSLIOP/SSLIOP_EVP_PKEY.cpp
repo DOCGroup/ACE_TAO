@@ -20,7 +20,12 @@ TAO::SSLIOP::OpenSSL_traits< ::EVP_PKEY >::copy (::EVP_PKEY const & key)
   // trait.  This allows us to maintain exception safety.
   TAO::SSLIOP::EVP_PKEY_var p = ::EVP_PKEY_new ();
 
-  switch (::EVP_PKEY_type (pkey->type))
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
+  int const pkey_id = ::EVP_PKEY_type (pkey->type);
+#else
+  int const pkey_id = ::EVP_PKEY_id(pkey);
+#endif
+  switch (pkey_id)
     {
     case EVP_PKEY_RSA:
       {

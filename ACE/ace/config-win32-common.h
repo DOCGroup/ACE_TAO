@@ -143,7 +143,7 @@
 #define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllexport) SINGLETON_TYPE<CLASS, LOCK>;
 #define ACE_IMPORT_SINGLETON_DECLARATION(T) extern template class T
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE <CLASS, LOCK>;
-#endif /* !__BORLANDC__ */
+#endif /* !ACE_HAS_CUSTOM_EXPORT_MACROS || ACE_HAS_CUSTOM_EXPORT_MACROS==0 */
 
 // Define ACE_HAS_WINSOCK2 to 0 in your config.h file if you do *not*
 // want to compile with WinSock 2.0.
@@ -154,7 +154,7 @@
 // By default, we use non-static object manager on Win32.  That is,
 // the object manager is allocated in main's stack memory.  If this
 // does not suit your need, i.e., if your programs depend on the use
-// of static object manager, you neet to disable the behavior by adding
+// of static object manager, you need to disable the behavior by adding
 //
 //   #undef ACE_HAS_NONSTATIC_OBJECT_MANAGER
 //
@@ -167,7 +167,7 @@
 // either:
 //
 // 1. Using static object manager (as described above), however, using
-// the non-static object manager is prefered, therefore,
+// the non-static object manager is preferred, therefore,
 // 2. Instantiate the non-static object manager yourself by either 1)
 //    call ACE::init () at the beginning and ACE::fini () at the end,
 //    _or_ 2) instantiate the ACE_Object_Manager in your CWinApp

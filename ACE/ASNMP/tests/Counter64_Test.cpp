@@ -38,7 +38,7 @@ DAMAGES.
 #include "test_config.h"
 
 // TODO: verify this with ACE folks
-#if defined(_WIN32)
+#if defined(ACE_WIN32)
 #define LLONG __int64
 #define ULLONG unsigned __int64
 #else

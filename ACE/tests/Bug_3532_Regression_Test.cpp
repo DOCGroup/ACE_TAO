@@ -2,7 +2,7 @@
  * @file Bug_3532_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 3532
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=3532
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3532
  *
  * @author Martin Gaus <Gaus at gmx dot de>
  */

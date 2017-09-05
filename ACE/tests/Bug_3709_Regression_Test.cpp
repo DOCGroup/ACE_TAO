@@ -2,7 +2,7 @@
  * @file Bug_3709_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 3709
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=3709
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3709
  */
 
 #include "test_config.h"

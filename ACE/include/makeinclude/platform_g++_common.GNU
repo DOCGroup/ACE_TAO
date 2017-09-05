@@ -52,22 +52,38 @@ ifeq ($(gprof),1)
   LDFLAGS += -pg
 endif
 
-ifeq ($(c++1y),1)
-  CCFLAGS += -std=c++1y
+ifeq ($(c++17),1)
+  CCFLAGS += -std=c++17
   # This is needed due to the use of the deprecated auto_ptr class
-  CCFLAGS += -Wno-deprecated
+  no_deprecated = 1
 else
-  ifeq ($(c++11),1)
-    CCFLAGS += -std=c++11
+  ifeq ($(c++14),1)
+    CCFLAGS += -std=c++14
     # This is needed due to the use of the deprecated auto_ptr class
-    CCFLAGS += -Wno-deprecated
+    no_deprecated = 1
   else
-    ifeq ($(c++0x),1)
-      CCFLAGS += -std=c++0x
+    ifeq ($(c++1y),1)
+      CCFLAGS += -std=c++1y
       # This is needed due to the use of the deprecated auto_ptr class
-      CCFLAGS += -Wno-deprecated
-    endif
-  endif
+      no_deprecated = 1
+    else
+      ifeq ($(c++11),1)
+        CCFLAGS += -std=c++11
+        # This is needed due to the use of the deprecated auto_ptr class
+        no_deprecated = 1
+      else
+        ifeq ($(c++0x),1)
+          CCFLAGS += -std=c++0x
+          # This is needed due to the use of the deprecated auto_ptr class
+          no_deprecated = 1
+        endif # c++0x
+      endif # c++11
+    endif # c++1y
+  endif # c++14
+endif #c++17
+
+ifeq ($(no_deprecated),1)
+  CCFLAGS += -Wno-deprecated
 endif
 
 ifeq ($(gcov),1)
@@ -182,11 +198,11 @@ ifeq ($(shared_libs), 1)
         LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | egrep -i "(option|flag)" /dev/null; echo $$?')
       else
         LD_EXPORT_DEFINED := $(shell $(LD_FOR_VERSION_TEST) -E 2>&1 | grep -c -i -e '(option|flag)')
-	    ifeq ($(LD_EXPORT_DEFINED),0)
-	      LD_EXPORT_DEFINED:=1
-	    else
-	      LD_EXPORT_DEFINED:=0
-	    endif
+        ifeq ($(LD_EXPORT_DEFINED),0)
+          LD_EXPORT_DEFINED:=1
+        else
+          LD_EXPORT_DEFINED:=0
+        endif
       endif # mingw32
       ifeq ($(LD_EXPORT_DEFINED),1)
         LDFLAGS += -Wl,-E

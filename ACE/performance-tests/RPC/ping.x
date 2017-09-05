@@ -1,8 +1,4 @@
 /*
- * $Id$
- */
-
-/*
  * A small program to test RPC round-trip delays.
  */
 program PINGPROG {

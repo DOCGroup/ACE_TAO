@@ -1,1 +1,7 @@
 libace-dev: extended-description-is-probably-too-short
+
+# Required by some downstreams that use custom-built ACE instead of system-wide ACE for development
+libace-dev: symlink-is-self-recursive usr/lib/ace/lib ..
+
+# It is indeed a script and lintian 2.5.26 seems to work fine, 2.5.25 reports the false positive
+libace-dev: executable-not-elf-or-script usr/lib/ace/bin/generate_export_file.pl

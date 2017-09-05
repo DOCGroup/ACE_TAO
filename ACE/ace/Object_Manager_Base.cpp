@@ -282,9 +282,16 @@ ACE_OS_Object_Manager::init (void)
 /* Since MS found it necessary to deprecate these. */
 #   pragma warning(push)
 #   pragma warning(disable:4996)
+#   if defined(__clang__)
+#     pragma clang diagnostic push
+#     pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#   endif /* __clang__ */
       ACE_OS::win32_versioninfo_.dwOSVersionInfoSize =
         sizeof (ACE_TEXT_OSVERSIONINFO);
       ACE_TEXT_GetVersionEx (&ACE_OS::win32_versioninfo_);
+#   if defined(__clang__)
+#     pragma clang diagnostic pop
+#   endif /* __clang__ */
 #   pragma warning(pop)
 # endif /* ACE_WIN32 */
       return 0;

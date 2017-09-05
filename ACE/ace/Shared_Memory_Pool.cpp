@@ -123,7 +123,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                       "exceeded max number of segments = %d, base = %u, offset = %u\n",
                        counter,
                        this->base_addr_,
-                       offset),
+                       static_cast<unsigned int>(offset)),
                       -1);
   else
     {

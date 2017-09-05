@@ -49,11 +49,6 @@
 #undef TAO_PI_SAFE_INCLUDE
 #include "tao/OctetSeqC.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_PI_Server_Export
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
 

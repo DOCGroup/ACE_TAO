@@ -1,27 +1,25 @@
 /**
 
-
-
 @page MT_IIOP_SSL Test README File
 
-	This is a stress test for the IIOP_SSL features.  This test should
+This is a stress test for the IIOP_SSL features.  This test should
 serve as a stress test for
 
-http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1421
+http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1421
 
-        If SSL cannot be used (for whatever reason) we expect the
+If SSL cannot be used (for whatever reason) we expect the
 communication to take place  over an insecure TCP/IP port. This test
 just makes sure that the fallback port actually works!
 
-	To run the test use the run_test.pl script:
+To run the test use the run_test.pl script:
 
 $ ./run_test.pl
 
-	the script returns 0 if the test was successful.
+the script returns 0 if the test was successful.
 
 @NOTE:
 
-       This test links *and* loads the SSLIOP library. They are needed
+This test links *and* loads the SSLIOP library. They are needed
 due to the way the test is setup.
 
 */

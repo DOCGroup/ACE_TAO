@@ -26,6 +26,7 @@ ace_idl_dependencies = 1
 ace_for_tao   = 0
 cross_compile = 0
 ssl           = 0
+openssl11     = 0
 qos           = 0
 rapi          = 0
 repo          = 0

@@ -1,6 +1,5 @@
 <?xml version='1.0'?>
 <!-- Converted from ./tests/MT_Client/client_muxed.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
  <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler MT  -ORBTransportMuxStrategy MUXED"/>
 </ACE_Svc_Conf>

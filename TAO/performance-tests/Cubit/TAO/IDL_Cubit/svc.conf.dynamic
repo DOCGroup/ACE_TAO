@@ -1,7 +1,4 @@
-# $Id$
-#
 # Please see $TAO_ROOT/docs/Options.html for details on these options.
-#
 
 dynamic Resource_Factory Service_Object * TAO:_make_TAO_Default_Resource_Factory() "-ORBResources global -ORBReactorlock null -ORBInputCDRAllocator null"
 dynamic Client_Strategy_Factory Service_Object * TAO:_make_TAO_Default_Client_Strategy_Factory() "-ORBProfileLock null -ORBClientConnectionHandler RW -ORBConnectorLock null"

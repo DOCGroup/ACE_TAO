@@ -46,14 +46,7 @@
 #include "tao/Objref_VarOut_T.h"
 #include /**/ "tao/Versioned_Namespace.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_RTCORBA_Export
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
 
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:49
