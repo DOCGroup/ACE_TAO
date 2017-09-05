@@ -152,7 +152,8 @@ be_visitor_args::gen_pd_arg (be_predefined_type *node,
   switch (pt)
   {
     case AST_PredefinedType::PT_any:
-      *os << any_deref; // No break.
+      *os << any_deref;
+      // fallthrough
     case AST_PredefinedType::PT_pseudo:
     case AST_PredefinedType::PT_object:
       *os << lname << var_call;
