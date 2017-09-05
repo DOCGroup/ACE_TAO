@@ -335,7 +335,26 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "\";" << be_uidt_nl
       << "}";
 
-  bool is_loc = node->is_local ();
+  if (be_global->gen_static_desc_operations ())
+    {
+      *os << be_nl_2 << "const char* " << node->full_name ()
+          << "::_desc_repository_id (void)"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return \"" << node->repoID ()
+          << "\";" << be_uidt_nl
+          << "}";
+
+      *os << be_nl_2 << "const char* " << node->full_name ()
+          << "::_desc_interface_name (void)"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return \"" << node->local_name()
+          << "\";" << be_uidt_nl
+          << "}";
+    }
+
+  bool const is_loc = node->is_local ();
 
   *os << be_nl_2
       << "::CORBA::Boolean" << be_nl
