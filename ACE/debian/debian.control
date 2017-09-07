@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Maintainer: Debian ACE+TAO maintainers <pkg-ace-devel@lists.alioth.debian.org>
 Uploaders: Thomas Girard <thomas.g.girard@free.fr>, Pau Garcia i Quiles <pgquiles@elpauer.org>, Johnny Willemsen <jwillemsen@remedy.nl>
-Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.2), libssl1.0-dev | libssl-dev (<< 1.1), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.5), libfox-1.6-dev, zlib1g-dev, libzzip-dev, liblzo2-dev, docbook-to-man, bzip2, libbz2-dev, libxerces-c-dev
+Build-Depends: debhelper (>= 9), dpkg-dev (>= 1.16.2), libssl-dev, libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev (>= 8.5), libfox-1.6-dev, docbook-to-man, libxerces-c-dev
 Build-Depends-Indep: doxygen, graphviz
 Standards-Version: 3.9.6.1
 Vcs-Git: git://anonscm.debian.org/pkg-ace/pkg-ace.git
@@ -73,7 +73,7 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-6.4.5 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl1.0-dev | libssl-dev (<< 1.1), ${misc:Depends}
+Depends: libace-ssl-6.4.5 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev, ${misc:Depends}
 Description: ACE secure socket layer library - development files
  This package contains the header files and static library for the ACE
  SSL library.
