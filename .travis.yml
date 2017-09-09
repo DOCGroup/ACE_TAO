@@ -97,6 +97,6 @@ before_script:
 script:
   - if [ "$FUZZ" == "1" ]; then exec perl $ACE_ROOT/bin/fuzz.pl; fi
   - perl $ACE_ROOT/bin/mwc.pl -type gnuace -workers 2 travis.mwc
-  - make -j 3
+  - make -j 6
   - perl $ACE_ROOT/bin/auto_run_tests.pl -l $TAO_ROOT/bin/travis-ci.lst
 
