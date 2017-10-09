@@ -100,7 +100,8 @@ sub write_comps {
     $self->write_named_targets($fh, $crlf, \%targnum, \@list,
                                'REMAINING_TARGETS := ' .
                                '$(filter-out all depend,$(TARGETS_NESTED:.nested=)) $(CUSTOM_TARGETS)' .
-                               "$crlf$crlf\$(REMAINING_TARGETS)", '', '',
+                               "$crlf.PHONY: \$(REMAINING_TARGETS)$crlf$crlf".
+                               "\$(REMAINING_TARGETS)", '', '',
                                $self->project_target_translation(1), 1);
   }
   else {
