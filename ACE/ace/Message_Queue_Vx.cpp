@@ -342,15 +342,6 @@ ACE_Message_Queue_Vx::wait_not_empty_cond (ACE_Time_Value *)
   return 0;
 }
 
-#if ! defined (ACE_NEEDS_FUNC_DEFINITIONS)
-int
-ACE_Message_Queue_Vx::peek_dequeue_head (ACE_Message_Block *&,
-                                         ACE_Time_Value *)
-{
-  ACE_NOTSUP_RETURN (-1);
-}
-#endif /* ! ACE_NEEDS_FUNC_DEFINITIONS */
-
 #endif /* ACE_VXWORKS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
