@@ -21,7 +21,7 @@
 module FT_Naming
 {
 
-  enum ChangeType { NEW, UPDATED, DELETED, NONE };
+  enum ChangeType { NEW, UPDATED, DELETED };
 
   exception NotAvailable
   {

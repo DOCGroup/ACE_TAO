@@ -93,7 +93,7 @@ ifeq ($(rtp),0)
 $(LD) -r -nostdlib $(LDFLAGS) -o $(call IFILE,$@)_partial.o $(filter %.o,$^) $(DKM_LIBS)
 	$(NM) $(call IFILE,$@)_partial.o | $(MUNCH) > $(call IFILE,$@)_ctdt.c
 	$(COMPILE.cc) -o $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_ctdt.c
-	$(LD) -r -nostdlib -X $(LD_SCRIPT_DOWNLOAD) -o $@ $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_partial.o
+	$(LD) -r -nostdlib -X $(LD_SCRIPT_DOWNLOAD) -o $@ $(call IFILE,$@)_ctdt.o $(call IFILE,$@)_partial.o $(DKM_FINAL_LIBS)
   endef
 
   SOLINK.cc.override = $(LINK.cc.override)
@@ -103,22 +103,24 @@ endif
 ace_vx_mk_dir = $(if $(findstring 1,$(rtp)),$(WIND_USR_MK),$(WIND_KRNL_MK))
 include $(ace_vx_mk_dir)/defs.library.mk
 
+dkm_libstdcpp ?= $(if $(findstring y,$(_WRS_CONFIG_PRI_diab)),1,0)
+ifeq ($(dkm_libstdcpp),1)
+  DKM_LIBS += -L$(VSB_DIR)/krnl/gnu_standard --start-group -lstl -lgnucplus --end-group
+  DKM_FINAL_LIBS = -L$(VSB_DIR)/krnl/gnu_standard -lgnucplus
+endif
+
 CCFLAGS += $(C++FLAGS)
 PIC += $(OPTION_SHARED_CODE)
 
-OCFLAGS += $(filter -O%,$(CFLAGS))
-OCCFLAGS += $(filter -O%,$(CCFLAGS))
-ifneq ($(OCFLAGS),)
-  CFLAGS := $(filter-out $(OCFLAGS),$(CFLAGS))
-endif
-ifneq ($(OCCFLAGS),)
-  CCFLAGS := $(filter-out $(OCCFLAGS),$(CCFLAGS))
-endif
+OCFLAGS += $(CC_OPTIM_NORMAL)
+OCCFLAGS += $(CC_OPTIM_NORMAL)
+CC_OPTIM =
 
 DCFLAGS += -g
 DCCFLAGS += -g
 
 DLD = $(LD)
+LDFLAGS += $(LDFLAGS_COMMON)
 
 EXEEXT = $(if $(findstring 1,$(rtp)),.vxe,.out)
 
@@ -131,7 +133,9 @@ ifeq ($(rtp),1)
   LDFLAGS := $(filter-out -X -N,$(LDFLAGS))
   LDFLAGS += -L$(VSB_DIR)/usr/lib/common$(if $(filter library,$(PRJ_TYPE)),/PIC -L$(VSB_DIR)/usr/lib/common)
 endif
-LIBS += -lstdc++
+
+LIBS_CPLUSPLUS = $(foreach lib,$(LIBCPLUS), -l$(lib))
+LIBS += $(LIBS_CPLUSPLUS)
 
 build_nonstatic = $(if $(findstring 1,$(shared_libs)$(shared_libs_only)),$(if $(filter 1,$(static_libs_only)),,1))
-LDFLAGS += $(if $(build_nonstatic),$(LDFLAGS_DYNAMIC),-static)
+LDFLAGS += $(if $(build_nonstatic),$(LDFLAGS_DYNAMIC),-static $(LDFLAGS_STATIC))
