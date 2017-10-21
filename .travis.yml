@@ -30,12 +30,12 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.9
+            - llvm-toolchain-trusty-5.0
           packages:
             - libxerces-c-dev
             - libssl-dev
-            - clang++-3.9
-      env: COMPILER=clang++ VERSIONED=1 TAO=1 ACETESTS=1
+            - clang++-5.0
+      env: COMPILER=clang++-5.0 VERSIONED=1 TAO=1 ACETESTS=1
     - os: osx
       env: COMPILER=clang++ VERSIONED=1 TAO=1 ACETESTS=1
 
