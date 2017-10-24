@@ -17,8 +17,7 @@ static const char NAMING_SERVICE_NAME[] = "NameService";
 void
 StructuredPushSupplier_i::subscription_change (
     const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  )
+    const CosNotification::EventTypeSeq & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -29,8 +28,7 @@ StructuredPushSupplier_i::subscription_change (
 
 
 void
-StructuredPushSupplier_i::disconnect_structured_push_supplier (
-  )
+StructuredPushSupplier_i::disconnect_structured_push_supplier ()
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) Supplier StructuredPushSupplier received disconnect\n")
@@ -43,8 +41,7 @@ StructuredPushSupplier_i::disconnect_structured_push_supplier (
 void
 SequencePushSupplier_i::subscription_change (
     const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  )
+    const CosNotification::EventTypeSeq & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -53,10 +50,8 @@ SequencePushSupplier_i::subscription_change (
     ));
 }
 
-
 void
-SequencePushSupplier_i::disconnect_sequence_push_supplier (
-  )
+SequencePushSupplier_i::disconnect_sequence_push_supplier ()
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) Supplier SequencePushSupplier received disconnect\n")
@@ -69,8 +64,7 @@ SequencePushSupplier_i::disconnect_sequence_push_supplier (
 void
 AnyPushSupplier_i::subscription_change (
     const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  )
+    const CosNotification::EventTypeSeq & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -81,8 +75,7 @@ AnyPushSupplier_i::subscription_change (
 
 
 void
-AnyPushSupplier_i::disconnect_push_supplier (
-  )
+AnyPushSupplier_i::disconnect_push_supplier ()
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("(%P,%t) Suppleir AnyPushSupplier received disconnect\n")
