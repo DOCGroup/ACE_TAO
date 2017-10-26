@@ -33,8 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Notify_Serv_Export TAO_Notify_ProxyPushConsumer
   : public virtual TAO_Notify_ProxyConsumer_T <
-                       POA_CosNotifyChannelAdmin::ProxyPushConsumer
-                     >
+                       POA_CosNotifyChannelAdmin::ProxyPushConsumer>
 {
  typedef TAO_Notify_ProxyConsumer_T <POA_CosNotifyChannelAdmin::ProxyPushConsumer> SuperClass;
  friend class TAO_Notify_Builder;
@@ -45,8 +44,6 @@ public:
   /// Destructor
   virtual ~TAO_Notify_ProxyPushConsumer ();
 
-
-//  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual const char * get_proxy_type_name (void) const;
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
