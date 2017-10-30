@@ -14,8 +14,8 @@ public:
   typedef key key_type;
   typedef value data_type;
   typedef std::pair<key, value> value_type;
-  size_t capacity_;
-  value_type* nodes_;
+  size_t capacity_ {};
+  value_type* nodes_ {};
 };
 
 template <typename key, typename value>
