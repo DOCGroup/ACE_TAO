@@ -10,6 +10,7 @@ template <typename key, typename value>
 class my_map
 {
 public:
+  my_map () : capacity_ (0), nodes_(0) {}
   ~my_map ();
   typedef key key_type;
   typedef value data_type;
