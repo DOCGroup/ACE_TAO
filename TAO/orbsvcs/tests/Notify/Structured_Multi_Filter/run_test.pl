@@ -142,6 +142,9 @@ foreach my $supplier_op (@ops) {
         $CON_status = $CON->SpawnWaitKill ($con->ProcessStartWaitInterval()+5);
         if ($CON_status != 0) {
             print STDERR "ERROR: Consumer returned $CON_status\n";
+            $SUP->Kill (); $SUP->TimedWait (1);
+            $NFS->Kill (); $NFS->TimedWait (1);
+            $NS->Kill (); $NS->TimedWait (1);
             last;
         }
 
