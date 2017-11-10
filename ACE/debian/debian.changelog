@@ -1,10 +1,22 @@
-ace (6.4.4+dfsg-1) unstable; urgency=medium
+ace (6.4.5+dfsg-1) unstable; urgency=medium
 
   [ Johnny Willemsen ]
-  * New upstream version
-  * Cleanup packaging
+  * New upstream version:
+    - fixes FTBFS with GCC-7. Closes: #853299.
+    - can use openssl 1.1. Closes: #851424.
+    - fixes GNU/FreeBSD FTBFS. Closes: #823592.
+  * Cleanup packaging:
+    - re-enable PIE. Closes: #859350.
+    - remove Marek from uploaders.
 
- -- Johnny Willemsen <jwillemsen@remedy.nl>  Mon, 4 Sep 2017 09:11:41 +0000
+  [ Thomas Girard ]
+  * Remove Pau from uploaders.
+  * Fix repackaging process by removing bashism.
+  * Remove QtReactor until it gets ported to Qt5. Closes: #874813.
+  * Remove d/p/37-remove-google-tracking.diff, no longer needed.
+  * Bump Standards-Version: to 4.1.0.
+
+ -- Thomas Girard <thomas.g.girard@free.fr>  Sat, 16 Sep 2017 17:29:35 +0200
 
 ace (6.3.3+dfsg-1.2) unstable; urgency=medium
 
