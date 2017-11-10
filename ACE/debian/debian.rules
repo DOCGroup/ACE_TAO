@@ -35,7 +35,6 @@ ALL_ACEXML   := $(filter libacexml%,$(ALL_PACKAGES))
 export ACE_ROOT := $(shell pwd)
 export MPC_ROOT := $(ACE_ROOT)/MPC
 export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
-export QTDIR := /usr/share/qt4
 
 %:
 	dh $@
@@ -53,15 +52,15 @@ configure-stamp:
 	touch $@
 
 override_dh_auto_build-arch: configure-stamp
-	$(MAKE) -C $(ACE_ROOT) $(DSO_MAKE_FLAG) $(FIXUP)
+	$(MAKE) -C $(ACE_ROOT) $(DSO_MAKE_FLAG)
 
 override_dh_auto_build-indep: configure-stamp
-	$(MAKE) -C $(ACE_ROOT) $(DSO_MAKE_FLAG) $(FIXUP)
+	$(MAKE) -C $(ACE_ROOT) $(DSO_MAKE_FLAG)
 	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release -exclude_tao -exclude_ciao -exclude_dance
 	find $(ACE_ROOT)/html $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
 
 override_dh_auto_install: manpages-stamp
-	$(MAKE) -C $(ACE_ROOT) install $(INSTALL_FLAGS) $(FIXUP)
+	$(MAKE) -C $(ACE_ROOT) install $(INSTALL_FLAGS)
 	mkdir -p $(DT)/usr/share/man/man1
 	cp $(ACE_ROOT)/apps/gperf/ace_gperf.1 $(DT)/usr/share/man/man1
 #	Relocate .idl and .pidl files
@@ -72,7 +71,7 @@ override_dh_auto_install: manpages-stamp
 	   done
 
 override_dh_auto_clean:
-	[ -f $(ACE_ROOT)/GNUmakefile ] && $(MAKE) -C $(ACE_ROOT) realclean $(DSO_MAKE_FLAG) $(FIXUP) || true
+	[ -f $(ACE_ROOT)/GNUmakefile ] && $(MAKE) -C $(ACE_ROOT) realclean $(DSO_MAKE_FLAG) || true
 	find $(ACE_ROOT) -name 'GNUmakefile*' -o -name '.depend.*' | xargs -r rm
 	rm -f $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 	rm -f $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
@@ -99,7 +98,7 @@ override_dh_installchangelogs:
 	dh_installchangelogs -pace-gperf -pgperf-ace apps/gperf/ChangeLog
 	dh_installchangelogs -pmpc-ace MPC/ChangeLog
 	dh_installchangelogs $(addprefix -p,$(ALL_ACEXML)) ACEXML/ChangeLog
-	dh_installchangelogs --remaining-packages ChangeLogs/ACE-6_4_4
+	dh_installchangelogs --remaining-packages ChangeLogs/ACE-6_4_5
 
 override_dh_fixperms:
 ifneq (,$(filter libace-doc, $(shell dh_listpackages)))
