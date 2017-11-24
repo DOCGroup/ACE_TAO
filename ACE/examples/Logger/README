@@ -1,5 +1,3 @@
-
-
 This directory contains a simple client/server implementation of the
 distributed logging server described in several papers in the C++
 Report (which can be obtained via the following WWW URLs:
