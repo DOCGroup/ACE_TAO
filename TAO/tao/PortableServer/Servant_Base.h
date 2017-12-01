@@ -185,13 +185,7 @@ public:
 protected:
 
   /// Default constructor, only derived classes can be created.
-  TAO_ServantBase (void);
-
-  /// Copy constructor, protected so no instances can be created.
-  TAO_ServantBase (const TAO_ServantBase &);
-
-  /// Assignment operator.
-  TAO_ServantBase &operator= (const TAO_ServantBase &);
+  explicit TAO_ServantBase (TAO_Operation_Table* optable = 0);
 
   void synchronous_upcall_dispatch (
     TAO_ServerRequest & req,
@@ -202,6 +196,13 @@ protected:
     TAO_ServerRequest & req,
     TAO::Portable_Server::Servant_Upcall* servant_upcall,
     TAO_ServantBase *derived_this);
+
+private:
+  /// Copy constructor, private so no instances can be created.
+  TAO_ServantBase (const TAO_ServantBase &);
+
+  /// Assignment operator.
+  TAO_ServantBase &operator= (const TAO_ServantBase &);
 
 protected:
   /// Reference counter.
