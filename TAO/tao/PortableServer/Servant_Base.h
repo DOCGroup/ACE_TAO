@@ -184,7 +184,7 @@ public:
 
 protected:
 
-  /// Default constructor, only derived classes can be created.
+  /// Constructor, only derived classes can be created.
   explicit TAO_ServantBase (TAO_Operation_Table* optable = 0);
 
   void synchronous_upcall_dispatch (
