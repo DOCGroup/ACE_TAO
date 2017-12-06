@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.4.5 and ACE-6.4.6
 ====================================================
 
+. Fixed some Codacy and C++ Core guidelines reported issues
+
+. VxWorks 7 (SR0510) support
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.4 and ACE-6.4.5
 ====================================================
 
