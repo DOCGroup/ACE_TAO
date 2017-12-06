@@ -1132,6 +1132,8 @@ echo ace/QtReactor/QtReactor.h >> allhdrs.list
 echo TAO/tao/QtResource/QtResource_Factory.h >> allhdrs.list
 echo TAO/tao/QtResource/QtResource_Loader.h >> allhdrs.list
 echo TAO/tao/PortableServer/get_arg.h >> allhdrs.list
+echo TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.{h,inl,cpp} >> allhdrs.list
+echo TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.{h,inl,cpp} >> allhdrs.list
 %endif
 
 # Install headers and create header lists
