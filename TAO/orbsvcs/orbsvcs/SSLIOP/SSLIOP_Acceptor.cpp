@@ -338,19 +338,16 @@ TAO::SSLIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
   if (endp == 0)
     return 0;
 
+  const TAO_IIOP_Endpoint *iiop = endp->iiop_endpoint ();
+
   for (size_t i = 0; i < this->endpoint_count_; ++i)
     {
-      // @@ TODO The following code looks funky, why only the address
-      //    is compared?  What about the IIOP address?  Why force a
-      //    DNS lookup every time an SSLIOP object is decoded:
-      //
-      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
-      //
-      if (endp->iiop_endpoint ()->object_addr () == this->addrs_[i])
-        return 1;  // Collocated
+      if (iiop->port () == this->addrs_[i].get_port_number ()
+          && ACE_OS::strcmp (iiop->host (), this->hosts_[i]) == 0)
+        return 1;
     }
 
-  return 0;  // Not collocated
+  return 0;
 }
 
 int
