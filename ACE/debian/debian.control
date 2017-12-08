@@ -154,7 +154,7 @@ Description: ACE Inet protocol library - development files
 Package: libace-inet-ssl-6.4.6
 Architecture: any
 Section: libs
-Depends: libace-inet-6.4.5, libace-ssl-6.4.6, ${shlibs:Depends}, ${misc:Depends}
+Depends: libace-inet-6.4.6, libace-ssl-6.4.6, ${shlibs:Depends}, ${misc:Depends}
 Description: ACE SSL-enabled Inet protocol library
  This package provides an ACE addon library for clients (and possibly
  servers at some point) using Inet protocols which support SSL, such as
@@ -257,7 +257,7 @@ Description: ACE-GUI reactor integration for Xt
 Package: libace-xtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-xtreactor-6.4.5 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.4.6), ${misc:Depends}
+Depends: libace-xtreactor-6.4.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 6.4.6), ${misc:Depends}
 Description: ACE-GUI reactor integration for Xt - development files
  This package contains header files and static library for the ACE-Xt
  reactor integration.
@@ -304,7 +304,7 @@ Description: ACE-GUI reactor integration for FLTK
 Package: libace-flreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-flreactor-6.4.5 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.4.6), ${misc:Depends}
+Depends: libace-flreactor-6.4.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 6.4.6), ${misc:Depends}
 Description: ACE-GUI reactor integration for FLTK - development files
  This package contains header files and static library for the ACE-FLTK
  reactor integration.
