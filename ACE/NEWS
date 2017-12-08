@@ -1,3 +1,6 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.4.6 and ACE-6.4.7
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.5 and ACE-6.4.6
 ====================================================
 
@@ -5,7 +8,7 @@ USER VISIBLE CHANGES BETWEEN ACE-6.4.5 and ACE-6.4.6
 
 . VxWorks 7 (SR0510) support
 
-. Support make install on newer Apple macOS versions
+. Support make install on newer Apple MacOS versions
 
 USER VISIBLE CHANGES BETWEEN ACE-6.4.4 and ACE-6.4.5
 ====================================================
