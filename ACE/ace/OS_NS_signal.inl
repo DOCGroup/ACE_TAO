@@ -34,7 +34,10 @@ pthread_sigmask (int how, const sigset_t *nsp, sigset_t *osp)
 {
 #if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_SIGMASK)
   int result;
-# if defined (ACE_HAS_NONCONST_PTHREAD_SIGMASK)
+# ifdef ACE_PTHREAD_SIGMASK_MACRO
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (ACE_PTHREAD_SIGMASK_MACRO (how, nsp, osp)
+                                      , result), int, -1);
+# elif defined (ACE_HAS_NONCONST_PTHREAD_SIGMASK)
   sigset_t *ncnsp = const_cast<sigset_t *>(nsp);
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, ncnsp, osp),
                                        result),
