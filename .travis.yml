@@ -1,4 +1,5 @@
 sudo: false
+group: travis_latest
 language: cpp
 os:
   - linux
