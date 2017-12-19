@@ -232,6 +232,7 @@ Service_Config_Stream_Test: !STATIC !FIXED_BUGS_ONLY
 Sigset_Ops_Test
 Simple_Message_Block_Test
 Singleton_Test
+Singleton_Restart_Test: !ST !FIXED_BUGS_ONLY
 Svc_Handler_Test: !ACE_FOR_TAO
 Task_Wait_Test
 TP_Reactor_Test: !ACE_FOR_TAO

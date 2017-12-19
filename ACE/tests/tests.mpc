@@ -1609,6 +1609,15 @@ project(Singleton Test) : acetest {
   }
 }
 
+project(Singleton Restart Test) : aceexe {
+  exename = Singleton_Restart_Test
+  after += Test_Output
+  libs += Test_Output
+  Source_Files {
+    Singleton_Restart_Test.cpp
+  }
+}
+
 project(SOCK Test) : acetest {
   exename = SOCK_Test
   Source_Files {
