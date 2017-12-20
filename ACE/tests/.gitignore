@@ -217,6 +217,7 @@
 /Sigset_Ops_Test
 /Simple_Message_Block_Test
 /Singleton_Test
+/Singleton_Restart_Test
 /SOCK_Connector_Test
 /SOCK_Dgram_Bcast_Test
 /SOCK_Dgram_Test
