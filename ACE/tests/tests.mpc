@@ -1616,6 +1616,14 @@ project(Singleton Restart Test) : aceexe {
   Source_Files {
     Singleton_Restart_Test.cpp
   }
+  Header_Files {
+  }
+  Template_Files {
+  }
+  Resource_Files {
+  }
+  Svc_Conf_Files {
+  }
 }
 
 project(SOCK Test) : acetest {
