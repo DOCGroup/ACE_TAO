@@ -91,8 +91,12 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
               ACE_NEW_RETURN (singleton, (TAO_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with TAO_Singleton_Manager.
-              TAO_Singleton_Manager::at_exit (singleton, 0, typeid (TYPE).name());
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
+              TAO_Singleton_Manager::at_exit (singleton, 0,
+                                              typeid (TYPE).name ());
+#else
+              TAO_Singleton_Manager::at_exit (singleton, &lock,
+                                              typeid (TYPE).name());
             }
 #endif /* ACE_MT_SAFE */
         }
@@ -102,10 +106,18 @@ TAO_Singleton<TYPE, ACE_LOCK>::instance (void)
 }
 
 template <class TYPE, class ACE_LOCK> void
-TAO_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
+TAO_Singleton<TYPE, ACE_LOCK>::cleanup (void *param)
 {
   delete this;
   TAO_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+
+#if defined ACE_MT_SAFE && ACE_MT_SAFE != 0
+  if (param)
+    {
+      ACE_LOCK **lock = static_cast<ACE_LOCK **> (param);
+      *lock = 0;
+    }
+#endif
 }
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
