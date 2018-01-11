@@ -41,7 +41,7 @@ A::u_type_::~u_type_ ()
 
 void A::clear ()
 {
-#ifdef __clang__
+#if defined __clang__ && __clang_major__ <= 5
   // As of 5.0, clang requires one of two workarounds:
   // 1. the name after ~ must be in scope
   using std::string;
@@ -54,7 +54,7 @@ struct B {
     std::string m;
   } u_;
   void clear() {
-#ifdef __clang__
+#if defined __clang__ && __clang_major__ <= 5
     // 2. actual class name instead of typedef
     u_.m.std::string::~basic_string ();
 #else
