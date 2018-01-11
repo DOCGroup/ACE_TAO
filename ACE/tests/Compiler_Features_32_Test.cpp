@@ -41,6 +41,11 @@ A::u_type_::~u_type_ ()
 
 void A::clear ()
 {
+#ifdef __clang__
+  // As of 5.0, clang requires one of two workarounds:
+  // 1. the name after ~ must be in scope
+  using std::string;
+#endif
   this->u_.string_member_.std::string::~string ();
 }
 
@@ -49,7 +54,12 @@ struct B {
     std::string m;
   } u_;
   void clear() {
-    u_.m.std::string::~string();
+#ifdef __clang__
+    // 2. actual class name instead of typedef
+    u_.m.std::string::~basic_string ();
+#else
+    u_.m.std::string::~string ();
+#endif
   }
 };
 
