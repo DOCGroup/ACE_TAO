@@ -3010,7 +3010,7 @@ union_type
         {
 //      ')'
           /*
-           * The top of the scopes must an empty union we added after we
+           * The top of the scopes must be an empty union we added after we
            * encountered 'union <id> switch ('. Now we are ready to add a
            * correct one. Temporarily remove the top so that we setup the
            * correct union in a right scope.
