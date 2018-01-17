@@ -1,0 +1,8 @@
+// -*- MPC -*-
+project(*Test) : taoserver {
+  exename = test3940
+
+  Source_Files {
+    test.cpp
+  }
+}
