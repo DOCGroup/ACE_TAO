@@ -221,7 +221,8 @@ ACE_SOCK_Acceptor::dump (void) const
 int
 ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
                                 int protocol_family,
-                                int backlog)
+                                int backlog,
+                                int ipv6_only)
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::shared_open");
   int error = 0;
@@ -243,19 +244,23 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
       else
         local_inet6_addr = *reinterpret_cast<sockaddr_in6 *> (local_sap.get_addr ());
 
-# if defined (ACE_WIN32)
-      // on windows vista and later, Winsock can support dual stack sockets
-      // but this must be explicitly set prior to the bind. Since this
-      // behavior is the default on *nix platforms, it should be benigh to
-      // just do it here. On older platforms the setsockopt will fail, but
-      // that should be OK.
-      int zero = 0;
-      ACE_OS::setsockopt (this->get_handle (),
-                          IPPROTO_IPV6,
-                          IPV6_V6ONLY,
-                          (char *)&zero,
-                          sizeof (zero));
-# endif /* ACE_WIN32 */
+      /*
+       * Handle IPv6-only requests. On Windows, v6-only is the default
+       * unless it is turned off. On Linux, v4/v6 dual is the default
+       * unless v6-only is turned on.
+       * This must be done before attempting to bind the address.
+       * On Windows older than Vista this will fail.
+       */
+#  if defined (IPPROTO_V6) && defined (IPV6_ONLY)
+      int setting = !!ipv6_only;
+      if (-1 == ACE_OS::setsockopt (this->get_handle (),
+                                    IPPROTO_IPV6,
+                                    IPV6_V6ONLY,
+                                    (char *)&setting,
+                                    sizeof (setting))
+        error = 1;
+      else
+# endif /* IPPROTO_V6 && IPV6_ONLY */
       // We probably don't need a bind_port written here.
       // There are currently no supported OS's that define
       // ACE_LACKS_WILDCARD_BIND.
@@ -343,7 +348,8 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                                       int reuse_addr,
                                       int protocol_family,
                                       int backlog,
-                                      int protocol)
+                                      int protocol,
+                                      int ipv6_only)
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::ACE_SOCK_Acceptor");
   if (this->open (local_sap,
@@ -353,7 +359,8 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                   reuse_addr,
                   protocol_family,
                   backlog,
-                  protocol) == -1)
+                  protocol,
+                  ipv6_only) == -1)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SOCK_Acceptor")));
@@ -366,7 +373,8 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
                          int reuse_addr,
                          int protocol_family,
                          int backlog,
-                         int protocol)
+                         int protocol,
+                         int ipv6_only)
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::open");
 
@@ -398,14 +406,16 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                                       int reuse_addr,
                                       int protocol_family,
                                       int backlog,
-                                      int protocol)
+                                      int protocol,
+                                      int ipv6_only)
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::ACE_SOCK_Acceptor");
   if (this->open (local_sap,
                   reuse_addr,
                   protocol_family,
                   backlog,
-                  protocol) == -1)
+                  protocol,
+                  ipv6_only) == -1)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SOCK_Acceptor")));
