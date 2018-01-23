@@ -403,6 +403,8 @@ L"'"\\u([0-9a-fA-F]{1,4})"'" {
                     }
                   break;
                 }
+@[A-Za-z][A-Za-z0-9_]*[ \t]*(\([^)]+\))?
+                break;
 [ \t]*          break;
 {NL}            {
                   idl_global->set_lineno (idl_global->lineno () + 1);
