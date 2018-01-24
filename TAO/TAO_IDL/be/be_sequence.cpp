@@ -772,21 +772,16 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
           default:
             if (this->unbounded ())
               {
-                *os << "::TAO::unbounded_value_sequence<" << linebreak
-                    << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << linebreak
-                    << be_uidt_nl
-                    << ">" << be_uidt;
+                *os << "::TAO::unbounded_value_sequence< "
+                    << elem->nested_type_name (ctx_scope)
+                    << ">";
               }
             else
               {
-                *os << "::TAO::bounded_value_sequence<" << linebreak
-                    << be_idt << be_idt_nl
-                    << elem->nested_type_name (ctx_scope) << "," << linebreak
-                    << be_nl
-                    << this->max_size ()->ev ()->u.ulval << linebreak
-                    << be_uidt_nl
-                    << ">" << be_uidt;
+                *os << "::TAO::bounded_value_sequence< "
+                    << elem->nested_type_name (ctx_scope) << ","
+                    << this->max_size ()->ev ()->u.ulval
+                    << ">";
               }
 
             break;

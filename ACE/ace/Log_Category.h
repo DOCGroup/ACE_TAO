@@ -63,7 +63,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
   } while (0)
 #endif
 #if !defined (ACELIB_ERROR_RETURN)
-#define ACELIB_ERROR_RETURN(X, Y) \
+# ifdef ACE_LACKS_VA_FUNCTIONS
+#  define ACELIB_ERROR_RETURN(X, Y) \
+  do { \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    ACE_Log_Category_TSS *ace___ = ACE_Log_Category::ace_lib().per_thr_obj(); \
+    if (ace___ == 0) return Y;\
+    ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
+    ace___->log (X);                                              \
+    return Y; \
+  } while (0)
+# else /* ACE_LACKS_VA_FUNCTIONS */
+#  define ACELIB_ERROR_RETURN(X, Y) \
   do { \
     int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Category_TSS *ace___ = ACE_Log_Category::ace_lib().per_thr_obj(); \
@@ -72,9 +83,20 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
     ace___->log X; \
     return Y; \
   } while (0)
+# endif /* ACE_LACKS_VA_FUNCTIONS */
 #endif
 #if !defined (ACELIB_ERROR)
-#define ACELIB_ERROR(X) \
+# ifdef ACE_LACKS_VA_FUNCTIONS
+#  define ACELIB_ERROR(X) \
+  do { \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    ACE_Log_Category_TSS *ace___ = ACE_Log_Category::ace_lib().per_thr_obj(); \
+    if (ace___ == 0) break;\
+    ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
+    ace___->log (X);                                               \
+  } while (0)
+# else /* ACE_LACKS_VA_FUNCTIONS */
+# define ACELIB_ERROR(X) \
   do { \
     int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Category_TSS *ace___ = ACE_Log_Category::ace_lib().per_thr_obj(); \
@@ -82,9 +104,20 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
     ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
     ace___->log X; \
   } while (0)
+# endif /* ACE_LACKS_VA_FUNCTIONS */
 #endif
 #if !defined (ACELIB_DEBUG)
-#define ACELIB_DEBUG(X) \
+# ifdef ACE_LACKS_VA_FUNCTIONS
+#  define ACELIB_DEBUG(X) \
+  do { \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    ACE_Log_Category_TSS *ace___ = ACE_Log_Category::ace_lib().per_thr_obj(); \
+    if (ace___ == 0) break;\
+    ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
+    ace___->log (X);                                              \
+  } while (0)
+# else /* ACE_LACKS_VA_FUNCTIONS */
+# define ACELIB_DEBUG(X) \
   do { \
     int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Category_TSS *ace___ = ACE_Log_Category::ace_lib().per_thr_obj(); \
@@ -92,6 +125,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log X; \
   } while (0)
+# endif /* ACE_LACKS_VA_FUNCTIONS */
 #endif
 #if !defined (ACELIB_ERROR_BREAK)
 #define ACELIB_ERROR_BREAK(X) { ACELIB_ERROR (X); break; }
@@ -145,15 +179,24 @@ public:
                         int         op_status,
                         int         errnum);
 
+#if !defined (ACE_LACKS_VA_FUNCTIONS)
   ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
 
 #if defined (ACE_HAS_WCHAR)
   ssize_t log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *format, ...);
 #endif /* ACE_HAS_WCHAR */
+#else /* ACE_LACKS_VA_FUNCTIONS */
+  friend class ACE_Log_Formatter;
+
+  ssize_t log (const ACE_Log_Formatter &formatter);
+#endif /* ACE_LACKS_VA_FUNCTIONS */
 
   ssize_t log (const ACE_TCHAR *format,
                ACE_Log_Priority priority,
                va_list          argp);
+
+  ssize_t log (ACE_Log_Record &log_record,
+               int suppress_stderr = 0);
 
   /**
    * Method to log hex dump.  This is useful for debugging.  Calls
@@ -164,6 +207,8 @@ public:
                    const char *     buffer,
                    size_t           size,
                    const ACE_TCHAR *text = 0);
+
+  ACE_ALLOC_HOOK_DECLARE;
 
 private:
   friend class ACE_Log_Category;

@@ -203,8 +203,13 @@ module ImplementationRepository
     void link_servers (in string server, in CORBA::StringSeq peers)
       raises(NotFound, CannotComplete);
 
-    /// Have the approprate activator send a signal to the named server process
+    /// Have the appropriate activator send a signal to the named server process
     void kill_server (in string server, in short signum)
+      raises(NotFound, CannotComplete);
+
+    /// Combine the action of shutting down a running server instance if any via
+    /// a shutdown command if signum is 0, or via kill if signum is nonzero
+    void force_remove_server (in string server, in short signum)
       raises(NotFound, CannotComplete);
   };
 };

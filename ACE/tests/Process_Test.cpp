@@ -35,11 +35,13 @@ test_setenv (void)
   for (int i = 0; i < 100; ++i)
     ACE_OS::strcat (bigval,
                     ACE_TEXT ("01234567890123456789012345678901234567890123456789"));
+#ifndef ACE_LACKS_VA_FUNCTIONS
 # if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   const ACE_TCHAR *fmt = ACE_TEXT ("%ls");
 # else
   const ACE_TCHAR *fmt = ACE_TEXT ("%s");
 # endif
+
   if (0 != opts.setenv (ACE_TEXT ("A"), fmt, bigval))
     {
       status = errno;
@@ -56,6 +58,7 @@ test_setenv (void)
                       env_len));
         }
     }
+#endif
   return status;
 }
 
@@ -144,6 +147,7 @@ run_parent (bool inherit_files)
     }
 
   ACE_Process_Options options;
+#ifndef ACE_LACKS_VA_FUNCTIONS
   options.command_line (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR
                         ACE_TEXT ("%sProcess_Test")
                         ACE_PLATFORM_EXE_SUFFIX
@@ -151,6 +155,7 @@ run_parent (bool inherit_files)
                         exe_sub_dir.c_str(),
                         (int)inherit_files,
                         tempfile);
+#endif
   options.handle_inheritance (inherit_files); /* ! */
 
   // Spawn child
@@ -224,8 +229,8 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_TCHAR lognm[MAXPATHLEN];
       int const mypid (ACE_OS::getpid ());
-      ACE_OS::sprintf(lognm, ACE_TEXT ("Process_Test-child-%d"), mypid);
-
+      ACE_OS::snprintf (lognm, MAXPATHLEN,
+                        ACE_TEXT ("Process_Test-child-%d"), mypid);
       ACE_START_TEST (lognm);
 
       int result = check_temp_file (temp_file_name);

@@ -115,6 +115,7 @@
 # define ACE_LACKS_SIGINFO_H
 # define ACE_HAS_UCONTEXT_T
 # define ACE_HAS_SIGTIMEDWAIT
+# define ACE_HAS_STRERROR_R
 
 #else  /* ! __GLIBC__ */
     // Fixes a problem with some non-glibc versions of Linux...
@@ -145,9 +146,6 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
-# ifdef __clang__
-#  undef ACE_HAS_GCC_ATOMIC_BUILTINS
-# endif
 #elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
 # include "ace/config-suncc-common.h"
 #elif defined (__PGI)
@@ -306,7 +304,7 @@
 # define ACE_HAS_STRBUF_T
 #endif
 
-#if defined (__ia64) || defined(__alpha) || defined (__x86_64__) || defined(__powerpc64__)
+#if defined (__ia64) || defined(__alpha) || defined (__x86_64__) || defined(__powerpc64__) || (defined(__mips__) && defined(__LP64__)) || defined (__aarch64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
 # define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%lu"
@@ -402,6 +400,7 @@
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_REENTRANT_FUNCTIONS
+#define ACE_HAS_MNTENT
 
 // To support UCLIBC
 #if defined (__UCLIBC__)

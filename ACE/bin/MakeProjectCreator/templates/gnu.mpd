@@ -65,7 +65,7 @@ DANCE_ROOT ?= $(TAO_ROOT)/DAnCE
 <%if(grouped_source_files)%>
 <%foreach(grouped_source_files)%>
 <%grouped_source_file%> = \
-<%foreach(grouped_source_file->files)%>
+<%foreach(uniq(grouped_source_file->files))%>
   <%grouped_source_file->file%><%fornotlast(" \\")%>
 <%endfor%>
 
@@ -77,7 +77,7 @@ FILES += \
 
 <%else%>
 FILES = \
-<%foreach(source_files)%>
+<%foreach(uniq(source_files))%>
   <%source_file%><%fornotlast(" \\")%>
 <%endfor%>
 
@@ -93,6 +93,9 @@ IDL_DEPS<%forcount%> = <%idl_file%>
 
 <%endif%>
 <%vpath%>
+
+LIBPATHS := <%libpaths%>
+
 #----------------------------------------------------------------------------
 #       Include macros and targets
 #----------------------------------------------------------------------------
@@ -790,16 +793,8 @@ install: <%if(postbuild)%>__postbuild__<%else%>all<%endif%>
 INSTALL_LIB ?= lib
 ifneq ($(INSTALL_PREFIX),)
 ifneq ($(install_rpath),0)
-UNAME := $(shell uname)
-ifeq ($(UNAME), HP-UX)
-LDFLAGS += -Wl,+s,+b,$(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
-else
-ifeq ($(UNAME), Darwin)
-LDFLAGS += -Wl,-rpath $(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
-else
-LDFLAGS += -Wl,-R$(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
-endif
-endif
+LD_RPATH ?= -Wl,-rpath,
+LDFLAGS += $(LD_RPATH)$(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
 endif
 endif
 

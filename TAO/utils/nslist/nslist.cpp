@@ -38,9 +38,9 @@ namespace
   const char
     *myTree = "|",      // Default string to draw tree "tram-lines"
     *myNode = "+";      // Default string to draw tree node end-points
-  int sizeMyTree;       // Initialised by main to strlen (myTree)
-  int sizeMyNode;       // Initialised by main to strlen (myNode)
-  int maxDepth= 0;      // Limit to display depth (default unlimited)
+  size_t sizeMyTree;       // Initialised by main to strlen (myTree)
+  size_t sizeMyNode;       // Initialised by main to strlen (myNode)
+  size_t maxDepth= 0;      // Limit to display depth (default unlimited)
   ACE_Time_Value
     rtt = ACE_Time_Value::zero; // relative roundtrip timeout for ctx
 
@@ -48,7 +48,7 @@ namespace
   CORBA::ULong max_count = MAX_COUNT_DEFAULT;
 
   void list_context (const CosNaming::NamingContext_ptr,
-                     int level,
+                     size_t level,
                      CORBA::ULong max_count);
 
   CORBA::Object_ptr set_rtt(CORBA::Object_ptr obj);
@@ -68,9 +68,9 @@ namespace
       delete pThisOne; // i.e. delete pBottom; Attempt to stop over-optimisation by BORLAND
     }
 
-    static int hasBeenSeen (const CosNaming::NamingContext_ptr nc)
+    static size_t hasBeenSeen (const CosNaming::NamingContext_ptr nc)
     {
-      int level= 1;
+      size_t level = 1;
       for (const NestedNamingContexts *pMyNode= pBottom;
            pMyNode;
            ++level, pMyNode= pMyNode->pNext)
@@ -133,7 +133,7 @@ namespace
 
   //==========================================================================
   void
-  display_endpoint_info (CORBA::Object_ptr obj, const int level)
+  display_endpoint_info (CORBA::Object_ptr obj, const size_t level)
   {
     TAO_Stub *stub = obj->_stubobj ();
     if (!stub)
@@ -162,7 +162,7 @@ namespace
     get_tag_name (tag, tag_name);
 
     ACE_DEBUG ((LM_DEBUG, "\n"));
-    int count;
+    size_t count;
     for (count= 0; count < level; ++count)
       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
     for (count= 0; count < sizeMyNode; ++count)
@@ -186,13 +186,13 @@ namespace
   void
   show_chunk (const CosNaming::NamingContext_ptr nc,
               const CosNaming::BindingList &bl,
-              int level)
+              size_t level)
   {
     for (CORBA::ULong i = 0;
          i < bl.length ();
          ++i)
       {
-        int count;
+        size_t count;
         for (count= 0; count < level-1; ++count)
           ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
         ACE_DEBUG ((LM_DEBUG, "%C %C", myNode,
@@ -240,16 +240,16 @@ namespace
                  ACE_DEBUG ((LM_DEBUG, " {Operation on conext IOR timed out}"));
               }
 
-            if (const int backwards= NestedNamingContexts::hasBeenSeen (xc.in ()))
+            if (const size_t backwards= NestedNamingContexts::hasBeenSeen (xc.in ()))
               {
                 ACE_DEBUG ((LM_DEBUG, " (Binding Loop)\n"));
                 if (!noLoops)
                   {
-                    int count;
+                    size_t count;
                     for (count= 0; count < (level - backwards); ++count)
                       ACE_DEBUG ((LM_DEBUG, "%C ", myTree));
                     ACE_DEBUG ((LM_DEBUG, "^"));
-                    int chars;
+                    size_t chars;
                     while (++count < level)
                       for (chars= 0; chars <= sizeMyTree; ++chars)
                         ACE_DEBUG ((LM_DEBUG, "-"));
@@ -303,7 +303,7 @@ namespace
   //==========================================================================
   void
   list_context (const CosNaming::NamingContext_ptr nc,
-                int level,
+                size_t level,
                 CORBA::ULong max_count)
   {
     CosNaming::BindingIterator_var it;

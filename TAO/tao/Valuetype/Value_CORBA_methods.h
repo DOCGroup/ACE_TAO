@@ -24,13 +24,7 @@
 #include "tao/Basic_Types.h"
 #include "tao/CORBA_methods.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_Valuetype_Export
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 namespace CORBA
 {

@@ -224,7 +224,7 @@ be_visitor_any_extracted_type_decl::visit_typedef (be_typedef *node)
 int
 be_visitor_any_extracted_type_decl::visit_union (be_union *node)
 {
-  os_ << node->full_name () << " * " << var_name_ << " = 0;";
+  os_ << "const " << node->full_name () << " * " << var_name_ << " = 0;";
   return 0;
 }
 

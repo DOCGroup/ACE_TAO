@@ -61,7 +61,7 @@ compilers over the years.
 The <a href="http://www.dre.vanderbilt.edu/">DOC group</a>,
 <a href="http://www.riverace.com/">Riverace</a>,
 <a href="http://www.theaceorb.com/">OCI</a>,
-<a href="http://www.theaceorb.nl/">Remedy IT</a>, and members of the ACE
+<a href="http://www.remedy.nl/">Remedy IT</a>, and members of the ACE
 user community have all contributed ports to make ACE the successful
 and far-reaching toolkit it is today.  Any UNIX/POSIX/Windows
 variation is probably an easy target platform for ACE.  If you have
@@ -70,7 +70,7 @@ compiling the ACE source distribution, please contact one of the
 commercial support companies, or send a copy of the
 <a href="PROBLEM-REPORT-FORM">PROBLEM-REPORT-FORM</a>, located in the
 ACE_wrappers directory, to either the <a href="news:comp.soft-sys.ace">ACE
-Newsgroup</a> or the <a href="mailto:ace-users@cse.wustl.edu">ace-users
+Newsgroup</a> or the <a href="mailto:ace-users@list.isis.vanderbilt.edu">ace-users
 mailing list</a>.
 The DOC groups at Washington University, UC Irvine, and Vanderbilt
 University provide only "best effort" support for non-sponsors for the
@@ -163,7 +163,7 @@ document</a>.</p><p>
         The Intel C++ compiler is supported on
         Windows 32/64bit, Linux IA32/EM64T/IA64, MacOSX.
     </td>
-    <td>Remedy IT <a href="http://www.theaceorb.nl/">web site</a> and
+    <td>Remedy IT <a href="http://www.remedy.nl/">web site</a> and
         the TAO <a href="TAO/TAO-INSTALL.html">install document</a>
     </td>
   </tr>
@@ -234,7 +234,7 @@ HREF="http://downloads.ociweb.com/MPC/docs/html/MakeProjectCreator.html">MPC</A>
 tools (such as GNUmakefiles for UNIX based platforms, sln and vcproj
 files for VC71/VC8 and Embarcadero makefiles) on various platforms. To
 help new users to bootstrap quickly the release bundles of ACE (as
-well as TAO and CIAO) include all needed files to use the build
+well as TAO) include all needed files to use the build
 instructions in this document.
 
 </p>
@@ -312,14 +312,15 @@ per-platform configuration method:</p>
       </blockquote>
       <blockquote>
       BASH or Bourne Shell:
-      <code>ACE_ROOT=/home/cs/faculty/schmidt/ACE_wrappers; export ACE_ROOT
+      <code>export ACE_ROOT=/home/cs/faculty/schmidt/ACE_wrappers
       </code>
       </blockquote>
       <p>
       If you're building a number of versions of ACE, however, (e.g., for
       different OS platforms or for different releases of ACE) you might use
       the following approach (assuming TCSH/CSH):
-      </p><blockquote><code>setenv ACE_ROOT $cwd</code>
+      <blockquote>
+      <code>setenv ACE_ROOT $cwd</code>
       </blockquote>
   </li>
   <li>Create a configuration file, <code>$ACE_ROOT/ace/config.h</code>,
@@ -340,7 +341,7 @@ per-platform configuration method:</p>
       There are config files for most versions of UNIX.  If there
       isn't a version of this file that matches your
       platform/compiler, you'll need to make one.  Please send email
-      to the <a href="mailto:ace-users@cse.wustl.edu">ace-users</a> list
+      to the <a href="mailto:ace-users@list.isis.vanderbilt.edu">ace-users</a> list
       if you get it working so it can be added to the master ACE
       release.</p>
   </li>
@@ -379,6 +380,11 @@ INSTALL_PREFIX = /usr/local
       you probably want to do something like the following:
       <blockquote>
       <code>% setenv LD_LIBRARY_PATH $ACE_ROOT/lib:$LD_LIBRARY_PATH</code></blockquote>
+      </blockquote>
+      or
+      <blockquote>
+      <code>% export LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH</code></blockquote>
+      </blockquote>
   </li>
   <li>When all this is done, hopefully all you'll need to do is type:
       <blockquote>
@@ -640,11 +646,11 @@ to check <a href="#win32nonic">here</a> first. <p>
       create an
       ACE_wrappers directory containing the source.  The ACE_wrappers
       directory will be referred to as ACE_ROOT in the following steps -- so
-      ACE_ROOT\ace would be C:\ACE_wrappers\ace if you uncompressed into the
+      <code>ACE_ROOT\ace</code> would be <code>C:\ACE_wrappers\ace</code> when you uncompressed into the
       root directory.<br>
       <br>
   </li><li>Create a file called <code>config.h</code> in the ACE_ROOT\ace
-      directory that contains: <br>
+      directory that contains at least: <br>
       <br>
       <code>#include "ace/config-win32.h"</code><br>
       <br>
@@ -679,6 +685,10 @@ to check <a href="#win32nonic">here</a> first. <p>
       Set the environment variable below to build a version of ACE with
       Codeguard support. Should only be used when DEBUG is also set<br>
       <code>set CODEGUARD=1</code><br>
+      <br>
+      By default we are using the clang based compilers. At the moment you
+      want to compile using the old bcc32 compiler set the CLASIC environment variable<br>
+      <code>set CLASSIC=1</code><br>
       <br>
       Set the environment variable below to build a version of ACE optimized
       for a certain CPU. For this there are special compiler flags
@@ -1069,7 +1079,7 @@ applications that use it.  Please see below for more information on
 
 A few notes on VxWorks builds (thanks to
 <a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a> and
-<a href="http://www.theaceorb.nl">Remedy IT</a> for these notes):</p>
+<a href="http://www.remedy.nl">Remedy IT</a> for these notes):</p>
 <p>
 </p><ul>
   <li>VxWorks builds are done with a cross compiler, i.e., the compiles
@@ -1330,7 +1340,7 @@ The following, very useful information was contributed by
 <a href="http://people.qualcomm.com/cryan">Chris Ryan</a>
 and <a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a>.
 Please submit corrections, additions, or clarifications to the
-the <a href="mailto:ace-users@cse.wustl.edu">ACE mailing list</a>.<p>
+the <a href="mailto:ace-users@list.isis.vanderbilt.edu">ACE mailing list</a>.<p>
 
 <strong>NOTE:</strong>The make (version 3.74) that is provided with
 Tornado 2.2 cannot be used to build ACE. A working version is available
@@ -1785,7 +1795,12 @@ below.</p>
       <code>out32dll</code> directories.
   <li>Add <code>ssl=1</code> to your MPC
       <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
-      or <code>$ACE_ROOT/local.features</code> file, and re-run MPC to add
+      or <code>$ACE_ROOT/local.features</code> file.
+  <li>At the moment you are using OpenSSL v1.1 or
+      newer also add <code>openssl11=1</code> to your MPC
+      <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
+      or <code>$ACE_ROOT/local.features</code> file.
+  <li>Re-run MPC to add
       support for building the ACE_SSL library to your MSVC++
       workspaces and projects.
   <li>Open the <code>ACE.sln</code> solution, and refer to the ACE build
@@ -2232,7 +2247,7 @@ libraries.
       and earlier with ACE anymore because the compilers delivered with
       5.4 and earlier don't support the C++ features ACE needs.</p><p>
 
-      At this moment <a href="http://www.theaceorb.nl">Remedy IT</a> is upgrading
+      At this moment <a href="http://www.remedy.nl">Remedy IT</a> is upgrading
       and stabilizing ACE/TAO support for Tornado 2.2/VxWorks 5.5.1.
       Since the existing support for previous VxWorks version has been unsupported
       and broken for some time and most (potential) users seem to have upgraded to
@@ -2930,7 +2945,7 @@ show_uninit        Lists all uninitialized in object files built for
 
 </p><hr><p>
 </p><h2><a name="power">Building from git</a></h2>
-If users are building from our <a href="https://github.com/DOCGroup/ATCD">Git repository</a> the
+If users are building from our <a href="https://github.com/DOCGroup/ACE_TAO">Git repository</a> the
 GNUmakefiles, and project files for building on various platforms will
 not be available.  Git users are expected to <a href="#generate_using_mpc">generate them</a>
 using <a href="https://raw.githubusercontent.com/DOCGroup/MPC/master/docs/README">MPC</a> before building ACE, TAO or
@@ -2940,7 +2955,7 @@ quickly.
 <ul>
   <li>You can clone all code easily from our git repository.
   <ul>
-  <code>git clone https://github.com/DOCGroup/ATCD.git</code>
+  <code>git clone https://github.com/DOCGroup/ACE_TAO.git</code>
   </ul>
   </p></li><li>Please make sure that you have <a href="http://www.perl.org/">
   perl</a> installed, preferably perl
@@ -2961,9 +2976,8 @@ quickly.
 
   On Windows, with Visual C++ 7, you must generate solution and project files with MPC:<p>
   <code> $ACE_ROOT/bin/mwc.pl -type vc71 ACE.mwc </code> </p>
-  </li><li>If you want to build TAO+CIAO and its associated libraries
-  please see <a href="TAO/TAO-INSTALL.html">TAO-INSTALL</a><a> and
-  </a><a href="TAO/CIAO/CIAO-INSTALL.html">CIAO-INSTALL</a> for details.
+  </li><li>If you want to build TAO and its associated libraries
+  please see <a href="TAO/TAO-INSTALL.html">TAO-INSTALL</a> for details.
 </li></ul>
 
 <hr><p>

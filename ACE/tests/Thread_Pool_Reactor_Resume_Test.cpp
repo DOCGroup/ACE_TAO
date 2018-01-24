@@ -40,7 +40,7 @@
 
 
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 #include "Thread_Pool_Reactor_Resume_Test.h"
 typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
@@ -66,7 +66,7 @@ static size_t svr_thrno = ACE_MAX_THREADS;
 // Total number of client threads.
 static size_t cli_thrno = ACE_MAX_THREADS ACE_LOAD_FACTOR;
 
-// Total connection attemps of a client thread.
+// Total connection attempts of a client thread.
 static size_t cli_conn_no = ACE_MAX_ITERATIONS ACE_LOAD_FACTOR;
 
 // Total requests a client thread sends.
@@ -376,10 +376,10 @@ run_main (int argc, ACE_TCHAR *argv[])
 int
 run_main (int, ACE_TCHAR *[])
 {
-  ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_Test"));
+  ACE_START_TEST (ACE_TEXT ("Thread_Pool_Reactor_Resume_Test"));
 
   ACE_ERROR ((LM_INFO,
-              "threads not supported on this platform\n"));
+              "threads/accept not supported on this platform\n"));
 
   ACE_END_TEST;
   return 0;

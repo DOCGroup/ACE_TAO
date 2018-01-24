@@ -2,6 +2,8 @@
 #include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.h"
 #include "orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h"
 
+#include "ace/Auto_Ptr.h"
+
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.inl"
 #endif /* __ACE_INLINE__ */

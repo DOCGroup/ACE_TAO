@@ -253,9 +253,9 @@ be_visitor_root_ch::gen_static_corba_overrides (void)
       idl_global->mixed_parentage_interfaces ().dequeue_head (i);
 
       *o_ << be_nl
-          << "TAO_NAMESPACE_STORAGE_CLASS void release ("
+          << "extern " << be_global->stub_export_macro () << " void release ("
           << i->name () << "_ptr);" << be_nl
-          << "TAO_NAMESPACE_STORAGE_CLASS ::CORBA::Boolean is_nil ("
+          << "extern " << be_global->stub_export_macro () << " ::CORBA::Boolean is_nil ("
           << i->name () << "_ptr);";
     }
 

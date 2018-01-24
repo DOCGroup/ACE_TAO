@@ -9,6 +9,7 @@
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/OS_NS_unistd.h"
 
 // The server name of the Aiprlane Server
 const char SERVER_NAME[] = "airplane_server";
@@ -22,6 +23,7 @@ Airplane_Server_i::Airplane_Server_i (void)
     poa_manager_ (),
     server_impl_ (0),
     ior_output_file_ (0),
+    pid_output_file_ (0),
     server_name_(SERVER_NAME)
 {
   // Nothing
@@ -30,7 +32,7 @@ Airplane_Server_i::Airplane_Server_i (void)
 int
 Airplane_Server_i::parse_args (void)
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:s:"));
+  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:s:p:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -46,6 +48,13 @@ Airplane_Server_i::parse_args (void)
                              "Unable to open %s for writing: %p\n",
                              get_opts.opt_arg ()), -1);
         break;
+      case 'p':  // output the pid to a file.
+        this->pid_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
+        if (this->pid_output_file_ == 0)
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to open %s for writing: %p\n",
+                             get_opts.opt_arg ()), -1);
+        break;
       case 's':  // extension to the server name.
         this->server_name_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
         break;
@@ -55,6 +64,7 @@ Airplane_Server_i::parse_args (void)
                            "usage:  %s"
                            " [-d]"
                            " [-o <ior_output_file>]"
+                           " [-p <pid_output_file>]"
                            " [-s <the server name>]"
                            "\n",
                            argv_ [0]),
@@ -132,14 +142,14 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
       CORBA::String_var ior =
         this->orb_->object_to_string (obj.in ());
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "The ImRified IOR is: <%s>\n", ior.in ()));
+        ACE_DEBUG ((LM_DEBUG, "The ImRified IOR is: <%C>\n", ior.in ()));
 
       TAO_Root_POA* tmp_poa = dynamic_cast<TAO_Root_POA*>(airplane_poa_.in());
       obj = tmp_poa->id_to_reference_i (server_id.in (), false);
       CORBA::String_var plain_ior =
         this->orb_->object_to_string (obj.in ());
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "The plain IOR is: <%s>\n", plain_ior.in ()));
+        ACE_DEBUG ((LM_DEBUG, "The plain IOR is: <%C>\n", plain_ior.in ()));
 
       // Note : The IORTable will only be used for those clients who try to
       // invoke indirectly using a simple object_key reference
@@ -158,13 +168,19 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
           ACE_OS::fprintf (this->ior_output_file_, "%s", ior.in ());
           ACE_OS::fclose (this->ior_output_file_);
         }
+
+      if (this->pid_output_file_)
+        {
+          int pid = static_cast<int> (ACE_OS::getpid ());
+          ACE_OS::fprintf (this->pid_output_file_, "%d\n", pid);
+          ACE_OS::fclose (this->pid_output_file_);
+        }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Airplane_Server_i::init");
       throw;
     }
-
 
   return 0;
 }

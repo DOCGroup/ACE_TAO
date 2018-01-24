@@ -19,11 +19,15 @@ class Thread
 {
 public:
   Thread (long tid, const char *alias, size_t offset);
+  void add_time (const ACE_CString &time);
+
   long max_depth (void) const;
   long client_encounters (void) const;
   long server_encounters (void) const;
   long id (void) const;
   const ACE_CString &alias (void) const;
+  void split_filename (char *buff, size_t len) const;
+
   void incoming_from (PeerProcess *);
   void add_invocation (Invocation *);
   void push_invocation (Invocation *);
@@ -36,9 +40,9 @@ public:
   void exit_wait (PeerProcess *, size_t linenum);
   GIOP_Buffer *giop_target (void);
   void set_giop_target (GIOP_Buffer *buffer);
-  void dump_detail (ostream &strm);
+  void dump_summary (ostream &strm);
   void dump_invocations (ostream &strm);
-  void dump_incidents (ostream &strm);
+  void dump_incidents (ostream &strm, const ACE_Time_Value& start);
 
   void get_summary (long &sent_reqs, long &recv_reqs, size_t &sent_size, size_t &recv_size);
 
@@ -74,6 +78,8 @@ private:
   InvocationStack current_invocation_;
   long active_handle_;
   size_t first_line_;
+  ACE_CString first_time_;
+  ACE_CString last_time_;
 };
 
 #endif // LOG_WALKER_THREAD_H

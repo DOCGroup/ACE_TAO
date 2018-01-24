@@ -159,7 +159,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in ());
+        Test::Hello::_unchecked_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {

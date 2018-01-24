@@ -28,7 +28,7 @@ class Updates;
 class Updates_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Contructor.
+  /// Constructor.
   Updates_StructuredPushConsumer (Updates *test_client);
 
   /// Offer change is conveyed here.

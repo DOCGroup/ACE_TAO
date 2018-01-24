@@ -165,7 +165,7 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
     }
 
   const char endpoint_delimiter = ',';
-  // The delimiter used to separate inidividual addresses.
+  // The delimiter used to separate individual addresses.
 
   // Count the number of endpoints in the IOR.  This will be the number
   // of entries in the MProfile.
@@ -502,7 +502,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
         {
           TAO_Connection_Handler *ch = base_transport->connection_handler ();
           // one last check before using the cached connection
-          if (ch->error_detected ())
+          if (ch->error_detected (this->orb_core ()->leader_follower ()))
             {
               if (TAO_debug_level > 0)
                 {

@@ -1,7 +1,6 @@
 # Set the version number here.
-%define ACEVER  6.3.3
-%define TAOVER  2.3.3
-%define CIAOVER 1.3.3
+%define ACEVER  6.4.6
+%define TAOVER  2.4.6
 
 # Conditional build
 # Default values are
@@ -9,7 +8,7 @@
 #                    --with opt          (Optimized build)
 #                    --with zlib         (Zlib compressor)
 #                    --with bzip2        (Bzip2 compressor)
-#                    --with tao          (TAO/CIAO)
+#                    --with tao          (TAO)
 #                    --without fltk      (No ftlk support)
 #                    --without tk        (No tk support)
 #                    --without xt        (No xt support)
@@ -75,7 +74,7 @@ Group:        Development/Libraries/C and C++
 URL:          http://www.dre.vanderbilt.edu/~schmidt/ACE.html
 License:      DOC License
 %if 0%{?_with_tao:1}%{?_without_tao:0}
-Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO+CIAO-src-%{ACEVER}.tar.gz
+Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO-src-%{ACEVER}.tar.gz
 %else
 Source0:      http://download.dre.vanderbilt.edu/previous_versions/ACE-src-%{ACEVER}.tar.gz
 %endif
@@ -823,8 +822,6 @@ export MPC_ROOT=$ACE_ROOT/MPC
 export LD_LIBRARY_PATH=$ACE_ROOT/lib
 %if 0%{?_with_tao:1}%{?_without_tao:0}
 export TAO_ROOT=$ACE_ROOT/TAO
-export CIAO_ROOT=$TAO_ROOT/CIAO
-export DANCE_ROOT=$TAO_ROOT/DAnCE
 %endif
 
 # Dump the g++ versions, in case the g++ version is broken we can
@@ -1003,15 +1000,12 @@ make %{?_smp_mflags} -C $ACE_ROOT
 
 %define ACEVERSO %{ACEVER}
 %define TAOVERSO %{TAOVER}
-%define CIAOVERSO %{CIAOVER}
 
 %install
 
 export ACE_ROOT=$(pwd)
 %if 0%{?_with_tao:1}%{?_without_tao:0}
 export TAO_ROOT=$ACE_ROOT/TAO
-export CIAO_ROOT=$TAO_ROOT/CIAO
-export DANCE_ROOT=$TAO_ROOT/DAnCE
 %endif
 
 # ---------------- Runtime Components ----------------
@@ -1138,6 +1132,8 @@ echo ace/QtReactor/QtReactor.h >> allhdrs.list
 echo TAO/tao/QtResource/QtResource_Factory.h >> allhdrs.list
 echo TAO/tao/QtResource/QtResource_Loader.h >> allhdrs.list
 echo TAO/tao/PortableServer/get_arg.h >> allhdrs.list
+echo TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.{h,inl,cpp} >> allhdrs.list
+echo TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.{h,inl,cpp} >> allhdrs.list
 %endif
 
 # Install headers and create header lists

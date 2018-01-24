@@ -197,6 +197,8 @@ class ACE_Export ACE_Object_Manager : public ACE_Object_Manager_Base
 {
 
 public:
+  ACE_ALLOC_HOOK_DECLARE;
+
   /**
    * Explicitly initialize (construct the singleton instance of) the
    * ACE_Object_Manager.  Returns 0 on success, -1 on failure, and 1

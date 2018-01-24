@@ -30,6 +30,9 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_netdb.h"
 
+#include <clocale>
+#include <cmath>
+#include <limits>
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \
   ((X)                                                          \
@@ -66,7 +69,7 @@ access_test (void)
 int
 rename_test (void)
 {
-#if defined (ACE_VXWORKS)
+#if defined (ACE_LACKS_RENAME) || defined (ACE_VXWORKS)
   // On VxWorks only some filesystem drivers support rename
   // and as we do not know which is used, skip the test here
   ACE_ERROR_RETURN ((LM_INFO,
@@ -91,7 +94,7 @@ rename_test (void)
                        ACE_TEXT ("fopen")),
                       -1);
   // Write something in the old_file so it has non-zero length
-  ACE_OS::fputs (ACE_TEXT ("this is a test\n"), f);
+  ACE_OS::fwrite (ACE_TEXT ("this is a test\n"), sizeof (ACE_TCHAR), 15, f);
   ACE_OS::fclose (f);
   f = ACE_OS::fopen (new_file, ACE_TEXT ("w+"));
   if (f == 0)
@@ -571,8 +574,10 @@ string_emulation_test (void)
 }
 
 // Test ACE_OS::snprintf
+typedef int (*SNPrintF_t) (char *buf, size_t maxlen, const char *format, ...);
+
 int
-snprintf_test (void)
+snprintf_test (SNPrintF_t fn)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing snprintf\n")));
 
@@ -582,7 +587,7 @@ snprintf_test (void)
   int retval;
 
   ACE_OS::memset(buf, 0xab, 2*BUFFER_SIZE);
-  retval = ACE_OS::snprintf (buf, BUFFER_SIZE, "%d", 123);
+  retval = fn (buf, BUFFER_SIZE, "%d", 123);
   if (retval != 3)
     {
       ACE_ERROR ((LM_ERROR,
@@ -592,7 +597,7 @@ snprintf_test (void)
     }
 
   ACE_OS::memset(buf, 0xab, 2*BUFFER_SIZE);
-  retval = ACE_OS::snprintf (buf, BUFFER_SIZE, "%d", 1234);
+  retval = fn (buf, BUFFER_SIZE, "%d", 1234);
 
   // HP-UX has broken vsnprintf
 #if !defined (HPUX)
@@ -619,7 +624,7 @@ snprintf_test (void)
     }
 
   ACE_OS::memset(buf, 0xab, 2*BUFFER_SIZE);
-  retval = ACE_OS::snprintf (buf, BUFFER_SIZE, "%d", 12345);
+  retval = fn (buf, BUFFER_SIZE, "%d", 12345);
   if (retval != 5)
     {
       ACE_ERROR ((LM_ERROR,
@@ -690,6 +695,31 @@ compiler_test (void)
     ACE::compiler_beta_version ()));
 
   return 0;
+}
+
+static int
+version_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing version macros\n")));
+
+  int code = ACE_MAKE_VERSION_CODE(ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_MICRO_VERSION);
+  bool run_time_check = code == ACE_VERSION_CODE;
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE release time version code: %d, runtime version code: %d, %s\n"),
+              ACE_VERSION_CODE, code, run_time_check ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
+
+  // Compile time check. Check we have ACE version 6.x
+#if ACE_VERSION_CODE > ACE_MAKE_VERSION_CODE(5, 88, 99)
+  bool compile_time_check = true;
+#else
+  bool compile_time_check = false;
+#endif
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Compile time version check, %s\n"),
+              compile_time_check ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
+
+  if(run_time_check && compile_time_check)
+    return 0;
+  return 1;
 }
 
 static int
@@ -1369,6 +1399,190 @@ log2_test (void)
   return error_count;
 }
 
+#if defined (ACE_HAS_VSNPRINTF_EMULATION)
+int snprintf_emulation (char *buf, size_t maxlen, const char *format, ...)
+{
+  va_list ap;
+  va_start (ap, format);
+  const int ret = ACE_OS::vsnprintf_emulation (buf, maxlen, format, ap);
+  va_end (ap);
+  return ret;
+}
+
+#define TEST_STR_EQUAL(LHS, RHS)                                              \
+  if (ACE_OS::strcmp ((LHS), (RHS))) {                                        \
+    failed = true;                                                            \
+    ACE_ERROR ((LM_ERROR, "Test assertion FAILED {%C} != {%C} at line %l\n",  \
+                (LHS), (RHS)));                                               \
+  }
+
+#define TEST_INT_EQUAL(LHS, RHS)                                              \
+  if (!((LHS) == (RHS))) {                                                    \
+    failed = true;                                                            \
+    ACE_ERROR ((LM_ERROR, "Test assertion FAILED %d != %d at line %l\n",      \
+                (LHS), (RHS)));                                               \
+  }
+
+#define EXPECTED_RESULT(STR)                          \
+  TEST_INT_EQUAL (ACE_OS::strlen (STR), size_t (ret)) \
+  TEST_STR_EQUAL (STR, buf)
+
+#define EXPECTED_RESULTS(STR_A, STR_B)                                        \
+  if (ACE_OS::strcmp ((STR_A), (buf)) && ACE_OS::strcmp ((STR_B), (buf))) {   \
+    failed = true;                                                            \
+    ACE_ERROR ((LM_ERROR, "Test assertion FAILED {%C} != {%C} and "           \
+                          "{%C} != {%C} at line %l\n",                        \
+                (STR_A), (buf), (STR_B), (buf)));                             \
+  }
+
+#define EXPECTED_RESULT_LEN(STR, LEN)         \
+  TEST_INT_EQUAL (LEN, ret)                   \
+  TEST_STR_EQUAL (STR, buf)
+
+#define LOG_RESULT(STR)                                                     \
+  ACE_DEBUG ((LM_DEBUG, "Locale-dependent snprintf could be {%C}, was {%C}" \
+                        " at line %l\n", (STR), buf));
+
+int snprintf_emulation_test ()
+{
+  bool failed = false;
+  char buf[BUFSIZ];
+
+  int ret = snprintf_emulation (buf, sizeof buf, "[%d]", 314); EXPECTED_RESULT ("[314]");
+  ret = snprintf_emulation (buf, sizeof buf, "[%i] %% [%u]", -314, 314); EXPECTED_RESULT ("[-314] % [314]");
+  ret = snprintf_emulation (buf, sizeof buf, "%5d", 414); EXPECTED_RESULT ("  414");
+  ret = snprintf_emulation (buf, sizeof buf, "%05d", 414); EXPECTED_RESULT ("00414");
+  ret = snprintf_emulation (buf, sizeof buf, "%*d", 5, 414); EXPECTED_RESULT ("  414");
+  ret = snprintf_emulation (buf, sizeof buf, "%-*d", 5, 414); EXPECTED_RESULT ("414  ");
+  ret = snprintf_emulation (buf, sizeof buf, "%5i", -414); EXPECTED_RESULT (" -414");
+  ret = snprintf_emulation (buf, sizeof buf, "%05i", -414); EXPECTED_RESULT ("-0414");
+  ret = snprintf_emulation (buf, sizeof buf, "%2d", -414); EXPECTED_RESULT ("-414");
+  ret = snprintf_emulation (buf, sizeof buf, "%.4d", -414); EXPECTED_RESULT ("-0414");
+  ret = snprintf_emulation (buf, sizeof buf, "%6.4d", -314); EXPECTED_RESULT (" -0314");
+  ret = snprintf_emulation (buf, sizeof buf, "%.4i", 314); EXPECTED_RESULT ("0314");
+  ret = snprintf_emulation (buf, sizeof buf, "%6.4u", 414); EXPECTED_RESULT ("  0414");
+  ret = snprintf_emulation (buf, sizeof buf, "%.d", 0); EXPECTED_RESULT ("");
+  ret = snprintf_emulation (buf, sizeof buf, "% .0d", 0); EXPECTED_RESULT (" ");
+  ret = snprintf_emulation (buf, sizeof buf, "%d", 0); EXPECTED_RESULT ("0");
+  ret = snprintf_emulation (buf, sizeof buf, "%+d", 0); EXPECTED_RESULT ("+0");
+  ret = snprintf_emulation (buf, sizeof buf, "% d", 0); EXPECTED_RESULT (" 0");
+
+  ret = snprintf_emulation (buf, sizeof buf, "%04o", 0755); EXPECTED_RESULT ("0755");
+  ret = snprintf_emulation (buf, sizeof buf, "%#o", 0644); EXPECTED_RESULT ("0644");
+  ret = snprintf_emulation (buf, sizeof buf, "%#.o", 0); EXPECTED_RESULT ("0");
+  ret = snprintf_emulation (buf, sizeof buf, "%#.5o", 0644); EXPECTED_RESULT ("00644");
+
+  ret = snprintf_emulation (buf, sizeof buf, "%x", 0x987abc); EXPECTED_RESULT ("987abc");
+  ret = snprintf_emulation (buf, sizeof buf, "%X", 0x987abc); EXPECTED_RESULT ("987ABC");
+  ret = snprintf_emulation (buf, sizeof buf, "%02x", 0); EXPECTED_RESULT ("00");
+  ret = snprintf_emulation (buf, sizeof buf, "%-#10x", 0x987abc); EXPECTED_RESULT ("0x987abc  ");
+  ret = snprintf_emulation (buf, sizeof buf, "%#10X", 0x987abc); EXPECTED_RESULT ("  0X987ABC");
+  ret = snprintf_emulation (buf, sizeof buf, "%#X", 0); EXPECTED_RESULT ("0");
+  ret = snprintf_emulation (buf, sizeof buf, "%#.X", 0); EXPECTED_RESULT ("");
+  ret = snprintf_emulation (buf, sizeof buf, "%#05x", 20); EXPECTED_RESULT ("0x014");
+  ret = snprintf_emulation (buf, sizeof buf, "%#.3X", 20); EXPECTED_RESULT ("0X014");
+  ret = snprintf_emulation (buf, sizeof buf, "%#6.3X", 20); EXPECTED_RESULT (" 0X014");
+  ret = snprintf_emulation (buf, sizeof buf, "%#-6.3X", 20); EXPECTED_RESULT ("0X014 ");
+
+  ret = snprintf_emulation (buf, sizeof buf, "%c", 'a'); EXPECTED_RESULT ("a");
+  ret = snprintf_emulation (buf, sizeof buf, "%2c", 'b'); EXPECTED_RESULT (" b");
+  ret = snprintf_emulation (buf, sizeof buf, "%-2c", 'c'); EXPECTED_RESULT ("c ");
+  ret = snprintf_emulation (buf, sizeof buf, "%-2s", "d"); EXPECTED_RESULT ("d ");
+  ret = snprintf_emulation (buf, sizeof buf, "%2s", "e"); EXPECTED_RESULT (" e");
+  ret = snprintf_emulation (buf, sizeof buf, "%2.1s", "fg"); EXPECTED_RESULT (" f");
+  ret = snprintf_emulation (buf, sizeof buf, "%-2.1s", "gh"); EXPECTED_RESULT ("g ");
+  ret = snprintf_emulation (buf, sizeof buf, "%.s", "x"); EXPECTED_RESULT ("");
+  ret = snprintf_emulation (buf, sizeof buf, "%-4.9s", "hi"); EXPECTED_RESULT ("hi  ");
+  ret = snprintf_emulation (buf, sizeof buf, "%.s", "x"); EXPECTED_RESULT ("");
+
+  int n;
+  ret = snprintf_emulation (buf, sizeof buf, "%-5.2s%n %s", "jkl", &n, "lmn"); EXPECTED_RESULT ("jk    lmn");
+  ret = snprintf_emulation (buf, sizeof buf, "%0-3.2i", n); EXPECTED_RESULT ("05 ");
+
+  ret = snprintf_emulation (buf, sizeof buf, "%p", reinterpret_cast<void *> (0x1234abc)); EXPECTED_RESULT ("0x1234abc");
+  ret = snprintf_emulation (buf, sizeof buf, "%12p", reinterpret_cast<void *> (0x1234abc)); EXPECTED_RESULT ("   0x1234abc");
+  ret = snprintf_emulation (buf, sizeof buf, "%-12p", reinterpret_cast<void *> (0x1234abc)); EXPECTED_RESULT ("0x1234abc   ");
+
+  ret = snprintf_emulation (buf, sizeof buf, "%hhu", 0x101); EXPECTED_RESULT ("1");
+  ret = snprintf_emulation (buf, sizeof buf, "%hu", 0x10002); EXPECTED_RESULT ("2");
+  ret = snprintf_emulation (buf, sizeof buf, "%#lx", 0x87654321ul); EXPECTED_RESULT ("0x87654321");
+  ret = snprintf_emulation (buf, sizeof buf, "%llu", 612578912487901265ull); EXPECTED_RESULT ("612578912487901265");
+
+  ret = snprintf_emulation (buf, sizeof buf, "%-+010.7d", 98765); EXPECTED_RESULT ("+0098765  ");
+  ret = snprintf_emulation (buf, 10, "%-+010.7d", 98765); EXPECTED_RESULT_LEN ("+0098765 ", 10);
+
+  ret = snprintf_emulation (buf, sizeof buf, "%f", 3.14); EXPECTED_RESULT ("3.140000");
+  ret = snprintf_emulation (buf, sizeof buf, "%10f", -3.14); EXPECTED_RESULT (" -3.140000");
+  ret = snprintf_emulation (buf, sizeof buf, "%+-10F", 3.14); EXPECTED_RESULT ("+3.140000 ");
+  ret = snprintf_emulation (buf, sizeof buf, "%010f", -3.14); EXPECTED_RESULT ("-03.140000");
+  ret = snprintf_emulation (buf, sizeof buf, "% f", 3.14); EXPECTED_RESULT (" 3.140000");
+  ret = snprintf_emulation (buf, sizeof buf, "% f", HUGE_VAL); EXPECTED_RESULT (" inf");
+  ret = snprintf_emulation (buf, sizeof buf, "%f", -HUGE_VAL); EXPECTED_RESULT ("-inf");
+  ret = snprintf_emulation (buf, sizeof buf, "%#F", HUGE_VAL); EXPECTED_RESULT ("INF");
+  ret = snprintf_emulation (buf, sizeof buf, "%5F", -HUGE_VAL); EXPECTED_RESULT (" -INF");
+#ifndef ACE_LYNXOS_MAJOR
+  ret = snprintf_emulation (buf, sizeof buf, "%f", std::numeric_limits<double>::quiet_NaN ()); EXPECTED_RESULTS ("nan", "-nan");
+  ret = snprintf_emulation (buf, sizeof buf, "%+F", std::numeric_limits<double>::quiet_NaN ()); EXPECTED_RESULTS ("+NAN", "-NAN");
+#endif
+  ret = snprintf_emulation (buf, sizeof buf, "%.f", 2.17); EXPECTED_RESULT ("2");
+  ret = snprintf_emulation (buf, sizeof buf, "%#.f", 2.17); EXPECTED_RESULT ("2.");
+  ret = snprintf_emulation (buf, sizeof buf, "%.1f", 18.); EXPECTED_RESULT ("18.0");
+  ret = snprintf_emulation (buf, sizeof buf, "%.1f", .9); EXPECTED_RESULT ("0.9");
+  ret = snprintf_emulation (buf, sizeof buf, "%.2f", .01); EXPECTED_RESULT ("0.01");
+
+  ret = snprintf_emulation (buf, sizeof buf, "%.2e", .01); EXPECTED_RESULT ("1.00e-02");
+  ret = snprintf_emulation (buf, sizeof buf, "%#.E", .01); EXPECTED_RESULT ("1.E-02");
+  ret = snprintf_emulation (buf, sizeof buf, "%+.E", .01); EXPECTED_RESULT ("+1E-02");
+  ret = snprintf_emulation (buf, sizeof buf, "%e", 3.14159265); EXPECTED_RESULT ("3.141592e+00");
+  ret = snprintf_emulation (buf, sizeof buf, "% .e", 0.); EXPECTED_RESULT (" 0e+00");
+  ret = snprintf_emulation (buf, sizeof buf, "% -8.e", 0.); EXPECTED_RESULT (" 0e+00  ");
+
+#if !defined _MSC_VER || ACE_CC_MAJOR_VERSION > 7
+  ret = snprintf_emulation (buf, sizeof buf, "% -11.2e", -0.); EXPECTED_RESULT ("-0.00e+00  ");
+#endif
+
+  ret = snprintf_emulation (buf, sizeof buf, "%.E", 9e101); EXPECTED_RESULTS ("9E+101", "8E+101"); // could be rounded
+
+  ret = snprintf_emulation (buf, sizeof buf, "%g", 3.); EXPECTED_RESULT ("3");
+  ret = snprintf_emulation (buf, sizeof buf, "%g", 3.000001); EXPECTED_RESULT ("3");
+  ret = snprintf_emulation (buf, sizeof buf, "%.6g", 3.000001); EXPECTED_RESULT ("3");
+  ret = snprintf_emulation (buf, sizeof buf, "%G", 3000000.1); EXPECTED_RESULT ("3E+06");
+  ret = snprintf_emulation (buf, sizeof buf, "%+#g", 3000000.1); EXPECTED_RESULT ("+3.00000e+06");
+  ret = snprintf_emulation (buf, sizeof buf, "%G", -3000010.); EXPECTED_RESULTS ("-3.00001E+06", "-3E+06");
+  ret = snprintf_emulation (buf, sizeof buf, "%g", .0001); EXPECTED_RESULT ("0.0001");
+  ret = snprintf_emulation (buf, sizeof buf, "%- g", .00001); EXPECTED_RESULT (" 1e-05");
+
+  ret = snprintf_emulation (buf, sizeof buf, "%a", 4.); EXPECTED_RESULT ("0x8p-1");
+  ret = snprintf_emulation (buf, sizeof buf, "%#a", 4.); EXPECTED_RESULT ("0x8.p-1");
+  ret = snprintf_emulation (buf, sizeof buf, "%A", -3.125); EXPECTED_RESULT ("-0XC.8P-2");
+  ret = snprintf_emulation (buf, sizeof buf, "%+a", 0.); EXPECTED_RESULT ("+0x0p+0");
+  ret = snprintf_emulation (buf, sizeof buf, "%+-10.1a", 0.); EXPECTED_RESULT ("+0x0.0p+0 ");
+  ret = snprintf_emulation (buf, sizeof buf, "%0+10.1a", 0.); EXPECTED_RESULT ("+0x00.0p+0");
+  ret = snprintf_emulation (buf, sizeof buf, "% 09A", 16.625); EXPECTED_RESULT (" 0X8.5P+1");
+  ret = snprintf_emulation (buf, sizeof buf, "% 010a", 16.625); EXPECTED_RESULT (" 0x08.5p+1");
+
+  ret = snprintf_emulation (buf, sizeof buf, "%%%d%#x", 1, 2); EXPECTED_RESULT ("%10x2");
+  ret = snprintf_emulation (buf, sizeof buf, "foo %%%% bar"); EXPECTED_RESULT ("foo %% bar");
+  ret = snprintf_emulation (buf, sizeof buf, ""); EXPECTED_RESULT ("");
+  ret = snprintf_emulation (buf, sizeof buf, "foo"); EXPECTED_RESULT ("foo");
+
+  ret = snprintf_emulation (buf, sizeof buf, "%'d", 12345); LOG_RESULT ("12,345");
+  ret = snprintf_emulation (buf, sizeof buf, "%'d", 123456); LOG_RESULT ("123,456");
+  ret = snprintf_emulation (buf, sizeof buf, "%'d", 1234567890); LOG_RESULT ("1,234,567,890");
+  ret = snprintf_emulation (buf, sizeof buf, "%'.f", 12345.); LOG_RESULT ("12,345");
+  ret = snprintf_emulation (buf, sizeof buf, "%'.f", 1234567890.); LOG_RESULT ("1,234,567,890");
+  ret = snprintf_emulation (buf, sizeof buf, "%'.6d", 12345); LOG_RESULT ("012,345");
+  ret = snprintf_emulation (buf, sizeof buf, "%0'8d", 12345); LOG_RESULT ("0012,345");
+
+  ret = snprintf_emulation (buf, sizeof buf, "a%%b%2$*3$.*1$s %%%%%%%4$*3$.*1$s", 3, "cdef", 4, "fgh"); EXPECTED_RESULT ("a%b cde %%% fgh");
+  ret = snprintf_emulation (buf, sizeof buf, "%3$d %6$d %5$d %4$d %8$d %9$d %7$d %1$d %2$d %10$d %11$d", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11); EXPECTED_RESULT ("3 6 5 4 8 9 7 1 2 10 11");
+  ret = snprintf_emulation (buf, sizeof buf, "%2$0*1$d %3$.*1$f %1$.*2$d", 3, 2, 3.1); EXPECTED_RESULT ("002 3.100 03");
+  ret = snprintf_emulation (buf, sizeof buf, "%2$#*1$x", -4, 10); EXPECTED_RESULT ("0xa ");
+
+  return failed ? 1 : 0;
+}
+#endif // ACE_HAS_VSNPRINTF_EMULATION
+
 int
 swab_test (void)
 {
@@ -1393,9 +1607,31 @@ swab_test (void)
 }
 
 int
+gai_strerror_test (void)
+{
+  ACE_DEBUG ((LM_DEBUG,
+              ACE_TEXT ("Testing gai_strerror method\n")));
+
+  const ACE_TCHAR* error_text = ACE_OS::gai_strerror (EAI_FAMILY);
+
+  ACE_UNUSED_ARG (error_text);
+
+  return 0;
+}
+
+int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("OS_Test"));
+
+  // Enable a locale that has digit grouping so that snprintf's %'d is
+  // different than %d.  If the locale is not available the test won't
+  // fail (log file needs to be examined to check formatting).
+#ifdef ACE_WIN32
+  std::setlocale(LC_NUMERIC, "en-US");
+#elif defined ACE_LINUX
+  std::setlocale(LC_NUMERIC, "en_US.utf8");
+#endif
 
   int status = 0;
   int result;
@@ -1409,10 +1645,16 @@ run_main (int, ACE_TCHAR *[])
   if ((result = string_emulation_test ()) != 0)
     status = result;
 
-#if !defined (ACE_LACKS_VSNPRINTF) || defined (ACE_HAS_TRIO)
-  if ((result = snprintf_test ()) != 0)
+  if ((result = snprintf_test (ACE_OS::snprintf)) != 0)
     status = result;
-#endif /* !ACE_LACKS_VSNPRINTF || ACE_HAS_TRIO */
+
+#if defined (ACE_HAS_VSNPRINTF_EMULATION)
+  if ((result = snprintf_test (snprintf_emulation)) != 0)
+    status = result;
+
+  if ((result = snprintf_emulation_test ()) != 0)
+    status = result;
+#endif
 
   if ((result = getpwnam_r_test ()) != 0)
     status = result;
@@ -1463,6 +1705,12 @@ run_main (int, ACE_TCHAR *[])
       status = result;
 
   if ((result = compiler_test ()) != 0)
+      status = result;
+
+  if ((result = version_test ()) != 0)
+      status = result;
+
+  if ((result = gai_strerror_test   ()) != 0)
       status = result;
 
   ACE_END_TEST;

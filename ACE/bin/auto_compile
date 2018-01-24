@@ -3,8 +3,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     if 0;
 
 # -*- perl -*-
-# $Id$
-#
 # This script checkouts ACE from CVS, updates the "clone" directory,
 # compiles $ACE_ROOT/ace and $ACE_ROOT/tests and finally runs
 # $ACE_ROOT/tests/run_tests.sh.
@@ -17,7 +15,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 # This script requires Perl5.
 #
 # TODO: Modify the script or split it in such a way that the main copy
-# can be obtained either using cvs or downloading the lastest beta
+# can be obtained either using cvs or downloading the latest beta
 # from the WWW.
 #
 
@@ -208,7 +206,7 @@ if ($debug) {
 
 } else {
   $config_list->load ($CHECKOUT . '/' . $MODULE . '/' . 'build/' . $BUILD . '/bin/auto_run_tests.lst');
-  
+
   @RUN_LIST = $config_list->valid_entries ();
 }
 
@@ -247,7 +245,7 @@ sub copy_logs {
 }
 
 sub report_errors {
-  
+
   # First clear the lock, so the next execution works...
   unlink $disable_file; # Ignore errors!
 
@@ -273,7 +271,7 @@ sub report_errors {
 	  close (MAIL); # Ignore errors....
 	}
   }
-  
+
   # Now send the complete log to bugzilla...
   if ($copy_logs) {
     copy_logs ();

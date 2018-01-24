@@ -54,7 +54,11 @@ ACE_OS::access (const char *path, int amode)
 #  endif  /* ACE_HAS_ACCESS_EMULATION */
 #elif defined(ACE_WIN32)
   // Windows doesn't support checking X_OK(6)
-  ACE_OSCALL_RETURN (::access (path, amode & 6), int, -1);
+#  if defined (ACE_ACCESS_EQUIVALENT)
+     ACE_OSCALL_RETURN (ACE_ACCESS_EQUIVALENT (path, amode & 6), int, -1);
+#  else
+     ACE_OSCALL_RETURN (::access (path, amode & 6), int, -1);
+#  endif
 #else
   ACE_OSCALL_RETURN (::access (path, amode), int, -1);
 #endif /* ACE_LACKS_ACCESS */
@@ -124,6 +128,8 @@ ACE_OS::chdir (const char *path)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_NONCONST_CHDIR)
   ACE_OSCALL_RETURN (::chdir (const_cast<char *> (path)), int, -1);
+#elif defined (ACE_CHDIR_EQUIVALENT)
+  ACE_OSCALL_RETURN (ACE_CHDIR_EQUIVALENT (path), int, -1);
 #else
   ACE_OSCALL_RETURN (::chdir (path), int, -1);
 #endif /* ACE_HAS_NONCONST_CHDIR */
@@ -151,6 +157,8 @@ ACE_OS::rmdir (const char *path)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (ACE_TEXT_CHAR_TO_TCHAR(path)),
                                           ace_result_),
                         int, -1);
+#elif defined (ACE_RMDIR_EQUIVALENT)
+  ACE_OSCALL_RETURN (ACE_RMDIR_EQUIVALENT (path), int, -1);
 #else
   ACE_OSCALL_RETURN (::rmdir (path), int, -1);
 #endif /* ACE_WIN32 */
@@ -323,7 +331,7 @@ ACE_OS::execvp (const char *file,
                 char *const argv[])
 {
   ACE_OS_TRACE ("ACE_OS::execvp");
-#if defined (ACE_LACKS_EXEC)
+#if defined (ACE_LACKS_EXEC) || defined (ACE_LACKS_EXECVP)
   ACE_UNUSED_ARG (file);
   ACE_UNUSED_ARG (argv);
 
@@ -403,7 +411,11 @@ ACE_OS::getcwd (char *buf, size_t size)
   ACE_UNUSED_ARG (size);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_WIN32)
+#  if defined (ACE_GETCWD_EQUIVALENT)
+  return ACE_GETCWD_EQUIVALENT (buf, static_cast<int> (size));
+#  else
   return ::getcwd (buf, static_cast<int> (size));
+#  endif
 #else
   ACE_OSCALL_RETURN (::getcwd (buf, size), char *, 0);
 #endif /* ACE_LACKS_GETCWD */
@@ -919,10 +931,7 @@ ACE_INLINE int
 ACE_OS::sleep (u_int seconds)
 {
   ACE_OS_TRACE ("ACE_OS::sleep");
-#if defined (ACE_WIN32)
-  ::Sleep (seconds * ACE_ONE_SECOND_IN_MSECS);
-  return 0;
-#elif defined (ACE_HAS_CLOCK_GETTIME)
+#if defined (ACE_HAS_CLOCK_GETTIME)
   struct timespec rqtp;
   // Initializer doesn't work with Green Hills 1.8.7
   rqtp.tv_sec = seconds;
@@ -930,6 +939,12 @@ ACE_OS::sleep (u_int seconds)
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_OSCALL_RETURN (::nanosleep (&rqtp, 0), int, -1);
   //FUZZ: enable check_for_lack_ACE_OS
+#elif defined (ACE_LACKS_SLEEP)
+  ACE_UNUSED_ARG (seconds);
+  ACE_NOTSUP_RETURN (-1);
+#elif defined (ACE_WIN32)
+  ::Sleep (seconds * ACE_ONE_SECOND_IN_MSECS);
+  return 0;
 #else
   ACE_OSCALL_RETURN (::sleep (seconds), int, -1);
 #endif /* ACE_WIN32 */
@@ -1008,7 +1023,11 @@ ACE_OS::swab (const void *src,
   char *to = static_cast<char *> (dest);
 #  if defined (ACE_HAS_INT_SWAB)
   int ilength = ACE_Utils::truncate_cast<int> (length);
+#    if defined (ACE_SWAB_EQUIVALENT)
+  ACE_SWAB_EQUIVALENT (from, to, ilength);
+#    else
   ::swab (from, to, ilength);
+#    endif
 #  else
   ::swab (from, to, length);
 #  endif /* ACE_HAS_INT_SWAB */
@@ -1162,6 +1181,8 @@ ACE_OS::unlink (const char *path)
 # elif defined (ACE_LACKS_UNLINK)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
+# elif defined (ACE_UNLINK_EQUIVALENT)
+  ACE_OSCALL_RETURN (ACE_UNLINK_EQUIVALENT (path), int, -1);
 # else
   ACE_OSCALL_RETURN (::unlink (path), int, -1);
 # endif /* ACE_HAS_NONCONST_UNLINK */

@@ -33,7 +33,7 @@ class TAO_Notify_Builder;
 /**
  * @class TAO_Notify_Properties
  *
- * @brief Global properties that strategize Notify's run-time behaviour.
+ * @brief Global properties that strategize Notify's run-time behavior.
  */
 class TAO_Notify_Serv_Export TAO_Notify_Properties
 {

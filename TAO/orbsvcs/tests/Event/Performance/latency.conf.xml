@@ -1,7 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/tests/Event/Performance/latency.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
  <!--  tp is now the default reactor type -->
  <!--  static Resource_Factory "-ORBReactorType tp" -->
  <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler RW"/>

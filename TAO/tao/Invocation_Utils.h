@@ -29,7 +29,7 @@ namespace TAO
       /// Initial state of the FSM in the invocation class.
       TAO_INVOKE_START = 0,
       /// The request must be restarted, a temporary failure has
-      /// occured.
+      /// occurred.
       TAO_INVOKE_RESTART,
       /// invoke() call successful. Final state of the FSM.
       TAO_INVOKE_SUCCESS,

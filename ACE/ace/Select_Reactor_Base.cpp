@@ -18,6 +18,10 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor_Notify)
+ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor_Handler_Repository)
+ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor_Handler_Repository_Iterator)
+
 template<typename iterator>
 inline ACE_Event_Handler *
 ACE_SELECT_REACTOR_EVENT_HANDLER (iterator i)
@@ -525,8 +529,6 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_ALLOC_HOOK_DEFINE(ACE_Select_Reactor_Handler_Repository_Iterator)
-
 ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify (void)
   : select_reactor_ (0)
   , max_notify_iterations_ (-1)
@@ -608,9 +610,16 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 
       if (this->notification_pipe_.open () == -1)
         return -1;
-#if defined (F_SETFD)
-      ACE_OS::fcntl (this->notification_pipe_.read_handle (), F_SETFD, 1);
-      ACE_OS::fcntl (this->notification_pipe_.write_handle (), F_SETFD, 1);
+#if defined (F_SETFD) && !defined (ACE_LACKS_FCNTL)
+      if (ACE_OS::fcntl (this->notification_pipe_.read_handle (), F_SETFD, 1) == -1)
+        {
+          return -1;
+        }
+
+      if (ACE_OS::fcntl (this->notification_pipe_.write_handle (), F_SETFD, 1) == -1)
+        {
+          return -1;
+        }
 #endif /* F_SETFD */
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
@@ -618,6 +627,13 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
         {
           return -1;
         }
+
+# if defined (ACE_LACKS_LISTEN) && defined (ACE_LACKS_SOCKETPAIR) \
+  && !defined (ACE_HAS_STREAM_PIPES)
+      if (ACE::set_flags (this->notification_pipe_.write_handle (),
+                          ACE_NONBLOCK) == -1)
+        return -1;
+# endif
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
       // There seems to be a Win32 bug with this...  Set this into

@@ -197,7 +197,7 @@ Manager::shut_down (void)
       Worker *worker = (*worker_ptr);
       ACE_Thread_ID id = thread_id (worker);
       char buf [65];
-      id.to_string (buf);
+      id.to_string (buf, 65);
       ACE_DEBUG ((LM_DEBUG,
                  ACE_TEXT ("(%t) Attempting shutdown of %C\n"),
                  buf));

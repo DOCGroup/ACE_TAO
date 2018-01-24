@@ -651,7 +651,6 @@ LoggingWorker::LoggingWorker(TAO_Notify_Service_Driver* ns)
 {
 }
 
-
 void
 LoggingWorker::start ()
 {
@@ -695,7 +694,7 @@ LoggingWorker::svc (void)
   if (TAO_debug_level > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t)Running logging reactor \n")));
+                  ACE_TEXT ("(%P|%t) Running logging reactor \n")));
     }
   started_ = true;
   this->logging_reactor_.run_event_loop();

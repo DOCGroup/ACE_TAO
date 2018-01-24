@@ -263,7 +263,7 @@ TAO_Property_Evaluator::property_value (int index)
   else if (this->supports_dp_)
     {
       // Property is defined at this point.
-      CosTradingDynamic::DynamicProp* dp_struct;
+      const CosTradingDynamic::DynamicProp* dp_struct = 0;
       const CORBA::String_var name = this->props_[index].name.in ();
       const CORBA::Any& value = this->props_[index].value;
 
@@ -283,7 +283,7 @@ TAO_Property_Evaluator::property_value (int index)
       else
         {
           CORBA::TypeCode* type = dp_struct->returned_type.in ();
-          CORBA::Any& info = dp_struct->extra_info;
+          const CORBA::Any& info = dp_struct->extra_info;
 
           try
             {
@@ -314,7 +314,7 @@ TAO_Property_Evaluator::property_type (int index)
     {
       // Extract type information from the DP_Struct.
       const CORBA::Any& value = this->props_[index].value;
-      CosTradingDynamic::DynamicProp* dp_struct = 0;
+      const CosTradingDynamic::DynamicProp* dp_struct = 0;
       value >>= dp_struct;
 
       // Grab a pointer to the returned_type description
@@ -703,10 +703,10 @@ TAO_Policies::exact_type_match (void) const
 }
 
 
-CosTrading::TraderName*
+const CosTrading::TraderName*
 TAO_Policies::starting_trader (void) const
 {
-  CosTrading::TraderName* trader_name = 0;
+  const CosTrading::TraderName* trader_name = 0;
 
   if (this->policies_[STARTING_TRADER] != 0)
     {
@@ -788,10 +788,10 @@ TAO_Policies::hop_count (void) const
   return this->ulong_prop (HOP_COUNT);
 }
 
-CosTrading::Admin::OctetSeq*
+const CosTrading::Admin::OctetSeq*
 TAO_Policies::request_id (void) const
 {
-  CosTrading::Admin::OctetSeq* request_id = 0;
+  const CosTrading::Admin::OctetSeq* request_id = 0;
 
   if (this->policies_[REQUEST_ID] != 0)
     {

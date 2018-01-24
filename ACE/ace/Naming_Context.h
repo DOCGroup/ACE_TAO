@@ -339,6 +339,8 @@ public:
   /// Return verbose status
   bool verbose (void);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
   /// Extra debugging info
   bool debugging_;
@@ -371,14 +373,14 @@ private:
   ACE_Naming_Context::Context_Scope_Type context_;
 };
 
+ACE_FACTORY_DECLARE (ACE, ACE_Naming_Context)
+ACE_STATIC_SVC_DECLARE_EXPORT (ACE, ACE_Naming_Context)
+
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "ace/Naming_Context.inl"
 #endif /* __ACE_INLINE__ */
-
-ACE_FACTORY_DECLARE (ACE, ACE_Naming_Context)
-ACE_STATIC_SVC_DECLARE_EXPORT (ACE, ACE_Naming_Context)
 
 #include /**/ "ace/post.h"
 #endif /* ACE_NAMING_CONTEXT_H */

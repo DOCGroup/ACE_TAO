@@ -25,7 +25,7 @@ ClientInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
     }
   catch(...)
     {
-      std::cerr << "Exception ocurred creating ClientInterceptor" << std::endl;
+      std::cerr << "Exception occurred creating ClientInterceptor" << std::endl;
     }
 
   PortableInterceptor::ClientRequestInterceptor_var ci_interceptor =

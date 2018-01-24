@@ -15,8 +15,7 @@ public:
 
     virtual void op (
         ::Test::Fls_out fstruct,
-        ::Test::Vls_out vstruct
-      );
+        ::Test::Vls_out vstruct);
 
   virtual void shutdown (void);
 

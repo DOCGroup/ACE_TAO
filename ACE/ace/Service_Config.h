@@ -716,7 +716,7 @@ private:
  * @brief A guard class, designed to be instantiated on the stack.
  *
  * Instantiating it with a specific configuration ensures any references to
- * ACE_Service_Config::instance(), even when occuring in static constructors,
+ * ACE_Service_Config::instance(), even when occurring in static constructors,
  * will allways access the designated configuration instance.
  * This comes very handy when a dynamic service also registers any static
  * services of its own and their static factories.

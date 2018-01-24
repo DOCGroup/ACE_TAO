@@ -1,0 +1,715 @@
+commit 107289ca7ecf168fc02ed799b01eab663ed9bfb6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 16 10:05:58 2017 +0100
+
+    Introduce ACE_NOEXCEPT_FALSE and use that in some places to silence C++11 compiler warnings
+    
+        * ACE/ace/Global_Macros.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * TAO/tao/Storable_File_Guard.cpp:
+        * TAO/tao/Storable_File_Guard.h:
+
+commit 1c3b168d59245c255477d2166480acc8100cf0a3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 09:37:21 2017 +0100
+
+    Make var/ptr usage as it was
+    
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+
+commit 97ad74101a0ae4d0724e5c783cf740469454ee25
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 13 09:34:20 2017 +0100
+
+    Make usage of var/ptr as it was
+    
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+
+commit 63fc79dca4e7232727d4f5020d5d1ed8b7553298
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 11 21:55:54 2017 +0100
+
+    Fixed compile error
+    
+        * TAO/tao/Strategies/SCIOP_Connector.cpp:
+
+commit b04bfa184d2ec587c850df091b071c9cb6886d67
+Merge: baa25142cfe 8ee074292a1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 11 11:12:04 2017 +0100
+
+    Merge branch 'master' into jwi-deprecatedanyop
+
+commit baa25142cfe39dacb5ed215056b37b90ec89b15d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 11 11:11:42 2017 +0100
+
+    Fixed memory leaks
+    
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+        * TAO/orbsvcs/tests/FtRtEvent/PushConsumer.cpp:
+
+commit 8ee074292a1884a0b5d43e9ecd7c7e69b0975dd2
+Merge: 9c7f4df646c 879f150b5ef
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Mon Jan 9 19:33:50 2017 +0100
+
+    Merge pull request #350 from jwillemsen/jwi-deprecatedanyop
+    
+    Removed the non-const Any extraction operators
+
+commit 879f150b5ef1c780b95ba7221ce6f0045b1d2c7d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 9 17:08:37 2017 +0100
+
+    Correct indentation
+    
+        * TAO/docs/ORBEndpoint.html:
+
+commit 5b3dfe511a2df6cc52b40e0bc6b355c19ea50267
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 9 13:28:00 2017 +0100
+
+    Fixed coverity issues
+    
+        * TAO/tao/Strategies/advanced_resource.h:
+        * TAO/tao/TAO_Server_Request.inl:
+
+commit fca417408e738e43ea779d515ade0fbfa24fa777
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 9 12:15:03 2017 +0100
+
+    Removed empty line
+        * TAO/tao/Strategies/SCIOP_Connector.cpp:
+
+commit 21a7af72de0e490b6419bfed54bca674e74756bd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 9 12:11:24 2017 +0100
+
+    At the moment we can't lock the mutex it is better to return true from error detected indicating an error
+    
+        * TAO/tao/LF_Event.cpp:
+
+commit 40aee145ba4993129239a35aba14de48db1dfac9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 9 12:10:50 2017 +0100
+
+    Comment change
+    
+        * TAO/orbsvcs/LifeCycle_Service/Criteria_Evaluator.h:
+
+commit caf63f452bc42dd56b2d505a5581c9d81a34a11f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 6 18:47:38 2017 +0100
+
+    Fixed last any extraction
+    
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * TAO/tests/Param_Test/param_test_i.cpp:
+
+commit 887ce19b02266ee51ff5a6ba720e68eba34022d3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 6 10:51:25 2017 +0100
+
+    Simple layout change
+    
+        * TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+
+commit 550fcf9c358e55de8b89fb048d08e15b263f2e35
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 6 10:21:13 2017 +0100
+
+    Fixed any extraction
+    
+        * TAO/docs/tutorials/Quoter/RT_Event_Service/Stock_Consumer.cpp:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+        * TAO/orbsvcs/Fault_Detector/FT_FaultDetectorFactory_i.cpp:
+        * TAO/orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * TAO/orbsvcs/LifeCycle_Service/Criteria_Evaluator.h:
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * TAO/tests/Param_Test/param_test_i.cpp:
+
+commit 76684280776760657103f76bead4c57e4d3e99c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 5 21:10:43 2017 +0100
+
+    More any extraction changes
+    
+        * TAO/orbsvcs/LifeCycle_Service/Criteria_Evaluator.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/AVStreams_i.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_ClientPolicy_i.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * TAO/orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Property_T.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Property_Set_Find.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Interfaces.cpp:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+        * TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.h:
+        * TAO/tests/Bug_2678_Regression/server.cpp:
+        * TAO/tests/Codec/client.cpp:
+        * TAO/tests/Param_Test/complex_any.cpp:
+        * TAO/tests/Param_Test/param_test_i.cpp:
+        * TAO/tests/Param_Test/ub_struct_seq.cpp:
+
+commit 7d8b0feae4bb77d4867eeaba358f690f6d0075e9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 5 18:10:11 2017 +0100
+
+    More const any extraction
+    
+        * TAO/TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_Property_Validator.cpp:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel_Impl.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.cpp:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Property_Set_Find.h:
+        * TAO/tests/IDL_Test/main.cpp:
+
+commit 283fb56eae1580dd83d1a6d67f3caf0dfb8f4ad4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 5 16:44:59 2017 +0100
+
+    Fixed code due to removal of the non const Any extraction
+    
+        * TAO/docs/tutorials/Quoter/Event_Service/Stock_Consumer.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/FP_Scheduler.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/MIF_Scheduler.cpp:
+        * TAO/examples/Kokyu_dsrt_schedulers/MUF_Scheduler.cpp:
+        * TAO/interop-tests/AnyTypeCode/tao/Demo_i.cpp:
+        * TAO/orbsvcs/orbsvcs/LoadBalancing/LB_LoadManager.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Default_Property_Validator.cpp:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.cpp:
+        * TAO/orbsvcs/orbsvcs/Security/SL3_PolicyFactory.cpp:
+        * TAO/orbsvcs/orbsvcs/Security/Security_PolicyFactory.cpp:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test/idl3_client.cpp:
+        * TAO/orbsvcs/tests/InterfaceRepo/IFR_Test/Admin_Client.cpp:
+        * TAO/orbsvcs/tests/Trading/TT_Info.cpp:
+        * TAO/performance-tests/Anyop/anyop.cpp:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_i.cpp:
+        * TAO/tests/Any/Recursive/client.cpp:
+        * TAO/tests/Bug_2678_Regression/client.cpp:
+        * TAO/tests/Bug_2678_Regression/server.cpp:
+        * TAO/tests/Bug_2804_Regression/client.cpp:
+        * TAO/tests/Bug_2844_Regression/client.cpp:
+        * TAO/tests/Bug_2918_Regression/client.cpp:
+        * TAO/tests/Bug_3506_Regression/server.cpp:
+        * TAO/tests/Bug_3552_Regression/check.cpp:
+        * TAO/tests/Bug_3919_Regression/client.cpp:
+        * TAO/tests/Codec/client.cpp:
+        * TAO/tests/DynAny_Test/test_dynany.cpp:
+        * TAO/tests/DynAny_Test/test_dynsequence.cpp:
+        * TAO/tests/DynAny_Test/test_dynstruct.cpp:
+        * TAO/tests/Param_Test/any.cpp:
+        * TAO/tests/Param_Test/anyop.cpp:
+        * TAO/tests/Param_Test/bd_array_seq.cpp:
+        * TAO/tests/Param_Test/bd_short_seq.cpp:
+        * TAO/tests/Param_Test/bd_struct_seq.cpp:
+        * TAO/tests/Param_Test/big_union.cpp:
+        * TAO/tests/Param_Test/complex_any.cpp:
+        * TAO/tests/Param_Test/except.cpp:
+        * TAO/tests/Param_Test/fixed_struct.cpp:
+        * TAO/tests/Param_Test/nested_struct.cpp:
+        * TAO/tests/Param_Test/objref_struct.cpp:
+        * TAO/tests/Param_Test/recursive_struct.cpp:
+        * TAO/tests/Param_Test/recursive_union.cpp:
+        * TAO/tests/Param_Test/small_union.cpp:
+        * TAO/tests/Param_Test/ub_any_seq.cpp:
+        * TAO/tests/Param_Test/ub_array_seq.cpp:
+        * TAO/tests/Param_Test/ub_long_seq.cpp:
+        * TAO/tests/Param_Test/ub_objref_seq.cpp:
+        * TAO/tests/Param_Test/ub_short_seq.cpp:
+        * TAO/tests/Param_Test/ub_str_seq.cpp:
+        * TAO/tests/Param_Test/ub_struct_seq.cpp:
+        * TAO/tests/Param_Test/ub_wstr_seq.cpp:
+        * TAO/tests/Param_Test/var_struct.cpp:
+        * TAO/tests/Portable_Interceptors/Benchmark/client_interceptors.cpp:
+        * TAO/tests/Portable_Interceptors/Benchmark/server_interceptors.cpp:
+        * TAO/tests/Portable_Interceptors/Dynamic/client_interceptor.cpp:
+
+commit 09579a9740d859943864bba5633485ed160f8b9c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 5 12:32:05 2017 +0100
+
+    Fixed typo
+    
+        * TAO/docs/PP_Memory_Management.txt:
+
+commit d072f60e3d63e15d040089f33627efc11f86211d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 5 12:30:50 2017 +0100
+
+    Fixed typo
+    
+        * TAO/docs/ORBEndpoint.html:
+        * TAO/orbsvcs/orbsvcs/Notify/RT_Properties.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_GenericFactory.cpp:
+        * TAO/tao/Codeset/Codeset_Manager_i.cpp:
+
+commit 208c5d1b7608e8aae88f058a0023aaa06c5041ef
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 5 12:29:34 2017 +0100
+
+    Fixed old link
+        * TAO/README:
+
+commit d9697013a423eecab228777ee2c2e45f3fcaa183
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 5 12:27:51 2017 +0100
+
+    List change
+    
+        * TAO/NEWS:
+
+commit e47a44f0f6d037b8c907beee9111e238b17af81d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 5 12:19:30 2017 +0100
+
+    Make sure we use the const *& extraction operators
+    
+        * TAO/tao/AnyTypeCode/BasicTypeTraits.h:
+        * TAO/tao/DynamicAny/DynCommon.cpp:
+        * TAO/tao/RTCORBA/RT_Policy_i.cpp:
+        * TAO/tao/ZIOP/ZIOP_PolicyFactory.cpp:
+
+commit bc7c0c564894b065672899a01679a62f9cf2fee7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 5 11:50:06 2017 +0100
+
+    Remove deprecated non-const extraction
+    
+        * TAO/TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/any_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_union/any_op_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+
+commit fb67b06c4c09549e0a7a2cb094fa03654f069659
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 4 21:16:31 2017 +0100
+
+    Remove comment that shouldn't be there anymore
+    
+        * TAO/tao/LF_Event.h:
+
+commit 67bfae686fbdb0136154c0754ac7f6ce51c98d8f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 4 21:15:51 2017 +0100
+
+    Zapped space
+    
+        * TAO/tao/LF_Event.h:
+
+commit 099e520ce5a608fe00cb9d921854b2d87966cde3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 16:40:38 2017 +0100
+
+    Make the leader follower state a real enum instead of using it as int, that way a compiler can detect when we assign a non-existent value
+    
+        * TAO/tao/LF_CH_Event.cpp:
+        * TAO/tao/LF_CH_Event.h:
+        * TAO/tao/LF_Event.cpp:
+        * TAO/tao/LF_Event.h:
+        * TAO/tao/LF_Event.inl:
+        * TAO/tao/LF_Invocation_Event.cpp:
+        * TAO/tao/LF_Invocation_Event.h:
+        * TAO/tao/LF_Multi_Event.cpp:
+        * TAO/tao/LF_Multi_Event.h:
+        * TAO/tests/Bug_3531b_Regression/server.cpp:
+
+commit 15327947b0a014aa99909dc33e4cfc9255473542
+Merge: 6f66470f609 db1a461b5c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 16:25:22 2017 +0100
+
+    Merge branch 'master' into jwi-lf-race
+
+commit db1a461b5c3954552b1cb29b8d86ff977da6cbc1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 16:24:30 2017 +0100
+
+    No need to pass this to ACE_DES_FREE_THIS
+    
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/Message_Block.cpp:
+        * TAO/tao/Asynch_Queued_Message.cpp:
+        * TAO/tao/Synch_Queued_Message.cpp:
+
+commit 6f66470f609a4aba63f95e637261859892bce458
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 15:36:54 2017 +0100
+
+    The successful/error_detected/keep_waiting accessors of TAO_LF_Event are also called from outside of the leader follower loop by other threads. This could trigger a data race because an inconsistent state is ready. Moved the real logic to _i methods and the public accessors now first lock the lf lock, this is normally only done in connection setup so doesn't add a penalty to the regular invocation path
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/IIOP_SSL_Connector.cpp:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connector.cpp:
+        * TAO/tao/IIOP_Connector.cpp:
+        * TAO/tao/LF_CH_Event.cpp:
+        * TAO/tao/LF_CH_Event.h:
+        * TAO/tao/LF_Connect_Strategy.cpp:
+        * TAO/tao/LF_Event.cpp:
+        * TAO/tao/LF_Event.h:
+        * TAO/tao/LF_Event.inl:
+        * TAO/tao/LF_Invocation_Event.cpp:
+        * TAO/tao/LF_Invocation_Event.h:
+        * TAO/tao/LF_Multi_Event.cpp:
+        * TAO/tao/LF_Multi_Event.h:
+        * TAO/tao/Leader_Follower.cpp:
+        * TAO/tao/Reactive_Connect_Strategy.cpp:
+        * TAO/tao/Strategies/SCIOP_Connector.cpp:
+        * TAO/tao/Strategies/SHMIOP_Connector.cpp:
+        * TAO/tao/Strategies/UIOP_Connector.cpp:
+        * TAO/tao/Transport_Connector.cpp:
+        * TAO/tao/Wait_On_Reactor.cpp:
+        * TAO/tao/Wait_On_Read.cpp:
+        * TAO/tests/Bug_3531b_Regression/server.cpp:
+
+commit 02052a420dea4dafaa7134e02653aa42a63d41fc
+Merge: 076a9392482 6994f54248b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 12:52:38 2017 +0100
+
+    Merge branch 'master' into jwi-lf-race
+
+commit 6994f54248bacffb4465330e6cc712d50f97762f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 12:51:05 2017 +0100
+
+    Added ACE_DES_FREE_THIS which doesn't check the pointer for nil because this can't be nil, fixes compiler warnings with newer GCC versions
+    
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/Message_Block.cpp:
+        * TAO/tao/Asynch_Queued_Message.cpp:
+        * TAO/tao/Synch_Queued_Message.cpp:
+
+commit 076a93924827b3103cb150cba8c539a7e498b0e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 10:37:36 2017 +0100
+
+    Updated for LF changes
+    
+        * TAO/tests/Bug_3531b_Regression/server.cpp:
+
+commit b5fa2c282010fb98602df72df1ba882cad539695
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 2 18:41:52 2017 +0100
+
+    Make keep_waiting const
+        * TAO/tao/LF_Event.h:
+        * TAO/tao/LF_Event.inl:
+
+commit 38098bfe9b4cfe238acacdf7db894afd38bfbebb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 2 16:32:12 2017 +0100
+
+    Fixed typo
+
+commit b5645088fcb47aafe5dcf4f53edd646020a0b737
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 2 16:31:44 2017 +0100
+
+    Fixed docu
+        * TAO/tao/Leader_Follower.h:
+
+commit 6cff83528f14fd156db8608dd342e73721351d13
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 2 15:47:43 2017 +0100
+
+    Make several check methods to return a bool instead of int, much easier to understand the code path and less error phrone
+    
+        * TAO/tao/LF_CH_Event.cpp:
+        * TAO/tao/LF_CH_Event.h:
+        * TAO/tao/LF_Event.cpp:
+        * TAO/tao/LF_Event.h:
+        * TAO/tao/LF_Event.inl:
+        * TAO/tao/LF_Invocation_Event.cpp:
+        * TAO/tao/LF_Invocation_Event.h:
+        * TAO/tao/LF_Multi_Event.cpp:
+        * TAO/tao/LF_Multi_Event.h:
+
+commit c33a4044b374435b16732f4bb34092859cc952d0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 2 15:37:12 2017 +0100
+
+    Make keep_waiting return a bool instead of int
+    
+        * TAO/tao/LF_Event.h:
+        * TAO/tao/LF_Event.inl:
+
+commit b9aa5bd4892d0de338420540480fc5a1f11cfae7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 2 12:37:10 2017 +0100
+
+    Fixed typo
+    
+        * ACE/ACEXML/common/DTD_Manager.h:
+        * ACE/ACEXML/common/NamespaceSupport.h:
+        * ACE/ACEXML/parser/debug_validator/Debug_DTD_Manager.h:
+        * ACE/ace/Containers_T.h:
+        * ACE/ace/DLL.h:
+        * ACE/ace/QoS/QoS_Session.h:
+        * ACE/ace/QoS/QoS_Session_Impl.cpp:
+        * ACE/ace/QoS/QoS_Session_Impl.h:
+        * ACE/ace/RB_Tree.h:
+        * ACE/ace/SSL/SSL_SOCK_Stream.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Stream.inl:
+        * ACE/ace/Select_Reactor_T.cpp:
+        * ACE/ace/TP_Reactor.cpp:
+        * ACE/ace/Token.cpp:
+        * ACE/apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/file.h:
+        * ACE/examples/APG/Signals/SigHandler.cpp:
+        * ACE/examples/APG/Signals/SigHandlers.cpp:
+        * ACE/examples/Reactor/Proactor/test_aiosig.cpp:
+        * ACE/examples/Reactor/Proactor/test_aiosig_ace.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/APC.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * ACE/tests/Cached_Accept_Conn_Test.cpp:
+        * ACE/tests/Dev_Poll_Reactor_Echo_Test.cpp:
+        * ACE/tests/Dev_Poll_Reactor_Test.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/ServerInitializer.cpp:
+        * TAO/examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
+        * TAO/orbsvcs/examples/Notify/Subscribe/Subscribe.h:
+        * TAO/orbsvcs/examples/RtEC/Kokyu/Supplier.cpp:
+        * TAO/orbsvcs/examples/RtEC/Kokyu/Supplier.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * TAO/orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+        * TAO/orbsvcs/tests/Concurrency/CC_command.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+        * TAO/tao/Connection_Handler.cpp:
+        * TAO/tao/IIOP_Connector.cpp:
+        * TAO/tao/Invocation_Utils.h:
+        * TAO/tao/LF_CH_Event.h:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/Stub.h:
+        * TAO/tao/Stub.inl:
+        * TAO/tao/Transport.h:
+        * TAO/tests/Bug_1495_Regression/Threaded_Server.cpp:
+        * TAO/tests/Bug_1495_Regression/server_interceptor.cpp:
+        * TAO/tests/Bug_3748_Regression/client.cpp:
+        * TAO/tests/DII_AMI_Forward/server_interceptor.cpp:
+        * TAO/tests/DynValue_Test/main.cpp:
+        * TAO/tests/Explicit_Event_Loop/client.cpp:
+        * TAO/tests/Explicit_Event_Loop/server.cpp:
+        * TAO/tests/IORManipulation/IORTest.cpp:
+        * TAO/tests/POA/On_Demand_Act_Direct_Coll/Collocated_Test.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_1559/server_interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
+        * TAO/tests/TransportCurrent/Framework/client.cpp:
+        * TAO/tests/TransportCurrent/IIOP/client.cpp:
+
+commit 888473f332f9a3f57cf31036c72ce51782883e2c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 1 19:40:06 2017 +0100
+
+    Updated copyright to 2017
+    
+        * ACE/COPYING:
+        * TAO/COPYING:
+
+commit 9ba8869b737ee6ad2c775fadf04a56a90dc3ba33
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 27 18:21:41 2016 +0100
+
+    Fixed typo
+    
+        * ACE/ace/Asynch_Acceptor.h:
+        * ACE/ace/Name_Space.h:
+        * TAO/TAO_IDL/be/be_visitor_valuebox/field_ch.cpp:
+        * TAO/TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+        * TAO/TAO_IDL/be_include/be_visitor_valuebox/field_ch.h:
+        * TAO/docs/implrepo/paper.html:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * TAO/orbsvcs/orbsvcs/SecurityLevel3.idl:
+
+commit c08807ca7fcb4d34ac4c8a3f06f55bcd7f4bb4ab
+Merge: dd839188b02 10925cb8e97
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Dec 2 14:46:27 2016 -0600
+
+    Merge pull request #338 from huangminghuang/master
+    
+    fix memory leak for tao_idl
+
+commit 10925cb8e97f0407a98c362eb5b6d39ded8960f3
+Author: Huang-Ming Huang <huangh@ociweb.com>
+Date:   Fri Dec 2 13:08:27 2016 -0600
+
+    fix memory leak for tao_idl
+
+commit 4b6b4778025df3fae1617cff8bed5ed2933339d7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 30 19:41:19 2016 +0100
+
+    Doxygen changes and some typos
+    
+        * ACE/ace/CDR_Size.h:
+        * ACE/ace/CDR_Stream.h:
+        * ACE/ace/Codecs.h:
+        * ACE/tests/Upgradable_RW_Test.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/ClientInitializer.cpp:
+        * TAO/orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * TAO/performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+        * TAO/tests/POA/Generic_Servant/client.cpp:
+        * TAO/tests/POA/TIE/client.cpp:
+
+commit 5f8c9a1b4e1991866ca3a7f6af689bda5a4caa2f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 11:03:47 2016 +0100
+
+    More compact code generation
+        * TAO/TAO_IDL/be/be_interface.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_ch.cpp:
+
+commit 5e603e37283e26b753beed0944adc7f369b46653
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 15 08:57:06 2016 +0100
+
+    List versioned namespace changes
+    
+        * TAO/NEWS:
+
+commit bdc5b25a77d105827de2c908f27cdeb7cabe14ed
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 14 17:20:54 2016 +0100
+
+    Small changes to the generated code
+    
+        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuebox/valuebox_ch.cpp:
+
+commit 8fafdf71329f4e11e14aa1d786fb782f467a1460
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 14 14:39:31 2016 +0100
+
+    Fixed typo in comment
+        * TAO/bin/rm_exception_macros.pl:
+
+commit f2ee532dc7e527e38194f14194432f56c9b2889b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 14 14:38:42 2016 +0100
+
+    Don't use global scoping
+        * TAO/tao/CDR.inl:
+
+commit a4dd2cf069a0584733bfe3afd0ad4aa92ec0b22e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 4 13:08:22 2016 +0100
+
+    Reduce sloc
+        * TAO/TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+
+commit f7c787705124fe0870ae5415c06886e2fbd3aa5f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 4 13:05:50 2016 +0100
+
+    Reduce amount of lines generated, lot of new lines which a left over of the old exception macros
+        * TAO/TAO_IDL/be/be_visitor_exception/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_exception/cdr_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_structure/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_union/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuebox/cdr_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/cdr_op_cs.cpp:
+
+commit 0a0a40d14648f7743dae31219d8eff8b79dd75b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 4 12:22:39 2016 +0100
+
+    Removed not necessary c-style cast
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+commit 7c0fd0abff1e337a4cff46096f384b83251a75a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 2 16:14:28 2016 +0100
+
+    Fixed problem when enabling versioned namespaces, the TAO arg traits have to be within the TAO core versioned namespace and a layout change to the generated code
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+commit 212e6bd8898a38c6e37fddeec27b7151033da7f3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 31 19:42:13 2016 +0100
+
+    Layout changes
+        * ACE/ace/config-win32-common.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * TAO/tests/Bug_1551_Regression/client.cpp:
+        * TAO/tests/Bug_2595_Regression/Hello.h:
+        * TAO/tests/Portable_Interceptors/Collocated/Dynamic/interceptors.h:
+        * TAO/tests/Portable_Interceptors/Dynamic/client_interceptor.h:
+        * TAO/tests/Portable_Interceptors/Dynamic/server_interceptor.h:
+        * TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/interceptors.h:
+        * TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_interceptor.h:
+        * TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_interceptor.h:
+
+commit fbe2afce7458c2f253f7d2a8a7c394de80cff595
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 27 20:31:23 2016 +0200
+
+    Fixed typos in comment
+        * ACE/ace/Asynch_IO.h:
+        * ACE/ace/CDR_Stream.h:
+        * ACE/ace/Hash_Map_Manager_T.h:
+        * ACE/ace/Hash_Multi_Map_Manager_T.h:
+        * ACE/ace/Malloc_T.cpp:
+        * ACE/ace/Map_Manager.h:
+        * ACE/ace/POSIX_Asynch_IO.h:
+        * ACE/ace/SSL/SSL_Context.h:
+        * ACE/websvcs/lib/URL_Addr.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.h:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable/ftp.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Events.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Simple.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Updates.h:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * TAO/tao/CDR.h:
+
+commit 956f2f051339a94b536c2495068cba0d71b15727
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 17 12:32:13 2016 +0200
+
+    TAO Array specializations should appear between core versioning macros
+        * TAO/TAO_IDL/be/be_visitor_array/array_ci.cpp:
+
+commit 9fd4bf36d3527c91cc79fc4e9dcfa087c5588b3f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 17 12:04:48 2016 +0200
+
+    Changed indentation of generated array code to reduce its size
+        * TAO/TAO_IDL/be/be_visitor_array/array_ci.cpp:
+
+commit 7d19d361f2aeffcb581d4bf2bf7e291435f40e70
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 10 10:13:36 2016 +0200
+
+    Make x.4.1 public and make initial changes for x.4.2
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

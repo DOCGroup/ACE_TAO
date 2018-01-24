@@ -43,6 +43,8 @@ public:
   /// Perform the cleanup operation.
   void cleanup (void);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 //private:
 
   /// The real TS object.

@@ -55,9 +55,11 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
       //FUZZ: enable check_for_lack_ACE_OS
     }
 
+  TAO_Leader_Follower &leader_follower = this->orb_core_->leader_follower ();
+
   try
     {
-      while (ev->keep_waiting ())
+      while (ev->keep_waiting (leader_follower))
         {
           result =
             this->orb_core_->run (max_wait_time, 1);
@@ -83,7 +85,7 @@ TAO_Reactive_Connect_Strategy::wait_i (TAO_LF_Event *ev,
     }
 
   // Set the result.
-  if (result != -1 && ev->error_detected ())
+  if (result != -1 && ev->error_detected (leader_follower))
     {
       result = -1;
     }

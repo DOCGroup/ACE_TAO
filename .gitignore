@@ -12,6 +12,9 @@
 *.sdf
 *.sln
 *.suo
+*S_T.cpp
+*S_T.h
+*S_T.inl
 
 .depend.*
 GNUmakefile*
@@ -30,3 +33,8 @@ ipch/
 /setenv.cmd
 /setenv.sh
 /build
+
+*.o
+*.res
+*.opendb
+*.VC.db

@@ -173,18 +173,19 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       return 0;
     }
 
-  if (svc_handler->keep_waiting ())
+  TAO_Leader_Follower &leader_follower = this->orb_core ()->leader_follower ();
+
+  if (svc_handler->keep_waiting (leader_follower))
     {
       svc_handler->connection_pending ();
     }
 
-  if (svc_handler->error_detected ())
+  if (svc_handler->error_detected (leader_follower))
     {
       svc_handler->cancel_pending_connection ();
     }
 
-  TAO_Transport *transport =
-    svc_handler->transport ();
+  TAO_Transport *transport = svc_handler->transport ();
 
   // At this point, the connection has be successfully connected.
   // #REFCOUNT# is one.
@@ -218,7 +219,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       return 0;
     }
 
-  if (svc_handler->error_detected ())
+  if (svc_handler->error_detected (leader_follower))
     {
       svc_handler->cancel_pending_connection ();
       transport->purge_entry();

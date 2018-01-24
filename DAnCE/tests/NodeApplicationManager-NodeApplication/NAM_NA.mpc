@@ -1,7 +1,0 @@
-project : dance, dance_nodemanager_stub, dance_nodeapplication_stub, dance_logger {
-  exename   = NodeApplicationManagerNodeApplicationTest
-
-  Source_Files {
-    test.cpp
-  }
-}

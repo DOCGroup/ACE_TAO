@@ -139,7 +139,7 @@ run_service_command (Options& opts)
         }
       else
         {
-          ORBSVCS_ERROR ((LM_ERROR, "Error: Failed to install service. error:%d\n", errno));
+          ORBSVCS_ERROR ((LM_ERROR, "Error: Failed to install service. errno %d, error <%p>\n", errno, "install"));
         }
       if (ret == 0)
         return 1;

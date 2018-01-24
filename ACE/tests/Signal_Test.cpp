@@ -27,7 +27,7 @@
 
 
 
-#if !defined (ACE_LACKS_UNIX_SIGNALS)
+#if !defined (ACE_LACKS_UNIX_SIGNALS) && !defined ACE_LACKS_SIGNAL
 
 // Global options.
 static size_t n_iterations = 10000;
@@ -264,10 +264,8 @@ worker_parent (void *arg)
   ACE_TCHAR pid_str[100];
   // Store the parent's process id so we can pass it to the child
   // portably.  Also, pass the test number, as well.
-  ACE_OS::sprintf (pid_str,
-                   ACE_TEXT ("-p %ld -t %d"),
-                   static_cast <long> (parent_pid),
-                   test_number);
+  ACE_OS::snprintf (pid_str, 100, ACE_TEXT ("-p %ld -t %d"),
+                    static_cast<long> (parent_pid), test_number);
 
   // We're going to create a new process that runs this program again,
   // so we need to indicate that it's the child.

@@ -155,7 +155,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
       // occur.  For most protocol implementations this is fine.
       // OpenSSL, on the other hand, requires that the same arguments
       // be passed to SSL_write() if an SSL_ERROR_WANT_WRITE error
-      // occured on a previous SSL_write() attempt, which cannot be
+      // occurred on a previous SSL_write() attempt, which cannot be
       // guaranteed by TAO's current message queuing/construction
       // code, often resulting in a "bad write retry" OpenSSL error.
       // To work around this issue, we enable partial SSL_write()s in

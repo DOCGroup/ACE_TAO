@@ -59,18 +59,6 @@ public:
   /// Returns the transport associated with the first entry in the collection.
   TAO_Transport *base_transport(void);
 
-  //@{
-  /// Return 1 if the condition was satisfied successfully, 0 if it
-  /// has not - This iterates over the list of attached events and
-  /// returns 1 if any of them return 1 from successful.
-  int successful (void) const;
-
-  /// Return 1 if an error was detected while waiting for the
-  /// event - This iterates over the list of events and returns
-  /// 1 only if all of them return 1 from error_detected().
-  int error_detected (void) const;
-
-  //@}
 private:
   void operator= (const TAO_LF_Multi_Event &);
   TAO_LF_Multi_Event (const TAO_LF_Multi_Event &);
@@ -78,10 +66,20 @@ private:
 protected:
 
   /// Validate the state change
-  virtual void state_changed_i (int new_state);
+  virtual void state_changed_i (LFS_STATE new_state);
 
   /// Check whether we have reached the final state..
-  virtual int is_state_final (void);
+  virtual bool is_state_final (void) const;
+
+  /// Return true if the condition was satisfied successfully, false if it
+  /// has not - This iterates over the list of attached events and
+  /// returns true if any of them return true from successful.
+  virtual bool successful_i (void) const;
+
+  /// Return true if an error was detected while waiting for the
+  /// event - This iterates over the list of events and returns
+  /// true only if all of them return true from error_detected().
+  virtual bool error_detected_i (void) const;
 
 private:
 
@@ -93,7 +91,6 @@ private:
   struct Event_Node *events_;
 
   mutable TAO_Connection_Handler * winner_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

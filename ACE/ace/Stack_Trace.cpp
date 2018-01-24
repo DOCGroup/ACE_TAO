@@ -28,6 +28,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /*
   This is ugly, simply because it's very platform-specific.
 */
@@ -55,7 +57,16 @@ determine_starting_frame (ssize_t initial_frame, ssize_t offset)
   return ACE_MAX( initial_frame + offset, static_cast<ssize_t>(0));
 }
 
-#if (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H)) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+#if defined(ACE_FACE_SAFETY_BASE) && !defined(ACE_FACE_DEV)
+void
+ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frames)
+{
+  ACE_UNUSED_ARG (starting_frame_offset);
+  ACE_UNUSED_ARG (num_frames);
+  ACE_OS::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
+}
+
+#elif (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H)) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
 // This is the code for glibc
 #  include <execinfo.h>
 
@@ -724,3 +735,4 @@ ACE_Stack_Trace::generate_trace (ssize_t, size_t)
 }
 #endif
 
+ACE_END_VERSIONED_NAMESPACE_DECL

@@ -46,6 +46,9 @@ public:
   /// as the function is exited.
   ~ACE_Trace (void);
 
+  /// Declare the dynamic allocation hooks.
+  ACE_ALLOC_HOOK_DECLARE;
+
   // = Control the tracing level.
   /// Determine if tracing is enabled or not
   static bool is_tracing(void);

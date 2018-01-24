@@ -1,202 +1,200 @@
-
-
-The following TAO applications test and illustate various Portable
+The following TAO applications test and illustrate various Portable
 Object Adapter (POA) interfaces and their usage scenarios.
 
-        . Identity
+. Identity
 
-                The example shows the identity between servants, ids,
-                and references.
+        The example shows the identity between servants, ids,
+        and references.
 
-        . POA_Destruction
+. POA_Destruction
 
-                The program tests the destruction of a POA during an
-                upcall.
+        The program tests the destruction of a POA during an
+        upcall.
 
-        . Default_Servant
+. Default_Servant
 
-                This program tests the behavior of
-                POA::id_to_servant() and POA::reference_to_servant()
-                with the use of default servants.
+        This program tests the behavior of
+        POA::id_to_servant() and POA::reference_to_servant()
+        with the use of default servants.
 
-        . Object_Reactivation
+. Object_Reactivation
 
-                This program tests the reactivation of a servant that
-                has been deactivated but not removed from the Active
-                Object Map yet.
+        This program tests the reactivation of a servant that
+        has been deactivated but not removed from the Active
+        Object Map yet.
 
-        . Excessive_Object_Deactivations
+. Excessive_Object_Deactivations
 
-                This program tests for excessive deactivations of a
-                servant.  The test checks excessive deactivations in a
-                POA with SYSTEM_ID and other POA with USER_ID.  The
-                test also check for excessive deactivations during
-                upcalls.
+        This program tests for excessive deactivations of a
+        servant.  The test checks excessive deactivations in a
+        POA with SYSTEM_ID and other POA with USER_ID.  The
+        test also check for excessive deactivations during
+        upcalls.
 
-        . Non_Servant_Upcalls
+. Non_Servant_Upcalls
 
-                This program check the users ability to make calls on
-                a POA during non-servant upcalls.  In this example, a
-                servant which is being destroyed during because of a
-                deactivate_object() call, tries to deactivate another
-                object in its destructor.
+        This program check the users ability to make calls on
+        a POA during non-servant upcalls.  In this example, a
+        servant which is being destroyed during because of a
+        deactivate_object() call, tries to deactivate another
+        object in its destructor.
 
-        . wait_for_completion
+. wait_for_completion
 
-                This program tests the <wait_for_completion> feature
-                of the POA.
+        This program tests the <wait_for_completion> feature
+        of the POA.
 
-        . Single_Threaded_POA
+. Single_Threaded_POA
 
-                This program tests to make sure that two threads
-                cannot call servants in a single threaded POA
-                simultaneously.  At the same time, it makes sure that
-                a servant can call itself or other servants in the
-                same POA while in an upcall.
+        This program tests to make sure that two threads
+        cannot call servants in a single threaded POA
+        simultaneously.  At the same time, it makes sure that
+        a servant can call itself or other servants in the
+        same POA while in an upcall.
 
-        . Etherealization
+. Etherealization
 
-                This program tests for deactivation and
-                etherealization of reference counted and non reference
-                counted servants.
+        This program tests for deactivation and
+        etherealization of reference counted and non reference
+        counted servants.
 
-        . Persistent_ID
+. Persistent_ID
 
-                This test checks the combination of PERSISTENT &
-                SYSTEM_ID POA policies.
+        This test checks the combination of PERSISTENT &
+        SYSTEM_ID POA policies.
 
-        . Policies
+. Policies
 
-                This program tests the construction of POA policies,
-                both through the generic ORB::create_policy interface
-                and the PortableServer specific interfaces.
+        This program tests the construction of POA policies,
+        both through the generic ORB::create_policy interface
+        and the PortableServer specific interfaces.
 
-        . MT_Servant_Locator
+. MT_Servant_Locator
 
-                This program tests that multiple calls to the Servant
-                Locator can take place simultaneously.
+        This program tests that multiple calls to the Servant
+        Locator can take place simultaneously.
 
-        . Nested_Non_Servant_Upcalls
+. Nested_Non_Servant_Upcalls
 
-                This program tests that nested non-servant upcalls are
-                handled correctly.
+        This program tests that nested non-servant upcalls are
+        handled correctly.
 
-        . POAManagerFactory
+. POAManagerFactory
 
-                The program tests the POAManagerFactory interface. Test may
-                be run by hand using "POAManagerFactory -v" to get a verbose
-                report of individual tests being run.
+        The program tests the POAManagerFactory interface. Test may
+        be run by hand using "POAManagerFactory -v" to get a verbose
+        report of individual tests being run.
 
-        . EndpointPolicy
+. EndpointPolicy
 
-                Tests for the endpoint policy, the server listens on two
-                endpoints, one with an alias rendering it unreachable. The
-                server uses the endpoint policy to create two IORs, one with
-                the only the good endpoint and another with only the bad. The
-                client expects to reach the good ior and expects to fail with
-                the bad ior.
+        Tests for the endpoint policy, the server listens on two
+        endpoints, one with an alias rendering it unreachable. The
+        server uses the endpoint policy to create two IORs, one with
+        the only the good endpoint and another with only the bad. The
+        client expects to reach the good ior and expects to fail with
+        the bad ior.
 
-        . RootPOA
+. RootPOA
 
-                This example explains how to obtain the name of the
-                RootPOA.
+        This example explains how to obtain the name of the
+        RootPOA.
 
-        . NewPOA
+. NewPOA
 
-                This example explains the operations involved in
-                creation of new POAs.
+        This example explains the operations involved in
+        creation of new POAs.
 
-        . FindPOA
+. FindPOA
 
-                This example explains registering an adapter activator
-                for a POA and also the find_POA operation.
+        This example explains registering an adapter activator
+        for a POA and also the find_POA operation.
 
-        . Generic_Servant
+. Generic_Servant
 
-                A simple test interface is defined here and its
-                implementations, server and client programs are
-                available, which can be used for testing POA
-                applications.  Several servers for that interface are
-                implemented using different POA policies; a common
-                client for all the servers is also provided.
+        A simple test interface is defined here and its
+        implementations, server and client programs are
+        available, which can be used for testing POA
+        applications.  Several servers for that interface are
+        implemented using different POA policies; a common
+        client for all the servers is also provided.
 
-        . On_Demand_Activation
+. On_Demand_Activation
 
-                Contains programs that test the POA's 2 types of
-                activation of objects on demand, namely , Servant
-                Activator approach and Servant Locator , which depend
-                on the RETAIN/NON-RETAIN policy of a POA.
+        Contains programs that test the POA's 2 types of
+        activation of objects on demand, namely , Servant
+        Activator approach and Servant Locator , which depend
+        on the RETAIN/NON-RETAIN policy of a POA.
 
-        . Default_Servant
+. Default_Servant
 
-                Contains a File IDL module and its implementation and
-                a server,client to test the File Module interfaces.
-                The System interface uses the USE_DEFAULT_MANAGER policy
-                to create a POA and registers a single File Descriptor
-                object as the default servant. The default servant serves
-                requests for many Descriptor objects.
+        Contains a File IDL module and its implementation and
+        a server,client to test the File Module interfaces.
+        The System interface uses the USE_DEFAULT_MANAGER policy
+        to create a POA and registers a single File Descriptor
+        object as the default servant. The default servant serves
+        requests for many Descriptor objects.
 
-        . Explicit_Activation
+. Explicit_Activation
 
-                This application explains various operations involved
-                in the explicit activation of objects; including the
-                creation of objects without servants (the servant is
-                created on demand).
+        This application explains various operations involved
+        in the explicit activation of objects; including the
+        creation of objects without servants (the servant is
+        created on demand).
 
-        . DSI
+. DSI
 
-                The client/server couple tests the DSI features of the
-                POA.
+        The client/server couple tests the DSI features of the
+        POA.
 
-        . Forwarding
+. Forwarding
 
-                The example is used to test the support for forwarding
-                in TAO.  Three ways are shown: (a) Forwarding using
-                Servant Activators, (b) Forwarding using Servant
-                Locators, and (c) Forwarding using POA (this feature
-                is TAO specific).
+        The example is used to test the support for forwarding
+        in TAO.  Three ways are shown: (a) Forwarding using
+        Servant Activators, (b) Forwarding using Servant
+        Locators, and (c) Forwarding using POA (this feature
+        is TAO specific).
 
-        . TIE
+. TIE
 
-                Shows off the standard TIE features of the new CORBA
-                2.2 specification.
+        Shows off the standard TIE features of the new CORBA
+        2.2 specification.
 
-        . On_Demand_Loading
+. On_Demand_Loading
 
-                This example illustrates how to dynamically link and
-                load servants into a POA in a platform-independent
-                manner using the ACE_DLL feature and standard CORBA
-                Servant Manager features.  In the example, the POA is
-                configured with the USE_SERVANT_MANAGER policy value,
-                which relies on an application supplied Servant
-                Manager object to supply object/server associations.
+        This example illustrates how to dynamically link and
+        load servants into a POA in a platform-independent
+        manner using the ACE_DLL feature and standard CORBA
+        Servant Manager features.  In the example, the POA is
+        configured with the USE_SERVANT_MANAGER policy value,
+        which relies on an application supplied Servant
+        Manager object to supply object/server associations.
 
-                This example illustrates both Servant Activator and
-                Servant_Locator interfaces.  The servant object is
-                created by a factory function that resides in a DLL
-                that is linked and loaded into the server's address
-                space on-demand when client requests arrive.  The
-                ObjectID in each client request indicates which DLL
-                name and which factory function to use to create the
-                servant.
+        This example illustrates both Servant Activator and
+        Servant_Locator interfaces.  The servant object is
+        created by a factory function that resides in a DLL
+        that is linked and loaded into the server's address
+        space on-demand when client requests arrive.  The
+        ObjectID in each client request indicates which DLL
+        name and which factory function to use to create the
+        servant.
 
-         . Loader
+  . Loader
 
-                This example is similar to the above except the id is
-                not hijacked to store the DLL and factory function
-                name.  This information is provided to the Servant
-                Managers on creation.
+        This example is similar to the above except the id is
+        not hijacked to store the DLL and factory function
+        name.  This information is provided to the Servant
+        Managers on creation.
 
-        . Explicit_Activation
+. Explicit_Activation
 
-                This example is very similar to the
-                Explicit_Activation example except that the POAs are
-                deleted once the object references have been
-                created. After this, an adapter activator is install
-                in the RootPOA to reactivate the POAs on demand.
+        This example is very similar to the
+        Explicit_Activation example except that the POAs are
+        deleted once the object references have been
+        created. After this, an adapter activator is install
+        in the RootPOA to reactivate the POAs on demand.
 
-        . Reference_Counted_Servant
+. Reference_Counted_Servant
 
-                This example shows how to use reference counted
-                servants to automatically manage dynamic memory for
-                servants.
+        This example shows how to use reference counted
+        servants to automatically manage dynamic memory for
+        servants.

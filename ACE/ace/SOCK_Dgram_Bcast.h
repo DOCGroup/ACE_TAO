@@ -44,6 +44,8 @@ public:
 
   /// Pointer to the next interface in the chain.
   ACE_Bcast_Node *next_;
+
+  ACE_ALLOC_HOOK_DECLARE;
 };
 
 /**

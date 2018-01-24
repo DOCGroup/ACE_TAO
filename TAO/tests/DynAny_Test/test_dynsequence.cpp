@@ -311,7 +311,7 @@ Test_DynSequence::run_test (void)
       CORBA::Any_var out_any1 =
         ftc1->to_any ();
 
-      DynAnyTests::test_seq *ts_out;
+      const DynAnyTests::test_seq *ts_out = 0;
       out_any1.in () >>= ts_out;
 
       if (!ACE_OS::strcmp ((*ts_out)[0U], data.m_string1))

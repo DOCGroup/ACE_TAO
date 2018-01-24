@@ -77,7 +77,7 @@ Event_Handler::handle_timeout (const ACE_Time_Value &,
 {
   --this->iterations_;
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) timeout occured @ %T, iterations left %d\n",
+              "(%t) timeout occurred @ %T, iterations left %d\n",
               this->iterations_));
 
   if (this->iterations_ == 0)

@@ -18,7 +18,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Containers_T.h"
 #include "ace/SString.h"
 #include "ace/os_include/os_dlfcn.h"
@@ -139,6 +138,8 @@ public:
    */
   ACE_SHLIB_HANDLE get_handle (bool become_owner = false);
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
 
   /// Returns a string explaining why <symbol> or <open>
@@ -246,6 +247,8 @@ public:
   /// LAZY to EAGER, then it will also unload any dlls with zero
   /// refcounts.
   void unload_policy (u_long unload_policy);
+
+  ACE_ALLOC_HOOK_DECLARE;
 
 protected:
 

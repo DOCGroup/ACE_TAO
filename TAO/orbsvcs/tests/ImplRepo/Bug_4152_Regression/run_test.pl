@@ -51,13 +51,14 @@ $actlogfile = "act.log";
 $cltlogfile = "client.log";
 $imrlogfile = "imr.log";
 $srvlogfile = "server.log";
+$tilogfile = "ti.log";
 
 $imr_imriorfile = $imr->LocalFile ($imriorfile);
 $act_imriorfile = $act->LocalFile ($imriorfile);
 $ti_imriorfile = $ti->LocalFile ($imriorfile);
 $srv_imriorfile = $srv->LocalFile ($imriorfile);
 $act_actiorfile = $act->LocalFile ($actiorfile);
-
+$srv_statusfile = $srv->LocalFile ($statusfile);
 
 $IMR = $imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
 $ACT = $act->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_activator");
@@ -68,6 +69,9 @@ $CLINW = $clinw->CreateProcess ("client");
 $SRV = $srv->CreateProcess ("server");
 $server_cmd = $SRV->Executable();
 $srv_server_cmd = $imr->LocalFile ($server_cmd);
+
+$ti_cmd_base = "-ORBInitRef ImplRepoService=file://$ti_imriorfile ";
+$ti_cmd_base .= "-ORBVerboseLogging 1 -ORBDebugLevel $debug_level -ORBLogfile $tilogfile " if ($debug_level > 0);
 
 $stdout_file      = "test.out";
 $stderr_file      = "test.err";
@@ -87,13 +91,14 @@ sub deletefiles
     $ti->DeleteFile ($stdout_file);
     $ti->DeleteFile ($stderr_file);
 
-    $srv->DeleteFile ($statusfile);
+    $res = $srv->DeleteFile ($statusfile);
 
     if ($logs_too == 1) {
         $imr->DeleteFile ($imrlogfile);
         $act->DeleteFile ($actlogfile);
         $cli->DeleteFile ($cltlogfile);
         $srv->DeleteFile ($srvlogfile);
+        $ti->DeleteFile ($tilogfile);
     }
 }
 
@@ -119,14 +124,20 @@ sub restore_output
 
 sub register_server
 {
+    if ($debug_level > 0) {
+        open (my $log, '>>', $tilogfile) or die "failed to append to $tilogfile\n";
+        say $log "\nregister server\n";
+        close $log;
+    }
+
     my $expected = shift;
     my $debugarg = "-ORBVerboseLogging 1 -ORBDebugLevel $debug_level -ORBLogfile $srvlogfile" if ($debug_level > 0);
     my $endpointarg = "-ORBDottedDecimalAddresses 1 -ORBListenEndpoints iiop://127.0.0.1:" if ($no_dns == 1);
 
-    $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
+    $TI->Arguments ($ti_cmd_base.
                     "add TestObject_a -c \"".
                     $srv_server_cmd .
-                    " -ORBUseIMR 1 -p $poa_delay " .
+                    " -ORBUseIMR 1 -p $poa_delay -ORBLingerTimeout 0 " .
                     "$debugarg $endpointarg " .
                     "-ORBInitRef ImplRepoService=file://$imr_imriorfile\"");
 
@@ -193,8 +204,13 @@ sub start_client_no_wait
 
 sub shutdown_server
 {
+    if ($debug_level > 0) {
+        open (my $log, '>>', $tilogfile) or die "failed to append to $tilogfile\n";
+        say $log "\nshutdown server\n";
+        close $log;
+    }
     # Shutting down any server object within the server will shutdown the whole server
-    $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
+    $TI->Arguments ($ti_cmd_base .
                     "shutdown TestObject_a" );
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0  && $TI_status != 5) {
@@ -205,8 +221,13 @@ sub shutdown_server
 
 sub manual_start_server
 {
+    if ($debug_level > 0) {
+        open (my $log, '>>', $tilogfile) or die "failed to append to $tilogfile\n";
+        say $log "\nmanual start server\n";
+        close $log;
+    }
     # Shutting down any server object within the server will shutdown the whole server
-    $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
+    $TI->Arguments ($ti_cmd_base .
                     "start TestObject_a" );
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
@@ -228,6 +249,8 @@ sub validate_servers
             kill $pids[$i];
         }
     }
+    close FILE;
+    return $count != 2;
 }
 
 
@@ -286,34 +309,35 @@ sub double_server_test
     print "Manual start\n";
     manual_start_server();
 
-    if ($status != 0) {
-        return 1;
-    }
+    if ($status == 0) {
 
-    print "Initial client request to kill server\n";
-    run_client ("-k");
+        print "Initial client request to kill server\n";
+        run_client ("-k");
+        sleep (1);
 
-   sleep (1);
+        print "Second client request to reactivate server \n";
+        start_client_no_wait ();
 
-    print "Second client request to reactivate server \n";
-    start_client_no_wait ();
+        print "Second shutdown of server\n";
+        shutdown_server ();
 
-    print "Second shutdown of server\n";
-    shutdown_server ();
+        print "manual start\n";
+        manual_start_server();
 
-    print "manual start\n";
-    manual_start_server();
+        print "Third client request should just work \n";
+        run_client ("");
 
-    print "Third client request should just work \n";
-    run_client ("");
+        print "delay before shutdown\n";
+        sleep (5);
 
-    print "final shutdown\n";
-    shutdown_server ();
+        print "final shutdown\n";
+        shutdown_server ();
 
-    my $CLINW_status = $CLINW->TerminateWaitKill ($clinw->ProcessStopWaitInterval());
-    if ($CLINW_status != 0) {
-	print STDERR "ERROR: no-wait client returned $CLINW_status\n";
-	$status = 1;
+        my $CLINW_status = $CLINW->TerminateWaitKill ($clinw->ProcessStopWaitInterval());
+        if ($CLINW_status != 0) {
+            print STDERR "ERROR: no-wait client returned $CLINW_status\n";
+            $status = 1;
+        }
     }
 
     my $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());

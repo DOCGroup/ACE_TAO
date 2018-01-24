@@ -404,9 +404,8 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_TCHAR lognm[MAXPATHLEN];
       int mypid (ACE_OS::getpid ());
-      ACE_OS::sprintf(lognm,
-                      ACE_TEXT ("RW_Process_Mutex_Test-child-%d"),
-                      (int)mypid);
+      ACE_OS::snprintf (lognm, MAXPATHLEN,
+                        ACE_TEXT ("RW_Process_Mutex_Test-child-%d"), mypid);
       ACE_START_TEST (lognm);
       if (child_nr == 0)
         writer ();
@@ -417,6 +416,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   else
     {
       ACE_START_TEST (ACE_TEXT ("RW_Process_Mutex_Test"));
+#if defined ACE_HAS_PROCESS_SPAWN && !defined ACE_LACKS_FILELOCKS
       // Although it should be safe for each process to construct and
       // destruct the rw lock, this can disturb other process still
       // using the lock. This is not really correct, and should be
@@ -461,11 +461,15 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           Child *child = (i == 0 ? &writer : &readers[i-1]);
           ACE_Process_Options options;
+#ifndef ACE_LACKS_VA_FUNCTIONS
           options.command_line (format,
                                 argc > 0 ? argv[0] : ACE_TEXT ("RW_Process_Mutex_Test"),
                                 i,
                                 (unsigned int)me.get_port_number (),
                                 mutex_name.c_str ());
+#else
+          ACE_UNUSED_ARG (format);
+#endif
           if (child->spawn (options) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -593,6 +597,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (!reader_overlap)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("No readers overlapped!\n")));
 
+#endif // ACE_HAS_PROCESS_SPAWN
       ACE_END_TEST;
     }
 

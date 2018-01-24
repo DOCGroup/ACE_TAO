@@ -60,7 +60,7 @@ int Get_Task::svc ()
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) task started\n")));
 
   ACE::HTTP::URL http_url;
-  if (http_url.parse ("http://www.theaceorb.nl"))
+  if (http_url.parse ("http://www.remedy.nl"))
     {
       ACE::HTTP::ClientRequestHandler rh;
       ACE::INet::URLStream urlin = http_url.open (rh);

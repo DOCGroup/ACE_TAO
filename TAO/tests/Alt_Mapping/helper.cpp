@@ -104,6 +104,4 @@ Generator::gen_fixed_struct (void)
   return this->fixed_struct_;
 }
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Generator, ACE_Recursive_Thread_Mutex> *ACE_Singleton<Generator, ACE_Recursive_Thread_Mutex>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Generator,  ACE_Recursive_Thread_Mutex);

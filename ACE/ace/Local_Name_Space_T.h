@@ -212,6 +212,8 @@ public:
   typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, ACE_LOCK> >
           ALLOCATOR;
 
+  ACE_ALLOC_HOOK_DECLARE;
+
 private:
 #if defined (ACE_WIN32)
   /// Remap the backing store

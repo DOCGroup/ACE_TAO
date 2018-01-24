@@ -20,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Unbounded_Set.h"
@@ -322,6 +321,7 @@ public:
     ~Processed_Static_Svc (void);
     ACE_TCHAR * name_;
     const ACE_Static_Svc_Descriptor *assd_;
+    ACE_ALLOC_HOOK_DECLARE;
   };
 
   /// Get the current ACE_Service_Repository held by this object.

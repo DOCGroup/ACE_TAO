@@ -1,3 +1,4 @@
+
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
@@ -297,10 +298,9 @@ File_Open_Lock_and_Check::~File_Open_Lock_and_Check ()
   // notify the context if it did.
   if (context_->write_occurred_ == 1)
     {
-      context_->context_written ();
-      // We have to make sure we clear the flag
-      // for subsequent times through.
+      // clear first to avoid potential nested upcalls
       context_->write_occurred_ = 0;
+      context_->context_written ();
     }
 }
 
@@ -929,6 +929,8 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                                    CosNaming::BindingIterator_out &bi)
 {
   ACE_TRACE("TAO_Storable_Naming_Context::list");
+  // Allocate nil out parameters in case we won't be able to complete
+  // the operation.
   bi = CosNaming::BindingIterator::_nil ();
 
   ACE_NEW_THROW_EX (bl,
@@ -942,11 +944,14 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                            this->lock_,
                            CORBA::INTERNAL ());
 
+  // Dynamically allocate iterator for traversing the underlying hash map.
   HASH_MAP::ITERATOR *hash_iter = 0;
   ACE_NEW_THROW_EX (hash_iter,
                     HASH_MAP::ITERATOR (storable_context_->map ()),
                     CORBA::NO_MEMORY ());
 
+  // Store <hash_iter temporarily in auto pointer, in case we'll have
+  // some failures and throw an exception.
   ACE_Auto_Basic_Ptr<HASH_MAP::ITERATOR> temp (hash_iter);
 
   // Silliness below is required because of broken old g++!!!  E.g.,
@@ -957,14 +962,27 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
   typedef ACE_Hash_Map_Manager<TAO_Storable_ExtId,
                                TAO_Storable_IntId,
                                ACE_Null_Mutex>::ENTRY ENTRY_DEF;
+
+  // Typedef to the type of BindingIterator servant for ease of use.
   typedef TAO_Bindings_Iterator<ITER_DEF, ENTRY_DEF> ITER_SERVANT;
 
-  CORBA::ULong n = (this->context_->current_size () > how_many) ?
-    how_many :
-    static_cast<CORBA::ULong> (this->context_->current_size ());
+  // A pointer to BindingIterator servant.
+  ITER_SERVANT *bind_iter = 0;
+
+  // Number of bindings that will go into the BindingList <bl>.
+  CORBA::ULong n;
+
+  // Calculate number of bindings that will go into <bl>.
+  if (this->context_->current_size () > how_many)
+    n = how_many;
+  else
+    n = static_cast<CORBA::ULong> (this->context_->current_size ());
+
+  // Use the hash map iterator to populate <bl> with bindings.
   bl->length (n);
 
   ENTRY_DEF *hash_entry = 0;
+
   for (CORBA::ULong i = 0; i < n; i++)
     {
       hash_iter->next (hash_entry);
@@ -974,26 +992,35 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
           throw CORBA::NO_MEMORY();
     }
 
+  // Now we are done with the BindingsList, and we can follow up on
+  // the BindingIterator business.
+
+  // If we do not need to pass back BindingIterator.
   if (this->context_->current_size () <= how_many)
     return;
   else if (redundant_)
     {
+      ACE_UNUSED_ARG (bind_iter);
       throw CORBA::NO_IMPLEMENT ();
     }
   else
     {
-      ITER_SERVANT *bind_iter = 0;
+      // Create a BindingIterator for return.
       ACE_NEW_THROW_EX (bind_iter,
                         ITER_SERVANT (this, hash_iter, this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
+      // Release <hash_iter> from auto pointer, and start using
+      // reference counting to control our servant.
       temp.release ();
-      PortableServer::ServantBase_var svt = bind_iter;
+      PortableServer::ServantBase_var iter = bind_iter;
 
       // Increment reference count on this Naming Context, so it doesn't get
       // deleted before the BindingIterator servant gets deleted.
       interface_->_add_ref ();
 
+      // Register with the POA.
+      // Is an ACE_UINT32 enough?
       char poa_id[BUFSIZ];
       ACE_OS::snprintf (poa_id,
                         BUFSIZ,
@@ -1003,9 +1030,9 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId (poa_id);
 
-      this->poa_->activate_object_with_id (id.in (), svt.in());
-      CORBA::Object_var obj = this->poa_->id_to_reference (id.in ());
-      bi = CosNaming::BindingIterator::_narrow (obj.in());
+      this->poa_->activate_object_with_id (id.in (),
+                                           bind_iter);
+      bi = bind_iter->_this ();
     }
 }
 
@@ -1015,7 +1042,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
+/* static */
+CosNaming::NamingContext_ptr
+TAO_Storable_Naming_Context::recreate_all (
                                CORBA::ORB_ptr orb,
                                PortableServer::POA_ptr poa,
                                const char *poa_id,
@@ -1073,8 +1102,7 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
   // around a Storable_File_Guard derived class.
   gfl_.reset(pers_factory->
              create_stream (file_name.c_str(),
-                            "crw",
-                            false));
+                            "crw"));
   if (gfl_->open() != 0)
     {
       delete gfl_.release();
@@ -1086,7 +1114,10 @@ CosNaming::NamingContext_ptr TAO_Storable_Naming_Context::recreate_all (
   TAO_Storable_Naming_Context_ReaderWriter rw(*gfl_.get());
   rw.read_global(global);
   gcounter_ = global.counter();
-  if(redundant_) gfl_->close();
+  if (redundant_)
+    {
+      gfl_->close();
+    }
 
   return result._retn ();
 }

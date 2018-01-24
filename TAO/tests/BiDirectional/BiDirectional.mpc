@@ -3,7 +3,7 @@ project(*idl): taoidldefaults {
   IDL_Files {
     test.idl
   }
-  custom_only = 1;
+  custom_only = 1
 }
 
 project(*Server): taoserver, anytypecode, avoids_minimum_corba, bidir_giop, avoids_corba_e_micro {

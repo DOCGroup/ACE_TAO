@@ -33,22 +33,26 @@ class PingReceiver;
  *
  * @brief indication of the known condition of a target server
  *
- *  LS_UNKNOWN   - The server hasn't yet been pinged
+ *  LS_INIT      - This is a new entry
+ *  LS_UNKNOWN   - The server status was reset
  *  LS_PING_AWAY - A ping request has been issued, waiting for reply
  *  LS_DEAD      - The ping failed for reasons other than POA Activation
  *  LS_ALIVE     - The server positively acknowledged a ping
- *  LS_TRANSIENT - The server connected, but acively raised a transient
+ *  LS_TRANSIENT - The server connected, but actively raised a transient
  *  LS_LAST_TRANSIENT - The maximum number of retries is reached
  *  LS_TIMEDOUT  - The server connected, but never returned any result.
+ *  LS_CANCELED  - The ping was canceled by the owner
  */
 enum LiveStatus {
+  LS_INIT,
   LS_UNKNOWN,
   LS_PING_AWAY,
   LS_DEAD,
   LS_ALIVE,
   LS_TRANSIENT,
   LS_LAST_TRANSIENT,
-  LS_TIMEDOUT
+  LS_TIMEDOUT,
+  LS_CANCELED
 };
 
 //---------------------------------------------------------------------------
@@ -132,6 +136,8 @@ class Locator_Export LiveEntry
   int next_reping (void);
   void max_retry_msec (int max);
   const char *server_name (void) const;
+  void set_pid (int pid);
+  bool has_pid (int pid);
 
  private:
   LiveCheck *owner_;
@@ -147,6 +153,7 @@ class Locator_Export LiveEntry
   Listen_Set listeners_;
   TAO_SYNCH_MUTEX lock_;
   PortableServer::ServantBase_var callback_;
+  int pid_;
 
   static const int reping_msec_ [];
   static int reping_limit_;
@@ -161,7 +168,7 @@ class Locator_Export LiveEntry
  *
  * An instance of the ping receiver is used to handle the reply from a ping
  * request. Instances are created for the ping, then destroyed.
-`*/
+ `*/
 class Locator_Export PingReceiver :
   public virtual POA_ImplementationRepository::AMI_ServerObjectHandler
 {
@@ -198,12 +205,18 @@ class Locator_Export PingReceiver :
  * subsequent timeouts.
  * */
 
+#if (ACE_SIZEOF_VOID_P == 8)
+typedef ACE_INT64 LC_token_type;
+#else
+typedef ACE_INT32 LC_token_type;
+#endif
+
 class Locator_Export LC_TimeoutGuard
 {
  public:
   /// construct a new stack-based guard. This sets a flag in the owner that will
   /// be cleared on destruction.
-  LC_TimeoutGuard (LiveCheck *owner, int token);
+  LC_TimeoutGuard (LiveCheck *owner, LC_token_type token);
 
   /// releases the flag. If the LiveCheck received any requests for an immediate
   /// or defered ping during this time, schedule it now.
@@ -214,7 +227,7 @@ class Locator_Export LC_TimeoutGuard
 
  private:
   LiveCheck *owner_;
-  int token_;
+  LC_token_type token_;
   bool blocked_;
 };
 
@@ -240,43 +253,35 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   void init (CORBA::ORB_ptr orb,
              const ACE_Time_Value &interval);
   void shutdown (void);
-
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void *act = 0);
-
   bool has_server (const char *server);
-
   void add_server (const char *server,
                    bool may_ping,
                    ImplementationRepository::ServerObject_ptr ref);
-
-  void remove_server (const char *server);
-
-  void remove_deferred_servers (void);
-
+  void set_pid (const char *server, int pid);
+  void remove_server (const char *server, int pid = 0);
   bool remove_per_client_entry (LiveEntry *entry);
-
   bool add_listener (LiveListener *listener);
-
   bool add_poll_listener (LiveListener *listener);
-
   bool add_per_client_listener (LiveListener *listener,
                                 ImplementationRepository::ServerObject_ptr ref);
-
   void remove_listener (LiveListener *listener);
-
   bool schedule_ping (LiveEntry *entry);
-
   LiveStatus is_alive (const char *server);
-
   const ACE_Time_Value &ping_interval (void) const;
 
  private:
+  void enter_handle_timeout (void);
+  void exit_handle_timeout (void);
+  bool in_handle_timeout (void);
+  void remove_deferred_servers (void);
+
   typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
                                   LiveEntry *,
                                   ACE_Hash<ACE_CString>,
                                   ACE_Equal_To<ACE_CString>,
-                                  TAO_SYNCH_MUTEX> LiveEntryMap;
+                                  ACE_Null_Mutex> LiveEntryMap;
   typedef ACE_Unbounded_Set<LiveEntry *> PerClientStack;
   typedef ACE_Unbounded_Set<ACE_CString> NameStack;
 
@@ -285,7 +290,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   PortableServer::POA_var poa_;
   ACE_Time_Value ping_interval_;
   bool running_;
-  int token_;
+  LC_token_type token_;
   int handle_timeout_busy_;
   bool want_timeout_;
   ACE_Time_Value deferred_timeout_;
@@ -293,4 +298,3 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
 };
 
 #endif /* IMR_LIVECHECK_H_  */
-

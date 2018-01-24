@@ -502,7 +502,7 @@ TAO::PG_Object_Group::increment_version (void)
   if (TAO_debug_level > 3)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%T %n (%P|%t) - Setting IOGR version to %u\n"),
+                  ACE_TEXT ("TAO (%P|%t) PG_Object_Group::increment_version now %u\n"),
                   static_cast<unsigned> (this->tagged_component_.object_group_ref_version)
                   ));
     }
@@ -593,7 +593,7 @@ TAO::PG_Object_Group::locations_of_members (void)
 
   PortableGroup::Locations * result = 0;
 
-  size_t count = this->members_.current_size ();
+  CORBA::ULong count = static_cast<CORBA::ULong> (this->members_.current_size ());
 
   ACE_NEW_THROW_EX (
     result,
@@ -602,7 +602,7 @@ TAO::PG_Object_Group::locations_of_members (void)
 
   result->length (count);
 
-  size_t pos = 0;
+  CORBA::ULong pos = 0;
   for (MemberMap_Iterator it = this->members_.begin();
       it != this->members_.end();
       ++it)
@@ -932,4 +932,3 @@ TAO::PG_Object_Group::clear_members_map (void)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-

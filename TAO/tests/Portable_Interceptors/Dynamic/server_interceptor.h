@@ -29,9 +29,7 @@ public:
 
   virtual void destroy (void);
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr
-        );
+  virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr);
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 
@@ -39,9 +37,7 @@ public:
 
   virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
 
-  virtual void send_other (
-        PortableInterceptor::ServerRequestInfo_ptr
-        );
+  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
 
 protected:
 

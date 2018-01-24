@@ -19,7 +19,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"

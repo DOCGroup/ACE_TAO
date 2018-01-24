@@ -128,7 +128,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
 {
   this->check_validity ();
 
-  ::SSLIOP::AuthData *data = 0;
+  const ::SSLIOP::AuthData *data = 0;
 
   if (!(this->acquisition_arguments_ >>= data))
     throw CORBA::BAD_PARAM ();

@@ -1,4 +1,3 @@
-
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
@@ -20,7 +19,7 @@ foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debugging = 1;
         $imr_debug = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile imr.log -d 5 ";
-        $act_debug = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile imr.log -d 5 ";
+        $act_debug = "-ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile act.log -d 5 ";
     }
     elsif ($i eq '-manual') {
         # in manual mode the server is manually started, so it should
@@ -152,6 +151,10 @@ sub kill_imr
 {
     my $msg = shift;
     print STDERR "ERROR: $msg\n" if (length ($msg) > 0);
+    if ($mode eq "-a MANUAL ") {
+        $TI->Arguments ("$tiinitref kill MessengerService");
+        $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval() + $extra_timeout);
+    }
     $ACT->Kill (); $ACT->TimedWait (1);
     $IR->Kill (); $IR->TimedWait (1);
     return 1;

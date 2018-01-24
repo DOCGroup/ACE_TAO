@@ -30,7 +30,7 @@ TAO_LF_CH_Event::unbind (TAO_LF_Follower *follower)
 }
 
 void
-TAO_LF_CH_Event::state_changed_i (int new_state)
+TAO_LF_CH_Event::state_changed_i (LFS_STATE new_state)
 {
   if (this->state_ != new_state)
     {
@@ -64,7 +64,7 @@ TAO_LF_CH_Event::state_changed_i (int new_state)
 }
 
 void
-TAO_LF_CH_Event::validate_state_change (int new_state)
+TAO_LF_CH_Event::validate_state_change (LFS_STATE new_state)
 {
   if (this->state_ == TAO_LF_Event::LFS_IDLE)
     {
@@ -109,8 +109,8 @@ TAO_LF_CH_Event::validate_state_change (int new_state)
 }
 
 
-int
-TAO_LF_CH_Event::successful (void) const
+bool
+TAO_LF_CH_Event::successful_i (void) const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
@@ -118,8 +118,8 @@ TAO_LF_CH_Event::successful (void) const
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }
 
-int
-TAO_LF_CH_Event::error_detected (void) const
+bool
+TAO_LF_CH_Event::error_detected_i (void) const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
     return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
@@ -128,10 +128,10 @@ TAO_LF_CH_Event::error_detected (void) const
 }
 
 void
-TAO_LF_CH_Event::set_state (int new_state)
+TAO_LF_CH_Event::set_state (LFS_STATE new_state)
 {
   // @@ NOTE: Is this still required?
-  if (this->is_state_final () == 0
+  if (!this->is_state_final ()
       && new_state == TAO_LF_Event::LFS_TIMEOUT)
     {
       this->state_ = new_state;
@@ -150,8 +150,8 @@ TAO_LF_CH_Event::set_state (int new_state)
     }
 }
 
-int
-TAO_LF_CH_Event::is_state_final (void)
+bool
+TAO_LF_CH_Event::is_state_final (void) const
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }

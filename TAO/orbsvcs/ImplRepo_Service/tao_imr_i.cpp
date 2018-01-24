@@ -6,7 +6,6 @@
 
 #include "tao/Stub.h"
 #include "tao/Profile.h"
-
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_strings.h"
@@ -214,19 +213,37 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
       locked_out = "  Locked Out\n";
     }
 
-  ORBSVCS_DEBUG ((LM_DEBUG,
-    "  Activator: %C\n"
-    "  Command Line: %C\n"
-    "  Working Directory: %C\n"
-    "  Activation Mode: %C\n"
-    "  Number of retries: %d\n"
-    "%C",
-    info.startup.activator.in (),
-    info.startup.command_line.in (),
-    info.startup.working_directory.in (),
-    act,
-    limit - 1,
-    locked_out));
+  ORBSVCS_DEBUG ((LM_DEBUG, "  Activator: %C\n", info.startup.activator.in ()));
+
+  ORBSVCS_DEBUG ((LM_DEBUG, "  Command Line: "));
+  if (ACE_OS::strlen(info.startup.command_line.in ()) <= ACE_MAXLOGMSGLEN)
+    {
+       ORBSVCS_DEBUG ((LM_DEBUG, "%C", info.startup.command_line.in ()));
+    }
+  else
+    {
+       char *cl = const_cast<char *>(info.startup.command_line.in ());
+       while (*cl)
+         {
+            char tmp = 0;
+            size_t len = ACE_OS::strlen(cl);
+            if (len > ACE_MAXLOGMSGLEN)
+              {
+                 len = ACE_MAXLOGMSGLEN;
+                 tmp = cl[len+1];
+                 cl[len+1] = 0;
+              }
+            ORBSVCS_DEBUG ((LM_DEBUG, "%C", cl));
+            cl[len+1] = tmp;
+            cl += len;
+         }
+    }
+  ORBSVCS_DEBUG ((LM_DEBUG, "\n"));
+  ORBSVCS_DEBUG ((LM_DEBUG, "  Working Directory: %s\n", info.startup.working_directory.in ()));
+  ORBSVCS_DEBUG ((LM_DEBUG, "  Activation Mode: %C\n", act));
+  ORBSVCS_DEBUG ((LM_DEBUG, "  Number of retries: %d\n%C", limit - 1, locked_out));
+
+
   for (CORBA::ULong i = 0; i < info.startup.environment.length (); ++i)
     ORBSVCS_DEBUG ((LM_DEBUG, "Environment Variable: %C=%C\n",
     info.startup.environment[i].name.in (),
@@ -465,7 +482,7 @@ TAO_IMR_Op_Link::print_usage (void)
 {
   ORBSVCS_ERROR ((LM_ERROR, "Links multiple POAs to a single executable\n"
     "\n"
-    "Usage: tao_imr [options] link [name] [peers]\n"
+    "Usage: tao_imr [options] link [name] [command-arguments]\n"
     "  where [options] are ORB options\n"
     "  where [name] is the registered POA name the peers link to\n"
     "  where [command-arguments] can be\n"
@@ -595,8 +612,10 @@ TAO_IMR_Op_Remove::print_usage (void)
 {
   ORBSVCS_ERROR ((LM_ERROR, "Removes a server entry\n"
     "\n"
-    "Usage: tao_imr [options] remove <name>\n"
+    "Usage: tao_imr [options] remove <name> [-f [-s <signum>]]\n"
     "  where [options] are ORB options\n"
+    "  -f forces shutdown or kill of a running server"
+    "  -s specifies a signal for killing the server, if it is 0, a shutdown will be used"
     "  where <name> is the POA name used by the server object\n"
     "  -h Displays this\n"));
 }
@@ -610,9 +629,11 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
       this->print_usage ();
       return -1;
     }
+  this->force_ = false;
+  this->signum_ = 0;
 
   // Skip both the program name and the "remove" command
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("h"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("hfs:"));
 
   this->server_name_ = ACE_TEXT_ALWAYS_CHAR(argv[1]);
   int c;
@@ -624,12 +645,19 @@ TAO_IMR_Op_Remove::parse (int argc, ACE_TCHAR **argv)
       case 'h':
         this->print_usage ();
         return -1;
+      case 'f':
+        this->force_ = true;
+        break;
+      case 's':
+        this->signum_ = ACE_OS::strtol (get_opts.opt_arg (), 0, 10);
+        break;
       default:
         ORBSVCS_ERROR((LM_ERROR, "ERROR : Unknown option '%c'\n", (char) c));
         this->print_usage ();
         return -1;
       }
     }
+
   return 0;
 }
 
@@ -1200,8 +1228,18 @@ TAO_IMR_Op_Remove::run (void)
 
   try
     {
-      this->imr_->remove_server (this->server_name_.c_str ());
-
+      if (this->force_)
+        {
+          ImplementationRepository::AdministrationExt_var ext =
+            ImplementationRepository::AdministrationExt::_narrow (imr_);
+          ACE_ASSERT (! CORBA::is_nil(ext));
+          ext->force_remove_server (this->server_name_.c_str (),
+                                    this->signum_);
+        }
+      else
+        {
+          this->imr_->remove_server (this->server_name_.c_str ());
+        }
       ORBSVCS_DEBUG ((LM_DEBUG, "Successfully removed server <%C>\n",
         this->server_name_.c_str ()));
     }
@@ -1211,8 +1249,20 @@ TAO_IMR_Op_Remove::run (void)
         this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
-  catch (const CORBA::NO_PERMISSION&)
+  catch (const ImplementationRepository::CannotComplete& cc)
     {
+      ORBSVCS_ERROR ((LM_ERROR, "Could not complete forced removal of server <%C>. reason: %C\n",
+                      this->server_name_.c_str (), cc.reason.in() ));
+      return TAO_IMR_Op::CANNOT_COMPLETE;
+    }
+  catch (const CORBA::NO_PERMISSION& np)
+    {
+      if ((np.minor () & 0x7FU) == 0xFU) //TAO_EBUSY_MINOR_CODE)
+        {
+          ORBSVCS_ERROR ((LM_ERROR, "Server <%C> still busy.\n",
+                          this->server_name_.c_str ()));
+          return TAO_IMR_Op::CANNOT_COMPLETE;
+        }
       ORBSVCS_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;
     }

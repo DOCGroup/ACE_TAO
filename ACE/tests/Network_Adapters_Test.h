@@ -21,6 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_ICMP_SUPPORT) && (ACE_HAS_ICMP_SUPPORT == 1)
+# ifndef ACE_LACKS_GETPROTOBYNAME
 
 #include "ace/Reactor.h"
 #include "ace/INET_Addr.h"
@@ -251,6 +252,7 @@ private:
   unsigned long counter_;
 };
 
+# endif // ACE_LACKS_GETPROTOBYNAME
 #endif  /* ACE_HAS_ICMP_SUPPORT == 1 */
 
 #endif /* ACE_NETWORK_ADAPTERS_TEST_H */

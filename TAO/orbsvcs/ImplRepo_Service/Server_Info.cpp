@@ -297,7 +297,6 @@ Server_Info::reset_runtime (void)
   this->partial_ior = "";
   Server_Info *startup = this->active_info ();
   startup->ior = "";
-  startup->pid = 0;
   startup->death_notify = false;
   startup->last_ping = ACE_Time_Value::zero;
   startup->server = ImplementationRepository::ServerObject::_nil ();

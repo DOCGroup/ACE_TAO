@@ -5,9 +5,9 @@
 #include "ace/Log_Msg.h"
 
 ACEXML_Print_Handler::ACEXML_Print_Handler (ACEXML_Char* fileName)
-  : fileName_(ACE::strnew (fileName))
+  : fileName_(ACE::strnew (fileName)),
+    locator_ (0)
 {
-
 }
 
 ACEXML_Print_Handler::~ACEXML_Print_Handler (void)
@@ -20,8 +20,6 @@ ACEXML_Print_Handler::characters (const ACEXML_Char *cdata,
                                   size_t start,
                                   size_t length)
 {
-
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event characters () ** start: %u  end: %u ***************\n%s\n- End event characters () ---------------\n"),
               start, length, cdata));
@@ -30,8 +28,6 @@ ACEXML_Print_Handler::characters (const ACEXML_Char *cdata,
 void
 ACEXML_Print_Handler::endDocument (void)
 {
-
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event endDocument () ***************\n")));
 }
@@ -41,8 +37,6 @@ ACEXML_Print_Handler::endElement (const ACEXML_Char *uri,
                                   const ACEXML_Char *name,
                                   const ACEXML_Char *qName)
 {
-
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event endElement (%s, %s, %s) ***************\n"),
               uri, name, qName));
@@ -51,8 +45,6 @@ ACEXML_Print_Handler::endElement (const ACEXML_Char *uri,
 void
 ACEXML_Print_Handler::endPrefixMapping (const ACEXML_Char *prefix)
 {
-
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event endPrefixMapping (%s) ***************\n"),
               prefix));
@@ -71,8 +63,6 @@ void
 ACEXML_Print_Handler::processingInstruction (const ACEXML_Char *target,
                                              const ACEXML_Char *data)
 {
-
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event processingInstruction (%s, %s) ***************\n"),
               target, data));
@@ -81,7 +71,6 @@ ACEXML_Print_Handler::processingInstruction (const ACEXML_Char *target,
 void
 ACEXML_Print_Handler::setDocumentLocator (ACEXML_Locator * locator)
 {
-
   this->locator_ = locator;
   // ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("* Event setDocumentLocator () ***************\n")));
 }
@@ -89,8 +78,6 @@ ACEXML_Print_Handler::setDocumentLocator (ACEXML_Locator * locator)
 void
 ACEXML_Print_Handler::skippedEntity (const ACEXML_Char *name)
 {
-
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event skippedEntity (%s) ***************\n"),
               name));
@@ -99,8 +86,6 @@ ACEXML_Print_Handler::skippedEntity (const ACEXML_Char *name)
 void
 ACEXML_Print_Handler::startDocument (void)
 {
-
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event startDocument () ***************\n")));
 }
@@ -111,8 +96,6 @@ ACEXML_Print_Handler::startElement (const ACEXML_Char *uri,
                                     const ACEXML_Char *qName,
                                     ACEXML_Attributes *alist)
 {
-
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event startElement (%s, %s, %s) ***************\n"),
               uri, name, qName));
@@ -218,7 +201,6 @@ ACEXML_Print_Handler::fatalError (ACEXML_SAXParseException& ex)
               this->locator_->getLineNumber(),
               this->locator_->getColumnNumber()));
   ex.print();
-
 }
 
 void

@@ -54,7 +54,7 @@ project(ImR_Activator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, dy
   }
 }
 
-project(ImR_Locator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, portableserver, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro,tao_versioning_idl_defaults {
+project(ImR_Locator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, portableserver, messaging, dynamicinterface, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro,tao_versioning_idl_defaults {
   sharedname   = TAO_ImR_Locator_IDL
   after       += ImR_Activator_IDL
   libs        += TAO_ImR_Activator_IDL TAO_Async_ImR_Client_IDL
@@ -78,7 +78,7 @@ project(ImR_Locator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, port
   }
 }
 
-project(ImR_Activator) : orbsvcslib, orbsvcs_output, conv_lib, acexml, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, valuetype, portableserver, messaging, pi, codecfactory, svc_utils {
+project(ImR_Activator) : orbsvcslib, orbsvcs_output, conv_lib, acexml, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, valuetype, portableserver, messaging, dynamicinterface, pi, codecfactory, svc_utils {
   sharedname   = TAO_ImR_Activator
   dynamicflags += ACTIVATOR_BUILD_DLL
   after       += ImR_Locator_IDL
@@ -159,7 +159,7 @@ project(ImR_Locator_Service) : orbsvcsexe, install_bin, avoids_minimum_corba, av
 }
 
 
-project(ImR_Activator_Service) : orbsvcsexe, install, acexml, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, messaging, svc_utils {
+project(ImR_Activator_Service) : orbsvcsexe, install, acexml, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, messaging, dynamicinterface, svc_utils {
   exename  = tao_imr_activator
   after   += ImR_Activator
   libs    += TAO_ImR_Activator TAO_ImR_Activator_IDL TAO_ImR_Locator_IDL TAO_Async_ImR_Client_IDL
@@ -175,14 +175,20 @@ project(ImR_Activator_Service) : orbsvcsexe, install, acexml, avoids_minimum_cor
 project(tao_imr) : orbsvcsexe, install, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro, portableserver, imr_client, messaging, svc_utils {
   install         = $(ACE_ROOT)/bin
   exename  = tao_imr
+
   Source_Files {
     tao_imr.cpp
     tao_imr_i.cpp
   }
+
   idl_files {
   }
+
+  specific {
+    install_dir = tao/docs/implrepo
+  }
+
   InstallData_Files {
-    gendir = tao-imr
     README
   }
 }

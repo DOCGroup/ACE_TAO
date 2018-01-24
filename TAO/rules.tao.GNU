@@ -2,7 +2,7 @@
 
 #----------------------------------------------------------------------------
 #
-#       
+#
 #
 #       Common Makefile rules for all of TAO
 #
@@ -115,6 +115,8 @@ endif # interceptors
 # CPPFLAGS += -DTAO_HAS_TRANSPORT_CURRENT=1
 transport_current ?= 1
 
+build_tao_idl_be ?= 1
+
 ifeq (1,$(CROSS-COMPILE))
   ACE_MAKE_OPTIONS += cross_compile
 else
@@ -128,11 +130,13 @@ endif # ! CROSS-COMPILE
 ifeq (cmd,$(findstring cmd,$(SHELL)))
 TAO_MAJOR_VERSION := $(shell awk "/TAO_MAJOR_VERSION/ { print $$3}" ${TAO_ROOT}/tao/Version.h)
 TAO_MINOR_VERSION := $(shell awk "/TAO_MINOR_VERSION/ { print $$3}" ${TAO_ROOT}/tao/Version.h)
-TAO_BETA_VERSION := $(shell awk "/TAO_BETA_VERSION/ { print $$3}" ${TAO_ROOT}/tao/Version.h)
+TAO_MICRO_VERSION := $(shell awk "/TAO_MICRO_VERSION/ { print $$3}" ${TAO_ROOT}/tao/Version.h)
+TAO_BETA_VERSION := $(shell awk "/TAO_MICRO_VERSION/ { print $$3}" ${TAO_ROOT}/tao/Version.h)
 else
 TAO_MAJOR_VERSION := $(shell awk '/TAO_MAJOR_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
 TAO_MINOR_VERSION := $(shell awk '/TAO_MINOR_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
-TAO_BETA_VERSION := $(shell awk '/TAO_BETA_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
+TAO_MICRO_VERSION := $(shell awk '/TAO_MICRO_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
+TAO_BETA_VERSION := $(shell awk '/TAO_MICRO_VERSION/ { print $$3}' ${TAO_ROOT}/tao/Version.h)
 endif
 
-GNUACE_PROJECT_VERSION ?= $(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_BETA_VERSION)
+GNUACE_PROJECT_VERSION ?= $(TAO_MAJOR_VERSION).$(TAO_MINOR_VERSION).$(TAO_MICRO_VERSION)

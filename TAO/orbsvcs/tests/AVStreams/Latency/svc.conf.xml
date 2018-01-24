@@ -1,8 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/tests/AVStreams/Latency/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorType select_st  -ORBInputCDRAllocator null  -ORBConnectionCacheLock null"/>
  <static id="Server_Strategy_Factory" params="-ORBAllowReactivationOfSystemids 0"/>
  <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler ST"/>

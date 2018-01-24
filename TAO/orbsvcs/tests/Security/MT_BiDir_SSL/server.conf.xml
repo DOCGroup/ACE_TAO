@@ -1,8 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./tests/MT_BiDir/server.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
 <dynamic id="SSLIOP_Factory" type="Service_Object">
    <initializer path="TAO_SSLIOP" init="_make_TAO_SSLIOP_Protocol_Factory" params="-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:ssl/server-key.pem -SSLCertificate PEM:ssl/server-cert.pem -SSLCAFile PEM:ssl/ca.pem"/>
  </dynamic>

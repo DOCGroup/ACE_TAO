@@ -39,16 +39,16 @@ namespace
   // @@ This should also be done with a singleton, otherwise it is not
   //    thread safe and/or portable to some weird platforms...
 
-#ifdef ACE_HAS_THREADS
+#if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
   /// Array of mutexes used internally by OpenSSL when the SSL
   /// application is multithreaded.
   ACE_SSL_Context::lock_type * ssl_locks = 0;
 
   // @@ This should also be managed by a singleton.
-#endif
+#endif /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
 }
 
-#ifdef ACE_HAS_THREADS
+#if defined (ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
 
 # if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 #  define ACE_SSL_LOCKING_CALLBACK_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_SSL_locking_callback)
@@ -57,8 +57,6 @@ namespace
 #  define ACE_SSL_LOCKING_CALLBACK_NAME ACE_SSL_locking_callback
 #  define ACE_SSL_THREAD_ID_NAME ACE_SSL_thread_id
 # endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
-
-
 
 extern "C"
 {
@@ -96,16 +94,16 @@ extern "C"
     return (unsigned long) ACE_VERSIONED_NAMESPACE_NAME::ACE_OS::thr_self ();
   }
 }
-#endif  /* ACE_HAS_THREADS */
+#endif  /* ACE_HAS_THREADS && (OPENSSL_VERSION_NUMBER < 0x10100000L) */
 
 
 // ****************************************************************
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#ifdef ACE_HAS_THREADS
+#if defined (ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
 ACE_SSL_Context::lock_type * ACE_SSL_Context::locks_ = 0;
-#endif  /* ACE_HAS_THREADS */
+#endif  /* ACE_HAS_THREADS  && (OPENSSL_VERSION_NUMBER < 0x10100000L) */
 
 ACE_SSL_Context::ACE_SSL_Context (void)
   : context_ (0),
@@ -135,6 +133,12 @@ ACE_SSL_Context::instance (void)
 }
 
 void
+ACE_SSL_Context::close (void)
+{
+  ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::close ();
+}
+
+void
 ACE_SSL_Context::ssl_library_init (void)
 {
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex,
@@ -145,7 +149,7 @@ ACE_SSL_Context::ssl_library_init (void)
     {
       // Initialize the locking callbacks before initializing anything
       // else.
-#ifdef ACE_HAS_THREADS
+#if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
       int const num_locks = ::CRYPTO_num_locks ();
 
       this->locks_ = new lock_type[num_locks];
@@ -157,7 +161,7 @@ ACE_SSL_Context::ssl_library_init (void)
       ::CRYPTO_set_id_callback (ACE_SSL_THREAD_ID_NAME);
 # endif  /* !WIN32 */
       ::CRYPTO_set_locking_callback (ACE_SSL_LOCKING_CALLBACK_NAME);
-#endif  /* ACE_HAS_THREADS */
+#endif  /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
 
       ::SSLeay_add_ssl_algorithms ();
       ::SSL_load_error_strings ();
@@ -205,6 +209,7 @@ ACE_SSL_Context::ssl_library_fini (void)
   --ssl_library_init_count;
   if (ssl_library_init_count == 0)
     {
+#if OPENSSL_VERSION_NUMBER < 0x10100000L
       ::ERR_free_strings ();
       ::EVP_cleanup ();
 
@@ -216,7 +221,8 @@ ACE_SSL_Context::ssl_library_fini (void)
 
       delete [] this->locks_;
       this->locks_ = 0;
-#endif  /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS &&  */
+#endif /* OPENSSL_VERSION_NUMBER < 0x10100000L */
     }
 }
 
@@ -239,26 +245,6 @@ ACE_SSL_Context::set_mode (int mode)
 
   switch (mode)
     {
-#if !defined (OPENSSL_NO_SSL2)
-    case ACE_SSL_Context::SSLv2_client:
-      method = ::SSLv2_client_method ();
-      break;
-    case ACE_SSL_Context::SSLv2_server:
-      method = ::SSLv2_server_method ();
-      break;
-    case ACE_SSL_Context::SSLv2:
-      method = ::SSLv2_method ();
-      break;
-#endif /* OPENSSL_NO_SSL2 */
-    case ACE_SSL_Context::SSLv3_client:
-      method = ::SSLv3_client_method ();
-      break;
-    case ACE_SSL_Context::SSLv3_server:
-      method = ::SSLv3_server_method ();
-      break;
-    case ACE_SSL_Context::SSLv3:
-      method = ::SSLv3_method ();
-      break;
     case ACE_SSL_Context::SSLv23_client:
       method = ::SSLv23_client_method ();
       break;
@@ -268,39 +254,8 @@ ACE_SSL_Context::set_mode (int mode)
     case ACE_SSL_Context::SSLv23:
       method = ::SSLv23_method ();
       break;
-    case ACE_SSL_Context::TLSv1_client:
-      method = ::TLSv1_client_method ();
-      break;
-    case ACE_SSL_Context::TLSv1_server:
-      method = ::TLSv1_server_method ();
-      break;
-    case ACE_SSL_Context::TLSv1:
-      method = ::TLSv1_method ();
-      break;
-#if defined(TLS1_1_VERSION) && (TLS_MAX_VERSION >= TLS1_1_VERSION)
-    case ACE_SSL_Context::TLSv1_1_client:
-      method = ::TLSv1_1_client_method ();
-      break;
-    case ACE_SSL_Context::TLSv1_1_server:
-      method = ::TLSv1_1_server_method ();
-      break;
-    case ACE_SSL_Context::TLSv1_1:
-      method = ::TLSv1_1_method ();
-      break;
-#endif
-#if defined(TLS1_2_VERSION) && (TLS_MAX_VERSION >= TLS1_2_VERSION)
-    case ACE_SSL_Context::TLSv1_2_client:
-      method = ::TLSv1_2_client_method ();
-      break;
-    case ACE_SSL_Context::TLSv1_2_server:
-      method = ::TLSv1_2_server_method ();
-      break;
-    case ACE_SSL_Context::TLSv1_2:
-      method = ::TLSv1_2_method ();
-      break;
-#endif
     default:
-      method = ::SSLv3_method ();
+      method = ::SSLv23_method ();
       break;
     }
 
@@ -486,16 +441,7 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
 
   // For TLS/SSL servers scan all certificates in ca_file and ca_dir and
   // list them as acceptable CAs when requesting a client certificate.
-  if (mode_ == SSLv23
-      || mode_ == SSLv23_server
-      || mode_ == TLSv1
-      || mode_ == TLSv1_server
-#if !defined (OPENSSL_NO_SSL2)
-      || mode_ == SSLv2
-      || mode_ == SSLv2_server
-#endif /* !OPENSSL_NO_SSL2 */
-      || mode_ == SSLv3
-      || mode_ == SSLv3_server)
+  if (mode_ == SSLv23 || mode_ == SSLv23_server)
     {
       // Note: The STACK_OF(X509_NAME) pointer is a copy of the pointer in
       // the CTX; any changes to it by way of these function calls will
@@ -683,8 +629,9 @@ ACE_SSL_Context::random_seed (const char * seed)
 int
 ACE_SSL_Context::egd_file (const char * socket_file)
 {
-#if OPENSSL_VERSION_NUMBER < 0x00905100L
-  // OpenSSL < 0.9.5 doesn't have EGD support.
+#if OPENSSL_VERSION_NUMBER < 0x00905100L || defined (OPENSSL_NO_EGD)
+  // OpenSSL < 0.9.5 doesn't have EGD support. OpenSSL 1.1 and newer
+  // disable egd by default
   ACE_UNUSED_ARG (socket_file);
   ACE_NOTSUP_RETURN (-1);
 #else
@@ -695,7 +642,7 @@ ACE_SSL_Context::egd_file (const char * socket_file)
     return 0;
   else
     return -1;
-#endif  /* OPENSSL_VERSION_NUMBER >= 0x00905100L */
+#endif  /* OPENSSL_VERSION_NUMBER < 0x00905100L */
 }
 
 int
@@ -718,22 +665,22 @@ ACE_SSL_Context::seed_file (const char * seed_file, long bytes)
 void
 ACE_SSL_Context::report_error (unsigned long error_code)
 {
-  if (error_code == 0)
-    return;
-
-  char error_string[256];
+  if (error_code != 0)
+  {
+    char error_string[256];
 
 // OpenSSL < 0.9.6a doesn't have ERR_error_string_n() function.
 #if OPENSSL_VERSION_NUMBER >= 0x0090601fL
-  (void) ::ERR_error_string_n (error_code, error_string, sizeof error_string);
+    (void) ::ERR_error_string_n (error_code, error_string, sizeof error_string);
 #else /* OPENSSL_VERSION_NUMBER >= 0x0090601fL */
-  (void) ::ERR_error_string (error_code, error_string);
+    (void) ::ERR_error_string (error_code, error_string);
 #endif /* OPENSSL_VERSION_NUMBER >= 0x0090601fL */
 
-  ACELIB_ERROR ((LM_ERROR,
-              ACE_TEXT ("ACE_SSL (%P|%t) error code: %u - %C\n"),
-              error_code,
-              error_string));
+    ACELIB_ERROR ((LM_ERROR,
+                ACE_TEXT ("ACE_SSL (%P|%t) error code: %u - %C\n"),
+                error_code,
+                error_string));
+  }
 }
 
 void

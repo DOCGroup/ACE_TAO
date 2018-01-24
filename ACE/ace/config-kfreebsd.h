@@ -1,7 +1,12 @@
 #ifndef ACE_CONFIG_KFREEBSD_H
-#define ACE_CONFIG_KFREEBSDH
-#include "ace/config-g++-common.h"
+#define ACE_CONFIG_KFREEBSD_H
 
+// Make sure system defined macro (not related to ACE_OS::atop)
+// is not defined during ACE compilation
+#include <machine/param.h>
+#undef atop
+
+#include "ace/config-g++-common.h"
 
 /* Uses ctime_r & asctime_r with only two parameters vs. three. */
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R 1
@@ -233,9 +238,6 @@
 
 /* Compiler requires extern "C" functions for signals. */
 #define ACE_HAS_SIG_C_FUNC 1
-
-/* Define to 1 if platform has snprintf(). */
-#define ACE_HAS_SNPRINTF 1
 
 /* Define to 1 if `sin6_len' is a member of `sockaddr_in6'. */
 #define ACE_HAS_SOCKADDR_IN6_SIN6_LEN 1
@@ -610,7 +612,6 @@
 /* Enable ACE inlining */
 #define __ACE_INLINE__ 1
 
-
-#endif  /* ACE_CONFIG_KFREEBSDH */
+#endif  /* ACE_CONFIG_KFREEBSD_H */
 
 

@@ -448,6 +448,10 @@ extern int t_errno;
 #  define ECANCELED 125
 #endif /* ECANCELED */
 
+#ifndef ESHUTDOWN
+#define ESHUTDOWN ECANCELED
+#endif
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

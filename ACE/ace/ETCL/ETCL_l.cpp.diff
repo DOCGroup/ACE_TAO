@@ -6,7 +6,6 @@
 
  /* Scanner skeleton version:
 - * $Header$
-+ * $Id$
   */
 
  #define FLEX_SCANNER
@@ -49,7 +48,6 @@
  #define INITIAL 0
 -#line 4 "ETCL.ll"
 +//#line 4 "ETCL/ETCL.ll"
- // $Id$
  // ========================================================================
  //
  // = LIBRARY

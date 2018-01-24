@@ -1,5 +1,0 @@
-// -*- MPC -*-
-project : ciao, acelib {
-  after += DDS4CCM_Logger
-  libs  += DDS4CCM_Logger
-}

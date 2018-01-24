@@ -24,6 +24,8 @@ run_main (int, ACE_TCHAR *[])
   // failure
   int status = 0;
 
+#ifndef ACE_LACKS_IOSTREAM_TOTALLY
+
   // Test creation of a output stream ...
   std::ostringstream os;
 
@@ -54,6 +56,7 @@ run_main (int, ACE_TCHAR *[])
                   12345, v));
     }
 
+#endif
   ACE_END_TEST;
   return status;
 }

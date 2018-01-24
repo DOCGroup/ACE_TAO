@@ -4,6 +4,7 @@
 /**
  *  @file   FT_Storable_Naming_Context_Factory.h
  *
+ *
  *  @author Kevin Stanley stanleyk@ociweb.com>
  */
 //=============================================================================
@@ -21,6 +22,8 @@
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+class TAO_FT_Naming_Replication_Manager;
 
 /**
  * @class TAO_Naming_Context_Factory
@@ -40,11 +43,14 @@ public:
 
   /// Constructor.
   TAO_FT_Storable_Naming_Context_Factory (
-    size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
+                                          size_t hash_table_size = ACE_DEFAULT_MAP_SIZE,
+                                          TAO_FT_Naming_Replication_Manager * rep = 0);
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
   virtual ~TAO_FT_Storable_Naming_Context_Factory (void);
+
+  TAO_FT_Naming_Replication_Manager * replicator (void);
 
   /// Factory method for creating an implementation object for naming contexts.
   /// If an existing naming context implementation is being rebuilt,
@@ -56,6 +62,7 @@ public:
     const char *poa_id,
     TAO::Storable_Factory *factory);
 
+  TAO_FT_Naming_Replication_Manager *replicator_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

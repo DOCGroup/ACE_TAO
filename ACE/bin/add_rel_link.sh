@@ -89,7 +89,7 @@ if expr "$1" : '\/' >/dev/null; then
   else
     spath=`relpath $1 $ldir`
   fi
-  # use the completed relative path and the given destignation path
+  # use the completed relative path and the given designation path
   echo ln -s $spath $2
   ln -s $spath $2
 else

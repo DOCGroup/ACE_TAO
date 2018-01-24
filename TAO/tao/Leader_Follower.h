@@ -182,7 +182,7 @@ public:
   /// Check if there are any client threads running
   bool has_clients (void) const;
 
-  /// Accesor to the reactor
+  /// Accessor to the reactor
   ACE_Reactor *reactor (void);
 
   /// Called when we are out of leaders.
@@ -191,7 +191,7 @@ public:
   /// Set the new leader generator.
   void set_new_leader_generator(TAO_New_Leader_Generator *new_leader_generator);
 
-  /// Method to support deffering an event till later (f.i. in
+  /// Method to support deferring an event till later (f.i. in
   /// cases where transport()->wait_strategy()->can_process_upcalls()
   /// returns false).
   int defer_event (ACE_Event_Handler*);

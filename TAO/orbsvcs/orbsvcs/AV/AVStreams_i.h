@@ -567,7 +567,7 @@ protected:
   TAO_AV_FlowSpecSet forward_flow_spec_set;
   TAO_AV_FlowSpecSet reverse_flow_spec_set;
   AVStreams::StreamEndPoint_var peer_sep_;
-  AVStreams::SFPStatus *sfp_status_;
+  const AVStreams::SFPStatus *sfp_status_;
   AVStreams::StreamCtrl_var streamctrl_;
 };
 

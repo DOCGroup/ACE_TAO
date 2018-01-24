@@ -1,6 +1,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"

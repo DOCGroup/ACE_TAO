@@ -34,7 +34,11 @@ const int THREADS_PER_POOL = 50;
 const unsigned long MAX_THREAD = 500;
 #else
 const int THREADS_PER_POOL = 1000;
+ # ifdef ACE_FACE_SAFETY_BASE
+const unsigned long MAX_THREAD = 10000;
+ # else
 const unsigned long MAX_THREAD = 100000;
+ # endif
 #endif
 
 namespace

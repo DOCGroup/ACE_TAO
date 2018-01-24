@@ -50,7 +50,7 @@ Test_WString_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  CORBA::WStringSeq *tmp;
+  const CORBA::WStringSeq *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::WStringSeq (*tmp);
 

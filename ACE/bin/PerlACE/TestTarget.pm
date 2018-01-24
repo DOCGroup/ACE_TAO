@@ -47,7 +47,7 @@ sub create_target
     }
     my $config_os = $ENV{$envname};
     SWITCH: {
-      if ($config_os =~ m/local|remote/i) {
+      if ($config_os =~ m/local|remote|avd/i) {
         $target = new PerlACE::TestTarget ($config_name);
         last SWITCH;
       }
@@ -187,9 +187,21 @@ sub GetConfigSettings ($)
         $self->{dance_root} = "$self->{tao_root}/DAnCE";
     }
 
+    $env_name = $env_prefix.'TEST_ROOT';
+    if (exists $ENV{$env_name}) {
+      $self->{TEST_ROOT} = $ENV{$env_name};
+    } else {
+      $self->{TEST_ROOT} = $self->{ACE_ROOT};
+    }
+
+    $env_name = $env_prefix.'TEST_FSROOT';
+    if (exists $ENV{$env_name}) {
+      $self->{TEST_FSROOT} = $ENV{$env_name};
+    }
+
     if ($fs_root ne $tgt_fs_root) {
-      $self->{HOST_FSROOT} = dirname ($fs_root);
-      $self->{TARGET_FSROOT} = dirname ($tgt_fs_root);
+      $self->{HOST_FSROOT} = $fs_root;
+      $self->{TARGET_FSROOT} = $tgt_fs_root;
     }
 
     $env_name = $env_prefix.'EXE_SUBDIR';
@@ -301,6 +313,14 @@ sub GetConfigSettings ($)
     if (exists $ENV{$env_name}) {
         $self->{REMOTE_SHELL} = $ENV{$env_name};
     }
+    $env_name = $env_prefix.'PUT_CMD';
+    if (exists $ENV{$env_name}) {
+        $self->{PUT_CMD} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'GET_CMD';
+    if (exists $ENV{$env_name}) {
+        $self->{GET_CMD} = $ENV{$env_name};
+    }
     $env_name = $env_prefix.'LIBPATH';
     if (exists $ENV{$env_name}) {
         $self->{LIBPATH} = $ENV{$env_name};
@@ -308,6 +328,10 @@ sub GetConfigSettings ($)
     $env_name = $env_prefix.'REMOTE_FILETEST';
     if (exists $ENV{$env_name}) {
         $self->{REMOTE_FILETEST} = $ENV{$env_name};
+    }
+    $env_name = $env_prefix.'REMOTE_FILERM';
+    if (exists $ENV{$env_name}) {
+        $self->{REMOTE_FILERM} = $ENV{$env_name};
     }
     $env_name = $env_prefix.'PS_CMD';
     if (exists $ENV{$env_name}) {
@@ -449,6 +473,7 @@ sub LocalEnvDir ($)
     return $newdir;
 }
 
+# Convert a file in current directory to be local to the target
 sub LocalFile ($)
 {
     my $self = shift;
@@ -521,7 +546,22 @@ sub DeleteFile ($)
     my $self = shift;
     my $file = shift;
     my $newfile = $self->LocalFile($file);
-    unlink ($newfile);
+    my $remote_rm = (defined $self->{REMOTE_FILERM}) ? 1 : 0;
+    if ((($file eq $newfile) ||
+        (File::Spec->rel2abs($file) eq File::Spec->rel2abs($newfile))) &&
+        !(defined $self->{REMOTE_FILERM})) {
+        unlink ($newfile);
+    } else {
+        my $cmd;
+        if ($self->{REMOTE_FILERM} =~ /^\d*$/) {
+            $cmd = $self->{REMOTE_SHELL} . " 'test -e $newfile && rm $newfile'";
+        } else {
+            $cmd = $self->{REMOTE_FILERM} . ' ' . $newfile;
+        }
+        if (system ($cmd) != 0) {
+        	print STDERR "ERROR executing [".$cmd."]\n";
+        }
+    }
 }
 
 sub GetFile ($)
@@ -534,7 +574,12 @@ sub GetFile ($)
         $local_file = $remote_file;
         $remote_file = $self->LocalFile($local_file);
     }
-    if (($remote_file ne $local_file) &&
+    if (defined $self->{GET_CMD}) {
+	    if (system ($self->{GET_CMD}.' '.$remote_file.' '.$local_file) != 0) {
+	    	print STDERR "ERROR executing [".$self->{GET_CMD}." $remote_file $local_file]\n";
+	    }
+    }
+    elsif (($remote_file ne $local_file) &&
         (File::Spec->rel2abs($remote_file) ne File::Spec->rel2abs($local_file))) {
         copy ($remote_file, $local_file);
     }
@@ -547,7 +592,12 @@ sub PutFile ($)
     my $self = shift;
     my $src = shift;
     my $dest = $self->LocalFile ($src);
-    if (($src ne $dest) &&
+    if (defined $self->{PUT_CMD}) {
+	    if (system ($self->{PUT_CMD}.' '.$src.' '.$dest) != 0) {
+	    	print STDERR "ERROR executing [".$self->{PUT_CMD}." $src $dest]\n";
+	    }
+    }
+    elsif (($src ne $dest) &&
         (File::Spec->rel2abs($src) ne File::Spec->rel2abs($dest))) {
         copy ($src, $dest);
     }

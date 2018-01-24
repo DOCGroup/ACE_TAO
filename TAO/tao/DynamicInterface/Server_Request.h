@@ -31,11 +31,6 @@
 #include "tao/CDR.h"
 #include "ace/Atomic_Op.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA

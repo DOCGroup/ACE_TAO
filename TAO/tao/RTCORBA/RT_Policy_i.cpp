@@ -122,7 +122,7 @@ TAO_PriorityModelPolicy::_tao_cached_type (void) const
 TAO_Policy_Scope
 TAO_PriorityModelPolicy::_tao_scope (void) const
 {
-  // Note that this policy is propogated to the client even though
+  // Note that this policy is propagated to the client even though
   // it is not specified here.  The reason for this is that the
   // server priority field is set dynamically depending on the model
   // and the servant's priority.  Therefore, it can't be simply
@@ -315,7 +315,7 @@ TAO_PriorityBandedConnectionPolicy::~TAO_PriorityBandedConnectionPolicy (void)
 CORBA::Policy_ptr
 TAO_PriorityBandedConnectionPolicy::create (const CORBA::Any &val)
 {
-  RTCORBA::PriorityBands *value = 0;
+  const RTCORBA::PriorityBands *value = 0;
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
@@ -421,7 +421,7 @@ TAO_ServerProtocolPolicy::~TAO_ServerProtocolPolicy (void)
 CORBA::Policy_ptr
 TAO_ServerProtocolPolicy::create (const CORBA::Any &val)
 {
-  RTCORBA::ProtocolList *value = 0;
+  const RTCORBA::ProtocolList *value = 0;
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 
@@ -520,7 +520,7 @@ TAO_ClientProtocolPolicy::~TAO_ClientProtocolPolicy ()
 CORBA::Policy_ptr
 TAO_ClientProtocolPolicy::create (const CORBA::Any &val)
 {
-  RTCORBA::ProtocolList *value = 0;
+  const RTCORBA::ProtocolList *value = 0;
   if (!(val >>= value))
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
 

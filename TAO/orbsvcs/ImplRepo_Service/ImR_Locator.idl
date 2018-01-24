@@ -24,8 +24,6 @@ module ImplementationRepository
     /// Newer Activators call this method to notify spawn of child
     /// process to supply pid for reference
     void spawn_pid (in string name, in long pid);
-
-
   };
 
   enum UpdateType
@@ -62,7 +60,8 @@ module ImplementationRepository
     AAM_NO_ACTIVATOR,
     AAM_NO_COMMANDLINE,
     AAM_RETRIES_EXCEEDED,
-    AAM_UPDATE_FAILED
+    AAM_UPDATE_FAILED,
+    AAM_ACTIVE_TERMINATE
   };
 
   struct RepoInfo

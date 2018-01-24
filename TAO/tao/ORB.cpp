@@ -131,7 +131,7 @@ CORBA::ORB::~ORB (void)
 void
 CORBA::ORB::shutdown (CORBA::Boolean wait_for_completion)
 {
-  // We cannot lock the exceptions here. We need to propogate
+  // We cannot lock the exceptions here. We need to propagate
   // BAD_INV_ORDER  exceptions if needed to the caller. Locking
   // exceptions down would render us non-compliant with the spec.
   this->check_shutdown ();

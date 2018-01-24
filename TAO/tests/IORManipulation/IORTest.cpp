@@ -260,7 +260,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   if (Status == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "An ERROR occured during the tests!\n"));
+      ACE_DEBUG ((LM_DEBUG, "An ERROR occurred during the tests!\n"));
       return -1;
     }
   else

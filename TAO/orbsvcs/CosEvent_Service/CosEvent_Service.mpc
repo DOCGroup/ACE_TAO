@@ -1,8 +1,12 @@
 // -*- MPC -*-
 project : orbsvcsexe, install, naming, event_serv, svc_utils, iortable, messaging_optional, portableserver {
   exename  = tao_cosevent
+
+  specific {
+    install_dir = tao/docs/cosevent
+  }
+
   InstallData_Files {
-    gendir = .
     README
   }
 }

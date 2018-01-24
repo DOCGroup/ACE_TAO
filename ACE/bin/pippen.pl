@@ -76,7 +76,7 @@ while ( $#ARGV >= 0)
     elsif ($ARGV[0] =~ m/^-(\?|h)/i) {     # Help information
         print "Options\n";
         print "-list          - Prints out the list of project files\n";
-        print "-config <c>    - Use <c> as a configuratoin\n";
+        print "-config <c>    - Use <c> as a configuration\n";
         print "-evc3          - Looks for eMbedded Visual C++ 3.0 projects\n";
         print "-msvc6         - Looks for Visual C++ 5.0/6.0 projects\n";
         print "-msvc7         - Looks for Visual C++ 7.0 projects\n";

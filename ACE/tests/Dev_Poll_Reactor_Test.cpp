@@ -116,7 +116,7 @@ Client::handle_output (ACE_HANDLE)
     {
       char buffer[BUFSIZ] = { 0 };
 
-      ACE_OS::sprintf (buffer, "test message %d.\n", i);
+      ACE_OS::snprintf (buffer, BUFSIZ, "test message %d.\n", i);
 
       ssize_t bytes_sent =
         this->peer ().send (buffer, ACE_OS::strlen (buffer));
@@ -152,7 +152,7 @@ int
 Client::handle_timeout (const ACE_Time_Value &, const void *)
 {
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("(%t) Expected client timeout occured at: %T\n")));
+              ACE_TEXT ("(%t) Expected client timeout occurred at: %T\n")));
 
   this->call_count_++;
 
@@ -260,7 +260,7 @@ Server::handle_timeout (const ACE_Time_Value &,
                         const void *)
 {
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("(%t) Expected server timeout occured at: %T\n")));
+              ACE_TEXT ("(%t) Expected server timeout occurred at: %T\n")));
 
 //   if (this->call_count_ == 0
 //       && this->handle_input (this->get_handle ()) != 0

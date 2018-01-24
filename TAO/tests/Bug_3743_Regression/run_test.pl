@@ -11,7 +11,7 @@ $status = 0;
 
 my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
-my $tao_idl = "$PerlACE::ACE_ROOT/bin/tao_idl";
+my $tao_idl = "$ENV{ACE_ROOT}/bin/tao_idl";
 if (exists $ENV{HOST_ROOT}) {
     $tao_idl = "$ENV{HOST_ROOT}/bin/tao_idl";
 }

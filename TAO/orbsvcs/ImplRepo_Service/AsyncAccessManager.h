@@ -58,23 +58,29 @@ class Locator_Export AsyncAccessManager
 
   void started_running (void);
 
+  bool is_terminating (void);
   bool has_server (const char *name);
   void remote_state (ImplementationRepository::AAM_Status s);
 
   void add_interest (ImR_ResponseHandler *rh, bool manual);
   ImplementationRepository::AAM_Status status (void) const;
+  bool force_remove_rh (ImR_ResponseHandler *rh);
 
-  void activator_replied (bool success);
+  void activator_replied (bool success, int pid);
   void server_is_running (const char *partial_ior,
                           ImplementationRepository::ServerObject_ptr ref);
   void server_is_shutting_down (void);
-  void notify_child_death (void);
+  void shutdown_initiated (void);
+  bool notify_child_death (int pid);
   void ping_replied (LiveStatus server);
+  void listener_disconnected (void);
 
   AsyncAccessManager *_add_ref (void);
   void _remove_ref (void);
   static const ACE_TCHAR *status_name (ImplementationRepository::AAM_Status s);
   static bool is_final (ImplementationRepository::AAM_Status s);
+  void report (void);
+  void update_prev_pid (void);
 
  private:
   void final_state (bool active = true);
@@ -86,6 +92,7 @@ class Locator_Export AsyncAccessManager
   UpdateableServerInfo info_;
   bool manual_start_;
   int retries_;
+  ImR_ResponseHandler *remove_on_death_rh_;
   ImR_Locator_i &locator_;
   PortableServer::POA_var poa_;
   ACE_Vector<ImR_ResponseHandler *> rh_list_;
@@ -94,6 +101,7 @@ class Locator_Export AsyncAccessManager
 
   int refcount_;
   TAO_SYNCH_MUTEX lock_;
+  int prev_pid_;
 };
 
 typedef TAO_Intrusive_Ref_Count_Handle<AsyncAccessManager> AsyncAccessManager_ptr;

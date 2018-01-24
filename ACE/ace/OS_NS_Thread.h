@@ -400,7 +400,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #   endif /* ACE_HAS_WTHREADS_CONDITION_VARIABLE || ACE_LACKS_COND_T */
 
-#   if defined (ACE_LACKS_RWLOCK_T) && !defined (ACE_HAS_PTHREADS_UNIX98_EXT)
+#   if defined (ACE_LACKS_RWLOCK_T)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -705,7 +705,7 @@ public:
   ACE_Thread_ID (const ACE_Thread_ID &id);
 
   /// Assignment operator
-  ACE_Thread_ID& operator= (const ACE_Thread_ID&id);
+  ACE_Thread_ID& operator= (const ACE_Thread_ID &id);
 
   /// Get the thread id.
   ACE_thread_t id (void) const;
@@ -720,7 +720,14 @@ public:
   void handle (ACE_hthread_t);
 
   // Create a string representation of the thread id.
-  void to_string (char *thr_string) const;
+  void to_string (char *thr_string, size_t thr_string_len) const;
+
+  // Create a string representation of the thread id.
+  template <size_t N>
+  void to_string (char (&thr_string)[N]) const
+  {
+    this->to_string (thr_string, N);
+  }
 
   /// Equality operator.
   bool operator== (const ACE_Thread_ID &) const;
@@ -803,7 +810,7 @@ class ACE_TSS_Keys;
 class ACE_Export ACE_TSS_Emulation
 {
 public:
-  typedef void (*ACE_TSS_DESTRUCTOR)(void *value) /* throw () */;
+  typedef void (*ACE_TSS_DESTRUCTOR)(void *value);
 
   /// Maximum number of TSS keys allowed over the life of the program.
   enum { ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS };
@@ -999,6 +1006,8 @@ private:
 class ACE_TSS_Keys
 {
 public:
+  ACE_ALLOC_HOOK_DECLARE;
+
   /// Default constructor, to initialize all bits to zero (unused).
   ACE_TSS_Keys (void);
 
@@ -1255,7 +1264,7 @@ namespace ACE_OS {
                        ACE_Time_Value *timeout,
                        int use_absolute_time = 1);
 
-  extern ACE_Export
+  ACE_NAMESPACE_INLINE_FUNCTION
   int event_wait (ACE_event_t *event);
 
   //@}
@@ -1488,6 +1497,12 @@ namespace ACE_OS {
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
 # endif /* ACE_HAS_WCHAR */
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  void sema_avoid_unlink (ACE_sema_t *s, bool avoid_unlink);
+
+  ACE_NAMESPACE_INLINE_FUNCTION
+  int sema_unlink (const char *name);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sema_post (ACE_sema_t *s);
@@ -1835,57 +1850,65 @@ namespace ACE_OS {
 #endif /* ACE_USES_WCHAR */
 } /* namespace ACE_OS */
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #if !defined (ACE_WIN32)
 
-extern "C"
+/// Implementation details of Event emulation on Unix, may be in shared memory
+struct ACE_eventdata_t
 {
-  typedef struct
-  {
-#if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)) || \
-    (!defined (ACE_USES_FIFO_SEM) && \
-      (!defined (ACE_HAS_POSIX_SEM) || !defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-    /// Protect critical section.
-    ACE_mutex_t lock_;
-    /// Keeps track of waiters.
-    ACE_cond_t condition_;
-#else
-# if (defined (ACE_HAS_PTHREADS) && defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_MUTEXATTR_PSHARED)) || \
-     (!defined (ACE_USES_FIFO_SEM) && (!defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_NAMED_POSIX_SEM)))
-    /// Protect critical section.
-    ACE_mutex_t lock_;
+  /// Protect critical section.
+  ACE_mutex_t lock_;
+
+  /// Keeps track of waiters.
+  ACE_cond_t condition_;
+
+  /// Object type.
+  int type_;
+
+  /// Specifies if this is an auto- or manual-reset event.
+  int manual_reset_;
+
+  /// "True" if signaled.
+  int is_signaled_;
+
+  /// Special bool for auto_events alone
+  /**
+   * The semantics of auto events forces us to introduce this extra
+   * variable to ensure that the thread is not woken up
+   * spuriously. Please see event_timedwait () to see
+   * how this is used for auto_events.
+   * @todo This is a hack that needs revisiting after x.4
+   */
+  bool auto_event_signaled_;
+
+  /// Number of waiting threads.
+  unsigned long waiting_threads_;
+
+  /// Signal count
+  unsigned long signal_count_;
+
+  ACE_ALLOC_HOOK_DECLARE;
+};
+
+# if !defined ACE_USES_FIFO_SEM                                          \
+    && !(defined ACE_HAS_POSIX_SEM && defined ACE_HAS_POSIX_SEM_TIMEOUT  \
+         && !defined ACE_LACKS_NAMED_POSIX_SEM)
+#  define ACE_EVENT_NO_FIFO_SEM
 # endif
-#endif
 
-    /// Object type.
-    int type_;
+# if (defined ACE_HAS_PTHREADS && defined _POSIX_THREAD_PROCESS_SHARED  \
+      && !defined ACE_LACKS_MUTEXATTR_PSHARED) || defined ACE_EVENT_NO_FIFO_SEM
+#  define ACE_EVENT_USE_MUTEX_PSHARED 1
+# else
+#  define ACE_EVENT_USE_MUTEX_PSHARED 0
+# endif
 
-    /// Specifies if this is an auto- or manual-reset event.
-    int manual_reset_;
-
-    /// "True" if signaled.
-    int is_signaled_;
-
-    /// Special bool for auto_events alone
-    /**
-     * The semantics of auto events forces us to introduce this extra
-     * variable to ensure that the thread is not woken up
-     * spuriously. Please see event_wait and event_timedwait () to see
-     * how this is used for auto_events.
-     * @todo This is a hack that needs revisiting after x.4
-     */
-    bool auto_event_signaled_;
-
-    /// Number of waiting threads.
-    unsigned long waiting_threads_;
-
-    /// Signal count
-    unsigned long signal_count_;
-  } ACE_eventdata_t;
-}
-
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+# if (defined ACE_HAS_PTHREADS && defined _POSIX_THREAD_PROCESS_SHARED  \
+      && !defined ACE_LACKS_CONDATTR_PSHARED                            \
+      && !defined ACE_LACKS_MUTEXATTR_PSHARED) || defined ACE_EVENT_NO_FIFO_SEM
+#  define ACE_EVENT_USE_COND_PSHARED 1
+# else
+#  define ACE_EVENT_USE_COND_PSHARED 0
+# endif
 
 /**
  * @class ACE_event_t
@@ -1894,44 +1917,51 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_event_t
 {
-  friend int ACE_OS::event_init(ACE_event_t*, int, int, int, const char*, void*,int);
-  friend int ACE_OS::event_init(ACE_event_t*, int, ACE_condattr_t*, int, int, const char*, void*,int);
-  friend int ACE_OS::event_destroy(ACE_event_t*);
-  friend int ACE_OS::event_wait(ACE_event_t*);
-  friend int ACE_OS::event_timedwait(ACE_event_t*, ACE_Time_Value*, int);
-  friend int ACE_OS::event_signal(ACE_event_t*);
-  friend int ACE_OS::event_pulse(ACE_event_t*);
-  friend int ACE_OS::event_reset(ACE_event_t*);
+  friend int ACE_OS::event_init (ACE_event_t *, int, int, int, const char *,
+                                 void *, int);
+  friend int ACE_OS::event_init (ACE_event_t *, int, ACE_condattr_t *, int,
+                                 int, const char *, void *, int);
+  friend int ACE_OS::event_destroy (ACE_event_t *);
+  friend int ACE_OS::event_wait (ACE_event_t *);
+  friend int ACE_OS::event_timedwait (ACE_event_t *, ACE_Time_Value *, int);
+  friend int ACE_OS::event_signal (ACE_event_t *);
+  friend int ACE_OS::event_pulse (ACE_event_t *);
+  friend int ACE_OS::event_reset (ACE_event_t *);
 
 public:
   /// Constructor initializing all pointer fields to null
   ACE_event_t (void);
 
-protected:
+private:
+  /// Lock the internal mutex/semaphore
+  int lock (void);
+
+  /// Unlock the internal mutex/semaphore
+  int unlock (void);
+
+  /// Use the internal semaphore or condition variable to unblock one thread
+  int wake_one (void);
 
   /// Event name if process shared.
-  char* name_;
+  char *name_;
 
   /// Event data
-  ACE_eventdata_t* eventdata_;
+  ACE_eventdata_t *eventdata_;
 
-#if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_CONDATTR_PSHARED)) && \
-  (defined (ACE_USES_FIFO_SEM) || \
-    (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
+# if !ACE_EVENT_USE_COND_PSHARED
   /// Keeps track of waiters.
   ACE_sema_t semaphore_;
+# endif
 
-# if (!defined (ACE_HAS_PTHREADS) || !defined (_POSIX_THREAD_PROCESS_SHARED) || defined (ACE_LACKS_MUTEXATTR_PSHARED)) && \
-     (defined (ACE_USES_FIFO_SEM) || (defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
-    /// Protect critical section.
+# if !ACE_EVENT_USE_MUTEX_PSHARED
+  /// Protect critical section.
   ACE_sema_t lock_;
 # endif
-#endif
 };
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 #endif /* ACE_WIN32 */
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 

@@ -10,6 +10,10 @@
 
 #if defined (ACE_HAS_THREADS)
 
+#if defined (ACE_HAS_ALLOC_HOOKS)
+# include "ace/Malloc_Base.h"
+#endif /* ACE_HAS_ALLOC_HOOKS */
+
 #if !defined (__ACE_INLINE__)
 #include "ace/RW_Thread_Mutex.inl"
 #endif /* __ACE_INLINE__ */

@@ -30,12 +30,6 @@
         timeouts etc. Make sure that no new test failures show up. This <a href="mailto:jwillemsen@remedy.nl">
           guy</a>
       knows most of the information. Ask him to help you out with known problems.
-      <li>
-        Keep an eye on the <a href="http://atcdstats.theaceorb.nl/index.shtml">footprint and
-          performance</a> stats. Any abnormal changes should be brought to the
-        attention of the developer responsible for it or to the <a href="mailto:devo-group@list.isis.vanderbilt.edu">
-          devo group</a>.
-      <li>
       Keep the builds ticking. Any red on the "Last Finished" column in the
       Scoreboard should be fixed. The link to the "Build Name" indicates the machine
       where the build is being run.
@@ -47,7 +41,7 @@
         Keep an eye on the <a href="http://bugzilla.dre.vanderbilt.edu/">bugzilla
         </a>
       entries that are registered by users and developers. Decide on the bugs that
-      need to be fixed for the beta and pain developers for an ETA.
+      need to be fixed for the micro and pain developers for an ETA.
     </p>
     <P>
       The document <a href="./privileges.html">here </a>talks about the powers of a
@@ -72,14 +66,14 @@
        Do note that when there are a lot of compile errors the test results are really
        unusable.</p>
     <hr>
-    <h2>Recipe for Cutting a Beta/Minor Kit</h2>
+    <h2>Recipe for Cutting a Minor Kit</h2>
     <P>
-      The build czar is also in charge for the release of the beta. Cutting a beta is
+      The build czar is also in charge for the release of the micro. Cutting a micro is
       as simple as cutting butter if things go well. Here is the procedure followed
-      while cutting a beta:
+      while cutting a micro:
       <ol>
         <li>
-          The whole process takes somewhere between 3-4 hours.</li>
+          The whole process takes somewhere between 2-3 hours.</li>
         <li>
           We suggest you take advantage of GNU Screen so that even if your SSH session is
           interrupted, the cutting process can continue. This command must be installed on
@@ -118,7 +112,7 @@
           </ul>
           If you want to perform a full build with qt support, than run:
           <ul>
-            <li><code>yum install ntp rubygem-rmagick bison libxerces-c-devel psmisc yum-utils gdb unzip glibc-devel libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.7.0-openjdk git-svn perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git telnet GitPython NetworkManager wget mailx</code></li>
+            <li><code>yum install deltarpm ntp rubygem-rmagick bison xerces-c-devel psmisc yum-utils gdb unzip glibc-devel libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.8.0-openjdk git-svn perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git telnet GitPython NetworkManager wget mailx</code></li>
           </ul>
           For some optional i686 packages run
           <ul>
@@ -141,22 +135,22 @@
             Checkout like this:
             <ul>
               <li>
-                <code>git clone https://github.com/DOCGroup/ATCD.git ATCD</code></li>
+                <code>git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO</code></li>
               <li>
-                <code>git clone https://github.com/DOCGroup/ATCD.git MPC</code></li>
+                <code>git clone https://github.com/DOCGroup/ACE_TAO.git MPC</code></li>
             </ul>
         </ul>
         <li>
           Set $DOC_ROOT to point to the new workspace you checked out.</li>
         <li>
           Set an environment variable SIGNATURE indicating your full name. This is used
-          to fill the ChangeLog entry.</li>
+          to fill the commit entry.</li>
         <ul>
           <li>
             For example,<tt>export SIGNATURE="Johnny Willemsen"</tt></li></ul>
         <li>
           Set an environment variable MAILID indicating your mail id. This is used to
-          fill the mail id portion of the ChangeLog entry.</li>
+          fill the mail id portion of the commit entry.</li>
         <ul>
           <li>
             For example,<tt>export MAILID="jwillemsen@remedy.nl"</tt></li></ul>
@@ -165,10 +159,10 @@
         </li>
         <li>
           Tag the release by executing<br>
-          <code>ACE/bin/make_release.py --beta --update --tag --push</code><br>
+          <code>ACE/bin/make_release.py --micro --update --tag --push</code><br>
           This will only take a couple minutes to complete and once done successfully,
           you can carry on with BOTH creating the kits and generating the doxygen
-          documentation in parallel. NOTE that <code>--beta</code> should be replaced
+          documentation in parallel. NOTE that <code>--micro</code> should be replaced
           with <code>--minor</code> or <code>--major</code> as appropriate.</li>
         <br>
         After the repository has been tagged check each file listed below to make
@@ -180,25 +174,13 @@
         <ul>
           <code>
             <li>
-              ACE/ChangeLog</li>
-            <li>
               ACE/PROBLEM-REPORT-FORM</li>
             <li>
               ACE/VERSION</li>
             <li>
-              ACE/TAO/ChangeLog</li>
-            <li>
               ACE/TAO/PROBLEM-REPORT-FORM</li>
             <li>
               TAO/VERSION</li>
-            <li>
-              CIAO/ChangeLog</li>
-            <li>
-              CIAO/PROBLEM-REPORT-FORM</li>
-            <li>
-              CIAO/VERSION</li>
-            <li>
-              CIAO/ciao/Version.h</li>
             <li>
               TAO/tao/Version.h</li>
             ace/Version.h</li> </code>
@@ -207,11 +189,11 @@
         <code>svn revert -R *</code><br>
         from DOC_ROOT will suffice.<br />
     The tag will also need to be removed (both in Middleware and MPC):
-    ACE+TAO+CIAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
-    Minor and Beta release numbers of the release that is to be restarted).<p>
+    ACE+TAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
+    Minor and Micro release numbers of the release that is to be restarted).<p>
       E.g.:<br>
-      <code>cd ATCD && git tag -d ACE+TAO+CIAO-X_Y_Z<br />
-        cd MPC && git tag -d ACE+TAO+CIAO-X_Y_Z<br />
+      <code>cd ACE_TAO && git tag -d ACE+TAO-X_Y_Z<br />
+        cd MPC && git tag -d ACE+TAO-X_Y_Z<br />
       </code>
       <br>
       Note that this <em>only</em> needs to be done if the <em>tagging</em> fails. If
@@ -239,14 +221,12 @@
         mkdir DOC_ROOT<br>
         cd DOC_ROOT<br>
         export DOC_ROOT=$PWD<br>
-        export SIGNATURE="Johnny Willemsen"<br>
-        export MAILID=jwillemsen@remedy.nl<br>
-        git clone https://github.com/DOCGroup/ATCD.git ATCD<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO<br>
         git clone https://github.com/DOCGroup/MPC.git MPC<br>
-        cd ATCD<br>
-        ACE/bin/make_release.py --beta --update --verbose<br>
-        ACE/bin/make_release.py --beta --tag --verbose<br>
-        ACE/bin/make_release.py --beta --push --verbose<br>
+        cd ACE_TAO<br>
+        ACE/bin/make_release.py --micro --update --verbose<br>
+        ACE/bin/make_release.py --micro --tag --verbose<br>
+        ACE/bin/make_release.py --micro --push --verbose<br>
         ACE/bin/make_release.py --kit<br>
       </code>
     <p>
@@ -287,17 +267,16 @@
             Update the workspace with the right version tag (replace the X_Y_Z with the ACE
             version number being released e.g. 5_6_7)
             <br>
-            <code>svn co
-              git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_2 ATCD<br>
+            <code>git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_4_5 ACE_TAO</code><br>
           </li>
-          <li>Change to the ATCD directory using <br>
-          cd ATCD</li>
+          <li>Change to the ACE_TAO directory using <br>
+          cd ACE_TAO</li>
           <li>
             Set the needed environment variables using<br>
             <code>export ACE_ROOT=$PWD/ACE</code><br>
         <code>export TAO_ROOT=$PWD/TAO</code><br>
-        <code>export CIAO_ROOT=$PWD/CIAO</code><br>
-        <code>export DANCE_ROOT=$PWD/DAnCE</code><br>
+        <code>export CIAO_ROOT=</code><br>
+        <code>export DANCE_ROOT=</code><br>
         <code>export DDS_ROOT=</code><br></li>
           <li>
             Check the doxygen version at the shell by executing the command:<br>
@@ -319,12 +298,12 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ATCD.git --depth 1 --branch ACE+TAO+CIAO-6_3_2 ATCD<br>
-        cd ATCD<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_4_5 ACE_TAO<br>
+        cd ACE_TAO<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
-        export CIAO_ROOT=$PWD/CIAO<br>
-        export DANCE_ROOT=$PWD/DAnCE<br>
+        export CIAO_ROOT=<br>
+        export DANCE_ROOT=<br>
         export DDS_ROOT=<br>
         cd ACE<br>
         $ACE_ROOT/bin/generate_rel_manpages<br>
@@ -336,7 +315,7 @@
         notes gathered from developers.
         <ul>
           <li>Get from bugzilla the bugs fixed. Use the following
-              <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?query_format=advanced&short_desc_type=allwordssubstr&short_desc=&product=ACE&product=CIAO&product=CoSMIC&product=MPC&product=OpenDDS&product=TAO&long_desc_type=allwordssubstr&long_desc=&bug_file_loc_type=allwordssubstr&bug_file_loc=&status_whiteboard_type=allwordssubstr&status_whiteboard=&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&emailassigned_to1=1&emailtype1=substring&email1=&emailreporter2=1&emailtype2=substring&email2=&bugidtype=include&bug_id=&votes=&chfieldfrom=2010-07-04&chfieldto=Now&chfield=resolution&chfieldvalue=FIXED&cmdtype=doit&order=Reuse+same+sort+as+last+time&field0-0-0=noop&type0-0-0=noop&value0-0-0=">query</a> as start query and update the start date.</li>
+              <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&chfield=resolution&chfieldfrom=2015-09-07&chfieldto=Now&chfieldvalue=FIXED&list_id=452&product=ACE&product=TAO&query_format=advanced">query</a> as start query and update the start date.</li>
           <li>
             Let <a href="mailto:d.schmidt@vanderbilt.edu">Doug Schmidt</a> review these before
             you do anything with them.</li></ul>
@@ -370,7 +349,7 @@
           "Edit". Click on the "Product" link.</li>
         <li>
           you are then at "Select product" page. You should see a list components, i.e.,
-          ACE CIAO TAO. Click on the product you want to edit.</li>
+          ACE TAO. Click on the product you want to edit.</li>
         <li>
           you are then at "Edit product" page. Scroll down a bit, you should see a list
           of all versions coming with this product. At the very beginning of the list,
@@ -399,19 +378,19 @@
         <li>back out of the temporary directory<br>
           <code>cd ..</code></li>
         <li>
-          Create directory 'Current Version No' for example 5.8.1 and change directory into this new one<br><code>mkdir 5.8.1<br>cd 5.8.1</code></li>
+          Create directory 'Current Version No' for example 6.3.4 and change directory into this new one<br><code>mkdir 6.3.4<br>cd 6.3.4</code></li>
         <li>
           Move contents of the temporary directory's html to this directory -<br><code>mv ../tmp/html .</code></li>
         <li>
           Now back our of this directory and remove the already existing softlink to the "Micro" directory -<br><code>cd ..<br>rm Micro</code></li>
         <li>
-          Create softlink "Micro" linking it to new Documentation using -<br><code>ln -s 5.8.1/html
+          Create softlink "Micro" linking it to new Documentation using -<br><code>ln -s 6.3.4/html
           Micro</code>. If this is a minor release also update the <code>Stable</code> link.</li>
         <li>
         Remove the directory tmp -<br><code>rm -rf tmp</code></lib>
       </ul><br>
       <li>
-        On <b>anduril.dre.vanderbilt.edu</b> where the kit was being generated and once <b>BOTH</b> the kit
+        On <b>download.dre.vanderbilt.edu</b> where the kit was uploaded to and once <b>BOTH</b> the kit
         and doxygen generation have finished their work, you should also move the packages to the
         previous versions directory with the appropriate decorators.
         <ul>
@@ -431,9 +410,9 @@
         correct version number.</li>
       <li>
         Update in the autobuild archive the file configs/scoreboard/releases.xml with
-        the made release (version number and release date). This is used by the integrated scoreboard on http://scoreboard.theaceorb.nl  Remember to do a changelog entry.</li>
+        the made release (version number and release date). This is used by the integrated scoreboard on http://scoreboard.remedy.nl.</li>
       <li>
-        Update the ACE_wrappers repo (remember to create a changelog entry, and possibly archive the old changelog to the changelog directory if this has become too long):<ul>
+        Update the ACE_wrappers repo:<ul>
         <li>docs/Download.html to show the new release. Make sure you refer to the
         previous_versions directory, that way we can exactly track how many people
         download a specific version.</li>
@@ -441,7 +420,7 @@
         etc/index.hml to show the new doxygen package you installed</li>
         <li>bin/diff-builds-and-group-fixed-tests-only.sh to give the correct default old_date for this release.</li></ul>
       <li>
-        Update the NEWS, TAO/NEWS, TAO/DAnCE/NEWS, and TAO/CIAO/NEWS files to have a new section for the next release.</li>
+        Update the ACE/NEWS and TAO/NEWS files to have a new section for the next release.</li>
       <li>
         Update OpenSuSE Build service using
         <code>
@@ -454,6 +433,12 @@
         cp debian/rules debian.rules
         osc commit
         </code>
+      </li>
+      <li>
+        Make a new pull request for homebrew-core to update ACE to the new release, see https://github.com/Homebrew/homebrew-core/blob/master/Formula/ace.rb
+      </li>
+      <li>
+        Make a new pull request to Microsoft vcpkg to update ACE to the new release, see https://github.com/Microsoft/vcpkg/tree/master/ports/ace
       </li>
       <li>
         Mail the approved release announcement out to, at minimum the following:
@@ -484,7 +469,7 @@
         DEVO group</a> about it.</li>
       <li>Send a note to  <a href="mailto:sysadmin@isis.vanderbilt.edu">sysadmin@isis.vanderbilt.edu</a> asking for the repo to be frozen. Provide them a list of names, including yourself and bczar to be granted write permission.
       </li>
-      <li>Compile once on Win32, Linux and Solaris before cutting a beta.</li>
+      <li>Compile once on Win32, Linux and Solaris before cutting a micro.</li>
       <li>Trust the release script when making a release. Don't make tar balls by
       hand.</li>
       <li>When all hell breaks loose, don't wait for the nightly builds to monitor

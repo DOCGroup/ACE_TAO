@@ -6,7 +6,8 @@ project(*IDL): taoserver, messaging, gen_ostream {
   idlflags += -Wb,stub_export_macro=TAO_IDL_TEST_STUB_Export \
               -Wb,stub_export_include=TAO_IDL_TEST_stub_export.h \
               -Wb,skel_export_macro=TAO_IDL_TEST_STUB_Export \
-              -Wb,skel_export_include=TAO_IDL_TEST_stub_export.h
+              -Wb,skel_export_include=TAO_IDL_TEST_stub_export.h \
+              -Gsd
 
   IDL_Files {
     idlflags += -Gxhst

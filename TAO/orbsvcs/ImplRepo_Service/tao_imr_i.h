@@ -287,6 +287,8 @@ protected:
   void print_usage (void);
 
   ACE_CString server_name_;
+  bool force_;
+  int signum_;
 };
 
 

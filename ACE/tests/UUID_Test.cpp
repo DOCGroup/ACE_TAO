@@ -32,6 +32,7 @@ Tester::test (void)
               ACE_TEXT ("Generated UUID\n %C\n"),
               uuid_str.c_str ()));
 
+#ifndef ACE_LACKS_SSCANF
   // Construct UUID from string
   ACE_Utils::UUID new_uuid (uuid_str);
 
@@ -56,9 +57,13 @@ Tester::test (void)
 
   if (new_uuid.hash () != new_uuid_assign.hash ())
     ACE_ERROR_RETURN ((LM_ERROR,
-                        ACE_TEXT ("Error: hash value of UUIDs are ")
-                        ACE_TEXT ("not the same")),
-                        -1);
+                       ACE_TEXT ("Error: hash value of UUIDs are ")
+                       ACE_TEXT ("not the same")),
+                       -1);
+
+#else
+  const ACE_Utils::UUID &new_uuid = *uuid;
+#endif
 
   // Construct UUID using the copy constructor
   ACE_Utils::UUID new_uuid_copy (new_uuid);
@@ -73,6 +78,7 @@ Tester::test (void)
                        ACE_TEXT ("with copy\n")),
                        -1);
 
+#ifndef ACE_LACKS_SSCANF
   ACE_Utils::UUID nil_uuid (*ACE_Utils::UUID::NIL_UUID.to_string ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID Constructed from NIL_UUID with ")
@@ -84,6 +90,7 @@ Tester::test (void)
                        ACE_TEXT ("Error: UUIDs are not the same with ")
                        ACE_TEXT ("NIL_UUID string copy\n")),
                        -1);
+#endif
 
   // Construct UUID using the assignment constructor
   ACE_Utils::UUID new_uuid_assigment;
@@ -112,12 +119,14 @@ Tester::test (void)
                        ACE_TEXT ("Error: UUIDs are the same\n")),
                        -1);
 
+#ifndef ACE_LACKS_SSCANF
   // Construct UUID from string
   ACE_Utils::UUID new_uuid_with_tp_id (uuid_with_tp_id->to_string ()->c_str ());
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("UUID with Thread and Process ID reconstructed ")
               ACE_TEXT ("from above UUID \n %C\n"),
               new_uuid_with_tp_id.to_string ()->c_str ()));
+#endif
 
   return retval;
 }

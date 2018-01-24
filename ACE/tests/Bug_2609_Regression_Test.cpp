@@ -2,7 +2,7 @@
  * @file Bug_2609_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2609:
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2609
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2609
  *
  * @author Milan Cvetkovic <milan.cvetkovic@mpathix.com>
  */
@@ -17,7 +17,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Semaphore.h"
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 # define TEST_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 
@@ -109,7 +109,7 @@ run_main (int, ACE_TCHAR *[])
 
   int status = 0;
 
-#if defined (ACE_HAS_THREADS)
+#if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
   My_Acceptor acceptor;
   if (-1 == acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)))
@@ -164,7 +164,7 @@ run_main (int, ACE_TCHAR *[])
   task.wait ();
 #else
   ACE_ERROR ((LM_INFO,
-              ACE_TEXT ("threads not supported on this platform\n")));
+              ACE_TEXT ("threads/accept not supported on this platform\n")));
 #endif
   ACE_END_TEST;
 

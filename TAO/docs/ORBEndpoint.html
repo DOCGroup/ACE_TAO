@@ -84,7 +84,7 @@
       separated by a forward slash '<CODE>/</CODE>' in this case,
       i.e. for IIOP endpoints.  This character may differ for other
       types of pluggable protocol endpoints.  For example, UIOP
-      endpoint-specifc options are separated from the address by a
+      endpoint-specific options are separated from the address by a
       vertical bar '<CODE>|</CODE>'.  Also note that when using more
       than option, quotes should be used to prevent the shell from
       interpreting the ampersand '<CODE>&amp;</CODE>' as a command to
@@ -355,12 +355,12 @@
           <TD>
             Available in IIOP & SSLIOP the <CODE>reuse_addr</CODE> option allows one to
             set the SO_REUSEADDR socket option on an endpoint. Doing so bypasses
-	    the TCP TIME_WAIT and can be used to open an endpoint
-	    on a port still in TIME_WAIT state. Use caution using this option. Its not
-	    recommended for the general use-case. Setting
-	    SO_REUSEADDR has been observed to cause unexpected side-effects on some
-	    platforms (e.g. Solaris 5.7 x86 allows programs run as same or different
-	    users to bind to the same port when SO_REUSEADDR is set by all users).
+            the TCP TIME_WAIT and can be used to open an endpoint
+            on a port still in TIME_WAIT state. Use caution using this option. Its not
+            recommended for the general use-case. Setting
+            SO_REUSEADDR has been observed to cause unexpected side-effects on some
+            platforms (e.g. Solaris 5.7 x86 allows programs run as same or different
+            users to bind to the same port when SO_REUSEADDR is set by all users).
             <P>
             The format for <CODE>ORBListenEndpoints</CODE> with the
             <CODE>reuse_addr</CODE> option is:

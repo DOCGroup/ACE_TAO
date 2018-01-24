@@ -291,13 +291,13 @@ TAO_EC_Reactive_ObserverStrategy::supplier_qos_update (
         }
       catch (const CORBA::OBJECT_NOT_EXIST&)
         {
-          // Exception occured while updating observer, so remove it from the
+          // Exception occurred while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry);
         }
       catch (const CORBA::TRANSIENT&)
         {
-          // Exception occured while updating observer, so remove it from the
+          // Exception occurred while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry);
         }
@@ -333,13 +333,13 @@ TAO_EC_Reactive_ObserverStrategy::consumer_qos_update (
         }
       catch (const CORBA::OBJECT_NOT_EXIST&)
         {
-          // Exception occured while updating observer, so remove it from the
+          // Exception occurred while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry);
         }
       catch (const CORBA::TRANSIENT&)
         {
-          // Exception occured while updating observer, so remove it from the
+          // Exception occurred while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry);
         }

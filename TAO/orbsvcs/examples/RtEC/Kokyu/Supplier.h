@@ -43,7 +43,7 @@ public:
   /// The skeleton methods.
   virtual void disconnect_push_supplier (void);
 
-  void timeout_occured (void);
+  void timeout_occurred (void);
 
 private:
   RtecEventComm::EventSourceID id_;

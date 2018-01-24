@@ -23,8 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = 0;
 
 TAO_IFR_Server::TAO_IFR_Server (void)
-  : //servant_locator_impl_ (0),
-    ior_multicast_ (0),
+  : ior_multicast_ (0),
     config_ (0)
 {
 }

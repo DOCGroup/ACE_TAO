@@ -329,9 +329,7 @@ iterator_test (void)
 
   for (i = 0; i < ITERATIONS; i++)
     {
-      ACE_OS::sprintf (buffer[i],
-                       ACE_TEXT ("%d"),
-                       i + 1);
+      ACE_OS::snprintf (buffer[i], BUFSIZ, ACE_TEXT ("%d"), i + 1);
 
       ACE_Message_Block *entry = 0;
       ACE_NEW_RETURN (entry,

@@ -16,6 +16,7 @@
 #include "repo_id_modC.h"
 #include "constantsC.h"
 #include "nested_scopeS.h"
+#include "typedefC.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -89,7 +90,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (test_ull != AAA)
     {
       ++error_count;
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Generated value of unsigned")
                   ACE_TEXT (" long long AAA in constants.idl")
                   ACE_TEXT (" is incorrect\n")));
@@ -100,7 +101,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (test_nll != NAAA)
     {
       ++error_count;
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Generated value of signed")
                   ACE_TEXT (" long long NAAA in constants.idl")
                   ACE_TEXT (" is incorrect\n")));
@@ -111,7 +112,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (test_pll != PAAA)
     {
       ++error_count;
-      ACE_DEBUG ((LM_DEBUG,
+      ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Generated value of signed")
                   ACE_TEXT (" long long PAAA in constants.idl")
                   ACE_TEXT (" is incorrect\n")));
@@ -141,7 +142,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:anvil.com/hello:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'hello'\n"));
         }
 
@@ -154,7 +155,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:anvil.com/goodbye:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'goodbye'\n"));
         }
 
@@ -167,9 +168,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:hammer.com/salutation/sayonara:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'sayonara'\n"));
         }
+
+      // Check whether the implementation of Dubble and Toil are generated
+      CommaList::Dubble dub;
+      CommaList::Toil toi;
+      dub.length(4);
+      toi.length(4);
 
       ciao_i c;
       id = root_poa->activate_object (&c);
@@ -180,7 +187,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:anvil.com/ciao:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'ciao'\n"));
         }
 
@@ -193,7 +200,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:anvil.com/aloha:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'aloha'\n"));
         }
 
@@ -205,7 +212,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:gleep_prefix/gleep/schmooze:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmooze'\n"));
         }
 
@@ -215,7 +222,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:gleep_prefix/gleep/schmeer:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmeer'\n"));
         }
 
@@ -225,7 +232,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:gleep_prefix/gleep/schlemiel:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schlemiel'\n"));
         }
 
@@ -235,7 +242,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:gleep_prefix/gleep/spilkis:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'spilkis'\n"));
         }
 
@@ -245,7 +252,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "ABRA:cadabra/hocus/pocus:1.23"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmuck'\n"));
         }
 
@@ -255,8 +262,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:floop_prefix/gleep/floop/schmendrick:524.23"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmendrick'\n"));
+        }
+      if (ACE_OS::strcmp (gleep::floop::schmendrick::_desc_repository_id (),
+                          "IDL:floop_prefix/gleep/floop/schmendrick:524.23"))
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "error in _desc_repository_id 'schmendrick'\n"));
+        }
+      if (ACE_OS::strcmp (gleep::floop::schmendrick::_desc_interface_name (),
+                          "schmendrick"))
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR,
+                      "error in _desc_interface_name 'schmendrick'\n"));
         }
 
       schlemazel_i s_schlemazel;
@@ -267,7 +288,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             ))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schlemazel'\n"));
         }
 
@@ -277,7 +298,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                           "IDL:gleep_prefix/gleep/schmegegging:1.0"))
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "pragma prefix error in object 'schmegegging'\n"));
         }
 
@@ -296,7 +317,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             if (!x._is_a (base[i]))
               {
                 ++error_count;
-                ACE_DEBUG ((LM_DEBUG,
+                ACE_ERROR ((LM_ERROR,
                            "something_handler::_is_a should return true for %C\n",
                            base[i]));
               }
@@ -305,7 +326,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         if (!dynamic_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (&x))
           {
             ++error_count;
-            ACE_DEBUG( (LM_DEBUG,
+            ACE_ERROR( (LM_ERROR,
                        "mismatch in downcast for %C\n",
                         base[0]));
           }
@@ -313,7 +334,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         if (!dynamic_cast<POA_bug_1985_a::b::AMI_somethingHandler*> (&x))
           {
             ++error_count;
-            ACE_DEBUG ((LM_DEBUG,
+            ACE_ERROR ((LM_ERROR,
                        "mismatch in downcast for %C\n",
                        base[1]));
           }
@@ -321,7 +342,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         if (!dynamic_cast<POA_Messaging::ReplyHandler*> (&x))
           {
             ++error_count;
-            ACE_DEBUG ((LM_DEBUG,
+            ACE_ERROR ((LM_ERROR,
                        "mismatch in downcast for %C\n",
                        base[2]));
           }
@@ -337,12 +358,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       field.value._d (FTYPE_VARCHAR);
       CORBA::Any any1;
       any1 <<= field;
-      Field *outfield;
+      const Field *outfield = 0;
 
       if ((any1 >>= outfield) == 0)
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "error in extraction of "
                       "duplicate case label value\n"));
         }
@@ -352,7 +373,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (ACE_OS::strcmp (str, "duplicate case label test string") != 0)
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "error - corruption of "
                       "duplicate case label value\n"));
         }
@@ -363,7 +384,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if ((any1 >>= outfield) == 0)
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "error in extraction of "
                       "default case label value\n"));
         }
@@ -373,7 +394,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (ACE_OS::strcmp (str, "default case test string") != 0)
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "error - corruption of "
                       "default case label value\n"));
         }
@@ -381,7 +402,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (SignedGen::val !=  -3)
         {
           ++error_count;
-          ACE_DEBUG ((LM_DEBUG,
+          ACE_ERROR ((LM_ERROR,
                       "error - signed integer literal "
                       "generated as unsigned\n"));
         }

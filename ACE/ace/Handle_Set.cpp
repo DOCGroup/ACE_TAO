@@ -1,5 +1,8 @@
 // Handle_Set.cpp
 #include "ace/Handle_Set.h"
+#if defined (ACE_HAS_ALLOC_HOOKS)
+# include "ace/Malloc_Base.h"
+#endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Handle_Set.inl"
@@ -25,6 +28,8 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Handle_Set)
   // default on Linux/glibc-2.1.x systems.  Instead use "__fds_bits."
   // Ugly, but "what are you going to do?" 8-)
 #define fds_bits __fds_bits
+#elif defined ACE_FDS_BITS
+#define fds_bits ACE_FDS_BITS
 #endif  /* ACE_LINUX && __GLIBC__ > 1 && __GLIBC_MINOR__ >= 1 && !_XOPEN_SOURCE */
 
 void
@@ -116,12 +121,12 @@ ACE_Handle_Set::count_bits (u_long n)
 
  ACE_TRACE ("ACE_Handle_Set::count_bits");
 #if defined (ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT)
-  ACE_REGISTER int rval = 0;
+  int rval = 0;
 
   // Count the number of enabled bits in <n>.  This algorithm is very
   // fast, i.e., O(enabled bits in n).
 
-  for (ACE_REGISTER u_long m = n;
+  for (u_long m = n;
        m != 0;
        m &= m - 1)
     rval++;
@@ -142,8 +147,8 @@ ACE_Handle_Set::count_bits (u_long n)
 int
 ACE_Handle_Set::bitpos (u_long bit)
 {
-  ACE_REGISTER int l = 0;
-  ACE_REGISTER u_long n = bit - 1;
+  int l = 0;
+  u_long n = bit - 1;
 
   // This is a fast count method when have the most significative bit.
 
@@ -340,7 +345,7 @@ ACE_Handle_Set_Iterator::operator () (void)
     }
 #else /* !ACE_HAS_BIG_FD_SET */
    // Find the first word in fds_bits with bit on
-   ACE_REGISTER u_long lsb = this->word_val_;
+   u_long lsb = this->word_val_;
 
    if (lsb == 0)
      {
@@ -381,7 +386,7 @@ ACE_Handle_Set_Iterator::operator () (void)
         // Remove least significative bit.
         this->word_val_ ^= lsb;
 
-        ACE_REGISTER u_long n = lsb - this->oldlsb_;
+        u_long n = lsb - this->oldlsb_;
 
         // Move index to bit distance between new lsb and old lsb.
         do

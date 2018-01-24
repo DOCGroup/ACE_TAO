@@ -79,7 +79,7 @@ private:
   /// Create the exception holder valuetype
   be_valuetype *create_exception_holder (be_interface *node);
 
-  /// And the concrete implemenation of the exception holder valuetype
+  /// And the concrete implementation of the exception holder valuetype
   //  be_valuetype *create_exception_holder_concrete (be_valuetype *parent);
 
   /// Creates a raise operation from node and inserts it in

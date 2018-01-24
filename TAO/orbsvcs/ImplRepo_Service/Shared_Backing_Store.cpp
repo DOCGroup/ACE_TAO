@@ -322,7 +322,7 @@ Shared_Backing_Store::verify_unique_id (const ACE_CString& key,
                                         const XML_Backing_Store::NameValues& extra_params,
                                         UniqueIdMap& unique_ids)
   {
-    const size_t size = extra_params.size();
+    size_t const size = extra_params.size();
     if ((size != 2) && (this->opts_.debug() > 4))
       {
         ORBSVCS_ERROR((
@@ -630,7 +630,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr)
         }
     }
 
-  // ignore persistent_load return since files don't have to exist
+  // Ignore persistent_load return since files don't have to exist
   this->persistent_load (false);
 
   if (this->opts_.debug() > 9)
@@ -903,17 +903,25 @@ Shared_Backing_Store::load_server (Server_Info *info,
                                    bool server_started,
                                    const NameValues& extra_params)
 {
-  // ensure there is an entry for this server
+  if (this->opts_.debug() > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) loading server <%C>\n"),
+                      info->key_name_.c_str ()));
+    }
+
+  // Ensure there is an entry for this server
   this->verify_unique_id (info->key_name_,
                           extra_params,
                           this->server_uids_);
   Server_Info_Ptr si;
   if (this->servers ().find (info->key_name_, si) != 0)
     {
-      // create new or replace the existing entry
+      // Create new or replace the existing entry
       XML_Backing_Store::load_server (info, server_started, extra_params);
       return;
     }
+
   bool is_started = info->is_running ();
   bool was_started = si->is_running ();
 

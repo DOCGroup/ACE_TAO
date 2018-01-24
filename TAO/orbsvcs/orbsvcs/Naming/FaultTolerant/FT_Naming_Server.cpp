@@ -4,6 +4,7 @@
 /**
  * @file   FT_Naming_Server.cpp
  *
+ *
  * @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================
@@ -30,7 +31,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-#include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
 
 #include "tao/debug.h"
@@ -39,7 +39,7 @@
 
 #include "tao/debug.h"
 #include "tao/default_ports.h"
-
+#include "tao/IORTable/IORTable.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -48,33 +48,143 @@
 
 #include "tao/AnyTypeCode/Any.h"
 
-const ACE_TCHAR*
-TAO_FT_Naming_Server::primary_replica_ior_filename =
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+
+const ACE_TCHAR* primary_replica_ior_filename =
   ACE_TEXT ("ns_replica_primary.ior");
 
-const ACE_TCHAR*
-TAO_FT_Naming_Server::backup_replica_ior_filename =
+const ACE_TCHAR* backup_replica_ior_filename =
   ACE_TEXT ("ns_replica_backup.ior");
+
+
+TAO_FTNS_Notifier::TAO_FTNS_Notifier (TAO_FT_Naming_Server &owner, bool iors)
+  : owner_ (owner),
+    iors_ (iors)
+{
+}
+
+int
+TAO_FTNS_Notifier::handle_exception (ACE_HANDLE )
+{
+  if (this->iors_)
+    owner_.update_iors_i();
+  else
+    owner_.update_info_i();
+  return 0;
+}
 
 /// Default Constructor.
 TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
-  : replica_id_ (0),
+  : TAO_Naming_Server (IOR_ARRAY_SIZE),
     naming_manager_ (),
-    replication_manager_ (0),
-    combined_naming_service_ior_file_name_ (0),
-    combined_naming_manager_ior_file_name_ (0),
-    naming_manager_ior_file_name_ (0),
-    naming_manager_persistence_file_name_ (0),
+    replicator_ (0),
     use_object_group_persistence_ (0),
-    server_role_ (STANDALONE)
+    server_role_ (STANDALONE),
+    ft_endpoint_ (""),
+    ft_update_delay_ (ACE_Time_Value::zero),
+    registered_ (false),
+    ior_notifier_ (*this, true),
+    info_notifier_ (*this, false),
+    u_iors_(),
+    u_infos_(),
+    ior_lock_(),
+    info_lock_()
+
 {
 }
+
+void
+TAO_FT_Naming_Server::update_info_i (void)
+{
+  while (true)
+    {
+      FT_Naming::UpdateInfoSeq_var block;
+      {
+        ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->info_lock_);
+        if (this->u_infos_.dequeue_head(block.out()) == -1)
+          {
+            break;
+          }
+      }
+
+      for (CORBA::ULong i = 0; i < block->length(); i++)
+        {
+          FT_Naming::UpdateInfo &infoRef = (*block)[i];
+
+          if (infoRef._d() == FT_Naming::ctx_name)
+            {
+              this->update_naming_context (infoRef.ctx());
+            }
+          else
+            {
+              this->update_object_group (infoRef.grp());
+            }
+        }
+    }
+}
+
+void
+TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
+{
+
+  CORBA::ULong count = infos.length();
+  FT_Naming::UpdateInfo* guts = infos.get_buffer(true);
+  FT_Naming::UpdateInfoSeq_var block = 0;
+  ACE_NEW(block, FT_Naming::UpdateInfoSeq (count,count,guts,true));
+  {
+    ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->info_lock_);
+    this->u_infos_.enqueue_tail (block._retn());
+  }
+
+  this->orb_->orb_core ()->reactor ()->notify (&this->info_notifier_);
+}
+
+void
+TAO_FT_Naming_Server::update_iors_i (void)
+{
+  while (true)
+    {
+      FT_Naming::ReplicaInfo rep;
+      {
+        ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->ior_lock_);
+        if (this->u_iors_.dequeue_head(rep) == -1)
+          {
+            break;
+          }
+      }
+
+      if (rep.combined)
+        {
+          this->update_ior (FT_Naming::ctx_name, rep.root_context.in());
+          this->update_ior (FT_Naming::obj_grp, rep.naming_manager.in());
+        }
+      else
+        {
+          this->combine_iors (FT_Naming::ctx_name, rep.root_context.in());
+          this->combine_iors (FT_Naming::obj_grp, rep.naming_manager.in());
+          this->replicator_->send_registration (true);
+        }
+    }
+}
+
+void
+TAO_FT_Naming_Server::update_iors (const FT_Naming::ReplicaInfo & iors )
+{
+  {
+    ACE_GUARD(TAO_SYNCH_MUTEX, guard, this->ior_lock_);
+    this->u_iors_.enqueue_tail(iors);
+  }
+  this->orb_->orb_core ()->reactor ()->notify (&this->ior_notifier_);
+}
+
 
 int
 TAO_FT_Naming_Server::init_with_orb (int argc,
                                      ACE_TCHAR *argv [],
                                      CORBA::ORB_ptr orb)
 {
+  ACE_NEW_RETURN (this->replicator_, TAO_FT_Naming_Replication_Manager (*this), -1);
+
   // Invoke the base class initialization to setup the naming service
   // What follows after that are the initialization steps to support
   // fault tolerance and load balancing with the FT_Naming_Manager
@@ -96,9 +206,17 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
         }
 
       TAO::Storable_Factory * object_group_storable_factory;
+#if defined (ACE_USES_WCHAR)
+      ACE_CString alt_group_dir =
+        ACE_TEXT_ALWAYS_CHAR (this->object_group_dir_.c_str());
+      ACE_NEW_RETURN (object_group_storable_factory,
+                      TAO::Storable_FlatFileFactory (alt_group_dir),
+                      -1);
+#else
       ACE_NEW_RETURN (object_group_storable_factory,
                       TAO::Storable_FlatFileFactory (this->object_group_dir_),
                       -1);
+#endif /* ACE_USES_WCHAR */
 
       naming_manager_.set_object_group_storable_factory (
         object_group_storable_factory);
@@ -114,45 +232,21 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
   if (result != 0)
     return result;
 
-  try {
+  try
+    {
+      // Initialize the replicator if necessary
+      result = init_replicator ();
+      if (result != 0)
+        return result;
 
-    // Initialize the replication manager
-    result = init_replication_manager_with_orb (argc, argv, orb);
-    if (result != 0)
-      return result;
-
-    // Setup the pairing with peer
-    result = init_replication_pairing ();
-
-    // If we successfully paired, we are a backup and
-    // we have a peer_root_context, then export the combined IORs
-    if ((result == 0) &&
-        (this->server_role_ == TAO_FT_Naming_Server::BACKUP) &&
-        (!CORBA::is_nil (peer_root_context_.in ())))
-          { // If we successfully initialized the replication manager and we are
-            // a backup server, then we should export the multi-profile
-            // references to files. No need to write out the IOR if we
-
-            if (TAO_debug_level > 3)
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                          ACE_TEXT ("Writing combined IOR.\n")));
-
-            result = export_ft_naming_references ();
-          }
-    else if (result == 1)
-      { // Primary was started in the past, but it is not currently
-        // accessible for pairing. Primary will initiate pairing when
-        // it is restarted.
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Unable to pair with primary\n")));
-        result = 0; // This is a normal situation on backup restart.
-      }
-  }
+      // Setup the pairing with peer
+      init_replication_pairing ();
+      this->naming_manager_.set_replicator (this->replicator_);
+    }
   catch (const CORBA::Exception& ex)
     { // No exceptions are expected.
-      ex._tao_print_exception (
-        ACE_TEXT ("TAO_FT_Naming_Server::init_with_orb"));
+      ex._tao_print_exception
+        (ACE_TEXT ("TAO_FT_Naming_Server::init_with_orb"));
       return -1;
     }
 
@@ -160,13 +254,8 @@ TAO_FT_Naming_Server::init_with_orb (int argc,
 }
 
 int
-TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc,
-                                                    ACE_TCHAR *argv [],
-                                                    CORBA::ORB_ptr orb)
+TAO_FT_Naming_Server::init_naming_manager_with_orb (int, ACE_TCHAR *[], CORBA::ORB_ptr orb)
 {
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
-
   int result = 0;
 
   // Need to lock during startup to prevent access of partially
@@ -176,440 +265,160 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int argc,
                       this->lock_,
                       CORBA::INTERNAL ());
 
-  try {
-
-    // Get the POA from the ORB.
-    CORBA::Object_var poa_object =
-      orb->resolve_initial_references ("RootPOA");
-
-    if (CORBA::is_nil (poa_object.in ()))
+  try
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT(" (%P|%t) ERROR: Unable to initialize the POA.\n")),
-        -1);
-    }
+      if (CORBA::is_nil (this->orb_.in ()))
+        {
+          this->orb_ = CORBA::ORB::_duplicate (orb);
+        }
 
-    if (result != 0)
-      return result;
+      // Get the POA from the ORB.
+      CORBA::Object_var poa_object =
+        orb->resolve_initial_references ("RootPOA");
 
-    // Get the POA object.
-    this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
-
-    // Get the POA_Manager.
-    PortableServer::POAManager_var poa_manager =
-      this->root_poa_->the_POAManager ();
-
-    int numPolicies = 2;
-
-    CORBA::PolicyList policies (numPolicies);
-    policies.length (numPolicies);
-
-    // Id Assignment policy
-    policies[0] =
-      this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
-
-    // Lifespan policy
-    policies[1] =
-      this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
-
-    /* Register the naming manager with a POA
-    * TODO: 1) Error checking
-    *       2) Write IOR to file
-    *       3) Persistence for Object Group Manager
-    */
-
-    // We use a different POA, otherwise the user would have to change
-    // the object key each time it invokes the server.
-    this->naming_manager_poa_ = this->root_poa_->create_POA (
-      "NamingManager",
-      poa_manager.in (),
-      policies);
-    // Warning!  If create_POA fails, then the policies won't be
-    // destroyed and there will be hell to pay in memory leaks!
-
-    // Creation of the new POAs over, so destroy the Policy_ptr's.
-    for (CORBA::ULong i = 0;
-      i < policies.length ();
-      ++i)
-    {
-      CORBA::Policy_ptr policy = policies[i];
-      policy->destroy ();
-    }
-
-    poa_manager->activate ();
-
-    // Register with the POA.
-    PortableServer::ObjectId_var id =
-      PortableServer::string_to_ObjectId (
-         "NamingManager");
-
-    this->naming_manager_poa_->activate_object_with_id (
-       id.in (),
-       &this->naming_manager_);
-
-    CORBA::Object_var nm_obj =
-      this->naming_manager_poa_->id_to_reference (id.in ());
-
-    this->my_naming_manager_ = FT_Naming::NamingManager::_narrow (nm_obj.in ());
-
-    this->naming_manager_ior_ =
-      orb->object_to_string (this->my_naming_manager_.in ());
-
-  // write out our object reference to the file defined in the -h option
-  if (this->naming_manager_ior_file_name_ != 0)
-    {
-      if (this->write_ior_to_file (
-            this->naming_manager_ior_.in (),
-            ACE_TEXT_ALWAYS_CHAR (this->naming_manager_ior_file_name_)) != 0)
+      if (CORBA::is_nil (poa_object.in ()))
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) ERROR: Unable to open %s ")
-                             ACE_TEXT ("for writing:(%u) %p\n"),
-                             this->naming_manager_ior_file_name_,
-                             ACE_ERRNO_GET,
-                             ACE_TEXT ("TAO_Naming_Server::")
-                             ACE_TEXT ("init_naming_manager_with_orb")),
-                            -1);
+                                 ACE_TEXT(" (%P|%t) ERROR: Unable to initialize the POA.\n")),
+                                -1);
         }
+
+      if (result != 0)
+        return result;
+
+      this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
+      PortableServer::POAManager_var poa_manager =
+        this->root_poa_->the_POAManager ();
+
+      int numPolicies = 2;
+      CORBA::PolicyList policies (numPolicies);
+      policies.length (numPolicies);
+      policies[0] =
+        this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
+      policies[1] =
+        this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
+
+      this->naming_manager_poa_ =
+        this->root_poa_->create_POA ("NamingManager",
+                                     poa_manager.in (),
+                                     policies);
+
+      for (CORBA::ULong i = 0; i < policies.length (); ++i)
+        {
+          CORBA::Policy_ptr policy = policies[i];
+          policy->destroy ();
+        }
+      poa_manager->activate ();
+
+      PortableServer::ObjectId_var id =
+        PortableServer::string_to_ObjectId ("NamingManager");
+
+      this->naming_manager_poa_->activate_object_with_id (id.in (), &this->naming_manager_);
+      this->assign (size_t(GROUP), true, this->naming_manager_poa_->id_to_reference (id.in ()));
+
+      if (write (size_t(GROUP)) != 0)
+        return -1;
+
+
+      this->naming_manager_.initialize (this->orb_.in (),
+                                        this->naming_manager_poa_.in ());
+
     }
-
-  this->naming_manager_.initialize (this->orb_.in (),
-                                    this->naming_manager_poa_.in ());
-
-  }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        ACE_TEXT ("TAO_FT_Naming_Server::init_naming_manager_with_orb"));
+                               ACE_TEXT ("TAO_FT_Naming_Server::init_naming_manager_with_orb"));
       return -1;
     }
-
-  // Make the Object Group Manager easily accessible using Interoperable
-  // Naming Service IORs
   CORBA::Object_var table_object =
     orb->resolve_initial_references ("IORTable");
 
-  IORTable::Table_var adapter =
+  IORTable::Table_var ior_table =
     IORTable::Table::_narrow (table_object.in ());
-  if (CORBA::is_nil (adapter.in ()))
-  {
-    ORBSVCS_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) ERROR: TAO_FT_Naming_Server::")
-                ACE_TEXT ("init_naming_manager_with_orb - Nil IORTable\n")));
-  }
-  else
-  {
-    CORBA::String_var ior = this->naming_manager_ior ();
-    adapter->bind ("NamingManager", ior.in ());
-  }
-
+  if (!CORBA::is_nil (ior_table))
+    {
+      ior_table->bind ("NamingManager",
+                       this->iors_[GROUP].ior_.c_str ());
+    }
   return 0;
 }
 
 int
-TAO_FT_Naming_Server::init_replication_manager_with_orb (int argc,
-                                                         ACE_TCHAR *argv [],
-                                                         CORBA::ORB_ptr orb)
+TAO_FT_Naming_Server::init_replicator (void)
 {
-  ACE_UNUSED_ARG (argc);
-  ACE_UNUSED_ARG (argv);
+  if (this->server_role_ == STANDALONE )
+    return 0;
 
-  // Need to lock during startup to prevent access of partially initialized
-  // variables
   ACE_GUARD_THROW_EX (ACE_SYNCH_RECURSIVE_MUTEX,
                       ace_mon,
                       this->lock_,
                       CORBA::INTERNAL ());
-
-  // If redundancy is not requested, then do not initialize the
-  // replication manager
-  if (!this->use_redundancy_)
-    return 0;
-
-  int result = 0;
-
-  try {
-
-    // Get the POA from the ORB.
-    CORBA::Object_var poa_object =
-      orb->resolve_initial_references ("RootPOA");
-
-    if (CORBA::is_nil (poa_object.in ()))
+  try
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT(" (%P|%t) ERROR: Unable to initialize the POA.\n")),
-        -1);
+      this->replicator_->init_orb();
+      this->replicator_->activate();
+      this->iors_[REPLICATOR].ior_ = this->replicator_->ior ();
+      this->iors_[REPLICATOR].filename_ = this->replica_ior_filename (false);
+      this->write(REPLICATOR);
     }
-
-    if (result != 0)
-      return result;
-
-    // Get the POA object.
-    this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
-
-    // Get the POA_Manager.
-    PortableServer::POAManager_var poa_manager =
-      this->root_poa_->the_POAManager ();
-
-    int numPolicies = 2;
-
-    CORBA::PolicyList policies (numPolicies);
-    policies.length (numPolicies);
-
-    // Id Assignment policy
-    policies[0] =
-      this->root_poa_->create_id_assignment_policy (PortableServer::USER_ID);
-
-    // Lifespan policy
-    policies[1] =
-      this->root_poa_->create_lifespan_policy (PortableServer::PERSISTENT);
-
-    // We use a different POA, otherwise the user would have to change
-    // the object key each time it invokes the server.
-    this->replication_manager_poa_ = this->root_poa_->create_POA (
-      ACE_TEXT_ALWAYS_CHAR (this->replica_id_ ),
-      poa_manager.in (),
-      policies);
-
-    // Warning!  If create_POA fails, then the policies won't be
-    // destroyed and there will be hell to pay in memory leaks!
-
-    // Creation of the new POAs over, so destroy the Policy_ptr's.
-    for (CORBA::ULong i = 0;
-      i < policies.length ();
-      ++i)
-    {
-      CORBA::Policy_ptr policy = policies[i];
-      policy->destroy ();
-    }
-
-    poa_manager->activate ();
-
-    // Construct the replication manager providing it with its ID
-    ACE_NEW_RETURN (this->replication_manager_,
-                    TAO_FT_Naming_Replication_Manager (
-                      this,
-                      ACE_TEXT_ALWAYS_CHAR (this->replica_id_)),
-                    -1);
-
-    // Register with the POA.
-    PortableServer::ObjectId_var id =
-      PortableServer::string_to_ObjectId (
-        ACE_TEXT_ALWAYS_CHAR (this->replica_id_));
-
-    this->replication_manager_poa_->activate_object_with_id (
-      id.in (),
-      this->replication_manager_);
-
-    CORBA::Object_var repl_mgr_ref =
-      this->replication_manager_poa_->id_to_reference (id.in ());
-
-    this->replication_manager_ior_ =
-      orb->object_to_string (repl_mgr_ref.in ());
-
-    // Provide the replication manager its ORB and POA
-    this->replication_manager_->initialize (
-      this->orb_.in (),
-      this->replication_manager_poa_.in ());
-  }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception (
-        ACE_TEXT ("TAO_FT_Naming_Server::init_replication_manager_with_orb.\n"));
+        ACE_TEXT ("TAO_FT_Naming_Server::init_replicator\n"));
       return -1;
     }
 
-  // Success
   return 0;
 }
 
-int
-TAO_FT_Naming_Server::init_replication_pairing (void)
+ACE_TString
+TAO_FT_Naming_Server::replica_ior_filename (bool peer_ior_file) const
 {
-
-  ACE_CString primary_file_name (
-      ACE_TEXT_ALWAYS_CHAR (this->persistence_file_name_));
-  primary_file_name += "/";
-  primary_file_name +=
-    ACE_TEXT_ALWAYS_CHAR (TAO_FT_Naming_Server::primary_replica_ior_filename);
-
-  ACE_CString backup_file_name (
-      ACE_TEXT_ALWAYS_CHAR (this->persistence_file_name_));
-  backup_file_name += "/";
-  backup_file_name +=
-    ACE_TEXT_ALWAYS_CHAR (TAO_FT_Naming_Server::backup_replica_ior_filename);
-
-  if (this->server_role_ == PRIMARY)
-    { // We are the primary
-      if (TAO_debug_level > 3)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                    ACE_TEXT ("is a primary\n")));
-
-      // Write out this replicas IOR for the backup to use to bootstrap
-      CORBA::String_var replication_ior = naming_service_ior ();
-      this->write_ior_to_file (
-                               this->replication_manager_ior_.in (),
-                               primary_file_name.c_str ());
-
-      // Check if there is already a backup IOR file. If so, then the backup
-      // may be up and running so we should register with it.
-      CORBA::Object_var backup_ior;
-      if (TAO_debug_level > 3)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) - FT_Naming_Server reading ")
-                    ACE_TEXT ("backup ior file\n")));
-
-      if ((ACE_OS::access (primary_file_name.c_str (),
-                           R_OK) == 0) &&
-          this->read_reference_from_file (backup_file_name.c_str (),
-                                          backup_ior.out ()) == 0)
-        {// Success in reading backup IOR file
-          // Store the backup reference as our peer
-          FT_Naming::ReplicationManager_var peer_ref =
-              FT_Naming::ReplicationManager::_narrow (backup_ior.in ());
-
-          if (TAO_debug_level > 3)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                        ACE_TEXT ("narrowing IOR\n")));
-          if (CORBA::is_nil (peer_ref.in ()))
-            ORBSVCS_ERROR_RETURN (
-                              (LM_ERROR,
-                               ACE_TEXT ("(%P|%t) ERROR: IOR in file %s is not ")
-                               ACE_TEXT ("a FT_Naming::ReplicationManager\n"),
-                               primary_file_name.c_str ()),
-                              -1);
-
-          try {
-              if (TAO_debug_level > 3)
-                ORBSVCS_DEBUG (
-                           (LM_DEBUG,
-                            ACE_TEXT ("(%P|%t) - FT_Naming_Server registering ")
-                            ACE_TEXT ("with backup.\n")));
-
-              // Register with the backup
-              CosNaming::NamingContext_var root = this->my_root_context ();
-              FT_Naming::NamingManager_var nm = this->my_naming_manager ();
-
-              int registration_result =
-                this->replication_manager_->register_with_peer_replica (
-                   peer_ref.in (),
-                   root.in (),
-                   nm.in ());
-
-              if (registration_result == 0)
-                {
-                  if (TAO_debug_level > 3)
-                    ORBSVCS_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                                ACE_TEXT ("registered with backup.\n")));
-                }
-              else
-                {
-                  if (TAO_debug_level > 3)
-                    ORBSVCS_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("(%P|%t) - FT_Naming_Server:Backup peer ")
-                                ACE_TEXT ("replica not started yet.\n")));
-                }
-          }
-          catch (const CORBA::Exception& ex)
-            {
-              // Its Ok that we were unable to contact the backup peer.
-              // It has apparently not started yet.
-              // It will register with the primary when it starts up.
-              ex._tao_print_exception (
-                 ACE_TEXT ("Backup peer replica not started yet.\n"));
-            }
-        }
-      else
-        {
-          // Could not get the backup replica from the IOR file, which is OK.
-          // The backup will register with us in the future.
-          if (TAO_debug_level > 3)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) - FT_Naming_Server no Replica ")
-                        ACE_TEXT ("IOR file. Waiting for registration.\n")));
-          }
+  ServerRole desired = this->server_role_;
+  if (peer_ior_file)
+    {
+      desired = (desired  == PRIMARY) ? BACKUP : PRIMARY;
     }
-  else if (this->server_role_ == TAO_FT_Naming_Server::BACKUP)
-    { // We are the backup
-      if (TAO_debug_level > 3)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) - FT_Naming_Server:Is a Backup\n")));
-
-      if (TAO_debug_level > 3)
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) - FT_Naming_Server writing ")
-                      ACE_TEXT ("replica ior\n")));
-      // Write out the backup ior for use by the primary if it must be restarted.
-      this->write_ior_to_file (
-                               replication_manager_ior_.in (),
-                               backup_file_name.c_str ());
-
-      CORBA::Object_var primary_ref = CORBA::Object::_nil ();
-
-      if (TAO_debug_level > 3)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                    ACE_TEXT ("reading primary ior file\n")));
-      // Check for the primary IOR.  We must have it to bootstrap the redundant
-      // naming pair.
-      if ((ACE_OS::access (primary_file_name.c_str (), R_OK) == 0) &&
-          (this->read_reference_from_file (primary_file_name.c_str (),
-                                           primary_ref.out ()) == 0))
-        { // There is a primary IOR file, so we must be restarting.
-          if (TAO_debug_level > 3)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                        ACE_TEXT ("storing the primary reference ior\n")));
-          // Store the primary reference as our peer
-          FT_Naming::ReplicationManager_var peer_ref =
-            FT_Naming::ReplicationManager::_narrow (primary_ref.in ());
-
-          if (CORBA::is_nil (peer_ref.in ()))
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) ERROR: IOR in file %s ")
-                               ACE_TEXT ("is not a FT_Naming::ReplicationManager\n"),
-                               primary_file_name.c_str ()),
-                              -1);
-
-          if (TAO_debug_level > 3)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) - FT_Naming_Server ")
-                        ACE_TEXT ("backup registering with primary.\n")));
-          // Register with the primary
-          CosNaming::NamingContext_var root = this->my_root_context ();
-          FT_Naming::NamingManager_var nm = this->my_naming_manager ();
-          int registration_result =
-            this->replication_manager_->register_with_peer_replica (peer_ref.in (),
-                                                                    root.in (),
-                                                                    nm.in ());
-          if (registration_result == -1)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) Backup unable to ")
-                               ACE_TEXT ("register with the primary at this time.\n")),
-                              1);
-        }
-      else
-        {
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) ERROR: No primary IOR ")
-                             ACE_TEXT ("available. Have you started the ")
-                             ACE_TEXT ("primary? Exiting.\n")),
-                            -1);
-        }
+  ACE_TString path = this->persistence_dir_;
+  path += ACE_DIRECTORY_SEPARATOR_STR;
+  if (desired == PRIMARY)
+    {
+      path += primary_replica_ior_filename;
     }
   else
-    {// We are neither a primary or replica, but running in standalone mode
+    {
+      path += backup_replica_ior_filename;
+    }
+  return path;
+}
+
+void
+TAO_FT_Naming_Server::init_replication_pairing (void)
+{
+  if (this->server_role_ == STANDALONE)
+    {
       if (TAO_debug_level > 3)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) - FT_Naming_Server:Is Standalone\n")));
+                        ACE_TEXT ("(%P|%t) - FT_Naming_Server:Is ")
+                        ACE_TEXT ("Standalone\n")));
+    }
 
-      }
-
-  return 0;
+  if (this->replicator_->init_peer ())
+    {
+      this->replicator_->send_registration (false);
+    }
 }
+
+void
+TAO_FT_Naming_Server::no_replica ()
+{
+
+  if (this->server_role_ == BACKUP)
+    {
+      this->recover_iors ();
+    }
+}
+
 
 int
 TAO_FT_Naming_Server::parse_args (int argc,
@@ -620,7 +429,8 @@ TAO_FT_Naming_Server::parse_args (int argc,
   // Define the arguments for primary and backup
   get_opts.long_option (ACE_TEXT ("primary"), ACE_Get_Opt::NO_ARG);
   get_opts.long_option (ACE_TEXT ("backup"), ACE_Get_Opt::NO_ARG);
-  bool role_defined = false;
+  get_opts.long_option (ACE_TEXT ("ftendpoint"), ACE_Get_Opt::ARG_REQUIRED);
+  get_opts.long_option (ACE_TEXT ("ftupdatedelay"), ACE_Get_Opt::ARG_REQUIRED);
 
   int c;
   int size;
@@ -641,7 +451,6 @@ TAO_FT_Naming_Server::parse_args (int argc,
   int f_opt_used = 0;
   int u_opt_used = 0;
   int r_opt_used = 0;
-
   int v_opt_used = 0;
 
   // TODO: remove unsupported options with FT Naming Server
@@ -652,16 +461,16 @@ TAO_FT_Naming_Server::parse_args (int argc,
         ++TAO_debug_level;
         break;
       case 'o': // outputs this servers naming service ior to a file.
-        this->ior_file_name_ = get_opts.opt_arg ();
+        this->iors_[ROOT].filename_ = get_opts.opt_arg ();
         break;
       case 'c': // outputs the multi-profile naming service ior file
-        this->combined_naming_service_ior_file_name_ = get_opts.opt_arg ();
+        this->iors_[FT_ROOT].filename_ = get_opts.opt_arg ();
         break;
       case 'g': // outputs the mutli-profile object group manager ior file
-        this->combined_naming_manager_ior_file_name_ = get_opts.opt_arg ();
+        this->iors_[FT_GROUP].filename_ = get_opts.opt_arg ();
         break;
       case 'h': // outputs the object group manager ior to a file
-        this->naming_manager_ior_file_name_ = get_opts.opt_arg ();
+        this->iors_[GROUP].filename_ = get_opts.opt_arg ();
         break;
       case 'l':
         this->naming_manager_.set_global_strategy (get_opts.opt_arg ());
@@ -694,24 +503,24 @@ TAO_FT_Naming_Server::parse_args (int argc,
         this->base_address_ = (void *) address;
         break;
       case 'f':
-        this->persistence_file_name_ = get_opts.opt_arg ();
+        this->persistence_dir_ = get_opts.opt_arg ();
         f_opt_used = 1;
         break;
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)
       case 'r':
         this->use_redundancy_ = 1;
         this->use_storable_context_ = 1;
-        this->persistence_file_name_ = get_opts.opt_arg ();
+        this->persistence_dir_ = get_opts.opt_arg ();
         r_opt_used = 1;
         break;
       case 'u':
         this->use_storable_context_ = 1;
-        this->persistence_file_name_ = get_opts.opt_arg ();
+        this->persistence_dir_ = get_opts.opt_arg ();
         u_opt_used = 1;
         break;
       case 'v':
         this->use_object_group_persistence_ = 1;
-        this->object_group_dir_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+        this->object_group_dir_ = get_opts.opt_arg ();
         v_opt_used = 1;
         break;
 
@@ -727,25 +536,38 @@ TAO_FT_Naming_Server::parse_args (int argc,
           const ACE_TCHAR *long_option = get_opts.long_option ();
           if (ACE_OS::strcmp (long_option, ACE_TEXT ("backup")) == 0)
             {
-              this->replica_id_ = ACE_TEXT ("Backup");
               this->server_role_ = TAO_FT_Naming_Server::BACKUP;
-              role_defined = true;
+              break;
             }
           else if (ACE_OS::strcmp (long_option,
                                    ACE_TEXT ("primary")) == 0)
             {
-              this->replica_id_ = ACE_TEXT ("Primary");
               this->server_role_ = TAO_FT_Naming_Server::PRIMARY;
-              role_defined = true;
+              break;
+            }
+          else if (ACE_OS::strcasecmp (long_option,
+                                       ACE_TEXT ("ftendpoint")) == 0)
+            {
+              this->ft_endpoint_ = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg());
+              break;
+            }
+          else if (ACE_OS::strcasecmp (long_option,
+                                       ACE_TEXT ("ftupdatedelay")) == 0)
+            {
+              this->ft_update_delay_ =
+                ACE_Time_Value (0, 1000 * ACE_OS::atoi (get_opts.opt_arg()));
+              break;
             }
         }
-        break;
       case '?':
       default:
+        ORBSVCS_ERROR ((LM_ERROR,ACE_TEXT ("Unknown arg %c\n"), c ));
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("usage:  %s\n")
                            ACE_TEXT ("--primary  (not used with --backup)\n")
                            ACE_TEXT ("--backup  (not used with --primary)\n")
+                           ACE_TEXT ("--FtEndpoint <endpoint for FT ORB>\n")
+                           ACE_TEXT ("--FtUpdateDelay <msec>\n")
                            ACE_TEXT ("-d\n")
                            ACE_TEXT ("-c <multi-profile_name_service_ior_file>\n")
                            ACE_TEXT ("-o <name_svc_ior_output_file>\n")
@@ -758,7 +580,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
                            ACE_TEXT ("-m <1=enable multicast,")
                            ACE_TEXT (" 0=disable multicast(default)>\n")
                            ACE_TEXT ("-n <num_threads>\n")
-                           ACE_TEXT ("-f <persistence_file_name>\n")
+                           ACE_TEXT ("-f <persistence_directory>\n")
                            ACE_TEXT ("-u <storable_persistence_directory")
                            ACE_TEXT (" (not used with -f)>\n")
                            ACE_TEXT ("-v <storable_object_group_persistence")
@@ -778,48 +600,21 @@ TAO_FT_Naming_Server::parse_args (int argc,
                       -1);
 
   // If naming context or object group persistence is being used then
-  // enable backup/restore compability of persitent files.
-  if (u_opt_used || r_opt_used || v_opt_used)
+  // enable backup/restore compatibility of persistent files.
+  if (u_opt_used || v_opt_used || r_opt_used)
     {
       TAO::Storable_Base::use_backup_default = true;
     }
 
-  if (!role_defined)
-    { // No role specified, so we will become a STANDALONE server
-      this->replica_id_ = ACE_TEXT ("Standalone");
-      this->server_role_ = TAO_FT_Naming_Server::STANDALONE;
-      // User has not provided a role, so we will not use redundancy option
-      if (this->use_redundancy_ == 1)
-        {
-          ORBSVCS_ERROR ((LM_ERROR,
-                      ACE_TEXT ("INFO: Cannot run standalone with ")
-                      ACE_TEXT ("-r option. Using -u instead.\n")
-                      ACE_TEXT ("Must start a '--primary' and a '--backup' ")
-                      ACE_TEXT ("server to run as a Fault \n")
-                      ACE_TEXT ("Tolerant Naming Service. \n")));
-          this->use_redundancy_ = 0;
-        }
-
-    }
-  else
+  if (server_role_ != STANDALONE)
     {
-      // Only the backup should be requested to write the multi-profile IOR
-      if ((this->server_role_ != TAO_FT_Naming_Server::BACKUP) &&
-          (this->combined_naming_service_ior_file_name_ != 0))
+      if ((this->server_role_ == BACKUP) ==
+          (this->iors_[FT_ROOT].filename_.length() == 0))
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: Must export the multi-profile ")
-                           ACE_TEXT ("IOR (using '-c' option) from the backup")
-                           ACE_TEXT (" server.\n\n")),
-                          -1);
-
-      // Only the backup should be requested to write the multi-profile IOR
-      if ((this->server_role_ == TAO_FT_Naming_Server::BACKUP) &&
-          (this->combined_naming_service_ior_file_name_ == 0))
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: Must export the multi-profile ")
-                           ACE_TEXT ("IOR (using '-c' option) from the backup")
-                           ACE_TEXT (" server.\n\n")),
-                          -1);
+                               ACE_TEXT ("ERROR: Must export the multi-profile ")
+                               ACE_TEXT ("IOR (using '-c' option) from the backup ")
+                               ACE_TEXT ("server.\n\n")),
+                              -1);
     }
   return 0;
 }
@@ -827,34 +622,49 @@ TAO_FT_Naming_Server::parse_args (int argc,
 int
 TAO_FT_Naming_Server::fini (void)
 {
-  // Destroy the child POAs created when initializing
-  // the FT Naming Service
+  if (this->replicator_ != 0)
+    {
+      try
+        {
+          this->replicator_->stop ();
+        }
+      catch (const CORBA::Exception&)
+        {
+          // Ignore
+        }
+      delete replicator_;
+      replicator_ = 0;
+    }
   try
     {
       if (!CORBA::is_nil (this->naming_manager_poa_.in ()))
         this->naming_manager_poa_->destroy (1, 1);
       this->naming_manager_poa_ = PortableServer::POA::_nil ();
+    }
+  catch (const CORBA::Exception&)
+    {
+      // Ignore
+    }
 
-      if (!CORBA::is_nil (this->replication_manager_poa_.in ()))
-        this->replication_manager_poa_->destroy (1, 1);
-
-      this->replication_manager_poa_ = PortableServer::POA::_nil ();
+  try
+    {
       CORBA::Object_var table_object =
         this->orb_->resolve_initial_references ("IORTable");
-
-      IORTable::Table_var adapter =
+      IORTable::Table_var ior_table =
         IORTable::Table::_narrow (table_object.in ());
-      if (CORBA::is_nil (adapter.in ()))
+      if (!CORBA::is_nil (ior_table.in()))
         {
-          ORBSVCS_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) ERROR: Nil IORTable\n")));
+          ior_table->unbind ("NameService");
+          ior_table->unbind ("NamingManager");
         }
-      else
-        {
-          adapter->unbind ("NameService");
-          adapter->unbind ("NamingManager");
-        }
+    }
+  catch (const CORBA::Exception&)
+    {
+      // Ignore
+    }
 
+  try
+    {
 #if !defined (CORBA_E_MICRO)
       CORBA::Object_var svc =
         this->orb_->unregister_initial_reference ("NameService");
@@ -869,14 +679,8 @@ TAO_FT_Naming_Server::fini (void)
 
   // Specific FT_Naming cleanup
   naming_manager_poa_ = PortableServer::POA::_nil ();
-  replication_manager_poa_ = PortableServer::POA::_nil ();
-  my_naming_manager_ = FT_Naming::NamingManager::_nil ();
-  peer_naming_manager_ = FT_Naming::NamingManager::_nil ();
-  peer_root_context_ = CosNaming::NamingContext::_nil ();
+  iors_[GROUP].ref_ =  FT_Naming::NamingManager::_nil ();
 
-#if !defined (CORBA_E_MICRO)
-  delete replication_manager_;
-#endif /* CORBA_E_MICRO */
 
   // Invoke the base class fini
   return TAO_Naming_Server::fini ();
@@ -886,9 +690,9 @@ TAO_Storable_Naming_Context_Factory *
 TAO_FT_Naming_Server::storable_naming_context_factory (size_t context_size)
 {
 #if defined (ACE_HAS_NEW_NOTHROW)
-  return new (ACE_nothrow) TAO_FT_Storable_Naming_Context_Factory (context_size);
+  return new (ACE_nothrow) TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
 #else
-  return new TAO_FT_Storable_Naming_Context_Factory (context_size);
+  return new TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
 #endif /* ACE_HAS_NEW_NOTHROW */
 }
 
@@ -902,198 +706,18 @@ TAO_FT_Naming_Server::persistent_naming_context_factory (void)
 #endif /* ACE_HAS_NEW_NOTHROW */
 }
 
-
-int
-TAO_FT_Naming_Server::read_reference_from_file (const char* replica_file_name,
-                                                CORBA::Object_out obj_ref)
-{
-
-  ACE_CString replica_ior_string ("file://");
-  replica_ior_string += replica_file_name;
-
-  try {
-    CORBA::Object_var object =
-      this->orb_->string_to_object (replica_ior_string.c_str ());
-    if (CORBA::is_nil (object.in ()))
-      {
-        if (TAO_debug_level > 3)
-          ORBSVCS_DEBUG ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) - invalid ior in file <%s>\n"),
-                      replica_file_name));
-
-        return -1;
-      }
-
-    obj_ref = object._retn ();
-
-  }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception (
-        ACE_TEXT ("Invalid object reference in file: %s\n"));
-      return -1;
-    }
-
-  return 0;
-}
-
-int
-TAO_FT_Naming_Server::export_ft_naming_references (void)
-{
-  int result = 0;
-
-  switch (this->server_role_) {
-    // Neither the PRIMARY or STANDALONE server roles are able to write
-    // a multi-profile IOR for the redundant server pair.
-  case TAO_FT_Naming_Server::STANDALONE:
-  case TAO_FT_Naming_Server::PRIMARY:
-
-    if (this->naming_manager_ior_file_name_ != 0)
-      {
-          FT_Naming::NamingManager_var my_nm =
-            this->my_naming_manager ();
-          CORBA::String_var naming_manager_ior_string =
-            this->orb_->object_to_string (my_nm.in ());
-          this->write_ior_to_file (
-            naming_manager_ior_string.in (),
-            ACE_TEXT_ALWAYS_CHAR (this->naming_manager_ior_file_name_));
-      }
-
-    // Make sure the user provided an ior_file_name for the comb
-    if (this->combined_naming_service_ior_file_name_ != 0)
-      {
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) ERROR: Unable to write combined")
-                           ACE_TEXT (" NameService IOR file. ")
-                           ACE_TEXT ("Only supported by the backup naming service.\n")
-                           ACE_TEXT ("Provide the -c option to the --backup role.\n")),
-                          -1);
-      }
-    return 0;
-    break;
-
-  case TAO_FT_Naming_Server::BACKUP:
-    {
-      // Make sure the user provided an ior_file_name for the multi-profile ior file
-      if (this->combined_naming_service_ior_file_name_ == 0)
-        {
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) ERROR: Unable to write combined")
-                             ACE_TEXT (" NameService IOR file. ")
-                             ACE_TEXT ("No file name provided.\n")),
-                            -1);
-          return 0;
-        }
-
-      CORBA::Object_var peer_root_cxt = this->peer_root_context ();
-      if (CORBA::is_nil (peer_root_cxt.in ()))
-        {
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) ERROR: Unable to get the primary")
-                             ACE_TEXT (" NameService object ref")),
-                            -1);
-        }
-
-      CORBA::Object_var my_root_cxt = this->my_root_context ();
-      if (CORBA::is_nil (my_root_cxt.in ()))
-        {
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%P|%t) ERROR: Unable to get this")
-                             ACE_TEXT (" services NameService object ref")),
-                            -1);
-        }
-
-      CORBA::Object_var IORM =
-        this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
-
-      TAO_IOP::TAO_IOR_Manipulation_var iorm =
-        TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());
-
-      // Combine the primary and backup (my) object references for the naming service
-      CORBA::Object_var combined_obj_ref =
-        iorm->add_profiles (peer_root_cxt.in (),
-                            my_root_cxt.in ());
-
-      if (CORBA::is_nil (combined_obj_ref.in ()))
-        {
-          ORBSVCS_ERROR((LM_ERROR,
-                     ACE_TEXT("(%P|%t) ERROR: could not combine")
-                     ACE_TEXT(" primary and backup IORs for")
-                     ACE_TEXT(" fault tolerant Naming Service.\n")));
-          return -1;
-        }
-
-      CORBA::String_var combined_nameservice_ior_string =
-        this->orb_->object_to_string (combined_obj_ref.in ());
-
-      // Write out the combined IOR for the NameService
-      this->write_ior_to_file (
-        combined_nameservice_ior_string.in (),
-        ACE_TEXT_ALWAYS_CHAR (this->combined_naming_service_ior_file_name_));
-
-      // Verify that a naming manager ior file name was provided by user
-      if (this->combined_naming_manager_ior_file_name_ == 0)
-        {
-          if (TAO_debug_level > 3)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) - FT_Naming_Server:No NamingManager")
-                        ACE_TEXT (" IOR file name provided")
-                        ACE_TEXT (" with -g option. Not writing IOR.\n")));
-        }
-      else
-        {// A file name was provided to store the naming manager IOR
-
-          FT_Naming::NamingManager_var peer_nm =
-            this->peer_naming_manager ();
-          FT_Naming::NamingManager_var my_nm =
-            this->my_naming_manager ();
-
-          // This is the object reference for the fault tolerant
-          // naming manager.  The primary should be first.
-          combined_obj_ref =
-            iorm->add_profiles (peer_nm.in (),
-                                my_nm.in ());
-
-          if (CORBA::is_nil (combined_obj_ref.in ()))
-            {
-              ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT("(%P|%t) ERROR: could not combine")
-                                 ACE_TEXT(" primary and backup IORs for")
-                                 ACE_TEXT(" fault tolerant Naming Manager.\n")),
-                                -1);
-            }
-
-          CORBA::String_var combined_naming_manager_ior_string =
-            this->orb_->object_to_string (combined_obj_ref.in ());
-
-          // Write out the combined IOR for the NameService
-          this->write_ior_to_file (
-            combined_naming_manager_ior_string.in (),
-            ACE_TEXT_ALWAYS_CHAR (this->combined_naming_manager_ior_file_name_));
-        }
-
-      return 0;
-    }
-    break;
-  };
-  return result;
-}
-
-
-
 /// Return the IOR for the registered replication manager
 char*
-TAO_FT_Naming_Server::replication_manager_ior (void)
+TAO_FT_Naming_Server::replicator_ior (void)
 {
-  return CORBA::string_dup (this->replication_manager_ior_.in ());
+  return CORBA::string_dup (this->iors_[REPLICATOR].ior_.c_str());
 }
-
 
 /// Return the IOR for the registered object group manager
 char*
 TAO_FT_Naming_Server::naming_manager_ior (void)
 {
-  return CORBA::string_dup (this->naming_manager_ior_.in ());
+  return CORBA::string_dup (this->iors_[GROUP].ior_.c_str());
 }
 
 int
@@ -1194,39 +818,189 @@ TAO_FT_Naming_Server::~TAO_FT_Naming_Server (void)
   TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (0);
 }
 
-
-void
-TAO_FT_Naming_Server::peer_root_context (CosNaming::NamingContext_ptr peer_cxt)
-{
-  peer_root_context_ = CosNaming::NamingContext::_duplicate (peer_cxt);
-}
-
-CosNaming::NamingContext_ptr
-TAO_FT_Naming_Server::peer_root_context (void)
-{
-  return CosNaming::NamingContext::_duplicate (peer_root_context_.in ());
-}
-
 CosNaming::NamingContext_ptr
 TAO_FT_Naming_Server::my_root_context (void) const
 {
-  return CosNaming::NamingContext::_duplicate (this->naming_context_.in ());
-}
+  if (CORBA::is_nil (this->iors_[ROOT].ref_.in()))
+    {
+      return CosNaming::NamingContext::_nil ();
+    }
 
-void
-TAO_FT_Naming_Server::peer_naming_manager (FT_Naming::NamingManager_ptr peer_cxt)
-{
-  peer_naming_manager_ = FT_Naming::NamingManager::_duplicate (peer_cxt);
-}
+  CosNaming::NamingContext_ptr ret =
+    CosNaming::NamingContext::_narrow (this->iors_[ROOT].ref_);
 
-FT_Naming::NamingManager_ptr
-TAO_FT_Naming_Server::peer_naming_manager (void)
-{
-  return  FT_Naming::NamingManager::_duplicate (peer_naming_manager_.in ());
+  return ret;
+  //  return CosNaming::NamingContext::_narrow (this->iors_[ROOT].ref_.in());
 }
 
 FT_Naming::NamingManager_ptr
 TAO_FT_Naming_Server::my_naming_manager (void) const
 {
-  return  FT_Naming::NamingManager::_duplicate (this->my_naming_manager_.in ());
+  if (CORBA::is_nil (this->iors_[GROUP].ref_))
+    {
+      return FT_Naming::NamingManager::_nil ();
+    }
+
+  FT_Naming::NamingManager_ptr ret =
+    FT_Naming::NamingManager::_narrow (this->iors_[GROUP].ref_);
+
+  return ret;
+
+  //  return FT_Naming::NamingManager::_narrow (this->iors_[GROUP].ref_.in ());
 }
+
+CosNaming::NamingContext_ptr
+TAO_FT_Naming_Server::ft_root_context (void) const
+{
+  if (CORBA::is_nil (this->iors_[FT_ROOT].ref_))
+    {
+      return CosNaming::NamingContext::_nil ();
+    }
+
+  CosNaming::NamingContext_ptr ret =
+    CosNaming::NamingContext::_narrow (this->iors_[FT_ROOT].ref_);
+
+  return ret;
+  //  return CosNaming::NamingContext::_narrow (this->iors_[FT_ROOT].ref_.in());
+}
+
+FT_Naming::NamingManager_ptr
+TAO_FT_Naming_Server::ft_naming_manager (void) const
+{
+  if (CORBA::is_nil (this->iors_[FT_GROUP].ref_))
+    {
+      return FT_Naming::NamingManager::_nil ();
+    }
+
+  FT_Naming::NamingManager_ptr ret =
+    FT_Naming::NamingManager::_narrow (this->iors_[FT_GROUP].ref_);
+
+  return ret;
+
+  //  return FT_Naming::NamingManager::_narrow (this->iors_[FT_GROUP].ref_.in ());
+}
+
+const ACE_CString &
+TAO_FT_Naming_Server::ft_endpoint (void)
+{
+  return this->ft_endpoint_;
+}
+
+const ACE_Time_Value &
+TAO_FT_Naming_Server::ft_update_delay (void)
+{
+  return this->ft_update_delay_;
+}
+
+void
+TAO_FT_Naming_Server::update_ior (FT_Naming::EntityKind kind, CORBA::Object_ptr ft_obj)
+{
+  size_t combo = kind == FT_Naming::obj_grp ? FT_GROUP : FT_ROOT;
+
+  this->assign(combo, false, ft_obj);
+  this->write (combo);
+}
+
+void
+TAO_FT_Naming_Server::combine_iors (FT_Naming::EntityKind kind, CORBA::Object_ptr peer)
+{
+  size_t local = ROOT;
+  size_t combo = FT_ROOT;
+  if (kind == FT_Naming::obj_grp)
+    {
+      local = GROUP;
+      combo = FT_GROUP;
+    }
+
+  CORBA::Object_var IORM =
+    this->orb_->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
+
+  TAO_IOP::TAO_IOR_Manipulation_var iorm =
+    TAO_IOP::TAO_IOR_Manipulation::_narrow (IORM.in ());
+
+  bool peer_nil = CORBA::is_nil (peer);
+  bool local_nil =  CORBA::is_nil (this->iors_[local].ref_.in ());
+
+  if (peer_nil || local_nil)
+    {
+      if (peer_nil)
+        {
+          this->assign (combo, false, this->iors_[local].ref_.in());
+        }
+    }
+  else
+    {
+      if (this->server_role_ == PRIMARY)
+        {
+          this->assign (combo, false, iorm->add_profiles (this->iors_[local].ref_.in (),
+                                                         peer));
+        }
+      else
+        {
+
+          this->assign (combo, false, iorm->add_profiles (peer,
+                                                         this->iors_[local].ref_.in ()));
+        }
+    }
+
+  if (CORBA::is_nil (this->iors_[combo].ref_.in ()) && TAO_debug_level > 0)
+    {
+      ORBSVCS_ERROR((LM_ERROR,
+                     ACE_TEXT("(%P|%t) ERROR: could not combine")
+                     ACE_TEXT(" primary and backup IORs for")
+                     ACE_TEXT(" fault tolerant Naming Service.\n")));
+    }
+
+  this->write (size_t(combo));
+}
+
+int
+TAO_FT_Naming_Server::recover_iors (void)
+{
+  if (this->registered_)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+         ACE_TEXT ("ERROR: already registered IOR. ")
+         ACE_TEXT ("recover_ior should not be called.\n")), -1);
+    }
+
+  size_t index[2] = {FT_ROOT, FT_GROUP};
+  for (int i = 0; i < 2; i++)
+    {
+      ACE_TString fname = this->iors_[index[i]].filename_;
+      if (TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("recover_ior <%C>\n"),
+                          fname.c_str()));
+        }
+      if (ACE_OS::access (fname.c_str (), F_OK) != 0)
+        return -1;
+
+      CORBA::Object_ptr obj = CORBA::Object::_nil();
+      try
+        {
+          ACE_TString combined_ior = ACE_TEXT ("file://") + fname;
+          obj = this->orb_->string_to_object (combined_ior.c_str());
+          if (!CORBA::is_nil (obj))
+            {
+              this->assign(index[i], true, obj);
+            }
+        }
+      catch (const CORBA::Exception& ex)
+        {
+          if (TAO_debug_level > 0)
+            {
+              ORBSVCS_DEBUG ((LM_INFO,
+                              ACE_TEXT ("Caught %C loading from %C\n"),
+                              ex._name(),
+                              fname.c_str()));
+            }
+          return -1;
+        }
+    }
+  this->registered_ = true;
+
+  return 0;
+}
+
+TAO_END_VERSIONED_NAMESPACE_DECL

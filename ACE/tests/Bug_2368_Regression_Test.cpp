@@ -2,7 +2,7 @@
  * @file Bug_2368_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2368:
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2368
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2368
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */

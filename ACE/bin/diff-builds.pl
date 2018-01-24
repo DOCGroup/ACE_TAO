@@ -15,10 +15,10 @@ my $clean_builds_only = 1; # Only diff todays clean builds
 my $append_revision_to_new_test_fails = 0;  # Default to not doing this.
 
 # The root of the test statistics
-my $teststaturl = "http://teststat.theaceorb.nl/teststat/builds/";
+my $teststaturl = "http://teststat.remedy.nl/teststat/builds/";
 
-my $allbuildsurl = "http://teststat.theaceorb.nl/teststat/buildscore";
-my $cleanbuildsurl = "http://teststat.theaceorb.nl/teststat/cleanbuildtests";
+my $allbuildsurl = "http://teststat.remedy.nl/teststat/buildscore";
+my $cleanbuildsurl = "http://teststat.remedy.nl/teststat/cleanbuildtests";
 
 # Determine the available timestamps for a build on a date,
 # by scanning the index page (build.html)
@@ -199,7 +199,8 @@ sub find_builds ($$$$$)
         }
 
         if ($begin) {
-           %{$revision_hash}->{$columns[$selectcolumn_name]} = $columns[$selectcolumn_revision];
+           my $temp = %{$revision_hash};
+           $temp->{$columns[$selectcolumn_name]} = $columns[$selectcolumn_revision];
            push (@{$rbuilds}, $columns[$selectcolumn_name]);
         }
     }

@@ -65,7 +65,7 @@ typedef ACE_Malloc_T< ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Control_Block
 
 // Check that the ACE_Based_Pointer_Repository can be accessed
 // from a Windows DLL
-// (see http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1991)
+// (see http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1991)
 int singleton_test (void)
 {
     void* baddr1 = ACE_BASED_POINTER_REPOSITORY::instance();
@@ -214,7 +214,7 @@ mmap_map_test(void)
 // into the Based_Pointer_Repository
 // (i.e. maps based on backing stores that are already
 //  present in the filesystem)
-// (see http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2216)
+// (see http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2216)
 int
 mmap_persistent_map_test(void)
 {
@@ -281,7 +281,7 @@ mmap_persistent_map_test(void)
 // (i.e. when a segment is resized it may move its base address
 // because the OS cannot fit the new segment size at the same
 // base address, in this case the Repository must be updated)
-// (see http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2218)
+// (see http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2218)
 int
 mmap_remap_test(void)
 {
@@ -301,7 +301,7 @@ mmap_remap_test(void)
     for (i= 0; i<3; ++i)
       {
         ACE_TCHAR store[ MAXPATHLEN + 1 ];
-        ACE_OS::sprintf( store, ACE_TEXT("foo%d"), i );
+        ACE_OS::snprintf( store, MAXPATHLEN + 1, ACE_TEXT("foo%d"), i );
         ACE_OS::unlink( store );
 
         ACE_NEW_RETURN (alloc[ i ],

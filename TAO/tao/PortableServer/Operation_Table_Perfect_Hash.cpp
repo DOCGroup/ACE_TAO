@@ -25,7 +25,7 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Do nothing destrctor.
+// Do nothing destructor.
 TAO_Perfect_Hash_OpTable::~TAO_Perfect_Hash_OpTable (void)
 {
 }

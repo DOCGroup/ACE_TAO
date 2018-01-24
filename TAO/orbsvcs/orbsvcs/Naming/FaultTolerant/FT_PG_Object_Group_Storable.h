@@ -4,6 +4,7 @@
 /**
  *  @file    FT_PG_Object_Group_Storable.h
  *
+ *
  * Contains declaration for class FT_PG_Object_Group_Storable.
  *
  *  @author Byron Harris <harrisb@ociweb.com>
@@ -28,6 +29,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_FT_Naming_Replication_Manager;
 ////////////////
 // Class declarations
 namespace TAO
@@ -57,7 +59,8 @@ namespace TAO
       const char * type_id,
       const PortableGroup::Criteria & the_criteria,
       const TAO::PG_Property_Set_var & type_properties,
-      TAO::Storable_Factory & storable_factory);
+      TAO::Storable_Factory & storable_factory,
+      TAO_FT_Naming_Replication_Manager *replicator);
 
     /**
      * This constructor is suitable for creating an object group from
@@ -68,10 +71,11 @@ namespace TAO
       CORBA::ORB_ptr orb,
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
-      TAO::Storable_Factory & storable_factory);
+      TAO::Storable_Factory & storable_factory,
+      TAO_FT_Naming_Replication_Manager *replicator);
 
     /// Destructor
-    ~FT_PG_Object_Group_Storable ();
+    virtual ~FT_PG_Object_Group_Storable ();
 
     /////////////////
     // public methods
@@ -109,6 +113,7 @@ namespace TAO
     /// so can know if we should propagate a change type of NEW.
     bool file_created_;
 
+    TAO_FT_Naming_Replication_Manager *replicator_;
     /**
      * Although it is assumed for replication that services
      * using object groups share the persistent store, a

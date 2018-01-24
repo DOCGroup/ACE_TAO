@@ -1,11 +1,11 @@
 // -*- C++ -*-
 //=============================================================================
 /**
-*  @file   ImR_Activator_i.h
-*
-*  @author Priyanka Gontla <gontla_p@ociweb.com>
-*  @author Darrell Brunsch <brunsch@cs.wustl.edu>
-*/
+ *  @file   ImR_Activator_i.h
+ *
+ *  @author Priyanka Gontla <gontla_p@ociweb.com>
+ *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
+ */
 //=============================================================================
 
 #ifndef IMR_ACTIVATOR_I_H
@@ -46,19 +46,29 @@ struct ACE_Equal_To_pid_t
 };
 
 
+#if (ACE_SIZEOF_VOID_P == 8)
+typedef ACE_INT64 Act_token_type;
+#else
+typedef ACE_INT32 Act_token_type;
+#endif
+
+class Active_Pid_Setter;
+
 /**
-* @class ImR_Activator_i
-*
-* @brief IMR Activator Interface.
-*
-* This class provides the interface for the various activities
-* that can be done by the ImR_Activator.
-*
-*/
+ * @class ImR_Activator_i
+ *
+ * @brief IMR Activator Interface.
+ *
+ * This class provides the interface for the various activities
+ * that can be done by the ImR_Activator.
+ *
+ */
 class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::ActivatorExt,
                                          public ACE_Event_Handler
 {
  public:
+  friend class Active_Pid_Setter;
+
   ImR_Activator_i (void);
 
   void start_server (const char* name,
@@ -84,9 +94,9 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
   int run (void);
 
   /// Shutdown the orb.
-  void shutdown (bool wait_for_completion);
+  void shutdown (bool signaled);
 
-private:
+ private:
 
   int init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opts);
 
@@ -97,9 +107,11 @@ private:
   int handle_exit (ACE_Process * process);
   int handle_exit_i (pid_t pid);
 
-  bool still_running_i (const char *name);
+  bool still_running_i (const char *name, pid_t& pid);
 
-private:
+  bool in_upcall (void);
+
+ private:
 
   typedef ACE_Unbounded_Set<ACE_CString> UniqueServerList;
 
@@ -113,6 +125,7 @@ private:
 
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var imr_poa_;
+  PortableServer::Current_var current_;
 
   ImplementationRepository::Locator_var locator_;
 
@@ -132,13 +145,28 @@ private:
 
   ProcessMap process_map_;
 
-  UniqueServerList server_list_;
+  UniqueServerList running_server_list_;
+  UniqueServerList dying_server_list_;
 
   /// The default environment buffer length
   int env_buf_len_;
 
   /// Maximum number of environment variables
   int max_env_vars_;
+
+  bool detach_child_;
+  pid_t active_check_pid_;
 };
+
+class Active_Pid_Setter
+{
+public:
+  Active_Pid_Setter(ImR_Activator_i &owner, pid_t pid);
+  ~Active_Pid_Setter();
+
+  ImR_Activator_i &owner_;
+
+};
+
 
 #endif /* IMR_ACTIVATOR_I_H */

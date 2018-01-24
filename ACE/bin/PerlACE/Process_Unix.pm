@@ -124,13 +124,76 @@ sub Arguments
     return $self->{ARGUMENTS};
 }
 
+sub ReadPidFile ()
+{
+    my $self = shift;
+    my $tgt_pidfile = shift;
+    my $rc = 0;
+    # If a filesystem mapping exists
+    if (defined $self->{TARGET} && defined $self->{TARGET}{TEST_FSROOT} &&
+        defined $ENV{TEST_ROOT}) {
+      my $pidfile = PerlACE::rebase_path ($tgt_pidfile,
+                                          $self->{TARGET}->{TEST_FSROOT},
+                                          $self->{TARGET}->{TEST_ROOT});
+      if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+        print STDERR "Checking for pid file $pidfile\n";
+      }
+
+      if (-f $pidfile) {
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+          print STDERR "Found mapped pid file\n";
+        }
+        if (open(PID, "<$pidfile")) {
+          $rc = <PID>;
+          close PID;
+          if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            print STDERR "Read $rc from mapped file\n";
+          }
+          if ($rc) {
+            unlink $pidfile;
+          }
+        } else {
+          if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            print STDERR "Could not open mapped pid file\n";
+          }
+        }
+      } else {
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+          print STDERR "Could not find mapped file " . basename($pidfile) . "\n";
+        }
+      }
+    } else {
+      my $shell = $self->{TARGET}->{REMOTE_SHELL};
+      print STDERR "trying to remote read PID from file $tgt_pidfile\n";
+      $rc = int(`$shell 'if [ -e $tgt_pidfile -a -s $tgt_pidfile ] ; then cat $tgt_pidfile; rm -f $tgt_pidfile >/dev/null 2>&1; else echo 0; fi'`);
+    }
+    return $rc;
+}
+
 sub CommandLine ()
 {
     my $self = shift;
 
-    my $exe = $self->Executable ();
+    my $exe = File::Spec->rel2abs ($self->Executable ());
+    my $cur_root = $ENV{TEST_ROOT};
 
-    if (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
+    # Translate to target
+    if (defined $self->{TARGET} && defined $ENV{TEST_ROOT} &&
+        defined $self->{TARGET}->{TEST_ROOT}) {
+      $exe = PerlACE::rebase_path ($exe,
+                                   $ENV{TEST_ROOT},
+                                   $self->{TARGET}->{TEST_ROOT});
+      $cur_root = $self->{TARGET}->{TEST_ROOT};
+    }
+
+    # Translate to different filesystem
+    if (defined $self->{TARGET} && defined $ENV{TEST_ROOT} &&
+        defined $self->{TARGET}->{TEST_FSROOT}) {
+      $exe = PerlACE::rebase_path ($exe,
+                                   $cur_root,
+                                   $self->{TARGET}->{TEST_FSROOT});
+
+    } elsif (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
       # If the target's config has a different filesystem root, rebase the executable
       # from local root to the target's root.
       $exe = File::Spec->rel2abs ($exe);
@@ -201,21 +264,38 @@ sub CommandLine ()
             $root = $ENV{'ACE_ROOT'};
         }
         my $exedir = cwd ();
-        my $local_xdir = $exedir;
-
-        if (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
+        if (defined $self->{TARGET} && defined $ENV{TEST_ROOT} &&
+            defined $self->{TARGET}->{TEST_ROOT}) {
           $exedir = PerlACE::rebase_path ($exedir,
-                                          $self->{TARGET}->{HOST_FSROOT},
-                                          $self->{TARGET}->{TARGET_FSROOT});
+                                          $ENV{TEST_ROOT},
+                                          $self->{TARGET}->{TEST_ROOT});
           if (defined $ENV{'ACE_TEST_VERBOSE'}) {
               print STDERR "INFO: rebased run script exedir to [",$exedir,"]\n";
           }
         }
+        my $tgt_exedir = $exedir;
+
+        if (defined $self->{TARGET} && defined $ENV{TEST_ROOT} &&
+            defined $self->{TARGET}->{TEST_FSROOT}) {
+          $tgt_exedir = PerlACE::rebase_path ($exedir,
+                                              $self->{TARGET}->{TEST_ROOT},
+                                              $self->{TARGET}->{TEST_FSROOT});
+        } elsif (defined $self->{TARGET} &&
+                 defined $self->{TARGET}->{TARGET_FSROOT}) {
+          $tgt_exedir = PerlACE::rebase_path ($exedir,
+                                              $self->{TARGET}->{HOST_FSROOT},
+                                              $self->{TARGET}->{TARGET_FSROOT});
+          if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+              print STDERR "INFO: rebased run script exedir to [",$tgt_exedir,"]\n";
+          }
+        }
         if (!defined $self->{PIDFILE}) {
-            $self->{PIDFILE} = "$exedir/ace-".rand(time).".pid";
+            # PIDFILE is based on target file system
+            $self->{PIDFILE} = "$tgt_exedir/ace-".rand(time).".pid";
         }
         if (!defined $self->{SCRIPTFILE}) {
-            $self->{SCRIPTFILE} = "$local_xdir/run-".rand(time).".sh";
+            # SCRIPTFILE is based on host file system
+            $self->{SCRIPTFILE} = "$exedir/run-".rand(time).".sh";
         }
         ## create scriptfile
         my $libpath = "$root/lib";
@@ -225,7 +305,7 @@ sub CommandLine ()
         # add working dir by default as for local executions
         my $run_script =
             # "if [ ! -e /tmp/.acerun ]; then mkdir /tmp/.acerun; fi\n".
-            "cd $exedir\n".
+            "cd $tgt_exedir\n".
             "export LD_LIBRARY_PATH=$libpath:.:\$LD_LIBRARY_PATH\n".
             "export DYLD_LIBRARY_PATH=$libpath:.:\$DYLD_LIBRARY_PATH\n".
             "export LIBPATH=$libpath:.:\$LIBPATH\n".
@@ -261,8 +341,7 @@ sub CommandLine ()
             $run_script .=
               "echo INFO: Process started remote with pid [\$MY_PID]\n";
         }
-        $run_script .=
-          "wait \$MY_PID\n";
+        $run_script .= "wait \$MY_PID\n";
         unless (open (RUN_SCRIPT, ">".$self->{SCRIPTFILE})) {
             print STDERR "ERROR: Cannot Spawn: <", $self->Executable (),
                           "> failed to create ",$self->{SCRIPTFILE},"\n";
@@ -274,15 +353,14 @@ sub CommandLine ()
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "INFO: created run script [",$self->{SCRIPTFILE},"]\n", $run_script;
         }
-        if (defined $self->{TARGET} && defined $self->{TARGET}->{TARGET_FSROOT}) {
-          if ($self->{TARGET}->PutFile (basename ($self->{SCRIPTFILE})) == -1) {
-            print STDERR "ERROR: Failed to copy <", $self->{SCRIPTFILE},
-                          "> to target \n";
-            return -1;
-          }
+        if ($self->{TARGET}->PutFile ($self->{SCRIPTFILE}) == -1) {
+          print STDERR "ERROR: Failed to copy <", $self->{SCRIPTFILE},
+                        "> to target \n";
+          return -1;
         }
 
-        $commandline = "$shell \"source $exedir/".basename ($self->{SCRIPTFILE})."\"";
+        $commandline = "$shell \"source $tgt_exedir/".basename ($self->{SCRIPTFILE})."\"";
+
 
     }
 
@@ -470,7 +548,6 @@ sub Spawn ()
     }
 
     if (defined $self->{TARGET} && defined $self->{TARGET}->{REMOTE_SHELL}) {
-        my $shell = $self->{TARGET}->{REMOTE_SHELL};
         my $pidfile = $self->{PIDFILE};
         ## wait max 10 * $PerlACE::Process::WAIT_DELAY_FACTOR sec for pid file to appear
         my $start_tm = time ();
@@ -481,15 +558,14 @@ sub Spawn ()
         my $rc = 1;
         while ((time() - $start_tm) < $max_wait) {
             select(undef, undef, undef, 0.2);
-            $rc = int(`$shell 'if [ -e $pidfile -a -s $pidfile ] ; then cat $pidfile; rm -f $pidfile >/dev/null 2>&1; else echo 0; fi'`);
+            $rc = $self->ReadPidFile($pidfile);
             if ($rc != 0) {
                 $self->{REMOTE_PID} = $rc;
                 last;
             }
         }
         if (!defined $self->{REMOTE_PID}) {
-            print STDERR "ERROR: Remote command failed <" . $cmdline . ">: $! No PID found.\n";
-            return -1;
+            print STDERR "Remote command <" . $cmdline . ">: No PID found at Spawn.\n";
         }
     }
 
@@ -636,16 +712,39 @@ sub Kill ($)
     my $self = shift;
     my $ignore_return_value = shift;
 
+    # If Remote PID not known, but should be
+    if (defined $self->{TARGET} &&
+        defined $self->{TARGET}->{REMOTE_SHELL} &&
+        !defined $self->{REMOTE_PID}) {
+        my $rc = $self->ReadPidFile($self->{PIDFILE});
+        if ($rc != 0) {
+            $self->{REMOTE_PID} = $rc;
+        }
+    }
+
+    my $child_killed = 0;
+
     if ($self->{RUNNING} && !defined $ENV{'ACE_TEST_WINDOW'}) {
         if (defined $self->{TARGET} && defined $self->{TARGET}->{REMOTE_SHELL}) {
-            my $cmd = $self->{TARGET}->{REMOTE_SHELL}." kill -s KILL ".$self->{REMOTE_PID};
-            if (defined $ENV{'ACE_TEST_VERBOSE'}) {
-                print STDERR "INFO: Killing remote process <", $cmd, ">\n";
+            # Kill remote process
+            if (defined $self->{REMOTE_PID}) {
+                my $cmd = $self->{TARGET}->{REMOTE_SHELL}." kill -s KILL ".$self->{REMOTE_PID};
+                if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+                    print STDERR "INFO: Killing remote process <", $cmd, ">\n";
+                select(undef, undef, undef, .5);
+                }
+                $cmd = `$cmd 2>&1`;
+                # Wait to give remote process time to exit
+                select(undef, undef, undef, 3.0);
+            } else {
+                print STDERR "INFO: remote process PID unknown, can't kill\n";
             }
-            $cmd = `$cmd 2>&1`;
         } else {
             kill ('KILL', $self->{PROCESS});
+            $child_killed = 1;
         }
+
+
         for(my $i = 0; $i < 10; $i++) {
             my $pid = waitpid ($self->{PROCESS}, WNOHANG);
             if ($pid > 0) {
@@ -655,6 +754,11 @@ sub Kill ($)
                 last;
             }
             else {
+                if (!$child_killed) {
+                  # Kill child process (may be remote shell))
+                  kill ('KILL', $self->{PROCESS});
+                  $child_killed = 1;
+                }
                 select(undef, undef, undef, .5);
             }
         }
