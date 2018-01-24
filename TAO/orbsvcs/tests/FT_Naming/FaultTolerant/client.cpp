@@ -658,9 +658,9 @@ do_failover_name_test (
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ex._tao_print_exception (
+          ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
-              ACE_TEXT ("replica. Sleeping for a second.\n"));
+              ACE_TEXT ("replica. Sleeping for a second.\n")));
 
           ACE_OS::sleep (1);
 
@@ -1293,9 +1293,9 @@ do_persistence_name_test (
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ex._tao_print_exception (
+          ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
-              ACE_TEXT ("repository. Sleeping for a second.\n"));
+              ACE_TEXT ("repository. Sleeping for a second.\n")));
 
           ACE_OS::sleep (1);
 
@@ -1878,9 +1878,9 @@ do_equivalence_name_test (
       }
       catch (const CosNaming::NamingContext::NotFound& ex)
         {
-          ex._tao_print_exception (
+          ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
-              ACE_TEXT ("replica. Sleeping for a second.\n"));
+              ACE_TEXT ("replica. Sleeping for a second.\n")));
 
           ACE_OS::sleep (1);
 

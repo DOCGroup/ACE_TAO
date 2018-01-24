@@ -281,7 +281,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
     // still not completed (and we haven't run out of time).
     // All the conditions below are basically the various ways the
     // leader loop below can end, other than the event being complete
-    while (event->keep_waiting ()
+    while (event->keep_waiting_i ()
            && !(result == 0 &&
                 max_wait_time != 0 &&
                 *max_wait_time == ACE_Time_Value::zero)
@@ -309,7 +309,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
         // get a signal when the event terminates
         TAO_LF_Event_Binder event_binder (event, follower.get ());
 
-        while (event->keep_waiting () &&
+        while (event->keep_waiting_i () &&
                this->leader_available ())
         { // Scope #4: this loop handles spurious wake-ups
           // Add ourselves to the list, do it everytime we wake up
@@ -374,7 +374,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                     // We have timedout
                     event->set_state (TAO_LF_Event::LFS_TIMEOUT);
 
-                if (!event->successful ())
+                if (!event->successful_i ())
                 {
                   // Remove follower can fail because either
                   // 1) the condition was satisfied (i.e. reply
@@ -420,15 +420,15 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
                       ACE_TEXT ("TAO (%P|%t) - Leader_Follower[%d]::wait_for_event,")
                       ACE_TEXT (" done (follower), successful %d\n"),
                       t_id,
-                      event->successful ()));
+                      event->successful_i ()));
 
         // Now somebody woke us up to become a leader or to handle our
         // input. We are already removed from the follower queue.
 
-        if (event->successful ())
+        if (event->successful_i ())
           return 0;
 
-        if (event->error_detected ())
+        if (event->error_detected_i ())
           return -1;
 
         // FALLTHROUGH
@@ -499,7 +499,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
 
           // If we got our event, no need to run the event loop any
           // further.
-          while (event->keep_waiting ())
+          while (event->keep_waiting_i ())
           {
             // Run the event loop.
             result = reactor->handle_events (max_wait_time);
@@ -602,13 +602,13 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
   // Return an error if there was a problem receiving the reply...
   if (max_wait_time != 0)
     {
-      if (!event->successful ()
+      if (!event->successful_i ()
           && *max_wait_time == ACE_Time_Value::zero)
         {
           result = -1;
           errno = ETIME;
         }
-      else if (event->error_detected ())
+      else if (event->error_detected_i ())
         {
           // If the time did not expire yet, but we get a failure,
           // e.g. the connections closed, we should still return an error.
@@ -624,7 +624,7 @@ TAO_Leader_Follower::wait_for_event (TAO_LF_Event *event,
        * clients.
        * result = 0;
        */
-      if (event->error_detected ())
+      if (event->error_detected_i ())
         {
           result = -1;
         }

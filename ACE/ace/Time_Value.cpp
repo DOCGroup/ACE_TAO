@@ -18,6 +18,8 @@
 # include <iomanip>
 #endif /* ACE_HAS_CPP98_IOSTREAMS */
 
+#include <cstdlib>
+
 #ifdef ACE_HAS_CPP11
 # include <cmath>
 #endif /* ACE_HAS_CPP11 */
@@ -174,52 +176,30 @@ ACE_Time_Value::dump (void) const
 void
 ACE_Time_Value::normalize (bool saturate)
 {
-  // // ACE_OS_TRACE ("ACE_Time_Value::normalize");
-  // From Hans Rohnert...
+  // ACE_OS_TRACE ("ACE_Time_Value::normalize");
+  if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS ||
+      this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
+    {
+      time_t sec = std::abs(this->tv_.tv_usec) / ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
+      suseconds_t usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
 
-  if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS)
-    {
-      /*! \todo This loop needs some optimization.
-       */
-      if (!saturate) // keep the conditionnal expression outside the while loop to minimize performance cost
-        do
-          {
-            ++this->tv_.tv_sec;
-            this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
-          }
-        while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
+      if (saturate && this->tv_.tv_sec > 0 && sec > 0 &&
+          ACE_Numeric_Limits<time_t>::max() - this->tv_.tv_sec < sec)
+        {
+          this->tv_.tv_sec = ACE_Numeric_Limits<time_t>::max();
+          this->tv_.tv_usec = ACE_ONE_SECOND_IN_USECS - 1;
+        }
+      else if (saturate && this->tv_.tv_sec < 0 && sec < 0 &&
+               ACE_Numeric_Limits<time_t>::min() - this->tv_.tv_sec > sec)
+        {
+          this->tv_.tv_sec = ACE_Numeric_Limits<time_t>::min();
+          this->tv_.tv_usec = -ACE_ONE_SECOND_IN_USECS + 1;
+        }
       else
-        do
-          if (this->tv_.tv_sec < ACE_Numeric_Limits<time_t>::max())
-            {
-              ++this->tv_.tv_sec;
-              this->tv_.tv_usec -= ACE_ONE_SECOND_IN_USECS;
-            }
-          else
-            this->tv_.tv_usec = ACE_ONE_SECOND_IN_USECS - 1;
-        while (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS);
-    }
-  else if (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
-    {
-      /*! \todo This loop needs some optimization.
-       */
-      if (!saturate)
-        do
-          {
-            --this->tv_.tv_sec;
-            this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
-          }
-        while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
-      else
-        do
-          if (this->tv_.tv_sec > ACE_Numeric_Limits<time_t>::min())
-            {
-              --this->tv_.tv_sec;
-              this->tv_.tv_usec += ACE_ONE_SECOND_IN_USECS;
-            }
-          else
-            this->tv_.tv_usec = -ACE_ONE_SECOND_IN_USECS + 1;
-        while (this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS);
+        {
+          this->tv_.tv_sec += sec;
+          this->tv_.tv_usec = usec;
+        }
     }
 
   if (this->tv_.tv_sec >= 1 && this->tv_.tv_usec < 0)

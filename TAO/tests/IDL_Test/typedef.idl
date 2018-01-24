@@ -113,6 +113,7 @@ module First
 // must be destroyed only once.
 module CommaList
 {
+  typedef sequence<double> Foo;
   typedef sequence<double> Dubble, Dubbel, Toil, Trouble;
 };
 

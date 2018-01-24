@@ -431,7 +431,7 @@ ACE_OS::rand_r (unsigned int *seed)
   *seed = (unsigned int)new_seed;
   return (int) (new_seed & RAND_MAX);
 #else
-  return ::rand_r (seed);
+  return ace_rand_r_helper (seed);
 # endif /* ACE_LACKS_RAND_R */
 }
 

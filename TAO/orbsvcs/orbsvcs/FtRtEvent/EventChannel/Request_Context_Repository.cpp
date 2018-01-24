@@ -63,17 +63,18 @@ Request_Context_Repository::set_object_id(
 FtRtecEventChannelAdmin::ObjectId_var
 get_object_id(CORBA::Any_var a)
 {
-  FtRtecEventChannelAdmin::ObjectId *object_id, *r;
-  FtRtecEventChannelAdmin::ObjectId_var result;
+  const FtRtecEventChannelAdmin::ObjectId *object_id = 0;
 
-  if ((a.in() >>= object_id) ==0)
+  if ((a.in() >>= object_id) == 0)
     throw CORBA::NO_MEMORY();
 
+  FtRtecEventChannelAdmin::ObjectId *r = 0;
   ACE_NEW_THROW_EX(r,
                    FtRtecEventChannelAdmin::ObjectId(*object_id),
                    CORBA::NO_MEMORY());
 
-  result = r;
+  FtRtecEventChannelAdmin::ObjectId_var result = r;
+
   return result;
 }
 

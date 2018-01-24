@@ -331,7 +331,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
   prop_name[0].id = CORBA::string_dup (FT::FT_FACTORIES);
   int result = 0;
 
-  PortableGroup::FactoryInfos_var temp_factories;
+  const PortableGroup::FactoryInfos* temp_factories = 0;
   PortableGroup::Value value;
   if (TAO_PG::get_property_value (prop_name, properties, value) == 1)
   {
@@ -346,7 +346,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::get_factories (
     else
     {
       // Make a deep copy of the Factories.
-      ACE_NEW_RETURN (factories, PortableGroup::FactoryInfos (temp_factories.in()), -1);
+      ACE_NEW_RETURN (factories, PortableGroup::FactoryInfos (*temp_factories), -1);
       result = 0;
     }
   }

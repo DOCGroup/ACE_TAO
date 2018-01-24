@@ -153,6 +153,13 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "virtual const char* _interface_repository_id "
       << "(void) const;";
 
+  if (be_global->gen_static_desc_operations ())
+    {
+      *os << be_nl << "static const char* _desc_repository_id (void);";
+
+      *os << be_nl << "static const char* _desc_interface_name (void);";
+    }
+
   // The virtual marshal method, to prevent marshal of local interfaces.
   *os << be_nl
       << "virtual ::CORBA::Boolean marshal "

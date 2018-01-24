@@ -9,7 +9,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_HTTP_Handler::TAO_HTTP_Handler (void)
+TAO_HTTP_Handler::TAO_HTTP_Handler (void) :
+  mb_ (0),
+  filename_ (0),
+  bytecount_ (0)
 {
 }
 

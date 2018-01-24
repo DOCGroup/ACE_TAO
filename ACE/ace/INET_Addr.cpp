@@ -364,7 +364,6 @@ ACE_INET_Addr::set (u_short port_number,
     }
 
   this->reset_i ();
-  ACE_OS::memset (&this->inet_addr_, 0, sizeof this->inet_addr_);
 
 #if defined ACE_HAS_IPV6 && defined ACE_USES_IPV4_IPV6_MIGRATION
   if (address_family == AF_UNSPEC && !ACE::ipv6_enabled ())
@@ -372,6 +371,9 @@ ACE_INET_Addr::set (u_short port_number,
 #endif /* ACE_HAS_IPV6 && ACE_USES_IPV4_IPV6_MIGRATION */
 
 #ifdef ACE_HAS_IPV6
+  if (address_family == AF_UNSPEC && ACE::ipv6_enabled ())
+    address_family = AF_INET6;
+
   if (address_family != AF_INET
       && ACE_OS::inet_pton (AF_INET6, host_name,
                             &this->inet_addr_.in6_.sin6_addr) == 1)
@@ -410,7 +412,14 @@ ACE_INET_Addr::set (u_short port_number,
   // The ai_flags used to contain AI_ADDRCONFIG as well but that prevented
   // lookups from completing if there is no, or only a loopback, IPv6
   // interface configured. See Bugzilla 4211 for more info.
+
   hints.ai_flags = AI_V4MAPPED;
+#if defined(ACE_HAS_IPV6) && defined(AI_ALL)
+  // Without AI_ALL, Windows machines exhibit inconsistent behaviors on
+  // difference machines we have tested.
+  hints.ai_flags |= AI_ALL;
+#endif
+
   // Note - specify the socktype here to avoid getting multiple entries
   // returned with the same address for different socket types or
   // protocols. If this causes a problem for some reason (an address that's
@@ -511,6 +520,9 @@ ACE_INET_Addr::set (const char port_name[],
     }
 
   int address_family = PF_UNSPEC;
+  if (ACE_OS::strcmp(protocol, "tcp") == 0)
+    address_family = AF_INET;
+
 #  if defined (ACE_HAS_IPV6)
   if (ACE_OS::strcmp (protocol, "tcp6") == 0)
     address_family = AF_INET6;

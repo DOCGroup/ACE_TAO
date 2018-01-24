@@ -118,15 +118,13 @@ TAO_Notify_ThreadPool_Consumer::disconnect (void)
 
 void
 TAO_Notify_ThreadPool_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
-                               const CosNotification::EventTypeSeq & /*removed*/
-                               )
+                               const CosNotification::EventTypeSeq & /*removed*/)
 {
   // No-Op.
 }
 
 void
-TAO_Notify_ThreadPool_Consumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/
-                                            )
+TAO_Notify_ThreadPool_Consumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 

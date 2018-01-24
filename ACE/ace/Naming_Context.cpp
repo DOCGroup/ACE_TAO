@@ -140,7 +140,8 @@ ACE_Naming_Context::close (void)
 ACE_Naming_Context::ACE_Naming_Context (void)
   : name_options_ (0),
     name_space_ (0),
-    netnameserver_host_ (0)
+    netnameserver_host_ (0),
+    netnameserver_port_ (0)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
@@ -663,8 +664,6 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
       }
 }
 
-ACE_END_VERSIONED_NAMESPACE_DECL
-
 // The following Factory is used by the ACE_Service_Config and
 // svc.conf file to dynamically initialize the state of the Name
 // Server client.
@@ -678,3 +677,5 @@ ACE_STATIC_SVC_DEFINE (ACE_Naming_Context,
                        ACE_Service_Type::DELETE_OBJ,
                        0)
 ACE_STATIC_SVC_REQUIRE (ACE_Naming_Context)
+
+ACE_END_VERSIONED_NAMESPACE_DECL

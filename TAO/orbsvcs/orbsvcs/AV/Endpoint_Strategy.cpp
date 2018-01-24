@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   Endpoint_Strategy.cpp
@@ -6,7 +5,6 @@
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
@@ -16,8 +14,6 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Process_Semaphore.h"
-
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +29,6 @@ TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy (void)
 // Destructor.
 TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy (void)
 {
-
 }
 
 // The base class defines the "failure" case, so that unless the
@@ -61,7 +56,6 @@ TAO_AV_Endpoint_Strategy::create_B (AVStreams::StreamEndPoint_B_ptr & /* stream_
                      "(%P|%t) Error creating B endpoint\n"),
                     -1);
 }
-
 
 // ----------------------------------------------------------------------
 // TAO_AV_Endpoint_Process_Strategy
@@ -339,8 +333,12 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
                          "(%P|%t) TAO_AV_Endpoint_Process_Strategy: Error in activate ()\n"),
                         -1);
 
-    if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is:%s\n",
-                TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_.in())));
+    if (TAO_debug_level > 0)
+      {
+        CORBA::String_var ep = TAO_ORB_Core_instance ()->orb ()->object_to_string (this->stream_endpoint_b_.in());
+        ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)TAO_AV_Endpoint_Process_Strategy_B::create_B ()\n: stream_endpoint is: <%C>\n",
+                ep.in ()));
+      }
     stream_endpoint = AVStreams::StreamEndPoint_B::_duplicate ( this->stream_endpoint_b_.in() );
     vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   }

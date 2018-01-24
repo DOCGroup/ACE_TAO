@@ -60,6 +60,7 @@ Quoter_Client::parse_args (void)
         ACE_ERROR ((LM_ERROR,
                     "%s: unknown arg, -%c\n",
                     this->argv_[0], char(opt)));
+        // fallthrough
       case '?':
         ACE_DEBUG ((LM_DEBUG,
                     "usage:  %s"

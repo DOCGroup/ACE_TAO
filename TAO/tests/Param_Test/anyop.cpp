@@ -240,7 +240,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             i->d = 3.1416;
 
             any <<= *i;
-            Param_Test::Fixed_Struct *o;
+            const Param_Test::Fixed_Struct *o = 0;
 
             if (!(any >>= o)
                 || o->l != i->l
@@ -288,7 +288,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
 
             any <<= *i;
-            CORBA::LongSeq *o;
+            const CORBA::LongSeq *o = 0;
 
             if (!(any >>= o)
                 || (*i)[0] != (*o)[0]

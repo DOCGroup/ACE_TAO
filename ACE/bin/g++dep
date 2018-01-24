@@ -1,7 +1,5 @@
 #! /bin/sh
-# $Id$
-
-# This utility is a lightly editted version of the freed Berkeley
+# This utility is a lightly edited version of the freed Berkeley
 # script `mkdep'.  The current script is intended to work for GNU G++.
 
 # Here is the original BSD header:
@@ -33,7 +31,7 @@ case $1 in
   -p) SED='s;\.o;;'
       shift ;;
 
-  # -A implies -r and fixes the .obj line, hate 
+  # -A implies -r and fixes the .obj line, hate
   -A) REL="ACE_ROOT TAO_ROOT "$REL
       DO_ACE_MAKE_DEPEND=1
       shift ;;
@@ -108,7 +106,7 @@ if [ $DO_ACE_MAKE_DEPEND -eq 1 ]; then
   #    foo.o:
   # into
   #    .obj/foo.o .shobj/foo.o .obj/foo.so .shobj/foo.so:
-  # 
+  #
   # will be foo.o foo.
   LONG_TARGET="$""(sort "
   for i in VDIR VSHDIR; do

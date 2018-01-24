@@ -4,12 +4,12 @@
 
 #include "ACEXML/common/Mem_Map_Stream.h"
 
-
-
 ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream (void)
-  : svc_handler_ (0)
+  : svc_handler_ (0),
+    recv_pos_ (0),
+    get_pos_ (0),
+    end_of_mapping_plus1_ (0)
 {
-
 }
 
 ACE_SOCK_Stream &
@@ -196,10 +196,9 @@ ACEXML_Mem_Map_Stream::grow_file_and_remap (void)
   // file.
   ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ssize_t bytes = 0;
-  ssize_t n = 0;
   while (1)
     {
-      n = this->svc_handler_->peer ().recv (buf, sizeof buf, 0, &tv);
+      ssize_t const n = this->svc_handler_->peer ().recv (buf, sizeof buf, 0, &tv);
       if (n < 0)
         {
           if (errno != EWOULDBLOCK)

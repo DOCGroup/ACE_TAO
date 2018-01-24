@@ -20,19 +20,19 @@
     <UL>
       <LI><P>The consumer/supplier control can be controlled better, interval
         and timeout can be configured.
-	</P>
+  </P>
       </LI>
       <LI><P>At the moment a consumer is connected it can be controlled when the
         connection from the EC to the consumer is created, this can be directly
         at the first connect or with the first push.
-	</P>
+  </P>
       </LI>
       <LI><P>The IIOP Gateway has been expanded with several options to control
         its behaviour.
-	</P>
+  </P>
       </LI>
       <LI><P>The implementation of the multicast gateway has been improved.
-	</P>
+  </P>
       </LI>
     </UL>
 
@@ -42,29 +42,29 @@
       <DT><I>The new EC does not use the scheduling service</I>
       </DT>
       <DD>
-	<P>The new implementation has been designed to simplify its use
-	  in applications that do not require an scheduling service and
-	  to minimize the code footprint when the scheduling service is
-	  only required for dispatching
-	</P>
-	<P>To achieve this goals the EC will able to run without any
-	  scheduling service or only consulting the schedule, but not
-	  updating the dependencies.
-	</P>
-	<P>Using strategies and factories we will be able to
-	  configure the EC to update the schedule only in the
-	  configurations that required.
-	  Unfortunately this features have not been implemented yet.
-	</P>
+  <P>The new implementation has been designed to simplify its use
+    in applications that do not require an scheduling service and
+    to minimize the code footprint when the scheduling service is
+    only required for dispatching
+  </P>
+  <P>To achieve this goals the EC will able to run without any
+    scheduling service or only consulting the schedule, but not
+    updating the dependencies.
+  </P>
+  <P>Using strategies and factories we will be able to
+    configure the EC to update the schedule only in the
+    configurations that required.
+    Unfortunately this features have not been implemented yet.
+  </P>
       </DD>
 
       <DT><I>Further details:</I></DT>
 
       <DD><P>Many lower level issues and tasks can be found in the
-	  <A HREF="http://deuce.doc.wustl.edu/bugzilla/index.cgi">
-	    DOC Center Bugzilla webpage
-	  </A>.
-	</P>
+    <A HREF="http://bugzilla.dre.vanderbilt.edu/index.cgi">
+      DOC Center Bugzilla webpage
+    </A>.
+  </P>
       </DD>
     </DL>
 
@@ -106,76 +106,76 @@ Features in previous releases</H3>
 
     <UL>
       <LI><P>The copy-on-write semantics has been supported for a
-	  while now.
-	</P>
+    while now.
+  </P>
       </LI>
       <LI><P>The event service library has been divided in several
-	  smaller libraries, so applications only link the required
-	  components.
-	  The base code for the Event Service is located in the
-	  <CODE>TAO_RTEvent</CODE> library.
-	  <CODE>TAO_RTOLDEvent</CODE> contains the old implementation
-	  for the real-time Event Service,
-	  in addition to this the <CODE>TAO_RTSchedEvent</CODE>
-	  contains the components that will support scheduling in the
-	  new Event Service.
-	  This means that applications using only the
-	  <CODE>TAO_RTEvent</CODE> library do not need to link the
-	  scheduling service.
-	</P>
+    smaller libraries, so applications only link the required
+    components.
+    The base code for the Event Service is located in the
+    <CODE>TAO_RTEvent</CODE> library.
+    <CODE>TAO_RTOLDEvent</CODE> contains the old implementation
+    for the real-time Event Service,
+    in addition to this the <CODE>TAO_RTSchedEvent</CODE>
+    contains the components that will support scheduling in the
+    new Event Service.
+    This means that applications using only the
+    <CODE>TAO_RTEvent</CODE> library do not need to link the
+    scheduling service.
+  </P>
       </LI>
       <LI><P>More details can be found on the <CODE>README</CODE> file
-	  in the <CODE>$TAO_ROOT/orbsvcs/orbsvcs/Event</CODE>
-	  directory.
-	</P>
+    in the <CODE>$TAO_ROOT/orbsvcs/orbsvcs/Event</CODE>
+    directory.
+  </P>
       </LI>
       <LI><P>Add strategies to remove unresponsive or dead consumers
-	  and/or suppliers
-	</P>
+    and/or suppliers
+  </P>
       </LI>
       <LI><P>Lots of bug fixes since the last time this releases notes
-	  where updated.
-	</P>
+    where updated.
+  </P>
       </LI>
       <LI><P>In this release the EC supports atomic updates of
-	  subscriptions and publications.  In previous versions events
-	  could be lost during an update of the subscription list.
-	</P>
+    subscriptions and publications.  In previous versions events
+    could be lost during an update of the subscription list.
+  </P>
       </LI>
       <LI><P>The internal data structures in the event channel have
-	  been strategized, for example, it is possible to use
-	  RB-trees instead of ordered lists.  The benefits are small
-	  at this stage.
-	</P>
+    been strategized, for example, it is possible to use
+    RB-trees instead of ordered lists.  The benefits are small
+    at this stage.
+  </P>
       </LI>
       <LI><P>New implementation of the serialization protocols. The
-	  new version is based on "internal iterators" (aka Worker).
-	  This implementation can support copy-on-read (already
-	  implemented) and copy-on-write (in progress).
-	</P>
+    new version is based on "internal iterators" (aka Worker).
+    This implementation can support copy-on-read (already
+    implemented) and copy-on-write (in progress).
+  </P>
       </LI>
       <LI><P>The new EC allows the suppliers and consumers to update
-	  their publications and subscriptions, they can simply call
-	  the corresponding <CODE>connect</CODE> operation.
-	  The default EC configuration disallows this, but it is very
-	  easy to change it.
-	</P>
+    their publications and subscriptions, they can simply call
+    the corresponding <CODE>connect</CODE> operation.
+    The default EC configuration disallows this, but it is very
+    easy to change it.
+  </P>
       </LI>
       <LI><P>The new EC uses an abstract factory to build its
-	  strategies, this factory can be dynamically loaded using the
-	  service configurator.
-	</P>
+    strategies, this factory can be dynamically loaded using the
+    service configurator.
+  </P>
       </LI>
-      <LI><P>The new EC can use trivial filters for both consumers and 
-	  suppliers, resulting in optimal performance for broadcasters.
-	</P>
+      <LI><P>The new EC can use trivial filters for both consumers and
+    suppliers, resulting in optimal performance for broadcasters.
+  </P>
       </LI>
       <LI><P>Most of the locks on the new EC are strategized.
-	</P>
+  </P>
       </LI>
       <LI><P>The duration of all locks in the EC can be bounded,
-	  resulting in very predictable behavior.
-	</P>
+    resulting in very predictable behavior.
+  </P>
       </LI>
 
   <LI><P>Added fragmentation and reassembly support for the multicast
@@ -254,13 +254,13 @@ to work without problems now
 Service</TT> this works around a problem in the ORB when running on
 multiprocessor.
 </P>
-</LI> 
+</LI>
 
 <LI>
 <P>Startup and shutdown were revised, the event channel shutdown
 cleanly now.
 </P>
-</LI> 
+</LI>
 
 <LI>
 <P>Added yet another example

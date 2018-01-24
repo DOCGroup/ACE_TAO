@@ -1,9 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./performance-tests/Latency/Thread_Pool/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--  -->
- <!--   -->
- <!--  -->
  <static id="Advanced_Resource_Factory" params="-ORBReactorMaskSignals 0 -ORBFlushingStrategy blocking"/>
  <static id="Client_Strategy_Factory" params="-ORBTransportMuxStrategy EXCLUSIVE -ORBClientConnectionHandler RW"/>
 </ACE_Svc_Conf>

@@ -59,13 +59,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           orb2 =
             CORBA::ORB_init (three, argv2, "orb2" );
         }
-      catch (const CORBA::BAD_PARAM bad_param)
+      catch (const CORBA::BAD_PARAM&)
         {
-          ACE_UNUSED_ARG (bad_param);
           ACE_DEBUG ((LM_ERROR, "Error - REGRESSION - ORB doesn't even accept the config option\n"));
           return 1;
         }
-
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -88,9 +86,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           hello->check_normal_context ();
         }
-      catch (Test::MyException my_ex)
+      catch (Test::MyException&)
         {
-          ACE_UNUSED_ARG (my_ex);
           ACE_DEBUG ((LM_ERROR, "Error - REGRESSION - normal format service context not transmitted\n"));
           result = 1;
         }
@@ -114,9 +111,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           hello->check_extended_context ();
         }
-      catch (Test::MyException my_ex)
+      catch (Test::MyException& my_ex)
         {
-          ACE_UNUSED_ARG (my_ex);
           ACE_DEBUG ((LM_ERROR, "Error - REGRESSION - extended format service context not transmitted\n"));
           result = 1;
         }

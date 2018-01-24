@@ -538,7 +538,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
 //    missingParameterName = ::FT::FT_DOMAIN_ID;
   }
 
-  PortableGroup::Location * object_location = 0;
+  const PortableGroup::Location * object_location = 0;
   if (! ::TAO::find (decoder, ::FT::FT_LOCATION, object_location) )
   {
       object_location = & this->location_;

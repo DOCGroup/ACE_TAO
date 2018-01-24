@@ -72,7 +72,7 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-print "Starting Persistence_Test\n";
+print "Starting Persistence_Test 1\n";
 
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
 
@@ -122,7 +122,7 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-print "Starting Persistence_Test\n";
+print "Starting Persistence_Test 2\n";
 
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
 

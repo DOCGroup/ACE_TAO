@@ -219,6 +219,4 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::FilterAdmin_var& filte
   filter_admin = CosNotifyFilter::FilterAdmin::_narrow (object.in());
 }
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX> *ACE_Singleton<TAO_Notify_Tests_LookupManager, TAO_SYNCH_MUTEX>::singleton_;
-#endif /*ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, TAO_Notify_Tests_LookupManager,  TAO_SYNCH_MUTEX);

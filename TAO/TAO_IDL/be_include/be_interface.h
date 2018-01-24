@@ -335,7 +335,7 @@ private:
   /// will inherit from the TAO_Binary_Search_OpTable.
   void gen_binary_search_class_definition (const char *flat_name);
 
-  /// Outputs the class defintion for the linear search. This class
+  /// Outputs the class definition for the linear search. This class
   /// will inherit from the TAO_Linear_Search.
   void gen_linear_search_class_definition (const char *flat_name);
 

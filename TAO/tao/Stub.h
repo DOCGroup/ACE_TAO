@@ -145,7 +145,7 @@ public:
   /// Obtain a pointer to the forwarded profile set
   TAO_MProfile *forward_profiles (void);
 
-  /// True if permanent location forward occured, in this case the lock must be set and the
+  /// True if permanent location forward occurred, in this case the lock must be set and the
 
   // Manage forward and base profiles.
   /**
@@ -189,7 +189,7 @@ public:
   /**
    * THREAD SAFE.
    * Set the forward_profiles.  This object will assume ownership of
-   * this TAO_MProfile object!!  if permanent_forward is true,
+   * this TAO_MProfile object!!  if @a permanent_forward is true,
    * currently used profiles will be replaced permanently, otherwise
    * stub may fallback to current profiles later.  The flag
    * permanent_forward=true is only valid if currently used profile
@@ -197,7 +197,7 @@ public:
    * ignored.
    */
   void add_forward_profiles (const TAO_MProfile &mprofiles,
-                             const CORBA::Boolean permanent_forward=false);
+                             const CORBA::Boolean permanent_forward = false);
 
   /**
    * THREAD SAFE

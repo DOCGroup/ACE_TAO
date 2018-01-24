@@ -1,4 +1,0 @@
-project : ccm_cookie, ccm_configvalue, ccm_direct_collocation {
-  after += CIAO_Base_stub
-  libs += CIAO_Base_stub
-}

@@ -55,8 +55,8 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
   *os << be_nl_2
       << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name () << " &_tao_aggregate" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "const " << node->name () << " &_tao_aggregate)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
 
   // Do we have any members?
@@ -115,14 +115,14 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
   if (node->nmembers () > 0)
     {
       *os << "strm," << be_nl
-          << node->name () << " &_tao_aggregate" << be_uidt_nl
-          << ")" << be_uidt_nl;
+          << node->name () << " &_tao_aggregate)" << be_uidt
+          << be_uidt_nl;
     }
   else
     {
       *os << "," << be_nl
-          << node->name () << "&" << be_uidt_nl
-          << ")" << be_uidt_nl;
+          << node->name () << "&)" << be_uidt
+          << be_uidt_nl;
     }
 
   *os  << "{" << be_idt_nl;

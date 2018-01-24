@@ -1,7 +1,4 @@
-# $Id$
-#
 # Please see $TAO_ROOT/docs/Options.html for details on these options.
-#
 
 # This is a single threaded "server."
 static Advanced_Resource_Factory "-ORBReactorType select_st -ORBInputCDRAllocator null  -ORBConnectionCacheLock null"

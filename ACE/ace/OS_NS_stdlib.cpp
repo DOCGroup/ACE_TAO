@@ -545,11 +545,11 @@ ACE_OS::realpath (const char *file_name,
 long
 ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
 {
-  ACE_REGISTER const char *s = nptr;
-  ACE_REGISTER unsigned long acc;
-  ACE_REGISTER int c;
-  ACE_REGISTER unsigned long cutoff;
-  ACE_REGISTER int neg = 0, any, cutlim;
+  const char *s = nptr;
+  unsigned long acc;
+  int c;
+  unsigned long cutoff;
+  int neg = 0, any, cutlim;
 
   /*
    * Skip white space and pick up leading +/- sign if any.
@@ -627,11 +627,11 @@ ACE_OS::wcstol_emulation (const wchar_t *nptr,
         wchar_t **endptr,
         int base)
 {
-  ACE_REGISTER const wchar_t *s = nptr;
-  ACE_REGISTER unsigned long acc;
-  ACE_REGISTER int c;
-  ACE_REGISTER unsigned long cutoff;
-  ACE_REGISTER int neg = 0, any, cutlim;
+  const wchar_t *s = nptr;
+  unsigned long acc;
+  int c;
+  unsigned long cutoff;
+  int neg = 0, any, cutlim;
 
   /*
    * Skip white space and pick up leading +/- sign if any.
@@ -693,13 +693,13 @@ ACE_OS::wcstol_emulation (const wchar_t *nptr,
 unsigned long
 ACE_OS::strtoul_emulation (const char *nptr,
                            char **endptr,
-                           ACE_REGISTER int base)
+                           int base)
 {
-  ACE_REGISTER const char *s = nptr;
-  ACE_REGISTER unsigned long acc;
-  ACE_REGISTER int c;
-  ACE_REGISTER unsigned long cutoff;
-  ACE_REGISTER int neg = 0, any, cutlim;
+  const char *s = nptr;
+  unsigned long acc;
+  int c;
+  unsigned long cutoff;
+  int neg = 0, any, cutlim;
 
   /*
    * See strtol for comments as to the logic used.
@@ -765,11 +765,11 @@ ACE_OS::wcstoul_emulation (const wchar_t *nptr,
          wchar_t **endptr,
          int base)
 {
-  ACE_REGISTER const wchar_t *s = nptr;
-  ACE_REGISTER unsigned long acc;
-  ACE_REGISTER int c;
-  ACE_REGISTER unsigned long cutoff;
-  ACE_REGISTER int neg = 0, any, cutlim;
+  const wchar_t *s = nptr;
+  unsigned long acc;
+  int c;
+  unsigned long cutoff;
+  int neg = 0, any, cutlim;
 
   /*
    * See strtol for comments as to the logic used.
@@ -832,13 +832,13 @@ ACE_OS::wcstoul_emulation (const wchar_t *nptr,
 ACE_INT64
 ACE_OS::strtoll_emulation (const char *nptr,
          char **endptr,
-         ACE_REGISTER int base)
+         int base)
 {
-  ACE_REGISTER const char *s = nptr;
-  ACE_REGISTER ACE_UINT64 acc;
-  ACE_REGISTER int c;
-  ACE_REGISTER ACE_UINT64 cutoff;
-  ACE_REGISTER int neg = 0, any, cutlim;
+  const char *s = nptr;
+  ACE_UINT64 acc;
+  int c;
+  ACE_UINT64 cutoff;
+  int neg = 0, any, cutlim;
 
   /*
    * Skip white space and pick up leading +/- sign if any.
@@ -902,11 +902,11 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
          wchar_t **endptr,
          int base)
 {
-  ACE_REGISTER const wchar_t *s = nptr;
-  ACE_REGISTER ACE_UINT64 acc;
-  ACE_REGISTER int c;
-  ACE_REGISTER ACE_UINT64 cutoff;
-  ACE_REGISTER int neg = 0, any, cutlim;
+  const wchar_t *s = nptr;
+  ACE_UINT64 acc;
+  int c;
+  ACE_UINT64 cutoff;
+  int neg = 0, any, cutlim;
 
   /*
    * Skip white space and pick up leading +/- sign if any.
@@ -969,13 +969,13 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
 ACE_UINT64
 ACE_OS::strtoull_emulation (const char *nptr,
                             char **endptr,
-                            ACE_REGISTER int base)
+                            int base)
 {
-  ACE_REGISTER const char *s = nptr;
-  ACE_REGISTER ACE_UINT64 acc;
-  ACE_REGISTER int c;
-  ACE_REGISTER ACE_UINT64 cutoff;
-  ACE_REGISTER int neg = 0, any, cutlim;
+  const char *s = nptr;
+  ACE_UINT64 acc;
+  int c;
+  ACE_UINT64 cutoff;
+  int neg = 0, any, cutlim;
 
   /*
    * See strtol for comments as to the logic used.
@@ -1041,11 +1041,11 @@ ACE_OS::wcstoull_emulation (const wchar_t *nptr,
           wchar_t **endptr,
           int base)
 {
-  ACE_REGISTER const wchar_t *s = nptr;
-  ACE_REGISTER ACE_UINT64 acc;
-  ACE_REGISTER int c;
-  ACE_REGISTER ACE_UINT64 cutoff;
-  ACE_REGISTER int neg = 0, any, cutlim;
+  const wchar_t *s = nptr;
+  ACE_UINT64 acc;
+  int c;
+  ACE_UINT64 cutoff;
+  int neg = 0, any, cutlim;
 
   /*
    * See strtol for comments as to the logic used.

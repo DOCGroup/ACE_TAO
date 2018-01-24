@@ -52,11 +52,9 @@ public:
 
   // = Interface methods
   virtual void connect_push_consumer (
-    CosEventComm::PushConsumer_ptr push_consumer
-  );
+    CosEventComm::PushConsumer_ptr push_consumer);
 
-  virtual void disconnect_push_supplier (
-  );
+  virtual void disconnect_push_supplier ();
 
   virtual void validate ();
   virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);

@@ -983,13 +983,13 @@ public:
     ACE_Asynch_Accept_Result_Impl *implementation (void) const;
 
   protected:
-    /// Contructor. Implementation will not be deleted.
+    /// Constructor. Implementation will not be deleted.
     Result (ACE_Asynch_Accept_Result_Impl *implementation);
 
     /// Destructor.
     virtual ~Result (void);
 
-    /// Impelmentation class.
+    /// Implementation class.
     ACE_Asynch_Accept_Result_Impl *implementation_;
   };
 private:
@@ -1080,13 +1080,13 @@ public:
     ACE_Asynch_Connect_Result_Impl *implementation (void) const;
 
   protected:
-    /// Contructor. Implementation will not be deleted.
+    /// Constructor. Implementation will not be deleted.
     Result (ACE_Asynch_Connect_Result_Impl *implementation);
 
     /// Destructor.
     virtual ~Result (void);
 
-    /// Impelmentation class.
+    /// Implementation class.
     ACE_Asynch_Connect_Result_Impl *implementation_;
   };
 private:

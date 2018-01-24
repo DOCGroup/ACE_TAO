@@ -20,11 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_AnyTypeCode_Export
-
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
 #include "tao/CORBA_methods.h"

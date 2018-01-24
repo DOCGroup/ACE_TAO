@@ -97,6 +97,5 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
               "Samples are ready to view\n"));
 }
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX> *ACE_Singleton<Task_Stats, TAO_SYNCH_MUTEX>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Task_Stats, TAO_SYNCH_MUTEX);
+

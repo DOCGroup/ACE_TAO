@@ -42,8 +42,6 @@ TAO_Notify_Supplier::dispatch_updates_i (
     this->subscribe_->subscription_change (added, removed);
 }
 
-
-
 bool
 TAO_Notify_Supplier::is_alive (bool allow_nil_supplier)
 {

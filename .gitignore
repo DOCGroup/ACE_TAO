@@ -12,6 +12,9 @@
 *.sdf
 *.sln
 *.suo
+*S_T.cpp
+*S_T.h
+*S_T.inl
 
 .depend.*
 GNUmakefile*
@@ -34,3 +37,4 @@ ipch/
 *.o
 *.res
 *.opendb
+*.VC.db

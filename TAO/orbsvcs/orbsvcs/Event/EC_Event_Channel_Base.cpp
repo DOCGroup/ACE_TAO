@@ -46,7 +46,7 @@ TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
 TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base (void)
 {
   // Destroy Strategies in the reverse order of creation, they
-  // refere to each other during destruction and thus need to be
+  // reference to each other during destruction and thus need to be
   // cleaned up properly.
   this->factory_->destroy_supplier_control (this->supplier_control_);
   this->supplier_control_ = 0;
@@ -76,7 +76,7 @@ TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base (void)
   this->factory_->destroy_dispatching (this->dispatching_);
   this->dispatching_ = 0;
 
-  this->factory (0, 0);
+  this->factory (0, this->own_factory_);
 }
 
 void

@@ -43,8 +43,8 @@ public:
   /// Constructor.
   TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb);
 
-  /// Allocate hash map of size <hash_map_size> from persistent storage
-  /// using the <alloc>.
+  /// Allocate hash map of size @a hash_map_size from persistent storage
+  /// using the @a alloc.
   int open (size_t hash_map_size,
             ACE_Allocator *alloc);
 
@@ -81,7 +81,7 @@ public:
   /**
    * Add a binding with the specified parameters to the table.
    * Return 0 on success and -1 on failure, 1 if there already is a
-   * binding with <id> and <kind>.
+   * binding with @a id and @a kind.
    */
   virtual int bind (const char *id,
                     const char *kind,
@@ -89,7 +89,7 @@ public:
                     CosNaming::BindingType type);
 
   /**
-   * Overwrite a binding containing <id> and <kind> (or create a new
+   * Overwrite a binding containing @a id and @a kind (or create a new
    * one if one doesn't exist) with the specified parameters.  Return
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
@@ -210,10 +210,10 @@ public:
   virtual CosNaming::NamingContext_ptr new_context (void);
 
   /**
-   * Returns at most the requested number of bindings <how_many> in
-   * <bl>.  If the naming context contains additional bindings, they
+   * Returns at most the requested number of bindings @a how_many in
+   * @a bl.  If the naming context contains additional bindings, they
    * are returned with a BindingIterator.  In the naming context does
-   * not contain any additional bindings <bi> returned as null.
+   * not contain any additional bindings @a bi returned as null.
    */
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,

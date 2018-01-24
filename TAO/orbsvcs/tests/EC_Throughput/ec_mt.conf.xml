@@ -1,8 +1,5 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/tests/EC_Throughput/ec_mt.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--  -->
- <!--   -->
- <!--  -->
  <static id="EC_Factory" params="-ECProxyPushConsumerCollection mt:immediate:list -ECProxyPushSupplierCollection mt:immediate:list -ECDispatching mt -ECDispatchingThreads 4 -ECFiltering basic -ECProxyConsumerLock thread -ECProxySupplierLock thread -ECSupplierFiltering per-supplier"/>
 </ACE_Svc_Conf>

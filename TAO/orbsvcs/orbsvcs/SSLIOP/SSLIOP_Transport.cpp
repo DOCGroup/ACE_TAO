@@ -258,16 +258,18 @@ TAO::SSLIOP::Transport::get_listen_point (
 
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
-  {
-    if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
-      {
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) Could not resolve local host")
-                           ACE_TEXT (" address in get_listen_point()\n")),
-                        -1);
-      }
+  if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Could not resolve local host")
+                             ACE_TEXT (" address in get_listen_point()\n")),
+                            -1);
+    }
 
-  }
+#ifdef ACE_HAS_IPV6
+  if (local_addr.is_ipv4_mapped_ipv6 ())
+    local_addr.set (local_addr.get_port_number (), local_addr.get_ip_address ());
+#endif /* ACE_HAS_IPV6 */
 
   // Note: Looks like there is no point in sending the list of
   // endpoints on interfaces on which this connection has not

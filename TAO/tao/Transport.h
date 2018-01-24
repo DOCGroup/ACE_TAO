@@ -315,7 +315,7 @@ namespace TAO
  *
  * <B>See Also:</B>
  *
- * http://htmlpreview.github.com/?https://github.com/DOCGroup/ATCD/blob/master/TAO/docs/pluggable_protocols/index.html
+ * http://htmlpreview.github.com/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/pluggable_protocols/index.html
  */
 class TAO_Export TAO_Transport
 {
@@ -1211,7 +1211,7 @@ private:
   TAO_Codeset_Translator_Base *char_translator_;
   TAO_Codeset_Translator_Base *wchar_translator_;
 
-  /// The tcs_set_ flag indicates that negotiation has occured and so the
+  /// The tcs_set_ flag indicates that negotiation has occurred and so the
   /// translators are correct, since a null translator is valid if both ends
   /// are using the same codeset, whatever that codeset might be.
   CORBA::Boolean tcs_set_;
@@ -1278,7 +1278,7 @@ namespace TAO
      *
      * <B>See Also:</B>
      *
-     * http://htmlpreview.github.com/?https://github.com/DOCGroup/ATCD/blob/master/TAO/docs/transport_current/index.html
+     * http://htmlpreview.github.com/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
      *
      */
     class TAO_Export Stats

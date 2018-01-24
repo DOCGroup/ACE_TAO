@@ -45,12 +45,13 @@ TAO_Set_Update_Interceptor::send_request (
     {
       CORBA::Any_var a = Request_Context_Repository().get_ft_request_service_context(ri);
 
-      IOP::ServiceContext* sc;
+      const IOP::ServiceContext* scp = 0;
 
-      if ((a.in() >>= sc) ==0)
+      if ((a.in() >>= scp) == 0)
         return;
 
-      ri->add_request_service_context (*sc, 0);
+      IOP::ServiceContext sc = *scp;
+      ri->add_request_service_context (sc, 0);
 
       FTRT::TransactionDepth transaction_depth =
         Request_Context_Repository().get_transaction_depth(ri);
@@ -64,26 +65,26 @@ TAO_Set_Update_Interceptor::send_request (
         // Add Transaction Depth Context
         if ((cdr << transaction_depth) == 0)
           throw CORBA::MARSHAL ();
-        sc->context_id = FTRT::FT_TRANSACTION_DEPTH;
+        sc.context_id = FTRT::FT_TRANSACTION_DEPTH;
 
         ACE_CDR::consolidate(&mb, cdr.begin());
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-        sc->context_data.replace(mb.length(), &mb);
+        sc.context_data.replace(mb.length(), &mb);
 #else
         // If the replace method is not available, we will need
         // to do the copy manually.  First, set the octet sequence length.
         CORBA::ULong length = mb.length ();
-        sc->context_data.length (length);
+        sc.context_data.length (length);
 
         // Now copy over each byte.
         char* base = mb.data_block ()->base ();
         for(CORBA::ULong i = 0; i < length; i++)
           {
-            sc->context_data[i] = base[i];
+            sc.context_data[i] = base[i];
           }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-        ri->add_request_service_context (*sc, 0);
+        ri->add_request_service_context (sc, 0);
 
         cdr.reset();
       }
@@ -99,26 +100,26 @@ TAO_Set_Update_Interceptor::send_request (
           throw CORBA::MARSHAL ();
         if ((cdr << sequence_number) == 0)
           throw CORBA::MARSHAL ();
-        sc->context_id = FTRT::FT_SEQUENCE_NUMBER;
+        sc.context_id = FTRT::FT_SEQUENCE_NUMBER;
 
         ACE_CDR::consolidate(&mb, cdr.begin());
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
-        sc->context_data.replace(mb.length(), &mb);
+        sc.context_data.replace(mb.length(), &mb);
 #else
         // If the replace method is not available, we will need
         // to do the copy manually.  First, set the octet sequence length.
         CORBA::ULong length = mb.length ();
-        sc->context_data.length (length);
+        sc.context_data.length (length);
 
         // Now copy over each byte.
         char* base = mb.data_block ()->base ();
         for(CORBA::ULong i = 0; i < length; i++)
           {
-            sc->context_data[i] = base[i];
+            sc.context_data[i] = base[i];
           }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-        ri->add_request_service_context (*sc, 0);
+        ri->add_request_service_context (sc, 0);
       }
     }
 }

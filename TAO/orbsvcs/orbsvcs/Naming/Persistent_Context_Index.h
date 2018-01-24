@@ -108,12 +108,12 @@ public:
 
   /**
    * Create an entry for a Persistent Naming Context in <index_>,
-   * i.e., a context with <poa_id>, <counter> and <hash_map> has just
+   * i.e., a context with @a poa_id, @A counter and @A hash_map has just
    * been created, and is registering with us.
    */
   int bind (const char *poa_id, ACE_UINT32 *&counter, CONTEXT *hash_map);
 
-  /// Remove an entry for the Persistent Naming Context with <poa_id>
+  /// Remove an entry for the Persistent Naming Context with @a poa_id
   /// from <index_> (i.e., this context has just been destroyed).
   int unbind (const char *poa_id);
 
@@ -163,7 +163,7 @@ private:
   /// Base address for the memory-mapped file.
   void *base_address_;
 
-  /// ORB.  We use it for several object_to_string conversions, and
+  /// ORB. We use it for several object_to_string conversions, and
   /// keep it around for Persistent Naming Contexts' use.
   CORBA::ORB_var orb_;
 

@@ -133,3 +133,34 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
 
   return 0;
 }
+
+int
+be_visitor_typedef_cs::visit_sequence (be_sequence *node)
+{
+  be_type *bt = 0;
+
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (bt->node_type () == AST_Decl::NT_sequence)
+    {
+      // Let the base class visitor handle this case.
+      if (this->be_visitor_typedef::visit_sequence (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typedef_cs::"
+                             "visit_sequence - "
+                             "base class visitor failed\n"),
+                            -1);
+        }
+    }
+
+  return 0;
+}

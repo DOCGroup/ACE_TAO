@@ -10,7 +10,8 @@
 # variable must be set to its actual name before including this
 # file to allow the recursive MAKE to work properly.
 
-MAKEFILE ?= GNUmakefile
+TOP_MAKEFILE := $(word 1,$(MAKEFILE_LIST))
+MAKEFILE ?= $(TOP_MAKEFILE)
 SUBDIR_MAKEFILE ?= $(MAKEFILE)
 
 # Make sure that we build directories with DIRS= in sequence instead of in
@@ -29,7 +30,13 @@ endif
 # Triggered by the $(TARGETS_NESTED) target, below.
 
 %.subdir: %
+ifneq ($(timed),)
+	@date=`date`; echo "START: $< $$date"
+endif
 	cd $< && $(MAKE) -f $(SUBDIR_MAKEFILE) $(SUBDIR_TARGET)
+ifneq ($(timed),)
+	@date=`date`;echo "FINISH: $< $$date"
+endif
 
 # Build FOO.nested by calling MAKE again, this time with DIRS (with
 # ".subdir" appended to each) as the targets, and passing FOO as the

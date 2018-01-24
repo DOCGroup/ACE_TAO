@@ -1,0 +1,190 @@
+commit a4deec50d29f8eee4f65c6def5e6305177ad7237
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Dec 7 09:55:28 2017 -0600
+
+    More NEWS for next release
+
+commit 18dbe87dc905e64597b1fef4f2557d4a1e354003
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 6 20:12:51 2017 +0100
+
+    List changes
+    
+        * ACE/NEWS:
+
+commit 4c70a05e0dff993cffe43abdcb4797ec51343355
+Author: Thomas Lockhart <Thomas.Lockhart@jpl.nasa.gov>
+Date:   Tue Dec 5 14:51:48 2017 -0800
+
+    Add missing ESF header files to allow extending features in application code.
+
+commit e9778ea7d1d3bb7baab3403f0c0e3802df209250
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 24 13:40:05 2017 +0100
+
+    When we have C++11 support we use std::unique_ptr instead of auto_ptr
+    
+        * ACE/ace/Thread_Manager.cpp:
+
+commit 1e501fb9df9cd2122ccadf03e5c886c06d0b6cea
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 24 10:06:36 2017 +0100
+
+    Layout changes
+    
+        * ACE/examples/Logger/README:
+        * ACE/examples/README:
+
+commit 4d2d5bba206f06e72f96b7c64fbb0b50a29de68f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 10 13:43:22 2017 +0100
+
+    Removed scope of local variable
+    
+        * ACE/ace/Timer_Queue_T.cpp:
+
+commit 6ddb5b9e42b957401acc2b82505134e4800ae972
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 10 13:40:23 2017 +0100
+
+    Removed scope of variable
+    
+        * ACE/ACEXML/common/Mem_Map_Stream.cpp:
+
+commit a20df95a2b4614745fff9ea1621b1f613f6413f3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 10 13:16:41 2017 +0100
+
+    Fixed exception throwing
+    
+        * ACE/ACEXML/parser/parser/Parser.cpp:
+
+commit 9d0b2ea258f08682b47ab64abb4fe58f87903579
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 10 09:31:24 2017 +0100
+
+    Merge all changes from the debian packaging effort
+
+commit a6e6c7b8db5c2abe6c4789136d0b41336dfca389
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 10 09:29:26 2017 +0100
+
+    Merge all changes from the debian packaging effort
+
+commit cfd6b34887915d1addee556265c88184a7a26348
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 30 18:22:48 2017 +0100
+
+    Don't use C++11
+    
+        * ACE/tests/Compiler_Features_37_Test.cpp:
+
+commit f72d9e7a52a78ec2eb5a2f80a2f7085d3ce5329f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 30 18:21:27 2017 +0100
+
+    Make sure we initialise our members explicitly so that we get a capacity of zero and our nodes pointer is also zero
+    
+        * ACE/tests/Compiler_Features_37_Test.cpp:
+
+commit c3b6f0c68dd9d6bd266a6dfe06380924a3bafcc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 27 18:39:28 2017 +0200
+
+    Only one exit point in the constructor
+    
+        * ACE/ace/Malloc_T.cpp:
+
+commit 130aa32a44615d968a1a075b2941d1479d1c56c5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 27 18:39:06 2017 +0200
+
+    Removed empty line
+    
+        * ACE/tests/Malloc_Test.cpp:
+
+commit 83b52d9570d2226de51b14d60bfe078ce92a47f8
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Oct 13 17:21:39 2017 -0500
+
+    VxWorks 7 (SR0510) support
+
+commit 35b64b7c8b5a20a9bba2e0ebc7370378eb4f9af0
+Merge: f0410ceecf4 36afa956d3e
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Oct 9 13:47:33 2017 -0500
+
+    Merge pull request #524 from mitza-oci/master
+    
+    gnuace build improvements
+
+commit 36afa956d3e91c27242c05e0ae1e321bdffed017
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Oct 9 11:11:03 2017 -0500
+
+    gnuace: use .PHONY for makefile targets that aren't files
+
+commit 30a3ef141df6b2477ef6d2a3439f3bda72746ec3
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Oct 5 17:21:10 2017 -0500
+
+    gnuace rpath: move HP-UX settings to its own config file; support newer Apple macOS
+
+commit 88ce1806d42c2635558b855b2363a7d7f5a62e66
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Oct 5 17:18:40 2017 -0500
+
+    Set ACE_HAS_DYNAMIC_LINKING=0 when not linking to libdl on linux
+
+commit a634ac2f9d956f0ddcdfbb1970a0e8281fd50088
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 5 19:44:03 2017 +0200
+
+    Added perl bash to resolve debian packaging warning
+    
+        * ACE/bin/generate_export_file.pl:
+
+commit 82060fbf0679137be1aab4a4e17813ade4aa4309
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 5 19:43:47 2017 +0200
+
+    Const fix
+    
+        * ACE/ace/SSL/SSL_Asynch_Stream.cpp:
+
+commit 4dc3529a09cb7e723f03243f6b7f4924c3c3f18c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 7 10:36:50 2017 +0200
+
+    Updated 6.4.4 to 6.4.5
+    
+        * ACE/debian/libace-6.4.5.lintian-overrides:
+        * ACE/debian/libace-flreactor-6.4.5.lintian-overrides:
+        * ACE/debian/libace-foxreactor-6.4.5.lintian-overrides:
+        * ACE/debian/libace-htbp-6.4.5.lintian-overrides:
+        * ACE/debian/libace-inet-6.4.5.lintian-overrides:
+        * ACE/debian/libace-inet-ssl-6.4.5.lintian-overrides:
+        * ACE/debian/libace-qtreactor-6.4.5.lintian-overrides:
+        * ACE/debian/libace-rmcast-6.4.5.lintian-overrides:
+        * ACE/debian/libace-ssl-6.4.5.lintian-overrides:
+        * ACE/debian/libace-tkreactor-6.4.5.lintian-overrides:
+        * ACE/debian/libace-tmcast-6.4.5.lintian-overrides:
+        * ACE/debian/libace-xml-utils-6.4.5.lintian-overrides:
+        * ACE/debian/libace-xtreactor-6.4.5.lintian-overrides:
+        * ACE/debian/libacexml-6.4.5.lintian-overrides:
+        * ACE/debian/libkokyu-6.4.5.lintian-overrides:
+        * ACE/debian/libnetsvcs-6.4.5.lintian-overrides:
+
+commit 320c854b6270c62517cd612b2c93e96dcff1d3f4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 7 09:47:05 2017 +0200
+
+    Make x.4.5 public available and prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/debian/debian.control:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

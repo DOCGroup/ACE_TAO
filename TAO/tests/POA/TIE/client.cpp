@@ -96,7 +96,7 @@ print_stats (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time,
     }
   else
     ACE_ERROR ((LM_ERROR,
-                "\tNo time stats printed.  Zero iterations or error ocurred.\n"));
+                "\tNo time stats printed.  Zero iterations or error occurred.\n"));
 }
 
 template <class T, class T_var>

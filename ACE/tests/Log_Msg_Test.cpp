@@ -647,7 +647,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
           // Check if we have a string, exact length could vary
           if (b != log_record.msg_data () && ACE_OS::strlen (b) < 15)
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test %s failed; expected %d\n"),
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected %d\n"),
                           log_record.msg_data (), ACE_OS::strlen (b)));
               ++this->fail_;
             }
@@ -670,8 +670,18 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
             case (LM_EMERGENCY): expect = ACE_TEXT("!"); break;
             default: expect = ACE_TEXT("?"); break;
           }
-
         }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l6:"), 3) == 0)
+      {
+        // After a l6 there shouldn't be a space
+        b += 1;
+        if (b != log_record.msg_data () && ACE_OS::strncmp (b, ACE_TEXT (" "), 1) == 0)
+          {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected no space before the time\n"),
+                       log_record.msg_data ()));
+            ++this->fail_;
+          }
+      }
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -682,7 +692,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
 
       if (b != log_record.msg_data () && expect && ACE_OS::strcmp (b, expect) != 0)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test %s failed; expected %s\n"),
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected %s\n"),
                       log_record.msg_data (), expect));
           ++this->fail_;
         }
@@ -702,9 +712,9 @@ Log_Spec_Verify::result (void)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
                 this->fail_));
 
-  if (this->tests_ != 15)
+  if (this->tests_ != 19)
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 15!\n"),
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 19!\n"),
                 this->tests_));
     ++this->fail_;
   }
@@ -735,13 +745,6 @@ test_format_specs (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%m %p\n"), ACE_TEXT("perror")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), SIGINT));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%S\n"), ACE_NSIG));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%D\n")));
-  ACE_Time_Value tv = ACE_OS::gettimeofday ();
-  tv += ACE_Time_Value (25*60*60); // + 25 hours
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#D\n"), &tv));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%T\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%#T\n"), &tv));
-
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("thread id %t\n")));
 
   Log_Spec_Verify  verifier;
@@ -786,6 +789,14 @@ test_format_specs (void)
   ACE_DEBUG ((LM_CRITICAL, ACE_TEXT ("l5:%.1M")));
   ACE_DEBUG ((LM_ALERT, ACE_TEXT ("l5:%.1M")));
   ACE_DEBUG ((LM_EMERGENCY, ACE_TEXT ("l5:%.1M")));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%D\n")));
+  ACE_Time_Value tv = ACE_OS::gettimeofday ();
+  tv += ACE_Time_Value (25*60*60); // + 25 hours
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#D\n"), &tv));
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%T\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#T\n"), &tv));
 
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
   ACE_LOG_MSG->msg_callback (0);

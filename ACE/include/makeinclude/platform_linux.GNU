@@ -57,7 +57,9 @@ DCCFLAGS += -ggdb
 DLD      = $(CXX)
 LD       = $(CXX)
 
-ifneq ($(dynamic_loader),0)
+ifeq ($(dynamic_loader),0)
+  CPPFLAGS += -DACE_HAS_DYNAMIC_LINKING=0
+else
   LIBS     += -ldl
 endif
 

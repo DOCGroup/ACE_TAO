@@ -146,7 +146,7 @@ public:
 
   /**
    * Declare a Namespace prefix.  Return -1 if the prefix was illegal
-   * or an internal error occured.  Return 0 if the prefix gets declared
+   * or an internal error occurred.  Return 0 if the prefix gets declared
    * successfully, 1 if the prefix replaces an existing prefix definition.
    */
   int declarePrefix (const ACEXML_Char *prefix,

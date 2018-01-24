@@ -70,8 +70,6 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
               << " &); // copying version" << be_nl;
           *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
               << "*); // noncopying version" << be_nl;
-          *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::"
-              << node->name () << " *&); // deprecated\n";
           *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
               << node->name () << " *&);";
 
@@ -90,8 +88,6 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
       << " &); // copying version" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
-      << node->name () << " *&); // deprecated\n";
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const "
       << node->name () << " *&);";
 

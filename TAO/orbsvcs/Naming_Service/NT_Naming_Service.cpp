@@ -264,7 +264,7 @@ TAO_NT_Naming_Service::svc (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ORBSVCS_DEBUG ((LM_INFO, "Exception in service - exitting\n"));
+      ORBSVCS_DEBUG ((LM_INFO, "Exception in service - exiting\n"));
       ex._tao_print_exception ("TAO NT Naming Service");
       return -1;
     }

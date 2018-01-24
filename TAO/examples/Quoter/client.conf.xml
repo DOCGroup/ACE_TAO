@@ -1,8 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./examples/Quoter/client.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <dynamic id="Resource_Factory" type="Service_Object">
    <initializer path="TAO" init="_make_TAO_Default_Resource_Factory"/>
  </dynamic>

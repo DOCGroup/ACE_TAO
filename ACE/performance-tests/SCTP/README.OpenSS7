@@ -1,30 +1,28 @@
-// $Id$
-
 This document describes the OpenSS7 API in detail.
 
 Introduction
 =============
- 
-OpenSS7 defines two types of services, UDP style and TCP style.  How OpenSS7 
-distinguishes the two styles is by the way in which the data is presented to 
-the application.  In OpenSS7, data is presented as byte streams or datagrams.  
-The stream style is considered the TCP style socket, and the datagram is 
+
+OpenSS7 defines two types of services, UDP style and TCP style.  How OpenSS7
+distinguishes the two styles is by the way in which the data is presented to
+the application.  In OpenSS7, data is presented as byte streams or datagrams.
+The stream style is considered the TCP style socket, and the datagram is
 considered the UDP style socket.  The UDP style socket does not represent a one
-to many mapping of file descriptors to associations as the IETF compatible 
+to many mapping of file descriptors to associations as the IETF compatible
 sockets does.
 
 Instead of adding new system calls, OpenSS7 decided to modify some of the
-existing system calls to play nicely with multi-homing.  So, to bind to 
+existing system calls to play nicely with multi-homing.  So, to bind to
 multiple addresses, you pass in an array of struct sockaddr* structures and the
 total length in bytes of the array.  Also, when accepting connections from a
-peer, you would pass in a pointer to an array of struct sockaddr* and the 
+peer, you would pass in a pointer to an array of struct sockaddr* and the
 length of the array in bytes.
 
 
 Building ACE/TAO with support for OpenSS7 SCTP
 ==============================================
 
-        - apply OpenSS7's SCTP patch (see OpenSS7's readme for details) 
+        - apply OpenSS7's SCTP patch (see OpenSS7's readme for details)
 
         - compile kernel with the following kernel variables (.config file)
                 + CONFIG_SCTP=y
@@ -42,7 +40,7 @@ Common Calls
 ============
 
 There are a few common calls which have the same semantics no matter which
-interface you are using (UDP style or TCP style).  So, the usual calls used in 
+interface you are using (UDP style or TCP style).  So, the usual calls used in
 a client are:
 
   1) socket()
@@ -61,7 +59,7 @@ while the usual calls for a server are as follows:
   5) accept()
   6) close()
 
-The previous example mimics the way in which the TCP protocol is used.  
+The previous example mimics the way in which the TCP protocol is used.
 There are some exceptions to the above sequence which we will get into a little
 later. So, let's talk about the system calls above.
 
@@ -106,7 +104,7 @@ The connect() call can be used to initialize a connection with a peer SCTP
 machine.  A connection can be initialized in 2 ways.  The first is this
 call(connect()).  The second way is to allow implicit initialization when the
 application calls sendmsg or sendto with the address of the remote host
-specified.  To allow data to be piggybacked with the COOKIE_ECHO chunk, you 
+specified.  To allow data to be piggybacked with the COOKIE_ECHO chunk, you
 must use the second initialization technique.  The signature of connect is as
 follows:
 
@@ -133,9 +131,9 @@ Accept()
 --------
 The accept() call allows the application to explicitly accept an incoming
 association initialization attempt.  accept() returns a new file descriptor
-which can be used to send data to the client.  accept() has a slightly 
-different semantic which allows it to take an array of address structures.  
-This gives the application the chance to get a specified number of addresses 
+which can be used to send data to the client.  accept() has a slightly
+different semantic which allows it to take an array of address structures.
+This gives the application the chance to get a specified number of addresses
 from the peer on initialization.  The signature of accept() is as follows:
 
   int accept(int fd, struct sockaddr* r_addr, socklen_t *r_addr_len)
@@ -159,7 +157,7 @@ Start the association shutdown sequence.  The signature is as follows:
 Data Interfaces
 ===============
 This section describes the sending and receiving of data on an SCTP socket.
-This is where the differences between the TCP style and UDP style sockets 
+This is where the differences between the TCP style and UDP style sockets
 shows.  SCTP uses the standard pairs of calls:
 
   1) send()/recv()
@@ -174,15 +172,15 @@ calls returns only datagrams.  For example, assume a sender sends 2 100 byte
 datagrams.  Now assume that the receiver calls one of the receive routines with
 a max buffer size of 120 bytes.  Assuming no errors are encountered, only 100
 bytes are returned to the receiver (only 1 datagram), leaving the last 20 bytes
-empty in the receivers buffer.  When the last of a datagram is read, the 
-MSG_EOR flag is returned, and if the datagram is too big to fit into the 
-specified buffer, the MSG_TRUNC flag is returned.  
+empty in the receivers buffer.  When the last of a datagram is read, the
+MSG_EOR flag is returned, and if the datagram is too big to fit into the
+specified buffer, the MSG_TRUNC flag is returned.
 
 With TCP styles sockets, the data is presented to the application as a stream
-of bytes (like TCP).  For example, assume the sender sends 2 100 byte 
-datagrams.  Now assume that the receiver calls one of the receive routines with 
-a max buffer size of 120.  Assuming no errors are encountered, 120 bytes are 
-returned (100 from the first datagram and 20 from the next datagram), leaving 
+of bytes (like TCP).  For example, assume the sender sends 2 100 byte
+datagrams.  Now assume that the receiver calls one of the receive routines with
+a max buffer size of 120.  Assuming no errors are encountered, 120 bytes are
+returned (100 from the first datagram and 20 from the next datagram), leaving
 80 bytes in the second datagram.  MSG_EOR and MSG_TRUNC are never returned.
 
 Send()/Recv()
@@ -217,10 +215,10 @@ The msg argument holds the data to be sent to the peer.  It also can take an
 address to send the data to.  So, for example, if you had an association with 2
 addresses for the peer and the default path used the first address, and you
 wanted to send data to the other address, you could specify that address in the
-msg structure.  If this address field is NULL, then data is sent out the       
-default address.  
+msg structure.  If this address field is NULL, then data is sent out the
+default address.
 
-This interface also allows other functions by using the ancillary data field 
+This interface also allows other functions by using the ancillary data field
 in the msg structure.  By using the ancillary data field, you may send data out
 a different stream by using the SCTP_SID control message.  This type of control
 message would take an integer representing the stream to send data out as it's
@@ -233,7 +231,7 @@ Sendto()/Recvfrom()
 The sendto/recvfrom interface allows the specification of which remote address
 to send data.  The signature of sendto/recvfrom is as follows:
 
-  int sendto(int fd, void *data, size_t d_len, int flags, 
+  int sendto(int fd, void *data, size_t d_len, int flags,
              struct sockaddr* r_addr, socklen_t r_addr_len)
   Where:
     fd         - A SCTP socket descriptor

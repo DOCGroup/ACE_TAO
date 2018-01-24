@@ -1,9 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./examples/Buffered_AMI/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <!--  Please see $TAO_ROOT/docs/Options.html for details on these options. -->
- <!--  -->
  <static id="Client_Strategy_Factory" params="-ORBTransportMuxStrategy MUXED"/>
 </ACE_Svc_Conf>

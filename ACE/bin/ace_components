@@ -1,5 +1,4 @@
 #! /bin/sh
-# $Id$
 #
 # Encapsulates set/access of a components file, which records set of
 # components that were built in a library.  Intended to be used by

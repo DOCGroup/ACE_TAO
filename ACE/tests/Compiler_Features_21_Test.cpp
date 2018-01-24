@@ -17,6 +17,7 @@ struct A
 struct B
 {
   B() : b(new A<int>[0]) {}
+  ~B() { delete [] b; }
   A<int> *b;
 };
 

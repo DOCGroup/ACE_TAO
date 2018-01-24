@@ -25,7 +25,7 @@ drop() {
 
 # Removed unused/unshipped stuff
 unused() {
-  grep -E -v '^/(ASNMP|CIAO|TAO_IDL|ace/QoS|apps|contrib|utils)'
+  grep -E -v '^/(ASNMP|TAO_IDL|ace/QoS|apps|contrib|utils)'
 }
 
 F1=`mktemp -t ace_regular.XXXXXXXXXX`

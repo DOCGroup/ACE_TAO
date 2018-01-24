@@ -29,7 +29,7 @@ TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup (void)
        ! riter.done ();
        riter.advance ())
     {
-      CosTrading::Admin::OctetSeq** old_seq = 0;
+      const CosTrading::Admin::OctetSeq** old_seq = 0;
       riter.next (old_seq);
       delete *old_seq;
     }
@@ -52,7 +52,7 @@ query (const char *type,
 
   // If a federated query returns to us, ignore it to prevent
   // redundant results and infinite loops.
-  CosTrading::Admin::OctetSeq* request_id = 0;
+  const CosTrading::Admin::OctetSeq* request_id = 0;
   int check = this->seen_request_id (policies, request_id);
 
   if (check)
@@ -69,7 +69,7 @@ query (const char *type,
 
   // If the importer has specified a starting trader, foward the
   // query.
-  CosTrading::TraderName* trader_name =
+  const CosTrading::TraderName* trader_name =
     policies.starting_trader ();
 
   if (! CORBA::is_nil (link_if) && trader_name != 0)
@@ -729,7 +729,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::Boolean
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 seen_request_id (TAO_Policies& policies,
-                 CosTrading::Admin::OctetSeq*& seq)
+                 const CosTrading::Admin::OctetSeq*& seq)
 {
   CORBA::Boolean return_value = 0;
 
@@ -756,7 +756,7 @@ seen_request_id (TAO_Policies& policies,
        ! riter.done ();
        riter.advance ())
     {
-      CosTrading::Admin::OctetSeq** old_seq = 0;
+      const CosTrading::Admin::OctetSeq** old_seq = 0;
       riter.next (old_seq);
 
       if (**old_seq == *seq)
@@ -770,7 +770,7 @@ seen_request_id (TAO_Policies& policies,
     {
       if (this->request_ids_.size () == IDS_SAVED)
         {
-          CosTrading::Admin::OctetSeq* octet_seq = 0;
+          const CosTrading::Admin::OctetSeq* octet_seq = 0;
           this->request_ids_.dequeue_head (octet_seq);
           delete octet_seq;
         }

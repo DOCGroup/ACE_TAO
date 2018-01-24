@@ -306,7 +306,7 @@ Time_Calculation ::print_stats (void)
     }
   else
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("\tNo time stats printed.  Zero iterations or error ocurred.\n")));
+                ACE_TEXT ("\tNo time stats printed.  Zero iterations or error occurred.\n")));
 }
 
 static int

@@ -1,5 +1,0 @@
-// -*- MPC -*-
-project {
-  libout = $(ACE_ROOT)/lib
-}
-
