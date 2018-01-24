@@ -68,7 +68,6 @@ public:
   virtual void marshal (TAO_OutputCDR & cdr) const;
 
   /// unmarshal this event from a CDR buffer (for persistence)
-  /// \param code a code indicating what type of event to create.
   /// \param cdr a CDR stream containing the marshalled data for the event.
   /// \return the new event, or NULL if this is the wrong type of event.
   static TAO_Notify_AnyEvent * unmarshal (TAO_InputCDR & cdr);

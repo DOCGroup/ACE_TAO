@@ -1,113 +1,114 @@
-// -*- C++ -*-
+/* -*- C++ -*- */
 
 //=============================================================================
 /**
- * @file   FT_Naming_Replication_Manager.h
- *
- * @author Kevin Stanley <stanleyk@ociweb.com>
- */
+*  @file FT_Naming_Replication_Manager.h
+*
+*
+*  Based on the replicator class used in the ImR.
+*
+*/
 //=============================================================================
 
+#ifndef FT_REPLICATOR_H
+#define FT_REPLICATOR_H
 
-#ifndef TAO_FT_NAMING_REPLICATION_MANAGER_H
-#define TAO_FT_NAMING_REPLICATION_MANAGER_H
-
-#include /**/ "ace/pre.h"
-
-#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
-#include "orbsvcs/FT_NamingReplicationS.h"
-#include "ace/Recursive_Thread_Mutex.h"
+#include "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-#pragma once
+# pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/FT_NamingReplicationC.h"
+#include "orbsvcs/FT_NamingReplicationS.h"
+#include "ace/Bound_Ptr.h"
+#include "ace/Vector_T.h"
+#include "ace/Task.h"
+
+#include <set>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+class TAO_FT_Naming_Replication_Manager;
 class TAO_FT_Naming_Server;
 
-/**
- * @class TAO_FT_Naming_Replication_Manager
- * @brief The class that implements the FT_Naming::ReplicationManager
- * interface.
- */
-class TAO_FtNaming_Export TAO_FT_Naming_Replication_Manager
-  : public virtual POA_FT_Naming::ReplicationManager
+class FT_Update_Replicant_i : public virtual POA_FT_Naming::UpdatePushNotifier
 {
 public:
+  FT_Update_Replicant_i (TAO_FT_Naming_Replication_Manager &owner);
 
-  /// Create a Replication Manager and provide it with the naming server
-  /// to be updated whenever notified by the peer replica
-  TAO_FT_Naming_Replication_Manager(TAO_FT_Naming_Server *naming_svr,
-                                    const char* repl_mgr_name);
+  virtual void register_peer (::FT_Naming::UpdatePushNotifier_ptr peer,
+                              const ::FT_Naming::ReplicaInfo & info,
+                              CORBA::ULongLong seq_num);
+
+  virtual void notify_update (CORBA::ULongLong seq_num,
+                              FT_Naming::UpdateInfoSeq& info);
+
+private:
+  TAO_FT_Naming_Replication_Manager &owner_;
+};
+
+/**
+* @class Replicator
+*
+* @brief Manages the notification between the peers whenever a
+* context or object group changes state. The goal is to ensure
+* the servicing ORB never blocks for want of a channel to notify
+* the peer.
+*
+* This goal is attained by running a separate ORB in a separate thread,
+* and using the ORB's reactor notification mechanism as a way to ensure
+* the application ORB never blocks.
+*/
+
+class TAO_FT_Naming_Replication_Manager : public ACE_Task_Base
+{
+public:
+  friend class FT_Update_Replicant_i;
+
+  typedef FT_Naming::UpdatePushNotifier_var Replica_var;
+  typedef FT_Naming::UpdatePushNotifier_ptr Replica_ptr;
+
+  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner);
 
   virtual ~TAO_FT_Naming_Replication_Manager(void);
 
-  /// Initialize the naming manager. This will provide the poa to
-  /// the naming manager and underlying components for use in
-  /// managing the object groups.
-  void initialize (CORBA::ORB_ptr orb,
-                   PortableServer::POA_ptr root_poa);
+  virtual int svc (void);
+  virtual int handle_exception (ACE_HANDLE );
 
+  void stop (void);
+  void send_context_update (const ACE_CString &ctx,
+                            FT_Naming::ChangeType update);
+  void send_objgrp_update (PortableGroup::ObjectGroupId id,
+                           FT_Naming::ChangeType update);
 
-  /// Implementation of the FT_Naming::ReplicationManager interface
-  virtual ::FT_Naming::ReplicaInfo * register_replica (
-    ::FT_Naming::ReplicationManager_ptr replica,
-    const ::FT_Naming::ReplicaInfo & replica_info);
+  void init_orb (void);
 
-  /// This method implements the operation invoked by the peer replica when an
-  /// object group is updated on the remote process.
-  virtual void notify_updated_object_group (
-    const FT_Naming::ObjectGroupUpdate & group_info);
+  bool init_peer (void );
+  bool peer_init_i (void );
+  void send_registration (bool use_combo);
+  bool update_peer_registration ();
 
-  /// This method implements the operation invoked by the peer replica when an
-  /// naming context is updated on the remote process.
-  virtual void notify_updated_context (
-    const FT_Naming::NamingContextUpdate & group_info);
+  bool peer_available (void);
+  char * ior (void);
 
-  /// Retrieve the object reference for the peer naming service
-  /// ReplicationManager.
-  static FT_Naming::ReplicationManager_ptr peer_replica (void);
-
- /*
-  * Utilities for implementing the FT_Naming::ReplicationManager
-  */
-
-  /// Stores the peer in the peer_replica_ data member and invokes the
-  /// register_replica interface method with the peer. Returns 0 if
-  /// successful and -1 if unable to contact the peer.
-  int register_with_peer_replica (FT_Naming::ReplicationManager_ptr replica,
-                                  CosNaming::NamingContext_ptr nc,
-                                  FT_Naming::NamingManager_ptr rm);
-
-  /// The object reference for this servant instance
-  FT_Naming::ReplicationManager_ptr reference (void);
-
-protected:
-
-  // The object which implements the naming service and the object manager
-  TAO_FT_Naming_Server *naming_svr_;
-
-  // Store the reference to the replica object reference
-  // For now only a single replica is supported.
-  static FT_Naming::ReplicationManager_var peer_replica_;
-
-  PortableServer::POA_var repl_mgr_poa_;
-
-  ACE_CString repl_mgr_name_;
-
-  FT_Naming::ReplicationManager_var reference_;
-
-  /// Lock used to serialize access to fault tolerant extensions
-  /// to Naming Service.
+private:
+  Replica_var me_;
+  Replica_var peer_;
+  CORBA::ULongLong seq_num_;
+  CORBA::ULongLong replica_seq_num_;
+  TAO_FT_Naming_Server &server_;
+  CORBA::ORB_var orb_;
+  ACE_Reactor *reactor_;
   TAO_SYNCH_MUTEX lock_;
-
+  bool notified_;
+  FT_Naming::UpdateInfoSeq to_send_;
+  ACE_CString endpoint_;
+  ACE_Time_Value update_delay_;
+  ACE_CString replica_ior_;
+  bool send_combos_;
+  bool refresh_peer_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
-
-#endif /* TAO_FT_NAMING_REPLICATION_MANAGER_H */
+#endif /* FT_REPLICATOR_H */

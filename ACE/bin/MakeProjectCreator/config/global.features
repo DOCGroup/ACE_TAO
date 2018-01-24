@@ -1,4 +1,3 @@
-// $Id$
 // The global features file contains the default feature settings.
 // By default, if a feature isn't listed here then it is enabled.
 // If it is listed, then the value assigned to the feature is interpreted
@@ -21,12 +20,13 @@
 acexml        = 1
 ace_svcconf   = 1
 ace_token     = 1
+ace_idl_dependencies = 1
 
 // By default we disable these.
 ace_for_tao   = 0
-ace_idl_dependencies = 0
 cross_compile = 0
 ssl           = 0
+openssl11     = 0
 qos           = 0
 rapi          = 0
 repo          = 0
@@ -40,7 +40,7 @@ lzo2          = 0
 ipv6          = 0
 mfc           = 0
 rpc           = 0
-sctp 	      = 0
+sctp          = 0
 boost         = 0
 dummy_label   = 0
 wince         = 0

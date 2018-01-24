@@ -152,7 +152,7 @@ if ($html) {
 
 
 ####
-#### Build library with componnents specified in argument.
+#### Build library with components specified in argument.
 ####
 sub build_lib ()
 {

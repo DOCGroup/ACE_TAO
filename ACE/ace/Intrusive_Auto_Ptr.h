@@ -15,7 +15,6 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

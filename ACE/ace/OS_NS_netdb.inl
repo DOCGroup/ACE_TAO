@@ -785,10 +785,10 @@ ACE_OS::gai_strerror (int errcode)
     default:
       return ACE_TEXT ("Unknown error");
     }
-#elif !defined ACE_WIN32
-  return ACE_TEXT_CHAR_TO_TCHAR (::gai_strerror (errcode));
+#elif defined ACE_WIN32
+  return ACE_TEXT_gai_strerror (errcode);
 #else
-  return ::gai_strerror (errcode);
+  return ACE_TEXT_CHAR_TO_TCHAR (::gai_strerror (errcode));
 #endif
 }
 

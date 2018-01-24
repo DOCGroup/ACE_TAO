@@ -1,42 +1,41 @@
-# -*- Makefile -*-
+# include the platform_macosx_*.GNU based on the detected MacOS version
 
-# support for Mac OS X 10.2 (jaguar), 10.3 (panther)
-# Note: /sw/lib & /sw/include are inserted for the convience of Fink
-#       users. Non-Fink users should simply create these directories to
-#       eliminate the warnings.
+MACOS_RELEASE_VERSION=$(shell sw_vers -productVersion)
+MACOS_REL_WORDS := $(subst ., ,${MACOS_RELEASE_VERSION})
+MACOS_MAJOR_VERSION = $(word 1,${MACOS_REL_WORDS})
+MACOS_MINOR_VERSION = $(word 2,${MACOS_REL_WORDS})
+MACOS_BUILD_VERSION = $(word 3,${MACOS_REL_WORDS})
 
-threads ?= 1
-debug ?= 1
-optimize ?= 0
-versioned_so ?= 0
-with_ld = macosx
 
-CC              = gcc
-CXX             = g++
-CFLAGS          += -Wno-long-double -I/sw/include
+MACOS_CODENAME_VER_10_2   :=
+MACOS_CODENAME_VER_10_3   := panther
+MACOS_CODENAME_VER_10_4   := tiger
+MACOS_CODENAME_VER_10_5   := leopard
+MACOS_CODENAME_VER_10_6   := snowleopard
+MACOS_CODENAME_VER_10_7   := lion
+MACOS_CODENAME_VER_10_8   := mountainlion
+MACOS_CODENAME_VER_10_9   := mavericks
+MACOS_CODENAME_VER_10_10  := yosemite
+MACOS_CODENAME_VER_10_11  := elcapitan
+MACOS_CODENAME_VER_10_12  := sierra
+MACOS_CODENAME_VER_10_13  := highsierra
+MACOS_CODENAME_VER_latest := highsierra
 
-DCFLAGS         += -g
-DLD             = libtool
-LD              = $(CXX)
-LDFLAGS		+= -L/sw/lib -flat_namespace -undefined warning
-LIBS            += -lcc_dynamic -lstdc++ -lSystem
+MACOS_CODENAME = $(MACOS_CODENAME_VER_$(MACOS_MAJOR_VERSION)_$(MACOS_MINOR_VERSION))
 
-## dlcompat package (not part of base Darwin) is needed for dlopen() on 10.2.
-## Fink installer puts libraries in /sw/lib and headers in /sw/include
-## In order to install dlcompat do the following:
-##   - download fink from http://fink.sf.net
-##   - type:
-##        fink install dlcompat
-## 10.3 does not need this package.
-LIBS            += -ldl
-# 10.3 cannot do -03, this could be version dependent (probably on gcc)
-OCFLAGS         += -O2
-RANLIB          = ranlib
-SOEXT		= dylib
-SOFLAGS += -dynamic
-SOBUILD = -o $(VSHDIR)$*.dylib $<
+ifeq ($(MACOS_MAJOR_VERSION),10)
+  ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 13; echo $$?),0)
+    ## if the detected version is greater than the latest know version,
+    ## just use the latest known version
+    MACOS_CODENAME = $(MACOS_CODENAME_VER_latest)
+  else ifeq ($(shell test $(MACOS_MINOR_VERSION) -lt 2; echo $$?),0)
+    ## Unsupported minor version
+    $(error Unsupported MacOS version $(MACOS_RELEASE_VERSION))
+  endif
+else
+  ## Unsupported major version
+  $(error Unsupported MacOS version $(MACOS_RELEASE_VERSION))
+endif
 
-# Test for template instantiation, add to SOFLAGS if versioned_so set,
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+include $(ACE_ROOT)/include/makeinclude/platform_macosx_$(MACOS_CODENAME).GNU
+

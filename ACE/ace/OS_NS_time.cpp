@@ -287,7 +287,7 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
       return res;
     }
 #else
-  ACE_OSCALL_RETURN (::localtime_r (t, res), struct tm *, 0);
+  return ace_localtime_r_helper (t, res);
 #endif /* ACE_HAS_TR24731_2005_CRT */
 }
 

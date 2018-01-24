@@ -1,40 +1,25 @@
-= Compiling ACE+TAO Debian packages =
+= Compiling ACE Debian packages =
 
- * ACE+TAO-src-<version>.tar.gz is retrieved from:
+= Repackaged source =
+
+This version of ACE was downloaded as a big tarball from the ACE FTP
+and repackaged as using uscan:
+
+$ uscan --force-download --repack --verbose --watchfile debian/watch
+
+ * ACE-src-<version>.tar.gz is retrieved from:
      http://download.dre.vanderbilt.edu/previous_versions/
    The -src version does not contain pre-generated Makefiles. They are
-   regenerated in the buid process.
+   regenerated in the build process.
 
- -- Thomas Girard <thomas.g.girard@free.fr>, Sun, 24 Jul 2011 18:47:59 +0200
+ -- Thomas Girard <thomas.g.girard@free.fr>, Tue,  1 Jan 2013 20:32:49 +0100
+ -- Pau Garcia i Quiles <pgquiles@elpauer.org>, Mon, 18 Aug 2014 22:58:18 +0200
 
 = New releases =
 
 When preparing a new release, there are several things to remember:
 
-- Regenerate the list of include files for libace-inet-dev and
-   libace-inet-ssl-dev:
+ - Refresh reduce-doxygen-doc.diff patch by invoking the following command
+   from toplevel directory:
 
-   From debian/tmp:
-
-   $ find . -type f | grep -vi https | grep -vi ssl  --> These go to libace-inet-dev
-
-   The ones matching HTTPS or SSL go in libace-inet-ssl-dev.install:
-
-   usr/include/ace/INet/*SSL*
-   usr/include/ace/INet/*HTTPS*
-
-   But that might need updating if ACE_INet_SSL starts supporting FTPS or others
-
-   libace-inet-ssl-dev requires libace-inet-dev
-
-   Also, make sure none of the files in libace-inet-dev include anything from
-   libace-inet-ssl-dev. Test with:
-
-   From debian/tmp/usr/include/ace/INet:
-
-   $ find . -type f | grep -vi https | grep -vi ssl | xargs -I {} grep -Hi "include.*ssl"
-
-   $ find . -type f | grep -vi https | grep -vi ssl | xargs -I {} grep -Hi "include.*https"
-
-   (both should return nothing)
-
+   $ debian/fix_doxygen.sh

@@ -1,8 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/tests/AVStreams/Multicast/components_svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <!-- static Advanced_Resource_Factory "-ORBReactorType select_st  -ORBInputCDRAllocator null  -ORBConnectionCacheLock null" -->
  <!-- static Server_Strategy_Factory "-ORBAllowReactivationOfSystemids 0" -->
  <!-- static Client_Strategy_Factory "-ORBClientConnectionHandler ST" -->

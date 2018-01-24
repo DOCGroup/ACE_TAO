@@ -178,7 +178,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 
       if (check)
         {
-          TAO_Trader_Test::StringSeq* str_seq;
+          const TAO_Trader_Test::StringSeq* str_seq = 0;
           (*value) >>= str_seq;
 
           for (seq_length = str_seq->length (), i = 0; i < seq_length; i++)
@@ -192,7 +192,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
 
           if (check)
             {
-              TAO_Trader_Test::ULongSeq* ulong_seq;
+              const TAO_Trader_Test::ULongSeq* ulong_seq = 0;
               (*value) >>= ulong_seq;
 
               for (seq_length = ulong_seq->length (), i = 0; i < seq_length; i++)

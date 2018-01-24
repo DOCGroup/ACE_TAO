@@ -1,6 +1,4 @@
 @echo off
-rem $Id$
-
 rem    This file runs all the tests on PharLap ETS.
 rem    To use this either give it no arguments to run all the tests or
 rem    pass it the test name (without the extention) to run only one

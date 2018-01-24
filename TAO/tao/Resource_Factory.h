@@ -23,6 +23,7 @@
 #include /**/ "tao/Versioned_Namespace.h"
 #include "tao/Basic_Types.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Service_Object.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/SString.h"

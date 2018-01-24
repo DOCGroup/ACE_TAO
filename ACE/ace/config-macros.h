@@ -114,6 +114,11 @@
 #   endif
 # endif /* ACE_HAS_DYNAMIC_LINKING */
 
+# if defined (ACE_HAS_DYNAMIC_LINKING) && ACE_HAS_DYNAMIC_LINKING == 0 && \
+     defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
+#   undef ACE_HAS_SVR4_DYNAMIC_LINKING
+# endif /* ACE_HAS_DYNAMIC_LINKING == 0 */
+
 # if defined (ACE_USES_FIFO_SEM)
 #   if defined (ACE_HAS_POSIX_SEM) || defined (ACE_LACKS_MKFIFO) || defined (ACE_LACKS_FCNTL)
 #     undef ACE_USES_FIFO_SEM

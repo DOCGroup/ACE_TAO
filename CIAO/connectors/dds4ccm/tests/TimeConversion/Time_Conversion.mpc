@@ -1,7 +1,0 @@
-project(DDS_TimeConversion) : taoexe, dds4ccm_base {
-  includes += $(CIAO_ROOT)
-  exename = TimeConversion
-  Source_Files {
-    time_conversion.cpp
-  }
-}

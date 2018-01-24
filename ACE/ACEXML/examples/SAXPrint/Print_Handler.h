@@ -142,10 +142,8 @@ public:
    */
   virtual void warning (ACEXML_SAXParseException &exception);
 private:
-
   ACEXML_Char* fileName_;
   ACEXML_Locator* locator_;
-
 };
 
 #endif /* ACEXML_PRINT_HANDLER_H */

@@ -54,6 +54,7 @@ use PerlACE::Run_Test;
 @files_doxygen = ();
 @files_conf = ();
 @files_rb = ();
+@files_features = ();
 
 # To keep track of errors and warnings
 $errors = 0;
@@ -173,6 +174,9 @@ sub store_file ($)
         push @files_idl, ($name);
     }
     elsif ($name =~ /\.pl$/i) {
+        if ($name =~ /fuzz.pl/) {
+          return;
+        }
         push @files_pl, ($name);
         if ($name =~ /^run.*\.pl$/i) {
             push @files_run_pl, ($name);
@@ -183,6 +187,9 @@ sub store_file ($)
     }
     elsif ($name =~ /\.(rb|erb)$/i) {
         push @files_rb, ($name);
+    }
+    elsif ($name =~ /\.features$/i) {
+        push @files_features, ($name);
     }
     elsif ($name =~ /\.vcproj$/i) {
         push @files_vcproj, ($name);
@@ -293,7 +300,7 @@ sub check_for_id_string ()
     print "Running \$Id\$ string check\n";
     foreach $file (@files_cpp, @files_inl, @files_h, @files_mpc, @files_bor,
                    @files_gnu, @files_html, @files_idl, @files_pl,
-                   @files_cdp, @files_py, @files_conf, @files_generic) {
+                   @files_cdp, @files_py, @files_conf, @files_generic, @files_features) {
         my $found = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;
@@ -304,13 +311,13 @@ sub check_for_id_string ()
                 if (/\$Id:\$/) {
                     print_error ("$file:$.: Incorrect \$Id:\$ found (remove colon)");
                 }
-                if (/\$Id\$/) {
+                if (/\$Id\$/ || /\$Id: /) {
                     $found = 1;
                 }
             }
             close (FILE);
             if ($found == 1) {
-                print_error ("$file:1: \$Id\$ string found, not used anymore.");
+                print_error ("$file: \$Id\$ string found, not used anymore.");
             }
         }
         else {
@@ -1250,7 +1257,7 @@ sub check_for_empty_files ()
     return if is_suppressed ();
 
     print "Running empty file test\n";
-    foreach $file (@files_inl, @files_cpp) {
+    foreach $file (@files_inl, @files_cpp, @files_rb) {
         my $found_non_empty_line = 0;
         if (open (FILE, $file)) {
             print "Looking at file $file\n" if $opt_d;

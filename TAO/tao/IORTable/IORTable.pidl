@@ -25,7 +25,7 @@ module IORTable
    *
    *  Any TAO server can be configured as an corbaloc agent.
    *  Such agents forward requests generated using a simple
-   *  ObjectKey in a corbaloc specifcation to the real location
+   *  ObjectKey in a corbaloc specification to the real location
    *  of the object.
    *  In TAO we implement this feature by dynamically (or
    *  statically) adding a new Object Adapter to the ORB, that

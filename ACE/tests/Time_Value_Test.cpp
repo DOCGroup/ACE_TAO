@@ -115,6 +115,53 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("msec const test failed: %Q should be 42555\n"),
                 ms));
 
+  // Test setting double values
+  ACE_Time_Value d1(10, 500000);
+  ACE_Time_Value d2;
+  d2.set(10.5);
+
+  ACE_Time_Value d3(-10, -500000);
+  ACE_Time_Value d4;
+  d4.set(-10.5);
+
+  ACE_TEST_ASSERT (d1 == d2);
+  ACE_TEST_ASSERT (d3 == d4);
+  ACE_TEST_ASSERT (d1 + d3 == ACE_Time_Value::zero);
+  ACE_TEST_ASSERT (d3 + d1 == ACE_Time_Value::zero);
+  ACE_TEST_ASSERT (d2 + d4 == ACE_Time_Value::zero);
+  ACE_TEST_ASSERT (d4 + d2 == ACE_Time_Value::zero);
+  ACE_TEST_ASSERT (ACE_Time_Value::zero - d1 = d3);
+  ACE_TEST_ASSERT (ACE_Time_Value::zero - d3 = d1);
+  ACE_TEST_ASSERT (ACE_Time_Value::zero - d2 = d4);
+  ACE_TEST_ASSERT (ACE_Time_Value::zero - d4 = d2);
+
+  ACE_Time_Value d5;
+  d5.set(DBL_MAX);
+  ACE_TEST_ASSERT (d5 == ACE_Time_Value::max_time);
+  ACE_TEST_ASSERT (ACE_Time_Value::max_time.sec () != 0);
+  ACE_TEST_ASSERT (ACE_Time_Value::max_time.usec () != -1);
+
+  // Test performance of normalize()
+  ACE_Time_Value v1(ACE_Numeric_Limits<time_t>::max(),
+                    ACE_Numeric_Limits<suseconds_t>::max());
+  ACE_Time_Value v2(ACE_Numeric_Limits<time_t>::min(),
+                   ACE_Numeric_Limits<suseconds_t>::min());
+  ACE_Time_Value v3(ACE_Numeric_Limits<time_t>::max(),
+                    ACE_Numeric_Limits<suseconds_t>::min());
+  ACE_Time_Value v4(ACE_Numeric_Limits<time_t>::min(),
+                    ACE_Numeric_Limits<suseconds_t>::max());
+
+  v1.set(ACE_Numeric_Limits<time_t>::max(),
+         ACE_Numeric_Limits<suseconds_t>::max());
+  v2.set(ACE_Numeric_Limits<time_t>::min(),
+         ACE_Numeric_Limits<suseconds_t>::min());
+  v3.set(ACE_Numeric_Limits<time_t>::max(),
+         ACE_Numeric_Limits<suseconds_t>::min());
+  v4.set(ACE_Numeric_Limits<time_t>::min(),
+         ACE_Numeric_Limits<suseconds_t>::max());
+
+  v1.set(DBL_MAX);
+
   // Test setting from ACE_UINT64
   ms = 42555;
   ACE_Time_Value msec_test3;

@@ -111,7 +111,6 @@ ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_C
 
 ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException (void)
 {
-  delete[] this->message_;
 }
 
 

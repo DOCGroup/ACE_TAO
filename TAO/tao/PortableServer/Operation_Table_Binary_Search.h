@@ -39,7 +39,7 @@ class TAO_PortableServer_Export TAO_Binary_Search_OpTable
 {
 public:
 
-  /// Do nothing destrctor.
+  /// Do nothing destructor.
   virtual ~TAO_Binary_Search_OpTable (void);
 
   /// See the documentation in the base class for details.

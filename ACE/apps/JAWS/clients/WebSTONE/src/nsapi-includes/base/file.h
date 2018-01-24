@@ -158,7 +158,7 @@ int system_fwrite(SYS_FILE fd,char *buf,int sz);
 int system_fwrite_atomic(SYS_FILE fd, char *buf, int sz);
 
 /*
- * system_errmsg returns the last error that occured while processing file
+ * system_errmsg returns the last error that occurred while processing file
  * descriptor fd. fd does not have to be specified (if the error is a global
  * such as in UNIX systems). PPS: Rob is a halfwit. This parameter is useless.
  */

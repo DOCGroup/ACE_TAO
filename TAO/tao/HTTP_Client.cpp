@@ -10,6 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_HTTP_Client::TAO_HTTP_Client (void)
+  : filename_ (0)
 {
 }
 

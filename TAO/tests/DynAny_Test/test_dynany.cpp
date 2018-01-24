@@ -304,7 +304,7 @@ Test_DynAny::run_test (void)
       analyzer.analyze (ftc3.in ());
       CORBA::Any_var out_any3 = ftc3->to_any ();
 
-      CORBA::ShortSeq *outseq = 0;
+      const CORBA::ShortSeq *outseq = 0;
       out_any3.in () >>= outseq;
 
       good =

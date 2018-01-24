@@ -47,7 +47,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
           << "// " << __FILE__ << ":" << __LINE__;
 
-      *os << be_nl_2
+      *os << be_global->core_versioning_begin ();
+
+      *os << be_nl
           << "// Traits specializations for " << node->name () << ".";
 
       *os << be_nl_2
@@ -107,7 +109,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
         }
 
       *os << be_uidt_nl
-          << "}";
+          << "}" << be_nl;
+
+      *os << be_global->core_versioning_end () << be_nl;
     }
 
   // If we are generating CORBA Policy we need to add some more methods
@@ -331,7 +335,26 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "\";" << be_uidt_nl
       << "}";
 
-  bool is_loc = node->is_local ();
+  if (be_global->gen_static_desc_operations ())
+    {
+      *os << be_nl_2 << "const char* " << node->full_name ()
+          << "::_desc_repository_id (void)"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return \"" << node->repoID ()
+          << "\";" << be_uidt_nl
+          << "}";
+
+      *os << be_nl_2 << "const char* " << node->full_name ()
+          << "::_desc_interface_name (void)"
+          << be_nl
+          << "{" << be_idt_nl
+          << "return \"" << node->local_name()
+          << "\";" << be_uidt_nl
+          << "}";
+    }
+
+  bool const is_loc = node->is_local ();
 
   *os << be_nl_2
       << "::CORBA::Boolean" << be_nl
@@ -414,9 +437,9 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
       *os << "return " << node->local_name ()
           << "::_duplicate (" << be_idt << be_idt_nl
           << "dynamic_cast<" << node->local_name ()
-          << "_ptr> (_tao_objref)"
-          << be_uidt_nl
-          << ");" << be_uidt << be_uidt_nl
+          << "_ptr> (_tao_objref));"
+          << be_uidt
+          << be_uidt << be_uidt_nl
           << "}" << be_nl_2;
 
       return true;

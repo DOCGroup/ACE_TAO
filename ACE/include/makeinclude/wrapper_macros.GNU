@@ -1,7 +1,7 @@
 # -*- Makefile -*-
 
 #----------------------------------------------------------------------------
-#  
+#
 #----------------------------------------------------------------------------
 #
 #  ACE supports the following flags.  They can be enabled either on
@@ -78,10 +78,10 @@
 #                   If versioned_so is 1 (enabled), the SOVERSION make
 #                   variable can also be set to specify the version info
 #                   to append to the name - it should have a leading '.' -
-#                   else it defaults to .ACE_MAJOR.ACE_MINOR.ACE_BETA. If 2,
+#                   else it defaults to .ACE_MAJOR.ACE_MINOR.ACE_MICRO. If 2,
 #                   the version will be appended to the name but *before* the
 #                   $(SOEXT) - it should have a lead '-' - else it defaults to
-#                   -ACE_MAJOR.ACE_MINOR.ACE_BETA.
+#                   -ACE_MAJOR.ACE_MINOR.ACE_MICRO.
 #  wfmo             Build with wfmo support (Win32 only)
 #  winregistry      Build with windows registry support (Win32 only)
 #  winnt            Build WinNT-specific projects (Win32 only)
@@ -198,14 +198,16 @@ endif # static_libs
 ifeq (cmd,$(findstring cmd,$(SHELL)))
   ACE_MAJOR_VERSION := $(shell awk "/ACE_MAJOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
   ACE_MINOR_VERSION := $(shell awk "/ACE_MINOR_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
-  ACE_BETA_VERSION := $(shell awk "/ACE_BETA_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+  ACE_MICRO_VERSION := $(shell awk "/ACE_MICRO_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
+  ACE_BETA_VERSION := $(shell awk "/ACE_MICRO_VERSION/ { print $$3}" ${ACE_ROOT}/ace/Version.h)
 else
   ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
   ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
-  ACE_BETA_VERSION := $(shell awk '/ACE_BETA_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_MICRO_VERSION := $(shell awk '/ACE_MICRO_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
+  ACE_BETA_VERSION := $(shell awk '/ACE_MICRO_VERSION/ { print $$3}' ${ACE_ROOT}/ace/Version.h)
 endif
 
-ACE_VERSION = $(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_BETA_VERSION)
+ACE_VERSION = $(ACE_MAJOR_VERSION).$(ACE_MINOR_VERSION).$(ACE_MICRO_VERSION)
 
 # Define some variables to silence warnings
 SHR_FILTER ?=

@@ -13,7 +13,8 @@
 #define GRID_I_H
 
 #include "GridS.h"
-#include <ace/Vector_T.h>
+#include "ace/Vector_T.h"
+#include "ace/Auto_Ptr.h"
 
 /**
  * @class Grid_i:

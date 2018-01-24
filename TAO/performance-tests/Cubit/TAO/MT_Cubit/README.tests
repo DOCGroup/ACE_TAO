@@ -1,12 +1,10 @@
-// $Id$
-
 Note: this file is in very rough version.  Updates are coming soon.
 
 ORB/OS CPU processing Overhead Test
 -----------------------
 1. Execute the following command to obtain latency for CORBA requests:
 
-   ./client -u 10000000 
+   ./client -u 10000000
 
 NOTE:  This runs a copy of the server in the same process as the client
 and executes 10,000,000 CORBA requests.  Take a note of the total latency (L1).
@@ -40,5 +38,5 @@ Context Switch Test
 -------------------
 Use the same arguments as the latency test, and add "-c"
 
-NOTE: For Windows NT use a tool like Microsoft Spy that is installed with 
+NOTE: For Windows NT use a tool like Microsoft Spy that is installed with
 MS Visual C++ to obtain the context switch data.

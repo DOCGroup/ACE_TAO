@@ -14,7 +14,7 @@ namespace TAO
 {
   /*static*/ CORBA::Boolean
   PG_Utils::set_tagged_component (
-      PortableGroup::ObjectGroup *&ior,
+      PortableGroup::ObjectGroup *ior,
       PortableGroup::TagGroupTaggedComponent &tg)
   {
     if (ior->_stubobj () == 0)
@@ -80,11 +80,11 @@ namespace TAO
 
   /*static*/ CORBA::Boolean
   PG_Utils::get_tagged_component (
-      PortableGroup::ObjectGroup *&ior,
+      PortableGroup::ObjectGroup *ior,
       PortableGroup::TagGroupTaggedComponent &tg)
   {
     if (ior->_stubobj () == 0)
-      return 0;
+      return false;
 
     TAO_MProfile &mprofile =
       ior->_stubobj ()->base_profiles ();
@@ -100,7 +100,6 @@ namespace TAO
          i < count;
          i++)
       {
-
         // Get the Tagged Components
         const TAO_Tagged_Components &pfile_tagged =
           mprofile.get_profile (i)->tagged_components ();
@@ -116,18 +115,18 @@ namespace TAO
             cdr >> ACE_InputCDR::to_boolean (byte_order);
 
             if (!cdr.good_bit ())
-              return 0;
+              return false;
 
             cdr.reset_byte_order (static_cast<int> (byte_order));
 
             cdr >> tg;
 
             if (cdr.good_bit ())
-              return 1;
+              return true;
           }
       }
 
-    return 0;
+    return false;
   }
 
   CORBA::Boolean
@@ -138,31 +137,31 @@ namespace TAO
     cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER);
 
     if (!cdr.good_bit ())
-      return 0;
+      return false;
 
     // the version info
     cdr << tg.component_version;
 
     if (!cdr.good_bit ())
-      return 0;
+      return false;
 
     // the domain id
     cdr << tg.group_domain_id.in ();
 
     if (!cdr.good_bit ())
-      return 0;
+      return false;
 
     // Object group id
     cdr << tg.object_group_id;
 
     if (!cdr.good_bit ())
-      return 0;
+      return false;
 
     // Object group reference version
     cdr << tg.object_group_ref_version;
 
     if (!cdr.good_bit ())
-      return 0;
+      return false;
 
     return cdr.good_bit ();
   }

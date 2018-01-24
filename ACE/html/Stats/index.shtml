@@ -2,7 +2,6 @@
                       "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
   <HEAD>
-    <!-- $Id$ -->
     <TITLE>ACE+TAO+CIAO+DAnCE Metrics</TITLE>
     <LINK href="Stats.css" rel="stylesheet" type="text/css">
   </HEAD>
@@ -21,7 +20,7 @@
       href="http://www.dre.vanderbilt.edu/scoreboard"> nightly</A>
       regression tests. The complete source for the tests is
       available as part of the ACE+TAO+CIAO+DAnCE <A
-      HREF="http://download.dre.vanderbilt.edu">distribution</A>. 
+      HREF="http://download.dre.vanderbilt.edu">distribution</A>.
       The hardware and software configuration used for these
       tests is described <A
       HREF="configuration.shtml">here</A>. Notice, however, that the

@@ -21,7 +21,7 @@ public:
   /**
    * Create an input stream from an arbitrary buffer.
    *
-   * This contructor will work no matter the buffer is aligned properly
+   * This constructor will work no matter the buffer is aligned properly
    * or not. If the buffer is not properly aligned, it will make a copy
    * of the buffer.
    */

@@ -21,7 +21,6 @@ typedef ACE_Strong_Bound_Ptr<Locator_Repository, ACE_Null_Mutex> Repository_Ptr;
 *
 * @brief Class for managing changes to ServerInfo memory to ensure
 * it is persisted
-*
 */
 class UpdateableServerInfo
 {

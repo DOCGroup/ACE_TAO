@@ -210,7 +210,7 @@ Echo_Client_Request_Interceptor::receive_reply (
     {
       CORBA::Any_var a = ri->result ();
 
-      Test_Interceptors::Visual::VarLenStruct * v;
+      const Test_Interceptors::Visual::VarLenStruct * v = 0;
 
       (a.in ()) >>= v;
 

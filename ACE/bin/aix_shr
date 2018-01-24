@@ -1,5 +1,4 @@
 #!/bin/sh
-# $Id$
 # Filter out the duplicate symbol warnings from Visual Age C++
 #
 

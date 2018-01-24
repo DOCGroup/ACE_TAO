@@ -273,6 +273,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_PdhExpandCounterPath            ::PdhExpandCounterPathW
 #define ACE_TEXT_PdhOpenQuery                    ::PdhOpenQueryW
 #define ACE_TEXT_PdhAddCounter                   ::PdhAddCounterW
+#define ACE_TEXT_gai_strerror                    ::gai_strerrorW
 
 #else /* ACE_USES_WCHAR */
 #define ACE_LPSTR                                LPSTR
@@ -332,6 +333,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_PdhExpandCounterPath            ::PdhExpandCounterPathA
 #define ACE_TEXT_PdhOpenQuery                    ::PdhOpenQueryA
 #define ACE_TEXT_PdhAddCounter                   ::PdhAddCounterA
+#define ACE_TEXT_gai_strerror                    ::gai_strerrorA
 #endif /* ACE_USES_WCHAR */
 #endif /* ACE_WIN32 */
 

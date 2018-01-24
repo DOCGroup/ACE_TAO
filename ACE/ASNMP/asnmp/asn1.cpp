@@ -373,8 +373,8 @@ u_char *asn1::parse_header( u_char *data,
 {
   ACE_TRACE("asn1::parse_header");
   u_char *bufp = data;
-  ACE_REGISTER int header_len;
-  u_long            asn_length;
+  int header_len;
+  u_long asn_length;
 
   /* this only works on data types < 30, i.e. no extension octets */
   if (IS_EXTENSION_ID(*bufp)){

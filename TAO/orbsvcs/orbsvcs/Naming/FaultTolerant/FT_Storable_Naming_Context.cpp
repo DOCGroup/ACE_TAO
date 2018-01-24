@@ -1,8 +1,10 @@
+
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
-#include "orbsvcs/FT_NamingManagerC.h"
+
 #include "orbsvcs/PortableGroup/PG_Utils.h"
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"
 
@@ -26,7 +28,8 @@ TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr o
                                  poa_id,
                                  cxt_factory,
                                  pers_factory),
-    stale_ (false)
+    stale_ (false),
+    replicator_ (((TAO_FT_Storable_Naming_Context_Factory *)cxt_factory)->replicator())
 {
 
 }
@@ -97,38 +100,13 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
   return resolved_ref._retn ();
 }
 
-int
+void
 TAO_FT_Storable_Naming_Context::propagate_update_notification (
                    FT_Naming::ChangeType change_type)
 {
-  // Notify the peer of the changed context
-  FT_Naming::ReplicationManager_var peer =
-    TAO_FT_Naming_Replication_Manager::peer_replica ();
-
-  if (CORBA::is_nil (peer.in ()))
-    {
-      // Replication is not supported without a peer replica.
-      return 1;
-    }
-
-  FT_Naming::NamingContextUpdate context_info;
-  context_info.context_name = this->context_name_.c_str ();
-
-  // We are are updating the context one element before the specified name
-  context_info.change_type = change_type;
-
-  try {
-    // Notify the naming_manager of the updated context
-    peer->notify_updated_context (context_info);
-  }
-  catch (const CORBA::Exception& ex)
-    {
-      if (TAO_debug_level > 3)
-        ex._tao_print_exception (ACE_TEXT ("Unable to communicate with peer.\n"));
-      return -1;
-    }
-
-  return 0;
+  if (this->replicator_)
+    this->replicator_->send_context_update (this->context_name_,
+                                            change_type);
 }
 
 void

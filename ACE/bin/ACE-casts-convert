@@ -4,8 +4,6 @@
 #
 #  @file  ACE-casts-convert
 #
-#  $Id$
-#
 #  Script to convert all ACE cast macro calls (e.g.
 #  ACE_static_cast (foo, bar)) to their standard C++ counterparts (e.g.
 #  static_cast<foo> (bar)).

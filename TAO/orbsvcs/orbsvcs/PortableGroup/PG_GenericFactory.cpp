@@ -405,7 +405,7 @@ TAO_PG_GenericFactory::get_ObjectId (
   // with the LoadManager.  Previously used values will not be reused
   // to ensure that a ServantLocator does not inadvertently return a
   // reference to an object that had a previously used ObjectId.
-  // Specifcally, the numerical value used for the ObjectId increases
+  // Specifically, the numerical value used for the ObjectId increases
   // monotonically.
 
   // 4294967295UL -- Largest 32 bit unsigned integer

@@ -89,19 +89,26 @@ TAO::Object_Group_File_Guard::Object_Group_File_Guard (
         }
       throw CORBA::INTERNAL ();
     }
+
   try
     {
       this->init (method_type);
     }
-  catch (const TAO::Storable_Exception &)
+  catch (const TAO::Storable_Exception &se)
     {
       if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard:caught ")
-                          ACE_TEXT ("Storable Exception\n")));
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard::ctor caught ")
+                          ACE_TEXT ("Storable Exception, file = %C\n"),
+                          se.get_file_name().c_str()));
         }
-      object_group_.lock_.release();
+      if (object_group_.lock_.release() == -1 && TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard::ctor %p\n"),
+                          ACE_TEXT ("lock.release")));
+        }
       throw CORBA::INTERNAL ();
     }
   catch (const CORBA::NO_MEMORY &)
@@ -109,10 +116,15 @@ TAO::Object_Group_File_Guard::Object_Group_File_Guard (
       if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard:caught ")
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard::ctor caught ")
                           ACE_TEXT ("CORBA::NO_MEMORY Exception\n")));
         }
-      object_group_.lock_.release();
+      if (object_group_.lock_.release() == -1 && TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard::ctor %p\n"),
+                          ACE_TEXT ("lock.release")));
+        }
       throw CORBA::INTERNAL ();
     }
   catch (...)
@@ -120,31 +132,44 @@ TAO::Object_Group_File_Guard::Object_Group_File_Guard (
       if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard:caught ")
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard::ctor caught ")
                           ACE_TEXT ("Unknown Exception\n")));
         }
-      object_group_.lock_.release();
-      throw ;
+      if (object_group_.lock_.release() == -1 && TAO_debug_level > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard::ctor %p\n"),
+                          ACE_TEXT ("lock.release")));
+        }
+      throw CORBA::INTERNAL ();
     }
 }
 
 TAO::Object_Group_File_Guard::~Object_Group_File_Guard ()
 {
-  this->release ();
+  try
+    {
+      this->release ();
+      // Notify if persistent store was updated.
+      if (object_group_.write_occurred_)
+        object_group_.state_written ();
 
-  // Notify if persistent store was updated.
-  if (object_group_.write_occurred_)
-    object_group_.state_written ();
-
-  if (object_group_.lock_.release() == -1)
+    }
+  catch (const TAO::Storable_Exception &se)
     {
       if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard:release ")
-                          ACE_TEXT ("failed\n")));
+                          ACE_TEXT ("(%P|%t) Object_Group_File_Guard::dtor caught ")
+                          ACE_TEXT ("Storable Exception, file = %C\n"),
+                          se.get_file_name().c_str()));
         }
-      throw CORBA::INTERNAL ();
+    }
+  if (object_group_.lock_.release() == -1 && TAO_debug_level > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Object_Group_File_Guard::dtor %p\n"),
+                      ACE_TEXT ("lock.release")));
     }
 }
 

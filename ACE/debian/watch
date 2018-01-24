@@ -1,3 +1,4 @@
-version=3
-
-ftp://download.dre.vanderbilt.edu/previous_versions/ACE\+TAO-src-(.*)\.tar\.gz
+version=4
+opts=uversionmangle=s/-rc/~rc/g,dversionmangle=s/\+dfsg$// \
+ http://download.dre.vanderbilt.edu/previous_versions/ACE\-src-(\d\.\d\.\d[-a-z0-9]*)\.tar\.gz \
+  debian /bin/sh debian/get-orig-source.sh

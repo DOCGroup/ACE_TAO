@@ -50,7 +50,7 @@ namespace TAO
    *
    * <B>See Also:</B>
    *
-   * http://htmlpreview.github.com/?https://github.com/DOCGroup/ATCD/blob/master/TAO/docs/transport_current/index.html
+   * http://htmlpreview.github.com/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
    *
    */
   class TAO_Export Transport_Selection_Guard
@@ -102,7 +102,6 @@ namespace TAO
     return *this;
   }
 
-
   private:
     ACE_UNIMPLEMENTED_FUNC (Transport_Selection_Guard (const Transport_Selection_Guard&))
 
@@ -116,40 +115,21 @@ namespace TAO
     /// The "real" Transport, i.e. the one selected at present
     TAO_Transport* curr_;
 
-    // Comparison. See Modern C++ Design by A. Alexandrescu for the gory detail.
-    bool
-    operator! () const
-    {
-      return curr_ == 0;
-    }
-
-    inline friend bool
+    friend TAO_Export bool
     operator== (const Transport_Selection_Guard& lhs,
-                const TAO_Transport* rhs)
-    {
-      return lhs.curr_ == rhs;
-    }
+                const TAO_Transport* rhs);
 
-    inline friend bool
+    friend TAO_Export bool
     operator== (const TAO_Transport* lhs,
-                const Transport_Selection_Guard& rhs)
-    {
-      return lhs == rhs.curr_;
-    }
+                const Transport_Selection_Guard& rhs);
 
-    inline friend bool
+    friend TAO_Export bool
     operator!= (const Transport_Selection_Guard& lhs,
-                const TAO_Transport* rhs)
-    {
-      return lhs.curr_ != rhs;
-    }
+                const TAO_Transport* rhs);
 
-    inline friend bool
+    friend TAO_Export bool
     operator!= (const TAO_Transport* lhs,
-                const Transport_Selection_Guard& rhs)
-    {
-      return lhs != rhs.curr_;
-    }
+                const Transport_Selection_Guard& rhs);
 
     template <class U> inline friend bool
     operator== (const Transport_Selection_Guard& lhs,
@@ -178,9 +158,23 @@ namespace TAO
     {
       return lhs != rhs.curr_;
     }
-
   };
 
+  TAO_Export bool
+  operator== (const Transport_Selection_Guard& lhs,
+              const TAO_Transport* rhs);
+
+  TAO_Export bool
+  operator== (const TAO_Transport* lhs,
+              const Transport_Selection_Guard& rhs);
+
+  TAO_Export bool
+  operator!= (const Transport_Selection_Guard& lhs,
+              const TAO_Transport* rhs);
+
+  TAO_Export bool
+  operator!= (const TAO_Transport* lhs,
+              const Transport_Selection_Guard& rhs);
 } /* namespace TAO */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

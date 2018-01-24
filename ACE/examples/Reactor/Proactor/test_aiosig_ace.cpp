@@ -262,7 +262,7 @@ query_aio_completions (void)
                                "An AIO call has failed"),
                               error_code);
 
-          // No error occured in the AIO operation.
+          // No error occurred in the AIO operation.
           int nbytes = aio_return (aiocb_ptr);
           if (nbytes == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n",

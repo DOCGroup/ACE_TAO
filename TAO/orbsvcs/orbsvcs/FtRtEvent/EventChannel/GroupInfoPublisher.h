@@ -10,7 +10,7 @@
 
 #ifndef GROUPINFOPUBLISHER_H
 #define GROUPINFOPUBLISHER_H
-
+#include "ftrtec_export.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "ace/Vector_T.h"
@@ -73,8 +73,12 @@ private:
   Info_ptr info_;
 };
 
+TAO_END_VERSIONED_NAMESPACE_DECL
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+TAO_FTRTEC_SINGLETON_DECLARE(ACE_Singleton, GroupInfoPublisherBase, TAO_SYNCH_MUTEX)
 typedef ACE_Singleton<GroupInfoPublisherBase, TAO_SYNCH_MUTEX> GroupInfoPublisher;
 
-TAO_END_VERSIONED_NAMESPACE_DECL
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif

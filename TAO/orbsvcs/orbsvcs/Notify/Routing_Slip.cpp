@@ -156,6 +156,7 @@ Routing_Slip::create (
 void
 Routing_Slip::set_rspm (Routing_Slip_Persistence_Manager * rspm)
 {
+  delete this->rspm_;
   this->rspm_ = rspm;
   if (rspm_ != 0)
   {
@@ -187,6 +188,7 @@ Routing_Slip::~Routing_Slip ()
       ACE_TEXT ("(%P|%t) Routing Slip #%d: destructor\n"),
       this->sequence_
       ));
+   delete this->rspm_;
 }
 
 bool

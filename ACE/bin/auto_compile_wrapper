@@ -1,10 +1,8 @@
 #!/bin/sh
 #
-# $Id$
-#
-# Usually cron setups a really miserable enviroment, this script
+# Usually cron setups a really miserable environment, this script
 # serves two purposes:
-# 1. Setup a good enviroment for auto_compile.
+# 1. Setup a good environment for auto_compile.
 # 2. Invoke auto_compile with the proper arguments for each site.
 #
 # The idea is to modify this script on a per-site basis and leave

@@ -2807,7 +2807,7 @@ TAO_Transport::post_open (size_t id)
   if (!this->queue_is_empty_i ())
     {
       // If the wait strategy wants us to be registered with the reactor
-      // then we do so. If registeration is required and it succeeds,
+      // then we do so. If registration is required and it succeeds,
       // #REFCOUNT# becomes two.
       if (this->wait_strategy ()->register_handler () == 0)
         {

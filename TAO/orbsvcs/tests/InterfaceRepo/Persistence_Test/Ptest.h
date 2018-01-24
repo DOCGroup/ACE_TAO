@@ -45,6 +45,9 @@ public:
   /// Execute test code.
   int run (void);
 
+  /// Cleanup
+  int shutdown (void);
+
 private:
   /// The two IFR tests.
   void populate (void);

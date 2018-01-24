@@ -114,7 +114,7 @@ int
 ACE_Service_Repository::fini (void)
 {
   ACE_TRACE ("ACE_Service_Repository::fini");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
 
   int retval = 0;
   // Do not be tempted to use the prefix decrement operator.  Use
@@ -209,7 +209,7 @@ int
 ACE_Service_Repository::close (void)
 {
   ACE_TRACE ("ACE_Service_Repository::close");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
 
 #ifndef ACE_NLOGGING
   if(ACE::debug ())
@@ -384,7 +384,7 @@ ACE_Service_Repository::find (const ACE_TCHAR name[],
                               bool ignore_suspended) const
 {
   ACE_TRACE ("ACE_Service_Repository::find");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
   size_t ignore_location = 0;
   return this->find_i (name, ignore_location, srp, ignore_suspended);
 }
@@ -406,10 +406,8 @@ ACE_Service_Repository::insert (const ACE_Service_Type *sr)
   // storage
   {
     // @TODO: Do we need a recursive mutex here?
-    ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
-                              ace_mon,
-                              this->lock_,
-                              -1));
+    ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
+                      ace_mon, this->lock_, -1);
 
     return_value = find_i (sr->name (), i, &s, false);
 
@@ -463,7 +461,7 @@ ACE_Service_Repository::resume (const ACE_TCHAR name[],
                                 const ACE_Service_Type **srp)
 {
   ACE_TRACE ("ACE_Service_Repository::resume");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
 
   size_t i = 0;
   if (-1 == this->find_i (name, i, srp, 0))
@@ -479,7 +477,7 @@ ACE_Service_Repository::suspend (const ACE_TCHAR name[],
                                  const ACE_Service_Type **srp)
 {
   ACE_TRACE ("ACE_Service_Repository::suspend");
-  ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
   size_t i = 0;
   if (-1 == this->find_i (name, i, srp, 0))
     return -1;
@@ -497,7 +495,7 @@ ACE_Service_Repository::remove (const ACE_TCHAR name[], ACE_Service_Type **ps)
   ACE_TRACE ("ACE_Service_Repository::remove");
   ACE_Service_Type *s = 0;
   {
-    ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon, this->lock_, -1));
+    ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
 
     // Not found!?
     if (this->remove_i (name, &s) == -1)

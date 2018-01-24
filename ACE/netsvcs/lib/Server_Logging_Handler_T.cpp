@@ -2,6 +2,7 @@
 #define ACE_SERVER_LOGGING_HANDLERT_C
 
 #include "ace/config-all.h"
+#include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Record.h"
 #include "ace/CDR_Stream.h"

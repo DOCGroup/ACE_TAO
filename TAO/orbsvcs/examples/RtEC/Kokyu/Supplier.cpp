@@ -13,7 +13,7 @@ Supplier::Supplier (RtecEventComm::EventSourceID id,
 }
 
 void
-Supplier::timeout_occured (void)
+Supplier::timeout_occurred (void)
 {
   RtecEventComm::EventSet event (1);
   if (id_ == 1)
@@ -55,7 +55,7 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events)
     }
 
   ACE_DEBUG ((LM_DEBUG, "(%t) Timeout Event received\n"));
-  supplier_impl_->timeout_occured ();
+  supplier_impl_->timeout_occurred ();
 }
 
 void

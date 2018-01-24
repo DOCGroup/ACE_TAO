@@ -60,11 +60,9 @@ public:
   virtual CosNotifyChannelAdmin::ProxyType MyType (void);
 
   virtual void connect_any_push_consumer (
-    CosEventComm::PushConsumer_ptr push_consumer
-  );
+    CosEventComm::PushConsumer_ptr push_consumer);
 
-  virtual void disconnect_push_supplier (
-  );
+  virtual void disconnect_push_supplier ();
 
 private:
   /// TAO_Notify_Destroy_Callback methods

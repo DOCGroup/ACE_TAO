@@ -347,7 +347,7 @@ DII_Cubit_Client::print_stats (const char *call_name,
   else
     ACE_ERROR ((LM_ERROR,
                 "\tNo time stats printed.  "
-                "Call count zero or error ocurred.\n"));
+                "Call count zero or error occurred.\n"));
 
   ACE_DEBUG ((LM_DEBUG,
               "\t%d calls, %d errors\n",
@@ -506,7 +506,7 @@ DII_Cubit_Client::cube_union_dii (void)
 
 
       // Extract the result and check validity.
-      Cubit::oneof* ret_ptr;
+      const Cubit::oneof* ret_ptr = 0;
       req->return_value () >>= ret_ptr;
 
       if (ret_ptr->cm ().l != arg_union.cm ().l * arg_union.cm ().l * arg_union.cm ().l
@@ -535,8 +535,8 @@ DII_Cubit_Client::cube_struct_dii (void)
       // Create the request ...
       CORBA::Request_var req (this->obj_var_->_request ("cube_struct"));
 
-
-      Cubit::Many arg_struct, *ret_struct_ptr;
+      Cubit::Many arg_struct;
+      const Cubit::Many*ret_struct_ptr;
 
       arg_struct.l = 5;
       arg_struct.s = -7;
@@ -552,7 +552,6 @@ DII_Cubit_Client::cube_struct_dii (void)
       this->call_count_++;
 
       req->invoke ();
-
 
       req->return_value () >>= ret_struct_ptr;
 
@@ -585,7 +584,8 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
 
       // Same length as in IDL_Cubit tests so timings can be compared.
       // Return value holder is set to a different length to test resizing.
-      Cubit::octet_seq arg_octet_seq (length), *ret_octet_seq_ptr;
+      Cubit::octet_seq arg_octet_seq (length);
+      const Cubit::octet_seq *ret_octet_seq_ptr = 0;
       arg_octet_seq.length (length);
       arg_octet_seq[0] = 4;
 
@@ -600,7 +600,6 @@ DII_Cubit_Client::cube_octet_seq_dii (int length)
       this->call_count_++;
 
       req->invoke ();
-
 
       req->return_value () >>= ret_octet_seq_ptr;
 
@@ -642,7 +641,7 @@ DII_Cubit_Client::cube_long_seq_dii (int length)
       // Same length as in IDL_Cubit tests so timings can be compared.
       // Return value holder is set to a different length to test
       // resizing.
-      Cubit::long_seq *ret_long_seq_ptr;
+      const Cubit::long_seq *ret_long_seq_ptr = 0;
       Cubit::long_seq arg_long_seq (length);
       arg_long_seq.length (length);
       arg_long_seq[0] = 4;

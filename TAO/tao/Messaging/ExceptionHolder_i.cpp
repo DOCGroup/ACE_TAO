@@ -5,6 +5,8 @@
 #include "tao/Exception_Data.h"
 #include "tao/CDR.h"
 
+#include "ace/Auto_Ptr.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO

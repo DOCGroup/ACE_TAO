@@ -1064,7 +1064,7 @@ Cubit_Client::cube_any_struct (int i)
   try
     {
       Cubit::Many arg_struct;
-      Cubit::Many * ret_struct;
+      const Cubit::Many * ret_struct = 0;
 
       this->call_count_++;
 
@@ -1151,7 +1151,7 @@ Cubit_Client::print_stats (const char *call_name,
         {
           ACE_ERROR ((LM_ERROR,
                       "\tNo time stats printed."
-                      "  Call count zero or error ocurred.\n"));
+                      "  Call count zero or error occurred.\n"));
         }
     }
 

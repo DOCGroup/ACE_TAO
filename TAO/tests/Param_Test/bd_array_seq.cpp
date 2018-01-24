@@ -51,7 +51,7 @@ Test_Bounded_Array_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  Param_Test::Bounded_ArraySeq *tmp;
+  const Param_Test::Bounded_ArraySeq *tmp = 0;
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Bounded_ArraySeq (*tmp);
 

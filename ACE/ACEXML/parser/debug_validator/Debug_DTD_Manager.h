@@ -30,7 +30,7 @@ public:
    * Acquire a pointer to an element definition builder. The XML parser use
    * this interface to acquire the definition builder and use the builder
    * to create the DTD element definition. The resulting builder is then
-   * registered with the DTD Manager or destroyed if error occured when the
+   * registered with the DTD Manager or destroyed if error occurred when the
    * builder encountered errors.
    *
    * @retval 0 if error occurs creating the builder.

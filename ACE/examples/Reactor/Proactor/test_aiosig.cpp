@@ -197,7 +197,7 @@ query_aio_completions (void)
           return -1;
         }
 
-      // No error occured in the AIO operation.
+      // No error occurred in the AIO operation.
       int nbytes = aio_return (aiocb_ptr);
       if (nbytes == -1)
         {

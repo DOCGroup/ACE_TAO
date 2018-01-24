@@ -14,7 +14,10 @@
 #include <cctype>
 #include <clocale>
 #include <cmath>
-#include <cwchar>
+
+#ifndef ACE_LACKS_WCHAR_H
+# include <cwchar>
+#endif
 
 # if defined (ACE_WIN32)
 
@@ -497,13 +500,15 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
 #endif /* ACE_HAS_WCHAR */
 #endif /* !ACE_HAS_VASPRINTF */
 
-#ifndef ACE_LACKS_VA_FUNCTIONS
+#if defined (ACE_HAS_VSNPRINTF_EMULATION)
 
 #ifdef ACE_LACKS_WCHAR_H
   typedef int wint_t;
 #elif !defined ACE_LACKS_WCHAR_STD_NAMESPACE
   using std::wint_t;
+# ifndef ACE_LACKS_WCSRTOMBS
   using std::wcsrtombs;
+# endif
 #endif
 
 namespace { // helpers for vsnprintf_emulation
@@ -736,6 +741,9 @@ namespace { // helpers for vsnprintf_emulation
       static const char thousands_sep = 0;
       static const char grouping[] = "";
 #else
+# ifdef localeconv
+#  undef localeconv
+# endif
       const std::lconv *const conv = std::localeconv ();
       const char thousands_sep =
         conv && *conv->thousands_sep ? *conv->thousands_sep : ',';
@@ -856,7 +864,11 @@ namespace { // helpers for vsnprintf_emulation
       const long double log = val > 0 ? std::log10 (val) : 0;
       int dig_left = static_cast<int> (1 + ((val >= 1) ? log : 0));
 
+#if defined __HP_aCC && __HP_aCC < 40000
+      int exp = static_cast<int> (log);
+#else
       int exp = static_cast<int> (std::floor (log));
+#endif
       if (flags.has (SNPRINTF_FLEXPONENT))
         {
           const int p = precision > 0 ? precision : (precision < 0 ? 6 : 1);
@@ -895,8 +907,16 @@ namespace { // helpers for vsnprintf_emulation
         }
       else
         {
+#if (defined __MINGW32__ && defined __x86_64__) \
+    || (defined ACE_VXWORKS && !defined __RTP__)
+          // Avoid std::modf(long double, long double*) on MinGW-W64 64-bit:
+          // see https://sourceforge.net/p/mingw-w64/bugs/478
+          double int_part;
+          double frac_part = std::modf (static_cast<double> (val), &int_part);
+#else
           long double int_part;
           long double frac_part = std::modf (val, &int_part);
+#endif
 
           Snprintf_Digit_Grouping dg (flags, grouping, thousands_sep);
           dig_left += dg.separators_needed (dig_left);
@@ -1573,5 +1593,6 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
   *sb.buf_ = 0;
   return static_cast<int> (sb.written_);
 }
-#endif // ACE_LACKS_VA_FUNCTIONS
+#endif // ACE_HAS_VSNPRINTF_EMULATION
+
 ACE_END_VERSIONED_NAMESPACE_DECL

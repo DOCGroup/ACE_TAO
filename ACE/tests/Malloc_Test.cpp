@@ -25,7 +25,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if defined (ACE_HAS_PROCESS_SPAWN)
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
@@ -302,9 +301,9 @@ child (void)
   return 0;
 }
 
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_GETVERSION)
 // On Win9x/Me, a shared address needs to be on the shared arena,
-// betweeen the second and third megabyte in the virtual address space
+// between the second and third megabyte in the virtual address space
 // of the process. Also, a mapped view of a file is shared on the same
 // virtual address on every 32 bit process.  On WinNT/2k, memory above
 // 2Gb is reserved for the system.  So, we need to check at runtime
@@ -315,10 +314,17 @@ child (void)
 static void
 get_base_addrs (void)
 {
+#   if defined(__clang__)
+#     pragma clang diagnostic push
+#     pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#   endif /* __clang__ */
   OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
   if (::GetVersionEx(&vinfo) == 0)
     return;
+#   if defined(__clang__)
+#     pragma clang diagnostic pop
+#   endif /* __clang__ */
 
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT &&
       vinfo.dwMajorVersion >= 4)
@@ -328,12 +334,12 @@ get_base_addrs (void)
 
   CHILD_BASE_ADDR = CHILD_ADDR_DELTA + (char*) PARENT_BASE_ADDR;
 }
-#endif /* defined (ACE_WIN32) */
+#endif /* defined (ACE_HAS_WIN32_GETVERSION) */
 
 int
 run_main (int argc, ACE_TCHAR *argv[])
 {
-#if defined (ACE_WIN32)
+#if defined (ACE_HAS_WIN32_GETVERSION)
   get_base_addrs();
 #endif
 

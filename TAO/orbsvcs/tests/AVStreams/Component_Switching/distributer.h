@@ -78,7 +78,7 @@ private:
  * @brief Defines a class for the distributer application callback
  * for receiving data.
  *
- * This class overides the methods of the TAO_AV_Callback so the
+ * This class overrides the methods of the TAO_AV_Callback so the
  * AVStreams can make upcalls to the application.
  */
 class Distributer_Sender_Callback : public TAO_AV_Callback

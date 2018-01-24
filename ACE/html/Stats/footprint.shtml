@@ -2,7 +2,6 @@
                       "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
   <HEAD>
-    <!-- $Id$ -->
     <TITLE>Footprint Metrics Results</TITLE>
     <LINK href="Stats.css" rel="stylesheet" type="text/css">
   </HEAD>
@@ -27,8 +26,8 @@
    executables that represent the minimum size of TAO's client and
    server. </LI> </UL>
 
-   <UL> <LI> Detailed Footprint, for a closer look at the sizes of 
-   libraries and its dependencies. 
+   <UL> <LI> Detailed Footprint, for a closer look at the sizes of
+   libraries and its dependencies.
    <UL>
    <LI><a href="regular/ace_Footprint.html">ACE</a>
    <LI><a href="regular/tao_Footprint.html">TAO</a>
@@ -39,7 +38,7 @@
 </LI> </UL>
    </BODY> <P>
 <HR>
-      
+
 <!--#include file="navigation.html"-->
 <!--#include file="footer.html"-->
 </HTML>

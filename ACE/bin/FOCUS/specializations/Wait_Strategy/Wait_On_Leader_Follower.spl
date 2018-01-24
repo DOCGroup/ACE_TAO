@@ -6,7 +6,6 @@
  *   to specialize the Wait_Strategy with the TAO_Wait_On_Leader_Follower strategy
  *
  *   @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
- *   $Id$
 -->
 
 <transform>

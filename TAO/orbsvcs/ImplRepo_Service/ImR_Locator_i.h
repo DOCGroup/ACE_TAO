@@ -117,6 +117,11 @@ public:
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
      const char * name);
 
+  virtual void force_remove_server
+    (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
+     const char * name,
+     CORBA::Short signum);
+
   virtual void find
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
      const char * name);
@@ -163,12 +168,13 @@ public:
   PortableServer::POA_ptr root_poa (void);
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
+  void remove_server_i (const Server_Info_Ptr &si);
   void destroy_poa (const ACE_CString &poa_name);
   void remove_aam (AsyncAccessManager_ptr &aam);
   void remove_aam (const char *name);
   AsyncAccessManager *find_aam (const char *name, bool active = true);
   AsyncAccessManager *create_aam (UpdateableServerInfo &info, bool running = false);
-  void make_terminating (AsyncAccessManager_ptr &aam);
+  void make_terminating (AsyncAccessManager_ptr &aam, const char *name, int pid);
   /// Receiving an update from remote peer
   void remote_access_update (const char *name,
                              ImplementationRepository::AAM_Status state);
@@ -200,6 +206,14 @@ private:
   void child_death_i (const char* name, int pid);
 
   void remove_aam_i (const char *name, bool active);
+
+  bool kill_server_i (const Server_Info_Ptr &si,
+                      CORBA::Short signum,
+                      CORBA::Exception *&ex);
+
+  bool shutdown_server_i (const Server_Info_Ptr &si,
+                          CORBA::Exception *&ex,
+                          bool force);
 
 private:
 
@@ -301,6 +315,7 @@ public:
     {
       LOC_ACTIVATE_SERVER,
       LOC_ADD_OR_UPDATE_SERVER,
+      LOC_FORCE_REMOVE_SERVER,
       LOC_REMOVE_SERVER,
       LOC_SHUTDOWN_SERVER,
       LOC_SERVER_IS_RUNNING,
@@ -309,14 +324,20 @@ public:
 
   ImR_Loc_ResponseHandler (Loc_Operation_Id opid,
                            ImplementationRepository::AMH_AdministrationResponseHandler_ptr rh);
+  ImR_Loc_ResponseHandler (Loc_Operation_Id opid,
+                           ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr rh);
   virtual ~ImR_Loc_ResponseHandler (void);
 
   virtual void send_ior (const char *pior);
   virtual void send_exception (CORBA::Exception *ex);
 
 private:
+  void send_ior_ext (const char *pior);
+  void send_exception_ext (CORBA::Exception *ex);
+
   Loc_Operation_Id op_id_;
   ImplementationRepository::AMH_AdministrationResponseHandler_var resp_;
+  ImplementationRepository::AMH_AdministrationExtResponseHandler_var ext_;
 
 };
 

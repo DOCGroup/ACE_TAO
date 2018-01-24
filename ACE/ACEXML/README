@@ -1,5 +1,3 @@
-
-
 ACE XML PARSER Framework README file
 
 * Character set
@@ -12,6 +10,6 @@ does not care about language specific encoding information.
 ACE XML Parser interfaces follows the the design of SAX 2.0, which is
 a public domain specification for Java.  The major difference between
 ACE XML Parser interfaces and SAX is that we added an reference of
-ACEXML_Env to every SAX method to accomodate platforms/compilers that
+ACEXML_Env to every SAX method to accommodate platforms/compilers that
 don't support C++ exceptions.  SAX is defined by David Megginson
 <david@megginson.com>

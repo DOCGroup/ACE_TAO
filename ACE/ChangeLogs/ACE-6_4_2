@@ -1,0 +1,383 @@
+commit 45e9ccf82425959bb798b9d1826bf668ec425705
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 16 11:40:37 2017 +0100
+
+    Only check for ACE_HAS_CPP11 for ACE_NOEXCEPT_FALSE
+    
+        * ACE/ace/Global_Macros.h:
+
+commit 99be658f1eec6ad47407aed3f2d497dac5a624f1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 16 10:06:51 2017 +0100
+
+    Fixed comment
+    
+        * ACE/ace/Global_Macros.h:
+
+commit 107289ca7ecf168fc02ed799b01eab663ed9bfb6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 16 10:05:58 2017 +0100
+
+    Introduce ACE_NOEXCEPT_FALSE and use that in some places to silence C++11 compiler warnings
+    
+        * ACE/ace/Global_Macros.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * TAO/tao/Storable_File_Guard.cpp:
+        * TAO/tao/Storable_File_Guard.h:
+
+commit 978bfefc720b965cdc7f55081564301661dfa3cc
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Jan 12 09:23:33 2017 -0600
+
+    NEWS for ACE changes in 6.4.2
+
+commit 286b8eeab1476ebdfdf8bc53baca9f45ce047f40
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Jan 10 17:23:38 2017 -0600
+
+    More updates for VxWorks 7, especially kernel mode.
+
+commit a55bc9658df5e1bb763c8ff2f4d39d5921770701
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jan 9 16:49:56 2017 -0600
+
+    Updates for VxWorks 7 December 2016 release
+
+commit 824f1dd3944b832b324cf9c1f6865a7621619662
+Merge: 099e520ce5a ba747bb0721
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 16:41:11 2017 +0100
+
+    Merge branch 'master' into jwi-lf-race
+
+commit ba747bb07215d7aab92a55daa67fef20c56c2e72
+Merge: db1a461b5c3 0f6913c2a84
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 16:41:00 2017 +0100
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 15327947b0a014aa99909dc33e4cfc9255473542
+Merge: 6f66470f609 db1a461b5c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 16:25:22 2017 +0100
+
+    Merge branch 'master' into jwi-lf-race
+
+commit db1a461b5c3954552b1cb29b8d86ff977da6cbc1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 16:24:30 2017 +0100
+
+    No need to pass this to ACE_DES_FREE_THIS
+    
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/Message_Block.cpp:
+        * TAO/tao/Asynch_Queued_Message.cpp:
+        * TAO/tao/Synch_Queued_Message.cpp:
+
+commit 0f6913c2a84b2e56154b6b8f1c61a4dd8125eb86
+Merge: 26b33ead0ca 6994f54248b
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Tue Jan 3 15:14:40 2017 +0100
+
+    Merge pull request #346 from jwillemsen/master
+    
+    Added ACE_DES_FREE_THIS which doesn't check the pointer for nil becau…
+
+commit 02052a420dea4dafaa7134e02653aa42a63d41fc
+Merge: 076a9392482 6994f54248b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 12:52:38 2017 +0100
+
+    Merge branch 'master' into jwi-lf-race
+
+commit 6994f54248bacffb4465330e6cc712d50f97762f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 3 12:51:05 2017 +0100
+
+    Added ACE_DES_FREE_THIS which doesn't check the pointer for nil because this can't be nil, fixes compiler warnings with newer GCC versions
+    
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/Message_Block.cpp:
+        * TAO/tao/Asynch_Queued_Message.cpp:
+        * TAO/tao/Synch_Queued_Message.cpp:
+
+commit 2076decb54fba8a77c46396d892cf927d2ad70ca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 2 20:25:46 2017 +0100
+
+    Add support for thread-sanitizer=1
+
+commit cb6251ffd669c33047b8e90398e86ec7c8c30d83
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Jan 2 12:01:14 2017 -0500
+
+    Riverace-2053: improve start/finish build logging
+
+commit ac3ef746107c421758355199fbf99c14d0b79b77
+Merge: 3401c5b50a8 b9aa5bd4892
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Mon Jan 2 14:36:15 2017 +0100
+
+    Merge pull request #344 from jwillemsen/master
+    
+    Fixed typo
+
+commit b9aa5bd4892d0de338420540480fc5a1f11cfae7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 2 12:37:10 2017 +0100
+
+    Fixed typo
+    
+        * ACE/ACEXML/common/DTD_Manager.h:
+        * ACE/ACEXML/common/NamespaceSupport.h:
+        * ACE/ACEXML/parser/debug_validator/Debug_DTD_Manager.h:
+        * ACE/ace/Containers_T.h:
+        * ACE/ace/DLL.h:
+        * ACE/ace/QoS/QoS_Session.h:
+        * ACE/ace/QoS/QoS_Session_Impl.cpp:
+        * ACE/ace/QoS/QoS_Session_Impl.h:
+        * ACE/ace/RB_Tree.h:
+        * ACE/ace/SSL/SSL_SOCK_Stream.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Stream.inl:
+        * ACE/ace/Select_Reactor_T.cpp:
+        * ACE/ace/TP_Reactor.cpp:
+        * ACE/ace/Token.cpp:
+        * ACE/apps/JAWS/clients/WebSTONE/src/nsapi-includes/base/file.h:
+        * ACE/examples/APG/Signals/SigHandler.cpp:
+        * ACE/examples/APG/Signals/SigHandlers.cpp:
+        * ACE/examples/Reactor/Proactor/test_aiosig.cpp:
+        * ACE/examples/Reactor/Proactor/test_aiosig_ace.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/APC.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Abandoned.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * ACE/tests/Cached_Accept_Conn_Test.cpp:
+        * ACE/tests/Dev_Poll_Reactor_Echo_Test.cpp:
+        * ACE/tests/Dev_Poll_Reactor_Test.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/ServerInitializer.cpp:
+        * TAO/examples/Content_Server/AMI_Observer/Callback_Handler.cpp:
+        * TAO/orbsvcs/examples/Notify/Subscribe/Subscribe.h:
+        * TAO/orbsvcs/examples/RtEC/Kokyu/Supplier.cpp:
+        * TAO/orbsvcs/examples/RtEC/Kokyu/Supplier.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Round_Robin.cpp:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Connection_Handler.cpp:
+        * TAO/orbsvcs/tests/Bug_1630_Regression/testclient.cpp:
+        * TAO/orbsvcs/tests/Concurrency/CC_command.cpp:
+        * TAO/orbsvcs/tests/Event/Mcast/Two_Way/application.cpp:
+        * TAO/orbsvcs/tests/Notify/performance-tests/RedGreen/RedGreen_Test.h:
+        * TAO/tao/Connection_Handler.cpp:
+        * TAO/tao/IIOP_Connector.cpp:
+        * TAO/tao/Invocation_Utils.h:
+        * TAO/tao/LF_CH_Event.h:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/Stub.h:
+        * TAO/tao/Stub.inl:
+        * TAO/tao/Transport.h:
+        * TAO/tests/Bug_1495_Regression/Threaded_Server.cpp:
+        * TAO/tests/Bug_1495_Regression/server_interceptor.cpp:
+        * TAO/tests/Bug_3748_Regression/client.cpp:
+        * TAO/tests/DII_AMI_Forward/server_interceptor.cpp:
+        * TAO/tests/DynValue_Test/main.cpp:
+        * TAO/tests/Explicit_Event_Loop/client.cpp:
+        * TAO/tests/Explicit_Event_Loop/server.cpp:
+        * TAO/tests/IORManipulation/IORTest.cpp:
+        * TAO/tests/POA/On_Demand_Act_Direct_Coll/Collocated_Test.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_1559/server_interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/ForwardRequest/Client_Request_Interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/ForwardRequest/Server_Request_Interceptor.cpp:
+        * TAO/tests/TransportCurrent/Framework/client.cpp:
+        * TAO/tests/TransportCurrent/IIOP/client.cpp:
+
+commit 3401c5b50a810585b8c8c5bf19127520aa38c7d1
+Merge: e4539b0fa9e 888473f332f
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Sun Jan 1 19:41:49 2017 +0100
+
+    Merge pull request #343 from jwillemsen/master
+    
+    Updated copyright to 2017
+
+commit 888473f332f9a3f57cf31036c72ce51782883e2c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 1 19:40:06 2017 +0100
+
+    Updated copyright to 2017
+    
+        * ACE/COPYING:
+        * TAO/COPYING:
+
+commit b6776aaddd00a2762419009a7705e6c11191ad18
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Dec 28 16:18:55 2016 -0600
+
+    Mac OS X configs: Updates to get ioctl(SIOCGIFCONF) to work on x86_64
+
+commit 9ba8869b737ee6ad2c775fadf04a56a90dc3ba33
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 27 18:21:41 2016 +0100
+
+    Fixed typo
+    
+        * ACE/ace/Asynch_Acceptor.h:
+        * ACE/ace/Name_Space.h:
+        * TAO/TAO_IDL/be/be_visitor_valuebox/field_ch.cpp:
+        * TAO/TAO_IDL/be_include/be_visitor_amh_pre_proc.h:
+        * TAO/TAO_IDL/be_include/be_visitor_valuebox/field_ch.h:
+        * TAO/docs/implrepo/paper.html:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_ObjectGroupManager.cpp:
+        * TAO/orbsvcs/orbsvcs/SecurityLevel3.idl:
+
+commit f8a5c50179246cc09f96a75ee47560b5b9a5306e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 23 09:52:13 2016 +0100
+
+    Extended test to check that max_time is not {0, -1}
+    
+        * ACE/tests/Time_Value_Test.cpp:
+
+commit e36573babc36aa538adc7f81febc9e2c18f0ef1e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 13 10:09:37 2016 +0100
+
+    Added CIAO and DAnCE micro releases
+    
+        * ACE/docs/Download.html:
+
+commit 4b6b4778025df3fae1617cff8bed5ed2933339d7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 30 19:41:19 2016 +0100
+
+    Doxygen changes and some typos
+    
+        * ACE/ace/CDR_Size.h:
+        * ACE/ace/CDR_Stream.h:
+        * ACE/ace/Codecs.h:
+        * ACE/tests/Upgradable_RW_Test.cpp:
+        * TAO/DevGuideExamples/PortableInterceptors/Auth/ClientInitializer.cpp:
+        * TAO/orbsvcs/orbsvcs/RtecEventChannelAdmin.idl:
+        * TAO/performance-tests/Cubit/TAO/DII_Cubit/client.cpp:
+        * TAO/performance-tests/Cubit/TAO/IDL_Cubit/Cubit_Client.cpp:
+        * TAO/performance-tests/POA/Object_Creation_And_Registration/registration.cpp:
+        * TAO/tests/POA/Generic_Servant/client.cpp:
+        * TAO/tests/POA/TIE/client.cpp:
+
+commit cec147c4573f9ad41e4840d6e53e4980a93bff67
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 30 18:12:36 2016 +0100
+
+    Doxygen improvements
+    
+        * ACE/ace/Condition_Thread_Mutex.h:
+
+commit 0050aa1d8e010452160928c1de24c8ed8e31ba84
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 30 18:12:13 2016 +0100
+
+    Check for empty rb/erb files
+    
+        * ACE/bin/fuzz.pl:
+
+commit 1d7d9b2968e35a5fb83c74ee0c2e6fd998a430e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 12:05:26 2016 +0100
+
+    Versioned namespace fixes
+    
+        * ACE/ace/Logging_Strategy.cpp:
+        * ACE/ace/Logging_Strategy.h:
+        * ACE/ace/Naming_Context.cpp:
+        * ACE/ace/Naming_Context.h:
+
+commit 4d567b6e6d7e3cbdda188c0e6cb6997a28ca1827
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 17 12:03:04 2016 +0100
+
+    Add missing versioned namespace macros
+    
+        * ACE/ace/Stack_Trace.cpp:
+        * ACE/ace/Stack_Trace.h:
+
+commit 21cf22839b2d284d7658fd83f98c463fc08176e2
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Nov 3 15:43:20 2016 -0400
+
+    Fix closing parens and whitespace
+
+commit 503e6018283a7cf46e0a6aa769b4d9d21e0471a2
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Nov 3 14:44:57 2016 -0400
+
+    Add missing close parens
+
+commit 35ab24d45abff07fb8f6c49b77dd6c903c7dfb8e
+Author: Steve Huston <shuston@riverace.com>
+Date:   Wed Nov 2 13:04:51 2016 -0400
+
+    Output build timing markers if make variable 'timed' is set
+
+commit 212e6bd8898a38c6e37fddeec27b7151033da7f3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 31 19:42:13 2016 +0100
+
+    Layout changes
+        * ACE/ace/config-win32-common.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/Container_i.h:
+        * TAO/tests/Bug_1551_Regression/client.cpp:
+        * TAO/tests/Bug_2595_Regression/Hello.h:
+        * TAO/tests/Portable_Interceptors/Collocated/Dynamic/interceptors.h:
+        * TAO/tests/Portable_Interceptors/Dynamic/client_interceptor.h:
+        * TAO/tests/Portable_Interceptors/Dynamic/server_interceptor.h:
+        * TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Collocated/interceptors.h:
+        * TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Remote/client_interceptor.h:
+        * TAO/tests/Portable_Interceptors/Processing_Mode_Policy/Remote/server_interceptor.h:
+
+commit fbe2afce7458c2f253f7d2a8a7c394de80cff595
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 27 20:31:23 2016 +0200
+
+    Fixed typos in comment
+        * ACE/ace/Asynch_IO.h:
+        * ACE/ace/CDR_Stream.h:
+        * ACE/ace/Hash_Map_Manager_T.h:
+        * ACE/ace/Hash_Multi_Map_Manager_T.h:
+        * ACE/ace/Malloc_T.cpp:
+        * ACE/ace/Map_Manager.h:
+        * ACE/ace/POSIX_Asynch_IO.h:
+        * ACE/ace/SSL/SSL_Context.h:
+        * ACE/websvcs/lib/URL_Addr.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/Utils/Safe_InputCDR.h:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable/ftp.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Events.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Simple.h:
+        * TAO/orbsvcs/tests/Notify/Basic/Updates.h:
+        * TAO/orbsvcs/tests/Notify/performance-tests/Throughput/Throughput.h:
+        * TAO/tao/CDR.h:
+
+commit 72fef8ab3dccc482ab69bbb04d983dc21bcea3d5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 11 13:16:42 2016 +0200
+
+    Talk about micro instead of a beta release
+        * ACE/bin/make_release.py:
+        * ACE/docs/bczar/bczar.html:
+
+commit 39650d84224ebb9e7a8af77af713de1ac1882323
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 11 11:33:49 2016 +0200
+
+    Removed signature and mailid, not used anymore
+        * ACE/bin/make_release.py:
+        * ACE/docs/bczar/bczar.html:
+
+commit 7d19d361f2aeffcb581d4bf2bf7e291435f40e70
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 10 10:13:36 2016 +0200
+
+    Make x.4.1 public and make initial changes for x.4.2
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

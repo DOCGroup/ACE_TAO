@@ -2,7 +2,7 @@
  * @file Bug_2975_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 2975:
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2975
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2975
  *
  * @author Pavel Zaichenko <zaichep@mail.ru>
  */

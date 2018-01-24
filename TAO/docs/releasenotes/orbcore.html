@@ -51,12 +51,12 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
   <li><p> The multi-profile parsing code in TAO hasnt been tested well
       and we have been able to identify some issues with it. The
       details are documented in our  <A
-      HREF="http://deuce.doc.wustl.edu/bugzilla/index.cgi">bug tracking
-	    system</A> under id's  <A
-      HREF="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1237">1237</A>, <A
-      HREF="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1238">
+      HREF="http://bugzilla.dre.vanderbilt.edu/index.cgi">bug tracking
+      system</A> under id's  <A
+      HREF="http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1237">1237</A>, <A
+      HREF="http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1238">
       1238</A>and<A
-      HREF="http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1239">1239</A> <p></li>
+      HREF="http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1239">1239</A> <p></li>
 
   <li><p> Applications using the distributed callback paradigm could
       see crashes if they use multiple nested upcalls. The nested
@@ -193,21 +193,21 @@ Point of contact: <a href="mailto: bala@cs.wustl.edu">Balchandran Natarajan</a>
     </li>
 
     <li><p> Several changes were made to utilize the new memory management mechanisms
-	  of Event Handlers in TAO.  Previously, both the connection handlers and
-	  the transports had their own reference counting mechanism and
-	  independent lifetimes.  The reference counting was inadequate
-	  since it was not originated at the Reactor and the independent
-	  lifetimes unnecessarily completed protocol specific transport
-	  code.  <p>
+    of Event Handlers in TAO.  Previously, both the connection handlers and
+    the transports had their own reference counting mechanism and
+    independent lifetimes.  The reference counting was inadequate
+    since it was not originated at the Reactor and the independent
+    lifetimes unnecessarily completed protocol specific transport
+    code.  <p>
 
-	  The changes couple the lifetime of the connection handler with
-	  that of the transport and utilizes the reference count in the
-	  base ACE_Event_Handler class.  This allowed us to remove several
-	  hacks throughout TAO code which were designed to prevent (or
-	  delay) crashes.  Several extra checks and unnecessary locks were
-	  also removed. <p>
+    The changes couple the lifetime of the connection handler with
+    that of the transport and utilizes the reference count in the
+    base ACE_Event_Handler class.  This allowed us to remove several
+    hacks throughout TAO code which were designed to prevent (or
+    delay) crashes.  Several extra checks and unnecessary locks were
+    also removed. <p>
 
-	  All of the following protocols were updated: DIOP, IIOP,
+    All of the following protocols were updated: DIOP, IIOP,
           SCIOP, SHMIOP, SSLIOP, UIOP, UIPMC. </p>
     </li>
 

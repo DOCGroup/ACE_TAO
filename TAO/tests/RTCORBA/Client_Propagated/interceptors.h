@@ -20,7 +20,7 @@ class Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  /// Client-side interceptor.  Verifies presense of RTCORBA priority
+  /// Client-side interceptor.  Verifies presence of RTCORBA priority
   /// context in the reply messages.
 public:
   Client_Request_Interceptor (const char *orb_id);

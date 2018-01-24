@@ -16,6 +16,7 @@
 #include "HTBP_Session.h"
 #include "HTBP_Filter_Factory.h"
 
+#include "ace/Auto_Ptr.h"
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/netinet/os_tcp.h"

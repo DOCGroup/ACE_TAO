@@ -403,7 +403,7 @@ Admin_Client::enum_test (void)
 
   ACE_TEST_ASSERT (dkind == CORBA::dk_Enum);
 
-  CORBA::TypeDescription *td;
+  const CORBA::TypeDescription *td = 0;
   desc->value >>= td;
 
   if (this->debug_)
@@ -744,7 +744,7 @@ Admin_Client::alias_test (void)
   CORBA::Contained::Description_var desc =
     a_var->describe ();
 
-  CORBA::TypeDescription *td;
+  const CORBA::TypeDescription *td = 0;
   desc->value >>= td;
 
   if (this->debug_)
@@ -972,7 +972,7 @@ Admin_Client::struct_test (void)
   CORBA::Contained::Description_var desc =
     svar->describe ();
 
-  CORBA::TypeDescription *td;
+  const CORBA::TypeDescription *td = 0;
   desc->value >>= td;
 
   if (this->debug_)
@@ -1209,7 +1209,7 @@ Admin_Client::struct_test (void)
 
   for (i = 0; i < length; ++i)
     {
-      CORBA::TypeDescription *td;
+      const CORBA::TypeDescription *td = 0;
       cont_desc[i].value >>= td;
 
       str = td->type->id ();
@@ -1450,7 +1450,7 @@ Admin_Client::union_test (void)
       CORBA::Any_var label = tc->member_label (i);
 
       TAO_InputCDR cdr (static_cast<ACE_Message_Block *> (0));
-      CORBA::ULong val;
+      CORBA::ULong val = 0;
 
       TAO::Any_Impl *impl = label->impl ();
       TAO_OutputCDR out;
@@ -1573,7 +1573,7 @@ Admin_Client::exception_test (void)
   CORBA::Contained::Description_var desc =
     exvar->describe ();
 
-  CORBA::ExceptionDescription *ed;
+  const CORBA::ExceptionDescription *ed = 0;
   desc->value >>= ed;
 
   if (this->debug_)
@@ -1830,7 +1830,7 @@ Admin_Client::exception_test (void)
 
   ACE_TEST_ASSERT (length == 2);
 
-  CORBA::TypeDescription *td;
+  const CORBA::TypeDescription *td = 0;
 
   for (i = 0; i < length; ++i)
     {
@@ -2216,7 +2216,7 @@ Admin_Client::interface_test (void)
   CORBA::Contained::Description_var desc =
     p_op->describe ();
 
-  CORBA::OperationDescription *od;
+  const CORBA::OperationDescription *od = 0;
   desc->value >>= od;
 
   if (this->debug_)
@@ -2421,7 +2421,7 @@ Admin_Client::interface_test (void)
 
   desc = ivar->describe ();
 
-  CORBA::InterfaceDescription *ifd;
+  const CORBA::InterfaceDescription *ifd = 0;
   desc->value >>= ifd;
 
   length = ifd->base_interfaces.length ();

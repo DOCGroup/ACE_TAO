@@ -191,7 +191,7 @@ TAO::IIOP_SSL_Connector::make_connection (
       return 0;
     }
 
-  if (svc_handler->keep_waiting ())
+  if (svc_handler->keep_waiting (this->orb_core ()->leader_follower ()))
     {
       svc_handler->connection_pending ();
     }

@@ -24,7 +24,7 @@ Storable_File_Guard (bool redundant, bool use_backup)
 }
 
 TAO::Storable_File_Guard::
-~Storable_File_Guard ()
+~Storable_File_Guard () ACE_NOEXCEPT_FALSE
 {
   delete fl_;
 }
@@ -34,62 +34,24 @@ TAO::Storable_File_Guard::init_no_load(Method_Type method_type)
 {
 
   ACE_CString mode;
-
-  // If backup is used then always need to open with
-  // write access since if the file is corrupt then
-  // will overwrite with backup file.
-  if (this->use_backup_)
+  this->rwflags_ = 0;
+  switch (method_type)
     {
-      switch (method_type)
-        {
-        case CREATE_WITH_FILE:
-          mode = "rw";
-          break;
-        case CREATE_WITHOUT_FILE:
-          mode = "rwc";
-          break;
-        case ACCESSOR:
-          mode = "rw";
-          break;
-        case MUTATOR:
-          mode = "rw";
-          break;
-        }
-    }
-  else
-    {
-      switch (method_type)
-        {
-        case CREATE_WITH_FILE:
-          mode = "r";
-          break;
-        case CREATE_WITHOUT_FILE:
-          mode = "wc";
-          break;
-        case ACCESSOR:
-          mode = "r";
-          break;
-        case MUTATOR:
-          mode = "rw";
-          break;
-        }
+    case ACCESSOR:
+    case CREATE_WITH_FILE:
+      mode = "r";
+      this->rwflags_ = mode_read;
+      break;
+    case CREATE_WITHOUT_FILE:
+      mode = "rwc";
+      this->rwflags_ = mode_write | mode_create;
+      break;
+    case MUTATOR:
+      mode = "rw";
+      this->rwflags_ = mode_read | mode_write;
+      break;
     }
 
-  // We only accept a subset of mode argument, check it
-  rwflags_ = 0;
-  for( unsigned int i = 0; i < mode.length (); i++ )
-    {
-      switch (mode[i])
-        {
-        case 'r': rwflags_ |= mode_read;
-          break;
-        case 'w': rwflags_ |= mode_write;
-          break;
-        case 'c': rwflags_ |= mode_create;
-          break;
-        default: rwflags_ = -1;
-        }
-    }
   if( rwflags_ <= 0 )
     {
       errno = EINVAL;
@@ -201,8 +163,8 @@ TAO::Storable_File_Guard::release (void)
 {
   if ( ! closed_ )
     {
-
-      if (this->use_backup_ )
+      if (this->use_backup_ &&
+          (rwflags_ & mode_write) != 0)
         {
           fl_->create_backup ();
         }
@@ -256,10 +218,10 @@ TAO::Storable_File_Guard::load ()
       ACE_CString state_str = Storable_Base::state_as_string (ex.get_state());
 
       TAOLIB_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO: (%P|%t) ERROR: State %s ")
-                  ACE_TEXT ("encountered reading persistent ")
-                  ACE_TEXT ("state from file\n%s\n"),
-                  state_str.c_str (), ex.get_file_name().c_str ()));
+                     ACE_TEXT ("TAO: (%P|%t) ERROR: State %s ")
+                     ACE_TEXT ("encountered reading persistent ")
+                     ACE_TEXT ("state from file\n%s\n"),
+                     state_str.c_str (), ex.get_file_name().c_str ()));
 
       // The following opens the backup file, and copies it
       // to the primary file location.
@@ -270,8 +232,8 @@ TAO::Storable_File_Guard::load ()
         {
 
           TAOLIB_ERROR ((LM_INFO,
-                      ACE_TEXT ("TAO: (%P|%t) Attempting to restore ")
-                      ACE_TEXT ("from backup\n")));
+                         ACE_TEXT ("TAO: (%P|%t) Attempting to restore ")
+                         ACE_TEXT ("from backup\n")));
 
           try
             { // Load the data from the newly restored primary.
@@ -280,20 +242,20 @@ TAO::Storable_File_Guard::load ()
           catch (const Storable_Read_Exception)
             { // Still having trouble reading from the file. Time to bail.
               TAOLIB_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO: (%P|%t) ERROR: Unable to restore ")
-                          ACE_TEXT ("the state from backup.\n")));
+                             ACE_TEXT ("TAO: (%P|%t) ERROR: Unable to restore ")
+                             ACE_TEXT ("the state from backup.\n")));
               throw;
             }
           TAOLIB_ERROR ((LM_INFO,
-                      ACE_TEXT ("TAO: (%P|%t) The state was restored ")
-                      ACE_TEXT ("from backup.\n")));
+                         ACE_TEXT ("TAO: (%P|%t) The state was restored ")
+                         ACE_TEXT ("from backup.\n")));
         }
       else
         {
           TAOLIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO: (%P|%t) ERROR: Could not read ")
-                      ACE_TEXT ("backup file\n")));
-            throw;
+                         ACE_TEXT ("TAO: (%P|%t) ERROR: Could not read ")
+                         ACE_TEXT ("backup file\n")));
+          throw;
         }
 
     }

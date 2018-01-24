@@ -188,7 +188,7 @@ Options::~Options (void)
                        "\nhash function name = %s"
                        "\nkey name = %s"
                        "\njump value = %d"
-                       "\nmax associcated value = %d"
+                       "\nmax associated value = %d"
                        "\ninitial associated value = %d"
                        "\ndelimiters = %s"
                        "\nnumber of switch statements = %d"

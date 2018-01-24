@@ -10,6 +10,7 @@ TAO_ServerRequest::TAO_ServerRequest (void)
     operation_ (0),
     operation_len_ (0),
     release_operation_ (false),
+    is_forwarded_ (false),
     incoming_ (0),
     outgoing_ (0),
     response_expected_ (false),

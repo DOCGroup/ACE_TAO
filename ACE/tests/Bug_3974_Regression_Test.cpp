@@ -2,7 +2,7 @@
  * @file Bug_3974_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 3974
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=3974
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3974
  */
 
 #include "test_config.h"

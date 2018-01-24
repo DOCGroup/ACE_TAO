@@ -340,6 +340,4 @@ TAO_Notify_Tests_Periodic_Supplier::dump_stats (ACE_TCHAR* msg, int dump_samples
   stats_.dump_samples (fname.c_str (), buf, dump_samples);
 }
 
-#if defined (ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION)
-template ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> *ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>::singleton_;
-#endif /* ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION */
+ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Base_Time,  TAO_SYNCH_MUTEX);

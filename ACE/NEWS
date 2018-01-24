@@ -1,9 +1,106 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.4.5 and ACE-6.4.6
+====================================================
+
+. Fixed some Codacy and C++ Core guidelines reported issues
+
+. VxWorks 7 (SR0510) support
+
+. Support make install on newer Apple macOS versions
+
+USER VISIBLE CHANGES BETWEEN ACE-6.4.4 and ACE-6.4.5
+====================================================
+
+. Add support for OpenSSL 1.1. ACE users on Windows have
+  to add openssl11=1 to their default.features file so
+  that the correct OpenSSL library names are used.
+
+USER VISIBLE CHANGES BETWEEN ACE-6.4.3 and ACE-6.4.4
+====================================================
+
+. Enhanced support for Embarcadero C++ Builder 10.2 (Tokyo).
+  Support for bcc32/bcc64/bcc32c has been enhanced and by
+  default the clang based versions are used. When the old
+  bcc32 has to be used set the CLASSIC environment variable
+  to 1. At this moment runtime test results for bcc64/bcc32c
+  show some structural problems
+
+. Add support for Oracle Studio 12.5
+
+. Removed usage of ACE_REGISTER and register keyword because
+  they trigger deprecated warnings with newer gcc and clang
+  versions
+
+. Add support for gcc 7
+
+. Enhanced Android support
+
+. Fix ACE_INET_Addr::set(domain_name, AF_UNSPEC) to be set to IPv4 address
+  when IPv6 is enabled and the domain_name could be resolved to IPv4 address.
+
+USER VISIBLE CHANGES BETWEEN ACE-6.4.2 and ACE-6.4.3
+====================================================
+
+. Enhancements for Visual Studio 2017
+
+. Enhancements for Android
+
+USER VISIBLE CHANGES BETWEEN ACE-6.4.1 and ACE-6.4.2
+====================================================
+
+. Added support for Mac OS X on x86_64 to get the network adapter
+  address in ACE_OS::getmacaddress().
+
+. Added support for the December 2016 updates to VxWorks 7.
+
+USER VISIBLE CHANGES BETWEEN ACE-6.4.0 and ACE-6.4.1
+====================================================
+
+. The ACE_DEBUG environment variable can again be used to set the
+  internal debug flag.  This used to work but was mistakenly changed
+  in an earlier release.
+
+. Corrected usage of ACE_Singleton and template instantation to be
+  valid C++ (GCC cross-compiler arm-linux-gnueabihf-g++ requires it).
+
+. Added support for detecting the Mac OS X version when configured with
+  ace/config-macosx.h and include/makeinclude/platform_macosx.GNU.
+  Also on 10.11 El Capitan, use rpath to avoid a problem with SIP.
+
+. Added support for Android NDK r12b (Platform API 24) and improved
+  cross compilation support
+
+USER VISIBLE CHANGES BETWEEN ACE-6.3.4 and ACE-6.4.0
+====================================================
+
+. Added support for obtaining the micro version number
+
+. Reduced include of ace/Auto_Ptr.h in header files
+
 USER VISIBLE CHANGES BETWEEN ACE-6.3.3 and ACE-6.3.4
 ====================================================
 
-. Removed support for SSLv2/SSLv3/TLSv1/TLS1.v2 because
-  they have been removed from OpenSSL because they are not
-  secure. SSL v2.3 is the only currently used
+. ACE_SSL_Context::set_mode() can no longer be used to select a specific
+  SSL/TLS protocol version, use ACE_SSL_Context::filter_versions() for that.
+  This follows general advice by the OpenSSL project to go through
+  SSL_CTX_set_options() to limit the list of protocols available. The purpose
+  of ACE_SSL_Context::set_mode() is now limited to explicitly restricting
+  behaviour to client or server (defaults to both).
+
+. Improve Oracle Studio support
+
+. CIAO and DAnCE are forked to their own github repositories
+  and are not part anymore of the ACE+TAO release packages
+
+. Fixed several Coverity reported issues
+
+. Added ACE configuration for FACE safety profiles (see config-face-safety.h).
+  FACE, or Future Airborne Capability Environment http://www.opengroup.org/face,
+  specifies a restricted subset of OS functions and rules for controlling
+  dynamic memory allocation.  When built in this configuration on a platform
+  that supports it, ACE conforms to the FACE requirements.
+
+. ACE uses new netdb.h functions (getaddrinfo/getnameinfo) if they are
+  available, in place of deprecated functions (gethostbyname/addr).
 
 USER VISIBLE CHANGES BETWEEN ACE-6.3.2 and ACE-6.3.3
 ====================================================

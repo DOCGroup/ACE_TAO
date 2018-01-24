@@ -615,7 +615,11 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       flags),
                   -1);
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#if defined ACE_HAS_CPP11
+  std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args (static_cast<ACE_Base_Thread_Adapter *> (thread_args));
+#else
   auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args (static_cast<ACE_Base_Thread_Adapter *> (thread_args));
+#endif
 
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_hthread_t thr_handle;
