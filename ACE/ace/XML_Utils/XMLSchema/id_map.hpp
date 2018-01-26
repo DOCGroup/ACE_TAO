@@ -56,7 +56,7 @@
     //XML document.
     class Unresolved_IDREF {
       public:
-        Unresolved_IDREF(std::basic_string<ACE_TCHAR> &message) : message(message)
+        explicit Unresolved_IDREF(std::basic_string<ACE_TCHAR> &message) : message(message)
         {}
         ~Unresolved_IDREF(){}
         std::basic_string<ACE_TCHAR> get_message ( void )
