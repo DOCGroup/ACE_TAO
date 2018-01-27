@@ -106,7 +106,7 @@
       return;
     }
 
-    void resolve_single_idref (const std::basic_string<ACE_TCHAR> idref&, ::XSCRT::Type * element)
+    void resolve_single_idref (const std::basic_string<ACE_TCHAR>& idref, ::XSCRT::Type * element)
     {
        ID_Map::id_iterator id_iterator = this->id_map_.find(idref);
        if (id_iterator != this->id_map_.end())
