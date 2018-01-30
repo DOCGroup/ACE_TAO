@@ -227,7 +227,9 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SOCK_Acceptor::shared_open");
   int error = 0;
 
-#if defined (ACE_HAS_IPV6)
+#if !defined (ACE_HAS_IPV6) || (!defined (IPPROTO_IPV6) || !defined (IPV6_V6ONLY))
+  ACE_UNUSED_ARG (ipv6_only);
+#else /* defined (ACE_HAS_IPV6) */
   if (protocol_family == PF_INET6)
     {
       sockaddr_in6 local_inet6_addr;
@@ -251,13 +253,13 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
        * This must be done before attempting to bind the address.
        * On Windows older than Vista this will fail.
        */
-#  if defined (IPPROTO_V6) && defined (IPV6_ONLY)
+#  if defined (IPPROTO_IPV6) && defined (IPV6_V6ONLY)
       int setting = !!ipv6_only;
       if (-1 == ACE_OS::setsockopt (this->get_handle (),
                                     IPPROTO_IPV6,
                                     IPV6_V6ONLY,
                                     (char *)&setting,
-                                    sizeof (setting))
+                                    sizeof (setting)))
         error = 1;
       else
 # endif /* IPPROTO_V6 && IPV6_ONLY */
@@ -320,7 +322,8 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
                          int reuse_addr,
                          int protocol_family,
                          int backlog,
-                         int protocol)
+                         int protocol,
+                         int ipv6_only)
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::open");
 
@@ -338,7 +341,8 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
   else
     return this->shared_open (local_sap,
                               protocol_family,
-                              backlog);
+                              backlog,
+                              ipv6_only);
 }
 
 ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
@@ -397,7 +401,8 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
   else
     return this->shared_open (local_sap,
                               protocol_family,
-                              backlog);
+                              backlog,
+                              ipv6_only);
 }
 
 // General purpose routine for performing server ACE_SOCK creation.
