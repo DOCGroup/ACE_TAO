@@ -104,13 +104,28 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
 
 int
 ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
-                             int protocol_family)
+                             int protocol_family,
+                             int ipv6_only)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::shared_open");
   bool error = false;
+#if !defined (ACE_HAS_IPV6) || (!defined (IPPROTO_IPV6) || !defined (IPV6_V6ONLY))
+  ACE_UNUSED_ARG (ipv6_only);
+#endif /* !defined (ACE_HAS_IPV6) || (!defined (IPPROTO_IPV6) || !defined (IPV6_V6ONLY)) */
 
   if (local == ACE_Addr::sap_any)
     {
+#if defined (ACE_HAS_IPV6) && defined (IPPROTO_IPV6) && defined (IPV6_V6ONLY)
+      int setting = !!ipv6_only;
+      if (-1 == ACE_OS::setsockopt (this->get_handle (),
+                                    IPPROTO_IPV6,
+                                    IPV6_V6ONLY,
+                                    (char *)&setting,
+                                    sizeof (setting)))
+        error = true;
+      else
+#endif /* ACE_HAS_IPV6 && IPPROTO_IPV6 && IPV6_V6ONLY */
+
       if (protocol_family == PF_INET
 #if defined (ACE_HAS_IPV6)
           || protocol_family == PF_INET6
@@ -141,7 +156,8 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       ACE_Protocol_Info *protocolinfo,
                       ACE_SOCK_GROUP g,
                       u_long flags,
-                      int reuse_addr)
+                      int reuse_addr,
+                      int ipv6_only)
 {
   if (ACE_SOCK::open (SOCK_DGRAM,
                       protocol_family,
@@ -152,7 +168,8 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       reuse_addr) == -1)
     return -1;
   else if (this->shared_open (local,
-                              protocol_family) == -1)
+                              protocol_family,
+                              ipv6_only) == -1)
     return -1;
   else
     return 0;
@@ -164,7 +181,8 @@ int
 ACE_SOCK_Dgram::open (const ACE_Addr &local,
                       int protocol_family,
                       int protocol,
-                      int reuse_addr)
+                      int reuse_addr,
+                      int ipv6_only)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::open");
 
@@ -186,7 +204,8 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
     return -1;
   else
     return this->shared_open (local,
-                              protocol_family);
+                              protocol_family,
+                              ipv6_only);
 }
 
 // Here's the general-purpose constructor used by a connectionless
@@ -195,14 +214,16 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
 ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                                 int protocol_family,
                                 int protocol,
-                                int reuse_addr)
+                                int reuse_addr,
+                                int ipv6_only)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
 
   if (this->open (local,
                   protocol_family,
                   protocol,
-                  reuse_addr) == -1)
+                  reuse_addr,
+                  ipv6_only) == -1)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SOCK_Dgram")));
@@ -214,7 +235,8 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                                 ACE_Protocol_Info *protocolinfo,
                                 ACE_SOCK_GROUP g,
                                 u_long flags,
-                                int reuse_addr)
+                                int reuse_addr,
+                                int ipv6_only)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::ACE_SOCK_Dgram");
   if (this->open (local,
@@ -223,7 +245,8 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
                   protocolinfo,
                   g,
                   flags,
-                  reuse_addr) == -1)
+                  reuse_addr,
+                  ipv6_only) == -1)
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SOCK_Dgram")));
