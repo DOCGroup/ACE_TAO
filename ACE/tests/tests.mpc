@@ -1437,6 +1437,13 @@ project(Singleton Test) : acetest {
   }
 }
 
+project(SOCK Acceptor_Test) : acetest {
+  exename = SOCK_Acceptor_Test
+  Source_Files {
+    SOCK_Acceptor_Test.cpp
+  }
+}
+
 project(SOCK Test) : acetest {
   exename = SOCK_Test
   Source_Files {
