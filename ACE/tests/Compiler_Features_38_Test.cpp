@@ -9,7 +9,7 @@ template <typename T>
 class Foo_T
 {
 public:
-  Foo_T () {};
+  Foo_T () : member() {};
   typedef T& T_elem;
   T_elem operator[] (long) { return member; }
   operator T *& () { return & member; };
@@ -29,7 +29,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT("Compiler_Features_38_Test"));
 
   Foo2Seq f2;
-  long j = f2[0].i;
+  long const j = f2[0].i;
   ACE_UNUSED_ARG(j);
 
   ACE_DEBUG ((LM_INFO,
