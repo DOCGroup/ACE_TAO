@@ -9,6 +9,7 @@ template <typename T>
 class Foo_T
 {
 public:
+  Foo_T () {};
   typedef T& T_elem;
   T_elem operator[] (long) { return member; }
   operator T *& () { return & member; };
