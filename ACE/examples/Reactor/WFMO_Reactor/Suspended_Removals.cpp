@@ -56,7 +56,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_WFMO_Reactor reactor;
   ACE_Reactor base_reactor (&reactor);
 
-  ACE_Time_Value sleep_sleep_time (1);
+  ACE_Time_Value sleep_time (1);
 
   int result =
     reactor.register_handler (&handler);
