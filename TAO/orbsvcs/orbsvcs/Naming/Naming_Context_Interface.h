@@ -129,7 +129,7 @@ public:
    * Delete the naming context.  The user should take care to <unbind> any
    * bindings in which the given context is bound to some names, to
    * avoid dangling references when invoking <destroy> operation.
-   * NOTE: <destory> is a no-op on the root context.
+   * NOTE: <destroy> is a no-op on the root context.
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
@@ -325,7 +325,7 @@ public:
    * Delete the naming context.  The user should take care to <unbind> any
    * bindings in which the given context is bound to some names, to
    * avoid dangling references when invoking <destroy> operation.
-   * NOTE: <destory> is a no-op on the root context.
+   * NOTE: <destroy> is a no-op on the root context.
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
