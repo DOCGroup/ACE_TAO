@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.4.6 and ACE-6.4.7
 ====================================================
 
+. Integrated some changes from XSC into XML Utils
+
+. Enable ACE_HAS_CPP11 when we have clang with C++11 enabled
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.5 and ACE-6.4.6
 ====================================================
 
