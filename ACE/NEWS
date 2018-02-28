@@ -1,6 +1,17 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.4.6 and ACE-6.4.7
 ====================================================
 
+. Added a new, optional argument named ipv6_only to:
+    ACE_Acceptor::ACE_Acceptor
+    ACE_Acceptor::open
+    ACE_SOCK_Dgram::ACE_SOCK_Dgram
+    ACE_SOCK_Dgram::open
+  If ipv6_only is 0/false (the default) the socket will accept
+  both IPv6 and IPv4 connections/datagrams. If ipv6_only is
+  1/true the socket will only accept IPv6.
+  This behavior only applies when ACE_HAS_IPV6 is true and the
+  local-side IP address is the generic localhost IP address.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.5 and ACE-6.4.6
 ====================================================
 
