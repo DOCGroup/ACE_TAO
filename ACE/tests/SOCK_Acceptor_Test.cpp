@@ -3,8 +3,6 @@
 /**
  *  @file    SOCK_Acceptor_Test.cpp
  *
- *  $Id$
- *
  *   This is a test of the <ACE_SOCK_Acceptor> class.
  *
  *  @author Steve Huston <shuston@riverace.com>
