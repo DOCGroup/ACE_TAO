@@ -610,7 +610,7 @@ sub check_for_trailing_whitespace ()
 
     print "Running trailing_whitespaces check\n";
     ITERATION: foreach $file (@files_cpp, @files_inl, @files_h, @files_idl,
-                              @files_cdp, @files_pl, @files_generic) {
+                              @files_cdp, @files_pl, @files_py, @files_generic) {
         if (open (FILE, $file)) {
             my $disable = 0;
             print "Looking at file $file\n" if $opt_d;

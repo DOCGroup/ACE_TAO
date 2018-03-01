@@ -60,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // user-defined smart factory on the heap as the smart proxy
       // generated classes take care of destroying the object. This
       // way it a win situation for the application developer who
-      // doesnt have to make sure to destoy it and also for the smart
+      // doesnt have to make sure to destroy it and also for the smart
       // proxy designer who now can manage the lifetime of the object
       // much surely.
       Smart_Test_Factory *test_factory = 0;

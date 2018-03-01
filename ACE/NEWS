@@ -12,6 +12,16 @@ USER VISIBLE CHANGES BETWEEN ACE-6.4.6 and ACE-6.4.7
   This behavior only applies when ACE_HAS_IPV6 is true and the
   local-side IP address is the generic localhost IP address.
 
+. Integrated some changes from XSC into XML Utils
+
+. Enable ACE_HAS_CPP11 when we have clang with C++11 enabled
+
+. Added support for cross compiling using MinGW on a Linux host
+
+. Added support for FreeBSD 11
+
+. Fixed issue ACE_Singleton was broken after ACE::fini, ACE::init (GitHub #554)
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.5 and ACE-6.4.6
 ====================================================
 

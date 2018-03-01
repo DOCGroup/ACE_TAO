@@ -41,7 +41,13 @@ A::u_type_::~u_type_ ()
 
 void A::clear ()
 {
-#if defined __clang__ && __clang_major__ <= 5
+#if defined __clang__ && \
+    (defined __apple_build_version__ && __apple_build_version__ < 9100000 \
+     || __clang_major__ <= 5)
+#define CLANG_WORKAROUND
+#endif
+
+#ifdef CLANG_WORKAROUND
   // As of 5.0, clang requires one of two workarounds:
   // 1. the name after ~ must be in scope
   using std::string;
@@ -54,7 +60,7 @@ struct B {
     std::string m;
   } u_;
   void clear() {
-#if defined __clang__ && __clang_major__ <= 5
+#ifdef CLANG_WORKAROUND
     // 2. actual class name instead of typedef
     u_.m.std::string::~basic_string ();
 #else

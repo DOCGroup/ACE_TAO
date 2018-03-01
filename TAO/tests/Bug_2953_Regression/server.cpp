@@ -209,7 +209,7 @@ void shutdownORB(CORBA::ORB_ptr orb, const char * orbid)
 
   orb->destroy();
   ACE_DEBUG ((LM_DEBUG,
-              "ORB <%C> is destoyed\n",
+              "ORB <%C> is destroyed\n",
               orbid));
 }
 
