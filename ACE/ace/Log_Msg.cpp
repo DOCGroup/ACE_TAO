@@ -1256,6 +1256,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                                  this->linenum ());
                   else
                     this_len = ACE_OS::sprintf (bp, format, this->linenum ());
+                  ACE_UPDATE_COUNT (bspace, this_len);
                   break;
 
                 case 'N':             // Source file name
