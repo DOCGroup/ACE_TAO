@@ -13,7 +13,7 @@ TAO_EC_Queue::
 }
 
 /// @todo The high water mark and low water mark shouldn't be
-/// hardcoded, check http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=565
+/// hardcoded, check http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=565
 #ifndef TAO_EC_QUEUE_HWM
 #define TAO_EC_QUEUE_HWM 16384
 //#define TAO_EC_QUEUE_HWM 2
@@ -26,7 +26,7 @@ TAO_EC_Queue::
 
 ACE_INLINE
 TAO_EC_Dispatching_Task::
-TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager, TAO_EC_Queue_Full_Service_Object* so)
+TAO_EC_Dispatching_Task (ACE_Thread_Manager *thr_manager, TAO_EC_Queue_Full_Service_Object *so)
   :  ACE_Task<ACE_SYNCH> (thr_manager),
      allocator_ (0),
      the_queue_ (TAO_EC_QUEUE_HWM, TAO_EC_QUEUE_LWM),
@@ -34,6 +34,15 @@ TAO_EC_Dispatching_Task (ACE_Thread_Manager* thr_manager, TAO_EC_Queue_Full_Serv
 {
   this->msg_queue (&this->the_queue_);
 }
+
+#ifdef ACE_WIN32_VC14
+// Work around for Connect #2869042 Bugzilla #4215
+ACE_INLINE
+TAO_EC_Dispatching_Task::
+TAO_EC_Dispatching_Task ()
+  : TAO_EC_Dispatching_Task (0, 0)
+{}
+#endif
 
 // ****************************************************************
 

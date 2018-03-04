@@ -30,14 +30,14 @@ AnySeq *Test_impl::RunTest(const AnySeq &params)
   ACE_DEBUG ((LM_DEBUG, "RunTest: params.length == %d\n", params.length()));
   for (CORBA::ULong count = 0; count < params.length(); ++count)
   {
-    Container* container = 0;
+    const Container* container = 0;
     if (!(params[count] >>= container))
     {
       ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));
     }
     else
     {
-      Inner* inner = 0;
+      const Inner* inner = 0;
       if (!(container->contents >>= inner))
       {
         ACE_ERROR ((LM_ERROR, "ERROR, failed extract\n"));

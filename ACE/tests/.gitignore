@@ -217,6 +217,7 @@
 /Sigset_Ops_Test
 /Simple_Message_Block_Test
 /Singleton_Test
+/Singleton_Restart_Test
 /SOCK_Connector_Test
 /SOCK_Dgram_Bcast_Test
 /SOCK_Dgram_Test
@@ -256,6 +257,7 @@
 /Tokens_Test
 /TP_Reactor_Test
 /TSS_Static_Test
+/TSS_Leak_Test
 /TSS_Test
 /Unbounded_Set_Test
 /Unbounded_Set_Test_Ex

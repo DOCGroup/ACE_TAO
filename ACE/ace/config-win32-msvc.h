@@ -38,7 +38,9 @@
 #endif /* _WIN32_WCE */
 
 //FUZZ: disable check_for_msc_ver
-#if (_MSC_VER >= 1900)
+#if (_MSC_VER >= 1910)
+# include "ace/config-win32-msvc-141.h"
+#elif (_MSC_VER >= 1900)
 # include "ace/config-win32-msvc-14.h"
 #elif (_MSC_VER >= 1800)
 # include "ace/config-win32-msvc-12.h"
@@ -124,6 +126,10 @@
 #define ACE_LACKS_NETINET_TCP_H
 #define ACE_LACKS_TERMIOS_H
 #define ACE_LACKS_REGEX_H
+
+#define ACE_LACKS_LOCALTIME_R
+#define ACE_LACKS_GMTIME_R
+#define ACE_LACKS_ASCTIME_R
 
 #define ACE_INT64_FORMAT_SPECIFIER_ASCII "%I64d"
 #define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%I64u"

@@ -1258,6 +1258,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                                  this->linenum ());
                   else
                     this_len = ACE_OS::sprintf (bp, format, this->linenum ());
+                  ACE_UPDATE_COUNT (bspace, this_len);
                   break;
 
                 case 'N':             // Source file name
@@ -1733,12 +1734,14 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       ACE_Time_Value* time_value = va_arg (argp, ACE_Time_Value*);
                       ACE::timestamp (*time_value,
                                       day_and_time,
-                                      sizeof (day_and_time) / sizeof (ACE_TCHAR));
+                                      sizeof (day_and_time) / sizeof (ACE_TCHAR),
+                                      true);
                     }
                     else
                     {
                       ACE::timestamp (day_and_time,
-                                      sizeof (day_and_time) / sizeof (ACE_TCHAR));
+                                      sizeof (day_and_time) / sizeof (ACE_TCHAR),
+                                      true);
                     }
 #if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
                     ACE_OS::strcpy (fp, ACE_TEXT ("ls"));
@@ -1772,23 +1775,25 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           (bp, bspace, format,
                           ACE::timestamp (*time_value,
                                          day_and_time,
-                                         sizeof day_and_time / sizeof (ACE_TCHAR)));
+                                         sizeof day_and_time / sizeof (ACE_TCHAR),
+                                         true));
                       else
                         this_len = ACE_OS::sprintf
                           (bp, format, ACE::timestamp (*time_value,
                                                       day_and_time,
-                                                      sizeof day_and_time / sizeof (ACE_TCHAR)));
+                                                      sizeof day_and_time / sizeof (ACE_TCHAR),
+                                                      true));
                     }
                     else
                     {
                       if (can_check)
                         this_len = ACE_OS::snprintf
                           (bp, bspace, format,
-                          ACE::timestamp (day_and_time, sizeof day_and_time / sizeof (ACE_TCHAR)));
+                          ACE::timestamp (day_and_time, sizeof day_and_time / sizeof (ACE_TCHAR), true));
                       else
                         this_len = ACE_OS::sprintf
                           (bp, format, ACE::timestamp (day_and_time,
-                                                      sizeof day_and_time / sizeof (ACE_TCHAR)));
+                                                      sizeof day_and_time / sizeof (ACE_TCHAR), true));
                     }
                     ACE_UPDATE_COUNT (bspace, this_len);
                     break;

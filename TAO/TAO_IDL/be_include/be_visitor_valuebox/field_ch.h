@@ -5,7 +5,7 @@
  *  @file    field_ch.h
  *
  *   Visitor for the structure fields in valuebox class.
- *   This one generates code for access to strucuture members
+ *   This one generates code for access to structure members
  *   in the client header.
  *
  *   Based on be_visitor_union_branch/public_ch.  In general we

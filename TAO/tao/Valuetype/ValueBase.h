@@ -34,11 +34,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Vector_T.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-#define TAO_EXPORT_MACRO TAO_Valuetype_Export
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #define DEFAULT_INDIRECTION_MAP_SIZE 10
@@ -357,6 +352,12 @@ namespace CORBA
 
 }  // End CORBA namespace
 
+# if defined (__ACE_INLINE__)
+#   define TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION inline
+# else
+#   define TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION extern TAO_Valuetype_Export
+# endif
+
 /**
  * @namespace TAO_OBV_GIOP_Flags
  *
@@ -377,17 +378,17 @@ namespace TAO_OBV_GIOP_Flags
   const CORBA::Long Indirection_tag   = 0xFFFFFFFF;
   const CORBA::Long Null_tag          = 0x00000000L;
 
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long tag);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_value_tag         (CORBA::Long tag);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_codebase_url     (CORBA::Long tag);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_no_type_info     (CORBA::Long tag);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_single_type_info (CORBA::Long tag);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean has_list_type_info   (CORBA::Long tag);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_chunked           (CORBA::Long tag);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection_tag   (CORBA::Long tag);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_indirection       (CORBA::Long tag);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_block_size        (CORBA::Long tag);
-  TAO_NAMESPACE_INLINE_FUNCTION CORBA::Boolean is_end_tag           (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_value_tag         (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean has_codebase_url     (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean has_no_type_info     (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean has_single_type_info (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean has_list_type_info   (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_chunked           (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_indirection_tag   (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_indirection       (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_block_size        (CORBA::Long tag);
+  TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_end_tag           (CORBA::Long tag);
 }
 
 TAO_Valuetype_Export CORBA::Boolean

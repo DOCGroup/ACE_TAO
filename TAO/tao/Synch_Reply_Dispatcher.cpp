@@ -57,7 +57,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   this->reply_status_ = params.reply_status ();
   this->locate_reply_status_ = params.locate_reply_status ();
 
-  // Steal the buffer, that way we don't do any unnecesary copies of
+  // Steal the buffer, that way we don't do any unnecessary copies of
   // this data.
   CORBA::ULong const max = params.svc_ctx_.maximum ();
   CORBA::ULong const len = params.svc_ctx_.length ();

@@ -37,7 +37,7 @@ public:
    * definition builder and use the builder to create
    * the DTD element definition.  The resulting builder
    * is then registered with the DTD Manager or destroyed
-   * if error occured when the builder encountered errors.
+   * if error occurred when the builder encountered errors.
    *
    * @retval 0 if error occurs creating the builder.
    */

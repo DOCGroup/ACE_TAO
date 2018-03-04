@@ -272,7 +272,7 @@ DRV_cpp_init (void)
                    "-D__TAO_IDL=0x%2.2d%2.2d%2.2d",
                    ACE_MAJOR_VERSION,
                    ACE_MINOR_VERSION,
-                   ACE_BETA_VERSION);
+                   ACE_MICRO_VERSION);
 
   DRV_cpp_putarg (version_option);
   DRV_cpp_putarg ("-I.");
@@ -648,79 +648,6 @@ DRV_cpp_post_init (void)
                             "/ccm",
                             true);
     }
-  else if (TAO_ROOT != 0)
-    {
-      // If CIAO_ROOT hasn't been set,
-      // maybe it's nested under TAO_ROOT.
-      DRV_add_include_path (include_path4,
-                            TAO_ROOT,
-                            "/CIAO",
-                            true);
-
-      DRV_add_include_path (include_path5,
-                            TAO_ROOT,
-                            "/CIAO/ciao",
-                            true);
-
-      DRV_add_include_path (include_path5,
-                            TAO_ROOT,
-                            "/CIAO/ccm",
-                            true);
-    }
-  else
-    {
-      // If TAO_ROOT hasn't been set, try ACE_ROOT.
-      char* ACE_ROOT = ACE_OS::getenv ("ACE_ROOT");
-
-      if (ACE_ROOT != 0)
-        {
-          DRV_add_include_path (include_path4,
-                                ACE_ROOT,
-                                "/TAO/CIAO",
-                                true);
-
-          DRV_add_include_path (include_path5,
-                                ACE_ROOT,
-                                "/TAO/CIAO/ciao",
-                                true);
-
-          DRV_add_include_path (include_path5,
-                                ACE_ROOT,
-                                "/TAO/CIAO/ccm",
-                                true);
-        }
-      else
-        {
-#if defined (TAO_IDL_INCLUDE_DIR)
-          DRV_add_include_path (include_path4,
-                                TAO_IDL_INCLUDE_DIR,
-                                0,
-                                true);
-
-          DRV_add_include_path (include_path5,
-                                TAO_IDL_INCLUDE_DIR,
-                                "/ciao",
-                                true);
-
-          DRV_add_include_path (include_path5,
-                                TAO_IDL_INCLUDE_DIR,
-                                "/ccm",
-                                true);
-#else
-          // If ACE_ROOT isn't defined either, there will already
-          // be a warning from DRV_preproc().
-          DRV_add_include_path (include_path4,
-                                ACE_ROOT,
-                                ".",
-                                true);
-
-          DRV_add_include_path (include_path5,
-                                ACE_ROOT,
-                                ".",
-                                true);
-#endif  /* TAO_IDL_INCLUDE_DIR */
-        }
-    }
 
   // Save path of current directory, in case
   // the call to DRV_sweep_dirs()
@@ -935,7 +862,7 @@ namespace
         ACE_CString fixed_name ("tao/");
         fixed_name += incl_file;
 
-        idl_global->add_to_included_idl_files (fixed_name.rep ());
+        idl_global->add_to_included_idl_files (fixed_name.c_str ());
       }
     else
       {

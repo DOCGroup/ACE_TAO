@@ -38,23 +38,26 @@ public:
                              const ACE_CString &alternate);
   void default_service (const char *string);
 
-  void make_dir (const char * );
+  void make_dir (const char * ,bool );
   void outfile (const char * );
 
   bool has_dir (void);
   bool has_outfile (void);
 
   void dump ();
+  ostream * stream_for (ostream *old,
+                        HostProcess *hp = 0,
+                        const char *sub = 0,
+                        const char *detail = 0);
 
 private:
   HostProcess *find_host_i (const Endpoint &endpoint, bool server);
-
-  ostream * stream_for ( ostream *, HostProcess * = 0, const char * = 0);
 
   Processes processes_;
   Procs_By_Name procs_by_name_;
   ACE_CString base_dir_;
   ACE_CString outfile_;
+  bool split_details_;
   static long tao_version_;
   static AltAddresses alt_addrs_;
 };

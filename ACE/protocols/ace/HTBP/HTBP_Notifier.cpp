@@ -8,12 +8,9 @@
  */
 //=============================================================================
 #include "HTBP_Notifier.h"
-
-#include "ace/Reactor.h"
-#include "ace/Synch.h"
-
 #include "HTBP_Channel.h"
 #include "HTBP_Session.h"
+#include "ace/Reactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

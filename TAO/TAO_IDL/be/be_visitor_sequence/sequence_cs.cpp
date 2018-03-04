@@ -26,7 +26,24 @@ be_visitor_sequence_cs::~be_visitor_sequence_cs (void)
 
 int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 {
-  if (node->imported () || node->cli_stub_gen ())
+  // First create a name for ourselves.
+  if (node->create_name (this->ctx_->tdef ()) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_sequence_cs::")
+                         ACE_TEXT ("visit_sequence - ")
+                         ACE_TEXT ("failed creating name\n")),
+                        -1);
+    }
+
+  // We don't check cli_stub_gen() here. If we are generated more
+  // than once as an anonymous sequence, the name guard will cause
+  // the C++ preprocessor to catch it. If we are generated more than
+  // once as a typedef (caused by a comma separated list of
+  // typedefs), our name will be changed by the call above and the
+  // name guard will not catch it, but that's ok - we want to
+  // be generated for each typedef.
+  if (node->imported ())
     {
       return 0;
     }
@@ -36,13 +53,29 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
-
   be_type *bt = be_type::narrow_from_decl (node->base_type ());
+
+  if (bt == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("be_visitor_sequence_cs::")
+                         ACE_TEXT ("visit_sequence - ")
+                         ACE_TEXT ("Bad element type\n")),
+                        -1);
+    }
+
   AST_Decl::NodeType nt = bt->node_type ();
 
-  // If our base type is an anonymous sequence, generate code for it here.
+  // If our base type is an anonymous sequence, we must create a name
+  // and generate a class declaration for it as well.
   if (nt == AST_Decl::NT_sequence)
     {
+      // Temporarily make the context's tdef node 0 so the nested call
+      // to create_name will not get confused and give our anonymous
+      // sequence element type the same name as we have.
+      be_typedef *tmp = this->ctx_->tdef ();
+      this->ctx_->tdef (0);
+
       if (bt->accept (this) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -50,9 +83,11 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
                              ACE_TEXT ("visit_sequence - ")
                              ACE_TEXT ("codegen for anonymous ")
                              ACE_TEXT ("base type failed\n")),
-                           -1);
+                            -1);
         }
 
+      // Restore the tdef value.
+      this->ctx_->tdef (tmp);
     }
 
   if (be_global->alt_mapping () && node->unbounded ())
@@ -138,8 +173,8 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
         }
 
       *os << " * buffer," << be_nl
-          << "::CORBA::Boolean release" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << "::CORBA::Boolean release)" << be_uidt
+          << be_uidt_nl
           << "  : " << be_idt << be_idt;
 
       // Pass it to the base constructor.

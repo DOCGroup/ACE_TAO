@@ -21,7 +21,7 @@
  *
  * @brief be_visitor_typedef_cs
  *
- * This is a concrete visitor to generate the server header for typedef
+ * This is a concrete visitor to generate the client source for typedef
  */
 class be_visitor_typedef_cs : public be_visitor_typedef
 {
@@ -34,6 +34,9 @@ public:
 
   /// visit typedef. We provide code for this method in the derived class
   virtual int visit_typedef (be_typedef *node);
+
+  /// visit a sequence
+  virtual int visit_sequence (be_sequence *node);
 };
 
 #endif /* _BE_VISITOR_TYPEDEF_TYPEDEF_CS_H_*/

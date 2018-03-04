@@ -1,5 +1,3 @@
-$Id$
-
 CatIOR is a utility that takes in a stringified IOR and decodes it,
 printing out the information contained in it.
 

@@ -29,7 +29,7 @@ class Simple_Test;
 class Event_AnyPushConsumer : public TAO_Notify_Tests_PushConsumer
 {
 public:
-  /// Contructor.
+  /// Constructor.
   Event_AnyPushConsumer (Simple_Test *test_client);
 
   // = PushSupplier methods

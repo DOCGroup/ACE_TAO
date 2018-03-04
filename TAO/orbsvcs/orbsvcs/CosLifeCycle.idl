@@ -80,11 +80,6 @@ module CosLifeCycle
 
   interface LifeCycleObject
     {
-      // = TITLE
-      //   @@ Please fill in.
-      // = DESCRIPTION
-      //   @@ Please fill in.
-
       LifeCycleObject copy (in FactoryFinder there,
                             in Criteria the_criteria)
         raises (NoFactory, NotCopyable, InvalidCriteria, CannotMeetCriteria);
@@ -97,11 +92,6 @@ module CosLifeCycle
 
   interface GenericFactory
     {
-      // = TITLE
-      //   @@ Please fill in.
-      // = DESCRIPTION
-      //   @@ Please fill in.
-
       boolean _supports (in Key k);
       Object create_object (in Key k,
                             in Criteria the_criteria)

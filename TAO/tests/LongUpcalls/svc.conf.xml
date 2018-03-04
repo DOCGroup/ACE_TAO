@@ -1,9 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./tests/LongUpcalls/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--  -->
- <!--   -->
- <!--  -->
  <static id="Resource_Factory" params="-ORBFlushingStrategy blocking"/>
  <static id="Client_Strategy_Factory" params="-ORBClientConnectionHandler MT -ORBTransportMuxStrategy MUXED"/>
 </ACE_Svc_Conf>

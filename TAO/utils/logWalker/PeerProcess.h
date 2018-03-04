@@ -47,11 +47,15 @@ public:
 class Transport
 {
 public:
-  Transport (const char *addr, bool is_client, size_t offset);
+  Transport (const char *addr, bool is_client, size_t offset, const ACE_CString &time);
+  void close (size_t offset, const ACE_CString &time);
+
   long handle_;
   Endpoint client_endpoint_;
   size_t open_offset_;
+  ACE_CString open_time_;
   size_t close_offset_;
+  ACE_CString close_time_;
 };
 
 
@@ -64,11 +68,12 @@ class PeerProcess
 {
 public:
   static char *nextIdent(bool is_server);
-  PeerProcess (size_t offset, bool is_server);
+  PeerProcess (size_t offset, const ACE_CString &time, bool is_server);
 
   virtual ~PeerProcess (void);
 
   const char * id (void) const;
+  void split_filename (char *buffer, size_t len) const;
 
   void set_owner (HostProcess *host);
   HostProcess *owner (void);
@@ -112,6 +117,7 @@ private:
   PeerObjectTable objects_;
   InvocationList invocations_;
   ObjectByIndex object_by_index_;
+  ACE_CString first_time_;
 };
 
 

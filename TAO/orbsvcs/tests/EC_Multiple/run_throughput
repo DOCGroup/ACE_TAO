@@ -1,7 +1,4 @@
 #!/bin/sh
-#
-# $Id$
-#
 
 MSG_COUNT=500
 # The number of messages to send.

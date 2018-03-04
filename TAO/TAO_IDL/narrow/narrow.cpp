@@ -147,9 +147,7 @@ DeclAsScope (AST_Decl *d)
        * field and iterating
        */
       d = (AST_InterfaceFwd::narrow_from_decl (d))->full_definition ();
-      /*
-       * Fall through
-       */
+      // fallthrough
     case AST_Decl::NT_interface:
       return AST_Interface::narrow_from_decl (d);
     case AST_Decl::NT_valuetype:

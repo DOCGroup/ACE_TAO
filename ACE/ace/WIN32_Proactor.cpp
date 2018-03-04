@@ -635,12 +635,6 @@ ACE_WIN32_Proactor::application_specific_code (ACE_WIN32_Asynch_Result *asynch_r
                                                const void *completion_key,
                                                u_long error)
 {
-  // *NOTE*: on Win32 with MSVC (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS set), this
-  //         needs to be compiled with '/EHa' to work properly, otherwise
-  //         'finally' is skipped, leaking memory
-  // *TODO*: the default (auto-)generated MPC MSVC project files do not enforce
-  //         this (uses '/EHsc', see $MPC_ROOT/templates/nmakedll.mpt:36)
-  // *WORKAROUND*: #undef(ine) ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS in config.h
   ACE_SEH_TRY
     {
       // Call completion hook

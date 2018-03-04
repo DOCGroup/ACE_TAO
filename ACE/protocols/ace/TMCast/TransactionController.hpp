@@ -1,9 +1,9 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
-#include "ace/Bound_Ptr.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/Synch_Traits.h"
+#include "ace/Synch.h"
+#include "ace/Bound_Ptr.h"
 
 #include "Protocol.hpp"
 #include "Messaging.hpp"
@@ -366,7 +366,7 @@ namespace ACE_TMCast
 
   private:
     // FUZZ: disable check_for_ACE_Guard
-    typedef ACE_Guard<ACE_SYNCH_MUTEX> AutoLock;
+    typedef ACE_Guard<ACE_Thread_Mutex> AutoLock;
     // FUZZ: enable check_for_ACE_Guard
 
     // bool trace_;

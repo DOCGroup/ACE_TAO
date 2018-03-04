@@ -451,7 +451,7 @@ ACE_SSL_Asynch_Stream::do_SSL_shutdown (void)
 
   int retval = ::SSL_shutdown (this->ssl_);
 
-  int status = ::SSL_get_error (this->ssl_, retval);
+  int const status = ::SSL_get_error (this->ssl_, retval);
 
   switch (status)
     {

@@ -50,7 +50,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
       void* placement = this->pool_ + c * chunk_size;
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<T>);
     }
-  // Put into free list using placement contructor, no real memory
+  // Put into free list using placement constructor, no real memory
   // allocation in the above <new>.
 }
 
@@ -128,7 +128,7 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Dynamic_Cached_Allocator
 
       this->free_list_.add (new (placement) ACE_Cached_Mem_Pool_Node<char>);
     }
-  // Put into free list using placement contructor, no real memory
+  // Put into free list using placement constructor, no real memory
   // allocation in the above <new>.
 }
 
@@ -516,17 +516,17 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   this->lock_ = ACE_Malloc_Lock_Adapter_T<ACE_LOCK> ()(pool_name);
-  if (this->lock_ == 0)
-    return;
+  if (this->lock_ != 0)
+    {
+      this->delete_lock_ = true;
 
-  this->delete_lock_ = true;
+      this->bad_flag_ = this->open ();
 
-  this->bad_flag_ = this->open ();
-
-  if (this->bad_flag_ == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
+      if (this->bad_flag_ == -1)
+        ACELIB_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
+    }
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
@@ -541,16 +541,16 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
   // Use pool_name for lock_name if lock_name not passed.
   const ACE_TCHAR *name = lock_name ? lock_name : pool_name;
   this->lock_ = ACE_Malloc_Lock_Adapter_T<ACE_LOCK> ()(name);
-  if (this->lock_ == 0)
-    return;
+  if (this->lock_ != 0)
+    {
+      this->delete_lock_ = true;
 
-  this->delete_lock_ = true;
-
-  this->bad_flag_ = this->open ();
-  if (this->bad_flag_ == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
+      this->bad_flag_ = this->open ();
+      if (this->bad_flag_ == -1)
+        ACELIB_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%p\n"),
+                    ACE_TEXT ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T")));
+    }
 }
 
 

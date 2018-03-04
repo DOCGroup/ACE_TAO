@@ -1,3 +1,4 @@
+#! /usr/bin/perl
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
@@ -58,7 +59,6 @@ $ucname = uc $name;
 
 $prologue = '
 // -*- C++ -*-
-// ' . '$' . 'Id' . '$
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl '."$flags".'
 // ------------------------------'."

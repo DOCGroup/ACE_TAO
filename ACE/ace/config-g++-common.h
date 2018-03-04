@@ -31,29 +31,17 @@
 #  define ACE_HAS_NEW_NOTHROW
 #endif /* __GNUC__ >= 3.3 */
 
-#if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7))
+#if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7)) || defined __clang__
 # if __cplusplus > 199711L
 #  define ACE_HAS_CPP11
 # endif
 # if __cplusplus > 201103L
 #  define ACE_HAS_CPP14
 # endif
-#endif /* __GNUC__ >= 4.7 */
-
-// *NOTE*: this feature may go back further, see e.g.:
-//         https://gcc.gnu.org/projects/cxx0x.html
-#if defined (ACE_HAS_CPP11)
-# if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 3))
-#  define ACE_HAS_CPP11_EXTERN_TEMPLATES
-# endif /* __GNUC__ >= 4.3 */
-
-// *NOTE*: suppress a warning, g++ 5.2.1 does not support attributes on template
-// instantiation declarations
-// *TODO*: this probably goes back further than 5.2
-# if (__GNUC__ >= 6 || (__GNUC__ == 5 && __GNUC_MINOR__ >= 2))
-#  define ACE_LACKS_CPP11_EXTERN_TEMPLATE_ATTRIBUTES
-# endif /* __GNUC__ >= 5.2 */
-#endif /* ACE_HAS_CPP11 */
+# if __cplusplus > 201402L
+#  define ACE_HAS_CPP17
+# endif
+#endif
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
 # define ACE_SIZEOF_LONG_DOUBLE 12
@@ -147,8 +135,9 @@
 #  endif
 
 #  if defined (ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS) && ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS == 1
-#   define ACE_EXPORT_SINGLETON_DECLARATION(T) template class ACE_Proper_Export_Flag T
-#   define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class ACE_Proper_Export_Flag SINGLETON_TYPE <CLASS, LOCK>;
+#   define ACE_EXPORT_SINGLETON_DECLARATION(T) __extension__ extern template class ACE_Proper_Export_Flag T
+#   define ACE_EXPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)  __extension__ extern template class ACE_Proper_Export_Flag SINGLETON_TYPE <CLASS, LOCK>;
+#   define ACE_HAS_EXPLICIT_TEMPLATE_CLASS_INSTANTIATION
 #  else  /* ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS */
 #   define ACE_EXPORT_SINGLETON_DECLARATION(T)     \
         _Pragma ("GCC visibility push(default)")  \

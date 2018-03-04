@@ -1,7 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/tests/Security/Secure_Invocation/client_nopasswd.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
  <dynamic id="SSLIOP_Factory" type="Service_Object">
    <initializer path="TAO_SSLIOP" init="_make_TAO_SSLIOP_Protocol_Factory" params="-SSLAuthenticate NONE -SSLPrivateKey PEM:client_key_nopasswd.pem -SSLCertificate PEM:client_cert.pem"/>
  </dynamic>

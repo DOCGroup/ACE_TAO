@@ -1,0 +1,509 @@
+commit 83db1ec85068af6520fbe44d324d9df34218b302
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 6 12:41:00 2016 +0200
+
+    Zapped some empty lines
+        * ACE/apps/gperf/tests/test.cpp:
+
+commit a796d2a58d1fe560af15661f4d640d9eaae20c85
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 6 09:43:53 2016 +0200
+
+    Removed the bug fix only release concept, all micro releases the last years have been stable and there is no need anymore to have a special BFO release anymore
+        * ACE/bin/make_release.py:
+        * ACE/docs/ACE-development-process.html:
+        * ACE/docs/Download.html:
+
+commit 8829191dda28a35e81d9fbe6b7c29abc9bb16524
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 19:40:35 2016 +0200
+
+    Remove ACE_STATIC_CONSTANT because there is no compiler anymore that lacks the support for static constants
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/Truncate.h:
+
+commit 999c2d14947c0e6f67061972cc8971789c5acbb4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 4 12:07:48 2016 +0200
+
+    Extended list of user visible changes
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 40cb5c604df5682bef240be456b52e135615770d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 4 10:56:18 2016 +0200
+
+    Make this script work again with newer perl versions
+        * ACE/bin/diff-builds.pl:
+
+commit 4e484bfb6c0ee71bde2313e333368a6b43fe937d
+Merge: 1dacd12 4b67e5a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 3 20:13:57 2016 +0200
+
+    gerge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 1dacd1257ed117a8c04f283e3a662cda9bda539f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 3 20:13:50 2016 +0200
+
+    Added cast to silence win32 warnings
+        * ACE/ace/Time_Value.cpp:
+
+commit 4b67e5a178658c04d86232b1bd649ecd3caf66b4
+Merge: b1d7ab6 1c7fca0
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Mon Oct 3 14:16:35 2016 +0200
+
+    Merge pull request #306 from jwillemsen/master
+    
+    Cleanup travis-ci support, some experiments for OSX but not completed
+
+commit bd14f06fed22d7c77e0c54bddcd191a883cf72ad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Oct 2 20:53:26 2016 +0200
+
+    Fixed typo
+
+commit 0c03edc0a82959b51724d49e9ec2676609d5de9a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 30 14:55:21 2016 -0500
+
+    NEWS updates
+
+commit fd0d79f44b951665480b34449d969fa20cdf43ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 27 08:24:59 2016 +0200
+
+    Set ACE_PLATFORM_CONFIG to config-android.h
+        * ACE/include/makeinclude/platform_android.GNU:
+
+commit 65a6d0bb86e9df6fd323f646a512b9527ec73cb4
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Sep 26 14:03:12 2016 -0500
+
+    Support for Android NDK r12b (Platform API 24)
+
+commit ff14fd0b2562642866130b3e1b6ccbbd318365f0
+Merge: ad376e1 41f7f57
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Sat Sep 24 09:18:25 2016 +0200
+
+    Merge pull request #301 from DOCGroup/revert-300-master
+    
+    Revert "ACE Core Typo Bug"
+
+commit 7f4cb857d93eaef328201ff95560f48eaa155c60
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 24 09:03:56 2016 +0200
+
+    Disable newer features because they lead to runtime problems on Android
+        * ACE/ace/config-android.h:
+
+commit 41f7f5747390ecc906b9677670321c37fd0879c1
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Sat Sep 24 08:14:01 2016 +0200
+
+    Revert "ACE Core Typo Bug"
+
+commit ce6a48bf72de2c6f5aa2bfc099f1e87d4246b5dd
+Merge: d788b54 ddc8667
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Fri Sep 23 13:56:22 2016 +0200
+
+    Merge pull request #300 from GaryN4/master
+    
+    ACE Core Typo Bug
+
+commit 784a25d9950a1c5587a1ca51c41ca6f84b9e3e60
+Merge: 688a39c 9979d94
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Sep 22 16:10:14 2016 -0500
+
+    Merge pull request #298 from huangminghuang/macosx_elcapitan
+    
+    Better Mac OSX support
+
+commit 688a39c1edaa36714a33c088cb3d6b0273796534
+Merge: 92223ac e573d3d
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Sep 22 16:10:09 2016 -0500
+
+    Merge pull request #297 from mitza-oci/master
+    
+    Use env var ACE_DEBUG to set ACE::debug_ from the environment.
+
+commit 9979d94aaf9ced72f193f2197dd3fa2901958363
+Author: Huang-Ming Huang <huangh@ociweb.com>
+Date:   Wed Sep 21 15:08:19 2016 -0500
+
+    remove '-all' from the filenames of  config-macosx-all.h and platform_macosx_all.GNU and rename the original *macosx.(h,GNU) files with juguar suffix
+
+commit e573d3d883eb53b4713e467dc611127a28ac4112
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Sep 21 14:28:10 2016 -0500
+
+    Fuzz script needs special comments for this case
+
+commit 1e2f6fc64b2cc8fdf6824545a77cb93a8e890c8f
+Author: Huang-Ming Huang <huangh@ociweb.com>
+Date:   Wed Sep 21 13:25:48 2016 -0500
+
+    Add ace/config-macosx-all.h and include/makeinclude/platform_macosx_all.GNU for auto-detecting macOS version
+
+commit e96e1a5f6dedc9931373e6619a6eddfd092cd144
+Author: Huang-Ming Huang <huangh@ociweb.com>
+Date:   Wed Sep 21 13:13:34 2016 -0500
+
+    Support MacOSX El Capitan without disabling the default System Integrity Protection mode.
+
+commit 5a15f3fc7dafee50bebd5436c2585021243b885e
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Sep 21 12:31:02 2016 -0500
+
+    Use env var ACE_DEBUG to set ACE::debug_ from the environment.
+    
+    Looks like this was mistakenly updated to ACELIB_DEBUG when the logging statements were changed a few years ago.
+
+commit 7771149a115f4225b32990e97b5dc01766058ca4
+Author: Huang-Ming Huang <huangh@ociweb.com>
+Date:   Wed Sep 21 09:59:59 2016 -0500
+
+    Use explicit template class instantiation for ACE_*_SINGLETON_DECLARE with GCC 4 and above
+    
+    This prevents multiple definition of typeinfo symbols during linking,
+    only seen on arm-linux-gnueabihf-g++.
+
+commit 6cfd75bc1a5c717739f37a369ab82be4089c1a3d
+Author: GaryN4 <gary.nicholls@adaptivemobile.com>
+Date:   Thu Sep 15 15:43:46 2016 +0100
+
+    Update Time_Value.inl
+
+commit 7e30d370d0c7104b2ab0ea61c1ff93b9f15797a3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 15:25:13 2016 +0200
+
+    Fixed coverity error
+        * ACE/ace/Naming_Context.cpp:
+
+commit 037b0c63d3a2fb9eb6701122930583bba3ebd9c9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 15:17:54 2016 +0200
+
+    removed commented out code
+        * ACE/ACEXML/examples/SAXPrint/main.cpp:
+
+commit 06b6bea83df9722ada3a0972db825de7750eaf33
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 15:17:01 2016 +0200
+
+    Fixed coverity reported issues
+        * ACE/ACEXML/common/Mem_Map_Stream.cpp:
+        * ACE/ACEXML/examples/SAXPrint/Print_Handler.cpp:
+        * ACE/ACEXML/examples/SAXPrint/Print_Handler.h:
+
+commit 4ebc48ab2088bb536b3810db372b830415bbe74c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 11:36:02 2016 +0200
+
+    Don't delete the member of the base in ACEXML_SAXNotSupportedException, the base class destructor already handles that
+        * ACE/ACEXML/common/SAXExceptions.cpp:
+
+commit 851196b5e70421cd62c16e47ccd3863591ffa8c7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 11:13:08 2016 +0200
+
+    Fixed reported memory leak by Coverity
+        * ACE/tests/Compiler_Features_21_Test.cpp:
+
+commit a49ca87a1393375a3c00363d94ec1ba0243ee8a1
+Merge: 37ce198 8e8a781
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Mon Sep 12 08:51:00 2016 +0200
+
+    Merge pull request #279 from dlifshitz-maca/BZ-4216_01
+    
+    BZ-4216 Android build fails when not cross-compiled on Linux
+
+commit 8e8a781442a5ae5e4938a469ac5e8df91f3707bd
+Author: David Lifshitz <dlifshitz@macadamian.com>
+Date:   Tue Aug 2 16:30:12 2016 -0400
+
+    BZ-4216 Android build fails when not cross-compiled on Linux
+    
+    [Changed]
+    platform_android.GNU
+    - removed extra comment and include
+
+commit 37ce198752139f0886592ff78879d0051736bb9a
+Merge: 4b78b50 e240612
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Sun Sep 11 12:45:10 2016 +0200
+
+    Merge pull request #292 from jwillemsen/master
+    
+    Use std::abs instead of abs
+
+commit 4b78b50b8a0ebeb75a285d0f5c7240bb6bad7ca6
+Merge: 5a33d55 f4bfd1c
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Sun Sep 11 11:18:32 2016 +0200
+
+    Merge pull request #291 from ops/master
+    
+    Take 2: Handle system functions that may be defined as macros on some…
+
+commit e24061216228b5ead1ea90e3e9d0d4df8df8b8f4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 11 11:02:43 2016 +0200
+
+    Use std::abs instead of abs
+        * ACE/ace/Time_Value.cpp:
+
+commit f4bfd1ca023c8ea58aa3ca4147ff883b12ecde37
+Author: Olli Savia <ops@iki.fi>
+Date:   Fri Sep 9 18:07:48 2016 +0300
+
+    Moved ACE_LACKS_xxxTIME_R defines to config-win32-msvc.h
+
+commit c982c07989a3286e0f91705f0583b1ffad2dcda0
+Author: Olli Savia <ops@iki.fi>
+Date:   Fri Sep 9 17:47:40 2016 +0300
+
+    Take 2: Handle system functions that may be defined as macros on some platforms
+
+commit 5a33d55ef56723226a3d4ac779ecd4fe96530c38
+Merge: d19738b 58100d3
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Fri Sep 9 09:03:12 2016 +0200
+
+    Merge pull request #200 from INMarkus/Bug#4084-Patch
+    
+    Fix for  Bug 4084 - ACE_Time_Value::set(double) hangs on large numbers
+
+commit bc841d6bb68196f65d0286bd118af7fe3b67efdc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 8 12:13:24 2016 +0200
+
+    Use stati65 with MinGW
+        * ACE/ace/OS_NS_sys_stat.h:
+
+commit 03ef5706e8b3dcdd8de7636f39aaca7543b23283
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 2 20:53:02 2016 +0200
+
+    Revert "*_SINGLETON_DECLARE needs to appear in .cpp files, not .h."
+    
+    This reverts commit 411929ec7d2550f289eb1a2f045f2fc6651cb002.
+
+commit 411929ec7d2550f289eb1a2f045f2fc6651cb002
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Aug 24 15:40:44 2016 -0500
+
+    *_SINGLETON_DECLARE needs to appear in .cpp files, not .h.
+    
+    This prevents multiple definition of typeinfo symbols during linking,
+    only seen on arm-linux-gnueabihf-g++ but the code is invalid C++ on
+    all platforms.
+
+commit c6a04b11d5e960451861a5d51d469dc48376a05f
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Aug 24 15:39:55 2016 -0500
+
+    fixed makefile syntax error
+
+commit 72c5994d4fae5813925762afd1f1cc102ae88944
+Merge: b3b4e68 1b4dabc
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Aug 10 10:27:05 2016 -0500
+
+    Merge pull request #282 from oschwaldp-oci/topic_footprint_fixes
+    
+    Footprint script fixes
+
+commit 33c4e1e642d55814fd7bcd044a6ac7871208dbc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 13:52:48 2016 +0200
+
+    Layout change
+        * ACE/ace/POSIX_Proactor.cpp:
+
+commit 68e2cf228e4f053358361993c4dccfde507ab9f7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 13:52:41 2016 +0200
+
+    removed SGI from comment, not used anymore
+        * ACE/ace/OS_NS_sys_mman.inl:
+
+commit ca6d7f0a90498b003eaa541394c3cb4d54d0f148
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 13:49:57 2016 +0200
+
+    Removed old left over of SGI
+        * ACE/ace/POSIX_Proactor.cpp:
+
+commit 571605a737200863989ba3d438e15619da419b1d
+Merge: 18cb084 a87c34e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 13:47:53 2016 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit ad958e7639275dc8626599ac0bfcc805a7e4ea76
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 13:28:52 2016 +0200
+
+    Fixed typos
+        * ACE/examples/QOS/Change_Receiver_FlowSpec/QoS_Util.cpp:
+        * ACE/examples/QOS/Change_Sender_TSpec/QoS_Util.cpp:
+        * ACE/examples/QOS/Simple/QoS_Util.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Supplier.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/distributer.h:
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/sender.h:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable/server.h:
+
+commit 1b4dabcbd23e2892df7766bb719a64e001bdd9a5
+Author: Peter Oschwald <oschwaldp@ociweb.com>
+Date:   Tue Aug 9 16:48:47 2016 -0500
+
+    Remove sed search and replace as it malfunctions with files or directories ending or beginning with a 0, which in some cases like tests, causes the output links to break in the created report pages.
+
+commit b17449e2d53c67fb7343e594d65dcbd915d1d0b0
+Author: Peter Oschwald <oschwaldp@ociweb.com>
+Date:   Tue Aug 9 11:41:05 2016 -0500
+
+    Fix use case for non-ACE/TAO/CIAO/DAnCE footprint calculations.  Need to actually populate an array to pass to sort_list.
+
+commit 72485ec324e2c11a24ec679e8269c38122e323fc
+Author: David Lifshitz <dlifshitz@macadamian.com>
+Date:   Tue Aug 2 16:36:20 2016 -0400
+
+    BZ-4217 Android 6 with 3rd party AIO not working
+    
+    [Changed]
+    POSIX_Proactor.cpp
+    - disable an OS bounds check for Android since it does not support AIO
+      and ACE_HAS_AIO_CALLS will only be defined if a 3rd party lib is used
+    
+    [Tests]
+    Test 1:
+    1) Compile ACE for Android using a 3rd party AIO lib
+    2) In the implementation of ACE_Service_Handler::open, try to read from
+       an ACE_Asynch_Read_Stream
+    3) Verify it returns >= 0 with no error
+
+commit a84855c64690c8048fe1a8513c0a8b54af345b4b
+Author: David Lifshitz <dlifshitz@macadamian.com>
+Date:   Tue Aug 2 16:30:12 2016 -0400
+
+    BZ-4216 Android build fails when not cross-compiled on Linux
+    
+    [Changed]
+    platform_android.GNU
+    - replace the platform_linux_common.GNU include with its contents
+      except the erroneous call to getconf
+    
+    [Tests]
+    Test 1:
+    1) Compile ACE for Android using OSX or Windows
+    2) Verify build is successful
+
+commit c752cc58a68f2f91da9550764a55b6dc7f91432c
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Jul 7 20:15:29 2016 -0400
+
+    Case 2025, see notes
+    (cherry picked from commit ce6901f995267e3bc2cf5695c1bca42bd07b44b0)
+
+commit 7627b5e0073d58550491af5493237880f514b66a
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Jul 14 15:13:27 2016 -0400
+
+    Revert "Case 2025, see notes"; should have made this a pull request.
+    
+    This reverts commit dcdedb05f23e55c2c9b718e666554ed6e75d99a5.
+
+commit dcdedb05f23e55c2c9b718e666554ed6e75d99a5
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Jul 7 20:15:29 2016 -0400
+
+    Case 2025, see notes
+    (cherry picked from commit ce6901f995267e3bc2cf5695c1bca42bd07b44b0)
+
+commit 64e20f76a068d75086794de63f31388c249ccad7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 6 20:18:13 2016 +0200
+
+    Removed empty comment lines
+        * ACE/tests/Compiler_Features_20_DLL.cpp:
+        * ACE/tests/Compiler_Features_22_DLL.cpp:
+
+commit b1b43173cff6eb21a5f7e9ce8ab18f62b2304225
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 6 09:30:47 2016 +0200
+
+    Updated lin
+        * ACE/ace/config-macosx-sierra.h:
+
+commit 0f7b8dcc81a8c1d7ebd1fb70573f1657dbb8ee80
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 6 09:29:40 2016 +0200
+
+    Fixed some version numbers
+        * ACE/debian/debian.control:
+
+commit a2b3e76ab4407981816cfa903b9fc749b8c53886
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 6 09:29:31 2016 +0200
+
+    New files for MacOSX 10.12 (Sierra)
+        * ACE/ace/config-macosx-sierra.h:
+        * ACE/include/makeinclude/platform_macosx_sierra.GNU:
+          Added.
+
+commit 7c7157b6132b68a04f064a1bdb949b9f9acc7188
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 09:31:26 2016 +0200
+
+    No CIAO+DAnCE
+        * ACE/docs/Download.html:
+
+commit da68e30dd6e6939b6aade74c46e25ca8594d7182
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 4 08:58:23 2016 +0200
+
+    Prepare for next release
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 58100d3aeae33252ad12446f620382734e8f02d2
+Author: INMarkus <markus.hossner@innovative-navigation.de>
+Date:   Tue Feb 23 11:39:20 2016 +0100
+
+    Update Time_Value_Test.cpp
+    
+    Added tests for setting of double values and to check performance of normalize for large numbers.
+
+commit 5f2fcf252b7b9790a2cb27e57f9d90ae7ea32f9e
+Author: INMakrus <markus.hossner@innovative-navigation.de>
+Date:   Mon Feb 22 23:18:46 2016 +0100
+
+    Update Time_Value.cpp
+    
+    - Better performance by not using a loop for normalizing time values
+
+commit 53f4a8826c9002a81f8c37acee13778c3f6674d0
+Author: INMakrus <markus.hossner@innovative-navigation.de>
+Date:   Mon Feb 22 23:17:29 2016 +0100
+
+    Update Time_Value.inl
+    
+    - Handle big positiv and negativ double values by limiting them to possible values for sec and usec
+    - Correct round for negativ double values: -10.5 => -10 -500000 (not -10 -499999)
+    - no normalize needed cause result is already normalized

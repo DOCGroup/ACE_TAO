@@ -474,7 +474,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (myAny_var.in () >>= myNestedValueExtracted)
         {
           ACE_DEBUG ((LM_DEBUG,
-            "..%N:%l FAILED the extraction occured without factory\n"));
+            "..%N:%l FAILED the extraction occurred without factory\n"));
           return 1;
         }
 
@@ -708,7 +708,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       myNullValueExtracted= reinterpret_cast<DynValue_Test::NullValue::_ptr_type> (9);
       if (myAny_var.in () >>= myNullValueExtracted)
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED the extraction occured without factory\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED the extraction occurred without factory\n"));
           return 1;
         }
 
@@ -1020,7 +1020,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       myTruncExtracted= reinterpret_cast<DynValue_Test::Trunc::_ptr_type> (9);
       if (myAny_var.in () >>= myTruncExtracted)
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED the extraction occured without factory\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED the extraction occurred without factory\n"));
           return 1;
         }
 
@@ -1160,7 +1160,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       myBaseExtracted= reinterpret_cast<DynValue_Test::BaseValue::_ptr_type> (9);
       if (myAny_var.in () >>= myBaseExtracted)
         {
-          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED the extraction occured without factory\n"));
+          ACE_DEBUG ((LM_DEBUG, "..%N:%l FAILED the extraction occurred without factory\n"));
           return 1;
         }
 

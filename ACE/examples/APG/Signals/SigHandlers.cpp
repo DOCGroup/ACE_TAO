@@ -19,7 +19,7 @@ public:
     // Make sure the right handler was called back..
     ACE_ASSERT(signum == this->signum_);
 
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d occured\n"), signum));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d occurred\n"), signum));
 
     return 0;
   }

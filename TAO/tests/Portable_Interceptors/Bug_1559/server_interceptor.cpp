@@ -241,7 +241,7 @@ Echo_Server_Request_Interceptor::send_other (
   // LOCATION_FORWARD reply.
 
   // This will throw an exception if a location forward has not
-  // occured.  If an exception is thrown then something is wrong with
+  // occurred.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.
   CORBA::Object_var forward = ri->forward_reference ();
 

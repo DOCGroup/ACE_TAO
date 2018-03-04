@@ -1,6 +1,3 @@
-
-# $Id$
-#
 # This is the list of tests that need to be run by run_test.pl.
 # Each line has its own test, and a test can be followed by a
 # list of platforms it runs or does not run on.
@@ -109,6 +106,9 @@ Compiler_Features_32_Test
 Compiler_Features_33_Test
 Compiler_Features_34_Test
 Compiler_Features_35_Test
+Compiler_Features_36_Test
+Compiler_Features_37_Test
+Compiler_Features_38_Test
 Config_Test: !LynxOS !VxWorks !ACE_FOR_TAO
 Conn_Test: !ACE_FOR_TAO
 DLL_Test: !STATIC Linux
@@ -218,6 +218,7 @@ Reverse_Lock_Test
 RW_Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP !Cygwin
 Sendfile_Test: !QNX !NO_NETWORK !VxWorks !LabVIEW_RT
 Signal_Test: !VxWorks !Cygwin
+SOCK_Acceptor_Test: !NO_NETWORK
 SOCK_Connector_Test: !NO_NETWORK
 SOCK_Netlink_Test: !ACE_FOR_TAO
 SOCK_Send_Recv_Test: !NO_NETWORK
@@ -233,10 +234,12 @@ Service_Config_Stream_Test: !STATIC !FIXED_BUGS_ONLY
 Sigset_Ops_Test
 Simple_Message_Block_Test
 Singleton_Test
+Singleton_Restart_Test
 Svc_Handler_Test: !ACE_FOR_TAO
 Task_Wait_Test
 TP_Reactor_Test: !ACE_FOR_TAO
 TSS_Test
+TSS_Leak_Test: !ST !FIXED_BUGS_ONLY
 TSS_Static_Test
 Task_Test
 Task_Group_Test

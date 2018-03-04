@@ -1,5 +1,0 @@
-// -*- MPC -*-
-project : ami4ccm_stub, ccm_session_stub {
-  after += AMI4CCM_lem_stub
-  libs += AMI4CCM_lem_stub
-}

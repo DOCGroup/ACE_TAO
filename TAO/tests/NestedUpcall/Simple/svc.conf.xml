@@ -1,8 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./tests/NestedUpcall/Simple/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <!-- static Resource_Factory "-ORBReactorType tp" -->
  <!-- static Server_Strategy_Factory "-ORBConcurrency thread-per-connection" -->
 </ACE_Svc_Conf>

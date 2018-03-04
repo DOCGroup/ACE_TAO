@@ -70,8 +70,8 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
     }
   catch (CORBA::UnknownUserException& user_ex)
     {
-      Param_Test::Ooops* oops;
-      Param_Test::BadBoy* bad_boy;
+      const Param_Test::Ooops* oops = 0;
+      const Param_Test::BadBoy* bad_boy = 0;
 
       if (user_ex.exception () >>= oops)
         {

@@ -215,7 +215,8 @@ Test_Any::reset_parameters (void)
 
         if (TAO_debug_level > 0)
           {
-            Param_Test::Big_Union *bu_in, *bu_inout;
+            const Param_Test::Big_Union *bu_in = 0;
+            const Param_Test::Big_Union *bu_inout = 0;
             this->in_ >>= bu_in;
             this->inout_ >>= bu_inout;
             ACE_DEBUG ((LM_DEBUG,
@@ -238,7 +239,8 @@ Test_Any::reset_parameters (void)
 
         if (TAO_debug_level > 0)
           {
-            Param_Test::Small_Union *bu_in, *bu_inout;
+            const Param_Test::Small_Union *bu_in = 0;
+            const Param_Test::Small_Union *bu_inout = 0;
             this->in_ >>= bu_in;
             this->inout_ >>= bu_inout;
             ACE_DEBUG ((LM_DEBUG,
@@ -280,11 +282,11 @@ Test_Any::check_validity (void)
   const char *str_ret;
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
   Param_Test::Fixed_Array_forany array_in, array_inout, array_out, array_ret;
-  Param_Test::Bounded_Short_Seq *bdss_in, *bdss_inout, *bdss_out, *bdss_ret;
-  CORBA::ShortSeq *ubss_in, *ubss_inout, *ubss_out, *ubss_ret;
-  Param_Test::Fixed_Struct *fs_in, *fs_inout, *fs_out, *fs_ret;
-  Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
-  Param_Test::Small_Union *su_in, *su_inout, *su_out, *su_ret;
+  const Param_Test::Bounded_Short_Seq *bdss_in, *bdss_inout, *bdss_out, *bdss_ret;
+  const CORBA::ShortSeq *ubss_in, *ubss_inout, *ubss_out, *ubss_ret;
+  const Param_Test::Fixed_Struct *fs_in, *fs_inout, *fs_out, *fs_ret;
+  const Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
+  const Param_Test::Small_Union *su_in, *su_inout, *su_out, *su_ret;
 
   if ((this->in_ >>= short_in) &&
       (this->inout_ >>= short_inout) &&

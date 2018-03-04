@@ -374,7 +374,6 @@ ifeq ($(VXWORKSLINK), 1)
     endif
   endif
 
-.PHONY: $(PRJ_DIR)/$(PRJ_FILE)
   ## special target to satisfy VxWorks dependencies for images
 $(PRJ_DIR)/$(PRJ_FILE):
   ifeq ($(repo),1)

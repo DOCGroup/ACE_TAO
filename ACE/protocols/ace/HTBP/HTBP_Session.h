@@ -12,10 +12,10 @@
 #define ACE_HTBP_SESSION_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Hash_Map_Manager.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Message_Queue.h"
 #include "ace/SOCK_IO.h"
+#include "ace/Hash_Map_Manager.h"
+#include "ace/Synch.h"
+#include "ace/Message_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

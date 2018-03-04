@@ -589,7 +589,7 @@ TAO_Notify_Consumer::dispatch_from_queue (
 }
 
 /// @todo: rather than is_error, use pacing interval so it will be configurable
-/// @todo: find some way to use batch buffering stratgy for sequence consumers.
+/// @todo: find some way to use batch buffering strategy for sequence consumers.
 void
 TAO_Notify_Consumer::schedule_timer (bool is_error)
 {

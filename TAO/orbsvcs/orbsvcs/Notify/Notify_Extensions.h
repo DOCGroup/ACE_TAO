@@ -21,7 +21,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify_Extensions
 {
-  TAO_NAMESPACE_STORAGE_CLASS const char BlockingPolicy[];
+  extern TAO_Notify_Export const char BlockingPolicy[];
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

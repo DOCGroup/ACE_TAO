@@ -2,8 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
-#
 # Drop-in replacement for "ld" that supports munching.
 #
 # The first three lines above let this script run without specifying the

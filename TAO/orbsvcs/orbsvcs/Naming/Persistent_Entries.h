@@ -70,7 +70,7 @@ public:
  * @class TAO_Persistent_ExtId
  *
  * @brief Helper class for TAO_Persistent_Bindings_Map: unifies several
- * data items, so they can be stored together as a  <key>
+ * data items, so they can be stored together as a <key>
  * for a <value> in a hash table holding the state of a Persistent
  * Naming Context.
  *
@@ -109,17 +109,17 @@ public:
   /// Inequality comparison operator.
   bool operator!= (const TAO_Persistent_ExtId &rhs) const;
 
-  /// <hash> function is required in order for this class to be usable by
+  /// hash() function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
   u_long hash (void) const;
 
   // = Data members.
 
-  /// <id> portion of the name to be associated with some object
+  /// id portion of the name to be associated with some object
   /// reference in a Persistent Naming Context.
   const char * id_;
 
-  /// <kind> portion of the name to be associated with some object
+  /// kind portion of the name to be associated with some object
   /// reference in a Persistent Naming Context.
   const char * kind_;
 

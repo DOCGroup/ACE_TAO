@@ -1,9 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/tests/Security/MT_SSLIOP/client.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--  -->
- <!--   -->
- <!--  -->
  <dynamic id="SSLIOP_Factory" type="Service_Object">
    <initializer path="TAO_SSLIOP" init="_make_TAO_SSLIOP_Protocol_Factory" params="-SSLAuthenticate SERVER_AND_CLIENT -SSLPrivateKey PEM:ssl/client-key.pem -SSLCertificate PEM:ssl/client-cert.pem -SSLCAFile PEM:ssl/ca.pem"/>
  </dynamic>

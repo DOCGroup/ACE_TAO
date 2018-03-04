@@ -28,7 +28,7 @@ class Events;
 class Event_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Contructor.
+  /// Constructor.
   Event_StructuredPushConsumer (Events *test_client);
 
   // = StructuredPushSupplier methods.

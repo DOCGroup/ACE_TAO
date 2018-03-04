@@ -10,8 +10,7 @@ PushConsumer_impl::PushConsumer_impl(CORBA::ORB_ptr orb)
 
 
 void
-PushConsumer_impl::push (const RtecEventComm::EventSet & event
-             )
+PushConsumer_impl::push (const RtecEventComm::EventSet & event)
 {
   CORBA::ULong x;
   ACE_Time_Value time_val = ACE_OS::gettimeofday ();

@@ -13,7 +13,7 @@
 // See Appendix A for a chart of POSIX calls that are excluded from the
 // various profiles.
 // The top half of this file is only included if the user enables Safety Base,
-// so these are exclusions that aply to Base but not to Extended.
+// so these are exclusions that apply to Base but not to Extended.
 // The bottom half is included for either profile, so it contains restrictions
 // that are common to both Based and Extended.
 // Keep macro definitions in sorted order.  Macros set by this file that are

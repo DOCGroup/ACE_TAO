@@ -455,7 +455,7 @@ Key_List::already_determined (List_Node *ptr)
   return is_determined;
 }
 // Reorders the table by first sorting the list so that frequently
-// occuring keys appear first, and then the list is reorded so that
+// occurring keys appear first, and then the list is reorded so that
 // keys whose values are already determined will be placed towards the
 // front of the list.  This helps prune the search time by handling
 // inevitable collisions early in the search process.  See Cichelli's

@@ -1,9 +1,8 @@
 #include "ace/streams.h"
-
+#include "ace/Synch.h"
+#include "ace/Singleton.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Callback.h"
-#include "ace/Singleton.h"
-#include "ace/Synch_Traits.h"
 
 #ifndef LOG_MANAGER_H
 #define LOG_MANAGER_H
@@ -93,7 +92,7 @@ LogManager::redirectToCallback (ACE_Log_Msg_Callback * callback)
 // Listing 2
 
 // Listing 3 code/ch03
-typedef ACE_Singleton<LogManager, ACE_SYNCH_NULL_MUTEX>
+typedef ACE_Singleton<LogManager, ACE_Null_Mutex>
         LogManagerSingleton;
 #define LOG_MANAGER LogManagerSingleton::instance()
 // Listing 3

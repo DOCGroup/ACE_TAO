@@ -45,10 +45,8 @@
 #define ACE_LACKS_SYS_MSG_H
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_SYS_SYSCTL_H
-#define ACE_LACKS_UCONTEXT_H
 
 #define ACE_LACKS_CUSERID
-#define ACE_LACKS_FD_MASK
 #define ACE_LACKS_GETHOSTENT
 #define ACE_LACKS_GETLOADAVG
 #define ACE_LACKS_ISCTYPE
@@ -125,6 +123,8 @@
 #if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
 # define ACE_HAS_ISASTREAM_PROTOTYPE
 # define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
+# define ACE_HAS_CPU_SET_T
+#elif __ANDROID_API__ >= 21
 # define ACE_HAS_CPU_SET_T
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
@@ -331,6 +331,15 @@
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
+#if __ANDROID_API__ < 21
+# define ACE_LACKS_UCONTEXT_H
+#else
+# define ACE_HAS_CLOCK_SETTIME
+# define ACE_HAS_UCONTEXT_T
+#endif
+
+#define ACE_LACKS_FD_MASK
+
 #if __ANDROID_API__ >= 9
 # define ACE_HAS_TIMEZONE
 #endif
@@ -346,10 +355,6 @@
 #elif __ANDROID_API__ == 8
 # define ACE_LACKS_REGEX_H 1
 # define ACE_LACKS_CONDATTR 1
-#elif __ANDROID_API__ == 9
-#elif __ANDROID_API__ == 14
-#else
-# error Unsupported Android release
 #endif
 
 #if !defined ACE_DEFAULT_TEMP_DIR
@@ -399,6 +404,10 @@
 #if defined (_B)
 # undef _B
 #endif
+
+// Disable newer features, result in runtime failures on Android
+#define ACE_LACKS_GETADDRINFO
+#define ACE_LACKS_GETNAMEINFO
 
 #include /**/ "ace/post.h"
 

@@ -157,7 +157,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("server: a CORBA exception occured");
+      ex._tao_print_exception ("server: a CORBA exception occurred");
       return 1;
     }
   catch (...)

@@ -41,7 +41,7 @@ static void WINAPI
 apc_callback (DWORD)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) apc occured @ %T\n"));
+              "(%t) apc occurred @ %T\n"));
 
   global_event_handler->handle_.signal ();
 }
@@ -79,7 +79,7 @@ Event_Handler::handle_timeout (const ACE_Time_Value &,
                                const void *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) timeout occured @ %T\n"));
+              "(%t) timeout occurred @ %T\n"));
   queue_apc ();
   return 0;
 }

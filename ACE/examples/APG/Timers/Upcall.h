@@ -2,9 +2,9 @@
 #if !defined(UPCALL_H)
 #define UPCALL_H
 
-#include "ace/Synch_Traits.h"
 #include "ace/Timer_Queue_T.h"
 #include "ace/Timer_Heap_T.h"
+#include "ace/Synch.h"
 
 #include "PCB.h"
 
@@ -14,16 +14,14 @@ class UpcallHandler;
 typedef ACE_Timer_Queue_T<PCB,
                           UpcallHandler,
                           ACE_SYNCH_NULL_MUTEX,
-                          ACE_Default_Time_Policy>
-  PTimerQueue;
+                          ACE_Default_Time_Policy> PTimerQueue;
 
 // Create a special heap-based timer queue that allows you to
 // control exactly how timer evetns are handled.
 typedef ACE_Timer_Heap_T<PCB,
                          UpcallHandler,
                          ACE_SYNCH_NULL_MUTEX,
-                         ACE_Default_Time_Policy>
-  PTimerHeap;
+                         ACE_Default_Time_Policy> PTimerHeap;
 // Listing 1
 
 class UpcallHandler

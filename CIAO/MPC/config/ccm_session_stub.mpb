@@ -1,5 +1,0 @@
-// -*- MPC -*-
-project : ccm_lem_stub {
-  after += CCM_session_stub
-  libs  += CCM_session_stub
-}

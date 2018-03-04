@@ -6,6 +6,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_Memory.h"
 #include "ace/Truncate.h"
+#include "ace/Malloc_Base.h"
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
 #  include "ace/OS_NS_unistd.h"
@@ -54,7 +55,7 @@ ACE_Pipe::open (int buffer_size)
     }
 
   sockaddr_un addr = {
-#ifdef ACE_VXWORKS
+#if defined(ACE_VXWORKS) || defined(__APPLE__)
     sizeof (sockaddr_un),
 #endif
     AF_LOCAL, {}};

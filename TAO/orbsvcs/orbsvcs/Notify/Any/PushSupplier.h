@@ -15,7 +15,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/Notify/Supplier.h"
 

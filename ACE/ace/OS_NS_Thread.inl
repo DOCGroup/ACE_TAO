@@ -3801,13 +3801,6 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 
 /*****************************************************************************/
 
-# if defined (ACE_IS_SPLITTING)
-#   define ACE_SPECIAL_INLINE
-# else
-#   define ACE_SPECIAL_INLINE ACE_INLINE
-//#   define ACE_SPECIAL_INLINE inline
-# endif
-
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
 ACE_INLINE

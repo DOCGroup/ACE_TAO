@@ -24,6 +24,7 @@ my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed
 
 # Variables for command-line arguments to client and server
 # executables.
+$multicast = '224.9.9.2';
 $ns_multicast_port = 10001 + $test->RandomPort(); # Can not be 10000 on Chorus 4.0
 $ns_orb_port = 12000 + $test->RandomPort();
 
@@ -43,8 +44,7 @@ $test->DeleteFile($persistent_ior_file);
 
 sub name_server
 {
-    my $args = "-ORBNameServicePort $ns_multicast_port -o $test_iorfile -m 1 @_";
-
+    my $args = "-o $test_iorfile @_";
 
     $SV = $test->CreateProcess ("$prog", "$args");
 

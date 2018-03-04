@@ -27,9 +27,18 @@ failover                  runs a primary and backup ImR Locator, verifying
                           tao_imr activities being unaffected. Must also
                           pass the "-replica" command to run_test.pl for
                           this test to run.
+manual_persistent_restart Does a test with the ImR where we are using a
+                          manual registered server that is started but
+                          then killed when the ImR is not running, using
+                          the -x <file> flag
+manual_persistent_restart_hash same as manual_persistent_restart but using -p
+manual_persistent_restart_registry same as manual_persistent_restart but using
+                                   windows registry
+manual_persistent_restart_shared same as manual_persistent_restart --directory
 
-The nt_service_ir and persistent_ir_registry tests will work only on Win32
-platforms. For the test to run successfully, these conditions must be met:
+The nt_service_ir, persistent_ir_registry, and manual_persistent_restart_registry
+tests will work only on Win32 platforms. For the test to run successfully,
+these conditions must be met:
 
 --  The user must be logged in as administrator, or have administrative
     priveleges (in order to register an NT service).

@@ -85,23 +85,28 @@ consumer (void *)
 
   par1 = currsec;
 
-  while (done == 0
-         && (c_stream.recv (mb_p) != -1))
-    if (mb_p->length () > 1)
-      {
-        cnt++;
-        if (verb)
-          cout << " consumer received message !!!!!! "
-               << mb_p->rd_ptr () << endl;
-      }
-    else
-      {
-        if (verb)
-          cout << "consumer got last mb"
-               << (char) * (mb_p->rd_ptr ()) << endl;
-        c_stream.close ();
-        done = 1;
-      }
+  while (done == 0 && (c_stream.recv (mb_p) != -1))
+    {
+      if (mb_p->length () > 1)
+        {
+          cnt++;
+          if (verb)
+            {
+              cout << " consumer received message !!!!!! "
+                  << mb_p->rd_ptr () << endl;
+            }
+        }
+      else
+        {
+          if (verb)
+            {
+              cout << "consumer got last mb"
+                  << (char) * (mb_p->rd_ptr ()) << endl;
+            }
+          c_stream.close ();
+          done = 1;
+        }
+    }
 
     ACE_OS::time (&currsec);
     par2 = currsec;

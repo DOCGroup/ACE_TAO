@@ -84,6 +84,8 @@ public:
 
   int max_env_vars (void) const;
 
+  bool detach_child (void) const;
+
 private:
   /// Parses and pulls out arguments for the ImR
   int parse_args (int &argc, ACE_TCHAR *argv[]);
@@ -122,6 +124,9 @@ private:
 
   /// Maximum number of environment variables
   int max_env_vars_;
+
+  /// Control signal handling related to child processes
+  bool detach_child_;
 };
 
 #endif

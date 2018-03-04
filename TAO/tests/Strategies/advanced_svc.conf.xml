@@ -1,7 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./tests/Strategies/advanced_svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
  <!-- This conf file is used to load the advanced strategies. -->
  <!--  dynamic UIOP_Factory Service_Object *TAO_Strategies:_make_TAO_UIOP_Protocol_Factory () "" -->
  <dynamic id="SHMIOP_Factory" type="Service_Object">

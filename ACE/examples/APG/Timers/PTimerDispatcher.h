@@ -2,9 +2,8 @@
 #if !defined(PTIMER_DISPATCHER_H)
 #define PTIMER_DISPATCHER_H
 
-#include "ace/Event.h"
 #include "ace/Singleton.h"
-#include "ace/Synch_Traits.h"
+#include "ace/Synch.h"  // needed for ACE_Event
 
 #include "Upcall.h"
 class PCB;
@@ -32,7 +31,7 @@ private:
   ACE_Event timer_;
 };
 
-typedef ACE_Singleton<PTimer_Dispatcher, ACE_SYNCH_NULL_MUTEX> PTimer;
+typedef ACE_Singleton<PTimer_Dispatcher, ACE_Null_Mutex> PTimer;
 
 #endif /*TIMER_DISPATCHER_H*/
 

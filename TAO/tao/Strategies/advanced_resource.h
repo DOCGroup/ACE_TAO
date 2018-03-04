@@ -111,9 +111,6 @@ protected:
   /// List of loaded protocol factories.
   TAO_ProtocolFactorySet protocol_factories_;
 
-  /// The type of reactor registry.
-  int reactor_registry_type_;
-
   /// Flag indicating which kind of reactor we should use.
   int reactor_type_;
 

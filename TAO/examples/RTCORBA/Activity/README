@@ -13,7 +13,7 @@ The Real-Time CORBA specification provides a high level API for programmers
 to write distributed applications in which the priority of a distributed
 thread of execution is maintained across separate hosts with potentially
 different operating systems.  It also provides support for explicit
-binding, standard sychronizers, the ability to modify transport protocol
+binding, standard synchronizers, the ability to modify transport protocol
 properties and thread pools as a standard.
 
 In this experiment we show the effect of maintaining end to end priorities.
@@ -50,12 +50,12 @@ Name - poa1
 Priority model - client propogated, def. priority = 10
 
 Bands - 2 Bands with Band values as follows -
-	Band 1 :  low priority = 1, high priority = 20
-	Band 2 :  low priority = 30, high priority = 85
+  Band 1 :  low priority = 1, high priority = 20
+  Band 2 :  low priority = 30, high priority = 85
 
 Lanes - 2 Lanes with Lane values as follows -
-	Lane 1 : priority = 10, 1 static thread, 0 dynamic threads
-	Lane 2 : priority = 80, 1 static thread, 0 dynamic threads
+  Lane 1 : priority = 10, 1 static thread, 0 dynamic threads
+  Lane 2 : priority = 80, 1 static thread, 0 dynamic threads
 
 You can specify options for creating POA, Job and Task as shown
 below. Please note that you must specify the number of POA, Job or Task via

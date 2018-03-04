@@ -1,5 +1,0 @@
-// -*- MPC -*-
-project : ccm_stub {
-  after += CCM_Cookie_Factory
-  libs += CCM_Cookie_Factory
-}

@@ -651,9 +651,14 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
 
               if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) TAO_StreamCtrl::create_B: succeeded\n"));
 
-              if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,
-                          "\n(%P|%t)stream_endpoint_b_ = %s",
-                          TAO_ORB_Core_instance ()->orb ()->object_to_string (this->sep_b_.in ())));
+              if (TAO_debug_level > 0)
+                {
+                  CORBA::String_var ep = TAO_ORB_Core_instance ()->orb ()->object_to_string (this->sep_b_.in ());
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                          "\n(%P|%t)stream_endpoint_b_ = <%C>",
+                          ep.in ()));
+                }
+
               // Define ourselves as the related_streamctrl property of the sep.
               CORBA::Any streamctrl_any;
               streamctrl_any <<= this->streamctrl_.in ();
@@ -713,9 +718,11 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
           try
             {
               CORBA::Any_ptr flows_any = this->sep_a_->get_property_value ("Flows");
-              AVStreams::flowSpec_var flows;
-              *flows_any >>= flows.out ();
-              for (CORBA::ULong i=0; i< flows->length ();++i)
+              AVStreams::flowSpec flows;
+              const AVStreams::flowSpec *temp_flows = 0;
+              *flows_any >>= temp_flows;
+              flows = *temp_flows;
+              for (CORBA::ULong i=0; i< flows.length ();++i)
                 {
                   CORBA::Object_var fep_obj =
                     this->sep_a_->get_fep (flows [i]);
@@ -906,15 +913,15 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
       AVStreams::flowSpec a_flows, b_flows;
       CORBA::Any_var flows_any;
       flows_any = sep_a_->get_property_value ("Flows");
-      AVStreams::flowSpec *temp_flows = 0;
+      const AVStreams::flowSpec *temp_flows = 0;
       flows_any.in () >>= temp_flows;
       a_flows = *temp_flows;
       flows_any = sep_b_->get_property_value ("Flows");
       flows_any.in () >>= temp_flows;
       b_flows = *temp_flows;
       u_int i;
-      FlowEndPoint_Map *a_fep_map;
-      FlowEndPoint_Map *b_fep_map;
+      FlowEndPoint_Map *a_fep_map = 0;
+      FlowEndPoint_Map *b_fep_map = 0;
       ACE_NEW_RETURN (a_fep_map,
                       FlowEndPoint_Map,
                       0);
@@ -1606,7 +1613,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
           CORBA::Any_var protocols_any =
             responder->get_property_value ("AvailableProtocols");
           AVStreams::protocolSpec peer_protocols;
-          AVStreams::protocolSpec *temp_protocols = 0;
+          const AVStreams::protocolSpec *temp_protocols = 0;
           protocols_any.in () >>= temp_protocols;
           peer_protocols = *temp_protocols;
           for (u_int i=0;i<peer_protocols.length ();i++)
@@ -4019,7 +4026,7 @@ TAO_FlowEndPoint::set_protocol_restriction (const AVStreams::protocolSpec & prot
       AvailableProtocols_property <<= protocols;
       this->define_property ("AvailableProtocols",
                              AvailableProtocols_property);
-      AVStreams::protocolSpec *temp_spec = 0;
+      const AVStreams::protocolSpec *temp_spec = 0;
       CORBA::Any_var temp_any = this->get_property_value ("AvailableProtocols");
       temp_any.in () >>= temp_spec;
       if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG, "%N:%l\n"));
@@ -4067,7 +4074,7 @@ TAO_FlowEndPoint::is_fep_compatible (AVStreams::FlowEndPoint_ptr peer_fep)
       // since formats are same, check for a common protocol
       CORBA::Any_var AvailableProtocols_ptr;
       AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
-      AVStreams::protocolSpec *temp_protocols = 0;
+      const AVStreams::protocolSpec *temp_protocols = 0;
 
       exception_message =
         "TAO_FlowEndPoint::is_fep_compatible - AvailableProtocols";
@@ -4153,7 +4160,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
       break;
     }
   AVStreams::protocolSpec my_protocol_spec, peer_protocol_spec;
-  AVStreams::protocolSpec *temp_protocols = 0;
+  const AVStreams::protocolSpec *temp_protocols = 0;
   CORBA::Any_var AvailableProtocols_ptr =
     peer_fep->get_property_value ("AvailableProtocols");
   AvailableProtocols_ptr.in () >>= temp_protocols;

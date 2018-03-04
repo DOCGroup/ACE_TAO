@@ -179,6 +179,14 @@
 }
 
 {
+   <dlopen7>
+   Memcheck:Leak
+   fun:calloc
+   fun:do_lookup_x
+   fun:_dl_lookup_symbol_x
+}
+
+{
    <insert_a_suppression_name_here>
    Memcheck:Leak
    fun:malloc

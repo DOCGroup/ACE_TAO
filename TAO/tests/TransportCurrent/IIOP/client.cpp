@@ -193,7 +193,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       catch (const Transport::NoContext& )
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Client (%P|%t) Expected exception occured when trying ")
+                      ACE_TEXT ("Client (%P|%t) Expected exception occurred when trying ")
                       ACE_TEXT ("to access traits outside the ")
                       ACE_TEXT ("interceptor or upcall context.\n")));
         }

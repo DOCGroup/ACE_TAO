@@ -14,7 +14,7 @@ module Callback_Quoter
     //   Requested stock does not exist.
 
     string reason;
-    // The message which declares the reason for this execption.
+    // The message which declares the reason for this exception.
 
   };
 

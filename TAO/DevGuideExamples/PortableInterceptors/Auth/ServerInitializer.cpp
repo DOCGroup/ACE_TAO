@@ -32,7 +32,7 @@ ServerInitializer::post_init (
     }
   catch(...)
     {
-      std::cerr << "Exception occured trying to create ServerInterceptor." << std::endl;
+      std::cerr << "Exception occurred trying to create ServerInterceptor." << std::endl;
     }
 
   PortableInterceptor::ServerRequestInterceptor_var si_interceptor =

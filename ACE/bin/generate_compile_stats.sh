@@ -958,8 +958,7 @@ sort_list ()
     #echo $i
   done
 
-  # sort eats underscores, soo...
-  sed "s/___/000/g" ${DEST}/tmp_list | sort -f | sed "s/000/___/g"
+  sort -f ${DEST}/tmp_list
 }
 
 ###############################################################################
@@ -973,7 +972,7 @@ create_html ()
 
   local DEST=$1
   local TYPE=$2
-  local ALL_BASE=""
+  local ALL_OBJS=""
   local ACE_OBJS=""
   local TAO_OBJS=""
   local CIAO_OBJS=""
@@ -993,7 +992,7 @@ create_html ()
     elif [ "${base}" != "${base#ACE}" ]; then
       ACE_OBJS="${ACE_OBJS} ${base}"
     fi
-    ALL_OBJS="${ALL_BASE} ${base}"
+    ALL_OBJS="${ALL_OBJS} ${base}"
   done
 
   # create main page
@@ -1014,7 +1013,7 @@ create_html ()
       sort_list ${DAnCE_OBJS} | create_page "DAnCE" ${TYPE} > ${DEST}/${name}
     else
       name="all_${TYPE}.html"
-      sort_list ${ACE_OBJS} | create_page $BASE_TITLE ${TYPE} > ${DEST}/${name}
+      sort_list ${ALL_OBJS} | create_page $BASE_TITLE ${TYPE} > ${DEST}/${name}
     fi
   fi
 }

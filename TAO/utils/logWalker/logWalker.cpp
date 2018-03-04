@@ -82,7 +82,14 @@ parse_manifest (Session &session, ACE_TCHAR *filename)
                               "or directory but not both\n"));
                   ACE_OS::exit (0);
                 }
-              session.make_dir (buffer+3);
+              if (buffer[2] == 'd')
+                {
+                  session.make_dir (buffer+4, true);
+                }
+              else
+                {
+                  session.make_dir (buffer+3, false);
+                }
               continue;
             }
           if (buffer[1] == 't')
@@ -110,11 +117,12 @@ print_help (void)
 {
   ACE_DEBUG ((LM_DEBUG, "tao_logWalker recongizes the following arguments\n"));
   ACE_DEBUG ((LM_DEBUG, "-o <filename> - write all output to specified file\n"));
-  ACE_DEBUG ((LM_DEBUG, "-d <directory> - create separate output files, one per log, and put them in specified directory.\n   Either -o or -d may be set but not both. Default output to stdout.\n"));
+  ACE_DEBUG ((LM_DEBUG, "-d[d] <directory> - create separate output files, one per log, and put them in specified directory.\n   Either -o or -d may be set but not both. Default output to stdout.\n   Use -dd to further split thread and peer process details onto multiple files."));
   ACE_DEBUG ((LM_DEBUG, "-m <manifest> - Take inputs from named manifest file\n"));
   ACE_DEBUG ((LM_DEBUG, "-t <1.5 .. 2.0>  - set source TAO version, default 2.0\n"));
   ACE_DEBUG ((LM_DEBUG, "-a <name=address> - bind an alias to a host address.\n   Repeat as many times as necessary.\n"));
-  ACE_DEBUG ((LM_DEBUG, "-p <service=address> - bind a service such as Naming to a specific endpoint address\n"));
+  ACE_DEBUG ((LM_DEBUG, "-p <service=address> - bind a service such as Naming to a specific peer endpoint address\n"));
+  ACE_DEBUG ((LM_DEBUG, "[alias=]filename - provide a source file with an altenate name"));
 }
 
 int
@@ -138,13 +146,15 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
           session.outfile(ACE_TEXT_ALWAYS_CHAR(argv[++i]));
           continue;
         }
-      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-d")) == 0)
+      if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-d")) == 0 ||
+          ACE_OS::strcasecmp (argv[i], ACE_TEXT("-dd")) == 0)
         {
           if (session.has_outfile())
             ACE_ERROR_RETURN ((LM_ERROR,
                                "supply either output file "
                                "or directory but not both\n"), 0);
-          session.make_dir (ACE_TEXT_ALWAYS_CHAR(argv[++i]));
+          bool split = ACE_OS::strcasecmp (argv[i], ACE_TEXT("-dd")) == 0;
+          session.make_dir (ACE_TEXT_ALWAYS_CHAR(argv[++i]), split);
           continue;
         }
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-m")) == 0)

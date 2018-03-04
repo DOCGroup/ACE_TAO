@@ -81,10 +81,11 @@ public:
   Thread *waiter (void) const;
   long handle (void) const;
 
-  void new_line (ostream &strm, int indent, int offset,  bool add_nl, bool show_indent);
+  void new_line (ostream &strm, size_t indent, int offset,  bool add_nl, bool show_indent);
   void dump_detail (ostream &strm, size_t indent, Dump_Mode mode, bool show_handle);
-  void dump_start_line (ostream &strm, size_t indent);
-  void dump_finish_line (ostream &strm, size_t indent);
+  void dump_rel_time (ostream &strm, const ACE_Time_Value& tv, const ACE_Time_Value& start);
+  void dump_start_line (ostream &strm, size_t indent, const ACE_Time_Value& start);
+  void dump_finish_line (ostream &strm, size_t indent, const ACE_Time_Value& start);
   void dump_special_details (ostream &strm, size_t indent, const char *opname);
 
 private:

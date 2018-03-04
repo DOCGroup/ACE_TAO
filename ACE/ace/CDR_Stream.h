@@ -121,7 +121,7 @@ public:
   /// with the alignment of @a data.
   /**
    * Create an output stream from an arbitrary buffer, care must be
-   * exercised with alignment, because this contructor will align if
+   * exercised with alignment, because this constructor will align if
    * needed.  In this case @a data will not point to the start of the
    * output stream. @c begin()->rd_ptr() points to the start of the
    * output stream.  See @c ACE_ptr_align_binary() to properly align a
@@ -138,11 +138,11 @@ public:
                  ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Build a CDR stream with an initial data block, it will *not* remove
-  /// <data_block>, since it did not allocated it.  It's important to be
-  // careful with the alignment of <data_block>.
+  /// @a data_block, since it did not allocated it.  It's important to be
+  /// careful with the alignment of <data_block>.
   /**
    * Create an output stream from an arbitrary data block, care must be
-   * exercised with alignment, because this contructor will align if
+   * exercised with alignment, because this constructor will align if
    * needed.  In this case @a data_block will not point to the
    * start of the output stream. begin()->rd_ptr() points to the start
    * off the output stream.  See ACE_ptr_align_binary() to properly align a
@@ -330,7 +330,7 @@ public:
    * type to insert. This requirement is satisfied by using one of the
    * placeholder-writing methods to align the stream for the anticipated
    * value and obtain the correct location.
-   * Treatment of @a x with repect to byte swapping is the same as for when
+   * Treatment of @a x with respect to byte swapping is the same as for when
    * any value is inserted.
    *
    * @param x   The value to insert into the specified location.
@@ -375,7 +375,7 @@ public:
   ACE_CDR::Boolean append_string (ACE_InputCDR &);
   //@}
 
-  /// Returns @c false if an error has ocurred.
+  /// Returns @c false if an error has occurred.
   /**
    * @note The only expected error is to run out of memory.
    */
@@ -645,7 +645,7 @@ public:
 
   /**
    * Create an input stream from an arbitrary buffer.  The buffer must
-   * be properly aligned because this contructor will *not* work if
+   * be properly aligned because this constructor will *not* work if
    * the buffer is aligned unproperly.See ACE_ptr_align_binary() for
    * instructions on how to align a pointer properly and use
    * ACE_CDR::MAX_ALIGNMENT for the correct alignment.
@@ -677,7 +677,7 @@ public:
                 ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION,
                 ACE_Lock* lock = 0);
 
-  /// Create an input stream from an ACE_Data_Block. The <flag>
+  /// Create an input stream from an ACE_Data_Block. The @a flag
   /// indicates whether the @a data can be deleted by the CDR stream
   /// or not
   ACE_InputCDR (ACE_Data_Block *data,
@@ -733,7 +733,7 @@ public:
 
     ACE_InputCDR &rhs_;
   };
-  /// Transfer the contents from <rhs> to a new CDR
+  /// Transfer the contents from @a rhs to a new CDR
   ACE_InputCDR (Transfer_Contents rhs);
 
   /// Destructor
@@ -1048,7 +1048,7 @@ private:
   // We could use void* or char* to make the interface more
   // consistent, but using native types let us exploit the strict
   // alignment requirements of CDR streams and implement the
-  // operations using asignment.
+  // operations using assignment.
 
   /**
    * Read an array of @a length elements, each of @a size bytes and the

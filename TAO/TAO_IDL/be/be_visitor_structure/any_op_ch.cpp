@@ -73,8 +73,6 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
               << " &); // copying version" << be_nl;
           *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
               << "*); // noncopying version" << be_nl;
-          *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ::"
-              << node->name () << " *&); // deprecated\n";
           *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
               << node->name () << " *&);";
 
@@ -92,8 +90,6 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
       << " &); // copying version" << be_nl;
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
-      << node->name () << " *&); // deprecated\n";
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const "
       << node->name () << " *&);";
 

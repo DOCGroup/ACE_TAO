@@ -12,7 +12,6 @@
 #define ACE_HTBP_CHANNEL_H
 #include /**/ "ace/pre.h"
 
-#include "ace/INET_Addr.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Message_Block.h"
 

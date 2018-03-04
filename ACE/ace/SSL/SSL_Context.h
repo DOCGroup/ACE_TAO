@@ -37,7 +37,7 @@ public:
   /// Default constructor
   ACE_SSL_Data_File (void);
 
-  /// Contructor from a file name and the file type.
+  /// Constructor from a file name and the file type.
   ACE_SSL_Data_File (const char *file_name,
                      int type = SSL_FILETYPE_PEM);
 
@@ -394,11 +394,11 @@ private:
   /// count of successful CA load attempts
   int have_ca_;
 
-#ifdef ACE_HAS_THREADS
+#if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
   /// Array of mutexes used internally by OpenSSL when the SSL
   /// application is multithreaded.
   static lock_type * locks_;
-#endif  /* ACE_HAS_THREADS */
+#endif /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

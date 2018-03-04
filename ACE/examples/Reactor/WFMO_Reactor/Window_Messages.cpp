@@ -50,7 +50,7 @@ timer_callback (HWND,
                 UINT,
                 DWORD dwTime)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) timeout occured @ %u\n", dwTime));
+  ACE_DEBUG ((LM_DEBUG, "(%t) timeout occurred @ %u\n", dwTime));
 
   global_event_handler->handle_.signal ();
 }

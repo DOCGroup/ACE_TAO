@@ -32,11 +32,12 @@ if ($server_status != 0) {
     exit 1;
 }
 
-$server_status = $SV3->SpawnWaitKill ($server->ProcessStartWaitInterval());
+$server_status = $SV3->Spawn ();
 if ($server_status == 0) {
     print STDERR "ERROR: Last server didn't fail! Err:$server_status\n";
     $SV1->Kill ();
     $SV2->Kill ();
+    $SV3->Kill ();
     exit 1;
 }
 

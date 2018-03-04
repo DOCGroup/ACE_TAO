@@ -24,8 +24,6 @@ module ImplementationRepository
     /// Newer Activators call this method to notify spawn of child
     /// process to supply pid for reference
     void spawn_pid (in string name, in long pid);
-
-
   };
 
   enum UpdateType

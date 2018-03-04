@@ -67,7 +67,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Any_var
         decodedData = codec->decode (OctSeq);
       // And extract the actual struct (still owned by the any)
-      Test::theStruct *myStruct;
+      const Test::theStruct *myStruct = 0;
       if (decodedData.in () >>= myStruct)
         {
           if (!strcmp (myStruct->theString, "Hello"))

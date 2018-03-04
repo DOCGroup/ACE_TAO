@@ -1,0 +1,75 @@
+commit 8e3f34f5f3cf09f3e5ac9d35b03cc110959cdc31
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 16:43:46 2016 +0200
+
+    Updated for next release
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 14f0e5a70e352cd833e9b71fc41bb1c4eb232510
+Merge: 8bed7fd 9f2aca3
+Author: Johnny Willemsen <jwillemsen@users.noreply.github.com>
+Date:   Fri Jul 1 08:47:19 2016 +0200
+
+    Merge pull request #267 from jwillemsen/master
+    
+    Documentation changes
+
+commit 9f2aca309b7c9a8e43b611c6b3f269e10720b7f1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 08:46:26 2016 +0200
+
+    Zapped some old empty comment headers
+        * TAO/orbsvcs/orbsvcs/CosLifeCycle.idl:
+
+commit 85c486146bc456ab33887f2157aca52a61dec9ff
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Jun 17 14:09:28 2016 -0500
+
+    Updates to work with previous commit
+
+commit 7767d0dd86da1d81ebe619f02e5716cac1ea4987
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Jun 17 09:16:49 2016 -0500
+
+    Removed include of ace/Auto_Ptr.h where not needed
+    
+    GCC 6.1 by default issues warnings when seeing std::auto_ptr
+
+commit 5abacc1d2a7f54d9e26320d90dcc36622454eac9
+Author: makke4ever <maarten_vanhout@msn.com>
+Date:   Tue May 24 14:29:00 2016 +0200
+
+    The test didn't fail when the startup of server3 was successful, because SpawnWaitKill not only returns -1 when the server couldn't start, but also when the server's still running after the wait.
+
+commit d2a7d20741730f9b2d98a415df0cffb2ed502b51
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 16 10:51:12 2016 +0200
+
+    We already have micro releases for years, so introduce a MICRO version number which we use instead of the BETA number which is kept for backwards compliance
+
+commit a11d43ae6c40b99fdf8ced5f70bbfa84ad2a20e8
+Author: Olli Savia <ops@iki.fi>
+Date:   Sat May 14 18:12:38 2016 +0300
+
+    Added helper macros to compare ACE/TAO versions
+
+commit d659c0f56eb90e38d3bdaf59bc52ed36ae0294d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 2 11:00:48 2016 +0200
+
+    Fixed typo
+        * TAO/NEWS:
+
+commit ce7b17aa7e482180d5eabc852060855775e08dac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 2 10:43:24 2016 +0200
+
+    Make x.3.4 public and prepare for x.3.5
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/bin/make_release.py:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

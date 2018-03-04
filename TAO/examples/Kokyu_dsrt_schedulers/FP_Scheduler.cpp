@@ -331,7 +331,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param_out*/)
 {
-  Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
+  const Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr = 0;
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):entered FP_Scheduler::receive_request\n"));
@@ -531,7 +531,7 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
 
       //Don't store in a _var, since >>= returns a pointer to an internal buffer
       //and we are not supposed to free it.
-      Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr;
+      const Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr = 0;
       CORBA::Any sc_qos_as_any;
       CORBA::Any_var scqostmp = codec_->decode (oc_seq);
       sc_qos_as_any = scqostmp.in ();

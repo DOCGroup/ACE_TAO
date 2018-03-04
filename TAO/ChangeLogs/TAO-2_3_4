@@ -1,0 +1,967 @@
+commit 5e66d6c70708ca569e71042278f177b743aff468
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Sat Apr 30 15:26:29 2016 -0500
+
+    Updated TAO/NEWS
+
+commit 26b6d803d04551ed8f00ea4789c15c39b1e314af
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Sat Apr 23 14:47:29 2016 -0500
+
+    restore the allowed return code from the shutdown command.
+
+commit 61e0940169fc638c1f8a056bd8ade03902f8e6af
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 20 17:22:17 2016 +0200
+
+    Updates for change of ATCD to ACE_TAO
+        * ACE/ACE-INSTALL.html:
+        * ACE/bin/make_release.py:
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * README.md:
+        * TAO/TAO-INSTALL.html:
+        * TAO/tao/Transport.h:
+        * TAO/tao/Transport_Selection_Guard.h:
+
+commit 80cae59427ae6006b9ec139428982a37ed320b32
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Apr 14 15:31:16 2016 -0500
+
+    undo a typo
+
+commit 92be6ac77a07b89bda6e4aef2704bb54d3a2d254
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Apr 14 14:19:36 2016 -0500
+
+    fix for generating a false failure on non windows systems.
+
+commit 5b81f308ace1299586ed43ffcbeb631ff7862685
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Apr 13 21:49:25 2016 -0500
+
+    score board cleanup
+
+commit 13ac88a0387ad39737ce4a6d08aa567d9855be56
+Merge: 3593c04 f7329a4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 13 12:58:31 2016 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 3593c043574ac7126fe934e41de1c5adf7cdddd9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 13 12:58:23 2016 +0200
+
+    Doxygen fix
+        * TAO/tao/Stub.h:
+
+commit 61b67c51c373a2b4f245d1a954e8b6200adc7e4a
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Apr 13 00:04:40 2016 -0500
+
+    revert conflicting ignores, re-indent, and remove cli delay
+
+commit 980c5a53d91ef91ecb88d46df8eeb08e6cc0b322
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Mon Apr 11 20:56:13 2016 -0500
+
+    Wchar compatibility
+
+commit 4a8167325505815d5a9955498af3db6ff840ee49
+Merge: 4306d64 ad00f36
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Mon Apr 11 16:00:10 2016 -0500
+
+    The longer version of a fix for bug 4152 which still fails on windows.
+
+commit 4306d64b214666c5513e695964bcbc53f0b194ac
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Mon Apr 11 13:30:59 2016 -0500
+
+    Fix a couple mre issues identified by Coverity.
+
+commit b9c1668aa88dd58e3f906ee147e666208a313099
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 11 13:40:21 2016 +0200
+
+    Docu change
+
+commit baabb4208e1c22ce3c08473a280931c8f8627587
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Sat Apr 9 00:19:46 2016 -0500
+
+    fix build error on windows
+
+commit ca2a02fbceb158ec549ac4c25e5ca8628f0a29ca
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Fri Apr 8 10:45:40 2016 -0500
+
+    Fix for Bug 4152 test on windows. The default socket linger behavior on windows platforms messed with the timing of the test scenario since it differed from the defualt behavior on Linux, where the test case originated.
+
+commit ad00f36fc929b14c558abe96ad94c31bdddc5ced
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Thu Apr 7 08:56:25 2016 -0500
+
+    cleanup intermediate debug
+
+commit e189795a7af4e459c3fdbf1ffc835b9a12e4ba13
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Apr 6 12:01:50 2016 -0500
+
+    adorn the activator
+
+commit fa6a6f392424226dcbbfba3835f5607bb3c10339
+Author: Phil Mesnier <mesnier_p@ociweb.com>
+Date:   Wed Apr 6 05:15:39 2016 -0500
+
+    Adorn with temp debugging
+
+commit 6211d66300b8ccf9f42188622f88ed7c6d2596f6
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Apr 5 16:12:39 2016 -0500
+
+    intermediate to share with windows.
+
+commit 6ac0377593bdd11ce6bcb3c001e51f1c6446bab3
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Apr 5 01:42:56 2016 -0500
+
+    Add relative (to earliest parsed) time on thread invocation reports
+
+commit 178c640975b23879a1c1dbdb17b054a7f60ab39b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 5 17:14:29 2016 +0200
+
+    Documentation changes
+    
+    * Layout changes, fixed typo
+        * TAO/tests/POA/README:
+    
+    * Fixed typo
+        * DAnCE/dance/LocalityManager/Handler/LocalityActivator_Impl.cpp:
+        * TAO/docs/releasenotes/index.html:
+
+commit c971d3585df6655c7c0fac2ef7adfea029c5ef9a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 30 08:40:16 2016 +0200
+
+    Also kill and restart the activator
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+
+commit 4733ddc67442e3dc4d8cb27e75c94e83a03b8d67
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 16:55:08 2016 +0200
+
+    Fixed link for TPG
+        * TAO/docs/documentation.html:
+
+commit abbe15e7da5418b0bebd8d0fd5ab814158ae0afb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:30:23 2016 +0200
+
+    Revert change
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+
+commit 1e4e0b5ac5d46c3b2f431d23ec1fbcf3d0afa986
+Merge: 124b997 42f7c5d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:25:47 2016 +0200
+
+    Merge branch 'master' into jwi-implrepo
+
+commit 124b997b9e44a4db469b4b6ebbebb11fb40c4a20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:25:43 2016 +0200
+
+    Removed comment
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+
+commit 8a5af0e4ec6507a0fff07b03d175ce3a8e87ef4e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:24:49 2016 +0200
+
+    Removed not needed variable
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+
+commit 14f41038b90d1d9c8cfa70c9d72f55f768989147
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:22:38 2016 +0200
+
+    Fixed logging
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 59362f334f59341de72a7919ed36e84601bc4233
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:10:54 2016 +0200
+
+    New tests
+        * TAO/bin/imr_tests.lst:
+        * TAO/bin/tao_other_tests.lst:
+
+commit c417a6e064469268e765717e3d6b5320413a0be5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:08:42 2016 +0200
+
+    Add new tests
+        * TAO/orbsvcs/tests/ImplRepo/README:
+
+commit 70870ce06c3f2497991a43c3e87cbec56d56407b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:08:33 2016 +0200
+
+    Remove dot as we don't use that in the other messages in this operation which prevents a double dot in our logging
+        * TAO/tao/ImR_Client/ImR_Client.cpp:
+
+commit e9a843b605016f6a75e24b9494bf4eef1da1d944
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:08:00 2016 +0200
+
+    Remove empty line
+        * TAO/orbsvcs/ImplRepo_Service/UpdateableServerInfo.h:
+
+commit 2275a24bca6e768731f612d3fc0b85c8cddd1b76
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:07:47 2016 +0200
+
+    Add log level check
+        * TAO/orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+commit 3f95b34a4375f18f0a13e0256ab4c02e5ab666ad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:07:02 2016 +0200
+
+    Log a line when we load a server config
+        * TAO/orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+commit 30e220fae4f40cf61e782e88bcbd921a87396011
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:06:43 2016 +0200
+
+    Zap empty lines
+        * TAO/orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+
+commit 0323379fae2eb5ffb6626d6abb18e05c2543dcb6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:06:23 2016 +0200
+
+    Const fix
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 3867298806327218ed7243041961716749da29bd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:06:07 2016 +0200
+
+    When we load our running servers from a persistent storage and a server is dead on start also remove it from the running list
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit d63c03e82be1d415a1a5fbff87ec105678404a45
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 15:05:05 2016 +0200
+
+    Rework test for manual persistent restart
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+
+commit 84a9de54b89585a656d035e9d612b89059b62851
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 13:52:06 2016 +0200
+
+    Extend with a test for the persistent option with manual start without NT Service
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+
+commit b79948fa4a9c98381e9da5827707610fbaf04eb8
+Merge: a59ed5f da29254
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 13:22:03 2016 +0200
+
+    Merge branch 'jwi-implrepo' of https://github.com/jwillemsen/ATCD into jwi-implrepo
+
+commit a59ed5f69a003750f85a938031c7c9b372774518
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 13:21:59 2016 +0200
+
+    Logging change
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 54866ad1cdca2f40baad9791980c123960041745
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 13:21:51 2016 +0200
+
+    Zap empty line
+        * TAO/orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+
+commit 02fdd729b911fa0b760ab90aa1a938dc20d058df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 13:21:39 2016 +0200
+
+    Doxygen fix
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.h:
+
+commit da29254096262f7b5650920c2070994efde3af78
+Merge: 87cd2a3 7c1b9e8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 13:20:33 2016 +0200
+
+    Merge branch 'jwi-implrepo' of https://github.com/jwillemsen/ATCD into jwi-implrepo
+
+commit 87cd2a33c2abdbaaba27772ad22858f4015221f7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 13:19:48 2016 +0200
+
+    more test code
+
+commit 8ad52362070311b21b53728ca80d73e55080f4f0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 13:19:12 2016 +0200
+
+    Improved logging
+
+commit f92358aa9a0c9655535859f0cbafa008c258c0ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 11:46:50 2016 +0200
+
+    Layout changes
+        * ACE/ace/NT_Service.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator.cpp:
+
+commit c52905e975e9c3bda020a18ed4077272c87d92b6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 29 11:41:19 2016 +0200
+
+    Extended error information when installing the service fails
+
+commit 42f7c5d534a248dbb41d07740e9d3faecd898227
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 20:28:27 2016 +0100
+
+    Fixed comparison warnings
+        * TAO/utils/nslist/nslist.cpp:
+
+commit c0edb7b7ff7b3678e9666bd963e0e7a764e9637e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 11:40:10 2016 +0100
+
+    more testing
+
+commit 8aae9bfda11571eadc57901ca791f68e7420772c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 11:28:56 2016 +0100
+
+    testing
+
+commit d078474165478092cd05863f43851b67d14ede5c
+Merge: cb6a808 5169303
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 11:17:38 2016 +0100
+
+    Merge branch 'master' into jwi-implrepo
+
+commit 516930304a9b4bc58a8636b0a97df93b5a771815
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 11:16:40 2016 +0100
+
+    Add missing include
+        * TAO/orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+
+commit cb6a80849e0e7f641b1021db9f1752f181034c50
+Merge: d4627d9 6c34672
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 11:14:57 2016 +0100
+
+    Merge branch 'master' into jwi-implrepo
+
+commit d4627d9c1819587ee1491b95b028e387d454ad8e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 11:14:36 2016 +0100
+
+    Testing
+
+commit 6c34672dd01e5808d52bf5cde4c632a7942c49f7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 11:12:57 2016 +0100
+
+    Add support for writing the PID of the started server to a file which can be specified using the new -p commandline option
+        * TAO/orbsvcs/tests/ImplRepo/airplane_server.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/airplane_server_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/airplane_server_i.h:
+
+commit 6bccf6d8b9a886ae8e0f22ce6277af36784e4cc5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 10:27:34 2016 +0100
+
+    Documentation updates
+        * TAO/orbsvcs/ImplRepo_Service/README:
+    
+    Removed commented out code
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+
+commit afe1c095ef60bdc488a13f432c2ea6a78416e421
+Merge: 74d3a1e 8b8a9c0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 09:42:53 2016 +0100
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 74d3a1efa0a88718bca2298c898afc19495fad90
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 25 09:42:47 2016 +0100
+
+    Minor documentation changes
+        * ACE/etc/index.html:
+        * TAO/docs/implrepo/paper.html:
+        * TAO/docs/implrepo/usersguide.html:
+        * TAO/orbsvcs/tests/ImplRepo/run_test.pl:
+
+commit 934ccdbef0ec5c5e9bc6d7470290b360235eb0c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 24 20:36:55 2016 +0100
+
+    Fixed Windows64 bit conversion warnings
+
+commit 07f85af28ac13e7dd99675bca4144eebf3ff61b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 24 16:05:14 2016 +0100
+
+    Fixed incorrect logging formatter
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit 56e63aca8ebe8bbe7ad4df8ee9114c1877122b73
+Merge: 0fd33b0 b7ecf6b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 22 18:51:10 2016 +0100
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 0fd33b0e6d61d504985dcf5dd209b45ff720ddee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 22 18:50:36 2016 +0100
+
+    Remove last night snapshot link
+        * ACE/etc/index.html:
+        * TAO/docs/implrepo/index.html:
+
+commit e4e1ea65cfe0ef4f833b2aac5a994ffd4ca0143f
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Mar 17 11:52:09 2016 -0500
+
+    Clean up the header commentary
+
+commit 4498f95388a4dc8574516e764af576a9450880d3
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Mar 17 11:44:42 2016 -0500
+
+    Clean up various Coverity and scoreboard issues
+
+commit 16ad7d513096e67654e6b22ef5443960d05e1848
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Mar 16 14:32:25 2016 -0500
+
+    Fix for new persistence failures that appeared after earlier commits.
+
+commit 28ba46822f5cffe9e289dbc49ec320496c39d962
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Fri Mar 11 23:26:32 2016 -0600
+
+    Fix scoreboard warning.
+
+commit 4b90123d8fa67cf89626bff22d683e1245383162
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Fri Mar 11 02:44:38 2016 -0600
+
+    Fix signature inconsistency
+
+commit 355b5ae287d6ee5a5b08aaf524d4b7788cab5271
+Merge: dc4277f 121ffbd
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Mar 10 14:32:00 2016 -0600
+
+    Merge pull request #210 from pmesnier/master
+    
+    Collection of commits to bring over features and fixes from OCI TAO
+
+commit 121ffbda2fd8a0f9ddd3f6cfdeb48874890a15d2
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Sun Mar 6 21:13:32 2016 -0600
+
+    revert extra test config changes
+
+commit de6934262adbb3ecf5c65c966135d00a3fd74d73
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Sun Mar 6 07:08:41 2016 -0600
+
+    Restore inadevertent cast reversions and eliminate Id strings
+
+commit 8e21c9da5c44feafcb5810d4123a2c63f95acab2
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Fri Mar 4 17:18:29 2016 -0600
+
+    more cleanup
+
+commit 4061bd721aad75e7a74b38dc4e203c2d89a85b29
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Fri Mar 4 16:58:31 2016 -0600
+
+    Redo the commit to only capture the new fix from TAO 2.2a
+
+commit dee72dd034d91f750f6a4ed19a83056040f23fa2
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Fri Mar 4 16:07:37 2016 -0600
+
+    fixing up identified issues
+
+commit 567c00f44ee22c95842f8b09c82a71b07046b9e9
+Merge: 51e1b3d 0061c58
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Mar 4 15:19:19 2016 -0600
+
+    Merge pull request #206 from mitza-oci/master
+    
+    Updated installed location of documentation and header files.
+
+commit 0d0f18df98b2bd64b9ec645cf5326364275a4107
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Mar 3 17:05:17 2016 -0600
+
+    More OCI supplied updates
+
+commit eb3d1c4d67e28d154d2b5f5f6699df1f47731dc2
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Mar 3 17:03:56 2016 -0600
+
+    Updating ImR with OCI supplied fixes
+
+commit f68ad1ebb25927d2b6650091f3bc23ae6888a495
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Mar 3 16:55:46 2016 -0600
+
+    Bring over recent fixes and enhancements to the FaultTolerant / LoadBalancing naming service extension from OCI's TAO release.
+    Fixes deadlocks that could occur as a result of file access errors, such as the transient "bad file decriptor" (ebadf) error that seems to pop up fairly regularly
+    when using NFS. Also optimized the file locking strategy to not always setting to MODIFY access state, which then required a file update on every access
+
+commit 80f4315eb1314ccdc47052f07c882a45a60fa10b
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Feb 17 09:54:33 2016 -0600
+
+    LogWalker improvements. Add -dd command line option to split the peer and thread data into per-instance files, address a failure to process excessivly long service context buffers attached to a message.
+
+commit 5a183cc311372e89b13a1026afd581edd950255d
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Feb 17 09:22:20 2016 -0600
+
+    Fix for another case involving slowly terminating server instances, being overlapped by start up of new instance.
+
+commit 92b33622de4d607cf417742f3ba30915cd87a01d
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Mar 4 09:33:19 2016 -0600
+
+    IDL files need to be listed in the correct group in the .mpc files.
+
+commit 9f630793aa00a8162d9809217bbaff8b5ff2622e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 4 10:50:29 2016 +0100
+
+    Corrected links
+        * TAO/docs/implrepo/index.html:
+
+commit 0061c5848a6bae3d1ec79af7b7313faf4483c5be
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Mar 3 16:29:51 2016 -0600
+
+    Updated installed location of documentation and header files.
+
+commit 9b502667266da5fcd9996c0ba08569693b2c8e83
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 3 19:55:01 2016 +0100
+
+    Fixed typos
+        * ACE/examples/APG/ThreadPools/TP_Reactor.cpp:
+        * ACE/tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * ACE/tests/Thread_Pool_Reactor_Resume_Test.cpp:
+        * ACE/tests/Thread_Pool_Reactor_Test.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEventComm.idl:
+        * TAO/orbsvcs/orbsvcs/CosNotification.idl:
+        * TAO/tests/Bug_3154_Regression/orbsvcs/CosNotification.idl:
+
+commit fc094d72d8a9d1b35856b3c00123121a40e0aa54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 3 19:39:54 2016 +0100
+
+    Fixed typo in documentation
+        * TAO/tao/ImR_Client/ImplRepo.idl:
+
+commit a84cdb724bf359b29ce5e5184fde100888a11485
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Mar 3 19:39:39 2016 +0100
+
+    Zapped empty lines
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+
+commit de2c1d6dfe3044900cb7932e746bb97523dbdc90
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 27 08:54:01 2016 +0100
+
+    Fixed compile error
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+commit 6eec42f5132e01a0e12064d548bb0be5e19bf181
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 25 16:00:49 2016 +0100
+
+    Fix for compiling SSL using Visual Studio 2015
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+commit eee112e74fd2f2f7a0667248661afc3161dbc1f3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 19 10:22:20 2016 +0100
+
+    Fixed typo in comment
+        * TAO/tao/IIOP_Acceptor.h:
+
+commit 4025337b50de77d1d9259c88eddf87181c79dbd7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 18 15:32:13 2016 +0100
+
+    Fixed typo
+        * TAO/tao/IORTable/IORTable.pidl:
+
+commit 3c2e394934c29cef8e395a83c9ba0bca07395353
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Feb 8 10:16:04 2016 -0600
+
+    Two projects that can both build the same IDL need an "after" to work correctly with parallel builds.
+
+commit 61662aba4bbd20e7d43412ebb1125b72b0df50e7
+Merge: b4f48de 3d47257
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 6 12:21:58 2016 +0100
+
+    Merge pull request #194 from jwillemsen/master
+    
+    Log an error when resume_handler returns -1
+
+commit 85bd06e3be12e85b616e36ed5ddd5647b51c2e07
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 5 16:15:38 2016 +0100
+
+    Fixed typo
+        * TAO/tao/Transport.cpp:
+
+commit 78fbbc27e31828082d5d012652cb33012c493b9e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 2 12:15:24 2016 +0100
+
+    At the moment the resume_handler failed log an error at this level
+        * TAO/tao/Resume_Handle.cpp:
+
+commit c3a2ade0f4d223ca81343e66bc11f9dcc27f546e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 2 12:15:07 2016 +0100
+
+    Fixed typo
+        * TAO/tao/Transport_Connector.cpp:
+
+commit b5eb8e972e2f534b46369f73d4f43aa61e3a8223
+Merge: a536f85 6fca736
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 31 18:33:57 2016 +0100
+
+    Merge pull request #192 from jwillemsen/master
+    
+    Updated copyright year
+
+commit 6fca736365e690631dfe92d1f854371fd36ee409
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 31 18:33:28 2016 +0100
+
+    Updated copyright year
+        * ACE/COPYING:
+        * CIAO/COPYING:
+        * DAnCE/COPYING:
+        * TAO/COPYING:
+
+commit a536f85de35ba6b082109209adc13dd9418cde74
+Merge: f8f6fd0 69e088a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 29 16:42:06 2016 +0100
+
+    Merge pull request #191 from jwillemsen/master
+    
+    Docu fixes
+
+commit 69e088a6ab7188d936d13cb8d9e25473fbc2e6ff
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 29 12:53:26 2016 +0100
+
+    Updated link to the TPG
+        * TAO/docs/documentation.html:
+
+commit 66ade18ac5c5ae1f05278dc453d3319185d7f90c
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Jan 26 11:04:39 2016 -0600
+
+    Updated mpc/mpb files to accurately reflect library dependencies.
+    
+    By listing all required libraries in mpb files, when executables are built all
+    used libraries (even indirectly used) will appear on the linker command line.
+    This is required for static libs and probably a good idea for shared libs.
+
+commit f4710039768f3880241763627d931bbae8b72a2e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 26 14:16:05 2016 +0100
+
+    Fixed typo
+        * TAO/tao/DynamicInterface/Server_Request.cpp:
+
+commit 92bec1a6b04a302c463aa10d6383e4aa2781a4d7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 26 14:06:50 2016 +0100
+
+    Fixed typos
+        * TAO/docs/Smart_Proxies.html:
+        * TAO/tao/ORB.cpp:
+        * TAO/tao/RTCORBA/RT_Policy_i.cpp:
+        * TAO/tao/Synch_Invocation.h:
+        * TAO/tests/RTCORBA/Bug_3382_Regression/interceptors.h:
+        * TAO/tests/RTCORBA/Client_Propagated/interceptors.h:
+
+commit 08f1e80c705927957bc861d3d00bf16088be4cae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 26 08:53:51 2016 +0100
+
+    Fixed typo
+        * TAO/tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * TAO/tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+        * TAO/tao/Synch_Reply_Dispatcher.cpp:
+
+commit 652d38577ad3c81457a220df9ad178c84641cbf1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 20 17:20:46 2016 +0100
+
+    Removed commented out code
+        * TAO/tao/RTCORBA/Thread_Pool.h:
+
+commit a68b3e0ea91e61c4b5457a0ebdd9436f45c99cb7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 20 17:20:36 2016 +0100
+
+    Zap empty lines
+        * TAO/tao/CodecFactory/CodecFactory.h:
+
+commit 227d5e700281db305fdfaf8076f17c30bdc889dc
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Dec 18 08:59:27 2015 -0600
+
+    Fixed syntax errors in .mpc files.
+
+commit 7b21b923c90ba27e2972a9454ca6a2335e250de6
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Sat Dec 5 16:42:53 2015 -0600
+
+    fix typo
+
+commit 3973100876ab086543d9fdd459cad06e437355dd
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Sat Dec 5 16:37:58 2015 -0600
+
+    Windows related fixes. Addresses tests failures due to an unmet expectation of child death signal handling
+
+commit c53b697b40bdab7104684dc77f1ba5baa5c7d3c2
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Dec 2 16:59:14 2015 -0600
+
+    Fix a memory leak
+
+commit d5e1d98d743cbe4779ecb74ed5fe7ea63089bed3
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Nov 25 10:43:33 2015 -0600
+
+    Clean up more force remove test failures.
+
+commit 2f093aa99c866dbbb63708a63539739913b55b9e
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Fri Nov 20 14:06:33 2015 -0600
+
+    Fix the order of the command line arguments to be consistent with the rest of the tao_imr commands.
+
+commit 19e9ff24881b62a1fe334c47f6da72316f20e8da
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Fri Nov 20 13:22:30 2015 -0600
+
+    New ImR feature to force a remove of a running server.
+
+commit c580da5ec730691a7acc7206031155429a4cb119
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 19 08:13:32 2015 +0100
+
+    Fixed typo
+        * TAO/tao/Transport_Cache_Manager_T.h:
+
+commit acb5b1f1f00653bcdf840afa6dc042a0b880a454
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 19 08:13:23 2015 +0100
+
+    Updated because of SSL changes
+        * ACE/NEWS:
+        * TAO/docs/Security/SSLIOP-USAGE.html:
+
+commit 16b194f49e5e5d2314cfbbf1826b083969cbd181
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Nov 18 15:26:07 2015 -0600
+
+    Address more corner cases that leave the async access state machine hung without sending a reply to attached waiters. Also cleaned up the type of the "pid" values used inside the locator.
+
+commit 6095e56dc88e15906a0e008892eae3372585a293
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Nov 18 13:15:35 2015 -0600
+
+    Add a new test case to the kill server test. This matches a scenario that was leading to hung clients
+
+commit ab036e452cf1add954cf0f410badc991295f83d0
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Nov 18 12:40:04 2015 -0600
+
+    Fix the test to work on newer platforms that detect a connection failure before returning an ewouldblock as the test requires.
+
+commit 1673253344ba61dd615c87d21eaed2be9b42e683
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Wed Nov 18 12:24:32 2015 -0600
+
+    Fix old buffer overflow error
+
+commit c4626b7de030ee1d58ebd9200ebbd89620080a44
+Merge: c293f34 67eb0b6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 17 10:19:54 2015 +0100
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 4a5e44840ac95cab411b05f68cf06e7730342276
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Nov 10 12:22:33 2015 -0600
+
+    fuzz fix
+
+commit 459a8a1b4169d48cf0ee917f8589b7a46a51f9cd
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Nov 10 11:29:47 2015 -0600
+
+    Fix a deadlock that could happen if a server is killed, removed from the ImR repo, added anew, then restarted all while the Activator is slow to catch/report the sigchild from the server. Adding a custom test list to ease running the ImR suite quickly from the command line
+
+commit f564ccd575f33bb82cb43fdd5952dfcd5fbf7556
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Nov 10 11:18:51 2015 -0600
+
+    silence a compiler warning
+
+commit c293f345453b4d7c23516e107d844f63faa4d9c5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 6 17:05:38 2015 +0100
+
+    Layout changes
+        * TAO/orbsvcs/Notify_Service/Notify_Service.cpp:
+        * TAO/tao/Codeset/UTF16_BOM_Factory.cpp:
+        * TAO/tao/Codeset/UTF16_BOM_Factory.h:
+        * TAO/tao/Codeset/UTF16_BOM_Translator.h:
+
+commit aec6786c48a63fdd46a3c6c814ab435a1f7423c3
+Merge: 58294d3 2f4a437
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 2 08:52:19 2015 +0100
+
+    Merge pull request #154 from jwillemsen/master
+    
+    Adapt for msvc deprecated API
+
+commit be3e62349015dc8c1123d8bb8f7bafdf655efc6d
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Oct 23 16:28:53 2015 -0500
+
+    Remove an unneeded 'after' which caused exe to build before libs.
+
+commit 05a3e1f192ba770d8d78c01f8a1ee6c985e041cc
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Oct 23 16:28:11 2015 -0500
+
+    Default the MPC feature's corresponding make macro to 1 so that the previous change works as intended.
+
+commit 034b71c01b7e63d1fcf0ccf9a1bbee9662a5392a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Oct 23 15:47:44 2015 -0500
+
+    Allow TAO_IDL_BE and tao_idl projects to be skipped based on an MPC feature.
+    
+    This restores the previous behavior for cross-compiles on an opt-in basis.
+    VxWorks 7.0 opts-in to skipping TAO_IDL_BE and tao_idl.
+
+commit a2c283f4723ad5b9ad364cf1bd4f6ac85b12576d
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Oct 23 15:47:19 2015 -0500
+
+    Avoid using PID as an identifer, caused a macro collision on VxWorks.
+
+commit 3e436af379301233f1671c6f8014a5af6f041c84
+Merge: 3a6a827 ef36446
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 23 11:22:58 2015 +0200
+
+    Merge branch 'master' of git://github.com/DOCGroup/ATCD
+
+commit 55dacbd2cfbc86ed4a3e3d99e395384a95bacce8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 22 20:39:27 2015 +0200
+
+    Replace tabs with spaces
+        * TAO/orbsvcs/tests/ior_corbaname/README:
+
+commit 469f54eb17972b386ca08e3d61f2d97e366448c9
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Mon Oct 19 06:05:40 2015 -0500
+
+    use const exception
+
+commit 45e4a03fab81857de3f020e764f646f01cd3ddbb
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Mon Oct 19 05:57:04 2015 -0500
+
+    restore the use of const exception
+
+commit e03df04c974460d92eb349d9caa5ff5eace49a22
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Mon Oct 19 04:47:32 2015 -0500
+
+    Deal with the case of a > 4K command line when listing
+
+commit 5490a323a80df80a475fb690f1af8ae3dd395a10
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Mon Oct 19 04:45:17 2015 -0500
+
+    ensure byte alignment on all platforms
+
+commit 0934970ef63ff308116b6546f23c65867547c816
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Mon Oct 19 04:41:26 2015 -0500
+
+    Synchronize signal handler with upcalls to avoid deadlock
+
+commit 23372fb65170aeea9d4176c51f5fee350c2e6a87
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Thu Oct 15 15:46:44 2015 -0500
+
+    Fix for the case when the compressed data is too large to fit
+    in the stack allocated buffer. Modify the test to accept a size value for testing the message size fix.
+
+commit 03ac88c8c4208951933a9fe9fa9b301813d6525d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 17 09:11:26 2015 +0200
+
+    Make x.3.3 public available and prepare for the next release
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * CIAO/NEWS:
+        * DAnCE/NEWS:
+        * TAO/NEWS:
