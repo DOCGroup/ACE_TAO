@@ -21,7 +21,7 @@ if you use a link to a platform-specific file, simply state which one (unless th
 
 ### Contents of $ACE_ROOT/bin/MakeProjectCreator/config/default.features
     
-Uused by MPC when you generate your own makefiles
+Used by MPC when you generate your own makefiles
 
 ### AREA/CLASS/EXAMPLE AFFECTED:
  
