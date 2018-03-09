@@ -6,7 +6,7 @@
 #include "test_config.h"
 
 // g++ 4.1 can't handle this construct
-#if (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ <= 1))
+#if defined (__GNUC__) && (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ <= 1))
 # define ACE_DISABLE_TEST
 #endif
 
@@ -44,10 +44,10 @@ run_main (int, ACE_TCHAR *[])
   Foo2Seq f2;
   long const j = f2[0].i;
   ACE_UNUSED_ARG(j);
-#endif /* !ACE_DISABLE_TEST */
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("C++ support ok\n")));
+#endif /* !ACE_DISABLE_TEST */
 
   ACE_END_TEST;
 
