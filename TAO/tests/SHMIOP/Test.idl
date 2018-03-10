@@ -1,0 +1,9 @@
+module Test
+{
+  interface Hello
+  {
+    string get_string ();
+
+    oneway void shutdown ();
+  };
+};
