@@ -15,6 +15,11 @@
 # define ACE_DISABLE_TEST
 #endif
 
+// Sun Studio 5.13 and older can't handle this construct
+#if defined (__SUNPRO_CC) && (__SUNPRO_CC <= 0x5130)
+# define ACE_DISABLE_TEST
+#endif
+
 #if !defined (ACE_DISABLE_TEST)
 template <typename T>
 class Foo_T
