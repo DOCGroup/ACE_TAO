@@ -121,22 +121,23 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
 {
   ACE_TRACE ("ACE_SOCK_Dgram::shared_open");
   bool error = false;
-#if !defined (ACE_HAS_IPV6) || (!defined (IPPROTO_IPV6) || !defined (IPV6_V6ONLY))
+#if !defined (ACE_HAS_IPV6)
   ACE_UNUSED_ARG (ipv6_only);
-#endif /* !defined (ACE_HAS_IPV6) || (!defined (IPPROTO_IPV6) || !defined (IPV6_V6ONLY)) */
+#endif /* !defined (ACE_HAS_IPV6) */
 
   if (local == ACE_Addr::sap_any)
     {
-#if defined (ACE_HAS_IPV6) && defined (IPPROTO_IPV6) && defined (IPV6_V6ONLY)
+#if defined (ACE_HAS_IPV6)
       int setting = !!ipv6_only;
-      if (-1 == ACE_OS::setsockopt (this->get_handle (),
+      if (protocol_family == PF_INET6 &&
+          -1 == ACE_OS::setsockopt (this->get_handle (),
                                     IPPROTO_IPV6,
                                     IPV6_V6ONLY,
                                     (char *)&setting,
                                     sizeof (setting)))
         error = true;
       else
-#endif /* ACE_HAS_IPV6 && IPPROTO_IPV6 && IPV6_V6ONLY */
+#endif /* ACE_HAS_IPV6 */
 
       if (protocol_family == PF_INET
 #if defined (ACE_HAS_IPV6)
