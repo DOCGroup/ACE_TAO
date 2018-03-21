@@ -213,6 +213,20 @@ namespace XSCRT
       }
     }
 
+    Type* get_idref (const std::basic_string<ACE_TCHAR>& name)
+    {
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i =
+          this->idref_map_.find(name);
+      if (i != idref_map_.end())
+      {
+        return i->second;
+      }
+      else
+      {
+        return 0;
+      }
+    }
+
     Type* get_idref (const wchar_t *name)
     {
       std::basic_string<ACE_TCHAR> name_string (ACE_TEXT_WCHAR_TO_TCHAR(name));
@@ -228,8 +242,7 @@ namespace XSCRT
       }
     }
 
-
-    void set_idref (std::basic_string<ACE_TCHAR> name, Type* new_idref)
+    void set_idref (const std::basic_string<ACE_TCHAR>& name, Type* new_idref)
     {
       this->idref_map_.insert(std::pair<std::basic_string<ACE_TCHAR>,Type*>(name, new_idref));
       return;
@@ -267,9 +280,6 @@ namespace XSCRT
   public:
     // Trait for marshaling a FundamentalType X
     typedef X CDR_Type__;
-#if !defined (__BORLANDC__) || (__BORLANDC__ >= 0x620)
-    typedef ACE_Refcounted_Auto_Ptr < FundamentalType, ACE_Null_Mutex > _ptr;
-#endif /* !__BORLANDC__ */
 
     FundamentalType ()
     {
