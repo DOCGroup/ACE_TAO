@@ -89,7 +89,6 @@
       {
         throw NULL_PTR_Entry();
       }
-        return;
     }
 
     // Add an IDREF to the IDREF map
@@ -103,7 +102,6 @@
       {
         throw NULL_PTR_Entry();
       }
-      return;
     }
 
     void resolve_single_idref (const std::basic_string<ACE_TCHAR>& idref, ::XSCRT::Type * element)
@@ -124,27 +122,23 @@
     //Note: The pointer is of type "XSCRT::Type*"
     void resolve_idref ( void )
     {
-      //Declare iterators to navigate the maps
-      ID_Map::id_iterator id_iterator;
-      ID_Map::idref_iterator idref_iterator;
-
-      for (idref_iterator = this->idref_map_.begin();
+      // Declare iterators to navigate the maps
+      for (ID_Map::idref_iterator idref_iterator = this->idref_map_.begin();
            idref_iterator != this->idref_map_.end();
            ++idref_iterator)
       {
         //Find the ID that matches the IDREF element
-        id_iterator = this->id_map_.find(idref_iterator->first);
+        ID_Map::id_iterator id_iterator = this->id_map_.find(idref_iterator->first);
         if (id_iterator != this->id_map_.end())
         {
-          //Add the IDREF identifier and the reference to the
-          //identified object
+          // Add the IDREF identifier and the reference to the
+          // identified object
           std::basic_string<ACE_TCHAR> temp_id = id_iterator->first;
           idref_iterator->second->set_idref(temp_id, id_iterator->second);
         }
         else
         {
-          std::basic_string<ACE_TCHAR> temp (idref_iterator->first);
-          throw Unresolved_IDREF(temp);
+          throw Unresolved_IDREF(idref_iterator->first);
         }
       }
     }
@@ -156,11 +150,11 @@
     }
 
     private:
-    //id_map_: maps the ID string to the element with the
-    //         ID attribute
+    /// Maps the ID string to the element with the
+    /// ID attribute
     ID_MAP id_map_;
-    //idref_map_: multimap that maps the IDREF string to the
-    //            element with the IDREF attribute
+    /// Multimap that maps the IDREF string to the
+    /// element with the IDREF attribute
     IDREF_MAP idref_map_;
   };
 
