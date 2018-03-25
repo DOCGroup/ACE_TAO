@@ -36,6 +36,10 @@ export ACE_ROOT := $(shell pwd)
 export MPC_ROOT := $(ACE_ROOT)/MPC
 export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
 
+ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
+ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
+ACE_MICRO_VERSION := $(shell awk '/ACE_MICRO_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
+
 %:
 	dh $@
 
@@ -95,7 +99,8 @@ override_dh_installchangelogs:
 	dh_installchangelogs -pace-gperf -pgperf-ace apps/gperf/ChangeLog
 	dh_installchangelogs -pmpc-ace MPC/ChangeLog
 	dh_installchangelogs $(addprefix -p,$(ALL_ACEXML)) ACEXML/ChangeLog
-	dh_installchangelogs --remaining-packages ChangeLogs/ACE-6_4_7
+	dh_installchangelogs --remaining-packages \
+	        ChangeLogs/ACE-$(ACE_MAJOR_VERSION)_$(ACE_MINOR_VERSION)_$(ACE_MICRO_VERSION)
 
 override_dh_fixperms:
 ifneq (,$(filter libace-doc, $(shell dh_listpackages)))
