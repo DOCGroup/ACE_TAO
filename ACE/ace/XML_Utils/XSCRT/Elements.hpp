@@ -28,7 +28,6 @@ namespace XSCRT
   class Type
   {
   public:
-
     virtual ~Type (void)
     {
     }
@@ -152,8 +151,7 @@ namespace XSCRT
         map_ = std::auto_ptr<Map_> (new Map_);
       }
 
-      if (!map_->insert (
-            std::pair<IdentityProvider const*, Type*> (&id, t)).second)
+      if (!map_->insert (std::pair<IdentityProvider const*, Type*> (&id, t)).second)
       {
         throw 1;
       }
@@ -197,12 +195,11 @@ namespace XSCRT
       return 0;
     }
 
-    //Get and set methods for the idref_map_ data member
+    /// Get and set methods for the idref_map_ data member
     Type* get_idref (const char* name)
     {
       std::basic_string<ACE_TCHAR> name_string (ACE_TEXT_CHAR_TO_TCHAR(name));
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i =
-          this->idref_map_.find(name_string);
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i = this->idref_map_.find(name_string);
       if (i != idref_map_.end())
       {
         return i->second;
@@ -215,8 +212,7 @@ namespace XSCRT
 
     Type* get_idref (const std::basic_string<ACE_TCHAR>& name)
     {
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i =
-          this->idref_map_.find(name);
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i = this->idref_map_.find(name);
       if (i != idref_map_.end())
       {
         return i->second;
@@ -230,8 +226,7 @@ namespace XSCRT
     Type* get_idref (const wchar_t *name)
     {
       std::basic_string<ACE_TCHAR> name_string (ACE_TEXT_WCHAR_TO_TCHAR(name));
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i =
-          this->idref_map_.find(name_string);
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*>::iterator i = this->idref_map_.find(name_string);
       if (i != idref_map_.end())
       {
         return i->second;
@@ -245,12 +240,11 @@ namespace XSCRT
     void set_idref (const std::basic_string<ACE_TCHAR>& name, Type* new_idref)
     {
       this->idref_map_.insert(std::pair<std::basic_string<ACE_TCHAR>,Type*>(name, new_idref));
-      return;
     }
 
   private:
 
-    //Data member to handle unbounded IDREF attributes and elements
+    // Data member to handle unbounded IDREF attributes and elements
     std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type*> idref_map_;
 
     Type* container_;
