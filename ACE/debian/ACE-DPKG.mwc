@@ -1,5 +1,7 @@
 workspace {
   exclude {
+    TAO
+
     performance-tests
 
     examples
