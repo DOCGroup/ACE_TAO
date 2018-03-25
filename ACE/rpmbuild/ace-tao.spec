@@ -112,7 +112,7 @@ BuildRequires:  zlib-devel
 BuildRequires:  bzip2
 %endif
 
-BuildRequires:  perl
+BuildRequires:  perl perl(Data::Dumper)
 
 %if %{?_with_fltk:1}%{!?_with_fltk:0}
 BuildRequires:  fltk-devel
