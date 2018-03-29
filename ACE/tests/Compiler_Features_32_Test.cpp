@@ -43,7 +43,7 @@ void A::clear ()
 {
 #if defined __clang__ && \
     (defined __apple_build_version__ && __apple_build_version__ < 9100000 \
-     || __clang_major__ <= 5)
+     || __clang_major__ <= 6)
 #define CLANG_WORKAROUND
 #endif
 
