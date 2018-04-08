@@ -65,19 +65,19 @@ ACE_INLINE int
 ACE_Handle_Set::is_set (ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_Handle_Set::is_set");
-#if defined (ACE_HAS_BIG_FD_SET)
   return FD_ISSET (handle,
-                   &this->mask_)
-    && this->size_ > 0;
-#elif defined (ACE_HAS_NONCONST_FD_ISSET)
-  return FD_ISSET (handle,
-                   const_cast<fd_set*> (&this->mask_));
-#elif defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x690
-  return FD_ISSET (handle, &this->mask_) != 0;
+#if defined (ACE_HAS_NONCONST_FD_ISSET)
+                   const_cast<fd_set*> (&this->mask_)
 #else
-  return FD_ISSET (handle,
-                   &this->mask_);
+                   &this->mask_
+#endif
+      ) // end of FD_ISSET
+#if defined (ACE_HAS_BIG_FD_SET)
+    && this->size_ > 0
+#elif defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x690
+    != 0
 #endif /* ACE_HAS_BIG_FD_SET */
+    ; // end of return
 }
 
 // Enables the handle.
