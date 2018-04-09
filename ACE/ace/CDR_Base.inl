@@ -83,8 +83,6 @@ ACE_CDR::swap_2 (const char *orig, char* target)
 #elif defined (ACE_HAS_PENTIUM) \
        && (defined(_MSC_VER) || defined(__BORLANDC__)) \
        && !defined(ACE_LACKS_INLINE_ASSEMBLY)
-
- ss
   __asm mov ebx, orig;
   __asm mov ecx, target;
   __asm mov ax, [ebx];
