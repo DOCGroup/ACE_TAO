@@ -65,13 +65,12 @@ ACE_INLINE int
 ACE_Handle_Set::is_set (ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_Handle_Set::is_set");
-  return FD_ISSET (handle,
 #if defined (ACE_HAS_NONCONST_FD_ISSET)
-                   const_cast<fd_set*> (&this->mask_)
+  fd_set *set = const_cast<fd_set*> (&this->mask_);
 #else
-                   &this->mask_
+  const fd_set *set = &this->mask_;
 #endif
-      ) // end of FD_ISSET
+  return FD_ISSET (handle, set)
 #if defined (ACE_HAS_BIG_FD_SET)
     && this->size_ > 0
 #elif defined (ACE_VXWORKS) && ACE_VXWORKS >= 0x690
