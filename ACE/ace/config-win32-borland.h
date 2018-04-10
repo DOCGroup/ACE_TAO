@@ -189,6 +189,7 @@
 # define ACE_HAS_BUILTIN_BSWAP16
 # define ACE_HAS_BUILTIN_BSWAP32
 # define ACE_HAS_BUILTIN_BSWAP64
+# define ACE_LACKS_INLINE_ASSEMBLY
 #endif /* __clang__ */
 
 
