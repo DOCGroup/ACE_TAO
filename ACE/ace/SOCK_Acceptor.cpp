@@ -226,7 +226,7 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
   ACE_TRACE ("ACE_SOCK_Acceptor::shared_open");
   int error = 0;
 
-#if !defined (ACE_HAS_IPV6) || (!defined (IPPROTO_IPV6) || !defined (IPV6_V6ONLY))
+#if !defined (ACE_HAS_IPV6)
   ACE_UNUSED_ARG (ipv6_only);
 #else /* !defined (ACE_HAS_IPV6) || (!defined (IPPROTO_IPV6) || !defined (IPV6_V6ONLY)) */
   if (protocol_family == PF_INET6)
@@ -251,7 +251,6 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
        * This must be done before attempting to bind the address.
        * On Windows older than Vista this will fail.
        */
-#  if defined (IPPROTO_IPV6) && defined (IPV6_V6ONLY)
       int setting = !!ipv6_only;
       if (-1 == ACE_OS::setsockopt (this->get_handle (),
                                     IPPROTO_IPV6,
@@ -260,17 +259,16 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
                                     sizeof (setting)))
         error = 1;
       else
-# endif /* IPPROTO_V6 && IPV6_ONLY */
-      // We probably don't need a bind_port written here.
-      // There are currently no supported OS's that define
-      // ACE_LACKS_WILDCARD_BIND.
-      if (ACE_OS::bind (this->get_handle (),
-                        reinterpret_cast<sockaddr *> (&local_inet6_addr),
-                        sizeof local_inet6_addr) == -1)
-        error = 1;
+        // We probably don't need a bind_port written here.
+        // There are currently no supported OS's that define
+        // ACE_LACKS_WILDCARD_BIND.
+        if (ACE_OS::bind (this->get_handle (),
+                          reinterpret_cast<sockaddr *> (&local_inet6_addr),
+                          sizeof local_inet6_addr) == -1)
+          error = 1;
     }
   else
-#endif /* !defined (ACE_HAS_IPV6) || (!defined (IPPROTO_IPV6) || !defined (IPV6_V6ONLY)) */
+#endif /* ACE_HAS_IPV6 */
   if (protocol_family == PF_INET)
     {
       sockaddr_in local_inet_addr;
