@@ -189,6 +189,9 @@
 # define ACE_HAS_BUILTIN_BSWAP16
 # define ACE_HAS_BUILTIN_BSWAP32
 # define ACE_HAS_BUILTIN_BSWAP64
+# if (defined (ACE_HAS_PENTIUM) || defined (__amd64__) || defined (__x86_64__))
+#  define ACE_HAS_INTEL_ASSEMBLY
+# endif
 #endif /* __clang__ */
 
 
