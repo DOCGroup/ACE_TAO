@@ -929,9 +929,8 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
               //    profile from the IOR.
               TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) - ERROR: Could not create all ")
-                                 ACE_TEXT ("profiles while extracting object [%d, %d]\n")
-                                 ACE_TEXT ("TAO (%P|%t) - ERROR: reference from the ")
-                                 ACE_TEXT ("CDR stream.\n"),
+                                 ACE_TEXT ("profiles while extracting object [%d, %d] ")
+                                 ACE_TEXT ("reference from the CDR stream.\n"),
                                  mp.profile_count (), profile_count),
                                 false);
             }
