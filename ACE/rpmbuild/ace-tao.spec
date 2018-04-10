@@ -1,6 +1,6 @@
 # Set the version number here.
-%define ACEVER  6.4.6
-%define TAOVER  2.4.6
+%define ACEVER  6.4.7
+%define TAOVER  2.4.7
 
 # Conditional build
 # Default values are
@@ -83,7 +83,7 @@ BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %define _extension .gz
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel}
 BuildRequires: redhat-rpm-config elfutils sendmail
 %endif
 
@@ -112,7 +112,7 @@ BuildRequires:  zlib-devel
 BuildRequires:  bzip2
 %endif
 
-BuildRequires:  perl
+BuildRequires:  perl perl(Data::Dumper)
 
 %if %{?_with_fltk:1}%{!?_with_fltk:0}
 BuildRequires:  fltk-devel

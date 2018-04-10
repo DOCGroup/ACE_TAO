@@ -419,16 +419,13 @@
       <li>
         Update the ACE/NEWS and TAO/NEWS files to have a new section for the next release.</li>
       <li>
-        Update OpenSuSE Build service using
+        Update openSUSE Build service using<br>
         <code>
-        osc checkout devel:libraries:ACE
-        osc add <new release>
-        cp rpmbuild/ace-tao.spec .
-        cp debian/control debian.control
-        cp debian/dsc ace.dsc
-        cp debian/changelog debian.changelog
-        cp debian/rules debian.rules
-        osc commit
+        osc checkout devel:libraries:ACE:micro ACE<br>
+        cd &quot;devel:libraries:ACE:micro/ACE&quot;<br>
+        osc rm ACE+TAO-src-*.tar.gz<br>
+        cp $DOC_ROOT/package-&lt;PID&gt;/ACE+TAO-src-*.tar.gz .<br>
+        osc commit<br>
         </code>
       </li>
       <li>

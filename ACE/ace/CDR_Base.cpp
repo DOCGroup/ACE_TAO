@@ -52,7 +52,7 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
     }
 #else
   char const * const o4 = ACE_ptr_align_binary (orig, 4);
-  // this is an _if_, not a _while_. The mistmatch can only be by 2.
+  // this is an _if_, not a _while_. The mismatch can only be by 2.
   if (orig != o4)
     {
       ACE_CDR::swap_2 (orig, target);
@@ -74,7 +74,7 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
   // end marks our barrier for not falling outside.
   char const * const end = orig + 2 * (n & (~3));
 
-  // See if we're aligned for writting in 64 or 32 bit chunks...
+  // See if we're aligned for writing in 64 or 32 bit chunks...
 #if ACE_SIZEOF_LONG == 8 && \
     !((defined(__amd64__) || defined (__x86_64__)) && defined(__GNUG__))
   if (target == ACE_ptr_align_binary (target, 8))

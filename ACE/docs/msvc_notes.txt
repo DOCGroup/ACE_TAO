@@ -14,7 +14,7 @@ main two are Debug and Release.  Debug produces libraries and
 executables with debugging symbols and doesn't enable inlining.  The
 Release configuration enables optimizations and leaves out debugging
 symbols.  All projects contain both configurations. If you want to
-build static or mfc versions of th elibrary you need to use different
+build static or mfc versions of the library you need to use different
 project and solution files. Project files with _Static extension
 denote workspaces for building static libraries.
 

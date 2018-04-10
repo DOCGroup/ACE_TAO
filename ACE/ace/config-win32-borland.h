@@ -174,12 +174,22 @@
 #endif
 
 #if defined (ACE_HAS_BCC32)
+// The bcc32 compiler can't handle assembly in inline methods or
+// templates (E2211). When we build for pentium optimized and we are inlining
+// then we disable inline assembly
+# if defined (ACE_HAS_PENTIUM) && defined(__ACE_INLINE__) && !defined(__clang__)
+#  define ACE_LACKS_INLINE_ASSEMBLY
+# endif
 # define ACE_SIZEOF_LONG_DOUBLE 10
 # define ACE_NEEDS_DL_UNDERSCORE
 #endif
 
 #ifdef __clang__
 # define ACE_ANY_OPS_USE_NAMESPACE
+# define ACE_HAS_BUILTIN_BSWAP16
+# define ACE_HAS_BUILTIN_BSWAP32
+# define ACE_HAS_BUILTIN_BSWAP64
+# define ACE_LACKS_INLINE_ASSEMBLY
 #endif /* __clang__ */
 
 

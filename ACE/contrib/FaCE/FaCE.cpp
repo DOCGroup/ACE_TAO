@@ -26,7 +26,6 @@ const ACE_TCHAR* g_ParameterFileName = ACE_TEXT("Parameters.txt");
  * parameters and parameter history file.
  *
  * @author Si Mong Park (spark@ociweb.com)
- * @version $Revision$ $Date$
  */
 class ParameterList
 {

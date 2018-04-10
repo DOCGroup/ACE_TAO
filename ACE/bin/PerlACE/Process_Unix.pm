@@ -586,6 +586,20 @@ sub WaitKill ($)
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
+
+        if ($ENV{ACE_TEST_LOG_STUCK_STACKS}) {
+            my $debugger = ($^O eq 'darwin') ? 'lldb' : 'gdb';
+            my $commands = ($^O eq 'darwin') ? "-o 'bt all'"
+                : "-ex 'set pagination off' -ex 'thread apply all backtrace'";
+            system "$debugger --batch -p $self->{PROCESS} $commands";
+        }
+
+        if ($ENV{ACE_TEST_GENERATE_CORE_FILE}) {
+            system ($^O ne 'darwin') ? "gcore $self->{PROCESS}"
+                : "lldb -b -p $self->{PROCESS} -o " .
+                "'process save-core core.$self->{PROCESS}'";
+        }
+
         $self->Kill ();
     }
 

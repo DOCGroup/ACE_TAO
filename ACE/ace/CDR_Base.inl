@@ -66,6 +66,9 @@ ACE_CDR::swap_2 (const char *orig, char* target)
   // function.
   *reinterpret_cast<unsigned short *> (target) =
     _byteswap_ushort (*reinterpret_cast<unsigned short const *> (orig));
+#elif defined (ACE_HAS_BUILTIN_BSWAP16)
+  *reinterpret_cast<uint16_t *> (target) =
+    __builtin_bswap16 (*reinterpret_cast<uint16_t const *> (orig));
 #elif defined (ACE_HAS_BSWAP16)
   *reinterpret_cast<uint16_t *> (target) =
     bswap16 (*reinterpret_cast<uint16_t const *> (orig));
@@ -100,6 +103,9 @@ ACE_CDR::swap_4 (const char* orig, char* target)
   // function.
   *reinterpret_cast<unsigned long *> (target) =
     _byteswap_ulong (*reinterpret_cast<unsigned long const *> (orig));
+#elif defined (ACE_HAS_BUILTIN_BSWAP32)
+  *reinterpret_cast<uint32_t *> (target) =
+    __builtin_bswap32 (*reinterpret_cast<uint32_t const *> (orig));
 #elif defined (ACE_HAS_BSWAP32)
   *reinterpret_cast<uint32_t *> (target) =
     bswap32 (*reinterpret_cast<uint32_t const *> (orig));
@@ -135,6 +141,9 @@ ACE_CDR::swap_8 (const char* orig, char* target)
   // function.
   *reinterpret_cast<unsigned __int64 *> (target) =
     _byteswap_uint64 (*reinterpret_cast<unsigned __int64 const *> (orig));
+#elif defined (ACE_HAS_BUILTIN_BSWAP64)
+  *reinterpret_cast<uint64_t *> (target) =
+    __builtin_bswap64 (*reinterpret_cast<uint64_t const *> (orig));
 #elif defined (ACE_HAS_BSWAP64)
   *reinterpret_cast<uint64_t *> (target) =
     bswap64 (*reinterpret_cast<uint64_t const *> (orig));
