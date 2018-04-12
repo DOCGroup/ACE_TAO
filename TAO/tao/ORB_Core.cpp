@@ -3075,7 +3075,7 @@ TAO_ORB_Core::connector_registry (void)
   return conn;
 }
 
-auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+TAO_GIOP_Fragmentation_Strategy*
 TAO_ORB_Core::fragmentation_strategy (TAO_Transport * transport)
 {
   return
