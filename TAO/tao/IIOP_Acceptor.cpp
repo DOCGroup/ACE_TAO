@@ -19,7 +19,6 @@
 #include "tao/IIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
