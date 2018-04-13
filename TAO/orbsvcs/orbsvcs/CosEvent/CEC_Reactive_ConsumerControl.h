@@ -95,8 +95,7 @@ public:
       const ACE_Time_Value &timeout,
       unsigned int retries,
       TAO_CEC_TypedEventChannel *typed_event_channel,
-      CORBA::ORB_ptr orb
-    );
+      CORBA::ORB_ptr orb);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...

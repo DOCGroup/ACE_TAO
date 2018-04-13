@@ -4,7 +4,6 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_errno.h"
 
-
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/CosEvent/CEC_Dispatching_Task.inl"
 #endif /* __ACE_INLINE__ */

@@ -153,8 +153,7 @@ public:
       ACE_Lock *lock,
       CORBA::ULong &refcount,
       TAO_CEC_TypedEventChannel *ec,
-      TAO_CEC_TypedProxyPushConsumer *proxy
-    );
+      TAO_CEC_TypedProxyPushConsumer *proxy);
 
   /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer_Guard (void);
