@@ -56,8 +56,7 @@ namespace CORBA
 class TAO_Event_Serv_Export TAO_CEC_SupplierControl
 {
 public:
-  /// Constructor.  It does not assume ownership of the <event_channel>
-  /// parameter.
+  /// Constructor
   TAO_CEC_SupplierControl (void);
 
   /// destructor...

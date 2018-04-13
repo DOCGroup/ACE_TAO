@@ -100,7 +100,7 @@ protected:
   (CosEventComm::PushSupplier_ptr pre);
 
 private:
-  /// The typed supplier admin, used for activation and memory managment.
+  /// The typed supplier admin, used for activation and memory management.
   TAO_CEC_TypedEventChannel* typed_event_channel_;
 
   ACE_Time_Value timeout_;

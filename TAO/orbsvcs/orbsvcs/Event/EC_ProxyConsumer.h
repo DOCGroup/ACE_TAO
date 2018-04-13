@@ -134,7 +134,7 @@ protected:
   /// Release the filter and the supplier
   void cleanup_i (void);
 
-  /// The supplier admin, used for activation and memory managment.
+  /// The supplier admin, used for activation and memory management.
   TAO_EC_Event_Channel_Base* event_channel_;
 
   /// The locking strategy.

@@ -45,7 +45,7 @@ class TAO_CEC_TypedEventChannel;
  * remember that this class is used to communicate with a
  * PushConsumer, so, in effect, this is the ambassador for a
  * consumer inside the event channel.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * It does not assume ownership of the TAO_CEC_Dispatching object.
  * It makes a copy of the ConsumerQOS and the consumer object
  * reference.

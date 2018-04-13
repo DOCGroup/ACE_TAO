@@ -334,7 +334,7 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
   return this_profile->is_equivalent (other_profile);
 }
 
-// Memory managment
+// Memory management
 
 TAO_Profile *
 TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)

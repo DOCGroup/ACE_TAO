@@ -47,11 +47,10 @@ namespace CORBA
 class TAO_Event_Serv_Export TAO_CEC_ConsumerControl
 {
 public:
-  /// Constructor.  It does not assume ownership of the <event_channel>
-  /// parameter.
+  /// Constructor
   TAO_CEC_ConsumerControl (void);
 
-  /// destructor...
+  /// Destructor
   virtual ~TAO_CEC_ConsumerControl (void);
 
   /// Activate any internal threads or timers used to poll the state of

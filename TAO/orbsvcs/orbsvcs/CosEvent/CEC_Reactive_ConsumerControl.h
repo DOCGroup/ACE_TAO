@@ -80,7 +80,7 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_ConsumerControl
   : public TAO_CEC_ConsumerControl
 {
 public:
-  /// Constructor.  It does not assume ownership of the <event_channel>
+  /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
   TAO_CEC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
                                     const ACE_Time_Value &timeout,
