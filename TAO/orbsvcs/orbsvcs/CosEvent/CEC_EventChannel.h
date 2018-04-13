@@ -117,7 +117,7 @@ public:
 
   /**
    * constructor
-   * If <own_factory> is not 0 it assumes ownership of the factory.
+   * If @a own_factory is not 0 it assumes ownership of the factory.
    * If the factory is <nil> it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */
