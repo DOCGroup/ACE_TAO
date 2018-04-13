@@ -62,7 +62,7 @@ template<class Target> class TAO_ESF_Worker;
  * cleanup operations).
  *
  * The class must also collaborate with other components of the
- * EC to efficiently and safely perform memory managment of the
+ * EC to efficiently and safely perform memory management of the
  * members in the collection.
  *
  * The PROXY object must be reference counted with the following

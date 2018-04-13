@@ -54,7 +54,7 @@ public:
   /**
    * The basic constructor.
    * The attributes listed as arguments are *required* by the EC, and
-   * no appropiate defaults are available for them.
+   * no appropriate defaults are available for them.
    */
   TAO_CEC_EventChannel_Attributes (PortableServer::POA_ptr supplier_poa,
                                    PortableServer::POA_ptr consumer_poa);
@@ -117,7 +117,7 @@ public:
 
   /**
    * constructor
-   * If <own_factory> is not 0 it assumes ownership of the factory.
+   * If @a own_factory is not 0 it assumes ownership of the factory.
    * If the factory is <nil> it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */

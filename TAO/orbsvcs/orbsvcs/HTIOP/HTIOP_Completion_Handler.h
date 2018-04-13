@@ -56,16 +56,15 @@ namespace TAO
 
     public:
       Completion_Handler (ACE_Thread_Manager* t = 0);
-      /// Constructor. <arg> parameter is used by the Acceptor to pass the
-      /// protocol configuration properties for this connection.
+      /// Constructor.
       Completion_Handler (TAO_ORB_Core *orb_core,
-                          CORBA::Boolean = 0 );
+                          CORBA::Boolean = false);
 
       /// Destructor.
       ~Completion_Handler (void);
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
-      /// connected.  Argument is unused.
+      /// connected. Argument is unused.
       virtual int open (void *);
 
       //@{

@@ -62,19 +62,12 @@ private:
   // Use our own thread manager
   ACE_Thread_Manager thread_manager_;
 
-  /// The number of active tasks
-  // int nthreads_;
-
   /// The flags (THR_BOUND, THR_NEW_LWP, etc.) used to create the
   /// dispatching threads.
   int thread_creation_flags_;
 
   /// The priority of the dispatching threads.
   int thread_priority_;
-
-  /// If activation at the requested priority fails then we fallback on
-  /// the defaults for thread activation.
-  // int force_activate_;
 
   typedef ACE_Hash_Map_Manager_Ex<RtecEventComm::PushConsumer_ptr,TAO_EC_Dispatching_Task*,ACE_Pointer_Hash<RtecEventComm::PushConsumer_ptr>,ACE_Equal_To<RtecEventComm::PushConsumer_ptr>,ACE_Null_Mutex> MAPTYPE;
 

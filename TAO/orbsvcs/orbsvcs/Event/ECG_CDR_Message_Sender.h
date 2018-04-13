@@ -152,7 +152,7 @@ private:
    * Count the number of fragments that will be required to send the
    * message blocks in the range [begin,end)
    * The maximum fragment payload (i.e. the size without the header is
-   * also required); <total_length> returns the total message size.
+   * also required); @a total_length returns the total message size.
    */
   CORBA::ULong compute_fragment_count (const ACE_Message_Block* begin,
                                        const ACE_Message_Block* end,
@@ -167,7 +167,7 @@ private:
   /// The MTU for this sender...
   CORBA::ULong mtu_;
 
-  /// Should crc checksum be caluclated and sent?
+  /// Should crc checksum be calculated and sent?
   CORBA::Boolean checksum_;
 };
 
