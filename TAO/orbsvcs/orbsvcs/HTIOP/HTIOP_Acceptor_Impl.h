@@ -41,9 +41,7 @@ namespace TAO
     {
     public:
       /**
-       * Constructor. <arg> parameter is used to pass any special
-       * state/info to the service handler upon creation.
-
+       * Constructor.
       */
       Creation_Strategy (TAO_ORB_Core *orb_core);
 

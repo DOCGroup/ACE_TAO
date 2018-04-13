@@ -4,8 +4,6 @@
 #include "orbsvcs/Event/EC_Supplier_Filter.h"
 #include "ace/Reverse_Lock_T.h"
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;

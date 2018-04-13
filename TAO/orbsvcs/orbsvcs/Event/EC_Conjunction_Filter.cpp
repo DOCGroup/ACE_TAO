@@ -1,7 +1,5 @@
 #include "orbsvcs/Event/EC_Conjunction_Filter.h"
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const int bits_per_word = sizeof(TAO_EC_Conjunction_Filter::Word) * CHAR_BIT;
