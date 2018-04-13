@@ -37,7 +37,6 @@
 #include "tao/Service_Context_Handler_Registry.h"
 
 #include "ace/Array_Map.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/TSS_T.h"
@@ -900,7 +899,7 @@ public:
   ACE_Service_Gestalt* configuration () const;
 
   /// Get outgoing fragmentation strategy.
-  auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+  TAO_GIOP_Fragmentation_Strategy*
   fragmentation_strategy (TAO_Transport * transport);
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
