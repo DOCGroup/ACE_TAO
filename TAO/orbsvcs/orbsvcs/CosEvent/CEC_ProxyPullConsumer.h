@@ -37,7 +37,7 @@ class TAO_CEC_ProxyPullSupplier;
  * remember that this class is used to communicate with a
  * PullSupplier, so, in effect, this is the ambassador for a
  * supplier inside the event channel.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * The object commits suicide when disconnect_pull_consumer() is
  * called.
  */

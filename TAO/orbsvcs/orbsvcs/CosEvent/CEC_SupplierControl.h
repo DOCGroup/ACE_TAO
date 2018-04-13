@@ -49,7 +49,7 @@ namespace CORBA
  *
  * Defines the interface for the supplier control strategy.
  * This strategy handles misbehaving or failing suppliers.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * = LOCKING
  * = TODO
  */

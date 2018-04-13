@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * can specify which strategies will this factory generate.
  * Since the class can be dynamically loaded the strategies can be
  * set in the service configurator file.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  */
 class TAO_Event_Serv_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
 {

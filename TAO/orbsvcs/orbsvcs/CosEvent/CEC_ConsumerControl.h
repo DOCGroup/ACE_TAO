@@ -40,7 +40,7 @@ namespace CORBA
  *
  * Defines the interface for the consumer control strategy.
  * This strategy handles misbehaving or failing consumers.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * = LOCKING
  * = TODO
  */

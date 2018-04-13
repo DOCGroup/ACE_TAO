@@ -36,7 +36,7 @@ class TAO_CEC_EventChannel;
  *
  * Implements the ConsumerAdmin interface, i.e. the factory for
  * ProxyPushSupplier objects.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * It does not assume ownership of the TAO_CEC_EventChannel
  * object; but it *does* assume ownership of the
  * TAO_CEC_ProxyPushSupplier_Set object.

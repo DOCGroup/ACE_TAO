@@ -73,7 +73,7 @@ typedef TAO_ESF_Proxy_Collection<TAO_CEC_ProxyPullSupplier> TAO_CEC_ProxyPullSup
  * initialization time through several strategies and
  * components. This class defines the interface of an Abstract
  * Factory that creates all such components.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * The objects it creates are owned by this class, the client must
  * invoke the corresponding destroy() method to release them.
  * Some implementations may require a different instance for the
