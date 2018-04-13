@@ -481,7 +481,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
 
   Documentation_Files {
     README
-    ../VERSION
   }
 
   Pkgconfig_Files {
