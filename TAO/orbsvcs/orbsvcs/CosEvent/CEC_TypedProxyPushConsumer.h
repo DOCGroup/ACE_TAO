@@ -55,7 +55,7 @@ public:
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
    * it is disconnected then it returns true and sets the
-   * <disconnected> flag.
+   * @a disconnected flag.
    */
   CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
@@ -100,7 +100,7 @@ protected:
   (CosEventComm::PushSupplier_ptr pre);
 
 private:
-  /// The typed supplier admin, used for activation and memory managment.
+  /// The typed supplier admin, used for activation and memory management.
   TAO_CEC_TypedEventChannel* typed_event_channel_;
 
   ACE_Time_Value timeout_;
@@ -153,8 +153,7 @@ public:
       ACE_Lock *lock,
       CORBA::ULong &refcount,
       TAO_CEC_TypedEventChannel *ec,
-      TAO_CEC_TypedProxyPushConsumer *proxy
-    );
+      TAO_CEC_TypedProxyPushConsumer *proxy);
 
   /// Destructor
   ~TAO_CEC_TypedProxyPushConsumer_Guard (void);

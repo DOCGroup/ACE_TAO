@@ -99,9 +99,6 @@ public:
 private:
   /// The typed event
   const TAO_CEC_TypedEvent typed_event_;
-
-  /// The typed EC
-  // TAO_CEC_TypedEventChannel* typed_event_channel_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

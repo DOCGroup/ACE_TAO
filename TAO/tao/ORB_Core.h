@@ -383,7 +383,7 @@ public:
   /// transports.
   ACE_Allocator *transport_message_buffer_allocator (void);
 
-  /// The Message Blocks used for input CDRs must have appropiate
+  /// The Message Blocks used for input CDRs must have appropriate
   /// locking strategies.
   ACE_Data_Block *create_input_cdr_data_block (size_t size);
 

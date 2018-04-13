@@ -317,7 +317,7 @@ TAO::HTIOP::Connector::cancel_svc_handler (
 
 /**
  * @brief Create a profile and initialize it based on the
- * encapsulation in <cdr>
+ * encapsulation in @a cdr
  */
 TAO_Profile *
 TAO::HTIOP::Connector::create_profile (TAO_InputCDR& cdr)

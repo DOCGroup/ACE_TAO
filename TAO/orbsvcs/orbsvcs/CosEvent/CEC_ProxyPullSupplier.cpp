@@ -113,15 +113,15 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
 
-    disconnected = 0;
-    if (this->is_connected_i () == 0)
+    disconnected = false;
+    if (!this->is_connected_i ())
       {
-        disconnected = 1;
-        return 0;
+        disconnected = true;
+        return false;
       }
     if (CORBA::is_nil (this->nopolicy_consumer_.in ()))
       {
-        return 0;
+        return false;
       }
     consumer = CORBA::Object::_duplicate (this->nopolicy_consumer_.in ());
   }
@@ -129,7 +129,7 @@ TAO_CEC_ProxyPullSupplier::consumer_non_existent (
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   return consumer->_non_existent ();
 #else
-  return 0;
+  return false;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
@@ -300,7 +300,7 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier ()
         CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-    if (this->is_connected_i () == 0)
+    if (!this->is_connected_i ())
       throw CORBA::BAD_INV_ORDER ();
 
     consumer = this->consumer_._retn ();

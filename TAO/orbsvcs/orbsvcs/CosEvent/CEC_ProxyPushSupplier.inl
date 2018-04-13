@@ -21,7 +21,7 @@ TAO_CEC_ProxyPushSupplier::is_connected_i (void) const
 ACE_INLINE CORBA::Boolean
 TAO_CEC_ProxyPushSupplier::is_connected (void) const
 {
-  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, false);
 
   return this->is_connected_i ();
 }
