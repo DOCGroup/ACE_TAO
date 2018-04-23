@@ -357,10 +357,6 @@
 # define ACE_LACKS_CONDATTR 1
 #endif
 
-#if defined(__BIONIC_CAST)
-# define ACE_HAS_NONCONST_FD_ISSET
-#endif
-
 #if !defined ACE_DEFAULT_TEMP_DIR
 # define ACE_DEFAULT_TEMP_DIR "/data/tmp"
 #endif
