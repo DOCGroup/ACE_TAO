@@ -566,11 +566,11 @@ endif
 SPACE = $(should_be_unset) $(should_be_unset)
 <%foreach(custom_types)%>
 <%if(custom_type->libpath)%>
-DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
-LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
-SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
-LIBPATH           := $(LIBPATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
-PATH              := $(PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+export DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+export LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+export SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+export LIBPATH           := $(LIBPATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+export PATH              := $(PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
 
 <%endif%>
 <%foreach(custom_type->input_files)%>
@@ -793,16 +793,8 @@ install: <%if(postbuild)%>__postbuild__<%else%>all<%endif%>
 INSTALL_LIB ?= lib
 ifneq ($(INSTALL_PREFIX),)
 ifneq ($(install_rpath),0)
-UNAME := $(shell uname)
-ifeq ($(UNAME), HP-UX)
-LDFLAGS += -Wl,+s,+b,$(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
-else
-ifeq ($(UNAME), Darwin)
-LDFLAGS += -Wl,-rpath $(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
-else
-LDFLAGS += -Wl,-R$(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
-endif
-endif
+LD_RPATH ?= -Wl,-rpath,
+LDFLAGS += $(LD_RPATH)$(INSTALL_PREFIX)/$(INSTALL_LIB) $(LD_RPATH_FLAGS)
 endif
 endif
 

@@ -209,3 +209,5 @@ endif
 ifeq ($(c++0x),1)
   CCFLAGS += -Ax
 endif
+
+LD_RPATH = -Wl,+s,+b,

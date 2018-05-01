@@ -1,9 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./tests/POA/Identity/svc.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <!--  Please see $TAO_ROOT/docs/Options.html for details on these options. -->
- <!--  -->
  <static id="Server_Strategy_Factory" params="-ORBUseridPolicyDemuxStrategy dynamic -ORBSystemidPolicyDemuxStrategy active -ORBUniqueidPolicyReverseDemuxStrategy dynamic -ORBAllowReactivationOfSystemids 1 -ORBActiveHintInIds 1"/>
 </ACE_Svc_Conf>

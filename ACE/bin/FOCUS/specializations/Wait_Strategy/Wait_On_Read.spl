@@ -6,7 +6,6 @@
  *   to specialize the Wait_Strategy with the Wait_On_Read strategy
  *
  *   @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
- *   $Id$
 -->
 
 <transform>

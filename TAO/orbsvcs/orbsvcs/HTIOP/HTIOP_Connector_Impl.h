@@ -46,13 +46,11 @@ namespace TAO
      * creation time.
      *
      */
-
     template <class SVC_HANDLER>
     class Connect_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
     {
     public:
-
-      /// Constructor. <arg> parameter is used to pass any special
+      /// Constructor. @a arg parameter is used to pass any special
       /// state/info to the service handler upon creation.  Currently used
       /// by HTIOP to pass protocol configuration properties.
       Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
@@ -65,15 +63,12 @@ namespace TAO
 
 
     private:
-
       /// Pointer to the ORB_Core on which we are activated
       TAO_ORB_Core* orb_core_;
 
       /// Some info/state to be passed to the service handler we create.
       void *arg_;
     };
-
-
 
     /**
      * @class HTIOP_Connect_Concurrency_Strategy
@@ -90,10 +85,8 @@ namespace TAO
       public ACE_Concurrency_Strategy<SVC_HANDLER>
     {
     public:
-
       /// Constructor.
       Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
-
 
       /// Activates the Svc_Handler, and if the right wait strategy is in
       /// use, registers the handle with the reactor.
@@ -101,10 +94,8 @@ namespace TAO
                                 void *arg);
 
     private:
-
       /// Pointer to the ORB Core.
       TAO_ORB_Core *orb_core_;
-
     };
   }
 }

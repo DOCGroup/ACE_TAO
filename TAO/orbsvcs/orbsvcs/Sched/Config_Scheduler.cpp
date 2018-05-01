@@ -104,7 +104,7 @@ ACE_Config_Scheduler::get (RtecScheduler::handle_t handle)
     {
     case BaseSchedImplType::SUCCEEDED:
       {
-        // IDL memory managment semantics require that we return a copy.
+        // IDL memory management semantics require that we return a copy.
         RtecScheduler::RT_Info* copy;
         ACE_NEW_RETURN (copy, RtecScheduler::RT_Info (*rt_info), 0);
         return copy;

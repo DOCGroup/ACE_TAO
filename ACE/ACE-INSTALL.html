@@ -1795,7 +1795,12 @@ below.</p>
       <code>out32dll</code> directories.
   <li>Add <code>ssl=1</code> to your MPC
       <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
-      or <code>$ACE_ROOT/local.features</code> file, and re-run MPC to add
+      or <code>$ACE_ROOT/local.features</code> file.
+  <li>At the moment you are using OpenSSL v1.1 or
+      newer also add <code>openssl11=1</code> to your MPC
+      <code>$ACE_ROOT/bin/MakeProjectCreator/config/default.features</code>
+      or <code>$ACE_ROOT/local.features</code> file.
+  <li>Re-run MPC to add
       support for building the ACE_SSL library to your MSVC++
       workspaces and projects.
   <li>Open the <code>ACE.sln</code> solution, and refer to the ACE build

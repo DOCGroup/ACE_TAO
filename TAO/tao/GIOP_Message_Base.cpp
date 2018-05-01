@@ -25,12 +25,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                                               TAO_Transport *transport,
                                               size_t input_cdr_size)
   : orb_core_ (orb_core)
-#if defined (__SUNPRO_CC) && (__SUNPRO_CC == 0x5110 || __SUNPRO_CC == 0x5120)
-  // initializing from auto_ptr_ref is broken on SunCC 5.11 and 5.12
-  , fragmentation_strategy_ (orb_core->fragmentation_strategy (transport).release ())
-#else
   , fragmentation_strategy_ (orb_core->fragmentation_strategy (transport))
-#endif
   , out_stream_ (0,
                  input_cdr_size,
                  TAO_ENCAP_BYTE_ORDER,
@@ -38,7 +33,7 @@ TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                  orb_core->output_cdr_dblock_allocator (),
                  orb_core->output_cdr_msgblock_allocator (),
                  orb_core->orb_params ()->cdr_memcpy_tradeoff (),
-                 fragmentation_strategy_.get (),
+                 fragmentation_strategy_,
                  TAO_DEF_GIOP_MAJOR,
                  TAO_DEF_GIOP_MINOR)
 {
@@ -61,6 +56,7 @@ TAO_GIOP_Message_Base::~TAO_GIOP_Message_Base (void)
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
   this->out_stream_.unregister_monitor ();
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
+  delete fragmentation_strategy_;
 }
 
 void
@@ -637,7 +633,7 @@ TAO_GIOP_Message_Base::process_request_message (TAO_Transport *transport,
                         TAO_ENCAP_BYTE_ORDER,
                         this->orb_core_->input_cdr_msgblock_allocator (),
                         this->orb_core_->orb_params ()->cdr_memcpy_tradeoff (),
-                        this->fragmentation_strategy_.get (),
+                        this->fragmentation_strategy_,
                         qd->giop_version ().major_version (),
                         qd->giop_version ().minor_version ());
 
@@ -2021,7 +2017,7 @@ TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel
 TAO_GIOP_Fragmentation_Strategy *
 TAO_GIOP_Message_Base::fragmentation_strategy (void)
 {
-  return this->fragmentation_strategy_.get ();
+  return this->fragmentation_strategy_;
 }
 
 void

@@ -13,7 +13,7 @@ optimize ?= 1
 threads ?= 1
 versioned_so ?= 1
 
-ifeq ($(OSMAJOR),10)
+ifneq ($(filter 10 11,$(OSMAJOR)),)
   CC            ?= clang
   CXX           ?= clang++
   CCFLAGS       += -fdelayed-template-parsing

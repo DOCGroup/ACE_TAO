@@ -26,14 +26,10 @@
 
 class RND_Driver;
 
+/// Simple consumer object
 class RND_Consumer
   : public POA_CosEventComm::PushConsumer
 {
-  // = TITLE
-  //   Simple consumer object
-  //
-  // = DESCRIPTION
-  //
 public:
   /// Constructor
   RND_Consumer (RND_Driver *driver);
@@ -63,29 +59,13 @@ RND_Consumer::RND_Consumer (RND_Driver *driver)
 
 // ****************************************************************
 
-class RND_Timer : public RND_Consumer
-{
-public:
-  RND_Timer (RND_Driver *driver);
-};
-
-inline
-RND_Timer::RND_Timer (RND_Driver *driver)
-  :  RND_Consumer (driver)
-{
-}
-
 // ****************************************************************
 
+/// Simple supplier object
 class RND_Supplier
   : public POA_CosEventComm::PushSupplier
   , public ACE_Task_Base
 {
-  // = TITLE
-  //   Simple supplier object
-  //
-  // = DESCRIPTION
-  //
 public:
   /// Constructor
   RND_Supplier (void);

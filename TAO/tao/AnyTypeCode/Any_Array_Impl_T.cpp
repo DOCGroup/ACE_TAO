@@ -22,8 +22,7 @@ template<typename T_slice, typename T_forany>
 TAO::Any_Array_Impl_T<T_slice, T_forany>::Any_Array_Impl_T (
     _tao_destructor destructor,
     CORBA::TypeCode_ptr tc,
-    T_slice * const val
-  )
+    T_slice * const val)
   : Any_Impl (destructor,
               tc),
     value_ (val)

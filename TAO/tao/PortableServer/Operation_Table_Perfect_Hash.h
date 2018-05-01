@@ -40,7 +40,7 @@ class TAO_PortableServer_Export TAO_Perfect_Hash_OpTable
 {
 public:
 
-  /// Do nothing destrctor.
+  /// Do nothing destructor.
   virtual ~TAO_Perfect_Hash_OpTable (void);
 
   /// See the documentation in the base class for details.

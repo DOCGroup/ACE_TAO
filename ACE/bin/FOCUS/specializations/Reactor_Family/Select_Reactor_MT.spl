@@ -7,7 +7,6 @@
  *   is a select reactor.
  *
  *   @author Arvind S. Krishna <arvindk@dre.vanderbilt.edu>
- *   $Id$
 -->
 
 <transform>
@@ -156,7 +155,7 @@ virtual int register_handler (ACE_HANDLE handle,
 
 </file>
 
-<!-- 
+<!--
 <file name="Select_Reactor_T.inl">
 
 <remove>#include "ace/Reactor.h"</remove>

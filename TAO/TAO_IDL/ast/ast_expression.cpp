@@ -3179,11 +3179,19 @@ AST_Expression::ast_accept (ast_visitor *visitor)
 void
 AST_Expression::destroy (void)
 {
-  if (0 != this->pd_ev && EV_string == this->pd_ev->et)
+  if (0 != this->pd_ev)
     {
-      this->pd_ev->u.strval->destroy ();
-      delete this->pd_ev->u.strval;
-      this->pd_ev->u.strval = 0;
+      if (EV_string == this->pd_ev->et)
+        {
+          this->pd_ev->u.strval->destroy ();
+          delete this->pd_ev->u.strval;
+          this->pd_ev->u.strval = 0;
+        }
+      else if (EV_wstring == this->pd_ev->et)
+        {
+          ACE::strdelete (this->pd_ev->u.wstrval);
+          this->pd_ev->u.wstrval = 0;
+        }
     }
 
   delete this->pd_ev;

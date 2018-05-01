@@ -1,7 +1,6 @@
 <?xml version='1.0'?>
 <!-- Converted from ./orbsvcs/examples/Security/Send_File/server_none.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
  <dynamic id="SSLIOP_Factory" type="Service_Object">
    <initializer path="TAO_SSLIOP" init="_make_TAO_SSLIOP_Protocol_Factory" params="-SSLAuthenticate NONE -SSLPrivateKey PEM:server_key.pem -SSLCertificate PEM:server_cert.pem"/>
  </dynamic>

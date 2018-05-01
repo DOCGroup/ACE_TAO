@@ -19,8 +19,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Select_Reactor.h"
 
-
-
 // Just need a simple exception class.
 class Except {};
 

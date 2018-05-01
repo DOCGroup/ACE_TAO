@@ -23,12 +23,6 @@
 
 #include "tao/CORBA_methods.h"
 
-#if defined (TAO_EXPORT_MACRO)
-#undef TAO_EXPORT_MACRO
-#endif
-
-#define TAO_EXPORT_MACRO TAO_DynamicInterface_Export
-
 #include /**/ "ace/post.h"
 
 #endif  /* TAO_DII_CORBA_METHODS_H */

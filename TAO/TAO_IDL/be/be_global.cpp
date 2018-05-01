@@ -136,6 +136,7 @@ BE_GlobalData::BE_GlobalData (void)
     use_clonable_in_args_ (false),
     gen_template_export_ (false),
     gen_ostream_operators_ (false),
+    gen_static_desc_operations_ (false),
     gen_custom_ending_ (true),
     gen_unique_guards_ (true),
     gen_ciao_svnt_ (false),
@@ -1360,6 +1361,19 @@ void
 BE_GlobalData::gen_ostream_operators (bool val)
 {
   this->gen_ostream_operators_ = val;
+}
+
+
+bool
+BE_GlobalData::gen_static_desc_operations (void) const
+{
+  return this->gen_static_desc_operations_;
+}
+
+void
+BE_GlobalData::gen_static_desc_operations (bool val)
+{
+  this->gen_static_desc_operations_ = val;
 }
 
 const char*
@@ -3212,6 +3226,13 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             // DDS type support IDL generation.
             be_global->gen_dds_typesupport_idl (true);
+
+            break;
+          }
+        else if (av[i][2] == 's' && av[i][3] == 'd')
+          {
+            // Generate static description operations
+            be_global->gen_static_desc_operations (true);
 
             break;
           }

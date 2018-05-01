@@ -37,13 +37,10 @@ public:
   /// Init
   void init (CosEventComm::PushConsumer_ptr push_consumer);
 
-  /// Push <event> to this consumer.
-//  virtual void push_i (const TAO_Notify_Event* event);
-
-  /// Push <event> to this consumer.
+  /// Push @a event to this consumer.
   virtual void push (const CORBA::Any& event);
 
-  /// Push <event> to this consumer.
+  /// Push @a event to this consumer.
   virtual void push (const CosNotification::StructuredEvent& event);
 
   /// Push a batch of events to this consumer.

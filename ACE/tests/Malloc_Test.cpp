@@ -25,7 +25,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if defined (ACE_HAS_PROCESS_SPAWN)
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
@@ -321,11 +320,11 @@ get_base_addrs (void)
 #   endif /* __clang__ */
   OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+  if (::GetVersionEx(&vinfo) == 0)
+    return;
 #   if defined(__clang__)
 #     pragma clang diagnostic pop
 #   endif /* __clang__ */
-  if (::GetVersionEx(&vinfo) == 0)
-    return;
 
   if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT &&
       vinfo.dwMajorVersion >= 4)

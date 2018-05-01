@@ -38,7 +38,7 @@ class TAO_CEC_ProxyPushSupplier;
  * remember that this class is used to communicate with a
  * PushSupplier, so, in effect, this is the ambassador for a
  * supplier inside the event channel.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * The object commits suicide when disconnect_push_consumer() is
  * called.
  */
@@ -73,7 +73,7 @@ public:
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
    * it is disconnected then it returns true and sets the
-   * <disconnected> flag.
+   * @ disconnected flag.
    */
   CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
@@ -116,7 +116,7 @@ protected:
   (CosEventComm::PushSupplier_ptr s);
 
 private:
-  /// The supplier admin, used for activation and memory managment.
+  /// The supplier admin, used for activation and memory management.
   TAO_CEC_EventChannel* event_channel_;
 
   ACE_Time_Value timeout_;

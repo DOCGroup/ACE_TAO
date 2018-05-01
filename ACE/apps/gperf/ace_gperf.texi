@@ -1,7 +1,5 @@
 \input texinfo  @c -*-texinfo-*-
 
-@c $Id$
-
 @include version.texi
 
 @c %**start of header
@@ -498,11 +496,11 @@ particular class of static search sets.  A minimal perfect hash
 function is defined by two properties:
 
 @itemize @bullet
-@item 
+@item
 It allows keyword recognition in a static search set using at most
 @emph{one} probe into the hash table.  This represents the ``perfect''
 property.
-@item 
+@item
 The actual memory allocated to store the keywords is precisely large
 enough for the keyword set, and @emph{no larger}.  This is the
 ``minimal'' property.
@@ -687,7 +685,7 @@ example taken from a partial list of C reserved words:
 
 @example
 @group
-# These are a few C reserved words, see the c.@code{gperf} file 
+# These are a few C reserved words, see the c.@code{gperf} file
 # for a complete list of ANSI C reserved words.
 unsigned
 sizeof
@@ -820,7 +818,7 @@ Duplicate hash values occur for two reasons:
 @item
 Since @code{gperf} does not backtrack it is possible for it to process
 all your input keywords without finding a unique mapping for each word.
-However, frequently only a very small number of duplicates occur, and 
+However, frequently only a very small number of duplicates occur, and
 the majority of keys still require one probe into the table.
 @item
 Sometimes a set of keys may have the same names, but possess different
@@ -980,7 +978,7 @@ associated value range should be, in relationship to the number of keys.
 If the @var{size-multiple} is negative the maximum associated value is
 calculated by @emph{dividing} it into the total number of keys.  For
 example, a value of 3 means ``allow the maximum associated value to be
-about 3 times larger than the number of input keys.''  
+about 3 times larger than the number of input keys.''
 
 Conversely, a value of -3 means ``allow the maximum associated value to
 be about 3 times smaller than the number of input keys.''  Negative
@@ -1060,7 +1058,7 @@ likely to be a @emph{perfect} hash function anymore!  Finally, use the
 @samp{-f} option if you want @code{gperf} to generate the perfect hash
 function @emph{fast}, with less emphasis on making it minimal.
 
-@item 
+@item
 The size of the generate static keyword array can get @emph{extremely}
 large if the input keyword file is large or if the keywords are quite
 similar.  This tends to slow down the compilation of the generated C
@@ -1072,7 +1070,7 @@ large switch statements it is important to qualify the @var{-S} option
 with an appropriate numerical argument that controls the number of
 switch statements generated.
 
-@item 
+@item
 The maximum number of key positions selected for a given key has an
 arbitrary limit of 126.  This restriction should be removed, and if
 anyone considers this a problem write me and let me know so I can remove
@@ -1097,7 +1095,7 @@ module is essential independent from other program modules.  Additional
 worthwhile improvements include:
 
 @itemize @bullet
-@item 
+@item
 Make the algorithm more robust.  At present, the program halts with an
 error diagnostic if it can't find a direct solution and the @samp{-D}
 option is not enabled.  A more comprehensive, albeit computationally
@@ -1105,7 +1103,7 @@ expensive, approach would employ backtracking or enable alternative
 options and retry.  It's not clear how helpful this would be, in
 general, since most search sets are rather small in practice.
 
-@item 
+@item
 Another useful extension involves modifying the program to generate
 ``minimal'' perfect hash functions (under certain circumstances, the
 current version can be rather extravagant in the generated table size).
@@ -1140,20 +1138,20 @@ determining both the minimum and maximum elements in a list.
 
 [1] Chang, C.C.: @i{A Scheme for Constructing Ordered Minimal Perfect
 Hashing Functions} Information Sciences 39(1986), 187-195.
-       
+
 [2] Cichelli, Richard J. @i{Author's Response to ``On Cichelli's Minimal Perfec
 t Hash
 Functions Method''} Communications of the ACM, 23, 12(December 1980), 729.
-    
+
 [3] Cichelli, Richard J. @i{Minimal Perfect Hash Functions Made Simple}
 Communications of the ACM, 23, 1(January 1980), 17-19.
-           
+
 [4] Cook, C. R. and Oldehoeft, R.R. @i{A Letter Oriented Minimal
 Perfect Hashing Function} SIGPLAN Notices, 17, 9(September 1982), 18-27.
 
 [5] Cormack, G. V. and Horspool, R. N. S. and Kaiserwerth, M.
 @i{Practical Perfect Hashing} Computer Journal, 28, 1(January 1985), 54-58.
-    
+
 [6] Jaeschke, G. @i{Reciprocal Hashing: A Method for Generating Minimal
 Perfect Hashing Functions} Communications of the ACM, 24, 12(December
 1981), 829-833.

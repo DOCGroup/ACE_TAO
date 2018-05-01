@@ -1,3 +1,46 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.4.7 and ACE-6.4.8
+====================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-6.4.6 and ACE-6.4.7
+====================================================
+
+. Added a new, optional argument named ipv6_only to:
+    ACE_Acceptor::ACE_Acceptor
+    ACE_Acceptor::open
+    ACE_SOCK_Dgram::ACE_SOCK_Dgram
+    ACE_SOCK_Dgram::open
+  If ipv6_only is 0/false (the default) the socket will accept
+  both IPv6 and IPv4 connections/datagrams. If ipv6_only is
+  1/true the socket will only accept IPv6.
+  This behavior only applies when ACE_HAS_IPV6 is true and the
+  local-side IP address is the generic localhost IP address.
+
+. Integrated some changes from XSC into XML Utils
+
+. Enable ACE_HAS_CPP11 when we have clang with C++11 enabled
+
+. Added support for cross compiling using MinGW on a Linux host
+
+. Added support for FreeBSD 11
+
+. Fixed issue ACE_Singleton was broken after ACE::fini, ACE::init (GitHub #554)
+
+USER VISIBLE CHANGES BETWEEN ACE-6.4.5 and ACE-6.4.6
+====================================================
+
+. Fixed some Codacy and C++ Core guidelines reported issues
+
+. VxWorks 7 (SR0510) support
+
+. Support make install on newer Apple MacOS versions
+
+USER VISIBLE CHANGES BETWEEN ACE-6.4.4 and ACE-6.4.5
+====================================================
+
+. Add support for OpenSSL 1.1. ACE users on Windows have
+  to add openssl11=1 to their default.features file so
+  that the correct OpenSSL library names are used.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.3 and ACE-6.4.4
 ====================================================
 
@@ -9,6 +52,17 @@ USER VISIBLE CHANGES BETWEEN ACE-6.4.3 and ACE-6.4.4
   show some structural problems
 
 . Add support for Oracle Studio 12.5
+
+. Removed usage of ACE_REGISTER and register keyword because
+  they trigger deprecated warnings with newer gcc and clang
+  versions
+
+. Add support for gcc 7
+
+. Enhanced Android support
+
+. Fix ACE_INET_Addr::set(domain_name, AF_UNSPEC) to be set to IPv4 address
+  when IPv6 is enabled and the domain_name could be resolved to IPv4 address.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.4.2 and ACE-6.4.3
 ====================================================

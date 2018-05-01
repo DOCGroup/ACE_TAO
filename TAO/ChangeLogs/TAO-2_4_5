@@ -1,0 +1,287 @@
+commit 8d0c8e258e74aa952a5891400878b68ce7826f30
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 5 20:38:48 2017 +0200
+
+    List change
+    
+        * TAO/NEWS:
+
+commit 5e06e6bd3126560383efdefc0de123ec47658243
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 5 14:14:23 2017 +0200
+
+    Put the implementation of the _desc_repository_id and _desc_interface_name into the generated C.cpp
+    
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_cs.cpp:
+
+commit 1cdfec588f4c562f9df8c9daedcad88c99040fc4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 5 13:31:49 2017 +0200
+
+    Extended TAO_IDL with a new -Gsd which enabled the generation of two additional static operations for each interface. _desc_repository_id to retrieve the repository id as string, second _desc_interface_name to return the interface name. Both can be useful in template meta programming use cases where we want to use the repository id or interface name of a specific type.
+    
+        * ACE/tests/Reactor_Exceptions_Test.cpp:
+        * TAO/TAO_IDL/be/be_global.cpp:
+        * TAO/TAO_IDL/be/be_util.cpp:
+        * TAO/TAO_IDL/be/be_visitor_argument/argument.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_ch.cpp:
+        * TAO/TAO_IDL/be_include/be_global.h:
+        * TAO/docs/compiler.html:
+        * TAO/tests/IDL_Test/IDL_Test.mpc:
+        * TAO/tests/IDL_Test/main.cpp:
+
+commit b98b8c18ddc69e8df872b366f39931599bb098f2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 1 19:59:25 2017 +0200
+
+    Updated certificates
+
+commit c231bc157dd27b59faea8e25f639f527772fd362
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 1 14:51:32 2017 +0200
+
+    Fixed 64bit warning
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+commit d30148e3724f0fcb623f282122bbb62ca64fe591
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 1 14:48:51 2017 +0200
+
+    Fixed size_t to int conversion
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp:
+
+commit 82a6ded0476400b130ec65cdb757f96a940b3072
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 1 08:56:36 2017 +0200
+
+    Fixed compile error with older SSL versions
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+
+commit 63fcf5fc12de6c916dfe848c52ca4dfb404759a8
+Merge: d1400a7535f 7fba52d361a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 20:11:17 2017 +0200
+
+    Merge pull request #502 from jwillemsen/jwi-xmlsvcconf-cleanup
+    
+    Cleanup empty commented out lines
+
+commit 7fba52d361a4cff50d4a1181e8a503b5054935b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 20:09:57 2017 +0200
+
+    Cleanup empty commented out lines
+
+commit ca26c9ada3b597dbd1966cb2c2661558f85cf5e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 19:55:12 2017 +0200
+
+    Updated SSL certificates to let this test work with OpenSSL 1.1
+
+commit 419c1660e94294ae4bedb67c1fe5e2e8aa22a4c5
+Merge: e146f0981e8 4c31674fa5f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 13:33:42 2017 +0200
+
+    Merge pull request #499 from jwillemsen/jwi-zapid2
+    
+    Removed left over Id tags
+
+commit 9770e4def8b689f87b820bb1a464fb1a516f798d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 12:15:35 2017 +0200
+
+    Removed left over Id tags
+
+commit ce09e976aad2fcee0139a85b694b5f3de6f24df6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 11:33:30 2017 +0200
+
+    Updated SSL certificates to let this test work with OpenSSL v1.1
+
+commit 764d3a74cf80e3a3d439347fbaaf9077b0f93d42
+Merge: dc58459e8b7 ff78e6235f5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 31 08:39:28 2017 +0200
+
+    Merge pull request #494 from jwillemsen/jwi-openssl110support
+    
+    Add support for OpenSSL 1.1
+
+commit ff78e6235f5103312bef1de2b30798a707f8817b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 20:50:56 2017 +0200
+
+    Make logging format the same as TAO messages and fixed some unicode logging issues
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+commit dc58459e8b75d06bbe49e048647b0d0993ff2d49
+Merge: 4c0075dad8d dd06341261d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 20:34:29 2017 +0200
+
+    Merge pull request #497 from jwillemsen/jwi-bugzilla-links
+    
+    Fixed links to bugzilla
+
+commit 85a16c4b2f0180a7638924176091ed0cf7ff540f
+Merge: d26b179fad7 1564badbcc2
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Aug 30 13:02:03 2017 -0500
+
+    Merge pull request #490 from huangminghuang/master
+    
+    Fix Naming server memory leaks
+
+commit dd06341261df2394b791fb1eeb3b189d5174c63a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 17:23:11 2017 +0200
+
+    Updated links to point to Vanderbilt bugzilla
+    
+        * ACE/tests/Based_Pointer_Test.cpp:
+        * ACE/tests/Bug_1576_Regression_Test.cpp:
+        * ACE/tests/Bug_1890_Regression_Test.cpp:
+        * ACE/tests/Bug_2368_Regression_Test.cpp:
+        * ACE/tests/Bug_2497_Regression_Test.cpp:
+        * ACE/tests/Bug_2540_Regression_Test.cpp:
+        * ACE/tests/Bug_2609_Regression_Test.cpp:
+        * ACE/tests/Bug_2610_Regression_Test.cpp:
+        * ACE/tests/Bug_2659_Regression_Test.cpp:
+        * ACE/tests/Bug_2740_Regression_Test.cpp:
+        * ACE/tests/Bug_2975_Regression_Test.cpp:
+        * ACE/tests/Bug_3102_Regression_Test.cpp:
+        * ACE/tests/Bug_3319_Regression_Test.cpp:
+        * ACE/tests/Bug_3500_Regression_Test.cpp:
+        * ACE/tests/Bug_3532_Regression_Test.cpp:
+        * ACE/tests/Bug_3541_Regression_Test.cpp:
+        * ACE/tests/Bug_3673_Regression_Test.cpp:
+        * ACE/tests/Bug_3709_Regression_Test.cpp:
+        * ACE/tests/Bug_3710_Regression_Test.cpp:
+        * ACE/tests/Bug_3911_Regression_Test.cpp:
+        * ACE/tests/Bug_3974_Regression_Test.cpp:
+        * TAO/docs/Security/SSLIOP-USAGE.html:
+        * TAO/docs/releasenotes/TODO.html:
+        * TAO/docs/releasenotes/ec.html:
+        * TAO/docs/releasenotes/orbcore.html:
+        * TAO/docs/rtcorba/issues.html:
+        * TAO/docs/rtcorba/status.html:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Dispatching_Task.inl:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+
+commit cfe08f9b5738b5d439168d2ce9fc488cc51de4c4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 17:17:58 2017 +0200
+
+    Layout changes
+    
+        * TAO/orbsvcs/tests/Security/MT_SSLIOP/README:
+        * TAO/orbsvcs/tests/Security/cert/README:
+
+commit 69e82bb732facc858bb52df2b100710304940e77
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 16:18:11 2017 +0200
+
+    Fix gcc7 warnings and remove commented out throws
+    
+        * ACE/ace/OS_NS_Thread.h:
+        * TAO/examples/Quoter/Factory_Finder.cpp:
+        * TAO/examples/Quoter/client.cpp:
+        * TAO/orbsvcs/LifeCycle_Service/LifeCycle_Service.cpp:
+        * TAO/tao/PortableServer/Servant_var.h:
+
+commit 1371f828a1347514995d0154f7b47be166008c66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 10:56:50 2017 +0200
+
+    Make use of EVP_PKEY_id to ge the type of key, looks the naming of this operation is strange, but we should use EVP_PKEY_id to get the type
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.cpp:
+
+commit 3cb3eea7ad23b2a446e22d254d6c02cea12f9d76
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 30 08:35:02 2017 +0200
+
+    Fixes for OpenSSL 1.1
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_SSL.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_X509.h:
+
+commit d148f4662b1cbea5574bb0c43b09a57b7a26ed6d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 29 15:35:33 2017 +0200
+
+    Fix gcc7 warning
+    
+        * ACE/tests/Based_Pointer_Test_Lib.cpp:
+        * TAO/tao/DynamicAny/DynAny_i.cpp:
+
+commit c5d5c60b8bed1ed1328664fc53eb2956e1174793
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 21 10:18:37 2017 +0200
+
+    Updated links to point to Vanderbilt pages
+    
+        * ACE/COPYING:
+        * TAO/COPYING:
+
+commit 1564badbcc2235ae0082183432fd57e5bface4e8
+Author: Huang-Ming Huang <huangming.huang@gmail.com>
+Date:   Tue Aug 15 12:15:49 2017 -0500
+
+    Fix Naming server memory leaks
+
+commit dda4b6780bb5dc1dc0b07c435d854e6bdd7c0abc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 14 14:03:35 2017 +0200
+
+    Upgrade to latest doxygen
+    
+        * TAO/etc/tao.doxygen:
+        * TAO/etc/tao_anytypecode.doxygen:
+        * TAO/etc/tao_av.doxygen:
+        * TAO/etc/tao_compression.doxygen:
+        * TAO/etc/tao_cosevent.doxygen:
+        * TAO/etc/tao_cosnaming.doxygen:
+        * TAO/etc/tao_cosnotification.doxygen:
+        * TAO/etc/tao_costime.doxygen:
+        * TAO/etc/tao_costrader.doxygen:
+        * TAO/etc/tao_dynamicany.doxygen:
+        * TAO/etc/tao_dynamicinterface.doxygen:
+        * TAO/etc/tao_esf.doxygen:
+        * TAO/etc/tao_ifr.doxygen:
+        * TAO/etc/tao_implrepo.doxygen:
+        * TAO/etc/tao_iormanip.doxygen:
+        * TAO/etc/tao_iortable.doxygen:
+        * TAO/etc/tao_pi.doxygen:
+        * TAO/etc/tao_pi_server.doxygen:
+        * TAO/etc/tao_portablegroup.doxygen:
+        * TAO/etc/tao_portableserver.doxygen:
+        * TAO/etc/tao_rtcorba.doxygen:
+        * TAO/etc/tao_rtevent.doxygen:
+        * TAO/etc/tao_rtportableserver.doxygen:
+        * TAO/etc/tao_security.doxygen:
+        * TAO/etc/tao_smartproxies.doxygen:
+        * TAO/etc/tao_ssliop.doxygen:
+        * TAO/etc/tao_strategies.doxygen:
+        * TAO/etc/tao_transportcurrent.doxygen:
+        * TAO/etc/tao_ziop.doxygen:
+
+commit 5af437c7b4f5fe2dc1111e1215e9236489628602
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 14 09:48:31 2017 +0200
+
+    Make ACE 6.4.4 and TAO 2.4.4 available
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

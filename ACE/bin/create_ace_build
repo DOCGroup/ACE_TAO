@@ -2,8 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# $Id$
-#
 # Creates an ACE build tree in directory "build/<build name>" below the current
 # directory, which must be an ACE "top level" directory (such as
 # $ACE_ROOT).  The build tree directory structure mirrors that of the ACE
@@ -180,20 +178,20 @@ sub wanted {
     /^Static_Release\z/s &&
     ($File::Find::prune = 1)
     ||
-    ( 
+    (
         ($nlink || (($dev,$ino,$mode,$nlink,$uid,$gid) = lstat($_))) &&
         ! -l $_ &&
         ! /^core\z/s &&
         ! /^.*\.state\z/s &&
-        ! /^.*\.so\z/s &&   
-        ! /^.*\.[oa]\z/s && 
-        ! /^.*\.dll\z/s &&   
-        ! /^.*\.lib\z/s && 
-        ! /^.*\.obj\z/s && 
+        ! /^.*\.so\z/s &&
+        ! /^.*\.[oa]\z/s &&
+        ! /^.*\.dll\z/s &&
+        ! /^.*\.lib\z/s &&
+        ! /^.*\.obj\z/s &&
         ! /^.*~\z/s &&
-        ! /^\.\z/s && 
+        ! /^\.\z/s &&
         ! /^\.#.*\z/s &&
-        ! /^.*\.log\z/s 
+        ! /^.*\.log\z/s
     ) &&
     push(@files, $File::Find::name);
 }

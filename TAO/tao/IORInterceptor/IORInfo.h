@@ -102,7 +102,7 @@ public:
 
 protected:
 
-  /// Protected destructor to enforce proper memory managment through
+  /// Protected destructor to enforce proper memory management through
   /// the reference counting mechanism.
   ~TAO_IORInfo (void);
 

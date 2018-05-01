@@ -55,27 +55,27 @@ endif
 ifeq ($(c++17),1)
   CCFLAGS += -std=c++17
   # This is needed due to the use of the deprecated auto_ptr class
-  no_deprecated = 1
+  no_deprecated ?= 1
 else
   ifeq ($(c++14),1)
     CCFLAGS += -std=c++14
     # This is needed due to the use of the deprecated auto_ptr class
-    no_deprecated = 1
+    no_deprecated ?= 1
   else
     ifeq ($(c++1y),1)
       CCFLAGS += -std=c++1y
       # This is needed due to the use of the deprecated auto_ptr class
-      no_deprecated = 1
+      no_deprecated ?= 1
     else
       ifeq ($(c++11),1)
         CCFLAGS += -std=c++11
         # This is needed due to the use of the deprecated auto_ptr class
-        no_deprecated = 1
+        no_deprecated ?= 1
       else
         ifeq ($(c++0x),1)
           CCFLAGS += -std=c++0x
           # This is needed due to the use of the deprecated auto_ptr class
-          no_deprecated = 1
+          no_deprecated ?= 1
         endif # c++0x
       endif # c++11
     endif # c++1y

@@ -1,7 +1,5 @@
 <?xml version='1.0'?>
 <!-- Converted from ./examples/AMI/FL_Callback/peer.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--   -->
- <!--  -->
  <static id="Client_Strategy_Factory" params="-ORBTransportMuxStrategy MUXED"/>
 </ACE_Svc_Conf>
