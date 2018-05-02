@@ -239,7 +239,7 @@ TAO::Storable_File_Guard::load ()
             { // Load the data from the newly restored primary.
               result = this->load_from_stream ();
             }
-          catch (const Storable_Read_Exception)
+          catch (const Storable_Read_Exception&)
             { // Still having trouble reading from the file. Time to bail.
               TAOLIB_ERROR ((LM_ERROR,
                              ACE_TEXT ("TAO: (%P|%t) ERROR: Unable to restore ")
