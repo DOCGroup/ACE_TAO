@@ -1,6 +1,12 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.4.7 and ACE-6.4.8
 ====================================================
 
+. Enhanced Embarcadero C++ Builder support
+
+. ACE XML_Utils enhancements
+
+. Debian packaging enhancements
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.6 and ACE-6.4.7
 ====================================================
 
