@@ -7,6 +7,12 @@ USER VISIBLE CHANGES BETWEEN ACE-6.4.7 and ACE-6.4.8
 
 . Debian packaging enhancements
 
+. Support for clang6 and gcc8
+
+. Enhanced Android support
+
+. Remove addr_any restriction from ipv6_only UDP
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.6 and ACE-6.4.7
 ====================================================
 
