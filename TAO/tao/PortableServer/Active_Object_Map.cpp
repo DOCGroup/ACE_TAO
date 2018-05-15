@@ -232,7 +232,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                       "linear option for "
                       "-ORBUniqueidPolicyReverseDemuxStrategy "
                       "not supported with minimum POA maps. "
-                      "Ingoring option to use default...\n"));
+                      "Ignoring option to use default...\n"));
           /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -270,7 +270,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
           TAOLIB_ERROR ((LM_ERROR,
                       "linear option for -ORBUseridPolicyDemuxStrategy "
                       "not supported with minimum POA maps. "
-                      "Ingoring option to use default...\n"));
+                      "Ignoring option to use default...\n"));
           /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -304,7 +304,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
           TAOLIB_ERROR ((LM_ERROR,
                       "linear and dynamic options for -ORBSystemidPolicyDemuxStrategy "
                       "are not supported with minimum POA maps. "
-                      "Ingoring option to use default...\n"));
+                      "Ignoring option to use default...\n"));
           /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
