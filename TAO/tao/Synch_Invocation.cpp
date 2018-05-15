@@ -589,7 +589,7 @@ namespace TAO
     std::unique_ptr<CORBA::Exception> safety (exception);
 #else
     auto_ptr<CORBA::Exception> safety (exception);
-#endif
+#endif /* ACE_HAS_CPP11 */
 
     exception->_raise ();
 
@@ -740,7 +740,7 @@ namespace TAO
     std::unique_ptr<CORBA::SystemException> safety (ex);
 #else
     auto_ptr<CORBA::SystemException> safety (ex);
-#endif
+#endif /* ACE_HAS_CPP11 */
 
     ex->minor (minor);
     ex->completed (CORBA::CompletionStatus (completion));

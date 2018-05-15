@@ -162,7 +162,7 @@ TAO::Any_Dual_Impl_T<T>::replace (TAO_InputCDR &cdr,
   std::unique_ptr<T> empty_value_safety (empty_value);
 #else
   auto_ptr<T> empty_value_safety (empty_value);
-#endif
+#endif /* ACE_HAS_CPP11 */
   TAO::Any_Dual_Impl_T<T> *replacement = 0;
   ACE_NEW_RETURN (replacement,
                   TAO::Any_Dual_Impl_T<T> (destructor,

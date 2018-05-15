@@ -460,7 +460,7 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
   std::unique_ptr<TAO_Policy_Set> policy_manager (new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
 #else
   auto_ptr<TAO_Policy_Set> policy_manager (new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
-#endif
+#endif /* ACE_HAS_CPP11 */
 
   if (set_add == CORBA::SET_OVERRIDE)
     {

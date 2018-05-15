@@ -306,7 +306,7 @@ TAO_AMH_DSI_Exception_Holder::raise_invoke ()
   std::unique_ptr< ::CORBA::Exception> safety (this->exception_);
 #else
   auto_ptr< ::CORBA::Exception> safety (this->exception_);
-#endif
+#endif /* ACE_HAS_CPP11 */
   this->exception_->_raise ();
 }
 

@@ -1970,7 +1970,7 @@ TAO_ORB_Core::root_poa (void)
           std::unique_ptr<TAO_Adapter> poa_adapter (factory->create (this));
 #else
           auto_ptr<TAO_Adapter> poa_adapter (factory->create (this));
-#endif
+#endif /* ACE_HAS_CPP11 */
           poa_adapter->open ();
 
           // @@ Not exception safe

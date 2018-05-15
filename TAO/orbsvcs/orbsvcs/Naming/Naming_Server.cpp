@@ -484,7 +484,11 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           TAO::Storable_Factory* pf = 0;
           ACE_CString directory (ACE_TEXT_ALWAYS_CHAR (persistence_location));
           ACE_NEW_RETURN (pf, TAO::Storable_FlatFileFactory (directory), -1);
+#if defined (ACE_HAS_CPP11)
+          std::unique_ptr<TAO::Storable_Factory> persFactory(pf);
+#else
           auto_ptr<TAO::Storable_Factory> persFactory(pf);
+#endif /* ACE_HAS_CPP11 */
 
           // Use an auto_ptr to ensure that we clean up the factory in the case
           // of a failure in creating and registering the Activator.

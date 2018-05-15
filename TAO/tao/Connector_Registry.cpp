@@ -68,7 +68,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
       std::unique_ptr <TAO_Connector> connector ((*factory)->factory ()->make_connector ());
 #else
       auto_ptr <TAO_Connector> connector ((*factory)->factory ()->make_connector ());
-#endif
+#endif /* ACE_HAS_CPP11 */
 
       if (connector.get ())
         {
