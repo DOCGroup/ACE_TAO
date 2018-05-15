@@ -46,7 +46,11 @@ TAO_IOR_Manipulation_impl::merge_iors (
   // get the profile lists, start by initialize the composite reference
   // by using the first Object.  Then for each subsequent Object verify
   // they are the same type and they do not have duplicate profiles.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->make_profiles ());
+#else
   auto_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->make_profiles ());
+#endif /* ACE_HAS_CPP11 */
   if (Merged_Profiles.add_profiles (tmp_pfiles.get ())< 0)
     throw TAO_IOP::Invalid_IOR ();
   CORBA::String_var id =
@@ -55,7 +59,6 @@ TAO_IOR_Manipulation_impl::merge_iors (
   for (i = 1; i < iors.length () ; i++)
     {
       // this gets a copy of the MProfile, hence the auto_ptr;
-
       ACE_auto_ptr_reset (tmp_pfiles,
                           iors[i]->_stubobj ()->make_profiles ());
 
@@ -147,7 +150,11 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   // initialize with estimated pfile count.
   TAO_MProfile Diff_Profiles (count);
 
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_MProfile> tmp_pfiles (group->_stubobj ()->make_profiles ());
+#else
   auto_ptr<TAO_MProfile> tmp_pfiles (group->_stubobj ()->make_profiles ());
+#endif /* ACE_HAS_CPP11 */
   if (Diff_Profiles.add_profiles (tmp_pfiles.get ()) < 0)
     throw TAO_IOP::Invalid_IOR ();
 
