@@ -16,7 +16,7 @@ TAO_OBV_GIOP_Flags::is_value_tag (CORBA::Long tag)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: has_codebase_url (CORBA::Long tag)
+TAO_OBV_GIOP_Flags::has_codebase_url (CORBA::Long tag)
 {
   return (CORBA::Boolean) (tag & Codebase_url);
 }
@@ -40,7 +40,7 @@ TAO_OBV_GIOP_Flags::has_list_type_info (CORBA::Long tag)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_OBV_GIOP_Flags:: is_chunked (CORBA::Long tag)
+TAO_OBV_GIOP_Flags::is_chunked (CORBA::Long tag)
 {
   return (CORBA::Boolean) (tag & 8);
 }

@@ -268,7 +268,7 @@ TAO_IOR_Manipulation_impl::is_primary_set (
 }
 
 CORBA::Boolean
-TAO_IOR_Manipulation_impl:: remove_primary_tag (
+TAO_IOR_Manipulation_impl::remove_primary_tag (
     TAO_IOP::TAO_IOR_Property_ptr prop,
     CORBA::Object_ptr group)
 {
