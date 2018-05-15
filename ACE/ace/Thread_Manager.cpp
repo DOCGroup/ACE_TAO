@@ -588,7 +588,11 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // Create a new thread running <func>.  *Must* be called with the
   // <lock_> held...
   // Get a "new" Thread Descriptor from the freelist.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<ACE_Thread_Descriptor> new_thr_desc (this->thread_desc_freelist_.remove ());
+#else
   auto_ptr<ACE_Thread_Descriptor> new_thr_desc (this->thread_desc_freelist_.remove ());
+#endif /* ACE_HAS_CPP11 */
 
   // Reset thread descriptor status
   new_thr_desc->reset (this);
