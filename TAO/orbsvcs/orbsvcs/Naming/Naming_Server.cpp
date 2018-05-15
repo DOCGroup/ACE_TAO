@@ -496,7 +496,11 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             this->storable_naming_context_factory (context_size);
           // Make sure we got a factory
           if (cf == 0) return -1;
+#if defined (ACE_HAS_CPP11)
+          std::unique_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
+#else
           auto_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
+#endif /* ACE_HAS_CPP11 */
 
           // This instance will either get deleted after recreate all or,
           // in the case of a servant activator's use, on destruction of the
