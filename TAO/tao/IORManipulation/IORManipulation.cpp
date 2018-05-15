@@ -283,8 +283,13 @@ TAO_IOR_Manipulation_impl::is_in_ior (
   CORBA::ULong count = 0;
   TAO_Profile *pfile1 = 0;
   TAO_Profile *pfile2 = 0;
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
+  std::unique_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
+#else
   auto_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
   auto_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
+#endif /* ACE_HAS_CPP11 */
 
   tmp_pfiles1->rewind ();
   while ((pfile1 = tmp_pfiles1->get_next ()) != 0)
