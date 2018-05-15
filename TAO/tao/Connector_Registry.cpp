@@ -64,8 +64,11 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
        factory != end;
        ++factory)
     {
-      auto_ptr <TAO_Connector> connector (
-        (*factory)->factory ()->make_connector ());
+#if defined (ACE_HAS_CPP11)
+      std::unique_ptr <TAO_Connector> connector ((*factory)->factory ()->make_connector ());
+#else
+      auto_ptr <TAO_Connector> connector ((*factory)->factory ()->make_connector ());
+#endif /* ACE_HAS_CPP11 */
 
       if (connector.get ())
         {
@@ -79,8 +82,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
                                -1);
            }
 
-         this->connectors_[this->size_++] =
-           connector.release ();
+         this->connectors_[this->size_++] = connector.release ();
         }
       else
         return -1;
