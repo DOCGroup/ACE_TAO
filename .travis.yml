@@ -37,6 +37,16 @@ matrix:
             - libssl-dev
             - clang-6.0
       env: COMPILER='clang++-6.0' VERSIONED=1 TAO=1 ACETESTS=1
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - libxerces-c-dev
+            - libssl-dev
+            - g++-7
+      env: COMPILER='g++-7' VERSIONED=1 TAO=1 ACETESTS=1
     - os: osx
       env: COMPILER=clang++ VERSIONED=1 TAO=1 ACETESTS=1
 
