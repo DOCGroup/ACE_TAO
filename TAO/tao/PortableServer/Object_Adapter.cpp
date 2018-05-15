@@ -197,7 +197,11 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
       break;
     }
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<persistent_poa_name_map> new_persistent_poa_name_map (ppnm);
+#else
   auto_ptr<persistent_poa_name_map> new_persistent_poa_name_map (ppnm);
+#endif /* ACE_HAS_CPP11 */
 
   transient_poa_map *tpm = 0;
   switch (creation_parameters.poa_lookup_strategy_for_transient_id_policy_)
@@ -233,12 +237,9 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
   auto_ptr<transient_poa_map> new_transient_poa_map (tpm);
 #endif /* ACE_HAS_CPP11 */
 
-  this->hint_strategy_ =
-    new_hint_strategy.release ();
-  this->persistent_poa_name_map_ =
-    new_persistent_poa_name_map.release ();
-  this->transient_poa_map_ =
-    new_transient_poa_map.release ();
+  this->hint_strategy_ = new_hint_strategy.release ();
+  this->persistent_poa_name_map_ = new_persistent_poa_name_map.release ();
+  this->transient_poa_map_ = new_transient_poa_map.release ();
 }
 
 void
