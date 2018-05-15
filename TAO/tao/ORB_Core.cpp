@@ -1966,8 +1966,11 @@ TAO_ORB_Core::root_poa (void)
 
       if (CORBA::is_nil (this->root_poa_.in ()))
         {
+#if defined (ACE_HAS_CPP11)
+          std::unique_ptr<TAO_Adapter> poa_adapter (factory->create (this));
+#else
           auto_ptr<TAO_Adapter> poa_adapter (factory->create (this));
-
+#endif
           poa_adapter->open ();
 
           // @@ Not exception safe
