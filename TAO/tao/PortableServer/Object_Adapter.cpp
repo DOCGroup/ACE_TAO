@@ -166,7 +166,11 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
              No_Hint_Strategy);
 
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<Hint_Strategy> new_hint_strategy (hint_strategy);
+#else
   auto_ptr<Hint_Strategy> new_hint_strategy (hint_strategy);
+#endif /* ACE_HAS_CPP11 */
 
   new_hint_strategy->object_adapter (this);
 
@@ -223,7 +227,11 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
       break;
     }
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<transient_poa_map> new_transient_poa_map (tpm);
+#else
   auto_ptr<transient_poa_map> new_transient_poa_map (tpm);
+#endif /* ACE_HAS_CPP11 */
 
   this->hint_strategy_ =
     new_hint_strategy.release ();
