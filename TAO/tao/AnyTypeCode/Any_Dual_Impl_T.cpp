@@ -170,7 +170,11 @@ TAO::Any_Dual_Impl_T<T>::replace (TAO_InputCDR &cdr,
                                            empty_value),
                   false);
 
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);
+#else
   auto_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);
+#endif /* ACE_HAS_CPP11 */
 
   CORBA::Boolean const good_decode = replacement->demarshal_value (cdr);
 
