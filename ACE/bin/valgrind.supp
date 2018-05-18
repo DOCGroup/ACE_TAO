@@ -280,7 +280,7 @@
 
 {
   Memcheck:Leak
-  fun:*
+  ...
   fun:*_dl_open*
 }
 
