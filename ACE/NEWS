@@ -1,4 +1,4 @@
-USER VISIBLE CHANGES BETWEEN ACE-6.4.8 and ACE-6.4.9
+USER VISIBLE CHANGES BETWEEN ACE-6.4.8 and ACE-6.5.0
 ====================================================
 
 . The ACE core libraries now use std::unique_ptr instead
