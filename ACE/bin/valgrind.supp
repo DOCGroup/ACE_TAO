@@ -279,12 +279,6 @@
 }
 
 {
-  Memcheck:Leak
-  ...
-  fun:*_dl_open*
-}
-
-{
   <ndds>
   Memcheck:Leak
   fun:*
