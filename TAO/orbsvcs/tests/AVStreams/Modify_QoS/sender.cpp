@@ -35,8 +35,7 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
 
 CORBA::Boolean
 Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
-                                   const AVStreams::flowSpec &/* the_flows */
-                                   )
+                                   const AVStreams::flowSpec &/* the_flows */)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Sender_StreamEndPoint::modify_QoS\n"));

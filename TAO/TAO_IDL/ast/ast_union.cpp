@@ -736,8 +736,7 @@ AST_Union::compute_default_value (void)
                               LM_ERROR,
                               ACE_TEXT ("(%N:%l) AST_Union::")
                               ACE_TEXT ("compute_default_value - ")
-                              ACE_TEXT ("Bad case label value\n")
-                            ),
+                              ACE_TEXT ("Bad case label value\n")),
                             -1
                           );
                         }

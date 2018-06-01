@@ -318,8 +318,7 @@ TAO_Notify_EventChannelFactory::load_event_persistence (void)
             //@@todo: tell the rspm it's an orphan, but we can't during reload
             // we need collect these and come back later to remove them
             ORBSVCS_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Reload persistent event failed.\n")
-              ));
+              ACE_TEXT ("(%P|%t) Reload persistent event failed.\n")));
           }
         }
       }

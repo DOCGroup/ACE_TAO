@@ -3604,8 +3604,7 @@ TAO_ORB_Core::valuetype_adapter (void)
             {
               TAO_Valuetype_Adapter_Factory * vt_ap_factory =
                 ACE_Dynamic_Service<TAO_Valuetype_Adapter_Factory>::instance (
-                    TAO_ORB_Core::valuetype_adapter_factory_name ()
-                  );
+                    TAO_ORB_Core::valuetype_adapter_factory_name ());
 
               if (vt_ap_factory)
                 {

@@ -36,8 +36,7 @@ public:
                            TAO_AV_Protocol_Object *object);
 
   CORBA::Boolean modify_QoS (AVStreams::streamQoS &new_qos,
-                             const AVStreams::flowSpec &/* the_flows */
-                             );
+                             const AVStreams::flowSpec &/* the_flows */);
 protected:
   /// Application callback.
   TAO_AV_Callback callback_;

@@ -131,9 +131,7 @@ Publisher_impl::~Publisher_impl()
   delete worker;
 }
 
-void subscribe (
-                ::Subscriber_ptr subscriber
-                );
+void subscribe (::Subscriber_ptr subscriber);
 
 void
 Publisher_impl::subscribe(

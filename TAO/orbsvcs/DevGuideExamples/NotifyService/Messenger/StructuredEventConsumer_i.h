@@ -10,13 +10,11 @@ public:
     StructuredEventConsumer_i(CORBA::ORB_ptr orb);
 
     virtual void push_structured_event(
-      const CosNotification::StructuredEvent &notification
-      );
+      const CosNotification::StructuredEvent &notification);
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 
    virtual void disconnect_structured_push_consumer();
 

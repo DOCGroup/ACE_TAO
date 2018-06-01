@@ -36,8 +36,7 @@ namespace TAO
         ::PortableServer::ThreadPolicyValue value);
 
       virtual void destroy (
-        ThreadStrategy *strategy
-       );
+        ThreadStrategy *strategy);
     };
   }
 }

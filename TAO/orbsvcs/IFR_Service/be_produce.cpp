@@ -175,8 +175,7 @@ BE_produce (void)
               ORBSVCS_ERROR ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) BE_produce -")
-                  ACE_TEXT (" failed to accept removing visitor\n")
-                ));
+                  ACE_TEXT (" failed to accept removing visitor\n")));
 
               BE_abort ();
             }
@@ -192,8 +191,7 @@ BE_produce (void)
               ORBSVCS_ERROR ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) BE_produce -")
-                  ACE_TEXT (" failed to accept adding visitor\n")
-                ));
+                  ACE_TEXT (" failed to accept adding visitor\n")));
 
               BE_abort ();
             }
