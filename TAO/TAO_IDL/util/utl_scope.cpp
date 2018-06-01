@@ -1215,8 +1215,14 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
   const bool global_scope_name = work->is_global_name (name);
   if (global_scope_name)
     {
+      // No tail, exit directly
+      UTL_List* tail = e->tail ();
+      if (!tail)
+        {
+          return 0;
+        }
       // Remove the preceeding "::" or "" from the scopename
-      e = static_cast<UTL_ScopedName *> (e->tail ());
+      e = static_cast<UTL_ScopedName *> (tail);
       name = e->head ();
 
       // Move directly to the root scope
