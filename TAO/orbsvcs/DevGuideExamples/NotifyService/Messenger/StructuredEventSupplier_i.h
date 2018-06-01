@@ -13,8 +13,8 @@ public:
 
     virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-    );
+        const CosNotification::EventTypeSeq & removed);
+
 private:
     CORBA::ORB_var orb_;
 };

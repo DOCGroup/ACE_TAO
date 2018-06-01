@@ -29,9 +29,7 @@ public:
   virtual CORBA::Boolean send_message (
                                        const char * user_name,
                                        const char * subject,
-                                       char *& message
-                                       );
-
+                                       char *& message);
 };
 
 
