@@ -98,8 +98,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Servant_var<TAO_EC_Event_Channel> ec_impl (
               RTEC_Initializer::create (ec_poa.in (),
                                         ec_poa.in (),
-                                        rtserver_setup.rtcorba_setup ())
-              );
+                                        rtserver_setup.rtcorba_setup ()));
 
       ec_impl->activate ();
 

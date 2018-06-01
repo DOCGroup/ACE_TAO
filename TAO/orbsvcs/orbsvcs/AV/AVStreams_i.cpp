@@ -3669,8 +3669,7 @@ TAO_FlowConnection::add_producer (AVStreams::FlowProducer_ptr producer,
             {
               ACE_INET_Addr mcast_addr;
               mcast_addr.set (this->mcast_port_,
-                              this->mcast_addr_.c_str ()
-                              );
+                              this->mcast_addr_.c_str ());
 
               ACE_TCHAR buf [BUFSIZ];
               mcast_addr.addr_to_string (buf, BUFSIZ);
