@@ -186,7 +186,7 @@ public class MTQueue
 class MTQueue_Node
 {
   public MTQueue_Node prev_ = null;
-  public MTQueue_Node next_ = null;;
+  public MTQueue_Node next_ = null;
   public Object data_;
 
   public MTQueue_Node(Object data)
