@@ -162,7 +162,6 @@ public:
     slot_id = info->allocate_slot_id ();
     ACE_DEBUG ((LM_DEBUG, "Allocated slot with id %d.\n", slot_id));
 
-
     ServerRequestInterceptor_var interceptor (new ReplicaController ());
     info->add_server_request_interceptor (interceptor.in ());
   }
@@ -198,7 +197,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       String_var ior (orb->object_to_string (ref.in ()));
 
       poa_manager->activate ();
-
 
       // Dump the ior.
       //
