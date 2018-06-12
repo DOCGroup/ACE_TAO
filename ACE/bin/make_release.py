@@ -565,8 +565,13 @@ def tag ():
             # Update latest tag
             if opts.release_type == "major":
                 update_latest_tag ("Major", tagname)
+                update_latest_tag ("Minor", tagname)
+                update_latest_tag ("Beta", tagname)
+                update_latest_tag ("Micro", tagname)
             elif opts.release_type == "minor":
                 update_latest_tag ("Minor", tagname)
+                update_latest_tag ("Beta", tagname)
+                update_latest_tag ("Micro", tagname)
             elif opts.release_type == "micro":
                 update_latest_tag ("Beta", tagname)
                 update_latest_tag ("Micro", tagname)
