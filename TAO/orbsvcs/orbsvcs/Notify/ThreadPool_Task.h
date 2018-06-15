@@ -21,6 +21,7 @@
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
 #include "ace/Null_Condition.h"
+#include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
