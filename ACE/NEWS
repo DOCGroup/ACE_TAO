@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.0 and ACE-6.5.1
 ====================================================
 
+. At the moment C++11 or newer is enabled ACE_Strong_Bound_Ptr
+  doesn't provide the convenience functions to use a
+  std::auto_ptr anymore
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.8 and ACE-6.5.0
 ====================================================
 
