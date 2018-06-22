@@ -25,5 +25,13 @@
 
 #include "ace/config-win32-msvc-14.h"
 
+#if _MSVC_LANG >= 201402L
+# define ACE_HAS_CPP14
+#endif /* _MSVC_LANG >= 201402L */
+
+#if _MSVC_LANG >= 201703L
+# define ACE_HAS_CPP17
+#endif /* _MSVC_LANG >= 201703L */
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_141_H */
