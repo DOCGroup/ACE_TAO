@@ -9,6 +9,8 @@ project(*idl) : tao_versioning_idl_defaults, valuetype, install {
                 -iC tao/DynamicAny
     DynamicAny.pidl
   }
+  PIDL_Files {
+  }
 
   specific {
     install_dir = tao/DynamicAny
