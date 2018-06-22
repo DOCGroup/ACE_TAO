@@ -76,7 +76,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include <memory>
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
+#if !defined (ACE_HAS_CPP17)
 using std::auto_ptr;
+#endif /* !ACE_HAS_CPP17 */
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
