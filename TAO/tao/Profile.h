@@ -442,7 +442,6 @@ public:
   virtual int decode_endpoints (void);
 
 protected:
-
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile* other_profile);
   virtual TAO_Service_Callbacks::Profile_Equivalence is_equivalent_hook (
                                            const TAO_Profile* other_profile);

@@ -37,20 +37,15 @@ template <class ACE_LOCK>
 class TAO_Intrusive_Ref_Count_Base
 {
 public:
-
   virtual ~TAO_Intrusive_Ref_Count_Base (void);
 
   void _add_ref (void);
   void _remove_ref (void);
 
-
 protected:
-
   TAO_Intrusive_Ref_Count_Base (void);
 
-
 private:
-
   ACE_Atomic_Op<ACE_LOCK, long> ref_count_;
 
   // Prevent copying/assignment.

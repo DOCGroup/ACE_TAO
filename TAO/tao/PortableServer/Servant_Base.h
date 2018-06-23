@@ -210,7 +210,7 @@ protected:
 protected:
   /// Reference counter.
 #if defined (ACE_HAS_CPP11)
-  std::atomic_uint32_t ref_count_;
+  std::atomic<uint32_t> ref_count_;
 #else
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> ref_count_;
 #endif /* ACE_HAS_CPP11 */

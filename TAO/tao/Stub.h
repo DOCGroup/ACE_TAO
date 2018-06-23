@@ -412,7 +412,6 @@ protected:
   /// True if forwarding request upon some specific exceptions
   /// (e.g. OBJECT_NOT_EXIST) already happened.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, bool> forwarded_on_exception_;
-
 };
 
 // Define a TAO_Stub auto_ptr class.
