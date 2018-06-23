@@ -423,6 +423,10 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule_i (const TYPE&
           n->set (type, act, future_time, interval, 0, 0, id);
           this->schedule_i (n, spoke, future_time);
         }
+      else
+        {
+          this->free_node (n);
+        }
       return id;
     }
 
