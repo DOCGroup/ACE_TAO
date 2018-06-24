@@ -27,7 +27,7 @@ CORBA::remove_ref (CORBA::ValueFactoryBase *val)
 // ===========================================================
 
 CORBA::ValueFactoryBase::ValueFactoryBase (void)
-  : _tao_reference_count_ (1)
+  : refcount_ (1)
 {
 }
 
@@ -38,13 +38,13 @@ CORBA::ValueFactoryBase::~ValueFactoryBase (void)
 void
 CORBA::ValueFactoryBase::_add_ref (void)
 {
-  ++this->_tao_reference_count_;
+  ++this->refcount_;
 }
 
 void
 CORBA::ValueFactoryBase::_remove_ref (void)
 {
-  CORBA::ULong const new_count = --this->_tao_reference_count_;
+  CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
     delete this;

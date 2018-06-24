@@ -84,7 +84,7 @@ CORBA::Context::get_values (const char * /* start_scope */,
 }
 
 CORBA::ContextList::ContextList (CORBA::ULong len, char* *ctx_list)
-  : ref_count_ (1)
+  : refcount_ (1)
 {
   for (CORBA::ULong i=0; i < len; i++)
     {
@@ -143,14 +143,14 @@ CORBA::ContextList::remove (CORBA::ULong)
 CORBA::ContextList_ptr
 CORBA::ContextList::_duplicate (void)
 {
-  ++this->ref_count_;
+  ++this->refcount_;
   return this;
 }
 
 void
 CORBA::ContextList::_destroy (void)
 {
-  CORBA::ULong const current = --this->ref_count_;
+  CORBA::ULong const current = --this->refcount_;
 
   if (current == 0)
     {
@@ -161,15 +161,15 @@ CORBA::ContextList::_destroy (void)
 void
 CORBA::ContextList::_incr_refcount (void)
 {
-  ++this->ref_count_;
+  ++this->refcount_;
 }
 
 void
 CORBA::ContextList::_decr_refcount (void)
 {
-  --this->ref_count_;
+  --this->refcount_;
 
-  if (this->ref_count_ != 0)
+  if (this->refcount_ != 0)
     {
       delete this;
     }

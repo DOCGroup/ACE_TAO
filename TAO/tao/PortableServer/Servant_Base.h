@@ -210,9 +210,9 @@ protected:
 protected:
   /// Reference counter.
 #if defined (ACE_HAS_CPP11)
-  std::atomic<uint32_t> ref_count_;
+  std::atomic<uint32_t> refcount_;
 #else
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> ref_count_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
 #endif /* ACE_HAS_CPP11 */
 
   /// The operation table for this servant.  It is initialized by the

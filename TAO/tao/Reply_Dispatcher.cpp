@@ -11,7 +11,7 @@ TAO_Reply_Dispatcher::TAO_Reply_Dispatcher (ACE_Allocator *allocator)
   // Just an invalid reply status.
   : locate_reply_status_ (GIOP::UNKNOWN_OBJECT)
   , reply_status_ (GIOP::NO_EXCEPTION)
-  , refcnt_ (1)
+  , refcount_ (1)
   , allocator_(allocator)
 {
 }
@@ -27,7 +27,7 @@ TAO_Reply_Dispatcher::intrusive_add_ref (TAO_Reply_Dispatcher* rd)
 {
   if (rd != 0)
     {
-      ++rd->refcnt_;
+      ++rd->refcount_;
     }
 }
 
@@ -36,7 +36,7 @@ TAO_Reply_Dispatcher::intrusive_remove_ref (TAO_Reply_Dispatcher* rd)
 {
   if (rd != 0)
     {
-      long tmp = --rd->refcnt_;
+      long const tmp = --rd->refcount_;
       if (tmp <= 0)
         {
           if (rd->allocator_)
