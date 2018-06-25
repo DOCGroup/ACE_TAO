@@ -33,8 +33,7 @@ namespace TAO
     public:
       IdUniquenessStrategyUnique (void);
 
-      virtual void strategy_init (TAO_Root_POA *poa
-                                 );
+      virtual void strategy_init (TAO_Root_POA *poa);
 
       virtual void strategy_cleanup (void);
 
