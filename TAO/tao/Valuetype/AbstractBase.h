@@ -25,6 +25,11 @@
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Object.h"  /* For CORBA::Object_var */
 #include "tao/Pseudo_VarOut_T.h"
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -143,7 +148,11 @@ namespace CORBA
   private:
 
     /// Number of outstanding references to this object.
+#if defined (ACE_HAS_CPP11)
+    std::atomic<uint32_t> refcount_;
+#else
     ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+#endif /* ACE_HAS_CPP11 */
 
     CORBA::Boolean is_collocated_;
     TAO_Abstract_ServantBase *servant_;

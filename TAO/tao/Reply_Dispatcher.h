@@ -103,7 +103,7 @@ protected:
 
 private:
   /// Support for intrusive reference counting
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> refcnt_;
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> refcount_;
 
   /// Allocator that was used to allocate this reply dispatcher. In case of
   /// zero we come from the heap.

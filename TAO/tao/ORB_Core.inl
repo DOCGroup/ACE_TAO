@@ -19,7 +19,11 @@ TAO_ORB_Core::_incr_refcnt (void)
 ACE_INLINE unsigned long
 TAO_ORB_Core::_refcnt (void) const
 {
+#if defined (ACE_HAS_CPP11)
+  return this->refcount_;
+#else
   return this->refcount_.value ();
+#endif /* ACE_HAS_CPP11 */
 }
 
 ACE_INLINE unsigned long

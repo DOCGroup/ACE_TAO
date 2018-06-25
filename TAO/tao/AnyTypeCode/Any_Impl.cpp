@@ -110,7 +110,7 @@ TAO::Any_Impl::_add_ref (void)
 void
 TAO::Any_Impl::_remove_ref (void)
 {
-  const CORBA::ULong new_count = --this->refcount_;
+  CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count != 0)
     return;

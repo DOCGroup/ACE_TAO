@@ -40,8 +40,12 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/TSS_T.h"
-
 #include "ace/Service_Config.h"
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Data_Block;
@@ -1207,7 +1211,11 @@ protected:
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   /// Number of outstanding references to this object.
+#if defined (ACE_HAS_CPP11)
+  std::atomic<uint32_t> refcount_;
+#else
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+#endif /* ACE_HAS_CPP11 */
 
   /// Registry containing all registered policy factories.
   TAO::PolicyFactory_Registry_Adapter *policy_factory_registry_;

@@ -22,7 +22,11 @@
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Refcounted_ObjectKey.h"
 #include "tao/Service_Callbacks.h"
-#include "ace/Atomic_Op.h"
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
@@ -380,7 +384,11 @@ private:
   TAO_MProfile* forward_to_;
 
   /// Number of outstanding references to this object.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+#if defined (ACE_HAS_CPP11)
+    std::atomic<uint32_t> refcount_;
+#else
+    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+#endif /* ACE_HAS_CPP11 */
 
   /// A lock that protects creation of the tagged profile
   TAO_SYNCH_MUTEX tagged_profile_lock_;
@@ -442,7 +450,6 @@ public:
   virtual int decode_endpoints (void);
 
 protected:
-
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile* other_profile);
   virtual TAO_Service_Callbacks::Profile_Equivalence is_equivalent_hook (
                                            const TAO_Profile* other_profile);

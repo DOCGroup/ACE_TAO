@@ -40,7 +40,11 @@
 #endif /* TAO_HAS_AMI */
 
 #include "ace/SString.h"
-#include "ace/Atomic_Op.h"
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -246,7 +250,11 @@ namespace CORBA
     CORBA::Context_ptr ctx_;
 
     /// Reference counting.
+#if defined (ACE_HAS_CPP11)
+    std::atomic<uint32_t> refcount_;
+#else
     ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+#endif /* ACE_HAS_CPP11 */
 
     /// Protect the response_received_.
     TAO_SYNCH_MUTEX lock_;
