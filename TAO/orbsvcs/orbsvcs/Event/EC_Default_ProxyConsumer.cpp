@@ -81,7 +81,7 @@ void
 TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event)
 {
   TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
-                                          this->refcount_,
+                                          this->ec_refcount_,
                                           this->event_channel_,
                                           this);
   if (!ace_mon.locked ())
