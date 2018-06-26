@@ -59,14 +59,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table* optable)
   : TAO_Abstract_ServantBase ()
-  , refcount_ (1)
+  , ref_count_ (1)
   , optable_ (optable)
 {
 }
 
 TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
   : TAO_Abstract_ServantBase ()
-  , refcount_ (1)
+  , ref_count_ (1)
   , optable_ (rhs.optable_)
 {
 }
@@ -655,13 +655,13 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
 void
 TAO_ServantBase::_add_ref (void)
 {
-  ++this->refcount_;
+  ++this->ref_count_;
 }
 
 void
 TAO_ServantBase::_remove_ref (void)
 {
-  CORBA::ULong const new_count = --this->refcount_;
+  CORBA::ULong const new_count = --this->ref_count_;
 
   if (new_count == 0)
     {
@@ -673,9 +673,9 @@ CORBA::ULong
 TAO_ServantBase::_refcount_value (void) const
 {
 #if defined (ACE_HAS_CPP11)
-  return this->refcount_;
+  return this->ref_count_;
 #else
-  return this->refcount_.value ();
+  return this->ref_count_.value ();
 #endif /* ACE_HAS_CPP11 */
 }
 
