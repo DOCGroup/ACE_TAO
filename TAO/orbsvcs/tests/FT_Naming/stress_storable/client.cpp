@@ -38,7 +38,7 @@ public:
         try {
           group_svc.member_list (group_names[g]);
         }
-        catch (PortableGroup::ObjectGroupNotFound) {
+        catch (PortableGroup::ObjectGroupNotFound&) {
           }
         catch (CORBA::Exception &ex) {
           ACE_DEBUG ((LM_DEBUG,
