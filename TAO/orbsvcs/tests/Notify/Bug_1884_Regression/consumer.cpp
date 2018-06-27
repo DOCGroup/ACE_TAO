@@ -115,7 +115,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       proxySupplier_obj = ca->obtain_notification_push_supplier(ctype, proxy_id);
     }
-    catch(CosNotifyChannelAdmin::AdminLimitExceeded err)
+    catch(CosNotifyChannelAdmin::AdminLimitExceeded& err)
     {
       std::cerr << "CosNotifyChannelAdmin::AdminLimitExceeded Exception!" << std::endl;
       throw;
@@ -164,7 +164,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       pps->connect_structured_push_consumer(spc.in());
     }
-    catch (CosEventChannelAdmin::AlreadyConnected ac)
+    catch (CosEventChannelAdmin::AlreadyConnected& ac)
     {
       std::cerr << "CosEventChannelAdmin::AlreadyConnected" << std::endl;
       throw;

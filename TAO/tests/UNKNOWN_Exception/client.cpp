@@ -67,7 +67,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           test->unknown_exception_in_method ();
         }
-      catch (const CORBA::UNKNOWN)
+      catch (const CORBA::UNKNOWN&)
         {
           unknown_exception_raised = 1;
 
