@@ -31,6 +31,7 @@
 #include "tao/Arg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"
 #if defined (ACE_HAS_CPP11)
+# defined TAO_OBJECT_USES_STD_ATOMIC_REFCOUNT
 # include <atomic>
 #else
 # include "ace/Atomic_Op.h"
