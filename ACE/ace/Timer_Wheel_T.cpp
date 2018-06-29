@@ -313,20 +313,6 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::generate_timer_id (u_in
   if (root == root->get_next ())
     root->set_act(0);
 
-  // We use this field to keep track of the next counter value that
-  // may be in use. Of course it may have expired, so we just use
-  // this field so that we know when we don't have to check for duplicates
-#if defined (ACE_WIN64)
-  // The cast below is legit... we know that long is shorter than a
-  // pointer, but are only using it as a 'long' storage area.
-#  pragma warning(push)
-#  pragma warning(disable : 4311)
-#endif /* ACE_WIN64 */
-  long next_cnt = ACE_Utils::truncate_cast<long> ((intptr_t)root->get_act ());
-#if defined (ACE_WIN64)
-#  pragma warning(pop)
-#endif /* ACE_WIN64 */
-
   // This field is used as a counter instead of a timer_id.
   long cnt = root->get_timer_id ();
 
