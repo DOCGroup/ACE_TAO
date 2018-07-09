@@ -13,7 +13,6 @@ project(Test_Output) : acelib, script {
   Resource_Files {
   }
   Script_Files {
-    run_test.pl
     run_test.lst
   }
 }
