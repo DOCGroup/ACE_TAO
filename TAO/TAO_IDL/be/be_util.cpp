@@ -742,6 +742,10 @@ be_util::usage (void)
     ));
   ACE_DEBUG ((
       LM_DEBUG,
+      ACE_TEXT (" -GX\t\t\tgenerate empty A.h file\n")
+    ));
+  ACE_DEBUG ((
+      LM_DEBUG,
       ACE_TEXT (" -hc\t\t\tClient's header file name ending.")
       ACE_TEXT (" Default is C.h\n")
     ));
