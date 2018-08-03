@@ -1684,6 +1684,108 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
   return false;
 }
 
+// As of C++11 std::string guarantees contiguous memory storage.
+// That provides the opportunity to optimize CDR streaming.
+#if defined (ACE_HAS_CPP11)
+ACE_CDR::Boolean
+ACE_InputCDR::read_string (std::string& x)
+{
+  ACE_CDR::ULong len = 0;
+
+  if (!this->read_ulong (len))
+    return false;
+
+  // A check for the length being too great is done later in the
+  // call to read_char_array but we want to have it done before
+  // the memory is allocated.
+  if (len > 0 && len <= this->length())
+    {
+      try
+        {
+          x.resize (len-1); // no need to include the terminating '\0' here
+        }
+      catch (const std::bad_alloc&)
+        {
+          return false;
+        }
+
+      if (len == 0 || this->read_char_array (&x[0], len-1))
+      {
+        return this->skip_char (); // skip the terminating '\0'
+      }
+    }
+
+  this->good_bit_ = false;
+  x.clear ();
+  return false;
+}
+
+ACE_CDR::Boolean
+ACE_InputCDR::read_wstring (std::wstring& x)
+{
+  if (ACE_OutputCDR::wchar_maxbytes_ == 0)
+    {
+      errno = EACCES;
+      return (this->good_bit_ = false);
+    }
+
+  ACE_CDR::ULong len = 0;
+
+  if (!this->read_ulong (len))
+    {
+      return false;
+    }
+
+  // A check for the length being too great is done later in the
+  // call to read_char_array but we want to have it done before
+  // the memory is allocated.
+  if (len <= this->length ())
+    {
+      if (static_cast<ACE_CDR::Short> (this->major_version_) == 1
+          && static_cast<ACE_CDR::Short> (this->minor_version_) == 2)
+        {
+          len /=
+            ACE_Utils::truncate_cast<ACE_CDR::ULong> (
+              ACE_OutputCDR::wchar_maxbytes_);
+
+          try
+            {
+              x.resize (len);
+            }
+          catch (const std::bad_alloc&)
+            {
+              return false;
+            }
+
+          if (len == 0 || this->read_wchar_array (&x[0], len))
+            {
+              return true;
+            }
+        }
+      else
+        {
+          try
+            {
+              x.resize (len-1); // no need to include the terminating '\0' here
+            }
+          catch (const std::bad_alloc&)
+            {
+              return false;
+            }
+
+          if (len <= 1 || this->read_wchar_array (&x[0], len-1))
+            {
+              return this->skip_wchar (); // skip the terminating '\0'
+            }
+        }
+    }
+
+  this->good_bit_ = false;
+  x.clear ();
+  return false;
+}
+#endif
+
 ACE_CDR::Boolean
 ACE_InputCDR::read_array (void* x,
                           size_t size,

@@ -250,6 +250,11 @@ public:
   ACE_CDR::Boolean write_wstring (const ACE_CDR::WChar *x);
   ACE_CDR::Boolean write_wstring (ACE_CDR::ULong length,
                                   const ACE_CDR::WChar *x);
+#if defined (ACE_HAS_CPP11)
+  ACE_CDR::Boolean write_string (const std::string &x);
+  ACE_CDR::Boolean write_wstring (const std::wstring &x);
+#endif
+
   //@}
 
   /// @note the portion written starts at @a x and ends
@@ -818,6 +823,10 @@ public:
   ACE_CDR::Boolean read_string (ACE_CDR::Char *&x);
   ACE_CDR::Boolean read_string (ACE_CString &x);
   ACE_CDR::Boolean read_wstring (ACE_CDR::WChar*& x);
+#if defined (ACE_HAS_CPP11)
+  ACE_CDR::Boolean read_string (std::string& x);
+  ACE_CDR::Boolean read_wstring (std::wstring& x);
+#endif
   //@}
 
   /**
@@ -1344,6 +1353,12 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::Char* x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::WChar* x);
+#if defined (ACE_HAS_CPP11)
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
+                                               const std::string& x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
+                                               const std::wstring& x);
+#endif
 
 // Not used by CORBA or TAO
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
@@ -1389,6 +1404,12 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Char*& x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::WChar*& x);
+#if defined (ACE_HAS_CPP11)
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
+                                               std::string& x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
+                                               std::wstring& x);
+#endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
