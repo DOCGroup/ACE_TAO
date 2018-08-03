@@ -143,7 +143,6 @@ ACE_SizeCDR::write_wstring (const ACE_CDR::WChar *x)
   return this->write_wstring (0, 0);
 }
 
-#if defined (ACE_HAS_CPP11)
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_string (const std::string &x)
 {
@@ -153,6 +152,7 @@ ACE_SizeCDR::write_string (const std::string &x)
                              x.empty () ? 0 : x.c_str ());
 }
 
+#if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_wstring (const std::wstring &x)
 {
@@ -392,7 +392,6 @@ operator<< (ACE_SizeCDR &ss, const ACE_CDR::WChar *x)
   return (ACE_CDR::Boolean) ss.good_bit ();
 }
 
-#if defined (ACE_HAS_CPP11)
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_SizeCDR &ss, const std::string& x)
 {
@@ -400,6 +399,7 @@ operator<< (ACE_SizeCDR &ss, const std::string& x)
   return (ACE_CDR::Boolean) ss.good_bit ();
 }
 
+#if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_SizeCDR &ss, const std::wstring& x)
 {
