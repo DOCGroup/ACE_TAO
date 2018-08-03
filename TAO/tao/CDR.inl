@@ -326,24 +326,6 @@ TAO_InputCDR::reset_vt_indirect_maps ()
   }
 }
 
-ACE_INLINE
-TAO_InputCDR::to_std_string::to_std_string (std::string &s,
-                                            ACE_CDR::ULong b)
-  : val_ (s),
-    bound_ (b)
-{
-}
-
-#if !defined(ACE_LACKS_STD_WSTRING)
-ACE_INLINE
-TAO_InputCDR::to_std_wstring::to_std_wstring (std::wstring &s,
-                                              ACE_CDR::ULong b)
-  : val_ (s),
-    bound_ (b)
-{
-}
-#endif /* ACE_LACKS_STD_WSTRING */
-
 // ****************************************************************
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
@@ -472,14 +454,52 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::string &x)
 {
+#if defined (ACE_HAS_CPP11)
+  return
+    os.fragment_stream (ACE_CDR::OCTET_ALIGN,
+                        sizeof (char))
+    && static_cast<ACE_OutputCDR &> (os) << x;
+#else
   return os << x.c_str ();
+#endif
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      ACE_OutputCDR::from_std_string x)
+{
+  if (x.bound_ != 0 &&
+      static_cast<ACE_CDR::ULong> (x.val_.size ()) > x.bound_)
+    {
+      throw CORBA::BAD_PARAM ();
+    }
+  return os << x.val_;
 }
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::wstring &x)
 {
+#if defined (ACE_HAS_CPP11)
+  return
+    os.fragment_stream ((sizeof (CORBA::WChar) == 2
+                         ? ACE_CDR::SHORT_ALIGN
+                         : ACE_CDR::LONG_ALIGN),
+                        sizeof (CORBA::WChar))
+    && static_cast<ACE_OutputCDR &> (os) << x;
+#else
   return os << x.c_str ();
+#endif
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      ACE_OutputCDR::from_std_wstring x)
+{
+  if (x.bound_ != 0 &&
+      static_cast<ACE_CDR::ULong> (x.val_.size ()) > x.bound_)
+    {
+      throw CORBA::BAD_PARAM ();
+    }
+  return os << x.val_;
 }
 #endif /* ACE_LACKS_STD_WSTRING */
 
@@ -580,15 +600,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       std::string &x)
 {
-  char *buf = 0;
-  CORBA::Boolean const marshal_flag = is >> buf;
-  x.assign (buf);
-  ACE::strdelete (buf);
-  return marshal_flag;
+  return static_cast<ACE_InputCDR &> (is) >> x;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
-                                      TAO_InputCDR::to_std_string x)
+                                      ACE_InputCDR::to_std_string x)
 {
   CORBA::Boolean const marshal_flag = is >> x.val_;
   if (marshal_flag && x.bound_ != 0 && x.val_.size () > x.bound_)
@@ -602,15 +618,11 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
                                       std::wstring &x)
 {
-  CORBA::WChar *buf = 0;
-  CORBA::Boolean const marshal_flag = is >> buf;
-  x.assign (buf);
-  ACE::strdelete (buf);
-  return marshal_flag;
+  return static_cast<ACE_InputCDR &> (is) >> x;
 }
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
-                                      TAO_InputCDR::to_std_wstring x)
+                                      ACE_InputCDR::to_std_wstring x)
 {
   CORBA::Boolean const marshal_flag = is >> x.val_;
   if (marshal_flag && x.bound_ != 0 && x.val_.size () > x.bound_)
