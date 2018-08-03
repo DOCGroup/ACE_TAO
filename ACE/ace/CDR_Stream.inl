@@ -128,6 +128,40 @@ ACE_InputCDR::to_wstring::to_wstring (const ACE_CDR::WChar *&ws,
 }
 
 ACE_INLINE
+ACE_InputCDR::to_std_string::to_std_string (std::string &s,
+                                            ACE_CDR::ULong b)
+  : val_ (s),
+    bound_ (b)
+{
+}
+
+ACE_INLINE
+ACE_OutputCDR::from_std_string::from_std_string (const std::string &ws,
+                                                 ACE_CDR::ULong b)
+  : val_ (ws),
+    bound_ (b)
+{
+}
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+ACE_INLINE
+ACE_InputCDR::to_std_wstring::to_std_wstring (std::wstring &s,
+                                              ACE_CDR::ULong b)
+  : val_ (s),
+    bound_ (b)
+{
+}
+
+ACE_INLINE
+ACE_OutputCDR::from_std_wstring::from_std_wstring (const std::wstring &ws,
+                                                   ACE_CDR::ULong b)
+  : val_ (ws),
+    bound_ (b)
+{
+}
+#endif
+
+ACE_INLINE
 ACE_InputCDR::Transfer_Contents::Transfer_Contents (ACE_InputCDR &rhs)
   :  rhs_ (rhs)
 {
@@ -301,7 +335,6 @@ ACE_OutputCDR::write_wstring (const ACE_CDR::WChar *x)
   return this->write_wstring (0, 0);
 }
 
-#if defined (ACE_HAS_CPP11)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_string (const std::string &x)
 {
@@ -311,6 +344,7 @@ ACE_OutputCDR::write_string (const std::string &x)
                              x.empty () ? 0 : x.c_str ());
 }
 
+#if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_wstring (const std::wstring &x)
 {
@@ -1240,7 +1274,30 @@ operator<< (ACE_OutputCDR &os, const ACE_CDR::WChar *x)
   return (ACE_CDR::Boolean) os.good_bit ();
 }
 
-#if defined (ACE_HAS_CPP11)
+ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_std_string x)
+{
+  ACE_CDR::ULong len =
+      static_cast<ACE_CDR::ULong> (x.val_.size ());
+
+  os.write_string (len, x.val_.c_str ());
+  return
+    (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
+}
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_std_wstring x)
+{
+  ACE_CDR::ULong len =
+      static_cast<ACE_CDR::ULong> (x.val_.size ());
+
+  os.write_wstring (len, x.val_.c_str ());
+  return
+    (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
+}
+#endif
+
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const std::string& x)
 {
@@ -1248,6 +1305,7 @@ operator<< (ACE_OutputCDR &os, const std::string& x)
   return (ACE_CDR::Boolean) os.good_bit ();
 }
 
+#if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, const std::wstring& x)
 {
@@ -1395,13 +1453,13 @@ operator>> (ACE_InputCDR &is, ACE_CDR::WChar *&x)
   return is.read_wstring (x) && is.good_bit ();
 }
 
-#if defined (ACE_HAS_CPP11)
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, std::string& x)
 {
   return is.read_string (x) && is.good_bit ();
 }
 
+#if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, std::wstring& x)
 {
@@ -1456,6 +1514,29 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_wstring x)
          || ACE_OS::strlen (x.val_) <= x.bound_));
 }
 
+ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_InputCDR::to_std_string x)
+{
+  // check if the bounds are satisfied
+  return
+    (is.read_string (x.val_)
+     && is.good_bit ()
+     && (!x.bound_
+         || static_cast<ACE_CDR::ULong> (x.val_.size ()) <= x.bound_));
+}
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_InputCDR::to_std_wstring x)
+{
+  // check if the bounds are satisfied
+  return
+    (is.read_wstring (x.val_)
+     && is.good_bit ()
+     && (!x.bound_
+         || static_cast<ACE_CDR::ULong> (x.val_.size ()) <= x.bound_));
+}
+#endif
 // ***************************************************************************
 // We must define these methods here because they use the "read_*" inlined
 // methods of the ACE_InputCDR class

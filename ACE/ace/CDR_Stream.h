@@ -221,6 +221,24 @@ public:
     ACE_CDR::ULong bound_;
     ACE_CDR::Boolean nocopy_;
   };
+
+  struct ACE_Export from_std_string
+  {
+    from_std_string (const std::string &s,
+                     ACE_CDR::ULong b);
+    const std::string &val_;
+    ACE_CDR::ULong bound_;
+  };
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+  struct ACE_Export from_std_wstring
+  {
+    from_std_wstring (const std::wstring &ws,
+                      ACE_CDR::ULong b);
+    const std::wstring &val_;
+    ACE_CDR::ULong bound_;
+  };
+#endif
   //@}
 
   /**
@@ -250,8 +268,8 @@ public:
   ACE_CDR::Boolean write_wstring (const ACE_CDR::WChar *x);
   ACE_CDR::Boolean write_wstring (ACE_CDR::ULong length,
                                   const ACE_CDR::WChar *x);
-#if defined (ACE_HAS_CPP11)
   ACE_CDR::Boolean write_string (const std::string &x);
+#if !defined(ACE_LACKS_STD_WSTRING)
   ACE_CDR::Boolean write_wstring (const std::wstring &x);
 #endif
 
@@ -799,6 +817,25 @@ public:
     const ACE_CDR::WChar *&val_;
     ACE_CDR::ULong bound_;
   };
+
+  /// Helper classes for extracting bounded strings into std::string/wstring.
+  struct ACE_Export to_std_string
+  {
+    to_std_string (std::string &s,
+                   ACE_CDR::ULong b);
+    std::string &val_;
+    ACE_CDR::ULong bound_;
+  };
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+  struct ACE_Export to_std_wstring
+  {
+    to_std_wstring (std::wstring &ws,
+                    ACE_CDR::ULong b);
+    std::wstring &val_;
+    ACE_CDR::ULong bound_;
+  };
+#endif /* ACE_LACKS_STD_WSTRING */
   //@}
 
   /**
@@ -823,8 +860,8 @@ public:
   ACE_CDR::Boolean read_string (ACE_CDR::Char *&x);
   ACE_CDR::Boolean read_string (ACE_CString &x);
   ACE_CDR::Boolean read_wstring (ACE_CDR::WChar*& x);
-#if defined (ACE_HAS_CPP11)
   ACE_CDR::Boolean read_string (std::string& x);
+#if !defined(ACE_LACKS_STD_WSTRING)
   ACE_CDR::Boolean read_wstring (std::wstring& x);
 #endif
   //@}
@@ -1353,9 +1390,13 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::Char* x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::WChar* x);
-#if defined (ACE_HAS_CPP11)
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
+                                               ACE_OutputCDR::from_std_string x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const std::string& x);
+#if !defined(ACE_LACKS_STD_WSTRING)
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
+                                               ACE_OutputCDR::from_std_wstring x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const std::wstring& x);
 #endif
@@ -1404,9 +1445,13 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Char*& x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::WChar*& x);
-#if defined (ACE_HAS_CPP11)
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_InputCDR &os,
+                                               ACE_InputCDR::to_std_string x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                std::string& x);
+#if !defined(ACE_LACKS_STD_WSTRING)
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_InputCDR &os,
+                                               ACE_InputCDR::to_std_wstring x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                std::wstring& x);
 #endif

@@ -1686,10 +1686,10 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
 
 // As of C++11 std::string guarantees contiguous memory storage.
 // That provides the opportunity to optimize CDR streaming.
-#if defined (ACE_HAS_CPP11)
 ACE_CDR::Boolean
 ACE_InputCDR::read_string (std::string& x)
 {
+#if defined (ACE_HAS_CPP11)
   ACE_CDR::ULong len = 0;
 
   if (!this->read_ulong (len))
@@ -1718,11 +1718,20 @@ ACE_InputCDR::read_string (std::string& x)
   this->good_bit_ = false;
   x.clear ();
   return false;
+#else
+  CORBA::Char *buf = 0;
+  CORBA::Boolean const marshal_flag = this->read_string (buf);
+  x.assign (buf);
+  ACE::strdelete (buf);
+  return marshal_flag;
+#endif
 }
 
+#if !defined(ACE_LACKS_STD_WSTRING)
 ACE_CDR::Boolean
 ACE_InputCDR::read_wstring (std::wstring& x)
 {
+#if defined (ACE_HAS_CPP11)
   if (ACE_OutputCDR::wchar_maxbytes_ == 0)
     {
       errno = EACCES;
@@ -1783,6 +1792,13 @@ ACE_InputCDR::read_wstring (std::wstring& x)
   this->good_bit_ = false;
   x.clear ();
   return false;
+#else
+  CORBA::WChar *buf = 0;
+  CORBA::Boolean const marshal_flag = this->read_string (buf);
+  x.assign (buf);
+  ACE::strdelete (buf);
+  return marshal_flag;
+#endif
 }
 #endif
 
