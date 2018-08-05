@@ -9,4 +9,7 @@ project : orbsvcsexe, install, naming, event_serv, svc_utils, iortable, messagin
   InstallData_Files {
     README
   }
+
+  Documentation_Files {
+  }
 }

@@ -13,6 +13,9 @@ project(Time_Service_Server) : orbsvcsexe, install, time_serv, naming, utils, av
   InstallData_Files {
     README
   }
+
+  Documentation_Files {
+  }
 }
 
 project(Time_Service_Clerk) : orbsvcsexe, install, time_serv, naming, utils, avoids_corba_e_micro {
