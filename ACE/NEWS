@@ -5,6 +5,12 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.0 and ACE-6.5.1
   doesn't provide the convenience functions to use a
   std::auto_ptr anymore
 
+. Optimized CDR std::(w)string insertion and extraction
+  when C++11 or newer is enabled
+
+. Solved Visual Studio 2017 solution loading due to duplicate
+  files generated in a project file
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.8 and ACE-6.5.0
 ====================================================
 
