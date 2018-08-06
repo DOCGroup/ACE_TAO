@@ -56,6 +56,7 @@
 #include "Monitor_Size.h"
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
+#include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
