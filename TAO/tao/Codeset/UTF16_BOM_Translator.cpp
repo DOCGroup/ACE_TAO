@@ -165,6 +165,74 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
   return 0;
 }
 
+#if !defined(ACE_LACKS_STD_WSTRING)
+ACE_CDR::Boolean
+TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
+                                        std::wstring &x)
+{
+#if defined (ACE_HAS_CPP11)
+  ACE_CDR::ULong len;
+  if (!this->read_4 (cdr, &len))
+    return false;
+
+  // A check for the length being too great is done later in the
+  // call to read_char_array but we want to have it done before
+  // the memory is allocated.
+  if (len > 0 && len <= cdr.length ())
+    {
+      if (static_cast<ACE_CDR::Short> (this->major_version (cdr)) == 1
+          && static_cast<ACE_CDR::Short> (this->minor_version (cdr)) > 1)
+        {
+          len /= ACE_UTF16_CODEPOINT_SIZE;
+
+          try
+            {
+              x.resize (len);
+            }
+          catch (const std::bad_alloc&)
+            {
+              return false;
+            }
+
+          if (this->read_wchar_array_i (cdr, &x[0], len, 1))
+            {
+              // Since reading the array may have adjusted the length,
+              // shrink to fit
+              x.resize (len);
+              return true;
+            }
+        }
+      else
+        {
+          try
+            {
+              x.resize (len);
+            }
+          catch (const std::bad_alloc&)
+            {
+              return false;
+            }
+
+          if (this->read_wchar_array (cdr, &x[0], len))
+            {
+              x.resize (len-1); // drop terminating zero wchar read from stream
+              return true;
+            }
+        }
+    }
+  else if (len == 0)
+    {
+      x.clear ();
+      return true;
+    }
+  x.clear ();
+  return false;
+#else
+  return this->ACE_WChar_Codeset_Translator::read_wstring (cdr, x);
+#endif
+}
+#endif
+
 ACE_CDR::Boolean
 TAO_UTF16_BOM_Translator::read_wchar_array_i (ACE_InputCDR & cdr,
                                               ACE_CDR::WChar *x,
