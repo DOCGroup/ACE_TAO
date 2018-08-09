@@ -1269,7 +1269,7 @@ ImR_Locator_i::server_is_running
   if (debug_ > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) ImR: Server %C is running at %C.\n"),
+                      ACE_TEXT ("(%P|%t) ImR: Server <%C> is running at <%C>.\n"),
                       id, partial_ior));
     }
   CORBA::String_var sior = orb_->object_to_string (server_object);
@@ -1277,7 +1277,7 @@ ImR_Locator_i::server_is_running
   if (debug_ > 1)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) ImR: Server %C callback at %C.\n"),
+                      ACE_TEXT ("(%P|%t) ImR: Server <%C> callback at <%C>.\n"),
                       id, sior.in ()));
     }
 
