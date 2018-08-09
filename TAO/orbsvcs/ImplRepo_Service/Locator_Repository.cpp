@@ -538,7 +538,7 @@ Locator_Repository::remove_server (const ACE_CString& name,
     }
   Server_Info_Ptr si;
   this->servers().find (name, si);
-  int ret = this->servers().unbind (name);
+  int const ret = this->servers().unbind (name);
   if (ret != 0)
     {
       return ret;
@@ -634,7 +634,7 @@ Locator_Repository::remove_activator (const ACE_CString& name)
       return err;
     }
 
-  int ret = activators().unbind (lcase(name));
+  int const ret = activators().unbind (lcase(name));
   if (ret != 0)
     {
       return ret;

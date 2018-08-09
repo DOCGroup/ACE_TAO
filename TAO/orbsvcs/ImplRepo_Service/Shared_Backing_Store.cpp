@@ -1263,11 +1263,11 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
   Locator_Repository::SIMap::CONST_ITERATOR siit (this->unmatched_servers_);
   for (; siit.next (sientry); siit.advance() )
     {
-      int ret = repo.servers().unbind (sientry->ext_id_);
+      int const ret = repo.servers().unbind (sientry->ext_id_);
       if (ret != 0)
         {
           ORBSVCS_ERROR((LM_ERROR,
-            ACE_TEXT ("ERROR: could not remove server: %s\n"),
+            ACE_TEXT ("ERROR: could not remove server: %C\n"),
             sientry->int_id_->key_name_.c_str()));
         }
     }
@@ -1280,7 +1280,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
       if (ret != 0)
         {
           ORBSVCS_ERROR((LM_ERROR,
-            ACE_TEXT ("ERROR: could not remove activator: %s\n"),
+            ACE_TEXT ("ERROR: could not remove activator: %C\n"),
             aientry->int_id_->name.c_str()));
         }
     }

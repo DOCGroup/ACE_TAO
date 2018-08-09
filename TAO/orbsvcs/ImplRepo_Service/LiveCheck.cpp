@@ -849,7 +849,7 @@ LiveCheck::remove_server (const char *server, int pid)
 {
   ACE_CString s(server);
   LiveEntry *entry = 0;
-  int result = entry_map_.find (s, entry);
+  int const result = entry_map_.find (s, entry);
   if (result != -1 && entry->has_pid (pid))
     {
       if (!this->in_handle_timeout ())
@@ -900,7 +900,7 @@ LiveCheck::remove_deferred_servers (void)
                           ACE_TEXT ("removing %s\n"), (*re).c_str()));
         }
       LiveEntry *entry = 0;
-      int result = entry_map_.unbind (*re, entry);
+      int const result = entry_map_.unbind (*re, entry);
       if (result == 0)
         {
           delete entry;

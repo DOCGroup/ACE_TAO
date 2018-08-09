@@ -310,7 +310,7 @@ namespace TAO
       {
         CORBA::String_var poaname = poa->the_name ();
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_ImR_Client (%P|%t) - Informing IMR that <%C> is running at: <%C>\n"),
+                    ACE_TEXT ("TAO_ImR_Client (%P|%t) - Informing IMR that <%C> is running at <%C>\n"),
                     poaname.in(), partial_ior.c_str ()));
       }
 
