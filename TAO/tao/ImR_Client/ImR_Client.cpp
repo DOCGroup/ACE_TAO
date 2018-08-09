@@ -307,9 +307,12 @@ namespace TAO
       const ACE_CString partial_ior (ior.in (), (pos - ior.in ()) + 1);
 
       if (TAO_debug_level > 0)
+      {
+        CORBA::String_var poaname = poa->the_name ();
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_ImR_Client (%P|%t) - Informing IMR that we are running at: <%C>\n"),
-                    partial_ior.c_str ()));
+                    ACE_TEXT ("TAO_ImR_Client (%P|%t) - Informing IMR that <%C> is running at: <%C>\n"),
+                    poaname.in(), partial_ior.c_str ()));
+      }
 
       try
         {
@@ -317,7 +320,7 @@ namespace TAO
           TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*poa);
           ACE_UNUSED_ARG (non_servant_upcall);
 
-          ACE_CString serverId = poa->orb_core ().server_id ();
+          ACE_CString const serverId = poa->orb_core ().server_id ();
           ACE_CString name;
           if (serverId.empty ())
             {
