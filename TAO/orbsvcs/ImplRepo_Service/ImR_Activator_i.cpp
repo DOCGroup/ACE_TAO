@@ -458,29 +458,32 @@ ImR_Activator_i::start_server(const char* name,
       name += unique_prefix_len;
     }
 
-  // if (debug_ > 1)
-  ORBSVCS_DEBUG((LM_DEBUG,
-                 "ImR Activator: Starting %C <%C>...\n",
-                 (unique ? "unique server" : "server"), name));
+  if (debug_ > 0)
+    {
+      ORBSVCS_DEBUG((LM_DEBUG,
+                    "ImR Activator: Starting %C <%C>...\n",
+                    (unique ? "unique server" : "server"), name));
+    }
   pid_t pid;
   if (unique && this->still_running_i (name, pid))
     {
-      // if (debug_ > 1)
-      ORBSVCS_DEBUG((LM_DEBUG,
-                     "ImR Activator: Unique instance already running %d\n",
-                     static_cast<int> (pid)));
+      if (debug_ > 0)
+        {
+          ORBSVCS_DEBUG((LM_DEBUG,
+                        "ImR Activator: Unique instance already running %d\n",
+                        static_cast<int> (pid)));
+        }
       char reason[32];
       ACE_OS::snprintf (reason,32,"pid:%d",static_cast<int> (pid));
       throw ImplementationRepository::CannotActivate(
                                                      CORBA::string_dup (reason));
     }
 
-  ACE_TString cmdline_tstr(ACE_TEXT_CHAR_TO_TCHAR(cmdline));
-  size_t cmdline_buf_len = cmdline_tstr.length();
-  if (debug_ > 1)
+  size_t const cmdline_buf_len = ACE_OS::strlen(cmdline);
+  if (debug_ > 0)
     ORBSVCS_DEBUG((LM_DEBUG,
-                   "\tcommand line : len=%d <%s>\n\tdirectory : <%C>\n",
-                   cmdline_buf_len, cmdline_tstr.c_str(), dir)  );
+                   "\tcommand line : len=%d <%C>\n\tdirectory : <%C>\n",
+                   cmdline_buf_len, cmdline, dir)  );
 
   ACE_Process_Options proc_opts (
                                  1,

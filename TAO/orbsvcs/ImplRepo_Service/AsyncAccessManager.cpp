@@ -700,7 +700,7 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
     {
       if (ACE_OS::strstr (ca.reason.in(),"pid:") == ca.reason.in())
         {
-          int pid = ACE_OS::atoi (ca.reason.in()+4);
+          int const pid = ACE_OS::atoi (ca.reason.in()+4);
           this->aam_->activator_replied (true, pid);
         }
       else
