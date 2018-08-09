@@ -38,7 +38,7 @@ namespace
     if (TAO_debug_level > 0)
       {
         TAOLIB_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO_ImR_Client (%P|%t) - IMR partial IOR =\n%C\n"),
+                       ACE_TEXT ("TAO_ImR_Client (%P|%t) - IMR partial IOR <%C>\n"),
                        profile_str.in ()));
       }
     char* const pos = find_delimiter (profile_str.inout (),
@@ -63,7 +63,7 @@ namespace
     if (TAO_debug_level > 0)
       {
         TAOLIB_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("TAO_ImR_Client (%P|%t) - ImR-ified IOR =\n%C\n\n"),
+                       ACE_TEXT ("TAO_ImR_Client (%P|%t) - ImR-ified IOR <%C>\n"),
                        ior.c_str ()));
       }
     CORBA::Object_ptr obj = orb_core.orb ()->string_to_object (ior.c_str ());
@@ -225,16 +225,14 @@ namespace TAO
 
       if (TAO_debug_level > 0)
         {
-          ACE_CString imr_info;
           if (TAO_debug_level > 1)
             {
               CORBA::ORB_ptr orb = poa->orb_core ().orb ();
               CORBA::String_var ior = orb->object_to_string (imr.in ());
-              imr_info = ACE_CString (", IMR IOR=") + ior.in ();
+              TAOLIB_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("TAO_ImR_Client (%P|%t) - Notifying ImR of startup IMR IOR <%C>\n"),
+                            ior.in ()));
             }
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO_ImR_Client (%P|%t) - Notifying ImR of startup <%C>\n"),
-                      imr_info.c_str ()));
         }
 
       ImplementationRepository::Administration_var imr_locator;
@@ -299,7 +297,7 @@ namespace TAO
       if (TAO_debug_level > 0)
         {
           TAOLIB_DEBUG((LM_INFO,
-                        "TAO_ImR_Client (%P|%t) - full_ior=<%C>\n\nior=<%C>\n\n",
+                        "TAO_ImR_Client (%P|%t) - full_ior <%C>\nior <%C>\n",
                         full_ior.in(),
                         ior.in()));
         }
