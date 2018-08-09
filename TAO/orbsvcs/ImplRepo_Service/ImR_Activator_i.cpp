@@ -464,6 +464,7 @@ ImR_Activator_i::start_server(const char* name,
                     "ImR Activator: Starting %C <%C>...\n",
                     (unique ? "unique server" : "server"), name));
     }
+
   pid_t pid;
   if (unique && this->still_running_i (name, pid))
     {
@@ -607,7 +608,7 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
           if (debug_ > 1)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) ImR Activator: caught %s from locator::child_death_pid\n"),
+                              ACE_TEXT ("(%P|%t) ImR Activator: caught <%C> from locator::child_death_pid\n"),
                               ex._name()));
             }
         }
