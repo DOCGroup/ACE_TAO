@@ -35,7 +35,7 @@ LiveListener::_add_ref (void)
   if (ImR_Locator_i::debug () > 5)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("LiveListener::add_ref, %s, count = %d\n"),
+                      ACE_TEXT ("LiveListener::add_ref, %C, count = %d\n"),
                       server_.c_str(), refcount_));
     }
   return this;
@@ -51,7 +51,7 @@ LiveListener::_remove_ref (void)
     if (ImR_Locator_i::debug () > 5)
       {
         ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT  ("LiveListener::remove_ref, %s, count = %d\n"),
+                        ACE_TEXT  ("LiveListener::remove_ref, %C, count = %d\n"),
                         server_.c_str(), count));
       }
   }

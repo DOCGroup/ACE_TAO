@@ -1146,7 +1146,7 @@ Shared_Backing_Store::gen_ior (char*& ft_imr_ior)
       // give back the original pointer and don't clean it up
       ft_imr_ior = ior._retn();
       ORBSVCS_ERROR((LM_ERROR,
-        "ERROR: Failed to create Fault Tolerant ImR, reason=%s\n",
+        "ERROR: Failed to create Fault Tolerant ImR, reason=%C\n",
         reason.in()));
       throw ImplementationRepository::InvalidPeer(reason.in());
     }
