@@ -29,7 +29,7 @@ public:
   ImR_ResponseHandler (void);
   virtual ~ImR_ResponseHandler (void);
 
-  // dummy implementations used for internal operations
+  // Dummy implementations used for internal operations
   virtual void send_ior (const char *pior);
   virtual void send_exception (CORBA::Exception *ex);
 };
