@@ -1,8 +1,5 @@
 // -*- IDL -*-
 
-/**
- */
-
 #ifndef TAO_IMRCLIENT_IMPLREPO_PIDL
 #define TAO_IMRCLIENT_IMPLREPO_PIDL
 
@@ -73,7 +70,7 @@ module ImplementationRepository
     /// No attempt as been made to determine status.
     ACTIVE_MAYBE,
 
-    /// Server has been succesfully pinged within ping interval.
+    /// Server has been successfully pinged within ping interval.
     ACTIVE_YES,
 
     /// Server was not able to be pinged within ping interval.

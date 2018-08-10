@@ -196,7 +196,6 @@ Server_i::run (void)
     throw;
   }
 
-
   return 0;
 }
 

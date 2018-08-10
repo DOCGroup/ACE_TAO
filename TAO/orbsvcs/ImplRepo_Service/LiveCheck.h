@@ -71,7 +71,7 @@ enum LiveStatus {
 class Locator_Export LiveListener
 {
  public:
-  /// Construct a new listener. The server name suppled is used to
+  /// Construct a new listener. The server name supplied is used to
   /// look up a listener entry in the LiveCheck map.
   LiveListener (const char *server);
 
@@ -125,7 +125,7 @@ class Locator_Export LiveEntry
   void reset_status (void);
 
   /// the current state value as text
-  static const ACE_TCHAR *status_name (LiveStatus s);
+  static const char *status_name (LiveStatus s);
 
   void update_listeners (void);
   bool validate_ping (bool &want_reping, ACE_Time_Value &next);

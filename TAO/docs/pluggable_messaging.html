@@ -4,17 +4,17 @@
   <head>
     <title>Pluggable Messaging framework</title>
   </head>
-  
+
   <BODY text = "#000000"
     link="#0000ff"
     vlink="#cc0000"
     bgcolor="#ffffff">
-    
+
     <body>
       <HR>
-          	<h1>Pluggable Messaging Framework</h1>
-	<HR>
-	  <h2>Context</h2>
+            <h1>Pluggable Messaging Framework</h1>
+  <HR>
+    <h2>Context</h2>
           TAO uses GIOP message formats to exchange messages between
           inter-operating ORBs. GIOP, essentially specifies formats of
           messages exchanged between ORBs. It has only a few message
@@ -26,30 +26,30 @@
           different protocols. The framework,though not complete in
           itself, has been used for implementing GIOP and
           GIOPlite. The framework would be re-factored and reworked
-          depending on the use cases our users come across. 
-	  
-	  <h2>Idea</h2>
+          depending on the use cases our users come across.
+
+    <h2>Idea</h2>
           We wanted to give a flexibility to the user to load the message
           formatting protocol by selecting a protocol during the
-          bootstrapping process. So, we tried to leverage the work 
+          bootstrapping process. So, we tried to leverage the work
           that has already been done for the <a HREF =
-          "pluggable_protocols/index.html"> pluggable_protocols</a>. 
+          "pluggable_protocols/index.html"> pluggable_protocols</a>.
 
           The fundamental idea that we followed was to isolate all of
           the ORB code from the message formatting details. The
           framework is constrained by the type of marshalling
           scheme. The framework now completely relies on CDR
-          formatted streams. 
-          
-          
+          formatted streams.
+
+
           <h2>Implementation of GIOP</h2>
 
           <P>The common interface that has  been defined is the class
           Pluggable_Messaging_Interface forms the core class for the
           implementation of a concrete messaging protocol. We have
-          been able to implement the GIOP & GIOPlite succesfully using
+          been able to implement the GIOP & GIOPlite successfully using
           this minimal interface. The different versions of GIOP have
-          been managed succesfully within this implementation.</P>
+          been managed successfully within this implementation.</P>
 
           <P>When the user loads protocols like IIOP he/she in turn is
           loading the TCP/IP mapping of GIOP formatted message. The
@@ -58,11 +58,11 @@
           the user behind the scene. If an user wants to use GIOPlite
           mapped on to TCP/IP he would load IIOP_Lite using the
           svc.conf file. The format is given below </P>
-          
+
           <P><code>dynamic IIOP_Lite_Factory Service_Object * TAO:_make_TAO_IIOP_Lite_Protocol_Factory() ""</code></P>
           <P><code>static Resource_Factory "-ORBProtocolFactory IIOP_Lite_Factory". </code></P>
 
-          <P>At the moment the TAO Strategies library is used the 
+          <P>At the moment the TAO Strategies library is used the
           svc.conf file should contain: </P>
 
           <P><code>dynamic IIOP_Lite_Factory Service_Object * TAO:_make_TAO_IIOP_Lite_Protocol_Factory() ""</code></P>
@@ -71,7 +71,7 @@
           <P>Please see the documentation of the pluggable protocol
           framework for exact meaning of the above syntax. The same
           applies to GIOPlite mapping on UIOP too.</P>
-          
+
           <P>The class GIOP_Message_Base derives from the
           Pluggable_Messaging_Interface. This class holds most of the
           common code needed for the GIOP classes. GIOP places a
@@ -112,16 +112,16 @@
           <P> Uses only CDR formats. </P>
           <P> Need more ise cases to make the interface more flexible
           and better. </P>
-          
-                                         
-	  <HR>
-	    For more details and questions,
-	    <p>
-	      
-	      <address><a href="mailto:bala@cs.wustl.edu">Balachandran
-	      Natarajan</a></address>
-	      <p>
-		<address><a href="mailto:fredk@cs.wustl.edu">Fred Kuhns</a></address>
+
+
+    <HR>
+      For more details and questions,
+      <p>
+
+        <address><a href="mailto:bala@cs.wustl.edu">Balachandran
+        Natarajan</a></address>
+        <p>
+    <address><a href="mailto:fredk@cs.wustl.edu">Fred Kuhns</a></address>
     </body>
 </html>
 

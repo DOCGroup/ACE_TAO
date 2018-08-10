@@ -1,23 +1,28 @@
-
-
 This is a test of the ImplRepo being accessed by a variable number of clients trying to send a request
 to a server registered with the ImplRepo and launched using the activator.
 
 1. Syntax
 
 run_test.pl [-clients <num>]
-	    [-msecs_between_clients <msecs>]
-	    [-server_init_delay <seconds>]
-	    [-server_reply_delay <seconds>]
-	    [-rt_timeout <round-trip-timeout-msecs>]
-	    [-max_rt_tries <max-client-requests>]
-	    [-no_imr]
-
+      [-imrdebug <level>]
+      [-activationmode <mode>]
+      [-msecs_between_clients <msecs>]
+      [-server_init_delay <seconds>]
+      [-server_reply_delay <seconds>]
+      [-rt_timeout <round-trip-timeout-msecs>]
+      [-max_rt_tries <max-client-requests>]
+      [-no_imr]
 
 2. Description of command line arguments
 
 - clients <num>
         The number of clients to spawn.
+
+- imrdebug <level>
+        The debug level for the ImR Locator/Activator, default of 1
+
+- activationmode <mode>
+        The server activation mode, normal|manual|per_client|auto_start
 
 - msecs_between_clients <msecs>
         The number of milliseconds to wait between client spawns.
@@ -41,8 +46,8 @@ run_test.pl [-clients <num>]
         the client will attempt to try the request again. This
         argument controls the maximum number of requests that the
         client will make.
-	You can use this argument along with low value of rt_timeout
-	to cause a rapid number of request attempts.
+        You can use this argument along with low value of rt_timeout
+        o cause a rapid number of request attempts.
 
 - no_imr
        Passing this argument will assume the ImplRepo is already

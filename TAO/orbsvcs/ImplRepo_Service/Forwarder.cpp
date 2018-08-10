@@ -206,7 +206,7 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) ImR_ResponseHandler::send_ior (): Invalid corbaloc ior.\n")
-                  ACE_TEXT ("\t<%s>\n"),
+                  ACE_TEXT ("\t<%C>\n"),
                   ior.c_str()));
     }
 
