@@ -138,7 +138,7 @@ sub scale_clients_test
     my $result = 0;
     my $start_time = time();
 
-    $IMR->Arguments ("-d $imr_debug_level -o $imr_imriorfile -orbendpoint iiop://:$port $asynch_loc ");
+    $IMR->Arguments ("-d $imr_debug_level -o $imr_imriorfile -orbendpoint iiop://:$port $asynch_loc -ORBDebugLevel $debug_level");
 
     if ($no_imr) {
       print STDERR "IMR assumed to be manually launched in way that is ".
