@@ -90,7 +90,7 @@ Commandline Arguments that can be passed to tao_imr_locator
 -o <filename>      write the ior to the file.
 -t <timeout>       specify a startup timeout value (default 60 seconds)
 -i                 periodically ping servers to check liveness.
--v                 the minimum succcessful ping interval. (default 10 seconds)
+-v                 the minimum successful ping interval. (default 10 seconds)
 -g                 the timeout for ping attempts. (default 1 second)
 -s                 run as a winNT service
 -c <command>       execute the named service command: install, remove
