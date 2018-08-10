@@ -517,16 +517,6 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
   return si;
 }
 
-Server_Info_Ptr
-Locator_Repository::get_info (const ACE_CString& name)
-{
-  sync_load ();
-
-  Server_Info_Ptr si;
-  servers ().find (name, si);
-  return si;
-}
-
 int
 Locator_Repository::remove_server (const ACE_CString& name,
                                    ImR_Locator_i* imr_locator)
@@ -585,7 +575,7 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
                                 const CORBA::StringSeq p)
 {
   sync_load ();
-  CORBA::ULong len = base->peers.length();
+  CORBA::ULong const len = base->peers.length();
   base->peers.length (len + p.length());
   for (CORBA::ULong i = 0; i < p.length(); i++)
     {
@@ -628,7 +618,7 @@ Locator_Repository::has_activator (const ACE_CString& name)
 int
 Locator_Repository::remove_activator (const ACE_CString& name)
 {
-  int err = sync_load ();
+  int const err = sync_load ();
   if (err != 0)
     {
       return err;
