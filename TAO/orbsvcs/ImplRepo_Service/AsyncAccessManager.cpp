@@ -580,7 +580,7 @@ AsyncAccessManager::send_start_request (void)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, manual_start_ %d\n"),
-                      this->manual_start_));
+                      this, this->manual_start_));
     }
 
   if ((this->locator_.opts ()->lockout () && !this->info_.edit ()->start_allowed ()) ||

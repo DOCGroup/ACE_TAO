@@ -127,11 +127,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     //
     //
     // Stop discarding requests.
-    //
     mgr->activate();
 
     ACE_DEBUG ((LM_DEBUG,
-      "\n  Started Server %s \n",
+      "(%P|%t) Server: Started <%C>\n",
       poa_name.c_str()));
 
     {
@@ -151,14 +150,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     return 1;
   }
 
-  bool expected_requests_made = Test_i::expected_requests_made ();
+  bool const expected_requests_made = Test_i::expected_requests_made ();
   if (!expected_requests_made)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Expected number of requests were not made\n"));
     }
 
-  int status = expected_requests_made ? 0 : -1;
+  int const status = expected_requests_made ? 0 : -1;
 
   return status;
 }
