@@ -58,8 +58,8 @@ class Locator_Export AsyncAccessManager
 
   void started_running (void);
 
-  bool is_terminating (void);
-  bool has_server (const char *name);
+  bool is_terminating (void) const;
+  bool has_server (const char *name) const ;
   void remote_state (ImplementationRepository::AAM_Status s);
 
   void add_interest (ImR_ResponseHandler *rh, bool manual);
@@ -79,7 +79,7 @@ class Locator_Export AsyncAccessManager
   void _remove_ref (void);
   static const char *status_name (ImplementationRepository::AAM_Status s);
   static bool is_final (ImplementationRepository::AAM_Status s);
-  void report (void);
+  void report (void) const;
   void update_prev_pid (void);
 
  private:

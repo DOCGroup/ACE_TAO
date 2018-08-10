@@ -27,8 +27,8 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server <%C> pid <%d>\n"),
-                      this, info->ping_id (), info->pid));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server <%C> pid <%d> status <%C>\n"),
+                      this, info->ping_id (), info->pid, status_name (this->status_)));
     }
   this->prev_pid_ = info_->pid;
 }
@@ -38,32 +38,39 @@ AsyncAccessManager::~AsyncAccessManager (void)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::dtor server <%C>\n"),
-                      this, info_->ping_id ()));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::dtor server <%C> status <%C>\n"),
+                      this, info_->ping_id (), status_name (this->status_)));
     }
 }
 
 void
 AsyncAccessManager::started_running (void)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::started_running server <%C> pid <%d> status <%C>\n"),
+                      this, info_->ping_id (), info_->pid, status_name (this->status_)));
+    }
+
   this->update_status(ImplementationRepository::AAM_SERVER_STARTED_RUNNING);
 }
 
 bool
-AsyncAccessManager::is_terminating (void)
+AsyncAccessManager::is_terminating (void) const
 {
   return this->status_ == ImplementationRepository::AAM_ACTIVE_TERMINATE ||
     remove_on_death_rh_ != 0;
 }
 
 bool
-AsyncAccessManager::has_server (const char *s)
+AsyncAccessManager::has_server (const char *s) const
 {
   return ACE_OS::strcmp (this->info_->ping_id (), s) == 0;
 }
 
 void
-AsyncAccessManager::report (void)
+AsyncAccessManager::report (void) const
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) AsyncAccessManager(%@) - Server <%C> pid <%d> lastpid <%d> status <%C> waiters <%d>\n"),
@@ -97,9 +104,8 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::add_interest status <%C>\n"),
-                      this,
-                      status_name (this->status_)));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::add_interest server <%C> status <%C>\n"),
+                      this, info_->ping_id (), status_name (this->status_)));
     }
 
   this->info_.notify_remote_access (this->status_);
@@ -191,7 +197,7 @@ AsyncAccessManager::remote_state (ImplementationRepository::AAM_Status state)
 void
 AsyncAccessManager::final_state (bool active)
 {
-  bool success = this->status_ == ImplementationRepository::AAM_SERVER_READY;
+  bool const success = this->status_ == ImplementationRepository::AAM_SERVER_READY;
   this->info_.edit (active)->started (success);
   this->retries_ = this->info_->start_limit_;
   if (active)
