@@ -174,7 +174,14 @@ LiveEntry::add_listener (LiveListener *ll)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   LiveListener_ptr llp(ll->_add_ref());
-  this->listeners_.insert (llp);
+  int const result = this->listeners_.insert (llp);
+  if (ImR_Locator_i::debug() > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveEntry::add_listener server <%C> result <%d>\n"),
+                      this->server_.c_str(),
+                      result));
+    }
 }
 
 void
@@ -182,11 +189,11 @@ LiveEntry::remove_listener (LiveListener *ll)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   LiveListener_ptr llp(ll->_add_ref());
-  int result = this->listeners_.remove (llp);
+  int const result = this->listeners_.remove (llp);
   if (ImR_Locator_i::debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::remove_listener server <%C> result <%d?\n"),
+                      ACE_TEXT ("(%P|%t) LiveEntry::remove_listener server <%C> result <%d>\n"),
                       this->server_.c_str(),
                       result));
     }
@@ -624,7 +631,7 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
       ACE_Time_Value delay = ACE_Time_Value::zero;
       if (owner_->deferred_timeout_ != ACE_Time_Value::zero)
         {
-          ACE_Time_Value now (ACE_OS::gettimeofday());
+          ACE_Time_Value const now (ACE_OS::gettimeofday());
           if (owner_->deferred_timeout_ > now)
             delay = owner_->deferred_timeout_ - now;
         }
@@ -739,7 +746,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d), ")
-                      ACE_TEXT ("running = %d\n"),
+                      ACE_TEXT ("running <%d>\n"),
                       token, this->running_));
     }
   if (!this->running_)
@@ -790,7 +797,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
             {
               entry->do_ping (poa_.in ());
             }
-          LiveStatus status = entry->status ();
+          LiveStatus const status = entry->status ();
           if (status != LS_PING_AWAY && status != LS_TRANSIENT)
             {
               this->per_client_.remove (entry);
@@ -807,7 +814,7 @@ LiveCheck::has_server (const char *server)
 {
   ACE_CString s (server);
   LiveEntry *entry = 0;
-  int result = entry_map_.find (s, entry);
+  int const result = entry_map_.find (s, entry);
   return (result == 0 && entry != 0);
 }
 
@@ -816,6 +823,14 @@ LiveCheck::add_server (const char *server,
                        bool may_ping,
                        ImplementationRepository::ServerObject_ptr ref)
 {
+  if (ImR_Locator_i::debug () > 2)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveCheck::add_server <%C> ")
+                      ACE_TEXT ("running <%d>\n"),
+                      server, this->running_));
+    }
+
   if (!this->running_)
     return;
 
@@ -840,7 +855,7 @@ LiveCheck::set_pid (const char *server, int pid)
 {
   ACE_CString s(server);
   LiveEntry *entry = 0;
-  int result = entry_map_.find (s, entry);
+  int const result = entry_map_.find (s, entry);
   if (result != -1 && entry != 0)
     {
       entry->set_pid (pid);
@@ -958,7 +973,7 @@ LiveCheck::add_poll_listener (LiveListener *l)
 
   LiveEntry *entry = 0;
   ACE_CString key (l->server());
-  int result = entry_map_.find (key, entry);
+  int const result = entry_map_.find (key, entry);
   if (result == -1 || entry == 0)
     {
       return false;
@@ -978,7 +993,7 @@ LiveCheck::add_listener (LiveListener *l)
 
   LiveEntry *entry = 0;
   ACE_CString key (l->server());
-  int result = entry_map_.find (key, entry);
+  int const result = entry_map_.find (key, entry);
   if (result == -1 || entry == 0)
     {
       return false;
@@ -996,7 +1011,7 @@ LiveCheck::remove_listener (LiveListener *l)
 
   LiveEntry *entry = 0;
   ACE_CString key (l->server());
-  int result = entry_map_.find (key, entry);
+  int const result = entry_map_.find (key, entry);
   if (result != -1 && entry != 0)
     {
       entry->remove_listener (l);
@@ -1089,7 +1104,7 @@ LiveCheck::is_alive (const char *server)
 
   ACE_CString s(server);
   LiveEntry *entry = 0;
-  int result = entry_map_.find (s, entry);
+  int const result = entry_map_.find (s, entry);
   if (result == 0 && entry != 0)
     {
       return entry->status ();
