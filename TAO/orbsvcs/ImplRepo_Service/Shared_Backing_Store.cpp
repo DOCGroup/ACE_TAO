@@ -90,7 +90,7 @@ namespace {
         ((flags_ & O_RDWR) != 0) ? ACE_TEXT ("r+") :
         (((flags_ & O_WRONLY) != 0) ? ACE_TEXT ("w") : ACE_TEXT ("r"));
       this->filename_ = file;
-#ifdef ACE_WIN32
+#if defined (ACE_WIN32)
       this->file_ = ACE_OS::fopen (file.c_str(), flags_str);
 #else
       this->file_lock_.reset
@@ -111,7 +111,7 @@ namespace {
       ACE_OS::fflush (this->file_);
       ACE_OS::fclose (this->file_);
       this->file_ = 0;
-#ifdef ACE_WIN32
+#if defined (ACE_WIN32)
       if (this->unlink_in_destructor_)
         {
           ACE_OS::unlink (this->filename_.c_str ());
@@ -122,7 +122,7 @@ namespace {
 
     void lock (void)
     {
-#ifndef ACE_WIN32
+#if defined (ACE_WIN32)
       if (this->locked_)
         return;
 
@@ -1042,7 +1042,7 @@ Shared_Backing_Store::process_updates (void)
             if (this->opts_.debug() > 4)
               {
                 ORBSVCS_DEBUG ((LM_INFO,
-                                ACE_TEXT("(%P|%t) notify_access_state_update, %C now %s\n"),
+                                ACE_TEXT("(%P|%t) notify_access_state_update, <%C> now <%C>\n"),
                                 entity.name.in (),
                                 AsyncAccessManager::status_name (entity.action.state ())));
               }

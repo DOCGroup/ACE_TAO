@@ -77,7 +77,7 @@ class Locator_Export AsyncAccessManager
 
   AsyncAccessManager *_add_ref (void);
   void _remove_ref (void);
-  static const ACE_TCHAR *status_name (ImplementationRepository::AAM_Status s);
+  static const char *status_name (ImplementationRepository::AAM_Status s);
   static bool is_final (ImplementationRepository::AAM_Status s);
   void report (void);
   void update_prev_pid (void);

@@ -67,31 +67,31 @@ LiveListener::_remove_ref (void)
 const int LiveEntry::reping_msec_[] = {10, 100, 500, 1000, 1000, 2000, 2000, 5000, 5000};
 int LiveEntry::reping_limit_ = sizeof (LiveEntry::reping_msec_) / sizeof (int);
 
-const ACE_TCHAR *
+const char *
 LiveEntry::status_name (LiveStatus s)
 {
   switch (s)
     {
     case LS_INIT:
-      return ACE_TEXT ("INIT");
+      return "INIT";
     case LS_UNKNOWN:
-      return ACE_TEXT ("UNKNOWN");
+      return "UNKNOWN";
     case LS_PING_AWAY:
-      return ACE_TEXT ("PING_AWAY");
+      return "PING_AWAY";
     case LS_DEAD:
-      return ACE_TEXT ("DEAD");
+      return "DEAD";
     case LS_ALIVE:
-      return ACE_TEXT ("ALIVE");
+      return "ALIVE";
     case LS_TRANSIENT:
-      return ACE_TEXT ("TRANSIENT");
+      return "TRANSIENT";
     case LS_LAST_TRANSIENT:
-      return ACE_TEXT ("LAST_TRANSIENT");
+      return "LAST_TRANSIENT";
     case LS_TIMEDOUT:
-      return ACE_TEXT ("TIMEDOUT");
+      return "TIMEDOUT";
     case LS_CANCELED:
-      return ACE_TEXT ("CANCELED");
+      return "CANCELED";
     }
-  return ACE_TEXT ("<undefined status>");
+  return "<undefined status>";
 }
 
 void
@@ -208,7 +208,7 @@ LiveEntry::reset_status (void)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) LiveEntry::reset_status this <%x>, ")
-                      ACE_TEXT ("server <%C> status <%s>\n"),
+                      ACE_TEXT ("server <%C> status <%C>\n"),
                       this, this->server_.c_str(),
                       status_name (this->liveliness_)));
     }
@@ -290,7 +290,7 @@ LiveEntry::status (LiveStatus l)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::status change, ")
-                          ACE_TEXT ("server <%C> status <%s>\n"),
+                          ACE_TEXT ("server <%C> status <%C>\n"),
                           this->server_.c_str(),
                           status_name (this->liveliness_)));
         }
@@ -340,7 +340,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                          ACE_TEXT ("<%s>, listeners <%d> server <%C>\n"),
+                          ACE_TEXT ("<%C>, listeners <%d> server <%C>\n"),
                           status_name (this->liveliness_), this->listeners_.size (),
                           this->server_.c_str()));
         }
@@ -360,7 +360,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
-                          ACE_TEXT ("status <%s>, listeners <%d>, ")
+                          ACE_TEXT ("status <%C>, listeners <%d>, ")
                           ACE_TEXT ("msec <%d> server <%C>\n"),
                           status_name (this->liveliness_), this->listeners_.size (),
                           msec, this->server_.c_str()));

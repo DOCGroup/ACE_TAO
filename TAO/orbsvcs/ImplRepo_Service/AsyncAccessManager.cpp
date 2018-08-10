@@ -27,8 +27,8 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server <%C> pid = %d, %d\n"),
-                      this, info->ping_id (), info->pid, info_->pid));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server <%C> pid <%d>\n"),
+                      this, info->ping_id (), info->pid));
     }
   this->prev_pid_ = info_->pid;
 }
@@ -66,7 +66,7 @@ void
 AsyncAccessManager::report (void)
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) AsyncAccessManager(%@) - Server: %C, pid: %d, lastpid: %d, status: %C, waiters: %d\n"),
+                  ACE_TEXT ("(%P|%t) AsyncAccessManager(%@) - Server <%C> pid <%d> lastpid <%d> status <%C> waiters <%d>\n"),
                   this, info_->ping_id (), info_->pid, this->prev_pid_, status_name (this->status_), this->rh_list_ .size()));
 }
 
@@ -97,7 +97,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::add_interest status <%s>\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::add_interest status <%C>\n"),
                       this,
                       status_name (this->status_)));
     }
@@ -262,7 +262,7 @@ AsyncAccessManager::notify_waiters (void)
                         ("Server terminating.");
                     default: {
                       ACE_CString reason = ACE_CString ("AAM_Status is ") +
-                        ACE_TEXT_ALWAYS_CHAR (status_name (this->status_));
+                        status_name (this->status_);
                       throw ImplementationRepository::CannotActivate (reason.c_str());
                     }
                     }
@@ -288,44 +288,44 @@ AsyncAccessManager::is_final (ImplementationRepository::AAM_Status s)
           s == ImplementationRepository::AAM_RETRIES_EXCEEDED);
 }
 
-const ACE_TCHAR *
+const char *
 AsyncAccessManager::status_name (ImplementationRepository::AAM_Status s)
 {
   switch (s)
     {
     case ImplementationRepository::AAM_INIT:
-      return ACE_TEXT ("INIT");
+      return "INIT";
     case ImplementationRepository::AAM_SERVER_STARTED_RUNNING:
-      return ACE_TEXT ("SERVER_STARTED_RUNNING");
+      return "SERVER_STARTED_RUNNING";
     case ImplementationRepository::AAM_ACTIVATION_SENT:
-      return ACE_TEXT ("ACTIVATION_SENT");
+      return "ACTIVATION_SENT";
     case ImplementationRepository::AAM_WAIT_FOR_RUNNING:
-      return ACE_TEXT ("WAIT_FOR_RUNNING");
+      return "WAIT_FOR_RUNNING";
     case ImplementationRepository::AAM_WAIT_FOR_PING:
-      return ACE_TEXT ("WAIT_FOR_PING");
+      return "WAIT_FOR_PING";
     case ImplementationRepository::AAM_WAIT_FOR_ALIVE:
-      return ACE_TEXT ("WAIT_FOR_ALIVE");
+      return "WAIT_FOR_ALIVE";
     case ImplementationRepository::AAM_WAIT_FOR_DEATH:
-      return ACE_TEXT ("WAIT_FOR_DEATH");
+      return "WAIT_FOR_DEATH";
     case ImplementationRepository::AAM_SERVER_READY:
-      return ACE_TEXT ("SERVER_READY");
+      return "SERVER_READY";
     case ImplementationRepository::AAM_SERVER_DEAD:
-      return ACE_TEXT ("SERVER_DEAD");
+      return "SERVER_DEAD";
     case ImplementationRepository::AAM_NOT_MANUAL:
-      return ACE_TEXT ("NOT_MANUAL");
+      return "NOT_MANUAL";
     case ImplementationRepository::AAM_NO_ACTIVATOR:
-      return ACE_TEXT ("NO_ACTIVATOR");
+      return "NO_ACTIVATOR";
     case ImplementationRepository::AAM_NO_COMMANDLINE:
-      return ACE_TEXT ("NO_COMMANDLINE");
+      return "NO_COMMANDLINE";
     case ImplementationRepository::AAM_RETRIES_EXCEEDED:
-      return ACE_TEXT ("RETRIES_EXCEEDED");
+      return "RETRIES_EXCEEDED";
     case ImplementationRepository::AAM_UPDATE_FAILED:
-      return ACE_TEXT ("UPDATE_FAILED");
+      return "UPDATE_FAILED";
     case ImplementationRepository::AAM_ACTIVE_TERMINATE:
-      return ACE_TEXT ("ACTIVE_TERMINATE");
+      return "ACTIVE_TERMINATE";
 
     }
-  return ACE_TEXT ("<undefined status>");
+  return "<undefined status>";
 }
 
 ImplementationRepository::AAM_Status
@@ -367,7 +367,7 @@ AsyncAccessManager::activator_replied (bool success, int pid)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::activator_replied with ")
-                              ACE_TEXT ("pid = %d this pid = %d, status = %s\n"),
+                              ACE_TEXT ("pid <%d> this pid <%d> status <%C>\n"),
                               this, pid, this->info_->pid, status_name (this->status_)));
             }
           this->update_status (ImplementationRepository::AAM_SERVER_READY);
@@ -389,7 +389,7 @@ AsyncAccessManager::shutdown_initiated (void)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::shutdown_initiated ")
-                      ACE_TEXT ("on server <%C> pid <%d> current status <%s>\n"),
+                      ACE_TEXT ("on server <%C> pid <%d> current status <%C>\n"),
                       this, this->info_->ping_id(), this->info_->pid, status_name (this->status_)));
     }
   this->prev_pid_ = this->info_->pid;
@@ -409,7 +409,7 @@ AsyncAccessManager::server_is_shutting_down (void)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::server_is_shutting_down ")
-                      ACE_TEXT ("on server <%C> pid <%d> prev_pid <%d> current status <%s>\n"),
+                      ACE_TEXT ("on server <%C> pid <%d> prev_pid <%d> current status <%C>\n"),
                       this, this->info_->ping_id(), this->info_->pid, this->prev_pid_, status_name (this->status_)));
     }
   this->prev_pid_ = this->info_->pid;
@@ -468,8 +468,8 @@ AsyncAccessManager::notify_child_death (int pid)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, pid = %d, status = %s ")
-                      ACE_TEXT ("this info_.pid = %d, prev_pid = %d, waiter count = %d\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, pid <%d>, status <%C> ")
+                      ACE_TEXT ("this info_.pid <%d> prev_pid <%d> waiter count <%d>\n"),
                       this, pid, status_name (status_),
                       this->info_->pid, this->prev_pid_, this->rh_list_.size() ));
     }
@@ -495,7 +495,7 @@ AsyncAccessManager::listener_disconnected (void)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::listener_disconnected,")
-                      ACE_TEXT (" this status %s\n"),
+                      ACE_TEXT (" this status <%C>\n"),
                       this, status_name (this->status_)));
     }
 
@@ -509,8 +509,8 @@ AsyncAccessManager::ping_replied (LiveStatus server)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied %s,")
-                      ACE_TEXT (" this status %s\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied <%C>,")
+                      ACE_TEXT (" this status <%C>\n"),
                       this, LiveEntry::status_name (server), status_name (this->status_)));
     }
 

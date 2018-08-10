@@ -61,8 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     CORBA::Object_var obj;
 
-    ///// Specify the relative round trip policy /////
-
+    //Specify the relative round trip policy
     if (rt_timeout_msecs > 0)
       {
         // Timeout specified in hundreds of nanoseconds which is
@@ -99,7 +98,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (max_tries > 1)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "Maximum number of tries = %d\n",
+                    "(%P|%t) Maximum number of tries = %d\n",
                     max_tries));
       }
 
@@ -121,17 +120,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (n == 0)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "ERROR: Expected number of requests from "
-                           "server to by > 0\n"),
+                           "(%P|%t) ERROR: Expected number of requests from "
+                           "server to be > 0\n"),
                           -1);
       }
-
+    else
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "(%P|%t) Client got back <%d>\n",
+                    n));
+      }
 
     return 0;
 
   }
   catch(const CORBA::Exception& ex) {
-    ex._tao_print_exception ("client:");
+    ex._tao_print_exception ("Client:");
   }
 
   return -1;

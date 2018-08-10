@@ -1338,7 +1338,8 @@ ImR_Locator_i::server_is_running
           if (ImR_Locator_i::debug () > 4)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) ImR_Locator_i::server_is_running aam is not nil\n")));
+                              ACE_TEXT ("(%P|%t) ImR_Locator_i::server_is_running <%C> aam is not nil\n"),
+                              id));
             }
           aam->server_is_running (partial_ior, srvobj.in());
         }
@@ -1347,7 +1348,8 @@ ImR_Locator_i::server_is_running
           if (ImR_Locator_i::debug () > 4)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) ImR_Locator_i::server_is_running aam is nil\n")));
+                              ACE_TEXT ("(%P|%t) ImR_Locator_i::server_is_running <<%C>> aam is nil\n"),
+                              id));
             }
           if (!info->is_mode(ImplementationRepository::PER_CLIENT))
             {
