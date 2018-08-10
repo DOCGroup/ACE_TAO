@@ -776,7 +776,7 @@ AccessLiveListener::~AccessLiveListener (void)
 bool
 AccessLiveListener::start (void)
 {
-  bool started = this->per_client_ ?
+  bool const started = this->per_client_ ?
     this->pinger_.add_per_client_listener (this, srv_ref_.in()) :
     this->pinger_.add_listener (this);
   if (!started)

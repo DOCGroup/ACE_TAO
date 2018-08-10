@@ -563,12 +563,12 @@ ImR_Locator_i::spawn_pid
                     pid, name));
 
   UpdateableServerInfo info(this->repository_, name);
-  if (! info.null ())
+  if (!info.null ())
     {
       if (debug_ > 4)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) ImR: Spawn_pid prev pid was %d becoming %d\n"),
+                          ACE_TEXT ("(%P|%t) ImR: Spawn_pid prev pid was <%d> becoming <%d>\n"),
                           info.edit ()->active_info ()->pid, pid));
         }
 
@@ -588,7 +588,8 @@ ImR_Locator_i::spawn_pid
     {
       if (debug_ > 1)
         ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) ImR: Failed to find server in repository.\n")));
+                        ACE_TEXT ("(%P|%t) ImR: Failed to find server <%C> in repository\n"),
+                        name));
     }
   this->pinger_.set_pid (name, pid);
 

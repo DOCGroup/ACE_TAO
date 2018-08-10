@@ -894,7 +894,7 @@ LiveCheck::remove_server (const char *server, int pid)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
-                          ACE_TEXT ("pid %d does not match entry\n"),
+                          ACE_TEXT ("pid <%d> does not match entry\n"),
                           server, pid));
         }
     }
@@ -915,7 +915,7 @@ LiveCheck::remove_deferred_servers (void)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_entries ")
-                          ACE_TEXT ("removing %s\n"), (*re).c_str()));
+                          ACE_TEXT ("removing <%C>\n"), (*re).c_str()));
         }
       LiveEntry *entry = 0;
       int const result = entry_map_.unbind (*re, entry);
