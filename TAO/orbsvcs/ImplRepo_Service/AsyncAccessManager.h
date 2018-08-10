@@ -59,6 +59,7 @@ class Locator_Export AsyncAccessManager
   void started_running (void);
 
   bool is_terminating (void) const;
+  bool is_running (void) const;
   bool has_server (const char *name) const ;
   void remote_state (ImplementationRepository::AAM_Status s);
 
@@ -79,10 +80,10 @@ class Locator_Export AsyncAccessManager
   void _remove_ref (void);
   static const char *status_name (ImplementationRepository::AAM_Status s);
   static bool is_final (ImplementationRepository::AAM_Status s);
-  void report (void) const;
   void update_prev_pid (void);
 
  private:
+  void report (const char* operation) const;
   void final_state (bool active = true);
   void notify_waiters (void);
   void status (ImplementationRepository::AAM_Status s);

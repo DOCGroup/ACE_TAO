@@ -26,9 +26,7 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server <%C> pid <%d> status <%C>\n"),
-                      this, info->ping_id (), info->pid, status_name (this->status_)));
+      this->report ("AsyncAccessManager");
     }
   this->prev_pid_ = info_->pid;
 }
@@ -37,9 +35,7 @@ AsyncAccessManager::~AsyncAccessManager (void)
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::dtor server <%C> status <%C>\n"),
-                      this, info_->ping_id (), status_name (this->status_)));
+      this->report ("~AsyncAccessManager");
     }
 }
 
@@ -48,9 +44,7 @@ AsyncAccessManager::started_running (void)
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::started_running server <%C> pid <%d> status <%C>\n"),
-                      this, info_->ping_id (), info_->pid, status_name (this->status_)));
+      this->report ("started_running");
     }
 
   this->update_status(ImplementationRepository::AAM_SERVER_STARTED_RUNNING);
@@ -64,17 +58,29 @@ AsyncAccessManager::is_terminating (void) const
 }
 
 bool
+AsyncAccessManager::is_running (void) const
+{
+  if (ImR_Locator_i::debug () > 4)
+    {
+      this->report ("is_running()");
+    }
+
+  return this->info_->is_running ();
+}
+
+bool
 AsyncAccessManager::has_server (const char *s) const
 {
   return ACE_OS::strcmp (this->info_->ping_id (), s) == 0;
 }
 
 void
-AsyncAccessManager::report (void) const
+AsyncAccessManager::report (const char* operation) const
 {
+  const Server_Info* si = info_.operator->();
   ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) AsyncAccessManager(%@) - Server <%C> pid <%d> lastpid <%d> status <%C> waiters <%d>\n"),
-                  this, info_->ping_id (), info_->pid, this->prev_pid_, status_name (this->status_), this->rh_list_.size()));
+                  ACE_TEXT ("(%P|%t) AsyncAccessManager(%@:%@)::%C - Server <%C> pid <%d> lastpid <%d> status <%C> running <%d> waiters <%d>\n"),
+                  this, si, operation, info_->ping_id (), info_->pid, this->prev_pid_, status_name (this->status_), info_->is_running(), this->rh_list_.size()));
 }
 
 void
@@ -103,9 +109,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
 
   if (ImR_Locator_i::debug () > 4)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::add_interest server <%C> status <%C>\n"),
-                      this, info_->ping_id (), status_name (this->status_)));
+      this->report ("add_interest");
     }
 
   this->info_.notify_remote_access (this->status_);
@@ -371,10 +375,7 @@ AsyncAccessManager::activator_replied (bool success, int pid)
         {
           if (ImR_Locator_i::debug () > 4)
             {
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::activator_replied with ")
-                              ACE_TEXT ("pid <%d> this pid <%d> status <%C>\n"),
-                              this, pid, this->info_->pid, status_name (this->status_)));
+              this->report ("activator_replied");
             }
           this->update_status (ImplementationRepository::AAM_SERVER_READY);
           this->info_.edit()->pid = pid;
@@ -393,10 +394,7 @@ AsyncAccessManager::shutdown_initiated (void)
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::shutdown_initiated ")
-                      ACE_TEXT ("on server <%C> pid <%d> current status <%C>\n"),
-                      this, this->info_->ping_id(), this->info_->pid, status_name (this->status_)));
+      this->report ("shutdown_initiated");
     }
   this->prev_pid_ = this->info_->pid;
   this->status (ImplementationRepository::AAM_ACTIVE_TERMINATE);
@@ -413,10 +411,7 @@ AsyncAccessManager::server_is_shutting_down (void)
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::server_is_shutting_down ")
-                      ACE_TEXT ("on server <%C> pid <%d> prev_pid <%d> current status <%C>\n"),
-                      this, this->info_->ping_id(), this->info_->pid, this->prev_pid_, status_name (this->status_)));
+      this->report ("server_is_shutting_down");
     }
   this->prev_pid_ = this->info_->pid;
   this->status (ImplementationRepository::AAM_SERVER_DEAD);
@@ -429,10 +424,7 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::server_is_running ")
-                      ACE_TEXT("for server <%C> pid <%d> prev_pid <%d> current status <%C>\n"),
-                      this, this->info_->ping_id(), this->info_->pid, this->prev_pid_, status_name (this->status_)));
+      this->report ("server_is_running");
     }
 
   this->update_status (ImplementationRepository::AAM_WAIT_FOR_ALIVE);
@@ -500,10 +492,7 @@ AsyncAccessManager::listener_disconnected (void)
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::listener_disconnected,")
-                      ACE_TEXT (" this status <%C>\n"),
-                      this, status_name (this->status_)));
+      this->report ("listener_disconnected");
     }
 
   this->status (ImplementationRepository::AAM_SERVER_DEAD);
@@ -586,7 +575,7 @@ AsyncAccessManager::send_start_request (void)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, manual_start_ %d\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, manual_start <%d>\n"),
                       this, this->manual_start_));
     }
 

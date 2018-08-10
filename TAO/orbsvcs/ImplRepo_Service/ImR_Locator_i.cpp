@@ -1340,9 +1340,7 @@ ImR_Locator_i::server_is_running
           this->pinger_.add_server (info->ping_id(), true, srvobj.in());
         }
 
-      // In case of a per client activation there could be multiple AAM for a specific server (ping_id)
-      // we need to make sure we take an AAM that has a wait for running state
-      AsyncAccessManager_ptr aam(this->find_aam (info->ping_id ()));
+      AsyncAccessManager_ptr aam(this->find_aam (info->ping_id ());)
       if (!aam.is_nil())
         {
           if (ImR_Locator_i::debug () > 4)
@@ -1708,6 +1706,20 @@ ImR_Locator_i::find_aam (const char *name, bool active)
   for (AAM_Set::ITERATOR i = set.begin(); i != set.end(); ++i)
     {
       if ((*i)->has_server (name))
+        {
+          return (*i)->_add_ref();
+        }
+    }
+  return 0;
+}
+
+AsyncAccessManager *
+ImR_Locator_i::find_not_running_aam (const char *name, bool active)
+{
+  AAM_Set &set = active ? this->aam_active_ : this->aam_terminating_;
+  for (AAM_Set::ITERATOR i = set.begin(); i != set.end(); ++i)
+    {
+      if ((*i)->has_server (name) && (!(*i)->is_running ()))
         {
           return (*i)->_add_ref();
         }
