@@ -103,6 +103,11 @@ class Locator_Export AsyncAccessManager
   int refcount_;
   TAO_SYNCH_MUTEX lock_;
   int prev_pid_;
+
+  /// The cached server object in case this is a per client activated AAM
+  ImplementationRepository::ServerObject_var server_;
+  /// Current endpoint used by the server in case this is a per client activated AAM
+  ACE_CString partial_ior_;
 };
 
 typedef TAO_Intrusive_Ref_Count_Handle<AsyncAccessManager> AsyncAccessManager_ptr;

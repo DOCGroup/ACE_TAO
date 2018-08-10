@@ -243,8 +243,7 @@ sub scale_clients_test
     ##### Stop clients #####
     print STDERR "Waiting for clients to stop\n";
     for(my $i = 0; $i < $clients_count; $i++ ) {
-        my $CLI_status = $CLI[$i]->WaitKill ($cli[$i]->ProcessStartWaitInterval() +
-              $server_init_delay + $server_reply_delay);
+        my $CLI_status = $CLI[$i]->WaitKill ($cli[$i]->ProcessStartWaitInterval() + $server_init_delay + $server_reply_delay);
         if ($CLI_status != 0) {
             print STDERR "ERROR: Client $i returned $CLI_status\n";
             return 1;
@@ -256,13 +255,15 @@ sub scale_clients_test
     $srv->DeleteFile ($status_file_name);
 
     # Shutting down any server object within the server will shutdown the whole server
-    $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-       "shutdown $objprefix");
-    print ">>> " . $TI->CommandLine () . "\n";
-    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-    if ($TI_status != 0) {
-      print STDERR "ERROR: tao_imr shutdown returned $TI_status\n";
-      $status = 1;
+    # This can not be done with per client activation mode
+    if ($activationmode != "per_client") {
+      $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile shutdown $objprefix");
+      print ">>> " . $TI->CommandLine () . "\n";
+      $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+      if ($TI_status != 0) {
+        print STDERR "ERROR: tao_imr shutdown returned $TI_status\n";
+        $status = 1;
+      }
     }
 
     my $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());

@@ -60,12 +60,14 @@ AsyncAccessManager::is_terminating (void) const
 bool
 AsyncAccessManager::is_running (void) const
 {
-  if (ImR_Locator_i::debug () > 4)
+  if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
     {
-      this->report ("is_running()");
+      return !CORBA::is_nil (this->server_.in());
     }
-
-  return this->info_->is_running ();
+  else
+    {
+      return this->info_->is_running ();
+    }
 }
 
 bool
@@ -80,7 +82,7 @@ AsyncAccessManager::report (const char* operation) const
   const Server_Info* si = info_.operator->();
   ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) AsyncAccessManager(%@:%@)::%C - Server <%C> pid <%d> lastpid <%d> status <%C> running <%d> waiters <%d>\n"),
-                  this, si, operation, info_->ping_id (), info_->pid, this->prev_pid_, status_name (this->status_), info_->is_running(), this->rh_list_.size()));
+                  this, si, operation, info_->ping_id (), info_->pid, this->prev_pid_, status_name (this->status_), this->is_running(), this->rh_list_.size()));
 }
 
 void
@@ -247,7 +249,14 @@ AsyncAccessManager::notify_waiters (void)
         {
           if (this->status_ == ImplementationRepository::AAM_SERVER_READY)
             {
-              rh->send_ior (this->info_->partial_ior.c_str());
+              if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
+                {
+                  rh->send_ior (this->partial_ior_.c_str());
+                }
+              else
+                {
+                  rh->send_ior (this->info_->partial_ior.c_str());
+                }
             }
           else
             {
@@ -424,13 +433,22 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      this->report ("server_is_running");
+      this->report ("server_is_running-start");
     }
 
   this->update_status (ImplementationRepository::AAM_WAIT_FOR_ALIVE);
-  this->info_.edit ()->partial_ior = partial_ior;
-  this->info_.edit ()->server =
-    ImplementationRepository::ServerObject::_duplicate (ref);
+  // Only when we are not using per client activation we should store the
+  // information of the started server within our repository
+  if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
+    {
+      this->partial_ior_ = partial_ior;
+      this->server_ = ImplementationRepository::ServerObject::_duplicate (ref);
+    }
+  else
+    {
+      this->info_.edit ()->partial_ior = partial_ior;
+      this->info_.edit ()->server = ImplementationRepository::ServerObject::_duplicate (ref);
+    }
 
   if (this->locator_.pinger().is_alive (this->info_->ping_id()) == LS_ALIVE)
     {
@@ -444,7 +462,7 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
       ACE_NEW (l, AccessLiveListener (this->info_->ping_id(),
                                       this,
                                       this->locator_.pinger(),
-                                      this->info_->active_info()->server.in()));
+                                      this->server_.in ()));
     }
   else
     {
@@ -458,6 +476,11 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
     {
       this->status (ImplementationRepository::AAM_SERVER_DEAD);
       this->final_state ();
+    }
+
+  if (ImR_Locator_i::debug () > 4)
+    {
+      this->report ("server_is_running-end");
     }
 }
 

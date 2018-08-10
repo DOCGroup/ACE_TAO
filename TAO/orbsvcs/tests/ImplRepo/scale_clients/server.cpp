@@ -112,14 +112,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     IORTable::Table_var table = IORTable::Table::_narrow(obj.in());
     table->bind(poa_name.c_str (), test_ior.in());
 
-    //
     // This server is now ready to run.
     // This version does not create an IOR
     // file as demonstrated in the
     // Developer's Guide.  It assumes that
     // users create IORs for the client using
     // the tao_imr utility.
-    //
     //
     // Stop discarding requests.
     mgr->activate();

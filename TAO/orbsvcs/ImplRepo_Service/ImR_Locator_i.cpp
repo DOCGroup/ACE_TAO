@@ -1332,15 +1332,23 @@ ImR_Locator_i::server_is_running
                           id, ImR_Utils::activationModeToString(info->mode ())));
         }
 
+      AsyncAccessManager_ptr aam;
       if (!info->is_mode(ImplementationRepository::PER_CLIENT))
         {
           info.edit ()->set_contact (partial_ior, sior.in(), srvobj.in());
 
           info.update_repo();
           this->pinger_.add_server (info->ping_id(), true, srvobj.in());
+
+          aam = this->find_aam (info->ping_id ());
+        }
+      else
+        {
+          // In case of a per client activation there could be multiple AAM for a specific server (ping_id)
+          // we need to make sure we take an AAM that is not running yet
+          aam = this->find_not_running_aam  (info->ping_id ());
         }
 
-      AsyncAccessManager_ptr aam(this->find_aam (info->ping_id ()));
       if (!aam.is_nil())
         {
           if (ImR_Locator_i::debug () > 4)
