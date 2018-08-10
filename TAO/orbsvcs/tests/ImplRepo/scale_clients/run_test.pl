@@ -22,6 +22,7 @@ my $server_reply_delay = 0;
 my $rt_timeout_msecs = 0;
 my $max_rt_tries = 1;
 my $asynch_loc = "";
+my $activationmode = "normal";
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
@@ -32,6 +33,10 @@ if ($#ARGV >= 0) {
       elsif ($ARGV[$i] eq "-imrdebug") {
         $i++;
         $imr_debug_level = $ARGV[$i];
+      }
+      elsif ($ARGV[$i] eq "-activationmode") {
+        $i++;
+        $activationmode = $ARGV[$i];
       }
       elsif ($ARGV[$i] eq "-clients") {
         $i++;
@@ -198,7 +203,7 @@ sub scale_clients_test
     $srv->DeleteFile ($srv_status_file);
 
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-        "add $objprefix" . " -c \"".
+        "add $objprefix" . " -a $activationmode -c \"".
         $srv_server_cmd . " ".
         "-ORBUseIMR 1 -d $server_init_delay -n $clients_count ".
         "-ORBInitRef ImplRepoService=file://$imr_imriorfile\"");
@@ -291,6 +296,7 @@ sub usage() {
       "[-max_rt_tries <max-client-requests=$max_rt_tries>] ".
       "[-no_imr] ".
       "[-imrdebug <level=$imr_debug_level>]" .
+      "[-activationmode <activationmode=$activationmode]" .
       "\n";
 }
 

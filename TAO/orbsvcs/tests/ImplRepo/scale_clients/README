@@ -4,7 +4,8 @@ to a server registered with the ImplRepo and launched using the activator.
 1. Syntax
 
 run_test.pl [-clients <num>]
-      [-imrdebug <level>
+      [-imrdebug <level>]
+      [-activationmode <mode>]
       [-msecs_between_clients <msecs>]
       [-server_init_delay <seconds>]
       [-server_reply_delay <seconds>]
@@ -19,6 +20,9 @@ run_test.pl [-clients <num>]
 
 - imrdebug <level>
         The debug level for the ImR Locator/Activator, default of 1
+
+- activationmode <mode>
+        The server activation mode, normal|manual|per_client|auto_start
 
 - msecs_between_clients <msecs>
         The number of milliseconds to wait between client spawns.
