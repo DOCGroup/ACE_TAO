@@ -142,13 +142,13 @@ class AccessLiveListener : public LiveListener
 {
  public:
   AccessLiveListener (const char * server,
-                     AsyncAccessManager *aam,
-                     LiveCheck &pinger,
-                     ImplementationRepository::ServerObject_ptr ref);
+                      AsyncAccessManager *aam,
+                      LiveCheck &pinger,
+                      ImplementationRepository::ServerObject_ptr ref);
 
   AccessLiveListener (const char * server,
-                     AsyncAccessManager *aam,
-                     LiveCheck &pinger);
+                      AsyncAccessManager *aam,
+                      LiveCheck &pinger);
 
   virtual ~AccessLiveListener (void);
   bool start (void);

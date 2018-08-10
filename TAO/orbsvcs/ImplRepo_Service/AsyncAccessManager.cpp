@@ -742,8 +742,8 @@ ActivatorReceiver::kill_server_excep (Messaging::ExceptionHolder * )
 //---------------------------------------------------------------------------
 
 AccessLiveListener::AccessLiveListener (const char *server,
-                                      AsyncAccessManager *aam,
-                                      LiveCheck &pinger)
+                                        AsyncAccessManager *aam,
+                                        LiveCheck &pinger)
   :LiveListener (server),
    aam_ (aam->_add_ref ()),
    pinger_ (pinger),
@@ -754,9 +754,9 @@ AccessLiveListener::AccessLiveListener (const char *server,
 }
 
 AccessLiveListener::AccessLiveListener (const char *server,
-                                      AsyncAccessManager *aam,
-                                      LiveCheck &pinger,
-                                      ImplementationRepository::ServerObject_ptr ref)
+                                        AsyncAccessManager *aam,
+                                        LiveCheck &pinger,
+                                        ImplementationRepository::ServerObject_ptr ref)
   :LiveListener (server),
    aam_ (aam->_add_ref ()),
    pinger_ (pinger),
