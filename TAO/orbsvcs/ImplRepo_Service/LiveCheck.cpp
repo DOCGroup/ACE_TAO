@@ -942,7 +942,7 @@ LiveCheck::add_per_client_listener (LiveListener *l,
     return false;
 
   LiveEntry *entry = 0;
-  ACE_NEW_RETURN (entry, LiveEntry (this, 0, true, ref), false);
+  ACE_NEW_RETURN (entry, LiveEntry (this, l->server (), true, ref), false);
 
   if (this->per_client_.insert_tail(entry) == 0)
     {
