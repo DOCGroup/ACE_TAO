@@ -135,7 +135,6 @@ private:
   PortableServer::POA_var poa_;
 };
 
-
 //----------------------------------------------------------------------------
 
 class AccessLiveListener : public LiveListener
@@ -162,9 +161,5 @@ class AccessLiveListener : public LiveListener
   bool per_client_;
   ImplementationRepository::ServerObject_var srv_ref_;
 };
-
-
-
-
 
 #endif /* IMR_ASYNCACCESSMANGER_H_  */

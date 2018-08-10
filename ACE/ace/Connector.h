@@ -70,7 +70,7 @@ public:
 
   /// Close up and return underlying SVC_HANDLER through @c sh.
   /**
-   * If the return value is true the close was performed succesfully,
+   * If the return value is true the close was performed successfully,
    * implying that this object was removed from the reactor and thereby
    * (by means of reference counting decremented to 0) deleted.
    * If the return value is false, the close was not successful.

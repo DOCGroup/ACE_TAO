@@ -536,7 +536,7 @@ ImR_Activator_i::start_server(const char* name,
       if (debug_ > 1)
         {
           ORBSVCS_DEBUG((LM_DEBUG,
-                         "(%P|%t) ImR Activator: register death handler for server <%C> pid <%d>\n",
+                         "(%P|%t) ImR Activator: Register death handler for server <%C> pid <%d>\n",
                          name,
                          static_cast<int> (pid)));
         }

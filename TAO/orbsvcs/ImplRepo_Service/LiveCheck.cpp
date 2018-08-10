@@ -490,7 +490,7 @@ PingReceiver::cancel (void)
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      const char *server = "<not available>";
+      const char *server = "not available";
       if (this->entry_ != 0)
         {
           server = this->entry_->server_name ();
