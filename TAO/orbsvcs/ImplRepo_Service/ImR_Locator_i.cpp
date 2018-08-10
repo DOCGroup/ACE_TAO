@@ -1340,7 +1340,7 @@ ImR_Locator_i::server_is_running
           this->pinger_.add_server (info->ping_id(), true, srvobj.in());
         }
 
-      AsyncAccessManager_ptr aam(this->find_aam (info->ping_id ());)
+      AsyncAccessManager_ptr aam(this->find_aam (info->ping_id ()));
       if (!aam.is_nil())
         {
           if (ImR_Locator_i::debug () > 4)
