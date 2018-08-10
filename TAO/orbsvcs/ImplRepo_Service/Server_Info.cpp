@@ -119,6 +119,12 @@ Server_Info::is_mode (ImplementationRepository::ActivationMode m) const
   return this->active_info ()->activation_mode_ == m;
 }
 
+ImplementationRepository::ActivationMode
+Server_Info::mode (void) const
+{
+  return this->active_info ()->activation_mode_;
+}
+
 bool
 Server_Info::has_peer (const char *name) const
 {

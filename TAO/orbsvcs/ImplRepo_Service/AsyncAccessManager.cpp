@@ -67,7 +67,7 @@ AsyncAccessManager::report (void)
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) AsyncAccessManager(%@) - Server <%C> pid <%d> lastpid <%d> status <%C> waiters <%d>\n"),
-                  this, info_->ping_id (), info_->pid, this->prev_pid_, status_name (this->status_), this->rh_list_ .size()));
+                  this, info_->ping_id (), info_->pid, this->prev_pid_, status_name (this->status_), this->rh_list_.size()));
 }
 
 void
@@ -424,8 +424,9 @@ AsyncAccessManager::server_is_running (const char *partial_ior,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::server_is_running\n"),
-                      this));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::server_is_running ")
+                      ACE_TEXT("for server <%C> pid <%d> prev_pid <%d> current status <%C>\n"),
+                      this, this->info_->ping_id(), this->info_->pid, this->prev_pid_, status_name (this->status_)));
     }
 
   this->update_status (ImplementationRepository::AAM_WAIT_FOR_ALIVE);

@@ -182,7 +182,7 @@ sub scale_clients_test
         return 1;
     }
 
-    $ACT->Arguments ("-d $imr_debug_level -l -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
+    $ACT->Arguments ("-d $imr_debug_level -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
     print ">>> " . $ACT->CommandLine () . "\n";
 
     $ACT_status = $ACT->Spawn ();

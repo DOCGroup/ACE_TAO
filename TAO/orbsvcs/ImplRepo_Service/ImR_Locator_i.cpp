@@ -559,7 +559,7 @@ ImR_Locator_i::spawn_pid
  const char* name, CORBA::Long pid)
 {
   if (debug_ > 1)
-    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Server[%d] spawned <%C>.\n"),
+    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Server<%d> spawned <%C>.\n"),
                     pid, name));
 
   UpdateableServerInfo info(this->repository_, name);
@@ -1325,6 +1325,13 @@ ImR_Locator_i::server_is_running
     }
   else
     {
+      if (ImR_Locator_i::debug () > 4)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) ImR_Locator_i::server_is_running <%C> has mode <%C>\n"),
+                          id, ImR_Utils::activationModeToString(info->mode ())));
+        }
+
       if (!info->is_mode(ImplementationRepository::PER_CLIENT))
         {
           info.edit ()->set_contact (partial_ior, sior.in(), srvobj.in());
@@ -1349,7 +1356,7 @@ ImR_Locator_i::server_is_running
           if (ImR_Locator_i::debug () > 4)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) ImR_Locator_i::server_is_running <<%C>> aam is nil\n"),
+                              ACE_TEXT ("(%P|%t) ImR_Locator_i::server_is_running <%C> aam is nil\n"),
                               id));
             }
           if (!info->is_mode(ImplementationRepository::PER_CLIENT))
@@ -1715,9 +1722,7 @@ ImR_Locator_i::create_aam (UpdateableServerInfo &info, bool running)
     {
       aam->started_running ();
     }
-  {
-    this->aam_active_.insert_tail (aam);
-  }
+  this->aam_active_.insert_tail (aam);
   return aam._retn ();
 }
 
