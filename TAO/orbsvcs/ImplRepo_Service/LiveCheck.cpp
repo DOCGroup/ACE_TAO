@@ -35,7 +35,7 @@ LiveListener::_add_ref (void)
   if (ImR_Locator_i::debug () > 5)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("LiveListener::add_ref, %C, count = %d\n"),
+                      ACE_TEXT ("(%P|%t) LiveListener::add_ref <%C> count <%d>\n"),
                       server_.c_str(), refcount_));
     }
   return this;
@@ -51,7 +51,7 @@ LiveListener::_remove_ref (void)
     if (ImR_Locator_i::debug () > 5)
       {
         ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT  ("LiveListener::remove_ref, %C, count = %d\n"),
+                        ACE_TEXT  ("(%P|%t) LiveListener::remove_ref <%C> count <%d>\n"),
                         server_.c_str(), count));
       }
   }
@@ -146,7 +146,7 @@ LiveEntry::LiveEntry (LiveCheck *owner,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server <%C>, may_ping <%d>\n"),
+                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server <%C> may_ping <%d>\n"),
                       server, may_ping));
     }
 }
@@ -186,7 +186,8 @@ LiveEntry::remove_listener (LiveListener *ll)
   if (ImR_Locator_i::debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::remove_listener, result = %d\n"),
+                      ACE_TEXT ("(%P|%t) LiveEntry::remove_listener server <%C> result <%d?\n"),
+                      this->server_.c_str(),
                       result));
     }
 }
@@ -206,8 +207,8 @@ LiveEntry::reset_status (void)
   if (ImR_Locator_i::debug () > 2)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::reset_status this = %x, ")
-                      ACE_TEXT ("server = %C status = %s\n"),
+                      ACE_TEXT ("(%P|%t) LiveEntry::reset_status this <%x>, ")
+                      ACE_TEXT ("server <%C> status <%s>\n"),
                       this, this->server_.c_str(),
                       status_name (this->liveliness_)));
     }
@@ -486,7 +487,7 @@ PingReceiver::cancel (void)
           server = this->entry_->server_name ();
         }
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) PingReceiver::cancel server = <%C>\n"),
+                      ACE_TEXT ("(%P|%t) PingReceiver::cancel server <%C>\n"),
                       server));
     }
 
@@ -501,7 +502,7 @@ PingReceiver::cancel (void)
       if (ImR_Locator_i::debug () > 4)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) PingReceiver::cancel caught %C\n"),
+                          ACE_TEXT ("(%P|%t) PingReceiver::cancel caught <%C>\n"),
                           ex._name ()));
         }
     }

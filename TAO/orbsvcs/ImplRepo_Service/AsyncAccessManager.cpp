@@ -389,7 +389,7 @@ AsyncAccessManager::shutdown_initiated (void)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::shutdown_initiated ")
-                      ACE_TEXT ("on server <%C> pid=%d current status = %s\n"),
+                      ACE_TEXT ("on server <%C> pid <%d> current status <%s>\n"),
                       this, this->info_->ping_id(), this->info_->pid, status_name (this->status_)));
     }
   this->prev_pid_ = this->info_->pid;
@@ -409,7 +409,7 @@ AsyncAccessManager::server_is_shutting_down (void)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::server_is_shutting_down ")
-                      ACE_TEXT ("on server <%C> pid = %d prev_pid = %d, current status = %s\n"),
+                      ACE_TEXT ("on server <%C> pid <%d> prev_pid <%d> current status <%s>\n"),
                       this, this->info_->ping_id(), this->info_->pid, this->prev_pid_, status_name (this->status_)));
     }
   this->prev_pid_ = this->info_->pid;

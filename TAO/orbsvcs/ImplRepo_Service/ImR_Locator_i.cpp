@@ -779,20 +779,20 @@ ImR_Locator_i::add_or_update_server
     }
 
   if (debug_ > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Add/Update server <%C>.\n"), server));
+    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Add/Update server <%C>\n"), server));
 
   UpdateableServerInfo info(this->repository_, server);
   if (info.null ())
     {
       if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Adding server <%C>.\n"), server));
+        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Adding server <%C>\n"), server));
 
       this->repository_->add_server (server, options);
     }
   else
     {
       if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Updating server <%C>.\n"),
+        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Updating server <%C>\n"),
                         server));
 
       info.edit ()->update_options (options);
@@ -803,12 +803,11 @@ ImR_Locator_i::add_or_update_server
     {
       // Note : The info var may be null, so we use options.
       ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Server: %C\n")
-                      ACE_TEXT ("\tActivator: %C\n")
-                      ACE_TEXT ("\tCommand Line: %C\n")
-                      ACE_TEXT ("\tWorking Directory: %C\n")
-                      ACE_TEXT ("\tActivation: %C\n")
-                      ACE_TEXT ("\tStart Limit: %d\n")
-                      ACE_TEXT ("\n"),
+                      ACE_TEXT ("\tActivator: <%C>\n")
+                      ACE_TEXT ("\tCommand Line: <%C>\n")
+                      ACE_TEXT ("\tWorking Directory: <%C>\n")
+                      ACE_TEXT ("\tActivation: <%C>\n")
+                      ACE_TEXT ("\tStart Limit: <%d>\n"),
                       server,
                       options.activator.in (),
                       options.command_line.in (),
@@ -818,7 +817,7 @@ ImR_Locator_i::add_or_update_server
                       ));
 
       for (CORBA::ULong i = 0; i < options.environment.length (); ++i)
-        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Environment variable %C=%C\n"),
+        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("Environment variable <%C>=<%C>\n"),
                         options.environment[i].name.in (),
                         options.environment[i].value.in ()));
     }
@@ -1269,7 +1268,7 @@ ImR_Locator_i::server_is_running
   if (debug_ > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) ImR: Server <%C> is running at <%C>.\n"),
+                      ACE_TEXT ("(%P|%t) ImR: Server <%C> is running at <%C>\n"),
                       id, partial_ior));
     }
   CORBA::String_var sior = orb_->object_to_string (server_object);
@@ -1277,7 +1276,7 @@ ImR_Locator_i::server_is_running
   if (debug_ > 1)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) ImR: Server <%C> callback at <%C>.\n"),
+                      ACE_TEXT ("(%P|%t) ImR: Server <%C> callback at <%C>\n"),
                       id, sior.in ()));
     }
 
@@ -1294,7 +1293,7 @@ ImR_Locator_i::server_is_running
       if (debug_ > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) ImR: Auto adding NORMAL server <%C>.\n"),
+                          ACE_TEXT ("(%P|%t) ImR: Auto adding NORMAL server <%C>\n"),
                           id));
         }
 
@@ -1372,7 +1371,7 @@ ImR_Locator_i::server_is_shutting_down
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) ImR_Locator_i::server_is_shutting_down: ")
-                          ACE_TEXT ("Unknown server: %C\n"),
+                          ACE_TEXT ("Unknown server <%C>\n"),
                           fqname));
         }
       _tao_rh->server_is_shutting_down ();
@@ -1381,7 +1380,7 @@ ImR_Locator_i::server_is_shutting_down
 
   if (debug_ > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) ImR: Server <%C> is shutting down.\n"),
+                    ACE_TEXT ("(%P|%t) ImR: Server <%C> is shutting down\n"),
                     fqname));
 
   if (!info->is_mode(ImplementationRepository::PER_CLIENT))
@@ -1417,7 +1416,7 @@ ImR_Locator_i::find
           imr_info = si->createImRServerInfo ();
 
           if (debug_ > 1)
-            ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Found server %C.\n"), id));
+            ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Found server <%C>\n"), id));
         }
       else
         {
