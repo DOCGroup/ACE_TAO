@@ -64,7 +64,7 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
 
   if (this->opts_.debug () > 0)
     {
-      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) report_ior <%C>\n"),
+      ORBSVCS_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) ImR: report_ior <%C>\n"),
         this->imr_ior_.in ()));
     }
 
@@ -165,7 +165,7 @@ Locator_Repository::recover_ior (void)
   }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Attempting to read combined_ior for ImR_Locator\n");
+      ex._tao_print_exception ("ImR: Attempting to read combined_ior for ImR_Locator\n");
       return -1;
     }
 
@@ -282,8 +282,8 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
   if (this->opts_.debug() > 0)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t)ImR: checking reuse address ")
-                    ACE_TEXT ("for server \"%C\" ior \"%C\"\n"),
+                    ACE_TEXT ("(%P|%t) ImR: checking reuse address ")
+                    ACE_TEXT ("for server <%C> ior <%C>\n"),
                     fqname.c_str(),
                     partial_ior));
   }
@@ -314,8 +314,8 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
     if (this->opts_.debug() > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t)ImR: iterating - registered server")
-                      ACE_TEXT ("\"%C:%C\" key = <%C> ior \"%C\"\n"), info->server_id.c_str(),
+                      ACE_TEXT ("(%P|%t) ImR: iterating - registered server")
+                      ACE_TEXT ("<%C:%C> key <%C> ior <%C>\n"), info->server_id.c_str(),
                       info->poa_name.c_str (), info->key_name_.c_str(), info->partial_ior.c_str ()));
     }
     bool same_server = info->server_id == server_id;
@@ -328,7 +328,7 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
         if (this->opts_.debug() > 0)
           {
             ORBSVCS_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%P|%t)ImR: reuse address %C so remove server %C \n"),
+                            ACE_TEXT ("(%P|%t) ImR: reuse address <%C> so remove server <%C>\n"),
                             info->partial_ior.c_str (), info->poa_name.c_str ()));
           }
         imr_locator->pinger ().remove_server (info->key_name_.c_str());
@@ -474,7 +474,7 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
       if (this->opts_.debug() > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) get_active_server could not find %C\n"),
+                          ACE_TEXT ("(%P|%t) ImR: get_active_server could not find <%C>\n"),
                           name.c_str()));
         }
       si = find_by_poa (key);
@@ -508,8 +508,8 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
       if (this->opts_.debug() > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) get_active_server could not")
-                          ACE_TEXT (" find %C, %d != %d\n"),
+                          ACE_TEXT ("(%P|%t) ImR: get_active_server could not")
+                          ACE_TEXT (" find <%C>, pid <%d> != <%d>\n"),
                           name.c_str(), pid, si->pid));
         }
       si.reset ();
@@ -590,7 +590,7 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
   for (CORBA::ULong i = 0; i < p.length(); i++)
     {
       base->peers[len + i] =  p[i];
-      Server_Info *si;
+      Server_Info *si = 0;
       ACE_CString peer(p[i]);
       ACE_NEW_RETURN (si,
                       Server_Info (base->server_id, peer, base->is_jacorb, base),

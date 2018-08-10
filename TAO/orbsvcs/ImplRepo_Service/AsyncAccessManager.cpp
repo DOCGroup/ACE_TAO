@@ -27,7 +27,7 @@ AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server = %C pid = %d, %d\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ctor server <%C> pid = %d, %d\n"),
                       this, info->ping_id (), info->pid, info_->pid));
     }
   this->prev_pid_ = info_->pid;
@@ -38,7 +38,7 @@ AsyncAccessManager::~AsyncAccessManager (void)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::dtor server = %C\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::dtor server <%C>\n"),
                       this, info_->ping_id ()));
     }
 }
@@ -97,7 +97,7 @@ AsyncAccessManager::add_interest (ImR_ResponseHandler *rh, bool manual)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::add_interest status = %s\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::add_interest status <%s>\n"),
                       this,
                       status_name (this->status_)));
     }
@@ -212,7 +212,7 @@ AsyncAccessManager::final_state (bool active)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state ")
-                          ACE_TEXT ("removing this from map, server = <%C>\n"),
+                          ACE_TEXT ("removing this from map, server <%C>\n"),
                           this, info_->ping_id ()));
         }
       if (this->remove_on_death_rh_ != 0)
@@ -579,7 +579,7 @@ AsyncAccessManager::send_start_request (void)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager::send_start_request, manual_start_ %d\n"),
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, manual_start_ %d\n"),
                       this->manual_start_));
     }
 

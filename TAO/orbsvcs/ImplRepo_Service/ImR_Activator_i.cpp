@@ -97,7 +97,7 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
           if (this->debug_ > 9)
             {
               CORBA::String_var ior = orb_->object_to_string (obj.in ());
-              ORBSVCS_DEBUG((LM_DEBUG, "ImR Activator: ImplRepoService ior=<%C>\n",
+              ORBSVCS_DEBUG((LM_DEBUG, "ImR Activator: ImplRepoService ior <%C>\n",
                              ior.in()));
             }
 
@@ -471,7 +471,7 @@ ImR_Activator_i::start_server(const char* name,
       if (debug_ > 0)
         {
           ORBSVCS_DEBUG((LM_DEBUG,
-                        "ImR Activator: Unique instance already running %d\n",
+                        "ImR Activator: Unique instance already running pid <%d>\n",
                         static_cast<int> (pid)));
         }
       char reason[32];
@@ -483,7 +483,7 @@ ImR_Activator_i::start_server(const char* name,
   size_t const cmdline_buf_len = ACE_OS::strlen(cmdline);
   if (debug_ > 0)
     ORBSVCS_DEBUG((LM_DEBUG,
-                   "\tcommand line : len=%d <%C>\n\tdirectory : <%C>\n",
+                   "ImR Activator: command line : len=<%d> <%C>\n\tdirectory <%C>\n",
                    cmdline_buf_len, cmdline, dir)  );
 
   ACE_Process_Options proc_opts (
@@ -532,16 +532,15 @@ ImR_Activator_i::start_server(const char* name,
       ORBSVCS_ERROR ((LM_ERROR,
                       "ImR Activator: Cannot start server <%C> using <%C>\n", name, cmdline));
 
-      throw ImplementationRepository::CannotActivate(
-                                                     CORBA::string_dup (
-                                                                        "Process Creation Failed"));
+      throw ImplementationRepository::CannotActivate(CORBA::string_dup ("Process Creation Failed"));
     }
   else
     {
       if (debug_ > 1)
         {
           ORBSVCS_DEBUG((LM_DEBUG,
-                         "ImR Activator: register death handler for process %d\n",
+                         "ImR Activator: register death handler for server <%C> pid <%d>\n",
+                         name,
                          static_cast<int> (pid)));
         }
       this->process_map_.rebind (pid, name);
@@ -568,7 +567,7 @@ ImR_Activator_i::start_server(const char* name,
   if (debug_ > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) ImR Activator: Successfully started <%C>, pid=%d\n"),
+                      ACE_TEXT ("(%P|%t) ImR Activator: Successfully started <%C> pid <%d>\n"),
                       name, static_cast<int> (pid)));
     }
 }
@@ -579,7 +578,6 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
   // We use the process_manager so that we're notified when
   // any of our launched processes die. We notify the locator
   // when this happens.
-
   ACE_CString name;
   if (this->process_map_.find (pid, name) == 0)
     {
@@ -596,7 +594,7 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) ImR Activator: Notifying ImR that ")
-                          ACE_TEXT ("server[%d], <%C> has exited.\n"),
+                          ACE_TEXT ("server <%C> pid <%d> has exited.\n"),
                           static_cast<int> (pid), name.c_str()));
         }
       try
@@ -608,8 +606,10 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
           if (debug_ > 1)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) ImR Activator: caught <%C> from locator::child_death_pid\n"),
-                              ex._name()));
+                              ACE_TEXT ("(%P|%t) ImR Activator: caught <%C> from locator::child_death_pid for server <%C> pid <%d>\n"),
+                              ex._name(),
+                              name.c_str (),
+                              static_cast<int> (pid)));
             }
         }
     }
@@ -632,7 +632,7 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
     {
       ACE_Reactor *r = this->orb_->orb_core()->reactor();
       ACE_Time_Value dtv (0, this->induce_delay_ * 1000);
-      pid_t pid = process->getpid();
+      pid_t const pid = process->getpid();
       Act_token_type token = static_cast<Act_token_type>(pid);
       r->schedule_timer (this, reinterpret_cast<void *>(token), dtv );
     }

@@ -146,7 +146,7 @@ LiveEntry::LiveEntry (LiveCheck *owner,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server = <%C>, may_ping = %d\n"),
+                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server <%C>, may_ping <%d>\n"),
                       server, may_ping));
     }
 }
@@ -289,7 +289,7 @@ LiveEntry::status (LiveStatus l)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::status change, ")
-                          ACE_TEXT ("server = %C status = %s\n"),
+                          ACE_TEXT ("server <%C> status <%s>\n"),
                           this->server_.c_str(),
                           status_name (this->liveliness_)));
         }
@@ -339,7 +339,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                          ACE_TEXT ("= %s, listeners = %d server %C\n"),
+                          ACE_TEXT ("<%s>, listeners <%d> server <%C>\n"),
                           status_name (this->liveliness_), this->listeners_.size (),
                           this->server_.c_str()));
         }
@@ -359,8 +359,8 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
-                          ACE_TEXT ("status = %s, listeners = %d, ")
-                          ACE_TEXT ("msec = %d server %C\n"),
+                          ACE_TEXT ("status <%s>, listeners <%d>, ")
+                          ACE_TEXT ("msec <%d> server <%C>\n"),
                           status_name (this->liveliness_), this->listeners_.size (),
                           msec, this->server_.c_str()));
         }
@@ -395,8 +395,8 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
               {
                 ORBSVCS_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
-                                ACE_TEXT ("transient, reping in %d ms, ")
-                                ACE_TEXT ("server %C\n"),
+                                ACE_TEXT ("transient, reping in <%d> ms, ")
+                                ACE_TEXT ("server <%C>\n"),
                                 ms, this->server_.c_str()));
               }
           }
@@ -412,7 +412,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
                 ORBSVCS_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
                                 ACE_TEXT ("transient, no more repings, ")
-                                ACE_TEXT ("server %C\n"),
+                                ACE_TEXT ("server <%C>\n"),
                                 this->server_.c_str()));
               }
             if (this->listeners_.size() > 0)
@@ -456,7 +456,7 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
-                          ACE_TEXT ("sendc_ping threw %C\n"), ex._name()));
+                          ACE_TEXT ("sendc_ping threw <%C>\n"), ex._name()));
         }
       this->status (LS_DEAD);
     }
@@ -515,7 +515,7 @@ PingReceiver::ping (void)
       if (ImR_Locator_i::debug () > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) PingReceiver::ping received from %C\n"),
+                          ACE_TEXT ("(%P|%t) PingReceiver::ping received from <%C>\n"),
                           this->entry_->server_name ()));
         }
       this->entry_->release_callback ();
@@ -534,7 +534,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
       if (ImR_Locator_i::debug () > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) PingReceiver::ping_excep received from %C\n"),
+                          ACE_TEXT ("(%P|%t) PingReceiver::ping_excep received from <%C>\n"),
                           this->entry_->server_name ()));
         }
       excep_holder->raise_exception ();
