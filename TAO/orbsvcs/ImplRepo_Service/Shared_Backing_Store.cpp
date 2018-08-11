@@ -122,7 +122,7 @@ namespace {
 
     void lock (void)
     {
-#if defined (ACE_WIN32)
+#if !defined (ACE_WIN32)
       if (this->locked_)
         return;
 
