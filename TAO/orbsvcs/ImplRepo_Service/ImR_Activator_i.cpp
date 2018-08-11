@@ -592,7 +592,7 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) ImR Activator: Notifying ImR that ")
                           ACE_TEXT ("server <%C> pid <%d> has exited.\n"),
-                          static_cast<int> (pid), name.c_str()));
+                          name.c_str(), static_cast<int> (pid)));
         }
       try
         {
