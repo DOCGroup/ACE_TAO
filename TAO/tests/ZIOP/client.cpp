@@ -211,7 +211,7 @@ check_results (CORBA::ORB_ptr orb)
                              ACE_TEXT ("LZO Compressor\n")),
                             1);
         }
-      catch (::Compression::UnknownCompressorId)
+      catch (const ::Compression::UnknownCompressorId&)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("check_results, expected exception caught, ")
