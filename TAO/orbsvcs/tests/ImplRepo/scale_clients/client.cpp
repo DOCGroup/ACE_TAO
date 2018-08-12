@@ -12,11 +12,12 @@ int request_delay_secs = 0;
 // 0 Indicates don't apply RT timeout policy
 long rt_timeout_msecs = 0;
 int max_tries = 1;
+long shutdown_server = 0;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:r:m:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("d:r:m:x:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -34,6 +35,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
         max_tries = ACE_OS::atoi(get_opts.opt_arg ());
         break;
 
+      case 'x':
+        shutdown_server = ACE_OS::atoi(get_opts.opt_arg ());
+        break;
+
+
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -41,6 +47,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "-d <request delay in seconds> "
                            "-r <round trip timeout in milliseconds> "
                            "-m <max tries if RT timeout failures> "
+                           "-x <shutdown server at end of client>"
                            "\n",
                            argv [0]),
                           -1);
@@ -130,6 +137,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     "(%P|%t) Client got back <%d>\n",
                     n));
       }
+
+    // In a per client situation the client has to shutdown the server
+    if (shutdown_server)
+    {
+      test->shutdown();
+    }
+
+    orb->destroy ();
 
     return 0;
 

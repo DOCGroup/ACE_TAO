@@ -13,7 +13,7 @@
 class  Test_i : public virtual POA_Test
 {
 public:
-  Test_i (CORBA::Short num_requests_expected);
+  Test_i (CORBA::ORB_ptr orb, CORBA::Short num_requests_expected);
 
   virtual ~Test_i ();
 
@@ -22,7 +22,10 @@ public:
   /// Valid after shutdown () is called.
   static bool expected_requests_made ();
 
+  virtual void shutdown ();
+
 private:
+  CORBA::ORB_var orb_;
   CORBA::Short const num_requests_expected_;
   CORBA::Short num_requests_made_;
 

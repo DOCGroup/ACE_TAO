@@ -23,6 +23,7 @@ my $rt_timeout_msecs = 0;
 my $max_rt_tries = 1;
 my $asynch_loc = "";
 my $activationmode = "normal";
+my $shutdownserver = 0;
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
@@ -138,6 +139,10 @@ sub scale_clients_test
     my $result = 0;
     my $start_time = time();
 
+    if ($activationmode eq "per_client") {
+      $shutdownserver = 1;
+    }
+
     $IMR->Arguments ("-d $imr_debug_level -o $imr_imriorfile -orbendpoint iiop://:$port $asynch_loc -ORBDebugLevel $debug_level");
 
     if ($no_imr) {
@@ -197,6 +202,13 @@ sub scale_clients_test
       return 1;
     }
 
+    # In a per client mode each server should get one request, in all other
+    # modes the server gets a request for each client started
+    $expected_requests = $clients_count;
+    if ($activationmode eq "per_client") {
+      $expected_requests = 1;
+    }
+
     ##### Add server to activator #####
     my $status_file_name = $objprefix . ".status";
     my $srv_status_file = $srv->LocalFile ($status_file_name);
@@ -205,7 +217,7 @@ sub scale_clients_test
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
         "add $objprefix" . " -a $activationmode -c \"".
         $srv_server_cmd . " ".
-        "-ORBUseIMR 1 -d $server_init_delay -n $clients_count ".
+        "-ORBUseIMR 1 -d $server_init_delay -n $expected_requests ".
         "-ORBInitRef ImplRepoService=file://$imr_imriorfile\"");
 
     print ">>> " . $TI->CommandLine () . "\n";
@@ -226,6 +238,7 @@ sub scale_clients_test
 
       $CLI[$i]->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" .
             " -d $server_reply_delay".
+            " -x $shutdownserver " .
             " -r $rt_timeout_msecs".
             " -m $max_rt_tries");
       print ">>> " . $CLI[$i]->CommandLine () . "\n";
@@ -256,7 +269,7 @@ sub scale_clients_test
 
     # Shutting down any server object within the server will shutdown the whole server
     # This can not be done with per client activation mode
-    if ($activationmode != "per_client") {
+    if ($activationmode ne "per_client") {
       $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile shutdown $objprefix");
       print ">>> " . $TI->CommandLine () . "\n";
       $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());

@@ -83,7 +83,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                  poa_name.c_str ());
 
     PortableServer::Servant_var<Test_i> test_servant =
-      new Test_i(num_requests_expected);
+      new Test_i(orb.in(), num_requests_expected);
 
     PortableServer::ObjectId_var object_id =
       PortableServer::string_to_ObjectId("test_object");
@@ -137,6 +137,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     root_poa->destroy(1,1);
     orb->destroy();
 
+    ACE_DEBUG ((LM_DEBUG,
+      "(%P|%t) Server: ended <%C>\n",
+      poa_name.c_str()));
   }
   catch(const CORBA::Exception& ex) {
     ex._tao_print_exception ("Server main()");
