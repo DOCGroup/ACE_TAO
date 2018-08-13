@@ -406,7 +406,7 @@ ImR_Activator_i::still_alive (CORBA::Long pid)
 #if defined (ACE_WIN32)
   if (is_running)
     {
-      pid_t waitp = this->process_mgr_.wait (pt, ACE_Time_Value::zero);
+      pid_t const waitp = this->process_mgr_.wait (pt, ACE_Time_Value::zero);
       is_running = (waitp != pt);
     }
 #endif /* ACE_WIN32 */
