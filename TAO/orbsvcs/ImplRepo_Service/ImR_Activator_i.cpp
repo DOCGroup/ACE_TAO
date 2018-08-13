@@ -23,6 +23,7 @@ static ACE_CString getHostName ()
   return ACE_CString (host_name);
 }
 
+#if defined (ACE_WIN32)
 Active_Pid_Setter::Active_Pid_Setter(ImR_Activator_i &owner, pid_t pid)
   :owner_(owner)
 {
@@ -33,6 +34,7 @@ Active_Pid_Setter::~Active_Pid_Setter()
 {
   owner_.active_check_pid_ = ACE_INVALID_PID;
 }
+#endif /* ACE_WIN32 */
 
 ImR_Activator_i::ImR_Activator_i (void)
   : registration_token_(0)
