@@ -93,9 +93,11 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
                                       T_forany::tao_alloc ()),
                       false);
 
-      auto_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany> > replacement_safety (
-          replacement
-        );
+#if defined (ACE_HAS_CPP11)
+      std::unique_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany> > replacement_safety (replacement);
+#else
+      auto_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany> > replacement_safety (replacement);
+#endif /* ACE_HAS_CPP11 */
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =
