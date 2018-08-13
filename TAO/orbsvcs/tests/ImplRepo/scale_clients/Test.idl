@@ -2,5 +2,7 @@ interface Test
 {
   // Return the number of the server after a delay
   short get_num_requests (in short delay_secs);
+
+  oneway void shutdown();
 };
 

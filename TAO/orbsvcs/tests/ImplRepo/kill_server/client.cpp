@@ -50,10 +50,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_DEBUG ((LM_DEBUG,
                 "Client received reply from server %d\n",
                 n));
+
+    orb->destroy ();
+
     if (expect_transient)
       return -1;
     return 0;
-
   }
   catch(const CORBA::TRANSIENT& ex) {
     if (expect_transient)
