@@ -23,6 +23,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
     else
       ACE_DEBUG((LM_DEBUG, "Error: Client Expected %d = %d + 1.\n", m, n));
 
+    orb->destroy ();
+
     return 0;
   }
   catch (const CORBA::Exception& ex)
