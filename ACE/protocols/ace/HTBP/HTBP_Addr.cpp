@@ -1,3 +1,5 @@
+// $Id: HTBP_Addr.cpp 91673 2010-09-08 18:49:47Z johnnyw $
+
 #include "HTBP_Addr.h"
 #include "ace/OS_NS_string.h"
 
@@ -67,11 +69,12 @@ ACE::HTBP::Addr::addr_to_string (ACE_TCHAR buffer[],
 {
   if (this->htid_.length() == 0)
     return this->ACE_INET_Addr::addr_to_string(buffer,size,ipaddr_format);
-  if (size < htid_.length())
+  const size_t max_num = size / sizeof(ACE_TCHAR);
+  if (max_num < htid_.length() + 1) // + '\0'
     return -1;
   ACE_OS::strncpy (buffer,
                    ACE_TEXT_CHAR_TO_TCHAR(htid_.c_str()),
-                   size);
+                   htid_.length() + 1);  // + '\0'
   return 0;
 }
 
