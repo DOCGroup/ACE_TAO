@@ -67,6 +67,7 @@ ACE::HTBP::Addr::addr_to_string (ACE_TCHAR buffer[],
 {
   if (this->htid_.length() == 0)
     return this->ACE_INET_Addr::addr_to_string(buffer,size,ipaddr_format);
+  const size_t max_num = size / sizeof(ACE_TCHAR);
   if (max_num < htid_.length() + 1) // + '\0'
     return -1;
   ACE_OS::strncpy (buffer,
