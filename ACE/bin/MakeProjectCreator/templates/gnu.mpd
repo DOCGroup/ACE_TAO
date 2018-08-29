@@ -767,10 +767,10 @@ endif
 all: __postbuild__
 
 <%if(exename)%>
-__postbuild__: $(VBIN)
+__postbuild__: $(VBIN) $(INSTALL)
 <%else%>
 <%if(sharedname || staticname)%>
-__postbuild__: $(VLIBS)
+__postbuild__: $(VLIBS) $(INSTALL)
 <%endif%>
 <%endif%>
 
