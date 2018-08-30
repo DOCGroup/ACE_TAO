@@ -106,6 +106,8 @@ qt            = 0
 qt3           = 0
 // 1 - Qt4 core libraries are available
 qt4           = 0
+// Qt5
+qt5 = 0
 // 1 - Fox libraries are available
 fox           = 0
 // 1 - OpenGL libraries are available
