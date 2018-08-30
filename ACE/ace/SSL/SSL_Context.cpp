@@ -172,7 +172,11 @@ ACE_SSL_Context::ssl_library_init (void)
 
 #ifdef WIN32
       // Seed the random number generator by sampling the screen.
+# if OPENSSL_VERSION_NUMBER < 0x10100000L
       ::RAND_screen ();
+# else
+      ::RAND_poll ();
+# endif  /* OPENSSL_VERSION_NUMBER < 0x10100000L */
 #endif  /* WIN32 */
 
 #if OPENSSL_VERSION_NUMBER >= 0x00905100L
