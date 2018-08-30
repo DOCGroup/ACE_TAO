@@ -313,7 +313,6 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   int certificate_type = -1;
   int private_key_type = -1;
   int dhparams_type = -1;
-  int ec_nid = -1;
 
   int prevdebug = -1;
 
@@ -743,7 +742,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 
   if (ec_name.in() != 0)
   {
-      ec_nid = OBJ_sn2nid(ec_name.in());
+      int ec_nid = OBJ_sn2nid(ec_name.in());
 
       if (ec_nid == NID_undef)
       {
