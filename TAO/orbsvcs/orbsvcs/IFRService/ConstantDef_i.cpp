@@ -56,7 +56,7 @@ TAO_ConstantDef_i::describe_i (void)
 
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT("container_id"),
                                             container_id);
   cd.defined_in = container_id.c_str ();
 
@@ -87,7 +87,7 @@ TAO_ConstantDef_i::type_i (void)
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "type_path",
+                                            ACE_TEXT("type_path"),
                                             type_path);
 
   TAO_IDLType_i *impl = TAO_IFR_Service_Utils::path_to_idltype (type_path,
@@ -111,7 +111,7 @@ TAO_ConstantDef_i::type_def_i (void)
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "type_path",
+                                            ACE_TEXT("type_path"),
                                             type_path);
 
   CORBA::Object_var obj =
