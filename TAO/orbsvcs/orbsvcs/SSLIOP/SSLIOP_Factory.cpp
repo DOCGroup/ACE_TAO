@@ -305,6 +305,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   CORBA::String_var certificate_path;
   CORBA::String_var private_key_path;
   CORBA::String_var dhparams_path;
+  CORBA::String_var ec_name;
   CORBA::String_var ca_file;
   CORBA::String_var ca_dir;
   ACE_TCHAR *rand_path = 0;
@@ -547,6 +548,15 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         {
           this->check_host_ = true;
         }
+      else if (ACE_OS::strcasecmp(argv[curarg],
+                                  ACE_TEXT("-SSLEcName")) == 0)
+      {
+          curarg++;
+          if (curarg < argc)
+          {
+              ec_name = static_cast<const char *>(ACE_TEXT_ALWAYS_CHAR(argv[curarg]));
+          }
+      }
 
     }
 
@@ -729,6 +739,51 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
                             private_key_path.in ()));
         }
     }
+
+  if (ec_name.in() != 0)
+  {
+      int ec_nid = OBJ_sn2nid(ec_name.in());
+
+      if (ec_nid == NID_undef)
+      {
+          ORBSVCS_ERROR((LM_ERROR,
+                         ACE_TEXT("TAO (%P|%t) - Unable to obtain ")
+                         ACE_TEXT("EC NID for <%C> ")
+                         ACE_TEXT("in SSLIOP factory.\n"),
+                         ec_name.in()));
+          return -1;
+      }
+
+      EC_KEY *ecdh = EC_KEY_new_by_curve_name(ec_nid);
+      if (!ecdh)
+      {
+          ORBSVCS_ERROR((LM_ERROR,
+                         ACE_TEXT("TAO (%P|%t) - Unable to set ")
+                         ACE_TEXT("Curve Name ")
+                         ACE_TEXT("<%C> in SSLIOP factory.\n"),
+                         ec_name.in()));
+          return -1;
+      }
+
+      if (1 != ::SSL_CTX_set_tmp_ecdh(ssl_ctx->context(), ecdh))
+      {
+          ORBSVCS_ERROR((LM_ERROR,
+                         ACE_TEXT("TAO (%P|%t) - Unable to set ")
+                         ACE_TEXT("temp ECDH ")
+                         ACE_TEXT("<%C> in SSLIOP factory.\n"),
+                         ec_name.in()));
+          return -1;
+      }
+
+      if (TAO_debug_level > 0)
+      {
+          ORBSVCS_DEBUG((LM_INFO,
+                         ACE_TEXT("TAO (%P|%t) - SSLIOP set ")
+                         ACE_TEXT("EC Curve Name ")
+                         ACE_TEXT("to <%C>\n"),
+                         ec_name.in()));
+      }
+  }
 
   if (this->register_orb_initializer () != 0)
     return -1;
