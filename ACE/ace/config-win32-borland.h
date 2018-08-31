@@ -150,7 +150,7 @@
 # define ACE_LACKS_ISCTYPE
 #endif
 
-#if (__BORLANDC__ >= 0x650) && (__BORLANDC__ <= 0x730)
+#if (__BORLANDC__ >= 0x640) && (__BORLANDC__ <= 0x730)
 # define ACE_LACKS_STRTOK_R
 #endif
 
