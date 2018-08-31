@@ -47,31 +47,22 @@ public:
   virtual ~TAO_EventDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// Remove the repository entry.
-  virtual void destroy (
-    );
+  virtual void destroy ();
 
-  virtual void destroy_i (
-    );
+  virtual void destroy_i ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe (
-    );
+  virtual CORBA::Contained::Description *describe ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i (
-    );
+  virtual CORBA::Contained::Description *describe_i ();
 
-  virtual CORBA::Boolean is_a (
-      const char *event_id
-    );
+  virtual CORBA::Boolean is_a (const char *event_id);
 
-  CORBA::Boolean is_a_i (
-      const char *event_id
-    );
+  CORBA::Boolean is_a_i (const char *event_id);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

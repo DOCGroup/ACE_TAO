@@ -46,44 +46,29 @@ public:
   virtual ~TAO_UsesDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe (
-    );
+  virtual CORBA::Contained::Description *describe ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i (
-    );
+  virtual CORBA::Contained::Description *describe_i ();
 
-  virtual CORBA::InterfaceDef_ptr interface_type (
-    );
+  virtual CORBA::InterfaceDef_ptr interface_type ();
 
-  virtual void interface_type (
-      CORBA::InterfaceDef_ptr interface_type
-    );
+  virtual void interface_type (CORBA::InterfaceDef_ptr interface_type);
 
-  void interface_type_i (
-      CORBA::InterfaceDef_ptr interface_type
-    );
+  void interface_type_i (CORBA::InterfaceDef_ptr interface_type);
 
-  CORBA::InterfaceDef_ptr interface_type_i (
-    );
+  CORBA::InterfaceDef_ptr interface_type_i ();
 
-  virtual CORBA::Boolean is_multiple (
-    );
+  virtual CORBA::Boolean is_multiple ();
 
-  CORBA::Boolean is_multiple_i (
-    );
+  CORBA::Boolean is_multiple_i ();
 
-  virtual void is_multiple (
-      CORBA::Boolean is_multiple
-    );
+  virtual void is_multiple (CORBA::Boolean is_multiple);
 
-  void is_multiple_i (
-      CORBA::Boolean is_multiple
-    );
+  void is_multiple_i (CORBA::Boolean is_multiple);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

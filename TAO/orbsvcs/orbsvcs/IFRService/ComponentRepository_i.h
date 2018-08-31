@@ -67,20 +67,12 @@ public:
   virtual int create_servants_and_poas (void);
 
   /// Return one of our servants for internal use.
-  virtual TAO_IDLType_i *select_idltype (
-      CORBA::DefinitionKind def_kind
-    ) const;
-  virtual TAO_Container_i *select_container (
-      CORBA::DefinitionKind def_kind
-    ) const;
-  virtual TAO_Contained_i *select_contained (
-      CORBA::DefinitionKind def_kind
-    ) const;
+  virtual TAO_IDLType_i *select_idltype (CORBA::DefinitionKind def_kind) const;
+  virtual TAO_Container_i *select_container (CORBA::DefinitionKind def_kind) const;
+  virtual TAO_Contained_i *select_contained (CORBA::DefinitionKind def_kind) const;
 
   /// Select the right POA for object creation.
-  virtual PortableServer::POA_ptr select_poa (
-      CORBA::DefinitionKind def_kind
-    ) const;
+  virtual PortableServer::POA_ptr select_poa (CORBA::DefinitionKind def_kind) const;
 
 protected:
 
