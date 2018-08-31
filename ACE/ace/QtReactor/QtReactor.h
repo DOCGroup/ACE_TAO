@@ -42,7 +42,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * dispatcher that uses the Qt Library. This class declaration
  * also uses the extension facilities  provided by the Qt. So,
  * readers  of the class declaration should not be upset with
- * the appearence of the Keywords like Q_OBJECT, private slots
+ * the appearance of the Keywords like Q_OBJECT, private slots
  * etc. They are specific to Qt which uses these as a call back
  * methods implementation mechanism.
  *
@@ -189,7 +189,7 @@ protected:
     /// An exception notifier
     MAP exception_notifier_;
 
-    /// The timer class that would provide timer-sgnals & single-shot timers
+    /// The timer class that would provide timer-signals & single-shot timers
     QTimer *qtime_ ;
 
 private:
