@@ -58,7 +58,9 @@ static BIO_METHOD methods_ACE =
 # define BIO_set_init(b, val) b->init = val
 # define BIO_set_data(b, val) b->ptr = val
 # define BIO_set_num(b, val) b->num = val
-# define BIO_set_flags(b, val) b->flags = val
+# if !defined (BIO_set_flags)
+#  define BIO_set_flags(b, val) b->flags = val
+# endif /* !BIO_set_flags */
 # define BIO_set_shutdown(b, val) b->shutdown = val
 # define BIO_get_init(b) b->init
 # define BIO_get_data(b) b->ptr
