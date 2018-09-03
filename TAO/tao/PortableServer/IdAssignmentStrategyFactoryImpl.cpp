@@ -49,8 +49,6 @@ namespace TAO
   }
 }
 
-
-
 ACE_STATIC_SVC_DEFINE (
   IdAssignmentStrategyFactoryImpl,
   ACE_TEXT ("IdAssignmentStrategyFactory"),

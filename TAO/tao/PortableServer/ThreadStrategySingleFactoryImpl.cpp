@@ -47,7 +47,6 @@ namespace TAO
   }
 }
 
-
 ACE_STATIC_SVC_DEFINE (
   ThreadStrategySingleFactoryImpl,
   ACE_TEXT ("ThreadStrategySingleFactory"),

@@ -84,7 +84,6 @@ namespace TAO
     private:
       PortableServer::ServantBase_var default_servant_;
     };
-
   }
 }
 

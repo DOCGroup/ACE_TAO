@@ -105,7 +105,7 @@ public:
   typedef int (*name_clash_checker)(const char *);
 
   /// Convert the hex form of an 4-byte unsigned int to a string.
-  static char *int_to_string (CORBA::ULong number);
+  static ACE_TCHAR *int_to_string (CORBA::ULong number);
 
   /// The error-checking methods below all return void because
   /// they throw a spec-defined exception for every error case
@@ -183,7 +183,7 @@ public:
                                     ACE_Configuration_Section_Key &,
                                     TAO_Repository_i *);
 
-  /// Converison from IR Object reference to key location path.
+  /// Conversion from IR Object reference to key location path.
   static char *reference_to_path (CORBA::IRObject_ptr obj);
 
   /// Conversion from key location path to CORBA::DefinitionKind.

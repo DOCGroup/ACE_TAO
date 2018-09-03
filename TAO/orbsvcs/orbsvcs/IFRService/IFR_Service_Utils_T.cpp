@@ -11,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 void
-TAO_IFR_Generic_Utils<T>::destroy_special (const char *section_name,
+TAO_IFR_Generic_Utils<T>::destroy_special (const ACE_TCHAR *section_name,
                                            TAO_Repository_i *repo,
                                            ACE_Configuration_Section_Key &key)
 {
@@ -30,10 +30,10 @@ TAO_IFR_Generic_Utils<T>::destroy_special (const char *section_name,
 
   CORBA::ULong count = 0;
   repo->config ()->get_integer_value (sub_key,
-                                      "count",
+                                      ACE_TEXT("count"),
                                       count);
 
-  char *stringified = 0;
+  ACE_TCHAR *stringified = 0;
   ACE_Configuration_Section_Key special_key;
   ACE_TString holder;
 
@@ -67,11 +67,11 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
 
   ACE_Configuration_Section_Key initializers_key;
   config->open_section (key,
-                        "initializers",
+                        ACE_TEXT("initializers"),
                         1,
                         initializers_key);
   config->set_integer_value (initializers_key,
-                             "count",
+                             ACE_TEXT("count"),
                              length);
 
   CORBA::ULong arg_count = 0;
@@ -82,13 +82,13 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (initializers_key,
                             stringified,
                             1,
                             initializer_key);
       config->set_string_value (initializer_key,
-                                "name",
+                                ACE_TEXT("name"),
                                 initializers[i].name.in ());
 
       arg_count = initializers[i].members.length ();
@@ -96,16 +96,16 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
       if (arg_count > 0)
         {
           config->open_section (initializer_key,
-                                "params",
+                                ACE_TEXT("params"),
                                 1,
                                 params_key);
           config->set_integer_value (params_key,
-                                     "count",
+                                     ACE_TEXT("count"),
                                      arg_count);
 
           for (CORBA::ULong j = 0; j < arg_count; ++j)
             {
-              char *stringified =
+              ACE_TCHAR *stringified =
                 TAO_IFR_Service_Utils::int_to_string (j);
               config->open_section (params_key,
                                     stringified,
@@ -121,7 +121,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
                     initializers[i].members[j].type_def.in ()
                   );
               config->set_string_value (arg_key,
-                                        "arg_path",
+                                        ACE_TEXT("arg_path"),
                                         arg_path);
             }
         }
@@ -133,8 +133,7 @@ void
 TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin (
     T_desc &desc,
     TAO_Repository_i *repo,
-    ACE_Configuration_Section_Key &key
-  )
+    ACE_Configuration_Section_Key &key)
 {
   T_impl impl (repo);
   impl.section_key (key);
@@ -145,7 +144,7 @@ TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin (
 
   ACE_TString holder;
   repo->config ()->get_string_value (key,
-                                     "container_id",
+                                     ACE_TEXT("container_id"),
                                      holder);
   desc.defined_in = holder.fast_rep ();
 
@@ -158,8 +157,7 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
     const char *section_name,
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key,
-    T_strseq &seq
-  )
+    T_strseq &seq)
 {
   ACE_Configuration_Section_Key section_key;
   int status = config->open_section (key,
