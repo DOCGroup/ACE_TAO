@@ -31,7 +31,6 @@ TAO_Network_Priority_Hook::initialize (void)
     (ace_svc_desc_TAO_Network_Priority_Hook);
 }
 
-
 ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_Network_Priority_Hook)
 ACE_STATIC_SVC_DEFINE (TAO_Network_Priority_Hook,
                        ACE_TEXT ("TAO_Network_Priority_Hook"),

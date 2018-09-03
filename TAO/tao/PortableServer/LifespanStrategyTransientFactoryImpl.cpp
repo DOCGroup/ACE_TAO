@@ -42,7 +42,6 @@ namespace TAO
   }
 }
 
-
 ACE_STATIC_SVC_DEFINE (
   LifespanStrategyTransientFactoryImpl,
   ACE_TEXT ("LifespanStrategyTransientFactory"),

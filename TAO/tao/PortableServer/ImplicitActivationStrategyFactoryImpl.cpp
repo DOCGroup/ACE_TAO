@@ -52,12 +52,10 @@ namespace TAO
   }
 }
 
-
 ACE_FACTORY_NAMESPACE_DEFINE (
   ACE_Local_Service,
   ImplicitActivationStrategyFactoryImpl,
   TAO_VERSIONED_NAMESPACE_NAME::TAO::Portable_Server::ImplicitActivationStrategyFactoryImpl)
-
 
 ACE_STATIC_SVC_DEFINE (
   ImplicitActivationStrategyFactoryImpl,

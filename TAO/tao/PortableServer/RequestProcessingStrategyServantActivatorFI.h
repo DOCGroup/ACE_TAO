@@ -48,7 +48,6 @@ ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingStrategyServantActivat
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #include /**/ "ace/post.h"
