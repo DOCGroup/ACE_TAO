@@ -46,7 +46,6 @@ namespace TAO
     /// Execute the upcall.
     virtual void execute (void) = 0;
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
