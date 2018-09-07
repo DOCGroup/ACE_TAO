@@ -1,3 +1,12 @@
+%top{
+#include /**/ "tao/orbconf.h"
+#include /**/ "tao/Versioned_Namespace.h"
+
+#include "ace/OS_NS_unistd.h"
+#include "ace/os_include/os_stdio.h"
+
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+}
 %{
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -198,7 +207,7 @@ trader_strtoull(const char* s, unsigned int base)
           result = (result * base) + (*s - 'A' + 10);
         }
       else
-        { 
+        {
           break;
         }
 
