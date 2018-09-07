@@ -87,7 +87,6 @@ class ACE_QtReactor_Export ACE_QtReactor
   : public QObject,
     public ACE_Select_Reactor
 {
-
     Q_OBJECT
 
 public:
@@ -133,9 +132,6 @@ public:
         int dont_call_handle_close = 1);
 
 protected:
-
-    // = Register timers/handles with Qt
-
     /// Register a single @a handler.
     virtual int register_handler_i (ACE_HANDLE handle,
         ACE_Event_Handler *handler,
@@ -203,7 +199,6 @@ private:
     ACE_QtReactor &operator= (const ACE_QtReactor &);
 
 private slots:
-
     // These are all part of the communication mechanism adopted in Qt.
     /// Dispatch a Read Event
     void read_event (int FD);

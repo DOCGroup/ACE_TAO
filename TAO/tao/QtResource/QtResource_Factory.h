@@ -40,16 +40,13 @@ namespace TAO
   class TAO_QtResource_Export QtResource_Factory : public GUIResource_Factory
   {
   public:
-
     QtResource_Factory (QApplication *qapp_);
 
   protected:
-
     /// Create or obtain current reactor implementation
     virtual ACE_Reactor_Impl *reactor_impl (void);
 
   private:
-
     /// Reactor created by this factory.
     ACE_QtReactor *reactor_impl_;
 
