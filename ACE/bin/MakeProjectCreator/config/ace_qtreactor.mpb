@@ -1,0 +1,4 @@
+feature(qt4): ace_qt4reactor {
+}
+feature(qt5): ace_qt5reactor {
+}
