@@ -42,7 +42,6 @@ class TAO_BidirectionalPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_BidirectionalPolicy (const BiDirPolicy::BidirectionalPolicyValue val);
 
@@ -64,10 +63,8 @@ public:
   virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
 
 private:
-
   /// The attribute
   BiDirPolicy::BidirectionalPolicyValue value_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
