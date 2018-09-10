@@ -2,7 +2,12 @@
 #ifndef QTREACTOR_TEST_H
 #define QTREACTOR_TEST_H
 
-#include <QtGui/qapplication.h>
+#ifdef ACE_HAS_QT5
+#include /**/ <QtWidgets/QApplication>
+#else
+#include /**/ <QtGui/QApplication>
+#endif
+
 #include <QtCore/qtimer.h>
 
 class QTestApplication: public QApplication

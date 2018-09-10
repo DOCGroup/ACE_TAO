@@ -28,7 +28,13 @@
 #endif
 
 // QT toolkit specific includes.
+#ifdef ACE_HAS_QT5
+#include /**/ <QtWidgets/QApplication>
+#define ACE_QT_HANDLE_TYPE qintptr
+#else
 #include /**/ <QtGui/QApplication>
+#define ACE_QT_HANDLE_TYPE int
+#endif
 #include /**/ <QtCore/QObject>
 #include /**/ <QtCore/QSocketNotifier>
 #include /**/ <QtCore/QTimer>
@@ -93,7 +99,7 @@ public:
     /** \brief Constructor follows  @ACE_Select_Reactor
         \param QApplication *qapp, qapplication which runs events loop
     */
-    ACE_QtReactor (QApplication *qapp = 0,
+    explicit ACE_QtReactor (QApplication *qapp = 0,
         ACE_Sig_Handler * = 0,
         ACE_Timer_Queue * = 0,
         int disable_notify_pipe = 0,
@@ -104,7 +110,7 @@ public:
     /** \brief Constructor follows @ACE_Select_Reactor
         \param QApplication *qapp, qapplication which runs events loop
     */
-    ACE_QtReactor (size_t size,
+    explicit ACE_QtReactor (size_t size,
         QApplication *qapp = 0,
         bool restart = false,
         ACE_Sig_Handler * = 0,
@@ -201,13 +207,13 @@ private:
 private slots:
     // These are all part of the communication mechanism adopted in Qt.
     /// Dispatch a Read Event
-    void read_event (int FD);
+    void read_event (ACE_QT_HANDLE_TYPE p_handle);
 
     /// Dispatch a Write Event
-    void write_event (int FD);
+    void write_event (ACE_QT_HANDLE_TYPE p_handle);
 
     /// Dispatch an exception event
-    void exception_event (int FD);
+    void exception_event (ACE_QT_HANDLE_TYPE p_handle);
 
     /// Dispatch a timeout event
     void timeout_event (void);
