@@ -3,6 +3,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.1 and ACE-6.5.2
 
 . Enhanced C++Builder XE2 support
 
+. ACE_QtReactor can be built with Qt version 5 using the qt5 MPC feature
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.0 and ACE-6.5.1
 ====================================================
 
