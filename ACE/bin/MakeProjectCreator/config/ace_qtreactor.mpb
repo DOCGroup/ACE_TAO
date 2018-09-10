@@ -2,6 +2,6 @@ feature(qt4): ace_qt4reactor {
 }
 feature(qt5): ace_qt5reactor {
 }
-feature(!qt4, !qt4) {
+feature(!qt4, !qt5) {
   requires += dummy_label
 }
