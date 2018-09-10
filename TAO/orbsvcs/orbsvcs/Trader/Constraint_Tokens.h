@@ -1,10 +1,6 @@
-#ifndef CONSTRAINT_TOKEN_H
-#define CONSTRAINT_TOKEN_H
+#ifndef CONSTRAINT_TOKENS_H
+#define CONSTRAINT_TOKENS_H
 #include /**/ "ace/pre.h"
-
-#ifndef YYERRCODE
-#define YYERRCODE 256
-#endif
 
 #define TAO_GT 257
 #define TAO_GE 258
@@ -41,4 +37,4 @@
 #define TAO_FIRST 289
 #define TAO_RANDOM 290
 #include /**/ "ace/post.h"
-#endif /* CONSTRAINT_TOKEN_H */
+#endif /* CONSTRAINT_TOKENS_H */
