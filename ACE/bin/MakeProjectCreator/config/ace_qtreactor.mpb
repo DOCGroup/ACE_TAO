@@ -4,4 +4,10 @@ feature(qt5): ace_qt5reactor {
 }
 feature(!qt4, !qt5) {
   requires += dummy_label
+  Define_Custom(UIC) {
+  }
+  Define_Custom(MOC) {
+  }
+  Define_Custom(QRC) {
+  }
 }
